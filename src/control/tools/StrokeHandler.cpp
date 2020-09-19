@@ -21,7 +21,11 @@ guint32 StrokeHandler::lastStrokeTime;  // persist for next stroke
 
 
 StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
-        InputHandler(xournal, redrawable, page), surfMask(nullptr), crMask(nullptr), reco(nullptr) {}
+        InputHandler(xournal, redrawable, page),
+        surfMask(nullptr),
+        snappingHandler(xournal->getControl()->getSettings()),
+        crMask(nullptr),
+        reco(nullptr) {}
 
 StrokeHandler::~StrokeHandler() {
     destroySurface();
@@ -215,16 +219,37 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
     Stroke* recognized = result->getRecognized();
     recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
 
-    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, recognized);
+    // snapping
+    Stroke* snappedStroke = recognized->cloneStroke();
+    if (xournal->getControl()->getSettings()->getSnapRecognizedShapesEnabled()) {
+        Rectangle<double> oldSnappedBounds = recognized->getSnappedBounds();
+        Point topLeft = Point(oldSnappedBounds.x, oldSnappedBounds.y);
+        Point topLeftSnapped = snappingHandler.snapToGrid(topLeft, false);
+
+        snappedStroke->move(topLeftSnapped.x - topLeft.x, topLeftSnapped.y - topLeft.y);
+        Rectangle<double> snappedBounds = snappedStroke->getSnappedBounds();
+        Point belowRight = Point(snappedBounds.x + snappedBounds.width, snappedBounds.y + snappedBounds.height);
+        Point belowRightSnapped = snappingHandler.snapToGrid(belowRight, false);
+
+        double fx = (std::abs(snappedBounds.width) > DBL_EPSILON) ?
+                            (belowRightSnapped.x - topLeftSnapped.x) / snappedBounds.width :
+                            1;
+        double fy = (std::abs(snappedBounds.height) > DBL_EPSILON) ?
+                            (belowRightSnapped.y - topLeftSnapped.y) / snappedBounds.height :
+                            1;
+        snappedStroke->scale(topLeftSnapped.x, topLeftSnapped.y, fx, fy, 0, false);
+    }
+
+    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, snappedStroke);
     auto& locRecUndo = *recognizerUndo;
 
     UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
     undo->addUndoAction(std::move(recognizerUndo));
-    layer->addElement(result->getRecognized());
+    layer->addElement(snappedStroke);
 
-    Range range(recognized->getX(), recognized->getY());
-    range.addPoint(recognized->getX() + recognized->getElementWidth(),
-                   recognized->getY() + recognized->getElementHeight());
+    Range range(snappedStroke->getX(), snappedStroke->getY());
+    range.addPoint(snappedStroke->getX() + snappedStroke->getElementWidth(),
+                   snappedStroke->getY() + snappedStroke->getElementHeight());
 
     range.addPoint(stroke->getX(), stroke->getY());
     range.addPoint(stroke->getX() + stroke->getElementWidth(), stroke->getY() + stroke->getElementHeight());

@@ -13,8 +13,8 @@
  */
 auto CircleRecognizer::makeCircleShape(Stroke* originalStroke, Inertia& inertia) -> Stroke* {
     int npts = static_cast<int>(2 * inertia.rad());
-    if (npts < 12) {
-        npts = 12;  // min. number of points
+    if (npts < 24) {
+        npts = 24;  // min. number of points
     }
 
     auto* s = new Stroke();

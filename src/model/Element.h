@@ -43,20 +43,22 @@ public:
 
     void setX(double x);
     void setY(double y);
-    double getX();
-    double getY();
+    double getX() const;
+    double getY() const;
 
     virtual void move(double dx, double dy);
-    virtual void scale(double x0, double y0, double fx, double fy) = 0;
-    virtual void rotate(double x0, double y0, double xo, double yo, double th) = 0;
+    virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) = 0;
+    virtual void rotate(double x0, double y0, double th) = 0;
 
     void setColor(Color color);
     Color getColor() const;
 
-    double getElementWidth();
-    double getElementHeight();
+    double getElementWidth() const;
+    double getElementHeight() const;
 
-    Rectangle<double> boundingRect();
+    Rectangle<double> getSnappedBounds() const;
+
+    Rectangle<double> boundingRect() const;
 
     virtual bool intersectsArea(const GdkRectangle* src);
     virtual bool intersectsArea(double x, double y, double width, double height);
@@ -72,21 +74,24 @@ public:
 
 private:
 protected:
-    virtual void calcSize() = 0;
+    virtual void calcSize() const = 0;
 
     void serializeElement(ObjectOutputStream& out) const;
     void readSerializedElement(ObjectInputStream& in);
 
 protected:
     // If the size has been calculated
-    bool sizeCalculated = false;
+    mutable bool sizeCalculated = false;
 
-    double width = 0;
-    double height = 0;
+    mutable double width = 0;
+    mutable double height = 0;
 
     // The position on the screen
-    double x = 0;
-    double y = 0;
+    mutable double x = 0;
+    mutable double y = 0;
+
+    // The position and dimensions on the screen used for snapping
+    mutable Rectangle<double> snappedBounds{};
 
 private:
     /**

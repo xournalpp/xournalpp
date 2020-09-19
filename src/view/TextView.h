@@ -28,25 +28,25 @@ public:
     /**
      * Calculates the size of a Text model
      */
-    static void calcSize(Text* t, double& width, double& height);
+    static void calcSize(const Text* t, double& width, double& height);
 
     /**
      * Draws a Text modle to a cairo surface
      */
-    static void drawText(cairo_t* cr, Text* t);
+    static void drawText(cairo_t* cr, const Text* t);
 
     /**
      * Searches text within a Text model, returns XojPopplerRectangle, have to been freed
      */
-    static vector<XojPdfRectangle> findText(Text* t, string& search);
+    static vector<XojPdfRectangle> findText(const Text* t, string& search);
 
     /**
      * Initialize a Pango layout
      */
-    static PangoLayout* initPango(cairo_t* cr, Text* t);
+    static PangoLayout* initPango(cairo_t* cr, const Text* t);
 
     /**
      * Sets the font name from Text model
      */
-    static void updatePangoFont(PangoLayout* layout, Text* t);
+    static void updatePangoFont(PangoLayout* layout, const Text* t);
 };

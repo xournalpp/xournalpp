@@ -162,7 +162,7 @@ auto InputSequence::actionMoved(guint32 time) -> bool {
         PositionInputData pos = getInputDataRelativeToCurrentPage(view);
 
         if (xournal->selection->isMoving()) {
-            selection->mouseMove(pos.x, pos.y);
+            selection->mouseMove(pos.x, pos.y, pos.isAltDown());
         } else {
             CursorSelectionType selType = selection->getSelectionTypeForPos(pos.x, pos.y, xournal->view->getZoom());
             xournal->view->getCursor()->setMouseSelectionType(selType);

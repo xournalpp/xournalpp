@@ -56,7 +56,7 @@ Xournal++ features:
 - Page Template definitions
 - Shape drawing (line, arrow, circle, rect, splines)
 - Shape resizing and rotation
-- Rotation snapping every 45 degrees
+- Rotation snapping every 15 degrees
 - Rect snapping to grid
 - Audio recording and playback alongside with handwritten notes
 - Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...

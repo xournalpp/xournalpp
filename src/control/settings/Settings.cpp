@@ -163,6 +163,9 @@ void Settings::loadDefault() {
     this->doActionOnStrokeFiltered = false;
     this->trySelectOnStrokeFiltered = false;
 
+    this->snapRecognizedShapesEnabled = false;
+    this->restoreLineWidthEnabled = false;
+
     this->inTransaction = false;
 }
 
@@ -459,6 +462,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->latexSettings.globalTemplatePath = fs::u8path(v);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
         this->latexSettings.genCmd = reinterpret_cast<char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapRecognizedShapesEnabled")) == 0) {
+        this->snapRecognizedShapesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("restoreLineWidthEnabled")) == 0) {
+        this->restoreLineWidthEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     }
 
     xmlFree(name);
@@ -825,10 +832,12 @@ void Settings::save() {
     WRITE_INT_PROP(strokeFilterIgnoreTime);
     WRITE_DOUBLE_PROP(strokeFilterIgnoreLength);
     WRITE_INT_PROP(strokeFilterSuccessiveTime);
-
     WRITE_BOOL_PROP(strokeFilterEnabled);
     WRITE_BOOL_PROP(doActionOnStrokeFiltered);
     WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
+
+    WRITE_BOOL_PROP(snapRecognizedShapesEnabled);
+    WRITE_BOOL_PROP(restoreLineWidthEnabled);
 
     WRITE_INT_PROP(numIgnoredStylusEvents);
 
@@ -1663,6 +1672,15 @@ auto Settings::getDoActionOnStrokeFiltered() const -> bool { return this->doActi
 void Settings::setTrySelectOnStrokeFiltered(bool enabled) { this->trySelectOnStrokeFiltered = enabled; }
 
 auto Settings::getTrySelectOnStrokeFiltered() const -> bool { return this->trySelectOnStrokeFiltered; }
+
+void Settings::setSnapRecognizedShapesEnabled(bool enabled) { this->snapRecognizedShapesEnabled = enabled; }
+
+auto Settings::getSnapRecognizedShapesEnabled() const -> bool { return this->snapRecognizedShapesEnabled; }
+
+
+void Settings::setRestoreLineWidthEnabled(bool enabled) { this->restoreLineWidthEnabled = enabled; }
+
+auto Settings::getRestoreLineWidthEnabled() const -> bool { return this->restoreLineWidthEnabled; }
 
 
 void Settings::setIgnoredStylusEvents(int numEvents) {

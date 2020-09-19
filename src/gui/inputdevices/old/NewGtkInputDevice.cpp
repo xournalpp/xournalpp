@@ -126,19 +126,19 @@ auto NewGtkInputDevice::eventKeyPressHandler(GdkEventKey* event) -> bool {
         }
 
         if (event->keyval == GDK_KEY_Left) {
-            selection->moveSelection(d, 0);
-            return true;
-        }
-        if (event->keyval == GDK_KEY_Up) {
-            selection->moveSelection(0, d);
-            return true;
-        }
-        if (event->keyval == GDK_KEY_Right) {
             selection->moveSelection(-d, 0);
             return true;
         }
-        if (event->keyval == GDK_KEY_Down) {
+        if (event->keyval == GDK_KEY_Up) {
             selection->moveSelection(0, -d);
+            return true;
+        }
+        if (event->keyval == GDK_KEY_Right) {
+            selection->moveSelection(d, 0);
+            return true;
+        }
+        if (event->keyval == GDK_KEY_Down) {
+            selection->moveSelection(0, d);
             return true;
         }
     }

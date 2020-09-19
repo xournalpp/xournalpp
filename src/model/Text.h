@@ -23,10 +23,12 @@ public:
     ~Text() override;
 
 public:
-    void setFont(XojFont& font);
+    void setFont(const XojFont& font);
     XojFont& getFont();
+    double getFontSize() const;  // same result as getFont()->getSize(), but const
+    string getFontName() const;  // same result as getFont()->getName(), but const
 
-    string getText();
+    string getText() const;
     void setText(string text);
 
     void setWidth(double width);
@@ -35,8 +37,8 @@ public:
     void setInEditing(bool inEditing);
     bool isInEditing() const;
 
-    void scale(double x0, double y0, double fx, double fy) override;
-    void rotate(double x0, double y0, double xo, double yo, double th) override;
+    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
+    void rotate(double x0, double y0, double th) override;
 
     bool rescaleOnlyAspectRatio() override;
 
@@ -54,7 +56,8 @@ public:
     void readSerialized(ObjectInputStream& in) override;
 
 protected:
-    void calcSize() override;
+    void calcSize() const override;
+    void updateSnapping() const;
 
 private:
     XojFont font;

@@ -15,6 +15,24 @@
 namespace Snapping {
 
 /**
+ * @brief If a value is near enough to the y-coordinate of a grid point, it returns the nearest y-coordinate of the
+ * grid point. Otherwise the original value itself.
+ * @param y the value
+ * @param gridSize the distance to each snapping point
+ * @param tolerance the tolerance as a fraction of a half grid diagonal (assumed to be between 0 and 1)
+ */
+[[nodiscard]] double snapVertically(double y, double gridSize, double tolerance);
+
+/**
+ * @brief If a value is near enough to the x-coordinate of a grid point, it returns the nearest x-coordinate of the
+ * grid point. Otherwise the original value itself.
+ * @param x the value
+ * @param gridSize the distance to each snapping point
+ * @param tolerance the tolerance as a fraction of a half grid diagonal (assumed to be between 0 and 1)
+ */
+[[nodiscard]] double snapHorizontally(double x, double gridSize, double tolerance);
+
+/**
  * @brief If a points distance to the nearest grid point is under a certain tolerance, it returns the nearest
  * grid point. Otherwise the original Point itself.
  * @param pos the position

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.1 -->
 <interface>
-  <requires lib="gtk+" version="3.18"/>
+  <requires lib="gtk+" version="3.18" />
   <object class="GtkAdjustment" id="adjustmentAudioGain">
     <property name="upper">10</property>
     <property name="value">1</property>
@@ -139,9 +139,9 @@
     <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <property name="type_hint">normal</property>
     <property name="gravity">center</property>
-    <signal name="close" handler="gtk_widget_hide" swapped="no"/>
+    <signal name="close" handler="gtk_widget_hide" swapped="no" />
     <child type="titlebar">
-      <placeholder/>
+      <placeholder />
     </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox3">
@@ -749,7 +749,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                 <property name="can_focus">False</property>
                                 <property name="orientation">vertical</property>
                                 <child>
-                                  <placeholder/>
+                                  <placeholder />
                                 </child>
                               </object>
                               <packing>
@@ -973,7 +973,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1011,7 +1011,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1328,7 +1328,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1366,7 +1366,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1404,7 +1404,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1533,7 +1533,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <child>
-                                              <placeholder/>
+                                              <placeholder />
                                             </child>
                                           </object>
                                           <packing>
@@ -1691,7 +1691,7 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <placeholder/>
+                                                  <placeholder />
                                                 </child>
                                               </object>
                                               <packing>
@@ -1742,77 +1742,77 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                                             <property name="row_spacing">5</property>
                                                             <property name="column_spacing">5</property>
                                                             <child>
-                                                            <object class="GtkLabel" id="label52">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Enable</property>
-                                                            <property name="xalign">0</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">0</property>
-                                                            <property name="top_attach">0</property>
-                                                            </packing>
+                                                              <object class="GtkLabel" id="label52">
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">False</property>
+                                                                <property name="label" translatable="yes">Enable</property>
+                                                                <property name="xalign">0</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">0</property>
+                                                                <property name="top_attach">0</property>
+                                                              </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkLabel" id="label53">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Disable</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">0</property>
-                                                            <property name="top_attach">1</property>
-                                                            </packing>
+                                                              <object class="GtkLabel" id="label53">
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">False</property>
+                                                                <property name="label" translatable="yes">Disable</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">0</property>
+                                                                <property name="top_attach">1</property>
+                                                              </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkEntry" id="txtEnableTouchCommand">
-                                                            <property name="name">txtEnableTouchCommand</property>
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="hexpand">True</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="top_attach">0</property>
-                                                            </packing>
+                                                              <object class="GtkEntry" id="txtEnableTouchCommand">
+                                                                <property name="name">txtEnableTouchCommand</property>
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">True</property>
+                                                                <property name="hexpand">True</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">1</property>
+                                                                <property name="top_attach">0</property>
+                                                              </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkEntry" id="txtDisableTouchCommand">
-                                                            <property name="name">txtDisableTouchCommand</property>
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="hexpand">True</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="top_attach">1</property>
-                                                            </packing>
+                                                              <object class="GtkEntry" id="txtDisableTouchCommand">
+                                                                <property name="name">txtDisableTouchCommand</property>
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">True</property>
+                                                                <property name="hexpand">True</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">1</property>
+                                                                <property name="top_attach">1</property>
+                                                              </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkButton" id="btTestEnable">
-                                                            <property name="label" translatable="yes">Test</property>
-                                                            <property name="name">btTestEnable</property>
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="receives_default">True</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">2</property>
-                                                            <property name="top_attach">0</property>
-                                                            </packing>
+                                                              <object class="GtkButton" id="btTestEnable">
+                                                                <property name="label" translatable="yes">Test</property>
+                                                                <property name="name">btTestEnable</property>
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">True</property>
+                                                                <property name="receives_default">True</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">2</property>
+                                                                <property name="top_attach">0</property>
+                                                              </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkButton" id="btTestDisable">
-                                                            <property name="label" translatable="yes">Test</property>
-                                                            <property name="name">btTestDisable</property>
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="receives_default">True</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">2</property>
-                                                            <property name="top_attach">1</property>
-                                                            </packing>
+                                                              <object class="GtkButton" id="btTestDisable">
+                                                                <property name="label" translatable="yes">Test</property>
+                                                                <property name="name">btTestDisable</property>
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">True</property>
+                                                                <property name="receives_default">True</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">2</property>
+                                                                <property name="top_attach">1</property>
+                                                              </packing>
                                                             </child>
                                                           </object>
                                                           <packing>
@@ -2519,7 +2519,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <placeholder/>
+                                              <placeholder />
                                             </child>
                                           </object>
                                           <packing>
@@ -3104,7 +3104,7 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="orientation">vertical</property>
                                                 <child>
-                                                  <placeholder/>
+                                                  <placeholder />
                                                 </child>
                                               </object>
                                               <packing>
@@ -3435,93 +3435,122 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
-                                      <object class="GtkGrid" id="sid148">
+                                      <object class="GtkBox" id="box51">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="row_spacing">5</property>
-                                        <property name="column_spacing">5</property>
+                                        <property name="orientation">vertical</property>
+                                        <property name="spacing">6</property>
                                         <child>
-                                          <object class="GtkLabel" id="lbSnapRotationTolerance">
-                                            <property name="name">lbSnapRotationTolerance</property>
+                                          <object class="GtkGrid" id="sid148">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Rotation snapping tolerance</property>
-                                            <property name="xalign">0</property>
+                                            <property name="row_spacing">5</property>
+                                            <property name="column_spacing">5</property>
+                                            <child>
+                                              <object class="GtkLabel" id="lbSnapRotationTolerance">
+                                                <property name="name">lbSnapRotationTolerance</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="label" translatable="yes">Rotation snapping tolerance</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">0</property>
+                                                <property name="top_attach">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="lbSnapGridTolerance">
+                                                <property name="name">lbSnapGridTolerance</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="label" translatable="yes">Grid snapping tolerance</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">0</property>
+                                                <property name="top_attach">1</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkSpinButton" id="spSnapRotationTolerance">
+                                                <property name="name">spSnapRotationTolerance</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="adjustment">adjustmentSnapRotationTolerance</property>
+                                                <property name="climb_rate">0.050000000000000003</property>
+                                                <property name="digits">2</property>
+                                                <property name="value">0.20000000000000001</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">1</property>
+                                                <property name="top_attach">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkSpinButton" id="spSnapGridTolerance">
+                                                <property name="name">spSnapGridTolerance</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="adjustment">adjustmentSnapGridTolerance</property>
+                                                <property name="climb_rate">0.050000000000000003</property>
+                                                <property name="digits">2</property>
+                                                <property name="value">0.25</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">1</property>
+                                                <property name="top_attach">1</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="lbSnapGridSize">
+                                                <property name="name">lbSnapGridSize</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="label" translatable="yes">Grid size</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">0</property>
+                                                <property name="top_attach">2</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkSpinButton" id="spSnapGridSize">
+                                                <property name="name">spSnapGridSize</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="adjustment">adjustmentSnapGridSize</property>
+                                                <property name="climb_rate">0.01</property>
+                                                <property name="digits">2</property>
+                                                <property name="value">1</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">1</property>
+                                                <property name="top_attach">2</property>
+                                              </packing>
+                                            </child>
                                           </object>
                                           <packing>
-                                            <property name="left_attach">0</property>
-                                            <property name="top_attach">0</property>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="lbSnapGridTolerance">
-                                            <property name="name">lbSnapGridTolerance</property>
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Grid snapping tolerance</property>
-                                            <property name="xalign">0</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">0</property>
-                                            <property name="top_attach">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkSpinButton" id="spSnapRotationTolerance">
-                                            <property name="name">spSnapRotationTolerance</property>
+                                          <object class="GtkCheckButton" id="cbSnapRecognizedShapesEnabled">
+                                            <property name="label" translatable="yes">Use snapping for recognized shapes</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="adjustment">adjustmentSnapRotationTolerance</property>
-                                            <property name="climb_rate">0.050000000000000003</property>
-                                            <property name="digits">2</property>
-                                            <property name="value">0.20000000000000001</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">1</property>
-                                            <property name="top_attach">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkSpinButton" id="spSnapGridTolerance">
-                                            <property name="name">spSnapGridTolerance</property>
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="adjustment">adjustmentSnapGridTolerance</property>
-                                            <property name="climb_rate">0.050000000000000003</property>
-                                            <property name="digits">2</property>
-                                            <property name="value">0.25</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">1</property>
-                                            <property name="top_attach">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkLabel" id="lbSnapGridSize">
-                                            <property name="name">lbSnapGridSize</property>
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Grid size</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_text" translatable="yes">If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing.</property>
                                             <property name="xalign">0</property>
+                                            <property name="draw_indicator">True</property>
                                           </object>
                                           <packing>
-                                            <property name="left_attach">0</property>
-                                            <property name="top_attach">2</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkSpinButton" id="spSnapGridSize">
-                                            <property name="name">spSnapGridSize</property>
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="adjustment">adjustmentSnapGridSize</property>
-                                            <property name="climb_rate">0.01</property>
-                                            <property name="digits">2</property>
-                                            <property name="value">1</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left_attach">1</property>
-                                            <property name="top_attach">2</property>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -3627,7 +3656,57 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                               </packing>
                             </child>
                             <child>
-                              <placeholder/>
+                              <object class="GtkFrame" id="sid 155">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="margin_left">4</property>
+                                <property name="margin_top">3</property>
+                                <property name="margin_bottom">3</property>
+                                <property name="border_width">2</property>
+                                <property name="label_xalign">0.0099999997764825821</property>
+                                <child>
+                                  <object class="GtkAlignment">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="left_padding">12</property>
+                                    <child>
+                                      <object class="GtkGrid">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbRestoreLineWidthEnabled">
+                                            <property name="label" translatable="yes">Preserve line width</property>
+                                            <property name="name">cbRestoreLineWidthEnabled</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_markup" translatable="yes">After resizing a selection, the line width of all strokes will be the same as before the resizing operation. </property>
+                                            <property name="margin_bottom">2</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">0</property>
+                                            <property name="top_attach">0</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Resizing</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">4</property>
+                              </packing>
                             </child>
                             <child>
                               <object class="GtkFrame" id="sid154">
@@ -3914,7 +3993,7 @@ It must be short in time and length and we can't have ignored another stroke rec
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <child>
-                                              <placeholder/>
+                                              <placeholder />
                                             </child>
                                           </object>
                                           <packing>
@@ -3924,7 +4003,7 @@ It must be short in time and length and we can't have ignored another stroke rec
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder/>
+                                          <placeholder />
                                         </child>
                                       </object>
                                     </child>
@@ -4431,7 +4510,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <placeholder/>
+                  <placeholder />
                 </child>
               </object>
               <packing>

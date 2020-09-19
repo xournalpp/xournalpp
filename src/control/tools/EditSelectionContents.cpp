@@ -27,25 +27,17 @@
 
 #include "Selection.h"
 
-EditSelectionContents::EditSelectionContents(double x, double y, double width, double height, const PageRef& sourcePage,
-                                             Layer* sourceLayer, XojPageView* sourceView) {
-    this->crBuffer = nullptr;
+EditSelectionContents::EditSelectionContents(Rectangle<double> bounds, Rectangle<double> snappedBounds,
+                                             const PageRef& sourcePage, Layer* sourceLayer, XojPageView* sourceView):
+        lastBounds(bounds),
+        originalBounds(bounds),
+        lastSnappedBounds(snappedBounds),
+        sourcePage(sourcePage),
+        sourceLayer(sourceLayer),
+        sourceView(sourceView) {
 
-    this->rescaleId = 0;
-
-    this->lastWidth = this->originalWidth = width;
-    this->lastHeight = this->originalHeight = height;
-    this->relativeX = -9999999999;
-    this->relativeY = -9999999999;
-    this->rotation = 0;
-    this->lastRotation = 0;
-
-    this->lastX = this->originalX = x;
-    this->lastY = this->originalY = y;
-
-    this->sourcePage = sourcePage;
-    this->sourceLayer = sourceLayer;
-    this->sourceView = sourceView;
+    this->restoreLineWidth =
+            this->getSourceView()->getXournal()->getControl()->getSettings()->getRestoreLineWidthEnabled();
 }
 
 EditSelectionContents::~EditSelectionContents() {
@@ -302,32 +294,32 @@ void EditSelectionContents::deleteViewBuffer() {
 /**
  * Gets the original width of the contents
  */
-auto EditSelectionContents::getOriginalWidth() const -> double { return this->originalWidth; }
+auto EditSelectionContents::getOriginalWidth() const -> double { return this->originalBounds.width; }
 
 /**
  * Gets the original height of the contents
  */
-auto EditSelectionContents::getOriginalHeight() const -> double { return this->originalHeight; }
+auto EditSelectionContents::getOriginalHeight() const -> double { return this->originalBounds.height; }
 
 /**
  * The contents of the selection
  */
-void EditSelectionContents::finalizeSelection(double x, double y, double width, double height, bool aspectRatio,
-                                              Layer* layer, const PageRef& targetPage, XojPageView* targetView,
-                                              UndoRedoHandler* undo) {
-    double fx = width / this->originalWidth;
-    double fy = height / this->originalHeight;
+void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds,
+                                              bool aspectRatio, Layer* layer, const PageRef& targetPage,
+                                              XojPageView* targetView, UndoRedoHandler* undo) {
+    double fx = bounds.width / this->originalBounds.width;
+    double fy = bounds.height / this->originalBounds.height;
 
     if (aspectRatio) {
         double f = (fx + fy) / 2;
         fx = f;
         fy = f;
     }
-    bool scale = (width != this->originalWidth || height != this->originalHeight);
+    bool scale = (bounds.width != this->originalBounds.width || bounds.height != this->originalBounds.height);
     bool rotate = (std::abs(this->rotation) > __DBL_EPSILON__);
 
-    double mx = x - this->originalX;
-    double my = y - this->originalY;
+    double mx = bounds.x - this->originalBounds.x;
+    double my = bounds.y - this->originalBounds.y;
 
     bool move = mx != 0 || my != 0;
 
@@ -337,10 +329,11 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
             e->move(mx, my);
         }
         if (scale) {
-            e->scale(x, y, fx, fy);
+            e->scale(bounds.x, bounds.y, fx, fy, 0, this->restoreLineWidth);
         }
         if (rotate) {
-            e->rotate(x, y, this->lastWidth / 2, this->lastHeight / 2, this->rotation);
+            e->rotate(snappedBounds.x + this->lastSnappedBounds.width / 2,
+                      snappedBounds.y + this->lastSnappedBounds.height / 2, this->rotation);
         }
         if (index == Layer::InvalidElementIndex) {
             // if the element didn't have a source layer (e.g, clipboard)
@@ -351,22 +344,22 @@ void EditSelectionContents::finalizeSelection(double x, double y, double width, 
     }
 }
 
-auto EditSelectionContents::getOriginalX() const -> double { return this->originalX; }
+auto EditSelectionContents::getOriginalX() const -> double { return this->originalBounds.x; }
 
-auto EditSelectionContents::getOriginalY() const -> double { return this->originalY; }
+auto EditSelectionContents::getOriginalY() const -> double { return this->originalBounds.y; }
 
 auto EditSelectionContents::getSourceView() -> XojPageView* { return this->sourceView; }
 
 
-void EditSelectionContents::updateContent(double x, double y, double rotation, double width, double height,
+void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<double> snappedBounds, double rotation,
                                           bool aspectRatio, Layer* layer, const PageRef& targetPage,
                                           XojPageView* targetView, UndoRedoHandler* undo, CursorSelectionType type) {
-    double mx = x - this->lastX;
-    double my = y - this->lastY;
+    double mx = snappedBounds.x - this->lastSnappedBounds.x;
+    double my = snappedBounds.y - this->lastSnappedBounds.y;
     this->rotation = rotation;
 
-    double fx = width / this->lastWidth;
-    double fy = height / this->lastHeight;
+    double fx = snappedBounds.width / this->lastSnappedBounds.width;
+    double fy = snappedBounds.height / this->lastSnappedBounds.height;
 
     if (aspectRatio) {
         double f = (fx + fy) / 2;
@@ -374,29 +367,31 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
         fy = f;
     }
 
-    bool scale = (width != this->lastWidth || height != this->lastHeight);
+    bool scale = (snappedBounds.width != this->lastSnappedBounds.width ||
+                  snappedBounds.height != this->lastSnappedBounds.height);
 
     if (type == CURSOR_SELECTION_MOVE) {
         undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, mx,
                                                              my, layer, targetPage));
     } else if (type == CURSOR_SELECTION_ROTATE) {
-        undo->addUndoAction(std::make_unique<RotateUndoAction>(this->sourcePage, &this->selected, x, y, width / 2,
-                                                               height / 2, rotation - this->lastRotation));
+        undo->addUndoAction(std::make_unique<RotateUndoAction>(
+                this->sourcePage, &this->selected, snappedBounds.x + snappedBounds.width / 2,
+                snappedBounds.y + snappedBounds.height / 2, rotation - this->lastRotation));
         this->rotation = 0;             // reset rotation for next usage
         this->lastRotation = rotation;  // undo one rotation at a time.
     }
     if (scale) {
-        // The coordinates which are the center of the scaling
-        // operation. Their coordinates depend on the scaling
-        // operation performed
-        double px = this->lastX;
-        double py = this->lastY;
+        // The coordinates of the center of the scaling operation. They depend on the scaling operation performed
+        double px = this->lastSnappedBounds.x;
+        double py = this->lastSnappedBounds.y;
 
         switch (type) {
             case CURSOR_SELECTION_TOP_LEFT:
+                [[fallthrough]];
             case CURSOR_SELECTION_BOTTOM_LEFT:
+                [[fallthrough]];
             case CURSOR_SELECTION_LEFT:
-                px = (this->lastWidth + this->lastX);
+                px += this->lastSnappedBounds.width;
                 break;
             default:
                 break;
@@ -404,24 +399,31 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
 
         switch (type) {
             case CURSOR_SELECTION_TOP_LEFT:
+                [[fallthrough]];
             case CURSOR_SELECTION_TOP_RIGHT:
+                [[fallthrough]];
             case CURSOR_SELECTION_TOP:
-                py = (this->lastHeight + this->lastY);
+                py += this->lastSnappedBounds.height;
                 break;
             default:
                 break;
         }
+        // now px and py are the center of the scaling in the rotated coordinate system. We need to rotate them
+        double cx = this->lastSnappedBounds.x + this->lastSnappedBounds.width / 2;
+        double cy = this->lastSnappedBounds.y + this->lastSnappedBounds.height / 2;
+        cairo_matrix_t rotMatrix;
+        cairo_matrix_init_identity(&rotMatrix);
+        cairo_matrix_translate(&rotMatrix, cx, cy);
+        cairo_matrix_rotate(&rotMatrix, this->lastRotation);
+        cairo_matrix_translate(&rotMatrix, -cx, -cy);
+        cairo_matrix_transform_point(&rotMatrix, &px, &py);
 
-        // Todo: this needs to be aware of the rotation...  this should all be rewritten to scale and rotate from
-        //       center... !!!!!!!!!
-        undo->addUndoAction(std::make_unique<ScaleUndoAction>(this->sourcePage, &this->selected, px, py, fx, fy));
+        undo->addUndoAction(std::make_unique<ScaleUndoAction>(this->sourcePage, &this->selected, px, py, fx, fy,
+                                                              this->lastRotation, restoreLineWidth));
     }
 
-    this->lastX = x;
-    this->lastY = y;
-
-    this->lastWidth = width;
-    this->lastHeight = height;
+    this->lastBounds = bounds;
+    this->lastSnappedBounds = snappedBounds;
 }
 
 /**
@@ -429,8 +431,8 @@ void EditSelectionContents::updateContent(double x, double y, double rotation, d
  */
 void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotation, double width, double height,
                                   double zoom) {
-    double fx = width / this->originalWidth;
-    double fy = height / this->originalHeight;
+    double fx = width / this->originalBounds.width;
+    double fy = height / this->originalBounds.height;
 
     if (this->relativeX == -9999999999) {
         this->relativeX = x;
@@ -492,7 +494,7 @@ auto EditSelectionContents::copySelection(PageRef page, XojPageView* view, doubl
     for (Element* e: *getElements()) {
         Element* ec = e->clone();
 
-        ec->move(x - this->originalX, y - this->originalY);
+        ec->move(x - this->originalBounds.x, y - this->originalBounds.y);
 
         layer->addElement(ec);
         new_elems.push_back(ec);
@@ -506,11 +508,11 @@ auto EditSelectionContents::copySelection(PageRef page, XojPageView* view, doubl
 void EditSelectionContents::serialize(ObjectOutputStream& out) {
     out.writeObject("EditSelectionContents");
 
-    out.writeDouble(this->originalWidth);
-    out.writeDouble(this->originalHeight);
+    out.writeDouble(this->originalBounds.width);
+    out.writeDouble(this->originalBounds.height);
 
-    out.writeDouble(this->originalX);
-    out.writeDouble(this->originalY);
+    out.writeDouble(this->originalBounds.x);
+    out.writeDouble(this->originalBounds.y);
 
     out.writeDouble(this->relativeX);
     out.writeDouble(this->relativeY);
@@ -521,11 +523,13 @@ void EditSelectionContents::serialize(ObjectOutputStream& out) {
 void EditSelectionContents::readSerialized(ObjectInputStream& in) {
     in.readObject("EditSelectionContents");
 
-    this->originalWidth = in.readDouble();
-    this->originalHeight = in.readDouble();
+    double originalWidth = in.readDouble();
+    double originalHeight = in.readDouble();
 
-    this->originalX = in.readDouble();
-    this->originalY = in.readDouble();
+    double originalX = in.readDouble();
+    double originalY = in.readDouble();
+
+    this->originalBounds = Rectangle<double>{originalX, originalY, originalWidth, originalHeight};
 
     this->relativeX = in.readDouble();
     this->relativeY = in.readDouble();

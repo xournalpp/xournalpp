@@ -24,6 +24,22 @@ protected:
 
 public:
     /**
+     * @brief If a value is near enough to the y-coordinate of a grid point, it returns the nearest y-coordinate of the
+     * grid point. Otherwise the original value itself.
+     * @param y the value
+     * @param alt indicates whether snapping mode is altered (via the Alt key)
+     */
+    [[nodiscard]] double snapVertically(double y, bool alt);
+
+    /**
+     * @brief If a value is near enough to the x-coordinate of a grid point, it returns the nearest x-coordinate of the
+     * grid point. Otherwise the original value itself.
+     * @param x the value
+     * @param alt indicates whether snapping mode is altered (via the Alt key)
+     */
+    [[nodiscard]] double snapHorizontally(double x, bool alt);
+
+    /**
      * @brief If a points distance to the nearest grid point is under a certain tolerance, it returns the nearest
      * grid point. Otherwise the original Point itself.
      * @param pos the position

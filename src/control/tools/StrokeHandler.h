@@ -14,6 +14,7 @@
 #include "view/DocumentView.h"
 
 #include "InputHandler.h"
+#include "SnapToGridInputHandler.h"
 
 class ShapeRecognizer;
 
@@ -50,6 +51,8 @@ protected:
 
 protected:
     Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.
+    SnapToGridInputHandler snappingHandler;
+
 private:
     /**
      * The masking surface

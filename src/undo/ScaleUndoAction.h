@@ -15,7 +15,8 @@
 
 class ScaleUndoAction: public UndoAction {
 public:
-    ScaleUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double fx, double fy);
+    ScaleUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double fx, double fy,
+                    double rotation, bool restoreLineWidth);
     virtual ~ScaleUndoAction();
 
 public:
@@ -24,7 +25,7 @@ public:
     virtual string getText();
 
 private:
-    void applyScale(double fx, double fy);
+    void applyScale(double fx, double fy, bool restoreLineWidth);
 
 private:
     vector<Element*> elements;
@@ -33,4 +34,6 @@ private:
     double y0;
     double fx;
     double fy;
+    double rotation;
+    bool restoreLineWidth;
 };

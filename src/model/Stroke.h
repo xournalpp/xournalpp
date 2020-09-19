@@ -91,8 +91,8 @@ public:
     double getAvgPressure() const;
 
     void move(double dx, double dy) override;
-    void scale(double x0, double y0, double fx, double fy) override;
-    void rotate(double x0, double y0, double xo, double yo, double th) override;
+    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
+    void rotate(double x0, double y0, double th) override;
 
     bool isInSelection(ShapeContainer* container) override;
 
@@ -107,7 +107,7 @@ public:
     void readSerialized(ObjectInputStream& in) override;
 
 protected:
-    void calcSize() override;
+    void calcSize() const override;
 
 private:
     // The stroke width cannot be inherited from Element

@@ -372,7 +372,7 @@ public:
                     auto tA = dynamic_cast<Text*>(a);
                     auto tB = dynamic_cast<Text*>(b);
                     CPPUNIT_ASSERT_EQUAL(tA->getText(), tB->getText());
-                    CPPUNIT_ASSERT_EQUAL(tA->getFont().getSize(), tB->getFont().getSize());
+                    CPPUNIT_ASSERT_EQUAL(tA->getFontSize(), tB->getFontSize());
                     break;
                 }
                 default:

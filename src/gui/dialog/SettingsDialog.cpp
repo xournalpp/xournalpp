@@ -216,6 +216,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbStrokeFilterEnabled", settings->getStrokeFilterEnabled());
     loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());
     loadCheckbox("cbTrySelectOnStrokeFiltered", settings->getTrySelectOnStrokeFiltered());
+    loadCheckbox("cbSnapRecognizedShapesEnabled", settings->getSnapRecognizedShapesEnabled());
+    loadCheckbox("cbRestoreLineWidthEnabled", settings->getRestoreLineWidthEnabled());
     loadCheckbox("cbDarkTheme", settings->isDarkTheme());
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
@@ -496,6 +498,8 @@ void SettingsDialog::save() {
     settings->setStrokeFilterEnabled(getCheckbox("cbStrokeFilterEnabled"));
     settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
     settings->setTrySelectOnStrokeFiltered(getCheckbox("cbTrySelectOnStrokeFiltered"));
+    settings->setSnapRecognizedShapesEnabled(getCheckbox("cbSnapRecognizedShapesEnabled"));
+    settings->setRestoreLineWidthEnabled(getCheckbox("cbRestoreLineWidthEnabled"));
     settings->setDarkTheme(getCheckbox("cbDarkTheme"));
     settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
     settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));

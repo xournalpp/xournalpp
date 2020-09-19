@@ -11,11 +11,17 @@ Element::~Element() = default;
 
 auto Element::getType() const -> ElementType { return this->type; }
 
-void Element::setX(double x) { this->x = x; }
+void Element::setX(double x) {
+    this->x = x;
+    this->sizeCalculated = false;
+}
 
-void Element::setY(double y) { this->y = y; }
+void Element::setY(double y) {
+    this->y = y;
+    this->sizeCalculated = false;
+}
 
-auto Element::getX() -> double {
+auto Element::getX() const -> double {
     if (!this->sizeCalculated) {
         this->sizeCalculated = true;
         calcSize();
@@ -23,20 +29,28 @@ auto Element::getX() -> double {
     return x;
 }
 
-auto Element::getY() -> double {
+auto Element::getY() const -> double {
     if (!this->sizeCalculated) {
         this->sizeCalculated = true;
         calcSize();
     }
     return y;
 }
+auto Element::getSnappedBounds() const -> Rectangle<double> {
+    if (!this->sizeCalculated) {
+        this->sizeCalculated = true;
+        calcSize();
+    }
+    return this->snappedBounds;
+}
 
 void Element::move(double dx, double dy) {
     this->x += dx;
     this->y += dy;
+    this->snappedBounds = this->snappedBounds.translated(dx, dy);
 }
 
-auto Element::getElementWidth() -> double {
+auto Element::getElementWidth() const -> double {
     if (!this->sizeCalculated) {
         this->sizeCalculated = true;
         calcSize();
@@ -44,7 +58,7 @@ auto Element::getElementWidth() -> double {
     return this->width;
 }
 
-auto Element::getElementHeight() -> double {
+auto Element::getElementHeight() const -> double {
     if (!this->sizeCalculated) {
         this->sizeCalculated = true;
         calcSize();
@@ -52,7 +66,7 @@ auto Element::getElementHeight() -> double {
     return this->height;
 }
 
-auto Element::boundingRect() -> Rectangle<double> {
+auto Element::boundingRect() const -> Rectangle<double> {
     return Rectangle<double>(getX(), getY(), getElementWidth(), getElementHeight());
 }
 
