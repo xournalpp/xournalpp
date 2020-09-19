@@ -151,6 +151,8 @@ void Sidebar::saveSize() {
     this->control->getSettings()->setSidebarWidth(alloc.width);
 }
 
+auto Sidebar::getToolbar() -> SidebarToolbar* { return &this->toolbar; }
+
 auto Sidebar::getControl() -> Control* { return this->control; }
 
 void Sidebar::documentChanged(DocumentChangeType type) {
