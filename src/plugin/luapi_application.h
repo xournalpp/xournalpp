@@ -272,6 +272,7 @@ static int applib_changeColor(lua_State* L) {
 
     if (toolType == TOOL_NONE) {
         g_warning("tool \"%s\" is not valid or no tool has been selected", toolTypeToString(toolType).c_str());
+        lua_pop(L, 3);
         return 0;
     }
 
@@ -288,6 +289,9 @@ static int applib_changeColor(lua_State* L) {
     } else {
         g_warning("tool \"%s\" has no color capability", toolTypeToString(toolType).c_str());
     }
+
+    // Make sure to remove all vars which are put to the stack before!
+    lua_pop(L, 3);
 
     return 1;
 }
