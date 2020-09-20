@@ -62,7 +62,11 @@ void XojCairoPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
     std::stack<std::pair<GtkTreeIter, int>> nodeStack;
 
     GtkTreeIter firstIter = {0};
-    gtk_tree_model_get_iter_first(tocModel, &firstIter);
+    if (!gtk_tree_model_get_iter_first(tocModel, &firstIter)) {
+        // Outline is empty, so do nothing.
+        return;
+    }
+
     nodeStack.push(std::make_pair(firstIter, idCounter));
     while (!nodeStack.empty()) {
         auto iter = nodeStack.top().first;
