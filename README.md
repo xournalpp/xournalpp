@@ -175,6 +175,16 @@ of some popular Linux distros and platforms.
 
 ### Ubuntu and derivatives
 
+#### Stable PPA
+The latest stable version is available via the following [_unofficial_ PPA](https://github.com/xournalpp/xournalpp/issues/1013#issuecomment-692656810):
+
+```bash
+sudo add-apt-repository ppa:apandada1/xournalpp-stable
+sudo apt update
+sudo apt install xournalpp
+```
+
+#### Unstable PPA
 An _unstable_, nightly release is available for Ubuntu-based distributions via the following PPA:
 
 ```bash
@@ -186,9 +196,6 @@ sudo apt install xournalpp
 This PPA is provided by the Xournal++ team. While it has the latest features and
 bug fixes, it has also not been tested thoroughly and may break periodically (we
 try our best not to break things, though).
-
-We eventually also planning on setting up a PPA for stable releases
-([#1013](https://github.com/xournalpp/xournalpp/issues/1013)).
 
 ### Fedora
 
