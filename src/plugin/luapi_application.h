@@ -237,14 +237,14 @@ static int applib_changeCurrentPageBackground(lua_State* L) {
 /**
  * Change color of a specified tool or of the current tool
  */
-static int applib_changeColor(lua_State* L) {
+static int applib_changeToolColor(lua_State* L) {
 
     // discard any extra arguments passed in
     lua_settop(L, 1);
     luaL_checktype(L, 1, LUA_TTABLE);
 
     lua_getfield(L, 1, "selection"); /* either true or false, for changing selection color
-                                       defaults to true*/
+                                       defaults to false*/
     lua_getfield(L, 1, "tool");      /* "pen", "hilighter", "text"
                                       "select_rect", "select_object", "select_region"
                                       if omitted, current Tool is used */
@@ -262,6 +262,10 @@ static int applib_changeColor(lua_State* L) {
     bool selection = false;
     if (lua_isboolean(L, -3)) {
         selection = lua_toboolean(L, -3);
+    } else if (!lua_isnil(L, -3)) {
+        g_warning(""
+                  "selection"
+                  " key should be a boolean value (or nil)");
     }
 
     ToolType toolType = toolHandler->getToolType();
@@ -279,6 +283,14 @@ static int applib_changeColor(lua_State* L) {
     int color = 0x000000;
     if (lua_isinteger(L, -1)) {
         color = lua_tointeger(L, -1);
+        if (color < 0x000000 || color > 0xffffff) {
+            g_warning("Color 0x%x is no valid RGB color. ", color);
+            return 0;
+        }
+    } else if (!lua_isnil(L, -1)) {
+        g_warning(" "
+                  "color"
+                  " key should be an RGB hex code in the form 0xRRGGBB (or nil)");
     }
 
     Tool& tool = toolHandler->getTool(toolType);
@@ -302,7 +314,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"uiActionSelected", applib_uiActionSelected},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
                                   {"saveAs", applib_saveAs},
-                                  {"changeColor", applib_changeColor},
+                                  {"changeToolColor", applib_changeToolColor},
 
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
