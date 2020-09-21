@@ -9,7 +9,7 @@
 
 class ColorUndoActionEntry {
 public:
-    ColorUndoActionEntry(Element* e, Color oldColor, Color newColor): e(), oldColor(oldColor), newColor(newColor) {}
+    ColorUndoActionEntry(Element* e, Color oldColor, Color newColor): e(e), oldColor(oldColor), newColor(newColor) {}
     Element* e;
     Color oldColor;
     Color newColor;
