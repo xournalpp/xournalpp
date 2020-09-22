@@ -75,7 +75,14 @@ void Element::setColor(Color color) { this->color = color; }
 auto Element::getColor() const -> Color { return this->color; }
 
 auto Element::intersectsArea(const GdkRectangle* src) -> bool {
-    GdkRectangle rect = {gint(getX()), gint(getY()), gint(getElementWidth()), gint(getElementHeight())};
+    // compute the smallest rectangle with integer coordinates containing the bounding box and having width, height > 0
+    auto x = getX();
+    auto y = getY();
+    auto x1 = gint(std::floor(getX()));
+    auto y1 = gint(std::floor(getY()));
+    auto x2 = gint(std::ceil(x + getElementWidth()));
+    auto y2 = gint(std::ceil(y + getElementHeight()));
+    GdkRectangle rect = {x1, y1, std::max(1, x2 - x1), std::max(1, y2 - y1)};
 
     return gdk_rectangle_intersect(src, &rect, nullptr);
 }
