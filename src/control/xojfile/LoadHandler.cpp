@@ -86,8 +86,9 @@ void LoadHandler::initAttributes()
 	this->image = NULL;
 	this->teximage = NULL;
 	this->text = NULL;
+    this->pages.clear();
 
-	if (this->audioFiles)
+    if (this->audioFiles)
 	{
 		g_hash_table_unref(this->audioFiles);
 	}
