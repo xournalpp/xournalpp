@@ -17,7 +17,6 @@
 
 #include <gtk/gtk.h>
 
-
 #ifndef XOURNAL_ENFORCE_COLOR
 using Color = uint32_t;
 #else
@@ -84,6 +83,13 @@ struct hash<Color> {
 
 #endif
 
+struct ColorU16 {
+    uint16_t red{};
+    uint16_t green{};
+    uint16_t blue{};
+    uint16_t alpha{};
+};
+
 namespace Util {
 
 constexpr auto rgb_to_GdkRGBA(Color color) -> GdkRGBA;
@@ -91,6 +97,8 @@ constexpr auto argb_to_GdkRGBA(Color color) -> GdkRGBA;
 constexpr auto argb_to_GdkRGBA(Color color, double alpha) -> GdkRGBA;
 constexpr auto GdkRGBA_to_argb(const GdkRGBA& color) -> Color;
 constexpr auto GdkRGBA_to_rgb(const GdkRGBA& color) -> Color;
+
+constexpr auto GdkRGBA_to_ColorU16(const GdkRGBA& color) -> ColorU16;
 
 
 void cairo_set_source_rgbi(cairo_t* cr, Color color);
@@ -136,4 +144,17 @@ constexpr auto Util::floatToUIntColor(const double color) -> uint32_t {  //
     constexpr double MAX_COLOR = 256.0 - std::numeric_limits<double>::epsilon() * 128;
     static_assert(MAX_COLOR < 256.0, "MAX_COLOR isn't smaller than 256");
     return static_cast<uint32_t>(color * MAX_COLOR);
+}
+
+constexpr auto Util::GdkRGBA_to_ColorU16(const GdkRGBA& color) -> ColorU16 {
+    auto floatToColorU16 = [](double color) {
+        constexpr double MAX_COLOR = 65536.0 - std::numeric_limits<double>::epsilon() * (65536.0 / 2.0);
+        static_assert(MAX_COLOR < 65536.0, "MAX_COLOR isn't smaller than 65536");
+        return static_cast<uint16_t>(color * MAX_COLOR);
+    };
+
+    return {floatToColorU16(color.red),    //
+            floatToColorU16(color.green),  //
+            floatToColorU16(color.blue),   //
+            floatToColorU16(color.alpha)};
 }
