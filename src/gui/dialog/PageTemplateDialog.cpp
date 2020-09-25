@@ -90,10 +90,8 @@ void PageTemplateDialog::saveToFile() {
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
     if (!settings->getLastSavePath().empty()) {
-        gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog),
-                                                settings->getLastSavePath().u8string().c_str());
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().string().c_str());
     }
-
 
     time_t curtime = time(nullptr);
     char stime[128];

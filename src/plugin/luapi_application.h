@@ -36,8 +36,7 @@ static int applib_saveAs(lua_State* L) {
     // If user tries to overwrite a file, ask if it's OK
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native), TRUE);
     // Offer a suggestion for the filename
-    gchar* default_filename = g_strconcat(_("Untitled"), ".png", nullptr);
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native), default_filename);
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native), (std::string{_("Untitled")} += ".png").c_str());
 
     // Wait until user responds to dialog
     res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native));
@@ -53,7 +52,6 @@ static int applib_saveAs(lua_State* L) {
 
     // Destroy the dialog and free memory
     g_object_unref(native);
-    g_free(default_filename);
 
     return args_returned;
 }

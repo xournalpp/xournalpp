@@ -27,7 +27,7 @@ LatexSettingsPanel::~LatexSettingsPanel() {
 void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_toggle_button_set_active(this->cbAutoDepCheck, settings.autoCheckDependencies);
     if (!settings.globalTemplatePath.empty()) {
-        gtk_file_chooser_set_filename(this->globalTemplateChooser, settings.globalTemplatePath.u8string().c_str());
+        gtk_file_chooser_set_filename(this->globalTemplateChooser, settings.globalTemplatePath.string().c_str());
     }
     gtk_entry_set_text(GTK_ENTRY(this->get("latexSettingsGenCmd")), settings.genCmd.c_str());
 }

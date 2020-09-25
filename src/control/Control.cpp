@@ -2260,12 +2260,12 @@ auto Control::showSaveDialog() -> bool {
 
     this->doc->lock();
     auto suggested_folder = this->doc->createSaveFolder(this->settings->getLastSavePath());
-    fs::path suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
+    auto suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
     this->doc->unlock();
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), suggested_folder.u8string().c_str());
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), suggested_name.u8string().c_str());
-    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), this->settings->getLastOpenPath().u8string().c_str(),
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), suggested_folder.string().c_str());
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), suggested_name.string().c_str());
+    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), this->settings->getLastOpenPath().string().c_str(),
                                          nullptr);
 
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), false);  // handled below
