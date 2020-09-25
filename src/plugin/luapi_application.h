@@ -127,12 +127,9 @@ static int applib_registerUi(lua_State* L) {
         accelerator = "";
     }
 
-    int menuId = -1;
     int toolbarId = -1;
 
-    if (menu) {
-        menuId = plugin->registerMenu(menu, callback, accelerator);
-    }
+    int menuId = plugin->registerMenu(menu, callback, accelerator);
 
     // Make sure to remove all vars which are put to the stack before!
     lua_pop(L, 3);
@@ -207,7 +204,7 @@ static int applib_uiAction(lua_State* L) {
 static int applib_uiActionSelected(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
 
-    ActionGroup group = group = ActionGroup_fromString(luaL_checkstring(L, 1));
+    ActionGroup group = ActionGroup_fromString(luaL_checkstring(L, 1));
     ActionType action = ActionType_fromString(luaL_checkstring(L, 2));
 
     Control* ctrl = plugin->getControl();
