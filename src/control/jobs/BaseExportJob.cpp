@@ -57,8 +57,8 @@ auto BaseExportJob::showFilechooser() -> bool {
     fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
     doc->unlock();
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.u8string().c_str());
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), name.u8string().c_str());
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.string().c_str());
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), name.string().c_str());
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 
