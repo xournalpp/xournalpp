@@ -177,9 +177,9 @@ of some popular Linux distros and platforms.
 
 ### Debian
 
-[Stable releases](https://github.com/xournalpp/xournalpp/releases) and
-_unstable_, [automated nightly releases](https://github.com/xournalpp/xournalpp/releases/tag/nightly)
-for Debian can be found on Debian.
+There are [Stable releases](https://github.com/xournalpp/xournalpp/releases) and
+_unstable_ [automated nightly releases](https://github.com/xournalpp/xournalpp/releases/tag/nightly)
+for Debian.
 
 ### Ubuntu and derivatives
 
