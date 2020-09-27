@@ -159,17 +159,20 @@ void ToolHandler::fireToolChanged() {
 
 auto ToolHandler::getTool(ToolType type) -> Tool& { return *(this->tools[type - TOOL_PEN]); }
 
-auto ToolHandler::getToolType() -> ToolType { return this->currentTool->type; }
-
-auto ToolHandler::hasCapability(ToolCapabilities cap, bool mainTool) -> bool {
-    if (mainTool == false) {
-        return (currentTool->capabilities & cap) != 0;
-    } else {
-        return (toolbarSelectedTool->capabilities & cap) != 0;
-    }
+auto ToolHandler::getToolType(ToolPointer toolPointer) -> ToolType {
+    Tool* tool = getToolPointer(toolPointer);
+    return tool->type;
 }
 
-auto ToolHandler::getSize() -> ToolSize { return this->currentTool->getSize(); }
+auto ToolHandler::hasCapability(ToolCapabilities cap, ToolPointer toolPointer) -> bool {
+    Tool* tool = getToolPointer(toolPointer);
+    return (tool->capabilities & cap) != 0;
+}
+
+auto ToolHandler::getSize(ToolPointer toolPointer) -> ToolSize {
+    Tool* tool = getToolPointer(toolPointer);
+    return tool->getSize();
+}
 
 auto ToolHandler::getPenSize() -> ToolSize { return tools[TOOL_PEN - TOOL_PEN]->getSize(); }
 
@@ -229,23 +232,23 @@ void ToolHandler::setHilighterFill(int alpha) { this->tools[TOOL_HILIGHTER - TOO
 
 auto ToolHandler::getHilighterFill() -> int { return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFillAlpha(); }
 
-auto ToolHandler::getThickness() -> double {
-    if (this->currentTool->thickness) {
-        return this->currentTool->thickness[this->currentTool->getSize()];
+auto ToolHandler::getThickness(ToolPointer toolPointer) -> double {
+    Tool* tool = getToolPointer(toolPointer);
+    if (tool->thickness) {
+        return tool->thickness[tool->getSize()];
     }
 
-
-    g_warning("Request size of \"%s\"", this->currentTool->getName().c_str());
+    g_warning("Request size of \"%s\"", tool->getName().c_str());
     return 0;
 }
 
-void ToolHandler::setSize(ToolSize size) {
+void ToolHandler::setSize(ToolSize size, ToolPointer toolPointer) {
+    Tool* tool = getToolPointer(toolPointer);
     if (size < TOOL_SIZE_VERY_FINE || size > TOOL_SIZE_VERY_THICK) {
         g_warning("ToolHandler::setSize: Invalid size! %i", size);
         return;
     }
-
-    this->currentTool->setSize(size);
+    tool->setSize(size);
     this->listener->toolSizeChanged();
 }
 
@@ -275,24 +278,37 @@ void ToolHandler::setColor(Color color, bool userSelection) {
     this->listener->setCustomColorSelected();
 }
 
-auto ToolHandler::getColor() -> Color { return currentTool->getColor(); }
+auto ToolHandler::getColor(ToolPointer toolPointer) -> Color {
+    Tool* tool = getToolPointer(toolPointer);
+    return tool->getColor();
+}
 
 /**
  * @return -1 if fill is disabled, else the fill alpha value
  */
-auto ToolHandler::getFill() -> int {
-    if (!currentTool->getFill()) {
+auto ToolHandler::getFill(ToolPointer toolPointer) -> int {
+    Tool* tool = getToolPointer(toolPointer);
+    if (!tool->getFill()) {
         return -1;
     }
-
-    return currentTool->getFillAlpha();
+    return tool->getFillAlpha();
 }
 
-auto ToolHandler::getLineStyle() -> const LineStyle& { return currentTool->getLineStyle(); }
+auto ToolHandler::getLineStyle(ToolPointer toolPointer) -> const LineStyle& {
+    Tool* tool = getToolPointer(toolPointer);
+    return tool->getLineStyle();
+}
 
-auto ToolHandler::getDrawingType() -> DrawingType { return currentTool->getDrawingType(); }
+auto ToolHandler::getDrawingType(ToolPointer toolPointer) -> DrawingType {
+    Tool* tool = getToolPointer(toolPointer);
+    return tool->getDrawingType();
+}
 
-void ToolHandler::setDrawingType(DrawingType drawingType) { currentTool->setDrawingType(drawingType); }
+// TODO
+void ToolHandler::setDrawingType(DrawingType drawingType, ToolPointer toolPointer) {
+    Tool* tool = getToolPointer(toolPointer);
+    tool->setDrawingType(drawingType);
+}
 
 auto ToolHandler::getTools() const -> std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& { return tools; }
 
@@ -466,9 +482,9 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
     }
 }
 
-auto ToolHandler::isSinglePageTool() -> bool {
-    ToolType toolType = this->getToolType();
-    DrawingType drawingType = this->getDrawingType();
+auto ToolHandler::isSinglePageTool(ToolPointer toolPointer) -> bool {
+    ToolType toolType = this->getToolType(toolPointer);
+    DrawingType drawingType = this->getDrawingType(toolPointer);
 
     return toolType == (TOOL_PEN && (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_CIRCLE ||
                                      drawingType == DRAWING_TYPE_COORDINATE_SYSTEM ||
@@ -477,4 +493,17 @@ auto ToolHandler::isSinglePageTool() -> bool {
            toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_CIRCLE ||
            toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
            toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE;
+}
+
+auto ToolHandler::getToolPointer(ToolPointer toolpointer) -> Tool* {
+    switch (toolpointer) {
+        case ToolPointer::current:
+            return this->currentTool;
+        case ToolPointer::toolbar:
+            return this->toolbarSelectedTool;
+        case ToolPointer::button:
+            return this->buttonSelectedTool;
+        default:
+            g_error("This ToolPointer does not exist.");
+    }
 }
