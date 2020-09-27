@@ -891,6 +891,11 @@ void EditSelection::serialize(ObjectOutputStream& out) {
     out.writeDouble(this->width);
     out.writeDouble(this->height);
 
+    out.writeDouble(this->snappedBounds.x);
+    out.writeDouble(this->snappedBounds.y);
+    out.writeDouble(this->snappedBounds.width);
+    out.writeDouble(this->snappedBounds.height);
+
     this->contents->serialize(out);
     out.endObject();
 
@@ -907,6 +912,7 @@ void EditSelection::readSerialized(ObjectInputStream& in) {
     this->width = in.readDouble();
     this->height = in.readDouble();
 
+    this->snappedBounds = Rectangle<double>{in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble()};
     this->contents->readSerialized(in);
 
     in.endObject();

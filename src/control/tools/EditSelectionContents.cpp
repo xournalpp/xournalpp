@@ -508,11 +508,10 @@ auto EditSelectionContents::copySelection(PageRef page, XojPageView* view, doubl
 void EditSelectionContents::serialize(ObjectOutputStream& out) {
     out.writeObject("EditSelectionContents");
 
-    out.writeDouble(this->originalBounds.width);
-    out.writeDouble(this->originalBounds.height);
-
     out.writeDouble(this->originalBounds.x);
     out.writeDouble(this->originalBounds.y);
+    out.writeDouble(this->originalBounds.width);
+    out.writeDouble(this->originalBounds.height);
 
     out.writeDouble(this->relativeX);
     out.writeDouble(this->relativeY);
@@ -523,13 +522,7 @@ void EditSelectionContents::serialize(ObjectOutputStream& out) {
 void EditSelectionContents::readSerialized(ObjectInputStream& in) {
     in.readObject("EditSelectionContents");
 
-    double originalWidth = in.readDouble();
-    double originalHeight = in.readDouble();
-
-    double originalX = in.readDouble();
-    double originalY = in.readDouble();
-
-    this->originalBounds = Rectangle<double>{originalX, originalY, originalWidth, originalHeight};
+    this->originalBounds = Rectangle<double>{in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble()};
 
     this->relativeX = in.readDouble();
     this->relativeY = in.readDouble();
