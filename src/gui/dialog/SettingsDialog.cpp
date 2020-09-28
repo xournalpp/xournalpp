@@ -569,7 +569,7 @@ void SettingsDialog::save() {
     settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
 
     settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
-    // Todo(fabian): use Util::fromGtkFilename!
+    // Todo(fabian): use Util::fromGFilename!
     char* uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(get("fcAudioPath")));
     if (uri != nullptr) {
         settings->setAudioFolder(uri);

@@ -379,7 +379,7 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*win), msg);
         }
 
-        fs::path p(optFilename[0]);
+        fs::path p = Util::fromGFilename(optFilename[0]);
 
         try {
             if (fs::exists(p)) {
@@ -392,6 +392,7 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
                                "You have to copy the file to a local directory.") %
                             p.u8string().c_str() % e.what());
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*win), msg);
+            opened = control->newFile("", optFilename[0]);
         }
     }
 
