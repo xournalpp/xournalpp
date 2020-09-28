@@ -90,7 +90,8 @@ void PageTemplateDialog::saveToFile() {
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
     if (!settings->getLastSavePath().empty()) {
-        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().string().c_str());
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog),
+                                            Util::toGFilename(settings->getLastSavePath()).c_str());
     }
 
     time_t curtime = time(nullptr);
@@ -107,7 +108,7 @@ void PageTemplateDialog::saveToFile() {
         return;
     }
 
-    auto filepath = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    auto filepath = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
     settings->setLastSavePath(filepath.parent_path());
     gtk_widget_destroy(dialog);
 

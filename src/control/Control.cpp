@@ -2263,10 +2263,10 @@ auto Control::showSaveDialog() -> bool {
     auto suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
     this->doc->unlock();
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), suggested_folder.string().c_str());
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), suggested_name.string().c_str());
-    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), this->settings->getLastOpenPath().string().c_str(),
-                                         nullptr);
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggested_folder).c_str());
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggested_name).c_str());
+    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog),
+                                         Util::toGFilename(this->settings->getLastOpenPath()).c_str(), nullptr);
 
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), false);  // handled below
 
@@ -2278,7 +2278,7 @@ auto Control::showSaveDialog() -> bool {
             return false;
         }
 
-        auto fileTmp = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        auto fileTmp = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
         Util::clearExtensions(fileTmp);
         fileTmp += ".xopp";
         // Since we add the extension after the OK button, we have to check manually on existing files
@@ -2287,7 +2287,7 @@ auto Control::showSaveDialog() -> bool {
         }
     }
 
-    auto filename = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    auto filename = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
     settings->setLastSavePath(filename.parent_path());
     gtk_widget_destroy(dialog);
 
