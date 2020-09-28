@@ -912,7 +912,11 @@ void EditSelection::readSerialized(ObjectInputStream& in) {
     this->width = in.readDouble();
     this->height = in.readDouble();
 
-    this->snappedBounds = Rectangle<double>{in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble()};
+    double xSnap = in.readDouble();
+    double ySnap = in.readDouble();
+    double wSnap = in.readDouble();
+    double hSnap = in.readDouble();
+    this->snappedBounds = Rectangle<double>{xSnap, ySnap, wSnap, hSnap};
     this->contents->readSerialized(in);
 
     in.endObject();

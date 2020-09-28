@@ -522,7 +522,11 @@ void EditSelectionContents::serialize(ObjectOutputStream& out) {
 void EditSelectionContents::readSerialized(ObjectInputStream& in) {
     in.readObject("EditSelectionContents");
 
-    this->originalBounds = Rectangle<double>{in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble()};
+    double originalX = in.readDouble();
+    double originalY = in.readDouble();
+    double originalW = in.readDouble();
+    double originalH = in.readDouble();
+    this->originalBounds = Rectangle<double>{originalX, originalY, originalW, originalH};
 
     this->relativeX = in.readDouble();
     this->relativeY = in.readDouble();
