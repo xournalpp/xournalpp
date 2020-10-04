@@ -340,7 +340,7 @@ void InputSequence::actionEnd(guint32 time) {
     EditSelection* tmpSelection = xournal->selection;
     xournal->selection = nullptr;
 
-    h->restoreLastConfig();
+    h->pointCurrentToolToToolbarTool();
 
     // we need this workaround so it's possible to select something with the middle button
     if (tmpSelection) {
@@ -424,10 +424,10 @@ auto InputSequence::changeTool() -> bool {
     }
 
     if (cfg && cfg->getAction() != TOOL_NONE) {
-        h->copyCurrentConfig();
+        h->pointCurrentToolToButtonTool();
         cfg->acceptActions(h);
     } else {
-        h->restoreLastConfig();
+        h->pointCurrentToolToToolbarTool();
     }
 
     return false;

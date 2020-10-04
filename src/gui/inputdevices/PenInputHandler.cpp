@@ -300,7 +300,7 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     xournal->selection = nullptr;
     this->sequenceStartPage = nullptr;
 
-    toolHandler->restoreLastConfig();
+    toolHandler->pointCurrentToolToToolbarTool();
 
     // we need this workaround so it's possible to select something with the middle button
     if (tmpSelection) {

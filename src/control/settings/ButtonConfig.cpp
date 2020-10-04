@@ -25,7 +25,7 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler) {
         return;
     }
 
-    toolHandler->selectTool(this->action, false);
+    toolHandler->selectTool(this->action, false, true);
 
     if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
 
@@ -36,10 +36,6 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler) {
         if (this->size != TOOL_SIZE_NONE) {
             toolHandler->setSize(this->size);
         }
-    }
-
-    if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_TEXT) {
-        toolHandler->setColor(this->color, false);
     }
 
     if (this->action == TOOL_ERASER && this->eraserMode != ERASER_TYPE_NONE) {

@@ -5,18 +5,6 @@ ToolBase::ToolBase() = default;
 ToolBase::~ToolBase() = default;
 
 /**
- * Apply data from another ToolBase or any extending class
- */
-void ToolBase::applyFrom(const ToolBase* t) {
-    this->color = t->color;
-    this->size = t->size;
-    this->drawingType = t->drawingType;
-    this->fill = t->fill;
-    this->fillAlpha = t->fillAlpha;
-    this->lineStyle = t->lineStyle;
-}
-
-/**
  * @return Color of the tool for all drawing tools
  */
 auto ToolBase::getColor() const -> Color { return this->color; }
