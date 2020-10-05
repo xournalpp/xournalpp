@@ -56,7 +56,13 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 [[maybe_unused]] [[nodiscard]] fs::path fromGFile(GFile* file);
 [[maybe_unused]] [[nodiscard]] GFile* toGFile(fs::path const& path);
 
-[[maybe_unused]] [[nodiscard]] inline fs::path fromGFilename(char* path) {
+[[maybe_unused]] [[nodiscard]] inline fs::path fromGFilename(char* path, bool owned = true) {
+    auto deleter = [path, owned]() {
+        if (owned) {
+            g_free(path);
+        }
+    };
+
     if (path == nullptr) {
         return {};
     }
@@ -66,12 +72,12 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
     if (err) {
         g_message("Failed to convert g_filename to utf8 with error code: %d\n%s", err->code, err->message);
         g_error_free(err);
-        g_free(path);
+        deleter();
         return {};
     }
     auto ret = fs::u8path(u8Path, u8Path + pSize);
     g_free(u8Path);
-    g_free(path);
+    deleter();
     return ret;
 }
 

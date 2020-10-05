@@ -59,6 +59,7 @@ auto PopplerGlibDocument::load(fs::path const& file, string password, GError** e
 
     if (document) {
         g_object_unref(document);
+        document = nullptr;
     }
 
     this->document = poppler_document_new_from_file(uri->c_str(), password.c_str(), error);
