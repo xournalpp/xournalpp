@@ -21,6 +21,8 @@
 #include "Util.h"
 #include "XournalType.h"
 
+template <class T>
+using optional = std::optional<T>;
 
 class XojPage: public PageHandler {
 public:
@@ -71,6 +73,10 @@ public:
     BackgroundImage& getBackgroundImage();
     void setBackgroundImage(BackgroundImage img);
 
+    string getBackgroundName() const;
+    bool backgroundHasName() const;
+    void setBackgroundName(const string& newName);
+
     /**
      * Copies this page an all it's contents to a new page
      */
@@ -117,6 +123,11 @@ private:
      * Background visible
      */
     bool backgroundVisible = true;
+
+    /**
+     * Background name
+     */
+    optional<string> backgroundName;
 
     // Allow LoadHandler to add layers directly
     friend class LoadHandler;

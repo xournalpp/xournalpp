@@ -58,3 +58,7 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p) {
 void XojExportHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) {
     // Do nothing since timestamp are not supported by Xournal
 }
+
+void XojExportHandler::writeBackgroundName(XmlNode* background, PageRef p) {
+    // Do nothing since background name is not supported by Xournal
+}

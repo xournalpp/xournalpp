@@ -11,10 +11,12 @@
 
 #pragma once
 
+#include <optional>
 #include <string>
 #include <vector>
 
 #include "control/Actions.h"
+#include "gui/dialog/RenameLayerDialog.h"
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 
@@ -84,6 +86,21 @@ public:
      * @return Current layer ID
      */
     size_t getCurrentLayerId();
+
+    /**
+     * @return Current layer name
+     */
+    std::string getCurrentLayerName();
+
+    /**
+     * @return Get layer name by layer id
+     */
+    std::string getLayerNameById(int id);
+
+    /**
+     * Sets current layer name
+     */
+    void setCurrentLayerName(const std::string& newName);
 
     /**
      * Make sure there is at least one layer on the page

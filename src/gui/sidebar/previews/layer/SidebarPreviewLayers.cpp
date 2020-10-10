@@ -97,7 +97,8 @@ void SidebarPreviewLayers::updatePreviews() {
 
     size_t index = 0;
     for (int i = layerCount; i >= 0; i--) {
-        SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i - 1, index++);
+        std::string name = lc->getLayerNameById(i);
+        SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i - 1, name, index++);
         this->previews.push_back(p);
         gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
     }

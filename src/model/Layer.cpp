@@ -14,6 +14,10 @@ Layer::~Layer() {
 auto Layer::clone() -> Layer* {
     auto* layer = new Layer();
 
+    if (hasName()) {
+        layer->setName(getName());
+    }
+
     for (Element* e: this->elements) {
         layer->addElement(e->clone());
     }
@@ -107,3 +111,10 @@ auto Layer::isVisible() const -> bool { return visible; }
 void Layer::setVisible(bool visible) { this->visible = visible; }
 
 auto Layer::getElements() -> vector<Element*>* { return &this->elements; }
+
+
+auto Layer::hasName() const -> bool { return name.has_value(); }
+
+auto Layer::getName() const -> string { return name.value_or(""); }
+
+void Layer::setName(const string& newName) { this->name = newName; }

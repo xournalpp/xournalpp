@@ -322,6 +322,11 @@ void LoadHandler::parseBgSolid() {
 
     Color color = LoadHandlerHelper::parseBackgroundColor(this);
     this->page->setBackgroundColor(color);
+
+    const char* name = LoadHandlerHelper::getAttrib("name", true, this);
+    if (name != nullptr) {
+        this->page->setBackgroundName(name);
+    }
 }
 
 void LoadHandler::parseBgPixmap() {
@@ -459,6 +464,11 @@ void LoadHandler::parseBgPdf() {
 
 void LoadHandler::parsePage() {
     if (!strcmp(elementName, "background")) {
+        const char* name = LoadHandlerHelper::getAttrib("name", true, this);
+        if (name != nullptr) {
+            this->page->setBackgroundName(name);
+        }
+
         const char* type = LoadHandlerHelper::getAttrib("type", false, this);
 
         if (strcmp("solid", type) == 0) {
@@ -478,6 +488,12 @@ void LoadHandler::parsePage() {
     } else if (!strcmp(elementName, "layer")) {
         this->pos = PARSER_POS_IN_LAYER;
         this->layer = new Layer();
+
+        const char* name = LoadHandlerHelper::getAttrib("name", true, this);
+        if (name != nullptr) {
+            this->layer->setName(name);
+        }
+
         this->page->addLayer(this->layer);
     }
 }

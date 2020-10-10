@@ -67,13 +67,14 @@ function parseEnumFile($file) {
 
 function writeCppFile($output, $name, $values) {
 	$fp = fopen($output, 'w');
+    $tab = "    "; // 4 tab space as specified in .clang_format
 
 	fwrite($fp, "// ** THIS FILE IS GENERATED **\n");
 	fwrite($fp, "// ** use generateConvert.php to update this file **\n");
-	fwrite($fp, "\n\n\n");
+	fwrite($fp, "\n\n");
 
+	fwrite($fp, "#include <string>\n\n");
 	fwrite($fp, "#include \"../$name.enum.h\"\n\n");
-	fwrite($fp, "#include <string>\n");
 	fwrite($fp, "using std::string;\n");
 	fwrite($fp, "#include <glib.h>\n");
 
@@ -81,45 +82,41 @@ function writeCppFile($output, $name, $values) {
 	fwrite($fp, "\n\n");
 
 	fwrite($fp, "// ** This needs to be copied to the header\n");
-	fwrite($fp, $name . " " . $name . "_fromString(string value);\n");
+	fwrite($fp, $name . " " . $name . "_fromString(const string& value);\n");
 	fwrite($fp, "string " . $name . "_toString($name value);\n");
 
 	fwrite($fp, "\n\n");
 
-	fwrite($fp, $name . " " . $name . "_fromString(string value)\n");
-	fwrite($fp, "{\n");
+	fwrite($fp, "auto " . $name . "_fromString(const string& value) -> " . $name . " {\n");
 	
 	foreach ($values as $v) {
-		fwrite($fp, "\tif (value == \"$v\")\n");
-		fwrite($fp, "\t{\n");
-		fwrite($fp, "\t\treturn $v;\n");
-		fwrite($fp, "\t}\n");
+		fwrite($fp, $tab . "if (value == \"$v\") {\n");
+		fwrite($fp, $tab . $tab . "return $v;\n");
+		fwrite($fp, $tab . "}\n");
 		fwrite($fp, "\n");
 	}
 
-	fwrite($fp, "\tg_error(\"Invalid enum value for $name: «%s»\", value.c_str());\n");
-	fwrite($fp, "\treturn {$values[0]};\n");
+	fwrite($fp, $tab . "g_error(\"Invalid enum value for $name: «%s»\", value.c_str());\n");
+	fwrite($fp, $tab . "return {$values[0]};\n");
 
 	
 	fwrite($fp, "}\n");
 
 	////////////////////////////////////////////////////////////////////////////
 	
-	fwrite($fp, "\n\n\n");
+	fwrite($fp, "\n\n");
 
-	fwrite($fp, "string " . $name . "_toString($name value)\n");
-	fwrite($fp, "{\n");
+	fwrite($fp, "auto " . $name . "_toString($name value) -> string {\n");
 	
 	foreach ($values as $v) {
-		fwrite($fp, "\tif (value == $v)\n");
-		fwrite($fp, "\t{\n");
-		fwrite($fp, "\t\treturn \"$v\";\n");
-		fwrite($fp, "\t}\n");
+		fwrite($fp, $tab . "if (value == $v) {\n");
+		fwrite($fp, $tab . $tab . "return \"$v\";\n");
+		fwrite($fp, $tab . "}\n");
 		fwrite($fp, "\n");
 	}
 
-	fwrite($fp, "\tg_error(\"Invalid enum value for $name: %i\", value);\n");
-	fwrite($fp, "\treturn \"\";\n");
+	fwrite($fp, $tab . "g_error(\"Invalid enum value for $name: %i\", value);\n");
+	fwrite($fp, $tab . "return \"\";\n");
 
 	
 	fwrite($fp, "}\n");

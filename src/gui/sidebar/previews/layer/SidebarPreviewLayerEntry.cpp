@@ -7,21 +7,14 @@
 
 
 SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer,
-                                                   size_t index):
+                                                   const string& layerName, size_t index):
         SidebarPreviewBaseEntry(sidebar, page),
         index(index),
         layer(layer),
         box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2)) {
     GtkWidget* toolbar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 
-    string text;
-    if (layer < 0) {
-        text = _("Background");
-    } else {
-        text = FS(_F("Layer {1}") % (layer + 1));
-    }
-
-    cbVisible = gtk_check_button_new_with_label(text.c_str());
+    cbVisible = gtk_check_button_new_with_label(layerName.c_str());
 
     g_signal_connect(cbVisible, "toggled", G_CALLBACK(+[](GtkToggleButton* source, SidebarPreviewLayerEntry* self) {
                          self->checkboxToggled();

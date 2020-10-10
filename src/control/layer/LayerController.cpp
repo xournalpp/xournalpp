@@ -10,6 +10,7 @@
 
 #include "LayerCtrlListener.h"
 #include "Util.h"
+#include "i18n.h"
 
 LayerController::LayerController(Control* control): control(control), selectedPage(npos) {}
 
@@ -95,6 +96,12 @@ auto LayerController::actionPerformed(ActionType type) -> bool {
         case ACTION_GOTO_TOP_LAYER: {
             PageRef p = getCurrentPage();
             switchToLay(p->getLayerCount(), true);
+        }
+            return true;
+        case ACTION_RENAME_LAYER: {
+            RenameLayerDialog dialog(control->getGladeSearchPath(), control->getUndoRedoHandler(), this,
+                                     getCurrentPage()->getSelectedLayer());
+            dialog.show(control->getGtkWindow());
         }
             return true;
         default:
@@ -302,8 +309,63 @@ auto LayerController::getCurrentLayerId() -> size_t {
     if (!page) {
         return 0;
     }
-
     return page->getSelectedLayerId();
+}
+
+auto LayerController::getCurrentLayerName() -> std::string {
+    PageRef page = getCurrentPage();
+
+    if (page == nullptr) {
+        return "Unknown layer name";
+    }
+
+    auto currentID = getCurrentLayerId();
+
+    if (currentID == 0) {  // If is background
+        return page->getBackgroundName();
+    } else if (auto layer = page->getSelectedLayer(); layer->hasName()) {
+        return layer->getName();
+    } else {
+        return FS(_F("Layer {1}") % currentID);
+    }
+}
+
+void LayerController::setCurrentLayerName(const std::string& newName) {
+    PageRef page = getCurrentPage();
+
+    if (page == nullptr) {
+        return;
+    }
+
+    if (getCurrentLayerId() == 0) {  // Background
+        page->setBackgroundName(newName);
+    } else {  // Any other layer
+        page->getSelectedLayer()->setName(newName);
+    }
+
+    fireRebuildLayerMenu();
+}
+
+std::string LayerController::getLayerNameById(int id) {
+    PageRef page = getCurrentPage();
+
+    if (page == nullptr) {
+        return "Unknown layer name";
+    }
+
+    if (id == 0) {
+        return page->getBackgroundName();
+    }
+
+    int previousId = page->getSelectedLayerId();
+    if (previousId == id) {
+        return getCurrentLayerName();
+    }
+    page->setSelectedLayerId(id);
+    std::string name = getCurrentLayerName();
+    page->setSelectedLayerId(previousId);
+
+    return name;
 }
 
 /**
