@@ -27,11 +27,11 @@ protected:
     /**
      * Export the fill attributes
      */
-    virtual void visitStrokeExtended(XmlPointNode* stroke, Stroke* s);
-
-    virtual void writeHeader();
-    virtual void writeSolidBackground(XmlNode* background, PageRef p);
-    virtual void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode);
+    void visitStrokeExtended(XmlPointNode* stroke, Stroke* s) override;
+    void writeHeader() override;
+    void writeSolidBackground(XmlNode* background, PageRef p) override;
+    void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode) override;
+    void writeBackgroundName(XmlNode* background, PageRef p) override;
 
 private:
 };

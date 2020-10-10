@@ -6,6 +6,7 @@
 
 #include "BackgroundImage.h"
 #include "Document.h"
+#include "i18n.h"
 
 XojPage::XojPage(double width, double height): width(width), height(height), bgType(PageTypeFormat::Lined) {}
 
@@ -169,3 +170,9 @@ auto XojPage::getSelectedLayer() -> Layer* {
 
     return this->layer[layer];
 }
+
+auto XojPage::getBackgroundName() const -> string { return backgroundName.value_or(_("Background")); }
+
+auto XojPage::backgroundHasName() const -> bool { return backgroundName.has_value(); }
+
+void XojPage::setBackgroundName(const string& newName) { backgroundName = newName; }

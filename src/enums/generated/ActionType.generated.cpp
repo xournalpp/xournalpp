@@ -5,11 +5,14 @@
 #include <string>
 
 #include "../ActionType.enum.h"
+
 using std::string;
 #include <glib.h>
 
 
 // ** This needs to be copied to the header
+ActionType ActionType_fromString(const string& value);
+string ActionType_toString(ActionType value);
 
 
 auto ActionType_fromString(const string& value) -> ActionType {
@@ -137,7 +140,6 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_NEW_PAGE_AT_END;
     }
 
-
     if (value == "ACTION_APPEND_NEW_PDF_PAGES") {
         return ACTION_APPEND_NEW_PDF_PAGES;
     }
@@ -156,6 +158,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
 
     if (value == "ACTION_DELETE_LAYER") {
         return ACTION_DELETE_LAYER;
+    }
+
+    if (value == "ACTION_RENAME_LAYER") {
+        return ACTION_RENAME_LAYER;
     }
 
     if (value == "ACTION_PAPER_FORMAT") {
@@ -716,7 +722,6 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_NEW_PAGE_AT_END";
     }
 
-
     if (value == ACTION_APPEND_NEW_PDF_PAGES) {
         return "ACTION_APPEND_NEW_PDF_PAGES";
     }
@@ -735,6 +740,10 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_DELETE_LAYER) {
         return "ACTION_DELETE_LAYER";
+    }
+
+    if (value == ACTION_RENAME_LAYER) {
+        return "ACTION_RENAME_LAYER";
     }
 
     if (value == ACTION_PAPER_FORMAT) {

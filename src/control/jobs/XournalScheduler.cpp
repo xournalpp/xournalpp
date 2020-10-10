@@ -12,7 +12,9 @@ XournalScheduler::XournalScheduler()
 XournalScheduler::~XournalScheduler() = default;
 
 void XournalScheduler::removeSidebar(SidebarPreviewBaseEntry* preview) {
-    removeSource(preview, JOB_TYPE_PREVIEW, JOB_PRIORITY_HIGH);
+    // Dont await for tasks, as it completly blocks whole program.
+    // Not sure why.
+    removeSource(preview, JOB_TYPE_PREVIEW, JOB_PRIORITY_HIGH, false);
 }
 
 void XournalScheduler::removePage(XojPageView* view) { removeSource(view, JOB_TYPE_RENDER, JOB_PRIORITY_URGENT); }
@@ -42,7 +44,7 @@ void XournalScheduler::finishTask() {
     g_mutex_unlock(&this->jobRunningMutex);
 }
 
-void XournalScheduler::removeSource(void* source, JobType type, JobPriority priority) {
+void XournalScheduler::removeSource(void* source, JobType type, JobPriority priority, bool awaitFinishTask) {
     g_mutex_lock(&this->jobQueueMutex);
 
     int length = g_queue_get_length(this->jobQueue[priority]);
@@ -61,7 +63,9 @@ void XournalScheduler::removeSource(void* source, JobType type, JobPriority prio
 
     // wait until the last job is done
     // we can be sure we don't access "source"
-    finishTask();
+    if (awaitFinishTask) {
+        finishTask();
+    }
 
     g_mutex_unlock(&this->jobQueueMutex);
 }

@@ -17,6 +17,8 @@
 #include "Element.h"
 #include "XournalType.h"
 
+template <class T>
+using optional = std::optional<T>;
 
 class Layer {
 public:
@@ -76,8 +78,26 @@ public:
      */
     Layer* clone();
 
+
+    /**
+     * @return true if layer has a name
+     */
+    bool hasName() const;
+
+    /**
+     * @return layer custom name or empty string if custom name is not set
+     */
+    string getName() const;
+
+    /**
+     * Sets custom name for the layer
+     */
+    void setName(const string& newName);
+
 private:
     vector<Element*> elements;
 
     bool visible = true;
+
+    optional<string> name;
 };

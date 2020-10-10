@@ -1199,6 +1199,17 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkMenuItem" id="menuJournalRenameLayer">
+                            <property name="name">menuJournalRenameLayer</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Rename Layer</property>
+                            <property name="use_underline">True</property>
+                            <signal name="activate" handler="ACTION_RENAME_LAYER" swapped="no"/>
+                            <accelerator key="r" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem11">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>

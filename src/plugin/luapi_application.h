@@ -515,6 +515,10 @@ static int applib_getDocumentStructure(lua_State* L) {
         lua_pushboolean(L, page->isLayerVisible(0));
         lua_settable(L, -3);
 
+        lua_pushliteral(L, "name");
+        lua_pushstring(L, page->getBackgroundName().c_str());
+        lua_settable(L, -3);
+
         lua_settable(L, -3);  // end of table for background layer
 
         // add (non-background) layers
@@ -524,9 +528,9 @@ static int applib_getDocumentStructure(lua_State* L) {
             lua_pushinteger(L, ++currLayer);
             lua_newtable(L);  // beginning of table for layer l
 
-            // lua_pushliteral(L, "name");
-            // lua_pushstring(L, layer->getName());
-            // lua_settable(L,-3);
+            lua_pushliteral(L, "name");
+            lua_pushstring(L, lc->getLayerNameById(currLayer).c_str());
+            lua_settable(L, -3);
 
             lua_pushliteral(L, "isVisible");
             lua_pushboolean(L, l->isVisible());
@@ -738,6 +742,47 @@ static int applib_setLayerVisibility(lua_State* L) {
     return 1;
 }
 
+/**
+ * Sets currently selected layer's name.
+ *
+ * Example: app.setCurrentLayerName("Custom name 1")
+ * Changes current layer name to "Custom name 1"
+ **/
+static int applib_setCurrentLayerName(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+
+    if (lua_isstring(L, 1)) {
+        auto name = lua_tostring(L, 1);
+        control->getLayerController()->setCurrentLayerName(name);
+    }
+
+    return 1;
+}
+
+/**
+ * Sets background name.
+ *
+ * Example: app.setBackgroundName("Custom name 1")
+ * Changes background name to "Custom name 1"
+ **/
+static int applib_setBackgroundName(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    PageRef const& page = control->getCurrentPage();
+
+    if (!page) {
+        luaL_error(L, "No page!");
+    }
+
+    if (lua_isstring(L, 1)) {
+        auto name = lua_tostring(L, 1);
+        page->setBackgroundName(name);
+    }
+
+    return 1;
+}
+
 
 /*
  * The full Lua Plugin API.
@@ -760,7 +805,8 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"setPageSize", applib_setPageSize},
                                   {"setCurrentLayer", applib_setCurrentLayer},
                                   {"setLayerVisibility", applib_setLayerVisibility},
-
+                                  {"setCurrentLayerName", applib_setCurrentLayerName},
+                                  {"setBackgroundName", applib_setBackgroundName},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
 

@@ -5,11 +5,14 @@
 #include <string>
 
 #include "../ActionGroup.enum.h"
+
 using std::string;
 #include <glib.h>
 
 
 // ** This needs to be copied to the header
+ActionGroup ActionGroup_fromString(const string& value);
+string ActionGroup_toString(ActionGroup value);
 
 
 auto ActionGroup_fromString(const string& value) -> ActionGroup {

@@ -155,6 +155,10 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
 void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
     auto* layer = new XmlNode("layer");
     page->addChild(layer);
+    if (l->hasName()) {
+        layer->setAttrib("name", l->getName().c_str());
+    }
+
     for (Element* e: *l->getElements()) {
         if (e->getType() == ELEMENT_STROKE) {
             auto* s = dynamic_cast<Stroke*>(e);
@@ -208,6 +212,8 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
 
     auto* background = new XmlNode("background");
     page->addChild(background);
+
+    writeBackgroundName(background, p);
 
     if (p->getBackgroundType().isPdfPage()) {
         /**
@@ -295,6 +301,12 @@ void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
     // to be changed to a basic one!
     if (!p->getBackgroundType().config.empty()) {
         background->setAttrib("config", p->getBackgroundType().config);
+    }
+}
+
+void SaveHandler::writeBackgroundName(XmlNode* background, PageRef p) {
+    if (p->backgroundHasName()) {
+        background->setAttrib("name", p->getBackgroundName());
     }
 }
 

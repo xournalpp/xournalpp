@@ -179,7 +179,7 @@ void ToolPageLayer::updateMenu() {
 
     int layerCount = lc->getLayerCount();
     for (int layer = layerCount; layer > 0; layer--) {
-        createLayerMenuItem(FS(_F("Layer {1}") % layer), layer);
+        createLayerMenuItem(lc->getLayerNameById(layer), layer);
         createLayerMenuItemShow(layer);
         menuY++;
     }
@@ -188,9 +188,13 @@ void ToolPageLayer::updateMenu() {
         createSeparator();
     }
 
-    createLayerMenuItem(_("Background"), 0);
-
+    if (lc->getCurrentPage() == nullptr) {
+        createLayerMenuItem(_("Background"), 0);
+    } else {
+        createLayerMenuItem(lc->getCurrentPage()->getBackgroundName(), 0);
+    }
     createLayerMenuItemShow(0);
+
     menuY++;
 
     gtk_widget_show_all(menu);
@@ -224,13 +228,7 @@ void ToolPageLayer::updateLayerData() {
 
     inMenuUpdate = false;
 
-    string lb;
-    if (layerId > 0) {
-        lb = FS(_F("Layer {1}") % layerId);
-    } else {
-        lb = _("Background");
-    }
-    gtk_label_set_text(GTK_LABEL(layerLabel), lb.c_str());
+    gtk_label_set_text(GTK_LABEL(layerLabel), lc->getCurrentLayerName().c_str());
 }
 
 auto ToolPageLayer::getToolDisplayName() -> string { return _("Layer selection"); }

@@ -51,7 +51,7 @@ private:
     /**
      * Remove source, e.g. if a page is removed they don't need to repaint
      */
-    void removeSource(void* source, JobType type, JobPriority priority);
+    void removeSource(void* source, JobType type, JobPriority priority, bool awaitFinishTask = true);
 
     bool existsSource(void* source, JobType type, JobPriority priority);
 

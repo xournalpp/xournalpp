@@ -52,6 +52,7 @@ protected:
     virtual void writeHeader();
     virtual void writeSolidBackground(XmlNode* background, PageRef p);
     virtual void writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAudioNode);
+    virtual void writeBackgroundName(XmlNode* background, PageRef p);
 
 protected:
     XmlNode* root;
