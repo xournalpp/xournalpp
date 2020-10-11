@@ -182,10 +182,6 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
         gdk_window_move_resize(gtk_widget_get_window(widget), allocation->x, allocation->y, allocation->width,
                                allocation->height);
     }
-
-    GtkXournal* xournal = GTK_XOURNAL(widget);
-
-    xournal->layout->layoutPages(allocation->width, allocation->height);
 }
 
 static void gtk_xournal_realize(GtkWidget* widget) {
