@@ -4698,17 +4698,36 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbAutoDetectHyperlinks">
-                                            <property name="label" translatable="yes">Auto detect hyperlinks</property>
+                                          <object class="GtkLabel">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="receives_default">False</property>
-                                            <property name="draw_indicator">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">One line tex boxes that starts with protocol: (like https:) can be exported as hyperlinks on PDF and SVG.
+</property>
+                                            <property name="wrap">True</property>
+                                            <property name="xalign">0</property>
+                                            <attributes>
+                                              <attribute name="style" value="italic"/>
+                                            </attributes>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
                                             <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbAutoDetectHyperlinks">
+                                            <property name="label" translatable="yes">Auto detect hyperlinks</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
                                           </packing>
                                         </child>
                                       </object>
