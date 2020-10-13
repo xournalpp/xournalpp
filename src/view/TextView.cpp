@@ -48,14 +48,14 @@ void TextView::drawText(cairo_t* cr, const Text* t) {
     // https://developer.gnome.org/glib/stable/glib-URI-Functions.html#g-uri-escape-string
     string str = t->getText();
 
-    bool isURL = regex_search( str, std::regex("^[a-z][a-z0-9]*:") );
+    bool isURL = regex_search(str, std::regex("^[a-z][a-z0-9]*:")) && str.find('\n')==string::npos;
     
     
-    if( isURL ){
+    if (isURL) {
       string uri = "uri='";
       uri += regex_replace(str,std::regex("'"), "%27"); // Assume url is escaped, change only apostrophe
       uri += "'";
-      cairo_tag_begin (cr, CAIRO_TAG_LINK, uri.c_str());
+      cairo_tag_begin(cr, CAIRO_TAG_LINK, uri.c_str());
     }
     
     cairo_translate(cr, t->getX(), t->getY());
@@ -68,8 +68,8 @@ void TextView::drawText(cairo_t* cr, const Text* t) {
 
     g_object_unref(layout);
 
-    if( isURL ){
-      cairo_tag_end (cr, CAIRO_TAG_LINK);
+    if (isURL) {
+      cairo_tag_end(cr, CAIRO_TAG_LINK);
     }
 
     cairo_restore(cr);

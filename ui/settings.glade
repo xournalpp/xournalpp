@@ -4701,8 +4701,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                           <object class="GtkLabel">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">One line tex boxes that starts with protocol: (like https:) can be exported as hyperlinks on PDF and SVG.
-</property>
+                                            <property name="label" translatable="yes">One line text boxes that starts with protocol: (like https:) can be exported as hyperlinks on PDF and SVG.</property>
                                             <property name="wrap">True</property>
                                             <property name="xalign">0</property>
                                             <attributes>
