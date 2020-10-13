@@ -226,17 +226,18 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_top">5</property>
-                <property name="label">Andreas Butti, 2010 - 2019
-Wilson Brenna, 2012 - 2015
-Marek Pikuła, 2015 - 2018
-Moreno Razzoli, 2018 - 2019
-Luca Errani, 2018 - 2019
-Ulrich Huber, 2019
-Justin Jones, 2019
-Bryan Tan, 2019
-Justus Rossmeier, 2019
-Fabian Keßler, 2019
-lehmanju, 2019
+                <property name="label">Andreas Butti
+Wilson Brenna (since 2012)
+Marek Pikuła (since 2015)
+Moreno Razzoli (since 2018)
+Luca Errani (since 2018)
+Ulrich Huber (since 2019)
+Justin Jones (since 2019)
+Bryan Tan (since 2019)
+Justus Rossmeier (since 2019)
+Fabian Keßler (since 2019)
+lehmanju (since 2019)
+Roland Lötscher (since 2020)
 </property>
                 <property name="use_markup">True</property>
                 <property name="justify">center</property>
