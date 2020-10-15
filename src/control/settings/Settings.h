@@ -461,6 +461,9 @@ public:
      */
     std::string getPreferredLocale() const;
 
+
+    bool getAutoDetectHyperLinks() const;
+    void setAutoDetectHyperLinks(bool autoDetectHyperLinks);
 public:
     // Custom settings
     SElement& getCustomElement(const string& name);
@@ -895,4 +898,6 @@ private:
      * e.g. "en_US"
      */
     std::string preferredLocale;
+
+    bool autoDetectHyperLinks{};
 };

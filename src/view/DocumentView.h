@@ -28,6 +28,7 @@
 
 class EditSelection;
 class MainBackgroundPainter;
+class Settings;
 
 class DocumentView {
 public:
@@ -94,7 +95,7 @@ public:
     void finializeDrawing();
 
 private:
-    static void drawText(cairo_t* cr, Text* t);
+    static void drawText(cairo_t* cr, Text* t, bool autoDetectHyperLinks);
     static void drawImage(cairo_t* cr, Image* i);
     static void drawTexImage(cairo_t* cr, TexImage* texImage);
 
@@ -116,4 +117,6 @@ private:
     double lHeight = -1;
 
     MainBackgroundPainter* backgroundPainter;
+
+    Settings* settings;
 };

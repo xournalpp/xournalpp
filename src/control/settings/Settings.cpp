@@ -167,6 +167,8 @@ void Settings::loadDefault() {
     this->restoreLineWidthEnabled = false;
 
     this->inTransaction = false;
+
+    this->autoDetectHyperLinks = true;
 }
 
 /**
@@ -468,6 +470,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->restoreLineWidthEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preferredLocale")) == 0) {
         this->preferredLocale = reinterpret_cast<char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autoDetectHyperLinks")) == 0) {
+        this->autoDetectHyperLinks = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     }
 
     xmlFree(name);
@@ -856,6 +860,8 @@ void Settings::save() {
     fs::path& p = latexSettings.globalTemplatePath;
     xmlNode = saveProperty("latexSettings.globalTemplatePath", p.empty() ? "" : p.u8string().c_str(), root);
     WRITE_STRING_PROP(latexSettings.genCmd);
+
+    WRITE_BOOL_PROP(autoDetectHyperLinks);
 
     xmlNodePtr xmlFont = nullptr;
     xmlFont = xmlNewChild(root, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
@@ -1809,6 +1815,13 @@ void Settings::setScrollbarFadeoutDisabled(bool disable) {
     save();
 }
 
+auto Settings::getAutoDetectHyperLinks() const -> bool { return this->autoDetectHyperLinks; }
+
+void Settings::setAutoDetectHyperLinks(bool autoDetect) {
+    this->autoDetectHyperLinks = autoDetect;
+}
+
+
 //////////////////////////////////////////////////
 
 SAttribute::SAttribute() {
@@ -1935,3 +1948,4 @@ auto SElement::getString(const string& name, string& value) -> bool {
 
     return true;
 }
+

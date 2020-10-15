@@ -444,6 +444,8 @@ void SettingsDialog::load() {
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spAudioGain")), settings->getAudioGain());
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")), settings->getDefaultSeekTime());
 
+    loadCheckbox("cbAutoDetectHyperlinks", settings->getAutoDetectHyperLinks());
+    
     this->latexPanel.load(settings->latexSettings);
 }
 
@@ -690,6 +692,9 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
+    settings->setAutoDetectHyperLinks(getCheckbox("cbAutoDetectHyperlinks"));
+
+    
     for (DeviceClassConfigGui* deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui->saveSettings();
     }

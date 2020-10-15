@@ -41,19 +41,22 @@ void TextView::updatePangoFont(PangoLayout* layout, const Text* t) {
     pango_font_description_free(desc);
 }
 
-void TextView::drawText(cairo_t* cr, const Text* t) {
+void TextView::drawText(cairo_t* cr, const Text* t, bool autoDetectHyperLinks) {
     cairo_save(cr);
 
     // https://www.cairographics.org/manual/cairo-Tags-and-Links.html
     // https://developer.gnome.org/glib/stable/glib-URI-Functions.html#g-uri-escape-string
     string str = t->getText();
 
-    bool isURL = regex_search(str, std::regex("^[a-z][a-z0-9]*:")) && str.find('\n')==string::npos;
-    
+    bool isURL = autoDetectHyperLinks &&
+                 regex_search(str, std::regex("^[a-z][a-z0-9]*:")) &&
+                 str.find('\n')==string::npos;
+    printf( "str:%s autoDetectHyperLinks:%d isURL:%d\n", str.c_str(), (int)autoDetectHyperLinks, (int)isURL);    
     
     if (isURL) {
       string uri = "uri='";
-      uri += regex_replace(str,std::regex("'"), "%27"); // Assume url is escaped, change only apostrophe
+      // Assume url is escaped, change only apostrophe
+      uri += regex_replace(str,std::regex("'"), "%27"); 
       uri += "'";
       cairo_tag_begin(cr, CAIRO_TAG_LINK, uri.c_str());
     }

@@ -4665,16 +4665,18 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
               <object class="GtkBox" id="exportTabBox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="shadow_type">in</property>
+                    <property name="hscrollbar_policy">never</property>
                     <child>
                       <object class="GtkViewport">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="shadow_type">none</property>
                         <child>
                           <object class="GtkBox">
                             <property name="visible">True</property>
@@ -4684,12 +4686,12 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                               <object class="GtkFrame">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label_xalign">0</property>
+                                <property name="label_xalign">0.0099999997764825821</property>
                                 <child>
                                   <object class="GtkAlignment">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="bottom_padding">8</property>
+                                    <property name="bottom_padding">12</property>
                                     <property name="left_padding">12</property>
                                     <property name="right_padding">12</property>
                                     <child>
@@ -4701,7 +4703,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                           <object class="GtkLabel">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">One line text boxes that starts with protocol: (like https:) can be exported as hyperlinks on PDF and SVG.</property>
+                                            <property name="label" translatable="yes">One line text boxes that start with 'protocol:' (like 'https:') can be exported to PDF as hyperlinks.</property>
                                             <property name="wrap">True</property>
                                             <property name="xalign">0</property>
                                             <attributes>

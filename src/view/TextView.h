@@ -33,7 +33,7 @@ public:
     /**
      * Draws a Text modle to a cairo surface
      */
-    static void drawText(cairo_t* cr, const Text* t);
+    static void drawText(cairo_t* cr, const Text* t, bool autoDetectHyperLinks = false);
 
     /**
      * Searches text within a Text model, returns XojPopplerRectangle, have to been freed
