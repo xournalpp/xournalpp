@@ -20,12 +20,12 @@ auto ButtonConfig::getDrawingType() -> DrawingType { return this->drawingType; }
 
 auto ButtonConfig::getAction() -> ToolType { return this->action; }
 
-void ButtonConfig::acceptActions(ToolHandler* toolHandler) {
+void ButtonConfig::acceptActions(ToolHandler* toolHandler, bool setDefaultTool) {
     if (this->action == TOOL_NONE) {
         return;
     }
 
-    toolHandler->selectTool(this->action, false, true);
+    toolHandler->selectTool(this->action, false, !setDefaultTool);
 
     if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
 
@@ -35,6 +35,9 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler) {
 
         if (this->size != TOOL_SIZE_NONE) {
             toolHandler->setSize(this->size);
+        }
+        if (setDefaultTool) {
+            toolHandler->setColor(this->color, false);
         }
     }
 
