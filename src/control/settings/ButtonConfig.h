@@ -26,7 +26,7 @@ public:
     virtual ~ButtonConfig();
 
 public:
-    void acceptActions(ToolHandler* toolHandler);
+    void acceptActions(ToolHandler* toolHandler, bool setDefaultTool = false);
     ToolType getAction();
     bool getDisableDrawing() const;
     DrawingType getDrawingType();

@@ -1651,7 +1651,8 @@ void Control::selectTool(ToolType type) {
 
 void Control::selectDefaultTool() {
     ButtonConfig* cfg = settings->getDefaultButtonConfig();
-    cfg->acceptActions(toolHandler);
+    bool setDefaultTool = true;
+    cfg->acceptActions(toolHandler, setDefaultTool);
 }
 
 void Control::toolChanged() {

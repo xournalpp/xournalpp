@@ -304,7 +304,6 @@ auto ToolHandler::getDrawingType(ToolPointer toolPointer) -> DrawingType {
     return tool->getDrawingType();
 }
 
-// TODO
 void ToolHandler::setDrawingType(DrawingType drawingType, ToolPointer toolPointer) {
     Tool* tool = getToolPointer(toolPointer);
     tool->setDrawingType(drawingType);
