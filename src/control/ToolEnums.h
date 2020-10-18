@@ -45,8 +45,8 @@ enum DrawingType {
     DRAWING_TYPE_CIRCLE,
     DRAWING_TYPE_ARROW,
     DRAWING_TYPE_COORDINATE_SYSTEM,
-    DRAWING_TYPE_SPLINE,
-    DRAWING_TYPE_STROKE_RECOGNIZER
+    DRAWING_TYPE_STROKE_RECOGNIZER,
+    DRAWING_TYPE_SPLINE
 };
 string drawingTypeToString(DrawingType type);
 DrawingType drawingTypeFromString(const string& type);
