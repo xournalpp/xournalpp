@@ -136,7 +136,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
     // Esc leaves fullscreen mode
-    if (event->keyval == GDK_KEY_Escape || event->keyval == GDK_KEY_F11) {
+    if (event->keyval == GDK_KEY_Escape) {
         if (control->isFullscreen()) {
             control->setFullscreen(false);
             return true;

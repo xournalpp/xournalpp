@@ -313,6 +313,8 @@ void Control::initWindow(MainWindow* win) {
 
     this->pluginController->registerMenu();
 
+    win->rebindMenubarAccelerators();
+
     fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
     fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
 }
