@@ -82,7 +82,7 @@ stages:
               artifactName: 'linux-debian-packages'
               targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
             displayName: 'Publish packages'
-          
+        continueOnError: true
       - job: Windows
         pool:
           vmImage: 'vs2017-win2016'
