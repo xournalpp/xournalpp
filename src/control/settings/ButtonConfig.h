@@ -27,8 +27,8 @@ public:
     virtual ~ButtonConfig();
 
 public:
-    void acceptActions(ToolHandler* toolHandler, ToolPointer toolpointer = ToolPointer::toolbar);
-    void initActions(ToolHandler* toolHandler, ToolPointer toolpointer = ToolPointer::toolbar);
+    void acceptActions(ToolHandler* toolHandler, ToolPointer toolpointer);
+    void initActions(ToolHandler* toolHandler, ToolPointer toolpointer);
     ToolType getAction();
     bool getDisableDrawing() const;
     DrawingType getDrawingType();

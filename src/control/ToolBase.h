@@ -62,6 +62,16 @@ public:
     void setDrawingType(DrawingType drawingType);
 
     /**
+     * @return Eraser Type
+     */
+    EraserType getEraserType() const;
+
+    /**
+     * @param eraserType type of eraser
+     */
+    void setEraserType(EraserType eraserType);
+
+    /**
      * @return Fill of the shape is enabled
      */
     bool getFill() const;
@@ -106,6 +116,11 @@ private:
      * Draw special shape
      */
     DrawingType drawingType = DRAWING_TYPE_DEFAULT;
+
+    /**
+     * Eraser type
+     */
+    EraserType eraserType = ERASER_TYPE_DEFAULT;
 
     /**
      * Fill of the shape is enabled

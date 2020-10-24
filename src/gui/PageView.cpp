@@ -288,7 +288,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
 
     if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HILIGHTER) &&
                 h->getDrawingType() != DRAWING_TYPE_SPLINE ||
-        (h->getToolType() == TOOL_ERASER && h->getEraserType() == ERASER_TYPE_WHITEOUT)) {
+        (h->getToolType() == TOOL_ERASER && h->getEraserType(ToolPointer::current) == ERASER_TYPE_WHITEOUT)) {
         delete this->inputHandler;
         this->inputHandler = nullptr;
 
@@ -472,7 +472,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 
         Text* text = this->textEditor->getText();
         this->textEditor->mouseMoved(x - text->getX(), y - text->getY());
-    } else if (h->getToolType() == TOOL_ERASER && h->getEraserType() != ERASER_TYPE_WHITEOUT && this->inEraser) {
+    } else if (h->getToolType() == TOOL_ERASER && h->getEraserType(ToolPointer::current) != ERASER_TYPE_WHITEOUT &&
+               this->inEraser) {
         this->eraser->erase(x, y);
     }
 

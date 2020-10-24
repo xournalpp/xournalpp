@@ -505,17 +505,17 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
         case ACTION_TOOL_ERASER_STANDARD:
             if (enabled) {
-                toolHandler->setEraserType(ERASER_TYPE_DEFAULT);
+                toolHandler->setEraserType(ERASER_TYPE_DEFAULT, ToolPointer::current);
             }
             break;
         case ACTION_TOOL_ERASER_DELETE_STROKE:
             if (enabled) {
-                toolHandler->setEraserType(ERASER_TYPE_DELETE_STROKE);
+                toolHandler->setEraserType(ERASER_TYPE_DELETE_STROKE, ToolPointer::current);
             }
             break;
         case ACTION_TOOL_ERASER_WHITEOUT:
             if (enabled) {
-                toolHandler->setEraserType(ERASER_TYPE_WHITEOUT);
+                toolHandler->setEraserType(ERASER_TYPE_WHITEOUT, ToolPointer::current);
             }
             break;
 

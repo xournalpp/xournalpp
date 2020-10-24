@@ -25,7 +25,11 @@ void ButtonConfig::initActions(ToolHandler* toolHandler, ToolPointer toolpointer
         return;
     }
 
-    bool button = !(toolpointer == ToolPointer::toolbar || toolpointer == ToolPointer::current);
+    if (toolpointer == ToolPointer::current)
+        g_error("This toolpointer is not expected for ButtonConfig::initActions.");
+
+
+    bool button = !(toolpointer == ToolPointer::toolbar);
 
     if (button)
         toolHandler->initButtonTool(toolpointer, this->action);
@@ -44,7 +48,7 @@ void ButtonConfig::initActions(ToolHandler* toolHandler, ToolPointer toolpointer
         toolHandler->setColor(this->color, false, toolpointer);
     }
     if (this->action == TOOL_ERASER && this->eraserMode != ERASER_TYPE_NONE) {
-        toolHandler->setEraserType(this->eraserMode);
+        toolHandler->setEraserType(this->eraserMode, toolpointer);
     }
 }
 
@@ -53,20 +57,20 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler, ToolPointer toolpoint
         return;
     }
 
-    bool button = !(toolpointer == ToolPointer::toolbar || toolpointer == ToolPointer::current);
+    if (toolpointer == ToolPointer::toolbar || toolpointer == ToolPointer::current)
+        g_error("This toolpointer is not expected for ButtonConfig::acceptActions.");
 
-    if (button) {
-        if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
+    if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
 
-            if (this->drawingType == DRAWING_TYPE_DONT_CHANGE) {
-                toolHandler->setDrawingType(toolHandler->getDrawingType(ToolPointer::toolbar), toolpointer);
-            }
-
-            if (this->size == TOOL_SIZE_NONE) {
-                toolHandler->setSize(toolHandler->getSize(ToolPointer::toolbar), toolpointer);
-            }
+        if (this->drawingType == DRAWING_TYPE_DONT_CHANGE) {
+            toolHandler->setDrawingType(toolHandler->getDrawingType(ToolPointer::toolbar), toolpointer);
         }
-        toolHandler->pointCurrentToolToButtonTool(toolpointer);
+
+        if (this->size == TOOL_SIZE_NONE) {
+            toolHandler->setSize(toolHandler->getSize(ToolPointer::toolbar), toolpointer);
+        }
     }
+    toolHandler->pointCurrentToolToButtonTool(toolpointer);
+
     toolHandler->fireToolChanged();
 }

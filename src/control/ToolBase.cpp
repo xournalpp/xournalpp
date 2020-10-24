@@ -34,6 +34,11 @@ auto ToolBase::getDrawingType() const -> DrawingType { return this->drawingType;
  */
 void ToolBase::setDrawingType(DrawingType drawingType) { this->drawingType = drawingType; }
 
+
+auto ToolBase::getEraserType() const -> EraserType { return this->eraserType; }
+
+void ToolBase::setEraserType(EraserType eraserType) { this->eraserType = eraserType; }
+
 /**
  * @return Fill of the shape is enabled
  */
