@@ -121,7 +121,7 @@ auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
 
     if (cfg && cfg->getAction() != TOOL_NONE) {
         toolHandler->pointCurrentToolToButtonTool(ToolPointer::eraserButton);
-        cfg->acceptActions(toolHandler);
+        cfg->acceptActions(toolHandler, ToolPointer::eraserButton);
     } else {
         toolHandler->pointCurrentToolToToolbarTool();
     }

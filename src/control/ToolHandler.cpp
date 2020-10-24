@@ -112,8 +112,9 @@ void ToolHandler::initButtonTool(ToolPointer tp, ToolType type) {
     setToolPointer(new Tool(tools[type - TOOL_PEN].get()), tp);
 }
 
-void ToolHandler::setEraserType(EraserType eraserType) {
-    this->eraserType = eraserType;
+void ToolHandler::setEraserType(EraserType eraserType, ToolPointer toolPointer) {
+    Tool* p = getToolPointer(toolPointer);
+    p->setEraserType(eraserType);
     eraserTypeChanged();
 }
 
@@ -122,7 +123,7 @@ void ToolHandler::eraserTypeChanged() {
         return;
     }
 
-    switch (this->eraserType) {
+    switch (this->getEraserType(ToolPointer::current)) {
         case ERASER_TYPE_DELETE_STROKE:
             this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_DELETE_STROKE);
             break;
@@ -138,7 +139,10 @@ void ToolHandler::eraserTypeChanged() {
     }
 }
 
-auto ToolHandler::getEraserType() -> EraserType { return this->eraserType; }
+auto ToolHandler::getEraserType(ToolPointer toolPointer) -> EraserType {
+    Tool* p = getToolPointer(toolPointer);
+    return p->getEraserType();
+}
 
 void ToolHandler::selectTool(ToolType type, bool fireToolChanged, ToolPointer toolpointer) {
     if (type < 1 || type > TOOL_COUNT) {
@@ -366,9 +370,9 @@ void ToolHandler::saveSettings() {
         }
 
         if (tool->type == TOOL_ERASER) {
-            if (this->eraserType == ERASER_TYPE_DELETE_STROKE) {
+            if (this->getEraserType(ToolPointer::toolbar) == ERASER_TYPE_DELETE_STROKE) {
                 st.setString("type", "deleteStroke");
-            } else if (this->eraserType == ERASER_TYPE_WHITEOUT) {
+            } else if (this->getEraserType(ToolPointer::toolbar) == ERASER_TYPE_WHITEOUT) {
                 st.setString("type", "whiteout");
             } else  // ERASER_TYPE_DEFAULT
             {
@@ -438,11 +442,11 @@ void ToolHandler::loadSettings() {
 
                 if (st.getString("type", type)) {
                     if (type == "deleteStroke") {
-                        setEraserType(ERASER_TYPE_DELETE_STROKE);
+                        setEraserType(ERASER_TYPE_DELETE_STROKE, ToolPointer::toolbar);
                     } else if (type == "whiteout") {
-                        setEraserType(ERASER_TYPE_WHITEOUT);
+                        setEraserType(ERASER_TYPE_WHITEOUT, ToolPointer::toolbar);
                     } else {
-                        setEraserType(ERASER_TYPE_DEFAULT);
+                        setEraserType(ERASER_TYPE_DEFAULT, ToolPointer::toolbar);
                     }
                     eraserTypeChanged();
                 }

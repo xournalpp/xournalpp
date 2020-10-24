@@ -96,8 +96,8 @@ public:
 
     Tool& getTool(ToolType type);
 
-    void setEraserType(EraserType eraserType);
-    EraserType getEraserType();
+    void setEraserType(EraserType eraserType, ToolPointer toolpointer);
+    EraserType getEraserType(ToolPointer toolpointer);
     void eraserTypeChanged();
 
     bool hasCapability(ToolCapabilities cap, ToolPointer toolpointer = ToolPointer::current);
@@ -145,7 +145,6 @@ private:
     Tool* button2Tool;
     Tool* eraserButtonTool;
 
-    EraserType eraserType = ERASER_TYPE_DEFAULT;
 
     /**
      * If a color is selected, it may be in the list,
