@@ -20,6 +20,7 @@
 class Tool: public ToolBase {
 public:
     Tool(string name, ToolType type, Color color, int capabilities, double* thickness);
+    Tool(Tool* t);
     virtual ~Tool();
 
 public:
@@ -33,7 +34,6 @@ protected:
     void setCapability(int capability, bool enabled);
 
 private:
-    Tool(const Tool& t);
     void operator=(const Tool& t);
 
 private:

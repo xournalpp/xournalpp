@@ -325,6 +325,8 @@ private:
      */
     void applyPreferredLanguage();
 
+    void initButtonTool();
+
     RecentManager* recent;
     UndoRedoHandler* undoRedo;
     ZoomControl* zoom;
