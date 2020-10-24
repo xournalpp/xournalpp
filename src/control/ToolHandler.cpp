@@ -95,7 +95,10 @@ void ToolHandler::initTools() {
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX,
                                                                      Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
-    this->buttonSelectedTool = &getTool(TOOL_PEN);
+    this->eraserButtonTool = new Tool(tools[TOOL_HILIGHTER - TOOL_PEN].get());
+    this->button1Tool = new Tool(tools[TOOL_HILIGHTER - TOOL_PEN].get());
+    this->button2Tool = new Tool(tools[TOOL_HILIGHTER - TOOL_PEN].get());
+
     this->toolbarSelectedTool = &getTool(TOOL_PEN);
     this->currentTool = &getTool(TOOL_PEN);
 }
@@ -103,6 +106,10 @@ void ToolHandler::initTools() {
 ToolHandler::~ToolHandler() {
     // Do not delete settings!
     this->settings = nullptr;
+}
+
+void ToolHandler::initButtonTool(ToolPointer tp, ToolType type) {
+    setToolPointer(new Tool(tools[type - TOOL_PEN].get()), tp);
 }
 
 void ToolHandler::setEraserType(EraserType eraserType) {
@@ -133,17 +140,15 @@ void ToolHandler::eraserTypeChanged() {
 
 auto ToolHandler::getEraserType() -> EraserType { return this->eraserType; }
 
-void ToolHandler::selectTool(ToolType type, bool fireToolChanged, bool triggeredByButton) {
+void ToolHandler::selectTool(ToolType type, bool fireToolChanged, ToolPointer toolpointer) {
     if (type < 1 || type > TOOL_COUNT) {
         g_warning("unknown tool selected: %i\n", type);
         return;
     }
-    this->triggeredByButton = triggeredByButton;
-    if (this->triggeredByButton) {
-        this->buttonSelectedTool = &getTool(type);
-    } else {
-        this->toolbarSelectedTool = &getTool(type);
-    }
+    this->triggeredByButton = toolpointer != ToolPointer::toolbar || toolpointer != ToolPointer::current;
+
+
+    setToolPointer(&getTool(type), toolpointer);
     this->currentTool = &getTool(type);
 
     if (fireToolChanged) {
@@ -269,11 +274,12 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
  * 			false if the color is selected by a tool change
  * 			and therefore should not be applied to a selection
  */
-void ToolHandler::setColor(Color color, bool userSelection) {
-    if ((this->buttonSelectedTool->capabilities & TOOL_CAP_COLOR) == 0) {
+void ToolHandler::setColor(Color color, bool userSelection, ToolPointer toolPointer) {
+    if (this->currentTool != this->toolbarSelectedTool && (this->currentTool->capabilities & TOOL_CAP_COLOR) == 0) {
         this->toolbarSelectedTool->setColor(color);
     }
-    this->currentTool->setColor(color);
+    Tool* tool = getToolPointer(toolPointer);
+    tool->setColor(color);
     this->listener->toolColorChanged(userSelection);
     this->listener->setCustomColorSelected();
 }
@@ -445,7 +451,14 @@ void ToolHandler::loadSettings() {
     }
 }
 
-void ToolHandler::pointCurrentToolToButtonTool() { this->currentTool = this->buttonSelectedTool; }
+void ToolHandler::pointCurrentToolToButtonTool(ToolPointer p) {
+    Tool* tool = getToolPointer(p);
+    this->currentTool = tool;
+
+    this->listener->toolColorChanged(false);
+    this->listener->toolSizeChanged();
+    this->fireToolChanged();
+}
 
 void ToolHandler::pointCurrentToolToToolbarTool() {
     this->currentTool = this->toolbarSelectedTool;
@@ -500,8 +513,34 @@ auto ToolHandler::getToolPointer(ToolPointer toolpointer) -> Tool* {
             return this->currentTool;
         case ToolPointer::toolbar:
             return this->toolbarSelectedTool;
-        case ToolPointer::button:
-            return this->buttonSelectedTool;
+        case ToolPointer::eraserButton:
+            return this->eraserButtonTool;
+        case ToolPointer::button1:
+            return this->button1Tool;
+        case ToolPointer::button2:
+            return this->button2Tool;
+        default:
+            g_error("This ToolPointer does not exist.");
+    }
+}
+
+void ToolHandler::setToolPointer(Tool* tool, ToolPointer toolpointer) {
+    switch (toolpointer) {
+        case ToolPointer::current:
+            this->currentTool = tool;
+            break;
+        case ToolPointer::toolbar:
+            this->toolbarSelectedTool = tool;
+            break;
+        case ToolPointer::eraserButton:
+            this->eraserButtonTool = tool;
+            break;
+        case ToolPointer::button1:
+            this->button1Tool = tool;
+            break;
+        case ToolPointer::button2:
+            this->button2Tool = tool;
+            break;
         default:
             g_error("This ToolPointer does not exist.");
     }

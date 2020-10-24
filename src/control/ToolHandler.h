@@ -23,7 +23,7 @@
 #include "Tool.h"
 #include "XournalType.h"
 
-enum ToolPointer { current, toolbar, button };
+enum ToolPointer { current, toolbar, eraserButton, button1, button2 };
 
 class ToolListener {
 public:
@@ -44,6 +44,7 @@ public:
     ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings);
     virtual ~ToolHandler();
 
+    void initButtonTool(ToolPointer tp, ToolType type);
     /**
      * Select the color for the tool
      *
@@ -53,7 +54,7 @@ public:
      * 			false if the color is selected by a tool change
      * 			and therefore should not be applied to a selection
      */
-    void setColor(Color color, bool userSelection);
+    void setColor(Color color, bool userSelection, ToolPointer toolpointer = ToolPointer::current);
     Color getColor(ToolPointer toolpointer = ToolPointer::current);
 
     /**
@@ -89,7 +90,7 @@ public:
     void setHilighterFill(int alpha);
     int getHilighterFill();
 
-    void selectTool(ToolType type, bool fireToolChanged = true, bool stylus = false);
+    void selectTool(ToolType type, bool fireToolChanged = true, ToolPointer toolpointer = ToolPointer::toolbar);
     ToolType getToolType(ToolPointer toolpointer = ToolPointer::current);
     void fireToolChanged();
 
@@ -104,7 +105,7 @@ public:
     void saveSettings();
     void loadSettings();
 
-    void pointCurrentToolToButtonTool();
+    void pointCurrentToolToButtonTool(ToolPointer p);
     void pointCurrentToolToToolbarTool();
 
     [[maybe_unused]] std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& getTools() const;
@@ -121,7 +122,7 @@ public:
      * pointer moves to another
      * @return
      */
-    bool isSinglePageTool(ToolPointer toolpointer = ToolPointer::current);
+    bool isSinglePageTool(ToolPointer toolpointer = ToolPointer::toolbar);
 
     bool triggeredByButton = false;
 
@@ -133,13 +134,16 @@ private:
 
     // get Pointer based on Enum used for public setters and getters
     Tool* getToolPointer(ToolPointer toolpointer);
+    void setToolPointer(Tool* tool, ToolPointer toolpointer);
     Tool* currentTool = nullptr;
 
     /**
      * Last selected tool, reference with color values etc.
      */
     Tool* toolbarSelectedTool = nullptr;
-    Tool* buttonSelectedTool = nullptr;
+    Tool* button1Tool;
+    Tool* button2Tool;
+    Tool* eraserButtonTool;
 
     EraserType eraserType = ERASER_TYPE_DEFAULT;
 

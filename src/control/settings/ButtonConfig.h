@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "control/Tool.h"
+#include "control/ToolHandler.h"
 
 #include "XournalType.h"
 
@@ -26,7 +27,8 @@ public:
     virtual ~ButtonConfig();
 
 public:
-    void acceptActions(ToolHandler* toolHandler, bool setDefaultTool = false);
+    void acceptActions(ToolHandler* toolHandler, ToolPointer toolpointer = ToolPointer::toolbar);
+    void initActions(ToolHandler* toolHandler, ToolPointer toolpointer = ToolPointer::toolbar);
     ToolType getAction();
     bool getDisableDrawing() const;
     DrawingType getDrawingType();

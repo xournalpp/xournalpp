@@ -113,6 +113,7 @@ Control::Control(GladeSearchpath* gladeSearchPath) {
 
     this->toolHandler = new ToolHandler(this, this, this->settings);
     this->toolHandler->loadSettings();
+    this->initButtonTool();
 
     /**
      * This is needed to update the previews
@@ -183,6 +184,7 @@ Control::~Control() {
     delete this->fullscreenHandler;
     this->fullscreenHandler = nullptr;
 }
+
 
 void Control::renameLastAutosaveFile() {
     if (this->lastAutosaveFilename.empty()) {
@@ -1642,7 +1644,7 @@ void Control::undoRedoPageChanged(PageRef page) {
 }
 
 void Control::selectTool(ToolType type) {
-    toolHandler->selectTool(type);
+    toolHandler->selectTool(type, ToolPointer::toolbar);
 
     if (win) {
         (win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderPage();
@@ -1651,8 +1653,7 @@ void Control::selectTool(ToolType type) {
 
 void Control::selectDefaultTool() {
     ButtonConfig* cfg = settings->getDefaultButtonConfig();
-    bool setDefaultTool = true;
-    cfg->acceptActions(toolHandler, setDefaultTool);
+    cfg->initActions(toolHandler, ToolPointer::toolbar);
 }
 
 void Control::toolChanged() {
@@ -2501,6 +2502,20 @@ void Control::applyPreferredLanguage() {
 #else
     setenv("LANGUAGE", this->settings->getPreferredLocale().c_str(), 1);
 #endif
+}
+
+void Control::initButtonTool() {
+    ButtonConfig* cfg = settings->getEraserButtonConfig();
+    cfg->initActions(this->toolHandler, ToolPointer::eraserButton);
+
+    cfg = settings->getStylusButton1Config();
+    cfg->initActions(this->toolHandler, ToolPointer::button1);
+
+    cfg = settings->getStylusButton2Config();
+    cfg->initActions(this->toolHandler, ToolPointer::button2);
+
+    cfg = settings->getDefaultButtonConfig();
+    cfg->initActions(this->toolHandler, ToolPointer::toolbar);
 }
 
 auto Control::askToReplace(fs::path const& filepath) const -> bool {

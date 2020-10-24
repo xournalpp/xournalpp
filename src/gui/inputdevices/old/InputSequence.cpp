@@ -424,7 +424,7 @@ auto InputSequence::changeTool() -> bool {
     }
 
     if (cfg && cfg->getAction() != TOOL_NONE) {
-        h->pointCurrentToolToButtonTool();
+        h->pointCurrentToolToButtonTool(ToolPointer::eraserButton);
         cfg->acceptActions(h);
     } else {
         h->pointCurrentToolToToolbarTool();

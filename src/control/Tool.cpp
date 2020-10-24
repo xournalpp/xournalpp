@@ -12,6 +12,16 @@ Tool::Tool(string name, ToolType type, Color color, int capabilities, double* th
     setColor(color);
 }
 
+Tool::Tool(Tool* t) {
+    this->name = t->name;
+    this->type = t->type;
+    this->thickness = t->thickness;
+
+    this->capabilities = t->capabilities;
+
+    setColor(t->getColor());
+}
+
 Tool::~Tool() {
     delete[] this->thickness;
     this->thickness = nullptr;
