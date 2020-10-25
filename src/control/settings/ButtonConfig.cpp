@@ -70,6 +70,10 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler, ToolPointer toolpoint
             toolHandler->setSize(toolHandler->getSize(ToolPointer::toolbar), toolpointer);
         }
     }
+    if (this->action == TOOL_ERASER && this->eraserMode == ERASER_TYPE_NONE) {
+        toolHandler->setEraserType(toolHandler->getEraserType(ToolPointer::toolbar), toolpointer);
+    }
+
     toolHandler->pointCurrentToolToButtonTool(toolpointer);
 
     toolHandler->fireToolChanged();
