@@ -34,9 +34,14 @@ auto ToolBase::getDrawingType() const -> DrawingType { return this->drawingType;
  */
 void ToolBase::setDrawingType(DrawingType drawingType) { this->drawingType = drawingType; }
 
-
+/**
+ * @return Eraser Type
+ */
 auto ToolBase::getEraserType() const -> EraserType { return this->eraserType; }
 
+/**
+ * @param eraserType type of eraser
+ */
 void ToolBase::setEraserType(EraserType eraserType) { this->eraserType = eraserType; }
 
 /**
