@@ -15,7 +15,15 @@ Tool::Tool(string name, ToolType type, Color color, int capabilities, double* th
 Tool::Tool(Tool* t) {
     this->name = t->name;
     this->type = t->type;
-    this->thickness = t->thickness;
+    if (t->thickness) {
+        this->thickness = new double[5];
+        for (int i{0}; i < 5; i++) {
+            this->thickness[i] = t->thickness[i];
+        }
+    } else {
+        this->thickness = nullptr;
+    }
+
 
     this->capabilities = t->capabilities;
 
