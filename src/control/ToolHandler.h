@@ -124,8 +124,6 @@ public:
      */
     bool isSinglePageTool(ToolPointer toolpointer = ToolPointer::toolbar);
 
-    bool triggeredByButton = false;
-
 protected:
     void initTools();
 
@@ -141,9 +139,9 @@ private:
      * Last selected tool, reference with color values etc.
      */
     Tool* toolbarSelectedTool = nullptr;
-    Tool* button1Tool;
-    Tool* button2Tool;
-    Tool* eraserButtonTool;
+    std::unique_ptr<Tool> button1Tool;
+    std::unique_ptr<Tool> button2Tool;
+    std::unique_ptr<Tool> eraserButtonTool;
 
 
     /**
