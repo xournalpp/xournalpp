@@ -1236,7 +1236,6 @@ void Control::insertPage(const PageRef& page, size_t position) {
     if (visibleHeight < 10) {
         Util::execInUiThread([=]() { scrollHandler->scrollToPage(position); });
     }
-    firePageSelected(position);
 
     updateDeletePageButton();
     undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, position, true));
