@@ -1224,18 +1224,18 @@ void Control::insertNewPage(size_t position) { pageBackgroundChangeController->i
 
 void Control::insertPage(const PageRef& page, size_t position) {
     this->doc->lock();
-    this->doc->insertPage(page, position);
+    this->doc->insertPage(page, position);  // insert the new page to the document and update page numbers
     this->doc->unlock();
+
+    // notify document listeners about the inserted page; this creates the new XojViewPage, recalculates the layout
+    // and creates a preview page in the sidebar
     firePageInserted(position);
 
     getCursor()->updateCursor();
 
-    int visibleHeight = 0;
-    scrollHandler->isPageVisible(position, &visibleHeight);
-
-    if (visibleHeight < 10) {
-        Util::execInUiThread([=]() { scrollHandler->scrollToPage(position); });
-    }
+    // make the inserted page fully visible (or at least as much from the top which fits on the screen),
+    // and make the page appear selected
+    scrollHandler->scrollToPage(position);
     firePageSelected(position);
 
     updateDeletePageButton();

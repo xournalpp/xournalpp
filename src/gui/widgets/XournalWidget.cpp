@@ -171,6 +171,9 @@ static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_he
     *minimal_height = *natural_height = xournal->scrollHandling->getPreferredHeight();
 }
 
+/**
+ * This method is called while scrolling or after the XournalWidget size has changed
+ */
 static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation) {
     g_return_if_fail(widget != nullptr);
     g_return_if_fail(GTK_IS_XOURNAL(widget));
@@ -185,6 +188,7 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
 
     GtkXournal* xournal = GTK_XOURNAL(widget);
 
+    // layout the pages in the XournalWidget
     xournal->layout->layoutPages(allocation->width, allocation->height);
 }
 
