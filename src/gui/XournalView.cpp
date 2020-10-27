@@ -638,7 +638,7 @@ HandRecognition* XournalView::getHandRecognition()
 }
 
 /**
- * @returnScrollbars
+ * @return Scrollbars
  */
 ScrollHandling* XournalView::getScrollHandling()
 {
@@ -839,8 +839,12 @@ void XournalView::pageInserted(size_t page)
 	this->viewPages[page] = pageView;
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
-	layout->recalculate();
-	layout->updateVisibility();
+    // recalculate the layout width and height amd layout the pages with the updated layout size
+    layout->recalculate();
+    layout->layoutPages(layout->getMinimalWidth(), layout->getMinimalHeight());
+
+    // check which pages are visible and select the most visible page
+    layout->updateVisibility();
 }
 
 double XournalView::getZoom()

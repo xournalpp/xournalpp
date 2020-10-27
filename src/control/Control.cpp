@@ -1444,13 +1444,7 @@ void Control::insertPage(const PageRef& page, size_t position)
 
 	getCursor()->updateCursor();
 
-	int visibleHeight = 0;
-	scrollHandler->isPageVisible(position, &visibleHeight);
-
-	if (visibleHeight < 10)
-	{
-		Util::execInUiThread([=]() { scrollHandler->scrollToPage(position); });
-	}
+    scrollHandler->scrollToPage(position);
 	firePageSelected(position);
 
 	updateDeletePageButton();

@@ -17,7 +17,15 @@ ScrollHandlingGtk::~ScrollHandlingGtk()
 void ScrollHandlingGtk::setLayoutSize(int width, int height)
 {
 	XOJ_CHECK_TYPE(ScrollHandlingGtk);
-
+    
+	// after a page has been inserted the layout size must be updated immediately,
+    // otherwise it comes down to a race deciding if scrolling happens normally or not
+    if (gtk_adjustment_get_upper(getHorizontal()) < width) {
+        gtk_adjustment_set_upper(getHorizontal(), width);
+    }
+    if (gtk_adjustment_get_upper(getVertical()) < height) {
+        gtk_adjustment_set_upper(getVertical(), height);
+    }
 	gtk_widget_queue_resize(xournal);
 }
 
