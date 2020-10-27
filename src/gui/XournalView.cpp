@@ -471,7 +471,7 @@ auto XournalView::getVisibleRect(XojPageView* redrawable) -> Rectangle<double>* 
 auto XournalView::getHandRecognition() -> HandRecognition* { return handRecognition; }
 
 /**
- * @returnScrollbars
+ * @return Scrollbars
  */
 auto XournalView::getScrollHandling() -> ScrollHandling* { return scrollHandling; }
 
@@ -567,7 +567,12 @@ void XournalView::pageInserted(size_t page) {
     viewPages.insert(begin(viewPages) + page, pageView);
 
     Layout* layout = gtk_xournal_get_layout(this->widget);
+
+    // recalculate the layout width and height amd layout the pages with the updated layout size
     layout->recalculate();
+    layout->layoutPages(layout->getMinimalWidth(), layout->getMinimalHeight());
+
+    // check which pages are visible and select the most visible page
     layout->updateVisibility();
 }
 
@@ -651,6 +656,9 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
+/**
+ * Recalculates the layout height and width for the XournalView widget
+ */
 void XournalView::layoutPages() {
     Layout* layout = gtk_xournal_get_layout(this->widget);
     layout->recalculate();
