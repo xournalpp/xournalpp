@@ -40,6 +40,30 @@ public:
 protected:
     void paintBackgroundColor();
 
+    /**
+     * Choose between color1 and color2 based on the page's background brightness.
+     *
+     * @param color1 A color intended for light backgrounds.
+     * @param color2 A color intended for dark backgrounds.
+     *
+     * @return color1 if the page background is light, else, color2.
+     */
+    Color alternativeColor(Color color1, Color color2) const;
+
+    /**
+     * Determines and returns the primary foreground color to use for this page.
+     *
+     * @return the primary foreground color for the page.
+     */
+    Color getForegroundColor1() const;
+
+    /**
+     * Determines and returns the secondary foreground color to use for this page.
+     *
+     * @return the secondary foreground color for the page.
+     */
+    Color getForegroundColor2() const;
+
 private:
 protected:
     BackgroundConfig* config = nullptr;
@@ -52,8 +76,13 @@ protected:
     // Drawing attributes
     // ParserKey=Value
 protected:
-    Color foregroundColor1{0U};
+    Color defaultForegroundColor1{0U};
+    Color defaultAlternativeForegroundColor1{0U};
 
+    Color defaultForegroundColor2{0U};
+    Color defaultAlternativeForegroundColor2{0U};
+
+    Color foregroundColor1{0U};
     Color foregroundColor2{0U};
 
     double lineWidth = 0;

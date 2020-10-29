@@ -30,7 +30,4 @@ public:
      * Reset all used configuration values
      */
     virtual void resetConfig();
-
-private:
-    void updateGraphColor();
 };
