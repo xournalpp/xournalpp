@@ -108,8 +108,8 @@ void ColorToolItem::showColorchooser() {
  * Enable / Disable the tool item
  */
 void ColorToolItem::enable(bool enabled) {
-    if (!enabled && !toolHandler->hasCapability(TOOL_CAP_COLOR, ToolPointer::current) &&
-        toolHandler->hasCapability(TOOL_CAP_COLOR, ToolPointer::toolbar)) {
+    if (!enabled && !toolHandler->hasCapability(TOOL_CAP_COLOR, SelectedTool::active) &&
+        toolHandler->hasCapability(TOOL_CAP_COLOR, SelectedTool::toolbar)) {
         if (this->icon) {
             // allow changes if currentTool has no colour capability
             // and mainTool has Colour capability

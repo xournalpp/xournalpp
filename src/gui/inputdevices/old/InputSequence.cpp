@@ -399,17 +399,29 @@ auto InputSequence::changeTool() -> bool {
     if (gdk_device_get_source(device) == GDK_SOURCE_PEN) {
         penDevice = true;
         if (button == 2) {
+            h->pointCurrentToolToButtonTool(Button::one);
             cfg = settings->getStylusButton1Config();
+            cfg->acceptActions(h, Button::one);
         } else if (button == 3) {
+            h->pointCurrentToolToButtonTool(Button::two);
             cfg = settings->getStylusButton2Config();
+            cfg->acceptActions(h, Button::two);
         }
     } else if (button == 2 /* Middle Button */ && !xournal->selection) {
+        h->pointCurrentToolToButtonTool(Button::mouseMiddle);
         cfg = settings->getMiddleButtonConfig();
+        cfg->acceptActions(h, Button::mouseMiddle);
+
     } else if (button == 3 /* Right Button */ && !xournal->selection) {
+        h->pointCurrentToolToButtonTool(Button::mouseRight);
         cfg = settings->getRightButtonConfig();
+        cfg->acceptActions(h, Button::mouseRight);
+
     } else if (gdk_device_get_source(device) == GDK_SOURCE_ERASER) {
         penDevice = true;
+        h->pointCurrentToolToButtonTool(Button::eraser);
         cfg = settings->getEraserButtonConfig();
+        cfg->acceptActions(h, Button::eraser);
     } else if (cfgTouch->device == gdk_device_get_name(device)) {
         cfg = cfgTouch;
 
@@ -423,10 +435,7 @@ auto InputSequence::changeTool() -> bool {
         }
     }
 
-    if (cfg && cfg->getAction() != TOOL_NONE) {
-        h->pointCurrentToolToButtonTool(ToolPointer::eraserButton);
-        cfg->acceptActions(h, ToolPointer::eraserButton);
-    } else {
+    if (!cfg || cfg->getAction() == TOOL_NONE) {
         h->pointCurrentToolToToolbarTool();
     }
 

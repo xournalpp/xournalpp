@@ -67,7 +67,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
     }
 
     // delete complete element
-    if (this->handler->getEraserType(ToolPointer::current) == ERASER_TYPE_DELETE_STROKE) {
+    if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
         this->doc->lock();
         int pos = l->removeElement(s, false);
         this->doc->unlock();

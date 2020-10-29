@@ -23,7 +23,8 @@
 #include "Tool.h"
 #include "XournalType.h"
 
-enum ToolPointer { current, toolbar, eraserButton, button1, button2 };
+enum SelectedTool { active, toolbar };
+enum Button { one, two, eraser, mouseMiddle, mouseRight };
 
 class ToolListener {
 public:
@@ -44,7 +45,7 @@ public:
     ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings);
     virtual ~ToolHandler();
 
-    void initButtonTool(ToolPointer tp, ToolType type);
+    void initButtonTool(Button button, ToolType type);
     /**
      * Select the color for the tool
      *
@@ -54,22 +55,25 @@ public:
      * 			false if the color is selected by a tool change
      * 			and therefore should not be applied to a selection
      */
-    void setColor(Color color, bool userSelection, ToolPointer toolpointer = ToolPointer::current);
-    Color getColor(ToolPointer toolpointer = ToolPointer::current);
+    void setColor(Color color, bool userSelection);
+    void setButtonColor(Color color, Button button);
+    Color getColor();
 
     /**
      * @return -1 if fill is disabled, else the fill alpha value
      */
-    int getFill(ToolPointer toolpointer = ToolPointer::current);
+    int getFill();
 
-    DrawingType getDrawingType(ToolPointer toolpointer = ToolPointer::current);
-    void setDrawingType(DrawingType drawingType, ToolPointer toolpointer = ToolPointer::current);
+    DrawingType getDrawingType(SelectedTool selectedTool = SelectedTool::active);
+    void setDrawingType(DrawingType drawingType);
+    void setButtonDrawingType(DrawingType drawingType, Button button);
 
-    const LineStyle& getLineStyle(ToolPointer toolpointer = ToolPointer::current);
+    const LineStyle& getLineStyle();
 
-    ToolSize getSize(ToolPointer toolpointer = ToolPointer::current);
-    void setSize(ToolSize size, ToolPointer toolpointer = ToolPointer::current);
-    double getThickness(ToolPointer toolpointer = ToolPointer::current);
+    ToolSize getSize(SelectedTool selectedTool = SelectedTool::active);
+    void setSize(ToolSize size);
+    void setButtonSize(ToolSize size, Button button);
+    double getThickness();
 
     void setLineStyle(const LineStyle& style);
 
@@ -90,22 +94,23 @@ public:
     void setHilighterFill(int alpha);
     int getHilighterFill();
 
-    void selectTool(ToolType type, bool fireToolChanged = true, ToolPointer toolpointer = ToolPointer::toolbar);
-    ToolType getToolType(ToolPointer toolpointer = ToolPointer::current);
+    void selectTool(ToolType type, bool fireToolChanged = true);
+    ToolType getToolType();
     void fireToolChanged();
 
     Tool& getTool(ToolType type);
 
-    void setEraserType(EraserType eraserType, ToolPointer toolpointer);
-    EraserType getEraserType(ToolPointer toolpointer);
+    void setEraserType(EraserType eraserType);
+    void setButtonEraserType(EraserType eraserType, Button button);
+    EraserType getEraserType(SelectedTool selectedTool = SelectedTool::active);
     void eraserTypeChanged();
 
-    bool hasCapability(ToolCapabilities cap, ToolPointer toolpointer = ToolPointer::current);
+    bool hasCapability(ToolCapabilities cap, SelectedTool selectedTool = SelectedTool::active);
 
     void saveSettings();
     void loadSettings();
 
-    void pointCurrentToolToButtonTool(ToolPointer p);
+    void pointCurrentToolToButtonTool(Button button);
     void pointCurrentToolToToolbarTool();
 
     [[maybe_unused]] std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& getTools() const;
@@ -122,7 +127,7 @@ public:
      * pointer moves to another
      * @return
      */
-    bool isSinglePageTool(ToolPointer toolpointer = ToolPointer::toolbar);
+    bool isSinglePageTool();
 
 protected:
     void initTools();
@@ -131,9 +136,12 @@ private:
     std::array<std::unique_ptr<Tool>, TOOL_COUNT> tools;
 
     // get Pointer based on Enum used for public setters and getters
-    Tool* getToolPointer(ToolPointer toolpointer);
-    void setToolPointer(Tool* tool, ToolPointer toolpointer);
-    Tool* currentTool = nullptr;
+    Tool* getButtonTool(Button button);
+    Tool* getSelectedTool(SelectedTool selectedTool);
+
+    void resetButtonTool(Tool* tool, Button button);
+
+    Tool* activeTool = nullptr;
 
     /**
      * Last selected tool, reference with color values etc.
@@ -142,6 +150,8 @@ private:
     std::unique_ptr<Tool> button1Tool;
     std::unique_ptr<Tool> button2Tool;
     std::unique_ptr<Tool> eraserButtonTool;
+    std::unique_ptr<Tool> mouseMiddleButtonTool;
+    std::unique_ptr<Tool> mouseRightButtonTool;
 
 
     /**

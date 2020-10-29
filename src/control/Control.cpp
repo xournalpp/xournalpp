@@ -505,17 +505,17 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
         case ACTION_TOOL_ERASER_STANDARD:
             if (enabled) {
-                toolHandler->setEraserType(ERASER_TYPE_DEFAULT, ToolPointer::current);
+                toolHandler->setEraserType(ERASER_TYPE_DEFAULT);
             }
             break;
         case ACTION_TOOL_ERASER_DELETE_STROKE:
             if (enabled) {
-                toolHandler->setEraserType(ERASER_TYPE_DELETE_STROKE, ToolPointer::current);
+                toolHandler->setEraserType(ERASER_TYPE_DELETE_STROKE);
             }
             break;
         case ACTION_TOOL_ERASER_WHITEOUT:
             if (enabled) {
-                toolHandler->setEraserType(ERASER_TYPE_WHITEOUT, ToolPointer::current);
+                toolHandler->setEraserType(ERASER_TYPE_WHITEOUT);
             }
             break;
 
@@ -1644,7 +1644,7 @@ void Control::undoRedoPageChanged(PageRef page) {
 }
 
 void Control::selectTool(ToolType type) {
-    toolHandler->selectTool(type, ToolPointer::toolbar);
+    toolHandler->selectTool(type);
 
     if (win) {
         (win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderPage();
@@ -1653,7 +1653,7 @@ void Control::selectTool(ToolType type) {
 
 void Control::selectDefaultTool() {
     ButtonConfig* cfg = settings->getDefaultButtonConfig();
-    cfg->initActions(toolHandler, ToolPointer::toolbar);
+    cfg->initActions(toolHandler);
 }
 
 void Control::toolChanged() {
@@ -2506,16 +2506,22 @@ void Control::applyPreferredLanguage() {
 
 void Control::initButtonTool() {
     ButtonConfig* cfg = settings->getEraserButtonConfig();
-    cfg->initActions(this->toolHandler, ToolPointer::eraserButton);
+    cfg->initButton(this->toolHandler, Button::eraser);
 
     cfg = settings->getStylusButton1Config();
-    cfg->initActions(this->toolHandler, ToolPointer::button1);
+    cfg->initButton(this->toolHandler, Button::one);
 
     cfg = settings->getStylusButton2Config();
-    cfg->initActions(this->toolHandler, ToolPointer::button2);
+    cfg->initButton(this->toolHandler, Button::two);
+
+    cfg = settings->getMiddleButtonConfig();
+    cfg->initButton(toolHandler, Button::mouseMiddle);
+
+    cfg = settings->getRightButtonConfig();
+    cfg->initButton(toolHandler, Button::mouseRight);
 
     cfg = settings->getDefaultButtonConfig();
-    cfg->initActions(this->toolHandler, ToolPointer::toolbar);
+    cfg->initActions(this->toolHandler);
 }
 
 auto Control::askToReplace(fs::path const& filepath) const -> bool {

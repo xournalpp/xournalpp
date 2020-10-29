@@ -114,15 +114,16 @@ auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
 
     ButtonConfig* cfg = nullptr;
     if (modifier2 /* Middle Button */ && !xournal->selection) {
+        toolHandler->pointCurrentToolToButtonTool(Button::mouseMiddle);
         cfg = settings->getMiddleButtonConfig();
+        cfg->acceptActions(toolHandler, Button::mouseMiddle);
     } else if (modifier3 /* Right Button */ && !xournal->selection) {
+        toolHandler->pointCurrentToolToButtonTool(Button::mouseRight);
         cfg = settings->getRightButtonConfig();
+        cfg->acceptActions(toolHandler, Button::mouseRight);
     }
 
-    if (cfg && cfg->getAction() != TOOL_NONE) {
-        toolHandler->pointCurrentToolToButtonTool(ToolPointer::eraserButton);
-        cfg->acceptActions(toolHandler, ToolPointer::eraserButton);
-    } else {
+    if (!cfg || cfg->getAction() == TOOL_NONE) {
         toolHandler->pointCurrentToolToToolbarTool();
     }
 
