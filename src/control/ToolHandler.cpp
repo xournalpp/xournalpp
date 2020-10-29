@@ -98,9 +98,11 @@ void ToolHandler::initTools() {
     this->eraserButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
     this->button1Tool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
     this->button2Tool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
+    this->mouseMiddleButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
+    this->mouseRightButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
 
     this->toolbarSelectedTool = &getTool(TOOL_PEN);
-    this->currentTool = &getTool(TOOL_PEN);
+    this->activeTool = &getTool(TOOL_PEN);
 }
 
 ToolHandler::~ToolHandler() {
@@ -108,16 +110,19 @@ ToolHandler::~ToolHandler() {
     this->settings = nullptr;
 }
 
-void ToolHandler::initButtonTool(ToolPointer tp, ToolType type) {
-    if (tp == ToolPointer::current || tp == ToolPointer::toolbar)
-        g_error("InitButton should never be called with non-button ToolPointers!");
-    Tool* tool = getToolPointer(tp);
-    setToolPointer(tools[type - TOOL_PEN].get(), tp);
+void ToolHandler::initButtonTool(Button button, ToolType type) {
+    resetButtonTool(tools[type - TOOL_PEN].get(), button);
 }
 
-void ToolHandler::setEraserType(EraserType eraserType, ToolPointer toolPointer) {
-    Tool* p = getToolPointer(toolPointer);
-    p->setEraserType(eraserType);
+void ToolHandler::setEraserType(EraserType eraserType) {
+    Tool* tool = this->toolbarSelectedTool;
+    tool->setEraserType(eraserType);
+    eraserTypeChanged();
+}
+
+void ToolHandler::setButtonEraserType(EraserType eraserType, Button button) {
+    Tool* tool = getButtonTool(button);
+    tool->setEraserType(eraserType);
     eraserTypeChanged();
 }
 
@@ -126,7 +131,7 @@ void ToolHandler::eraserTypeChanged() {
         return;
     }
 
-    switch (this->getEraserType(ToolPointer::current)) {
+    switch (this->getEraserType()) {
         case ERASER_TYPE_DELETE_STROKE:
             this->actionHandler->fireActionSelected(GROUP_ERASER_MODE, ACTION_TOOL_ERASER_DELETE_STROKE);
             break;
@@ -142,18 +147,17 @@ void ToolHandler::eraserTypeChanged() {
     }
 }
 
-auto ToolHandler::getEraserType(ToolPointer toolPointer) -> EraserType {
-    Tool* p = getToolPointer(toolPointer);
-    return p->getEraserType();
+auto ToolHandler::getEraserType(SelectedTool selectedTool) -> EraserType {
+    Tool* tool = getSelectedTool(selectedTool);
+    return tool->getEraserType();
 }
 
-void ToolHandler::selectTool(ToolType type, bool fireToolChanged, ToolPointer toolpointer) {
+void ToolHandler::selectTool(ToolType type, bool fireToolChanged) {
     if (type < 1 || type > TOOL_COUNT) {
         g_warning("unknown tool selected: %i\n", type);
         return;
     }
-    setToolPointer(&getTool(type), toolpointer);
-    this->currentTool = &getTool(type);
+    this->toolbarSelectedTool = &getTool(type);
 
     if (fireToolChanged) {
         this->fireToolChanged();
@@ -168,18 +172,18 @@ void ToolHandler::fireToolChanged() {
 
 auto ToolHandler::getTool(ToolType type) -> Tool& { return *(this->tools[type - TOOL_PEN]); }
 
-auto ToolHandler::getToolType(ToolPointer toolPointer) -> ToolType {
-    Tool* tool = getToolPointer(toolPointer);
+auto ToolHandler::getToolType() -> ToolType {
+    Tool* tool = this->activeTool;
     return tool->type;
 }
 
-auto ToolHandler::hasCapability(ToolCapabilities cap, ToolPointer toolPointer) -> bool {
-    Tool* tool = getToolPointer(toolPointer);
+auto ToolHandler::hasCapability(ToolCapabilities cap, SelectedTool selectedTool) -> bool {
+    Tool* tool = getSelectedTool(selectedTool);
     return (tool->capabilities & cap) != 0;
 }
 
-auto ToolHandler::getSize(ToolPointer toolPointer) -> ToolSize {
-    Tool* tool = getToolPointer(toolPointer);
+auto ToolHandler::getSize(SelectedTool selectedTool) -> ToolSize {
+    Tool* tool = getSelectedTool(selectedTool);
     return tool->getSize();
 }
 
@@ -192,7 +196,7 @@ auto ToolHandler::getHilighterSize() -> ToolSize { return tools[TOOL_HILIGHTER -
 void ToolHandler::setPenSize(ToolSize size) {
     this->tools[TOOL_PEN - TOOL_PEN]->setSize(size);
 
-    if (this->currentTool->type == TOOL_PEN) {
+    if (this->activeTool->type == TOOL_PEN) {
         this->listener->toolSizeChanged();
     }
 }
@@ -200,7 +204,7 @@ void ToolHandler::setPenSize(ToolSize size) {
 void ToolHandler::setEraserSize(ToolSize size) {
     this->tools[TOOL_ERASER - TOOL_PEN]->setSize(size);
 
-    if (this->currentTool->type == TOOL_ERASER) {
+    if (this->activeTool->type == TOOL_ERASER) {
         this->listener->toolSizeChanged();
     }
 }
@@ -208,7 +212,7 @@ void ToolHandler::setEraserSize(ToolSize size) {
 void ToolHandler::setHilighterSize(ToolSize size) {
     this->tools[TOOL_HILIGHTER - TOOL_PEN]->setSize(size);
 
-    if (this->currentTool->type == TOOL_HILIGHTER) {
+    if (this->activeTool->type == TOOL_HILIGHTER) {
         this->listener->toolSizeChanged();
     }
 }
@@ -216,7 +220,7 @@ void ToolHandler::setHilighterSize(ToolSize size) {
 void ToolHandler::setPenFillEnabled(bool fill, bool fireEvent) {
     this->tools[TOOL_PEN - TOOL_PEN]->setFill(fill);
 
-    if (this->currentTool->type == TOOL_PEN && fireEvent) {
+    if (this->activeTool->type == TOOL_PEN && fireEvent) {
         this->listener->toolFillChanged();
     }
 }
@@ -230,7 +234,7 @@ auto ToolHandler::getPenFill() -> int { return this->tools[TOOL_PEN - TOOL_PEN]-
 void ToolHandler::setHilighterFillEnabled(bool fill, bool fireEvent) {
     this->tools[TOOL_HILIGHTER - TOOL_PEN]->setFill(fill);
 
-    if (this->currentTool->type == TOOL_HILIGHTER && fireEvent) {
+    if (this->activeTool->type == TOOL_HILIGHTER && fireEvent) {
         this->listener->toolFillChanged();
     }
 }
@@ -241,8 +245,8 @@ void ToolHandler::setHilighterFill(int alpha) { this->tools[TOOL_HILIGHTER - TOO
 
 auto ToolHandler::getHilighterFill() -> int { return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFillAlpha(); }
 
-auto ToolHandler::getThickness(ToolPointer toolPointer) -> double {
-    Tool* tool = getToolPointer(toolPointer);
+auto ToolHandler::getThickness() -> double {
+    Tool* tool = this->activeTool;
     if (tool->thickness) {
         return tool->thickness[tool->getSize()];
     }
@@ -251,8 +255,18 @@ auto ToolHandler::getThickness(ToolPointer toolPointer) -> double {
     return 0;
 }
 
-void ToolHandler::setSize(ToolSize size, ToolPointer toolPointer) {
-    Tool* tool = getToolPointer(toolPointer);
+void ToolHandler::setSize(ToolSize size) {
+    Tool* tool = this->activeTool;
+    if (size < TOOL_SIZE_VERY_FINE || size > TOOL_SIZE_VERY_THICK) {
+        g_warning("ToolHandler::setSize: Invalid size! %i", size);
+        return;
+    }
+    tool->setSize(size);
+    this->listener->toolSizeChanged();
+}
+
+void ToolHandler::setButtonSize(ToolSize size, Button button) {
+    Tool* tool = getButtonTool(button);
     if (size < TOOL_SIZE_VERY_FINE || size > TOOL_SIZE_VERY_THICK) {
         g_warning("ToolHandler::setSize: Invalid size! %i", size);
         return;
@@ -278,44 +292,56 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
  * 			false if the color is selected by a tool change
  * 			and therefore should not be applied to a selection
  */
-void ToolHandler::setColor(Color color, bool userSelection, ToolPointer toolPointer) {
-    if (this->currentTool != this->toolbarSelectedTool && (this->currentTool->capabilities & TOOL_CAP_COLOR) == 0) {
+void ToolHandler::setColor(Color color, bool userSelection) {
+    if (this->activeTool != this->toolbarSelectedTool && (this->activeTool->capabilities & TOOL_CAP_COLOR) == 0) {
         this->toolbarSelectedTool->setColor(color);
     }
-    Tool* tool = getToolPointer(toolPointer);
+    Tool* tool = this->activeTool;
     tool->setColor(color);
     this->listener->toolColorChanged(userSelection);
     this->listener->setCustomColorSelected();
 }
 
-auto ToolHandler::getColor(ToolPointer toolPointer) -> Color {
-    Tool* tool = getToolPointer(toolPointer);
+void ToolHandler::setButtonColor(Color color, Button button) {
+    Tool* tool = this->getButtonTool(button);
+    tool->setColor(color);
+    this->listener->toolColorChanged(false);
+    this->listener->setCustomColorSelected();
+}
+
+auto ToolHandler::getColor() -> Color {
+    Tool* tool = this->activeTool;
     return tool->getColor();
 }
 
 /**
  * @return -1 if fill is disabled, else the fill alpha value
  */
-auto ToolHandler::getFill(ToolPointer toolPointer) -> int {
-    Tool* tool = getToolPointer(toolPointer);
+auto ToolHandler::getFill() -> int {
+    Tool* tool = this->activeTool;
     if (!tool->getFill()) {
         return -1;
     }
     return tool->getFillAlpha();
 }
 
-auto ToolHandler::getLineStyle(ToolPointer toolPointer) -> const LineStyle& {
-    Tool* tool = getToolPointer(toolPointer);
+auto ToolHandler::getLineStyle() -> const LineStyle& {
+    Tool* tool = this->activeTool;
     return tool->getLineStyle();
 }
 
-auto ToolHandler::getDrawingType(ToolPointer toolPointer) -> DrawingType {
-    Tool* tool = getToolPointer(toolPointer);
+auto ToolHandler::getDrawingType(SelectedTool selectedTool) -> DrawingType {
+    Tool* tool = getSelectedTool(selectedTool);
     return tool->getDrawingType();
 }
 
-void ToolHandler::setDrawingType(DrawingType drawingType, ToolPointer toolPointer) {
-    Tool* tool = getToolPointer(toolPointer);
+void ToolHandler::setDrawingType(DrawingType drawingType) {
+    Tool* tool = this->toolbarSelectedTool;
+    tool->setDrawingType(drawingType);
+}
+
+void ToolHandler::setButtonDrawingType(DrawingType drawingType, Button button) {
+    Tool* tool = getButtonTool(button);
     tool->setDrawingType(drawingType);
 }
 
@@ -325,7 +351,7 @@ void ToolHandler::saveSettings() {
     SElement& s = settings->getCustomElement("tools");
     s.clear();
 
-    s.setString("current", this->currentTool->getName());
+    s.setString("current", this->activeTool->getName());
 
     for (auto&& tool: tools) {
         SElement& st = s.child(tool->getName());
@@ -370,9 +396,9 @@ void ToolHandler::saveSettings() {
         }
 
         if (tool->type == TOOL_ERASER) {
-            if (this->getEraserType(ToolPointer::toolbar) == ERASER_TYPE_DELETE_STROKE) {
+            if (this->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
                 st.setString("type", "deleteStroke");
-            } else if (this->getEraserType(ToolPointer::toolbar) == ERASER_TYPE_WHITEOUT) {
+            } else if (this->getEraserType() == ERASER_TYPE_WHITEOUT) {
                 st.setString("type", "whiteout");
             } else  // ERASER_TYPE_DEFAULT
             {
@@ -393,7 +419,7 @@ void ToolHandler::loadSettings() {
             SElement& st = s.child(tool->getName());
 
             if (selectedTool == tool->getName()) {
-                this->currentTool = tool.get();
+                this->activeTool = tool.get();
             }
 
             int iColor{};
@@ -442,11 +468,11 @@ void ToolHandler::loadSettings() {
 
                 if (st.getString("type", type)) {
                     if (type == "deleteStroke") {
-                        setEraserType(ERASER_TYPE_DELETE_STROKE, ToolPointer::toolbar);
+                        setEraserType(ERASER_TYPE_DELETE_STROKE);
                     } else if (type == "whiteout") {
-                        setEraserType(ERASER_TYPE_WHITEOUT, ToolPointer::toolbar);
+                        setEraserType(ERASER_TYPE_WHITEOUT);
                     } else {
-                        setEraserType(ERASER_TYPE_DEFAULT, ToolPointer::toolbar);
+                        setEraserType(ERASER_TYPE_DEFAULT);
                     }
                     eraserTypeChanged();
                 }
@@ -455,9 +481,9 @@ void ToolHandler::loadSettings() {
     }
 }
 
-void ToolHandler::pointCurrentToolToButtonTool(ToolPointer p) {
-    Tool* tool = getToolPointer(p);
-    this->currentTool = tool;
+void ToolHandler::pointCurrentToolToButtonTool(Button button) {
+    Tool* tool = getButtonTool(button);
+    this->activeTool = tool;
 
     this->listener->toolColorChanged(false);
     this->listener->toolSizeChanged();
@@ -465,7 +491,7 @@ void ToolHandler::pointCurrentToolToButtonTool(ToolPointer p) {
 }
 
 void ToolHandler::pointCurrentToolToToolbarTool() {
-    this->currentTool = this->toolbarSelectedTool;
+    this->activeTool = this->toolbarSelectedTool;
 
     this->listener->toolColorChanged(false);
     this->listener->toolSizeChanged();
@@ -489,8 +515,8 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
         t->setFill(false);
     }
 
-    if (this->currentTool->type == TOOL_SELECT_RECT || this->currentTool->type == TOOL_SELECT_REGION ||
-        this->currentTool->type == TOOL_SELECT_OBJECT || this->currentTool->type == TOOL_PLAY_OBJECT) {
+    if (this->activeTool->type == TOOL_SELECT_RECT || this->activeTool->type == TOOL_SELECT_REGION ||
+        this->activeTool->type == TOOL_SELECT_OBJECT || this->activeTool->type == TOOL_PLAY_OBJECT) {
         this->listener->toolColorChanged(false);
         this->listener->toolSizeChanged();
         this->listener->toolFillChanged();
@@ -498,9 +524,9 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
     }
 }
 
-auto ToolHandler::isSinglePageTool(ToolPointer toolPointer) -> bool {
-    ToolType toolType = this->getToolType(toolPointer);
-    DrawingType drawingType = this->getDrawingType(toolPointer);
+auto ToolHandler::isSinglePageTool() -> bool {
+    ToolType toolType = this->getToolType();
+    DrawingType drawingType = this->getDrawingType();
 
     return toolType == (TOOL_PEN && (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_CIRCLE ||
                                      drawingType == DRAWING_TYPE_COORDINATE_SYSTEM ||
@@ -511,41 +537,53 @@ auto ToolHandler::isSinglePageTool(ToolPointer toolPointer) -> bool {
            toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE;
 }
 
-auto ToolHandler::getToolPointer(ToolPointer toolpointer) -> Tool* {
-    switch (toolpointer) {
-        case ToolPointer::current:
-            return this->currentTool;
-        case ToolPointer::toolbar:
+
+auto ToolHandler::getSelectedTool(SelectedTool selectedTool) -> Tool* {
+    switch (selectedTool) {
+        case SelectedTool::active:
+            return this->activeTool;
+        case SelectedTool::toolbar:
             return this->toolbarSelectedTool;
-        case ToolPointer::eraserButton:
-            return this->eraserButtonTool.get();
-        case ToolPointer::button1:
-            return this->button1Tool.get();
-        case ToolPointer::button2:
-            return this->button2Tool.get();
         default:
-            g_error("This ToolPointer does not exist.");
+            g_error("This button does not exist.");
     }
 }
 
-void ToolHandler::setToolPointer(Tool* tool, ToolPointer toolpointer) {
-    switch (toolpointer) {
-        case ToolPointer::current:
-            this->currentTool = tool;
-            break;
-        case ToolPointer::toolbar:
-            this->toolbarSelectedTool = tool;
-            break;
-        case ToolPointer::eraserButton:
+auto ToolHandler::getButtonTool(Button button) -> Tool* {
+    switch (button) {
+        case Button::eraser:
+            return this->eraserButtonTool.get();
+        case Button::one:
+            return this->button1Tool.get();
+        case Button::two:
+            return this->button2Tool.get();
+        case Button::mouseMiddle:
+            return this->mouseMiddleButtonTool.get();
+        case Button::mouseRight:
+            return this->mouseRightButtonTool.get();
+        default:
+            g_error("This button does not exist.");
+    }
+}
+
+void ToolHandler::resetButtonTool(Tool* tool, Button button) {
+    switch (button) {
+        case Button::eraser:
             this->eraserButtonTool.reset(new Tool(tool));
             break;
-        case ToolPointer::button1:
+        case Button::one:
             this->button1Tool.reset(new Tool(tool));
             break;
-        case ToolPointer::button2:
+        case Button::two:
             this->button2Tool.reset(new Tool(tool));
             break;
+        case Button::mouseMiddle:
+            this->mouseMiddleButtonTool.reset(new Tool(tool));
+            break;
+        case Button::mouseRight:
+            this->mouseRightButtonTool.reset(new Tool(tool));
+            break;
         default:
-            g_error("This ToolPointer does not exist.");
+            g_error("This Button does not exist.");
     }
 }
