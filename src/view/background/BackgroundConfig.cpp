@@ -17,7 +17,7 @@ BackgroundConfig::BackgroundConfig(const string& config) {
 
 BackgroundConfig::~BackgroundConfig() = default;
 
-auto BackgroundConfig::loadValue(const string& key, string& value) -> bool {
+auto BackgroundConfig::loadValue(const string& key, string& value) const -> bool {
     auto it = data.find(key);
     if (it != this->data.end()) {
         value = it->second;
@@ -27,7 +27,7 @@ auto BackgroundConfig::loadValue(const string& key, string& value) -> bool {
     return false;
 }
 
-auto BackgroundConfig::loadValue(const string& key, int& value) -> bool {
+auto BackgroundConfig::loadValue(const string& key, int& value) const -> bool {
     string str;
     if (loadValue(key, str)) {
         value = std::stoul(str, nullptr, 10);
@@ -37,7 +37,7 @@ auto BackgroundConfig::loadValue(const string& key, int& value) -> bool {
     return false;
 }
 
-auto BackgroundConfig::loadValue(const string& key, double& value) -> bool {
+auto BackgroundConfig::loadValue(const string& key, double& value) const -> bool {
     string str;
     if (loadValue(key, str)) {
         value = std::stoul(str, nullptr, 10);
@@ -47,7 +47,7 @@ auto BackgroundConfig::loadValue(const string& key, double& value) -> bool {
     return false;
 }
 
-auto BackgroundConfig::loadValueHex(const string& key, int& value) -> bool {
+auto BackgroundConfig::loadValueHex(const string& key, int& value) const -> bool {
     string str;
     if (loadValue(key, str)) {
         value = std::stoul(str, nullptr, 16);
@@ -57,7 +57,7 @@ auto BackgroundConfig::loadValueHex(const string& key, int& value) -> bool {
     return false;
 }
 
-auto BackgroundConfig::loadValueHex(const string& key, uint32_t& value) -> bool {
+auto BackgroundConfig::loadValueHex(const string& key, uint32_t& value) const -> bool {
     string str;
     if (loadValue(key, str)) {
         value = std::stoul(str, nullptr, 16);

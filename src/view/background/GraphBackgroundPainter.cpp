@@ -8,21 +8,9 @@ GraphBackgroundPainter::GraphBackgroundPainter() = default;
 
 GraphBackgroundPainter::~GraphBackgroundPainter() = default;
 
-/**
- * Set the Graph line color to a lower contrast alternative if a black background is used
- */
-void GraphBackgroundPainter::updateGraphColor() {
-    Color backgroundColor = this->page->getBackgroundColor();
-
-    auto greyscale = [](Color color) {
-        return ((0xffU & uint32_t(color)) + (0xffU & (uint32_t(color) >> 8U)) + (0xffU & (uint32_t(color) >> 16U))) / 3;
-    };
-
-    this->foregroundColor1 = greyscale(backgroundColor) < 0x80U ? 0x202020U : 0xBDBDBDU;
-}
-
 void GraphBackgroundPainter::resetConfig() {
-    this->foregroundColor1 = 0xBDBDBDU;
+    this->defaultForegroundColor1 = 0xBDBDBDU;
+    this->defaultAlternativeForegroundColor1 = 0x434343U;
     this->lineWidth = 0.5;
     this->drawRaster1 = 14.17;
     this->margin1 = 0;
@@ -30,8 +18,7 @@ void GraphBackgroundPainter::resetConfig() {
 }
 
 void GraphBackgroundPainter::paint() {
-    this->updateGraphColor();
-    paintBackgroundColor();
+    this->paintBackgroundColor();
     paintBackgroundGraph();
 }
 

@@ -15,6 +15,36 @@ void BaseBackgroundPainter::resetConfig() {
     // Overwritten from the subclasses
 }
 
+auto BaseBackgroundPainter::alternativeColor(Color color1, Color color2) const -> Color {
+    auto backgroundColor = this->page->getBackgroundColor();
+
+    auto greyscale = [](uint32_t color) {
+        return ((0xff & color) + (0xff & (color >> 8)) + (0xff & (color >> 16))) / 3;
+    };
+
+    return greyscale(backgroundColor) < 0x80 ? color2 : color1;
+}
+
+auto BaseBackgroundPainter::getForegroundColor1() const -> Color {
+    uint32_t temp{};
+
+    const uint32_t foregroundColor = this->config->loadValueHex("f1", temp) ? temp : this->defaultForegroundColor1;
+    const uint32_t altForegroundColor =
+            this->config->loadValueHex("af1", temp) ? temp : this->defaultAlternativeForegroundColor1;
+
+    return this->alternativeColor(foregroundColor, altForegroundColor);
+}
+
+auto BaseBackgroundPainter::getForegroundColor2() const -> Color {
+    uint32_t temp{};
+
+    const uint32_t foregroundColor = this->config->loadValueHex("f2", temp) ? temp : this->defaultForegroundColor2;
+    const uint32_t altForegroundColor =
+            this->config->loadValueHex("af2", temp) ? temp : this->defaultAlternativeForegroundColor2;
+
+    return this->alternativeColor(foregroundColor, altForegroundColor);
+}
+
 void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, BackgroundConfig* config) {
     this->cr = cr;
     this->page = page;
@@ -23,9 +53,8 @@ void BaseBackgroundPainter::paint(cairo_t* cr, PageRef page, BackgroundConfig* c
     this->width = page->getWidth();
     this->height = page->getHeight();
 
-    uint32_t temp{};
-    this->foregroundColor1 = this->config->loadValueHex("f1", temp) ? temp : this->foregroundColor1;
-    this->foregroundColor2 = this->config->loadValueHex("f2", temp) ? temp : this->foregroundColor2;
+    this->foregroundColor1 = this->getForegroundColor1();
+    this->foregroundColor2 = this->getForegroundColor2();
 
     this->config->loadValue("lw", this->lineWidth);
     this->config->loadValue("r1", this->drawRaster1);
