@@ -350,7 +350,7 @@ void LoadHandler::parseBgPixmap() {
         // This is the new zip file attach domain
         gpointer data = nullptr;
         gsize dataLength = 0;
-        bool success = readZipAttachment(filepath.string(), data, dataLength);
+        bool success = readZipAttachment(filepath, data, dataLength);
         if (!success) {
             return;
         }
@@ -434,7 +434,7 @@ void LoadHandler::parseBgPdf() {
                 return;
             }
         } else {
-            pdfFilename = this->pdfReplacementFilepath.string();
+            pdfFilename = this->pdfReplacementFilepath;
             attachToDocument = this->pdfReplacementAttach;
         }
 

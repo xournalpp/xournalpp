@@ -76,7 +76,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 
         string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
                            "No Toolbars will be available") %
-                        file.string());
+                        file.u8string());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
     }
 
@@ -85,7 +85,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
         if (!tbModel->parse(file, false)) {
             string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
                                "Toolbars will not be available") %
-                            file.string());
+                            file.u8string());
             XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
         }
     }

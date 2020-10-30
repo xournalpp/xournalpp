@@ -297,11 +297,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
         this->selectedToolbar = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastSavePath")) == 0) {
-        this->lastSavePath = reinterpret_cast<const char*>(value);
+        this->lastSavePath = fs::u8path(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastOpenPath")) == 0) {
-        this->lastOpenPath = reinterpret_cast<const char*>(value);
+        this->lastOpenPath = fs::u8path(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastImagePath")) == 0) {
-        this->lastImagePath = reinterpret_cast<const char*>(value);
+        this->lastImagePath = fs::u8path(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStep")) == 0) {
         this->zoomStep = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStepScroll")) == 0) {
@@ -723,9 +723,9 @@ void Settings::save() {
 
     WRITE_STRING_PROP(selectedToolbar);
 
-    auto lastSavePath = this->lastSavePath.string();
-    auto lastOpenPath = this->lastOpenPath.string();
-    auto lastImagePath = this->lastImagePath.string();
+    auto lastSavePath = this->lastSavePath.u8string();
+    auto lastOpenPath = this->lastOpenPath.u8string();
+    auto lastImagePath = this->lastImagePath.u8string();
     WRITE_STRING_PROP(lastSavePath);
     WRITE_STRING_PROP(lastOpenPath);
     WRITE_STRING_PROP(lastImagePath);
