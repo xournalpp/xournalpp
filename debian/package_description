@@ -6,7 +6,7 @@ Supports pen input from devices such as Wacom Tablets.
 
 Xournal++ features:
 
- - Support for Pen preassure, e.g. Wacom Tablet
+ - Support for Pen pressure, e.g. Wacom Tablet
  - Support for annotating PDFs
  - Fill shape functionality
  - PDF Export (with and without paper style)
