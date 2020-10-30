@@ -18,7 +18,7 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const 
     builder = gtk_builder_new();
 
     if (!gtk_builder_add_from_file(builder, filepath.u8string().c_str(), &error)) {
-        string msg = FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade % filepath.string());
+        string msg = FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade % filepath.u8string());
 
         if (error != nullptr) {
             msg += "\n";

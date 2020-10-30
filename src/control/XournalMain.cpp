@@ -160,7 +160,7 @@ void XournalMain::checkForErrorlog() {
     {
         if (!fs::exists(errorlogPath)) {
             string msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}") %
-                            errorlogPath.string());
+                            errorlogPath.u8string());
             XojMsgBox::showErrorToUser(nullptr, msg);
         }
     } else if (res == 5)  // Cancel
@@ -527,8 +527,8 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
         return;
     }
 
-    string msg =
-            FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile % p.string());
+    string msg = FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile %
+                    p.u8string());
 
     if (!failIfNotFound) {
         msg += _("\nWill now attempt to run without this file.");
@@ -541,7 +541,7 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
     absolute /= relativePathAndFile;
 
     if (fs::exists(absolute)) {
-        gladePath->addSearchDirectory(absolute.parent_path().string());
+        gladePath->addSearchDirectory(absolute.parent_path());
         return;
     }
 

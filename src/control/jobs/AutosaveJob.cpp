@@ -32,7 +32,7 @@ void AutosaveJob::run() {
     if (filepath.empty()) {
         filepath = Util::getAutosaveFilepath();
     } else {
-        filepath = filepath.parent_path() / ("." + filepath.filename().string());
+        filepath.replace_filename(fs::u8path(u8"." + filepath.filename().u8string()));
     }
     Util::clearExtensions(filepath);
     filepath += ".autosave.xopp";

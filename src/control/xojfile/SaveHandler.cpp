@@ -232,7 +232,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                         this->errorMessage += "\n";
                     }
                     this->errorMessage +=
-                            FS(_F("Could not write background \"{1}\", {2}") % filepath.string() % error->message);
+                            FS(_F("Could not write background \"{1}\", {2}") % filepath.u8string() % error->message);
 
                     g_error_free(error);
                 }
@@ -328,7 +328,7 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
                 this->errorMessage += "\n";
             }
 
-            this->errorMessage += FS(_F("Could not write background \"{1}\". Continuing anyway.") % tmpfn.string());
+            this->errorMessage += FS(_F("Could not write background \"{1}\". Continuing anyway.") % tmpfn.u8string());
         }
     }
 }

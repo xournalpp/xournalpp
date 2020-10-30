@@ -36,11 +36,11 @@ LatexController::~LatexController() { this->control = nullptr; }
  * Find the tex executable, return false if not found
  */
 auto LatexController::findTexDependencies() -> LatexController::FindDependencyStatus {
-    std::string templatePathName = this->settings.globalTemplatePath.string();
-    if (fs::is_regular_file(fs::status(templatePathName))) {
-        std::ifstream is(templatePathName, std::ios_base::binary);
+    auto templatePath = this->settings.globalTemplatePath;
+    if (fs::is_regular_file(templatePath)) {
+        std::ifstream is(templatePath, std::ios_base::binary);
         if (!is.is_open()) {
-            g_message("%s", templatePathName.c_str());
+            g_message("%s", templatePath.string().c_str());
             string msg = _("Global template file does not exist. Please check your settings.");
             return LatexController::FindDependencyStatus(false, msg);
         }

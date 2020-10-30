@@ -2310,14 +2310,14 @@ void Control::updateWindowTitle() {
             if (undoRedo->isChanged()) {
                 title += "*";
             }
-            title += doc->getPdfFilepath().filename().string();
+            title += doc->getPdfFilepath().filename().u8string();
         }
     } else {
         if (undoRedo->isChanged()) {
             title += "*";
         }
 
-        title += doc->getFilepath().filename().string();
+        title += doc->getFilepath().filename().u8string();
     }
     this->doc->unlock();
 
@@ -2471,7 +2471,7 @@ void Control::applyPreferredLanguage() {
 auto Control::askToReplace(fs::path const& filepath) const -> bool {
     if (fs::exists(filepath)) {
         string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") %
-                        filepath.filename().string());
+                        filepath.filename().u8string());
         int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
         return res == GTK_RESPONSE_OK;
     }

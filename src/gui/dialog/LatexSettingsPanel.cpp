@@ -46,9 +46,9 @@ void LatexSettingsPanel::checkDeps() {
     this->save(settings);
     std::string msg;
 
-    if (fs::is_regular_file(fs::status(settings.globalTemplatePath.string()))) {
+    if (fs::is_regular_file(settings.globalTemplatePath)) {
         // Assume the file is encoded as UTF-8 (open in binary mode to avoid surprises)
-        std::ifstream is(settings.globalTemplatePath.string(), std::ios_base::binary);
+        std::ifstream is(settings.globalTemplatePath, std::ios_base::binary);
         if (!is.is_open()) {
             msg = FS(_F("Unable to open global template file at {1}. Does it exist?") %
                      settings.globalTemplatePath.u8string().c_str());
