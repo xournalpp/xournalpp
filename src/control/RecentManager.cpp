@@ -130,7 +130,7 @@ auto RecentManager::filterRecent(GList* items, bool xoj) -> GList* {
         auto p = Util::fromUri(uri);
 
         // Skip remote files
-        if (!p || !fs::exists(*p)) {
+        if (!p) {
             continue;
         }
 
