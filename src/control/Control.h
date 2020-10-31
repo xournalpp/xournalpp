@@ -255,6 +255,9 @@ public:
 
     void selectFillAlpha(bool pen);
 
+    void initButtonTool();
+
+
 public:
     // UndoRedoListener interface
     void undoRedoChanged();
@@ -324,8 +327,6 @@ private:
      * Applies the preferred language to the UI
      */
     void applyPreferredLanguage();
-
-    void initButtonTool();
 
     RecentManager* recent;
     UndoRedoHandler* undoRedo;
