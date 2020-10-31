@@ -699,4 +699,5 @@ void SettingsDialog::save() {
     settings->transactionEnd();
 
     this->control->getWindow()->setTouchscreenScrollingForDeviceMapping();
+    this->control->initButtonTool();
 }
