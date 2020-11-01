@@ -38,7 +38,7 @@ void GraphBackgroundPainter::paint() {
 }
 
 void GraphBackgroundPainter::paintBackgroundGraph() {
-    Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
+    Util::cairo_set_source_rgbi(cr, this->page->getForegroundColor());
 
     cairo_set_line_width(cr, lineWidth * lineWidthFactor);
     double marginTopBottom = margin1;

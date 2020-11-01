@@ -172,6 +172,7 @@ public:
     void paperTemplate();
     void paperFormat();
     void changePageBackgroundColor();
+    void changePageForegroundColor();
     void updateBackgroundSizeButton();
 
     void endDragDropToolbar();

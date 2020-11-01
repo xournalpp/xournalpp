@@ -486,6 +486,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_PAPER_BACKGROUND_COLOR:
             changePageBackgroundColor();
             break;
+        case ACTION_PAPER_FOREGROUND_COLOR:
+            changePageForegroundColor();
+            break;
 
             // Menu Tools
         case ACTION_TOOL_PEN:
@@ -1374,6 +1377,32 @@ void Control::changePageBackgroundColor() {
 
     if (auto optColor = dlg.getSelectedColor(); optColor) {
         p->setBackgroundColor(*optColor);
+        firePageChanged(pNr);
+    }
+}
+
+void Control::changePageForegroundColor() {
+    int pNr = getCurrentPageNo();
+    this->doc->lock();
+    auto const& p = this->doc->getPage(pNr);
+    this->doc->unlock();
+
+    if (!p) {
+        return;
+    }
+
+    clearSelectionEndText();
+
+    PageType bg = p->getBackgroundType();
+    if (bg.isSpecial()) {
+        return;
+    }
+
+    SelectBackgroundColorDialog dlg(this);
+    dlg.show(GTK_WINDOW(this->win->getWindow()));
+
+    if (auto optColor = dlg.getSelectedColor(); optColor) {
+        p->setForegroundColor(*optColor);
         firePageChanged(pNr);
     }
 }

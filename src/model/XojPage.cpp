@@ -120,6 +120,10 @@ void XojPage::setBackgroundColor(Color color) { this->backgroundColor = color; }
 
 auto XojPage::getBackgroundColor() const -> Color { return this->backgroundColor; }
 
+void XojPage::setForegroundColor(Color color) {this->foregroundColor = color; }
+
+auto XojPage::getForegroundColor() const -> Color {return this->foregroundColor; };
+
 void XojPage::setSize(double width, double height) {
     this->width = width;
     this->height = height;

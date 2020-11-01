@@ -166,9 +166,15 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_PAPER_BACKGROUND_COLOR;
     }
 
-    if (value == "ACTION_TOOL_PEN") {
-        return ACTION_TOOL_PEN;
-    }
+	if (value == "ACTION_PAPER_FOREGROUND_COLOR")
+	{
+		return ACTION_PAPER_FOREGROUND_COLOR;
+	}
+
+	if (value == "ACTION_TOOL_PEN")
+	{
+		return ACTION_TOOL_PEN;
+	}
 
     if (value == "ACTION_TOOL_ERASER") {
         return ACTION_TOOL_ERASER;
@@ -745,9 +751,15 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_PAPER_BACKGROUND_COLOR";
     }
 
-    if (value == ACTION_TOOL_PEN) {
-        return "ACTION_TOOL_PEN";
-    }
+	if (value == ACTION_PAPER_FOREGROUND_COLOR)
+	{
+		return "ACTION_PAPER_FOREGROUND_COLOR";
+	}
+
+	if (value == ACTION_TOOL_PEN)
+	{
+		return "ACTION_TOOL_PEN";
+	}
 
     if (value == ACTION_TOOL_ERASER) {
         return "ACTION_TOOL_ERASER";

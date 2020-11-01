@@ -80,13 +80,13 @@ function writeCppFile($output, $name, $values) {
 
 	fwrite($fp, "\n\n");
 
-	fwrite($fp, "// ** This needs to be copied to the header\n");
-	fwrite($fp, $name . " " . $name . "_fromString(string value);\n");
-	fwrite($fp, "string " . $name . "_toString($name value);\n");
+	//fwrite($fp, "// ** This needs to be copied to the header\n");
+	//fwrite($fp, $name . " " . $name . "_fromString(const string& value);\n");
+	//fwrite($fp, "string " . $name . "_toString($name value);\n");
 
 	fwrite($fp, "\n\n");
 
-	fwrite($fp, $name . " " . $name . "_fromString(string value)\n");
+	fwrite($fp, "auto " . $name . "_fromString(const string& value) -> $name\n");
 	fwrite($fp, "{\n");
 	
 	foreach ($values as $v) {
