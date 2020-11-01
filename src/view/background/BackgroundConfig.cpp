@@ -1,7 +1,7 @@
 #include "BackgroundConfig.h"
 
-#include <utility>
 #include <sstream>
+#include <utility>
 
 #include "StringUtils.h"
 
@@ -68,13 +68,13 @@ auto BackgroundConfig::loadValueHex(const string& key, uint32_t& value) -> bool 
     return false;
 }
 
-bool BackgroundConfig::setValue(const string &key, string value) {
+bool BackgroundConfig::setValue(const string& key, string value) {
     this->data[key] = value;
 
     return true;
 }
 
-bool BackgroundConfig::setValueHex(const string &key, uint32_t value) {
+bool BackgroundConfig::setValueHex(const string& key, uint32_t value) {
     char output[6];
 
     sprintf(output, "%X", value);
@@ -86,12 +86,13 @@ bool BackgroundConfig::setValueHex(const string &key, uint32_t value) {
 string BackgroundConfig::toString() {
     map<string, string>::iterator it;
 
-    //string output = (char *) malloc(64);
+    // string output = (char *) malloc(64);
 
     string output;
 
-    for ( it = this->data.begin(); it != this->data.end(); it++ ) {
-        if (it != this->data.begin()) output += ',';
+    for (it = this->data.begin(); it != this->data.end(); it++) {
+        if (it != this->data.begin())
+            output += ',';
         output += it->first + '=' + it->second;
     }
 

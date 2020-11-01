@@ -1404,8 +1404,8 @@ void Control::changePageForegroundColor() {
 
     if (auto optColor = dlg.getSelectedColor(); optColor) {
         PageType pageType = p->getBackgroundType();
-        auto *backgroundConfig = new BackgroundConfig(pageType.config);
-        backgroundConfig->setValueHex("f1", ((uint32_t) *optColor) - 0xff000000);
+        auto* backgroundConfig = new BackgroundConfig(pageType.config);
+        backgroundConfig->setValueHex("f1", ((uint32_t)*optColor) - 0xff000000);
         pageType.config = backgroundConfig->toString();
         p->setBackgroundType(pageType);
 
