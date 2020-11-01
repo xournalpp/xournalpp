@@ -29,6 +29,11 @@ public:
     bool loadValueHex(const string& key, int& value);
     bool loadValueHex(const string& key, uint32_t& value);
 
+    bool setValue(const string& key, string value);
+    bool setValueHex(const string& key, uint32_t value);
+
+    string toString();
+
 private:
     map<string, string> data;
 };

@@ -10,6 +10,7 @@
 #include <gio/gio.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
+#include <view/background/BackgroundConfig.h>
 
 #include "gui/TextEditor.h"
 #include "gui/XournalView.h"
@@ -1402,7 +1403,12 @@ void Control::changePageForegroundColor() {
     dlg.show(GTK_WINDOW(this->win->getWindow()));
 
     if (auto optColor = dlg.getSelectedColor(); optColor) {
-        p->setForegroundColor(*optColor);
+        PageType pageType = p->getBackgroundType();
+        auto *backgroundConfig = new BackgroundConfig(pageType.config);
+        backgroundConfig->setValueHex("f1", ((uint32_t) *optColor) - 0xff000000);
+        pageType.config = backgroundConfig->toString();
+        p->setBackgroundType(pageType);
+
         firePageChanged(pNr);
     }
 }

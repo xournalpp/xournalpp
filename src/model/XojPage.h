@@ -59,9 +59,6 @@ public:
     void setBackgroundColor(Color color);
     Color getBackgroundColor() const;
 
-    void setForegroundColor(Color color);
-    Color getForegroundColor() const;
-
     vector<Layer*>* getLayers();
     size_t getLayerCount();
     int getSelectedLayerId();
@@ -115,7 +112,6 @@ private:
      * The background color if the background type is plain
      */
     Color backgroundColor{0xffffffU};
-    Color foregroundColor;
 
     /**
      * Background visible
