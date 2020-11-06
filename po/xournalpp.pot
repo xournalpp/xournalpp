@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-31 15:44+0000\n"
+"POT-Creation-Date: 2020-11-06 21:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,7 +74,7 @@ msgstr ""
 msgid "Apply to current page"
 msgstr ""
 
-#: ../src/control/stockdlg/ImageOpenDlg.cpp:28
+#: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
 msgid "Attach file to the journal"
 msgstr ""
@@ -191,7 +191,7 @@ msgstr ""
 msgid "Copy page"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:207
+#: ../src/util/PathUtil.cpp:206
 msgid ""
 "Could not create folder: {1}\n"
 "Failed with error: {2}"
@@ -209,25 +209,25 @@ msgstr ""
 msgid "Could not load pagetemplates.ini file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:777
+#: ../src/control/xojfile/LoadHandler.cpp:759
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:786
+#: ../src/control/xojfile/LoadHandler.cpp:768
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:758
+#: ../src/control/xojfile/LoadHandler.cpp:740
+#: ../src/control/xojfile/LoadHandler.cpp:991
 #: ../src/control/xojfile/LoadHandler.cpp:1009
-#: ../src/control/xojfile/LoadHandler.cpp:1027
 msgid ""
 "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:749
-#: ../src/control/xojfile/LoadHandler.cpp:765
-#: ../src/control/xojfile/LoadHandler.cpp:1000
-#: ../src/control/xojfile/LoadHandler.cpp:1016
+#: ../src/control/xojfile/LoadHandler.cpp:731
+#: ../src/control/xojfile/LoadHandler.cpp:747
+#: ../src/control/xojfile/LoadHandler.cpp:982
+#: ../src/control/xojfile/LoadHandler.cpp:998
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
@@ -459,12 +459,12 @@ msgstr ""
 msgid "Error opening file: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:443
-#: ../src/control/xojfile/LoadHandler.cpp:464
+#: ../src/control/xojfile/LoadHandler.cpp:426
+#: ../src/control/xojfile/LoadHandler.cpp:446
 msgid "Error reading PDF: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:510
+#: ../src/control/xojfile/LoadHandler.cpp:492
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
@@ -488,13 +488,13 @@ msgstr ""
 msgid "Error: {1}"
 msgstr ""
 
-#: ../src/gui/dialog/LatexSettingsPanel.cpp:74
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid ""
 "Error: {1} is not a regular file. Please check your LaTeX template file "
 "settings. "
 msgstr ""
 
-#: ../src/gui/dialog/LatexSettingsPanel.cpp:64
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
@@ -520,7 +520,7 @@ msgstr ""
 msgid "Failed to read global template file. Please check your settings."
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:124 ../src/util/PathUtil.cpp:141
+#: ../src/util/PathUtil.cpp:123 ../src/util/PathUtil.cpp:140
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
@@ -716,7 +716,7 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:531
+#: ../src/control/XournalMain.cpp:530
 msgid ""
 "Missing the needed UI file:\n"
 "{1}\n"
@@ -778,7 +778,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:92
+#: ../src/control/jobs/BaseExportJob.cpp:88
 msgid ""
 "Only local files are supported\n"
 "Path: {1}"
@@ -955,7 +955,7 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:1046
+#: ../src/control/xojfile/LoadHandler.cpp:1028
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -991,7 +991,7 @@ msgstr ""
 msgid "SVG with transparent background"
 msgstr ""
 
-#: ../src/gui/dialog/LatexSettingsPanel.cpp:62
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
@@ -1094,13 +1094,13 @@ msgstr ""
 msgid "Show only not used pages ({1} unused pages)"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:377
+#: ../src/control/XournalMain.cpp:376
 msgid ""
 "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:391
+#: ../src/control/XournalMain.cpp:390
 msgid ""
 "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -1269,7 +1269,7 @@ msgstr ""
 msgid "Trying to emergency save the current open document…"
 msgstr ""
 
-#: ../src/gui/dialog/LatexSettingsPanel.cpp:52
+#: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
@@ -1298,7 +1298,7 @@ msgstr ""
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:492
+#: ../src/control/xojfile/LoadHandler.cpp:474
 msgid "Unknown background type: {1}"
 msgstr ""
 
@@ -1306,7 +1306,7 @@ msgstr ""
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:450
+#: ../src/control/xojfile/LoadHandler.cpp:433
 msgid "Unknown domain type: {1}"
 msgstr ""
 
@@ -1318,7 +1318,7 @@ msgstr ""
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:583
+#: ../src/control/xojfile/LoadHandler.cpp:565
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
@@ -1355,11 +1355,11 @@ msgstr ""
 msgid "Write text"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:900
+#: ../src/control/xojfile/LoadHandler.cpp:882
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:910
+#: ../src/control/xojfile/LoadHandler.cpp:892
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr ""
 
@@ -1550,7 +1550,7 @@ msgstr ""
 msgid "whiteout"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:909
+#: ../src/control/xojfile/LoadHandler.cpp:891
 msgid "xoj-File: {1}"
 msgstr ""
 
@@ -1587,7 +1587,7 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:197
+#: ../src/util/PathUtil.cpp:196
 msgid "xournalpp-{1}"
 msgstr ""
 
