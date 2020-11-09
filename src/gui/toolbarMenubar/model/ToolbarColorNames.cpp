@@ -1,5 +1,6 @@
 #include "ToolbarColorNames.h"
 
+#include <cinttypes>
 #include <fstream>
 
 #include <glib/gstdio.h>
@@ -12,9 +13,7 @@ ToolbarColorNames::ToolbarColorNames() {
     initPredefinedColors();
 }
 
-ToolbarColorNames::~ToolbarColorNames() {
-    g_key_file_free(this->config);
-}
+ToolbarColorNames::~ToolbarColorNames() { g_key_file_free(this->config); }
 
 static ToolbarColorNames* instance = nullptr;
 
@@ -61,14 +60,14 @@ void ToolbarColorNames::addColor(Color color, const std::string& name, bool pred
         this->predefinedColorNames[color] = name;
     } else {
         char colorHex[16];
-        sprintf(colorHex, "%06x", uint32_t{color});
+        snprintf(colorHex, sizeof(colorHex), "%06" PRIx32, uint32_t{color});
         g_key_file_set_string(this->config, "custom", colorHex, name.c_str());
     }
 }
 
 auto ToolbarColorNames::getColorName(Color color) -> std::string {
     char colorHex[16];
-    sprintf(colorHex, "%06x", uint32_t{color});
+    snprintf(colorHex, sizeof(colorHex), "%06" PRIx32, uint32_t{color});
 
     std::string colorName;
     char* name = g_key_file_get_string(this->config, "custom", colorHex, nullptr);
