@@ -162,7 +162,7 @@ void MainWindow::rebindAcceleratorsMenuItem(GtkWidget* widget, gpointer user_dat
     if (GTK_IS_MENU_ITEM(widget)) {
         GtkAccelGroup* newAccelGroup = reinterpret_cast<GtkAccelGroup*>(user_data);
         GList* menuAccelClosures = gtk_widget_list_accel_closures(widget);
-        for (GList* l = menuAccelClosures; l != NULL; l = l->next) {
+        for (GList* l = menuAccelClosures; l != nullptr; l = l->next) {
             GClosure* closure = reinterpret_cast<GClosure*>(l->data);
             GtkAccelGroup* accelGroup = gtk_accel_group_from_accel_closure(closure);
             GtkAccelKey* key = gtk_accel_group_find(accelGroup, isKeyForClosure, closure);
@@ -171,7 +171,7 @@ void MainWindow::rebindAcceleratorsMenuItem(GtkWidget* widget, gpointer user_dat
             // gtk_widget_get_name(widget));
 
             gtk_accel_group_connect(newAccelGroup, key->accel_key, key->accel_mods, GtkAccelFlags(0),
-                                    g_cclosure_new_swap(G_CALLBACK(MainWindow::invokeMenu), widget, NULL));
+                                    g_cclosure_new_swap(G_CALLBACK(MainWindow::invokeMenu), widget, nullptr));
         }
 
         MainWindow::rebindAcceleratorsSubMenu(widget, newAccelGroup);

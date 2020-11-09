@@ -1,5 +1,6 @@
 #include "PageTemplateSettings.h"
 
+#include <cinttypes>
 #include <sstream>
 
 #include "control/pagetype/PageTypeHandler.h"
@@ -114,7 +115,7 @@ auto PageTemplateSettings::toString() const -> string {
     }
 
     char buffer[64];
-    sprintf(buffer, "#%06x", uint32_t{this->backgroundColor});
+    snprintf(buffer, sizeof(buffer), "#%06" PRIx32, uint32_t{this->backgroundColor});
     str += string("backgroundColor=") + buffer + "\n";
 
     return str;

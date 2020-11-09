@@ -87,7 +87,7 @@ void Stacktrace::printStracktrace(std::ostream& stream) {
 
         std::array<char, 1024> syscom{};
 
-        sprintf(syscom.data(), "addr2line %p -e %s", trace[i], exeName.c_str());
+        snprintf(syscom.data(), syscom.size(), "addr2line %p -e %s", trace[i], exeName.c_str());
         FILE* fProc = popen(syscom.data(), "r");
         while (fgets(buff.data(), buff.size(), fProc) != nullptr) {
             stream << buff.data();

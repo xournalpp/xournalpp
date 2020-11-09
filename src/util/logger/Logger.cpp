@@ -6,12 +6,11 @@
 
 #ifdef DEV_CALL_LOG
 
+#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
-
-#include <stdio.h>
 
 #ifdef _WIN32
 
@@ -41,7 +40,7 @@ inline std::string NowTime() {
     tm r;
     strftime(buffer, sizeof(buffer), "%X", localtime_r(&tv.tv_sec, &r));
     char result[100];
-    sprintf(result, "%s.%06ld", buffer, (long)tv.tv_usec);
+    snprintf(result, sizeof(result), "%s.%06ld", buffer, (long)tv.tv_usec);
     return result;
 }
 

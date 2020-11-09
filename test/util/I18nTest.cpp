@@ -9,12 +9,12 @@
  * @license GNU GPLv2 or later
  */
 
+#include <cstdlib>
 #include <ctime>
 
 #include <config-test.h>
 #include <cppunit/extensions/HelperMacros.h>
 #include <i18n.h>
-#include <stdlib.h>
 
 using namespace std;
 

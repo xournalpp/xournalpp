@@ -1,5 +1,7 @@
 #include "ColorToolItem.h"
 
+#include <cinttypes>
+
 #include <config.h>
 
 #include "control/ToolEnums.h"
@@ -79,7 +81,7 @@ auto ColorToolItem::getId() -> string {
     }
 
     char buffer[64];
-    sprintf(buffer, "COLOR(0x%06x)", uint32_t{this->color});
+    snprintf(buffer, sizeof(buffer), "COLOR(0x%06" PRIx32 ")", uint32_t{this->color});
     string id = buffer;
 
     return id;
