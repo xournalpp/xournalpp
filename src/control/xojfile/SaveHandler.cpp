@@ -1,5 +1,7 @@
 #include "SaveHandler.h"
 
+#include <cinttypes>
+
 #include <config.h>
 
 #include "control/jobs/ProgressListener.h"
@@ -83,9 +85,9 @@ void SaveHandler::writeHeader() {
 }
 
 auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> string {
-    char* str = g_strdup_printf("#%08x", uint32_t(c) << 8U | alpha);
-    string color = str;
-    g_free(str);
+    char str[10];
+    sprintf(str, "#%08" PRIx32, uint32_t(c) << 8U | alpha);
+    string color(str);
     return color;
 }
 
