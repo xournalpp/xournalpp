@@ -113,14 +113,15 @@ auto LoadHandler::openFile(fs::path const& filepath) -> bool {
         zip_file_t* mimetypeFp = zip_fopen(this->zipFp, "mimetype", 0);
         if (!mimetypeFp) {
             this->lastError = zip_error_strerror(zip_get_error(zipFp));
-            this->lastError = FS(_F("The file is no valid .xopp file (Mimetype missing): \"{1}\"") % filepath.string());
+            this->lastError =
+                    FS(_F("The file is no valid .xopp file (Mimetype missing): \"{1}\"") % filepath.u8string());
             return false;
         }
         char mimetype[25];
         // read the mimetype and a few more bytes to make sure we do not only read a subset
         zip_fread(mimetypeFp, mimetype, 25);
         if (!strcmp(mimetype, "application/xournal++")) {
-            this->lastError = FS(_F("The file is no valid .xopp file (Mimetype wrong): \"{1}\"") % filepath.string());
+            this->lastError = FS(_F("The file is no valid .xopp file (Mimetype wrong): \"{1}\"") % filepath.u8string());
             return false;
         }
         zip_fclose(mimetypeFp);
@@ -128,7 +129,8 @@ auto LoadHandler::openFile(fs::path const& filepath) -> bool {
         // Get the file version
         zip_file_t* versionFp = zip_fopen(this->zipFp, "META-INF/version", 0);
         if (!versionFp) {
-            this->lastError = FS(_F("The file is no valid .xopp file (Version missing): \"{1}\"") % filepath.string());
+            this->lastError =
+                    FS(_F("The file is no valid .xopp file (Version missing): \"{1}\"") % filepath.u8string());
             return false;
         }
         char versionString[50];
@@ -141,7 +143,7 @@ auto LoadHandler::openFile(fs::path const& filepath) -> bool {
             this->minimalFileVersion = std::stoi(match.str(2));
         } else {
             this->lastError = FS(_F("The file is not a valid .xopp file (Version string corrupted): \"{1}\"") %
-                                 filepath.string());
+                                 filepath.u8string());
             return false;
         }
         zip_fclose(versionFp);
@@ -152,7 +154,7 @@ auto LoadHandler::openFile(fs::path const& filepath) -> bool {
 
     // Fail if neither utility could open the file
     if (!this->zipFp && !this->gzFp) {
-        this->lastError = FS(_F("Could not open file: \"{1}\"") % filepath.string());
+        this->lastError = FS(_F("Could not open file: \"{1}\"") % filepath.u8string());
         return false;
     }
     return true;

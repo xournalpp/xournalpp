@@ -54,9 +54,8 @@ void PluginController::loadPluginsFrom(fs::path const& path) {
 
     try {
         for (auto const& f: fs::directory_iterator(path)) {
-            auto pluginFolder = path / f.path();
-
-            Plugin* p = new Plugin(control, f.path().string(), pluginFolder.string());
+            const auto& pluginPath = f.path();
+            Plugin* p = new Plugin(control, pluginPath.filename().string(), pluginPath);
             if (!p->isValid()) {
                 g_warning("Error loading plugin «%s»", f.path().string().c_str());
                 delete p;
