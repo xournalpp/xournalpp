@@ -213,7 +213,7 @@ void Control::renameLastAutosaveFile() {
         Util::safeRenameFile(filename, renamed);
     } catch (fs::filesystem_error const& e) {
         auto fmtstr = _F("Could not rename autosave file from \"{1}\" to \"{2}\": {3}");
-        errors.emplace_back(FS(fmtstr % filename.string() % renamed.string() % e.what()));
+        errors.emplace_back(FS(fmtstr % filename.u8string() % renamed.u8string() % e.what()));
     }
 
 
@@ -2020,7 +2020,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
     }
 
     if (!loadedDocument) {
-        string msg = FS(_F("Error opening file \"{1}\"") % filepath.string()) + "\n" + loadHandler.getLastError();
+        string msg = FS(_F("Error opening file \"{1}\"") % filepath.u8string()) + "\n" + loadHandler.getLastError();
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
 
         fileLoaded(scrollToPage);
@@ -2199,7 +2199,7 @@ auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDo
         string errMsg = doc->getLastErrorMsg();
         this->doc->unlock();
 
-        string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filepath.string() % errMsg);
+        string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filepath.u8string() % errMsg);
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
     }
     getCursor()->setCursorBusy(false);

@@ -18,8 +18,10 @@
 #include <gtk/gtk.h>
 
 #include "XournalType.h"
+#include "filesystem.h"
 
 #ifdef ENABLE_PLUGINS
+
 extern "C" {
 #include <lua.h>
 }
@@ -64,7 +66,7 @@ public:
 
 class Plugin {
 public:
-    Plugin(Control* control, string name, string path);
+    Plugin(Control* control, std::string name, fs::path path);
     virtual ~Plugin();
 
 public:
@@ -176,7 +178,7 @@ private:
     /**
      * Plugin root path
      */
-    string path;
+    fs::path path;
 
     /**
      * Plugin name

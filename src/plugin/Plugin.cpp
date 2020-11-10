@@ -1,5 +1,7 @@
 #include "Plugin.h"
 
+#include <utility>
+
 #include <config.h>
 
 #include "i18n.h"
@@ -29,7 +31,10 @@ extern "C" {
  */
 static const luaL_Reg loadedlibs[] = {{"app", luaopen_app}, {nullptr, nullptr}};
 
-Plugin::Plugin(Control* control, string name, string path): control(control), name(name), path(path) { loadIni(); }
+Plugin::Plugin(Control* control, std::string name, fs::path path):
+        control(control), name(std::move(name)), path(std::move(path)) {
+    loadIni();
+}
 
 Plugin::~Plugin() {
     if (lua) {
@@ -189,8 +194,8 @@ void Plugin::loadIni() {
     GKeyFile* config = g_key_file_new();
     g_key_file_set_list_separator(config, ',');
 
-    string filename = path + "/plugin.ini";
-    if (!g_key_file_load_from_file(config, filename.c_str(), G_KEY_FILE_NONE, nullptr)) {
+    auto filename = path / "plugin.ini";
+    if (!g_key_file_load_from_file(config, Util::toGFilename(filename).c_str(), G_KEY_FILE_NONE, nullptr)) {
         g_key_file_free(config);
         return;
     }
@@ -241,15 +246,13 @@ void Plugin::addPluginToLuaPath() {
     // grab path string from top of stack
     // string curPath = lua_tostring(lua, -1);
     // curPath.append(";");
-    string curPath;
-    curPath.append(path);
-    curPath.append("/?.lua");
+    auto curPath = path / "?.lua";
 
     // get rid of the string on the stack we just pushed on line 5
     lua_pop(lua, 1);
 
     // push the new one
-    lua_pushstring(lua, curPath.c_str());
+    lua_pushstring(lua, curPath.string().c_str());
 
     // set the field "path" in table at -2 with value at top of stack
     lua_setfield(lua, -2, "path");
@@ -285,10 +288,10 @@ void Plugin::loadScript() {
     luaL_openlibs(lua);
 
     // Load but don't run the Lua script
-    string luafile = path + "/" + mainfile;
-    if (luaL_loadfile(lua, luafile.c_str())) {
+    auto luafile = path / mainfile;
+    if (luaL_loadfile(lua, luafile.string().c_str())) {
         // Error out if file can't be read
-        g_warning("Could not run plugin Lua file: «%s»", luafile.c_str());
+        g_warning("Could not run plugin Lua file: «%s»", luafile.string().c_str());
         this->valid = false;
         return;
     }
@@ -308,7 +311,7 @@ void Plugin::loadScript() {
         button.insert(std::pair<int, string>(0, _("OK")));
         XojMsgBox::showPluginMessage(name, errMsg, button, true);
 
-        g_warning("Could not run plugin Lua file: «%s», error: «%s»", luafile.c_str(), errMsg);
+        g_warning("Could not run plugin Lua file: «%s», error: «%s»", luafile.string().c_str(), errMsg);
         this->valid = false;
         return;
     }
