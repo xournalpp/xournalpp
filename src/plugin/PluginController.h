@@ -11,19 +11,18 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
+#include "Plugin.h"
 #include "filesystem.h"
 
 class Control;
-class Plugin;
 
-class PluginController {
+class PluginController final {
 public:
-    PluginController(Control* control);
-    virtual ~PluginController();
+    explicit PluginController(Control* control);
 
 public:
     /**
@@ -39,19 +38,19 @@ public:
     void registerToolbar();
 
     /**
-     * Show Plugin manager Dialog
-     */
-    void showPluginManager();
-
-    /**
      * Register menu stuff
      */
     void registerMenu();
 
     /**
+     * Show Plugin manager Dialog
+     */
+    void showPluginManager() const;
+
+    /**
      * Return the plugin list
      */
-    vector<Plugin*>& getPlugins();
+    auto getPlugins() const -> std::vector<Plugin*>;
 
 private:
     /**
@@ -62,5 +61,5 @@ private:
     /**
      * All loaded Plugins
      */
-    vector<Plugin*> plugins;
+    std::vector<std::unique_ptr<Plugin>> plugins;
 };

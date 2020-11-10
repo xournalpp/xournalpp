@@ -11,20 +11,23 @@
 
 #pragma once
 
+#include <memory>
+
 #include "gui/GladeGui.h"
 
+#include "PluginDialogEntry.h"
+
 class PluginController;
-class PluginDialogEntry;
 class Settings;
 
 class PluginDialog: public GladeGui {
 public:
     PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings);
-    virtual ~PluginDialog();
+    ~PluginDialog() override = default;
 
 public:
-    void loadPluginList(PluginController* pc);
-    virtual void show(GtkWindow* parent);
+    void loadPluginList(PluginController const* pc);
+    void show(GtkWindow* parent) override;
 
 private:
     void saveSettings();
@@ -32,5 +35,5 @@ private:
 private:
     Settings* settings;
 
-    vector<PluginDialogEntry*> plugins;
+    std::vector<std::unique_ptr<PluginDialogEntry>> plugins;
 };

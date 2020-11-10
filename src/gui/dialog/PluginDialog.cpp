@@ -9,18 +9,11 @@
 PluginDialog::PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings):
         GladeGui(gladeSearchPath, "plugin.glade", "pluginDialog"), settings(settings) {}
 
-PluginDialog::~PluginDialog() {
-    for (PluginDialogEntry* p: this->plugins) {
-        delete p;
-    }
-    this->plugins.clear();
-}
-
-void PluginDialog::loadPluginList(PluginController* pc) {
+void PluginDialog::loadPluginList(PluginController const* pc) {
     GtkWidget* pluginBox = get("pluginBox");
 
     for (Plugin* p: pc->getPlugins()) {
-        this->plugins.push_back(new PluginDialogEntry(p, getGladeSearchPath(), pluginBox));
+        this->plugins.emplace_back(std::make_unique<PluginDialogEntry>(p, getGladeSearchPath(), pluginBox));
     }
 }
 
@@ -29,7 +22,7 @@ void PluginDialog::saveSettings() {
     string pluginDisabled;
 
     // Save plugin settings
-    for (PluginDialogEntry* bcg: this->plugins) {
+    for (auto&& bcg: this->plugins) {
         bcg->saveSettings(pluginEnabled, pluginDisabled);
     }
 
