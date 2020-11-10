@@ -20,7 +20,8 @@ auto ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterSupported);
 
     if (!settings->getLastImagePath().empty()) {
-        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), settings->getLastImagePath().string().c_str());
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog),
+                                            Util::toGFilename(settings->getLastImagePath()).c_str());
     }
 
     GtkWidget* cbAttach = nullptr;
@@ -47,7 +48,7 @@ auto ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool
 
     // e.g. from last used files, there is no folder selected
     // in this case do not store the folder
-    if (auto folder = Util::fromGtkFilename(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
+    if (auto folder = Util::fromGFilename(gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(dialog)));
         !folder.empty()) {
         settings->setLastImagePath(folder);
     }

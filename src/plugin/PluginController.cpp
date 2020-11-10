@@ -15,13 +15,13 @@
 PluginController::PluginController(Control* control): control(control) {
 #ifdef ENABLE_PLUGINS
     // Use string instead of fs::path due to string operations below
-    string path = control->getGladeSearchPath()->getFirstSearchPath().string();
+    string path = control->getGladeSearchPath()->getFirstSearchPath().u8string();
     if (StringUtils::endsWith(path, "ui")) {
         path = path.substr(0, path.length() - 2) + "plugins";
     } else {
         path += "/../plugins";
     }
-    loadPluginsFrom(path);
+    loadPluginsFrom(fs::u8path(path));
 #endif
 }
 

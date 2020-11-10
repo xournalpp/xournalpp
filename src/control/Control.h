@@ -192,6 +192,7 @@ public:
 
     void addDefaultPage(string pageTemplate);
     void insertNewPage(size_t position);
+    void appendNewPdfPages();
     void insertPage(const PageRef& page, size_t position);
     void deletePage();
 

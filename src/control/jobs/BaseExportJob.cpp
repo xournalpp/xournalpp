@@ -57,8 +57,9 @@ auto BaseExportJob::showFilechooser() -> bool {
     fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
     doc->unlock();
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), folder.string().c_str());
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), name.string().c_str());
+    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(folder).c_str());
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(name).c_str());
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 
@@ -67,15 +68,10 @@ auto BaseExportJob::showFilechooser() -> bool {
             gtk_widget_destroy(dialog);
             return false;
         }
-        auto uri = [](char* uri) {
-            std::string ret{uri};
-            g_free(uri);
-            return ret;
-        }(gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(dialog)));
-        this->filepath = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        this->filepath = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
         Util::clearExtensions(this->filepath);
         // Since we add the extension after the OK button, we have to check manually on existing files
-        if (isUriValid(uri) && control->askToReplace(filepath)) {
+        if (control->askToReplace(filepath)) {
             break;
         }
     }

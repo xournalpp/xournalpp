@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <cstring>
 #include <optional>
 
 #include <gio/gio.h>
@@ -55,14 +56,46 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 [[maybe_unused]] [[nodiscard]] fs::path fromGFile(GFile* file);
 [[maybe_unused]] [[nodiscard]] GFile* toGFile(fs::path const& path);
 
-[[maybe_unused]] [[nodiscard]] inline fs::path fromGtkFilename(char* path) {
+[[maybe_unused]] [[nodiscard]] inline fs::path fromGFilename(char* path, bool owned = true) {
+    auto deleter = [path, owned]() {
+        if (owned) {
+            g_free(path);
+        }
+    };
+
     if (path == nullptr) {
         return {};
     }
-    auto ret = fs::path{path};
-    g_free(path);
+    size_t pSize{0};
+    GError* err{};
+    auto* u8Path = g_filename_to_utf8(path, std::strlen(path), nullptr, &pSize, &err);
+    if (err) {
+        g_message("Failed to convert g_filename to utf8 with error code: %d\n%s", err->code, err->message);
+        g_error_free(err);
+        deleter();
+        return {};
+    }
+    auto ret = fs::u8path(u8Path, u8Path + pSize);
+    g_free(u8Path);
+    deleter();
     return ret;
 }
+
+[[maybe_unused]] [[nodiscard]] inline std::string toGFilename(fs::path const& path) {
+    auto u8path = path.u8string();
+    size_t pSize{0};
+    GError* err{};
+    auto* local = g_filename_from_utf8(u8path.c_str(), ssize_t(u8path.size()), nullptr, &pSize, &err);
+    if (err) {
+        g_message("Failed to convert g_filename from utf8 with error code: %d\n%s", err->code, err->message);
+        g_error_free(err);
+        return {};
+    }
+    auto ret = std::string{local, pSize};
+    g_free(local);
+    return ret;
+}
+
 
 void openFileWithDefaultApplication(const fs::path& filename);
 void openFileWithFilebrowser(const fs::path& filename);

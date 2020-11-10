@@ -116,7 +116,7 @@ public:
     HandRecognition* getHandRecognition();
 
     /**
-     * @returnScrollbars
+     * @return Scrollbars
      */
     ScrollHandling* getScrollHandling();
 

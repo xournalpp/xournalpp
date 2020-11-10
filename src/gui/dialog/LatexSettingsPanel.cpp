@@ -27,14 +27,15 @@ LatexSettingsPanel::~LatexSettingsPanel() {
 void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_toggle_button_set_active(this->cbAutoDepCheck, settings.autoCheckDependencies);
     if (!settings.globalTemplatePath.empty()) {
-        gtk_file_chooser_set_filename(this->globalTemplateChooser, settings.globalTemplatePath.string().c_str());
+        gtk_file_chooser_set_filename(this->globalTemplateChooser,
+                                      Util::toGFilename(settings.globalTemplatePath).c_str());
     }
     gtk_entry_set_text(GTK_ENTRY(this->get("latexSettingsGenCmd")), settings.genCmd.c_str());
 }
 
 void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.autoCheckDependencies = gtk_toggle_button_get_active(this->cbAutoDepCheck);
-    settings.globalTemplatePath = Util::fromGtkFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
+    settings.globalTemplatePath = Util::fromGFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
     settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
 }
 
@@ -45,9 +46,9 @@ void LatexSettingsPanel::checkDeps() {
     this->save(settings);
     std::string msg;
 
-    if (fs::is_regular_file(fs::status(settings.globalTemplatePath.string()))) {
+    if (fs::is_regular_file(settings.globalTemplatePath)) {
         // Assume the file is encoded as UTF-8 (open in binary mode to avoid surprises)
-        std::ifstream is(settings.globalTemplatePath.string(), std::ios_base::binary);
+        std::ifstream is(settings.globalTemplatePath, std::ios_base::binary);
         if (!is.is_open()) {
             msg = FS(_F("Unable to open global template file at {1}. Does it exist?") %
                      settings.globalTemplatePath.u8string().c_str());

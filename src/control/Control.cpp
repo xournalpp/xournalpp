@@ -313,6 +313,8 @@ void Control::initWindow(MainWindow* win) {
 
     this->pluginController->registerMenu();
 
+    win->rebindMenubarAccelerators();
+
     fireActionSelected(GROUP_SNAPPING, settings->isSnapRotation() ? ACTION_ROTATION_SNAPPING : ACTION_NONE);
     fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
 }
@@ -465,6 +467,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_NEW_PAGE_AFTER:
             insertNewPage(getCurrentPageNo() + 1);
+            break;
+        case ACTION_APPEND_NEW_PDF_PAGES:
+            appendNewPdfPages();
             break;
         case ACTION_NEW_PAGE_AT_END:
             insertNewPage(this->doc->getPageCount());
@@ -1220,20 +1225,56 @@ void Control::deletePage() {
 
 void Control::insertNewPage(size_t position) { pageBackgroundChangeController->insertNewPage(position); }
 
+void Control::appendNewPdfPages() {
+    auto pageCount = this->doc->getPageCount();
+    // find last page with pdf background and get its pdf page number
+    auto currentPdfPageCount = [&]() {
+        for (size_t i = pageCount; i != 0; --i) {
+            if (auto page = doc->getPage(i - 1); page && page->getBackgroundType().isPdfPage()) {
+                return page->getPdfPageNr() + 1;
+            }
+        }
+        return size_t{0U};
+    }();
+
+    auto pdfPageCount = this->doc->getPdfPageCount();
+    auto insertCount = pdfPageCount - currentPdfPageCount;
+
+    if (insertCount == 0) {
+        string msg = FS(_F("No pdf pages available to append. You may need to reopen the document first."));
+        XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+    }
+    for (size_t i = 0; i != insertCount; ++i) {
+
+        doc->lock();
+        XojPdfPageSPtr pdf = doc->getPdfPage(currentPdfPageCount + i);
+        doc->unlock();
+
+        if (pdf) {
+            auto newPage = std::make_shared<XojPage>(pdf->getWidth(), pdf->getHeight());
+            newPage->setBackgroundPdfPageNr(currentPdfPageCount + i);
+            insertPage(newPage, pageCount + i);
+        } else {
+            string msg = FS(_F("Unable to retrieve pdf page."));  // should not happen
+            XojMsgBox::showErrorToUser(getGtkWindow(), msg);
+        }
+    }
+}
+
 void Control::insertPage(const PageRef& page, size_t position) {
     this->doc->lock();
-    this->doc->insertPage(page, position);
+    this->doc->insertPage(page, position);  // insert the new page to the document and update page numbers
     this->doc->unlock();
+
+    // notify document listeners about the inserted page; this creates the new XojViewPage, recalculates the layout
+    // and creates a preview page in the sidebar
     firePageInserted(position);
 
     getCursor()->updateCursor();
 
-    int visibleHeight = 0;
-    scrollHandler->isPageVisible(position, &visibleHeight);
-
-    if (visibleHeight < 10) {
-        Util::execInUiThread([=]() { scrollHandler->scrollToPage(position); });
-    }
+    // make the inserted page fully visible (or at least as much from the top which fits on the screen),
+    // and make the page appear selected
+    scrollHandler->scrollToPage(position);
     firePageSelected(position);
 
     updateDeletePageButton();
@@ -2263,10 +2304,10 @@ auto Control::showSaveDialog() -> bool {
     auto suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
     this->doc->unlock();
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), suggested_folder.string().c_str());
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), suggested_name.string().c_str());
-    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), this->settings->getLastOpenPath().string().c_str(),
-                                         nullptr);
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggested_folder).c_str());
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggested_name).c_str());
+    gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog),
+                                         Util::toGFilename(this->settings->getLastOpenPath()).c_str(), nullptr);
 
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), false);  // handled below
 
@@ -2278,7 +2319,7 @@ auto Control::showSaveDialog() -> bool {
             return false;
         }
 
-        auto fileTmp = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        auto fileTmp = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
         Util::clearExtensions(fileTmp);
         fileTmp += ".xopp";
         // Since we add the extension after the OK button, we have to check manually on existing files
@@ -2287,7 +2328,7 @@ auto Control::showSaveDialog() -> bool {
         }
     }
 
-    auto filename = Util::fromGtkFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    auto filename = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
     settings->setLastSavePath(filename.parent_path());
     gtk_widget_destroy(dialog);
 
@@ -2310,14 +2351,14 @@ void Control::updateWindowTitle() {
             if (undoRedo->isChanged()) {
                 title += "*";
             }
-            title += doc->getPdfFilepath().filename().string();
+            title += doc->getPdfFilepath().filename().u8string();
         }
     } else {
         if (undoRedo->isChanged()) {
             title += "*";
         }
 
-        title += doc->getFilepath().filename().string();
+        title += doc->getFilepath().filename().u8string();
     }
     this->doc->unlock();
 
@@ -2471,7 +2512,7 @@ void Control::applyPreferredLanguage() {
 auto Control::askToReplace(fs::path const& filepath) const -> bool {
     if (fs::exists(filepath)) {
         string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") %
-                        filepath.filename().string());
+                        filepath.filename().u8string());
         int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
         return res == GTK_RESPONSE_OK;
     }

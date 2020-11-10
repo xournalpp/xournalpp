@@ -36,7 +36,6 @@ auto Util::readString(fs::path const& path, bool showErrorToUser) -> std::option
 auto Util::getEscapedPath(const fs::path& path) -> string {
     string escaped = path.string();
     StringUtils::replaceAllChars(escaped, {replace_pair('\\', "\\\\"), replace_pair('\"', "\\\"")});
-
     return escaped;
 }
 
@@ -123,7 +122,7 @@ void Util::openFileWithDefaultApplication(const fs::path& filename) {
     if (system(command.c_str()) != 0) {
         string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
                            "URL: {1}") %
-                        filename.string());
+                        filename.u8string());
         XojMsgBox::showErrorToUser(nullptr, msg);
     }
 }
@@ -140,7 +139,7 @@ void Util::openFileWithFilebrowser(const fs::path& filename) {
     if (system(command.c_str()) != 0) {
         string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
                            "URL: {1}") %
-                        filename.string());
+                        filename.u8string());
         XojMsgBox::showErrorToUser(nullptr, msg);
     }
 }
@@ -204,7 +203,7 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
         fs::create_directories(p);
     } catch (fs::filesystem_error const& fe) {
         Util::execInUiThread([=]() {
-            string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.string() % fe.what());
+            string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.u8string() % fe.what());
             g_warning("%s %s", msg.c_str(), fe.what());
             XojMsgBox::showErrorToUser(nullptr, msg);
         });

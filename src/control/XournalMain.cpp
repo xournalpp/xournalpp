@@ -160,7 +160,7 @@ void XournalMain::checkForErrorlog() {
     {
         if (!fs::exists(errorlogPath)) {
             string msg = FS(_F("Errorlog cannot be deleted. You have to do it manually.\nLogfile: {1}") %
-                            errorlogPath.string());
+                            errorlogPath.u8string());
             XojMsgBox::showErrorToUser(nullptr, msg);
         }
     } else if (res == 5)  // Cancel
@@ -370,7 +370,6 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
     control->initWindow(win);
 
     win->show(nullptr);
-
     bool opened = false;
     if (optFilename) {
         if (g_strv_length(optFilename) != 1) {
@@ -379,19 +378,20 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*win), msg);
         }
 
-        fs::path p(optFilename[0]);
+        fs::path p = Util::fromGFilename(optFilename[0], false);
 
         try {
             if (fs::exists(p)) {
                 opened = control->openFile(p, openAtPageNumber);
             } else {
-                opened = control->newFile("", optFilename[0]);
+                opened = control->newFile("", p);
             }
         } catch (fs::filesystem_error const& e) {
             string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
                                "You have to copy the file to a local directory.") %
                             p.u8string().c_str() % e.what());
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*win), msg);
+            opened = control->newFile("", p);
         }
     }
 
@@ -527,8 +527,8 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
         return;
     }
 
-    string msg =
-            FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile % p.string());
+    string msg = FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile %
+                    p.u8string());
 
     if (!failIfNotFound) {
         msg += _("\nWill now attempt to run without this file.");
@@ -541,7 +541,7 @@ void XournalMain::initResourcePath(GladeSearchpath* gladePath, const gchar* rela
     absolute /= relativePathAndFile;
 
     if (fs::exists(absolute)) {
-        gladePath->addSearchDirectory(absolute.parent_path().string());
+        gladePath->addSearchDirectory(absolute.parent_path());
         return;
     }
 
