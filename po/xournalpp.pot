@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-06 21:53+0000\n"
+"POT-Creation-Date: 2020-11-11 08:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -209,29 +209,29 @@ msgstr ""
 msgid "Could not load pagetemplates.ini file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:759
+#: ../src/control/xojfile/LoadHandler.cpp:761
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:768
+#: ../src/control/xojfile/LoadHandler.cpp:770
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:740
-#: ../src/control/xojfile/LoadHandler.cpp:991
-#: ../src/control/xojfile/LoadHandler.cpp:1009
+#: ../src/control/xojfile/LoadHandler.cpp:742
+#: ../src/control/xojfile/LoadHandler.cpp:993
+#: ../src/control/xojfile/LoadHandler.cpp:1011
 msgid ""
 "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:731
-#: ../src/control/xojfile/LoadHandler.cpp:747
-#: ../src/control/xojfile/LoadHandler.cpp:982
-#: ../src/control/xojfile/LoadHandler.cpp:998
+#: ../src/control/xojfile/LoadHandler.cpp:733
+#: ../src/control/xojfile/LoadHandler.cpp:749
+#: ../src/control/xojfile/LoadHandler.cpp:984
+#: ../src/control/xojfile/LoadHandler.cpp:1000
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:155
+#: ../src/control/xojfile/LoadHandler.cpp:157
 msgid "Could not open file: \"{1}\""
 msgstr ""
 
@@ -247,8 +247,8 @@ msgid ""
 "No Toolbars will be available"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:344
-#: ../src/control/xojfile/LoadHandler.cpp:368
+#: ../src/control/xojfile/LoadHandler.cpp:346
+#: ../src/control/xojfile/LoadHandler.cpp:370
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr ""
 
@@ -360,11 +360,11 @@ msgstr ""
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:237
+#: ../src/control/xojfile/LoadHandler.cpp:239
 msgid "Document is corrupted (no pages found in file)"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:233
+#: ../src/control/xojfile/LoadHandler.cpp:235
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr ""
 
@@ -459,12 +459,12 @@ msgstr ""
 msgid "Error opening file: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:426
-#: ../src/control/xojfile/LoadHandler.cpp:446
+#: ../src/control/xojfile/LoadHandler.cpp:428
+#: ../src/control/xojfile/LoadHandler.cpp:448
 msgid "Error reading PDF: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:492
+#: ../src/control/xojfile/LoadHandler.cpp:494
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
@@ -774,7 +774,7 @@ msgstr ""
 msgid "Normal drawing"
 msgstr ""
 
-#: ../src/plugin/Plugin.cpp:308 ../src/plugin/Plugin.cpp:327
+#: ../src/plugin/Plugin.cpp:311 ../src/plugin/Plugin.cpp:330
 msgid "OK"
 msgstr ""
 
@@ -955,7 +955,7 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:1028
+#: ../src/control/xojfile/LoadHandler.cpp:1030
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -1187,19 +1187,19 @@ msgid ""
 "anyways?"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:116
+#: ../src/control/xojfile/LoadHandler.cpp:117
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:123
+#: ../src/control/xojfile/LoadHandler.cpp:124
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:131
+#: ../src/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:143
+#: ../src/control/xojfile/LoadHandler.cpp:145
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr ""
 
@@ -1290,15 +1290,15 @@ msgstr ""
 msgid "Undo: "
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:282
+#: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "Unexpected root tag: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:303
+#: ../src/control/xojfile/LoadHandler.cpp:305
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:474
+#: ../src/control/xojfile/LoadHandler.cpp:476
 msgid "Unknown background type: {1}"
 msgstr ""
 
@@ -1306,19 +1306,19 @@ msgstr ""
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:433
+#: ../src/control/xojfile/LoadHandler.cpp:435
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:222
+#: ../src/control/xojfile/LoadHandler.cpp:224
 msgid "Unknown parser error"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:380
+#: ../src/control/xojfile/LoadHandler.cpp:382
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:565
+#: ../src/control/xojfile/LoadHandler.cpp:567
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
@@ -1355,15 +1355,15 @@ msgstr ""
 msgid "Write text"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:882
+#: ../src/control/xojfile/LoadHandler.cpp:884
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:892
+#: ../src/control/xojfile/LoadHandler.cpp:894
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:219
+#: ../src/control/xojfile/LoadHandler.cpp:221
 msgid "XML Parser error: {1}"
 msgstr ""
 
@@ -1550,7 +1550,7 @@ msgstr ""
 msgid "whiteout"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:891
+#: ../src/control/xojfile/LoadHandler.cpp:893
 msgid "xoj-File: {1}"
 msgstr ""
 
