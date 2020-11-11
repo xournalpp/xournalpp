@@ -12,8 +12,8 @@ PdfExportJob::~PdfExportJob() = default;
 
 void PdfExportJob::addFilterToDialog() { addFileFilterToDialog(_("PDF files"), "*.pdf"); }
 
-auto PdfExportJob::isUriValid(string& uri) -> bool {
-    if (!BaseExportJob::isUriValid(uri)) {
+auto PdfExportJob::testAndSetFilepath(fs::path file) -> bool {
+    if (!BaseExportJob::testAndSetFilepath(std::move(file))) {
         return false;
     }
 

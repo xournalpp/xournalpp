@@ -45,17 +45,18 @@ void CustomExportJob::addFilterToDialog() {
     }
 }
 
-auto CustomExportJob::isUriValid(string& uri) -> bool {
-    if (!BaseExportJob::isUriValid(uri)) {
+auto CustomExportJob::testAndSetFilepath(fs::path file) -> bool {
+    if (!BaseExportJob::testAndSetFilepath(std::move(file))) {
         return false;
     }
 
     // Extract the file filter selected
     this->chosenFilterName = BaseExportJob::getFilterName();
+    auto chosenFilter = filters.at(this->chosenFilterName);
 
     // Remove any pre-existing extension and adds the chosen one
-    Util::clearExtensions(filepath, filters[this->chosenFilterName]->extension);
-    filepath += filters[this->chosenFilterName]->extension;
+    Util::clearExtensions(filepath, chosenFilter->extension);
+    filepath += chosenFilter->extension;
 
     return checkOverwriteBackgroundPDF(filepath);
 }
@@ -105,12 +106,10 @@ auto CustomExportJob::showFilechooser() -> bool {
  * Create one Graphics file per page
  */
 void CustomExportJob::exportGraphics() {
-    bool hideBackground = filters[this->chosenFilterName]->withoutBackground;
-
+    bool hideBackground = filters.at(this->chosenFilterName)->withoutBackground;
     ImageExport imgExport(control->getDocument(), filepath, format, hideBackground, exportRange);
     imgExport.setPngDpi(pngDpi);
     imgExport.exportGraphics(control);
-
     errorMsg = imgExport.getLastErrorMsg();
 }
 

@@ -33,14 +33,14 @@ public:
 
 public:
     virtual bool showFilechooser();
-    string getFilterName();
+    string getFilterName() const;
 
 protected:
     void initDialog();
     virtual void addFilterToDialog() = 0;
     void addFileFilterToDialog(const string& name, const string& pattern);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
-    virtual bool isUriValid(string& uri);
+    virtual bool testAndSetFilepath(fs::path file);
 
 private:
 protected:
