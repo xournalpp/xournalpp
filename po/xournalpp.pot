@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-11 08:19+0000\n"
+"POT-Creation-Date: 2020-11-11 11:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -520,6 +520,12 @@ msgstr ""
 msgid "Failed to read global template file. Please check your settings."
 msgstr ""
 
+#: ../src/control/jobs/BaseExportJob.cpp:93
+msgid ""
+"Failed to resolve path with the following error:\n"
+"{1}"
+msgstr ""
+
 #: ../src/util/PathUtil.cpp:123 ../src/util/PathUtil.cpp:140
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
@@ -778,12 +784,6 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:88
-msgid ""
-"Only local files are supported\n"
-"Path: {1}"
-msgstr ""
-
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
 msgstr ""
@@ -1008,7 +1008,7 @@ msgstr ""
 msgid "Save File"
 msgstr ""
 
-#: ../src/control/jobs/CustomExportJob.cpp:129
+#: ../src/control/jobs/CustomExportJob.cpp:128
 #: ../src/control/jobs/SaveJob.cpp:111
 msgid "Save file error: {1}"
 msgstr ""
