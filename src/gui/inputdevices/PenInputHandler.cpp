@@ -169,8 +169,6 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     GtkXournal* xournal = this->inputContext->getXournal();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
 
-    this->changeTool(event);
-
     if (toolHandler->getToolType() == TOOL_HAND) {
         if (this->deviceClassPressed) {
             this->handleScrollEvent(event);

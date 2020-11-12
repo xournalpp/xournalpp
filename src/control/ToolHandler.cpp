@@ -448,13 +448,7 @@ void ToolHandler::loadSettings() {
 
 void ToolHandler::pointCurrentToolToButtonTool() { this->currentTool = this->buttonSelectedTool; }
 
-void ToolHandler::pointCurrentToolToToolbarTool() {
-    this->currentTool = this->toolbarSelectedTool;
-
-    this->listener->toolColorChanged(false);
-    this->listener->toolSizeChanged();
-    this->fireToolChanged();
-}
+void ToolHandler::pointCurrentToolToToolbarTool() { this->currentTool = this->toolbarSelectedTool; }
 
 auto ToolHandler::getToolThickness(ToolType type) -> const double* { return this->tools[type - TOOL_PEN]->thickness; }
 
