@@ -24,11 +24,12 @@
 #include "XournalType.h"
 
 enum SelectedTool { active, toolbar };
-enum Button { one, two, eraser, mouseMiddle, mouseRight };
+enum Button { stylusOne, stylusTwo, stylusEraser, mouseMiddle, mouseRight };
 
 class ToolListener {
 public:
-    virtual void toolColorChanged(bool userSelection) = 0;
+    virtual void toolColorChanged() = 0;
+    virtual void changeColorOfSelection() = 0;
     virtual void setCustomColorSelected() = 0;
     virtual void toolSizeChanged() = 0;
     virtual void toolFillChanged() = 0;
@@ -147,8 +148,8 @@ private:
      * Last selected tool, reference with color values etc.
      */
     Tool* toolbarSelectedTool = nullptr;
-    std::unique_ptr<Tool> button1Tool;
-    std::unique_ptr<Tool> button2Tool;
+    std::unique_ptr<Tool> stylusButton1Tool;
+    std::unique_ptr<Tool> stylusButton2Tool;
     std::unique_ptr<Tool> eraserButtonTool;
     std::unique_ptr<Tool> mouseMiddleButtonTool;
     std::unique_ptr<Tool> mouseRightButtonTool;

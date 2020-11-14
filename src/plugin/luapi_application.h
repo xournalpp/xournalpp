@@ -292,7 +292,9 @@ static int applib_changeToolColor(lua_State* L) {
 
     if (tool.hasCapability(TOOL_CAP_COLOR)) {
         tool.setColor(color);
-        ctrl->toolColorChanged(selection);
+        ctrl->toolColorChanged();
+        if (selection)
+            ctrl->changeColorOfSelection();
     } else {
         g_warning("tool \"%s\" has no color capability", toolTypeToString(toolType).c_str());
     }
