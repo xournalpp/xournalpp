@@ -118,15 +118,8 @@ public:
     virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
                                  GtkToolButton* toolbutton, bool enabled);
 
-    /**
-     * Select the color for the tool
-     *
-     * @param userSelection
-     * 			true if the user selected the color
-     * 			false if the color is selected by a tool change
-     * 			and therefore should not be applied to a selection
-     */
-    virtual void toolColorChanged(bool userSelection);
+    virtual void toolColorChanged();
+    virtual void changeColorOfSelection();
     virtual void setCustomColorSelected();
     virtual void toolChanged();
     virtual void toolSizeChanged();

@@ -96,8 +96,8 @@ void ToolHandler::initTools() {
                                                                      Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     this->eraserButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
-    this->button1Tool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
-    this->button2Tool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
+    this->stylusButton1Tool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
+    this->stylusButton2Tool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
     this->mouseMiddleButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
     this->mouseRightButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
 
@@ -298,14 +298,16 @@ void ToolHandler::setColor(Color color, bool userSelection) {
     }
     Tool* tool = this->activeTool;
     tool->setColor(color);
-    this->listener->toolColorChanged(userSelection);
+    this->listener->toolColorChanged();
+    if (userSelection)
+        this->listener->changeColorOfSelection();
     this->listener->setCustomColorSelected();
 }
 
 void ToolHandler::setButtonColor(Color color, Button button) {
     Tool* tool = this->getButtonTool(button);
     tool->setColor(color);
-    this->listener->toolColorChanged(false);
+    this->listener->toolColorChanged();
     this->listener->setCustomColorSelected();
 }
 
@@ -483,12 +485,16 @@ void ToolHandler::loadSettings() {
 
 void ToolHandler::pointCurrentToolToButtonTool(Button button) {
     Tool* tool = getButtonTool(button);
+    if (this->activeTool == tool)
+        return;
     this->activeTool = tool;
 
     this->fireToolChanged();
 }
 
 void ToolHandler::pointCurrentToolToToolbarTool() {
+    if (this->activeTool == this->toolbarSelectedTool)
+        return;
     this->activeTool = this->toolbarSelectedTool;
 
     this->fireToolChanged();
@@ -513,7 +519,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
 
     if (this->activeTool->type == TOOL_SELECT_RECT || this->activeTool->type == TOOL_SELECT_REGION ||
         this->activeTool->type == TOOL_SELECT_OBJECT || this->activeTool->type == TOOL_PLAY_OBJECT) {
-        this->listener->toolColorChanged(false);
+        this->listener->toolColorChanged();
         this->listener->toolSizeChanged();
         this->listener->toolFillChanged();
         this->fireToolChanged();
@@ -547,12 +553,12 @@ auto ToolHandler::getSelectedTool(SelectedTool selectedTool) -> Tool* {
 
 auto ToolHandler::getButtonTool(Button button) -> Tool* {
     switch (button) {
-        case Button::eraser:
+        case Button::stylusEraser:
             return this->eraserButtonTool.get();
-        case Button::one:
-            return this->button1Tool.get();
-        case Button::two:
-            return this->button2Tool.get();
+        case Button::stylusOne:
+            return this->stylusButton1Tool.get();
+        case Button::stylusTwo:
+            return this->stylusButton2Tool.get();
         case Button::mouseMiddle:
             return this->mouseMiddleButtonTool.get();
         case Button::mouseRight:
@@ -564,14 +570,14 @@ auto ToolHandler::getButtonTool(Button button) -> Tool* {
 
 void ToolHandler::resetButtonTool(Tool* tool, Button button) {
     switch (button) {
-        case Button::eraser:
+        case Button::stylusEraser:
             this->eraserButtonTool.reset(new Tool(tool));
             break;
-        case Button::one:
-            this->button1Tool.reset(new Tool(tool));
+        case Button::stylusOne:
+            this->stylusButton1Tool.reset(new Tool(tool));
             break;
-        case Button::two:
-            this->button2Tool.reset(new Tool(tool));
+        case Button::stylusTwo:
+            this->stylusButton2Tool.reset(new Tool(tool));
             break;
         case Button::mouseMiddle:
             this->mouseMiddleButtonTool.reset(new Tool(tool));

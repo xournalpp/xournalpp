@@ -172,19 +172,19 @@ auto StylusInputHandler::changeTool(InputEvent const& event) -> bool {
     // Stylus
     if (event.deviceClass == INPUT_DEVICE_PEN) {
         if (this->modifier2) {
-            toolHandler->pointCurrentToolToButtonTool(Button::one);
+            toolHandler->pointCurrentToolToButtonTool(Button::stylusOne);
             cfg = settings->getStylusButton1Config();
-            cfg->acceptActions(toolHandler, Button::one);
+            cfg->acceptActions(toolHandler, Button::stylusOne);
 
         } else if (this->modifier3) {
-            toolHandler->pointCurrentToolToButtonTool(Button::two);
+            toolHandler->pointCurrentToolToButtonTool(Button::stylusTwo);
             cfg = settings->getStylusButton2Config();
-            cfg->acceptActions(toolHandler, Button::two);
+            cfg->acceptActions(toolHandler, Button::stylusTwo);
         }
     } else if (event.deviceClass == INPUT_DEVICE_ERASER) {
-        toolHandler->pointCurrentToolToButtonTool(Button::eraser);
+        toolHandler->pointCurrentToolToButtonTool(Button::stylusEraser);
         cfg = settings->getEraserButtonConfig();
-        cfg->acceptActions(toolHandler, Button::eraser);
+        cfg->acceptActions(toolHandler, Button::stylusEraser);
     }
     if (!cfg || cfg->getAction() == TOOL_NONE) {
         toolHandler->pointCurrentToolToToolbarTool();

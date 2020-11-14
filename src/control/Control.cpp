@@ -1694,7 +1694,7 @@ void Control::toolChanged() {
 
     // Update color
     if (toolHandler->hasCapability(TOOL_CAP_COLOR)) {
-        toolColorChanged(false);
+        toolColorChanged();
     }
 
     ActionType rulerAction = ACTION_NOT_SELECTED;
@@ -1846,19 +1846,14 @@ void Control::toolLineStyleChanged() {
     }
 }
 
-/**
- * Select the color for the tool
- *
- * @param userSelection
- * 			true if the user selected the color
- * 			false if the color is selected by a tool change
- * 			and therefore should not be applied to a selection
- */
-void Control::toolColorChanged(bool userSelection) {
+
+void Control::toolColorChanged() {
     fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
     getCursor()->updateCursor();
+}
 
-    if (userSelection && this->win && toolHandler->getColor() != Color(-1)) {
+void Control::changeColorOfSelection() {
+    if (this->win && toolHandler->getColor() != Color(-1)) {
         EditSelection* sel = this->win->getXournal()->getSelection();
         if (sel) {
             UndoAction* undo = sel->setColor(toolHandler->getColor());
@@ -2506,13 +2501,13 @@ void Control::applyPreferredLanguage() {
 
 void Control::initButtonTool() {
     ButtonConfig* cfg = settings->getEraserButtonConfig();
-    cfg->initButton(this->toolHandler, Button::eraser);
+    cfg->initButton(this->toolHandler, Button::stylusEraser);
 
     cfg = settings->getStylusButton1Config();
-    cfg->initButton(this->toolHandler, Button::one);
+    cfg->initButton(this->toolHandler, Button::stylusOne);
 
     cfg = settings->getStylusButton2Config();
-    cfg->initButton(this->toolHandler, Button::two);
+    cfg->initButton(this->toolHandler, Button::stylusTwo);
 
     cfg = settings->getMiddleButtonConfig();
     cfg->initButton(toolHandler, Button::mouseMiddle);

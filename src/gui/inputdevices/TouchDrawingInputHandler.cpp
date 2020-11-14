@@ -90,8 +90,8 @@ auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
     }
 
     if (cfg && cfg->getAction() != TOOL_NONE) {
-        toolHandler->pointCurrentToolToButtonTool(Button::eraser);
-        cfg->acceptActions(toolHandler, Button::eraser);
+        toolHandler->pointCurrentToolToButtonTool(Button::stylusEraser);
+        cfg->acceptActions(toolHandler, Button::stylusEraser);
     } else {
         toolHandler->pointCurrentToolToToolbarTool();
     }
