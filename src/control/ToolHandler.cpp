@@ -485,16 +485,12 @@ void ToolHandler::pointCurrentToolToButtonTool(Button button) {
     Tool* tool = getButtonTool(button);
     this->activeTool = tool;
 
-    this->listener->toolColorChanged(false);
-    this->listener->toolSizeChanged();
     this->fireToolChanged();
 }
 
 void ToolHandler::pointCurrentToolToToolbarTool() {
     this->activeTool = this->toolbarSelectedTool;
 
-    this->listener->toolColorChanged(false);
-    this->listener->toolSizeChanged();
     this->fireToolChanged();
 }
 
