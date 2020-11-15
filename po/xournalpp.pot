@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-11 11:37+0000\n"
+"POT-Creation-Date: 2020-11-15 16:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -780,7 +780,7 @@ msgstr ""
 msgid "Normal drawing"
 msgstr ""
 
-#: ../src/plugin/Plugin.cpp:311 ../src/plugin/Plugin.cpp:330
+#: ../src/plugin/Plugin.cpp:232 ../src/plugin/Plugin.cpp:248
 msgid "OK"
 msgstr ""
 
@@ -1465,11 +1465,11 @@ msgstr ""
 msgid "dashed"
 msgstr ""
 
-#: ../src/gui/dialog/PluginDialogEntry.cpp:28
+#: ../src/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default disabled"
 msgstr ""
 
-#: ../src/gui/dialog/PluginDialogEntry.cpp:28
+#: ../src/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default enabled"
 msgstr ""
 
