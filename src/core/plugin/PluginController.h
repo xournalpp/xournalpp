@@ -26,13 +26,6 @@ public:
 
 public:
     /**
-     * Load all plugins within this folder
-     *
-     * @param path The path which contains the plugin folders
-     */
-    void loadPluginsFrom(fs::path const& path);
-
-    /**
      * Register toolbar item and all other UI stuff
      */
     void registerToolbar();
@@ -59,7 +52,8 @@ private:
     Control* control;
 
     /**
-     * All loaded Plugins
+     * All loaded Plugins, sorted by name and path
+     * Todo: replace with boost::flat_map
      */
     std::vector<std::unique_ptr<Plugin>> plugins;
 };

@@ -20,6 +20,7 @@ void PluginDialogEntry::loadSettings() {
     gtk_label_set_text(GTK_LABEL(get("lbAuthor")), plugin->getAuthor().c_str());
     gtk_label_set_text(GTK_LABEL(get("lbVersion")), plugin->getVersion().c_str());
     gtk_label_set_text(GTK_LABEL(get("lbDescription")), plugin->getDescription().c_str());
+    gtk_label_set_text(GTK_LABEL(get("lbPath")), plugin->getPath().u8string().c_str());
     gtk_label_set_text(GTK_LABEL(get("lbDefaultText")),
                        plugin->isDefaultEnabled() ? _("default enabled") : _("default disabled"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbEnabled")), plugin->isEnabled());
@@ -42,12 +43,12 @@ void PluginDialogEntry::saveSettings(std::string& pluginEnabled, std::string& pl
         if (!pluginEnabled.empty()) {
             pluginEnabled += ",";
         }
-        pluginEnabled += plugin->getName();
+        pluginEnabled += plugin->getPath().u8string();
     } else {
         if (!pluginDisabled.empty()) {
             pluginDisabled += ",";
         }
-        pluginDisabled += plugin->getName();
+        pluginDisabled += plugin->getPath().u8string();
     }
 #endif
 }

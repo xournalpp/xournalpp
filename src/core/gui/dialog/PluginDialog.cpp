@@ -3,9 +3,6 @@
 #include "control/settings/Settings.h"
 #include "plugin/PluginController.h"
 
-#include "PluginDialogEntry.h"
-
-
 PluginDialog::PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings):
         GladeGui(gladeSearchPath, "plugin.glade", "pluginDialog"), settings(settings) {}
 

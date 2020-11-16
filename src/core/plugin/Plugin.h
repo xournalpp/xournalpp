@@ -80,6 +80,9 @@ public:
     /// Plugin version
     auto getVersion() const -> std::string const&;
 
+    /// @return the path to the plugin folder. Each plugin should have a unique path.
+    auto getPath() const -> fs::path const&;
+
     /// The plugin is enabled
     auto isEnabled() const -> bool;
 
@@ -134,5 +137,5 @@ private:
 };
 
 #else
-struct Plugin final {};  ///< empty struct, since Plugin is not compiled
+struct Plugin final {};  ///< empty struct, since Plugins are not available
 #endif
