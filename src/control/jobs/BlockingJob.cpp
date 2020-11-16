@@ -2,6 +2,7 @@
 
 #include "control/Control.h"
 #include "control/xojfile/SaveHandler.h"
+#include "gui/XournalView.h"
 
 BlockingJob::BlockingJob(Control* control, const string& name): control(control) { control->block(name); }
 
@@ -16,7 +17,11 @@ void BlockingJob::execute() {
 auto BlockingJob::finished(Control* control) -> bool {
     // "this" is not needed, "control" is in
     // the closure, therefore no sync needed
-    Util::execInUiThread([=]() { control->unblock(); });
+    Util::execInUiThread([=]() {
+        control->unblock();
+        XournalView* xournal = control->getWindow()->getXournal();
+        gtk_widget_grab_focus(xournal->getWidget());
+    });
 
     // do not call again
     return false;
