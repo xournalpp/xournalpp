@@ -169,8 +169,8 @@ auto ZoomControl::getZoomFitValue() const -> double { return this->zoomFitValue;
 auto ZoomControl::updateZoomPresentationValue(size_t pageNo) -> bool {
     XojPageView* page = view->getViewFor(view->getCurrentPage());
     if (!page) {
-        // no page
-        return false;
+        g_warning("Cannot update zoomPresentationValue yet. This should only happen on startup! ");
+        return true;
     }
 
     Rectangle widget_rect = getVisibleRect();
@@ -243,13 +243,9 @@ void ZoomControl::setZoomPresentationMode(bool isZoomPresentationMode) {
 
 auto ZoomControl::isZoomPresentationMode() const -> bool { return this->zoomPresentationMode; }
 
-void ZoomControl::setZoomStep(double zoomStep) {
-    this->zoomStep = zoomStep * this->zoom100Value;
-}
+void ZoomControl::setZoomStep(double zoomStep) { this->zoomStep = zoomStep * this->zoom100Value; }
 
-void ZoomControl::setZoomStepScroll(double zoomStep) {
-    this->zoomStepScroll = zoomStep * this->zoom100Value;
-}
+void ZoomControl::setZoomStepScroll(double zoomStep) { this->zoomStepScroll = zoomStep * this->zoom100Value; }
 
 void ZoomControl::pageSizeChanged(size_t page) {
     updateZoomPresentationValue(page);
