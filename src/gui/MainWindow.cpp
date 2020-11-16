@@ -497,11 +497,6 @@ auto MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
         // editing text - give that control
         return false;
     }
-    // if (event->keyval == GDK_KEY_Escape) {
-    //     win->getControl()->getSearchBar()->showSearchBar(false);
-    //     return true;
-    // }
-
 
     return false;
 }

@@ -22,8 +22,6 @@ void ScrollHandlingXournalpp::translate(cairo_t* cr, double& x1, double& x2, dou
     double h = gtk_adjustment_get_value(adjHorizontal);
     double v = gtk_adjustment_get_value(adjVertical);
 
-    printf("[ScrollHandlingXournalpp::translate] %f, %f\n", h, v);
-
     cairo_translate(cr, -h, -v);
 
     x1 += h;
@@ -36,8 +34,6 @@ void ScrollHandlingXournalpp::translate(cairo_t* cr, double& x1, double& x2, dou
 void ScrollHandlingXournalpp::translate(double& x, double& y) {
     double h = gtk_adjustment_get_value(adjHorizontal);
     double v = gtk_adjustment_get_value(adjVertical);
-
-    printf("[ScrollHandlingXournalpp::translate] %f, %f\n", h, v);
 
     x += h;
     y += v;

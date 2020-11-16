@@ -401,8 +401,6 @@ void XournalView::scrollTo(size_t pageNo, double yDocument) {
 
     layout->ensureRectIsVisible(x, y, width, height);
 
-    printf("[XournalView::scrollTo] %d %d %d %d\n", x, y, width, height);
-
     // Select the page
     control->firePageSelected(pageNo);
 }

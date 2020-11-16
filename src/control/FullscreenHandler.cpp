@@ -46,7 +46,7 @@ void FullscreenHandler::hideWidget(MainWindow* win, const string& widgetName) {
 
         gtk_widget_show(fix);
 
-        GtkWidget* mainBox = win->get("mainBox");   
+        GtkWidget* mainBox = win->get("mainBox");
         gtk_box_pack_end(GTK_BOX(mainBox), fix, false, false, 0);
 
         #endif
