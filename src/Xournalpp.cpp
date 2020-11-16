@@ -24,7 +24,7 @@ auto main(int argc, char* argv[]) -> int {
 #ifdef _WIN32
     // Show and hide the console here. Otherwise, gspawn-win32-helper will create annoying console popups.
     AllocConsole();
-    SetConsoleOutputCP(CP_UTF8); //< Quick fix for #2395
+    SetConsoleOutputCP(CP_UTF8); // Quick fix for #2395
     ShowWindow(GetConsoleWindow(), SW_HIDE);
 #endif
 
