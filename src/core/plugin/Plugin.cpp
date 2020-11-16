@@ -91,22 +91,6 @@ void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu) {
 
 void Plugin::executeMenuEntry(MenuEntry* entry) { callFunction(entry->callback); }
 
-auto Plugin::getName() const -> std::string const& { return name; }
-
-auto Plugin::getDescription() const -> std::string const& { return description; }
-
-auto Plugin::getAuthor() const -> std::string const& { return author; }
-
-auto Plugin::getVersion() const -> std::string const& { return version; }
-
-auto Plugin::isEnabled() const -> bool { return enabled; }
-
-void Plugin::setEnabled(bool lEnabled) { this->enabled = lEnabled; }
-
-auto Plugin::isDefaultEnabled() const -> bool { return defaultEnabled; }
-
-auto Plugin::isInInitUi() const -> bool { return inInitUi; }
-
 auto Plugin::registerMenu(std::string menu, std::string callback, std::string accelerator) -> size_t {
     menuEntries.emplace_back(this, std::move(menu), std::move(callback), std::move(accelerator));
     return menuEntries.size() - 1;
@@ -257,6 +241,17 @@ auto Plugin::callFunction(const std::string& fnc) -> bool {
     return true;
 }
 
+auto Plugin::getName() const -> std::string const& { return name; }
+auto Plugin::getDescription() const -> std::string const& { return description; }
+auto Plugin::getAuthor() const -> std::string const& { return author; }
+auto Plugin::getVersion() const -> std::string const& { return version; }
+auto Plugin::getPath() const -> fs::path const& { return path; }
+
+auto Plugin::isEnabled() const -> bool { return enabled; }
+void Plugin::setEnabled(bool lEnabled) { this->enabled = lEnabled; }
+auto Plugin::isDefaultEnabled() const -> bool { return defaultEnabled; }
+
+auto Plugin::isInInitUi() const -> bool { return inInitUi; }
 auto Plugin::isValid() const -> bool { return valid; }
 
 #endif
