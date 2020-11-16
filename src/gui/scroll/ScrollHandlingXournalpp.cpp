@@ -21,7 +21,6 @@ auto ScrollHandlingXournalpp::getPreferredHeight() -> int { return 400; }
 void ScrollHandlingXournalpp::translate(cairo_t* cr, double& x1, double& x2, double& y1, double& y2) {
     double h = gtk_adjustment_get_value(adjHorizontal);
     double v = gtk_adjustment_get_value(adjVertical);
-
     cairo_translate(cr, -h, -v);
 
     x1 += h;
@@ -34,6 +33,7 @@ void ScrollHandlingXournalpp::translate(cairo_t* cr, double& x1, double& x2, dou
 void ScrollHandlingXournalpp::translate(double& x, double& y) {
     double h = gtk_adjustment_get_value(adjHorizontal);
     double v = gtk_adjustment_get_value(adjVertical);
+
     x += h;
     y += v;
 }
