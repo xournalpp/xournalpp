@@ -36,11 +36,11 @@ LatexController::~LatexController() { this->control = nullptr; }
  * Find the tex executable, return false if not found
  */
 auto LatexController::findTexDependencies() -> LatexController::FindDependencyStatus {
-    std::string templatePathName = this->settings.globalTemplatePath.string();
-    if (fs::is_regular_file(fs::status(templatePathName))) {
-        std::ifstream is(templatePathName, std::ios_base::binary);
+    auto templatePath = this->settings.globalTemplatePath;
+    if (fs::is_regular_file(templatePath)) {
+        std::ifstream is(templatePath, std::ios_base::binary);
         if (!is.is_open()) {
-            g_message("%s", templatePathName.c_str());
+            g_message("%s", templatePath.string().c_str());
             string msg = _("Global template file does not exist. Please check your settings.");
             return LatexController::FindDependencyStatus(false, msg);
         }
@@ -182,11 +182,8 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
             g_warning("latex: %s", message.c_str());
             XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
         }
-        Path pdfPath = self->texTmpDir / "tex.pdf";
-        if (pdfPath.exists()) {
-            // Delete the pdf to prevent more errors
-            pdfPath.deleteFile();
-        }
+        fs::path pdfPath = self->texTmpDir / "tex.pdf";
+        fs::remove(pdfPath);
         g_error_free(err);
     } else {
         self->isValidTex = true;
@@ -240,20 +237,15 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
         return nullptr;
     }
 
-    Path pdfPath = texTmpDir / "tex.pdf";
-    GError* err = nullptr;
-
-    gchar* fileContents = nullptr;
-    gsize fileLength = 0;
-    if (!g_file_get_contents(pdfPath.c_str(), &fileContents, &fileLength, &err)) {
-        XojMsgBox::showErrorToUser(control->getGtkWindow(),
-                                   FS(_F("Could not load LaTeX PDF file, File Error: {1}") % err->message));
-        g_error_free(err);
+    fs::path pdfPath = texTmpDir / "tex.pdf";
+    auto contents = Util::readString(pdfPath, true);
+    if (!contents) {
         return nullptr;
     }
 
     auto img = std::make_unique<TexImage>();
-    bool loaded = img->loadData(std::string(fileContents, fileLength), &err);
+    GError* err{};
+    bool loaded = img->loadData(std::move(*contents), &err);
 
     if (err != nullptr) {
         string message = FS(_F("Could not load LaTeX PDF file: {1}") % err->message);
@@ -278,8 +270,6 @@ auto LatexController::loadRendered(string renderedTex) -> std::unique_ptr<TexIma
         }
         img->setHeight(imgheight);
     }
-
-    g_free(fileContents);
 
     return img;
 }

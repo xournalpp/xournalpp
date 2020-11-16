@@ -6,7 +6,7 @@
 
 auto AudioController::startRecording() -> bool {
     if (!this->isRecording()) {
-        if (getAudioFolder().isEmpty()) {
+        if (getAudioFolder().empty()) {
             return false;
         }
 
@@ -25,7 +25,7 @@ auto AudioController::startRecording() -> bool {
 
         g_message("Start recording");
 
-        bool isRecording = this->audioRecorder->start(getAudioFolder().str() + "/" + data);
+        bool isRecording = this->audioRecorder->start((getAudioFolder() / data).string());
 
         if (!isRecording) {
             audioFilename = "";
@@ -85,7 +85,7 @@ void AudioController::stopPlayback() {
 
 auto AudioController::getAudioFilename() const -> string const& { return this->audioFilename; }
 
-auto AudioController::getAudioFolder() const -> Path {
+auto AudioController::getAudioFolder() const -> fs::path {
     string const& af = this->settings.getAudioFolder();
 
     if (af.length() < 8) {
@@ -93,10 +93,16 @@ auto AudioController::getAudioFolder() const -> Path {
                        "recording folder under \"Preferences > Audio recording\"");
         g_warning("%s", msg.c_str());
         XojMsgBox::showErrorToUser(this->control.getGtkWindow(), msg);
-        return Path("");
+        return fs::path{};
     }
 
-    return Path::fromUri(af);
+    auto path = Util::fromUri(af);
+    if (!path) {
+        g_warning("Failed to fetch audio folder.");
+        return fs::path{};
+    }
+
+    return *Util::fromUri(af);
 }
 
 auto AudioController::getStartTime() const -> size_t { return this->timestamp; }

@@ -44,7 +44,7 @@ protected:
      */
     void exportGraphics();
 
-    virtual bool isUriValid(string& uri);
+    bool testAndSetFilepath(fs::path file) override;
 
 private:
     /**

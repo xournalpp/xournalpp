@@ -7,7 +7,7 @@
 
 #include "pixbuf-utils.h"
 
-Image::Image(): Element(ELEMENT_IMAGE) { this->sizeCalculated = true; }
+Image::Image(): Element(ELEMENT_IMAGE) {}
 
 Image::~Image() {
     if (this->image) {
@@ -27,13 +27,20 @@ auto Image::clone() -> Element* {
     img->data = this->data;
 
     img->image = cairo_surface_reference(this->image);
+    img->calcSize();
 
     return img;
 }
 
-void Image::setWidth(double width) { this->width = width; }
+void Image::setWidth(double width) {
+    this->width = width;
+    this->calcSize();
+}
 
-void Image::setHeight(double height) { this->height = height; }
+void Image::setHeight(double height) {
+    this->height = height;
+    this->calcSize();
+}
 
 auto Image::cairoReadFunction(Image* image, unsigned char* data, unsigned int length) -> cairo_status_t {
     for (unsigned int i = 0; i < length; i++, image->read++) {
@@ -76,7 +83,8 @@ auto Image::getImage() -> cairo_surface_t* {
     return this->image;
 }
 
-void Image::scale(double x0, double y0, double fx, double fy) {
+void Image::scale(double x0, double y0, double fx, double fy, double rotation,
+                  bool) {  // line width scaling option is not used
     this->x -= x0;
     this->x *= fx;
     this->x += x0;
@@ -86,9 +94,10 @@ void Image::scale(double x0, double y0, double fx, double fy) {
 
     this->width *= fx;
     this->height *= fy;
+    this->calcSize();
 }
 
-void Image::rotate(double x0, double y0, double xo, double yo, double th) {}
+void Image::rotate(double x0, double y0, double th) {}
 
 void Image::serialize(ObjectOutputStream& out) {
     out.writeObject("Image");
@@ -119,6 +128,10 @@ void Image::readSerialized(ObjectInputStream& in) {
     this->image = in.readImage();
 
     in.endObject();
+    this->calcSize();
 }
 
-void Image::calcSize() {}
+void Image::calcSize() const {
+    this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
+    this->sizeCalculated = true;
+}

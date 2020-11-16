@@ -85,8 +85,7 @@ public:
      */
     int getMappedCol() const;
 
-
-    GtkColorWrapper getSelectionColor();
+    GdkRGBA getSelectionColor() override;
     int getBufferPixels();
 
     /**

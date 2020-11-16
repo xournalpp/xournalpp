@@ -18,6 +18,7 @@
 #include <gtk/gtk.h>
 
 #include "XournalType.h"
+#include "filesystem.h"
 
 struct BackgroundImage {
     BackgroundImage();
@@ -33,15 +34,15 @@ struct BackgroundImage {
 
     void free();
 
-    void loadFile(const string& filename, GError** error);
-    void loadFile(GInputStream* stream, const string& filename, GError** error);
+    void loadFile(fs::path const& filepath, GError** error);
+    void loadFile(GInputStream* stream, fs::path const& filepath, GError** error);
 
     int getCloneId();
     void setCloneId(int id);
     void clearSaveState();
 
-    string getFilename();
-    void setFilename(string filename);
+    fs::path getFilepath();
+    void setFilepath(fs::path filepath);
 
     bool isAttached();
     void setAttach(bool attach);

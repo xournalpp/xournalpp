@@ -5,11 +5,14 @@
 
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
-#include "util/GtkColorWrapper.h"
 #include "view/DocumentView.h"
 
-VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, double y, double zoom):
-        view(view), page(page), layer(this->page->getSelectedLayer()), startY(y), endY(y) {
+VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y,
+                                         double zoom):
+        view(view), page(page), layer(this->page->getSelectedLayer()), snappingHandler(settings) {
+    double ySnapped = snappingHandler.snapVertically(y, false);
+    this->startY = ySnapped;
+    this->endY = ySnapped;
     for (Element* e: *this->layer->getElements()) {
         if (e->getY() >= y) {
             this->elements.push_back(e);
@@ -48,11 +51,11 @@ VerticalToolHandler::~VerticalToolHandler() {
 }
 
 void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
-    GtkColorWrapper selectionColor = view->getSelectionColor();
+    GdkRGBA selectionColor = view->getSelectionColor();
 
     cairo_set_line_width(cr, 1);
 
-    selectionColor.apply(cr);
+    gdk_cairo_set_source_rgba(cr, &selectionColor);
 
     double y = NAN;
     double height = NAN;
@@ -68,7 +71,8 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
     cairo_rectangle(cr, 0, y * zoom, this->page->getWidth() * zoom, height * zoom);
 
     cairo_stroke_preserve(cr);
-    selectionColor.applyWithAlpha(cr, 0.3);
+    auto applied = GdkRGBA{selectionColor.red, selectionColor.green, selectionColor.blue, 0.3};
+    gdk_cairo_set_source_rgba(cr, &applied);
     cairo_fill(cr);
 
     cairo_set_source_surface(cr, this->crBuffer, 0, this->endY * zoom);
@@ -76,12 +80,13 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
 }
 
 void VerticalToolHandler::currentPos(double x, double y) {
-    if (this->endY == y) {
+    double ySnapped = snappingHandler.snapVertically(y, false);
+    if (this->endY == ySnapped) {
         return;
     }
-    double y1 = std::min(this->endY, y);
+    double y1 = std::min(this->endY, ySnapped);
 
-    this->endY = y;
+    this->endY = ySnapped;
 
     this->view->repaintRect(0, y1, this->page->getWidth(), this->page->getHeight());
 }

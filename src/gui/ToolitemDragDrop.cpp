@@ -12,7 +12,7 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, AbstractToolItem* ai
     d->id = id;
     d->item = ait;
     d->type = TOOL_ITEM_ITEM;
-    d->color = 0;
+    d->color = Color(0U);
 
     g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, static_cast<GDestroyNotify>(g_free));
 }
@@ -23,7 +23,7 @@ auto ToolitemDragDrop::ToolItemDragDropData_new(AbstractToolItem* item) -> ToolI
     d->id = -1;
     d->item = item;
     d->type = TOOL_ITEM_ITEM;
-    d->color = 0;
+    d->color = Color(0U);
 
     return d;
 }
@@ -34,12 +34,12 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, ToolItemType type) {
     d->id = id;
     d->item = nullptr;
     d->type = type;
-    d->color = 0;
+    d->color = Color(0U);
 
     g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, static_cast<GDestroyNotify>(g_free));
 }
 
-void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, int color, AbstractToolItem* item) {
+void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, Color color, AbstractToolItem* item) {
     ToolItemDragDropData* d = g_new(ToolItemDragDropData, 1);
     d->identify = ToolItemDragDropData_Identify;
     d->id = id;

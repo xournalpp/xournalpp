@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "Util.h"
+#include "PathUtil.h"
 #include "XojMsgBox.h"
 
 using namespace std;
@@ -24,16 +24,17 @@ MetadataManager::~MetadataManager() { documentChanged(); }
 /**
  * Delete an old metadata file
  */
-void MetadataManager::deleteMetadataFile(const string& path) {
+void MetadataManager::deleteMetadataFile(fs::path const& path) {
     // be carefull, delete the Metadata file, NOT the Document!
-    if (path.substr(path.size() - 9) != ".metadata") {
-        g_warning("Try to delete non-metadata file: %s", path.c_str());
+    if (path.extension() != ".metadata") {
+        g_warning("Try to delete non-metadata file: %s", path.string().c_str());
         return;
     }
 
-    int result = g_unlink(path.c_str());
-    if (result != 0) {
-        g_warning("Could not delete metadata file %s", path.c_str());
+    try {
+        fs::remove(path);
+    } catch (fs::filesystem_error const&) {
+        g_warning("Could not delete metadata file %s", path.string().c_str());
     }
 }
 
@@ -60,31 +61,23 @@ auto sortMetadata(MetadataEntry& a, MetadataEntry& b) -> bool { return a.time > 
  * Load the metadata list (sorted)
  */
 auto MetadataManager::loadList() -> vector<MetadataEntry> {
-    Path folder = Util::getConfigSubfolder("metadata");
+    auto folder = Util::getConfigSubfolder("metadata");
 
     vector<MetadataEntry> data;
+    try {
+        for (auto const& f: fs::directory_iterator(folder)) {
+            auto path = folder / f;
 
-    GError* error = nullptr;
-    GDir* home = g_dir_open(folder.c_str(), 0, &error);
-    if (error != nullptr) {
-        XojMsgBox::showErrorToUser(nullptr, error->message);
-        g_error_free(error);
+            MetadataEntry entry = loadMetadataFile(path, f.path());
+
+            if (entry.valid) {
+                data.push_back(entry);
+            }
+        }
+    } catch (fs::filesystem_error& e) {
+        XojMsgBox::showErrorToUser(nullptr, e.what());
         return data;
     }
-
-    const gchar* file = nullptr;
-    while ((file = g_dir_read_name(home)) != nullptr) {
-        string path = folder.str();
-        path += "/";
-        path += file;
-
-        MetadataEntry entry = loadMetadataFile(path, file);
-
-        if (entry.valid) {
-            data.push_back(entry);
-        }
-    }
-    g_dir_close(home);
 
     std::sort(data.begin(), data.end(), sortMetadata);
 
@@ -94,14 +87,14 @@ auto MetadataManager::loadList() -> vector<MetadataEntry> {
 /**
  * Parse a single metadata file
  */
-auto MetadataManager::loadMetadataFile(const string& path, const string& file) -> MetadataEntry {
+auto MetadataManager::loadMetadataFile(fs::path const& path, fs::path const& file) -> MetadataEntry {
     MetadataEntry entry;
     entry.metadataFile = path;
 
     string line;
-    ifstream infile(path.c_str());
+    ifstream infile(path);
 
-    string time = file.substr(0, file.size() - 9);
+    auto time = file.stem().string();
     entry.time = strtoll(time.c_str(), nullptr, 10);
 
     if (!getline(infile, line)) {
@@ -159,7 +152,7 @@ auto MetadataManager::loadMetadataFile(const string& path, const string& file) -
 /**
  * Get the metadata for a file
  */
-auto MetadataManager::getForFile(const string& file) -> MetadataEntry {
+auto MetadataManager::getForFile(fs::path const& file) -> MetadataEntry {
     vector<MetadataEntry> files = loadList();
 
     MetadataEntry entry;
@@ -171,7 +164,7 @@ auto MetadataManager::getForFile(const string& file) -> MetadataEntry {
     }
 
     for (int i = 20; i < static_cast<int>(files.size()); i++) {
-        string path = files[i].metadataFile;
+        auto path = files[i].metadataFile;
         deleteMetadataFile(path);
     }
 
@@ -190,15 +183,12 @@ void MetadataManager::storeMetadata(MetadataEntry* m) {
         }
     }
 
-    Path folder = Util::getConfigSubfolder("metadata");
-    string path = folder.str();
-    path += "/";
+    auto path = Util::getConfigSubfolder("metadata");
     gint64 time = g_get_real_time();
-    path += std::to_string(time);
+    path /= std::to_string(time);
     path += ".metadata";
 
-    ofstream out;
-    out.open(path.c_str());
+    ofstream out(path);
     out << "XOJ-METADATA/1.0\n";
     out << m->path << "\n";
     out << "page=" << m->page << "\n";
@@ -209,7 +199,7 @@ void MetadataManager::storeMetadata(MetadataEntry* m) {
 /**
  * Store the current data into metadata
  */
-void MetadataManager::storeMetadata(const string& file, int page, double zoom) {
+void MetadataManager::storeMetadata(fs::path const& file, int page, double zoom) {
     if (file.empty()) {
         return;
     }
@@ -219,7 +209,6 @@ void MetadataManager::storeMetadata(const string& file, int page, double zoom) {
         metadata = new MetadataEntry();
     }
 
-    metadata->metadataFile = "";
     metadata->valid = true;
     metadata->path = file;
     metadata->zoom = zoom;

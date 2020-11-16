@@ -69,9 +69,9 @@ public:
 
 public:
     // Menu File
-    bool newFile(string pageTemplate = "", Path fileName = "");
-    bool openFile(Path filename = "", int scrollToPage = -1, bool forceOpen = false);
-    bool annotatePdf(Path filename, bool attachPdf, bool attachToDocument);
+    bool newFile(string pageTemplate = "", fs::path filepath = {});
+    bool openFile(fs::path filepath = "", int scrollToPage = -1, bool forceOpen = false);
+    bool annotatePdf(fs::path filepath, bool attachPdf, bool attachToDocument);
     void print();
     void exportAsPdf();
     void exportAs();
@@ -108,7 +108,7 @@ public:
 
     // Asks user to replace an existing file when saving / exporting, since we add the extension
     // after the OK, we need to check manually
-    bool checkExistingFile(Path& folder, Path& filename);
+    bool askToReplace(fs::path const& filepath) const;
 
     void resetShapeRecognizer();
 
@@ -144,7 +144,7 @@ public:
 
     void updatePageNumbers(size_t page, size_t pdfPage);
 
-    virtual void fileOpened(const char* uri);
+    virtual void fileOpened(fs::path const& path);
 
     /**
      * Save current state (selected tool etc.)
@@ -192,6 +192,7 @@ public:
 
     void addDefaultPage(string pageTemplate);
     void insertNewPage(size_t position);
+    void appendNewPdfPages();
     void insertPage(const PageRef& page, size_t position);
     void deletePage();
 
@@ -227,8 +228,8 @@ public:
     void unblock();
 
     void renameLastAutosaveFile();
-    void setLastAutosaveFile(Path newAutosaveFile);
-    void deleteLastAutosaveFile(Path newAutosaveFile);
+    void setLastAutosaveFile(fs::path newAutosaveFile);
+    void deleteLastAutosaveFile(fs::path newAutosaveFile);
     void setClipboardHandlerSelection(EditSelection* selection);
 
     MetadataManager* getMetadataManager();
@@ -238,7 +239,7 @@ public:
     Document* getDocument();
     UndoRedoHandler* getUndoRedoHandler();
     MainWindow* getWindow();
-    GtkWindow* getGtkWindow();
+    GtkWindow* getGtkWindow() const;
     RecentManager* getRecentManager();
     ScrollHandler* getScrollHandler();
     PageRef getCurrentPage();
@@ -315,16 +316,21 @@ protected:
     /**
      * Check if this is an autosave file, return false in this case and display a user instruction
      */
-    bool shouldFileOpen(string filename);
+    bool shouldFileOpen(fs::path const& filepath) const;
 
-    bool loadXoptTemplate(Path filename);
-    bool loadPdf(const Path& filename, int scrollToPage);
+    bool loadXoptTemplate(fs::path const& filepath);
+    bool loadPdf(fs::path const& filepath, int scrollToPage);
 
 private:
     /**
      * "Closes" the document, preparing the editor for a new document.
      */
     void closeDocument();
+
+    /**
+     * Applies the preferred language to the UI
+     */
+    void applyPreferredLanguage();
 
     RecentManager* recent;
     UndoRedoHandler* undoRedo;
@@ -374,7 +380,7 @@ private:
      * The autosave handler ID
      */
     int autosaveTimeout = 0;
-    Path lastAutosaveFilename;
+    fs::path lastAutosaveFilename;
 
     XournalScheduler* scheduler;
 

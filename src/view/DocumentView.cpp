@@ -1,12 +1,8 @@
 #include "DocumentView.h"
 
-#include <config-debug.h>
-#include <config.h>
-
 #include "background/MainBackgroundPainter.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
-#include "model/BackgroundImage.h"
 #include "model/Layer.h"
 #include "model/eraser/EraseableStroke.h"
 
@@ -38,14 +34,10 @@ void DocumentView::applyColor(cairo_t* cr, Stroke* s) {
     }
 }
 
-void DocumentView::applyColor(cairo_t* cr, Element* e, int alpha) { applyColor(cr, e->getColor(), alpha); }
+void DocumentView::applyColor(cairo_t* cr, Element* e, uint8_t alpha) { applyColor(cr, e->getColor(), alpha); }
 
-void DocumentView::applyColor(cairo_t* cr, int c, int alpha) {
-    double r = ((c >> 16) & 0xff) / 255.0;
-    double g = ((c >> 8) & 0xff) / 255.0;
-    double b = (c & 0xff) / 255.0;
-
-    cairo_set_source_rgba(cr, r, g, b, alpha / 255.0);
+void DocumentView::applyColor(cairo_t* cr, Color c, uint8_t alpha) {
+    Util::cairo_set_source_rgbi(cr, c, alpha / 255.0);
 }
 
 void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource,
@@ -290,11 +282,11 @@ void DocumentView::drawBackground() {
  * Draw background if there is no background shown, like in GIMP etc.
  */
 void DocumentView::drawTransparentBackgroundPattern() {
-    Util::cairo_set_source_rgbi(cr, 0x666666);
+    Util::cairo_set_source_rgbi(cr, 0x666666U);
     cairo_rectangle(cr, 0, 0, width, height);
     cairo_fill(cr);
 
-    Util::cairo_set_source_rgbi(cr, 0x999999);
+    Util::cairo_set_source_rgbi(cr, 0x999999U);
 
     bool second = false;
     for (int y = 0; y < height; y += 8) {

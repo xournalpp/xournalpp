@@ -14,8 +14,8 @@
 #include <string>
 #include <vector>
 
-#include "Path.h"
 #include "XournalType.h"
+#include "filesystem.h"
 
 class ToolbarData;
 
@@ -30,10 +30,10 @@ private:
 
 public:
     vector<ToolbarData*>* getToolbars();
-    bool parse(const string& filename, bool predefined);
+    bool parse(fs::path const& filepath, bool predefined);
     void add(ToolbarData* data);
     void remove(ToolbarData* data);
-    void save(const Path& filename);
+    void save(const fs::path& filepath);
     bool existsId(const string& id);
     void initCopyNameId(ToolbarData* data);
 

@@ -3,8 +3,6 @@
 #include <fstream>
 #include <sstream>
 
-#include <config.h>
-
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/stockdlg/XojOpenDlg.h"
 #include "gui/dialog/FormatDialog.h"
@@ -13,6 +11,7 @@
 
 #include "PathUtil.h"
 #include "Util.h"
+#include "filesystem.h"
 #include "i18n.h"
 using std::ofstream;
 
@@ -73,7 +72,7 @@ void PageTemplateDialog::saveToModel() {
 
     GdkRGBA color;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cbBackgroundButton")), &color);
-    model.setBackgroundColor(Util::gdkrgba_to_hex(color));
+    model.setBackgroundColor(Util::GdkRGBA_to_argb(color));
 }
 
 void PageTemplateDialog::saveToFile() {
@@ -90,10 +89,10 @@ void PageTemplateDialog::saveToFile() {
     gtk_file_filter_add_pattern(filterXoj, "*.xopt");
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
-    if (!settings->getLastSavePath().isEmpty()) {
-        gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(dialog), settings->getLastSavePath().c_str());
+    if (!settings->getLastSavePath().empty()) {
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog),
+                                            Util::toGFilename(settings->getLastSavePath()).c_str());
     }
-
 
     time_t curtime = time(nullptr);
     char stime[128];
@@ -109,32 +108,23 @@ void PageTemplateDialog::saveToFile() {
         return;
     }
 
-    char* name = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-
-    string filename = name;
-    char* folder = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(dialog));
-    settings->setLastSavePath(folder);
-    g_free(folder);
-    g_free(name);
-
+    auto filepath = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    settings->setLastSavePath(filepath.parent_path());
     gtk_widget_destroy(dialog);
 
-
-    ofstream out;
-    out.open(filename.c_str());
+    std::ofstream out{filepath};
     out << model.toString();
-    out.close();
 }
 
 void PageTemplateDialog::loadFromFile() {
     XojOpenDlg dlg(GTK_WINDOW(this->getWindow()), this->settings);
-    Path filename = dlg.showOpenTemplateDialog();
+    fs::path file = dlg.showOpenTemplateDialog();
 
-    string contents;
-    if (!PathUtil::readString(contents, filename)) {
+    auto contents = Util::readString(file);
+    if (!contents.has_value()) {
         return;
     }
-    model.parse(contents);
+    model.parse(*contents);
 
     updateDataFromModel();
 }

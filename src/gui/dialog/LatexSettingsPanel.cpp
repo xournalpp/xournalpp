@@ -5,7 +5,7 @@
 
 #include "control/latex/LatexGenerator.h"
 
-#include "Util.h"
+#include "PathUtil.h"
 #include "filesystem.h"
 #include "i18n.h"
 
@@ -27,20 +27,15 @@ LatexSettingsPanel::~LatexSettingsPanel() {
 void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_toggle_button_set_active(this->cbAutoDepCheck, settings.autoCheckDependencies);
     if (!settings.globalTemplatePath.empty()) {
-        gtk_file_chooser_set_filename(this->globalTemplateChooser, settings.globalTemplatePath.u8string().c_str());
+        gtk_file_chooser_set_filename(this->globalTemplateChooser,
+                                      Util::toGFilename(settings.globalTemplatePath).c_str());
     }
     gtk_entry_set_text(GTK_ENTRY(this->get("latexSettingsGenCmd")), settings.genCmd.c_str());
 }
 
 void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.autoCheckDependencies = gtk_toggle_button_get_active(this->cbAutoDepCheck);
-    gchar* templPath = gtk_file_chooser_get_filename(this->globalTemplateChooser);
-    if (templPath) {
-        settings.globalTemplatePath = fs::u8path(templPath);
-        g_free(templPath);
-    } else {
-        settings.globalTemplatePath = "";
-    }
+    settings.globalTemplatePath = Util::fromGFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
     settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
 }
 
@@ -51,23 +46,24 @@ void LatexSettingsPanel::checkDeps() {
     this->save(settings);
     std::string msg;
 
-    if (fs::is_regular_file(fs::status(settings.globalTemplatePath.string()))) {
+    if (fs::is_regular_file(settings.globalTemplatePath)) {
         // Assume the file is encoded as UTF-8 (open in binary mode to avoid surprises)
-        std::ifstream is(settings.globalTemplatePath.string(), std::ios_base::binary);
+        std::ifstream is(settings.globalTemplatePath, std::ios_base::binary);
         if (!is.is_open()) {
             msg = FS(_F("Unable to open global template file at {1}. Does it exist?") %
                      settings.globalTemplatePath.u8string().c_str());
         } else {
             std::string templ(std::istreambuf_iterator<char>(is), {});
             std::string sample = LatexGenerator::templateSub("x^2", templ, 0x000000U);
-            const Path tmpDir = Util::getTmpDirSubfolder("tex");
+            auto const& tmpDir = Util::getTmpDirSubfolder("tex");
             auto result = LatexGenerator(settings).asyncRun(tmpDir, sample);
             if (auto* proc = std::get_if<GSubprocess*>(&result)) {
                 GError* err = nullptr;
                 if (g_subprocess_wait_check(*proc, nullptr, &err)) {
                     msg = _("Sample LaTeX file generated successfully.");
                 } else {
-                    msg = FS(_F("Error: {1}. Please check the contents of {2}") % err->message % tmpDir.c_str());
+                    msg = FS(_F("Error: {1}. Please check the contents of {2}") % err->message %
+                             tmpDir.u8string().c_str());
                     g_error_free(err);
                 }
                 g_object_unref(*proc);

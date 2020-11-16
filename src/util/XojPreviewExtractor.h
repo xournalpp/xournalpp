@@ -16,7 +16,8 @@
 
 #include <gdk/gdk.h>
 
-#include "Path.h"
+#include "filesystem.h"
+
 using std::string;
 
 enum PreviewExtractResult {
@@ -58,7 +59,7 @@ public:
      * @param file .xoj File
      * @return If an image was read, or the error
      */
-    PreviewExtractResult readFile(const Path& file);
+    PreviewExtractResult readFile(const fs::path& file);
 
     /**
      * Try to read the preview from byte buffer

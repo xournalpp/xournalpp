@@ -1,7 +1,7 @@
 ## xournalpp-thumbnailer executable ##
 
 if (WIN32)
-  # Windows does not support the thumbniler like this
+  # Windows does not support the thumbnailer like this
   return ()
 endif ()
 
@@ -10,7 +10,6 @@ add_definitions (-DBUILD_THUMBNAILER)
 add_executable (xournalpp-thumbnailer
   xournalpp-thumbnailer.cpp
   "${PROJECT_SOURCE_DIR}/src/util/GzUtil.cpp"
-  "${PROJECT_SOURCE_DIR}/src/util/Path.cpp"
   "${PROJECT_SOURCE_DIR}/src/util/PlaceholderString.cpp"
   "${PROJECT_SOURCE_DIR}/src/util/StringUtils.cpp"
   "${PROJECT_SOURCE_DIR}/src/util/XojPreviewExtractor.cpp"
@@ -24,11 +23,15 @@ else()
   set(thumbnailer_GTK_LDFLAGS "${GTK_LDFLAGS}")
 endif()
 
+add_dependencies(xournalpp-thumbnailer std::filesystem)
+
 target_link_libraries (xournalpp-thumbnailer
   ${ZLIB_LIBRARIES}
   ${Glib_LDFLAGS}
   ${ZIP_LDFLAGS}
   ${thumbnailer_GTK_LDFLAGS}
+  std::filesystem
+  util
 )
 
 set (THUMBNAILER_BIN "xournalpp-thumbnailer")

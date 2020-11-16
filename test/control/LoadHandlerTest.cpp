@@ -24,6 +24,8 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
+#include "filesystem.h"
+
 class LoadHandlerTest: public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE(LoadHandlerTest);
 
@@ -249,9 +251,9 @@ public:
         CPPUNIT_ASSERT_EQUAL(string("blue"), t2->getText());
         CPPUNIT_ASSERT_EQUAL(string("green"), t3->getText());
 
-        CPPUNIT_ASSERT_EQUAL(0xff0000, t1->getColor());
-        CPPUNIT_ASSERT_EQUAL(0x3333CC, t2->getColor());
-        CPPUNIT_ASSERT_EQUAL(0x00f000, t3->getColor());
+        CPPUNIT_ASSERT_EQUAL(0xff0000U, t1->getColor());
+        CPPUNIT_ASSERT_EQUAL(0x3333CCU, t2->getColor());
+        CPPUNIT_ASSERT_EQUAL(0x00f000U, t3->getColor());
     }
 
     void testTextZipped() {
@@ -277,9 +279,9 @@ public:
         CPPUNIT_ASSERT_EQUAL(string("blue"), t2->getText());
         CPPUNIT_ASSERT_EQUAL(string("green"), t3->getText());
 
-        CPPUNIT_ASSERT_EQUAL(0xff0000, t1->getColor());
-        CPPUNIT_ASSERT_EQUAL(0x3333CC, t2->getColor());
-        CPPUNIT_ASSERT_EQUAL(0x00f000, t3->getColor());
+        CPPUNIT_ASSERT_EQUAL(0xff0000U, t1->getColor());
+        CPPUNIT_ASSERT_EQUAL(0x3333CCU, t2->getColor());
+        CPPUNIT_ASSERT_EQUAL(0x00f000U, t3->getColor());
     }
 
     void testStroke() {}
@@ -329,12 +331,12 @@ public:
 
         SaveHandler h;
         h.prepareSave(doc1);
-        Path tmp = Util::getTmpDirSubfolder() / "save.xopp";
+        auto tmp = Util::getTmpDirSubfolder() / "save.xopp";
         h.saveTo(tmp);
 
         // Create a second loader so the first one doesn't free the memory
         LoadHandler handler2;
-        Document* doc2 = handler2.loadDocument(tmp.str());
+        Document* doc2 = handler2.loadDocument(tmp);
         auto elements2 = getElements(doc2);
 
         // Check that the coordinates from both files don't differ more than the precision they were saved with
@@ -370,7 +372,7 @@ public:
                     auto tA = dynamic_cast<Text*>(a);
                     auto tB = dynamic_cast<Text*>(b);
                     CPPUNIT_ASSERT_EQUAL(tA->getText(), tB->getText());
-                    CPPUNIT_ASSERT_EQUAL(tA->getFont().getSize(), tB->getFont().getSize());
+                    CPPUNIT_ASSERT_EQUAL(tA->getFontSize(), tB->getFontSize());
                     break;
                 }
                 default:

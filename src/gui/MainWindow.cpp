@@ -35,7 +35,7 @@
 #include "util/DeviceListHelper.h"
 
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
-        GladeGui(gladeSearchPath, "main.glade", "mainWindow"), ignoreNextHideEvent(false) {
+        GladeGui(gladeSearchPath, "main.glade", "mainWindow") {
     this->control = control;
     this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
     this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
@@ -68,7 +68,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 
     this->toolbar = new ToolMenuHandler(this->control, this, GTK_WINDOW(getWindow()));
 
-    string file = gladeSearchPath->findFile("", "toolbar.ini");
+    auto file = gladeSearchPath->findFile("", "toolbar.ini");
 
     ToolbarModel* tbModel = this->toolbar->getModel();
 
@@ -76,16 +76,16 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 
         string msg = FS(_F("Could not parse general toolbar.ini file: {1}\n"
                            "No Toolbars will be available") %
-                        file);
+                        file.u8string());
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
     }
 
-    file = Util::getConfigFile(TOOLBAR_CONFIG).str();
-    if (g_file_test(file.c_str(), G_FILE_TEST_EXISTS)) {
+    file = Util::getConfigFile(TOOLBAR_CONFIG);
+    if (fs::exists(file)) {
         if (!tbModel->parse(file, false)) {
             string msg = FS(_F("Could not parse custom toolbar.ini file: {1}\n"
                                "Toolbars will not be available") %
-                            file);
+                            file.u8string());
             XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
         }
     }
@@ -150,6 +150,54 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 #endif
 }
 
+gboolean MainWindow::isKeyForClosure(GtkAccelKey* key, GClosure* closure, gpointer data) { return closure == data; }
+
+gboolean MainWindow::invokeMenu(GtkWidget* widget) {
+    // g_warning("invoke_menu %s", gtk_widget_get_name(widget));
+    gtk_widget_activate(widget);
+    return TRUE;
+}
+
+void MainWindow::rebindAcceleratorsMenuItem(GtkWidget* widget, gpointer user_data) {
+    if (GTK_IS_MENU_ITEM(widget)) {
+        GtkAccelGroup* newAccelGroup = reinterpret_cast<GtkAccelGroup*>(user_data);
+        GList* menuAccelClosures = gtk_widget_list_accel_closures(widget);
+        for (GList* l = menuAccelClosures; l != NULL; l = l->next) {
+            GClosure* closure = reinterpret_cast<GClosure*>(l->data);
+            GtkAccelGroup* accelGroup = gtk_accel_group_from_accel_closure(closure);
+            GtkAccelKey* key = gtk_accel_group_find(accelGroup, isKeyForClosure, closure);
+
+            // g_warning("Rebind %s : %s", gtk_accelerator_get_label(key->accel_key, key->accel_mods),
+            // gtk_widget_get_name(widget));
+
+            gtk_accel_group_connect(newAccelGroup, key->accel_key, key->accel_mods, GtkAccelFlags(0),
+                                    g_cclosure_new_swap(G_CALLBACK(MainWindow::invokeMenu), widget, NULL));
+        }
+
+        MainWindow::rebindAcceleratorsSubMenu(widget, newAccelGroup);
+    }
+}
+
+void MainWindow::rebindAcceleratorsSubMenu(GtkWidget* widget, gpointer user_data) {
+    if (GTK_IS_MENU_ITEM(widget)) {
+        GtkMenuItem* menuItem = reinterpret_cast<GtkMenuItem*>(widget);
+        GtkWidget* subMenu = gtk_menu_item_get_submenu(menuItem);
+        if (GTK_IS_CONTAINER(subMenu)) {
+            gtk_container_foreach(reinterpret_cast<GtkContainer*>(subMenu), rebindAcceleratorsMenuItem, user_data);
+        }
+    }
+}
+
+// When the Menubar is hidden, accelerators no longer work so rebind them to the MainWindow
+// It should be called after all plugins have been initialised so that their injected menu items are captured
+void MainWindow::rebindMenubarAccelerators() {
+    this->globalAccelGroup = gtk_accel_group_new();
+    gtk_window_add_accel_group(GTK_WINDOW(this->getWindow()), this->globalAccelGroup);
+
+    GtkMenuBar* menuBar = (GtkMenuBar*)this->get("mainMenubar");
+    gtk_container_foreach(reinterpret_cast<GtkContainer*>(menuBar), rebindAcceleratorsSubMenu, this->globalAccelGroup);
+}
+
 MainWindow::~MainWindow() {
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         g_object_unref(this->toolbarWidgets[i]);
@@ -181,17 +229,11 @@ const char* TOP_WIDGETS[] = {"tbTop1", "tbTop2", "mainContainerBox", nullptr};
 
 
 void MainWindow::toggleMenuBar(MainWindow* win) {
-    if (win->ignoreNextHideEvent) {
-        win->ignoreNextHideEvent = false;
-        return;
-    }
-
     GtkWidget* menu = win->get("mainMenubar");
     if (gtk_widget_is_visible(menu)) {
         gtk_widget_hide(menu);
     } else {
         gtk_widget_show(menu);
-        win->ignoreNextHideEvent = true;
     }
 }
 
@@ -274,11 +316,6 @@ void MainWindow::initHideMenu() {
         // Menu found, allow to hide it
         g_signal_connect(menuItem, "activate",
                          G_CALLBACK(+[](GtkMenuItem* menuitem, MainWindow* self) { toggleMenuBar(self); }), this);
-
-        GtkAccelGroup* accelGroup = gtk_accel_group_new();
-        gtk_accel_group_connect(accelGroup, GDK_KEY_F10, static_cast<GdkModifierType>(0), GTK_ACCEL_VISIBLE,
-                                g_cclosure_new_swap(G_CALLBACK(toggleMenuBar), this, nullptr));
-        gtk_window_add_accel_group(GTK_WINDOW(getWindow()), accelGroup);
     }
 
     // Hide menubar at startup if specified in settings
@@ -500,7 +537,10 @@ void MainWindow::setToolbarVisible(bool visible) {
 
     settings->setToolbarVisible(visible);
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        gtk_widget_set_visible(this->toolbarWidgets[i], visible);
+        auto widget = this->toolbarWidgets[i];
+        if (!visible || GTK_IS_CONTAINER(widget) && gtk_container_get_children(GTK_CONTAINER(widget))) {
+            gtk_widget_set_visible(widget, visible);
+        }
     }
 
     GtkWidget* w = get("menuViewToolbarsVisible");
@@ -698,9 +738,9 @@ void MainWindow::enableAudioPlaybackButtons() { this->getToolMenuHandler()->enab
 void MainWindow::setAudioPlaybackPaused(bool paused) { this->getToolMenuHandler()->setAudioPlaybackPaused(paused); }
 
 void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
-    string filename = gladeSearchPath->findFile("", cssFilename);
+    auto filepath = gladeSearchPath->findFile("", cssFilename);
     GtkCssProvider* provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, filename.c_str(), nullptr);
+    gtk_css_provider_load_from_path(provider, filepath.u8string().c_str(), nullptr);
     gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider),
                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     g_object_unref(provider);

@@ -31,8 +31,8 @@ public:
     void setImage(GdkPixbuf* img);
     cairo_surface_t* getImage();
 
-    virtual void scale(double x0, double y0, double fx, double fy);
-    virtual void rotate(double x0, double y0, double xo, double yo, double th);
+    virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth);
+    virtual void rotate(double x0, double y0, double th);
 
     /**
      * @overwrite
@@ -45,7 +45,7 @@ public:
     void readSerialized(ObjectInputStream& in);
 
 private:
-    virtual void calcSize();
+    void calcSize() const override;
 
     static cairo_status_t cairoReadFunction(Image* image, unsigned char* data, unsigned int length);
 

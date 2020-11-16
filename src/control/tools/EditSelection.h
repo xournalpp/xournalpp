@@ -89,6 +89,11 @@ public:
     double getHeight() const;
 
     /**
+     * Get the bounding rectangle in document coordinates (multiple with zoom)
+     */
+    Rectangle<double> getRect() const;
+
+    /**
      * Get the source page (where the selection was done)
      */
     PageRef getSourcePage();
@@ -130,7 +135,7 @@ public:
      * Set the color of all elements, return an undo action
      * (Or nullptr if nothing done, e.g. because there is only an image)
      */
-    UndoAction* setColor(int color);
+    UndoAction* setColor(Color color);
 
     /**
      * Sets the font of all containing text elements, return an undo action
@@ -200,7 +205,7 @@ public:
     /**
      * Handles mouse input for moving and resizing, coordinates are relative to "view"
      */
-    void mouseMove(double x, double y);
+    void mouseMove(double x, double y, bool alt);
 
     /**
      * If the selection should moved (or rescaled)
@@ -252,6 +257,16 @@ private:
      */
     void translateToView(XojPageView* v);
 
+    /**
+     * Updates rotation matrix
+     */
+    void updateMatrix();
+
+    /**
+     * scales and shifts to update bounding boxes
+     */
+    void scaleShift(double fx, double fy, bool changeLeft, bool changeTop);
+
 private:  // DATA
     /**
      * Support rotation
@@ -268,7 +283,7 @@ private:  // DATA
     /**
      * Use to translate to rotated selection
      */
-    _cairo_matrix cmatrix{};
+    cairo_matrix_t cmatrix{};
 
     /**
      * The size
@@ -277,11 +292,19 @@ private:  // DATA
     double height{};
 
     /**
+     * The size and dimensions for snapping
+     */
+    Rectangle<double> snappedBounds{};
+
+
+    /**
      * Mouse coordinates for moving / resizing
      */
     CursorSelectionType mouseDownType;
     double relMousePosX{};
     double relMousePosY{};
+    double relMousePosRotX{};
+    double relMousePosRotY{};
 
     /**
      * If both scale axes should have the same scale factor, e.g. for Text

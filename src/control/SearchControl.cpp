@@ -15,15 +15,16 @@ SearchControl::~SearchControl() { freeSearchResults(); }
 
 void SearchControl::freeSearchResults() { this->results.clear(); }
 
-void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GtkColorWrapper& color) {
+void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GdkRGBA& color) {
     // set the line always the same size on display
     cairo_set_line_width(cr, 1 / zoom);
 
     for (XojPdfRectangle rect: this->results) {
         cairo_rectangle(cr, rect.x1, rect.y1, rect.x2 - rect.x1, rect.y2 - rect.y1);
-        color.apply(cr);
+        gdk_cairo_set_source_rgba(cr, &color);
         cairo_stroke_preserve(cr);
-        color.applyWithAlpha(cr, 0.3);
+        auto applied = GdkRGBA{color.red, color.green, color.blue, 0.3};
+        gdk_cairo_set_source_rgba(cr, &applied);
         cairo_fill(cr);
     }
 }

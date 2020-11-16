@@ -12,16 +12,16 @@ PdfExportJob::~PdfExportJob() = default;
 
 void PdfExportJob::addFilterToDialog() { addFileFilterToDialog(_("PDF files"), "*.pdf"); }
 
-auto PdfExportJob::isUriValid(string& uri) -> bool {
-    if (!BaseExportJob::isUriValid(uri)) {
+auto PdfExportJob::testAndSetFilepath(fs::path file) -> bool {
+    if (!BaseExportJob::testAndSetFilepath(std::move(file))) {
         return false;
     }
 
     // Remove any pre-existing extension and adds .pdf
-    filename.clearExtensions(".pdf");
-    filename += ".pdf";
+    Util::clearExtensions(filepath, ".pdf");
+    filepath += ".pdf";
 
-    return checkOverwriteBackgroundPDF(filename);
+    return checkOverwriteBackgroundPDF(filepath);
 }
 
 
@@ -32,7 +32,7 @@ void PdfExportJob::run() {
     XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
     doc->unlock();
 
-    if (!pdfe->createPdf(this->filename)) {
+    if (!pdfe->createPdf(this->filepath)) {
         if (control->getWindow()) {
             callAfterRun();
         } else {

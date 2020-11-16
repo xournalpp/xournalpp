@@ -99,6 +99,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
     gtk_widget_show(callib);
 
+    initLanguageSettings();
     initMouseButtonEvents();
 
     vector<InputDevice> deviceList = DeviceListHelper::getDeviceList(this->settings);
@@ -132,6 +133,10 @@ SettingsDialog::~SettingsDialog() {
 
     // DO NOT delete settings!
     this->settings = nullptr;
+}
+
+void SettingsDialog::initLanguageSettings() {
+    languageConfig = std::make_unique<LanguageConfigGui>(getGladeSearchPath(), get("hboxLanguageSelect"), settings);
 }
 
 void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool withDevice) {
@@ -216,6 +221,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbStrokeFilterEnabled", settings->getStrokeFilterEnabled());
     loadCheckbox("cbDoActionOnStrokeFiltered", settings->getDoActionOnStrokeFiltered());
     loadCheckbox("cbTrySelectOnStrokeFiltered", settings->getTrySelectOnStrokeFiltered());
+    loadCheckbox("cbSnapRecognizedShapesEnabled", settings->getSnapRecognizedShapesEnabled());
+    loadCheckbox("cbRestoreLineWidthEnabled", settings->getRestoreLineWidthEnabled());
     loadCheckbox("cbDarkTheme", settings->isDarkTheme());
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
@@ -496,6 +503,8 @@ void SettingsDialog::save() {
     settings->setStrokeFilterEnabled(getCheckbox("cbStrokeFilterEnabled"));
     settings->setDoActionOnStrokeFiltered(getCheckbox("cbDoActionOnStrokeFiltered"));
     settings->setTrySelectOnStrokeFiltered(getCheckbox("cbTrySelectOnStrokeFiltered"));
+    settings->setSnapRecognizedShapesEnabled(getCheckbox("cbSnapRecognizedShapesEnabled"));
+    settings->setRestoreLineWidthEnabled(getCheckbox("cbRestoreLineWidthEnabled"));
     settings->setDarkTheme(getCheckbox("cbDarkTheme"));
     settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
     settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
@@ -515,20 +524,20 @@ void SettingsDialog::save() {
 
     GdkRGBA color;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
-    settings->setBorderColor(Util::gdkrgba_to_hex(color));
+    settings->setBorderColor(Util::GdkRGBA_to_argb(color));
 
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBackground")), &color);
-    settings->setBackgroundColor(Util::gdkrgba_to_hex(color));
+    settings->setBackgroundColor(Util::GdkRGBA_to_argb(color));
 
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
-    settings->setSelectionColor(Util::gdkrgba_to_hex(color));
+    settings->setSelectionColor(Util::GdkRGBA_to_argb(color));
 
 
     settings->setHighlightPosition(getCheckbox("cbHighlightPosition"));
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightColor")), &color);
-    settings->setCursorHighlightColor(Util::gdkrgba_to_hex(color));
+    settings->setCursorHighlightColor(Util::GdkRGBA_to_argb(color));
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightBorderColor")), &color);
-    settings->setCursorHighlightBorderColor(Util::gdkrgba_to_hex(color));
+    settings->setCursorHighlightBorderColor(Util::GdkRGBA_to_argb(color));
     GtkWidget* spCursorHighlightRadius = get("cursorHighlightRadius");
     settings->setCursorHighlightRadius(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spCursorHighlightRadius)));
     GtkWidget* spCursorHighlightBorderWidth = get("cursorHighlightBorderWidth");
@@ -560,6 +569,7 @@ void SettingsDialog::save() {
     settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
 
     settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
+    // Todo(fabian): use Util::fromGFilename!
     char* uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(get("fcAudioPath")));
     if (uri != nullptr) {
         settings->setAudioFolder(uri);
@@ -617,6 +627,8 @@ void SettingsDialog::save() {
     for (ButtonConfigGui* bcg: this->buttonConfigs) {
         bcg->saveSettings();
     }
+
+    languageConfig->saveSettings();
 
     SElement& touch = settings->getCustomElement("touch");
     touch.setBool("disableTouch", getCheckbox("cbDisableTouchOnPenNear"));

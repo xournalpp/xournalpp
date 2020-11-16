@@ -111,6 +111,10 @@ protected:
 private:
     static void checkScroll(GtkAdjustment* adjustment, double& lastScroll);
 
+    /**
+     * Calls either the ScrollHandlingGtk or (when the Touch Workaround is enabled) the ScrollHandlingXournalpp
+     * method to set the layout size by updating the horizontal and vertical GtkAdjustments
+     */
     void setLayoutSize(int width, int height);
 
 private:

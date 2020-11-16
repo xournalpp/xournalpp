@@ -13,15 +13,20 @@
 
 #include <gtk/gtk.h>
 
-#include "util/GtkColorWrapper.h"
-
 #include "Range.h"
 
 class Element;
 
 class Redrawable {
+protected:
+    Redrawable() = default;
+
 public:
-    virtual ~Redrawable();
+    Redrawable(Redrawable&&) = default;
+    Redrawable(Redrawable const&) = default;
+    virtual ~Redrawable() = default;
+    Redrawable& operator=(Redrawable&&) = default;
+    Redrawable& operator=(Redrawable const&) = default;
 
     /**
      * Call this if you only need to repaint the view, this means the buffer will be painted again,
@@ -62,7 +67,7 @@ public:
     /**
      * Return the GTK selection color
      */
-    virtual GtkColorWrapper getSelectionColor() = 0;
+    virtual GdkRGBA getSelectionColor() = 0;
 
 
     virtual void deleteViewBuffer() = 0;

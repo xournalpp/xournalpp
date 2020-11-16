@@ -11,7 +11,7 @@
 
 LatexGenerator::LatexGenerator(const LatexSettings& settings): settings(settings) {}
 
-auto LatexGenerator::templateSub(const std::string& input, const std::string& templ, const uint32_t textColor)
+auto LatexGenerator::templateSub(const std::string& input, const std::string& templ, const Color textColor)
         -> std::string {
     const static std::regex substRe("%%XPP_((TOOL_INPUT)|(TEXT_COLOR))%%");
     std::string output;
@@ -38,7 +38,7 @@ auto LatexGenerator::templateSub(const std::string& input, const std::string& te
     return output;
 }
 
-auto LatexGenerator::asyncRun(const Path& texDir, const std::string& texFileContents) -> Result {
+auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFileContents) -> Result {
     std::string cmd = this->settings.genCmd;
     GError* err = nullptr;
     const auto&& fail = [&](GenError&& res) -> Result {
@@ -46,7 +46,7 @@ auto LatexGenerator::asyncRun(const Path& texDir, const std::string& texFileCont
         return res;
     };
 
-    std::string texFilePath = (texDir / "tex.tex").c_str();
+    auto texFilePath = (texDir / "tex.tex").string();
     for (auto i = cmd.find(u8"{}"); i != std::string::npos; i = cmd.find(u8"{}", i + texFilePath.length())) {
         cmd.replace(i, 2, texFilePath);
     }
@@ -71,7 +71,7 @@ auto LatexGenerator::asyncRun(const Path& texDir, const std::string& texFileCont
 
     auto flags = static_cast<GSubprocessFlags>(G_SUBPROCESS_FLAGS_STDOUT_SILENCE | G_SUBPROCESS_FLAGS_STDERR_SILENCE);
     GSubprocessLauncher* launcher = g_subprocess_launcher_new(flags);
-    g_subprocess_launcher_set_cwd(launcher, texDir.c_str());
+    g_subprocess_launcher_set_cwd(launcher, texDir.u8string().c_str());
     auto* proc = g_subprocess_launcher_spawnv(launcher, argv, &err);
 
     std::string progName(prog);

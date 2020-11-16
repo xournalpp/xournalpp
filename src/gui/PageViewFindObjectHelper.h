@@ -18,7 +18,9 @@
 
 #include "util/audio/AudioPlayer.h"
 
+#include "PathUtil.h"
 #include "XournalView.h"
+#include "filesystem.h"
 
 class BaseSelectObject {
 public:
@@ -152,10 +154,12 @@ protected:
 
             if (!fn.empty()) {
                 if (fn.rfind(G_DIR_SEPARATOR, 0) != 0) {
-                    Path path = Path::fromUri(view->settings->getAudioFolder());
-                    path /= fn;
+                    auto path = Util::fromUri(view->settings->getAudioFolder());
 
-                    fn = path.str();
+                    // Assume path exists
+                    *path /= fn;
+
+                    fn = path->string();
                 }
                 auto* ac = view->getXournal()->getControl()->getAudioController();
                 bool success = ac->startPlayback(fn, (unsigned int)ts);

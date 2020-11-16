@@ -56,7 +56,7 @@ Xournal++ features:
 - Page Template definitions
 - Shape drawing (line, arrow, circle, rect, splines)
 - Shape resizing and rotation
-- Rotation snapping every 45 degrees
+- Rotation snapping every 15 degrees
 - Rect snapping to grid
 - Audio recording and playback alongside with handwritten notes
 - Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
@@ -158,8 +158,6 @@ Windows. For other Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
 after Ubuntu 16.04. For installing Xournal++ Mobile on handheld devices, please check out [Xournal++ Mobile's instructions](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#try-it-out)
 
-On Linux, Xournal++ can also be installed via [snapcraft](https://snapcraft.io/xournalpp).
-
 **A note for Ubuntu/Debian users**: The official binaries that we provide are
 only compatible with the _specific version of Debian or Ubuntu_ indicated by the
 file name. For example, if you are on Ubuntu 20.04, the binary whose name
@@ -177,6 +175,16 @@ of some popular Linux distros and platforms.
 
 ### Ubuntu and derivatives
 
+#### Stable PPA
+The latest stable version is available via the following [_unofficial_ PPA](https://github.com/xournalpp/xournalpp/issues/1013#issuecomment-692656810):
+
+```bash
+sudo add-apt-repository ppa:apandada1/xournalpp-stable
+sudo apt update
+sudo apt install xournalpp
+```
+
+#### Unstable PPA
 An _unstable_, nightly release is available for Ubuntu-based distributions via the following PPA:
 
 ```bash
@@ -188,9 +196,6 @@ sudo apt install xournalpp
 This PPA is provided by the Xournal++ team. While it has the latest features and
 bug fixes, it has also not been tested thoroughly and may break periodically (we
 try our best not to break things, though).
-
-We eventually also planning on setting up a PPA for stable releases
-([#1013](https://github.com/xournalpp/xournalpp/issues/1013)).
 
 ### Fedora
 
@@ -230,8 +235,8 @@ master on a weekly basis are available from
 
 ### Arch Linux
 
-The latest stable release is available [in the [extra]
-repository](https://www.archlinux.org/packages/?q=xournalpp).
+The latest stable release is available [in the [community]
+repository](https://www.archlinux.org/packages/community/x86_64/xournalpp/).
 
 To build the latest state of the master branch yourself, use [this AUR
 package](https://aur.archlinux.org/packages/xournalpp-git/).

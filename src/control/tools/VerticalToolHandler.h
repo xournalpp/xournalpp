@@ -21,11 +21,12 @@
 #include "undo/MoveUndoAction.h"
 #include "view/ElementContainer.h"
 
+#include "SnapToGridInputHandler.h"
 #include "XournalType.h"
 
 class VerticalToolHandler: public ElementContainer {
 public:
-    VerticalToolHandler(Redrawable* view, const PageRef& page, double y, double zoom);
+    VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y, double zoom);
     ~VerticalToolHandler() override;
 
     void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
@@ -50,4 +51,9 @@ private:
      * When we create a new page
      */
     double jumpY = 0;
+
+    /**
+     * The handler for snapping points
+     */
+    SnapToGridInputHandler snappingHandler;
 };

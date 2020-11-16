@@ -14,10 +14,10 @@
 #include <string>
 #include <vector>
 
-#include "Path.h"
 #include "XojPdfBookmarkIterator.h"
 #include "XojPdfPage.h"
 #include "XournalType.h"
+#include "filesystem.h"
 
 class XojPdfDocumentInterface {
 public:
@@ -29,8 +29,8 @@ public:
     virtual bool equals(XojPdfDocumentInterface* doc) = 0;
 
 public:
-    virtual bool save(Path filename, GError** error) = 0;
-    virtual bool load(Path filename, string password, GError** error) = 0;
+    virtual bool save(fs::path const& file, GError** error) = 0;
+    virtual bool load(fs::path const& file, string password, GError** error) = 0;
     virtual bool load(gpointer data, gsize length, string password, GError** error) = 0;
     virtual bool isLoaded() = 0;
 

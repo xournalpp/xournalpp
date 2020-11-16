@@ -9,15 +9,10 @@
 
 class ColorUndoActionEntry {
 public:
-    ColorUndoActionEntry(Element* e, int oldColor, int newColor) {
-        this->e = e;
-        this->oldColor = oldColor;
-        this->newColor = newColor;
-    }
-
+    ColorUndoActionEntry(Element* e, Color oldColor, Color newColor): e(e), oldColor(oldColor), newColor(newColor) {}
     Element* e;
-    int oldColor;
-    int newColor;
+    Color oldColor;
+    Color newColor;
 };
 
 ColorUndoAction::ColorUndoAction(const PageRef& page, Layer* layer): UndoAction("ColorUndoAction") {
@@ -31,7 +26,7 @@ ColorUndoAction::~ColorUndoAction() {
     }
 }
 
-void ColorUndoAction::addStroke(Element* e, int originalColor, double newColor) {
+void ColorUndoAction::addStroke(Element* e, Color originalColor, Color newColor) {
     this->data.push_back(new ColorUndoActionEntry(e, originalColor, newColor));
 }
 

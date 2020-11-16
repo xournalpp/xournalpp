@@ -16,12 +16,14 @@
 #include <string>
 #include <vector>
 
+#include <util/Color.h>
+
 #include "settings/Settings.h"
 
 #include "Tool.h"
 #include "XournalType.h"
 
-class LastSelectedTool;
+enum ToolPointer { current, toolbar, button };
 
 class ToolListener {
 public:
@@ -51,22 +53,22 @@ public:
      * 			false if the color is selected by a tool change
      * 			and therefore should not be applied to a selection
      */
-    void setColor(int color, bool userSelection);
-    int getColor();
+    void setColor(Color color, bool userSelection);
+    Color getColor(ToolPointer toolpointer = ToolPointer::current);
 
     /**
      * @return -1 if fill is disabled, else the fill alpha value
      */
-    int getFill();
+    int getFill(ToolPointer toolpointer = ToolPointer::current);
 
-    DrawingType getDrawingType();
-    void setDrawingType(DrawingType drawingType);
+    DrawingType getDrawingType(ToolPointer toolpointer = ToolPointer::current);
+    void setDrawingType(DrawingType drawingType, ToolPointer toolpointer = ToolPointer::current);
 
-    const LineStyle& getLineStyle();
+    const LineStyle& getLineStyle(ToolPointer toolpointer = ToolPointer::current);
 
-    ToolSize getSize();
-    void setSize(ToolSize size);
-    double getThickness();
+    ToolSize getSize(ToolPointer toolpointer = ToolPointer::current);
+    void setSize(ToolSize size, ToolPointer toolpointer = ToolPointer::current);
+    double getThickness(ToolPointer toolpointer = ToolPointer::current);
 
     void setLineStyle(const LineStyle& style);
 
@@ -87,8 +89,8 @@ public:
     void setHilighterFill(int alpha);
     int getHilighterFill();
 
-    void selectTool(ToolType type, bool fireToolChanged = true);
-    ToolType getToolType();
+    void selectTool(ToolType type, bool fireToolChanged = true, bool stylus = false);
+    ToolType getToolType(ToolPointer toolpointer = ToolPointer::current);
     void fireToolChanged();
 
     Tool& getTool(ToolType type);
@@ -97,13 +99,13 @@ public:
     EraserType getEraserType();
     void eraserTypeChanged();
 
-    bool hasCapability(ToolCapabilities cap);
+    bool hasCapability(ToolCapabilities cap, ToolPointer toolpointer = ToolPointer::current);
 
     void saveSettings();
     void loadSettings();
 
-    void copyCurrentConfig();
-    void restoreLastConfig();
+    void pointCurrentToolToButtonTool();
+    void pointCurrentToolToToolbarTool();
 
     std::array<std::unique_ptr<Tool>, TOOL_COUNT> const& getTools() const;
 
@@ -119,19 +121,25 @@ public:
      * pointer moves to another
      * @return
      */
-    bool isSinglePageTool();
+    bool isSinglePageTool(ToolPointer toolpointer = ToolPointer::current);
+
+    bool triggeredByButton = false;
 
 protected:
     void initTools();
 
 private:
     std::array<std::unique_ptr<Tool>, TOOL_COUNT> tools;
-    Tool* current = nullptr;
+
+    // get Pointer based on Enum used for public setters and getters
+    Tool* getToolPointer(ToolPointer toolpointer);
+    Tool* currentTool = nullptr;
 
     /**
      * Last selected tool, reference with color values etc.
      */
-    LastSelectedTool* lastSelectedTool = nullptr;
+    Tool* toolbarSelectedTool = nullptr;
+    Tool* buttonSelectedTool = nullptr;
 
     EraserType eraserType = ERASER_TYPE_DEFAULT;
 

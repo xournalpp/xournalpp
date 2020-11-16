@@ -22,6 +22,7 @@
 #include "Shadow.h"
 #include "Util.h"
 #include "XournalppCursor.h"
+#include "filesystem.h"
 
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
@@ -135,7 +136,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
     // Esc leaves fullscreen mode
-    if (event->keyval == GDK_KEY_Escape || event->keyval == GDK_KEY_F11) {
+    if (event->keyval == GDK_KEY_Escape) {
         if (control->isFullscreen()) {
             control->setFullscreen(false);
             control->setViewPresentationMode(false);
@@ -356,10 +357,10 @@ void XournalView::pageSelected(size_t page) {
 
     Document* doc = control->getDocument();
     doc->lock();
-    Path file = doc->getEvMetadataFilename();
+    auto const& file = doc->getEvMetadataFilename();
     doc->unlock();
 
-    control->getMetadataManager()->storeMetadata(file.str(), page, getZoom());
+    control->getMetadataManager()->storeMetadata(file, page, getZoom());
 
     if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPages.size()) {
         this->viewPages[this->lastSelectedPage]->setSelected(false);
@@ -475,7 +476,7 @@ auto XournalView::getVisibleRect(XojPageView* redrawable) -> Rectangle<double>* 
 auto XournalView::getHandRecognition() -> HandRecognition* { return handRecognition; }
 
 /**
- * @returnScrollbars
+ * @return Scrollbars
  */
 auto XournalView::getScrollHandling() -> ScrollHandling* { return scrollHandling; }
 
@@ -515,10 +516,10 @@ void XournalView::zoomChanged() {
 
     Document* doc = control->getDocument();
     doc->lock();
-    Path file = doc->getEvMetadataFilename();
+    auto const& file = doc->getEvMetadataFilename();
     doc->unlock();
 
-    control->getMetadataManager()->storeMetadata(file.str(), getCurrentPage(), zoom->getZoomReal());
+    control->getMetadataManager()->storeMetadata(file, getCurrentPage(), zoom->getZoomReal());
 
     // Updates the Eraser's cursor icon in order to make it as big as the erasing area
     control->getCursor()->updateCursor();
@@ -571,7 +572,12 @@ void XournalView::pageInserted(size_t page) {
     viewPages.insert(begin(viewPages) + page, pageView);
 
     Layout* layout = gtk_xournal_get_layout(this->widget);
+
+    // recalculate the layout width and height amd layout the pages with the updated layout size
     layout->recalculate();
+    layout->layoutPages(layout->getMinimalWidth(), layout->getMinimalHeight());
+
+    // check which pages are visible and select the most visible page
     layout->updateVisibility();
 }
 
@@ -655,6 +661,9 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
+/**
+ * Recalculates the layout height and width for the XournalView widget
+ */
 void XournalView::layoutPages() {
     Layout* layout = gtk_xournal_get_layout(this->widget);
     layout->recalculate();

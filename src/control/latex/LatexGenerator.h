@@ -19,7 +19,8 @@
 
 #include "control/settings/LatexSettings.h"
 
-#include "Path.h"
+#include "Color.h"
+#include "filesystem.h"
 
 class LatexGenerator {
 public:
@@ -40,12 +41,12 @@ public:
      * LaTeX file. The contents of the LaTeX file will be written to "tex.tex"
      * in the given directory.
      */
-    Result asyncRun(const Path& texDir, const std::string& texFileContents);
+    Result asyncRun(const fs::path& texDir, const std::string& texFileContents);
 
     /**
      * Instantiate the LaTeX template.
      */
-    static std::string templateSub(const string& input, const string& templ, const uint32_t textColor);
+    static std::string templateSub(const std::string& input, const std::string& templ, Color textColor);
 
 private:
     const LatexSettings& settings;

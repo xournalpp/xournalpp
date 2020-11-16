@@ -17,6 +17,7 @@
 #include "BlockingJob.h"
 #include "PathUtil.h"
 #include "XournalType.h"
+#include "filesystem.h"
 
 class Control;
 
@@ -32,20 +33,20 @@ public:
 
 public:
     virtual bool showFilechooser();
-    string getFilterName();
+    string getFilterName() const;
 
 protected:
     void initDialog();
     virtual void addFilterToDialog() = 0;
     void addFileFilterToDialog(const string& name, const string& pattern);
-    bool checkOverwriteBackgroundPDF(Path& filename);
-    virtual bool isUriValid(string& uri);
+    bool checkOverwriteBackgroundPDF(fs::path const& file) const;
+    virtual bool testAndSetFilepath(fs::path file);
 
 private:
 protected:
     GtkWidget* dialog = nullptr;
 
-    Path filename;
+    fs::path filepath;
 
     /**
      * Error message to show to the user

@@ -187,15 +187,20 @@ if (CXX_FILESYSTEM_HAVE_FS)
 
         int main() {
             auto cwd = @CXX_FILESYSTEM_NAMESPACE@::current_path();
-            return cwd.string().size();
+            auto relative = @CXX_FILESYSTEM_NAMESPACE@::relative(cwd,cwd);
+            return relative.string().size();
         }
     ]] code @ONLY)
 
-    # Try to compile a simple filesystem program without any linker flags
-    check_cxx_source_compiles("${code}" CXX_FILESYSTEM_NO_LINK_NEEDED)
+    #Ubuntu 18.04 packaging bug: the gcc8 api is linked with incompatible gcc9 fs STL
+    if((NOT (CMAKE_CXX_COMPILER_ID STREQUAL GNU)) OR (CMAKE_CXX_COMPILER_VERSION GREATER_EQUAL 9))
+        # Try to compile a simple filesystem program without any linker flags
+        check_cxx_source_compiles("${code}" CXX_FILESYSTEM_NO_LINK_NEEDED)
+    else()
+        set(CXX_FILESYSTEM_NO_LINK_NEEDED FALSE CACHE BOOL "" FORCE)
+    endif()
 
     set(can_link ${CXX_FILESYSTEM_NO_LINK_NEEDED})
-
     if (NOT CXX_FILESYSTEM_NO_LINK_NEEDED)
         set(prev_libraries ${CMAKE_REQUIRED_LIBRARIES})
         # Add the libstdc++ flag

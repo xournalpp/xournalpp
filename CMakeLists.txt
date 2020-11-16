@@ -340,6 +340,7 @@ endif (CMAKE_DEBUG_INCLUDES_LDFLAGS)
 set (CPACK_OUTPUT_FILE_PREFIX packages)
 set (CPACK_PACKAGE_NAME "${PROJECT_PACKAGE}")
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++ - Open source hand note-taking program")
+file(READ "${PROJECT_SOURCE_DIR}/debian/package_description" CPACK_DEBIAN_PACKAGE_DESCRIPTION)
 set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 set (CPACK_PACKAGE_INSTALL_DIRECTORY "Xournal++")
 set (CPACK_PACKAGE_FILE_NAME "xournalpp-${PROJECT_VERSION}-${DISTRO_NAME}-${DISTRO_CODENAME}-${PACKAGE_ARCH}")
@@ -350,11 +351,21 @@ set (CPACK_DEBIAN_PACKAGE_HOMEPAGE ${PACKAGE_URL})
 set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Andreas Butti <andreasbutti@gmail.com>")
 set (CPACK_DEBIAN_PACKAGE_SECTION "graphics")
 set (CPACK_DEBIAN_PACKAGE_DEPENDS
-		"libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g")
+		"libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6")
 set (CPACK_DEBIAN_PACKAGE_SUGGESTS "texlive-base, texlive-latex-extra")  # Latex tool
 # Use debian's arch scheme; we only care about x86/amd64 for now but feel free to add more
 if (${PACKAGE_ARCH} STREQUAL "x86_64")
 	set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+endif()
+
+if(CPACK_GENERATOR STREQUAL "DEB")
+	message("Preparing documentation for DEB package")
+	add_custom_target(package_docummentation ALL)
+
+	#Compress changelog and save it as share/doc/xournalpp/changelog.Debian.gz
+	add_custom_command(TARGET package_docummentation PRE_BUILD
+	COMMAND gzip -c -9 -n "${PROJECT_SOURCE_DIR}/debian/changelog" > "changelog.Debian.gz" VERBATIM)
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/changelog.Debian.gz" DESTINATION "share/doc/xournalpp/")
 endif()
 
 if (NOT DEFINED CPACK_GENERATOR)

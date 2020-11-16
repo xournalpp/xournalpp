@@ -16,8 +16,8 @@
 
 #include <zlib.h>
 
-#include "Path.h"
 #include "XournalType.h"
+#include "filesystem.h"
 
 class OutputStream {
 public:
@@ -34,7 +34,7 @@ public:
 
 class GzOutputStream: public OutputStream {
 public:
-    GzOutputStream(const Path& filename);
+    GzOutputStream(fs::path file);
     virtual ~GzOutputStream();
 
 public:
@@ -50,5 +50,5 @@ private:
     string error;
 
     string target;
-    Path filename;
+    fs::path file;
 };

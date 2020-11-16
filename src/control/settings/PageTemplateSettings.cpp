@@ -12,7 +12,7 @@ PageTemplateSettings::PageTemplateSettings():
         copyLastPageSize(false),
         pageWidth(595.275591),
         pageHeight(841.889764),
-        backgroundColor(0xffffff) {
+        backgroundColor(Color{0xffffffU}) {
     backgroundType.format = PageTypeFormat::Lined;
 }
 
@@ -36,9 +36,9 @@ auto PageTemplateSettings::getPageHeight() const -> double { return this->pageHe
 
 void PageTemplateSettings::setPageHeight(double pageHeight) { this->pageHeight = pageHeight; }
 
-auto PageTemplateSettings::getBackgroundColor() const -> int { return this->backgroundColor; }
+auto PageTemplateSettings::getBackgroundColor() const -> Color { return this->backgroundColor; }
 
-void PageTemplateSettings::setBackgroundColor(int backgroundColor) { this->backgroundColor = backgroundColor; }
+void PageTemplateSettings::setBackgroundColor(Color backgroundColor) { this->backgroundColor = backgroundColor; }
 
 auto PageTemplateSettings::getBackgroundType() -> PageType { return backgroundType; }
 
@@ -87,7 +87,7 @@ auto PageTemplateSettings::parse(const string& tpl) -> bool {
             pageWidth = std::stod(value.substr(0, pos));
             pageHeight = std::stod(value.substr(pos + 1));
         } else if (key == "backgroundColor") {
-            backgroundColor = std::stoul(value.substr(1), nullptr, 16);
+            backgroundColor = Color(std::stoul(value.substr(1), nullptr, 16));
         } else if (key == "backgroundType") {
             this->backgroundType.format = PageTypeHandler::getPageTypeFormatForString(value);
         } else if (key == "backgroundTypeConfig") {
@@ -114,7 +114,7 @@ auto PageTemplateSettings::toString() const -> string {
     }
 
     char buffer[64];
-    sprintf(buffer, "#%06x", this->backgroundColor);
+    sprintf(buffer, "#%06x", uint32_t{this->backgroundColor});
     str += string("backgroundColor=") + buffer + "\n";
 
     return str;

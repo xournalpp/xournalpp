@@ -120,10 +120,10 @@ auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
     }
 
     if (cfg && cfg->getAction() != TOOL_NONE) {
-        toolHandler->copyCurrentConfig();
+        toolHandler->pointCurrentToolToButtonTool();
         cfg->acceptActions(toolHandler);
     } else {
-        toolHandler->restoreLastConfig();
+        toolHandler->pointCurrentToolToToolbarTool();
     }
 
     return false;

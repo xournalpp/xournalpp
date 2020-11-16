@@ -12,13 +12,9 @@
 #include "i18n.h"
 
 
-ImageExport::ImageExport(Document* doc, Path filename, ExportGraphicsFormat format, bool hideBackground,
+ImageExport::ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, bool hideBackground,
                          PageRangeVector& exportRange):
-        doc(doc),
-        filename(std::move(filename)),
-        format(format),
-        hideBackground(hideBackground),
-        exportRange(exportRange) {}
+        doc(doc), file(std::move(file)), format(format), hideBackground(hideBackground), exportRange(exportRange) {}
 
 ImageExport::~ImageExport() = default;
 
@@ -44,8 +40,8 @@ void ImageExport::createSurface(double width, double height, int id) {
         double factor = this->pngDpi / Util::DPI_NORMALIZATION_FACTOR;
         cairo_scale(this->cr, factor, factor);
     } else if (format == EXPORT_GRAPHICS_SVG) {
-        string filepath = getFilenameWithNumber(id);
-        this->surface = cairo_svg_surface_create(filepath.c_str(), width, height);
+        auto filepath = getFilenameWithNumber(id);
+        this->surface = cairo_svg_surface_create(filepath.u8string().c_str(), width, height);
         cairo_svg_surface_restrict_to_version(this->surface, CAIRO_SVG_VERSION_1_2);
         this->cr = cairo_create(this->surface);
     } else {
@@ -61,8 +57,8 @@ auto ImageExport::freeSurface(int id) -> bool {
 
     cairo_status_t status = CAIRO_STATUS_SUCCESS;
     if (format == EXPORT_GRAPHICS_PNG) {
-        string filepath = getFilenameWithNumber(id);
-        status = cairo_surface_write_to_png(surface, filepath.c_str());
+        auto filepath = getFilenameWithNumber(id);
+        status = cairo_surface_write_to_png(surface, filepath.u8string().c_str());
     }
     cairo_surface_destroy(surface);
 
@@ -73,20 +69,17 @@ auto ImageExport::freeSurface(int id) -> bool {
 /**
  * Get a filename with a number, e.g. .../export-1.png, if the no is -1, return .../export.png
  */
-auto ImageExport::getFilenameWithNumber(int no) const -> string {
+auto ImageExport::getFilenameWithNumber(int no) const -> fs::path {
     if (no == -1) {
         // No number to add
-        return filename.str();
+        return file;
     }
 
-    string filepath = filename.str();
-    size_t dotPos = filepath.find_last_of('.');
-    if (dotPos == string::npos) {
-        // No file extension, add number
-        return filepath + "-" + std::to_string(no);
-    }
-
-    return filepath.substr(0, dotPos) + "-" + std::to_string(no) + filepath.substr(dotPos);
+    auto ext = file.extension();
+    auto path(file);
+    path.replace_extension();
+    (path += (std::string("-") + std::to_string(no))) += ext;
+    return path;
 }
 
 /**

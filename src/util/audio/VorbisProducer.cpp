@@ -25,7 +25,7 @@ auto VorbisProducer::start(const std::string& filename, unsigned int timestamp) 
 
     this->producerThread = std::thread([this, sfInfo, sfFile = std::move(sfFile)] {
         size_t numFrames{1};
-        size_t const bufferSize{1024ULL * sfInfo.channels};
+        size_t const bufferSize{size_t(1024U) * sfInfo.channels};
         std::vector<float> sampleBuffer(bufferSize);
         auto lock = audioQueue.aquire_lock();
 

@@ -7,7 +7,7 @@ DottedBackgroundPainter::DottedBackgroundPainter() = default;
 DottedBackgroundPainter::~DottedBackgroundPainter() = default;
 
 void DottedBackgroundPainter::resetConfig() {
-    this->foregroundColor1 = 0xBDBDBD;
+    this->foregroundColor1 = 0xBDBDBDU;
     this->lineWidth = 1.5;
     this->drawRaster1 = 14.17;
 }

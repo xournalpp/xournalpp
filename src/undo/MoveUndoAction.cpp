@@ -1,7 +1,6 @@
 #include "MoveUndoAction.h"
 
 #include "control/tools/EditSelection.h"
-#include "control/tools/VerticalToolHandler.h"
 #include "gui/Redrawable.h"
 #include "model/Element.h"
 #include "model/Layer.h"

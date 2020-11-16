@@ -26,7 +26,7 @@ public:
     virtual ~XojFont();
 
 public:
-    string getName();
+    string getName() const;
     void setName(string name);
 
     double getSize() const;

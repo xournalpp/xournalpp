@@ -33,12 +33,12 @@ public:
 
 public:
     void prepareSave(Document* doc);
-    void saveTo(const Path& filename, ProgressListener* listener = nullptr);
-    void saveTo(OutputStream* out, const Path& filename, ProgressListener* listener = nullptr);
+    void saveTo(const fs::path& filepath, ProgressListener* listener = nullptr);
+    void saveTo(OutputStream* out, const fs::path& filepath, ProgressListener* listener = nullptr);
     string getErrorMessage();
 
 protected:
-    static string getColorStr(int c, unsigned char alpha = 0xff);
+    static string getColorStr(Color c, unsigned char alpha = 0xff);
 
     virtual void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
     virtual void visitLayer(XmlNode* page, Layer* l);

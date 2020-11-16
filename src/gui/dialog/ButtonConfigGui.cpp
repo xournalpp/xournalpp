@@ -217,7 +217,7 @@ void ButtonConfigGui::saveSettings() {
 
     GdkRGBA color;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorButton), &color);
-    cfg->color = Util::gdkrgba_to_hex(color);
+    cfg->color = Util::GdkRGBA_to_argb(color);
 
     cfg->drawingType = static_cast<DrawingType>(gtk_combo_box_get_active(GTK_COMBO_BOX(this->cbDrawingType)));
 

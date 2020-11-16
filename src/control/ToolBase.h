@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "model/LineStyle.h"
+#include "util/Color.h"
 
 #include "ToolEnums.h"
 #include "XournalType.h"
@@ -25,11 +26,6 @@ public:
     ToolBase();
     virtual ~ToolBase();
 
-    /**
-     * Apply data from another ToolBase or any extending class
-     */
-    void applyFrom(const ToolBase* t);
-
 private:
     void operator=(const ToolBase& t);
     ToolBase(const ToolBase& t);
@@ -38,12 +34,12 @@ public:
     /**
      * @return Color of the tool for all drawing tools
      */
-    int getColor() const;
+    Color getColor() const;
 
     /**
      * @param color Color of the tool for all drawing tools
      */
-    void setColor(int color);
+    void setColor(Color color);
 
     /**
      * @return Size of a drawing tool
@@ -99,7 +95,7 @@ private:
     /**
      * Color of the tool for all drawing tools
      */
-    int color = 0x000000;
+    Color color{0x000000U};
 
     /**
      * Size of a drawing tool

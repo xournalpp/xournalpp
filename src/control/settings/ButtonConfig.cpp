@@ -2,7 +2,8 @@
 
 #include "control/ToolHandler.h"
 
-ButtonConfig::ButtonConfig(ToolType action, int color, ToolSize size, DrawingType drawingType, EraserType eraserMode) {
+ButtonConfig::ButtonConfig(ToolType action, Color color, ToolSize size, DrawingType drawingType,
+                           EraserType eraserMode) {
     this->action = action;
     this->color = color;
     this->size = size;
@@ -24,7 +25,7 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler) {
         return;
     }
 
-    toolHandler->selectTool(this->action, false);
+    toolHandler->selectTool(this->action, false, true);
 
     if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
 
@@ -35,10 +36,6 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler) {
         if (this->size != TOOL_SIZE_NONE) {
             toolHandler->setSize(this->size);
         }
-    }
-
-    if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_TEXT) {
-        toolHandler->setColor(this->color, false);
     }
 
     if (this->action == TOOL_ERASER && this->eraserMode != ERASER_TYPE_NONE) {

@@ -1,14 +1,15 @@
 #include "Util.h"
 
 #include <array>
+#include <cassert>
 #include <cstdlib>
-#include <utility>
 
 #include <unistd.h>
 
+#include "Color.h"
+#include "PathUtil.h"
 #include "StringUtils.h"
 #include "XojMsgBox.h"
-#include "config-dev.h"
 #include "i18n.h"
 
 struct CallbackUiData {
@@ -38,141 +39,18 @@ void Util::execInUiThread(std::function<void()>&& callback) {
                          new CallbackUiData(std::move(callback)));
 }
 
-auto Util::rgb_to_GdkRGBA(const uint32_t color) -> GdkRGBA { return Util::argb_to_GdkRGBA(0xFF000000U | color); }
-
-auto Util::argb_to_GdkRGBA(const uint32_t color) -> GdkRGBA {
-    // clang-format off
-    return {((color >> 16U) & 0xFFU) / 255.0,
-            ((color >> 8U) & 0xFFU) / 255.0,
-            (color & 0xFFU) / 255.0,
-            ((color >> 24U) & 0xFFU) / 255.0};
-    // clang-format on
-}
-
-void Util::cairo_set_source_rgbi(cairo_t* cr, int color) {
+void Util::cairo_set_source_rgbi(cairo_t* cr, Color color) {
     auto rgba = rgb_to_GdkRGBA(color);
-    cairo_set_source_rgb(cr, rgba.red, rgba.green, rgba.blue);
+    gdk_cairo_set_source_rgba(cr, &rgba);
 }
 
-// Splits the double into a equal sized distribution between [0,256[ and rounding down
-// inspired by, which isn't completely correct:
-// https://stackoverflow.com/questions/1914115/converting-color-value-from-float-0-1-to-byte-0-255
-constexpr double MAXCOLOR = 256.0 - std::numeric_limits<double>::epsilon() * 128;
-
-inline auto float_to_int_color(const double color) -> uint32_t {
-    static_assert(MAXCOLOR < 256.0, "MAXCOLOR isn't smaler than 256");
-    return static_cast<uint32_t>(color * MAXCOLOR);
-}
-
-auto Util::gdkrgba_to_hex(const GdkRGBA& color) -> uint32_t {  // clang-format off
-	return float_to_int_color(color.alpha) << 24U |
-	       float_to_int_color(color.red)  << 16U |
-	       float_to_int_color(color.green) << 8U |
-	       float_to_int_color(color.blue);
-                                                               // clang-format on
+void Util::cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha) {
+    auto rgba = argb_to_GdkRGBA(color, alpha);
+    gdk_cairo_set_source_rgba(cr, &rgba);
 }
 
 auto Util::getPid() -> pid_t { return ::getpid(); }
 
-auto Util::getAutosaveFilename() -> Path {
-    Path p(getConfigSubfolder("autosave"));
-    p /= std::to_string(getPid()) + ".xopp";
-    return p;
-}
-
-auto Util::getConfigFolder() -> Path {
-    Path p(g_get_user_config_dir());
-    p /= g_get_prgname();
-    return p;
-}
-
-auto Util::getConfigSubfolder(const Path& subfolder) -> Path {
-    Path p = getConfigFolder();
-    p /= subfolder;
-
-    return Util::ensureFolderExists(p);
-}
-
-auto Util::getCacheSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_user_cache_dir());
-    p /= g_get_prgname();
-    p /= subfolder;
-
-    return Util::ensureFolderExists(p);
-}
-
-auto Util::getDataSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_user_data_dir());
-    p /= g_get_prgname();
-    p /= subfolder;
-
-    return Util::ensureFolderExists(p);
-}
-
-auto Util::getConfigFile(const Path& relativeFileName) -> Path {
-    Path p = getConfigSubfolder(relativeFileName.getParentPath());
-    p /= relativeFileName.getFilename();
-    return p;
-}
-
-auto Util::getCacheFile(const Path& relativeFileName) -> Path {
-    Path p = getCacheSubfolder(relativeFileName.getParentPath());
-    p /= relativeFileName.getFilename();
-    return p;
-}
-
-auto Util::getTmpDirSubfolder(const Path& subfolder) -> Path {
-    Path p(g_get_tmp_dir());
-    p /= FS(_F("xournalpp-{1}") % Util::getPid());
-    p /= subfolder;
-    return Util::ensureFolderExists(p);
-}
-
-auto Util::ensureFolderExists(const Path& p) -> Path {
-    if (g_mkdir_with_parents(p.c_str(), 0700) == -1) {
-        Util::execInUiThread([=]() {
-            string msg = FS(_F("Could not create folder: {1}") % p.str());
-            g_warning("%s", msg.c_str());
-            XojMsgBox::showErrorToUser(nullptr, msg);
-        });
-    }
-    return p;
-}
-
-void Util::openFileWithDefaultApplicaion(const Path& filename) {
-#ifdef __APPLE__
-    constexpr auto const OPEN_PATTERN = "open \"{1}\"";
-#elif _WIN32  // note the underscore: without it, it's not msdn official!
-    constexpr auto const OPEN_PATTERN = "start \"{1}\"";
-#else         // linux, unix, ...
-    constexpr auto const OPEN_PATTERN = "xdg-open \"{1}\"";
-#endif
-
-    string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
-    if (system(command.c_str()) != 0) {
-        string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
-                           "URL: {1}") %
-                        filename.str());
-        XojMsgBox::showErrorToUser(nullptr, msg);
-    }
-}
-
-void Util::openFileWithFilebrowser(const Path& filename) {
-#ifdef __APPLE__
-    constexpr auto const OPEN_PATTERN = "open \"{1}\"";
-#elif _WIN32
-    constexpr auto const OPEN_PATTERN = "explorer.exe /n,/e,\"{1}\"";
-#else  // linux, unix, ...
-    constexpr auto const OPEN_PATTERN = R"(nautilus "file://{1}" || dolphin "file://{1}" || konqueror "file://{1}" &)";
-#endif
-    string command = FS(FORMAT_STR(OPEN_PATTERN) % filename.getEscapedPath());
-    if (system(command.c_str()) != 0) {
-        string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
-                           "URL: {1}") %
-                        filename.str());
-        XojMsgBox::showErrorToUser(nullptr, msg);
-    }
-}
 
 auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboolean {
     GtkAllocation alloc;

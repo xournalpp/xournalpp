@@ -11,11 +11,17 @@ Element::~Element() = default;
 
 auto Element::getType() const -> ElementType { return this->type; }
 
-void Element::setX(double x) { this->x = x; }
+void Element::setX(double x) {
+    this->x = x;
+    this->sizeCalculated = false;
+}
 
-void Element::setY(double y) { this->y = y; }
+void Element::setY(double y) {
+    this->y = y;
+    this->sizeCalculated = false;
+}
 
-auto Element::getX() -> double {
+auto Element::getX() const -> double {
     if (!this->sizeCalculated) {
         this->sizeCalculated = true;
         calcSize();
@@ -23,20 +29,28 @@ auto Element::getX() -> double {
     return x;
 }
 
-auto Element::getY() -> double {
+auto Element::getY() const -> double {
     if (!this->sizeCalculated) {
         this->sizeCalculated = true;
         calcSize();
     }
     return y;
 }
+auto Element::getSnappedBounds() const -> Rectangle<double> {
+    if (!this->sizeCalculated) {
+        this->sizeCalculated = true;
+        calcSize();
+    }
+    return this->snappedBounds;
+}
 
 void Element::move(double dx, double dy) {
     this->x += dx;
     this->y += dy;
+    this->snappedBounds = this->snappedBounds.translated(dx, dy);
 }
 
-auto Element::getElementWidth() -> double {
+auto Element::getElementWidth() const -> double {
     if (!this->sizeCalculated) {
         this->sizeCalculated = true;
         calcSize();
@@ -44,7 +58,7 @@ auto Element::getElementWidth() -> double {
     return this->width;
 }
 
-auto Element::getElementHeight() -> double {
+auto Element::getElementHeight() const -> double {
     if (!this->sizeCalculated) {
         this->sizeCalculated = true;
         calcSize();
@@ -52,16 +66,23 @@ auto Element::getElementHeight() -> double {
     return this->height;
 }
 
-auto Element::boundingRect() -> Rectangle<double> {
+auto Element::boundingRect() const -> Rectangle<double> {
     return Rectangle<double>(getX(), getY(), getElementWidth(), getElementHeight());
 }
 
-void Element::setColor(int color) { this->color = color; }
+void Element::setColor(Color color) { this->color = color; }
 
-auto Element::getColor() const -> int { return this->color; }
+auto Element::getColor() const -> Color { return this->color; }
 
 auto Element::intersectsArea(const GdkRectangle* src) -> bool {
-    GdkRectangle rect = {gint(getX()), gint(getY()), gint(getElementWidth()), gint(getElementHeight())};
+    // compute the smallest rectangle with integer coordinates containing the bounding box and having width, height > 0
+    auto x = getX();
+    auto y = getY();
+    auto x1 = gint(std::floor(getX()));
+    auto y1 = gint(std::floor(getY()));
+    auto x2 = gint(std::ceil(x + getElementWidth()));
+    auto y2 = gint(std::ceil(y + getElementHeight()));
+    GdkRectangle rect = {x1, y1, std::max(1, x2 - x1), std::max(1, y2 - y1)};
 
     return gdk_rectangle_intersect(src, &rect, nullptr);
 }
@@ -102,7 +123,7 @@ void Element::serializeElement(ObjectOutputStream& out) const {
 
     out.writeDouble(this->x);
     out.writeDouble(this->y);
-    out.writeInt(this->color);
+    out.writeInt(int(this->color));
 
     out.endObject();
 }
@@ -112,7 +133,7 @@ void Element::readSerializedElement(ObjectInputStream& in) {
 
     this->x = in.readDouble();
     this->y = in.readDouble();
-    this->color = in.readInt();
+    this->color = Color(in.readInt());
 
     in.endObject();
 }

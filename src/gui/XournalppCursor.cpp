@@ -43,7 +43,7 @@ enum AVAILABLECURSORS {
     CRSR_DRAWDIRSHIFT,      // "
     CRSR_DRAWDIRCTRL,       // "
     CRSR_DRAWDIRSHIFTCTRL,  // "
-
+    CRSR_RESIZE,
 
     CRSR_END_OF_CURSORS
 };
@@ -89,8 +89,15 @@ XournalppCursor::XournalppCursor(Control* control): control(control) {
 	cssCursors[CRSR_DRAWDIRSHIFT        ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
+    cssCursors[CRSR_RESIZE              ] =     {"",""};            // "
 };
 // clang-format on
+
+constexpr auto RESIZE_CURSOR_SIZE = 16;
+constexpr auto DELTA_ANGLE_ARROW_HEAD = M_PI / 6.0;
+constexpr auto LENGTH_ARROW_HEAD = 0.7;
+constexpr auto RESIZE_CURSOR_HASH_PRECISION = 1000;
+
 
 XournalppCursor::~XournalppCursor() = default;
 
@@ -130,6 +137,7 @@ void XournalppCursor::setMouseSelectionType(CursorSelectionType selectionType) {
     updateCursor();
 }
 
+void XournalppCursor::setRotationAngle(double angle) { this->angle = angle; }
 
 /*This handles setting the busy cursor for the main window and calls
  * updateCursor to set the busy cursor for the XournalWidget region.
@@ -222,30 +230,29 @@ void XournalppCursor::updateCursor() {
                     }
                     break;
                 case CURSOR_SELECTION_TOP_LEFT:
-                    setCursor(CRSR_TOP_LEFT_CORNER);
+                    [[fallthrough]];
+                case CURSOR_SELECTION_BOTTOM_RIGHT:
+                    cursor = getResizeCursor(45);
                     break;
                 case CURSOR_SELECTION_TOP_RIGHT:
-                    setCursor(CRSR_TOP_RIGHT_CORNER);
-                    break;
+                    [[fallthrough]];
                 case CURSOR_SELECTION_BOTTOM_LEFT:
-                    setCursor(CRSR_BOTTOM_LEFT_CORNER);
-                    break;
-                case CURSOR_SELECTION_BOTTOM_RIGHT:
-                    setCursor(CRSR_BOTTOM_RIGHT_CORNER);
+                    cursor = getResizeCursor(135);
                     break;
                 case CURSOR_SELECTION_LEFT:
+                    [[fallthrough]];
                 case CURSOR_SELECTION_RIGHT:
-                    setCursor(CRSR_SB_H_DOUBLE_ARROW);
+                    cursor = getResizeCursor(180);
                     break;
+                case CURSOR_SELECTION_TOP:
+                    [[fallthrough]];
+                case CURSOR_SELECTION_BOTTOM:
+                    cursor = getResizeCursor(90);
                 case CURSOR_SELECTION_ROTATE:
                     setCursor(CRSR_EXCHANGE);
                     break;
                 case CURSOR_SELECTION_DELETE:
                     setCursor(CRSR_PIRATE);
-                    break;
-                case CURSOR_SELECTION_TOP:
-                case CURSOR_SELECTION_BOTTOM:
-                    setCursor(CRSR_SB_V_DOUBLE_ARROW);
                     break;
                 default:
                     break;
@@ -305,6 +312,45 @@ void XournalppCursor::updateCursor() {
     }
 }
 
+auto XournalppCursor::getResizeCursor(double deltaAngle) -> GdkCursor* {
+    gulong flavour = static_cast<gulong>(RESIZE_CURSOR_HASH_PRECISION * (angle + deltaAngle));
+    if (CRSR_RESIZE == this->currentCursor && flavour == this->currentCursorFlavour) {
+        return nullptr;
+    }
+    this->currentCursor = CRSR_RESIZE;
+    this->currentCursorFlavour = flavour;
+
+    double a = (this->angle + deltaAngle) * M_PI / 180;
+    cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, RESIZE_CURSOR_SIZE, RESIZE_CURSOR_SIZE);
+    cairo_t* cr = cairo_create(crCursor);
+    cairo_set_source_rgba(cr, 0.1, 0.1, 0.1, 1);
+    cairo_translate(cr, RESIZE_CURSOR_SIZE / 2, RESIZE_CURSOR_SIZE / 2);
+    cairo_scale(cr, RESIZE_CURSOR_SIZE / 2, RESIZE_CURSOR_SIZE / 2);
+    cairo_set_line_width(cr, 0.2);
+    // draw double headed arrow rotated accordingly
+    cairo_move_to(cr, cos(a), sin(a));
+    cairo_line_to(cr, -cos(a), -sin(a));
+    cairo_stroke(cr);
+    // head and tail
+    for (auto s: {-1, 1}) {
+        cairo_move_to(cr, s * cos(a), s * sin(a));
+        cairo_rel_line_to(cr, s * cos(a + M_PI + DELTA_ANGLE_ARROW_HEAD) * LENGTH_ARROW_HEAD,
+                          s * sin(a + M_PI + DELTA_ANGLE_ARROW_HEAD) * LENGTH_ARROW_HEAD);
+        cairo_move_to(cr, s * cos(a), s * sin(a));
+        cairo_rel_line_to(cr, s * cos(a + M_PI - DELTA_ANGLE_ARROW_HEAD) * LENGTH_ARROW_HEAD,
+                          s * sin(a + M_PI - DELTA_ANGLE_ARROW_HEAD) * LENGTH_ARROW_HEAD);
+        cairo_stroke(cr);
+    }
+
+    cairo_destroy(cr);
+    GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, RESIZE_CURSOR_SIZE, RESIZE_CURSOR_SIZE);
+    cairo_surface_destroy(crCursor);
+    GdkCursor* cursor =
+            gdk_cursor_new_from_pixbuf(gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf,
+                                       RESIZE_CURSOR_SIZE / 2, RESIZE_CURSOR_SIZE / 2);
+    g_object_unref(pixbuf);
+    return cursor;
+}
 
 auto XournalppCursor::getEraserCursor() -> GdkCursor* {
 
@@ -357,10 +403,8 @@ auto XournalppCursor::getPenCursor() -> GdkCursor* {
 
 
 auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> GdkCursor* {
-    int rgb = control->getToolHandler()->getColor();
-    double r = ((rgb >> 16) & 0xff) / 255.0;
-    double g = ((rgb >> 8) & 0xff) / 255.0;
-    double b = (rgb & 0xff) / 255.0;
+    auto irgb = control->getToolHandler()->getColor();
+    auto drgb = Util::rgb_to_GdkRGBA(irgb);
     bool big = control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_BIG;
     bool bright = control->getSettings()->isHighlightPosition();
     int height = size;
@@ -368,7 +412,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
 
     // create a hash of variables so we notice if one changes despite being the same cursor type:
     gulong flavour = (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(64 * alpha) << 2 |
-                     static_cast<gulong>(size) << 9 | static_cast<gulong>(rgb) << 14;
+                     static_cast<gulong>(size) << 9 | static_cast<gulong>(irgb) << 14;
 
     if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) {
         return nullptr;
@@ -391,7 +435,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     if (big) {
         // When using highlighter, paint the icon with the current color
         if (size == 5) {
-            cairo_set_source_rgb(cr, r, g, b);
+            gdk_cairo_set_source_rgba(cr, &drgb);
         } else {
             cairo_set_source_rgb(cr, 1, 1, 1);
         }
@@ -416,17 +460,18 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     if (bright) {
         // Highlight cursor with a circle
         auto&& color = Util::argb_to_GdkRGBA(control->getSettings()->getCursorHighlightColor());
-        cairo_set_source_rgba(cr, color.red, color.green, color.blue, color.alpha);
+        gdk_cairo_set_source_rgba(cr, &color);
         cairo_arc(cr, centerX, centerY, control->getSettings()->getCursorHighlightRadius(), 0, 2 * M_PI);
         cairo_fill_preserve(cr);
         auto&& borderColor = Util::argb_to_GdkRGBA(control->getSettings()->getCursorHighlightBorderColor());
-        cairo_set_source_rgba(cr, borderColor.red, borderColor.green, borderColor.blue, borderColor.alpha);
+        gdk_cairo_set_source_rgba(cr, &borderColor);
         cairo_set_line_width(cr, control->getSettings()->getCursorHighlightBorderWidth());
         cairo_stroke(cr);
     }
 
-
-    cairo_set_source_rgba(cr, r, g, b, alpha);
+    auto drgbCopy = drgb;
+    drgbCopy.alpha = alpha;
+    gdk_cairo_set_source_rgba(cr, &drgbCopy);
     double cursorSize = control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom();
     cairo_arc(cr, centerX, centerY, cursorSize / 2., 0, 2. * M_PI);
     cairo_fill(cr);

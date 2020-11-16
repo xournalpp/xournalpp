@@ -56,3 +56,13 @@ auto BackgroundConfig::loadValueHex(const string& key, int& value) -> bool {
 
     return false;
 }
+
+auto BackgroundConfig::loadValueHex(const string& key, uint32_t& value) -> bool {
+    string str;
+    if (loadValue(key, str)) {
+        value = std::stoul(str, nullptr, 16);
+        return true;
+    }
+
+    return false;
+}

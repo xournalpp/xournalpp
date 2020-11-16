@@ -22,8 +22,8 @@
 #include "model/Font.h"
 
 #include "LatexSettings.h"
-#include "Path.h"
 #include "SettingsEnums.h"
+#include "filesystem.h"
 
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
 
@@ -84,7 +84,7 @@ private:
 
 class Settings {
 public:
-    /*[[implicit]]*/ Settings(Path filename);
+    /*[[implicit]]*/ Settings(fs::path filepath);
     Settings(const Settings& settings) = delete;
     void operator=(const Settings& settings) = delete;
     virtual ~Settings();
@@ -159,17 +159,17 @@ public:
     /**
      * The last saved path
      */
-    void setLastSavePath(Path p);
-    Path const& getLastSavePath() const;
+    void setLastSavePath(fs::path p);
+    fs::path const& getLastSavePath() const;
 
     /**
      * The last open path
      */
-    void setLastOpenPath(Path p);
-    Path const& getLastOpenPath() const;
+    void setLastOpenPath(fs::path p);
+    fs::path const& getLastOpenPath() const;
 
-    void setLastImagePath(const Path& p);
-    Path const& getLastImagePath() const;
+    void setLastImagePath(const fs::path& p);
+    fs::path const& getLastImagePath() const;
 
     void setMainWndSize(int width, int height);
     void setMainWndMaximized(bool max);
@@ -267,14 +267,14 @@ public:
     bool isHighlightPosition() const;
     void setHighlightPosition(bool highlight);
 
-    uint32_t getCursorHighlightColor() const;
-    void setCursorHighlightColor(uint32_t color);
+    Color getCursorHighlightColor() const;
+    void setCursorHighlightColor(Color color);
 
     double getCursorHighlightRadius() const;
     void setCursorHighlightRadius(double radius);
 
-    uint32_t getCursorHighlightBorderColor() const;
-    void setCursorHighlightBorderColor(uint32_t color);
+    Color getCursorHighlightBorderColor() const;
+    void setCursorHighlightBorderColor(Color color);
 
     double getCursorHighlightBorderWidth() const;
     void setCursorHighlightBorderWidth(double width);
@@ -304,14 +304,14 @@ public:
     string const& getPresentationHideElements() const;
     void setPresentationHideElements(string elements);
 
-    int getBorderColor() const;
-    void setBorderColor(int color);
+    Color getBorderColor() const;
+    void setBorderColor(Color color);
 
-    int getSelectionColor() const;
-    void setSelectionColor(int color);
+    Color getSelectionColor() const;
+    void setSelectionColor(Color color);
 
-    int getBackgroundColor() const;
-    void setBackgroundColor(int color);
+    Color getBackgroundColor() const;
+    void setBackgroundColor(Color color);
 
     int getPdfPageCacheSize() const;
     void setPdfPageCacheSize(int size);
@@ -400,7 +400,6 @@ public:
      */
     bool getStrokeFilterEnabled() const;
 
-
     /**
      * get strokeFilter settings
      */
@@ -432,6 +431,36 @@ public:
      */
     bool getTrySelectOnStrokeFiltered() const;
 
+    /**
+     * Set snap recognized shapes enabled
+     */
+    void setSnapRecognizedShapesEnabled(bool enabled);
+
+    /**
+     * Get snap recognized shapes enabled
+     */
+    bool getSnapRecognizedShapesEnabled() const;
+
+    /**
+     * Set line width restoring for resized edit selctions enabled
+     */
+    void setRestoreLineWidthEnabled(bool enabled);
+
+    /**
+     * Get line width restoring enabled
+     */
+    bool getRestoreLineWidthEnabled() const;
+
+    /**
+     * Set the preferred locale
+     */
+    void setPreferredLocale(std::string const& locale);
+
+    /**
+     * Get the preferred locale
+     */
+    std::string getPreferredLocale() const;
+
 public:
     // Custom settings
     SElement& getCustomElement(const string& name);
@@ -455,9 +484,9 @@ public:
 
 private:
     /**
-     *  The config filename
+     *  The config filepath
      */
-    Path filename;
+    fs::path filepath;
 
 private:
     /**
@@ -508,7 +537,7 @@ private:
     /**
      * Cursor highlight color (ARGB format)
      */
-    uint32_t cursorHighlightColor{};
+    Color cursorHighlightColor{};
 
     /**
      * Radius of cursor highlight circle. Note that this is limited by the size
@@ -519,7 +548,7 @@ private:
     /**
      * Cursor highlight border color (ARGB format)
      */
-    uint32_t cursorHighlightBorderColor{};
+    Color cursorHighlightBorderColor{};
 
     /**
      * Width of cursor highlight border, in pixels.
@@ -555,17 +584,17 @@ private:
     /**
      *  The last saved folder
      */
-    Path lastSavePath;
+    fs::path lastSavePath;
 
     /**
      *  The last opened folder
      */
-    Path lastOpenPath;
+    fs::path lastOpenPath;
 
     /**
      *  The last "insert image" folder
      */
-    Path lastImagePath;
+    fs::path lastImagePath;
 
     /**
      * The last used font
@@ -733,17 +762,17 @@ private:
      * The color to draw borders on selected elements
      * (Page, insert image selection etc.)
      */
-    int selectionBorderColor{};
+    Color selectionBorderColor{};
 
     /**
      * Color for Text selection, Stroke selection etc.
      */
-    int selectionMarkerColor{};
+    Color selectionMarkerColor{};
 
     /**
      * The color for Xournal page background
      */
-    int backgroundColor{};
+    Color backgroundColor{};
 
     /**
      * Page template String
@@ -828,6 +857,16 @@ private:
     bool trySelectOnStrokeFiltered{};
 
     /**
+     * Whether snapping for recognized shapes is enabled
+     */
+    bool snapRecognizedShapesEnabled{};
+
+    /**
+     * Whether the line width should be preserved in a resizing operation
+     */
+    bool restoreLineWidthEnabled{};
+
+    /**
      * How many stylus events since hitting the screen should be ignored before actually starting the action. If set to
      * 0, no event will be ignored. Should not be negative.
      */
@@ -851,4 +890,9 @@ private:
      * "Transaction" running, do not save until the end is reached
      */
     bool inTransaction{};
+
+    /** The preferred locale as its language code
+     * e.g. "en_US"
+     */
+    std::string preferredLocale;
 };

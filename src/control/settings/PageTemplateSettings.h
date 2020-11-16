@@ -49,8 +49,8 @@ public:
     double getPageHeight() const;
     void setPageHeight(double pageHeight);
 
-    int getBackgroundColor() const;
-    void setBackgroundColor(int backgroundColor);
+    Color getBackgroundColor() const;
+    void setBackgroundColor(Color backgroundColor);
 
     PageType getBackgroundType();
     PageType getPageInsertType();
@@ -73,7 +73,7 @@ private:
     /**
      * Background color in RGB
      */
-    int backgroundColor;
+    Color backgroundColor;
 
     /**
      * Background type

@@ -35,7 +35,7 @@ class DeleteUndoAction;
 
 class EditSelectionContents: public ElementContainer, public Serializeable {
 public:
-    EditSelectionContents(double x, double y, double width, double height, const PageRef& sourcePage,
+    EditSelectionContents(Rectangle<double> bounds, Rectangle<double> snappedBounds, const PageRef& sourcePage,
                           Layer* sourceLayer, XojPageView* sourceView);
     virtual ~EditSelectionContents();
 
@@ -51,7 +51,7 @@ public:
      * Set the color of all elements, return an undo action
      * (Or nullptr if nothing done, e.g. because there is only an image)
      */
-    UndoAction* setColor(int color);
+    UndoAction* setColor(Color color);
 
     /**
      * Sets the font of all containing text elements, return an undo action
@@ -93,11 +93,11 @@ public:
     /**
      * Finish the editing
      */
-    void finalizeSelection(double x, double y, double width, double height, bool aspectRatio, Layer* layer,
+    void finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds, bool aspectRatio, Layer* layer,
                            const PageRef& targetPage, XojPageView* targetView, UndoRedoHandler* undo);
 
-    void updateContent(double x, double y, double rotation, double width, double height, bool aspectRatio, Layer* layer,
-                       const PageRef& targetPage, XojPageView* targetView, UndoRedoHandler* undo,
+    void updateContent(Rectangle<double> bounds, Rectangle<double> snappedBounds, double rotation, bool aspectRatio,
+                       Layer* layer, const PageRef& targetPage, XojPageView* targetView, UndoRedoHandler* undo,
                        CursorSelectionType type);
 
 private:
@@ -149,16 +149,12 @@ public:
 
 private:
     /**
-     * The original size to calculate the zoom factor for reascaling the items
+     * The original dimensions to calculate the zoom factor for reascaling the items and the offset for moving the
+     * selection
      */
-    double originalWidth, originalHeight;
-    double lastWidth, lastHeight;
-
-    /**
-     * The original position, to calculate the offset for moving the objects
-     */
-    double originalX, originalY;
-    double lastX, lastY;
+    Rectangle<double> originalBounds;
+    Rectangle<double> lastBounds;
+    Rectangle<double> lastSnappedBounds;
 
     /**
      * The given rotation. Original rotation should always be zero (double)
@@ -169,8 +165,13 @@ private:
     /**
      * The offset to the original selection
      */
-    double relativeX;
-    double relativeY;
+    double relativeX = -9999999999;
+    double relativeY = -9999999999;
+
+    /**
+     * The setting for whether line width is restored after resizing operation (checked at creation time)
+     */
+    bool restoreLineWidth;
 
     /**
      * The selected element (the only one which are handled by this instance)
@@ -186,12 +187,12 @@ private:
     /**
      * The rendered elements
      */
-    cairo_surface_t* crBuffer;
+    cairo_surface_t* crBuffer = nullptr;
 
     /**
      * The source id for the rescaling task
      */
-    int rescaleId;
+    int rescaleId = 0;
 
     /**
      * Source Page for Undo operations

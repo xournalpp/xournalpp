@@ -25,7 +25,7 @@ public:
 
 protected:
     virtual void addFilterToDialog();
-    virtual bool isUriValid(string& uri);
+    bool testAndSetFilepath(fs::path file) override;
 
 private:
 };

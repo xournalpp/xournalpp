@@ -2,16 +2,16 @@
 
 #include <utility>
 
-#include <config.h>
-
 #include "model/FormatDefinitions.h"
 #include "util/DeviceListHelper.h"
 
 #include "ButtonConfig.h"
 #include "Util.h"
+#include "filesystem.h"
 #include "i18n.h"
-#define DEFAULT_FONT "Sans"
-#define DEFAULT_FONT_SIZE 12
+
+constexpr auto const* DEFAULT_FONT = "Sans";
+constexpr auto DEFAULT_FONT_SIZE = 12;
 
 #define WRITE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
 #define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
@@ -22,7 +22,7 @@
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
-Settings::Settings(Path filename): filename(std::move(filename)) { loadDefault(); }
+Settings::Settings(fs::path filepath): filepath(std::move(filepath)) { loadDefault(); }
 
 Settings::~Settings() {
     for (auto& i: this->buttonConfig) {
@@ -107,35 +107,35 @@ void Settings::loadDefault() {
 
     // Eraser
     this->buttonConfig[BUTTON_ERASER] =
-            new ButtonConfig(TOOL_ERASER, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_ERASER, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
     this->buttonConfig[BUTTON_MIDDLE] =
-            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Right button
     this->buttonConfig[BUTTON_RIGHT] =
-            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Touch
     this->buttonConfig[BUTTON_TOUCH] =
-            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Default config
     this->buttonConfig[BUTTON_DEFAULT] =
-            new ButtonConfig(TOOL_PEN, 0, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_PEN, Color{0x000000U}, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 1
     this->buttonConfig[BUTTON_STYLUS] =
-            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 2
     this->buttonConfig[BUTTON_STYLUS2] =
-            new ButtonConfig(TOOL_NONE, 0, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
     this->fullscreenHideElements = "mainMenubar";
     this->presentationHideElements = "mainMenubar,sidebarContents";
 
     this->pdfPageCacheSize = 10;
 
-    this->selectionBorderColor = 0xff0000;  // red
-    this->selectionMarkerColor = 0x729FCF;  // light blue
+    this->selectionBorderColor = 0xff0000U;  // red
+    this->selectionMarkerColor = 0x729fcfU;  // light blue
 
-    this->backgroundColor = 0xDCDAD5;
+    this->backgroundColor = 0xdcdad5U;
 
     // clang-format off
 	this->pageTemplate = "xoj/template\ncopyLastPageSettings=true\nsize=595.275591x841.889764\nbackgroundType=lined\nbackgroundColor=#ffffff\n";
@@ -162,6 +162,9 @@ void Settings::loadDefault() {
     this->strokeFilterEnabled = false;
     this->doActionOnStrokeFiltered = false;
     this->trySelectOnStrokeFiltered = false;
+
+    this->snapRecognizedShapesEnabled = false;
+    this->restoreLineWidthEnabled = false;
 
     this->inTransaction = false;
 }
@@ -271,10 +274,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
             if (sscanf(reinterpret_cast<const char*>(size), "%lf", &dSize) == 1) {
                 this->font.setSize(dSize);
             }
-
             xmlFree(size);
         }
-
         return;
     }
 
@@ -296,11 +297,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectedToolbar")) == 0) {
         this->selectedToolbar = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastSavePath")) == 0) {
-        this->lastSavePath = reinterpret_cast<const char*>(value);
+        this->lastSavePath = fs::u8path(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastOpenPath")) == 0) {
-        this->lastOpenPath = reinterpret_cast<const char*>(value);
+        this->lastOpenPath = fs::u8path(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastImagePath")) == 0) {
-        this->lastImagePath = reinterpret_cast<const char*>(value);
+        this->lastImagePath = fs::u8path(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStep")) == 0) {
         this->zoomStep = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStepScroll")) == 0) {
@@ -382,11 +383,11 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfPageCacheSize")) == 0) {
         this->pdfPageCacheSize = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionBorderColor")) == 0) {
-        this->selectionBorderColor = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        this->selectionBorderColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionMarkerColor")) == 0) {
-        this->selectionMarkerColor = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        this->selectionMarkerColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("backgroundColor")) == 0) {
-        this->backgroundColor = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+        this->backgroundColor = Color(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpace")) == 0) {
         this->addHorizontalSpace = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("addHorizontalSpaceAmount")) == 0) {
@@ -461,6 +462,12 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->latexSettings.globalTemplatePath = fs::u8path(v);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
         this->latexSettings.genCmd = reinterpret_cast<char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapRecognizedShapesEnabled")) == 0) {
+        this->snapRecognizedShapesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("restoreLineWidthEnabled")) == 0) {
+        this->restoreLineWidthEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preferredLocale")) == 0) {
+        this->preferredLocale = reinterpret_cast<char*>(value);
     }
 
     xmlFree(name);
@@ -508,7 +515,9 @@ void Settings::loadButtonConfig() {
             }
 
             if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT) {
-                e.getInt("color", cfg->color);
+                if (int iColor; e.getInt("color", iColor)) {
+                    cfg->color = Color(iColor);
+                }
             }
 
             if (type == TOOL_ERASER) {
@@ -546,12 +555,12 @@ void Settings::loadButtonConfig() {
 auto Settings::load() -> bool {
     xmlKeepBlanksDefault(0);
 
-    if (!filename.exists()) {
-        g_warning("configfile does not exist %s\n", filename.c_str());
+    if (!fs::exists(filepath)) {
+        g_warning("configfile does not exist %s\n", filepath.string().c_str());
         return false;
     }
 
-    xmlDocPtr doc = xmlParseFile(filename.c_str());
+    xmlDocPtr doc = xmlParseFile(filepath.u8string().c_str());
 
     if (doc == nullptr) {
         g_warning("Settings::load:: doc == null, could not load Settings!\n");
@@ -560,14 +569,14 @@ auto Settings::load() -> bool {
 
     xmlNodePtr cur = xmlDocGetRootElement(doc);
     if (cur == nullptr) {
-        g_message("The settings file \"%s\" is empty", filename.c_str());
+        g_message("The settings file \"%s\" is empty", filepath.string().c_str());
         xmlFreeDoc(doc);
 
         return false;
     }
 
     if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("settings"))) {
-        g_message("File \"%s\" is of the wrong type", filename.c_str());
+        g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
         xmlFreeDoc(doc);
 
         return false;
@@ -652,7 +661,7 @@ void Settings::saveButtonConfig() {
         }  // end if pen or highlighter
 
         if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT) {
-            e.setIntHex("color", cfg->color);
+            e.setIntHex("color", int32_t(cfg->color));
         }
 
         if (type == TOOL_ERASER) {
@@ -714,9 +723,9 @@ void Settings::save() {
 
     WRITE_STRING_PROP(selectedToolbar);
 
-    auto lastSavePath = this->lastSavePath.str();
-    auto lastOpenPath = this->lastOpenPath.str();
-    auto lastImagePath = this->lastImagePath.str();
+    auto lastSavePath = this->lastSavePath.u8string();
+    auto lastOpenPath = this->lastOpenPath.u8string();
+    auto lastImagePath = this->lastImagePath.u8string();
     WRITE_STRING_PROP(lastSavePath);
     WRITE_STRING_PROP(lastOpenPath);
     WRITE_STRING_PROP(lastImagePath);
@@ -800,9 +809,9 @@ void Settings::save() {
 
     WRITE_BOOL_PROP(touchWorkaround);
 
-    WRITE_INT_PROP(selectionBorderColor);
-    WRITE_INT_PROP(backgroundColor);
-    WRITE_INT_PROP(selectionMarkerColor);
+    WRITE_UINT_PROP(selectionBorderColor);
+    WRITE_UINT_PROP(backgroundColor);
+    WRITE_UINT_PROP(selectionMarkerColor);
 
     WRITE_INT_PROP(pdfPageCacheSize);
     WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
@@ -825,16 +834,20 @@ void Settings::save() {
     WRITE_INT_PROP(strokeFilterIgnoreTime);
     WRITE_DOUBLE_PROP(strokeFilterIgnoreLength);
     WRITE_INT_PROP(strokeFilterSuccessiveTime);
-
     WRITE_BOOL_PROP(strokeFilterEnabled);
     WRITE_BOOL_PROP(doActionOnStrokeFiltered);
     WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
+
+    WRITE_BOOL_PROP(snapRecognizedShapesEnabled);
+    WRITE_BOOL_PROP(restoreLineWidthEnabled);
 
     WRITE_INT_PROP(numIgnoredStylusEvents);
 
     WRITE_BOOL_PROP(newInputSystemEnabled);
     WRITE_BOOL_PROP(inputSystemTPCButton);
     WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
+
+    WRITE_STRING_PROP(preferredLocale);
 
     WRITE_BOOL_PROP(latexSettings.autoCheckDependencies);
     // Inline WRITE_STRING_PROP(latexSettings.globalTemplatePath) since it
@@ -860,7 +873,7 @@ void Settings::save() {
         saveData(root, p.first, p.second);
     }
 
-    xmlSaveFormatFileEnc(filename.c_str(), doc, "UTF-8", 1);
+    xmlSaveFormatFileEnc(filepath.u8string().c_str(), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
 }
 
@@ -1064,9 +1077,9 @@ void Settings::setHighlightPosition(bool highlight) {
     save();
 }
 
-auto Settings::getCursorHighlightColor() const -> uint32_t { return this->cursorHighlightColor; }
+auto Settings::getCursorHighlightColor() const -> Color { return this->cursorHighlightColor; }
 
-void Settings::setCursorHighlightColor(uint32_t color) {
+void Settings::setCursorHighlightColor(Color color) {
     if (this->cursorHighlightColor != color) {
         this->cursorHighlightColor = color;
         save();
@@ -1082,9 +1095,9 @@ void Settings::setCursorHighlightRadius(double radius) {
     }
 }
 
-auto Settings::getCursorHighlightBorderColor() const -> uint32_t { return this->cursorHighlightBorderColor; }
+auto Settings::getCursorHighlightBorderColor() const -> Color { return this->cursorHighlightBorderColor; }
 
-void Settings::setCursorHighlightBorderColor(uint32_t color) {
+void Settings::setCursorHighlightBorderColor(Color color) {
     if (this->cursorHighlightBorderColor != color) {
         this->cursorHighlightBorderColor = color;
         save();
@@ -1360,21 +1373,21 @@ void Settings::setViewLayoutB2T(bool b2t) {
 
 auto Settings::getViewLayoutB2T() const -> bool { return this->layoutBottomToTop; }
 
-void Settings::setLastSavePath(Path p) {
+void Settings::setLastSavePath(fs::path p) {
     this->lastSavePath = std::move(p);
     save();
 }
 
-auto Settings::getLastSavePath() const -> Path const& { return this->lastSavePath; }
+auto Settings::getLastSavePath() const -> fs::path const& { return this->lastSavePath; }
 
-void Settings::setLastOpenPath(Path p) {
+void Settings::setLastOpenPath(fs::path p) {
     this->lastOpenPath = std::move(p);
     save();
 }
 
-auto Settings::getLastOpenPath() const -> Path const& { return this->lastOpenPath; }
+auto Settings::getLastOpenPath() const -> fs::path const& { return this->lastOpenPath; }
 
-void Settings::setLastImagePath(const Path& path) {
+void Settings::setLastImagePath(const fs::path& path) {
     if (this->lastImagePath == path) {
         return;
     }
@@ -1382,7 +1395,7 @@ void Settings::setLastImagePath(const Path& path) {
     save();
 }
 
-auto Settings::getLastImagePath() const -> Path const& { return this->lastImagePath; }
+auto Settings::getLastImagePath() const -> fs::path const& { return this->lastImagePath; }
 
 void Settings::setZoomStep(double zoomStep) {
     if (this->zoomStep == zoomStep) {
@@ -1531,9 +1544,9 @@ void Settings::setPdfPageCacheSize(int size) {
     save();
 }
 
-auto Settings::getBorderColor() const -> int { return this->selectionBorderColor; }
+auto Settings::getBorderColor() const -> Color { return this->selectionBorderColor; }
 
-void Settings::setBorderColor(int color) {
+void Settings::setBorderColor(Color color) {
     if (this->selectionBorderColor == color) {
         return;
     }
@@ -1541,9 +1554,9 @@ void Settings::setBorderColor(int color) {
     save();
 }
 
-auto Settings::getSelectionColor() const -> int { return this->selectionMarkerColor; }
+auto Settings::getSelectionColor() const -> Color { return this->selectionMarkerColor; }
 
-void Settings::setSelectionColor(int color) {
+void Settings::setSelectionColor(Color color) {
     if (this->selectionMarkerColor == color) {
         return;
     }
@@ -1551,9 +1564,9 @@ void Settings::setSelectionColor(int color) {
     save();
 }
 
-auto Settings::getBackgroundColor() const -> int { return this->backgroundColor; }
+auto Settings::getBackgroundColor() const -> Color { return this->backgroundColor; }
 
-void Settings::setBackgroundColor(int color) {
+void Settings::setBackgroundColor(Color color) {
     if (this->backgroundColor == color) {
         return;
     }
@@ -1664,6 +1677,18 @@ void Settings::setTrySelectOnStrokeFiltered(bool enabled) { this->trySelectOnStr
 
 auto Settings::getTrySelectOnStrokeFiltered() const -> bool { return this->trySelectOnStrokeFiltered; }
 
+void Settings::setSnapRecognizedShapesEnabled(bool enabled) { this->snapRecognizedShapesEnabled = enabled; }
+
+auto Settings::getSnapRecognizedShapesEnabled() const -> bool { return this->snapRecognizedShapesEnabled; }
+
+
+void Settings::setRestoreLineWidthEnabled(bool enabled) { this->restoreLineWidthEnabled = enabled; }
+
+auto Settings::getRestoreLineWidthEnabled() const -> bool { return this->restoreLineWidthEnabled; }
+
+auto Settings::setPreferredLocale(std::string const& locale) -> void { this->preferredLocale = locale; }
+
+auto Settings::getPreferredLocale() const -> std::string { return this->preferredLocale; }
 
 void Settings::setIgnoredStylusEvents(int numEvents) {
     if (this->numIgnoredStylusEvents == numEvents) {

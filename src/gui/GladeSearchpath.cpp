@@ -4,32 +4,32 @@ GladeSearchpath::GladeSearchpath() = default;
 
 GladeSearchpath::~GladeSearchpath() { directories.clear(); }
 
-auto GladeSearchpath::findFile(const string& subdir, const string& file) -> string {
-    string filename;
+auto GladeSearchpath::findFile(fs::path const& subdir, fs::path const& file) -> fs::path {
+    fs::path filepath;
     if (subdir.empty()) {
-        filename = file;
+        filepath = file;
     } else {
-        filename = subdir + G_DIR_SEPARATOR_S + file;
+        filepath = subdir / file;
     }
 
     // We step through each directory to find it.
-    for (const string& dir: directories) {
-        string pathname = dir + G_DIR_SEPARATOR_S + filename;
+    for (const auto& dir: directories) {
+        auto pathname = dir / filepath;
 
-        if (g_file_test(pathname.c_str(), G_FILE_TEST_EXISTS)) {
+        if (fs::exists(pathname)) {
             return pathname;
         }
     }
 
-    return "";
+    return fs::path{};
 }
 
 /**
  * @return The first search path
  */
-auto GladeSearchpath::getFirstSearchPath() -> string {
+auto GladeSearchpath::getFirstSearchPath() const -> fs::path {
     if (this->directories.empty()) {
-        return "";
+        return {};
     }
 
     return this->directories[0];
@@ -38,4 +38,4 @@ auto GladeSearchpath::getFirstSearchPath() -> string {
 /**
  * Use this function to set the directory containing installed pixmaps and Glade XML files.
  */
-void GladeSearchpath::addSearchDirectory(const string& directory) { this->directories.push_back(directory); }
+void GladeSearchpath::addSearchDirectory(fs::path const& directory) { this->directories.push_back(directory); }

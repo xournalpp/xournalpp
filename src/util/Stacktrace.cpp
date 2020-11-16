@@ -1,18 +1,19 @@
 #include "Stacktrace.h"
 
 #include <array>
+#include <climits>
 #include <iostream>
 
 #ifdef _WIN32
 #include <Windows.h>
 #else
-#include <climits>
 
 #include <execinfo.h>
 #include <unistd.h>
 #endif
 
 #ifdef __APPLE__
+#include <glib.h>
 #include <mach-o/dyld.h>
 #endif
 
@@ -30,11 +31,11 @@ Stacktrace::Stacktrace() = default;
 Stacktrace::~Stacktrace() = default;
 
 #ifdef _WIN32
-std::string Stacktrace::getExePath() {
+fs::path Stacktrace::getExePath() {
     char szFileName[MAX_PATH + 1];
     GetModuleFileNameA(nullptr, szFileName, MAX_PATH + 1);
 
-    return szFileName;
+    return fs::path{szFileName};
 }
 void Stacktrace::printStracktrace(std::ostream& stream) {
     // Stracktrace is currently not implemented for Windows
@@ -44,18 +45,18 @@ void Stacktrace::printStracktrace(std::ostream& stream) {
 
 #ifdef __APPLE__
 
-#include "Path.h"
+#include "filesystem.h"
 
-std::string Stacktrace::getExePath() {
+fs::path Stacktrace::getExePath() {
     char c;
     uint32_t size = 0;
     _NSGetExecutablePath(&c, &size);
 
     char* path = new char[size + 1];
     if (_NSGetExecutablePath(path, &size) == 0) {
-        Path p(path);
+        fs::path p(path);
         delete[] path;
-        return p.getParentPath().str();
+        return p.parent_path();
     }
 
     g_error("Could not executable path!");
@@ -64,10 +65,10 @@ std::string Stacktrace::getExePath() {
     return "";
 }
 #else
-auto Stacktrace::getExePath() -> std::string {
+auto Stacktrace::getExePath() -> fs::path {
     std::array<char, PATH_MAX> result{};
     ssize_t count = readlink("/proc/self/exe", result.data(), PATH_MAX);
-    return std::string(result.data(), (count > 0) ? count : 0);
+    return fs::path{std::string(result.data(), (count > 0) ? count : 0)};
 }
 #endif
 

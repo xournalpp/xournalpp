@@ -1,10 +1,10 @@
 #include "Plugin.h"
-
-#include <config.h>
-
-#include "i18n.h"
-
 #ifdef ENABLE_PLUGINS
+
+#include <utility>
+
+#include "config.h"
+#include "i18n.h"
 
 extern "C" {
 #include <lauxlib.h>
@@ -14,44 +14,22 @@ extern "C" {
 
 #include "luapi_application.h"
 
-#define LOAD_FROM_INI(target, group, key)                                 \
-    {                                                                     \
-        char* value = g_key_file_get_string(config, group, key, nullptr); \
-        if (value != nullptr) {                                           \
-            target = value;                                               \
-            g_free(value);                                                \
-        }                                                                 \
-    }
-
 /*
  ** these libs are loaded by lua.c and are readily available to any Lua
  ** program
  */
-static const luaL_Reg loadedlibs[] = {{"app", luaopen_app}, {nullptr, nullptr}};
+constexpr std::array loadedlibs{luaL_Reg{"app", luaopen_app}};
 
-Plugin::Plugin(Control* control, string name, string path): control(control), name(name), path(path) { loadIni(); }
-
-Plugin::~Plugin() {
-    if (lua) {
-        // Clean up, free the Lua state var
-        lua_close(lua);
-        lua = nullptr;
-    }
-
-    for (MenuEntry* m: menuEntries) {
-        delete m;
-    }
-    menuEntries.clear();
+Plugin::Plugin(Control* control, std::string name, fs::path path):
+        control(control), name(std::move(name)), path(std::move(path)) {
+    loadIni();
 }
 
-/**
- * Get Plugin from lua engine
- */
-Plugin* Plugin::getPluginFromLua(lua_State* lua) {
+auto Plugin::getPluginFromLua(lua_State* lua) -> Plugin* {
     lua_getfield(lua, LUA_REGISTRYINDEX, "Xournalpp_Plugin");
 
     if (lua_islightuserdata(lua, -1)) {
-        Plugin* data = (Plugin*)lua_touserdata(lua, -1);
+        auto* data = static_cast<Plugin*>(lua_touserdata(lua, -1));
         lua_pop(lua, 1);
         return data;
     }
@@ -59,9 +37,6 @@ Plugin* Plugin::getPluginFromLua(lua_State* lua) {
     return nullptr;
 }
 
-/**
- * Register toolbar item and all other UI stuff
- */
 void Plugin::registerToolbar() {
     if (!this->valid || !this->enabled) {
         return;
@@ -69,8 +44,8 @@ void Plugin::registerToolbar() {
 
     inInitUi = true;
 
-    lua_getglobal(lua, "initUi");
-    if (lua_isfunction(lua, -1) == 1) {
+    lua_getglobal(lua.get(), "initUi");
+    if (lua_isfunction(lua.get(), -1) == 1) {
         if (callFunction("initUi")) {
             g_message("Plugin «%s» UI initialized", name.c_str());
         } else {
@@ -83,10 +58,6 @@ void Plugin::registerToolbar() {
     inInitUi = false;
 }
 
-
-/**
- * Register all menu entries to the menu
- */
 void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu) {
     if (menuEntries.empty() || !this->enabled) {
         // No entries - nothing to do
@@ -97,103 +68,68 @@ void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu) {
 
     GtkAccelGroup* accelGroup = gtk_accel_group_new();
 
-    for (MenuEntry* m: menuEntries) {
-        GtkWidget* mi = gtk_menu_item_new_with_label(m->menu.c_str());
-        m->widget = mi;
+    for (auto&& m: menuEntries) {
+        GtkWidget* mi = gtk_menu_item_new_with_label(m.menu.c_str());
+        m.widget = mi;
         gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
 
-        if (m->accelerator != "") {
-            guint acceleratorKey = 0;
-            GdkModifierType mods = (GdkModifierType)0;
-            gtk_accelerator_parse(m->accelerator.c_str(), &acceleratorKey, &mods);
-
+        if (!m.accelerator.empty()) {
+            auto acceleratorKey = guint(0);
+            auto mods = GdkModifierType(0);
+            gtk_accelerator_parse(m.accelerator.c_str(), &acceleratorKey, &mods);
             gtk_widget_add_accelerator(mi, "activate", accelGroup, acceleratorKey, mods, GTK_ACCEL_VISIBLE);
         }
 
+        // This might fail, when the vector reallocates, but then the order of initialisation is violated
         g_signal_connect(mi, "activate",
-                         G_CALLBACK(+[](GtkWidget* bt, MenuEntry* me) { me->plugin->executeMenuEntry(me); }), m);
+                         G_CALLBACK(+[](GtkWidget* bt, MenuEntry* me) { me->plugin->executeMenuEntry(me); }), &m);
     }
 
     gtk_window_add_accel_group(GTK_WINDOW(mainWindow), accelGroup);
 }
 
-/**
- * Execute menu entry
- */
 void Plugin::executeMenuEntry(MenuEntry* entry) { callFunction(entry->callback); }
 
-/**
- * @return the Plugin name
- */
-string Plugin::getName() { return name; }
+auto Plugin::getName() const -> std::string const& { return name; }
 
-/**
- * @return Description of the plugin
- */
-string Plugin::getDescription() { return description; }
+auto Plugin::getDescription() const -> std::string const& { return description; }
 
-/**
- * Author of the plugin
- */
-string Plugin::getAuthor() { return author; }
+auto Plugin::getAuthor() const -> std::string const& { return author; }
 
-/**
- * Plugin version
- */
-string Plugin::getVersion() { return version; }
+auto Plugin::getVersion() const -> std::string const& { return version; }
 
-/**
- * The plugin is enabled
- */
-bool Plugin::isEnabled() { return enabled; }
+auto Plugin::isEnabled() const -> bool { return enabled; }
 
-/**
- * The plugin is enabled
- */
-void Plugin::setEnabled(bool enabled) { this->enabled = enabled; }
+void Plugin::setEnabled(bool lEnabled) { this->enabled = lEnabled; }
 
-/**
- * The plugin is default enabled
- */
-bool Plugin::isDefaultEnabled() { return defaultEnabled; }
+auto Plugin::isDefaultEnabled() const -> bool { return defaultEnabled; }
 
-/**
- * @return Flag to check if init ui is currently running
- */
-bool Plugin::isInInitUi() { return inInitUi; }
+auto Plugin::isInInitUi() const -> bool { return inInitUi; }
 
-/**
- * Register a menu item
- *
- * @return Internal ID, can e.g. be used to disable the menu
- */
-int Plugin::registerMenu(string menu, string callback, string accelerator) {
-    MenuEntry* m = new MenuEntry(this);
-    m->menu = menu;
-    m->callback = callback;
-    m->accelerator = accelerator;
-    menuEntries.push_back(m);
-
+auto Plugin::registerMenu(std::string menu, std::string callback, std::string accelerator) -> size_t {
+    auto& m = menuEntries.emplace_back(this, std::move(menu), std::move(callback), std::move(accelerator));
     return menuEntries.size() - 1;
 }
 
-/**
- * @return The main controller
- */
-Control* Plugin::getControl() { return control; }
+auto Plugin::getControl() const -> Control* { return control; }
 
-/**
- * Load ini file
- */
 void Plugin::loadIni() {
     GKeyFile* config = g_key_file_new();
     g_key_file_set_list_separator(config, ',');
 
-    string filename = path + "/plugin.ini";
-    if (!g_key_file_load_from_file(config, filename.c_str(), G_KEY_FILE_NONE, nullptr)) {
+    auto filename = path / "plugin.ini";
+    if (!g_key_file_load_from_file(config, Util::toGFilename(filename).c_str(), G_KEY_FILE_NONE, nullptr)) {
         g_key_file_free(config);
         return;
     }
+
+    auto LOAD_FROM_INI = [config](auto& target, char const* group, char const* key) {
+        char* value = g_key_file_get_string(config, group, key, nullptr);
+        if (value != nullptr) {
+            target = value;
+            g_free(value);
+        }
+    };
 
     LOAD_FROM_INI(author, "about", "author");
     LOAD_FROM_INI(version, "about", "version");
@@ -205,7 +141,7 @@ void Plugin::loadIni() {
 
     LOAD_FROM_INI(mainfile, "plugin", "mainfile");
 
-    string defaultEnabledStr;
+    std::string defaultEnabledStr;
     LOAD_FROM_INI(defaultEnabledStr, "default", "enabled");
 
     defaultEnabled = defaultEnabledStr == "true";
@@ -216,53 +152,41 @@ void Plugin::loadIni() {
     this->valid = true;
 }
 
-/**
- * Load custom Lua Libraries
- */
-void Plugin::registerXournalppLibs(lua_State* lua) {
-    for (const luaL_Reg* lib = loadedlibs; lib->func; lib++) {
-        luaL_requiref(lua, lib->name, lib->func, 1);
-
+void Plugin::registerXournalppLibs(lua_State* luaPtr) {
+    for (auto const& lib: loadedlibs) {
+        luaL_requiref(luaPtr, lib.name, lib.func, 1);
         // remove lib
-        lua_pop(lua, 1);
+        lua_pop(luaPtr, 1);
     }
 }
 
-/**
- * Add the plugin folder to the lua path
- */
 void Plugin::addPluginToLuaPath() {
-    lua_getglobal(lua, "package");
+    lua_getglobal(lua.get(), "package");
 
     // get field "path" from table at top of stack (-1)
-    lua_getfield(lua, -1, "path");
+    lua_getfield(lua.get(), -1, "path");
 
     // For now: limit the include path to the current plugin folder, for security and compatibility reasons
     // grab path string from top of stack
-    // string curPath = lua_tostring(lua, -1);
+    // std::string curPath = lua_tostring(lua, -1);
     // curPath.append(";");
-    string curPath;
-    curPath.append(path);
-    curPath.append("/?.lua");
+    auto curPath = path / "?.lua";
 
-    // get rid of the string on the stack we just pushed on line 5
-    lua_pop(lua, 1);
+    // get rid of the std::string on the stack we just pushed on line 5
+    lua_pop(lua.get(), 1);
 
     // push the new one
-    lua_pushstring(lua, curPath.c_str());
+    lua_pushstring(lua.get(), curPath.string().c_str());
 
     // set the field "path" in table at -2 with value at top of stack
-    lua_setfield(lua, -2, "path");
+    lua_setfield(lua.get(), -2, "path");
 
     // get rid of package table from top of stack
-    lua_pop(lua, 1);
+    lua_pop(lua.get(), 1);
 }
 
-/**
- * Load the plugin script
- */
 void Plugin::loadScript() {
-    if (mainfile == "") {
+    if (mainfile.empty()) {
         this->valid = false;
         return;
     }
@@ -279,52 +203,49 @@ void Plugin::loadScript() {
 
 
     // Create Lua state variable
-    lua = luaL_newstate();
+    lua.reset(luaL_newstate());
 
     // Load Lua libraries
-    luaL_openlibs(lua);
+    luaL_openlibs(lua.get());
 
     // Load but don't run the Lua script
-    string luafile = path + "/" + mainfile;
-    if (luaL_loadfile(lua, luafile.c_str())) {
+    auto luafile = path / mainfile;
+    if (luaL_loadfile(lua.get(), luafile.string().c_str())) {
         // Error out if file can't be read
-        g_warning("Could not run plugin Lua file: «%s»", luafile.c_str());
+        g_warning("Could not run plugin Lua file: «%s»", luafile.string().c_str());
         this->valid = false;
         return;
     }
 
     // Register Plugin object to Lua instance
-    lua_pushlightuserdata(lua, this);
-    lua_setfield(lua, LUA_REGISTRYINDEX, "Xournalpp_Plugin");
+    lua_pushlightuserdata(lua.get(), this);
+    lua_setfield(lua.get(), LUA_REGISTRYINDEX, "Xournalpp_Plugin");
 
-    registerXournalppLibs(lua);
+    registerXournalppLibs(lua.get());
 
     addPluginToLuaPath();
 
     // Run the loaded Lua script
-    if (lua_pcall(lua, 0, 0, 0) != LUA_OK) {
-        const char* errMsg = lua_tostring(lua, -1);
-        map<int, string> button;
-        button.insert(std::pair<int, string>(0, _("OK")));
+    if (lua_pcall(lua.get(), 0, 0, 0) != LUA_OK) {
+        const char* errMsg = lua_tostring(lua.get(), -1);
+        std::map<int, std::string> button;
+        button.insert(std::pair<int, std::string>(0, _("OK")));
         XojMsgBox::showPluginMessage(name, errMsg, button, true);
 
-        g_warning("Could not run plugin Lua file: «%s», error: «%s»", luafile.c_str(), errMsg);
+        g_warning("Could not run plugin Lua file: «%s», error: «%s»", luafile.string().c_str(), errMsg);
         this->valid = false;
         return;
     }
 }
 
-/**
- * Execute lua function
- */
-bool Plugin::callFunction(string fnc) {
-    lua_getglobal(lua, fnc.c_str());
+auto Plugin::callFunction(const std::string& fnc) -> bool {
+    lua_getglobal(lua.get(), fnc.c_str());
 
     // Run the function
-    if (lua_pcall(lua, 0, 0, 0)) {
-        const char* errMsg = lua_tostring(lua, -1);
-        map<int, string> button;
-        button.insert(std::pair<int, string>(0, _("OK")));
+    if (lua_pcall(lua.get(), 0, 0, 0)) {
+        const char* errMsg = lua_tostring(lua.get(), -1);
+        std::map<int, std::string> button;
+        button.insert(std::pair<int, std::string>(0, _("OK")));
         XojMsgBox::showPluginMessage(name, errMsg, button, true);
 
         g_warning("Error in Plugin: «%s», error: «%s»", name.c_str(), errMsg);
@@ -334,9 +255,6 @@ bool Plugin::callFunction(string fnc) {
     return true;
 }
 
-/**
- * Check if this plugin is valid
- */
-bool Plugin::isValid() { return valid; }
+auto Plugin::isValid() const -> bool { return valid; }
 
 #endif

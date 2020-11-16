@@ -15,7 +15,8 @@
 
 #include "control/settings/Settings.h"
 
-#include "Path.h"
+#include "filesystem.h"
+
 
 class XojOpenDlg {
 public:
@@ -23,8 +24,8 @@ public:
     virtual ~XojOpenDlg();
 
 public:
-    Path showOpenDialog(bool pdf, bool& attachPdf);
-    Path showOpenTemplateDialog();
+    fs::path showOpenDialog(bool pdf, bool& attachPdf);
+    fs::path showOpenTemplateDialog();
 
 protected:
     void addFilterAllFiles();
@@ -33,7 +34,7 @@ protected:
     void addFilterXopp();
     void addFilterXopt();
 
-    Path runDialog();
+    fs::path runDialog();
 
 private:
     static void updatePreviewCallback(GtkFileChooser* fileChooser, void* userData);

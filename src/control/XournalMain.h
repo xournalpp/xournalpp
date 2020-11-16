@@ -17,6 +17,7 @@
 #include <config.h>
 
 #include "XournalType.h"
+#include "filesystem.h"
 
 class GladeSearchpath;
 class Control;
@@ -62,7 +63,7 @@ private:
     void initResourcePath(GladeSearchpath* gladePath);
     static void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile,
                                  bool failIfNotFound = true);
-    static string findResourcePath(const string& searchFile);
+    static fs::path findResourcePath(const string& searchFile);
 
 private:
 };

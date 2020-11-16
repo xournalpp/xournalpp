@@ -7,8 +7,8 @@ StavesBackgroundPainter::StavesBackgroundPainter() = default;
 StavesBackgroundPainter::~StavesBackgroundPainter() = default;
 
 void StavesBackgroundPainter::resetConfig() {
-    this->foregroundColor1 = 0x000000;
-    this->foregroundColor2 = 0xFF0080;
+    this->foregroundColor1 = 0x000000U;
+    this->foregroundColor2 = 0xFF0080U;
     this->lineWidth = 0.5;
 }
 

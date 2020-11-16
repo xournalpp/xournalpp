@@ -41,7 +41,7 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest) 
             g_warning("PDF Contains unknown link destination");
             break;
         case POPPLER_DEST_XYZ: {
-            PopplerPage* page = poppler_document_get_page(document, pDest->page_num);
+            PopplerPage* page = poppler_document_get_page(document, pDest->page_num - 1);
             if (page == nullptr) {
                 return;
             }
@@ -65,7 +65,6 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest) 
             if (pDest->zoom != 0) {
                 link->setChangeZoom(pDest->zoom);
             }
-
             g_object_unref(page);
         } break;
         case POPPLER_DEST_NAMED: {

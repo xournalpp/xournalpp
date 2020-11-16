@@ -168,40 +168,32 @@ void Stroke::move(double dx, double dy) {
     this->sizeCalculated = false;
 }
 
-void Stroke::rotate(double x0, double y0, double xo, double yo, double th) {
+void Stroke::rotate(double x0, double y0, double th) {
+    cairo_matrix_t rotMatrix;
+    cairo_matrix_init_identity(&rotMatrix);
+    cairo_matrix_translate(&rotMatrix, x0, y0);
+    cairo_matrix_rotate(&rotMatrix, th);
+    cairo_matrix_translate(&rotMatrix, -x0, -y0);
+
     for (auto&& p: points) {
-        p.x -= x0;  // move to origin
-        p.y -= y0;
-        double offset = 0.7;  // __DBL_EPSILON__;
-        p.x -= xo - offset;   // center to origin
-        p.y -= yo - offset;
-
-        double x1 = p.x * cos(th) - p.y * sin(th);
-        double y1 = p.y * cos(th) + p.x * sin(th);
-        p.x = x1;
-        p.y = y1;
-
-        p.x += x0;  // restore the position
-        p.y += y0;
-
-        p.x += xo - offset;  // center it
-        p.y += yo - offset;
+        cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y);
     }
     // Width and Height will likely be changed after this operation
     calcSize();
 }
 
-void Stroke::scale(double x0, double y0, double fx, double fy) {
-    double fz = sqrt(fx * fy);
+void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
+    double fz = (restoreLineWidth) ? 1 : sqrt(fx * fy);
+    cairo_matrix_t scaleMatrix;
+    cairo_matrix_init_identity(&scaleMatrix);
+    cairo_matrix_translate(&scaleMatrix, x0, y0);
+    cairo_matrix_rotate(&scaleMatrix, rotation);
+    cairo_matrix_scale(&scaleMatrix, fx, fy);
+    cairo_matrix_rotate(&scaleMatrix, -rotation);
+    cairo_matrix_translate(&scaleMatrix, -x0, -y0);
 
     for (auto&& p: points) {
-        p.x -= x0;
-        p.x *= fx;
-        p.x += x0;
-
-        p.y -= y0;
-        p.y *= fy;
-        p.y += y0;
+        cairo_matrix_transform_point(&scaleMatrix, &p.x, &p.y);
 
         if (p.z != Point::NO_PRESSURE) {
             p.z *= fz;
@@ -338,7 +330,7 @@ auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) 
  * the whole page (performance reason).
  * Also used for Selected Bounding box.
  */
-void Stroke::calcSize() {
+void Stroke::calcSize() const {
     if (this->points.empty()) {
         Element::x = 0;
         Element::y = 0;
@@ -346,12 +338,20 @@ void Stroke::calcSize() {
         // The size of the rectangle, not the size of the pen!
         Element::width = 0;
         Element::height = 0;
+
+        // used for snapping
+        Element::snappedBounds = Rectangle<double>{};
     }
 
     double minX = DBL_MAX;
     double maxX = DBL_MIN;
     double minY = DBL_MAX;
     double maxY = DBL_MIN;
+
+    double minSnapX = DBL_MAX;
+    double maxSnapX = DBL_MIN;
+    double minSnapY = DBL_MAX;
+    double maxSnapY = DBL_MIN;
 
     bool hasPressure = points[0].z != Point::NO_PRESSURE;
     double halfThick = this->width / 2.0;  //  accommodate for pen width
@@ -366,12 +366,20 @@ void Stroke::calcSize() {
 
         maxX = std::max(maxX, p.x + halfThick);
         maxY = std::max(maxY, p.y + halfThick);
+
+        minSnapX = std::min(minSnapX, p.x);
+        minSnapY = std::min(minSnapY, p.y);
+
+        maxSnapX = std::max(maxSnapX, p.x);
+        maxSnapY = std::max(maxSnapY, p.y);
     }
 
-    Element::x = minX - 2;
-    Element::y = minY - 2;
-    Element::width = maxX - minX + 4;
-    Element::height = maxY - minY + 4;
+    Element::x = minX;
+    Element::y = minY;
+    Element::width = maxX - minX;
+    Element::height = maxY - minY;
+
+    Element::snappedBounds = Rectangle<double>(minSnapX, minSnapY, maxSnapX - minSnapX, maxSnapY - minSnapY);
 }
 
 auto Stroke::getEraseable() -> EraseableStroke* { return this->eraseable; }

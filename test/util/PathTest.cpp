@@ -9,13 +9,11 @@
  * @license GNU GPLv2 or later
  */
 
-#include <ctime>
 
-#include <config-test.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include <stdlib.h>
 
-#include "Path.h"
+#include "PathUtil.h"
+#include "filesystem.h"
 
 using namespace std;
 
@@ -24,10 +22,8 @@ class PathTest: public CppUnit::TestFixture {
 
     CPPUNIT_TEST(testUnsupportedUri);
     CPPUNIT_TEST(testPathFromUri);
-    CPPUNIT_TEST(testParentPath);
-    CPPUNIT_TEST(testFilename);
-    CPPUNIT_TEST(testHasExtension);
     CPPUNIT_TEST(testClearExtensions);
+    CPPUNIT_TEST(testPathIsChildOf);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -37,117 +33,102 @@ public:
     void tearDown() {}
 
     void testUnsupportedUri() {
-        Path a = Path::fromUri("http://localhost/test.txt");
-        CPPUNIT_ASSERT_EQUAL(true, a.isEmpty());
-        Path b = Path::fromUri("file://invalid");
-        CPPUNIT_ASSERT_EQUAL(true, b.isEmpty());
+        auto a = Util::fromUri("http://localhost/test.txt");
+        CPPUNIT_ASSERT_EQUAL(true, !a);
+        auto b = Util::fromUri("file://invalid");
+        CPPUNIT_ASSERT_EQUAL(true, !b);
     }
 
     void testPathFromUri() {
-        Path b = Path::fromUri("file:///tmp/test.txt");
-        CPPUNIT_ASSERT_EQUAL(false, b.isEmpty());
-        CPPUNIT_ASSERT_EQUAL(G_DIR_SEPARATOR_S + string("tmp") + G_DIR_SEPARATOR_S + string("test.txt"), b.str());
+        auto b = Util::fromUri("file:///tmp/test.txt");
+        CPPUNIT_ASSERT_EQUAL(false, !b);
+        CPPUNIT_ASSERT_EQUAL(G_DIR_SEPARATOR_S + string("tmp") + G_DIR_SEPARATOR_S + string("test.txt"), b->string());
     }
 
-    void testParentPath() {
-        Path a = Path("C:\\test\\abc\\xyz.txt");
-        CPPUNIT_ASSERT_EQUAL(string("C:\\test\\abc"), a.getParentPath().str());
-        CPPUNIT_ASSERT_EQUAL(string("C:\\test"), a.getParentPath().getParentPath().str());
+    void testPathIsChildOf() {
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("C:/Users/Subdir", "C:/Users"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("C:/Users/Subdir", "C:/Users/"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("C:/Users/Subdir/", "C:/Users/"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("C:/Users/Subdir/", "C:/Users"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("C:/Users/Subdir/", "C:/Users/Subdir/"));
+        CPPUNIT_ASSERT(Util::isChildOrEquivalent("D:/Users/Subdir", "D:/Users"));
+        CPPUNIT_ASSERT(!Util::isChildOrEquivalent("D:/Users/Subdir", "D:/users"));
 
-        Path b = Path("/temp/test/asdf.txt");
-        CPPUNIT_ASSERT_EQUAL(string("/temp/test"), b.getParentPath().str());
-        CPPUNIT_ASSERT_EQUAL(string("/temp"), b.getParentPath().getParentPath().str());
-    }
+        CPPUNIT_ASSERT(!Util::isChildOrEquivalent("C:/A/B", "C:/B/A"));
+        CPPUNIT_ASSERT(!Util::isChildOrEquivalent("C:/B/A", "C:/A/B"));
 
-    void testFilename() {
-        Path a = Path("C:\\test\\abc\\xyz.txt");
-        CPPUNIT_ASSERT_EQUAL(string("xyz.txt"), a.getFilename());
-        CPPUNIT_ASSERT_EQUAL(string("abc"), a.getParentPath().getFilename());
+        CPPUNIT_ASSERT(!Util::isChildOrEquivalent("D:/Users/Subdir", "C:/Users"));
+        CPPUNIT_ASSERT(!Util::isChildOrEquivalent("D:/Users/Subdir", "C:/Users"));
 
-        Path b = Path("/temp/test/asdf.txt");
-        CPPUNIT_ASSERT_EQUAL(string("asdf.txt"), b.getFilename());
-        CPPUNIT_ASSERT_EQUAL(string("test"), b.getParentPath().getFilename());
-    }
-
-    void testHasExtension() {
-        Path a = Path("C:\\test\\abc\\xyz.txt");
-        CPPUNIT_ASSERT_EQUAL(true, a.hasExtension(".txt"));
-
-        Path b = Path("C:\\test\\abc\\xyz.TXT");
-        CPPUNIT_ASSERT_EQUAL(true, b.hasExtension(".txt"));
-
-        CPPUNIT_ASSERT_EQUAL(false, a.hasExtension("."));
-        CPPUNIT_ASSERT_EQUAL(false, a.hasExtension("xyz"));
+        // Todo add a symlink test
     }
 
     void testClearExtensions() {
-        Path a = Path("C:\\test\\abc\\xyz.txt");
-        a.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("C:\\test\\abc\\xyz.txt"), a.str());
+        // These tests use the preferred separator (i.e. "\\" on Windows and "/" on POSIX)
+        auto a = fs::path("C:") / "test" / "abc" / "xyz.txt";
+        fs::path old_path(a);
+        Util::clearExtensions(a);
+        CPPUNIT_ASSERT_EQUAL(old_path.string(), a.string());
 
-        Path b = Path("/test/asdf.TXT");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.TXT"), b.str());
-        b.clearExtensions(".txt");
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        a = fs::path("C:") / "test" / "abc" / "xyz";
+        old_path = a;
+        a += ".xopp";
+        Util::clearExtensions(a);
+        CPPUNIT_ASSERT_EQUAL(old_path.string(), a.string());
 
-        b = Path("/test/asdf.asdf/asdf");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.asdf/asdf"), b.str());
 
-        b = Path("/test/asdf.PDF");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
-        b.clearExtensions(".pdf");
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        // The following tests use the generic separator which works on all systems
+        auto b = fs::path("/test/asdf.TXT");
+        Util::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.TXT"), b.string());
+        Util::clearExtensions(b, ".txt");
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        b = Path("/test/asdf.PDF.xoj");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
+        b = fs::path("/test/asdf.asdf/asdf");
+        Util::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.asdf/asdf"), b.string());
 
-        b = Path("/test/asdf.PDF.xoj");
-        b.clearExtensions(".Pdf");
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        b = fs::path("/test/asdf.PDF");
+        Util::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.string());
+        Util::clearExtensions(b, ".pdf");
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        b = Path("/test/asdf.pdf.pdf");
-        b.clearExtensions(".pdf");
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.pdf"), b.str());
+        b = fs::path("/test/asdf.PDF.xoj");
+        Util::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.string());
 
-        b = Path("/test/asdf.xopp.xopp");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.xopp"), b.str());
+        b = fs::path("/test/asdf.PDF.xoj");
+        Util::clearExtensions(b, ".Pdf");
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        b = Path("/test/asdf.PDF.xopp");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.str());
+        b = fs::path("/test/asdf.pdf.pdf");
+        Util::clearExtensions(b, ".pdf");
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.pdf"), b.string());
 
-        b = Path("/test/asdf.SVG.xopp");
-        b.clearExtensions(".svg");
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        b = fs::path("/test/asdf.xopp.xopp");
+        Util::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.xopp"), b.string());
 
-        b = Path("/test/asdf.xoj");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        b = fs::path("/test/asdf.PDF.xopp");
+        Util::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.PDF"), b.string());
 
-        b = Path("/test/asdf.xopp");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.str());
+        b = fs::path("/test/asdf.SVG.xopp");
+        Util::clearExtensions(b, ".svg");
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        b = Path("/test/asdf.pdf");
-        b.clearExtensions();
-        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.pdf"), b.str());
-    }
+        b = fs::path("/test/asdf.xoj");
+        Util::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-    void testOperators() {
-        Path a = Path("/test/a");
-        Path b = a / "foo.pdf";
-        CPPUNIT_ASSERT_EQUAL(string("/test/a"), a.str());
-        CPPUNIT_ASSERT_EQUAL(string("/test/foo.pdf"), b.str());
+        b = fs::path("/test/asdf.xopp");
+        Util::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf"), b.string());
 
-        a /= "bar.pdf";
-        CPPUNIT_ASSERT_EQUAL(string("/test/a/bar.pdf"), a.str());
-        // b should not be affected by a
-        CPPUNIT_ASSERT_EQUAL(string("/test/foo.pdf"), b.str());
+        b = fs::path("/test/asdf.pdf");
+        Util::clearExtensions(b);
+        CPPUNIT_ASSERT_EQUAL(string("/test/asdf.pdf"), b.string());
     }
 };
 
