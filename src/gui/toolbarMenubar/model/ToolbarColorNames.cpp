@@ -50,7 +50,7 @@ void ToolbarColorNames::saveFile(fs::path const& file) {
         ofs.exceptions(std::ios::badbit | std::ios::failbit);
         ofs.write(data, len);
     } catch (std::ios_base::failure const& e) {
-        g_warning("Could not save color file «%s».\n%s with error code %d", file.u8string().c_str(), e.what(),
+        g_warning("Could not save color file \"%s\".\n%s with error code %d", file.u8string().c_str(), e.what(),
                   e.code().value());
     }
     g_free(data);

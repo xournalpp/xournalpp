@@ -270,7 +270,7 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
     ActionType action = ActionType_fromString(actionName);
 
     if (action == ACTION_NONE) {
-        g_error("Unknown action name from glade file: «%s» / «%s»", signalName, handlerName);
+        g_error("Unknown action name from glade file: \"%s\" / \"%s\"", signalName, handlerName);
         return;
     }
 
@@ -290,7 +290,7 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
         // There is no toolbar item -> register the menu only
         self->registerMenupoint(GTK_WIDGET(object), action, group);
     } else {
-        g_error("Unsupported signal handler from glade file: «%s» / «%s»", signalName, handlerName);
+        g_error("Unsupported signal handler from glade file: \"%s\" / \"%s\"", signalName, handlerName);
     }
 }
 

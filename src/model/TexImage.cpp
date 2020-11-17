@@ -87,7 +87,7 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
         this->image = cairo_image_surface_create_from_png_stream(
                 reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), this);
     } else {
-        g_warning("Unknown Latex image type: «%s»", type.c_str());
+        g_warning("Unknown Latex image type: \"%s\"", type.c_str());
     }
 
     return true;

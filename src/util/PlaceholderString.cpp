@@ -57,7 +57,7 @@ auto PlaceholderString::formatPart(std::string format) const -> std::string {
     try {
         index = std::stoi(format);
     } catch (const std::exception& e) {
-        g_error("Could not parse «%s» as int, error: %s", format.c_str(), e.what());
+        g_error("Could not parse \"%s\" as int, error: %s", format.c_str(), e.what());
     }
 
     // Placeholder index starting at 1, vector at 0

@@ -49,11 +49,11 @@ void TouchDisableX11::init() {
 
     touchdev = XOpenDevice(display, touch->id);
     if (!touchdev) {
-        g_warning("Failed to open touch device «%s»", touch->name);
+        g_warning("Failed to open touch device \"%s\"", touch->name);
         return;
     }
 
-    g_message("X11 Touch disabler active for device «%s»", touch->name);
+    g_message("X11 Touch disabler active for device \"%s\"", touch->name);
 
     enabledAtom = XInternAtom(display, "Device Enabled", false);
 }

@@ -30,7 +30,7 @@ void PluginController::loadPluginsFrom(fs::path const& path) {
             const auto& pluginPath = f.path();
             auto plugin = std::make_unique<Plugin>(control, pluginPath.filename().string(), pluginPath);
             if (!plugin->isValid()) {
-                g_warning("Error loading plugin «%s»", f.path().string().c_str());
+                g_warning("Error loading plugin \"%s\"", f.path().string().c_str());
                 continue;
             }
 
@@ -47,7 +47,7 @@ void PluginController::loadPluginsFrom(fs::path const& path) {
             this->plugins.emplace_back(std::move(plugin));
         }
     } catch (fs::filesystem_error const& e) {
-        g_warning("Could not open plugin dir: «%s»", path.string().c_str());
+        g_warning("Could not open plugin dir: \"%s\"", path.string().c_str());
         return;
     }
 #endif

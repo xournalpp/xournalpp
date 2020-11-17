@@ -586,7 +586,7 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_NOT_SELECTED;
     }
 
-    g_error("Invalid enum value for ActionType: «%s»", value.c_str());
+    g_error("Invalid enum value for ActionType: \"%s\"", value.c_str());
     return ACTION_NONE;
 }
 
