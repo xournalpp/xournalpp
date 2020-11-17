@@ -75,9 +75,10 @@ bool BackgroundConfig::setValue(const string& key, string value) {
 }
 
 bool BackgroundConfig::setValueHex(const string& key, uint32_t value) {
-    char output[6];
+    // Allocate a new string with length 6 + termination char
+    char output[7];
 
-    sprintf(output, "%X", value);
+    snprintf(output, 7, "%X", value);
 
     this->setValue(key, output);
     return true;
