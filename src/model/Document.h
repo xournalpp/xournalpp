@@ -62,7 +62,6 @@ public:
      */
     string getLastErrorMsg();
 
-    bool isPdfDocumentLoaded();
     size_t findPdfPage(size_t pdfPage);
 
     Document& operator=(const Document& doc);

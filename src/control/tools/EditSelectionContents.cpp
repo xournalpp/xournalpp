@@ -292,16 +292,6 @@ void EditSelectionContents::deleteViewBuffer() {
 }
 
 /**
- * Gets the original width of the contents
- */
-auto EditSelectionContents::getOriginalWidth() const -> double { return this->originalBounds.width; }
-
-/**
- * Gets the original height of the contents
- */
-auto EditSelectionContents::getOriginalHeight() const -> double { return this->originalBounds.height; }
-
-/**
  * The contents of the selection
  */
 void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds,

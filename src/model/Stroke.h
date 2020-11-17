@@ -99,7 +99,7 @@ public:
     EraseableStroke* getEraseable();
     void setEraseable(EraseableStroke* eraseable);
 
-    void debugPrint();
+    [[maybe_unused]] void debugPrint();
 
 public:
     // Serialize interface

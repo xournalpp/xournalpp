@@ -42,6 +42,4 @@ auto XojPdfDocument::getPage(size_t page) -> XojPdfPageSPtr { return doc->getPag
 
 auto XojPdfDocument::getPageCount() -> size_t { return doc->getPageCount(); }
 
-auto XojPdfDocument::getDocumentInterface() -> XojPdfDocumentInterface* { return doc; }
-
 auto XojPdfDocument::getContentsIter() -> XojPdfBookmarkIterator* { return doc->getContentsIter(); }

@@ -29,8 +29,6 @@ void GraphBackgroundPainter::resetConfig() {
     this->roundMargin = 0;
 }
 
-auto GraphBackgroundPainter::getUnitSize() -> double { return this->drawRaster1; }
-
 void GraphBackgroundPainter::paint() {
     this->updateGraphColor();
     paintBackgroundColor();

@@ -129,17 +129,6 @@ public:
      */
     double getOriginalY() const;
 
-
-    /**
-     * Gets the original width of the contents
-     */
-    double getOriginalWidth() const;
-
-    /**
-     * Gets the original height of the contents
-     */
-    double getOriginalHeight() const;
-
     UndoAction* copySelection(PageRef page, XojPageView* view, double x, double y);
 
 public:

@@ -32,7 +32,7 @@ public:
 
     void addOriginal(Layer* layer, Stroke* element, int pos);
     void addEdited(Layer* layer, Stroke* element, int pos);
-    void removeEdited(Stroke* element);
+    [[maybe_unused]] void removeEdited(Stroke* element);
 
     void finalize();
 

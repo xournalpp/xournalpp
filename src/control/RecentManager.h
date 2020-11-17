@@ -49,7 +49,7 @@ public:
      * Removes a file from the underlying GtkRecentManager
      * without altering the menu
      */
-    static void removeRecentFileFilename(const fs::path& filename);
+    [[maybe_unused]] static void removeRecentFileFilename(const fs::path& filename);
 
     /**
      * Removes all of the menu items corresponding to recent files
@@ -60,16 +60,6 @@ public:
      * Updates the menu of recent files
      */
     void updateMenu();
-
-    /**
-     * Returns the maximal number of recent files to be displayed
-     */
-    int getMaxRecent() const;
-
-    /**
-     * Sets the maximal number of recent files to be displayed
-     */
-    void setMaxRecent(int maxRecent);
 
     /**
      * Notifies all RecentManagerListener%s that a new

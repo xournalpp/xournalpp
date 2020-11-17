@@ -37,9 +37,6 @@ public:
     virtual ~XournalView();
 
 public:
-    void zoomIn();
-    void zoomOut();
-
     bool paint(GtkWidget* widget, GdkEventExpose* event);
 
     void requestPage(XojPageView* page);

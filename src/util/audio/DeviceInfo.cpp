@@ -13,7 +13,3 @@ auto DeviceInfo::getDeviceName() const -> const string& { return deviceName; }
 auto DeviceInfo::getIndex() const -> PaDeviceIndex { return index; }
 
 auto DeviceInfo::getSelected() const -> bool { return selected; }
-
-auto DeviceInfo::getInputChannels() const -> int { return inputChannels; }
-
-auto DeviceInfo::getOutputChannels() const -> int { return outputChannels; }

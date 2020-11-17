@@ -73,7 +73,6 @@ public:
      * given point on the display
      */
     bool containsPoint(int x, int y, bool local = false) const;
-    bool containsY(int y) const;
 
     /**
      * Returns Row assigned in current layout

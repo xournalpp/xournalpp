@@ -477,10 +477,6 @@ auto XournalView::getScrollHandling() -> ScrollHandling* { return scrollHandling
 
 auto XournalView::getWidget() -> GtkWidget* { return widget; }
 
-void XournalView::zoomIn() { control->getZoomControl()->zoomOneStep(ZOOM_IN); }
-
-void XournalView::zoomOut() { control->getZoomControl()->zoomOneStep(ZOOM_OUT); }
-
 void XournalView::ensureRectIsVisible(int x, int y, int width, int height) {
     Layout* layout = gtk_xournal_get_layout(this->widget);
     layout->ensureRectIsVisible(x, y, width, height);

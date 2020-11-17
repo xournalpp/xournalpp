@@ -2484,13 +2484,6 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
     return true;
 }
 
-auto Control::closeAndDestroy(bool allowCancel) -> bool {
-    // We don't want to "double close", so disallow it first.
-    auto retval = this->close(false, allowCancel);
-    this->closeDocument();
-    return retval;
-}
-
 void Control::closeDocument() {
     this->undoRedo->clearContents();
 
@@ -2821,8 +2814,6 @@ auto Control::getUndoRedoHandler() -> UndoRedoHandler* { return this->undoRedo; 
 auto Control::getZoomControl() -> ZoomControl* { return this->zoom; }
 
 auto Control::getCursor() -> XournalppCursor* { return this->cursor; }
-
-auto Control::getRecentManager() -> RecentManager* { return this->recent; }
 
 auto Control::getDocument() -> Document* { return this->doc; }
 

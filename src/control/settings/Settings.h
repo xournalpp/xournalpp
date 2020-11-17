@@ -68,10 +68,10 @@ public:
     void setBool(const string& name, const bool value);
     void setString(const string& name, const string& value);
 
-    void setComment(const string& name, const string& comment);
+    [[maybe_unused]] void setComment(const string& name, const string& comment);
 
     bool getInt(const string& name, int& value);
-    bool getDouble(const string& name, double& value);
+    [[maybe_unused]] bool getDouble(const string& name, double& value);
     bool getBool(const string& name, bool& value);
     bool getString(const string& name, string& value);
 
@@ -314,7 +314,7 @@ public:
     void setBackgroundColor(Color color);
 
     int getPdfPageCacheSize() const;
-    void setPdfPageCacheSize(int size);
+    [[maybe_unused]] void setPdfPageCacheSize(int size);
 
     string const& getPageTemplate() const;
     void setPageTemplate(const string& pageTemplate);

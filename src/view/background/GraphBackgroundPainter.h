@@ -31,8 +31,6 @@ public:
      */
     virtual void resetConfig();
 
-    double getUnitSize();
-
 private:
     void updateGraphColor();
 };
