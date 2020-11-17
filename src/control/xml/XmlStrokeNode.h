@@ -21,7 +21,6 @@ public:
     virtual ~XmlStrokeNode();
 
 public:
-    void setPoints(Point* points, int pointsLength);
     void setWidth(double width, const double* widths, int widthsLength);
 
     virtual void writeOut(OutputStream* out);

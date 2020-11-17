@@ -241,22 +241,6 @@ auto EditSelection::getYOnViewAbsolute() -> int {
 }
 
 /**
- * Get the width in View coordinates
- */
-auto EditSelection::getViewWidth() -> int {
-    double zoom = view->getXournal()->getZoom();
-    return this->width * zoom;
-}
-
-/**
- * Get the height in View coordinates
- */
-auto EditSelection::getViewHeight() -> int {
-    double zoom = view->getXournal()->getZoom();
-    return this->height * zoom;
-}
-
-/**
  * Sets the tool size for pen or eraser, returs an undo action
  * (or nullptr if nothing is done)
  */

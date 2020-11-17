@@ -15,18 +15,6 @@ XmlStrokeNode::~XmlStrokeNode() {
     delete[] this->widths;
 }
 
-void XmlStrokeNode::setPoints(Point* points, int pointsLength) {
-
-
-    delete[] this->points;
-
-    this->points = new Point[pointsLength];
-    for (int i = 0; i < pointsLength; i++) {
-        this->points[i] = points[i];
-    }
-    this->pointsLength = pointsLength;
-}
-
 void XmlStrokeNode::setWidth(double width, const double* widths, int widthsLength) {
     this->width = width;
 

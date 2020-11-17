@@ -34,11 +34,10 @@ public:
     bool getExpand() const;
 
     bool shouldChangeLeft() const;
-    bool shouldChangeZoom() const;
     bool shouldChangeTop() const;
 
     double getZoom() const;
-    double getLeft() const;
+    [[maybe_unused]] double getLeft() const;
     double getTop() const;
 
     void setChangeLeft(double left);

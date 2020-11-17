@@ -52,12 +52,6 @@ public:
     double lineLengthTo(const Point& p) const;
 
     /**
-     * @brief The slope to another point.
-     * @param p The other point.
-     */
-    double slopeTo(const Point& p) const;
-
-    /**
      * @brief Compute new Point in the direction from this to another Point.
      * @param p The other Point.
      * @param length The line length or vector length.

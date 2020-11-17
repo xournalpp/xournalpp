@@ -1032,5 +1032,3 @@ auto LoadHandler::getTempFileForPath(fs::path const& filename) -> fs::path {
 }
 
 auto LoadHandler::getFileVersion() const -> int { return this->fileVersion; }
-
-auto LoadHandler::getFileMinVersion() const -> int { return this->minimalFileVersion; }

@@ -43,9 +43,6 @@ public:
     size_t getPageCount();
     XojPdfBookmarkIterator* getContentsIter();
 
-public:
-    XojPdfDocumentInterface* getDocumentInterface();
-
 private:
     XojPdfDocumentInterface* doc;
 };

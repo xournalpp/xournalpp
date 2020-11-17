@@ -805,10 +805,6 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
     return true;
 }
 
-auto XojPageView::containsY(int y) const -> bool {
-    return (y >= this->getY() && y <= (this->getY() + this->getDisplayHeight()));
-}
-
 /**
  * GETTER / SETTER
  */

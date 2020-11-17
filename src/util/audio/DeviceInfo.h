@@ -25,8 +25,6 @@ public:
     const string& getDeviceName() const;
     PaDeviceIndex getIndex() const;
     bool getSelected() const;
-    int getInputChannels() const;
-    int getOutputChannels() const;
 
 private:
     const string deviceName;

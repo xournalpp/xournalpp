@@ -57,8 +57,6 @@ public:
 
     /** @return The version of the loaded file */
     int getFileVersion() const;
-    /** @return The minimum version of the loaded file */
-    int getFileMinVersion() const;
 
 private:
     void parseStart();

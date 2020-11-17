@@ -59,8 +59,6 @@ auto LinkDestination::getExpand() const -> bool { return this->expand; }
 
 auto LinkDestination::shouldChangeLeft() const -> bool { return changeLeft; }
 
-auto LinkDestination::shouldChangeZoom() const -> bool { return changeZoom; }
-
 auto LinkDestination::shouldChangeTop() const -> bool { return changeTop; }
 
 auto LinkDestination::getZoom() const -> double { return zoom; }

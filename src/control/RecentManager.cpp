@@ -86,10 +86,6 @@ void RecentManager::removeRecentFileFilename(const fs::path& filename) {
     gtk_recent_manager_remove_item(recentManager, uri->c_str(), nullptr);
 }
 
-auto RecentManager::getMaxRecent() const -> int { return this->maxRecent; }
-
-void RecentManager::setMaxRecent(int maxRecent) { this->maxRecent = maxRecent; }
-
 void RecentManager::openRecent(const fs::path& p) {
     if (p.empty()) {
         return;

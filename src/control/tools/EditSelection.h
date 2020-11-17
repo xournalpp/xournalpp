@@ -113,16 +113,6 @@ public:
      */
     int getYOnViewAbsolute();
 
-    /**
-     * Get the width in View coordinates
-     */
-    int getViewWidth();
-
-    /**
-     * Get the height in View coordinates
-     */
-    int getViewHeight();
-
 public:
     /**
      * Sets the tool size for pen or eraser, returns an undo action

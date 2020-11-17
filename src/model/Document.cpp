@@ -169,8 +169,6 @@ auto Document::getEvMetadataFilename() -> fs::path {
     return fs::path{};
 }
 
-auto Document::isPdfDocumentLoaded() -> bool { return pdfDocument.isLoaded(); }
-
 auto Document::isAttachPdf() const -> bool { return this->attachPdf; }
 
 auto Document::findPdfPage(size_t pdfPage) -> size_t {

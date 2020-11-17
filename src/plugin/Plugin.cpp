@@ -107,7 +107,7 @@ auto Plugin::isDefaultEnabled() const -> bool { return defaultEnabled; }
 auto Plugin::isInInitUi() const -> bool { return inInitUi; }
 
 auto Plugin::registerMenu(std::string menu, std::string callback, std::string accelerator) -> size_t {
-    auto& m = menuEntries.emplace_back(this, std::move(menu), std::move(callback), std::move(accelerator));
+    menuEntries.emplace_back(this, std::move(menu), std::move(callback), std::move(accelerator));
     return menuEntries.size() - 1;
 }
 
