@@ -59,6 +59,8 @@ public:
     void setBackgroundColor(Color color);
     Color getBackgroundColor() const;
 
+    void setForegroundColor(Color color);
+
     vector<Layer*>* getLayers();
     size_t getLayerCount();
     int getSelectedLayerId();

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iterator>
 #include <utility>
+#include <view/background/BackgroundConfig.h>
 
 #include "BackgroundImage.h"
 #include "Document.h"
@@ -119,6 +120,16 @@ void XojPage::setBackgroundPdfPageNr(size_t page) {
 void XojPage::setBackgroundColor(Color color) { this->backgroundColor = color; }
 
 auto XojPage::getBackgroundColor() const -> Color { return this->backgroundColor; }
+
+void XojPage::setForegroundColor(Color color) {
+    PageType pageType = this->getBackgroundType();
+
+    auto backgroundConfig = BackgroundConfig(pageType.config);
+    backgroundConfig.setValueHex("f1", color);
+    pageType.config = backgroundConfig.toString();
+
+    this->setBackgroundType(pageType);
+}
 
 void XojPage::setSize(double width, double height) {
     this->width = width;
