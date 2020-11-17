@@ -114,7 +114,7 @@ package and then use that with the `azure-pipelines/util/build_appimage.sh`
 script.
 
 ```bash
-cmake .. -DPACK_GENERATOR="TGZ"
+cmake .. -DCPACK_GENERATOR="TGZ"
 cmake --build . --target package
 ../azure-pipelines/util/build_appimage.sh
 ```
