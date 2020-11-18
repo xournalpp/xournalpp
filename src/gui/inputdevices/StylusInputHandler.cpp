@@ -7,6 +7,7 @@
 #include <cmath>
 
 #include "gui/XournalppCursor.h"
+#include "gui/inputdevices/InputUtils.h"
 #include "gui/widgets/XournalWidget.h"
 
 #include "InputContext.h"
@@ -168,26 +169,25 @@ auto StylusInputHandler::changeTool(InputEvent const& event) -> bool {
     Settings* settings = this->inputContext->getSettings();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
 
-    ButtonConfig* cfg = nullptr;
+    bool toolChanged = false;
+    bool pressed = false;
+    bool configChanged = true;
+
     // Stylus
     if (event.deviceClass == INPUT_DEVICE_PEN) {
-        if (this->modifier2) {
-            toolHandler->pointCurrentToolToButtonTool(Button::stylusOne);
-            cfg = settings->getStylusButton1Config();
-            cfg->acceptActions(toolHandler, Button::stylusOne);
-
-        } else if (this->modifier3) {
-            toolHandler->pointCurrentToolToButtonTool(Button::stylusTwo);
-            cfg = settings->getStylusButton2Config();
-            cfg->acceptActions(toolHandler, Button::stylusTwo);
-        }
+        if (this->modifier2)
+            InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_STYLUS, pressed, toolChanged, configChanged);
+        else if (this->modifier3)
+            InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_STYLUS2, pressed, toolChanged,
+                                    configChanged);
     } else if (event.deviceClass == INPUT_DEVICE_ERASER) {
-        toolHandler->pointCurrentToolToButtonTool(Button::stylusEraser);
-        cfg = settings->getEraserButtonConfig();
-        cfg->acceptActions(toolHandler, Button::stylusEraser);
+        InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_ERASER, pressed, toolChanged, configChanged);
     }
-    if (!cfg || cfg->getAction() == TOOL_NONE) {
-        toolHandler->pointCurrentToolToToolbarTool();
+
+    if (!pressed || !configChanged) {
+        toolChanged = toolHandler->pointCurrentToolToToolbarTool();
     }
+    if (toolChanged)
+        toolHandler->fireToolChanged();
     return false;
 }

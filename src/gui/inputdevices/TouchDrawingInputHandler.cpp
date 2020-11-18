@@ -5,6 +5,7 @@
 #include "TouchDrawingInputHandler.h"
 
 #include "gui/XournalppCursor.h"
+#include "gui/inputdevices/InputUtils.h"
 #include "gui/widgets/XournalWidget.h"
 
 #include "InputContext.h"
@@ -72,8 +73,11 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
 
 auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
     Settings* settings = this->inputContext->getSettings();
-    ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
+    ButtonConfig* cfgTouch = settings->getButtonConfig(Buttons::BUTTON_TOUCH);
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
+    bool toolChanged = false;
+    bool pressed = false;
+    bool configChanged = true;
 
     ButtonConfig* cfg = nullptr;
     if (cfgTouch->device == event.deviceName) {
@@ -90,11 +94,12 @@ auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
     }
 
     if (cfg && cfg->getAction() != TOOL_NONE) {
-        toolHandler->pointCurrentToolToButtonTool(Button::stylusEraser);
-        cfg->acceptActions(toolHandler, Button::stylusEraser);
+        InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_TOUCH, pressed, toolChanged, configChanged);
     } else {
-        toolHandler->pointCurrentToolToToolbarTool();
+        toolChanged = toolHandler->pointCurrentToolToToolbarTool();
     }
 
+    if (toolChanged)
+        toolHandler->fireToolChanged();
     return false;
 }

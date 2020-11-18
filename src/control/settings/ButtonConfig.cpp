@@ -20,7 +20,7 @@ auto ButtonConfig::getDrawingType() -> DrawingType { return this->drawingType; }
 
 auto ButtonConfig::getAction() -> ToolType { return this->action; }
 
-void ButtonConfig::initButton(ToolHandler* toolHandler, Button button) {
+void ButtonConfig::initButton(ToolHandler* toolHandler, Buttons button) {
     if (this->action == TOOL_NONE) {
         return;
     }
@@ -65,9 +65,9 @@ void ButtonConfig::initActions(ToolHandler* toolHandler) {
     }
 }
 
-void ButtonConfig::acceptActions(ToolHandler* toolHandler, Button button) {
+bool ButtonConfig::acceptActions(ToolHandler* toolHandler, Buttons button) {
     if (this->action == TOOL_NONE) {
-        return;
+        return false;
     }
     if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
 
@@ -82,5 +82,5 @@ void ButtonConfig::acceptActions(ToolHandler* toolHandler, Button button) {
     if (this->action == TOOL_ERASER && this->eraserMode == ERASER_TYPE_NONE) {
         toolHandler->setButtonEraserType(toolHandler->getEraserType(SelectedTool::toolbar), button);
     }
-    toolHandler->fireToolChanged();
+    return true;
 }

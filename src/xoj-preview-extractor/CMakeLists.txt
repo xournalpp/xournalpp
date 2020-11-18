@@ -12,6 +12,7 @@ add_executable (xournalpp-thumbnailer
   "${PROJECT_SOURCE_DIR}/src/util/GzUtil.cpp"
   "${PROJECT_SOURCE_DIR}/src/util/PlaceholderString.cpp"
   "${PROJECT_SOURCE_DIR}/src/util/StringUtils.cpp"
+  "${PROJECT_SOURCE_DIR}/src/gui/inputdevices/InputUtils.cpp"
   "${PROJECT_SOURCE_DIR}/src/util/XojPreviewExtractor.cpp"
 )
 

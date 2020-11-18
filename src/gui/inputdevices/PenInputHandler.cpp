@@ -301,6 +301,7 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     this->sequenceStartPage = nullptr;
 
     toolHandler->pointCurrentToolToToolbarTool();
+    toolHandler->fireToolChanged();
 
     // we need this workaround so it's possible to select something with the middle button
     if (tmpSelection) {
