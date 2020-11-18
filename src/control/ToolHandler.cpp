@@ -100,6 +100,7 @@ void ToolHandler::initTools() {
     this->stylusButton2Tool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
     this->mouseMiddleButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
     this->mouseRightButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
+    this->touchDrawingButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
 
     this->toolbarSelectedTool = &getTool(TOOL_PEN);
     this->activeTool = &getTool(TOOL_PEN);
@@ -110,7 +111,7 @@ ToolHandler::~ToolHandler() {
     this->settings = nullptr;
 }
 
-void ToolHandler::initButtonTool(Button button, ToolType type) {
+void ToolHandler::initButtonTool(Buttons button, ToolType type) {
     resetButtonTool(tools[type - TOOL_PEN].get(), button);
 }
 
@@ -120,7 +121,7 @@ void ToolHandler::setEraserType(EraserType eraserType) {
     eraserTypeChanged();
 }
 
-void ToolHandler::setButtonEraserType(EraserType eraserType, Button button) {
+void ToolHandler::setButtonEraserType(EraserType eraserType, Buttons button) {
     Tool* tool = getButtonTool(button);
     tool->setEraserType(eraserType);
     eraserTypeChanged();
@@ -158,6 +159,9 @@ void ToolHandler::selectTool(ToolType type, bool fireToolChanged) {
         return;
     }
     this->toolbarSelectedTool = &getTool(type);
+    // set activeTool is necessary for fireToolChanged()
+    // to result in the correct Button shown as active
+    this->activeTool = this->toolbarSelectedTool;
 
     if (fireToolChanged) {
         this->fireToolChanged();
@@ -265,7 +269,7 @@ void ToolHandler::setSize(ToolSize size) {
     this->listener->toolSizeChanged();
 }
 
-void ToolHandler::setButtonSize(ToolSize size, Button button) {
+void ToolHandler::setButtonSize(ToolSize size, Buttons button) {
     Tool* tool = getButtonTool(button);
     if (size < TOOL_SIZE_VERY_FINE || size > TOOL_SIZE_VERY_THICK) {
         g_warning("ToolHandler::setSize: Invalid size! %i", size);
@@ -304,7 +308,7 @@ void ToolHandler::setColor(Color color, bool userSelection) {
     this->listener->setCustomColorSelected();
 }
 
-void ToolHandler::setButtonColor(Color color, Button button) {
+void ToolHandler::setButtonColor(Color color, Buttons button) {
     Tool* tool = this->getButtonTool(button);
     tool->setColor(color);
     this->listener->toolColorChanged();
@@ -342,7 +346,7 @@ void ToolHandler::setDrawingType(DrawingType drawingType) {
     tool->setDrawingType(drawingType);
 }
 
-void ToolHandler::setButtonDrawingType(DrawingType drawingType, Button button) {
+void ToolHandler::setButtonDrawingType(DrawingType drawingType, Buttons button) {
     Tool* tool = getButtonTool(button);
     tool->setDrawingType(drawingType);
 }
@@ -483,21 +487,19 @@ void ToolHandler::loadSettings() {
     }
 }
 
-void ToolHandler::pointCurrentToolToButtonTool(Button button) {
+bool ToolHandler::pointCurrentToolToButtonTool(Buttons button) {
     Tool* tool = getButtonTool(button);
     if (this->activeTool == tool)
-        return;
+        return false;
     this->activeTool = tool;
-
-    this->fireToolChanged();
+    return true;
 }
 
-void ToolHandler::pointCurrentToolToToolbarTool() {
+bool ToolHandler::pointCurrentToolToToolbarTool() {
     if (this->activeTool == this->toolbarSelectedTool)
-        return;
+        return false;
     this->activeTool = this->toolbarSelectedTool;
-
-    this->fireToolChanged();
+    return true;
 }
 
 auto ToolHandler::getToolThickness(ToolType type) -> const double* { return this->tools[type - TOOL_PEN]->thickness; }
@@ -551,41 +553,46 @@ auto ToolHandler::getSelectedTool(SelectedTool selectedTool) -> Tool* {
     }
 }
 
-auto ToolHandler::getButtonTool(Button button) -> Tool* {
+auto ToolHandler::getButtonTool(Buttons button) -> Tool* {
     switch (button) {
-        case Button::stylusEraser:
+        case Buttons::BUTTON_ERASER:
             return this->eraserButtonTool.get();
-        case Button::stylusOne:
+        case Buttons::BUTTON_STYLUS:
             return this->stylusButton1Tool.get();
-        case Button::stylusTwo:
+        case Buttons::BUTTON_STYLUS2:
             return this->stylusButton2Tool.get();
-        case Button::mouseMiddle:
+        case Buttons::BUTTON_MIDDLE:
             return this->mouseMiddleButtonTool.get();
-        case Button::mouseRight:
+        case Buttons::BUTTON_RIGHT:
             return this->mouseRightButtonTool.get();
+        case Buttons::BUTTON_TOUCH:
+            return this->touchDrawingButtonTool.get();
         default:
-            g_error("This button does not exist.");
+            g_error("This button is not defined for ToolHandler.");
     }
 }
 
-void ToolHandler::resetButtonTool(Tool* tool, Button button) {
+void ToolHandler::resetButtonTool(Tool* tool, Buttons button) {
     switch (button) {
-        case Button::stylusEraser:
+        case Buttons::BUTTON_ERASER:
             this->eraserButtonTool.reset(new Tool(tool));
             break;
-        case Button::stylusOne:
+        case Buttons::BUTTON_STYLUS:
             this->stylusButton1Tool.reset(new Tool(tool));
             break;
-        case Button::stylusTwo:
+        case Buttons::BUTTON_STYLUS2:
             this->stylusButton2Tool.reset(new Tool(tool));
             break;
-        case Button::mouseMiddle:
+        case Buttons::BUTTON_MIDDLE:
             this->mouseMiddleButtonTool.reset(new Tool(tool));
             break;
-        case Button::mouseRight:
+        case Buttons::BUTTON_RIGHT:
             this->mouseRightButtonTool.reset(new Tool(tool));
             break;
+        case Buttons::BUTTON_TOUCH:
+            this->touchDrawingButtonTool.reset(new Tool(tool));
+            break;
         default:
-            g_error("This Button does not exist.");
+            g_error("This button is not defined for ToolHandler.");
     }
 }

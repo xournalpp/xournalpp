@@ -27,8 +27,8 @@ public:
     virtual ~ButtonConfig();
 
 public:
-    void acceptActions(ToolHandler* toolHandler, Button button);
-    void initButton(ToolHandler* toolHandler, Button button);
+    bool acceptActions(ToolHandler* toolHandler, Buttons button);
+    void initButton(ToolHandler* toolHandler, Buttons button);
     void initActions(ToolHandler* toolHandler);
 
     ToolType getAction();

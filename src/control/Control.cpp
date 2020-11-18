@@ -42,6 +42,7 @@
 #include "plugin/PluginController.h"
 #include "serializing/ObjectInputStream.h"
 #include "settings/ButtonConfig.h"
+#include "settings/SettingsEnums.h"
 #include "stockdlg/XojOpenDlg.h"
 #include "undo/AddUndoAction.h"
 #include "undo/DeleteUndoAction.h"
@@ -1652,7 +1653,7 @@ void Control::selectTool(ToolType type) {
 }
 
 void Control::selectDefaultTool() {
-    ButtonConfig* cfg = settings->getDefaultButtonConfig();
+    ButtonConfig* cfg = settings->getButtonConfig(Buttons::BUTTON_DEFAULT);
     cfg->initActions(toolHandler);
 }
 
@@ -2500,22 +2501,15 @@ void Control::applyPreferredLanguage() {
 }
 
 void Control::initButtonTool() {
-    ButtonConfig* cfg = settings->getEraserButtonConfig();
-    cfg->initButton(this->toolHandler, Button::stylusEraser);
+    vector<Buttons> buttons{Buttons::BUTTON_ERASER, Buttons::BUTTON_STYLUS, Buttons::BUTTON_STYLUS2,
+                            Buttons::BUTTON_MIDDLE, Buttons::BUTTON_RIGHT,  Buttons::BUTTON_TOUCH};
+    ButtonConfig* cfg;
+    for (auto b: buttons) {
+        cfg = settings->getButtonConfig(b);
+        cfg->initButton(this->toolHandler, b);
+    }
 
-    cfg = settings->getStylusButton1Config();
-    cfg->initButton(this->toolHandler, Button::stylusOne);
-
-    cfg = settings->getStylusButton2Config();
-    cfg->initButton(this->toolHandler, Button::stylusTwo);
-
-    cfg = settings->getMiddleButtonConfig();
-    cfg->initButton(toolHandler, Button::mouseMiddle);
-
-    cfg = settings->getRightButtonConfig();
-    cfg->initButton(toolHandler, Button::mouseRight);
-
-    cfg = settings->getDefaultButtonConfig();
+    cfg = settings->getButtonConfig(Buttons::BUTTON_DEFAULT);
     cfg->initActions(this->toolHandler);
 }
 

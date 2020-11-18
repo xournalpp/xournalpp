@@ -290,14 +290,6 @@ public:
 
     ButtonConfig* getButtonConfig(int id);
 
-    ButtonConfig* getEraserButtonConfig();
-    ButtonConfig* getMiddleButtonConfig();
-    ButtonConfig* getRightButtonConfig();
-    ButtonConfig* getTouchButtonConfig();
-    ButtonConfig* getDefaultButtonConfig();
-    ButtonConfig* getStylusButton1Config();
-    ButtonConfig* getStylusButton2Config();
-
     string const& getFullscreenHideElements() const;
     void setFullscreenHideElements(string elements);
 

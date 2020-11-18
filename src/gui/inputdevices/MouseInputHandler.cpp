@@ -4,10 +4,12 @@
 
 #include "MouseInputHandler.h"
 
+#include "control/settings/SettingsEnums.h"
 #include "gui/XournalppCursor.h"
 #include "gui/widgets/XournalWidget.h"
 
 #include "InputContext.h"
+#include "InputUtils.h"
 
 MouseInputHandler::MouseInputHandler(InputContext* inputContext): PenInputHandler(inputContext) {}
 
@@ -111,21 +113,21 @@ auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
     Settings* settings = this->inputContext->getSettings();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
     GtkXournal* xournal = this->inputContext->getXournal();
+    bool toolChanged = false;
+    bool pressed = false;
+    bool configChanged = true;
 
-    ButtonConfig* cfg = nullptr;
-    if (modifier2 /* Middle Button */ && !xournal->selection) {
-        toolHandler->pointCurrentToolToButtonTool(Button::mouseMiddle);
-        cfg = settings->getMiddleButtonConfig();
-        cfg->acceptActions(toolHandler, Button::mouseMiddle);
-    } else if (modifier3 /* Right Button */ && !xournal->selection) {
-        toolHandler->pointCurrentToolToButtonTool(Button::mouseRight);
-        cfg = settings->getRightButtonConfig();
-        cfg->acceptActions(toolHandler, Button::mouseRight);
+    if (modifier2 /* Middle Button */ && !xournal->selection)
+        InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_MIDDLE, pressed, toolChanged, configChanged);
+    else if (modifier3 /* Right Button */ && !xournal->selection)
+        InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_RIGHT, pressed, toolChanged, configChanged);
+
+    if (!pressed || !configChanged) {
+        toolChanged |= toolHandler->pointCurrentToolToToolbarTool();
     }
 
-    if (!cfg || cfg->getAction() == TOOL_NONE) {
-        toolHandler->pointCurrentToolToToolbarTool();
-    }
+    if (toolChanged)
+        toolHandler->fireToolChanged();
 
     return false;
 }

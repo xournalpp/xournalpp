@@ -1506,20 +1506,6 @@ auto Settings::getButtonConfig(int id) -> ButtonConfig* {
     return this->buttonConfig[id];
 }
 
-auto Settings::getEraserButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_ERASER]; }
-
-auto Settings::getMiddleButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_MIDDLE]; }
-
-auto Settings::getRightButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_RIGHT]; }
-
-auto Settings::getTouchButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_TOUCH]; }
-
-auto Settings::getDefaultButtonConfig() -> ButtonConfig* { return this->buttonConfig[BUTTON_DEFAULT]; }
-
-auto Settings::getStylusButton1Config() -> ButtonConfig* { return this->buttonConfig[BUTTON_STYLUS]; }
-
-auto Settings::getStylusButton2Config() -> ButtonConfig* { return this->buttonConfig[BUTTON_STYLUS2]; }
-
 auto Settings::getFullscreenHideElements() const -> string const& { return this->fullscreenHideElements; }
 
 void Settings::setFullscreenHideElements(string elements) {
