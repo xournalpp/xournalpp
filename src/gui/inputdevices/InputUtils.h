@@ -1,5 +1,3 @@
-#pragma once
-
 #include "control/ToolHandler.h"
 #include "control/settings/Settings.h"
 #include "control/settings/SettingsEnums.h"
