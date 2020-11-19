@@ -483,7 +483,7 @@ void XournalView::ensureRectIsVisible(int x, int y, int width, int height) {
 }
 
 void XournalView::zoomChanged() {
-    Layout* layout = gtk_xournal_get_layout(this->widget);
+
     size_t currentPage = this->getCurrentPage();
     XojPageView* view = getViewFor(currentPage);
     ZoomControl* zoom = control->getZoomControl();
@@ -492,6 +492,7 @@ void XournalView::zoomChanged() {
         return;
     }
 
+    layoutPages();
 
     if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode()) {
         scrollTo(currentPage);
@@ -499,11 +500,10 @@ void XournalView::zoomChanged() {
         auto pos = zoom->getScrollPositionAfterZoom();
         if (pos.x != -1 && pos.y != -1) {
             // Todo: This could be one source of all evil:
+            Layout* layout = gtk_xournal_get_layout(this->widget);
             layout->scrollAbs(pos.x, pos.y);
         }
     }
-    // move this somewhere else maybe
-    layout->recalculate();
 
     Document* doc = control->getDocument();
     doc->lock();
@@ -562,13 +562,9 @@ void XournalView::pageInserted(size_t page) {
 
     viewPages.insert(begin(viewPages) + page, pageView);
 
-    Layout* layout = gtk_xournal_get_layout(this->widget);
-
-    // recalculate the layout width and height amd layout the pages with the updated layout size
-    layout->recalculate();
-    layout->layoutPages(layout->getMinimalWidth(), layout->getMinimalHeight());
-
+    layoutPages();
     // check which pages are visible and select the most visible page
+    Layout* layout = gtk_xournal_get_layout(this->widget);
     layout->updateVisibility();
 }
 
@@ -652,12 +648,10 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
-/**
- * Recalculates the layout height and width for the XournalView widget
- */
 void XournalView::layoutPages() {
     Layout* layout = gtk_xournal_get_layout(this->widget);
     layout->recalculate();
+    layout->layoutPages(layout->getMinimalWidth(), layout->getMinimalHeight());
 }
 
 auto XournalView::getDisplayHeight() const -> int {

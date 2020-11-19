@@ -404,9 +404,8 @@ auto XournalMain::run(int argc, char* argv[]) -> int {
     checkForErrorlog();
     checkForEmergencySave(control);
 
-    // There is a timing issue with the layout
-    // This fixes it, see #405
-    Util::execInUiThread([=]() { control->getWindow()->getXournal()->layoutPages(); });
+    // There was a timing issue with the layout, see #405
+    control->getWindow()->getXournal()->layoutPages();
 
     if (migrateResult.status != MigrateStatus::NotNeeded) {
         Util::execInUiThread([=]() { XojMsgBox::showErrorToUser(control->getGtkWindow(), migrateResult.message); });
