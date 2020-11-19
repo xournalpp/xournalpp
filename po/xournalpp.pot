@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-15 16:14+0000\n"
+"POT-Creation-Date: 2020-11-19 21:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -368,8 +368,8 @@ msgstr ""
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr ""
 
-#: ../src/model/Document.cpp:287 ../src/model/Document.cpp:296
-#: ../src/model/Document.cpp:299
+#: ../src/model/Document.cpp:285 ../src/model/Document.cpp:294
+#: ../src/model/Document.cpp:297
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
@@ -801,7 +801,7 @@ msgstr ""
 msgid "Open file"
 msgstr ""
 
-#: ../src/control/RecentManager.cpp:183
+#: ../src/control/RecentManager.cpp:179
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr ""
