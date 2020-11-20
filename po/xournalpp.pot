@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-19 21:27+0000\n"
+"POT-Creation-Date: 2020-11-20 20:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgstr ""
 msgid "Attribute color not set!"
 msgstr ""
 
-#: ../src/control/AudioController.cpp:92
+#: ../src/control/AudioController.cpp:94
 msgid ""
 "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
@@ -139,12 +139,12 @@ msgid "Background"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:94
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:93
 msgid "Black"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:98
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:97
 msgid "Blue"
 msgstr ""
 
@@ -284,11 +284,11 @@ msgid ""
 "Something went wrong… Please write a bug report…"
 msgstr ""
 
-#: ../src/control/xojfile/SaveHandler.cpp:235
+#: ../src/control/xojfile/SaveHandler.cpp:237
 msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
-#: ../src/control/xojfile/SaveHandler.cpp:331
+#: ../src/control/xojfile/SaveHandler.cpp:333
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
@@ -594,12 +594,12 @@ msgid "Graph"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:99
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:98
 msgid "Gray"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:95
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:94
 msgid "Green"
 msgstr ""
 
@@ -693,12 +693,12 @@ msgid "Layer {1}"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:95
 msgid "Light Blue"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:97
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
 msgid "Light Green"
 msgstr ""
 
@@ -709,7 +709,7 @@ msgid "Loading..."
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:101
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:100
 msgid "Magenta"
 msgstr ""
 
@@ -807,7 +807,7 @@ msgid "Open {1}"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:102
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:101
 msgid "Orange"
 msgstr ""
 
@@ -926,7 +926,7 @@ msgid "Recorder could not be started."
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:100
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:99
 msgid "Red"
 msgstr ""
 
@@ -1057,8 +1057,8 @@ msgstr ""
 msgid "Select background color"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:40
-#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:92
+#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:42
+#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:94
 msgid "Select color"
 msgstr ""
 
@@ -1343,7 +1343,7 @@ msgid "Very Thick"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:104
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
 msgid "White"
 msgstr ""
 
@@ -1390,7 +1390,7 @@ msgid "Xournal++ template"
 msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
+#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:102
 msgid "Yellow"
 msgstr ""
 
