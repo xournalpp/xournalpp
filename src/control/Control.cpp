@@ -1678,20 +1678,19 @@ void Control::toolChanged() {
     fireEnableAction(ACTION_SHAPE_RECOGNIZER, toolHandler->hasCapability(TOOL_CAP_RECOGNIZER));
 
     bool enableSize = toolHandler->hasCapability(TOOL_CAP_SIZE);
-
     fireEnableAction(ACTION_SIZE_MEDIUM, enableSize);
     fireEnableAction(ACTION_SIZE_THICK, enableSize);
     fireEnableAction(ACTION_SIZE_FINE, enableSize);
     fireEnableAction(ACTION_SIZE_VERY_THICK, enableSize);
     fireEnableAction(ACTION_SIZE_VERY_FINE, enableSize);
-
-    bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);
-
-    fireEnableAction(ACTION_TOOL_FILL, enableFill);
-
-
     if (enableSize) {
         toolSizeChanged();
+    }
+
+    bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);
+    fireEnableAction(ACTION_TOOL_FILL, enableFill);
+    if (enableFill) {
+        toolFillChanged();
     }
 
     // Update color
