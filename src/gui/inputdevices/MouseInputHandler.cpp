@@ -109,7 +109,7 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
     }
 }
 
-auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
+void MouseInputHandler::changeTool(InputEvent const& event) {
     Settings* settings = this->inputContext->getSettings();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
     bool isClickOnSelection = this->inputContext->getXournal()->selection;
@@ -124,8 +124,6 @@ auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
 
     if (toolChanged)
         toolHandler->fireToolChanged();
-
-    return false;
 }
 
 void MouseInputHandler::onBlock() {}

@@ -30,5 +30,5 @@ public:
     bool handleImpl(InputEvent const& event) override;
 
 protected:
-    bool changeTool(InputEvent const& event) override;
+    void changeTool(InputEvent const& event) override;
 };

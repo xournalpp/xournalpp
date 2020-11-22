@@ -97,7 +97,7 @@ protected:
      */
     bool actionEnd(InputEvent const& event);
 
-    virtual bool changeTool(InputEvent const& event) = 0;
+    virtual void changeTool(InputEvent const& event) = 0;
 
     /**
      * Do the scrolling with the hand tool

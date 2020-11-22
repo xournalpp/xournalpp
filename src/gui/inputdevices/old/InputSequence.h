@@ -110,9 +110,8 @@ public:
 private:
     /**
      * Change the tool according to the device and button
-     * @return true to ignore event
      */
-    bool changeTool();
+    void changeTool();
 
     /**
      * Check if this input can be started (don't do two inputs at the same time)
