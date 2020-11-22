@@ -60,18 +60,18 @@ public:
      * @param drawingType Draw special shape
      */
     void setDrawingType(DrawingType drawingType);
-    
+
     /**
      * @brief Get the Eraser Type object
-     * 
-     * @return EraserType 
+     *
+     * @return EraserType
      */
     EraserType getEraserType() const;
 
     /**
      * @brief Set the Eraser Type object
-     * 
-     * @param eraserType 
+     *
+     * @param eraserType
      */
     void setEraserType(EraserType eraserType);
 
