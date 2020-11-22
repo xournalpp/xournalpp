@@ -64,6 +64,7 @@ void PenInputHandler::handleScrollEvent(InputEvent const& event) {
 
 auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->inputContext->focusWidget();
+    bool isEventHandled = false;
 
     XojPageView* currentPage = this->getPageAtCurrentPosition(event);
     // set reference data for handling of entering/leaving page
@@ -105,6 +106,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
 
     // hand tool don't change the selection, so you can scroll e.g. with your touchscreen without remove the selection
     if (toolHandler->getToolType() != TOOL_HAND && xournal->selection) {
+        isEventHandled = true;
         EditSelection* selection = xournal->selection;
 
         XojPageView* view = selection->getView();
@@ -120,16 +122,14 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
             }
 
             xournal->selection->mouseDown(selType, selectionPos.x, selectionPos.y);
-            // Only modify selection and do not forward event to page
-            return true;
+            return isEventHandled;
         }
-
 
         xournal->view->clearSelection();
-        if (changeTool(event)) {
-            // Do not handle event in any further way to make click only deselect selection
-            return true;
-        }
+        changeTool(event);
+        // stop early to prevent drawing when clicking outside of the selection with the intention of deselecting
+        if (toolHandler->hasCapability(TOOL_CAP_SIZE))
+            return isEventHandled;
     }
 
     // Forward event to page
@@ -139,7 +139,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     }
 
     // not handled
-    return false;
+    return isEventHandled;
 }
 
 auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {

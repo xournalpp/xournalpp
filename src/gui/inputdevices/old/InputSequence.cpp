@@ -197,6 +197,7 @@ auto InputSequence::actionMoved(guint32 time) -> bool {
  */
 auto InputSequence::actionStart(guint32 time) -> bool {
     this->eventTime = time;
+    bool isEventHandled = false;
 
     inputHandler->focusWidget();
 
@@ -214,16 +215,14 @@ auto InputSequence::actionStart(guint32 time) -> bool {
     }
 
     // Change the tool depending on the key or device
-    if (changeTool()) {
-        return true;
-    }
+    changeTool();
 
     GtkXournal* xournal = inputHandler->getXournal();
 
     // hand tool don't change the selection, so you can scroll e.g.
     // with your touchscreen without remove the selection
-    ToolHandler* h = inputHandler->getToolHandler();
-    if (h->getToolType() == TOOL_HAND) {
+    ToolHandler* toolHandler = inputHandler->getToolHandler();
+    if (toolHandler->getToolType() == TOOL_HAND) {
         XournalppCursor* cursor = xournal->view->getCursor();
         cursor->setMouseDown(true);
         inScrolling = true;
@@ -234,6 +233,7 @@ auto InputSequence::actionStart(guint32 time) -> bool {
         return true;
     }
     if (xournal->selection) {
+        isEventHandled = true;
         EditSelection* selection = xournal->selection;
 
         XojPageView* view = selection->getView();
@@ -249,14 +249,14 @@ auto InputSequence::actionStart(guint32 time) -> bool {
 
             xournal->view->getCursor()->setMouseDown(true);
             xournal->selection->mouseDown(selType, pos.x, pos.y);
-            return true;
+            return isEventHandled;
         }
 
 
         xournal->view->clearSelection();
-        if (changeTool()) {
-            return true;
-        }
+        // stop early to prevent drawing when clicking outside of the selection with the intention of deselecting
+        if (toolHandler->hasCapability(TOOL_CAP_SIZE))
+            return isEventHandled;
     }
 
     XojPageView* pv = getPageAtCurrentPosition();
@@ -271,7 +271,7 @@ auto InputSequence::actionStart(guint32 time) -> bool {
     }
 
     // not handled
-    return false;
+    return isEventHandled;
 }
 
 
@@ -389,9 +389,8 @@ void InputSequence::stopInput() {
 
 /**
  * Change the tool according to the device and button
- * @return true to ignore event
  */
-auto InputSequence::changeTool() -> bool {
+void InputSequence::changeTool() {
     Settings* settings = inputHandler->getSettings();
     ToolHandler* toolHandler = inputHandler->getToolHandler();
     ButtonConfig* cfgTouch = settings->getButtonConfig(Button::BUTTON_TOUCH);
@@ -420,7 +419,6 @@ auto InputSequence::changeTool() -> bool {
 
     if (toolChanged)
         toolHandler->fireToolChanged();
-    return false;
 }
 
 /**

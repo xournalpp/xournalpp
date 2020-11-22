@@ -71,7 +71,7 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
     return false;
 }
 
-auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
+void TouchDrawingInputHandler::changeTool(InputEvent const& event) {
     Settings* settings = this->inputContext->getSettings();
     ButtonConfig* cfg = settings->getButtonConfig(Button::BUTTON_TOUCH);
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
@@ -86,5 +86,4 @@ auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
 
     if (toolChanged)
         toolHandler->fireToolChanged();
-    return false;
 }
