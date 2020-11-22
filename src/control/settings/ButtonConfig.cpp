@@ -20,12 +20,12 @@ auto ButtonConfig::getDrawingType() -> DrawingType { return this->drawingType; }
 
 auto ButtonConfig::getAction() -> ToolType { return this->action; }
 
-void ButtonConfig::initButton(ToolHandler* toolHandler, Buttons button) {
+void ButtonConfig::initButton(ToolHandler* toolHandler, Button button) {
     if (this->action == TOOL_NONE) {
         return;
     }
 
-    toolHandler->initButtonTool(button, this->action);
+    toolHandler->resetButtonTool(this->action, button);
 
     if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
 
@@ -43,11 +43,11 @@ void ButtonConfig::initButton(ToolHandler* toolHandler, Buttons button) {
     }
 }
 
-void ButtonConfig::initActions(ToolHandler* toolHandler) {
+void ButtonConfig::applyConfigToToolbarTool(ToolHandler* toolHandler) {
     if (this->action == TOOL_NONE) {
         return;
     }
-    toolHandler->selectTool(this->action, false);
+    toolHandler->selectTool(this->action);
 
     if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
 
@@ -65,7 +65,7 @@ void ButtonConfig::initActions(ToolHandler* toolHandler) {
     }
 }
 
-bool ButtonConfig::acceptActions(ToolHandler* toolHandler, Buttons button) {
+bool ButtonConfig::applyNoChangeSettings(ToolHandler* toolHandler, Button button) {
     if (this->action == TOOL_NONE) {
         return false;
     }

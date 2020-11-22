@@ -1646,6 +1646,7 @@ void Control::undoRedoPageChanged(PageRef page) {
 
 void Control::selectTool(ToolType type) {
     toolHandler->selectTool(type);
+    toolHandler->fireToolChanged();
 
     if (win) {
         (win->getXournal()->getViewFor(getCurrentPageNo()))->rerenderPage();
@@ -1653,8 +1654,8 @@ void Control::selectTool(ToolType type) {
 }
 
 void Control::selectDefaultTool() {
-    ButtonConfig* cfg = settings->getButtonConfig(Buttons::BUTTON_DEFAULT);
-    cfg->initActions(toolHandler);
+    ButtonConfig* cfg = settings->getButtonConfig(Button::BUTTON_DEFAULT);
+    cfg->applyConfigToToolbarTool(toolHandler);
 }
 
 void Control::toolChanged() {
@@ -1854,7 +1855,7 @@ void Control::toolColorChanged() {
 }
 
 void Control::changeColorOfSelection() {
-    if (this->win && toolHandler->getColor() != Color(-1)) {
+    if (this->win && toolHandler->hasCapability(TOOL_CAP_COLOR)) {
         EditSelection* sel = this->win->getXournal()->getSelection();
         if (sel) {
             UndoAction* undo = sel->setColor(toolHandler->getColor());
@@ -2501,16 +2502,16 @@ void Control::applyPreferredLanguage() {
 }
 
 void Control::initButtonTool() {
-    vector<Buttons> buttons{Buttons::BUTTON_ERASER, Buttons::BUTTON_STYLUS, Buttons::BUTTON_STYLUS2,
-                            Buttons::BUTTON_MIDDLE, Buttons::BUTTON_RIGHT,  Buttons::BUTTON_TOUCH};
+    vector<Button> buttons{Button::BUTTON_ERASER,       Button::BUTTON_STYLUS_ONE,  Button::BUTTON_STYLUS_TWO,
+                           Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT, Button::BUTTON_TOUCH};
     ButtonConfig* cfg;
     for (auto b: buttons) {
         cfg = settings->getButtonConfig(b);
         cfg->initButton(this->toolHandler, b);
     }
 
-    cfg = settings->getButtonConfig(Buttons::BUTTON_DEFAULT);
-    cfg->initActions(this->toolHandler);
+    cfg = settings->getButtonConfig(Button::BUTTON_DEFAULT);
+    cfg->applyConfigToToolbarTool(this->toolHandler);
 }
 
 auto Control::askToReplace(fs::path const& filepath) const -> bool {

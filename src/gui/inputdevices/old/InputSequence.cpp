@@ -341,7 +341,7 @@ void InputSequence::actionEnd(guint32 time) {
     EditSelection* tmpSelection = xournal->selection;
     xournal->selection = nullptr;
 
-    h->pointCurrentToolToToolbarTool();
+    h->pointActiveToolToToolbarTool();
     h->fireToolChanged();
 
     // we need this workaround so it's possible to select something with the middle button
@@ -393,48 +393,33 @@ void InputSequence::stopInput() {
  */
 auto InputSequence::changeTool() -> bool {
     Settings* settings = inputHandler->getSettings();
-    ButtonConfig* cfgTouch = settings->getButtonConfig(Buttons::BUTTON_TOUCH);
-    ToolHandler* h = inputHandler->getToolHandler();
+    ToolHandler* toolHandler = inputHandler->getToolHandler();
+    ButtonConfig* cfgTouch = settings->getButtonConfig(Button::BUTTON_TOUCH);
     GtkXournal* xournal = inputHandler->getXournal();
     bool toolChanged = false;
-    bool pressed = false;
-    bool configChanged = true;
 
-    if (gdk_device_get_source(device) == GDK_SOURCE_PEN) {
+    if (gdk_device_get_source(device) == GDK_SOURCE_PEN && button == 2) {
         penDevice = true;
-        if (button == 2)
-            InputUtils::applyButton(h, settings, Buttons::BUTTON_STYLUS, pressed, toolChanged, configChanged);
-        else if (button == 3)
-            InputUtils::applyButton(h, settings, Buttons::BUTTON_STYLUS2, pressed, toolChanged, configChanged);
-    } else if (button == 2 /* Middle Button */ && !xournal->selection) {
-        InputUtils::applyButton(h, settings, Buttons::BUTTON_MIDDLE, pressed, toolChanged, configChanged);
-    } else if (button == 3 /* Right Button */ && !xournal->selection) {
-        InputUtils::applyButton(h, settings, Buttons::BUTTON_RIGHT, pressed, toolChanged, configChanged);
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_STYLUS_ONE);
+    } else if (gdk_device_get_source(device) == GDK_SOURCE_PEN && button == 3) {
+        penDevice = true;
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_STYLUS_TWO);
     } else if (gdk_device_get_source(device) == GDK_SOURCE_ERASER) {
         penDevice = true;
-        InputUtils::applyButton(h, settings, Buttons::BUTTON_ERASER, pressed, toolChanged, configChanged);
-    } else if (cfgTouch->device == gdk_device_get_name(device)) {
-        pressed = true;
-        if (cfgTouch->getAction() == TOOL_NONE)
-            configChanged = false;
-
-        // If an action is defined we do it, even if it's a drawing action...
-        if (cfgTouch->getDisableDrawing() && cfgTouch->getAction() == TOOL_NONE) {
-            ToolType tool = h->getToolType();
-            if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER) {
-                g_message("ignore touchscreen for drawing!\n");
-                return true;
-            }
-        }
-    }
-
-
-    if (!pressed || !configChanged) {
-        toolChanged = h->pointCurrentToolToToolbarTool();
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_ERASER);
+    } else if (button == 2 && !xournal->selection) {
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_MIDDLE);
+    } else if (button == 3 && !xournal->selection) {
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_RIGHT);
+    } else if (gdk_device_get_name(device) == cfgTouch->device) {
+        InputUtils::warnIfQuestionableTouchDrawingSettings(toolHandler, settings);
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_TOUCH);
+    } else {
+        toolChanged = toolHandler->pointActiveToolToToolbarTool();
     }
 
     if (toolChanged)
-        h->fireToolChanged();
+        toolHandler->fireToolChanged();
     return false;
 }
 

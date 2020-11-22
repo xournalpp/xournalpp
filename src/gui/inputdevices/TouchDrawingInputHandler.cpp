@@ -73,30 +73,15 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
 
 auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
     Settings* settings = this->inputContext->getSettings();
-    ButtonConfig* cfgTouch = settings->getButtonConfig(Buttons::BUTTON_TOUCH);
+    ButtonConfig* cfg = settings->getButtonConfig(Button::BUTTON_TOUCH);
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
     bool toolChanged = false;
-    bool pressed = false;
-    bool configChanged = true;
 
-    ButtonConfig* cfg = nullptr;
-    if (cfgTouch->device == event.deviceName) {
-        cfg = cfgTouch;
-
-        // If an action is defined we do it, even if it's a drawing action...
-        if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE) {
-            ToolType tool = toolHandler->getToolType();
-            if (tool == TOOL_PEN || tool == TOOL_ERASER || tool == TOOL_HILIGHTER) {
-                g_message("ignore touchscreen for drawing!\n");
-                return true;
-            }
-        }
-    }
-
-    if (cfg && cfg->getAction() != TOOL_NONE) {
-        InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_TOUCH, pressed, toolChanged, configChanged);
+    if (cfg->device == event.deviceName) {
+        InputUtils::warnIfQuestionableTouchDrawingSettings(toolHandler, settings);
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_TOUCH);
     } else {
-        toolChanged = toolHandler->pointCurrentToolToToolbarTool();
+        toolChanged = toolHandler->pointActiveToolToToolbarTool();
     }
 
     if (toolChanged)

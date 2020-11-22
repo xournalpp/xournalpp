@@ -16,14 +16,19 @@
 
 #include "XournalType.h"
 
-enum Buttons {
+/**
+ * @brief Buttons that can have a configuration attached to them
+ * Used for ButtonConfig and ToolHandler
+ *
+ */
+enum Button {
     BUTTON_ERASER,
-    BUTTON_MIDDLE,
-    BUTTON_RIGHT,
+    BUTTON_MOUSE_MIDDLE,
+    BUTTON_MOUSE_RIGHT,
     BUTTON_TOUCH,
     BUTTON_DEFAULT,
-    BUTTON_STYLUS,
-    BUTTON_STYLUS2,
+    BUTTON_STYLUS_ONE,
+    BUTTON_STYLUS_TWO,
     BUTTON_COUNT
 };
 
@@ -62,21 +67,21 @@ enum StylusCursorType {
     STYLUS_CURSOR_BIG = 2,
 };
 
-constexpr auto buttonToString(Buttons button) -> const char* {
+constexpr auto buttonToString(Button button) -> const char* {
     switch (button) {
         case BUTTON_ERASER:
             return "eraser";
-        case BUTTON_MIDDLE:
+        case BUTTON_MOUSE_MIDDLE:
             return "middle";
-        case BUTTON_RIGHT:
+        case BUTTON_MOUSE_RIGHT:
             return "right";
         case BUTTON_TOUCH:
             return "touch";
         case BUTTON_DEFAULT:
             return "default";
-        case BUTTON_STYLUS:
+        case BUTTON_STYLUS_ONE:
             return "stylus";
-        case BUTTON_STYLUS2:
+        case BUTTON_STYLUS_TWO:
             return "stylus2";
         default:
             return "unknown";
