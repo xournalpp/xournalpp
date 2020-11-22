@@ -19,6 +19,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find" "${PROJECT_SOURCE_DIR}/
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # enable clang tidy to use correct includes
 set_directory_properties(PROPERTIES EP_BASE "${PROJECT_BINARY_DIR}/external")
 
 add_definitions(-D_USE_MATH_DEFINES)

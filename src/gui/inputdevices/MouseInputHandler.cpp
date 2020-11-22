@@ -112,19 +112,15 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
 auto MouseInputHandler::changeTool(InputEvent const& event) -> bool {
     Settings* settings = this->inputContext->getSettings();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
-    GtkXournal* xournal = this->inputContext->getXournal();
+    bool isClickOnSelection = this->inputContext->getXournal()->selection;
     bool toolChanged = false;
-    bool pressed = false;
-    bool configChanged = true;
 
-    if (modifier2 /* Middle Button */ && !xournal->selection)
-        InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_MIDDLE, pressed, toolChanged, configChanged);
-    else if (modifier3 /* Right Button */ && !xournal->selection)
-        InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_RIGHT, pressed, toolChanged, configChanged);
-
-    if (!pressed || !configChanged) {
-        toolChanged |= toolHandler->pointCurrentToolToToolbarTool();
-    }
+    if (modifier2 && !isClickOnSelection)
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_MIDDLE);
+    else if (modifier3 && !isClickOnSelection)
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_RIGHT);
+    else
+        toolChanged = toolHandler->pointActiveToolToToolbarTool();
 
     if (toolChanged)
         toolHandler->fireToolChanged();

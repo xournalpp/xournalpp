@@ -144,12 +144,12 @@ void SettingsDialog::initMouseButtonEvents(const char* hbox, int button, bool wi
 }
 
 void SettingsDialog::initMouseButtonEvents() {
-    initMouseButtonEvents("hboxMidleMouse", BUTTON_MIDDLE);
-    initMouseButtonEvents("hboxRightMouse", BUTTON_RIGHT);
+    initMouseButtonEvents("hboxMidleMouse", BUTTON_MOUSE_MIDDLE);
+    initMouseButtonEvents("hboxRightMouse", BUTTON_MOUSE_RIGHT);
     initMouseButtonEvents("hboxEraser", BUTTON_ERASER);
     initMouseButtonEvents("hboxTouch", BUTTON_TOUCH, true);
-    initMouseButtonEvents("hboxPenButton1", BUTTON_STYLUS);
-    initMouseButtonEvents("hboxPenButton2", BUTTON_STYLUS2);
+    initMouseButtonEvents("hboxPenButton1", BUTTON_STYLUS_ONE);
+    initMouseButtonEvents("hboxPenButton2", BUTTON_STYLUS_TWO);
 
     initMouseButtonEvents("hboxDefaultTool", BUTTON_DEFAULT);
 }

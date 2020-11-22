@@ -25,6 +25,16 @@ public:
     ~StylusInputHandler();
 
     bool handleImpl(InputEvent const& event) override;
+
+    /**
+     * @brief Change the tool based on the settings and the Button pressed.
+     * In case no button is pressed or the settings for that button are "No Toolchange" this function ensures that the
+     * tool selected in the toolbar remains selected.
+     *
+     * @param event
+     * @return true never
+     * @return false always
+     */
     bool changeTool(InputEvent const& event) override;
 
 private:
@@ -38,6 +48,5 @@ private:
      */
     int eventsToIgnore = -1;
 
-private:
     void setPressedState(InputEvent const& event);
 };

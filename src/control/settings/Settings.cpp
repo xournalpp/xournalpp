@@ -109,10 +109,10 @@ void Settings::loadDefault() {
     this->buttonConfig[BUTTON_ERASER] =
             new ButtonConfig(TOOL_ERASER, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
-    this->buttonConfig[BUTTON_MIDDLE] =
+    this->buttonConfig[BUTTON_MOUSE_MIDDLE] =
             new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Right button
-    this->buttonConfig[BUTTON_RIGHT] =
+    this->buttonConfig[BUTTON_MOUSE_RIGHT] =
             new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Touch
     this->buttonConfig[BUTTON_TOUCH] =
@@ -121,10 +121,10 @@ void Settings::loadDefault() {
     this->buttonConfig[BUTTON_DEFAULT] =
             new ButtonConfig(TOOL_PEN, Color{0x000000U}, TOOL_SIZE_FINE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 1
-    this->buttonConfig[BUTTON_STYLUS] =
+    this->buttonConfig[BUTTON_STYLUS_ONE] =
             new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Pen button 2
-    this->buttonConfig[BUTTON_STYLUS2] =
+    this->buttonConfig[BUTTON_STYLUS_TWO] =
             new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
 
     this->fullscreenHideElements = "mainMenubar";
@@ -491,7 +491,7 @@ void Settings::loadButtonConfig() {
     SElement& s = getCustomElement("buttonConfig");
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
-        SElement& e = s.child(buttonToString(static_cast<Buttons>(i)));
+        SElement& e = s.child(buttonToString(static_cast<Button>(i)));
         ButtonConfig* cfg = buttonConfig[i];
 
         string sType;
@@ -649,7 +649,7 @@ void Settings::saveButtonConfig() {
     s.clear();
 
     for (int i = 0; i < BUTTON_COUNT; i++) {
-        SElement& e = s.child(buttonToString(static_cast<Buttons>(i)));
+        SElement& e = s.child(buttonToString(static_cast<Button>(i)));
         ButtonConfig* cfg = buttonConfig[i];
 
         ToolType type = cfg->action;

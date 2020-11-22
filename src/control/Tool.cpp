@@ -12,21 +12,15 @@ Tool::Tool(string name, ToolType type, Color color, int capabilities, double* th
     setColor(color);
 }
 
-Tool::Tool(Tool* t) {
-    this->name = t->name;
-    this->type = t->type;
+Tool::Tool(Tool* t): name{t->name}, type{t->type}, capabilities{t->capabilities} {
     if (t->thickness) {
-        this->thickness = new double[5];
-        for (int i{0}; i < 5; i++) {
+        this->thickness = new double[toolSizes];
+        for (int i{0}; i < toolSizes; i++) {
             this->thickness[i] = t->thickness[i];
         }
     } else {
         this->thickness = nullptr;
     }
-
-
-    this->capabilities = t->capabilities;
-
     setColor(t->getColor());
 }
 

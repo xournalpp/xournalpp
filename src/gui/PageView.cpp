@@ -402,6 +402,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
             if (elemType == ELEMENT_TEXT) {
                 this->xournal->clearSelection();
                 toolHandler->selectTool(TOOL_TEXT);
+                toolHandler->fireToolChanged();
                 // Simulate a button press; there's too many things that we
                 // could forget to do if we manually call startText
                 this->onButtonPressEvent(pos);

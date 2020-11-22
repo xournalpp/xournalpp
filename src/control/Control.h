@@ -118,7 +118,15 @@ public:
     virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
                                  GtkToolButton* toolbutton, bool enabled);
 
+    /**
+     * @brief Update the Cursor and the Toolbar based on the active color
+     *
+     */
     virtual void toolColorChanged();
+    /**
+     * @brief Change the color of the current selection based on the active Tool
+     *
+     */
     virtual void changeColorOfSelection();
     virtual void setCustomColorSelected();
     virtual void toolChanged();
@@ -248,6 +256,10 @@ public:
 
     void selectFillAlpha(bool pen);
 
+    /**
+     * @brief Initialize the all button tools based on the respective ButtonConfigs
+     *
+     */
     void initButtonTool();
 
 

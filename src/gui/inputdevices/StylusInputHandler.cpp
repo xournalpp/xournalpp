@@ -168,25 +168,17 @@ void StylusInputHandler::setPressedState(InputEvent const& event) {
 auto StylusInputHandler::changeTool(InputEvent const& event) -> bool {
     Settings* settings = this->inputContext->getSettings();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
-
     bool toolChanged = false;
-    bool pressed = false;
-    bool configChanged = true;
 
-    // Stylus
-    if (event.deviceClass == INPUT_DEVICE_PEN) {
-        if (this->modifier2)
-            InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_STYLUS, pressed, toolChanged, configChanged);
-        else if (this->modifier3)
-            InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_STYLUS2, pressed, toolChanged,
-                                    configChanged);
-    } else if (event.deviceClass == INPUT_DEVICE_ERASER) {
-        InputUtils::applyButton(toolHandler, settings, Buttons::BUTTON_ERASER, pressed, toolChanged, configChanged);
-    }
+    if (event.deviceClass == INPUT_DEVICE_PEN && this->modifier2)
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_STYLUS_ONE);
+    else if (event.deviceClass == INPUT_DEVICE_PEN && this->modifier3)
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_STYLUS_TWO);
+    else if (event.deviceClass == INPUT_DEVICE_ERASER)
+        toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_ERASER);
+    else
+        toolChanged = toolHandler->pointActiveToolToToolbarTool();
 
-    if (!pressed || !configChanged) {
-        toolChanged = toolHandler->pointCurrentToolToToolbarTool();
-    }
     if (toolChanged)
         toolHandler->fireToolChanged();
     return false;

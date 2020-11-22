@@ -17,11 +17,25 @@
 #include "ToolBase.h"
 #include "XournalType.h"
 
+
 class Tool: public ToolBase {
 public:
     Tool(string name, ToolType type, Color color, int capabilities, double* thickness);
+    /**
+     * @brief Construct a new Tool object based on the pointer to another tool
+     * Ideally this should be refactored to a copy constructor like Tool(const Tool& tool).
+     * However, this would would require to much refactoring as of now.
+     *
+     * @param t tool to use as basis for new copy
+     */
     Tool(Tool* t);
     virtual ~Tool();
+
+    /**
+     * @brief number of different sizes defined for tools with Size capability
+     *
+     */
+    static const int toolSizes = 5;
 
 public:
     string getName();
