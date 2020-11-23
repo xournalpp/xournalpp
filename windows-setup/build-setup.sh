@@ -36,8 +36,13 @@ echo "copy ui"
 
 cp -r ../ui setup/
 
-supportedLocales=("cs" "de" "it" "pl" "zh" "zh_TW" "zh_HK")
-for locale in "${supportedLocales[@]}" ; do
+for trans in ../build/po/*.gmo; do
+        # Bail if there are no translations at all
+        [ -f "$trans" ] || break;
+	
+	# Retrieve locale from name of translation file
+	locale=$(basename -s .gmo $trans)
+	
 	echo "Copy locale $locale"
 	mkdir -p setup/share/locale/$locale/LC_MESSAGES
 	
