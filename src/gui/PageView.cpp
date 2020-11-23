@@ -479,6 +479,12 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     return false;
 }
 
+void XojPageView::onMotionCancelEvent() {
+    if (this->inputHandler) {
+        this->inputHandler->onMotionCancelEvent();
+    }
+}
+
 auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     Control* control = xournal->getControl();
 

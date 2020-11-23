@@ -36,12 +36,11 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
 
     if (event.type == MOTION_EVENT && this->primarySequence) {
-        // Only zoom if there are two fingers involved
         if (this->primarySequence && this->secondarySequence) {
             zoomMotion(event);
-        } else {
-            scrollMotion(event);
         }
+
+        scrollMotion(event);
     }
 
     if (event.type == BUTTON_RELEASE_EVENT) {
@@ -51,7 +50,8 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
         }
 
         if (event.sequence == this->primarySequence) {
-            this->primarySequence = nullptr;
+            this->primarySequence = this->secondarySequence;
+            this->secondarySequence = nullptr;
         } else {
             this->secondarySequence = nullptr;
         }
@@ -119,8 +119,9 @@ void TouchInputHandler::zoomStart() {
     }
 
     Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
+    auto topLeft = utl::Point<double>{ zoomSequenceRectangle.x, zoomSequenceRectangle.y };
 
-    zoomControl->startZoomSequence(center);
+    zoomControl->startZoomSequence(center + topLeft);
 }
 
 void TouchInputHandler::zoomMotion(InputEvent const& event) {

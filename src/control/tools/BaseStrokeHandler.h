@@ -30,12 +30,13 @@ public:
 
     void draw(cairo_t* cr);
 
+    void onMotionCancelEvent();
     bool onMotionNotifyEvent(const PositionInputData& pos);
     void onButtonReleaseEvent(const PositionInputData& pos);
     void onButtonPressEvent(const PositionInputData& pos);
     void onButtonDoublePressEvent(const PositionInputData& pos);
     virtual bool onKeyEvent(GdkEventKey* event);
-
+    
 private:
     virtual void drawShape(Point& currentPoint, const PositionInputData& pos) = 0;
     DIRSET_MODIFIERS drawModifierFixed = NONE;

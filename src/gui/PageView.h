@@ -14,6 +14,7 @@
 #include "gui/inputdevices/PositionInputData.h"
 #include "model/PageListener.h"
 #include "model/PageRef.h"
+#include "model/Stroke.h"
 #include "model/TexImage.h"
 
 #include "Layout.h"
@@ -147,6 +148,7 @@ public:  // event handler
     bool onButtonDoublePressEvent(const PositionInputData& pos);
     bool onButtonTriplePressEvent(const PositionInputData& pos);
     bool onMotionNotifyEvent(const PositionInputData& pos);
+    void onMotionCancelEvent();
 
     /**
      * This method actually repaints the XojPageView, triggering

@@ -21,7 +21,9 @@ class InputContext;
 
 class TouchDrawingInputHandler: public PenInputHandler {
 private:
-    GdkEventSequence* currentSequence = nullptr;
+    GdkEventSequence* primarySequence = nullptr;
+    GdkEventSequence* secondarySequence = nullptr;
+    bool startedSingleInput = false;
 
 public:
     explicit TouchDrawingInputHandler(InputContext* inputContext);
