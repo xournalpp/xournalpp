@@ -7,6 +7,8 @@
 #include "StringUtils.h"
 #include "Util.h"
 
+#include <regex>
+
 TextView::TextView() = default;
 
 TextView::~TextView() = default;
@@ -39,18 +41,38 @@ void TextView::updatePangoFont(PangoLayout* layout, const Text* t) {
     pango_font_description_free(desc);
 }
 
-void TextView::drawText(cairo_t* cr, const Text* t) {
+void TextView::drawText(cairo_t* cr, const Text* t, bool autoDetectHyperLinks) {
     cairo_save(cr);
 
+    // https://www.cairographics.org/manual/cairo-Tags-and-Links.html
+    // https://developer.gnome.org/glib/stable/glib-URI-Functions.html#g-uri-escape-string
+    string str = t->getText();
+
+    bool isURL = autoDetectHyperLinks &&
+                 regex_search(str, std::regex("^[a-z][a-z0-9]*:")) &&
+                 str.find('\n')==string::npos;
+    
+    if (isURL) {
+      string uri = "uri='";
+      // Assume url is escaped, change only apostrophe
+      uri += regex_replace(str,std::regex("'"), "%27"); 
+      uri += "'";
+      cairo_tag_begin(cr, CAIRO_TAG_LINK, uri.c_str());
+    }
+    
     cairo_translate(cr, t->getX(), t->getY());
 
     PangoLayout* layout = initPango(cr, t);
-    string str = t->getText();
+
     pango_layout_set_text(layout, str.c_str(), str.length());
 
     pango_cairo_show_layout(cr, layout);
 
     g_object_unref(layout);
+
+    if (isURL) {
+      cairo_tag_end(cr, CAIRO_TAG_LINK);
+    }
 
     cairo_restore(cr);
 }

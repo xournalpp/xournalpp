@@ -3,18 +3,29 @@
 #include "background/MainBackgroundPainter.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
+#include "control/settings/Settings.h"
 #include "model/Layer.h"
 #include "model/eraser/EraseableStroke.h"
 
 #include "StrokeView.h"
 #include "TextView.h"
+#include "PathUtil.h"
 
 
-DocumentView::DocumentView() { this->backgroundPainter = new MainBackgroundPainter(); }
+DocumentView::DocumentView() {
+    this->backgroundPainter = new MainBackgroundPainter();
+
+    auto name = Util::getConfigFile(SETTINGS_XML_FILE);
+    this->settings = new Settings(std::move(name));
+    this->settings->load();
+
+}
 
 DocumentView::~DocumentView() {
     delete this->backgroundPainter;
     this->backgroundPainter = nullptr;
+    delete this->settings;
+    this->settings = nullptr;
 }
 
 /**
@@ -57,7 +68,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
     sv.paint(this->dontRenderEditingStroke);
 }
 
-void DocumentView::drawText(cairo_t* cr, Text* t) {
+void DocumentView::drawText(cairo_t* cr, Text* t, bool autoDetectHyperLinks) {
     if (t->isInEditing()) {
         return;
     }
@@ -65,7 +76,7 @@ void DocumentView::drawText(cairo_t* cr, Text* t) {
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
     applyColor(cr, t);
 
-    TextView::drawText(cr, t);
+    TextView::drawText(cr, t, autoDetectHyperLinks);
 }
 
 void DocumentView::drawImage(cairo_t* cr, Image* i) {
@@ -136,7 +147,8 @@ void DocumentView::drawElement(cairo_t* cr, Element* e) const {
     if (e->getType() == ELEMENT_STROKE) {
         drawStroke(cr, dynamic_cast<Stroke*>(e));
     } else if (e->getType() == ELEMENT_TEXT) {
-        drawText(cr, dynamic_cast<Text*>(e));
+        bool autoDetectHyperLinks = settings->getAutoDetectHyperLinks();
+        drawText(cr, dynamic_cast<Text*>(e), autoDetectHyperLinks);
     } else if (e->getType() == ELEMENT_IMAGE) {
         drawImage(cr, dynamic_cast<Image*>(e));
     } else if (e->getType() == ELEMENT_TEXIMAGE) {
@@ -306,6 +318,8 @@ void DocumentView::drawTransparentBackgroundPattern() {
  * @param hideBackground true to hide the background
  */
 void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hideBackground) {
+    this->settings->load();
+    
     initDrawing(page, cr, dontRenderEditingStroke);
 
     bool backgroundVisible = page->isLayerVisible(0);
