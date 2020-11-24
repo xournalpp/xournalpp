@@ -394,7 +394,7 @@ void ToolMenuHandler::initToolItems() {
     initPenToolItem();
     initEraserToolItem();
 
-    ADD_CUSTOM_ITEM_TGL("HILIGHTER", ACTION_TOOL_HILIGHTER, GROUP_TOOL, true, "tool_highlighter", _("Highlighter"));
+    ADD_CUSTOM_ITEM_TGL("HIGHLIGHTER", ACTION_TOOL_HIGHLIGHTER, GROUP_TOOL, true, "tool_highlighter", _("Highlighter"));
 
     ADD_CUSTOM_ITEM_TGL("TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, true, "tool_text", _("Text"));
     ADD_CUSTOM_ITEM("MATH_TEX", ACTION_TEX, "tool_math_tex", _("Add/Edit Tex"));

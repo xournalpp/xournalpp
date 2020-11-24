@@ -45,12 +45,12 @@ auto ActionGroup_fromString(const string& value) -> ActionGroup {
         return GROUP_PEN_FILL;
     }
 
-    if (value == "GROUP_HILIGHTER_SIZE") {
-        return GROUP_HILIGHTER_SIZE;
+    if (value == "GROUP_HIGHLIGHTER_SIZE") {
+        return GROUP_HIGHLIGHTER_SIZE;
     }
 
-    if (value == "GROUP_HILIGHTER_FILL") {
-        return GROUP_HILIGHTER_FILL;
+    if (value == "GROUP_HIGHLIGHTER_FILL") {
+        return GROUP_HIGHLIGHTER_FILL;
     }
 
     if (value == "GROUP_TOGGLE_GROUP") {
@@ -151,12 +151,12 @@ auto ActionGroup_toString(ActionGroup value) -> string {
         return "GROUP_PEN_FILL";
     }
 
-    if (value == GROUP_HILIGHTER_SIZE) {
-        return "GROUP_HILIGHTER_SIZE";
+    if (value == GROUP_HIGHLIGHTER_SIZE) {
+        return "GROUP_HIGHLIGHTER_SIZE";
     }
 
-    if (value == GROUP_HILIGHTER_FILL) {
-        return "GROUP_HILIGHTER_FILL";
+    if (value == GROUP_HIGHLIGHTER_FILL) {
+        return "GROUP_HIGHLIGHTER_FILL";
     }
 
     if (value == GROUP_TOGGLE_GROUP) {

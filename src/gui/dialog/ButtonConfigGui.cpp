@@ -56,7 +56,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     ADD_TYPE_CB("transparent", _("Tool - don't change"), TOOL_NONE);
     ADD_TYPE_CB("tool_pencil", _("Pen"), TOOL_PEN);
     ADD_TYPE_CB("tool_eraser", _("Eraser"), TOOL_ERASER);
-    ADD_TYPE_CB("tool_highlighter", _("Highlighter"), TOOL_HILIGHTER);
+    ADD_TYPE_CB("tool_highlighter", _("Highlighter"), TOOL_HIGHLIGHTER);
     ADD_TYPE_CB("tool_text", _("Text"), TOOL_TEXT);
     ADD_TYPE_CB("tool_image", _("Insert image"), TOOL_IMAGE);
     ADD_TYPE_CB("stretch", _("Vertical space"), TOOL_VERTICAL_SPACE);
@@ -255,7 +255,7 @@ void ButtonConfigGui::enableDisableTools() {
 
     switch (action) {
         case TOOL_PEN:
-        case TOOL_HILIGHTER:
+        case TOOL_HIGHLIGHTER:
             gtk_widget_set_visible(cbThickness, true);
             gtk_widget_set_visible(colorButton, true);
             gtk_widget_set_visible(cbDrawingType, true);

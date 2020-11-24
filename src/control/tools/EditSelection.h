@@ -118,7 +118,7 @@ public:
      * Sets the tool size for pen or eraser, returns an undo action
      * (or nullptr if nothing is done)
      */
-    UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHilighter,
+    UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
                         const double* thicknessEraser);
 
     /**

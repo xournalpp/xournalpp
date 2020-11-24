@@ -116,7 +116,7 @@ const char* TOOLBAR_INI_HEADER =
         "0x808080),COLOR(0x008000),COLOR(0xff0000),COLOR(0x3333cc),COLOR(0x000000),COLOR_SELECT\n"
         "  Notice: This are the default Xournal colors, each other color in HEX can also be used, eg COLOR(0x12ABCF);\n"
         "\n"
-        " Tools: ERASER,PEN,HILIGHTER,IMAGE,TEXT,IMAGE,SELECT,SELECT_REGION,SELECT_RECTANGLE,VERTICAL_SPACE,HAND\n"
+        " Tools: ERASER,PEN,HIGHLIGHTER,IMAGE,TEXT,IMAGE,SELECT,SELECT_REGION,SELECT_RECTANGLE,VERTICAL_SPACE,HAND\n"
         "  Notice: ERASER also has a drop down menu to select the eraser type, SELECT are all selection tools, with "
         "drop down menu\n"
         "\n"

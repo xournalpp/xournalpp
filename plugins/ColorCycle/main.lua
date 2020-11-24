@@ -34,5 +34,5 @@ function cycle()
   app.changeToolColor({["color"] = colorList[currentColor][2], ["selection"] = true})
   -- use app.changeColor({["color"] = colorList[currentColor][2], ["tool"] = "pen""}) 
   -- instead if you only want to change pen color
-  -- similarly if you want to change hilighter color or the color from another tool with color capabilities.
+  -- similarly if you want to change highlighter color or the color from another tool with color capabilities.
 end

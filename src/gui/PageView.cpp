@@ -286,7 +286,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     XournalppCursor* cursor = xournal->getCursor();
     cursor->setMouseDown(true);
 
-    if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HILIGHTER) &&
+    if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HIGHLIGHTER) &&
                 h->getDrawingType() != DRAWING_TYPE_SPLINE ||
         (h->getToolType() == TOOL_ERASER && h->getEraserType() == ERASER_TYPE_WHITEOUT)) {
         delete this->inputHandler;
@@ -307,7 +307,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         }
 
         this->inputHandler->onButtonPressEvent(pos);
-    } else if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HILIGHTER) &&
+    } else if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HIGHLIGHTER) &&
                h->getDrawingType() == DRAWING_TYPE_SPLINE) {
         if (!this->inputHandler) {
             this->inputHandler = new SplineHandler(this->xournal, this, getPage());

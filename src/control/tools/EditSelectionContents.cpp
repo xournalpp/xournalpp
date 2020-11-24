@@ -71,7 +71,7 @@ auto EditSelectionContents::getElements() -> vector<Element*>* { return &this->s
  * Sets the tool size for pen or eraser, returs an undo action
  * (or nullptr if nothing is done)
  */
-auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, const double* thicknessHilighter,
+auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
                                     const double* thicknessEraser) -> UndoAction* {
     auto* undo = new SizeUndoAction(this->sourcePage, this->sourceLayer);
 
@@ -90,7 +90,7 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
             if (tool == STROKE_TOOL_PEN) {
                 s->setWidth(thicknessPen[size]);
             } else if (tool == STROKE_TOOL_HIGHLIGHTER) {
-                s->setWidth(thicknessHilighter[size]);
+                s->setWidth(thicknessHighlighter[size]);
             } else if (tool == STROKE_TOOL_ERASER) {
                 s->setWidth(thicknessEraser[size]);
             }

@@ -59,7 +59,7 @@ enum ToolType {
     // First valid tool, often used starting Index 0
     TOOL_PEN = 1,
     TOOL_ERASER = 2,
-    TOOL_HILIGHTER = 3,
+    TOOL_HIGHLIGHTER = 3,
     TOOL_TEXT = 4,
     TOOL_IMAGE = 5,
     TOOL_SELECT_RECT = 6,

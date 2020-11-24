@@ -303,7 +303,7 @@ void Control::initWindow(MainWindow* win) {
 
     penSizeChanged();
     eraserSizeChanged();
-    hilighterSizeChanged();
+    highlighterSizeChanged();
     updateDeletePageButton();
     toolFillChanged();
     toolLineStyleChanged();
@@ -520,10 +520,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             }
             break;
 
-        case ACTION_TOOL_HILIGHTER:
+        case ACTION_TOOL_HIGHLIGHTER:
             clearSelection();
             if (enabled) {
-                selectTool(TOOL_HILIGHTER);
+                selectTool(TOOL_HIGHLIGHTER);
             }
             break;
         case ACTION_TOOL_TEXT:
@@ -701,40 +701,40 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
 
 
-        case ACTION_TOOL_HILIGHTER_SIZE_VERY_FINE:
+        case ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE:
             if (enabled) {
-                this->toolHandler->setHilighterSize(TOOL_SIZE_VERY_FINE);
-                hilighterSizeChanged();
+                this->toolHandler->setHighlighterSize(TOOL_SIZE_VERY_FINE);
+                highlighterSizeChanged();
             }
             break;
-        case ACTION_TOOL_HILIGHTER_SIZE_FINE:
+        case ACTION_TOOL_HIGHLIGHTER_SIZE_FINE:
             if (enabled) {
-                this->toolHandler->setHilighterSize(TOOL_SIZE_FINE);
-                hilighterSizeChanged();
+                this->toolHandler->setHighlighterSize(TOOL_SIZE_FINE);
+                highlighterSizeChanged();
             }
             break;
-        case ACTION_TOOL_HILIGHTER_SIZE_MEDIUM:
+        case ACTION_TOOL_HIGHLIGHTER_SIZE_MEDIUM:
             if (enabled) {
-                this->toolHandler->setHilighterSize(TOOL_SIZE_MEDIUM);
-                hilighterSizeChanged();
+                this->toolHandler->setHighlighterSize(TOOL_SIZE_MEDIUM);
+                highlighterSizeChanged();
             }
             break;
-        case ACTION_TOOL_HILIGHTER_SIZE_THICK:
+        case ACTION_TOOL_HIGHLIGHTER_SIZE_THICK:
             if (enabled) {
-                this->toolHandler->setHilighterSize(TOOL_SIZE_THICK);
-                hilighterSizeChanged();
+                this->toolHandler->setHighlighterSize(TOOL_SIZE_THICK);
+                highlighterSizeChanged();
             }
             break;
-        case ACTION_TOOL_HILIGHTER_SIZE_VERY_THICK:
+        case ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK:
             if (enabled) {
-                this->toolHandler->setHilighterSize(TOOL_SIZE_VERY_THICK);
-                hilighterSizeChanged();
+                this->toolHandler->setHighlighterSize(TOOL_SIZE_VERY_THICK);
+                highlighterSizeChanged();
             }
             break;
-        case ACTION_TOOL_HILIGHTER_FILL:
-            this->toolHandler->setHilighterFillEnabled(enabled);
+        case ACTION_TOOL_HIGHLIGHTER_FILL:
+            this->toolHandler->setHighlighterFillEnabled(enabled);
             break;
-        case ACTION_TOOL_HILIGHTER_FILL_TRANSPARENCY:
+        case ACTION_TOOL_HIGHLIGHTER_FILL_TRANSPARENCY:
             selectFillAlpha(false);
             break;
 
@@ -983,7 +983,7 @@ void Control::selectFillAlpha(bool pen) {
     if (pen) {
         alpha = toolHandler->getPenFill();
     } else {
-        alpha = toolHandler->getHilighterFill();
+        alpha = toolHandler->getHighlighterFill();
     }
 
     FillTransparencyDialog dlg(gladeSearchPath, alpha);
@@ -998,7 +998,7 @@ void Control::selectFillAlpha(bool pen) {
     if (pen) {
         toolHandler->setPenFill(alpha);
     } else {
-        toolHandler->setHilighterFill(alpha);
+        toolHandler->setHighlighterFill(alpha);
     }
 }
 
@@ -1770,22 +1770,22 @@ void Control::penSizeChanged() {
     }
 }
 
-void Control::hilighterSizeChanged() {
-    switch (toolHandler->getHilighterSize()) {
+void Control::highlighterSizeChanged() {
+    switch (toolHandler->getHighlighterSize()) {
         case TOOL_SIZE_VERY_FINE:
-            fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_VERY_FINE);
+            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE);
             break;
         case TOOL_SIZE_FINE:
-            fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_FINE);
+            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_FINE);
             break;
         case TOOL_SIZE_MEDIUM:
-            fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_MEDIUM);
+            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_MEDIUM);
             break;
         case TOOL_SIZE_THICK:
-            fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_THICK);
+            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_THICK);
             break;
         case TOOL_SIZE_VERY_THICK:
-            fireActionSelected(GROUP_HILIGHTER_SIZE, ACTION_TOOL_HILIGHTER_SIZE_VERY_THICK);
+            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK);
             break;
         default:
             break;
@@ -1797,8 +1797,8 @@ void Control::toolSizeChanged() {
         penSizeChanged();
     } else if (toolHandler->getToolType() == TOOL_ERASER) {
         eraserSizeChanged();
-    } else if (toolHandler->getToolType() == TOOL_HILIGHTER) {
-        hilighterSizeChanged();
+    } else if (toolHandler->getToolType() == TOOL_HIGHLIGHTER) {
+        highlighterSizeChanged();
     }
 
     switch (toolHandler->getSize()) {
@@ -1828,8 +1828,8 @@ void Control::toolSizeChanged() {
 void Control::toolFillChanged() {
     fireActionSelected(GROUP_FILL, toolHandler->getFill() != -1 ? ACTION_TOOL_FILL : ACTION_NONE);
     fireActionSelected(GROUP_PEN_FILL, toolHandler->getPenFillEnabled() ? ACTION_TOOL_PEN_FILL : ACTION_NONE);
-    fireActionSelected(GROUP_HILIGHTER_FILL,
-                       toolHandler->getHilighterFillEnabled() ? ACTION_TOOL_HILIGHTER_FILL : ACTION_NONE);
+    fireActionSelected(GROUP_HIGHLIGHTER_FILL,
+                       toolHandler->getHighlighterFillEnabled() ? ACTION_TOOL_HIGHLIGHTER_FILL : ACTION_NONE);
 }
 
 void Control::toolLineStyleChanged() {
@@ -2745,15 +2745,15 @@ void Control::setFill(bool fill) {
 
     if (sel) {
         undoRedo->addUndoAction(UndoActionPtr(
-                sel->setFill(fill ? toolHandler->getPenFill() : -1, fill ? toolHandler->getHilighterFill() : -1)));
+                sel->setFill(fill ? toolHandler->getPenFill() : -1, fill ? toolHandler->getHighlighterFill() : -1)));
     }
 
     if (toolHandler->getToolType() == TOOL_PEN) {
         fireActionSelected(GROUP_PEN_FILL, fill ? ACTION_TOOL_PEN_FILL : ACTION_NONE);
         this->toolHandler->setPenFillEnabled(fill, false);
-    } else if (toolHandler->getToolType() == TOOL_HILIGHTER) {
-        fireActionSelected(GROUP_HILIGHTER_FILL, fill ? ACTION_TOOL_HILIGHTER_FILL : ACTION_NONE);
-        this->toolHandler->setHilighterFillEnabled(fill, false);
+    } else if (toolHandler->getToolType() == TOOL_HIGHLIGHTER) {
+        fireActionSelected(GROUP_HIGHLIGHTER_FILL, fill ? ACTION_TOOL_HIGHLIGHTER_FILL : ACTION_NONE);
+        this->toolHandler->setHighlighterFillEnabled(fill, false);
     }
 }
 
@@ -2768,7 +2768,7 @@ void Control::setLineStyle(const string& style) {
     // TODO(fabian): allow to change selection
     if (sel) {
         //		UndoAction* undo = sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),
-        //										toolHandler->getToolThickness(TOOL_HILIGHTER),
+        //										toolHandler->getToolThickness(TOOL_HIGHLIGHTER),
         //										toolHandler->getToolThickness(TOOL_ERASER));
         //		undoRedo->addUndoAction(undo);
     }
@@ -2784,7 +2784,7 @@ void Control::setToolSize(ToolSize size) {
 
     if (sel) {
         undoRedo->addUndoAction(UndoActionPtr(sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),
-                                                           toolHandler->getToolThickness(TOOL_HILIGHTER),
+                                                           toolHandler->getToolThickness(TOOL_HIGHLIGHTER),
                                                            toolHandler->getToolThickness(TOOL_ERASER))));
     }
     this->toolHandler->setSize(size);

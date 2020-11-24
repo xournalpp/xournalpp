@@ -499,7 +499,7 @@ void Settings::loadButtonConfig() {
             ToolType type = toolTypeFromString(sType);
             cfg->action = type;
 
-            if (type == TOOL_PEN || type == TOOL_HILIGHTER) {
+            if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
                 string drawingType;
                 if (e.getString("drawingType", drawingType)) {
                     cfg->drawingType = drawingTypeFromString(drawingType);
@@ -514,7 +514,7 @@ void Settings::loadButtonConfig() {
                 }
             }
 
-            if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT) {
+            if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
                 if (int iColor; e.getInt("color", iColor)) {
                     cfg->color = Color(iColor);
                 }
@@ -655,12 +655,12 @@ void Settings::saveButtonConfig() {
         ToolType type = cfg->action;
         e.setString("tool", toolTypeToString(type));
 
-        if (type == TOOL_PEN || type == TOOL_HILIGHTER) {
+        if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER) {
             e.setString("drawingType", drawingTypeToString(cfg->drawingType));
             e.setString("size", toolSizeToString(cfg->size));
         }  // end if pen or highlighter
 
-        if (type == TOOL_PEN || type == TOOL_HILIGHTER || type == TOOL_TEXT) {
+        if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
             e.setIntHex("color", int32_t(cfg->color));
         }
 

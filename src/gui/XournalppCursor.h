@@ -70,7 +70,7 @@ private:
 
     // avoid re-assigning same cursor
     guint currentCursor = 0;        // enum AVAILABLECURSORS
-    gulong currentCursorFlavour{};  // for different flavours of a cursor (i.e. drawdir, pen and hilighter custom
+    gulong currentCursorFlavour{};  // for different flavours of a cursor (i.e. drawdir, pen and highlighter custom
                                     // cursors)
 
     // for resizing rotated selections
