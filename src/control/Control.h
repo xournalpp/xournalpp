@@ -301,7 +301,7 @@ protected:
 
     void eraserSizeChanged();
     void penSizeChanged();
-    void hilighterSizeChanged();
+    void highlighterSizeChanged();
 
     static bool checkChangedDocument(Control* control);
     static bool autosaveCallback(Control* control);

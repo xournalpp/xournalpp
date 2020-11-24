@@ -240,7 +240,7 @@ static int applib_changeToolColor(lua_State* L) {
 
     lua_getfield(L, 1, "selection"); /* either true or false, for changing selection color
                                        defaults to false*/
-    lua_getfield(L, 1, "tool");      /* "pen", "hilighter", "text"
+    lua_getfield(L, 1, "tool");      /* "pen", "highlighter", "text"
                                       "select_rect", "select_object", "select_region"
                                       if omitted, current Tool is used */
     lua_getfield(L, 1, "color");     // an RGB hex code defining the color

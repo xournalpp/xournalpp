@@ -34,8 +34,8 @@ enum ActionGroup {
     GROUP_ERASER_SIZE,
     GROUP_PEN_SIZE,
     GROUP_PEN_FILL,
-    GROUP_HILIGHTER_SIZE,
-    GROUP_HILIGHTER_FILL,
+    GROUP_HIGHLIGHTER_SIZE,
+    GROUP_HIGHLIGHTER_FILL,
 
     // Need group for toggle button, this is the first Toggle Group
     GROUP_TOGGLE_GROUP,

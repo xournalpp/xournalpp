@@ -27,7 +27,7 @@ void ButtonConfig::initButton(ToolHandler* toolHandler, Button button) {
 
     toolHandler->resetButtonTool(this->action, button);
 
-    if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
+    if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER || this->action == TOOL_ERASER) {
 
         if (this->drawingType != DRAWING_TYPE_DONT_CHANGE) {
             toolHandler->setButtonDrawingType(this->drawingType, button);
@@ -49,7 +49,7 @@ void ButtonConfig::applyConfigToToolbarTool(ToolHandler* toolHandler) {
     }
     toolHandler->selectTool(this->action);
 
-    if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
+    if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER || this->action == TOOL_ERASER) {
 
         if (this->drawingType != DRAWING_TYPE_DONT_CHANGE) {
             toolHandler->setDrawingType(this->drawingType);
@@ -69,7 +69,7 @@ bool ButtonConfig::applyNoChangeSettings(ToolHandler* toolHandler, Button button
     if (this->action == TOOL_NONE) {
         return false;
     }
-    if (this->action == TOOL_PEN || this->action == TOOL_HILIGHTER || this->action == TOOL_ERASER) {
+    if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER || this->action == TOOL_ERASER) {
 
         if (this->drawingType == DRAWING_TYPE_DONT_CHANGE) {
             toolHandler->setButtonDrawingType(toolHandler->getDrawingType(SelectedTool::toolbar), button);

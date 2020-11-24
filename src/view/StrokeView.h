@@ -24,7 +24,7 @@ public:
     void paint(bool dontRenderEditingStroke);
 
     /**
-     * Change cairo source, used to draw hilighter transparent,
+     * Change cairo source, used to draw highlighter transparent,
      * but only if not currently drawing and so on (yes, complicated)
      */
     void changeCairoSource(bool markAudioStroke);

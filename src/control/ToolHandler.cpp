@@ -51,8 +51,8 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_MEDIUM] = 8.50;
     thickness[TOOL_SIZE_THICK] = 19.84;
     thickness[TOOL_SIZE_VERY_THICK] = 30;
-    tools[TOOL_HILIGHTER - TOOL_PEN] = std::make_unique<Tool>(
-            "hilighter", TOOL_HILIGHTER, Color{0xFFFF00U},
+    tools[TOOL_HIGHLIGHTER - TOOL_PEN] = std::make_unique<Tool>(
+            "highlighter", TOOL_HIGHLIGHTER, Color{0xFFFF00U},
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_CIRCLE | TOOL_CAP_ARROW |
                     TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
             thickness);
@@ -97,12 +97,12 @@ void ToolHandler::initTools() {
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX,
                                                                      Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
-    this->eraserButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
-    this->stylusButton1Tool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
-    this->stylusButton2Tool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
-    this->mouseMiddleButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
-    this->mouseRightButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
-    this->touchDrawingButtonTool = std::make_unique<Tool>(tools[TOOL_HILIGHTER - TOOL_PEN].get());
+    this->eraserButtonTool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
+    this->stylusButton1Tool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
+    this->stylusButton2Tool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
+    this->mouseMiddleButtonTool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
+    this->mouseRightButtonTool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
+    this->touchDrawingButtonTool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
 
     this->toolbarSelectedTool = &getTool(TOOL_PEN);
     this->activeTool = &getTool(TOOL_PEN);
@@ -195,7 +195,7 @@ auto ToolHandler::getPenSize() -> ToolSize { return tools[TOOL_PEN - TOOL_PEN]->
 
 auto ToolHandler::getEraserSize() -> ToolSize { return tools[TOOL_ERASER - TOOL_PEN]->getSize(); }
 
-auto ToolHandler::getHilighterSize() -> ToolSize { return tools[TOOL_HILIGHTER - TOOL_PEN]->getSize(); }
+auto ToolHandler::getHighlighterSize() -> ToolSize { return tools[TOOL_HIGHLIGHTER - TOOL_PEN]->getSize(); }
 
 void ToolHandler::setPenSize(ToolSize size) {
     this->tools[TOOL_PEN - TOOL_PEN]->setSize(size);
@@ -213,10 +213,10 @@ void ToolHandler::setEraserSize(ToolSize size) {
     }
 }
 
-void ToolHandler::setHilighterSize(ToolSize size) {
-    this->tools[TOOL_HILIGHTER - TOOL_PEN]->setSize(size);
+void ToolHandler::setHighlighterSize(ToolSize size) {
+    this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->setSize(size);
 
-    if (this->activeTool->type == TOOL_HILIGHTER) {
+    if (this->activeTool->type == TOOL_HIGHLIGHTER) {
         this->listener->toolSizeChanged();
     }
 }
@@ -235,19 +235,19 @@ void ToolHandler::setPenFill(int alpha) { this->tools[TOOL_PEN - TOOL_PEN]->setF
 
 auto ToolHandler::getPenFill() -> int { return this->tools[TOOL_PEN - TOOL_PEN]->getFillAlpha(); }
 
-void ToolHandler::setHilighterFillEnabled(bool fill, bool fireEvent) {
-    this->tools[TOOL_HILIGHTER - TOOL_PEN]->setFill(fill);
+void ToolHandler::setHighlighterFillEnabled(bool fill, bool fireEvent) {
+    this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->setFill(fill);
 
-    if (this->activeTool->type == TOOL_HILIGHTER && fireEvent) {
+    if (this->activeTool->type == TOOL_HIGHLIGHTER && fireEvent) {
         this->listener->toolFillChanged();
     }
 }
 
-auto ToolHandler::getHilighterFillEnabled() -> bool { return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFill(); }
+auto ToolHandler::getHighlighterFillEnabled() -> bool { return this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->getFill(); }
 
-void ToolHandler::setHilighterFill(int alpha) { this->tools[TOOL_HILIGHTER - TOOL_PEN]->setFillAlpha(alpha); }
+void ToolHandler::setHighlighterFill(int alpha) { this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->setFillAlpha(alpha); }
 
-auto ToolHandler::getHilighterFill() -> int { return this->tools[TOOL_HILIGHTER - TOOL_PEN]->getFillAlpha(); }
+auto ToolHandler::getHighlighterFill() -> int { return this->tools[TOOL_HIGHLIGHTER - TOOL_PEN]->getFillAlpha(); }
 
 auto ToolHandler::getThickness() -> double {
     Tool* tool = this->activeTool;
@@ -380,7 +380,7 @@ void ToolHandler::saveSettings() {
             st.setString("size", value);
         }
 
-        if (tool->type == TOOL_PEN || tool->type == TOOL_HILIGHTER) {
+        if (tool->type == TOOL_PEN || tool->type == TOOL_HIGHLIGHTER) {
             st.setInt("fill", tool->getFill());
             st.setInt("fillAlpha", tool->getFillAlpha());
         }

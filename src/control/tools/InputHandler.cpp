@@ -53,7 +53,7 @@ void InputHandler::createStroke(Point p) {
             stroke->setTimestamp(milliseconds);
             stroke->setAudioFilename(audioFilename);
         }
-    } else if (h->getToolType() == TOOL_HILIGHTER) {
+    } else if (h->getToolType() == TOOL_HIGHLIGHTER) {
         stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
     } else if (h->getToolType() == TOOL_ERASER) {
         stroke->setToolType(STROKE_TOOL_ERASER);

@@ -179,20 +179,20 @@ public:
 
     ToolSize getPenSize();
     ToolSize getEraserSize();
-    ToolSize getHilighterSize();
+    ToolSize getHighlighterSize();
     void setPenSize(ToolSize size);
     void setEraserSize(ToolSize size);
-    void setHilighterSize(ToolSize size);
+    void setHighlighterSize(ToolSize size);
 
     void setPenFillEnabled(bool fill, bool fireEvent = true);
     bool getPenFillEnabled();
     void setPenFill(int alpha);
     int getPenFill();
 
-    void setHilighterFillEnabled(bool fill, bool fireEvent = true);
-    bool getHilighterFillEnabled();
-    void setHilighterFill(int alpha);
-    int getHilighterFill();
+    void setHighlighterFillEnabled(bool fill, bool fireEvent = true);
+    bool getHighlighterFillEnabled();
+    void setHighlighterFill(int alpha);
+    int getHighlighterFill();
 
     /**
      * @brief Set the toolbar selected tool to the type

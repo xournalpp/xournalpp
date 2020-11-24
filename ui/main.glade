@@ -1283,7 +1283,7 @@
                             <property name="label" translatable="yes">_Highlighter</property>
                             <property name="use_underline">True</property>
                             <property name="draw_as_radio">True</property>
-                            <signal name="toggled" handler="ACTION_TOOL_HILIGHTER" swapped="no"/>
+                            <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER" swapped="no"/>
                             <accelerator key="h" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
                         </child>
@@ -1762,7 +1762,7 @@
                                     <property name="label" translatable="yes">_very fine</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_as_radio">True</property>
-                                    <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_VERY_FINE:GROUP_HILIGHTER_SIZE" swapped="no"/>
+                                    <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
@@ -1773,7 +1773,7 @@
                                     <property name="label" translatable="yes">_fine</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_as_radio">True</property>
-                                    <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_FINE:GROUP_HILIGHTER_SIZE" swapped="no"/>
+                                    <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_FINE:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
@@ -1784,7 +1784,7 @@
                                     <property name="label" translatable="yes">_medium</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_as_radio">True</property>
-                                    <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_MEDIUM:GROUP_HILIGHTER_SIZE" swapped="no"/>
+                                    <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_MEDIUM:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
@@ -1795,7 +1795,7 @@
                                     <property name="label" translatable="yes">_thick</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_as_radio">True</property>
-                                    <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_THICK:GROUP_HILIGHTER_SIZE" swapped="no"/>
+                                    <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_THICK:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
@@ -1806,7 +1806,7 @@
                                     <property name="label" translatable="yes">ver_y thick</property>
                                     <property name="use_underline">True</property>
                                     <property name="draw_as_radio">True</property>
-                                    <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_SIZE_VERY_THICK:GROUP_HILIGHTER_SIZE" swapped="no"/>
+                                    <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
@@ -1822,7 +1822,7 @@
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Fi_ll</property>
                                     <property name="use_underline">True</property>
-                                    <signal name="toggled" handler="ACTION_TOOL_HILIGHTER_FILL:GROUP_HILIGHTER_FILL" swapped="no"/>
+                                    <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_FILL:GROUP_HIGHLIGHTER_FILL" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
@@ -1832,7 +1832,7 @@
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Fill transparency</property>
                                     <property name="use_underline">True</property>
-                                    <signal name="activate" handler="ACTION_TOOL_HILIGHTER_FILL_TRANSPARENCY" swapped="no"/>
+                                    <signal name="activate" handler="ACTION_TOOL_HIGHLIGHTER_FILL_TRANSPARENCY" swapped="no"/>
                                   </object>
                                 </child>
                               </object>
