@@ -80,6 +80,9 @@ public:
     /// Plugin version
     auto getVersion() const -> std::string const&;
 
+    /// @return the path to the plugin folder
+    auto getPath() const -> fs::path const&;
+
     /// The plugin is enabled
     auto isEnabled() const -> bool;
 

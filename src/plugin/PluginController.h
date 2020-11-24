@@ -11,12 +11,22 @@
 
 #pragma once
 
+#include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
 #include "Plugin.h"
 #include "filesystem.h"
+
+constexpr auto operator==(std::unique_ptr<Plugin> const& lhs, std::unique_ptr<Plugin> const& rhs) noexcept -> bool {
+    return lhs && rhs && (lhs == rhs || lhs->getName() == rhs->getName());
+}
+
+constexpr auto operator<(std::unique_ptr<Plugin> const& lhs, std::unique_ptr<Plugin> const& rhs) noexcept -> bool {
+    return lhs && rhs && lhs != rhs  && lhs->getName() < rhs->getName();
+}
 
 class Control;
 
@@ -61,5 +71,5 @@ private:
     /**
      * All loaded Plugins
      */
-    std::vector<std::unique_ptr<Plugin>> plugins;
+    std::set<std::unique_ptr<Plugin>> plugins;
 };

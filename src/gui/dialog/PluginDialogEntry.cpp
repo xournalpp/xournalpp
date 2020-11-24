@@ -24,6 +24,7 @@ void PluginDialogEntry::loadSettings() {
     gtk_label_set_text(GTK_LABEL(get("lbDefaultText")),
                        plugin->isDefaultEnabled() ? _("default enabled") : _("default disabled"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(get("cbEnabled")), plugin->isEnabled());
+    gtk_label_set_text(GTK_LABEL(get("lbPath")), plugin->getPath().u8string().c_str());
 #endif
 }
 

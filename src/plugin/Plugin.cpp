@@ -1,6 +1,7 @@
 #include "Plugin.h"
 #ifdef ENABLE_PLUGINS
 
+#include <iostream>
 #include <utility>
 
 #include "config.h"
@@ -89,22 +90,6 @@ void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu) {
 }
 
 void Plugin::executeMenuEntry(MenuEntry* entry) { callFunction(entry->callback); }
-
-auto Plugin::getName() const -> std::string const& { return name; }
-
-auto Plugin::getDescription() const -> std::string const& { return description; }
-
-auto Plugin::getAuthor() const -> std::string const& { return author; }
-
-auto Plugin::getVersion() const -> std::string const& { return version; }
-
-auto Plugin::isEnabled() const -> bool { return enabled; }
-
-void Plugin::setEnabled(bool lEnabled) { this->enabled = lEnabled; }
-
-auto Plugin::isDefaultEnabled() const -> bool { return defaultEnabled; }
-
-auto Plugin::isInInitUi() const -> bool { return inInitUi; }
 
 auto Plugin::registerMenu(std::string menu, std::string callback, std::string accelerator) -> size_t {
     menuEntries.emplace_back(this, std::move(menu), std::move(callback), std::move(accelerator));
@@ -210,9 +195,23 @@ void Plugin::loadScript() {
 
     // Load but don't run the Lua script
     auto luafile = path / mainfile;
+
+    auto pstr = luafile.string();
+    auto p_u8 = luafile.u8string();
+
+    auto conv = fs::u8path(luafile.string());
+    auto convs = conv.string();
+
+    std::cout << pstr << std::endl;
+    std::cout << p_u8 << std::endl;
+    std::cout << convs << std::endl;
+
     if (luaL_loadfile(lua.get(), luafile.string().c_str())) {
         // Error out if file can't be read
-        g_warning("Could not run plugin Lua file: «%s»", luafile.string().c_str());
+        g_warning("Could not run plugin Lua file: «%s»", luafile.lexically_normal().string().c_str());
+#ifdef __WIN32__
+        g_warning("Make sure the path to your plugins is encodeable in ASCII")
+#endif
         this->valid = false;
         return;
     }
@@ -255,6 +254,17 @@ auto Plugin::callFunction(const std::string& fnc) -> bool {
     return true;
 }
 
+auto Plugin::getName() const -> std::string const& { return name; }
+auto Plugin::getDescription() const -> std::string const& { return description; }
+auto Plugin::getAuthor() const -> std::string const& { return author; }
+auto Plugin::getVersion() const -> std::string const& { return version; }
+auto Plugin::getPath() const -> fs::path const& { return path; }
+
+auto Plugin::isEnabled() const -> bool { return enabled; }
+void Plugin::setEnabled(bool lEnabled) { this->enabled = lEnabled; }
+auto Plugin::isDefaultEnabled() const -> bool { return defaultEnabled; }
+
+auto Plugin::isInInitUi() const -> bool { return inInitUi; }
 auto Plugin::isValid() const -> bool { return valid; }
 
 #endif

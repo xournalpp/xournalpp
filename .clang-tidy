@@ -1,4 +1,8 @@
-Checks: "cppcoreguidelines*,\
+Checks: "cppcoreguidelines-*,\
+modernize-*,\
+misc*,\
+performance*,\
+bug*,\
 -cppcoreguidelines-pro-bounds-pointer-arithmetic,\
 -cppcoreguidelines-pro-type-cstyle-cast,\
 -readability-identifier-naming,\
@@ -125,3 +129,7 @@ CheckOptions:
     value:           assert
   - key:             cppcoreguidelines-macro-usage.AllowedRegexp
     value:           DEBUG*|GTK_*|GDK_*|G_*|RELEASE*|assert|g_assert*
+  - key:             cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+    value:           '1'
+  - key:             cppcoreguidelines-special-member-functions.AllowMissingMoveFunctionsWhenCopyIsDeleted
+    value:           '1'

@@ -11,16 +11,23 @@
 #include "Plugin.h"
 #include "StringUtils.h"
 
-
 PluginController::PluginController(Control* control): control(control) {
 #ifdef ENABLE_PLUGINS
+    // Todo(fabian) move those search pats into PathUtils
     auto searchPath = control->getGladeSearchPath()->getFirstSearchPath();
-    loadPluginsFrom((searchPath /= "../plugins").lexically_normal());
+    loadPluginsFrom(fs::weakly_canonical(searchPath /= "../plugins"));
+    loadPluginsFrom(Util::getConfigSubfolder("plugins"));
 #endif
 }
 
 void PluginController::loadPluginsFrom(fs::path const& path) {
 #ifdef ENABLE_PLUGINS
+    g_info("Try to enter plugin search path %s", path.string().c_str());
+    if (!fs::is_directory(path)) {
+        g_info("Plugin search path does not exist");
+        return;
+    }
+
     Settings* settings = control->getSettings();
     std::vector<std::string> pluginEnabled = StringUtils::split(settings->getPluginEnabled(), ',');
     std::vector<std::string> pluginDisabled = StringUtils::split(settings->getPluginDisabled(), ',');
