@@ -128,7 +128,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
         xournal->view->clearSelection();
         changeTool(event);
         // stop early to prevent drawing when clicking outside of the selection with the intention of deselecting
-        if (toolHandler->hasCapability(TOOL_CAP_SIZE))
+        if (toolHandler->isDrawingTool())
             return isEventHandled;
     }
 

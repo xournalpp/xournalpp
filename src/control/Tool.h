@@ -44,6 +44,19 @@ public:
 
     double getThickness(ToolSize size);
 
+    /**
+     * @brief Check whether the tool is a Drawing tool.
+     * Drawing tools are considered all tools that directly change the canvas.
+     * Right now these are:
+     *  - Highlighter
+     *  - Pen
+     *  - Eraser
+     *
+     * @return true if tool is a drawing tool
+     * @return false if tool is no drawing tool
+     */
+    bool isDrawingTool();
+
 protected:
     void setCapability(int capability, bool enabled);
 

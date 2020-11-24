@@ -265,6 +265,19 @@ public:
      */
     bool hasCapability(ToolCapabilities cap, SelectedTool selectedTool = SelectedTool::active);
 
+    /**
+     * @brief Check whether the active tool is a Drawing tool.
+     * Drawing tools are considered all tools that directly change the canvas.
+     * Right now these are:
+     *  - Highlighter
+     *  - Pen
+     *  - Eraser
+     *
+     * @return true if active tool is a drawing tool
+     * @return false if active tool is no drawing tool
+     */
+    bool isDrawingTool();
+
     void saveSettings();
     void loadSettings();
 
