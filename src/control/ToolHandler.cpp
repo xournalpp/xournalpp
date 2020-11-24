@@ -181,6 +181,11 @@ auto ToolHandler::hasCapability(ToolCapabilities cap, SelectedTool selectedTool)
     return (tool->capabilities & cap) != 0;
 }
 
+auto ToolHandler::isDrawingTool() -> bool {
+    Tool* tool = this->activeTool;
+    return tool->isDrawingTool();
+}
+
 auto ToolHandler::getSize(SelectedTool selectedTool) -> ToolSize {
     Tool* tool = getSelectedTool(selectedTool);
     return tool->getSize();

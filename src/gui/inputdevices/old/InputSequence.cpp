@@ -255,7 +255,7 @@ auto InputSequence::actionStart(guint32 time) -> bool {
 
         xournal->view->clearSelection();
         // stop early to prevent drawing when clicking outside of the selection with the intention of deselecting
-        if (toolHandler->hasCapability(TOOL_CAP_SIZE))
+        if (toolHandler->isDrawingTool())
             return isEventHandled;
     }
 

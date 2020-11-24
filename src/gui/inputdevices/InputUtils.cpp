@@ -24,7 +24,7 @@ bool InputUtils::applyButton(ToolHandler* toolHandler, Settings* settings, Butto
 
 void InputUtils::warnIfQuestionableTouchDrawingSettings(ToolHandler* toolHandler, Settings* settings) {
     ButtonConfig* cfg = settings->getButtonConfig(Button::BUTTON_TOUCH);
-    if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE && toolHandler->hasCapability(TOOL_CAP_SIZE)) {
+    if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE && toolHandler->isDrawingTool()) {
         g_message("Ignoring touchscreen for drawing.\n"
                   " Please check the settings for Touchscreen.\n"
                   " The current combination of \"Disable Drawing for this device\" and \"Tool - don't change\"\n"
