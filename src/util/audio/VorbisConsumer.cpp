@@ -26,7 +26,7 @@ auto VorbisConsumer::start(const string& filename) -> bool {
     }
 
     this->consumerThread = std::thread([this, sfFile = std::move(sfFile), channels = channels] {
-        auto lock{audioQueue.aquire_lock()};
+        auto lock{audioQueue.acquire_lock()};
         auto buffer_size{static_cast<size_t>(std::max(0, 64 * channels))};
         std::vector<float> buffer;
         buffer.reserve(buffer_size);  // efficiency

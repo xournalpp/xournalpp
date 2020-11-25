@@ -101,7 +101,7 @@ void ColorSelectImage::drawWidget(cairo_t* cr, const IconConfig& config) {
     cairo_stroke(cr);
 
     if (config.state == COLOR_ICON_STATE_PEN) {
-        // Pencil cursor from cursor drawing, a little shrinked, so that it fits to the color item
+        // Pencil cursor from cursor drawing, a little shrunk, so that it fits to the color item
         cairo_move_to(cr, x, y + 16);
         cairo_line_to(cr, x, y + 16 - 4);
         cairo_line_to(cr, x + 13, y + 16 - 16);

@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Utiltiy for loops
+ * Utility for loops
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

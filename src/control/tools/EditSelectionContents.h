@@ -80,7 +80,7 @@ public:
     void addElement(Element* e, Layer::ElementIndex order);
 
     /**
-     * Returns all containig elements of this selections
+     * Returns all containing elements of this selections
      */
     vector<Element*>* getElements();
 

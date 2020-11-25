@@ -151,7 +151,7 @@ void Layout::recalculate() {
         heightRows[r] = std::max<unsigned>(heightRows[r], v->getDisplayHeight());
     }
 
-    // add space around the entire page area to accomodate older Wacom tablets with limited sense area.
+    // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
     size_t const vPadding =
             sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmount(), settings->getAddVerticalSpace());
     size_t const hPadding =
@@ -176,14 +176,14 @@ void Layout::layoutPages(int width, int height) {
     size_t const len = this->view->viewPages.size();
     Settings* settings = this->view->getControl()->getSettings();
 
-    // get from mapper (some may have changed to accomodate paired setting etc.)
+    // get from mapper (some may have changed to accommodate paired setting etc.)
     bool const isPairedPages = this->mapper.isPairedPages();
 
     auto const rows = this->heightRows.size();
     auto const columns = this->widthCols.size();
 
 
-    // add space around the entire page area to accomodate older Wacom tablets with limited sense area.
+    // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
     int64_t const v_padding =
             sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmount(), settings->getAddVerticalSpace());
     int64_t const h_padding =

@@ -293,7 +293,7 @@ void EditSelection::addElement(Element* e, Layer::ElementIndex order) {
 }
 
 /**
- * Returns all containig elements of this selections
+ * Returns all containing elements of this selections
  */
 auto EditSelection::getElements() -> vector<Element*>* { return this->contents->getElements(); }
 
