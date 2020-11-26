@@ -57,7 +57,7 @@ void FullscreenHandler::disableFullscreen(MainWindow* win) {
 
     if (this->menubarHidden) {
         GtkWidget* mainMenubar = win->get("mainMenubar");
-        if(mainMenubar != nullptr) {
+        if (mainMenubar != nullptr) {
             gtk_widget_show(mainMenubar);
         }
         menubarHidden = false;
