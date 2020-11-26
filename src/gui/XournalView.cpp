@@ -139,6 +139,8 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     if (event->keyval == GDK_KEY_Escape) {
         if (control->isFullscreen()) {
             control->setFullscreen(false);
+            control->setViewPresentationMode(false);
+            control->getWindow()->setToolbarVisible(true);
             return true;
         }
     }
@@ -148,6 +150,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         if (!control->isFullscreen()) {
             control->setViewPresentationMode(true);
             control->setFullscreen(true);
+            control->getWindow()->setToolbarVisible(false);
             return true;
         }
     }
