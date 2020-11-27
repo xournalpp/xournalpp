@@ -7,12 +7,14 @@
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
         GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog") {
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spDpi")), 300);
 
     g_signal_connect(get("rdRangePages"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, ExportDialog* self) {
                          gtk_widget_set_sensitive(self->get("txtPages"), gtk_toggle_button_get_active(togglebutton));
                      }),
                      this);
+
+    g_signal_connect(get("cbQuality"), "changed", G_CALLBACK(ExportDialog::selectQualityCriterion), this);
+
 
     GSList* radios = gtk_radio_button_get_group(GTK_RADIO_BUTTON(get("rdRangeAll")));
     for (GSList* head = radios; head != nullptr; head = head->next) {
@@ -36,13 +38,35 @@ void ExportDialog::initPages(int current, int count) {
     this->pageCount = count;
 }
 
-void ExportDialog::removeDpiSelection() {
-    gtk_widget_hide(get("lbResolution"));
-    gtk_widget_hide(get("spDpi"));
-    gtk_widget_hide(get("lbDpi"));
+void ExportDialog::removeQualitySetting() {
+    gtk_widget_hide(get("lbQuality"));
+    gtk_widget_hide(get("boxQuality"));
+    gtk_widget_hide(get("cbQuality"));
 }
 
-auto ExportDialog::getPngDpi() -> int { return gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDpi"))); }
+void ExportDialog::selectQualityCriterion(GtkComboBox* comboBox, ExportDialog* self) {
+    int activeCriterion = gtk_combo_box_get_active(comboBox);
+    switch (activeCriterion) {
+        case EXPORT_QUALITY_DPI:
+            gtk_label_set_text(GTK_LABEL(self->get("lbQualityUnit")), "dpi");
+            gtk_spin_button_set_adjustment(GTK_SPIN_BUTTON(self->get("sbQualityValue")),
+                                           GTK_ADJUSTMENT(gtk_builder_get_object(self->getBuilder(), "adjustmentDpi")));
+            break;
+        case EXPORT_QUALITY_WIDTH:
+        case EXPORT_QUALITY_HEIGHT:
+            gtk_label_set_text(GTK_LABEL(self->get("lbQualityUnit")), "px");
+            gtk_spin_button_set_adjustment(
+                    GTK_SPIN_BUTTON(self->get("sbQualityValue")),
+                    GTK_ADJUSTMENT(gtk_builder_get_object(self->getBuilder(), "adjustmentHeightWidth")));
+            break;
+    }
+}
+
+auto ExportDialog::getPngQualityParameter() -> RasterImageQualityParameter {
+    return RasterImageQualityParameter(
+            (ExportQualityCriterion)gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbQuality"))),
+            gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("sbQualityValue"))));
+}
 
 auto ExportDialog::isConfirmed() const -> bool { return this->confirmed; }
 
@@ -51,7 +75,7 @@ auto ExportDialog::getRange() -> PageRangeVector {
     GtkWidget* rdRangePages = get("rdRangePages");
 
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangePages))) {
-        return PageRange::parse(gtk_entry_get_text(GTK_ENTRY(get("txtPages"))));
+        return PageRange::parse(gtk_entry_get_text(GTK_ENTRY(get("txtPages"))), this->pageCount);
     }
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangeCurrent))) {
         PageRangeVector range;

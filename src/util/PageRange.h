@@ -39,5 +39,5 @@ private:
 
 public:
     static bool isSeparator(char c);
-    static PageRangeVector parse(const char* str);
+    static PageRangeVector parse(const char* str, int pageCount);
 };
