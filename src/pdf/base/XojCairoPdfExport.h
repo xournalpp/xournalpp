@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "control/Control.h"
 #include "control/jobs/ProgressListener.h"
 #include "model/Document.h"
 
@@ -19,7 +20,7 @@
 
 class XojCairoPdfExport: public XojPdfExport {
 public:
-    XojCairoPdfExport(Document* doc, ProgressListener* progressListener);
+    XojCairoPdfExport(Document* doc, ProgressListener* progressListener, Control* control = nullptr );
     virtual ~XojCairoPdfExport();
 
 public:
@@ -51,6 +52,7 @@ private:
 private:
     Document* doc = nullptr;
     ProgressListener* progressListener = nullptr;
+    Control* control = nullptr;
 
     cairo_surface_t* surface = nullptr;
     cairo_t* cr = nullptr;

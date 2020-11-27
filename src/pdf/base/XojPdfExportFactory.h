@@ -17,6 +17,7 @@
 #include "XojPdfExport.h"
 #include "XournalType.h"
 
+class Control;
 class Document;
 class ProgressListener;
 
@@ -26,7 +27,7 @@ private:
     virtual ~XojPdfExportFactory();
 
 public:
-    static XojPdfExport* createExport(Document* doc, ProgressListener* listener);
+  static XojPdfExport* createExport(Document* doc, ProgressListener* listener, Control* control = nullptr);
 
 private:
 };

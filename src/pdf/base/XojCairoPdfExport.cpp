@@ -11,8 +11,8 @@
 #include "filesystem.h"
 #include "i18n.h"
 
-XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressListener):
-        doc(doc), progressListener(progressListener) {}
+XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressListener, Control* control):
+    doc(doc), progressListener(progressListener), control(control) {}
 
 XojCairoPdfExport::~XojCairoPdfExport() {
     if (this->surface != nullptr) {
@@ -112,7 +112,7 @@ void XojCairoPdfExport::exportPage(size_t page) {
         popplerPage->render(cr, true);
     }
 
-    view.drawPage(p, this->cr, true /* dont render eraseable */, noBackgroundExport);
+    view.drawPage(p, this->cr, true /* dont render eraseable */, noBackgroundExport, control);
 
     // next page
     cairo_show_page(this->cr);

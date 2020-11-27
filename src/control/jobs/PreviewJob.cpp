@@ -59,7 +59,7 @@ void PreviewJob::drawBackgroundPdf(Document* doc) {
                       this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
 }
 
-void PreviewJob::drawPage(int layer) {
+void PreviewJob::drawPage(int layer, Control* control) {
     DocumentView view;
     PageRef page = this->sidebarPreview->page;
 
@@ -75,7 +75,7 @@ void PreviewJob::drawPage(int layer) {
         view.initDrawing(page, cr2, true);
 
         Layer* drawLayer = (*page->getLayers())[layer];
-        view.drawLayer(cr2, drawLayer);
+        view.drawLayer(cr2, drawLayer, control);
 
         view.finializeDrawing();
     }
@@ -87,7 +87,8 @@ void PreviewJob::run() {
     initGraphics();
     drawBorder();
 
-    Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
+    Control* control = this->sidebarPreview->sidebar->getControl();
+    Document* doc = control->getDocument();
     doc->lock();
 
     PreviewRenderType type = this->sidebarPreview->getRenderType();
@@ -101,7 +102,7 @@ void PreviewJob::run() {
         drawBackgroundPdf(doc);
     }
 
-    drawPage(layer);
+    drawPage(layer, control);
 
     doc->unlock();
 

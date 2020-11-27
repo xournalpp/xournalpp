@@ -26,9 +26,10 @@
 #include "ElementContainer.h"
 #include "XournalType.h"
 
+class Control;
 class EditSelection;
 class MainBackgroundPainter;
-class Settings;
+
 
 class DocumentView {
 public:
@@ -39,11 +40,12 @@ public:
     /**
      * Draw the full page, usually you would like to call this method
      * @param page The page to draw
-     * @param cr Draw to thgis context
+     * @param cr Draw to this context
      * @param dontRenderEditingStroke false to draw currently drawing stroke
      * @param hideBackground true to hide the background
+     * @param control to get the settings, in case they modify the way the page is drawn
      */
-    void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hideBackground = false);
+    void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hideBackground = false, Control* control = nullptr);
 
 
     void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1, bool changeSource = true,
@@ -55,7 +57,7 @@ public:
 
     void limitArea(double x, double y, double width, double height);
 
-    void drawSelection(cairo_t* cr, ElementContainer* container);
+    void drawSelection(cairo_t* cr, ElementContainer* container, Control* control = nullptr);
 
     /**
      * Mark stroke with Audio
@@ -86,8 +88,9 @@ public:
      * Draw a single layer
      * @param cr Draw to thgis context
      * @param l The layer to draw
+     * @param control To get the settings for thw drawing (it can be nullptr)
      */
-    void drawLayer(cairo_t* cr, Layer* l);
+    void drawLayer(cairo_t* cr, Layer* l, Control* control);
 
     /**
      * Last step in drawing
@@ -99,7 +102,7 @@ private:
     static void drawImage(cairo_t* cr, Image* i);
     static void drawTexImage(cairo_t* cr, TexImage* texImage);
 
-    void drawElement(cairo_t* cr, Element* e) const;
+    void drawElement(cairo_t* cr, Element* e, Control* control) const;
 
     void paintBackgroundImage();
 
@@ -117,6 +120,4 @@ private:
     double lHeight = -1;
 
     MainBackgroundPainter* backgroundPainter;
-
-    Settings* settings;
 };

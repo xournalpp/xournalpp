@@ -51,6 +51,8 @@ void TextView::drawText(cairo_t* cr, const Text* t, bool autoDetectHyperLinks) {
     bool isURL = autoDetectHyperLinks &&
                  regex_search(str, std::regex("^[a-z][a-z0-9]*:")) &&
                  str.find('\n')==string::npos;
+
+    printf( "drawText: autoDetect:%d isURL:%d text:%s\n", (int)autoDetectHyperLinks, (int)isURL, str.c_str());
     
     if (isURL) {
       string uri = "uri='";

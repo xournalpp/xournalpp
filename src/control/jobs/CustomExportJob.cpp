@@ -105,11 +105,15 @@ auto CustomExportJob::showFilechooser() -> bool {
  * Create one Graphics file per page
  */
 void CustomExportJob::exportGraphics() {
+  printf( "exportGraphics 1\n" ); fflush(stdin);
     bool hideBackground = filters[this->chosenFilterName]->withoutBackground;
-
+    printf( "exportGraphics 1\n" ); fflush(stdin);
     ImageExport imgExport(control->getDocument(), filepath, format, hideBackground, exportRange);
+    printf( "exportGraphics 2\n" ); fflush(stdin);
     imgExport.setPngDpi(pngDpi);
+    printf( "exportGraphics 3\n" ); fflush(stdin);
     imgExport.exportGraphics(control);
+    printf( "exportGraphics 4\n" );fflush(stdin);
 
     errorMsg = imgExport.getLastErrorMsg();
 }

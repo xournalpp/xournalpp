@@ -1,6 +1,7 @@
 #include "DocumentView.h"
 
 #include "background/MainBackgroundPainter.h"
+#include "control/Control.h"
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
 #include "control/settings/Settings.h"
@@ -14,18 +15,11 @@
 
 DocumentView::DocumentView() {
     this->backgroundPainter = new MainBackgroundPainter();
-
-    auto name = Util::getConfigFile(SETTINGS_XML_FILE);
-    this->settings = new Settings(std::move(name));
-    this->settings->load();
-
 }
 
 DocumentView::~DocumentView() {
     delete this->backgroundPainter;
     this->backgroundPainter = nullptr;
-    delete this->settings;
-    this->settings = nullptr;
 }
 
 /**
@@ -143,11 +137,17 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) {
     cairo_set_matrix(cr, &defaultMatrix);
 }
 
-void DocumentView::drawElement(cairo_t* cr, Element* e) const {
+void DocumentView::drawElement(cairo_t* cr, Element* e, Control* control) const {
     if (e->getType() == ELEMENT_STROKE) {
         drawStroke(cr, dynamic_cast<Stroke*>(e));
     } else if (e->getType() == ELEMENT_TEXT) {
-        bool autoDetectHyperLinks = settings->getAutoDetectHyperLinks();
+        bool autoDetectHyperLinks = false;
+        // control can be nullptr, in case we reach here from
+        // ClipboardHandler, VerticalToolHandler or
+        // EditSelectionContents
+        if( control ){
+          autoDetectHyperLinks = control->getSettings()->getAutoDetectHyperLinks();
+        }
         drawText(cr, dynamic_cast<Text*>(e), autoDetectHyperLinks);
     } else if (e->getType() == ELEMENT_IMAGE) {
         drawImage(cr, dynamic_cast<Image*>(e));
@@ -161,7 +161,7 @@ void DocumentView::drawElement(cairo_t* cr, Element* e) const {
  * @param cr Draw to thgis context
  * @param l The layer to draw
  */
-void DocumentView::drawLayer(cairo_t* cr, Layer* l) {
+void DocumentView::drawLayer(cairo_t* cr, Layer* l, Control* control) {
     cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
 
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
@@ -179,7 +179,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l) {
 
         if (this->lX != -1) {
             if (e->intersectsArea(this->lX, this->lY, this->width, this->height)) {
-                drawElement(cr, e);
+                drawElement(cr, e, control);
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
                 drawn++;
 #endif  // DEBUG_SHOW_REPAINT_BOUNDS
@@ -194,7 +194,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l) {
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
             drawn++;
 #endif  // DEBUG_SHOW_REPAINT_BOUNDS
-            drawElement(cr, e);
+            drawElement(cr, e, control);
         }
     }
 
@@ -224,9 +224,9 @@ void DocumentView::paintBackgroundImage() {
     }
 }
 
-void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container) {
+void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container, Control* control) {
     for (Element* e: *container->getElements()) {
-        drawElement(cr, e);
+        drawElement(cr, e, control);
     }
 }
 
@@ -317,9 +317,7 @@ void DocumentView::drawTransparentBackgroundPattern() {
  * @param dontRenderEditingStroke false to draw currently drawing stroke
  * @param hideBackground true to hide the background
  */
-void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hideBackground) {
-    this->settings->load();
-    
+void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hideBackground, Control* control) {
     initDrawing(page, cr, dontRenderEditingStroke);
 
     bool backgroundVisible = page->isLayerVisible(0);
@@ -338,7 +336,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
             continue;
         }
 
-        drawLayer(cr, l);
+        drawLayer(cr, l, control);
         layer++;
     }
 
