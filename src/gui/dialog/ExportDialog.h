@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "control/jobs/ImageExport.h"
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
 
@@ -23,11 +24,26 @@ public:
 
 public:
     virtual void show(GtkWindow* parent);
-    void removeDpiSelection();
     void initPages(int current, int count);
-    int getPngDpi();
     bool isConfirmed() const;
     PageRangeVector getRange();
+
+    /**
+     * @brief Reads the quality parameter from the dialog
+     *
+     * @return The selected quality parameter
+     */
+    RasterImageQualityParameter getPngQualityParameter();
+
+    /**
+     * @brief Hides the quality settings
+     */
+    void removeQualitySetting();
+
+    /**
+     * @brief Handler for changes in combobox cbQuality
+     */
+    static void selectQualityCriterion(GtkComboBox* comboBox, ExportDialog* self);
 
 private:
     int currentPage = 0;

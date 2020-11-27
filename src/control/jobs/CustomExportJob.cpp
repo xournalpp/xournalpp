@@ -75,13 +75,12 @@ auto CustomExportJob::showFilechooser() -> bool {
     doc->lock();
     auto* dlg = new ExportDialog(control->getGladeSearchPath());
     if (filepath.extension() == ".pdf") {
-        dlg->removeDpiSelection();
+        dlg->removeQualitySetting();
         format = EXPORT_GRAPHICS_PDF;
     } else if (filepath.extension() == ".svg") {
-        dlg->removeDpiSelection();
+        dlg->removeQualitySetting();
         format = EXPORT_GRAPHICS_SVG;
     } else if (filepath.extension() == ".png") {
-        dlg->removeDpiSelection();
         format = EXPORT_GRAPHICS_PNG;
     }
 
@@ -95,7 +94,10 @@ auto CustomExportJob::showFilechooser() -> bool {
     }
 
     exportRange = dlg->getRange();
-    pngDpi = dlg->getPngDpi();
+
+    if (format == EXPORT_GRAPHICS_PNG) {
+        pngQualityParameter = dlg->getPngQualityParameter();
+    }
 
     delete dlg;
     doc->unlock();
@@ -108,7 +110,9 @@ auto CustomExportJob::showFilechooser() -> bool {
 void CustomExportJob::exportGraphics() {
     bool hideBackground = filters.at(this->chosenFilterName)->withoutBackground;
     ImageExport imgExport(control->getDocument(), filepath, format, hideBackground, exportRange);
-    imgExport.setPngDpi(pngDpi);
+    if (format == EXPORT_GRAPHICS_PNG) {
+        imgExport.setQualityParameter(pngQualityParameter);
+    }
     imgExport.exportGraphics(control);
     errorMsg = imgExport.getLastErrorMsg();
 }

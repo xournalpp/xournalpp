@@ -53,9 +53,9 @@ private:
     PageRangeVector exportRange;
 
     /**
-     * PNG dpi
+     * @brief Quality parameter for PNG exports
      */
-    int pngDpi = 300;
+    RasterImageQualityParameter pngQualityParameter = RasterImageQualityParameter();
 
     /**
      * Export graphics format

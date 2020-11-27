@@ -16,7 +16,7 @@ auto PageRangeEntry::getFirst() const -> int { return this->first; }
 
 auto PageRange::isSeparator(char c) -> bool { return (c == ',' || c == ';' || c == ':'); }
 
-auto PageRange::parse(const char* str) -> PageRangeVector {
+auto PageRange::parse(const char* str, int pageCount) -> PageRangeVector {
     PageRangeVector data;
 
     if (*str == 0) {
@@ -53,7 +53,7 @@ auto PageRange::parse(const char* str) -> PageRangeVector {
             end = static_cast<int>(strtol(p, &next, 10));
             if (next == p)  // a half-open range like 2-
             {
-                end = 0;
+                end = pageCount;
             } else if (end < start) {
                 end = start;
             }
