@@ -29,7 +29,6 @@ class ToolbarData;
 class ToolbarModel;
 class XournalView;
 class MainWindowToolbarMenu;
-class atomic_bool;
 
 class MainWindow: public GladeGui, public LayerCtrlListener {
 public:

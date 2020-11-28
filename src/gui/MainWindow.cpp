@@ -284,17 +284,11 @@ void MainWindow::initXournalWidget() {
 }
 
 void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
-    for (InputDevice const& inputDevice: DeviceListHelper::getDeviceList(this->getControl()->getSettings())) {
-        InputDeviceClass deviceClass = InputEvents::translateDeviceType(inputDevice.getName(), inputDevice.getSource(),
-                                                                        this->getControl()->getSettings());
-        if (inputDevice.getSource() == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN) {
-            setGtkTouchscreenScrollingEnabled(false);
+    InputDeviceClass touchscreenClass =
+            DeviceListHelper::getSourceMapping(GDK_SOURCE_TOUCHSCREEN, this->getControl()->getSettings());
 
-            return;
-        }
-    }
-
-    setGtkTouchscreenScrollingEnabled(true);
+    setGtkTouchscreenScrollingEnabled(touchscreenClass == INPUT_DEVICE_TOUCHSCREEN &&
+                                      control->getSettings()->getTouchDrawingEnabled());
 }
 
 void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {

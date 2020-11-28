@@ -8,10 +8,21 @@
 #include "gui/inputdevices/InputUtils.h"
 #include "gui/widgets/XournalWidget.h"
 #include "model/Stroke.h"
+#include "util/DeviceListHelper.h"
 
 #include "InputContext.h"
 
-TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext): PenInputHandler(inputContext) {}
+TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext): PenInputHandler(inputContext) {
+    inputContext->getToolHandler()->addToolChangedListener([&](ToolType newToolType) {
+        InputDeviceClass touchscreenClass =
+                DeviceListHelper::getSourceMapping(GDK_SOURCE_TOUCHSCREEN, this->inputContext->getSettings());
+
+        // If using the touchscreen as a touchscreen...
+        if (touchscreenClass == INPUT_DEVICE_TOUCHSCREEN) {
+            updateKineticScrollingEnabled();
+        }
+    });
+}
 
 TouchDrawingInputHandler::~TouchDrawingInputHandler() = default;
 
@@ -22,6 +33,19 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Do we need to end the touch sequence?
     bool mustEnd = event.type == BUTTON_RELEASE_EVENT;
     mustEnd = mustEnd || event.type == GRAB_BROKEN_EVENT && this->deviceClassPressed;
+
+    // Notify if finger enters/leaves widget
+    // Note: Drawing outside window doesn't seem to work
+    //  if this is put later in handleImpl.
+    if (event.type == ENTER_EVENT) {
+        this->actionEnterWindow(event);
+        return false;
+    }
+
+    if (event.type == LEAVE_EVENT) {
+        this->actionLeaveWindow(event);
+        return false;
+    }
 
     // Multitouch
     if (this->primarySequence && this->primarySequence != event.sequence || this->secondarySequence) {
@@ -68,8 +92,7 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
         // if this becomes a multi-touch event.
         this->startedSingleInput = false;
 
-        // Only enable kinetic scrolling if using the hand tool.
-        mainWindow->setGtkTouchscreenScrollingEnabled(toolHandler->getToolType() == TOOL_HAND);
+        updateKineticScrollingEnabled();
 
         return false;
     }
@@ -94,15 +117,6 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
         cursor->updateCursor();
 
         return true;
-    }
-
-    // Notify if finger enters/leaves widget
-    if (event.type == ENTER_EVENT) {
-        this->actionEnterWindow(event);
-    }
-
-    if (event.type == LEAVE_EVENT) {
-        this->actionLeaveWindow(event);
     }
 
     if (mustEnd) {
@@ -131,18 +145,23 @@ auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
         toolChanged = toolHandler->pointActiveToolToToolbarTool();
     }
 
+    this->updateKineticScrollingEnabled();
+
     if (toolChanged) {
         toolHandler->fireToolChanged();
     }
 
+    return true;
+}
+
+void TouchDrawingInputHandler::updateKineticScrollingEnabled() {
     auto* control = inputContext->getView()->getControl();
     auto* mainWindow = control->getWindow();
+    auto* toolHandler = this->inputContext->getToolHandler();
 
+    //  Kinetic scrolling is nice; however, we need to disable it so we can draw (it steals
+    // single-finger input).
     if (mainWindow != nullptr && control->getSettings()->getTouchDrawingEnabled()) {
-        //  GtkTouchscreenScrolling -- this makes it easier to use the hand tool; however
-        // Gtk steals all single-touch input when enabled, so if drawing, we want this disabled.
         mainWindow->setGtkTouchscreenScrollingEnabled(toolHandler->getToolType() == TOOL_HAND);
     }
-
-    return true;
 }

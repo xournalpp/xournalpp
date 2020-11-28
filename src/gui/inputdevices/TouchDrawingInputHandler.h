@@ -42,4 +42,7 @@ protected:
      * @return false if tool was not changed successfully
      */
     bool changeTool(InputEvent const& event) override;
+
+private:
+    void updateKineticScrollingEnabled();
 };
