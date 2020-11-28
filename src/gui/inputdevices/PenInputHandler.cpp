@@ -146,18 +146,23 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
 }
 
 double PenInputHandler::inferPressureIfEnabled(PositionInputData const& pos, XojPageView* page) {
-    // Infer pressure
     if (pos.pressure == Point::NO_PRESSURE && this->inputContext->getSettings()->isPressureGuessingEnabled()) {
         PositionInputData lastPos = getInputDataRelativeToCurrentPage(page, this->lastEvent);
 
         double dt = std::min((pos.timestamp - lastPos.timestamp) / 10.0, 2.0);
-        double inverseSpeed = (dt) / std::sqrt(std::pow(pos.x - lastPos.x, 2) + std::pow(pos.y - lastPos.y, 2) + 0.001);
+        double distance = utl::Point<double>(pos.x, pos.y).distance(utl::Point<double>(lastPos.x, lastPos.y));
+        double inverseSpeed = (dt) / (distance + 0.001);
 
+        // This doesn't have to be exact. Arctan is used here for its sigmoid-like shape,
+        // so that lim inverseSpeed->infinity (newPressure) is some finite value.
         double newPressure = 3.142 / 2.0 + std::atan(inverseSpeed * 3.14 - 1.3);
 
+        // This weighted average both smooths abrupt changes in newPressure caused
+        // by changes to inverseSpeed and causes an initial increase in pressure.
         newPressure = std::min(newPressure, 2.0) / 5.0 + this->lastPressure * 4.0 / 5.0;
         this->lastPressure = newPressure;
 
+        // Final pressure tweaks...
         return (newPressure * 1.1 + 0.8) / 2.0;
     }
 

@@ -6,6 +6,11 @@
 
 class PdfCacheEntry {
 public:
+    ///  Cache [img], the result of rendering [popplerPage] with
+    /// the given [zoom].
+    ///  A change in the document's zoom causes a change in the
+    /// quality of the PDF backgrounds (zoomed in => need a higher
+    /// quality rendering).
     PdfCacheEntry(XojPdfPageSPtr popplerPage, cairo_surface_t* img, double zoom) {
         this->popplerPage = std::move(popplerPage);
         this->rendered = img;
@@ -56,7 +61,7 @@ auto PdfCache::lookup(const XojPdfPageSPtr& popplerPage) -> PdfCacheEntry* {
 }
 
 PdfCacheEntry* PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img, double zoom) {
-    while (this->data.size() >= this->size) {
+    while (this->data.size() > this->size) {
         delete this->data.back();
         this->data.pop_back();
     }
@@ -74,9 +79,13 @@ void PdfCache::render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoo
 
     PdfCacheEntry* cacheResult = lookup(popplerPage);
 
-    if (cacheResult == nullptr || this->zoom < cacheResult->zoom / 2.0 && this->zoom > 1.0 ||
+    if (cacheResult == nullptr
+        // If we do have a cached result, is its rendering quality
+        // acceptable for our current zoom?
+        || this->zoom < cacheResult->zoom / 2.0 && this->zoom > 1.0 ||
         this->zoom > cacheResult->zoom * 2.0
 
+        // Has the user requested that we **always** clear the cache on zoom?
         || this->zoomClearsCache && this->zoom != cacheResult->zoom) {
 
         double renderZoom = std::max(zoom, 1.0);

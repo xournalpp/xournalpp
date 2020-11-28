@@ -62,6 +62,7 @@ class ActionHandler;
 
 class ToolHandler {
 public:
+    using ToolChangedCallback = std::function<void(ToolType)>;
     ToolHandler(ToolListener* stateChangedListener, ActionHandler* actionHandler, Settings* settings);
     virtual ~ToolHandler();
 
@@ -226,7 +227,7 @@ public:
      * @param listener A callback, called when the user/client 
      *  changes tools.
      */
-    void addToolChangedListener(std::function<void(ToolType)> listener);
+    void addToolChangedListener(ToolChangedCallback listener);
 
     /**
      * @brief Get the Tool of a certain type
@@ -364,8 +365,7 @@ private:
     std::unique_ptr<Tool> mouseRightButtonTool;
     std::unique_ptr<Tool> touchDrawingButtonTool;
 
-    std::vector< std::function<void(ToolType)> > toolChangeListeners;
-
+    std::vector<ToolChangedCallback> toolChangeListeners;
 
     ToolListener* stateChangeListener = nullptr;
     ActionHandler* actionHandler = nullptr;

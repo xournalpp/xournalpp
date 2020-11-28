@@ -22,7 +22,7 @@ struct Point {
     Point() = default;
     Point(T x, T y): x(x), y(y) {}
 
-    [[maybe_unused]] double distance(Point p) { return std::hypot(p.x - this->x, p.y - this->y); }
+    [[maybe_unused]] double distance(Point p) const { return std::hypot(p.x - this->x, p.y - this->y); }
 
     [[maybe_unused]] Point operator-(Point p) const { return {this->x - p.x, this->y - p.y}; }
     [[maybe_unused]] Point& operator-=(Point p) { return *this = *this - p; }

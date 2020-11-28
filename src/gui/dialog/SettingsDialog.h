@@ -40,7 +40,7 @@ public:
     void enableWithCheckbox(const string& checkbox, const string& widget);
     void disableWithCheckbox(const string& checkbox, const string& widget);
 
-    /**
+    /*
      * Listeners for changes to settings.
      */
     void touchWorkaroundStatusChanged();

@@ -169,6 +169,10 @@ private:
     GtkWidget* winXournal = nullptr;
     ScrollHandling* scrollHandling = nullptr;
 
+    // Note: `usingTouchWorkaround` is cached here because
+    // Settings::isTouchWorkorkaround reflects the current state
+    // of the setting -- usingTouchWorkaround should only change
+    // on application restart!
     bool usingTouchWorkaround;
     std::atomic_bool gtkTouchscreenScrollingEnabled;
 
