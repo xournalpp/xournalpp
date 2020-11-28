@@ -91,6 +91,11 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
             G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->customHandRecognitionToggled(); }),
             this);
 
+    g_signal_connect(get("cbTouchWorkaround"), "toggled", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
+                         self->touchWorkaroundStatusChanged();
+                     }),
+                     this);
+
     g_signal_connect(get("cbStylusCursorType"), "changed", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
                          self->customStylusIconTypeChanged();
                      }),
@@ -214,12 +219,31 @@ auto SettingsDialog::getCheckbox(const char* name) -> bool {
 }
 
 /**
- * Autosave was toggled, enable / disable autosave config
+ * Checkbox was toggled, enable / disable it
  */
-void SettingsDialog::enableWithCheckbox(const string& checkbox, const string& widget) {
-    GtkWidget* cbAutosave = get(checkbox);
-    bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
-    gtk_widget_set_sensitive(get(widget), autosaveEnabled);
+void SettingsDialog::enableWithCheckbox(const string& checkboxId, const string& widgetId) {
+    GtkWidget* checkboxWidget = get(checkboxId);
+    bool enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
+    gtk_widget_set_sensitive(get(widgetId), enabled);
+}
+
+void SettingsDialog::disableWithCheckbox(const string& checkboxId, const string& widgetId) {
+    GtkWidget* checkboxWidget = get(checkboxId);
+    bool enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
+    gtk_widget_set_sensitive(get(widgetId), !enabled);
+}
+
+/**
+ * Listeners specific to portions of the settings pane.
+ */
+void SettingsDialog::touchWorkaroundStatusChanged() {
+    if (getCheckbox("cbTouchWorkaround")) {
+        gtk_widget_set_sensitive(get("cbTouchDrawing"), true);
+
+        loadCheckbox("cbTouchDrawing", true);
+    }
+
+    disableWithCheckbox("cbTouchWorkaround", "cbTouchDrawing");
 }
 
 void SettingsDialog::customHandRecognitionToggled() {
@@ -254,7 +278,10 @@ void SettingsDialog::load() {
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
     loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
+    loadCheckbox("cbEnablePressureInference", settings->isPressureGuessingEnabled());
+    loadCheckbox("cbClearCacheOnZoom", settings->getClearPDFCacheOnZoom());
     loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
+    loadCheckbox("cbTouchDrawing", settings->getTouchDrawingEnabled());
     const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
     loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
     loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
@@ -396,6 +423,7 @@ void SettingsDialog::load() {
     enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
     customHandRecognitionToggled();
     customStylusIconTypeChanged();
+    touchWorkaroundStatusChanged();
 
 
     SElement& touch = settings->getCustomElement("touch");
@@ -533,7 +561,10 @@ void SettingsDialog::save() {
     settings->setSnapRecognizedShapesEnabled(getCheckbox("cbSnapRecognizedShapesEnabled"));
     settings->setRestoreLineWidthEnabled(getCheckbox("cbRestoreLineWidthEnabled"));
     settings->setDarkTheme(getCheckbox("cbDarkTheme"));
+    settings->setPressureGuessingEnabled(getCheckbox("cbEnablePressureInference"));
+    settings->setClearPDFCacheOnZoom(getCheckbox("cbClearCacheOnZoom"));
     settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
+    settings->setTouchDrawingEnabled(getCheckbox("cbTouchDrawing"));
     settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
     settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
@@ -725,6 +756,6 @@ void SettingsDialog::save() {
 
     settings->transactionEnd();
 
-    this->control->getWindow()->setTouchscreenScrollingForDeviceMapping();
+    this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
     this->control->initButtonTool();
 }

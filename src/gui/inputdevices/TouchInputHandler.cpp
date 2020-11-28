@@ -37,11 +37,13 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
 
     if (event.type == MOTION_EVENT && this->primarySequence) {
+        scrollMotion(event);
+
         if (this->primarySequence && this->secondarySequence) {
             zoomMotion(event);
         }
 
-        scrollMotion(event);
+        lastZoomScrollCenter = (this->priLastAbs + this->secLastAbs) / 2.0;
     }
 
     if (event.type == BUTTON_RELEASE_EVENT) {
@@ -57,7 +59,6 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             this->secondarySequence = nullptr;
 
             this->priLastAbs = this->secLastAbs;
-            this->priLastRel = this->secLastRel;
         } else {
             this->secondarySequence = nullptr;
         }
@@ -77,7 +78,6 @@ void TouchInputHandler::sequenceStart(InputEvent const& event) {
 }
 
 void TouchInputHandler::scrollMotion(InputEvent const& event) {
-
     // Will only be called if there is a single sequence (zooming handles two sequences)
     auto offset = [&]() {
         auto absolutePoint = utl::Point{event.absoluteX, event.absoluteY};
@@ -125,13 +125,22 @@ void TouchInputHandler::zoomStart() {
         zoomControl->setZoomFitMode(false);
     }
 
-    Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
-    auto topLeft = utl::Point<double>{zoomSequenceRectangle.x, zoomSequenceRectangle.y};
+    auto* mainWindow = inputContext->getView()->getControl()->getWindow();
 
-    zoomControl->startZoomSequence(center + topLeft);
+    // When not using touch drawing, we're using a different scrolling method.
+    // This requires different centering.
+    if (!mainWindow->getGtkTouchscreenScrollingEnabled()) {
+        Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
+        center += utl::Point<double>{zoomSequenceRectangle.x, zoomSequenceRectangle.y};
+    }
+
+    zoomControl->startZoomSequence(center);
 }
 
 void TouchInputHandler::zoomMotion(InputEvent const& event) {
+    if (!inputContext->getSettings()->isZoomGesturesEnabled()) {
+        return;
+    }
 
     if (event.sequence == this->primarySequence) {
         this->priLastAbs = {event.absoluteX, event.absoluteY};
@@ -150,10 +159,13 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
     auto offset = lastScrollPosition - (center - lastZoomScrollCenter);
 
     zoomControl->setScrollPositionAfterZoom(offset);
-    lastZoomScrollCenter = center;
 }
 
 void TouchInputHandler::zoomEnd() {
+    if (!inputContext->getSettings()->isZoomGesturesEnabled()) {
+        return;
+    }
+
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
     zoomControl->endZoomSequence();
 }

@@ -129,5 +129,5 @@ protected:
      * @param pos The position of the current event
      * @param page The page the event is relative to.
      */
-    double inferPressure(PositionInputData const& pos, XojPageView* page);
+    double inferPressureIfEnabled(PositionInputData const& pos, XojPageView* page);
 };

@@ -35,9 +35,15 @@ public:
     void setDpi(int dpi);
 
     /**
-     * Autosave was toggled, enable / disable autosave config
+     * Set active regions
      */
     void enableWithCheckbox(const string& checkbox, const string& widget);
+    void disableWithCheckbox(const string& checkbox, const string& widget);
+
+    /**
+     * Listeners for changes to settings.
+     */
+    void touchWorkaroundStatusChanged();
     void customHandRecognitionToggled();
     void customStylusIconTypeChanged();
 

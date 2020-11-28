@@ -246,8 +246,14 @@ public:
     int getDrawDirModsRadius() const;
     void setDrawDirModsRadius(int pixels);
 
+    bool getTouchDrawingEnabled() const;
+    void setTouchDrawingEnabled(bool b);
+
     bool isTouchWorkaround() const;
     void setTouchWorkaround(bool b);
+
+    bool isPressureGuessingEnabled() const;
+    void setPressureGuessingEnabled(bool b);
 
     bool isSnapRotation() const;
     void setSnapRotation(bool b);
@@ -304,6 +310,9 @@ public:
 
     Color getBackgroundColor() const;
     void setBackgroundColor(Color color);
+
+    bool getClearPDFCacheOnZoom() const;
+    void setClearPDFCacheOnZoom(bool b);
 
     int getPdfPageCacheSize() const;
     [[maybe_unused]] void setPdfPageCacheSize(int size);
@@ -751,6 +760,13 @@ private:
     int pdfPageCacheSize{};
 
     /**
+     *  Whether to clear the PDF cache on page zoom,
+     * or to use a previous rendering
+     * with nearly the current zoom, if available.
+     */
+    bool enableCacheClearOnZoom{};
+
+    /**
      * The color to draw borders on selected elements
      * (Page, insert image selection etc.)
      */
@@ -799,6 +815,15 @@ private:
      * Do not use GTK Scrolling / Touch handling
      */
     bool touchWorkaround{};
+
+    // Touchscreens act like multi-touch-aware pens.
+    bool touchDrawing{};
+
+    /**
+     * Infer pressure from speed when device pressure
+     * is unavailable (e.g. drawing with a mouse).
+     */
+    bool pressureGuessing{};
 
     /**
      * The index of the audio device used for recording

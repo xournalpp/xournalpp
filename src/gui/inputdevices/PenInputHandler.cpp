@@ -145,9 +145,9 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     return true;
 }
 
-double PenInputHandler::inferPressure(PositionInputData const& pos, XojPageView* page) {
+double PenInputHandler::inferPressureIfEnabled(PositionInputData const& pos, XojPageView* page) {
     // Infer pressure
-    if (pos.pressure == Point::NO_PRESSURE) {
+    if (pos.pressure == Point::NO_PRESSURE && this->inputContext->getSettings()->isPressureGuessingEnabled()) {
         PositionInputData lastPos = getInputDataRelativeToCurrentPage(page, this->lastEvent);
 
         double dt = std::min((pos.timestamp - lastPos.timestamp) / 10.0, 2.0);
@@ -268,7 +268,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         pos.x = std::min(pos.x, static_cast<double>(sequenceStartPage->getDisplayWidth()));
         pos.y = std::min(pos.y, static_cast<double>(sequenceStartPage->getDisplayHeight()));
 
-        pos.pressure = this->inferPressure(pos, sequenceStartPage);
+        pos.pressure = this->inferPressureIfEnabled(pos, sequenceStartPage);
 
         result = sequenceStartPage->onMotionNotifyEvent(pos);
     }
@@ -276,7 +276,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     if (currentPage && this->penInWidget) {
         // Relay the event to the page
         PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
-        pos.pressure = this->inferPressure(pos, currentPage);
+        pos.pressure = this->inferPressureIfEnabled(pos, currentPage);
 
         result = currentPage->onMotionNotifyEvent(pos);
     }

@@ -33,7 +33,9 @@ Settings::~Settings() {
 
 void Settings::loadDefault() {
     this->pressureSensitivity = true;
+    this->pressureGuessing = false;
     this->zoomGesturesEnabled = true;
+
     this->maximized = false;
     this->showPairedPages = false;
     this->presentationMode = false;
@@ -102,6 +104,7 @@ void Settings::loadDefault() {
     this->snapGridSize = DEFAULT_GRID_SIZE;
 
     this->touchWorkaround = false;
+    this->touchDrawing = false;
 
     this->defaultSaveName = _("%F-Note-%H-%M");
 
@@ -130,6 +133,7 @@ void Settings::loadDefault() {
     this->fullscreenHideElements = "mainMenubar";
     this->presentationHideElements = "mainMenubar,sidebarContents";
 
+    this->enableCacheClearOnZoom = true;
     this->pdfPageCacheSize = 10;
 
     this->selectionBorderColor = 0xff0000U;  // red
@@ -380,6 +384,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->fullscreenHideElements = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationHideElements")) == 0) {
         this->presentationHideElements = reinterpret_cast<const char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("enableCacheClearOnZoom")) == 0) {
+        this->enableCacheClearOnZoom = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfPageCacheSize")) == 0) {
         this->pdfPageCacheSize = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionBorderColor")) == 0) {
@@ -412,6 +418,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchWorkaround")) == 0) {
         this->touchWorkaround = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchDrawing")) == 0) {
+        this->touchDrawing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureGuessing")) == 0) {
+        this->pressureGuessing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scrollbarHideType")) == 0) {
         if (xmlStrcmp(value, reinterpret_cast<const xmlChar*>("both")) == 0) {
             this->scrollbarHideType = SCROLLBAR_HIDE_BOTH;
@@ -808,10 +818,14 @@ void Settings::save() {
     WRITE_DOUBLE_PROP(snapGridSize);
 
     WRITE_BOOL_PROP(touchWorkaround);
+    WRITE_BOOL_PROP(touchDrawing);
+    WRITE_BOOL_PROP(pressureGuessing);
 
     WRITE_UINT_PROP(selectionBorderColor);
     WRITE_UINT_PROP(backgroundColor);
     WRITE_UINT_PROP(selectionMarkerColor);
+
+    WRITE_BOOL_PROP(enableCacheClearOnZoom);
 
     WRITE_INT_PROP(pdfPageCacheSize);
     WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
@@ -1157,6 +1171,17 @@ void Settings::setSnapGridSize(double gridSize) {
     save();
 }
 
+auto Settings::getTouchDrawingEnabled() const -> bool { return this->touchDrawing; }
+
+void Settings::setTouchDrawingEnabled(bool b) {
+    if (this->touchDrawing == b) {
+        return;
+    }
+
+    this->touchDrawing = b;
+    save();
+}
+
 auto Settings::isTouchWorkaround() const -> bool { return this->touchWorkaround; }
 
 void Settings::setTouchWorkaround(bool b) {
@@ -1165,6 +1190,16 @@ void Settings::setTouchWorkaround(bool b) {
     }
 
     this->touchWorkaround = b;
+    save();
+}
+
+auto Settings::isPressureGuessingEnabled() const -> bool { return this->pressureGuessing; }
+void Settings::setPressureGuessingEnabled(bool b) {
+    if (this->pressureGuessing == b) {
+        return;
+    }
+
+    this->pressureGuessing = b;
     save();
 }
 
@@ -1517,6 +1552,16 @@ auto Settings::getPresentationHideElements() const -> string const& { return thi
 
 void Settings::setPresentationHideElements(string elements) {
     this->presentationHideElements = std::move(elements);
+    save();
+}
+
+auto Settings::getClearPDFCacheOnZoom() const -> bool { return this->enableCacheClearOnZoom; }
+void Settings::setClearPDFCacheOnZoom(bool b) {
+    if (this->enableCacheClearOnZoom == b) {
+        return;
+    }
+
+    this->enableCacheClearOnZoom = b;
     save();
 }
 

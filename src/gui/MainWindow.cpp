@@ -240,14 +240,16 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
 void MainWindow::initXournalWidget() {
     GtkWidget* boxContents = get("boxContents");
 
-    if (control->getSettings()->isTouchWorkaround()) {
+    usingTouchWorkaround = control->getSettings()->isTouchWorkaround();
+
+    if (usingTouchWorkaround) {
         GtkWidget* box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
         gtk_container_add(GTK_CONTAINER(boxContents), box1);
 
         GtkWidget* box2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
         gtk_container_add(GTK_CONTAINER(box1), box2);
 
-        scrollHandling = new ScrollHandlingXournalpp();
+        this->scrollHandling = new ScrollHandlingXournalpp();
 
         this->xournal = new XournalView(box2, control, scrollHandling);
 
@@ -261,7 +263,7 @@ void MainWindow::initXournalWidget() {
     } else {
         winXournal = gtk_scrolled_window_new(nullptr, nullptr);
 
-        setTouchscreenScrollingForDeviceMapping();
+        setGtkTouchscreenScrollingForDeviceMapping();
 
         gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
 
@@ -281,15 +283,44 @@ void MainWindow::initXournalWidget() {
     scrollHandling->init(this->xournal->getWidget(), layout);
 }
 
-void MainWindow::setTouchscreenScrollingForDeviceMapping() {
+void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
     for (InputDevice const& inputDevice: DeviceListHelper::getDeviceList(this->getControl()->getSettings())) {
         InputDeviceClass deviceClass = InputEvents::translateDeviceType(inputDevice.getName(), inputDevice.getSource(),
                                                                         this->getControl()->getSettings());
         if (inputDevice.getSource() == GDK_SOURCE_TOUCHSCREEN && deviceClass != INPUT_DEVICE_TOUCHSCREEN) {
-            gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), false);
-            break;
+            setGtkTouchscreenScrollingEnabled(false);
+
+            return;
         }
     }
+
+    setGtkTouchscreenScrollingEnabled(true);
+}
+
+void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
+    if (enabled == gtkTouchscreenScrollingEnabled.load() || usingTouchWorkaround || winXournal == nullptr) {
+        return;
+    }
+
+    gtkTouchscreenScrollingEnabled.store(enabled);
+
+    // Run on the main thread:
+    // 0 = timeout (run as soon as possible)
+    gdk_threads_add_timeout(
+            0,
+            [](gpointer data) -> gboolean {
+                MainWindow* self = static_cast<MainWindow*>(data);
+
+                gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(self->winXournal),
+                                                          self->gtkTouchscreenScrollingEnabled.load());
+
+                return FALSE;
+            },
+            this);
+}
+
+bool MainWindow::getGtkTouchscreenScrollingEnabled() const {
+    return gtkTouchscreenScrollingEnabled && !usingTouchWorkaround;
 }
 
 /**
