@@ -116,7 +116,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     if (event.deviceClass == INPUT_DEVICE_TOUCHSCREEN) {
         // trigger touch drawing depending on the setting
         if (this->touchWorkaroundEnabled) {
-            return this->touchDrawingHandler->handle(event);
+            return this->touchDrawingHandler->handle(event) || this->touchHandler->handle(event);
         }
 
         return this->touchHandler->handle(event);

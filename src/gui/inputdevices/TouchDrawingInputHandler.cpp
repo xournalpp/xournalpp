@@ -7,6 +7,7 @@
 #include "gui/XournalppCursor.h"
 #include "gui/inputdevices/InputUtils.h"
 #include "gui/widgets/XournalWidget.h"
+#include "model/Stroke.h"
 
 #include "InputContext.h"
 
@@ -18,8 +19,32 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Only handle events when there is no active gesture
     GtkXournal* xournal = inputContext->getXournal();
 
-    // Disallow multitouch
-    if (this->currentSequence && this->currentSequence != event.sequence) {
+    // Trigger end of action if mouse button is released
+    bool mustEnd = event.type == BUTTON_RELEASE_EVENT;
+
+    // If we loose our Grab on the device end the current action
+    mustEnd = mustEnd || event.type == GRAB_BROKEN_EVENT && this->deviceClassPressed;
+
+    // Multitouch
+    if (this->primarySequence && this->primarySequence != event.sequence || this->secondarySequence) {
+        if (!this->secondarySequence) {
+            this->secondarySequence = event.sequence;
+
+            if (this->startedSingleInput) {
+                XojPageView* currentPage = this->getPageAtCurrentPosition(event);
+                currentPage->onMotionCancelEvent();
+            }
+        }
+
+        if (mustEnd) {
+            if (event.sequence == this->primarySequence) {
+                this->primarySequence = nullptr;
+            } else if (event.sequence == this->secondarySequence) {
+                this->secondarySequence = this->primarySequence;
+                this->primarySequence = nullptr;
+            }
+        }
+
         return false;
     }
 
@@ -27,21 +52,31 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
      * Trigger start action
      */
     // Trigger start of action when pen/mouse is pressed
-    if (event.type == BUTTON_PRESS_EVENT && this->currentSequence == nullptr) {
-        this->currentSequence = event.sequence;
+    if (event.type == BUTTON_PRESS_EVENT && this->primarySequence == nullptr) {
+        this->primarySequence = event.sequence;
         this->deviceClassPressed = true;
-        this->actionStart(event);
-        return true;
+        this->startedSingleInput = false;
+
+        return false;
     }
 
     /*
      * Trigger motion actions
      */
+    if (this->deviceClassPressed && !this->startedSingleInput) {
+        this->actionStart(event);
+        this->startedSingleInput = true;
+    }
+
     // Trigger motion action when finger is pressed and moved
     if (this->deviceClassPressed && event.type == MOTION_EVENT) {
+        this->inputContext->getView()->getCursor()->setRotationAngle(event.relativeX);
+
         this->actionMotion(event);
         XournalppCursor* cursor = xournal->view->getCursor();
         cursor->updateCursor();
+
+        return true;
     }
 
     // Notify if finger enters/leaves widget
@@ -52,20 +87,12 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
         this->actionLeaveWindow(event);
     }
 
-    // Trigger end of action if mouse button is released
-    if (event.type == BUTTON_RELEASE_EVENT) {
-        this->currentSequence = nullptr;
+    if (mustEnd) {
+        this->primarySequence = nullptr;
         this->actionEnd(event);
-        this->deviceClassPressed = false;
-        return true;
-    }
 
-    // If we loose our Grab on the device end the current action
-    if (event.type == GRAB_BROKEN_EVENT && this->deviceClassPressed) {
-        this->currentSequence = nullptr;
-        this->actionEnd(event);
         this->deviceClassPressed = false;
-        return true;
+        return false;  // Any alternates should also end.
     }
 
     return false;

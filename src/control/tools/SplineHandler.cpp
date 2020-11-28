@@ -198,6 +198,14 @@ auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     return true;
 }
 
+void SplineHandler::onMotionCancelEvent() {
+    if (stroke) {
+        delete stroke;
+
+        stroke = nullptr;
+    }
+}
+
 void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     isButtonPressed = false;
 

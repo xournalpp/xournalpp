@@ -86,6 +86,13 @@ public:
     virtual void onButtonDoublePressEvent(const PositionInputData& pos) = 0;
 
     /**
+     * This method is called when an action taken by the pointer is canceled.
+     * It is used, for instance, to cancel a stroke drawn when a user starts
+     * to zoom on a touchscreen device.
+     */
+    virtual void onMotionCancelEvent() = 0;
+
+    /**
      * @return Current editing stroke
      */
     Stroke* getStroke();

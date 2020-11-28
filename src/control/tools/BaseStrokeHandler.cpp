@@ -23,6 +23,10 @@ BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawab
 BaseStrokeHandler::~BaseStrokeHandler() = default;
 
 void BaseStrokeHandler::draw(cairo_t* cr) {
+    if (!stroke) {
+        return;
+    }
+
     double zoom = xournal->getZoom();
     int dpiScaleFactor = xournal->getDpiScaleFactor();
 
@@ -97,6 +101,8 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
 
     return true;
 }
+
+void BaseStrokeHandler::onMotionCancelEvent() { stroke = nullptr; }
 
 void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     xournal->getCursor()->activateDrawDirCursor(false);  // in case released within  fixate_Dir_Mods_Dist

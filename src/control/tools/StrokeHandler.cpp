@@ -114,6 +114,14 @@ auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     return true;
 }
 
+void StrokeHandler::onMotionCancelEvent() {
+    if (stroke) {
+        delete stroke;
+
+        stroke = nullptr;
+    }
+}
+
 void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     if (!stroke) {
         return;
