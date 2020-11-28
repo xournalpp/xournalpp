@@ -32,8 +32,10 @@ public:
      * tool selected in the toolbar remains selected.
      *
      * @param event
+     * @return true if tool was changed successfully
+     * @return false never
      */
-    void changeTool(InputEvent const& event) override;
+    bool changeTool(InputEvent const& event) override;
 
 private:
     /**

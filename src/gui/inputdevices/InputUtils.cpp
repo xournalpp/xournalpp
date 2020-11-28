@@ -22,7 +22,7 @@ bool InputUtils::applyButton(ToolHandler* toolHandler, Settings* settings, Butto
     return toolChanged;
 }
 
-void InputUtils::warnIfQuestionableTouchDrawingSettings(ToolHandler* toolHandler, Settings* settings) {
+bool InputUtils::touchDrawingDisallowed(ToolHandler* toolHandler, Settings* settings) {
     ButtonConfig* cfg = settings->getButtonConfig(Button::BUTTON_TOUCH);
     if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE && toolHandler->isDrawingTool()) {
         g_message("Ignoring touchscreen for drawing.\n"
@@ -30,5 +30,7 @@ void InputUtils::warnIfQuestionableTouchDrawingSettings(ToolHandler* toolHandler
                   " The current combination of \"Disable Drawing for this device\" and \"Tool - don't change\"\n"
                   " results in drawing with the currently selected tool (in the toolbar).\n"
                   " This mightnot be the desired behaviour.");
+        return true;
     }
+    return false;
 }

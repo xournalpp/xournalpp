@@ -33,10 +33,12 @@ public:
      *  - no button is pressed
      *  - or the settings for that button are "No Toolchange"
      *  - or the click is happening on top of a selection on the canvas
-     * this function ensures that the tool selected in the toolbar resmains selected.
+     * this function ensures that the tool selected in the toolbar remains selected.
      *
      * @param event
+     * @return true if tool was changed successfully
+     * @return false never
      */
-    void changeTool(InputEvent const& event) override;
+    bool changeTool(InputEvent const& event) override;
     void onBlock() override;
 };

@@ -97,7 +97,14 @@ protected:
      */
     bool actionEnd(InputEvent const& event);
 
-    virtual void changeTool(InputEvent const& event) = 0;
+    /**
+     * @brief Change the tool according to the InputHandler and buttons pressed
+     *
+     * @param event some Inputevent
+     * @return true if tool was changed successfully
+     * @return false if tool was not changed successfully (currently only in TouchDrawingInputHandler)
+     */
+    virtual bool changeTool(InputEvent const& event) = 0;
 
     /**
      * Do the scrolling with the hand tool

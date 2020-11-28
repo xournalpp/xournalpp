@@ -71,14 +71,15 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
     return false;
 }
 
-void TouchDrawingInputHandler::changeTool(InputEvent const& event) {
+auto TouchDrawingInputHandler::changeTool(InputEvent const& event) -> bool {
     Settings* settings = this->inputContext->getSettings();
     ButtonConfig* cfg = settings->getButtonConfig(Button::BUTTON_TOUCH);
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
     bool toolChanged = false;
 
     if (cfg->device == event.deviceName) {
-        InputUtils::warnIfQuestionableTouchDrawingSettings(toolHandler, settings);
+        if (InputUtils::touchDrawingDisallowed(toolHandler, settings))
+            return false;
         toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_TOUCH);
     } else {
         toolChanged = toolHandler->pointActiveToolToToolbarTool();
@@ -86,4 +87,5 @@ void TouchDrawingInputHandler::changeTool(InputEvent const& event) {
 
     if (toolChanged)
         toolHandler->fireToolChanged();
+    return true;
 }

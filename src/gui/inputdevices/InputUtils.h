@@ -28,16 +28,18 @@ public:
     static bool applyButton(ToolHandler* toolHandler, Settings* settings, Button button);
 
     /**
-     * @brief Warn the user in case of Questionable Settings in for the Touchscreen "Tool"
+     * @brief Check whether touch Drawing is disallowed and warn user about this
      * Warn the user in case all of the following are true:
-     *  - Disable Drawing for this device is set for Touchscreen
-     *  - Tool - don't change is set for Touchscreen
-     *  - current Tool in the toolbar is a Drawing tool (i.e. Pen/Highlighter/Eraser)
+     *  1. Disable Drawing for this device is set for Touchscreen
+     *  2. Tool - don't change is set for Touchscreen
+     *  3. current Tool in the toolbar is a Drawing tool (i.e. Pen/Highlighter/Eraser)
      * As this results in xournalpp just using the currently selected tool to draw
      * which might be surprising to users. Hence it's logged as warning.
      *
      * @param toolHandler the toolHandler containing the tools
      * @param settings settings storing the information for the buttons
+     * @return true all above conditions are met
+     * @return false any of the above conditions is false
      */
-    static void warnIfQuestionableTouchDrawingSettings(ToolHandler* toolHandler, Settings* settings);
+    static bool touchDrawingDisallowed(ToolHandler* toolHandler, Settings* settings);
 };
