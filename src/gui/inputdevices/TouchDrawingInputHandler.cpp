@@ -32,7 +32,10 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
 
             if (this->startedSingleInput) {
                 XojPageView* currentPage = this->getPageAtCurrentPosition(event);
-                currentPage->onMotionCancelEvent();
+
+                if (currentPage) {
+                    currentPage->onMotionCancelEvent();
+                }
             }
         }
 
@@ -82,9 +85,14 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
     // Notify if finger enters/leaves widget
     if (event.type == ENTER_EVENT) {
         this->actionEnterWindow(event);
+
+        return true;
     }
+
     if (event.type == LEAVE_EVENT) {
         this->actionLeaveWindow(event);
+
+        return true;
     }
 
     if (mustEnd) {

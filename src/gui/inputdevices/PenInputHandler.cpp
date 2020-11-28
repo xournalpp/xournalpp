@@ -72,6 +72,9 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     // Change the tool depending on the key
     if (!changeTool(event))
         return false;
+    
+    // Used for pressure inference
+    this->lastPressure = 0.0;
 
     // Flag running input
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
@@ -134,10 +137,31 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     // Forward event to page
     if (currentPage) {
         PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
+        pos.pressure = this->inferPressureIfEnabled(pos, currentPage);
+
         return currentPage->onButtonPressEvent(pos);
     }
 
     return true;
+}
+
+double PenInputHandler::inferPressure(PositionInputData const& pos, XojPageView* page) {
+    // Infer pressure
+    if (pos.pressure == Point::NO_PRESSURE) {
+        PositionInputData lastPos = getInputDataRelativeToCurrentPage(page, this->lastEvent);
+
+        double dt = std::min((pos.timestamp - lastPos.timestamp) / 10.0, 2.0);
+        double inverseSpeed = (dt) / std::sqrt(std::pow(pos.x - lastPos.x, 2) + std::pow(pos.y - lastPos.y, 2) + 0.001);
+
+        double newPressure = 3.142 / 2.0 + std::atan(inverseSpeed * 3.14 - 1.3);
+
+        newPressure = std::min(newPressure, 2.0) / 5.0 + this->lastPressure * 4.0 / 5.0;
+        this->lastPressure = newPressure;
+
+        return (newPressure * 1.1 + 0.8) / 2.0;
+    }
+
+    return pos.pressure;
 }
 
 auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
@@ -147,6 +171,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
      */
     gdouble eventX = event.relativeX;
     gdouble eventY = event.relativeY;
+
     GtkAdjustment* adjHorizontal = this->inputContext->getScrollHandling()->getHorizontal();
     GtkAdjustment* adjVertical = this->inputContext->getScrollHandling()->getVertical();
     double h = gtk_adjustment_get_value(adjHorizontal);
@@ -227,8 +252,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         }
     }
 
-    // Update the last position of the input device
-    this->updateLastEvent(event);
+    bool result = false;
 
     // Update the cursor
     xournal->view->getCursor()->setInsidePage(currentPage != nullptr);
@@ -244,16 +268,23 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         pos.x = std::min(pos.x, static_cast<double>(sequenceStartPage->getDisplayWidth()));
         pos.y = std::min(pos.y, static_cast<double>(sequenceStartPage->getDisplayHeight()));
 
-        return sequenceStartPage->onMotionNotifyEvent(pos);
+        pos.pressure = this->inferPressure(pos, sequenceStartPage);
+
+        result = sequenceStartPage->onMotionNotifyEvent(pos);
     }
 
     if (currentPage && this->penInWidget) {
         // Relay the event to the page
         PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
-        return currentPage->onMotionNotifyEvent(pos);
+        pos.pressure = this->inferPressure(pos, currentPage);
+
+        result = currentPage->onMotionNotifyEvent(pos);
     }
 
-    return false;
+    // Update the last position of the input device
+    this->updateLastEvent(event);
+
+    return result;
 }
 
 auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
@@ -271,6 +302,8 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     // Selections and single-page elements will always work on one page so we need to handle them differently
     if (this->sequenceStartPage && toolHandler->isSinglePageTool()) {
         PositionInputData pos = getInputDataRelativeToCurrentPage(this->sequenceStartPage, event);
+        pos.pressure = this->inferPressureIfEnabled(pos, this->sequenceStartPage);
+
         this->sequenceStartPage->onButtonReleaseEvent(pos);
     } else {
         // Relay the event to the page
@@ -289,6 +322,8 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
 
         if (currentPage) {
             PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
+            pos.pressure = this->inferPressureIfEnabled(pos, currentPage);
+
             currentPage->onButtonReleaseEvent(pos);
         }
     }

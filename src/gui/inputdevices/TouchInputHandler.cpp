@@ -51,8 +51,13 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
         }
 
         if (event.sequence == this->primarySequence) {
+            // If secondarySequence is nullptr, this sets primarySequence
+            // to nullptr.
             this->primarySequence = this->secondarySequence;
             this->secondarySequence = nullptr;
+
+            this->priLastAbs = this->secLastAbs;
+            this->priLastRel = this->secLastRel;
         } else {
             this->secondarySequence = nullptr;
         }

@@ -36,6 +36,11 @@ protected:
     InputEvent lastEvent{};
 
     /**
+     * Last pressure inferred.
+     */
+    double lastPressure{0.0};
+
+    /**
      * Reference to the last event actually hitting a page
      */
     InputEvent lastHitEvent{};
@@ -118,4 +123,11 @@ protected:
      * @param event
      */
     void updateLastEvent(InputEvent const& event);
+
+    /**
+     * Estimate pressure based on pen speed using the previous event.
+     * @param pos The position of the current event
+     * @param page The page the event is relative to.
+     */
+    double inferPressure(PositionInputData const& pos, XojPageView* page);
 };
