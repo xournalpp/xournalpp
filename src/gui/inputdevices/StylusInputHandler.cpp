@@ -165,7 +165,7 @@ void StylusInputHandler::setPressedState(InputEvent const& event) {
     }
 }
 
-void StylusInputHandler::changeTool(InputEvent const& event) {
+auto StylusInputHandler::changeTool(InputEvent const& event) -> bool {
     Settings* settings = this->inputContext->getSettings();
     ToolHandler* toolHandler = this->inputContext->getToolHandler();
     bool toolChanged = false;
@@ -181,4 +181,5 @@ void StylusInputHandler::changeTool(InputEvent const& event) {
 
     if (toolChanged)
         toolHandler->fireToolChanged();
+    return true;
 }

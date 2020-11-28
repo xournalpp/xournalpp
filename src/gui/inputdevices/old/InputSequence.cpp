@@ -390,7 +390,7 @@ void InputSequence::stopInput() {
 /**
  * Change the tool according to the device and button
  */
-void InputSequence::changeTool() {
+auto InputSequence::changeTool() -> bool {
     Settings* settings = inputHandler->getSettings();
     ToolHandler* toolHandler = inputHandler->getToolHandler();
     ButtonConfig* cfgTouch = settings->getButtonConfig(Button::BUTTON_TOUCH);
@@ -411,7 +411,8 @@ void InputSequence::changeTool() {
     } else if (button == 3 && !xournal->selection) {
         toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_MOUSE_RIGHT);
     } else if (gdk_device_get_name(device) == cfgTouch->device) {
-        InputUtils::warnIfQuestionableTouchDrawingSettings(toolHandler, settings);
+        if (InputUtils::touchDrawingDisallowed(toolHandler, settings))
+            return false;
         toolChanged = InputUtils::applyButton(toolHandler, settings, Button::BUTTON_TOUCH);
     } else {
         toolChanged = toolHandler->pointActiveToolToToolbarTool();
@@ -419,6 +420,7 @@ void InputSequence::changeTool() {
 
     if (toolChanged)
         toolHandler->fireToolChanged();
+    return true;
 }
 
 /**

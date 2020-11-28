@@ -30,5 +30,12 @@ public:
     bool handleImpl(InputEvent const& event) override;
 
 protected:
-    void changeTool(InputEvent const& event) override;
+    /**
+     * @brief Change the tool according to Touch Settings
+     *
+     * @param event some Inputevent
+     * @return true if tool was changed successfully
+     * @return false if tool was not changed successfully
+     */
+    bool changeTool(InputEvent const& event) override;
 };
