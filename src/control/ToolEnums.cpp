@@ -141,7 +141,10 @@ auto toolTypeFromString(const string& type) -> ToolType {
     if (type == "eraser") {
         return TOOL_ERASER;
     }
-    if (type == "highlighter") {
+    // wrong "hilighter" spelling is left for backward compatibility
+    // soft migration introduced ~2020-11-28
+    // consider removing old spelling after a few releases to avoid breaking change
+    if (type == "highlighter" || type == "hilighter") {
         return TOOL_HIGHLIGHTER;
     }
     if (type == "text") {
