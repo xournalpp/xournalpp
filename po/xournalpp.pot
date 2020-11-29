@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-20 20:35+0000\n"
+"POT-Creation-Date: 2020-11-29 13:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/control/XournalMain.cpp:554
+#: ../src/control/XournalMain.cpp:553
 msgid ""
 "\n"
 "\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:534
+#: ../src/control/XournalMain.cpp:533
 msgid ""
 "\n"
 "Will now attempt to run without this file."
@@ -44,7 +44,7 @@ msgid ""
 "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:549
+#: ../src/control/XournalMain.cpp:548
 msgid ""
 "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
@@ -722,7 +722,7 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:530
+#: ../src/control/XournalMain.cpp:529
 msgid ""
 "Missing the needed UI file:\n"
 "{1}\n"
