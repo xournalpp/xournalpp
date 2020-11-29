@@ -248,6 +248,7 @@ void XournalppCursor::updateCursor() {
                     [[fallthrough]];
                 case CURSOR_SELECTION_BOTTOM:
                     cursor = getResizeCursor(90);
+                    break;
                 case CURSOR_SELECTION_ROTATE:
                     setCursor(CRSR_EXCHANGE);
                     break;
