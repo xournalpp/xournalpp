@@ -446,7 +446,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
 
             double snappedX = snappingHandler.snapHorizontally(this->snappedBounds.x, alt);
             double snappedY = snappingHandler.snapVertically(this->snappedBounds.y + this->snappedBounds.height, alt);
-            double dx = snappedX - this->snappedBounds.width;
+            double dx = snappedX - this->snappedBounds.x;
             double dy = snappedY - this->snappedBounds.y - this->snappedBounds.height;
             double fx = (this->snappedBounds.width > minSize) ?
                                 (this->snappedBounds.width - dx) / this->snappedBounds.width :
