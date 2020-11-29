@@ -279,7 +279,7 @@ auto ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 }
 
 
-// Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to allign/layout
+// Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to align/layout
 //       the pages manually, but it only works with the top Widget (GtkWindow) for now this works fine
 //       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
 auto ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allocation, ZoomControl* zoom) -> bool {

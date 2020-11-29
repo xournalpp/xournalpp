@@ -155,7 +155,7 @@ public:
     void addElement(Element* e, Layer::ElementIndex order = Layer::InvalidElementIndex);
 
     /**
-     * Returns all containig elements of this selections
+     * Returns all containing elements of this selections
      */
     vector<Element*>* getElements();
 

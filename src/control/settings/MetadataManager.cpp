@@ -25,7 +25,7 @@ MetadataManager::~MetadataManager() { documentChanged(); }
  * Delete an old metadata file
  */
 void MetadataManager::deleteMetadataFile(fs::path const& path) {
-    // be carefull, delete the Metadata file, NOT the Document!
+    // be careful, delete the Metadata file, NOT the Document!
     if (path.extension() != ".metadata") {
         g_warning("Try to delete non-metadata file: %s", path.string().c_str());
         return;

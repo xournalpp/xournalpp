@@ -31,7 +31,7 @@ public:
     static void calcSize(const Text* t, double& width, double& height);
 
     /**
-     * Draws a Text modle to a cairo surface
+     * Draws a Text model to a cairo surface
      */
     static void drawText(cairo_t* cr, const Text* t);
 

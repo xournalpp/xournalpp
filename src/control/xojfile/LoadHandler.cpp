@@ -907,10 +907,10 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
     }
 }
 
-auto LoadHandler::parseBase64(const gchar* base64, gsize lenght) -> string {
+auto LoadHandler::parseBase64(const gchar* base64, gsize length) -> string {
     // We have to copy the string in order to null terminate it, sigh.
-    auto* base64data = static_cast<gchar*>(g_memdup(base64, lenght + 1));
-    base64data[lenght] = '\0';
+    auto* base64data = static_cast<gchar*>(g_memdup(base64, length + 1));
+    base64data[length] = '\0';
 
     gsize binaryBufferLen = 0;
     guchar* binaryBuffer = g_base64_decode(base64data, &binaryBufferLen);

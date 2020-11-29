@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Handles differnt page background types
+ * Handles different page background types
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

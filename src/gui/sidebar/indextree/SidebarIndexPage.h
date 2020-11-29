@@ -79,7 +79,7 @@ private:
     static bool treeBookmarkSelected(GtkWidget* treeview, SidebarIndexPage* sidebar);
 
     /**
-     * If you select a Bookmark wich is currently not in the Xournal document, only in the PDF (page deleted or so)
+     * If you select a Bookmark which is currently not in the Xournal document, only in the PDF (page deleted or so)
      */
     void askInsertPdfPage(size_t pdfPage);
 

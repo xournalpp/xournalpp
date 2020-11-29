@@ -48,10 +48,10 @@ auto ToolbarModel::parse(fs::path const& filepath, bool predefined) -> bool {
         return false;
     }
 
-    gsize lenght = 0;
-    gchar** groups = g_key_file_get_groups(config, &lenght);
+    gsize length = 0;
+    gchar** groups = g_key_file_get_groups(config, &length);
 
-    for (gsize i = 0; i < lenght; i++) {
+    for (gsize i = 0; i < length; i++) {
         parseGroup(config, groups[i], predefined);
     }
 

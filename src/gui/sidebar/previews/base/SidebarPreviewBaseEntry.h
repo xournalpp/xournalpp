@@ -52,7 +52,7 @@ public:
     virtual void updateSize();
 
     /**
-     * @return What should be renderered
+     * @return What should be rendered
      */
     virtual PreviewRenderType getRenderType() = 0;
 

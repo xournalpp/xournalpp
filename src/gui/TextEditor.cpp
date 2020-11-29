@@ -546,7 +546,7 @@ void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos) {
 void TextEditor::contentsChanged(bool forceCreateUndoAction) {
     string currentText = getText()->getText();
 
-    // I know it's a little bit bulky, but ABS on substracted size_t is a little bit unsafe
+    // I know it's a little bit bulky, but ABS on subtracted size_t is a little bit unsafe
     if (forceCreateUndoAction ||
         ((lastText.length() >= currentText.length()) ? (lastText.length() - currentText.length()) :
                                                        (currentText.length() - lastText.length())) > 100) {

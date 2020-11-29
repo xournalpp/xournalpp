@@ -27,7 +27,7 @@ class AudioPlayer;
 
 class AudioController final {
 public:
-    // Todo convert Pointers to reference (changes to control.cpp are neccessary)
+    // Todo convert Pointers to reference (changes to control.cpp are necessary)
     AudioController(Settings* settings, Control* control): settings(*settings), control(*control) {}
 
     bool startRecording();

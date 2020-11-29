@@ -38,4 +38,4 @@ Description: Xournal++ - Open source hand note-taking program
   - Rect snapping to grid
   - Audio recording and playback alongside with handwritten notes
   - Multi Language Support, English, German, Italian ...
-  - Plugins using LUA Scripting
+  - Plugins using Lua scripting

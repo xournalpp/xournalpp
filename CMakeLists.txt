@@ -183,7 +183,7 @@ configure_file (
 ## I18n ##
 add_subdirectory (po)
 
-## Configuration headers and developement options ##
+## Configuration headers and development options ##
 
 # Development options
 option (DEV_CALL_LOG "Call log" OFF)

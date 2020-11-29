@@ -41,7 +41,7 @@
       <li>Rect snapping to grid</li>
       <li>Audio recording and playback alongside with handwritten notes</li>
       <li>Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...</li>
-      <li>Plugins using LUA Scripting</li>
+      <li>Plugins using Lua scripting</li>
     </ul>
   </description>
   <metadata_license>CC0-1.0</metadata_license>

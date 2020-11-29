@@ -21,7 +21,7 @@
 
 /**
  * @file Scheduler.h
- * @brief A file containing the defintion of the Scheduler
+ * @brief A file containing the definition of the Scheduler
  */
 
 /**

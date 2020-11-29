@@ -108,7 +108,7 @@ public:
         return this->streamEnd;
     }
 
-    [[nodiscard]] std::unique_lock<std::mutex> aquire_lock() {
+    [[nodiscard]] std::unique_lock<std::mutex> acquire_lock() {
         std::unique_lock retLock{this->queueLock, std::defer_lock};
         std::lock(retLock, this->internalLock);
         std::lock_guard{this->internalLock, std::adopt_lock};

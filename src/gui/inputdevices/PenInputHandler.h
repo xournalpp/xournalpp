@@ -25,7 +25,7 @@ protected:
      */
     bool deviceClassPressed = false;
     /**
-     * modifier varaibles storing whether button 2 and 3 are pressed
+     * modifier variables storing whether button 2 and 3 are pressed
      */
     bool modifier2 = false;
     bool modifier3 = false;

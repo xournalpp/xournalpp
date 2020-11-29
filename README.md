@@ -60,7 +60,7 @@ Xournal++ features:
 - Rect snapping to grid
 - Audio recording and playback alongside with handwritten notes
 - Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
-- Plugins using LUA Scripting
+- Plugins using Lua scripting
 
 ## Mobile & web app
 
@@ -329,7 +329,7 @@ The file format _.xopp is an XML which is .gz compressed. PDFs are not embedded 
 
 All new files will be saved as _.xopp, if an _.xoj file is opened which was created by Xournal, the Save-As dialog will be displayed on save. If the \*.xoj file was by Xournal++ created, Xournal++ overwrite the file on save, and does not change the extension.
 
-**We are currently introducing a new file format that can efficiently store attached PDF files and other attachments internally. We will still allow for attachments that are linked to external files. Please refer to [#937](https://github.com/xournalpp/xournalpp/issues/937) for futher details.**
+**We are currently introducing a new file format that can efficiently store attached PDF files and other attachments internally. We will still allow for attachments that are linked to external files. Please refer to [#937](https://github.com/xournalpp/xournalpp/issues/937) for further details.**
 
 ## Development
 

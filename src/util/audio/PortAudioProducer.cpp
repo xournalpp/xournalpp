@@ -102,7 +102,7 @@ void PortAudioProducer::stopRecording() {
         }
     }
 
-    // Notify the consumer at the other side that ther will be no more data
+    // Notify the consumer at the other side that there will be no more data
     this->audioQueue.signalEndOfStream();
 
     // Allow new recording by removing the old one
