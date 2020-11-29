@@ -119,6 +119,29 @@ public:
      */
     std::optional<size_t> getPageIndexAtGridMap(size_t row, size_t col);
 
+    /**
+     * @brief Get the total padding above the page at the given index.
+     *
+     *  The size of this padding does not scale with pages as the user zooms in and out.
+     * As such, it is often necessary to get _just_ this padding.
+     *
+     * @param pageIndex is the index of the XojPageView as returned by [getIndexAtGridMap]
+     * @return the sum of the padding between pages above the page with the given index
+     *         and any padding the user added vertically above all pages (i.e. in settings).
+     */
+    int getPaddingAbovePage(size_t pageIndex) const;
+
+    /**
+     * @brief Get the static padding added to the left of the current page.
+     *
+     *  This does not include padding added to center the page on the screen.
+     *
+     * @param pageIndex is the index of the XojPageView, as given by [getIndexAtGridMap]
+     * @return the sum of the padding between pages left of the page at [pageIndex] and
+     *         any horizontal padding the user decided to add (from settings)
+     */
+    int getPaddingLeftOfPage(size_t pageIndex) const;
+
 protected:
     // Todo(Fabian): move to ScrollHandling also it must not depend on Layout
     static void horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout);

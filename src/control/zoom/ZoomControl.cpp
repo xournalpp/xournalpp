@@ -95,8 +95,9 @@ void ZoomControl::startZoomSequence(utl::Point<double> zoomCenter) {
     auto const& view_pos = utl::Point{rect.x, rect.y};
 
     this->zoomWidgetPos = zoomCenter - view_pos;
-    this->scrollPosition = (view_pos + this->zoomWidgetPos) / this->zoom;
     this->zoomSequenceStart = this->zoom;
+
+    setScrollPositionAfterZoom(view_pos);
 }
 
 void ZoomControl::zoomSequenceChange(double zoom, bool relative) {
@@ -119,15 +120,35 @@ auto ZoomControl::getVisibleRect() -> Rectangle<double> {
 }
 
 void ZoomControl::setScrollPositionAfterZoom(utl::Point<double> scrollPos) {
-    this->scrollPosition = (scrollPos + this->zoomWidgetPos) / this->zoom;
+    size_t currentPageIdx = this->view->getCurrentPage();
+
+    // To get the layout, we need to call view->getWidget(), which isn't const.
+    // As such, we get the view and determine `unscaledPixels` here, rather than
+    // in `getScrollPositionAfterZoom`.
+    GtkWidget* widget = view->getWidget();
+    Layout* layout = gtk_xournal_get_layout(widget);
+
+    // TODO(personalizedrefrigerator) While this zooms in nearly where intended, it
+    //                                "jitters" while zooming if very far into the document.
+
+    // Not everything changes size as we zoom in/out. The padding, for example,
+    // remains constant!
+    this->unscaledPixels = {static_cast<double>(layout->getPaddingLeftOfPage(currentPageIdx)),
+                            static_cast<double>(layout->getPaddingAbovePage(currentPageIdx))};
+
+    // Use this->zoomWidgetPos to zoom into a location other than the top-left (e.g. where
+    // the user pinched).
+    this->scrollPosition = (scrollPos - this->unscaledPixels + this->zoomWidgetPos) / this->zoom;
 }
 
 auto ZoomControl::getScrollPositionAfterZoom() const -> utl::Point<double> {
+    //  If we aren't in a zoomSequence, `unscaledPixels`, `scrollPosition`, and `zoomWidgetPos
+    // can't be used to determine the scroll position! Return now.
     if (this->zoomSequenceStart == -1) {
         return {-1, -1};
     }
 
-    return (this->scrollPosition * this->zoom) - this->zoomWidgetPos;
+    return (this->scrollPosition * this->zoom) - this->zoomWidgetPos + this->unscaledPixels;
 }
 
 

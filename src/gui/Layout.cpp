@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <numeric>
 #include <optional>
+#include <utility>
 
 #include "control/Control.h"
 #include "gui/scroll/ScrollHandling.h"
@@ -253,6 +254,49 @@ void Layout::layoutPages(int width, int height) {
     int64_t totalHeight = borderY;
     std::transform(begin(this->pc.heightRows), end(this->pc.heightRows), begin(this->rowYStart),
                    [&totalHeight](auto&& heightRow) { return (totalHeight += heightRow + XOURNAL_PADDING_BETWEEN); });
+}
+
+int Layout::getPaddingAbovePage(size_t pageIndex) const {
+    const Settings* settings = this->view->getControl()->getSettings();
+
+    // User-configured padding above all pages.
+    auto const paddingAbove =
+            sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddVerticalSpace());
+
+    // (x, y) coordinate pair gives grid indicies. This handles paired pages
+    // and different page layouts for us.
+    std::pair<size_t, size_t> pageGridLocation = this->mapper.at(pageIndex);
+    size_t pageYLocation = std::get<1>(pageGridLocation);
+
+    return pageYLocation * XOURNAL_PADDING_BETWEEN + paddingAbove;
+}
+
+
+int Layout::getPaddingLeftOfPage(size_t pageIndex) const {
+    bool isPairedPages = this->mapper.isPairedPages();
+    const Settings* settings = this->view->getControl()->getSettings();
+
+    auto const paddingBefore =
+            sumIf(XOURNAL_PADDING, settings->getAddVerticalSpaceAmount(), settings->getAddHorizontalSpace());
+
+    std::pair<size_t, size_t> pageGridLocation = this->mapper.at(pageIndex);
+    size_t pageXLocation = std::get<0>(pageGridLocation);
+
+    // No page pairing or we haven't rendered enough pages in the row for
+    // page pairing to have an effect,
+    if (!isPairedPages || pageXLocation == 0) {
+        return pageXLocation * XOURNAL_PADDING_BETWEEN + paddingBefore;
+    } else {
+        // We have a greater separation between pairs of pages. Handle this here,
+        //  Note that pageXLocation - 1 >= 0 because we take the if branch above when
+        // pageXLocation == 0.
+        int paddingBetweenPairs = (pageXLocation - 1) / 2 * XOURNAL_PADDING_BETWEEN;
+
+        // The two pages within each pair have a smaller separation, XOURNAL_ROOM_FOR_SHADOW.
+        int shadowRoomInsidePairs = pageXLocation / 2 * XOURNAL_ROOM_FOR_SHADOW;
+
+        return paddingBetweenPairs + shadowRoomInsidePairs + paddingBefore;
+    }
 }
 
 void Layout::setLayoutSize(int width, int height) { this->scrollHandling->setLayoutSize(width, height); }
