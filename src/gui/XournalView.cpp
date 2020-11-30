@@ -518,7 +518,12 @@ void XournalView::zoomChanged() {
     this->control->getScheduler()->blockRerenderZoom();
 }
 
-void XournalView::pageSizeChanged(size_t page) { layoutPages(); }
+void XournalView::pageSizeChanged(size_t page) {
+    layoutPages();
+    if (page != npos && page < this->viewPages.size()) {
+        this->viewPages[page]->rerenderPage();
+    }
+}
 
 void XournalView::pageChanged(size_t page) {
     if (page != npos && page < this->viewPages.size()) {
