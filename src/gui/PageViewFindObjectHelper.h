@@ -35,7 +35,6 @@ public:
 
         // clear old selection anyway
         view->xournal->getControl()->clearSelection();
-        matchRect = {gint(x - 10), gint(y - 10), 20, 20};
 
         Layer* layer = this->view->getPage()->getSelectedLayer();
         return checkLayer(layer);
@@ -43,20 +42,21 @@ public:
 
 protected:
     bool checkLayer(Layer* l) {
-        // Search for Element closest to center of matching rectangle
+        /* Search for Element whose bounding box center is closest to the place (x,y) where the object is searched for.
+         * Only those strokes are taken into account that pass the appropriate checkElement test.
+         */
         bool found = false;
         double minDistSq = std::numeric_limits<double>::max();
-        const double mX = matchRect.x + matchRect.width / 2.0;
-        const double mY = matchRect.y + matchRect.height / 2.0;
         for (Element* e: *l->getElements()) {
             const double eX = e->getX() + e->getElementWidth() / 2.0;
             const double eY = e->getY() + e->getElementHeight() / 2.0;
-            const double dx = eX - mX;
-            const double dy = eY - mY;
+            const double dx = eX - this->x;
+            const double dy = eY - this->y;
             const double distSq = dx * dx + dy * dy;
+            const GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
             if (e->intersectsArea(&matchRect) && distSq < minDistSq) {
-                minDistSq = distSq;
                 if (this->checkElement(e)) {
+                    minDistSq = distSq;
                     found = true;
                 }
             }
@@ -67,7 +67,6 @@ protected:
     virtual bool checkElement(Element* e) = 0;
 
 protected:
-    GdkRectangle matchRect{};
     XojPageView* view{};
     double x{0};
     double y{0};
