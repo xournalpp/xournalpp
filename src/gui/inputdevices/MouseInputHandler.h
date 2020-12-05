@@ -37,7 +37,7 @@ public:
      *
      * @param event
      * @return true if tool was changed successfully
-     * @return false never
+     * @return false if tool was not changed successfully
      */
     bool changeTool(InputEvent const& event) override;
     void onBlock() override;
