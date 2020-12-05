@@ -137,7 +137,6 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
         return currentPage->onButtonPressEvent(pos);
     }
 
-    // not handled
     return true;
 }
 
