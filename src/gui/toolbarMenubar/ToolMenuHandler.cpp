@@ -103,6 +103,9 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     name = "AUDIO_RECORDING";
                 }
 
+                // recognize previous name, V1.0.19 (Dec 2020) and earlier
+                if (name == "HILIGHTER")
+                    name = "HIGHLIGHTER";
 
                 if (name == "SEPARATOR") {
                     GtkToolItem* it = gtk_separator_tool_item_new();
