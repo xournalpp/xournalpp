@@ -23,14 +23,20 @@ bool InputUtils::applyButton(ToolHandler* toolHandler, Settings* settings, Butto
 }
 
 bool InputUtils::touchDrawingDisallowed(ToolHandler* toolHandler, Settings* settings) {
+    static bool warningAlreadyShown{false};
     ButtonConfig* cfg = settings->getButtonConfig(Button::BUTTON_TOUCH);
     if (cfg->getDisableDrawing() && cfg->getAction() == TOOL_NONE && toolHandler->isDrawingTool()) {
-        g_message("Ignoring touchscreen for drawing.\n"
-                  " Please check the settings for Touchscreen.\n"
-                  " The current combination of \"Disable Drawing for this device\" and \"Tool - don't change\"\n"
-                  " results in drawing with the currently selected tool (in the toolbar).\n"
-                  " This mightnot be the desired behaviour.");
+        if (!warningAlreadyShown)
+            g_message("Ignoring touchscreen for drawing:\n"
+                      " Please check the settings for Touchscreen.\n"
+                      " The current combination of \"Disable Drawing for this device\"\n"
+                      " together with \"Tool - don't change\"\n"
+                      " prevents any drawing with the selected tool using the TouchScreen.");
+        warningAlreadyShown = true;
         return true;
     }
+    // reset warningAlreadyShown this allows the message to be sent multiple times
+    // in case the user switches the settings in between multiple times
+    warningAlreadyShown = false;
     return false;
 }
