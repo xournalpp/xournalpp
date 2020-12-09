@@ -39,6 +39,12 @@ sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libs
 libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev
 ````
 
+#### For Raspberry Pi OS (the same as Ubuntu/Debian with gettext added):
+````bash
+sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
+libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev gettext
+````
+
 #### For openSUSE:
 ```bash
 sudo zypper install cmake gtk3-devel cppunit-devel portaudio-devel libsndfile-devel \
