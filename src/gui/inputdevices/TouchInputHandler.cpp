@@ -9,9 +9,10 @@
 TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputHandler(inputContext) {}
 
 auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
-    // Don't handle more then 2 inputs
-    if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
-        this->secondarySequence != event.sequence) {
+    // Don't handle more than 2 inputs, or 1 input if zoom gestures are disabled
+    if (this->primarySequence && this->primarySequence != event.sequence &&
+        (!inputContext->getSettings()->isZoomGesturesEnabled() ||
+         this->secondarySequence && this->secondarySequence != event.sequence)) {
         return false;
     }
 
@@ -93,10 +94,6 @@ void TouchInputHandler::scrollMotion(InputEvent const& event) {
 }
 
 void TouchInputHandler::zoomStart() {
-    if (!inputContext->getSettings()->isZoomGesturesEnabled()) {
-        return;
-    }
-
     // Take horizontal and vertical padding of view into account when calculating the center of the gesture
     int vPadding = inputContext->getSettings()->getAddVerticalSpace() ?
                            inputContext->getSettings()->getAddVerticalSpaceAmount() :
