@@ -17,8 +17,6 @@ add_subdirectory (xoj-preview-extractor)
 add_definitions (-g -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable)
 
 if (WIN32)
-  # optimize for size (the Windows .exe is really big)
-  set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-Os -s")
 elseif (APPLE OR LINUX)
   # Nothing to do for APPLE and linux
 else ()

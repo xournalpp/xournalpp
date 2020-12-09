@@ -85,8 +85,8 @@ stages:
         steps:
           - template: steps/build_windows.yml
             parameters:
-              build_type: 'RelWithDebInfo'
-              cmake_flags: ''
+              build_type: 'MinSizeRel'
+              cmake_flags: '-DCMAKE_CXX_FLAGS=-g'
           - script: |
               set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
               C:\msys64\usr\bin\bash -lc "./build-setup.sh"
