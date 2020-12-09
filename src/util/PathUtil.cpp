@@ -10,8 +10,13 @@
 #include "XojMsgBox.h"
 #include "i18n.h"
 
+#ifdef __APPLE__
+// Fix of ghc::filesystem bug (path::operator/=() won't support string_views)
+constexpr auto const* CONFIG_FOLDER_NAME = "xournalpp";
+#else
 using namespace std::string_view_literals;
 constexpr auto CONFIG_FOLDER_NAME = "xournalpp"sv;
+#endif
 
 /**
  * Read a file to a string
