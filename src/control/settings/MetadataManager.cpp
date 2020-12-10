@@ -97,13 +97,7 @@ auto MetadataManager::loadMetadataFile(fs::path const& path, fs::path const& fil
     auto time = file.stem().string();
     entry.time = strtoll(time.c_str(), nullptr, 10);
 
-    if (!getline(infile, line)) {
-        deleteMetadataFile(path);
-        // Not valid
-        return entry;
-    }
-
-    if (line != "XOJ-METADATA/1.0") {
+    if (!getline(infile, line) || line != "XOJ-METADATA/1.0") {
         deleteMetadataFile(path);
         // Not valid
         return entry;
@@ -114,35 +108,21 @@ auto MetadataManager::loadMetadataFile(fs::path const& path, fs::path const& fil
         // Not valid
         return entry;
     }
+    istringstream iss(line);
+    iss >> entry.path;
 
-    entry.path = line;
-
-    if (!getline(infile, line)) {
+    if (!getline(infile, line) || line.length() < 6 || line.substr(0, 5) != "page=") {
         deleteMetadataFile(path);
         // Not valid
         return entry;
     }
-
-    if (line.length() < 6 || line.substr(0, 5) != "page=") {
-        deleteMetadataFile(path);
-        // Not valid
-        return entry;
-    }
-
     entry.page = strtoll(line.substr(5).c_str(), nullptr, 10);
 
-    if (!getline(infile, line)) {
+    if (!getline(infile, line) || line.length() < 6 || line.substr(0, 5) != "zoom=") {
         deleteMetadataFile(path);
         // Not valid
         return entry;
     }
-
-    if (line.length() < 6 || line.substr(0, 5) != "zoom=") {
-        deleteMetadataFile(path);
-        // Not valid
-        return entry;
-    }
-
     entry.zoom = strtod(line.substr(5).c_str(), nullptr);
 
     entry.valid = true;
