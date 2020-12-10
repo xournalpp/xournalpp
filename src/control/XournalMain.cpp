@@ -294,7 +294,7 @@ struct XournalMainPrivate {
     XournalMainPrivate() = default;
     XournalMainPrivate(XournalMainPrivate&&) = delete;
     XournalMainPrivate(XournalMainPrivate const&) = delete;
-    auto operator=(XournalMainPrivate&&) -> XournalMainPrivate = delete;
+    auto operator=(XournalMainPrivate &&) -> XournalMainPrivate = delete;
     auto operator=(XournalMainPrivate const&) -> XournalMainPrivate = delete;
 
     ~XournalMainPrivate() {
@@ -307,7 +307,7 @@ struct XournalMainPrivate {
     gchar* pdfFilename{};
     gchar* imgFilename{};
     gboolean showVersion = false;
-    int openAtPageNumber = -1;
+    int openAtPageNumber = 0;  // when no --page is used, the document opens at the page specified in the metadata file
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
@@ -474,7 +474,8 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
         try {
             if (fs::exists(p)) {
-                opened = app_data->control->openFile(p, app_data->openAtPageNumber);
+                opened = app_data->control->openFile(p,
+                                                     app_data->openAtPageNumber - 1);  // First page for user is page 1
             } else {
                 opened = app_data->control->newFile("", p);
             }
