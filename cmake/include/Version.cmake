@@ -46,7 +46,7 @@ function(core_find_git_rev stamp)
                         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
         endif()
         # get HEAD commit SHA-1
-        execute_process(COMMAND ${GIT_EXECUTABLE} log -n 1 --pretty=format:"%h" HEAD
+        execute_process(COMMAND ${GIT_EXECUTABLE} log --no-show-signature -n 1 --pretty=format:"%h" HEAD
                         OUTPUT_VARIABLE HASH
                         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
         string(REPLACE "\"" "" HASH ${HASH})
@@ -56,7 +56,7 @@ function(core_find_git_rev stamp)
         endif()
 
       # get HEAD commit date
-      execute_process(COMMAND ${GIT_EXECUTABLE} log -1 --pretty=format:"%cd" --date=short HEAD
+      execute_process(COMMAND ${GIT_EXECUTABLE} log --no-show-signature -1 --pretty=format:"%cd" --date=short HEAD
                       OUTPUT_VARIABLE DATE
                       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
       string(REPLACE "\"" "" DATE ${DATE})
