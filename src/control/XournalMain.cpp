@@ -550,7 +550,8 @@ auto XournalMain::run(int argc, char** argv) -> int {
                           GOptionEntry{G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &app_data.optFilename,
                                        "<input>", nullptr},
                           GOptionEntry{"version", 0, 0, G_OPTION_ARG_NONE, &app_data.showVersion,
-                                       _("Get version of xournalpp"), nullptr}};
+                                       _("Get version of xournalpp"), nullptr},
+                          GOptionEntry{nullptr}};  // Must be terminated by a nullptr. See gtk doc
     g_application_add_main_option_entries(G_APPLICATION(app), options.data());
     auto rv = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
