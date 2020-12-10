@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-09 20:40+0000\n"
+"POT-Creation-Date: 2020-12-10 15:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -548,7 +548,7 @@ msgstr ""
 msgid "Forward"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:552
+#: ../src/control/XournalMain.cpp:553
 msgid "Get version of xournalpp"
 msgstr ""
 
@@ -626,7 +626,7 @@ msgstr ""
 msgid "Image file successfully created"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:546
+#: ../src/control/XournalMain.cpp:547
 msgid "Image output filename (.png / .svg)"
 msgstr ""
 
@@ -662,7 +662,7 @@ msgstr ""
 msgid "Isometric Graph"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:548
+#: ../src/control/XournalMain.cpp:549
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
@@ -829,7 +829,7 @@ msgstr ""
 msgid "PDF files"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:544
+#: ../src/control/XournalMain.cpp:545
 msgid "PDF output filename"
 msgstr ""
 
@@ -1096,7 +1096,7 @@ msgid ""
 "Others are ignored."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:482
+#: ../src/control/XournalMain.cpp:483
 msgid ""
 "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
