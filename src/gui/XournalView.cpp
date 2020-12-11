@@ -687,7 +687,6 @@ void XournalView::zoomChanged()
 {
 	XOJ_CHECK_TYPE(XournalView);
 
-	Layout* layout = gtk_xournal_get_layout(this->widget);
 	size_t currentPage = this->getCurrentPage();
 	XojPageView* view = getViewFor(currentPage);
 	ZoomControl* zoom = control->getZoomControl();
@@ -697,6 +696,7 @@ void XournalView::zoomChanged()
 		return;
 	}
 
+    layoutPages();
 
 	if (zoom->isZoomPresentationMode() || zoom->isZoomFitMode())
 	{
@@ -707,11 +707,10 @@ void XournalView::zoomChanged()
 		std::tuple<double, double> pos = zoom->getScrollPositionAfterZoom();
 		if (std::get<0>(pos) != -1 && std::get<1>(pos) != -1)
 		{
+			Layout* layout = gtk_xournal_get_layout(this->widget);
 			layout->scrollAbs(std::get<0>(pos), std::get<1>(pos));
 		}
 	}
-	// move this somewhere else maybe
-	layout->recalculate();
 
 	Document* doc = control->getDocument();
 	doc->lock();
@@ -838,12 +837,10 @@ void XournalView::pageInserted(size_t page)
 
 	this->viewPages[page] = pageView;
 
-	Layout* layout = gtk_xournal_get_layout(this->widget);
-    // recalculate the layout width and height amd layout the pages with the updated layout size
-    layout->recalculate();
-    layout->layoutPages(layout->getMinimalWidth(), layout->getMinimalHeight());
+    layoutPages();
 
     // check which pages are visible and select the most visible page
+	Layout* layout = gtk_xournal_get_layout(this->widget);
     layout->updateVisibility();
 }
 
@@ -964,6 +961,7 @@ void XournalView::layoutPages()
 
 	Layout* layout = gtk_xournal_get_layout(this->widget);
 	layout->recalculate();
+    layout->layoutPages(layout->getMinimalWidth(), layout->getMinimalHeight());
 }
 
 int XournalView::getDisplayHeight() const
