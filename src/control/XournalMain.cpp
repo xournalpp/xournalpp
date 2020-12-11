@@ -427,11 +427,8 @@ int XournalMain::run(int argc, char* argv[])
 	checkForErrorlog();
 	checkForEmergencySave(control);
 
-	// There is a timing issue with the layout
-	// This fixes it, see #405
-	Util::execInUiThread([=]() {
-		control->getWindow()->getXournal()->layoutPages();
-	});
+    // There was a timing issue with the layout, see #405
+    control->getWindow()->getXournal()->layoutPages();
 
 	gtk_main();
 

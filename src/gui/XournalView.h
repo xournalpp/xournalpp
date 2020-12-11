@@ -49,6 +49,8 @@ public:
 
 	void requestPage(XojPageView* page);
 
+
+    // Recalculate the layout width and height amd layout the pages with the updated layout size
 	void layoutPages();
 
 	void scrollTo(size_t pageNo, double y = 0);
