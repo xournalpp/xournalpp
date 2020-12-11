@@ -314,8 +314,8 @@ bool ZoomControl::updateZoomPresentationValue(size_t pageNo)
 	XojPageView* page = view->getViewFor(view->getCurrentPage());
 	if(!page)
 	{
-		//no page
-		return false;
+		//no page, cannot update zoomPresentation value yet.
+		return true;
 	}
 
 	Rectangle widget_rect = getVisibleRect();
