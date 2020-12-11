@@ -72,7 +72,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     // Change the tool depending on the key
     if (!changeTool(event))
         return false;
-    
+
     // Used for pressure inference
     this->lastPressure = 0.0;
 

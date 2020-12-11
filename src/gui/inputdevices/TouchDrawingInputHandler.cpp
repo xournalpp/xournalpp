@@ -56,12 +56,10 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
             // momentum-based scrolling!
             mainWindow->setGtkTouchscreenScrollingEnabled(true);
 
-            if (this->startedSingleInput) {
-                XojPageView* currentPage = this->getPageAtCurrentPosition(event);
+            XojPageView* currentPage = this->getPageAtCurrentPosition(event);
 
-                if (currentPage) {
-                    currentPage->onMotionCancelEvent();
-                }
+            if (currentPage) {
+                currentPage->onMotionCancelEvent();
             }
         }
 
@@ -87,20 +85,11 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
         this->primarySequence = event.sequence;
         this->deviceClassPressed = true;
 
-        // Defer starting the single-touch action --
-        // this lets us avoid calling onMotionCancel event
-        // if this becomes a multi-touch event.
-        this->startedSingleInput = false;
+        this->actionStart(event);
 
         updateKineticScrollingEnabled();
 
         return false;
-    }
-
-    // If we defered the single-touch action,
-    if (this->deviceClassPressed && !this->startedSingleInput) {
-        this->actionStart(event);
-        this->startedSingleInput = true;
     }
 
     // Trigger motion action when finger is pressed and moved,

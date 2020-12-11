@@ -218,13 +218,13 @@ public:
      */
     void fireToolChanged();
 
-    /** 
+    /**
      * @brief Listen for tool changes.
-     * 
+     *
      * Different from the listener given to the constructor -- [listener]
      * here only listens for when the current tool is changed to another.
-     * 
-     * @param listener A callback, called when the user/client 
+     *
+     * @param listener A callback, called when the user/client
      *  changes tools.
      */
     void addToolChangedListener(ToolChangedCallback listener);
