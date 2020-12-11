@@ -729,6 +729,10 @@ void XournalView::pageSizeChanged(size_t page)
 {
 	XOJ_CHECK_TYPE(XournalView);
 	layoutPages();
+	if (page != npos && page < this->viewPagesLen) 
+	{
+        this->viewPages[page]->rerenderPage();
+    }
 }
 
 void XournalView::pageChanged(size_t page)
