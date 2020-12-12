@@ -28,14 +28,15 @@ public:
 
 public:
     /**
-     * @brief Apply Changes to the button tool in case "No Change" was selected for one of it's properties
+     * @brief Apply Changes to the button tool in case "Don't Change" was selected for one of it's properties
      * This is usually used after switching to a button tool from the toolbar tool
+     * Note: In case of the setting "Don't Change" for Size/DrawingType/EraserType the
+     * Size/DrawingType/EraserType of the corresponding tool in the toolbar is used.
      *
      * @param toolHandler
      * @param button button to be applied
      * @return true if some action was selected
      * @return false if no action was selected
-     * [idotobi: this should be refactored as this might not be optimal for current usage]
      */
     bool applyNoChangeSettings(ToolHandler* toolHandler, Button button);
 
