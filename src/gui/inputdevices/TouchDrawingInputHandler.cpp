@@ -64,14 +64,15 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
         }
 
         if (mustEnd) {
+            // Ending two-finger panning/zooming? We should now only have a primary sequence.
             if (event.sequence == this->primarySequence) {
-                this->primarySequence = nullptr;
+                this->primarySequence = this->secondarySequence;
+                this->secondarySequence = nullptr;
 
                 // Only scrolling now if using the hand tool.
                 mainWindow->setGtkTouchscreenScrollingEnabled(toolHandler->getToolType() == TOOL_HAND);
             } else if (event.sequence == this->secondarySequence) {
-                this->secondarySequence = this->primarySequence;
-                this->primarySequence = nullptr;
+                this->secondarySequence = nullptr;
             }
         }
 
