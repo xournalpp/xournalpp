@@ -225,9 +225,10 @@ public:
     Tool& getTool(ToolType type);
 
     /**
-     * @brief Set the Eraser Type of the toolbar selected tool
-     * @note It is safer to always set the toolbar tool as the active tool could be pointing to a button tool which
-     * could lead to hard to debug behaviour
+     * @brief Set the Eraser Type of the Eraser in the toolbar
+     * @note Here the Eraser Tool in the toolbar is changed regardless of the the tool currently selected.
+     * This is necessary to allow users to change the Eraser type for their Button Tools while having another tool
+     * active. This is relevant in case of Eraser Type being set to "Don't Change" for the button.
      *
      * @param eraserType
      */
@@ -242,12 +243,14 @@ public:
     void setButtonEraserType(EraserType eraserType, Button button);
 
     /**
-     * @brief Get the Eraser Type of one of the selected Tools
+     * @brief Get the Eraser Type
+     * If the currently active Tool is an eraser it's type is returned (relevant for Buttontools).
+     * If the currently active Tool is not a eraser the erasertype of the eraser in the toolbar is obtained.
      *
      * @param selectedTool
      * @return EraserType
      */
-    EraserType getEraserType(SelectedTool selectedTool = SelectedTool::active);
+    EraserType getEraserType();
 
     /**
      * @brief Update the toolbar based on the Eraser type of the active tool

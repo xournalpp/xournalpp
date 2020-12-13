@@ -114,8 +114,8 @@ ToolHandler::~ToolHandler() {
 }
 
 void ToolHandler::setEraserType(EraserType eraserType) {
-    Tool* tool = this->toolbarSelectedTool;
-    tool->setEraserType(eraserType);
+    Tool& tool = this->getTool(TOOL_ERASER);
+    tool.setEraserType(eraserType);
     eraserTypeChanged();
 }
 
@@ -146,9 +146,12 @@ void ToolHandler::eraserTypeChanged() {
     }
 }
 
-auto ToolHandler::getEraserType(SelectedTool selectedTool) -> EraserType {
-    Tool* tool = getSelectedTool(selectedTool);
-    return tool->getEraserType();
+auto ToolHandler::getEraserType() -> EraserType {
+    // if active tool is eraser get its type
+    if (this->activeTool->type == TOOL_ERASER)
+        return this->activeTool->getEraserType();
+    else  // otherwise get EraserType of Toolbar Eraser
+        return this->getTool(TOOL_ERASER).getEraserType();
 }
 
 void ToolHandler::selectTool(ToolType type) {
