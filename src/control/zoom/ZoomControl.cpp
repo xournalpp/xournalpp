@@ -140,9 +140,7 @@ void ZoomControl::setZoom100Value(double zoom100Val) {
     fireZoomRangeValueChanged();
 }
 
-auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool { return updateZoomFitValue(getVisibleRect(), pageNo); }
-
-auto ZoomControl::updateZoomFitValue(const Rectangle<double>& widget_rect, size_t pageNo) -> bool {
+auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool {
     if (pageNo == 0) {
         pageNo = view->getCurrentPage();
     }
@@ -151,6 +149,7 @@ auto ZoomControl::updateZoomFitValue(const Rectangle<double>& widget_rect, size_
         return false;
     }
 
+    Rectangle widget_rect = getVisibleRect();
     double zoom_fit_width = widget_rect.width / (page->getWidth() + 20.0);
     if (zoom_fit_width < this->zoomMin || zoom_fit_width > this->zoomMax) {
         return false;
@@ -285,10 +284,9 @@ auto ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScr
 auto ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allocation, ZoomControl* zoom) -> bool {
     g_assert_true(widget != zoom->view->getWidget());
 
-    Rectangle<double> r(allocation->x, allocation->y, allocation->width, allocation->height);
 
     zoom->updateZoomPresentationValue();
-    zoom->updateZoomFitValue(r);
+    zoom->updateZoomFitValue();
 
     auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
     layout->layoutPages(allocation->width, allocation->height);
