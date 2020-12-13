@@ -115,10 +115,6 @@ void ColorToolItem::enable(bool enabled) {
             // and mainTool has Colour capability
             icon->setState(COLOR_ICON_STATE_PEN);
             AbstractToolItem::enable(true);
-        } else {
-            // disallow changes in color
-            icon->setState(COLOR_ICON_STATE_DISABLED);
-            AbstractToolItem::enable(false);
         }
         return;
     }
