@@ -2493,9 +2493,6 @@ void Control::initButtonTool() {
         cfg = settings->getButtonConfig(b);
         cfg->initButton(this->toolHandler, b);
     }
-
-    cfg = settings->getButtonConfig(Button::BUTTON_DEFAULT);
-    cfg->applyConfigToToolbarTool(this->toolHandler);
 }
 
 auto Control::askToReplace(fs::path const& filepath) const -> bool {
