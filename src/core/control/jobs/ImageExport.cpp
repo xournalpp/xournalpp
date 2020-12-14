@@ -17,6 +17,9 @@
 #include "util/Util.h"                   // for DPI_NORMALIZATION_FACTOR
 #include "util/i18n.h"                   // for _
 #include "view/DocumentView.h"           // for DocumentView
+#include "view/LayerView.h"
+#include "view/View.h"
+#include "view/background/BackgroundView.h"
 
 #include "ProgressListener.h"  // for ProgressListener
 
@@ -42,6 +45,18 @@ void ImageExport::setQualityParameter(RasterImageQualityParameter qParam) { this
  */
 void ImageExport::setQualityParameter(ExportQualityCriterion criterion, int value) {
     this->qualityParameter = RasterImageQualityParameter(criterion, value);
+}
+
+/**
+ * @brief Select layers to export by parsing str
+ * @param rangeStr A string parsed to get a list of layers
+ */
+void ImageExport::setLayerRange(const char* rangeStr) {
+    if (rangeStr) {
+        // Use no upper bound for layer indices, as the maximal value can vary between pages
+        layerRange =
+                std::make_unique<LayerRangeVector>(ElementRange::parse(rangeStr, std::numeric_limits<size_t>::max()));
+    }
 }
 
 /**
@@ -166,8 +181,14 @@ void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, Ex
         }
     }
 
-    view.drawPage(page, this->cr, true /* dont render eraseable */, true /* don't rerender the pdf background */,
-                  exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
+    if (layerRange) {
+        view.drawLayersOfPage(*layerRange, page, this->cr, true /* dont render eraseable */,
+                              true /* don't rerender the pdf background */, exportBackground == EXPORT_BACKGROUND_NONE,
+                              exportBackground <= EXPORT_BACKGROUND_UNRULED);
+    } else {
+        view.drawPage(page, this->cr, true /* dont render eraseable */, true /* don't rerender the pdf background */,
+                      exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
+    }
 
     if (!freeSurface(id)) {
         // could not create this file...

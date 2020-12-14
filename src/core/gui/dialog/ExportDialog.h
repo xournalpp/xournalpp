@@ -18,7 +18,7 @@
 #include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
 #include "control/jobs/ImageExport.h"    // for RasterImageQualityParameter
 #include "gui/GladeGui.h"                // for GladeGui
-#include "util/PageRange.h"              // for PageRangeVector
+#include "util/ElementRange.h"           // for PageRangeVector
 
 class GladeSearchpath;
 

@@ -1660,7 +1660,7 @@ static int applib_getDisplayDpi(lua_State* L) {
  * app.export({["outputFile"] = "Test.svg", ["range"] = "3-", ["background"] = "unruled"})
  *
  * Example 3:
- * app.export({["outputFile"] = "Test.png", ["range"] = "1-2", ["background"] = "all", ["pngWidth"] = 800})
+ * app.export({["outputFile"] = "Test.png", ["layerRange"] = "1-2", ["background"] = "all", ["pngWidth"] = 800})
  **/
 static int applib_export(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
@@ -1673,14 +1673,16 @@ static int applib_export(lua_State* L) {
 
     lua_getfield(L, 1, "outputFile");
     lua_getfield(L, 1, "range");
+    lua_getfield(L, 1, "layerRange");
     lua_getfield(L, 1, "background");
     lua_getfield(L, 1, "progressiveMode");
     lua_getfield(L, 1, "pngDpi");
     lua_getfield(L, 1, "pngWidth");
     lua_getfield(L, 1, "dpiHeight");
 
-    const char* outputFile = luaL_optstring(L, -7, nullptr);
-    const char* range = luaL_optstring(L, -6, nullptr);
+    const char* outputFile = luaL_optstring(L, -8, nullptr);
+    const char* range = luaL_optstring(L, -7, nullptr);
+    const char* layerRange = luaL_optstring(L, -6, nullptr);
     const char* background = luaL_optstring(L, -5, "all");
     bool progressiveMode = lua_toboolean(L, -4);  // true unless nil or false
     int pngDpi = luaL_optinteger(L, -3, -1);
@@ -1702,13 +1704,13 @@ static int applib_export(lua_State* L) {
     auto extension = file.extension();
 
     if (extension == ".pdf") {
-        ExportHelper::exportPdf(doc, outputFile, range, bgType, progressiveMode);
+        ExportHelper::exportPdf(doc, outputFile, range, layerRange, bgType, progressiveMode);
     } else if (extension == ".svg" || extension == ".png") {
-        ExportHelper::exportImg(doc, outputFile, range, pngDpi, pngWidth, pngHeight, bgType);
+        ExportHelper::exportImg(doc, outputFile, range, layerRange, pngDpi, pngWidth, pngHeight, bgType);
     }
 
     // Make sure to remove all vars which are put to the stack before!
-    lua_pop(L, 7);
+    lua_pop(L, 8);
 
     return 1;
 }

@@ -23,6 +23,9 @@ namespace ExportHelper {
  * @param doc Document to export
  * @param output Path to the output file(s)
  * @param range Page range to be parsed. If range=nullptr, exports the whole file
+ * @param layerRange Layer range to be parsed. Will only export those layers, for every exported page.
+ *                  If a number is too high for the number of layers on a given page, it is just ignored.
+ *                  If range=nullptr, exports all layers.
  * @param pngDpi Set dpi for Png files. Non positive values are ignored
  * @param pngWidth Set the width for Png files. Non positive values are ignored
  * @param pngHeight Set the height for Png files. Non positive values are ignored
@@ -32,22 +35,25 @@ namespace ExportHelper {
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-int exportImg(Document* doc, const char* output, const char* range, int pngDpi, int pngWidth, int pngHeight,
-              ExportBackgroundType exportBackground);
+int exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
+              int pngHeight, ExportBackgroundType exportBackground);
 
 /**
  * @brief Export the input file as pdf
  * @param doc Document to export
  * @param output Path to the output file
  * @param range Page range to be parsed. If range=nullptr, exports the whole file
+ * @param layerRange Layer range to be parsed. Will only export those layers, for every exported page.
+ *                  If a number is too high for the number of layers on a given page, it is just ignored.
+ *                  If range=nullptr, exports all layers.
  * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported pdf file has white background
  * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
  * rendered one by one to produce as many pages as there are layers.
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-int exportPdf(Document* doc, const char* output, const char* range, ExportBackgroundType exportBackground,
-              bool progressiveMode);
+int exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
+              ExportBackgroundType exportBackground, bool progressiveMode);
 
 
 }  // namespace ExportHelper

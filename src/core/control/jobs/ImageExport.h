@@ -16,7 +16,7 @@
 
 #include <cairo.h>  // for cairo_surface_t, cairo_t
 
-#include "util/PageRange.h"  // for PageRangeVector
+#include "util/ElementRange.h"  // for PageRangeVector, LayerRangeVector
 
 #include "BaseExportJob.h"  // for ExportBackgroundType, EXPORT_BACKGROUND_ALL
 #include "filesystem.h"     // for path
@@ -97,6 +97,12 @@ public:
      */
     void setQualityParameter(ExportQualityCriterion criterion, int value);
 
+    /**
+     * @brief Select layers to export by parsing str
+     * @param str A string parsed to get a list of layers
+     */
+    void setLayerRange(const char* str);
+
 private:
     /**
      * @brief Create Cairo surface for a given page
@@ -162,6 +168,11 @@ public:
      * The range to export
      */
     const PageRangeVector& exportRange;
+
+    /**
+     * @brief A pointer to a range of layers to export (the same for every exported pages)
+     */
+    std::unique_ptr<LayerRangeVector> layerRange;
 
     /**
      * @brief The export quality parameters, used if format==EXPORT_GRAPHICS_PNG

@@ -13,7 +13,7 @@
 #include "model/Document.h"                 // for Document
 #include "pdf/base/XojPdfExport.h"          // for XojPdfExport
 #include "pdf/base/XojPdfExportFactory.h"   // for XojPdfExportFactory
-#include "util/PageRange.h"                 // for parse, PageRangeVector
+#include "util/ElementRange.h"              // for parse, PageRangeVector
 #include "util/i18n.h"                      // for _
 
 #include "filesystem.h"  // for operator==, path, u8path
@@ -34,8 +34,8 @@ namespace ExportHelper {
  *
  * @return 0 on success, -3 on export failure
  */
-auto exportImg(Document* doc, const char* output, const char* range, int pngDpi, int pngWidth, int pngHeight,
-               ExportBackgroundType exportBackground) -> int {
+auto exportImg(Document* doc, const char* output, const char* range, const char* layerRange, int pngDpi, int pngWidth,
+               int pngHeight, ExportBackgroundType exportBackground) -> int {
 
     fs::path const path(output);
 
@@ -47,7 +47,7 @@ auto exportImg(Document* doc, const char* output, const char* range, int pngDpi,
 
     PageRangeVector exportRange;
     if (range) {
-        exportRange = PageRange::parse(range, doc->getPageCount());
+        exportRange = ElementRange::parse(range, doc->getPageCount());
     } else {
         exportRange.emplace_back(0, doc->getPageCount() - 1);
     }
@@ -65,6 +65,8 @@ auto exportImg(Document* doc, const char* output, const char* range, int pngDpi,
             imgExport.setQualityParameter(EXPORT_QUALITY_HEIGHT, pngHeight);
         }
     }
+
+    imgExport.setLayerRange(layerRange);
 
     imgExport.exportGraphics(&progress);
 
@@ -89,8 +91,8 @@ auto exportImg(Document* doc, const char* output, const char* range, int pngDpi,
  *
  * @return 0 on success, -3 on export failure
  */
-auto exportPdf(Document* doc, const char* output, const char* range, ExportBackgroundType exportBackground,
-               bool progressiveMode) -> int {
+auto exportPdf(Document* doc, const char* output, const char* range, const char* layerRange,
+               ExportBackgroundType exportBackground, bool progressiveMode) -> int {
 
     GFile* file = g_file_new_for_commandline_arg(output);
 
@@ -101,9 +103,11 @@ auto exportPdf(Document* doc, const char* output, const char* range, ExportBackg
 
     bool exportSuccess = 0;  // Return of the export job
 
+    pdfe->setLayerRange(layerRange);
+
     if (range) {
         // Parse the range
-        PageRangeVector exportRange = PageRange::parse(range, doc->getPageCount());
+        PageRangeVector exportRange = ElementRange::parse(range, doc->getPageCount());
         // Do the export
         exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
     } else {
