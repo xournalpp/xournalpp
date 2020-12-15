@@ -28,18 +28,18 @@ void ButtonConfig::initButton(ToolHandler* toolHandler, Button button) {
     toolHandler->resetButtonTool(this->action, button);
 
     if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER || this->action == TOOL_ERASER) {
-
-        if (this->drawingType != DRAWING_TYPE_DONT_CHANGE) {
-            toolHandler->setButtonDrawingType(this->drawingType, button);
-        }
-
         if (this->size != TOOL_SIZE_NONE) {
             toolHandler->setButtonSize(this->size, button);
         }
-        toolHandler->setButtonColor(this->color, button);
-    }
-    if (this->action == TOOL_ERASER && this->eraserMode != ERASER_TYPE_NONE) {
-        toolHandler->setButtonEraserType(this->eraserMode, button);
+        if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER) {
+            toolHandler->setButtonColor(this->color, button);
+            if (this->drawingType != DRAWING_TYPE_DONT_CHANGE)
+                toolHandler->setButtonDrawingType(this->drawingType, button);
+        }
+        if (this->action == TOOL_ERASER) {
+            if (this->eraserMode != ERASER_TYPE_NONE)
+                toolHandler->setButtonEraserType(this->eraserMode, button);
+        }
     }
 }
 
@@ -50,18 +50,18 @@ void ButtonConfig::applyConfigToToolbarTool(ToolHandler* toolHandler) {
     toolHandler->selectTool(this->action);
 
     if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER || this->action == TOOL_ERASER) {
-
-        if (this->drawingType != DRAWING_TYPE_DONT_CHANGE) {
-            toolHandler->setDrawingType(this->drawingType);
-        }
-
         if (this->size != TOOL_SIZE_NONE) {
             toolHandler->setSize(this->size);
         }
-        toolHandler->setColor(this->color, false);
-    }
-    if (this->action == TOOL_ERASER && this->eraserMode != ERASER_TYPE_NONE) {
-        toolHandler->setEraserType(this->eraserMode);
+        if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER) {
+            toolHandler->setColor(this->color, false);
+            if (this->drawingType != DRAWING_TYPE_DONT_CHANGE)
+                toolHandler->setDrawingType(this->drawingType);
+        }
+        if (this->action == TOOL_ERASER) {
+            if (this->eraserMode != ERASER_TYPE_NONE)
+                toolHandler->setEraserType(this->eraserMode);
+        }
     }
 }
 
@@ -70,17 +70,20 @@ bool ButtonConfig::applyNoChangeSettings(ToolHandler* toolHandler, Button button
         return false;
     }
     if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER || this->action == TOOL_ERASER) {
-
-        if (this->drawingType == DRAWING_TYPE_DONT_CHANGE) {
-            toolHandler->setButtonDrawingType(toolHandler->getDrawingType(SelectedTool::toolbar), button);
-        }
+        Tool& correspondingTool = toolHandler->getTool(this->action);
 
         if (this->size == TOOL_SIZE_NONE) {
-            toolHandler->setButtonSize(toolHandler->getSize(SelectedTool::toolbar), button);
+            toolHandler->setButtonSize(correspondingTool.getSize(), button);
+        }
+        if (this->action == TOOL_PEN || this->action == TOOL_HIGHLIGHTER) {
+            if (this->drawingType == DRAWING_TYPE_DONT_CHANGE)
+                toolHandler->setButtonDrawingType(correspondingTool.getDrawingType(), button);
+        }
+        if (this->action == TOOL_ERASER) {
+            if (this->eraserMode == ERASER_TYPE_NONE)
+                toolHandler->setButtonEraserType(correspondingTool.getEraserType(), button);
         }
     }
-    if (this->action == TOOL_ERASER && this->eraserMode == ERASER_TYPE_NONE) {
-        toolHandler->setButtonEraserType(toolHandler->getEraserType(SelectedTool::toolbar), button);
-    }
+
     return true;
 }
