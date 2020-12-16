@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.20
+
+More bugfixes.
+
+* Fixed a regression with pdf files that could not be overwritten (#2355)
+* Fixed page layout update after inserting or deleting a page, changing the page layout or zooming (#1777, #2346, #2411)
+* Fixed incorrect rendering of pages after changing the page format (#2457)
+* Fixed blocked scrolling after saving a file (#2062)
+* Fixed presentation mode after startup (#2413)
+
 ## 1.0.19
 
 More bugfixes and improvements due to help from the various community
