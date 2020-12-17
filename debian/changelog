@@ -1,6 +1,5 @@
 xournalpp (1.0.20-0) unstable; urgency=medium
 
-  [ Roland Lötscher ]
   * Fixed a regression with pdf files that could not be overwritten
   * Fixed page layout update after inserting or deleting a page, changeing the page layout or zooming
   * Fixed incorrect rendering of pages after changing the page format
