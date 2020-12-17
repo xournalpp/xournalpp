@@ -133,7 +133,9 @@ void Settings::loadDefault() {
     this->fullscreenHideElements = "mainMenubar";
     this->presentationHideElements = "mainMenubar,sidebarContents";
 
-    this->enableCacheClearOnZoom = true;
+    this->touchZoomStartThreshold = 0.0;
+
+    this->pageRerenderThreshold = 5.0;
     this->pdfPageCacheSize = 10;
 
     this->selectionBorderColor = 0xff0000U;  // red
@@ -384,8 +386,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->fullscreenHideElements = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationHideElements")) == 0) {
         this->presentationHideElements = reinterpret_cast<const char*>(value);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("enableCacheClearOnZoom")) == 0) {
-        this->enableCacheClearOnZoom = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchZoomStartThreshold")) == 0) {
+        this->touchZoomStartThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageRerenderThreshold")) == 0) {
+        this->pageRerenderThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfPageCacheSize")) == 0) {
         this->pdfPageCacheSize = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("selectionBorderColor")) == 0) {
@@ -825,7 +829,8 @@ void Settings::save() {
     WRITE_UINT_PROP(backgroundColor);
     WRITE_UINT_PROP(selectionMarkerColor);
 
-    WRITE_BOOL_PROP(enableCacheClearOnZoom);
+    WRITE_DOUBLE_PROP(touchZoomStartThreshold);
+    WRITE_DOUBLE_PROP(pageRerenderThreshold);
 
     WRITE_INT_PROP(pdfPageCacheSize);
     WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
@@ -1555,13 +1560,24 @@ void Settings::setPresentationHideElements(string elements) {
     save();
 }
 
-auto Settings::getClearPDFCacheOnZoom() const -> bool { return this->enableCacheClearOnZoom; }
-void Settings::setClearPDFCacheOnZoom(bool b) {
-    if (this->enableCacheClearOnZoom == b) {
+auto Settings::getTouchZoomStartThreshold() const -> double { return this->touchZoomStartThreshold; }
+void Settings::setTouchZoomStartThreshold(double threshold) {
+    if (this->touchZoomStartThreshold == threshold) {
         return;
     }
 
-    this->enableCacheClearOnZoom = b;
+    this->touchZoomStartThreshold = threshold;
+    save();
+}
+
+
+auto Settings::getPDFPageRerenderThreshold() const -> double { return this->pageRerenderThreshold; }
+void Settings::setPDFPageRerenderThreshold(double threshold) {
+    if (this->pageRerenderThreshold == threshold) {
+        return;
+    }
+
+    this->pageRerenderThreshold = threshold;
     save();
 }
 

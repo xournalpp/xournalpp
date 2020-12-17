@@ -6,11 +6,17 @@
 
 class PdfCacheEntry {
 public:
-    ///  Cache [img], the result of rendering [popplerPage] with
-    /// the given [zoom].
-    ///  A change in the document's zoom causes a change in the
-    /// quality of the PDF backgrounds (zoomed in => need a higher
-    /// quality rendering).
+    /**
+     *   Cache [img], the result of rendering [popplerPage] with
+     * the given [zoom].
+     *  A change in the document's zoom causes a change in the
+     * quality of the PDF backgrounds (zoomed in => need a higher
+     * quality rendering).
+     *
+     * @param popplerPage
+     * @param img is the result of rendering popplerPage
+     * @param zoom is the zoom at which the page was rendered.
+     */
     PdfCacheEntry(XojPdfPageSPtr popplerPage, cairo_surface_t* img, double zoom) {
         this->popplerPage = std::move(popplerPage);
         this->rendered = img;
@@ -41,7 +47,9 @@ PdfCache::~PdfCache() {
 
 void PdfCache::setZoom(double zoom) { this->zoom = zoom; }
 
-void PdfCache::setZoomingClearsCache(bool clears) { this->zoomClearsCache = clears; }
+void PdfCache::setRefreshThreshold(double threshold) { this->zoomRefreshThreshold = threshold; }
+
+void PdfCache::setAnyZoomChangeCausesRecache(bool b) { this->zoomClearsCache = b; }
 
 void PdfCache::clearCache() {
     for (PdfCacheEntry* e: this->data) {
@@ -78,16 +86,21 @@ void PdfCache::render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoo
     this->setZoom(zoom);
 
     PdfCacheEntry* cacheResult = lookup(popplerPage);
+    bool needsRefresh{cacheResult == nullptr};
 
-    if (cacheResult == nullptr
+    if (cacheResult != nullptr) {
+        double averagedZoom = (this->zoom + cacheResult->zoom) / 2.0;
+        double percentZoomChange = std::abs(cacheResult->zoom - this->zoom) * 100.0 / averagedZoom;
+
         // If we do have a cached result, is its rendering quality
         // acceptable for our current zoom?
-        || this->zoom < cacheResult->zoom / 2.0 && this->zoom > 1.0 ||
-        this->zoom > cacheResult->zoom * 2.0
+        needsRefresh = this->zoom > 1.0 && percentZoomChange > this->zoomRefreshThreshold
 
-        // Has the user requested that we **always** clear the cache on zoom?
-        || this->zoomClearsCache && this->zoom != cacheResult->zoom) {
+                       // Has the user requested that we **always** clear the cache on zoom?
+                       || this->zoomClearsCache && this->zoom != cacheResult->zoom;
+    }
 
+    if (needsRefresh) {
         double renderZoom = std::max(zoom, 1.0);
 
         auto* img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, popplerPage->getWidth() * renderZoom,

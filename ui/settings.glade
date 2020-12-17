@@ -43,6 +43,12 @@
     <property name="step-increment">1</property>
     <property name="page-increment">1</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentReRenderThreshold">
+    <property name="upper">900</property>
+    <property name="value">10</property>
+    <property name="step-increment">5</property>
+    <property name="page-increment">100</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentSeekTime">
     <property name="lower">1</property>
     <property name="upper">90</property>
@@ -115,6 +121,11 @@
     <property name="upper">400</property>
     <property name="value">72</property>
     <property name="step-increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentZoomStartThreshold">
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustmentZoomStep">
     <property name="lower">0.10</property>
@@ -1995,6 +2006,58 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
                                             <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <!-- n-columns=3 n-rows=1 -->
+                                          <object class="GtkGrid" id="gdStartZoomAtSetting">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="tooltip-text" translatable="yes">When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. 
+This setting can make it easier to draw with touch. </property>
+                                            <child>
+                                              <object class="GtkLabel" id="label2">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">Start zooming after a distance </property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">0</property>
+                                                <property name="top-attach">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkSpinButton" id="spTouchZoomStartThreshold">
+                                                <property name="name">spTouchDisableTimeout</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="text" translatable="yes">1.0</property>
+                                                <property name="adjustment">adjustmentZoomStartThreshold</property>
+                                                <property name="climb-rate">0.5</property>
+                                                <property name="digits">1</property>
+                                                <property name="value">1</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">1</property>
+                                                <property name="top-attach">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="label4">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">% greater than the initial distance between the two touches.</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">2</property>
+                                                <property name="top-attach">0</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">2</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -4170,27 +4233,27 @@ It must be short in time and length and we can't have ignored another stroke rec
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFrame" id="boxPdfCaching">
+                              <object class="GtkFrame" id="framePDFCacheOptions">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="label-xalign">0.009999999776482582</property>
                                 <child>
-                                  <object class="GtkAlignment" id="alignPdfCachingContent">
+                                  <object class="GtkAlignment" id="alignPDFCacheOptions">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
                                     <property name="bottom-padding">8</property>
                                     <property name="left-padding">12</property>
                                     <property name="right-padding">12</property>
                                     <child>
-                                      <object class="GtkBox" id="boxPdfCachingContent">
+                                      <object class="GtkBox" id="boxReRenderSetting">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel" id="lblPdfCaching">
+                                          <object class="GtkLabel" id="lblReRenderMoreOftenWhileZooming">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">&lt;i&gt;Re-render PDF backgrounds more often for better render quality. 
+                                            <property name="label" translatable="yes">&lt;i&gt;Re-render PDF backgrounds more often while zooming for better render quality. 
 &lt;b&gt;Note:&lt;/b&gt; This should not affect print quality.&lt;/i&gt;</property>
                                             <property name="use-markup">True</property>
                                             <property name="wrap">True</property>
@@ -4205,14 +4268,57 @@ It must be short in time and length and we can't have ignored another stroke rec
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbClearCacheOnZoom">
-                                            <property name="label" translatable="yes">Clear cache whenever zoom changes</property>
-                                            <property name="name">cbClearCacheOnZoom</property>
+                                          <!-- n-columns=3 n-rows=1 -->
+                                          <object class="GtkGrid" id="gdRecacheOptions">
                                             <property name="visible">True</property>
-                                            <property name="can-focus">True</property>
-                                            <property name="receives-default">False</property>
-                                            <property name="xalign">0</property>
-                                            <property name="draw-indicator">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="row-spacing">5</property>
+                                            <property name="column-spacing">5</property>
+                                            <child>
+                                              <object class="GtkLabel" id="lbReRenderThreshold">
+                                                <property name="name">lbSnapRotationTolerance</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="tooltip-text" translatable="yes">When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.
+
+Set this to 0% to always re-render on zoom.</property>
+                                                <property name="label" translatable="yes">Re-render when the page's zoom changes by more than </property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">0</property>
+                                                <property name="top-attach">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkSpinButton" id="spReRenderThreshold">
+                                                <property name="name">spSnapRotationTolerance</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="text" translatable="yes">0.00</property>
+                                                <property name="input-purpose">number</property>
+                                                <property name="adjustment">adjustmentReRenderThreshold</property>
+                                                <property name="climb-rate">2</property>
+                                                <property name="numeric">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">1</property>
+                                                <property name="top-attach">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="lbReRenderThresholdEnding">
+                                                <property name="name">lbSnapRotationTolerance</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">%.</property>
+                                                <property name="xalign">0</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left-attach">2</property>
+                                                <property name="top-attach">0</property>
+                                              </packing>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>

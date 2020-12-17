@@ -311,8 +311,12 @@ public:
     Color getBackgroundColor() const;
     void setBackgroundColor(Color color);
 
-    bool getClearPDFCacheOnZoom() const;
-    void setClearPDFCacheOnZoom(bool b);
+    // Re-render pages if document zoom differs from the last render zoom by the given threshold.
+    double getPDFPageRerenderThreshold() const;
+    void setPDFPageRerenderThreshold(double threshold);
+
+    double getTouchZoomStartThreshold() const;
+    void setTouchZoomStartThreshold(double threshold);
 
     int getPdfPageCacheSize() const;
     [[maybe_unused]] void setPdfPageCacheSize(int size);
@@ -760,11 +764,17 @@ private:
     int pdfPageCacheSize{};
 
     /**
-     *  Whether to clear the PDF cache on page zoom,
-     * or to use a previous rendering
-     * with nearly the current zoom, if available.
+     *  Percentage by which the page's zoom must change
+     * for PDF pages to re-render while zooming.
      */
-    bool enableCacheClearOnZoom{};
+    double pageRerenderThreshold{};
+
+    /**
+     * Don't start zooming with touch until the difference in distances between the
+     * current touch points and the original is greater than this percentage of the
+     * original distance.
+     */
+    double touchZoomStartThreshold{};
 
     /**
      * The color to draw borders on selected elements

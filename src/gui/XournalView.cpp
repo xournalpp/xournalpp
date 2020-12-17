@@ -489,7 +489,8 @@ void XournalView::zoomChanged() {
     XojPageView* view = getViewFor(currentPage);
 
     ZoomControl* zoom = control->getZoomControl();
-    this->cache->setZoomingClearsCache(control->getSettings()->getClearPDFCacheOnZoom());
+    this->cache->setAnyZoomChangeCausesRecache(false);  // We're zooming -- no need for repeated re-renders.
+    this->cache->setRefreshThreshold(control->getSettings()->getPDFPageRerenderThreshold());
 
     if (!view) {
         return;

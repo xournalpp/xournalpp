@@ -91,6 +91,12 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
             G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->customHandRecognitionToggled(); }),
             this);
 
+    g_signal_connect(get("cbEnableZoomGestures"), "toggled",
+                     G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
+                         self->enableWithCheckbox("cbEnableZoomGestures", "gdStartZoomAtSetting");
+                     }),
+                     this);
+
     g_signal_connect(get("cbTouchWorkaround"), "toggled", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
                          self->touchWorkaroundStatusChanged();
                      }),
@@ -279,7 +285,6 @@ void SettingsDialog::load() {
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
     loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
     loadCheckbox("cbEnablePressureInference", settings->isPressureGuessingEnabled());
-    loadCheckbox("cbClearCacheOnZoom", settings->getClearPDFCacheOnZoom());
     loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
     loadCheckbox("cbTouchDrawing", settings->getTouchDrawingEnabled());
     const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
@@ -331,6 +336,12 @@ void SettingsDialog::load() {
 
     GtkWidget* spDrawDirModsRadius = get("spDrawDirModsRadius");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spDrawDirModsRadius), settings->getDrawDirModsRadius());
+
+    GtkWidget* spReRenderThreshold = get("spReRenderThreshold");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spReRenderThreshold), settings->getPDFPageRerenderThreshold());
+
+    GtkWidget* spTouchZoomStartThreshold = get("spTouchZoomStartThreshold");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spTouchZoomStartThreshold), settings->getTouchZoomStartThreshold());
 
     {
         int time = 0;
@@ -420,6 +431,7 @@ void SettingsDialog::load() {
     enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
     enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
     enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
+    enableWithCheckbox("cbEnableZoomGestures", "gdStartZoomAtSetting");
     enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
     customHandRecognitionToggled();
     customStylusIconTypeChanged();
@@ -562,7 +574,6 @@ void SettingsDialog::save() {
     settings->setRestoreLineWidthEnabled(getCheckbox("cbRestoreLineWidthEnabled"));
     settings->setDarkTheme(getCheckbox("cbDarkTheme"));
     settings->setPressureGuessingEnabled(getCheckbox("cbEnablePressureInference"));
-    settings->setClearPDFCacheOnZoom(getCheckbox("cbClearCacheOnZoom"));
     settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
     settings->setTouchDrawingEnabled(getCheckbox("cbTouchDrawing"));
     settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
@@ -678,6 +689,14 @@ void SettingsDialog::save() {
     GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
     int strokeSuccessiveTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
     settings->setStrokeFilter(strokeIgnoreTime, strokeIgnoreLength, strokeSuccessiveTime);
+
+    GtkWidget* spTouchZoomStartThreshold = get("spTouchZoomStartThreshold");
+    double zoomStartThreshold = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spTouchZoomStartThreshold));
+    settings->setTouchZoomStartThreshold(zoomStartThreshold);
+
+    GtkWidget* spReRenderThreshold = get("spReRenderThreshold");
+    double rerenderThreshold = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spReRenderThreshold));
+    settings->setPDFPageRerenderThreshold(rerenderThreshold);
 
 
     settings->setDisplayDpi(dpi);

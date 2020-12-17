@@ -4,6 +4,8 @@
 
 #include "TouchInputHandler.h"
 
+#include <cmath>
+
 #include "InputContext.h"
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputHandler(inputContext) {}
@@ -121,6 +123,10 @@ void TouchInputHandler::zoomStart() {
         this->startZoomDistance = 0.01;
     }
 
+    // Whether we can ignore the zoom portion of the gesture (e.g. distance between touch points
+    // hasn't changed enough).
+    this->canBlockZoom = true;
+
     lastZoomScrollCenter = (this->priLastAbs + this->secLastAbs) / 2.0;
 
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
@@ -150,8 +156,20 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
         this->secLastAbs = {event.absoluteX, event.absoluteY};
     }
 
-    double sqDistance = this->priLastAbs.distance(this->secLastAbs);
-    double zoom = sqDistance / this->startZoomDistance;
+    double distance = this->priLastAbs.distance(this->secLastAbs);
+    double zoom = distance / this->startZoomDistance;
+
+    double zoomTriggerThreshold = inputContext->getSettings()->getTouchZoomStartThreshold();
+    double zoomChangePercentage = std::abs(distance - startZoomDistance) / startZoomDistance * 100;
+
+    // Has the touch points moved far enough to trigger a zoom?
+    if (this->canBlockZoom && zoomChangePercentage < zoomTriggerThreshold) {
+        zoom = 1.0;
+    } else {
+        // Touches have moved far enough from their initial location that we
+        // no longer prevent touchscreen zooming.
+        this->canBlockZoom = false;
+    }
 
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
     zoomControl->zoomSequenceChange(zoom, true);
