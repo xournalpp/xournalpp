@@ -57,7 +57,7 @@ Xournal++ features:
 * Rect snapping to grid
 * Audio recording and playback alongside with handwritten notes
 * Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
-* Plugins using LUA Scripting
+* Plugins using Lua Scripting
 
 <table>
 <tr>
