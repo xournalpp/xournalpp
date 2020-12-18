@@ -80,9 +80,19 @@ public:
     void addElement(Element* e, Layer::ElementIndex order);
 
     /**
-     * Returns all containing elements of this selections
+     * Returns all containing elements of this selection
      */
     vector<Element*>* getElements();
+
+    /**
+     * Returns the insert order of this selection
+     */
+    std::deque<std::pair<Element*, Layer::ElementIndex>> const& getInsertOrder() const;
+
+    /** replaces all elements by a new vector of elements
+     * @param newElements: the elements which should replace the old elements
+     * */
+    void replaceInsertOrder(std::deque<std::pair<Element*, Layer::ElementIndex>> newInsertOrder);
 
 public:
     /**

@@ -16,6 +16,7 @@
 #include "serializing/ObjectOutputStream.h"
 #include "undo/ColorUndoAction.h"
 #include "undo/FontUndoAction.h"
+#include "undo/InsertUndoAction.h"
 #include "undo/SizeUndoAction.h"
 #include "undo/UndoRedoHandler.h"
 
@@ -293,9 +294,16 @@ void EditSelection::addElement(Element* e, Layer::ElementIndex order) {
 }
 
 /**
- * Returns all containing elements of this selections
+ * Returns all containing elements of this selection
  */
 auto EditSelection::getElements() -> vector<Element*>* { return this->contents->getElements(); }
+
+/**
+ * Returns the insert order of this selection
+ */
+auto EditSelection::getInsertOrder() const -> std::deque<std::pair<Element*, Layer::ElementIndex>> const& {
+    return this->contents->getInsertOrder();
+}
 
 /**
  * Finish the current movement
@@ -618,7 +626,22 @@ void EditSelection::translateToView(XojPageView* v) {
 }
 
 void EditSelection::copySelection() {
-    undo->addUndoAction(UndoActionPtr(contents->copySelection(this->view->getPage(), this->view, this->x, this->y)));
+    // clone elements in the insert order
+    std::deque<std::pair<Element*, Layer::ElementIndex>> clonedInsertOrder;
+    for (auto [e, index]: getInsertOrder()) {
+        clonedInsertOrder.emplace_back(e->clone(), index);
+    }
+
+    // apply transformations and add to layer
+    finalizeSelection();
+
+    // add undo action
+    PageRef page = this->view->getPage();
+    Layer* layer = page->getSelectedLayer();
+    undo->addUndoAction(std::unique_ptr<UndoAction>(new InsertsUndoAction(page, layer, *getElements())));
+
+    // restore insert order
+    contents->replaceInsertOrder(clonedInsertOrder);
 }
 
 /**
