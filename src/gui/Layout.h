@@ -129,9 +129,6 @@ private:
     double lastScrollHorizontal = -1;
     double lastScrollVertical = -1;
 
-    guint hadjHandler = -1;
-    guint vadjHandler = -1;
-
     /**
      * The last width and height of the widget
      */
