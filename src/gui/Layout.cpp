@@ -27,11 +27,9 @@ constexpr size_t const XOURNAL_PADDING_BETWEEN = 15;
 
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), scrollHandling(scrollHandling) {
-    this->hadjHandler = g_signal_connect(scrollHandling->getHorizontal(), "value-changed",
-                                         G_CALLBACK(horizontalScrollChanged), this);
+    g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(horizontalScrollChanged), this);
 
-    this->vadjHandler =
-            g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
+    g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
 
 
     lastScrollHorizontal = gtk_adjustment_get_value(scrollHandling->getHorizontal());
@@ -39,19 +37,15 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), s
 }
 
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
-    g_signal_handler_block(layout->scrollHandling->getHorizontal(), layout->hadjHandler);
     Layout::checkScroll(adjustment, layout->lastScrollHorizontal);
     layout->updateVisibility();
     layout->scrollHandling->scrollChanged();
-    g_signal_handler_unblock(layout->scrollHandling->getHorizontal(), layout->hadjHandler);
 }
 
 void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
-    g_signal_handler_block(layout->scrollHandling->getVertical(), layout->vadjHandler);
     Layout::checkScroll(adjustment, layout->lastScrollVertical);
     layout->updateVisibility();
     layout->scrollHandling->scrollChanged();
-    g_signal_handler_unblock(layout->scrollHandling->getVertical(), layout->vadjHandler);
 }
 
 Layout::~Layout() = default;
