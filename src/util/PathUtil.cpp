@@ -10,7 +10,7 @@
 #include "XojMsgBox.h"
 #include "i18n.h"
 
-#ifdef __APPLE__
+#ifdef GHC_FILESYSTEM
 // Fix of ghc::filesystem bug (path::operator/=() won't support string_views)
 constexpr auto const* CONFIG_FOLDER_NAME = "xournalpp";
 #else

@@ -276,6 +276,7 @@ elseif (NOT _found AND "ghc" IN_LIST want_components)
     ExternalProject_Get_Property(${GHC_FILESYSTEM} SOURCE_DIR)
     file(MAKE_DIRECTORY "${SOURCE_DIR}/include")
     target_include_directories(std_filesystem INTERFACE "${SOURCE_DIR}/include")
+    target_compile_definitions(std_filesystem INTERFACE -DGHC_FILESYSTEM)
 
     add_library(std::filesystem ALIAS std_filesystem)
 endif ()
