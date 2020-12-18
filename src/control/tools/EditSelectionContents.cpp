@@ -62,10 +62,25 @@ void EditSelectionContents::addElement(Element* e, Layer::ElementIndex order) {
     }
 }
 
+void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, Layer::ElementIndex>> newInsertOrder) {
+    this->selected.clear();
+    this->selected.reserve(newInsertOrder.size());
+    std::transform(begin(newInsertOrder), end(newInsertOrder), std::back_inserter(this->selected),
+                   [](auto const& e) { return e.first; });
+    this->insertOrder = std::move(newInsertOrder);
+}
+
 /**
- * Returns all containing elements of this selections
+ * Returns all containing elements of this selection
  */
 auto EditSelectionContents::getElements() -> vector<Element*>* { return &this->selected; }
+
+/**
+ * Returns the insert order of this selection
+ */
+auto EditSelectionContents::getInsertOrder() const -> std::deque<std::pair<Element*, Layer::ElementIndex>> const& {
+    return this->insertOrder;
+}
 
 /**
  * Sets the tool size for pen or eraser, returs an undo action

@@ -12,6 +12,7 @@
 
 #pragma once
 
+#include <deque>
 #include <string>
 #include <vector>
 
@@ -155,10 +156,14 @@ public:
     void addElement(Element* e, Layer::ElementIndex order = Layer::InvalidElementIndex);
 
     /**
-     * Returns all containing elements of this selections
+     * Returns all containing elements of this selection
      */
     vector<Element*>* getElements();
 
+    /**
+     * Returns the insert order of this selection
+     */
+    std::deque<std::pair<Element*, Layer::ElementIndex>> const& getInsertOrder() const;
     /**
      * Finish the current movement
      * (should be called in the mouse-button-released event handler)
