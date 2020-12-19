@@ -144,7 +144,7 @@ void ImageExport::exportImagePage(int pageId, int id, double zoomRatio, ExportGr
         return;
     }
 
-    if (page->getBackgroundType().isPdfPage()) {
+    if (page->getBackgroundType().isPdfPage() && !hideBackground) {
         int pgNo = page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
