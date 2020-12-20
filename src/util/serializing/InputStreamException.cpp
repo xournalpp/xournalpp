@@ -1,4 +1,4 @@
-#include "InputStreamException.h"
+#include "util/serializing/InputStreamException.h"
 
 const char* XML_VERSION_STR = "XojStrm1:";
 

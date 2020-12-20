@@ -9,10 +9,9 @@
  * @license GNU GPLv2 or later
  */
 
-#include <cstdlib>
 #include <ctime>
 
-#include <XojPreviewExtractor.h>
+#include <util/XojPreviewExtractor.h>
 #include <config-test.h>
 #include <cppunit/extensions/HelperMacros.h>
 

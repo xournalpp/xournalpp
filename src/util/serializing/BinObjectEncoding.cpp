@@ -1,4 +1,4 @@
-#include "BinObjectEncoding.h"
+#include "util/serializing/BinObjectEncoding.h"
 
 BinObjectEncoding::BinObjectEncoding() = default;
 

@@ -1,10 +1,10 @@
-#include "DeviceListHelper.h"
+#include "util/DeviceListHelper.h"
 
 #include <algorithm>
 #include <utility>
 #include <vector>
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 void storeNewUnlistedDevice(std::vector<InputDevice>& deviceList, GdkDevice* device) {
     // This could potentially be problematic with systems having a multitude of input devices as it searches linearily
@@ -41,8 +41,7 @@ void addDevicesToList(std::vector<InputDevice>& deviceList, GList* devList, bool
     }
 }
 
-auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices) -> vector<InputDevice> {
-    vector<InputDevice> deviceList = settings->getKnownInputDevices();
+auto DeviceListHelper::getDeviceList(std::vector<InputDevice> deviceList, bool ignoreTouchDevices) -> vector<InputDevice> {
     if (ignoreTouchDevices) {
         deviceList.erase(
                 std::remove_if(deviceList.begin(), deviceList.end(),

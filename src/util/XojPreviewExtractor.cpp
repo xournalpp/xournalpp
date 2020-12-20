@@ -1,15 +1,14 @@
-#include "XojPreviewExtractor.h"
+#include "util/XojPreviewExtractor.h"
 
 #include <array>
 #include <cstring>
-#include <iostream>
 
 #include <glib.h>
 #include <zip.h>
 #include <zlib.h>
 
-#include "GzUtil.h"
-#include "PathUtil.h"
+#include "util/GzUtil.h"
+#include "util/PathUtil.h"
 #include "filesystem.h"
 
 const char* TAG_PREVIEW_NAME = "preview";

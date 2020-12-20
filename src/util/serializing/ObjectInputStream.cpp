@@ -1,7 +1,7 @@
-#include "ObjectInputStream.h"
+#include "util/serializing/ObjectInputStream.h"
 
-#include "Serializeable.h"
-#include "i18n.h"
+#include "util/serializing/Serializeable.h"
+#include "util/i18n.h"
 
 ObjectInputStream::ObjectInputStream() = default;
 

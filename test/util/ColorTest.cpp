@@ -11,7 +11,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "Color.h"
+#include "util/Color.h"
 
 using namespace std;
 

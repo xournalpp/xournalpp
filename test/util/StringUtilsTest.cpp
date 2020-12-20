@@ -9,11 +9,7 @@
  * @license GNU GPLv2 or later
  */
 
-#include <cstdlib>
-#include <ctime>
-
-#include <StringUtils.h>
-#include <config-test.h>
+#include <util/StringUtils.h>
 #include <cppunit/extensions/HelperMacros.h>
 
 using namespace std;

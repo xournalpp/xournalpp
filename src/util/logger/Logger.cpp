@@ -1,16 +1,18 @@
-#include "Logger.h"
 
-#include <config-dev.h>
-
-#include "XournalType.h"
 
 #ifdef DEV_CALL_LOG
+
+#include "util/logger/Logger.h"
 
 #include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
+
+#include <config-dev.h>
+
+#include "util/XournalType.h"
 
 #ifdef _WIN32
 

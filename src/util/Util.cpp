@@ -1,16 +1,14 @@
-#include "Util.h"
+#include "util/Util.h"
 
 #include <array>
-#include <cassert>
 #include <cstdlib>
 
 #include <unistd.h>
 
-#include "Color.h"
-#include "PathUtil.h"
-#include "StringUtils.h"
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/Color.h"
+#include "util/PathUtil.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 struct CallbackUiData {
     explicit CallbackUiData(std::function<void()> callback): callback(std::move(callback)) {}

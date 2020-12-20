@@ -1,14 +1,14 @@
-#include "PathUtil.h"
+#include "util/PathUtil.h"
 
 #include <array>
 #include <fstream>
 
 #include <glib.h>
 
-#include "StringUtils.h"
-#include "Util.h"
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/StringUtils.h"
+#include "util/Util.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 #ifdef GHC_FILESYSTEM
 // Fix of ghc::filesystem bug (path::operator/=() won't support string_views)

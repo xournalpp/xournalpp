@@ -11,24 +11,26 @@
 
 // Set to true to write a log with errors and debug logs to /tmp/xojtmb.log
 #define DEBUG_THUMBNAILER false
-
+#if DEBUG_THUMBNAILER
+#include <fstream>
+#endif
 
 #include <algorithm>
-#include <fstream>
 #include <iostream>
 
 #include <config-paths.h>
 #include <config.h>
 
-#include "XojPreviewExtractor.h"
-#include "i18n.h"
-using std::cerr;
-using std::cout;
-using std::endl;
-#include <cairo-svg.h>
+#include "util/XojPreviewExtractor.h"
+#include "util/i18n.h"
+
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
+
+using std::cerr;
+using std::cout;
+using std::endl;
 
 void initLocalisation() {
 #ifdef ENABLE_NLS

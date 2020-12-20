@@ -12,7 +12,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
-#include "PathUtil.h"
+#include "util/PathUtil.h"
 #include "filesystem.h"
 
 using namespace std;
