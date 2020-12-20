@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "control/jobs/BaseExportJob.h"
 #include "control/jobs/ProgressListener.h"
 #include "model/Document.h"
 
@@ -30,7 +31,7 @@ public:
     /**
      * Export without background
      */
-    virtual void setNoBackgroundExport(bool noBackgroundExport);
+    virtual void setExportBackground(ExportBackgroundType exportBackground);
 
 private:
     bool startPdf(const fs::path& file);
@@ -59,7 +60,7 @@ private:
     cairo_surface_t* surface = nullptr;
     cairo_t* cr = nullptr;
 
-    bool noBackgroundExport = false;
+    ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
 
     string lastError;
 };

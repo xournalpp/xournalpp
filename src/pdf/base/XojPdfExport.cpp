@@ -7,6 +7,6 @@ XojPdfExport::~XojPdfExport() = default;
 /**
  * Export without background
  */
-void XojPdfExport::setNoBackgroundExport(bool noBackgroundExport) {
+void XojPdfExport::setExportBackground(ExportBackgroundType exportBackground) {
     // Does nothing in the base class
 }

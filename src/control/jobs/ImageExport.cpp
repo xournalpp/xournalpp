@@ -13,9 +13,9 @@
 #include "i18n.h"
 
 
-ImageExport::ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, bool hideBackground,
-                         PageRangeVector& exportRange):
-        doc(doc), file(std::move(file)), format(format), hideBackground(hideBackground), exportRange(exportRange) {}
+ImageExport::ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format,
+                         ExportBackgroundType exportBackground, PageRangeVector& exportRange):
+        doc(doc), file(std::move(file)), format(format), exportBackground(exportBackground), exportRange(exportRange) {}
 
 ImageExport::~ImageExport() = default;
 
@@ -144,14 +144,14 @@ void ImageExport::exportImagePage(int pageId, int id, double zoomRatio, ExportGr
         return;
     }
 
-    if (page->getBackgroundType().isPdfPage() && !hideBackground) {
+    if (page->getBackgroundType().isPdfPage() && (exportBackground == EXPORT_BACKGROUND_ALL)) {
         int pgNo = page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
         PdfView::drawPage(nullptr, popplerPage, cr, zoomRatio, page->getWidth(), page->getHeight());
     }
 
-    view.drawPage(page, this->cr, true, hideBackground);
+    view.drawPage(page, this->cr, true, exportBackground == EXPORT_BACKGROUND_NONE);
 
     if (!freeSurface(id)) {
         // could not create this file...
