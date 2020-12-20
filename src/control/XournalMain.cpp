@@ -52,10 +52,10 @@ auto migrateSettings() -> MigrateResult;
 void checkForErrorlog();
 void checkForEmergencySave(Control* control);
 
-auto exportPdf(const char* input, const char* output, const char* range, bool noBackground, bool progressiveMode)
-        -> int;
+auto exportPdf(const char* input, const char* output, const char* range, ExportBackgroundType exportBackground,
+               bool progressiveMode) -> int;
 auto exportImg(const char* input, const char* output, const char* range, int pngDpi, int pngWidth, int pngHeight,
-               bool noBackground) -> int;
+               ExportBackgroundType exportBackground) -> int;
 
 void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound = true);
 
@@ -235,14 +235,14 @@ void checkForEmergencySave(Control* control) {
  * @param pngDpi Set dpi for Png files. Non positive values are ignored
  * @param pngWidth Set the width for Png files. Non positive values are ignored
  * @param pngHeight Set the height for Png files. Non positive values are ignored
- * @param noBackground If true, the exported image file has transparent background
+ * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported image file has transparent background
  *
  *  The priority is: pngDpi overwrites pngWidth overwrites pngHeight
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
 auto exportImg(const char* input, const char* output, const char* range, int pngDpi, int pngWidth, int pngHeight,
-               bool noBackground) -> int {
+               ExportBackgroundType exportBackground) -> int {
     LoadHandler loader;
 
     Document* doc = loader.loadDocument(input);
@@ -267,7 +267,7 @@ auto exportImg(const char* input, const char* output, const char* range, int png
 
     DummyProgressListener progress;
 
-    ImageExport imgExport(doc, path, format, noBackground, exportRange);
+    ImageExport imgExport(doc, path, format, exportBackground, exportRange);
 
     if (format == EXPORT_GRAPHICS_PNG) {
         if (pngDpi > 0) {
@@ -301,14 +301,14 @@ auto exportImg(const char* input, const char* output, const char* range, int png
  * @param input Path to the input file
  * @param output Path to the output file
  * @param range Page range to be parsed. If range=nullptr, exports the whole file
- * @param noBackground If true, the exported pdf file has white background
+ * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported pdf file has white background
  * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
  * rendered one by one to produce as many pages as there are layers.
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-auto exportPdf(const char* input, const char* output, const char* range, bool noBackground, bool progressiveMode)
-        -> int {
+auto exportPdf(const char* input, const char* output, const char* range, ExportBackgroundType exportBackground,
+               bool progressiveMode) -> int {
     LoadHandler loader;
 
     Document* doc = loader.loadDocument(input);
@@ -319,7 +319,7 @@ auto exportPdf(const char* input, const char* output, const char* range, bool no
     GFile* file = g_file_new_for_commandline_arg(output);
 
     XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, nullptr);
-    pdfe->setNoBackgroundExport(noBackground);
+    pdfe->setExportBackground(exportBackground);
     char* cpath = g_file_get_path(file);
     string path = cpath;
     g_free(cpath);
@@ -584,11 +584,13 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
 
     if (app_data->pdfFilename && app_data->optFilename && *app_data->optFilename) {
         return exportPdf(*app_data->optFilename, app_data->pdfFilename, app_data->exportRange,
-                         app_data->exportNoBackground, app_data->progressiveMode);
+                         app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE : EXPORT_BACKGROUND_ALL,
+                         app_data->progressiveMode);
     }
     if (app_data->imgFilename && app_data->optFilename && *app_data->optFilename) {
         return exportImg(*app_data->optFilename, app_data->imgFilename, app_data->exportRange, app_data->exportPngDpi,
-                         app_data->exportPngWidth, app_data->exportPngHeight, app_data->exportNoBackground);
+                         app_data->exportPngWidth, app_data->exportPngHeight,
+                         app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE : EXPORT_BACKGROUND_ALL);
     }
     return -1;
 }

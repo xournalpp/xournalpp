@@ -18,6 +18,7 @@
 
 #include "view/DocumentView.h"
 
+#include "BaseExportJob.h"
 #include "PageRange.h"
 #include "XournalType.h"
 #include "filesystem.h"
@@ -26,7 +27,6 @@ class Document;
 class ProgressListener;
 
 enum ExportGraphicsFormat { EXPORT_GRAPHICS_UNDEFINED, EXPORT_GRAPHICS_PDF, EXPORT_GRAPHICS_PNG, EXPORT_GRAPHICS_SVG };
-
 
 /**
  * @brief List of available criterion for determining a PNG export quality.
@@ -68,7 +68,7 @@ private:
  */
 class ImageExport {
 public:
-    ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, bool hideBackground,
+    ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, ExportBackgroundType exportBackground,
                 PageRangeVector& exportRange);
     virtual ~ImageExport();
 
@@ -155,7 +155,7 @@ public:
     /**
      * Do not export the Background
      */
-    bool hideBackground = false;
+    ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
 
     /**
      * The range to export

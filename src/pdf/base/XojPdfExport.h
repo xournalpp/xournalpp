@@ -14,6 +14,8 @@
 #include <string>
 #include <vector>
 
+#include "control/jobs/BaseExportJob.h"
+
 #include "PageRange.h"
 #include "XournalType.h"
 #include "filesystem.h"
@@ -31,7 +33,7 @@ public:
     /**
      * Export without background
      */
-    virtual void setNoBackgroundExport(bool noBackgroundExport);
+    virtual void setExportBackground(ExportBackgroundType exportBackground);
 
 private:
 };
