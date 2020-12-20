@@ -144,14 +144,15 @@ void ImageExport::exportImagePage(int pageId, int id, double zoomRatio, ExportGr
         return;
     }
 
-    if (page->getBackgroundType().isPdfPage() && (exportBackground == EXPORT_BACKGROUND_ALL)) {
+    if (page->getBackgroundType().isPdfPage() && (exportBackground >= EXPORT_BACKGROUND_UNRULED)) {
         int pgNo = page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
         PdfView::drawPage(nullptr, popplerPage, cr, zoomRatio, page->getWidth(), page->getHeight());
     }
 
-    view.drawPage(page, this->cr, true, exportBackground == EXPORT_BACKGROUND_NONE);
+    view.drawPage(page, this->cr, true, exportBackground == EXPORT_BACKGROUND_NONE,
+                  exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
 
     if (!freeSurface(id)) {
         // could not create this file...

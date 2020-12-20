@@ -267,13 +267,13 @@ void DocumentView::finializeDrawing() {
 /**
  * Draw the background
  */
-void DocumentView::drawBackground() {
+void DocumentView::drawBackground(bool hidePdfBackground, bool hideImageBackground, bool hideRulingBackground) {
     PageType pt = page->getBackgroundType();
     if (pt.isPdfPage()) {
         // Handled in PdfView
-    } else if (pt.isImagePage()) {
+    } else if (pt.isImagePage() && !hideImageBackground) {
         paintBackgroundImage();
-    } else {
+    } else if (!hideRulingBackground) {
         backgroundPainter->paint(pt, cr, page);
     }
 }
@@ -305,13 +305,14 @@ void DocumentView::drawTransparentBackgroundPattern() {
  * @param dontRenderEditingStroke false to draw currently drawing stroke
  * @param hideBackground true to hide the background
  */
-void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hideBackground) {
+void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground,
+                            bool hideImageBackground, bool hideRulingBackground) {
     initDrawing(page, cr, dontRenderEditingStroke);
 
     bool backgroundVisible = page->isLayerVisible(0);
 
-    if (!hideBackground && backgroundVisible) {
-        drawBackground();
+    if (backgroundVisible) {
+        drawBackground(hidePdfBackground, hideImageBackground, hideRulingBackground);
     }
 
     if (!backgroundVisible) {

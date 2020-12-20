@@ -19,10 +19,13 @@
 CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Custom Export")) {
     // Supported filters
     filters[_("PDF files")] = new ExportType(".pdf", EXPORT_BACKGROUND_ALL);
+    filters[_("PDF without ruling")] = new ExportType(".pdf", EXPORT_BACKGROUND_UNRULED);
     filters[_("PDF with plain background")] = new ExportType(".pdf", EXPORT_BACKGROUND_NONE);
     filters[_("PNG graphics")] = new ExportType(".png", EXPORT_BACKGROUND_ALL);
+    filters[_("PNG without ruling")] = new ExportType(".png", EXPORT_BACKGROUND_UNRULED);
     filters[_("PNG with transparent background")] = new ExportType(".png", EXPORT_BACKGROUND_NONE);
     filters[_("SVG graphics")] = new ExportType(".svg", EXPORT_BACKGROUND_ALL);
+    filters[_("SVG without ruling")] = new ExportType(".svg", EXPORT_BACKGROUND_UNRULED);
     filters[_("SVG with transparent background")] = new ExportType(".svg", EXPORT_BACKGROUND_NONE);
     filters[_("Xournal (Compatibility)")] = new ExportType(".xoj", EXPORT_BACKGROUND_ALL);
 }

@@ -23,7 +23,7 @@
  *  @brief List of types for the export of background components.
  *  Keep the order so that one can check for intermediate types using comparsion.
  */
-enum ExportBackgroundType { EXPORT_BACKGROUND_NONE, EXPORT_BACKGROUND_ALL };
+enum ExportBackgroundType { EXPORT_BACKGROUND_NONE, EXPORT_BACKGROUND_UNRULED, EXPORT_BACKGROUND_ALL };
 
 class Control;
 
