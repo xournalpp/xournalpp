@@ -40,9 +40,12 @@ public:
      * @param page The page to draw
      * @param cr Draw to thgis context
      * @param dontRenderEditingStroke false to draw currently drawing stroke
-     * @param hideBackground true to hide the background
+     * @param hidePdfBackground true to hide the PDF background
+     * @param hideImageBackground true to hide the PDF background
+     * @param hideRulingBacground true to hide the ruling background
      */
-    void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hideBackground = false);
+    void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground = false,
+                  bool hideImageBackground = false, bool hideRulingBackground = false);
 
 
     void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1, bool changeSource = true,
@@ -74,7 +77,8 @@ public:
     /**
      * Draw the background
      */
-    void drawBackground();
+    void drawBackground(bool hidePdfBackground = false, bool hideImageBackground = false,
+                        bool hideRulingBackground = false);
 
     /**
      * Draw background if there is no background shown, like in GIMP etc.
