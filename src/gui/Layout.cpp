@@ -28,7 +28,6 @@ constexpr size_t const XOURNAL_PADDING_BETWEEN = 15;
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), scrollHandling(scrollHandling) {
     g_signal_connect(scrollHandling->getHorizontal(), "value-changed", G_CALLBACK(horizontalScrollChanged), this);
-
     g_signal_connect(scrollHandling->getVertical(), "value-changed", G_CALLBACK(verticalScrollChanged), this);
 
 
@@ -48,7 +47,6 @@ void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
     layout->scrollHandling->scrollChanged();
 }
 
-Layout::~Layout() = default;
 
 void Layout::checkScroll(GtkAdjustment* adjustment, double& lastScroll) {
     lastScroll = gtk_adjustment_get_value(adjustment);
@@ -66,10 +64,10 @@ void Layout::updateVisibility() {
     std::optional<size_t> mostPageNr;
     double mostPagePercent = 0;
 
-    for (size_t row = 0; row < this->heightRows.size(); ++row) {
-        int y2 = this->heightRows[row];
-        for (size_t col = 0; col < this->widthCols.size(); ++col) {
-            int x2 = this->widthCols[col];
+    for (size_t row = 0; row < this->rowYStart.size(); ++row) {
+        int y2 = this->rowYStart[row];
+        for (size_t col = 0; col < this->colXStart.size(); ++col) {
+            int x2 = this->colXStart[col];
             auto optionalPage = this->mapper.at({col, row});
             if (optionalPage)  // a page exists at this grid location
             {
@@ -125,24 +123,23 @@ inline auto sumIf(size_t base, size_t addend, bool predicate) -> size_t {
     return base;
 }
 
-
-void Layout::recalculate() {
+void Layout::recalculate_int() const {
     auto* settings = view->getControl()->getSettings();
     size_t len = view->viewPages.size();
     mapper.configureFromSettings(len, settings);
     size_t colCount = mapper.getColumns();
     size_t rowCount = mapper.getRows();
 
-    widthCols.assign(colCount, 0);
-    heightRows.assign(rowCount, 0);
+    pc.widthCols.assign(colCount, 0);
+    pc.heightRows.assign(rowCount, 0);
 
     for (size_t pageIdx{}; pageIdx < len; ++pageIdx) {
         auto const& raster_p = mapper.at(pageIdx);  // auto [c, r] raster = mapper.at();
         auto const& c = raster_p.first;
         auto const& r = raster_p.second;
         XojPageView* v = view->viewPages[pageIdx];
-        widthCols[c] = std::max<unsigned>(widthCols[c], v->getDisplayWidth());
-        heightRows[r] = std::max<unsigned>(heightRows[r], v->getDisplayHeight());
+        pc.widthCols[c] = std::max<unsigned>(pc.widthCols[c], v->getDisplayWidth());
+        pc.heightRows[r] = std::max<unsigned>(pc.heightRows[r], v->getDisplayHeight());
     }
 
     // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
@@ -151,21 +148,26 @@ void Layout::recalculate() {
     size_t const hPadding =
             sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
 
-    minWidth = 2 * hPadding + (widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN;
-    minHeight = 2 * vPadding + (heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN;
+    pc.minWidth = 2 * hPadding + (pc.widthCols.size() - 1) * XOURNAL_PADDING_BETWEEN;
+    pc.minHeight = 2 * vPadding + (pc.heightRows.size() - 1) * XOURNAL_PADDING_BETWEEN;
 
-    minWidth = std::accumulate(begin(widthCols), end(widthCols), minWidth);
-    minHeight = std::accumulate(begin(heightRows), end(heightRows), minHeight);
+    pc.minWidth = std::accumulate(begin(pc.widthCols), end(pc.widthCols), pc.minWidth);
+    pc.minHeight = std::accumulate(begin(pc.heightRows), end(pc.heightRows), pc.minHeight);
+    pc.valid = true;
+}
 
-    setLayoutSize(minWidth, minHeight);
-    valid = true;
+void Layout::recalculate() {
+    pc.valid = false;
+    gtk_widget_queue_resize(view->getWidget());
 }
 
 void Layout::layoutPages(int width, int height) {
-    if (!valid) {
-        recalculate();
+    std::lock_guard g{pc.m};
+    if (!pc.valid) {
+        recalculate_int();
     }
-    valid = false;
+    // Todo: remove, just a hack-hotfix
+    scrollHandling->setLayoutSize(width, height);
 
     size_t const len = this->view->viewPages.size();
     Settings* settings = this->view->getControl()->getSettings();
@@ -173,8 +175,8 @@ void Layout::layoutPages(int width, int height) {
     // get from mapper (some may have changed to accommodate paired setting etc.)
     bool const isPairedPages = this->mapper.isPairedPages();
 
-    auto const rows = this->heightRows.size();
-    auto const columns = this->widthCols.size();
+    auto const rows = this->pc.heightRows.size();
+    auto const columns = this->pc.widthCols.size();
 
 
     // add space around the entire page area to accommodate older Wacom tablets with limited sense area.
@@ -183,8 +185,8 @@ void Layout::layoutPages(int width, int height) {
     int64_t const h_padding =
             sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
 
-    int64_t const centeringXBorder = static_cast<int64_t>(width - minWidth) / 2;
-    int64_t const centeringYBorder = static_cast<int64_t>(height - minHeight) / 2;
+    int64_t const centeringXBorder = static_cast<int64_t>(width - pc.minWidth) / 2;
+    int64_t const centeringYBorder = static_cast<int64_t>(height - pc.minHeight) / 2;
 
     int64_t const borderX = std::max<int64_t>(h_padding, centeringXBorder);
     int64_t const borderY = std::max<int64_t>(v_padding, centeringYBorder);
@@ -209,7 +211,7 @@ void Layout::layoutPages(int width, int height) {
                 {
                     int64_t paddingLeft = 0;
                     int64_t paddingRight = 0;
-                    auto columnPadding = static_cast<int64_t>(this->widthCols[c] - vDisplayWidth);
+                    auto columnPadding = static_cast<int64_t>(this->pc.widthCols[c] - vDisplayWidth);
 
                     if (isPairedPages && len > 1) {
                         // pair pages mode
@@ -234,25 +236,23 @@ void Layout::layoutPages(int width, int height) {
                     x += vDisplayWidth + paddingRight;
                 }
             } else {
-                x += this->widthCols[c] + XOURNAL_PADDING_BETWEEN;
+                x += this->pc.widthCols[c] + XOURNAL_PADDING_BETWEEN;
             }
         }
         x = borderX;
-        y += this->heightRows[r] + XOURNAL_PADDING_BETWEEN;
+        y += this->pc.heightRows[r] + XOURNAL_PADDING_BETWEEN;
     }
 
+    this->colXStart.resize(this->pc.widthCols.size());
+    this->rowYStart.resize(this->pc.heightRows.size());
+
+    // accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
     int64_t totalWidth = borderX;
-    for (auto&& widthCol: this->widthCols) {
-        // accumulated - absolute pixel location for use by getViewAt() and updateVisibility()
-        totalWidth += widthCol + XOURNAL_PADDING_BETWEEN;
-        widthCol = totalWidth;
-    }
-
+    std::transform(begin(this->pc.widthCols), end(this->pc.widthCols), begin(this->colXStart),
+                   [&totalWidth](auto&& widthCol) { return (totalWidth += widthCol + XOURNAL_PADDING_BETWEEN); });
     int64_t totalHeight = borderY;
-    for (auto&& heightRow: this->heightRows) {
-        totalHeight += heightRow + XOURNAL_PADDING_BETWEEN;
-        heightRow = totalHeight;
-    }
+    std::transform(begin(this->pc.heightRows), end(this->pc.heightRows), begin(this->rowYStart),
+                   [&totalHeight](auto&& heightRow) { return (totalHeight += heightRow + XOURNAL_PADDING_BETWEEN); });
 }
 
 void Layout::setLayoutSize(int width, int height) { this->scrollHandling->setLayoutSize(width, height); }
@@ -284,12 +284,12 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
 }
 
 
-auto Layout::getViewAt(int x, int y) -> XojPageView* {
+auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
     // Binary Search:
-    auto rit = std::lower_bound(this->heightRows.begin(), this->heightRows.end(), y);
-    int const foundRow = std::distance(this->heightRows.begin(), rit);
-    auto cit = std::lower_bound(this->widthCols.begin(), this->widthCols.end(), x);
-    int const foundCol = std::distance(this->widthCols.begin(), cit);
+    auto rit = std::lower_bound(this->rowYStart.begin(), this->rowYStart.end(), y);
+    int const foundRow = std::distance(this->rowYStart.begin(), rit);
+    auto cit = std::lower_bound(this->colXStart.begin(), this->colXStart.end(), x);
+    int const foundCol = std::distance(this->colXStart.begin(), cit);
 
     auto optionalPage = this->mapper.at({foundCol, foundRow});
 
@@ -300,12 +300,22 @@ auto Layout::getViewAt(int x, int y) -> XojPageView* {
     return nullptr;
 }
 
-// Todo replace with boost::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
-//                  or std::optional<size_t> Layout::getIndexAtGridMap(size_t row, size_t col)
-auto Layout::getIndexAtGridMap(size_t row, size_t col) -> std::optional<size_t> {
+auto Layout::getPageIndexAtGridMap(size_t row, size_t col) -> std::optional<size_t> {
     return this->mapper.at({col, row});  // watch out.. x,y --> c,r
 }
 
-auto Layout::getMinimalHeight() const -> int { return this->minHeight; }
+auto Layout::getMinimalHeight() const -> int {
+    std::lock_guard g{pc.m};
+    if (!pc.valid) {
+        recalculate_int();
+    }
+    return this->pc.minHeight;
+}
 
-auto Layout::getMinimalWidth() const -> int { return this->minWidth; }
+auto Layout::getMinimalWidth() const -> int {
+    std::lock_guard g{pc.m};
+    if (!pc.valid) {
+        recalculate_int();
+    }
+    return this->pc.minWidth;
+}

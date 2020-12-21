@@ -256,7 +256,7 @@ void MainWindow::initXournalWidget() {
         gtk_container_add(GTK_CONTAINER(box1),
                           gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, scrollHandling->getHorizontal()));
 
-        control->getZoomControl()->initZoomHandler(box2, xournal, control);
+        control->getZoomControl()->initZoomHandler(this->window, box2, xournal, control);
         gtk_widget_show_all(box1);
     } else {
         winXournal = gtk_scrolled_window_new(nullptr, nullptr);
@@ -273,10 +273,9 @@ void MainWindow::initXournalWidget() {
 
         this->xournal = new XournalView(vpXournal, control, scrollHandling);
 
-        control->getZoomControl()->initZoomHandler(winXournal, xournal, control);
+        control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal, control);
         gtk_widget_show_all(winXournal);
     }
-    // Todo configure-event
 
     Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
     scrollHandling->init(this->xournal->getWidget(), layout);

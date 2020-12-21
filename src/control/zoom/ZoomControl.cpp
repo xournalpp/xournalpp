@@ -3,10 +3,51 @@
 #include <cmath>
 
 #include "control/Control.h"
-#include "gui/Layout.h"
-#include "gui/PageView.h"
 #include "gui/XournalView.h"
-#include "gui/widgets/XournalWidget.h"
+
+auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom) -> bool {
+    guint state = event->state & gtk_accelerator_get_default_mod_mask();
+
+    // do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
+    if (state != 0 && (state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK))) {
+        return true;
+    }
+
+    if (state & GDK_CONTROL_MASK) {
+        auto direction =
+                (event->direction == GDK_SCROLL_UP || (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0)) ?
+                        ZOOM_IN :
+                        ZOOM_OUT;
+        zoom->zoomScroll(direction, {event->x, event->y});
+        return true;
+    }
+
+    // TODO(unknown): Disabling scroll here is maybe a bit hacky find a better way
+    return zoom->isZoomPresentationMode();
+}
+
+
+// Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to align/layout
+//       the pages manually, but it only works with the top Widget (GtkWindow) for now this works "fine"
+//       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
+auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom) -> bool {
+    g_assert_true(widget != zoom->view->getWidget());
+    auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
+    // Todo (fabian): The following code is a hack.
+    //    Problem size-allocate:
+    //    when using the size-allocate signal, we cant use layout->recalculate() directly.
+    //    But using the xournal-widgets allocation is wrong, since the calculation is skipped already.
+    //    using size-allocate's allocation is wrong, since it is the alloc of the toplevel.
+    //    Problem expose-event:
+    //    when using the expose-event signal, the new Allocation is not known yet; calculation must be deferred.
+    //    (minimize / maximize wont work)
+    Util::execInUiThread([layout, zoom]() {
+        zoom->updateZoomPresentationValue();
+        zoom->updateZoomFitValue();
+        layout->recalculate();
+    });
+    return false;
+}
 
 void ZoomControl::zoomOneStep(ZoomDirection direction, utl::Point<double> zoomCenter) {
     if (this->zoomPresentationMode) {
@@ -92,12 +133,11 @@ auto ZoomControl::getScrollPositionAfterZoom() const -> utl::Point<double> {
 
 void ZoomControl::addZoomListener(ZoomListener* l) { this->listener.emplace_back(l); }
 
-void ZoomControl::initZoomHandler(GtkWidget* widget, XournalView* v, Control* c) {
+void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c) {
     this->control = c;
     this->view = v;
-    g_signal_connect(widget, "scroll_event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
-    g_signal_connect(widget, "size-allocate", G_CALLBACK(onWidgetSizeChangedEvent), this);
-
+    g_signal_connect(widget, "scroll-event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
+    g_signal_connect(window, "configure-event", G_CALLBACK(onWindowSizeChangedEvent), this);
     registerListener(this->control);
 }
 
@@ -254,43 +294,4 @@ void ZoomControl::pageSizeChanged(size_t page) {
 void ZoomControl::pageSelected(size_t page) {
     updateZoomPresentationValue(page);
     updateZoomFitValue(page);
-}
-
-auto ZoomControl::onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom) -> bool {
-    guint state = event->state & gtk_accelerator_get_default_mod_mask();
-
-    // do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
-    if (state != 0 && (state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK))) {
-        return true;
-    }
-
-    if (state & GDK_CONTROL_MASK) {
-        auto direction =
-                (event->direction == GDK_SCROLL_UP || (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0)) ?
-                        ZOOM_IN :
-                        ZOOM_OUT;
-        zoom->zoomScroll(direction, {event->x, event->y});
-        return true;
-    }
-
-    // TODO(unknown): Disabling scroll here is maybe a bit hacky find a better way
-    return zoom->isZoomPresentationMode();
-}
-
-
-// Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to align/layout
-//       the pages manually, but it only works with the top Widget (GtkWindow) for now this works fine
-//       see https://stackoverflow.com/questions/1060039/gtk-detecting-window-resize-from-the-user
-auto ZoomControl::onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allocation, ZoomControl* zoom) -> bool {
-    g_assert_true(widget != zoom->view->getWidget());
-
-
-    zoom->updateZoomPresentationValue();
-    zoom->updateZoomFitValue();
-
-    auto layout = gtk_xournal_get_layout(zoom->view->getWidget());
-    layout->layoutPages(allocation->width, allocation->height);
-    gtk_widget_queue_resize(zoom->view->getWidget());
-
-    return true;
 }
