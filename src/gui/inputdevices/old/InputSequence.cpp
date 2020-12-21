@@ -103,7 +103,7 @@ auto InputSequence::getPageAtCurrentPosition() -> XojPageView* {
     double x = this->x + xournal->x;
     double y = this->y + xournal->y;
 
-    return xournal->layout->getViewAt(x, y);
+    return xournal->layout->getPageViewAt(x, y);
 }
 
 /**

@@ -411,7 +411,7 @@ void XournalView::pageRelativeXY(int offCol, int offRow) {
     int col = view->getMappedCol();
 
     Layout* layout = gtk_xournal_get_layout(this->widget);
-    auto optionalPageIndex = layout->getIndexAtGridMap(row + offRow, col + offCol);
+    auto optionalPageIndex = layout->getPageIndexAtGridMap(row + offRow, col + offCol);
     if (optionalPageIndex) {
         this->scrollTo(*optionalPageIndex, 0);
     }
@@ -656,7 +656,12 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
 void XournalView::layoutPages() {
     Layout* layout = gtk_xournal_get_layout(this->widget);
     layout->recalculate();
-    layout->layoutPages(layout->getMinimalWidth(), layout->getMinimalHeight());
+
+    // Todo (fabian): the following lines are conceptually wrong, the Layout::layoutPages function is meant to be called
+    //                by an expose event, but removing it, will break "add page".
+    auto rectangle = layout->getVisibleRect();
+    layout->layoutPages(std::max<int>(layout->getMinimalWidth(), std::lround(rectangle.width)),
+                        std::max<int>(layout->getMinimalHeight(), std::lround(rectangle.height)));
 }
 
 auto XournalView::getDisplayHeight() const -> int {

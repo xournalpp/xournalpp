@@ -102,7 +102,7 @@ void LatexController::findSelectedTexElement() {
         const double centerX = visibleBounds.x + 0.5 * visibleBounds.width;
         const double centerY = visibleBounds.y + 0.5 * visibleBounds.height;
 
-        if (layout->getViewAt(centerX, centerY) == this->view) {
+        if (layout->getPageViewAt(centerX, centerY) == this->view) {
             // Pick the center of the visible area (converting from screen to page coordinates)
             this->posx = (centerX - this->view->getX()) / zoom;
             this->posy = (centerY - this->view->getY()) / zoom;

@@ -121,7 +121,7 @@ public:
 
     void addZoomListener(ZoomListener* listener);
 
-    void initZoomHandler(GtkWidget* widget, XournalView* view, Control* control);
+    void initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c);
 
     /**
      * Call this before any zoom is done, it saves the current page and position
@@ -168,12 +168,12 @@ protected:
     void pageSizeChanged(size_t page);
     void pageSelected(size_t page);
 
-    static bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
-    static bool onWidgetSizeChangedEvent(GtkWidget* widget, GdkRectangle* allocation, ZoomControl* zoom);
-
 private:
     void zoomFit();
     void zoomPresentation();
+
+    friend bool onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom);
+    friend bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
 
 private:
     XournalView* view = nullptr;

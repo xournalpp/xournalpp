@@ -52,7 +52,7 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) -> 
     double x = eventX + xournal->x;
     double y = eventY + xournal->y;
 
-    return xournal->layout->getViewAt(x, y);
+    return xournal->layout->getPageViewAt(x, y);
 }
 
 /**
