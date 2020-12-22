@@ -27,6 +27,7 @@ public:
     void initPages(int current, int count);
     bool isConfirmed() const;
     PageRangeVector getRange();
+    bool presentationMode();
 
     /**
      * @brief Reads the quality parameter from the dialog
@@ -39,6 +40,12 @@ public:
      * @brief Hides the quality settings
      */
     void removeQualitySetting();
+
+    /**
+     * @brief Show "presentation mode" checkbox and hide quality settings
+     * (both cannot be shown at the same time)
+     */
+    void showPresentationMode();
 
     /**
      * @brief Handler for changes in combobox cbQuality

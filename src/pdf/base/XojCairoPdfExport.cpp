@@ -1,5 +1,6 @@
 #include "XojCairoPdfExport.h"
 
+#include <map>
 #include <sstream>
 #include <stack>
 
@@ -119,7 +120,29 @@ void XojCairoPdfExport::exportPage(size_t page) {
     cairo_restore(this->cr);
 }
 
-auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range) -> bool {
+// export layers one by one to produce as many PDF pages as there are layers.
+void XojCairoPdfExport::exportPageLayers(size_t page) {
+    PageRef p = doc->getPage(page);
+
+    // We keep a copy of the layers initial Visible state
+    std::map<Layer*, bool> initialVisibility;
+    for (const auto& layer: *p->getLayers()) {
+        initialVisibility[layer] = layer->isVisible();
+        layer->setVisible(false);
+    }
+
+    // We draw as many pages as there are layers. The first page has
+    // only Layer 1 visible, the last has all layers visible.
+    for (const auto& layer: *p->getLayers()) {
+        layer->setVisible(true);
+        exportPage(page);
+    }
+
+    // We restore the initial visibilities
+    for (const auto& layer: *p->getLayers()) layer->setVisible(initialVisibility[layer]);
+}
+
+auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range, bool presentationMode) -> bool {
     if (range.empty()) {
         this->lastError = _("No pages to export!");
         return false;
@@ -145,7 +168,11 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range) 
                 continue;
             }
 
-            exportPage(i);
+            if (presentationMode) {
+                exportPageLayers(i);
+            } else {
+                exportPage(i);
+            }
 
             if (this->progressListener) {
                 this->progressListener->setCurrentState(c++);
@@ -157,7 +184,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range) 
     return true;
 }
 
-auto XojCairoPdfExport::createPdf(fs::path const& file) -> bool {
+auto XojCairoPdfExport::createPdf(fs::path const& file, bool presentationMode) -> bool {
     if (doc->getPageCount() < 1) {
         lastError = _("No pages to export!");
         return false;
@@ -173,7 +200,12 @@ auto XojCairoPdfExport::createPdf(fs::path const& file) -> bool {
     }
 
     for (int i = 0; i < count; i++) {
-        exportPage(i);
+
+        if (presentationMode) {
+            exportPageLayers(i);
+        } else {
+            exportPage(i);
+        }
 
         if (this->progressListener) {
             this->progressListener->setCurrentState(i);

@@ -23,8 +23,8 @@ public:
     virtual ~XojCairoPdfExport();
 
 public:
-    virtual bool createPdf(fs::path const& file);
-    virtual bool createPdf(fs::path const& file, PageRangeVector& range);
+    virtual bool createPdf(fs::path const& file, bool presentationMode);
+    virtual bool createPdf(fs::path const& file, PageRangeVector& range, bool presentationMode);
     virtual string getLastError();
 
     /**
@@ -47,6 +47,10 @@ private:
 #endif
     void endPdf();
     void exportPage(size_t page);
+    /**
+     * Export as a PDF document where each additional layer creates a
+     * new page */
+    void exportPageLayers(size_t page);
 
 private:
     Document* doc = nullptr;
