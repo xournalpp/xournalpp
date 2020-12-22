@@ -67,6 +67,11 @@ private:
      */
     bool exportTypeXoj = false;
 
+    /**
+     * Export Layers as pages
+     */
+    bool presentationMode = false;
+
     string lastError;
 
     string chosenFilterName;

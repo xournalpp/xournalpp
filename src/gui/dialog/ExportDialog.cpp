@@ -8,6 +8,7 @@
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
         GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog") {
 
+    gtk_widget_hide(get("cbPresentationMode"));
     g_signal_connect(get("rdRangePages"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, ExportDialog* self) {
                          gtk_widget_set_sensitive(self->get("txtPages"), gtk_toggle_button_get_active(togglebutton));
                      }),
@@ -44,6 +45,11 @@ void ExportDialog::removeQualitySetting() {
     gtk_widget_hide(get("cbQuality"));
 }
 
+void ExportDialog::showPresentationMode() {
+    gtk_widget_show(get("cbPresentationMode"));
+    removeQualitySetting();
+}
+
 void ExportDialog::selectQualityCriterion(GtkComboBox* comboBox, ExportDialog* self) {
     int activeCriterion = gtk_combo_box_get_active(comboBox);
     switch (activeCriterion) {
@@ -69,6 +75,10 @@ auto ExportDialog::getPngQualityParameter() -> RasterImageQualityParameter {
 }
 
 auto ExportDialog::isConfirmed() const -> bool { return this->confirmed; }
+
+auto ExportDialog::presentationMode() -> bool {
+    return gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbPresentationMode")));
+}
 
 auto ExportDialog::getRange() -> PageRangeVector {
     GtkWidget* rdRangeCurrent = get("rdRangeCurrent");

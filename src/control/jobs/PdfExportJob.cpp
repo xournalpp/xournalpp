@@ -32,7 +32,7 @@ void PdfExportJob::run() {
     XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
     doc->unlock();
 
-    if (!pdfe->createPdf(this->filepath)) {
+    if (!pdfe->createPdf(this->filepath, false)) {
         if (control->getWindow()) {
             callAfterRun();
         } else {

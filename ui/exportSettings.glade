@@ -328,6 +328,24 @@ Set export parameters</property>
                     <property name="top-attach">0</property>
                   </packing>
                 </child>
+
+		<child>
+                  <object class="GtkCheckButton" id="cbPresentationMode">
+                    <property name="label" translatable="yes">Export as a presentation</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="tooltip_text" translatable="yes">If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation.</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+		    <!-- Same place as "Image quality"; only one of them is shown -->
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">0</property>
+                    <property name="width">3</property>
+                  </packing>
+                </child>
+
                 <child>
                   <placeholder/>
                 </child>
