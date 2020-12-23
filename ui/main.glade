@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.2 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <object class="GtkAdjustment" id="adjHorizontal">
     <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjVertical">
     <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkRevealer" id="floatingToolbox">
     <property name="name">floatingToolbox</property>
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="transition_type">crossfade</property>
-    <property name="reveal_child">True</property>
+    <property name="can-focus">False</property>
+    <property name="transition-type">crossfade</property>
+    <property name="reveal-child">True</property>
     <child>
       <object class="GtkBox" id="floatingvbox">
         <property name="name">floatingvbox</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel" id="labelFloatingToolbox">
             <property name="name">labelFloatingToolbox</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes"> = Floating Toolbox (experimental) =</property>
             <attributes>
               <attribute name="weight" value="bold"/>
@@ -45,7 +45,7 @@
           <object class="GtkToolbar" id="tbFloat1">
             <property name="name">tbFloat1</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <style>
               <class name="tbCss"/>
             </style>
@@ -60,7 +60,7 @@
           <object class="GtkToolbar" id="tbFloat2">
             <property name="name">tbFloat2</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <style>
               <class name="tbCss"/>
             </style>
@@ -75,7 +75,7 @@
           <object class="GtkToolbar" id="tbFloat3">
             <property name="name">tbFloat3</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <style>
               <class name="tbCss"/>
             </style>
@@ -90,7 +90,7 @@
           <object class="GtkToolbar" id="tbFloat4">
             <property name="name">tbFloat4</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <style>
               <class name="tbCss"/>
             </style>
@@ -105,11 +105,11 @@
           <object class="GtkLabel" id="showIfEmpty">
             <property name="name">showIfEmpty</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_bottom">30</property>
+            <property name="can-focus">False</property>
+            <property name="margin-bottom">30</property>
             <property name="label" translatable="yes">&lt;b&gt;Empty Toolbox&lt;/b&gt;
 &lt;i&gt;Menu: View/Toolbars&lt;/i&gt;</property>
-            <property name="use_markup">True</property>
+            <property name="use-markup">True</property>
             <property name="justify">center</property>
           </object>
           <packing>
@@ -126,46 +126,43 @@
   </object>
   <object class="GtkWindow" id="mainWindow">
     <property name="name">mainWindow</property>
-    <property name="can_focus">False</property>
+    <property name="can-focus">False</property>
     <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
     <child>
       <object class="GtkOverlay" id="mainOverlay">
         <property name="name">mainOverlay</property>
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <child>
           <object class="GtkBox" id="mainBox">
             <property name="name">mainBox</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkMenuBar" id="mainMenubar">
                 <property name="name">mainMenubar</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkMenuItem" id="menuitemFile">
                     <property name="name">menuitemFile</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">_File</property>
-                    <property name="use_underline">True</property>
+                    <property name="use-underline">True</property>
                     <child type="submenu">
                       <object class="GtkMenu" id="menu1">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkImageMenuItem" id="menuFileNew">
                             <property name="label">gtk-new</property>
                             <property name="name">menuFileNew</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_NEW" swapped="no"/>
                             <accelerator key="n" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -175,9 +172,9 @@
                             <property name="label">gtk-open</property>
                             <property name="name">menuFileOpen</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_OPEN" swapped="no"/>
                             <accelerator key="o" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -186,18 +183,18 @@
                           <object class="GtkMenuItem" id="menuFileRecent">
                             <property name="name">menuFileRecent</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Recent _Documents</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuFileAnnotate">
                             <property name="name">menuFileAnnotate</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Annotate PDF</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_ANNOTATE_PDF" swapped="no"/>
                           </object>
                         </child>
@@ -206,9 +203,9 @@
                             <property name="label">gtk-save</property>
                             <property name="name">menuFileSave</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_SAVE" swapped="no"/>
                             <accelerator key="s" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -218,27 +215,27 @@
                             <property name="label">gtk-save-as</property>
                             <property name="name">menuFileSaveAs</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_SAVE_AS" swapped="no"/>
-                            <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                             <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem2">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuFileExportPdf">
                             <property name="name">menuFileExportPdf</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Export as PDF</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_EXPORT_AS_PDF" swapped="no"/>
                           </object>
                         </child>
@@ -246,9 +243,9 @@
                           <object class="GtkMenuItem" id="menuFileExportAs">
                             <property name="name">menuFileExportAs</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Export as...</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_EXPORT_AS" swapped="no"/>
                             <accelerator key="e" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -256,7 +253,7 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem1">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
@@ -264,9 +261,9 @@
                             <property name="label">gtk-print</property>
                             <property name="name">menuFilePrint</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_PRINT" swapped="no"/>
                             <accelerator key="p" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -276,9 +273,9 @@
                             <property name="label">gtk-quit</property>
                             <property name="name">menuFileQuit</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_QUIT" swapped="no"/>
                             <accelerator key="q" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -291,21 +288,21 @@
                   <object class="GtkMenuItem" id="menuitemEdit">
                     <property name="name">menuitemEdit</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">_Edit</property>
-                    <property name="use_underline">True</property>
+                    <property name="use-underline">True</property>
                     <child type="submenu">
                       <object class="GtkMenu" id="menu2">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkImageMenuItem" id="menuEditUndo">
                             <property name="label">gtk-undo</property>
                             <property name="name">menuEditUndo</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_UNDO" swapped="no"/>
                             <accelerator key="z" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -315,9 +312,9 @@
                             <property name="label">gtk-redo</property>
                             <property name="name">menuEditRedo</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_REDO" swapped="no"/>
                             <accelerator key="y" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -325,7 +322,7 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem4">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
@@ -333,9 +330,9 @@
                             <property name="label">gtk-cut</property>
                             <property name="name">menuEditCut</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_CUT" swapped="no"/>
                             <accelerator key="x" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -345,9 +342,9 @@
                             <property name="label">gtk-copy</property>
                             <property name="name">menuEditCopy</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_COPY" swapped="no"/>
                             <accelerator key="c" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -357,9 +354,9 @@
                             <property name="label">gtk-paste</property>
                             <property name="name">menuEditPaste</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_PASTE" swapped="no"/>
                             <accelerator key="v" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -367,7 +364,7 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem5">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
@@ -375,9 +372,9 @@
                             <property name="label">gtk-find</property>
                             <property name="name">menuEditSearch</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_SEARCH" swapped="no"/>
                             <accelerator key="f" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -385,7 +382,7 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem6">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
@@ -393,9 +390,9 @@
                             <property name="label">gtk-delete</property>
                             <property name="name">menuEditDelete</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_DELETE" swapped="no"/>
                             <accelerator key="Delete" signal="activate"/>
                           </object>
@@ -403,25 +400,25 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="menuitem5">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkCheckMenuItem" id="menuSnapRotation">
-                            <property name="use_action_appearance">False</property>
+                            <property name="use-action-appearance">False</property>
                             <property name="name">menuSnapRotation</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Rotation Snapping</property>
                             <signal name="toggled" handler="ACTION_ROTATION_SNAPPING" swapped="no"/>
                           </object>
                         </child>
                         <child>
                           <object class="GtkCheckMenuItem" id="menuSnapGrid">
-                            <property name="use_action_appearance">False</property>
+                            <property name="use-action-appearance">False</property>
                             <property name="name">menuSnapGrid</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Grid Snapping</property>
                             <signal name="toggled" handler="ACTION_GRID_SNAPPING" swapped="no"/>
                           </object>
@@ -429,16 +426,16 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="menuitem4">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuEditSettings">
                             <property name="name">menuEditSettings</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Preferences</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_SETTINGS" swapped="no"/>
                           </object>
                         </child>
@@ -450,20 +447,20 @@
                   <object class="GtkMenuItem" id="menuitemView">
                     <property name="name">menuitemView</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">_View</property>
-                    <property name="use_underline">True</property>
+                    <property name="use-underline">True</property>
                     <child type="submenu">
                       <object class="GtkMenu" id="menu4">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkCheckMenuItem" id="menuViewPairedPages">
                             <property name="name">menuViewPairedPages</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Pair Pages</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_VIEW_PAIRED_PAGES" swapped="no"/>
                           </object>
                         </child>
@@ -471,9 +468,9 @@
                           <object class="GtkCheckMenuItem" id="menuViewPresMode">
                             <property name="name">menuViewPresMode</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Presentation Mode</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_VIEW_PRESENTATION_MODE" swapped="no"/>
                           </object>
                         </child>
@@ -481,9 +478,9 @@
                           <object class="GtkCheckMenuItem" id="menuViewFullScreen">
                             <property name="name">menuViewFullScreen</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Fullscreen</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_FULLSCREEN" swapped="no"/>
                             <accelerator key="F11" signal="activate"/>
                           </object>
@@ -492,54 +489,54 @@
                           <object class="GtkCheckMenuItem" id="menuViewSidebarVisible">
                             <property name="name">menuViewSidebarVisible</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Show sidebar</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <accelerator key="F12" signal="activate"/>
                           </object>
                         </child>
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem3">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkCheckMenuItem" id="menuViewToolbarsVisible">
                             <property name="name">menuViewToolbarsVisible</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Show toolbars</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <accelerator key="F9" signal="activate"/>
                           </object>
                         </child>
                         <child>
                           <object class="GtkSeparatorMenuItem" id="menuViewToolbarsVisibleSeparator">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuitemLayout">
                             <property name="name">menuitemLayout</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Layout</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <child type="submenu">
                               <object class="GtkMenu" id="layoutmenu">
                                 <property name="name">layoutmenu</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can-focus">False</property>
                                 <child>
                                   <object class="GtkCheckMenuItem" id="menuLayoutHorizontal">
                                     <property name="name">menuLayoutHorizontal</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_Horizontal</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_SET_LAYOUT_HORIZONTAL:GROUP_LAYOUT_HORIZONTAL" swapped="no"/>
                                   </object>
                                 </child>
@@ -547,10 +544,10 @@
                                   <object class="GtkCheckMenuItem" id="menuLayoutVertical">
                                     <property name="name">menuLayoutVertical</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_Vertical</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_SET_LAYOUT_VERTICAL:GROUP_LAYOUT_HORIZONTAL" swapped="no"/>
                                   </object>
                                 </child>
@@ -558,17 +555,17 @@
                                   <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout1">
                                     <property name="name">separatormenuitemLayout1</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkCheckMenuItem" id="menuLayoutLR">
                                     <property name="name">menuLayoutLR</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_Left To Right</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_SET_LAYOUT_L2R:GROUP_LAYOUT_LR" swapped="no"/>
                                   </object>
                                 </child>
@@ -576,10 +573,10 @@
                                   <object class="GtkCheckMenuItem" id="menuLayoutRL">
                                     <property name="name">menuLayoutRL</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_Right To Left</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_SET_LAYOUT_R2L:GROUP_LAYOUT_LR" swapped="no"/>
                                   </object>
                                 </child>
@@ -587,17 +584,17 @@
                                   <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout2">
                                     <property name="name">separatormenuitemLayout2</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkCheckMenuItem" id="menuLayoutTB">
                                     <property name="name">menuLayoutTB</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_Top to Bottom</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_SET_LAYOUT_T2B:GROUP_LAYOUT_TB" swapped="no"/>
                                   </object>
                                 </child>
@@ -605,10 +602,10 @@
                                   <object class="GtkCheckMenuItem" id="menuLayoutBT">
                                     <property name="name">menuLayoutBT</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_Bottom to Top</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_SET_LAYOUT_B2T:GROUP_LAYOUT_TB" swapped="no"/>
                                   </object>
                                 </child>
@@ -620,35 +617,35 @@
                           <object class="GtkMenuItem" id="menuitemViewDimensions">
                             <property name="name">menuitemViewDimensions</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Cols/Rows</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <child type="submenu">
                               <object class="GtkMenu" id="menuViewDimensions">
                                 <property name="name">menuViewDimensions</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can-focus">False</property>
                                 <child>
                                   <object class="GtkMenuItem" id="menuitemViewColumns">
                                     <property name="name">menuitemViewColumns</property>
-                                    <property name="width_request">-1</property>
+                                    <property name="width-request">-1</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">Set Columns</property>
-                                    <property name="use_underline">True</property>
+                                    <property name="use-underline">True</property>
                                     <child type="submenu">
                                       <object class="GtkMenu" id="menuViewColumns">
                                         <property name="name">menuViewColumns</property>
                                         <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
+                                        <property name="can-focus">False</property>
                                         <child>
                                           <object class="GtkCheckMenuItem" id="menuViewColumns1">
                                             <property name="name">menuViewColumns1</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_1 Column</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_COLUMNS_1:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -656,10 +653,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewColumns2">
                                             <property name="name">menuViewColumns2</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_2 Columns</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_COLUMNS_2:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -667,10 +664,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewColumns3">
                                             <property name="name">menuViewColumns3</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_3 Columns</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_COLUMNS_3:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -678,10 +675,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewColumns4">
                                             <property name="name">menuViewColumns4</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_4 Columns</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_COLUMNS_4:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -689,10 +686,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewColumns5">
                                             <property name="name">menuViewColumns5</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_5 Columns</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_COLUMNS_5:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -700,10 +697,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewColumns6">
                                             <property name="name">menuViewColumns6</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_6 Columns</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_COLUMNS_6:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -711,10 +708,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewColumns7">
                                             <property name="name">menuViewColumns7</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_7 Columns</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_COLUMNS_7:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -722,10 +719,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewColumns8">
                                             <property name="name">menuViewColumns8</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_8 Columns</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_COLUMNS_8:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -736,24 +733,24 @@
                                 <child>
                                   <object class="GtkMenuItem" id="menuitemViewRows">
                                     <property name="name">menuitemViewRows</property>
-                                    <property name="width_request">-1</property>
+                                    <property name="width-request">-1</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">Set Rows</property>
-                                    <property name="use_underline">True</property>
+                                    <property name="use-underline">True</property>
                                     <child type="submenu">
                                       <object class="GtkMenu" id="menuViewRows">
                                         <property name="name">menuViewRows</property>
                                         <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
+                                        <property name="can-focus">False</property>
                                         <child>
                                           <object class="GtkCheckMenuItem" id="menuViewRows1">
                                             <property name="name">menuViewRows1</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_1 Row</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_ROWS_1:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -761,10 +758,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewRows2">
                                             <property name="name">menuViewRows2</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_2 Rows</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_ROWS_2:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -772,10 +769,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewRows3">
                                             <property name="name">menuViewRows3</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_3 Rows</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_ROWS_3:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -783,10 +780,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewRows4">
                                             <property name="name">menuViewRows4</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_4 Rows</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_ROWS_4:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -794,10 +791,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewRows5">
                                             <property name="name">menuViewRows5</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_5 Rows</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_ROWS_5:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -805,10 +802,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewRows6">
                                             <property name="name">menuViewRows6</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_6 Rows</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_ROWS_6:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -816,10 +813,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewRows7">
                                             <property name="name">menuViewRows7</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_7 Rows</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_ROWS_7:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -827,10 +824,10 @@
                                           <object class="GtkCheckMenuItem" id="menuViewRows8">
                                             <property name="name">menuViewRows8</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can-focus">False</property>
                                             <property name="label" translatable="yes">_8 Rows</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="draw_as_radio">True</property>
+                                            <property name="use-underline">True</property>
+                                            <property name="draw-as-radio">True</property>
                                             <signal name="toggled" handler="ACTION_SET_ROWS_8:GROUP_FIXED_ROW_OR_COLS" swapped="no"/>
                                           </object>
                                         </child>
@@ -845,34 +842,34 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem7">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuitemViewToolbar">
                             <property name="name">menuitemViewToolbar</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">T_oolbars</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <child type="submenu">
                               <object class="GtkMenu" id="menuViewToolbar">
                                 <property name="name">menuViewToolbar</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can-focus">False</property>
                                 <child>
                                   <object class="GtkSeparatorMenuItem" id="separatormenuitem16">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkMenuItem" id="menuViewToolbarManage">
                                     <property name="name">menuViewToolbarManage</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_Manage</property>
-                                    <property name="use_underline">True</property>
+                                    <property name="use-underline">True</property>
                                     <signal name="activate" handler="ACTION_MANAGE_TOOLBAR" swapped="no"/>
                                   </object>
                                 </child>
@@ -880,9 +877,9 @@
                                   <object class="GtkMenuItem" id="menuViewToolbarCustomize">
                                     <property name="name">menuViewToolbarCustomize</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_Customize</property>
-                                    <property name="use_underline">True</property>
+                                    <property name="use-underline">True</property>
                                     <signal name="activate" handler="ACTION_CUSTOMIZE_TOOLBAR" swapped="no"/>
                                   </object>
                                 </child>
@@ -893,23 +890,23 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem8">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuHideMenu">
                             <property name="name">menuHideMenu</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Hide Menubar</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <accelerator key="F10" signal="activate"/>
                           </object>
                         </child>
                         <child>
                           <object class="GtkSeparatorMenuItem" id="menuitem3">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
@@ -917,12 +914,12 @@
                             <property name="label">gtk-zoom-in</property>
                             <property name="name">menuViewZoomIn</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_IN" swapped="no"/>
-                            <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -930,12 +927,12 @@
                             <property name="label">gtk-zoom-out</property>
                             <property name="name">menuViewZoomOut</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_OUT" swapped="no"/>
-                            <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -943,9 +940,9 @@
                             <property name="label">gtk-zoom-100</property>
                             <property name="name">menuViewZoom100</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_100" swapped="no"/>
                           </object>
                         </child>
@@ -954,9 +951,9 @@
                             <property name="label">gtk-zoom-fit</property>
                             <property name="name">menuViewZoomFit</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_FIT" swapped="no"/>
                           </object>
                         </child>
@@ -968,20 +965,20 @@
                   <object class="GtkMenuItem" id="menuitemNavigation">
                     <property name="name">menuitemNavigation</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">_Navigation</property>
-                    <property name="use_underline">True</property>
+                    <property name="use-underline">True</property>
                     <child type="submenu">
                       <object class="GtkMenu" id="menu6">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkMenuItem" id="menuViewFirstPage">
                             <property name="name">menuViewFirstPage</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_First Page</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_FIRST" swapped="no"/>
                             <accelerator key="Home" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -990,9 +987,9 @@
                           <object class="GtkMenuItem" id="menuNavigationPreviousPage">
                             <property name="name">menuNavigationPreviousPage</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Previous Page</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_BACK" swapped="no"/>
                             <accelerator key="Page_Up" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1001,9 +998,9 @@
                           <object class="GtkMenuItem" id="menuNavigationGotoPage">
                             <property name="name">menuNavigationGotoPage</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Goto Page</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_PAGE" swapped="no"/>
                             <accelerator key="g" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1012,9 +1009,9 @@
                           <object class="GtkMenuItem" id="menuNavigationNextPage">
                             <property name="name">menuNavigationNextPage</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Next Page</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_NEXT" swapped="no"/>
                             <accelerator key="Page_Down" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1023,9 +1020,9 @@
                           <object class="GtkMenuItem" id="menuNavigationLastPage">
                             <property name="name">menuNavigationLastPage</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Last Page</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_LAST" swapped="no"/>
                             <accelerator key="End" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1033,16 +1030,16 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem17">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuNavigationPreviousLayer">
                             <property name="name">menuNavigationPreviousLayer</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Previous Layer</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_PREVIOUS_LAYER" swapped="no"/>
                             <accelerator key="Left" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1051,9 +1048,9 @@
                           <object class="GtkMenuItem" id="menuNavigationNextLayer">
                             <property name="name">menuNavigationNextLayer</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Next Layer</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_NEXT_LAYER" swapped="no"/>
                             <accelerator key="Right" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1062,25 +1059,25 @@
                           <object class="GtkMenuItem" id="menuNavigationTopLayer">
                             <property name="name">menuNavigationTopLayer</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Top Layer</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_TOP_LAYER" swapped="no"/>
                           </object>
                         </child>
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem9">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuNavigationNextAnnotatedPage">
                             <property name="name">menuNavigationNextAnnotatedPage</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">N_ext annotated page</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_NEXT_ANNOTATED_PAGE" swapped="no"/>
                             <accelerator key="Page_Down" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1089,9 +1086,9 @@
                           <object class="GtkMenuItem" id="menuNavigationPreviousAnnotatedPage">
                             <property name="name">menuNavigationPreviousAnnotatedPage</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">P_revious annotated Page</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE" swapped="no"/>
                             <accelerator key="Page_Up" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1104,20 +1101,20 @@
                   <object class="GtkMenuItem" id="menuitemJournal">
                     <property name="name">menuitemJournal</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">_Journal</property>
-                    <property name="use_underline">True</property>
+                    <property name="use-underline">True</property>
                     <child type="submenu">
                       <object class="GtkMenu" id="menu7">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkMenuItem" id="menuJournalNewPageBefore">
                             <property name="name">menuJournalNewPageBefore</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">New Page _Before</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_NEW_PAGE_BEFORE" swapped="no"/>
                           </object>
                         </child>
@@ -1125,9 +1122,9 @@
                           <object class="GtkMenuItem" id="menuJournalNewPageAfter">
                             <property name="name">menuJournalNewPageAfter</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">New Page _After</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_NEW_PAGE_AFTER" swapped="no"/>
                             <accelerator key="d" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1136,9 +1133,9 @@
                           <object class="GtkMenuItem" id="menuJournalNewPageAtEnd">
                             <property name="name">menuJournalNewPageAtEnd</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">New Page at _End</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_NEW_PAGE_AT_END" swapped="no"/>
                           </object>
                         </child>
@@ -1146,9 +1143,9 @@
                           <object class="GtkMenuItem" id="menuJournalAddNewPdfPages">
                             <property name="name">menuJournalNewPageAtEnd</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Append New Pdf Pages</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_APPEND_NEW_PDF_PAGES" swapped="no"/>
                           </object>
                         </child>
@@ -1156,9 +1153,9 @@
                           <object class="GtkMenuItem" id="menuJournalTemplateConfig">
                             <property name="name">menuJournalTemplateConfig</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Configure Page Template</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_CONFIGURE_PAGE_TEMPLATE" swapped="no"/>
                           </object>
                         </child>
@@ -1166,9 +1163,9 @@
                           <object class="GtkMenuItem" id="menuDeletePage">
                             <property name="name">menuDeletePage</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Delete Page</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_DELETE_PAGE" swapped="no"/>
                             <accelerator key="Delete" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1176,16 +1173,16 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem10">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuJournalNewLayer">
                             <property name="name">menuJournalNewLayer</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">New _Layer</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_NEW_LAYER" swapped="no"/>
                             <accelerator key="l" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1194,9 +1191,9 @@
                           <object class="GtkMenuItem" id="menuJournalDeleteLayer">
                             <property name="name">menuJournalDeleteLayer</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Delete Layer</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_DELETE_LAYER" swapped="no"/>
                             <accelerator key="l" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1204,16 +1201,16 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem11">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuJournalPaperFormat">
                             <property name="name">menuJournalPaperFormat</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Paper _Format</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_PAPER_FORMAT" swapped="no"/>
                           </object>
                         </child>
@@ -1221,9 +1218,9 @@
                           <object class="GtkMenuItem" id="menuJournalPaperColor">
                             <property name="name">menuJournalPaperColor</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Paper _Color</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_PAPER_BACKGROUND_COLOR" swapped="no"/>
                           </object>
                         </child>
@@ -1231,9 +1228,9 @@
                           <object class="GtkMenuItem" id="menuJournalPaperBackground">
                             <property name="name">menuJournalPaperBackground</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Paper b_ackground</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                           </object>
                         </child>
                       </object>
@@ -1244,21 +1241,21 @@
                   <object class="GtkMenuItem" id="menuitemTools">
                     <property name="name">menuitemTools</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">_Tools</property>
-                    <property name="use_underline">True</property>
+                    <property name="use-underline">True</property>
                     <child type="submenu">
                       <object class="GtkMenu" id="menu10">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkCheckMenuItem" id="menuToolsPen">
                             <property name="name">menuToolsPen</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Pen</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_PEN" swapped="no"/>
                             <accelerator key="p" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1267,10 +1264,10 @@
                           <object class="GtkCheckMenuItem" id="menuToolsEraser">
                             <property name="name">menuToolsEraser</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Eraser</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_ERASER" swapped="no"/>
                             <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1279,10 +1276,10 @@
                           <object class="GtkCheckMenuItem" id="menuToolsHighlighter">
                             <property name="name">menuToolsHighlighter</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Highlighter</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER" swapped="no"/>
                             <accelerator key="h" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1291,10 +1288,10 @@
                           <object class="GtkCheckMenuItem" id="menuToolsText">
                             <property name="name">menuToolsText</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Text</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_TEXT" swapped="no"/>
                             <accelerator key="t" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1303,10 +1300,10 @@
                           <object class="GtkCheckMenuItem" id="menuToolsImage">
                             <property name="name">menuToolsImage</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Image</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_IMAGE" swapped="no"/>
                             <accelerator key="i" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1315,25 +1312,25 @@
                           <object class="GtkMenuItem" id="menuToolsDefault">
                             <property name="name">menuToolsDefault</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Default Tools</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_TOOL_DEFAULT" swapped="no"/>
                           </object>
                         </child>
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem12">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkCheckMenuItem" id="menuToolsShapeRecognizer">
                             <property name="name">menuToolsShapeRecognizer</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Shape Recognizer</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_SHAPE_RECOGNIZER" swapped="no"/>
                             <accelerator key="1" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1342,9 +1339,9 @@
                           <object class="GtkCheckMenuItem" id="menuToolsDrawRect">
                             <property name="name">menuToolsDrawRect</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Draw Rectangle</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_DRAW_RECT" swapped="no"/>
                             <accelerator key="2" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1353,9 +1350,9 @@
                           <object class="GtkCheckMenuItem" id="menuToolsDrawCircle">
                             <property name="name">menuToolsDrawCircle</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Draw Circle</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_DRAW_CIRCLE" swapped="no"/>
                             <accelerator key="3" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1364,9 +1361,9 @@
                           <object class="GtkCheckMenuItem" id="menuToolsDrawArrow">
                             <property name="name">menuToolsDrawArrow</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Draw Arrow</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_DRAW_ARROW" swapped="no"/>
                             <accelerator key="4" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1375,9 +1372,9 @@
                           <object class="GtkCheckMenuItem" id="menuToolsDrawCoordinateSystem">
                             <property name="name">menuToolsDrawCoordinateSystem</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Draw Coordinate System</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_DRAW_COORDINATE_SYSTEM" swapped="no"/>
                             <accelerator key="5" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1386,9 +1383,9 @@
                           <object class="GtkCheckMenuItem" id="menuToolsRuler">
                             <property name="name">menuToolsRuler</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Draw _Line</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_RULER" swapped="no"/>
                             <accelerator key="6" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1397,9 +1394,9 @@
                           <object class="GtkCheckMenuItem" id="menuToolsDrawSpline">
                             <property name="name">menuToolsDrawSpline</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Draw Spline</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_DRAW_SPLINE" swapped="no"/>
                             <accelerator key="7" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1407,17 +1404,17 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem13">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkCheckMenuItem" id="menuToolsSelectRegion">
                             <property name="name">menuToolsSelectRegion</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Select Region</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_SELECT_REGION" swapped="no"/>
                             <accelerator key="g" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1426,10 +1423,10 @@
                           <object class="GtkCheckMenuItem" id="menuToolsSelectRectangle">
                             <property name="name">menuToolsSelectRectangle</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Select Rectangle</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_SELECT_RECT" swapped="no"/>
                             <accelerator key="r" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1438,10 +1435,10 @@
                           <object class="GtkCheckMenuItem" id="menuToolsSelectObject">
                             <property name="name">menuToolsSelectObject</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Select Object</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_SELECT_OBJECT" swapped="no"/>
                             <accelerator key="o" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1450,23 +1447,23 @@
                           <object class="GtkCheckMenuItem" id="menuToolsVerticalSpace">
                             <property name="name">menuToolsVerticalSpace</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">_Vertical Space</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_VERTICAL_SPACE" swapped="no"/>
                             <accelerator key="v" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
                           <object class="GtkCheckMenuItem" id="menuToolsPlayObject">
-                            <property name="use_action_appearance">False</property>
+                            <property name="use-action-appearance">False</property>
                             <property name="name">menuToolsPlayObject</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Play Object</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_PLAY_OBJECT" swapped="no"/>
                           </object>
                         </child>
@@ -1474,10 +1471,10 @@
                           <object class="GtkCheckMenuItem" id="menuToolsHand">
                             <property name="name">menuToolsHand</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">H_and Tool</property>
-                            <property name="use_underline">True</property>
-                            <property name="draw_as_radio">True</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_HAND" swapped="no"/>
                             <accelerator key="a" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1485,28 +1482,28 @@
                         <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem14">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkMenuItem" id="menuToolsPenOptions">
                             <property name="name">menuToolsPenOptions</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Pen _Options</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <child type="submenu">
                               <object class="GtkMenu" id="menu11">
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can-focus">False</property>
                                 <child>
                                   <object class="GtkCheckMenuItem" id="penthicknessVeryFine">
                                     <property name="name">penthicknessVeryFine</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_very fine</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_VERY_FINE:GROUP_PEN_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1514,10 +1511,10 @@
                                   <object class="GtkCheckMenuItem" id="penthicknessFine">
                                     <property name="name">penthicknessFine</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_fine</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_FINE:GROUP_PEN_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1525,10 +1522,10 @@
                                   <object class="GtkCheckMenuItem" id="penthicknessMedium">
                                     <property name="name">penthicknessMedium</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_medium</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_MEDIUM:GROUP_PEN_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1536,10 +1533,10 @@
                                   <object class="GtkCheckMenuItem" id="penthicknessThick">
                                     <property name="name">penthicknessThick</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_thick</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_THICK:GROUP_PEN_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1547,27 +1544,27 @@
                                   <object class="GtkCheckMenuItem" id="penthicknessVeryThick">
                                     <property name="name">penthicknessVeryThick</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">ver_y thick</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_VERY_THICK:GROUP_PEN_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkSeparatorMenuItem" id="menuitem6">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkCheckMenuItem" id="penStandard">
                                     <property name="name">penStandard</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">standard</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_PLAIN:GROUP_LINE_STYLE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1575,10 +1572,10 @@
                                   <object class="GtkCheckMenuItem" id="penStyleDashed">
                                     <property name="name">penStyleDashed</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">dashed</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_DASH:GROUP_LINE_STYLE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1586,10 +1583,10 @@
                                   <object class="GtkCheckMenuItem" id="penStyleDashDotted">
                                     <property name="name">penStyleDashDotted</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">dash-/ dotted</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_DASH_DOT:GROUP_LINE_STYLE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1597,37 +1594,37 @@
                                   <object class="GtkCheckMenuItem" id="penStyleDotted">
                                     <property name="name">penStyleDotted</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">dotted</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_DOT:GROUP_LINE_STYLE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkSeparatorMenuItem" id="menuitem1">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkCheckMenuItem" id="penFill">
                                     <property name="name">penFill</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">Fi_ll</property>
-                                    <property name="use_underline">True</property>
+                                    <property name="use-underline">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_PEN_FILL:GROUP_PEN_FILL" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
-                                  <object class="GtkMenuItem" id="penFillTransparency">
-                                    <property name="name">penFillTransparency</property>
+                                  <object class="GtkMenuItem" id="penFillOpacity">
+                                    <property name="name">penFillOpacity</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes">Fill transparency</property>
-                                    <property name="use_underline">True</property>
-                                    <signal name="activate" handler="ACTION_TOOL_PEN_FILL_TRANSPARENCY" swapped="no"/>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Fill opacity</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_TOOL_PEN_FILL_OPACITY" swapped="no"/>
                                   </object>
                                 </child>
                               </object>
@@ -1638,21 +1635,21 @@
                           <object class="GtkMenuItem" id="menuToolsEraserOptions">
                             <property name="name">menuToolsEraserOptions</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Eraser Optio_ns</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <child type="submenu">
                               <object class="GtkMenu" id="menu12">
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can-focus">False</property>
                                 <child>
                                   <object class="GtkCheckMenuItem" id="eraserVeryFine">
                                     <property name="name">eraserFine</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_very fine</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_VERY_FINE:GROUP_ERASER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1660,10 +1657,10 @@
                                   <object class="GtkCheckMenuItem" id="eraserFine">
                                     <property name="name">eraserFine</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_fine</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_FINE:GROUP_ERASER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1671,10 +1668,10 @@
                                   <object class="GtkCheckMenuItem" id="eraserMedium">
                                     <property name="name">eraserMedium</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_medium</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_MEDIUM:GROUP_ERASER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1682,10 +1679,10 @@
                                   <object class="GtkCheckMenuItem" id="eraserThick">
                                     <property name="name">eraserThick</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_thick</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_THICK:GROUP_ERASER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1693,27 +1690,27 @@
                                   <object class="GtkCheckMenuItem" id="eraserVeryThick">
                                     <property name="name">eraserVeryThick</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">ver_y thick</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_VERY_THICK:GROUP_ERASER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkSeparatorMenuItem" id="separatormenuitem15">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkCheckMenuItem" id="eraserStandard">
                                     <property name="name">eraserStandard</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_standard</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_ERASER_STANDARD:GROUP_ERASER_MODE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1721,10 +1718,10 @@
                                   <object class="GtkCheckMenuItem" id="eraserWhiteout">
                                     <property name="name">eraserWhiteout</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_whiteout</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_ERASER_WHITEOUT:GROUP_ERASER_MODE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1732,10 +1729,10 @@
                                   <object class="GtkCheckMenuItem" id="eraserDeleteStrokes">
                                     <property name="name">eraserDeleteStrokes</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_delete strokes</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_ERASER_DELETE_STROKE:GROUP_ERASER_MODE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1747,21 +1744,21 @@
                           <object class="GtkMenuItem" id="menuToolsHighlighterOptions">
                             <property name="name">menuToolsHighlighterOptions</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Highlighter Opti_ons</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <child type="submenu">
                               <object class="GtkMenu" id="menu13">
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can-focus">False</property>
                                 <child>
                                   <object class="GtkCheckMenuItem" id="highlighterVeryFine">
                                     <property name="name">highlighterVeryFine</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_very fine</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1769,10 +1766,10 @@
                                   <object class="GtkCheckMenuItem" id="highlighterFine">
                                     <property name="name">highlighterFine</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_fine</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_FINE:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1780,10 +1777,10 @@
                                   <object class="GtkCheckMenuItem" id="highlighterMedium">
                                     <property name="name">highlighterMedium</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_medium</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_MEDIUM:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1791,10 +1788,10 @@
                                   <object class="GtkCheckMenuItem" id="highlighterThick">
                                     <property name="name">highlighterThick</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">_thick</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_THICK:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
@@ -1802,37 +1799,37 @@
                                   <object class="GtkCheckMenuItem" id="highlighterVeryThick">
                                     <property name="name">highlighterThick</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">ver_y thick</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="draw_as_radio">True</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkSeparatorMenuItem" id="menuitem2">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                   </object>
                                 </child>
                                 <child>
                                   <object class="GtkCheckMenuItem" id="highlighterFill">
                                     <property name="name">highlighterFill</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="label" translatable="yes">Fi_ll</property>
-                                    <property name="use_underline">True</property>
+                                    <property name="use-underline">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_FILL:GROUP_HIGHLIGHTER_FILL" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
-                                  <object class="GtkMenuItem" id="highlighterFillTransparency">
-                                    <property name="name">highlighterFillTransparency</property>
+                                  <object class="GtkMenuItem" id="highlighterFillOpacity">
+                                    <property name="name">highlighterFillOpacity</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes">Fill transparency</property>
-                                    <property name="use_underline">True</property>
-                                    <signal name="activate" handler="ACTION_TOOL_HIGHLIGHTER_FILL_TRANSPARENCY" swapped="no"/>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Fill opacity</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY" swapped="no"/>
                                   </object>
                                 </child>
                               </object>
@@ -1843,29 +1840,29 @@
                           <object class="GtkMenuItem" id="menuToolsTextFont">
                             <property name="name">menuToolsTextFont</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Text Font...</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_SELECT_FONT" swapped="no"/>
                             <accelerator key="f" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
                           <object class="GtkCheckMenuItem" id="menuAudioRecord">
-                            <property name="use_action_appearance">False</property>
+                            <property name="use-action-appearance">False</property>
                             <property name="name">menuAudioRecord</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Record / Stop</property>
                             <signal name="toggled" handler="ACTION_AUDIO_RECORD" swapped="no"/>
                           </object>
                         </child>
                         <child>
                           <object class="GtkCheckMenuItem" id="menuAudioPausePlayback">
-                            <property name="use_action_appearance">False</property>
+                            <property name="use-action-appearance">False</property>
                             <property name="name">menuAudioPausePlayback</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Pause</property>
                             <signal name="toggled" handler="ACTION_AUDIO_PAUSE_PLAYBACK" swapped="no"/>
                           </object>
@@ -1874,9 +1871,9 @@
                           <object class="GtkMenuItem" id="menuAudioStopPlayback">
                             <property name="name">menuAudioStopPlayback</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Stop</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_AUDIO_STOP_PLAYBACK" swapped="no"/>
                           </object>
                         </child>
@@ -1884,9 +1881,9 @@
                           <object class="GtkMenuItem" id="menuAudioSeekForwards">
                             <property name="name">menuAudioSeekForwards</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Forward</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_AUDIO_SEEK_FORWARDS" swapped="no"/>
                           </object>
                         </child>
@@ -1894,9 +1891,9 @@
                           <object class="GtkMenuItem" id="menuAudioSeekBackwards">
                             <property name="name">menuAudioSeekBackwards</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Back</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_AUDIO_SEEK_BACKWARDS" swapped="no"/>
                           </object>
                         </child>
@@ -1904,9 +1901,9 @@
                           <object class="GtkMenuItem" id="menuEditTex">
                             <property name="name">menuEditTex</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Add/Edit Tex</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_TEX" swapped="no"/>
                             <accelerator key="x" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
@@ -1919,20 +1916,20 @@
                   <object class="GtkMenuItem" id="menuitemPlugin">
                     <property name="name">menuitemPlugin</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">_Plugin</property>
-                    <property name="use_underline">True</property>
+                    <property name="use-underline">True</property>
                     <child type="submenu">
                       <object class="GtkMenu" id="menuPlugin">
                         <property name="name">menuPlugin</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkMenuItem" id="menuitem8">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Plugin _Manager</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_PLUGIN_MANAGER" swapped="no"/>
                           </object>
                         </child>
@@ -1944,21 +1941,21 @@
                   <object class="GtkMenuItem" id="menuitemHelp">
                     <property name="name">menuitemHelp</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">_Help</property>
-                    <property name="use_underline">True</property>
+                    <property name="use-underline">True</property>
                     <child type="submenu">
                       <object class="GtkMenu" id="menu3">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkImageMenuItem" id="menuHelpHelp">
                             <property name="label">gtk-help</property>
                             <property name="name">menuHelpHelp</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_HELP" swapped="no"/>
                           </object>
                         </child>
@@ -1967,9 +1964,9 @@
                             <property name="label">gtk-about</property>
                             <property name="name">menuHelpAbout</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="use_stock">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_ABOUT" swapped="no"/>
                           </object>
                         </child>
@@ -1989,8 +1986,8 @@
               <object class="GtkToolbar" id="tbTop1">
                 <property name="name">tbTop1</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="toolbar_style">icons</property>
+                <property name="can-focus">False</property>
+                <property name="toolbar-style">icons</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -2002,7 +1999,7 @@
               <object class="GtkToolbar" id="tbTop2">
                 <property name="name">tbTop2</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -2014,14 +2011,14 @@
               <object class="GtkBox" id="mainContainerBox">
                 <property name="name">mainContainerBox</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkToolbar" id="tbLeft1">
                     <property name="name">tbLeft1</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
-                    <property name="toolbar_style">icons</property>
+                    <property name="toolbar-style">icons</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2033,9 +2030,9 @@
                   <object class="GtkToolbar" id="tbLeft2">
                     <property name="name">tbLeft2</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
-                    <property name="toolbar_style">icons</property>
+                    <property name="toolbar-style">icons</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2047,18 +2044,18 @@
                   <object class="GtkPaned" id="panelMainContents">
                     <property name="name">panelMainContents</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <child>
                       <object class="GtkBox" id="sidebar">
                         <property name="name">sidebar</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkToolbar" id="tbSelectSidebarPage">
                             <property name="name">tbSelectSidebarPage</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2070,7 +2067,7 @@
                           <object class="GtkBox" id="sidebarContents">
                             <property name="name">sidebarContents</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
                               <placeholder/>
@@ -2085,23 +2082,23 @@
                         <child>
                           <object class="GtkBox" id="box2">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <child>
                               <object class="GtkBox" id="box5">
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can-focus">False</property>
                                 <child>
                                   <object class="GtkButton" id="btUp">
                                     <property name="name">btUp</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="tooltip_text" translatable="yes">Swap the current page with the one above</property>
-                                    <property name="margin_left">2</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">True</property>
+                                    <property name="tooltip-text" translatable="yes">Swap the current page with the one above</property>
+                                    <property name="margin-left">2</property>
                                     <child>
                                       <object class="GtkImage" id="image1">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
+                                        <property name="can-focus">False</property>
                                         <property name="stock">gtk-go-up</property>
                                       </object>
                                     </child>
@@ -2116,13 +2113,13 @@
                                   <object class="GtkButton" id="btDown">
                                     <property name="name">btDown</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="tooltip_text" translatable="yes">Swap the current page with the one below</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">True</property>
+                                    <property name="tooltip-text" translatable="yes">Swap the current page with the one below</property>
                                     <child>
                                       <object class="GtkImage" id="image5">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
+                                        <property name="can-focus">False</property>
                                         <property name="stock">gtk-go-down</property>
                                       </object>
                                     </child>
@@ -2137,13 +2134,13 @@
                                   <object class="GtkButton" id="btCopy">
                                     <property name="name">btCopy</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="tooltip_text" translatable="yes">Insert a copy of the current page below</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">True</property>
+                                    <property name="tooltip-text" translatable="yes">Insert a copy of the current page below</property>
                                     <child>
                                       <object class="GtkImage" id="image6">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
+                                        <property name="can-focus">False</property>
                                         <property name="stock">gtk-copy</property>
                                       </object>
                                     </child>
@@ -2158,13 +2155,13 @@
                                   <object class="GtkButton" id="btDelete">
                                     <property name="name">btDelete</property>
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="tooltip_text" translatable="yes">Delete this page</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">True</property>
+                                    <property name="tooltip-text" translatable="yes">Delete this page</property>
                                     <child>
                                       <object class="GtkImage" id="image7">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
+                                        <property name="can-focus">False</property>
                                         <property name="stock">gtk-delete</property>
                                       </object>
                                     </child>
@@ -2190,13 +2187,13 @@
                               <object class="GtkButton" id="buttonCloseSidebar">
                                 <property name="name">buttonCloseSidebar</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">False</property>
                                 <property name="relief">none</property>
                                 <child>
                                   <object class="GtkImage" id="image8">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="stock">gtk-close</property>
                                   </object>
                                 </child>
@@ -2207,7 +2204,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="pack_type">end</property>
+                                <property name="pack-type">end</property>
                                 <property name="position">1</property>
                               </packing>
                             </child>
@@ -2229,7 +2226,7 @@
                       <object class="GtkBox" id="boxContents">
                         <property name="name">boxContents</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
                           <placeholder/>
@@ -2251,9 +2248,9 @@
                   <object class="GtkToolbar" id="tbRight1">
                     <property name="name">tbRight1</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
-                    <property name="toolbar_style">icons</property>
+                    <property name="toolbar-style">icons</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2265,9 +2262,9 @@
                   <object class="GtkToolbar" id="tbRight2">
                     <property name="name">tbRight2</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
-                    <property name="toolbar_style">icons</property>
+                    <property name="toolbar-style">icons</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2286,13 +2283,13 @@
               <object class="GtkBox" id="searchBar">
                 <property name="name">searchBar</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkSeparator" id="separator1">
                     <property name="name">separator1</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2303,26 +2300,26 @@
                 <child>
                   <object class="GtkToolbar" id="searchToolbar">
                     <property name="name">searchToolbar</property>
-                    <property name="can_focus">False</property>
-                    <property name="toolbar_style">icons</property>
+                    <property name="can-focus">False</property>
+                    <property name="toolbar-style">icons</property>
                     <child>
                       <object class="GtkToolItem" id="toolbutton1">
                         <property name="name">toolbutton1</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="margin_right">12</property>
+                        <property name="can-focus">False</property>
+                        <property name="margin-right">12</property>
                         <child>
                           <object class="GtkBox" id="box3">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <child>
                               <object class="GtkSearchEntry" id="searchTextField">
                                 <property name="name">searchTextField</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="primary_icon_name">edit-find-symbolic</property>
-                                <property name="primary_icon_activatable">False</property>
-                                <property name="primary_icon_sensitive">False</property>
+                                <property name="can-focus">True</property>
+                                <property name="primary-icon-name">edit-find-symbolic</property>
+                                <property name="primary-icon-activatable">False</property>
+                                <property name="primary-icon-sensitive">False</property>
                               </object>
                               <packing>
                                 <property name="expand">True</property>
@@ -2334,14 +2331,14 @@
                               <object class="GtkButton" id="btSearchBack">
                                 <property name="name">btSearchBack</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="receives_default">True</property>
-                                <property name="tooltip_text" translatable="yes">Find previous occurrence of the search string</property>
-                                <property name="always_show_image">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="receives-default">True</property>
+                                <property name="tooltip-text" translatable="yes">Find previous occurrence of the search string</property>
+                                <property name="always-show-image">True</property>
                                 <child>
                                   <object class="GtkImage" id="image3">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="stock">gtk-go-up</property>
                                   </object>
                                 </child>
@@ -2356,14 +2353,14 @@
                               <object class="GtkButton" id="btSearchForward">
                                 <property name="name">btSearchForward</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="receives_default">True</property>
-                                <property name="tooltip_text" translatable="yes">Find next occurrence of the search string</property>
-                                <property name="always_show_image">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="receives-default">True</property>
+                                <property name="tooltip-text" translatable="yes">Find next occurrence of the search string</property>
+                                <property name="always-show-image">True</property>
                                 <child>
                                   <object class="GtkImage" id="image4">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
+                                    <property name="can-focus">False</property>
                                     <property name="stock">gtk-go-down</property>
                                   </object>
                                 </child>
@@ -2390,12 +2387,12 @@
                       <object class="GtkToolItem" id="toolbutton3">
                         <property name="name">toolbutton3</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkLabel" id="lbSearchState">
                             <property name="name">lbSearchState</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="ellipsize">end</property>
                             <property name="xalign">0</property>
                           </object>
@@ -2410,18 +2407,18 @@
                       <object class="GtkToolItem" id="toolbutton2">
                         <property name="name">toolbutton2</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can-focus">False</property>
                         <child>
                           <object class="GtkButton" id="buttonCloseSearch">
                             <property name="name">buttonCloseSearch</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="receives_default">False</property>
+                            <property name="can-focus">False</property>
+                            <property name="receives-default">False</property>
                             <property name="relief">none</property>
                             <child>
                               <object class="GtkImage" id="image2">
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can-focus">False</property>
                                 <property name="stock">gtk-close</property>
                               </object>
                             </child>
@@ -2455,7 +2452,7 @@
               <object class="GtkToolbar" id="tbBottom1">
                 <property name="name">tbBottom1</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -2467,7 +2464,7 @@
               <object class="GtkToolbar" id="tbBottom2">
                 <property name="name">tbBottom2</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -2478,12 +2475,12 @@
             <child>
               <object class="GtkBox" id="statusbar">
                 <property name="name">statusbar</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkLabel" id="lbState">
                     <property name="name">lbState</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label">State PLACEHOLDER</property>
                   </object>
                   <packing>
@@ -2497,7 +2494,7 @@
                   <object class="GtkProgressBar" id="pgState">
                     <property name="name">pgState</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2509,18 +2506,18 @@
                   <object class="GtkStatusbar" id="statusbar1">
                     <property name="name">statusbar1</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="margin_left">10</property>
-                    <property name="margin_right">10</property>
-                    <property name="margin_top">6</property>
-                    <property name="margin_bottom">6</property>
+                    <property name="can-focus">False</property>
+                    <property name="margin-left">10</property>
+                    <property name="margin-right">10</property>
+                    <property name="margin-top">6</property>
+                    <property name="margin-bottom">6</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">2</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="pack_type">end</property>
+                    <property name="pack-type">end</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
@@ -2542,12 +2539,12 @@
   <object class="GtkMenu" id="sidebarPreviewContextMenu">
     <property name="name">sidebarPreviewContextMenu</property>
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
+    <property name="can-focus">False</property>
     <child>
       <object class="GtkMenuItem" id="sidebarPreviewNewBefore">
         <property name="name">sidebarPreviewNewBefore</property>
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Insert Page Before</property>
       </object>
     </child>
@@ -2555,7 +2552,7 @@
       <object class="GtkMenuItem" id="sidebarPreviewNewAfter">
         <property name="name">sidebarPreviewNewAfter</property>
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Insert Page After</property>
       </object>
     </child>
@@ -2563,21 +2560,21 @@
       <object class="GtkMenuItem" id="sidebarPreviewDuplicate">
         <property name="name">sidebarPreviewDuplicate</property>
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Duplicate</property>
       </object>
     </child>
     <child>
       <object class="GtkSeparatorMenuItem">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
       </object>
     </child>
     <child>
       <object class="GtkMenuItem" id="sidebarPreviewMoveUp">
         <property name="name">sidebarPreviewMoveUp</property>
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Move Up</property>
       </object>
     </child>
@@ -2585,14 +2582,14 @@
       <object class="GtkMenuItem" id="sidebarPreviewMoveDown">
         <property name="name">sidebarPreviewMoveDown</property>
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Move Down</property>
       </object>
     </child>
     <child>
       <object class="GtkSeparatorMenuItem">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
       </object>
     </child>
     <child>
@@ -2600,21 +2597,21 @@
         <property name="name">sidebarPreviewEdit</property>
         <property name="visible">True</property>
         <property name="sensitive">False</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Edit (not implemented yet)</property>
       </object>
     </child>
     <child>
       <object class="GtkSeparatorMenuItem">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
       </object>
     </child>
     <child>
       <object class="GtkMenuItem" id="sidebarPreviewDelete">
         <property name="name">sidebarPreviewDelete</property>
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Delete</property>
       </object>
     </child>

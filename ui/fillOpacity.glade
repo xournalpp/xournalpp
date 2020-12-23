@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="lower">1</property>
     <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
-  <object class="GtkDialog" id="fillTransparencyDialog">
-    <property name="name">fillTransparencyDialog</property>
-    <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Transparency settings</property>
-    <property name="window_position">center</property>
+  <object class="GtkDialog" id="fillOpacityDialog">
+    <property name="name">fillOpacityDialog</property>
+    <property name="can-focus">False</property>
+    <property name="title" translatable="yes">Opacity settings</property>
+    <property name="window-position">center</property>
     <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
-    <property name="type_hint">dialog</property>
+    <property name="type-hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">4</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
             <property name="name">dialog-action_area2</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
+            <property name="can-focus">False</property>
+            <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="btCancel">
-                <property name="name">btCancel</property>
                 <property name="label">gtk-cancel</property>
+                <property name="name">btCancel</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="can_default">True</property>
-                <property name="receives_default">False</property>
-                <property name="use_stock">True</property>
+                <property name="can-focus">True</property>
+                <property name="can-default">True</property>
+                <property name="receives-default">False</property>
+                <property name="use-stock">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -45,12 +45,12 @@
             </child>
             <child>
               <object class="GtkButton" id="btOk">
-                <property name="name">btOk</property>
                 <property name="label">gtk-ok</property>
+                <property name="name">btOk</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="use-stock">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -62,23 +62,23 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
-            <property name="pack_type">end</property>
+            <property name="pack-type">end</property>
             <property name="position">0</property>
           </packing>
         </child>
         <child>
           <object class="GtkBox" id="vbox1">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="orientation">vertical</property>
             <property name="spacing">10</property>
             <child>
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">&lt;b&gt;Fill transparency settings&lt;/b&gt;
-Select transparency for fill color</property>
-                <property name="use_markup">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">&lt;b&gt;Fill opacity settings&lt;/b&gt;
+Select opacity for fill color</property>
+                <property name="use-markup">True</property>
                 <property name="xalign">0</property>
               </object>
               <packing>
@@ -90,13 +90,13 @@ Select transparency for fill color</property>
             <child>
               <object class="GtkBox" id="box1">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="spacing">10</property>
                 <child>
                   <object class="GtkImage" id="imgPreview">
                     <property name="name">imgPreview</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="stock">gtk-missing-image</property>
                   </object>
                   <packing>
@@ -109,11 +109,11 @@ Select transparency for fill color</property>
                   <object class="GtkScale" id="scaleAlpha">
                     <property name="name">scaleAlpha</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment1</property>
-                    <property name="show_fill_level">True</property>
-                    <property name="fill_level">100</property>
-                    <property name="round_digits">0</property>
+                    <property name="show-fill-level">True</property>
+                    <property name="fill-level">100</property>
+                    <property name="round-digits">0</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>

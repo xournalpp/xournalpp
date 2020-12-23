@@ -1,29 +1,28 @@
-#include "FillTransparencyDialog.h"
+#include "FillOpacityDialog.h"
 
-FillTransparencyDialog::FillTransparencyDialog(GladeSearchpath* gladeSearchPath, int alpha):
-        GladeGui(gladeSearchPath, "fillTransparency.glade", "fillTransparencyDialog") {
+FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha):
+        GladeGui(gladeSearchPath, "fillOpacity.glade", "fillOpacityDialog") {
     GtkWidget* scaleAlpha = get("scaleAlpha");
 
     gtk_range_set_value(GTK_RANGE(scaleAlpha), static_cast<int>(alpha / 255.0 * 100));
 
     setPreviewImage(alpha);
 
-    g_signal_connect(
-            scaleAlpha, "change-value",
-            G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, FillTransparencyDialog* self) {
-                self->setPreviewImage((int)(value / 100 * 255));
-                gtk_range_set_value(range, value);
-            }),
-            this);
+    g_signal_connect(scaleAlpha, "change-value",
+                     G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, FillOpacityDialog* self) {
+                         self->setPreviewImage((int)(value / 100 * 255));
+                         gtk_range_set_value(range, value);
+                     }),
+                     this);
 }
 
-FillTransparencyDialog::~FillTransparencyDialog() = default;
+FillOpacityDialog::~FillOpacityDialog() = default;
 
 const int PREVIEW_WIDTH = 70;
 const int PREVIEW_HEIGTH = 50;
 const int PREVIEW_BORDER = 10;
 
-void FillTransparencyDialog::setPreviewImage(int alpha) {
+void FillOpacityDialog::setPreviewImage(int alpha) {
     cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, PREVIEW_WIDTH, PREVIEW_HEIGTH);
     cairo_t* cr = cairo_create(surface);
 
@@ -51,9 +50,9 @@ void FillTransparencyDialog::setPreviewImage(int alpha) {
     gtk_image_set_from_surface(GTK_IMAGE(preview), surface);
 }
 
-auto FillTransparencyDialog::getResultAlpha() const -> int { return resultAlpha; }
+auto FillOpacityDialog::getResultAlpha() const -> int { return resultAlpha; }
 
-void FillTransparencyDialog::show(GtkWindow* parent) {
+void FillOpacityDialog::show(GtkWindow* parent) {
     gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
     int result = gtk_dialog_run(GTK_DIALOG(this->window));
     gtk_widget_hide(this->window);

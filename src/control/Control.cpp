@@ -10,7 +10,7 @@
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
 #include "gui/dialog/AboutDialog.h"
-#include "gui/dialog/FillTransparencyDialog.h"
+#include "gui/dialog/FillOpacityDialog.h"
 #include "gui/dialog/FormatDialog.h"
 #include "gui/dialog/GotoDialog.h"
 #include "gui/dialog/PageTemplateDialog.h"
@@ -681,7 +681,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_TOOL_PEN_FILL:
             this->toolHandler->setPenFillEnabled(enabled);
             break;
-        case ACTION_TOOL_PEN_FILL_TRANSPARENCY:
+        case ACTION_TOOL_PEN_FILL_OPACITY:
             selectFillAlpha(true);
             break;
 
@@ -719,7 +719,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_TOOL_HIGHLIGHTER_FILL:
             this->toolHandler->setHighlighterFillEnabled(enabled);
             break;
-        case ACTION_TOOL_HIGHLIGHTER_FILL_TRANSPARENCY:
+        case ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY:
             selectFillAlpha(false);
             break;
 
@@ -971,7 +971,7 @@ void Control::selectFillAlpha(bool pen) {
         alpha = toolHandler->getHighlighterFill();
     }
 
-    FillTransparencyDialog dlg(gladeSearchPath, alpha);
+    FillOpacityDialog dlg(gladeSearchPath, alpha);
     dlg.show(getGtkWindow());
 
     if (dlg.getResultAlpha() == -1) {
