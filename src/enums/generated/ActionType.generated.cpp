@@ -338,8 +338,8 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_PEN_FILL;
     }
 
-    if (value == "ACTION_TOOL_PEN_FILL_TRANSPARENCY") {
-        return ACTION_TOOL_PEN_FILL_TRANSPARENCY;
+    if (value == "ACTION_TOOL_PEN_FILL_OPACITY") {
+        return ACTION_TOOL_PEN_FILL_OPACITY;
     }
 
     if (value == "ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE") {
@@ -366,8 +366,8 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_HIGHLIGHTER_FILL;
     }
 
-    if (value == "ACTION_TOOL_HIGHLIGHTER_FILL_TRANSPARENCY") {
-        return ACTION_TOOL_HIGHLIGHTER_FILL_TRANSPARENCY;
+    if (value == "ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY") {
+        return ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY;
     }
 
     if (value == "ACTION_TOOL_FILL") {
@@ -917,8 +917,8 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_TOOL_PEN_FILL";
     }
 
-    if (value == ACTION_TOOL_PEN_FILL_TRANSPARENCY) {
-        return "ACTION_TOOL_PEN_FILL_TRANSPARENCY";
+    if (value == ACTION_TOOL_PEN_FILL_OPACITY) {
+        return "ACTION_TOOL_PEN_FILL_OPACITY";
     }
 
     if (value == ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE) {
@@ -945,8 +945,8 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_TOOL_HIGHLIGHTER_FILL";
     }
 
-    if (value == ACTION_TOOL_HIGHLIGHTER_FILL_TRANSPARENCY) {
-        return "ACTION_TOOL_HIGHLIGHTER_FILL_TRANSPARENCY";
+    if (value == ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY) {
+        return "ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY";
     }
 
     if (value == ACTION_TOOL_FILL) {
