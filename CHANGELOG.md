@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.20-hotfix
+
+Hotfix for Debian. If you are not using the Debian package of the release page, you can stay on v1.0.20.
+
+* Fixed an issue with packaging information for Debian packages preventing installation (#2560)
+
 ## 1.0.20
 
 More bugfixes.

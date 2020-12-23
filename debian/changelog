@@ -1,3 +1,9 @@
+xournalpp (1.0.20-hotfix) unstable; urgency=medium
+
+  * Fixed an issue with packaging information for Debian packages preventing installation
+
+ -- Ulrich Huber <ulrich@huberulrich.de> Wed, 23 Dec 2020 19:23:00 +0100
+
 xournalpp (1.0.20-0) unstable; urgency=medium
 
   * Fixed a regression with pdf files that could not be overwritten
