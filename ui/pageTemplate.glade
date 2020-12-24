@@ -28,6 +28,7 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">4</property>
+	<property name="margin">12</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
             <property name="name">dialog-action_area2</property>
@@ -125,7 +126,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">center</property>
-                <property name="margin_top">10</property>
+                <property name="margin_top">12</property>
                 <property name="column_spacing">10</property>
                 <child>
                   <object class="GtkLabel" id="label2">

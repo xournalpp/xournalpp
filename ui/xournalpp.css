@@ -71,3 +71,12 @@ GtkToolbar GtkButton
 	padding: 2
 }
 */
+
+
+/*
+Labels for subsections of the Settings dialog
+*/
+notebook frame>label{
+    color: #666;
+    font-weight: bold;
+}

@@ -11,8 +11,8 @@
   <object class="GtkScrolledWindow" id="latexSettingsPanel">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
-    <property name="shadow_type">in</property>
-    <property name="min_content_height">500</property>
+    <property name="min_content_height">450</property>
+    <property name="min_content_width">500</property>
     <child>
       <object class="GtkViewport">
         <property name="visible">True</property>
@@ -22,11 +22,13 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
+	    <property name="vexpand">True</property>
             <child>
               <object class="GtkFrame">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label_xalign">0</property>
+                <property name="label_xalign">0.01</property>
+                <property name="margin">12</property>
                 <child>
                   <object class="GtkAlignment">
                     <property name="visible">True</property>
@@ -75,7 +77,8 @@
               <object class="GtkFrame">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label_xalign">0</property>
+                <property name="label_xalign">0.01</property>
+                <property name="margin">12</property>
                 <child>
                   <object class="GtkAlignment">
                     <property name="visible">True</property>
@@ -107,6 +110,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
+			    <property name="wrap">True</property>
                             <property name="label" translatable="yes">The following strings will be substituted in the global template file when running the LaTeX tool:</property>
                           </object>
                           <packing>
@@ -222,7 +226,8 @@
               <object class="GtkFrame">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label_xalign">0</property>
+                <property name="label_xalign">0.01</property>
+                <property name="margin">12</property>
                 <child>
                   <object class="GtkAlignment">
                     <property name="visible">True</property>

@@ -46,6 +46,7 @@
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">4</property>
+	<property name="margin">12</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
             <property name="name">dialog-action_area2</property>
