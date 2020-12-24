@@ -166,6 +166,33 @@ void SettingsDialog::setDpi(int dpi) {
 void SettingsDialog::show(GtkWindow* parent) {
     load();
 
+    // detect display size. If large enough, we enlarge the Settings
+    // Window up to 1000x740.
+    GdkDisplay* disp = gdk_display_get_default();
+    if (disp != NULL) {
+        GdkWindow* win = gtk_widget_get_window(GTK_WIDGET(parent));
+        if (win != NULL) {
+            GdkMonitor* moni = gdk_display_get_monitor_at_window(disp, win);
+            GdkRectangle workarea;
+            gdk_monitor_get_workarea(moni, &workarea);
+            gint w = -1;
+            gint h = -1;
+            if (workarea.width > 1100) {
+                w = 1000;
+            } else if (workarea.width > 920) {
+                w = 900;
+            }
+            if (workarea.height > 800) {
+                h = 740;
+            } else if (workarea.height > 620) {
+                h = 600;
+            }
+            gtk_window_set_default_size(GTK_WINDOW(this->window), w, h);
+        } else {
+            g_message("Parent window does not have a GDK Window. This is unexpected.");
+        }
+    }
+
     gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
     int res = gtk_dialog_run(GTK_DIALOG(this->window));
 
