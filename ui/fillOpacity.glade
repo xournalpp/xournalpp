@@ -19,6 +19,7 @@
       <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="margin">12</property>
         <property name="orientation">vertical</property>
         <property name="spacing">4</property>
         <child internal-child="action_area">
@@ -91,6 +92,8 @@ Select opacity for fill color</property>
               <object class="GtkBox" id="box1">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="margin-top">12</property>
+                <property name="margin-bottom">12</property>
                 <property name="spacing">10</property>
                 <child>
                   <object class="GtkImage" id="imgPreview">
