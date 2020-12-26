@@ -288,7 +288,7 @@ void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
             DeviceListHelper::getSourceMapping(GDK_SOURCE_TOUCHSCREEN, this->getControl()->getSettings());
 
     setGtkTouchscreenScrollingEnabled(touchscreenClass == INPUT_DEVICE_TOUCHSCREEN &&
-                                      control->getSettings()->getTouchDrawingEnabled());
+                                      !control->getSettings()->getTouchDrawingEnabled());
 }
 
 void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
@@ -307,7 +307,7 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 }
 
 bool MainWindow::getGtkTouchscreenScrollingEnabled() const {
-    return gtkTouchscreenScrollingEnabled && !usingTouchWorkaround;
+    return gtkTouchscreenScrollingEnabled.load() && !usingTouchWorkaround;
 }
 
 /**
