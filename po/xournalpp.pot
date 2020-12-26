@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-26 17:32+0000\n"
+"POT-Creation-Date: 2020-12-26 20:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1735,10 +1735,10 @@ msgid ""
 "<i>Menu: View/Toolbars</i>"
 msgstr ""
 
-#: ../ui/fillTransparency.glade:79
+#: ../ui/fillOpacity.glade:80
 msgid ""
-"<b>Fill transparency settings</b>\n"
-"Select transparency for fill color"
+"<b>Fill opacity settings</b>\n"
+"Select opacity for fill color"
 msgstr ""
 
 #: ../ui/pageTemplate.glade:135
@@ -1930,7 +1930,7 @@ msgstr ""
 msgid "Always check LaTeX dependencies before running"
 msgstr ""
 
-#: ../ui/main.glade:1150
+#: ../ui/main.glade:1147
 msgid "Append New Pdf Pages"
 msgstr ""
 
@@ -2023,7 +2023,7 @@ msgstr ""
 msgid "Colors"
 msgstr ""
 
-#: ../ui/main.glade:1160
+#: ../ui/main.glade:1157
 msgid "Configure Page Template"
 msgstr ""
 
@@ -2081,7 +2081,7 @@ msgstr ""
 msgid "Defaults"
 msgstr ""
 
-#: ../ui/main.glade:1198
+#: ../ui/main.glade:1195
 msgid "Delete Layer"
 msgstr ""
 
@@ -2089,7 +2089,7 @@ msgstr ""
 msgid "Delete stroke"
 msgstr ""
 
-#: ../ui/main.glade:2163
+#: ../ui/main.glade:2160
 msgid "Delete this page"
 msgstr ""
 
@@ -2153,11 +2153,11 @@ msgstr ""
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr ""
 
-#: ../ui/main.glade:1379
+#: ../ui/main.glade:1376
 msgid "Draw Coordinate System"
 msgstr ""
 
-#: ../ui/main.glade:1390
+#: ../ui/main.glade:1387
 msgid "Draw _Line"
 msgstr ""
 
@@ -2173,11 +2173,11 @@ msgstr ""
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/main.glade:2567
+#: ../ui/main.glade:2564
 msgid "Duplicate"
 msgstr ""
 
-#: ../ui/main.glade:2604
+#: ../ui/main.glade:2601
 msgid "Edit (not implemented yet)"
 msgstr ""
 
@@ -2231,7 +2231,7 @@ msgstr ""
 msgid "Enter / edit LaTeX Text"
 msgstr ""
 
-#: ../ui/main.glade:1642
+#: ../ui/main.glade:1639
 msgid "Eraser Optio_ns"
 msgstr ""
 
@@ -2247,23 +2247,23 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
-#: ../ui/main.glade:250
+#: ../ui/main.glade:247
 msgid "Export as..."
 msgstr ""
 
-#: ../ui/main.glade:1618 ../ui/main.glade:1823
+#: ../ui/main.glade:1615 ../ui/main.glade:1820
 msgid "Fi_ll"
 msgstr ""
 
-#: ../ui/main.glade:1628 ../ui/main.glade:1833
-msgid "Fill transparency"
+#: ../ui/main.glade:1625 ../ui/main.glade:1830
+msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2361
+#: ../ui/main.glade:2358
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:2339
+#: ../ui/main.glade:2336
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -2271,7 +2271,7 @@ msgstr ""
 msgid "First Page Offset "
 msgstr ""
 
-#: ../ui/main.glade:485 ../ui/settings.glade:2783
+#: ../ui/main.glade:482 ../ui/settings.glade:2783
 msgid "Fullscreen"
 msgstr ""
 
@@ -2311,7 +2311,7 @@ msgstr ""
 msgid "Grid snapping tolerance"
 msgstr ""
 
-#: ../ui/main.glade:1478
+#: ../ui/main.glade:1475
 msgid "H_and Tool"
 msgstr ""
 
@@ -2327,7 +2327,7 @@ msgstr ""
 msgid "Height:"
 msgstr ""
 
-#: ../ui/main.glade:904 ../ui/settings.glade:2745 ../ui/settings.glade:2813
+#: ../ui/main.glade:901 ../ui/settings.glade:2745 ../ui/settings.glade:2813
 msgid "Hide Menubar"
 msgstr ""
 
@@ -2347,7 +2347,7 @@ msgstr ""
 msgid "Highlight cursor position"
 msgstr ""
 
-#: ../ui/main.glade:1751
+#: ../ui/main.glade:1748
 msgid "Highlighter Opti_ons"
 msgstr ""
 
@@ -2406,15 +2406,15 @@ msgstr ""
 msgid "Insert Latex"
 msgstr ""
 
-#: ../ui/main.glade:2559
+#: ../ui/main.glade:2556
 msgid "Insert Page After"
 msgstr ""
 
-#: ../ui/main.glade:2551
+#: ../ui/main.glade:2548
 msgid "Insert Page Before"
 msgstr ""
 
-#: ../ui/main.glade:2142
+#: ../ui/main.glade:2139
 msgid "Insert a copy of the current page below"
 msgstr ""
 
@@ -2438,7 +2438,7 @@ msgstr ""
 msgid "Language Settings"
 msgstr ""
 
-#: ../ui/main.glade:528
+#: ../ui/main.glade:525
 msgid "Layout"
 msgstr ""
 
@@ -2489,31 +2489,31 @@ msgstr ""
 msgid "Mouse+Keyboard Combo"
 msgstr ""
 
-#: ../ui/main.glade:2589
+#: ../ui/main.glade:2586
 msgid "Move Down"
 msgstr ""
 
-#: ../ui/main.glade:2581
+#: ../ui/main.glade:2578
 msgid "Move Up"
 msgstr ""
 
-#: ../ui/main.glade:1082
+#: ../ui/main.glade:1079
 msgid "N_ext annotated page"
 msgstr ""
 
-#: ../ui/main.glade:1129
+#: ../ui/main.glade:1126
 msgid "New Page _After"
 msgstr ""
 
-#: ../ui/main.glade:1119
+#: ../ui/main.glade:1116
 msgid "New Page _Before"
 msgstr ""
 
-#: ../ui/main.glade:1140
+#: ../ui/main.glade:1137
 msgid "New Page at _End"
 msgstr ""
 
-#: ../ui/main.glade:1187
+#: ../ui/main.glade:1184
 msgid "New _Layer"
 msgstr ""
 
@@ -2526,6 +2526,10 @@ msgstr ""
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr ""
 
+#: ../ui/fillOpacity.glade:14
+msgid "Opacity settings"
+msgstr ""
+
 #: ../ui/settings.glade:894
 msgid "Options"
 msgstr ""
@@ -2534,7 +2538,7 @@ msgstr ""
 msgid "Output Device"
 msgstr ""
 
-#: ../ui/main.glade:1093
+#: ../ui/main.glade:1090
 msgid "P_revious annotated Page"
 msgstr ""
 
@@ -2550,15 +2554,15 @@ msgstr ""
 msgid "Paper Format"
 msgstr ""
 
-#: ../ui/main.glade:1225
+#: ../ui/main.glade:1222
 msgid "Paper _Color"
 msgstr ""
 
-#: ../ui/main.glade:1215
+#: ../ui/main.glade:1212
 msgid "Paper _Format"
 msgstr ""
 
-#: ../ui/main.glade:1235
+#: ../ui/main.glade:1232
 msgid "Paper b_ackground"
 msgstr ""
 
@@ -2568,11 +2572,11 @@ msgid ""
 "by Denis Auroux"
 msgstr ""
 
-#: ../ui/main.glade:1869
+#: ../ui/main.glade:1866
 msgid "Pause"
 msgstr ""
 
-#: ../ui/main.glade:1496
+#: ../ui/main.glade:1493
 msgid "Pen _Options"
 msgstr ""
 
@@ -2584,7 +2588,7 @@ msgstr ""
 msgid "Plugin Manager"
 msgstr ""
 
-#: ../ui/main.glade:1934
+#: ../ui/main.glade:1931
 msgid "Plugin _Manager"
 msgstr ""
 
@@ -2592,7 +2596,7 @@ msgstr ""
 msgid "Plugin changes are only applied after Xournal++ was restarted"
 msgstr ""
 
-#: ../ui/main.glade:440
+#: ../ui/main.glade:437
 msgid "Preferences"
 msgstr ""
 
@@ -2620,11 +2624,11 @@ msgstr ""
 msgid "Range"
 msgstr ""
 
-#: ../ui/main.glade:190
+#: ../ui/main.glade:187
 msgid "Recent _Documents"
 msgstr ""
 
-#: ../ui/main.glade:1859
+#: ../ui/main.glade:1856
 msgid "Record / Stop"
 msgstr ""
 
@@ -2684,11 +2688,11 @@ msgstr ""
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr ""
 
-#: ../ui/main.glade:637
+#: ../ui/main.glade:634
 msgid "Set Columns"
 msgstr ""
 
-#: ../ui/main.glade:742
+#: ../ui/main.glade:739
 msgid "Set Rows"
 msgstr ""
 
@@ -2704,7 +2708,7 @@ msgstr ""
 msgid "Show Menubar on Startup"
 msgstr ""
 
-#: ../ui/main.glade:496
+#: ../ui/main.glade:493
 msgid "Show sidebar"
 msgstr ""
 
@@ -2712,7 +2716,7 @@ msgstr ""
 msgid "Show sidebar on the right side"
 msgstr ""
 
-#: ../ui/main.glade:512
+#: ../ui/main.glade:509
 msgid "Show toolbars"
 msgstr ""
 
@@ -2757,15 +2761,15 @@ msgstr ""
 msgid "Successive (ms)"
 msgstr ""
 
-#: ../ui/main.glade:2099
+#: ../ui/main.glade:2096
 msgid "Swap the current page with the one above"
 msgstr ""
 
-#: ../ui/main.glade:2121
+#: ../ui/main.glade:2118
 msgid "Swap the current page with the one below"
 msgstr ""
 
-#: ../ui/main.glade:856
+#: ../ui/main.glade:853
 msgid "T_oolbars"
 msgstr ""
 
@@ -2791,7 +2795,7 @@ msgid ""
 "command on the global template file with a test formula."
 msgstr ""
 
-#: ../ui/main.glade:1847
+#: ../ui/main.glade:1844
 msgid "Text Font..."
 msgstr ""
 
@@ -2837,10 +2841,6 @@ msgstr ""
 #: ../ui/settings.glade:1579 ../ui/settings.glade:2048
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
-msgstr ""
-
-#: ../ui/fillTransparency.glade:14
-msgid "Transparency settings"
 msgstr ""
 
 #: ../ui/settings.glade:3873
@@ -2917,247 +2917,247 @@ msgstr ""
 msgid "Zoom Speed"
 msgstr ""
 
-#: ../ui/main.glade:649
+#: ../ui/main.glade:646
 msgid "_1 Column"
 msgstr ""
 
-#: ../ui/main.glade:754
+#: ../ui/main.glade:751
 msgid "_1 Row"
 msgstr ""
 
-#: ../ui/main.glade:660
+#: ../ui/main.glade:657
 msgid "_2 Columns"
 msgstr ""
 
-#: ../ui/main.glade:765
+#: ../ui/main.glade:762
 msgid "_2 Rows"
 msgstr ""
 
-#: ../ui/main.glade:671
+#: ../ui/main.glade:668
 msgid "_3 Columns"
 msgstr ""
 
-#: ../ui/main.glade:776
+#: ../ui/main.glade:773
 msgid "_3 Rows"
 msgstr ""
 
-#: ../ui/main.glade:682
+#: ../ui/main.glade:679
 msgid "_4 Columns"
 msgstr ""
 
-#: ../ui/main.glade:787
+#: ../ui/main.glade:784
 msgid "_4 Rows"
 msgstr ""
 
-#: ../ui/main.glade:693
+#: ../ui/main.glade:690
 msgid "_5 Columns"
 msgstr ""
 
-#: ../ui/main.glade:798
+#: ../ui/main.glade:795
 msgid "_5 Rows"
 msgstr ""
 
-#: ../ui/main.glade:704
+#: ../ui/main.glade:701
 msgid "_6 Columns"
 msgstr ""
 
-#: ../ui/main.glade:809
+#: ../ui/main.glade:806
 msgid "_6 Rows"
 msgstr ""
 
-#: ../ui/main.glade:715
+#: ../ui/main.glade:712
 msgid "_7 Columns"
 msgstr ""
 
-#: ../ui/main.glade:820
+#: ../ui/main.glade:817
 msgid "_7 Rows"
 msgstr ""
 
-#: ../ui/main.glade:726
+#: ../ui/main.glade:723
 msgid "_8 Columns"
 msgstr ""
 
-#: ../ui/main.glade:831
+#: ../ui/main.glade:828
 msgid "_8 Rows"
 msgstr ""
 
-#: ../ui/main.glade:199
+#: ../ui/main.glade:196
 msgid "_Annotate PDF"
 msgstr ""
 
-#: ../ui/main.glade:609
+#: ../ui/main.glade:606
 msgid "_Bottom to Top"
 msgstr ""
 
-#: ../ui/main.glade:624
+#: ../ui/main.glade:621
 msgid "_Cols/Rows"
 msgstr ""
 
-#: ../ui/main.glade:884
+#: ../ui/main.glade:881
 msgid "_Customize"
 msgstr ""
 
-#: ../ui/main.glade:1319
+#: ../ui/main.glade:1316
 msgid "_Default Tools"
 msgstr ""
 
-#: ../ui/main.glade:1170
+#: ../ui/main.glade:1167
 msgid "_Delete Page"
 msgstr ""
 
-#: ../ui/main.glade:295
+#: ../ui/main.glade:292
 msgid "_Edit"
 msgstr ""
 
-#: ../ui/main.glade:1271
+#: ../ui/main.glade:1268
 msgid "_Eraser"
 msgstr ""
 
-#: ../ui/main.glade:240
+#: ../ui/main.glade:237
 msgid "_Export as PDF"
 msgstr ""
 
-#: ../ui/main.glade:155
+#: ../ui/main.glade:152
 msgid "_File"
 msgstr ""
 
-#: ../ui/main.glade:983
+#: ../ui/main.glade:980
 msgid "_First Page"
 msgstr ""
 
-#: ../ui/main.glade:1005
+#: ../ui/main.glade:1002
 msgid "_Goto Page"
 msgstr ""
 
-#: ../ui/main.glade:1948
+#: ../ui/main.glade:1945
 msgid "_Help"
 msgstr ""
 
-#: ../ui/main.glade:1283
+#: ../ui/main.glade:1280
 msgid "_Highlighter"
 msgstr ""
 
-#: ../ui/main.glade:540
+#: ../ui/main.glade:537
 msgid "_Horizontal"
 msgstr ""
 
-#: ../ui/main.glade:1307
+#: ../ui/main.glade:1304
 msgid "_Image"
 msgstr ""
 
-#: ../ui/main.glade:1108
+#: ../ui/main.glade:1105
 msgid "_Journal"
 msgstr ""
 
-#: ../ui/main.glade:1027
+#: ../ui/main.glade:1024
 msgid "_Last Page"
 msgstr ""
 
-#: ../ui/main.glade:569
+#: ../ui/main.glade:566
 msgid "_Left To Right"
 msgstr ""
 
-#: ../ui/main.glade:874
+#: ../ui/main.glade:871
 msgid "_Manage"
 msgstr ""
 
-#: ../ui/main.glade:972
+#: ../ui/main.glade:969
 msgid "_Navigation"
 msgstr ""
 
-#: ../ui/main.glade:1055
+#: ../ui/main.glade:1052
 msgid "_Next Layer"
 msgstr ""
 
-#: ../ui/main.glade:1016
+#: ../ui/main.glade:1013
 msgid "_Next Page"
 msgstr ""
 
-#: ../ui/main.glade:465
+#: ../ui/main.glade:462
 msgid "_Pair Pages"
 msgstr ""
 
-#: ../ui/main.glade:1259
+#: ../ui/main.glade:1256
 msgid "_Pen"
 msgstr ""
 
-#: ../ui/main.glade:1923
+#: ../ui/main.glade:1920
 msgid "_Plugin"
 msgstr ""
 
-#: ../ui/main.glade:475
+#: ../ui/main.glade:472
 msgid "_Presentation Mode"
 msgstr ""
 
-#: ../ui/main.glade:1044
+#: ../ui/main.glade:1041
 msgid "_Previous Layer"
 msgstr ""
 
-#: ../ui/main.glade:994
+#: ../ui/main.glade:991
 msgid "_Previous Page"
 msgstr ""
 
-#: ../ui/main.glade:580
+#: ../ui/main.glade:577
 msgid "_Right To Left"
 msgstr ""
 
-#: ../ui/main.glade:1335
+#: ../ui/main.glade:1332
 msgid "_Shape Recognizer"
 msgstr ""
 
-#: ../ui/main.glade:1295
+#: ../ui/main.glade:1292
 msgid "_Text"
 msgstr ""
 
-#: ../ui/main.glade:1248
+#: ../ui/main.glade:1245
 msgid "_Tools"
 msgstr ""
 
-#: ../ui/main.glade:1066
+#: ../ui/main.glade:1063
 msgid "_Top Layer"
 msgstr ""
 
-#: ../ui/main.glade:598
+#: ../ui/main.glade:595
 msgid "_Top to Bottom"
 msgstr ""
 
-#: ../ui/main.glade:551
+#: ../ui/main.glade:548
 msgid "_Vertical"
 msgstr ""
 
-#: ../ui/main.glade:1454
+#: ../ui/main.glade:1451
 msgid "_Vertical Space"
 msgstr ""
 
-#: ../ui/main.glade:454
+#: ../ui/main.glade:451
 msgid "_View"
 msgstr ""
 
-#: ../ui/main.glade:1736
+#: ../ui/main.glade:1733
 msgid "_delete strokes"
 msgstr ""
 
-#: ../ui/main.glade:1518 ../ui/main.glade:1664 ../ui/main.glade:1773
+#: ../ui/main.glade:1515 ../ui/main.glade:1661 ../ui/main.glade:1770
 msgid "_fine"
 msgstr ""
 
-#: ../ui/main.glade:1529 ../ui/main.glade:1675 ../ui/main.glade:1784
+#: ../ui/main.glade:1526 ../ui/main.glade:1672 ../ui/main.glade:1781
 msgid "_medium"
 msgstr ""
 
-#: ../ui/main.glade:1714
+#: ../ui/main.glade:1711
 msgid "_standard"
 msgstr ""
 
-#: ../ui/main.glade:1540 ../ui/main.glade:1686 ../ui/main.glade:1795
+#: ../ui/main.glade:1537 ../ui/main.glade:1683 ../ui/main.glade:1792
 msgid "_thick"
 msgstr ""
 
-#: ../ui/main.glade:1507 ../ui/main.glade:1653 ../ui/main.glade:1762
+#: ../ui/main.glade:1504 ../ui/main.glade:1650 ../ui/main.glade:1759
 msgid "_very fine"
 msgstr ""
 
-#: ../ui/main.glade:1725
+#: ../ui/main.glade:1722
 msgid "_whiteout"
 msgstr ""
 
@@ -3203,7 +3203,7 @@ msgstr ""
 msgid "save to file"
 msgstr ""
 
-#: ../ui/main.glade:1551 ../ui/main.glade:1697 ../ui/main.glade:1806
+#: ../ui/main.glade:1548 ../ui/main.glade:1694 ../ui/main.glade:1803
 msgid "ver_y thick"
 msgstr ""
 
