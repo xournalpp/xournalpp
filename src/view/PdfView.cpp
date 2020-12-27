@@ -11,17 +11,16 @@ PdfView::~PdfView() = default;
 void PdfView::drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo_t* cr, double zoom, double width,
                        double height, bool forPrinting) {
     if (popplerPage) {
+        if (!forPrinting) {
+            cairo_set_source_rgb(cr, 1., 1., 1.);
+            cairo_paint(cr);
+        }
+
         if (cache && !forPrinting) {
             cache->render(cr, popplerPage, zoom);
         } else {
             popplerPage->render(cr, forPrinting);
         }
-
-        if (!forPrinting) {
-            cairo_set_operator(cr, CAIRO_OPERATOR_DEST_OVER);
-            cairo_set_source_rgb(cr, 1., 1., 1.);
-        }
-        cairo_paint(cr);
     } else {
         cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
         cairo_set_font_size(cr, 26);
