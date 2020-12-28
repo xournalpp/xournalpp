@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 13:17+0000\n"
+"POT-Creation-Date: 2020-12-28 13:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/control/XournalMain.cpp:465
+#: ../src/control/XournalMain.cpp:472
 msgid ""
 "\n"
 "\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:446
+#: ../src/control/XournalMain.cpp:453
 msgid ""
 "\n"
 "Will now attempt to run without this file."
@@ -44,7 +44,7 @@ msgid ""
 "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:460
+#: ../src/control/XournalMain.cpp:467
 msgid ""
 "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
@@ -58,7 +58,7 @@ msgstr ""
 msgid "Add/Edit Tex"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:654
+#: ../src/control/XournalMain.cpp:666
 msgid "Advanced export options"
 msgstr ""
 
@@ -149,7 +149,7 @@ msgid "Blue"
 msgstr ""
 
 #: ../src/control/Control.cpp:1984 ../src/control/Control.cpp:2440
-#: ../src/control/XournalMain.cpp:165
+#: ../src/control/XournalMain.cpp:166
 msgid "Cancel"
 msgstr ""
 
@@ -325,7 +325,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:164
+#: ../src/control/XournalMain.cpp:165
 msgid "Delete Logfile"
 msgstr ""
 
@@ -333,7 +333,7 @@ msgstr ""
 msgid "Delete current page"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:206
+#: ../src/control/XournalMain.cpp:207
 msgid "Delete file"
 msgstr ""
 
@@ -345,7 +345,7 @@ msgstr ""
 msgid "Discard"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:655
+#: ../src/control/XournalMain.cpp:667
 msgid "Display advanced export options"
 msgstr ""
 
@@ -502,17 +502,17 @@ msgstr ""
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:184
+#: ../src/control/XournalMain.cpp:185
 msgid ""
 "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:623
+#: ../src/control/XournalMain.cpp:630
 msgid "Export FILE as PDF"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:625
+#: ../src/control/XournalMain.cpp:632
 msgid ""
 "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension "
@@ -524,7 +524,15 @@ msgstr ""
 msgid "Export PDF"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:630
+#: ../src/control/XournalMain.cpp:642
+msgid ""
+"Export in presentation mode\n"
+"                                 In PDF export, layers are rendered one by "
+"one,\n"
+"                                 suitable for presentation\n"
+msgstr ""
+
+#: ../src/control/XournalMain.cpp:637
 msgid ""
 "Export without background\n"
 "                                 The exported file has transparent or white "
@@ -576,7 +584,7 @@ msgstr ""
 msgid "Forward"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:614
+#: ../src/control/XournalMain.cpp:621
 msgid "Get version of xournalpp"
 msgstr ""
 
@@ -650,7 +658,7 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:293
+#: ../src/control/XournalMain.cpp:294
 msgid "Image file successfully created"
 msgstr ""
 
@@ -686,7 +694,7 @@ msgstr ""
 msgid "Isometric Graph"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:610
+#: ../src/control/XournalMain.cpp:617
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
@@ -742,7 +750,7 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:442
+#: ../src/control/XournalMain.cpp:449
 msgid ""
 "Missing the needed UI file:\n"
 "{1}\n"
@@ -786,8 +794,8 @@ msgstr ""
 msgid "No device"
 msgstr ""
 
-#: ../src/pdf/base/XojCairoPdfExport.cpp:124
-#: ../src/pdf/base/XojCairoPdfExport.cpp:162
+#: ../src/pdf/base/XojCairoPdfExport.cpp:147
+#: ../src/pdf/base/XojCairoPdfExport.cpp:189
 msgid "No pages to export!"
 msgstr ""
 
@@ -804,7 +812,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:635
+#: ../src/control/XournalMain.cpp:647
 msgid ""
 "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--"
@@ -815,11 +823,11 @@ msgstr ""
 msgid "Open Image"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:162
+#: ../src/control/XournalMain.cpp:163
 msgid "Open Logfile"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:163
+#: ../src/control/XournalMain.cpp:164
 msgid "Open Logfile directory"
 msgstr ""
 
@@ -850,7 +858,7 @@ msgstr ""
 msgid "PDF background missing"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:346
+#: ../src/control/XournalMain.cpp:350
 msgid "PDF file successfully created"
 msgstr ""
 
@@ -982,7 +990,7 @@ msgstr ""
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:207
+#: ../src/control/XournalMain.cpp:208
 msgid "Restore file"
 msgstr ""
 
@@ -1031,7 +1039,7 @@ msgstr ""
 msgid "Save File"
 msgstr ""
 
-#: ../src/control/jobs/CustomExportJob.cpp:132
+#: ../src/control/jobs/CustomExportJob.cpp:133
 #: ../src/control/jobs/SaveJob.cpp:111
 msgid "Save file error: {1}"
 msgstr ""
@@ -1093,7 +1101,7 @@ msgstr ""
 msgid "Select region"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:161
+#: ../src/control/XournalMain.cpp:162
 msgid "Send Bugreport"
 msgstr ""
 
@@ -1101,13 +1109,13 @@ msgstr ""
 msgid "Separator"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:639
+#: ../src/control/XournalMain.cpp:651
 msgid ""
 "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:649
+#: ../src/control/XournalMain.cpp:661
 msgid ""
 "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
@@ -1115,7 +1123,7 @@ msgid ""
 "width is used"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:643
+#: ../src/control/XournalMain.cpp:655
 msgid ""
 "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
@@ -1138,13 +1146,13 @@ msgstr ""
 msgid "Show only not used pages ({1} unused pages)"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:531
+#: ../src/control/XournalMain.cpp:538
 msgid ""
 "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:546
+#: ../src/control/XournalMain.cpp:553
 msgid ""
 "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -1251,17 +1259,17 @@ msgstr ""
 msgid "The formula is empty when rendered or invalid."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:156
+#: ../src/control/XournalMain.cpp:157
 msgid "The most recent log file name: {1}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:151
+#: ../src/control/XournalMain.cpp:152
 msgid ""
 "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug "
 "may be fixed."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:150
+#: ../src/control/XournalMain.cpp:151
 msgid ""
 "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug "
 "may be fixed."
@@ -1419,7 +1427,7 @@ msgstr ""
 msgid "Xournal files"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:201
+#: ../src/control/XournalMain.cpp:202
 msgid ""
 "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
@@ -1445,7 +1453,7 @@ msgid ""
 "Template\"."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:153
+#: ../src/control/XournalMain.cpp:154
 msgid ""
 "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this "
 "repo's issue tracker."
@@ -2247,6 +2255,10 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
+#: ../ui/exportSettings.glade:334
+msgid "Export as a presentation"
+msgstr ""
+
 #: ../ui/main.glade:247
 msgid "Export as..."
 msgstr ""
@@ -2376,6 +2388,12 @@ msgstr ""
 msgid ""
 "If enabled, check that required LaTeX packages are installed and that the "
 "LaTeX commands are available before running the LaTeX tool."
+msgstr ""
+
+#: ../ui/exportSettings.glade:338
+msgid ""
+"If enabled, the layers of each page will be added one by one. The resulting "
+"PDF file can be used for a presentation."
 msgstr ""
 
 #: ../ui/settings.glade:3781
