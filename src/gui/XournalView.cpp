@@ -1,5 +1,6 @@
 #include "XournalView.h"
 
+#include <algorithm>
 #include <cmath>
 #include <memory>
 #include <tuple>
@@ -23,6 +24,14 @@
 #include "Util.h"
 #include "XournalppCursor.h"
 #include "filesystem.h"
+
+std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t maxPage) {
+    const size_t preloadBefore = this->control->getSettings()->getPreloadPagesBefore();
+    const size_t preloadAfter = this->control->getSettings()->getPreloadPagesAfter();
+    const size_t lower = page > preloadBefore ? page - preloadBefore : 0;
+    const size_t upper = std::min(maxPage, page + preloadAfter);
+    return {lower, upper};
+}
 
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
@@ -87,40 +96,24 @@ void XournalView::staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation
     xv->layoutPages();
 }
 
+
 auto XournalView::clearMemoryTimer(XournalView* widget) -> gboolean {
-    GList* list = nullptr;
-
-    for (auto&& page: widget->viewPages) {
-        if (page->getLastVisibleTime() > 0) {
-            list = g_list_insert_sorted(list, page, reinterpret_cast<GCompareFunc>(pageViewIncreasingClockTime));
-        }
-    }
-
-    int pixel = 2884560;
-    int firstPages = 4;
-
-    int i = 0;
-
-    for (GList* l = g_list_last(list); l != nullptr; l = l->prev)  // older (higher time) to newer (lower time)
-    {
-        if (firstPages) {
-            firstPages--;
-        } else {
-            auto* v = static_cast<XojPageView*>(l->data);
-
-            if (pixel <= 0) {
-                v->deleteViewBuffer();
-            } else {
-                pixel -= v->getBufferPixels();
-            }
-        }
-        i++;
-    }
-
-    g_list_free(list);
-
-    // call again
+    widget->cleanupBufferCache();
     return true;
+}
+
+auto XournalView::cleanupBufferCache() -> void {
+    const auto& [pagesLower, pagesUpper] = this->preloadPageBounds(this->currentPage, this->viewPages.size());
+    g_assert(pagesLower <= pagesUpper);
+
+    for (size_t i = 0; i < this->viewPages.size(); i++) {
+        auto&& page = this->viewPages[i];
+        const size_t pageNum = i + 1;
+        const bool isPreload = pagesLower <= pageNum && pageNum <= pagesUpper;
+        if (!isPreload && page->getLastVisibleTime() > 0 && page->getBufferPixels() > 0) {
+            page->deleteViewBuffer();
+        }
+    }
 }
 
 auto XournalView::getCurrentPage() const -> size_t { return currentPage; }
@@ -378,6 +371,19 @@ void XournalView::pageSelected(size_t page) {
     control->updatePageNumbers(currentPage, pdfPage);
 
     control->updateBackgroundSizeButton();
+
+    if (control->getSettings()->isEagerPageCleanup()) {
+        this->cleanupBufferCache();
+    }
+
+    // Load surrounding pages if they are not
+    const auto& [pagesLower, pagesUpper] = preloadPageBounds(page, this->viewPages.size());
+    g_assert(pagesLower <= pagesUpper);
+    for (size_t i = pagesLower; i < pagesUpper; i++) {
+        if (this->viewPages[i]->getBufferPixels() == 0) {
+            this->viewPages[i]->rerenderPage();
+        }
+    }
 }
 
 auto XournalView::getControl() -> Control* { return control; }
