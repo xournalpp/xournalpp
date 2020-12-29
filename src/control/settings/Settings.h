@@ -330,6 +330,15 @@ public:
     int getPdfPageCacheSize() const;
     [[maybe_unused]] void setPdfPageCacheSize(int size);
 
+    unsigned int getPreloadPagesBefore() const;
+    void setPreloadPagesBefore(unsigned int n);
+
+    unsigned int getPreloadPagesAfter() const;
+    void setPreloadPagesAfter(unsigned int n);
+
+    bool isEagerPageCleanup() const;
+    void setEagerPageCleanup(bool b);
+
     string const& getPageTemplate() const;
     void setPageTemplate(const string& pageTemplate);
 
@@ -937,4 +946,18 @@ private:
      * e.g. "en_US"
      */
     std::string preferredLocale;
+    /**
+     * The number of pages to pre-load before the current page.
+     */
+    unsigned int preloadPagesBefore{};
+
+    /**
+     * The number of pages to pre-load after the current page.
+     */
+    unsigned int preloadPagesAfter{};
+
+    /**
+     * Whether to evict from the page buffer cache when scrolling.
+     */
+    bool eagerPageCleanup{};
 };

@@ -487,6 +487,12 @@ void SettingsDialog::load() {
     loadCheckbox("cbHidePresentationSidebar", hidePresentationSidebar);
     loadCheckbox("cbHideMenubarStartup", settings->isMenubarVisible());
 
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("preloadPagesBefore")),
+                              static_cast<double>(settings->getPreloadPagesBefore()));
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("preloadPagesAfter")),
+                              static_cast<double>(settings->getPreloadPagesAfter()));
+    loadCheckbox("cbEagerPageCleanup", settings->isEagerPageCleanup());
+
     enableWithCheckbox("cbAutosave", "boxAutosave");
     enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
     enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
@@ -705,6 +711,16 @@ void SettingsDialog::save() {
                                                            hidePresentationMenubar, hidePresentationSidebar));
 
     settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
+
+    constexpr auto spinAsUint = [&](GtkSpinButton* btn) {
+        int v = gtk_spin_button_get_value_as_int(btn);
+        return v < 0 ? 0U : static_cast<unsigned int>(v);
+    };
+    unsigned int preloadPagesBefore = spinAsUint(GTK_SPIN_BUTTON(get("preloadPagesBefore")));
+    unsigned int preloadPagesAfter = spinAsUint(GTK_SPIN_BUTTON(get("preloadPagesAfter")));
+    settings->setPreloadPagesAfter(preloadPagesAfter);
+    settings->setPreloadPagesBefore(preloadPagesBefore);
+    settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
 
     settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
     // Todo(fabian): use Util::fromGFilename!

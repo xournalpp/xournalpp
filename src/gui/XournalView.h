@@ -140,11 +140,13 @@ public:
 private:
     void fireZoomChanged();
 
-    void addLoadPageToQue(PageRef page, int priority);
+    std::pair<size_t, size_t> preloadPageBounds(size_t page, size_t maxPage);
 
     Rectangle<double>* getVisibleRect(size_t page);
 
     static gboolean clearMemoryTimer(XournalView* widget);
+
+    void cleanupBufferCache();
 
     static void staticLayoutPages(GtkWidget* widget, GtkAllocation* allocation, void* data);
 
