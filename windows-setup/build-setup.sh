@@ -33,8 +33,13 @@ ldd ../build/src/xournalpp.exe | grep '\/mingw.*\.dll' -o | sort -u | xargs -I{}
 ldd ../build/src/xournalpp.exe | grep -E 'lib(ssl|crypto)[^\.]*\.dll' -o | sort -u | xargs -I{} cp "/mingw64/bin/{}" setup/bin/
 
 echo "copy ui"
-
 cp -r ../ui setup/
+
+echo "copy plugins"
+cp -r ../plugins setup/
+
+echo "copy resources"
+cp -r ../resources setup/
 
 for trans in ../build/po/*.gmo; do
         # Bail if there are no translations at all
