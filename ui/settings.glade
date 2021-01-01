@@ -2187,7 +2187,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">False</property>
-                                            <property name="tooltip-text" translatable="yes">Use two fingers to pan/zoom and one finger to use the selected tool.</property>
                                             <property name="xalign">0</property>
                                             <property name="draw-indicator">True</property>
                                           </object>

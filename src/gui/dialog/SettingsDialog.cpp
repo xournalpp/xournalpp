@@ -30,6 +30,12 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(get("cbNewInputSystem"), "toggled", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
+                         self->touchWorkaroundStatusChanged();
+                     }),
+                     this);
+
+
     g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
                          self->enableWithCheckbox("cbAutosave", "boxAutosave");
                      }),
@@ -243,13 +249,32 @@ void SettingsDialog::disableWithCheckbox(const string& checkboxId, const string&
  * Listeners specific to portions of the settings pane.
  */
 void SettingsDialog::touchWorkaroundStatusChanged() {
+    GtkWidget* touchDrawingCheckbox = get("cbTouchDrawing");
+
     if (getCheckbox("cbTouchWorkaround")) {
-        gtk_widget_set_sensitive(get("cbTouchDrawing"), true);
+        // Set sensitive so we can load the value
+        gtk_widget_set_sensitive(touchDrawingCheckbox, false);
+
+        gtk_widget_set_tooltip_text(touchDrawingCheckbox,
+                                    _("The touch workaround must be disabled to change this setting. "));
 
         loadCheckbox("cbTouchDrawing", true);
+    } else {
+        gtk_widget_set_tooltip_text(touchDrawingCheckbox,
+                                    _("Use two fingers to pan/zoom and one finger to use the selected tool."));
     }
 
-    disableWithCheckbox("cbTouchWorkaround", "cbTouchDrawing");
+
+    if (!getCheckbox("cbNewInputSystem")) {
+        gtk_widget_set_tooltip_text(touchDrawingCheckbox,
+                                    _("Without the new input system, two-finger gestures will not zoom/pan while "
+                                      "drawing. Enable the new input system and disable the touch workaround to"
+                                      " change this setting."));
+        loadCheckbox("cbTouchDrawing", getCheckbox("cbTouchWorkaround"));
+        gtk_widget_set_sensitive(touchDrawingCheckbox, false);
+    } else {
+        disableWithCheckbox("cbTouchWorkaround", "cbTouchDrawing");
+    }
 }
 
 void SettingsDialog::customHandRecognitionToggled() {
