@@ -79,9 +79,11 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 
     this->cbThickness = get("cbThickness");
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thickness - don't change"));
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Very thin"));
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thin"));
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Medium"));
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thick"));
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Very thick"));
     gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 
     this->colorButton = get("colorButton");
@@ -144,12 +146,16 @@ void ButtonConfigGui::loadSettings() {
         g_value_unset(&value);
     } while (gtk_tree_model_iter_next(model, &iter));
 
-    if (cfg->size == TOOL_SIZE_FINE) {
+    if (cfg->size == TOOL_SIZE_VERY_FINE) {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 1);
-    } else if (cfg->size == TOOL_SIZE_MEDIUM) {
+    } else if (cfg->size == TOOL_SIZE_FINE) {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 2);
-    } else if (cfg->size == TOOL_SIZE_THICK) {
+    } else if (cfg->size == TOOL_SIZE_MEDIUM) {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 3);
+    } else if (cfg->size == TOOL_SIZE_THICK) {
+        gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 4);
+    } else if (cfg->size == TOOL_SIZE_VERY_THICK) {
+        gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 5);
     } else {
         gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
     }
@@ -206,11 +212,15 @@ void ButtonConfigGui::saveSettings() {
     int thickness = gtk_combo_box_get_active(GTK_COMBO_BOX(cbThickness));
 
     if (thickness == 1) {
-        cfg->size = TOOL_SIZE_FINE;
+        cfg->size = TOOL_SIZE_VERY_FINE;
     } else if (thickness == 2) {
-        cfg->size = TOOL_SIZE_MEDIUM;
+        cfg->size = TOOL_SIZE_FINE;
     } else if (thickness == 3) {
+        cfg->size = TOOL_SIZE_MEDIUM;
+    } else if (thickness == 4) {
         cfg->size = TOOL_SIZE_THICK;
+    } else if (thickness == 5) {
+        cfg->size = TOOL_SIZE_VERY_THICK;
     } else {
         cfg->size = TOOL_SIZE_NONE;
     }
