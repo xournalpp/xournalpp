@@ -243,23 +243,19 @@ void MainWindow::initXournalWidget() {
     usingTouchWorkaround = control->getSettings()->isTouchWorkaround();
 
     if (usingTouchWorkaround) {
-        GtkWidget* box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        gtk_container_add(GTK_CONTAINER(boxContents), box1);
-
-        GtkWidget* box2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-        gtk_container_add(GTK_CONTAINER(box1), box2);
-
+        GtkWidget* grid = gtk_grid_new();
+        gtk_container_add(GTK_CONTAINER(boxContents), grid);
         this->scrollHandling = new ScrollHandlingXournalpp();
 
-        this->xournal = new XournalView(box2, control, scrollHandling);
+        this->xournal = new XournalView(grid, control, scrollHandling);
 
-        gtk_container_add(GTK_CONTAINER(box2),
-                          gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollHandling->getVertical()));
-        gtk_container_add(GTK_CONTAINER(box1),
-                          gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, scrollHandling->getHorizontal()));
-
-        control->getZoomControl()->initZoomHandler(this->window, box2, xournal, control);
-        gtk_widget_show_all(box1);
+        gtk_grid_attach(GTK_GRID(grid), gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollHandling->getVertical()),  //
+                        1, 0, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid),
+                        gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, scrollHandling->getHorizontal()),  //
+                        0, 1, 1, 1);
+        control->getZoomControl()->initZoomHandler(this->window, grid, xournal, control);
+        gtk_widget_show_all(grid);
     } else {
         winXournal = gtk_scrolled_window_new(nullptr, nullptr);
 

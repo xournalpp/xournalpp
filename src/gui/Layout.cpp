@@ -168,7 +168,8 @@ void Layout::layoutPages(int width, int height) {
         recalculate_int();
     }
     // Todo: remove, just a hack-hotfix
-    scrollHandling->setLayoutSize(width, height);
+    scrollHandling->setLayoutSize(std::max(width, int(unsigned(this->pc.minWidth))),
+                                  std::max(height, int(unsigned(this->pc.minHeight))));
 
     size_t const len = this->view->viewPages.size();
     Settings* settings = this->view->getControl()->getSettings();
