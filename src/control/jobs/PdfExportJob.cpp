@@ -38,6 +38,8 @@ void PdfExportJob::run() {
         } else {
             this->errorMsg = pdfe->getLastError();
         }
+    } else {
+        afterExport();
     }
 
     delete pdfe;

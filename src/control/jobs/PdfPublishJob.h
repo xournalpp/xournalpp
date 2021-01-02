@@ -16,8 +16,8 @@
 class PdfPublishJob: public PdfExportJob {
 public:
     PdfPublishJob(Control* control, const string& script);
-    void run();
 protected:
+    virtual void afterExport();
     virtual ~PdfPublishJob();
 private:
     string script;
