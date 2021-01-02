@@ -12,6 +12,7 @@
 #pragma once
 
 #include <array>
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
@@ -61,7 +62,8 @@ class ActionHandler;
 
 class ToolHandler {
 public:
-    ToolHandler(ToolListener* listener, ActionHandler* actionHandler, Settings* settings);
+    using ToolChangedCallback = std::function<void(ToolType)>;
+    ToolHandler(ToolListener* stateChangedListener, ActionHandler* actionHandler, Settings* settings);
     virtual ~ToolHandler();
 
     /**
@@ -217,7 +219,18 @@ public:
     void fireToolChanged();
 
     /**
-     * @brief Get the Tool of a certain typ
+     * @brief Listen for tool changes.
+     *
+     * Different from the listener given to the constructor -- [listener]
+     * here only listens for when the current tool is changed to another.
+     *
+     * @param listener A callback, called when the user/client
+     *  changes tools.
+     */
+    void addToolChangedListener(ToolChangedCallback listener);
+
+    /**
+     * @brief Get the Tool of a certain type
      *
      * @param type
      * @return Tool&
@@ -352,7 +365,9 @@ private:
     std::unique_ptr<Tool> mouseRightButtonTool;
     std::unique_ptr<Tool> touchDrawingButtonTool;
 
-    ToolListener* listener = nullptr;
+    std::vector<ToolChangedCallback> toolChangeListeners;
+
+    ToolListener* stateChangeListener = nullptr;
     ActionHandler* actionHandler = nullptr;
     Settings* settings = nullptr;
 };

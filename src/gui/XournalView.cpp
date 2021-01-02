@@ -27,6 +27,7 @@
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
     this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
+
     registerListener(control);
 
     InputContext* inputContext = nullptr;
@@ -486,7 +487,10 @@ void XournalView::zoomChanged() {
 
     size_t currentPage = this->getCurrentPage();
     XojPageView* view = getViewFor(currentPage);
+
     ZoomControl* zoom = control->getZoomControl();
+    this->cache->setAnyZoomChangeCausesRecache(false);  // We're zooming -- no need for repeated re-renders.
+    this->cache->setRefreshThreshold(control->getSettings()->getPDFPageRerenderThreshold());
 
     if (!view) {
         return;

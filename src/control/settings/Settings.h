@@ -246,8 +246,14 @@ public:
     int getDrawDirModsRadius() const;
     void setDrawDirModsRadius(int pixels);
 
+    bool getTouchDrawingEnabled() const;
+    void setTouchDrawingEnabled(bool b);
+
     bool isTouchWorkaround() const;
     void setTouchWorkaround(bool b);
+
+    bool isPressureGuessingEnabled() const;
+    void setPressureGuessingEnabled(bool b);
 
     bool isSnapRotation() const;
     void setSnapRotation(bool b);
@@ -304,6 +310,13 @@ public:
 
     Color getBackgroundColor() const;
     void setBackgroundColor(Color color);
+
+    // Re-render pages if document zoom differs from the last render zoom by the given threshold.
+    double getPDFPageRerenderThreshold() const;
+    void setPDFPageRerenderThreshold(double threshold);
+
+    double getTouchZoomStartThreshold() const;
+    void setTouchZoomStartThreshold(double threshold);
 
     int getPdfPageCacheSize() const;
     [[maybe_unused]] void setPdfPageCacheSize(int size);
@@ -751,6 +764,19 @@ private:
     int pdfPageCacheSize{};
 
     /**
+     *  Percentage by which the page's zoom must change
+     * for PDF pages to re-render while zooming.
+     */
+    double pageRerenderThreshold{};
+
+    /**
+     * Don't start zooming with touch until the difference in distances between the
+     * current touch points and the original is greater than this percentage of the
+     * original distance.
+     */
+    double touchZoomStartThreshold{};
+
+    /**
      * The color to draw borders on selected elements
      * (Page, insert image selection etc.)
      */
@@ -799,6 +825,15 @@ private:
      * Do not use GTK Scrolling / Touch handling
      */
     bool touchWorkaround{};
+
+    // Touchscreens act like multi-touch-aware pens.
+    bool touchDrawing{};
+
+    /**
+     * Infer pressure from speed when device pressure
+     * is unavailable (e.g. drawing with a mouse).
+     */
+    bool pressureGuessing{};
 
     /**
      * The index of the audio device used for recording

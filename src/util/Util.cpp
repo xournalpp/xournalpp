@@ -34,9 +34,10 @@ static auto execInUiThreadCallback(CallbackUiData* cb) -> bool {
  *
  * Make sure the container class is not deleted before the UI stuff is finished!
  */
-void Util::execInUiThread(std::function<void()>&& callback) {
-    gdk_threads_add_idle(reinterpret_cast<GSourceFunc>(execInUiThreadCallback),
-                         new CallbackUiData(std::move(callback)));
+void Util::execInUiThread(std::function<void()>&& callback, gint priority) {
+    // Note: nullptr = GDestroyNotify notify.
+    gdk_threads_add_idle_full(priority, reinterpret_cast<GSourceFunc>(execInUiThreadCallback),
+                              new CallbackUiData(std::move(callback)), nullptr);
 }
 
 void Util::cairo_set_source_rgbi(cairo_t* cr, Color color) {

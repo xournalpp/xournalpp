@@ -18,6 +18,7 @@
 #include <gtk/gtk.h>
 
 #include "control/settings/Settings.h"
+#include "gui/inputdevices/InputEvents.h"
 
 using std::string;
 using std::vector;
@@ -42,5 +43,7 @@ private:
 };
 
 namespace DeviceListHelper {
+
 vector<InputDevice> getDeviceList(Settings* settings, bool ignoreTouchDevices = false);
+InputDeviceClass getSourceMapping(GdkInputSource src, Settings* settings);
 }

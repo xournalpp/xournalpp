@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <atomic>
+
 #include "control/layer/LayerCtrlListener.h"
 #include "gui/FloatingToolbox.h"
 #include "model/Font.h"
@@ -49,7 +51,7 @@ public:
     [[maybe_unused]] void reloadToolbars();
 
     /**
-     * This methods are only used internally and for toolbar configuration
+     * These methods are only used internally and for toolbar configuration
      */
     ToolbarData* clearToolbar();
     void loadToolbar(ToolbarData* d);
@@ -101,7 +103,9 @@ public:
      * Disable kinetic scrolling if there is a touchscreen device that was manually mapped to another enabled input
      * device class. This is required so the GtkScrolledWindow does not swallow all the events.
      */
-    void setTouchscreenScrollingForDeviceMapping();
+    void setGtkTouchscreenScrollingForDeviceMapping();
+    void setGtkTouchscreenScrollingEnabled(bool enabled);
+    bool getGtkTouchscreenScrollingEnabled() const;
 
     void rebindMenubarAccelerators();
 
@@ -164,6 +168,13 @@ private:
     XournalView* xournal = nullptr;
     GtkWidget* winXournal = nullptr;
     ScrollHandling* scrollHandling = nullptr;
+
+    // Note: `usingTouchWorkaround` is cached here because
+    // Settings::isTouchWorkorkaround reflects the current state
+    // of the setting -- usingTouchWorkaround should only change
+    // on application restart!
+    bool usingTouchWorkaround;
+    std::atomic_bool gtkTouchscreenScrollingEnabled;
 
     // Toolbars
     ToolMenuHandler* toolbar;

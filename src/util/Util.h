@@ -37,7 +37,7 @@ void systemWithMessage(const char* command);
  *
  * Make sure the container class is not deleted before the UI stuff is finished!
  */
-void execInUiThread(std::function<void()>&& callback);
+void execInUiThread(std::function<void()>&& callback, gint priority = G_PRIORITY_DEFAULT_IDLE);
 
 gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);
 

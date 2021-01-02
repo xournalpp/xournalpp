@@ -205,6 +205,10 @@ private:
     /// Cursorposition x for Ctrl + Scroll
     utl::Point<double> scrollCursorPosition;
 
+    /// Size {x, y} of the pixels before the current page that
+    /// do not scale.
+    utl::Point<double> unscaledPixels;
+
     /**
      * Zoomstep value for Ctrl - and Zoom In and Out Button
      * depends on dpi (REAL_PERCENTAGE_VALUE * zoom100Value)

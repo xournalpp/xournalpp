@@ -128,6 +128,6 @@ auto SidebarPreviewBase::scrollToPreview(SidebarPreviewBase* sidebar) -> bool {
     return false;
 }
 
-void SidebarPreviewBase::pageDeleted(int page) {}
+void SidebarPreviewBase::pageDeleted(size_t page) {}
 
-void SidebarPreviewBase::pageInserted(int page) {}
+void SidebarPreviewBase::pageInserted(size_t page) {}

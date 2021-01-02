@@ -74,6 +74,21 @@ auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices
     return deviceList;
 }
 
+InputDeviceClass DeviceListHelper::getSourceMapping(GdkInputSource source, Settings* settings) {
+    auto deviceList = DeviceListHelper::getDeviceList(settings);
+
+    for (InputDevice const& inputDevice: deviceList) {
+        InputDeviceClass deviceClass =
+                InputEvents::translateDeviceType(inputDevice.getName(), inputDevice.getSource(), settings);
+
+        if (inputDevice.getSource() == source) {
+            return deviceClass;
+        }
+    }
+
+    return InputDeviceClass::INPUT_DEVICE_IGNORE;
+}
+
 InputDevice::InputDevice(GdkDevice* device): name(gdk_device_get_name(device)), source(gdk_device_get_source(device)) {}
 
 InputDevice::InputDevice(string name, GdkInputSource source): name(std::move(name)), source(source) {}

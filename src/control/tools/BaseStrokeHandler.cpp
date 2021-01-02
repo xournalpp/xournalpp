@@ -23,6 +23,10 @@ BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawab
 BaseStrokeHandler::~BaseStrokeHandler() = default;
 
 void BaseStrokeHandler::draw(cairo_t* cr) {
+    if (!stroke) {
+        return;
+    }
+
     double zoom = xournal->getZoom();
     int dpiScaleFactor = xournal->getDpiScaleFactor();
 
@@ -96,6 +100,11 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
     redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
 
     return true;
+}
+
+void BaseStrokeHandler::onMotionCancelEvent() {
+    delete stroke;
+    stroke = nullptr;
 }
 
 void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {

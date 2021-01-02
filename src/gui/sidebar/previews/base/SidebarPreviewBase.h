@@ -68,8 +68,8 @@ public:
 public:
     // DocumentListener interface (only the part handled by SidebarPreviewBase)
     virtual void documentChanged(DocumentChangeType type);
-    virtual void pageInserted(int page);
-    virtual void pageDeleted(int page);
+    virtual void pageInserted(size_t page);
+    virtual void pageDeleted(size_t page);
 
 protected:
     /**

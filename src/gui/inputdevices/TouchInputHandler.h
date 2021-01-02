@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * [Header description]
+ * Handle touchscreen zooming and panning.
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -34,6 +34,8 @@ private:
 
     utl::Point<double> priLastRel{-1.0, -1.0};
     utl::Point<double> secLastRel{-1.0, -1.0};
+
+    bool canBlockZoom{false};
 
 private:
     void sequenceStart(InputEvent const& event);

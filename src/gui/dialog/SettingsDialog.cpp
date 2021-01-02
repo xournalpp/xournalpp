@@ -30,6 +30,12 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(get("cbNewInputSystem"), "toggled", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
+                         self->touchWorkaroundStatusChanged();
+                     }),
+                     this);
+
+
     g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
                          self->enableWithCheckbox("cbAutosave", "boxAutosave");
                      }),
@@ -90,6 +96,17 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
             get("cbTouchDisableMethod"), "changed",
             G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->customHandRecognitionToggled(); }),
             this);
+
+    g_signal_connect(get("cbEnableZoomGestures"), "toggled",
+                     G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
+                         self->enableWithCheckbox("cbEnableZoomGestures", "gdStartZoomAtSetting");
+                     }),
+                     this);
+
+    g_signal_connect(get("cbTouchWorkaround"), "toggled", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
+                         self->touchWorkaroundStatusChanged();
+                     }),
+                     this);
 
     g_signal_connect(get("cbStylusCursorType"), "changed", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
                          self->customStylusIconTypeChanged();
@@ -214,12 +231,50 @@ auto SettingsDialog::getCheckbox(const char* name) -> bool {
 }
 
 /**
- * Autosave was toggled, enable / disable autosave config
+ * Checkbox was toggled, enable / disable it
  */
-void SettingsDialog::enableWithCheckbox(const string& checkbox, const string& widget) {
-    GtkWidget* cbAutosave = get(checkbox);
-    bool autosaveEnabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbAutosave));
-    gtk_widget_set_sensitive(get(widget), autosaveEnabled);
+void SettingsDialog::enableWithCheckbox(const string& checkboxId, const string& widgetId) {
+    GtkWidget* checkboxWidget = get(checkboxId);
+    bool enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
+    gtk_widget_set_sensitive(get(widgetId), enabled);
+}
+
+void SettingsDialog::disableWithCheckbox(const string& checkboxId, const string& widgetId) {
+    GtkWidget* checkboxWidget = get(checkboxId);
+    bool enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkboxWidget));
+    gtk_widget_set_sensitive(get(widgetId), !enabled);
+}
+
+/**
+ * Listeners specific to portions of the settings pane.
+ */
+void SettingsDialog::touchWorkaroundStatusChanged() {
+    GtkWidget* touchDrawingCheckbox = get("cbTouchDrawing");
+
+    if (getCheckbox("cbTouchWorkaround")) {
+        // Set sensitive so we can load the value
+        gtk_widget_set_sensitive(touchDrawingCheckbox, false);
+
+        gtk_widget_set_tooltip_text(touchDrawingCheckbox,
+                                    _("The touch workaround must be disabled to change this setting. "));
+
+        loadCheckbox("cbTouchDrawing", true);
+    } else {
+        gtk_widget_set_tooltip_text(touchDrawingCheckbox,
+                                    _("Use two fingers to pan/zoom and one finger to use the selected tool."));
+    }
+
+
+    if (!getCheckbox("cbNewInputSystem")) {
+        gtk_widget_set_tooltip_text(touchDrawingCheckbox,
+                                    _("Without the new input system, two-finger gestures will not zoom/pan while "
+                                      "drawing. Enable the new input system and disable the touch workaround to"
+                                      " change this setting."));
+        loadCheckbox("cbTouchDrawing", getCheckbox("cbTouchWorkaround"));
+        gtk_widget_set_sensitive(touchDrawingCheckbox, false);
+    } else {
+        disableWithCheckbox("cbTouchWorkaround", "cbTouchDrawing");
+    }
 }
 
 void SettingsDialog::customHandRecognitionToggled() {
@@ -254,7 +309,9 @@ void SettingsDialog::load() {
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
     loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
+    loadCheckbox("cbEnablePressureInference", settings->isPressureGuessingEnabled());
     loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
+    loadCheckbox("cbTouchDrawing", settings->getTouchDrawingEnabled());
     const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
     loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
     loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
@@ -304,6 +361,12 @@ void SettingsDialog::load() {
 
     GtkWidget* spDrawDirModsRadius = get("spDrawDirModsRadius");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spDrawDirModsRadius), settings->getDrawDirModsRadius());
+
+    GtkWidget* spReRenderThreshold = get("spReRenderThreshold");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spReRenderThreshold), settings->getPDFPageRerenderThreshold());
+
+    GtkWidget* spTouchZoomStartThreshold = get("spTouchZoomStartThreshold");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spTouchZoomStartThreshold), settings->getTouchZoomStartThreshold());
 
     {
         int time = 0;
@@ -393,9 +456,11 @@ void SettingsDialog::load() {
     enableWithCheckbox("cbStrokeFilterEnabled", "spStrokeSuccessiveTime");
     enableWithCheckbox("cbStrokeFilterEnabled", "cbDoActionOnStrokeFiltered");
     enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
+    enableWithCheckbox("cbEnableZoomGestures", "gdStartZoomAtSetting");
     enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
     customHandRecognitionToggled();
     customStylusIconTypeChanged();
+    touchWorkaroundStatusChanged();
 
 
     SElement& touch = settings->getCustomElement("touch");
@@ -533,7 +598,9 @@ void SettingsDialog::save() {
     settings->setSnapRecognizedShapesEnabled(getCheckbox("cbSnapRecognizedShapesEnabled"));
     settings->setRestoreLineWidthEnabled(getCheckbox("cbRestoreLineWidthEnabled"));
     settings->setDarkTheme(getCheckbox("cbDarkTheme"));
+    settings->setPressureGuessingEnabled(getCheckbox("cbEnablePressureInference"));
     settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
+    settings->setTouchDrawingEnabled(getCheckbox("cbTouchDrawing"));
     settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
     settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
@@ -648,6 +715,14 @@ void SettingsDialog::save() {
     int strokeSuccessiveTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
     settings->setStrokeFilter(strokeIgnoreTime, strokeIgnoreLength, strokeSuccessiveTime);
 
+    GtkWidget* spTouchZoomStartThreshold = get("spTouchZoomStartThreshold");
+    double zoomStartThreshold = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spTouchZoomStartThreshold));
+    settings->setTouchZoomStartThreshold(zoomStartThreshold);
+
+    GtkWidget* spReRenderThreshold = get("spReRenderThreshold");
+    double rerenderThreshold = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spReRenderThreshold));
+    settings->setPDFPageRerenderThreshold(rerenderThreshold);
+
 
     settings->setDisplayDpi(dpi);
 
@@ -725,6 +800,6 @@ void SettingsDialog::save() {
 
     settings->transactionEnd();
 
-    this->control->getWindow()->setTouchscreenScrollingForDeviceMapping();
+    this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
     this->control->initButtonTool();
 }
