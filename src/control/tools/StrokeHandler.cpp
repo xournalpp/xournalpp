@@ -265,6 +265,21 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     if (stroke->getPointCount() == 2) {
         this->redrawable->rerenderElement(stroke);
     }
+    
+    Stroke* splineStroke = stroke->schneider();
+    layer = page->getLayers()->at(1);
+    layer->addElement(splineStroke);
+    page->fireElementChanged(splineStroke);
+    this->redrawable->rerenderElement(splineStroke);
+    splineStroke = nullptr;
+    
+    Stroke* CRS = stroke->CRS();
+    layer = page->getLayers()->back();
+    layer->addElement(CRS);
+    page->fireElementChanged(CRS);
+    this->redrawable->rerenderElement(CRS);
+    CRS = nullptr;
+    
 
     stroke = nullptr;
 }

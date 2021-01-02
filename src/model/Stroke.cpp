@@ -3,6 +3,10 @@
 #include <cmath>
 #include <numeric>
 
+// TODO Remuve after use
+#include <locale>
+
+#include "model/Spline.h"
 #include "serializing/ObjectInputStream.h"
 #include "serializing/ObjectOutputStream.h"
 
@@ -411,3 +415,192 @@ void Stroke::debugPrint() {
 
     g_message("\n");
 }
+
+auto Stroke::CRS() -> Stroke* {
+    
+    int pointCount = getPointCount();
+    if (pointCount == 0) {
+        return new Stroke();
+    }
+    
+    /**
+     * Set the pressure value for the last point
+     */
+    if (pointCount >= 2 && points[pointCount-2].z != Point::NO_PRESSURE){
+        if (pointCount == 2) {
+            setLastPressure(points[pointCount-2].z);
+        } else {
+            // Linearly extrapolate the pressure using the second and third to last ppints
+            setLastPressure(2 * points[pointCount - 2].z - points[pointCount - 3].z);
+        }
+    }
+    
+    Spline catmullRom = Spline::getCentripetalCatmullRomInterpolation(points);
+    
+    std::list<Point> crpts =  catmullRom.toPointSequence();
+    std::vector<Point> newPoints;
+    newPoints.reserve(crpts.size());
+    for (Point p: crpts) {
+        newPoints.push_back(p);
+    }
+
+    Spline schneider_catmull_rom = Spline::getSchneiderApproximation(newPoints);
+    
+    g_message("                     CRS splines : %zu", schneider_catmull_rom.size());
+    
+    std::list<Point> pts = schneider_catmull_rom.toPointSequence();
+    Stroke* result = new Stroke();
+    for (auto&& p : pts) {
+        result->addPoint(p);
+    }
+    result->applyStyleFrom(this);
+    
+    return result;
+}
+
+auto Stroke::schneider() -> Stroke* {
+
+    int pointCount = getPointCount();
+    if (pointCount == 0) {
+        return new Stroke();
+    }
+    
+    /**
+     * Set the pressure value for the last point
+     */
+    if (pointCount >= 2 && points[pointCount-2].z != Point::NO_PRESSURE){
+        if (pointCount == 2) {
+            setLastPressure(points[pointCount-2].z);
+        } else {
+            // Linearly extrapolate the pressure using the second and third to last ppints
+            setLastPressure(2 * points[pointCount - 2].z - points[pointCount - 3].z);
+        }
+    }
+    
+//     Spline catmullRom = Spline::getCentripetalCatmullRomInterpolation(points);
+    
+    Spline schneider = Spline::getSchneiderApproximation(points);
+
+//     for (auto&& spline : catmullRom) {
+//         result.splice(result.end(), spline.toPointSequence());
+//     }
+//     std::list<Point> result =  catmullRom.toPointSequence();
+//     std::vector<Point> newPoints;
+//     newPoints.reserve(result.size());
+//     for (Point p: result) { newPoints.push_back(p); }
+    
+//     Spline schneider_catmull_rom = Spline::getSchneiderApproximation(newPoints);
+    
+    std::list<Point> pts = schneider.toPointSequence();
+    Stroke* result = new Stroke();
+    for (auto&& p : pts) {
+        result->addPoint(p);
+    }
+    result->applyStyleFrom(this);
+
+    g_message("Nb points: %d, Schneider segments: %zu", getPointCount(), schneider.size());//, schneider_catmull_rom.size());
+// #define PLOT_STROKE
+#ifdef PLOT_STROKE
+    //     printf("\n\n");
+    setlocale(LC_NUMERIC, "en_US.UTF-8");
+    
+    // Header
+    printf("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+    "<svg xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
+    "xmlns:cc=\"http://creativecommons.org/ns#\"\n"
+    "xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n"
+    "xmlns:svg=\"http://www.w3.org/2000/svg\"\n"
+    "xmlns=\"http://www.w3.org/2000/svg\"\n"
+    "xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n"
+    "xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n"
+    "width=\"210mm\"\n"
+    "height=\"297mm\"\n"
+    "viewBox=\"300 0 400 100\"\n"
+    "version=\"1.1\"\n"
+    "id=\"svg8\"\n"
+    "inkscape:version=\"1.0.1 (3bc2e813f5, 2020-09-07, custom)\"\n"
+    "sodipodi:docname=\"CatmullRom.svg\">\n"
+    "<defs id=\"defs2\" />\n"
+    "<sodipodi:namedview id=\"base\"\n"
+    "pagecolor=\"#ffffff\"\n"
+    "bordercolor=\"#666666\"\n"
+    "borderopacity=\"1.0\"\n"
+    "inkscape:pageopacity=\"0.0\"\n"
+    "inkscape:pageshadow=\"2\"\n"
+    "inkscape:zoom=\"0.35\"\n"
+    "inkscape:cx=\"400\"\n"
+    "inkscape:cy=\"540\"\n"
+    "inkscape:document-units=\"mm\"\n"
+    "inkscape:current-layer=\"layer2\"\n"
+    "inkscape:document-rotation=\"0\"\n"
+    "showgrid=\"false\"\n"
+    "inkscape:window-width=\"1872\"\n"
+    "inkscape:window-height=\"1043\"\n"
+    "inkscape:window-x=\"48\"\n"
+    "inkscape:window-y=\"0\"\n"
+    "inkscape:window-maximized=\"1\" />\n"
+    "<metadata id=\"metadata5\"><rdf:RDF><cc:Work rdf:about=\"\"><dc:format>image/svg+xml</dc:format><dc:type rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" /><dc:title /></cc:Work></rdf:RDF></metadata>");
+
+    // The splines
+    printf("<g inkscape:groupmode=\"layer\" id=\"layer2\" inkscape:label=\"Catmull-Rom\">\n");
+    printf("<path style=\"fill:none;stroke:#000000;stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\" d=\"");
+    printf("M %f %f ", catmullRom.getFirstKnot().x, catmullRom.getFirstKnot().y);
+    for (auto&& seg : catmullRom.getSegments()) {
+        printf("C %f %f, %f %f, %f %f ", seg.firstControlPoint.x, seg.firstControlPoint.y, seg.secondControlPoint.x, seg.secondControlPoint.y, seg.secondKnot.x, seg.secondKnot.y);
+    }
+    printf("\" />\n</g>\n");
+    
+    printf("<g inkscape:groupmode=\"layer\" id=\"layer3\" inkscape:label=\"Schneider\">\n");
+    printf("<path style=\"fill:none;stroke:#000000;stroke-width:0.5px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\" d=\"");
+    printf("M %f %f ", schneider.getFirstKnot().x, schneider.getFirstKnot().y);
+    for (auto&& seg : schneider.getSegments()) {
+        printf("C %f %f, %f %f, %f %f ", seg.firstControlPoint.x, seg.firstControlPoint.y, seg.secondControlPoint.x, seg.secondControlPoint.y, seg.secondKnot.x, seg.secondKnot.y);
+    }
+    printf("\" />\n</g>\n");
+
+    
+    printf("<g inkscape:groupmode=\"layer\" id=\"layer1\" inkscape:label=\"Original segments\">\n");
+    // Original segments
+    printf("<path style=\"fill:none;stroke:#ff0000;stroke-width:0.2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1\" d=\"");
+    printf("M %f %f ", points[0].x, points[0].y);
+    for (auto&& seg : catmullRom.getSegments()) {
+        printf("L %f %f ", seg.secondKnot.x, seg.secondKnot.y);
+    }
+    printf("\" />\n");
+
+    // Original points
+    printf("<g stroke=\"red\" stroke-width=\"0.1\" fill=\"red\">");
+    for (auto&& pt : points) {
+        printf("<circle cx=\"%f\" cy=\"%f\" r=\"0.2\" />", pt.x, pt.y);
+    }
+    printf("</g>\n</g>\n</svg>\n");
+#endif
+    
+    /**
+     * Pressure values
+     */
+#ifdef DUMP_PRESSURE
+    setlocale(LC_NUMERIC, "fr_FR.UTF-8");
+    double length = 0;
+    string interpolatePressure = "Interpolated\n0,000000;" + std::to_string(catmullRom.firstKnot.z) + "\n";
+    string originalPressure = "Original\n0,000000;" + std::to_string(points[0].z) + "\n";
+    int i = 0;
+    for (auto&& seg : catmullRom.segments) {
+        double dist = points[i].lineLengthTo(seg.secondKnot) / 10.0;
+        for (int j = 1 ; j<=10 ; j++) {
+            length += dist;
+            double p = pow(10 - j, 3) * points[i].z + 3 * pow(10 - j, 2) * j * seg.firstControlPoint.z + 3 * (10 - j) * pow(j, 2) * seg.secondControlPoint.z + pow(j, 3) * seg.secondKnot.z;
+            p /= 1000.0;
+            interpolatePressure += std::to_string(length) + ";" + std::to_string(p) + "\n";
+        }
+        i++;
+        originalPressure += std::to_string(length) + ";" + std::to_string(points[i].z) + "\n";
+//         i++;
+    }
+    printf("\n%s\n%s\n\n", originalPressure.c_str(), interpolatePressure.c_str());
+#endif
+    
+    return result;
+}
+
+// TODO: Change the StrokeHandler's behaviour on pressure

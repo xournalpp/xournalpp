@@ -16,6 +16,9 @@
 #include "LineStyle.h"
 #include "Point.h"
 
+#include "SplineSegment.h"
+#include <list>
+
 enum StrokeTool { STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER };
 
 class EraseableStroke;
@@ -136,4 +139,20 @@ private:
      *   1: The shape is nearly fully transparent filled
      */
     int fill = -1;
+    
+    /**
+     * @brief Approximate the stroke by a spline using 
+     *  1- the centripetal Catmull-Rom method (replace each line segment by a spline segment to obtain a smooth path)
+     *  2- de Casteljau's algorithm (replace each spline segment by a series of points with higher density where the spline has high curvature)
+     *  3- Schneider's algorithm (approximate the resulting list of points by a (much) smaller number of splines)
+     */
+//     void approximateBySpline();
+public:
+    
+//     std::list<SplineSegment> centripetalCatmullRomSmoothing();
+    Stroke* schneider();
+    Stroke* CRS();
+    
+//     SomeType splitAtSingularPoints();
+    
 };

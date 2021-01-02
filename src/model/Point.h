@@ -58,6 +58,14 @@ public:
      * @return The new Point.
      */
     Point lineTo(const Point& p, double length) const;
+    
+    /**
+     * @brief Compute new Point in the direction from this to another Point.
+     * @param p The other Point.
+     * @param ratio The line length over the distance between this and the other Point p
+     * @return The new Point.
+     */
+    Point relativeLineTo(const Point& p, double ratio) const;
 
     /**
      * @brief Compare if this Point has the same position as another Point.

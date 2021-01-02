@@ -111,18 +111,7 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
      * The std::min and its second argument ensure the spline segment stays reasonably close to its nodes
      */
     double distance = std::min(std::abs(squaredNormBC * normAB / (2 * MathVect::scalarProduct(vAB, vBC))), normBC);
-
-    // Quadratic control point
-    Point Q = B.lineTo(A, -distance);
-
-    /**
-     * The quadratic control point is converted into two cubic control points
-     */
-    // Equivalent to fp = B.lineTo(Q, 2/3*distance), but avoids recomputing the norms
-    Point fp((Q.x - B.x) * 2 / 3 + B.x, (Q.y - B.y) * 2 / 3 + B.y);
-    // Equivalent to sp = C.lineTo(Q, 2/3*distance), but avoids recomputing the norms
-    Point sp((Q.x - C.x) * 2 / 3 + C.x, (Q.y - C.y) * 2 / 3 + C.y);
-
+    
     /**
      * Set the pressure values. We assume the tool is pressure sensitive:
      *      stroke->getToolType() == STROKE_TOOL_PEN
@@ -130,16 +119,25 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     bool usePressure = ev.pressure != Point::NO_PRESSURE;
     if (usePressure) {
         C.z = ev.pressure * stroke->getWidth();
-        double coeff = normBC / 2 + distance;  // Very rough estimation of the spline's length
+        double coeff = 0.5 * normBC + distance;  // Very rough estimation of the spline's length
         B.z = (coeff * A.z + normAB * C.z) / (normAB + coeff);
         stroke->setLastPressure(B.z);
     }
+
+    // Quadratic control point
+    Point Q = B.lineTo(A, -distance);
+
+    /**
+     * The quadratic control point is converted into two cubic control points
+     */
+    Point fp = B.relativeLineTo(Q, 2.0 / 3.0);
+    Point sp = C.relativeLineTo(Q, 2.0 / 3.0);
 
     SplineSegment spline(B, fp, sp, C);
     /**
      * TODO Add support for spline segments in Stroke and replace this point sequence by a single spline segment
      */
-    std::list<Point> pointsToPaint = spline.toPointSequence(usePressure);
+    std::list<Point> pointsToPaint = spline.toPointSequence();
 
     pointsToPaint.pop_front();  // Point B has already been painted
 
