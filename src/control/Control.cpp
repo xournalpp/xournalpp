@@ -24,6 +24,7 @@
 #include "jobs/AutosaveJob.h"
 #include "jobs/CustomExportJob.h"
 #include "jobs/PdfExportJob.h"
+#include "jobs/PdfPublishJob.h"
 #include "jobs/SaveJob.h"
 #include "layer/LayerController.h"
 #include "model/StrokeStyle.h"
@@ -387,6 +388,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_EXPORT_AS_PDF:
             exportAsPdf();
+            break;
+        case ACTION_PUBLISH_AS_PDF:
+            publishAsPdf();
             break;
         case ACTION_EXPORT_AS:
             exportAs();
@@ -2353,6 +2357,11 @@ void Control::updateWindowTitle() {
 void Control::exportAsPdf() {
     this->clearSelectionEndText();
     exportBase(new PdfExportJob(this));
+}
+
+void Control::publishAsPdf() {
+    this->clearSelectionEndText();
+    exportBase(new PdfPublishJob(this, ""));
 }
 
 void Control::exportAs() {

@@ -240,6 +240,16 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkMenuItem" id="menuFilePublishPdf">
+                            <property name="name">menuFilePublishPdf</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">_Publish as PDF</property>
+                            <property name="use-underline">True</property>
+                            <signal name="activate" handler="ACTION_PUBLISH_AS_PDF" swapped="no"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkMenuItem" id="menuFileExportAs">
                             <property name="name">menuFileExportAs</property>
                             <property name="visible">True</property>

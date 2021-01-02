@@ -74,6 +74,7 @@ public:
     bool annotatePdf(fs::path filepath, bool attachPdf, bool attachToDocument);
     void print();
     void exportAsPdf();
+    void publishAsPdf();
     void exportAs();
     void exportBase(BaseExportJob* job);
     void quit(bool allowCancel = true);
