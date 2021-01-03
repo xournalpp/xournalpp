@@ -21,7 +21,7 @@ void PdfPublishJob::afterExport() {
             if (pos == string::npos)
                 break;
             modscript.erase(pos, parameter.length());
-            modscript.insert(pos, target.c_str());
+            modscript.insert(pos, string(target));
             pos += 1;
         }
         system(modscript.c_str());
