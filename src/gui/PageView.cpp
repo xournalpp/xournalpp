@@ -183,6 +183,7 @@ void XojPageView::endText() {
 
     delete this->textEditor;
     this->textEditor = nullptr;
+    this->xournal->getControl()->getWindow()->setFontButtonFont(settings->getFont());
     this->rerenderPage();
 }
 
@@ -244,6 +245,7 @@ void XojPageView::startText(double x, double y) {
             text->setY(oldtext->getY());
             text->setColor(oldtext->getColor());
             text->setFont(oldtext->getFont());
+            this->xournal->getControl()->getWindow()->setFontButtonFont(oldtext->getFont());
             text->setText(oldtext->getText());
             text->setTimestamp(oldtext->getTimestamp());
             text->setAudioFilename(oldtext->getAudioFilename());
