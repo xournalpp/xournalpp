@@ -12,7 +12,6 @@ void PdfPublishJob::afterExport() {
     PdfExportJob::afterExport();
 
     if (script != "") {
-        fs::path const target = this->filepath;
         string modscript(script);
         string parameter = "$1";
         size_t pos = 0;
@@ -21,7 +20,7 @@ void PdfPublishJob::afterExport() {
             if (pos == string::npos)
                 break;
             modscript.erase(pos, parameter.length());
-            modscript.insert(pos, string(target.c_str()));
+            modscript.insert(pos, string(this->filepath));
             pos += 1;
         }
         system(modscript.c_str());
