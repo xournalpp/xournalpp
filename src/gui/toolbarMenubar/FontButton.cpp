@@ -1,5 +1,7 @@
 #include "FontButton.h"
 
+#include <locale>
+#include <sstream>
 #include <utility>
 
 #include <config.h>
@@ -29,7 +31,11 @@ void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton
 
 void FontButton::setFontFontButton(GtkWidget* fontButton, XojFont& font) {
     GtkFontButton* button = GTK_FONT_BUTTON(fontButton);
-    string name = font.getName() + " " + std::to_string(font.getSize());
+    // Fixing locale to make format of font-size string independent of localization setting
+    std::stringstream fontSizeStream;
+    fontSizeStream.imbue(std::locale("C"));
+    fontSizeStream << font.getSize();
+    string name = font.getName() + " " + fontSizeStream.str();
     gtk_font_button_set_font_name(button, name.c_str());
 }
 
