@@ -62,9 +62,7 @@ auto BaseExportJob::showFilechooser(bool silent) -> bool {
         fs::path suggestedname = folder;
         suggestedname /= name;
         Util::clearExtensions(suggestedname);
-        if (testAndSetFilepath(std::move(suggestedname))) {
-            g_message(suggestedname.c_str());
-        } else {
+        if (!testAndSetFilepath(std::move(suggestedname))) {
             return false;
         }
     } else {
