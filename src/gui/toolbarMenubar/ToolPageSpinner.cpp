@@ -35,24 +35,51 @@ auto ToolPageSpinner::getNewToolIcon() -> GtkWidget* {
 }
 
 auto ToolPageSpinner::newItem() -> GtkToolItem* {
-    GtkToolItem* it = gtk_tool_item_new();
+    GtkOrientation orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
 
-    GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
+    GtkWidget* spinner = this->pageSpinner->getWidget();
+    gtk_widget_unparent(spinner);  // make spinner re-addable
+    gtk_orientable_set_orientation(reinterpret_cast<GtkOrientable*>(spinner), orientation);
 
     GtkWidget* pageLabel = gtk_label_new(_("Page"));
-    GtkWidget* spinner = this->pageSpinner->getWidget();
+    this->lbPageNo = gtk_label_new(this->lbPageNo ? gtk_label_get_text(GTK_LABEL(lbPageNo)) : "");
 
-    gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);
-    gtk_box_pack_start(GTK_BOX(hbox), pageLabel, false, false, 7);
+    if (horizontal) {
+        gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);
+        gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
+        gtk_widget_set_valign(this->lbPageNo, GTK_ALIGN_BASELINE);
+    } else {
+        gtk_widget_set_halign(pageLabel, GTK_ALIGN_BASELINE);
+        gtk_widget_set_halign(spinner, GTK_ALIGN_BASELINE);
+        gtk_widget_set_halign(this->lbPageNo, GTK_ALIGN_BASELINE);
+    }
 
-    gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
-    gtk_box_pack_start(GTK_BOX(hbox), spinner, false, false, 0);
+    GtkWidget* box = gtk_box_new(orientation, 1);
+    gtk_box_pack_start(GTK_BOX(box), pageLabel, false, false, 7);
+    gtk_box_pack_start(GTK_BOX(box), spinner, false, false, 0);
+    gtk_box_pack_start(GTK_BOX(box), this->lbPageNo, false, false, 7);
 
-    this->lbPageNo = gtk_label_new("");
-    gtk_widget_set_valign(this->lbPageNo, GTK_ALIGN_BASELINE);
-    gtk_box_pack_start(GTK_BOX(hbox), this->lbPageNo, false, false, 7);
-
-    gtk_container_add(GTK_CONTAINER(it), hbox);
+    GtkToolItem* it = gtk_tool_item_new();
+    gtk_container_add(GTK_CONTAINER(it), box);
 
     return it;
+}
+
+auto ToolPageSpinner::createItem(bool horizontal) -> GtkToolItem* {
+    this->horizontal = horizontal;
+
+    this->item = createTmpItem(horizontal);
+    g_object_ref(this->item);
+
+    if (GTK_IS_TOOL_BUTTON(this->item) || GTK_IS_TOGGLE_TOOL_BUTTON(this->item)) {
+        g_signal_connect(this->item, "clicked", G_CALLBACK(&toolButtonCallback), this);
+    }
+
+    return this->item;
+}
+
+auto ToolPageSpinner::createTmpItem(bool horizontal) -> GtkToolItem* {
+    GtkToolItem* item = AbstractToolItem::createTmpItem(horizontal);
+    g_object_ref(item);
+    return item;
 }
