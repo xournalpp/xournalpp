@@ -203,6 +203,7 @@ public:
     void setCopyPasteEnabled(bool enabled);
 
     void enableAutosave(bool enable);
+    void enablePublish(bool enable);
 
     void clearSelectionEndText();
 
@@ -306,6 +307,7 @@ protected:
 
     static bool checkChangedDocument(Control* control);
     static bool autosaveCallback(Control* control);
+    static bool publishCallback(Control* control);
 
     void fontChanged();
     /**
@@ -385,6 +387,11 @@ private:
      */
     int autosaveTimeout = 0;
     fs::path lastAutosaveFilename;
+
+    /**
+     * The publish handler ID
+     */
+    int publishTimeout = 0;
 
     XournalScheduler* scheduler;
 

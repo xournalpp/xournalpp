@@ -123,6 +123,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
 Control::~Control() {
     g_source_remove(this->changeTimout);
     this->enableAutosave(false);
+    this->enablePublish(false);
 
     deleteLastAutosaveFile("");
     this->scheduler->stop();
@@ -297,6 +298,7 @@ void Control::initWindow(MainWindow* win) {
     this->clipboardHandler = new ClipboardHandler(this, win->getXournal()->getWidget());
 
     this->enableAutosave(settings->isAutosaveEnabled());
+    this->enablePublish(settings->isPublishEnabled());
 
     win->setFontButtonFont(settings->getFont());
 
@@ -325,6 +327,13 @@ auto Control::autosaveCallback(Control* control) -> bool {
     return true;
 }
 
+auto Control::publishCallback(Control* control) -> bool {
+    // always publish, no check for isChangedAutosave because that event might have been triggered just before this one
+    g_message("Info: publish PDF...");
+    control->publishAsPdf();
+    return true;
+}
+
 void Control::enableAutosave(bool enable) {
     if (this->autosaveTimeout) {
         g_source_remove(this->autosaveTimeout);
@@ -334,6 +343,18 @@ void Control::enableAutosave(bool enable) {
     if (enable) {
         int timeout = settings->getAutosaveTimeout() * 60;
         this->autosaveTimeout = g_timeout_add_seconds(timeout, reinterpret_cast<GSourceFunc>(autosaveCallback), this);
+    }
+}
+
+void Control::enablePublish(bool enable) {
+    if (this->publishTimeout) {
+        g_source_remove(this->publishTimeout);
+        this->publishTimeout = 0;
+    }
+
+    if (enable) {
+        int timeout = settings->getPublishTimeout();
+        this->publishTimeout = g_timeout_add_seconds(timeout, reinterpret_cast<GSourceFunc>(publishCallback), this);
     }
 }
 
@@ -1896,6 +1917,7 @@ void Control::showSettings() {
     win->updateScrollbarSidebarPosition();
 
     enableAutosave(settings->isAutosaveEnabled());
+    enablePublish(settings->isPublishEnabled());
 
     this->zoom->setZoomStep(settings->getZoomStep() / 100.0);
     this->zoom->setZoomStepScroll(settings->getZoomStepScroll() / 100.0);
@@ -2361,7 +2383,7 @@ void Control::exportAsPdf() {
 
 void Control::publishAsPdf() {
     this->clearSelectionEndText();
-    exportBase(new PdfPublishJob(this, ""));
+    exportBase(new PdfPublishJob(this, this->settings->getPublishScript()));
 }
 
 void Control::exportAs() {

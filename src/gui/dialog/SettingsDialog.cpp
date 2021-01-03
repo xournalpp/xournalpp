@@ -41,6 +41,11 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(get("cbAutopublish"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+                         self->enableWithCheckbox("cbAutopublish", "boxAutopublish");
+                     }),
+                     this);
+
     g_signal_connect(get("cbIgnoreFirstStylusEvents"), "toggled",
                      G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
                          self->enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
@@ -297,6 +302,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
     loadCheckbox("cbAutoloadXoj", settings->isAutloadPdfXoj());
     loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
+    loadCheckbox("cbAutopublish", settings->isPublishEnabled());
     loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
     loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
     loadCheckbox("cbDrawDirModsEnabled", settings->getDrawDirModsEnabled());
@@ -323,10 +329,17 @@ void SettingsDialog::load() {
     string txt = settings->getDefaultSaveName();
     gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt.c_str());
 
+    GtkWidget* txtPublishScript = get("txtPublishScript");
+    string prg = settings->getPublishScript();
+    gtk_entry_set_text(GTK_ENTRY(txtPublishScript), prg.c_str());
+
     gtk_file_chooser_set_uri(GTK_FILE_CHOOSER(get("fcAudioPath")), settings->getAudioFolder().c_str());
 
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
+
+    GtkWidget* spAutopublishTimeout = get("spAutopublishTimeout");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutopublishTimeout), settings->getPublishTimeout());
 
     GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
     if (!ignoreStylusEventsEnabled) {  // The spinButton's value should be >= 1
@@ -447,6 +460,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbHideMenubarStartup", settings->isMenubarVisible());
 
     enableWithCheckbox("cbAutosave", "boxAutosave");
+    enableWithCheckbox("cbAutopublish", "boxAutopublish");
     enableWithCheckbox("cbIgnoreFirstStylusEvents", "spNumIgnoredStylusEvents");
     enableWithCheckbox("cbAddVerticalSpace", "spAddVerticalSpace");
     enableWithCheckbox("cbAddHorizontalSpace", "spAddHorizontalSpace");
@@ -589,6 +603,7 @@ void SettingsDialog::save() {
     settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));
     settings->setAutoloadPdfXoj(getCheckbox("cbAutoloadXoj"));
     settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
+    settings->setPublishEnabled(getCheckbox("cbAutopublish"));
     settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
     settings->setAddHorizontalSpace(getCheckbox("cbAddHorizontalSpace"));
     settings->setDrawDirModsEnabled(getCheckbox("cbDrawDirModsEnabled"));
@@ -663,6 +678,9 @@ void SettingsDialog::save() {
     settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
 
     settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
+
+    settings->setPublishScript(gtk_entry_get_text(GTK_ENTRY(get("txtPublishScript"))));
+
     // Todo(fabian): use Util::fromGFilename!
     char* uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(get("fcAudioPath")));
     if (uri != nullptr) {
@@ -673,6 +691,10 @@ void SettingsDialog::save() {
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
     int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
     settings->setAutosaveTimeout(autosaveTimeout);
+
+    GtkWidget* spAutopublishTimeout = get("spAutopublishTimeout");
+    int publishTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutopublishTimeout));
+    settings->setPublishTimeout(publishTimeout);
 
     if (getCheckbox("cbIgnoreFirstStylusEvents")) {
         GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");

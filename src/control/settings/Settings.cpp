@@ -87,6 +87,10 @@ void Settings::loadDefault() {
     this->autosaveTimeout = 3;
     this->autosaveEnabled = true;
 
+    // Set this for publish frequency in seconds
+    this->publishTimeout = 60;
+    this->publishEnabled = false;
+
     this->addHorizontalSpace = false;
     this->addHorizontalSpaceAmount = 150;
     this->addVerticalSpace = false;
@@ -107,6 +111,8 @@ void Settings::loadDefault() {
     this->touchDrawing = false;
 
     this->defaultSaveName = _("%F-Note-%H-%M");
+
+    this->publishScript = ""; // empty string -> nothing will happen after publish event
 
     // Eraser
     this->buttonConfig[BUTTON_ERASER] =
@@ -368,6 +374,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->darkTheme = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
         this->defaultSaveName = reinterpret_cast<const char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("publishScript")) == 0) {
+        this->publishScript = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
         this->pluginEnabled = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginDisabled")) == 0) {
@@ -382,6 +390,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->autosaveEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
         this->autosaveTimeout = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("publishEnabled")) == 0) {
+        this->publishEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("publishTimeout")) == 0) {
+        this->publishTimeout = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("fullscreenHideElements")) == 0) {
         this->fullscreenHideElements = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationHideElements")) == 0) {
@@ -803,8 +815,13 @@ void Settings::save() {
 
     WRITE_STRING_PROP(defaultSaveName);
 
+    WRITE_STRING_PROP(publishScript);
+
     WRITE_BOOL_PROP(autosaveEnabled);
     WRITE_INT_PROP(autosaveTimeout);
+
+    WRITE_BOOL_PROP(publishEnabled);
+    WRITE_INT_PROP(publishTimeout);
 
     WRITE_BOOL_PROP(addHorizontalSpace);
     WRITE_INT_PROP(addHorizontalSpaceAmount);
@@ -1026,6 +1043,30 @@ void Settings::setAutosaveEnabled(bool autosave) {
     save();
 }
 
+auto Settings::getPublishTimeout() const -> int { return this->publishTimeout; }
+
+void Settings::setPublishTimeout(int secs) {
+    if (this->publishTimeout == secs) {
+        return;
+    }
+
+    this->publishTimeout = secs;
+
+    save();
+}
+
+auto Settings::isPublishEnabled() const -> bool { return this->publishEnabled; }
+
+void Settings::setPublishEnabled(bool enabled) {
+    if (this->publishEnabled == enabled) {
+        return;
+    }
+
+    this->publishEnabled = enabled;
+
+    save();
+}
+
 auto Settings::getAddVerticalSpace() const -> bool { return this->addVerticalSpace; }
 
 void Settings::setAddVerticalSpace(bool space) { this->addVerticalSpace = space; }
@@ -1238,6 +1279,18 @@ void Settings::setDefaultSaveName(const string& name) {
     }
 
     this->defaultSaveName = name;
+
+    save();
+}
+
+auto Settings::getPublishScript() const -> string const& { return this->publishScript; }
+
+void Settings::setPublishScript(const string& prg) {
+    if (this->publishScript == prg) {
+        return;
+    }
+
+    this->publishScript = prg;
 
     save();
 }
