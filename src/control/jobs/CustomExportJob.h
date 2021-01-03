@@ -32,7 +32,7 @@ public:
     void run();
 
 public:
-    virtual bool showFilechooser();
+    virtual bool showFilechooser(bool silent);
 
 protected:
     virtual void afterRun();

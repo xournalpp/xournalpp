@@ -2378,21 +2378,21 @@ void Control::updateWindowTitle() {
 
 void Control::exportAsPdf() {
     this->clearSelectionEndText();
-    exportBase(new PdfExportJob(this));
+    exportBase(new PdfExportJob(this), false);
 }
 
 void Control::publishAsPdf() {
     this->clearSelectionEndText();
-    exportBase(new PdfPublishJob(this, this->settings->getPublishScript()));
+    exportBase(new PdfPublishJob(this, this->settings->getPublishScript()), true);
 }
 
 void Control::exportAs() {
     this->clearSelectionEndText();
-    exportBase(new CustomExportJob(this));
+    exportBase(new CustomExportJob(this), false);
 }
 
-void Control::exportBase(BaseExportJob* job) {
-    if (job->showFilechooser()) {
+void Control::exportBase(BaseExportJob* job, bool silent) {
+    if (job->showFilechooser(silent)) {
         this->scheduler->addJob(job, JOB_PRIORITY_NONE);
     } else {
         // The job blocked, so we have to unblock, because the job unblocks only after run

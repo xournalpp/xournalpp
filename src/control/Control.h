@@ -76,7 +76,7 @@ public:
     void exportAsPdf();
     void publishAsPdf();
     void exportAs();
-    void exportBase(BaseExportJob* job);
+    void exportBase(BaseExportJob* job, bool silent);
     void quit(bool allowCancel = true);
 
     /**
