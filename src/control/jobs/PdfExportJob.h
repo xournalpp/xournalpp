@@ -26,7 +26,7 @@ public:
 protected:
     virtual void addFilterToDialog();
     bool testAndSetFilepath(fs::path file) override;
-    virtual void afterExport() {};
+    virtual void afterExport(){};
 
 private:
 };

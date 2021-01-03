@@ -35,9 +35,9 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
-
-    g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
-                         self->enableWithCheckbox("cbAutosave", "boxAutosave");
+    g_signal_connect(get("cbAutopublish"), "toggled",
+                     G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+                         self->enableWithCheckbox("cbAutopublish", "boxAutopublish");
                      }),
                      this);
 

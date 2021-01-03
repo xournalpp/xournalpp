@@ -112,7 +112,7 @@ void Settings::loadDefault() {
 
     this->defaultSaveName = _("%F-Note-%H-%M");
 
-    this->publishScript = ""; // empty string -> nothing will happen after publish event
+    this->publishScript = "";  // empty string -> nothing will happen after publish event
 
     // Eraser
     this->buttonConfig[BUTTON_ERASER] =
