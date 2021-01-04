@@ -69,6 +69,17 @@ Var StartMenuFolder
 ;Languages
  
   !insertmacro MUI_LANGUAGE "English"
+  
+;-------------------------------
+;Uninstall previous version
+
+Section "" SecUninstallPrevious
+	ReadRegStr $R0 HKCU "Software\Xournalpp" ""
+	${If} $R0 != ""        
+        DetailPrint "Removing previous version."
+		ExecWait '"$R0\Uninstall.exe /S"'
+    ${EndIf}
+SectionEnd
 
 ;--------------------------------
 ;Installer Sections
@@ -91,7 +102,7 @@ Section "Xournal++" SecXournalpp
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 		;Create shortcuts
 		CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk" "$INSTDIR\Bin\xournalpp.exe"
+		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk" "$INSTDIR\bin\xournalpp.exe"
 		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 	!insertmacro MUI_STARTMENU_WRITE_END
 
@@ -103,7 +114,7 @@ Section "Assign .xopp files" SecFileXopp
 SectionEnd
 
 Section "Assign .xopt files" SecFileXopt
-	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".xopt" "Xournal++ Template Files"
+	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".xopt" "Xournal++ template files"
 SectionEnd
 
 Section "Assign .xoj files" SecFileXoj
