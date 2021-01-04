@@ -69,6 +69,28 @@ file (GLOB xournalpp_SOURCES_RECURSE
   pdf/popplerapi/*.cpp
 )
 
+if (WIN32)
+  # generate .ico from .png
+  set (ICON_SIZES 16 32 48 256)
+  foreach (SIZE IN LISTS ICON_SIZES)
+    set (RESIZED_ICON ${PROJECT_BINARY_DIR}/xournalpp-icon-${SIZE}.png)
+    add_custom_command (
+	  OUTPUT ${RESIZED_ICON}
+	  COMMAND rsvg-convert ${PROJECT_SOURCE_DIR}/ui/pixmaps/com.github.xournalpp.xournalpp.svg -o ${RESIZED_ICON}
+	)
+    set (ICON_DEPS ${ICON_DEPS} ${RESIZED_ICON})
+	unset (RESIZED_ICON)
+  endforeach()
+  add_custom_command (
+    OUTPUT ${PROJECT_BINARY_DIR}/xournalpp.ico
+	COMMAND convert ${ICON_DEPS} ${PROJECT_BINARY_DIR}/xournalpp.ico
+	DEPENDS ${ICON_DEPS}
+  )
+  unset (ICON_SIZES)
+  unset (ICON_DEPS)
+  add_custom_target (xournalpp_icon DEPENDS ${PROJECT_BINARY_DIR}/xournalpp.ico)
+endif()
+
 # Concatenate SOURCES lists
 set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
 unset (xournalpp_SOURCES_RECURSE)
@@ -87,6 +109,14 @@ add_executable (xournalpp
   $<TARGET_OBJECTS:xournalpp-core>
   Xournalpp.cpp
 )
+
+if (WIN32)
+  set (CMAKE_RC_COMPILER_INIT windres)
+  enable_language (RC)
+  set (CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
+  add_dependencies(xournalpp xournalpp_icon)
+  target_sources(xournalpp PRIVATE win32/xpp.rc)
+endif ()
 
 add_dependencies (xournalpp
   xournalpp-core

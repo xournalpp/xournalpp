@@ -89,6 +89,11 @@ else ()
 	add_includes_ldflags("${Backtrace_LIBRARIES}" "${Backtrace_INCLUDE_DIRS}")
 endif ()
 
+if (WIN32)
+	# Need ImageMagick to generate icons on Windows
+	find_package(ImageMagick REQUIRED COMPONENTS convert)
+endif ()
+
 # GLIB
 pkg_check_modules (Glib REQUIRED "glib-2.0 >= 2.32.0")
 add_definitions (-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32)
