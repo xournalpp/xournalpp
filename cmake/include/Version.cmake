@@ -4,8 +4,12 @@
 if(NOT DISTRO_CODENAME)
   find_program(LSB_RELEASE_CMD lsb_release)
   if(NOT LSB_RELEASE_CMD)
-    message(WARNING "include/Version.cmake: Can't find lsb_release in your path. Setting DISTRO_CODENAME to unknown.")
-    set(DISTRO_CODENAME unknown)
+    if (WIN32)
+	  set (DISTRO_CODENAME "Windows")
+	else ()
+      message(WARNING "include/Version.cmake: Can't find lsb_release in your path. Setting DISTRO_CODENAME to unknown.")
+      set(DISTRO_CODENAME unknown)
+	endif ()
   else()
     execute_process(COMMAND ${LSB_RELEASE_CMD} -cs
                     OUTPUT_VARIABLE DISTRO_CODENAME
