@@ -137,7 +137,7 @@ auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     // Forward event to page
     if (currentPage) {
         PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
-        pos.pressure = this->inferPressureIfEnabled(pos, currentPage);
+        pos.pressure = this->filterPressure(pos, currentPage);
 
         return currentPage->onButtonPressEvent(pos);
     }
@@ -167,6 +167,18 @@ double PenInputHandler::inferPressureIfEnabled(PositionInputData const& pos, Xoj
     }
 
     return pos.pressure;
+}
+
+double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView* page) {
+    double filteredPressure = inferPressureIfEnabled(pos, page);
+    Settings* settings = this->inputContext->getSettings();
+
+    if (filteredPressure != Point::NO_PRESSURE) {
+        filteredPressure *= settings->getPressureMultiplier();
+        filteredPressure = std::max(settings->getMinimumPressure(), filteredPressure);
+    }
+
+    return filteredPressure;
 }
 
 auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
@@ -273,7 +285,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         pos.x = std::min(pos.x, static_cast<double>(sequenceStartPage->getDisplayWidth()));
         pos.y = std::min(pos.y, static_cast<double>(sequenceStartPage->getDisplayHeight()));
 
-        pos.pressure = this->inferPressureIfEnabled(pos, sequenceStartPage);
+        pos.pressure = this->filterPressure(pos, sequenceStartPage);
 
         result = sequenceStartPage->onMotionNotifyEvent(pos);
     }
@@ -281,7 +293,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     if (currentPage && this->penInWidget) {
         // Relay the event to the page
         PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
-        pos.pressure = this->inferPressureIfEnabled(pos, currentPage);
+        pos.pressure = this->filterPressure(pos, currentPage);
 
         result = currentPage->onMotionNotifyEvent(pos);
     }
@@ -307,7 +319,7 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     // Selections and single-page elements will always work on one page so we need to handle them differently
     if (this->sequenceStartPage && toolHandler->isSinglePageTool()) {
         PositionInputData pos = getInputDataRelativeToCurrentPage(this->sequenceStartPage, event);
-        pos.pressure = this->inferPressureIfEnabled(pos, this->sequenceStartPage);
+        pos.pressure = this->filterPressure(pos, this->sequenceStartPage);
 
         this->sequenceStartPage->onButtonReleaseEvent(pos);
     } else {
@@ -327,7 +339,7 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
 
         if (currentPage) {
             PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
-            pos.pressure = this->inferPressureIfEnabled(pos, currentPage);
+            pos.pressure = this->filterPressure(pos, currentPage);
 
             currentPage->onButtonReleaseEvent(pos);
         }
