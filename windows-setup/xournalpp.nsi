@@ -91,7 +91,7 @@ Section "Xournal++" SecXournalpp
 	SetOutPath "$INSTDIR"
 
 	; Files to put into the setup
-	File /r "setup\*"
+	File /r "dist\*"
 
 	;Store installation folder
 	WriteRegStr HKCU "Software\Xournalpp" "" $INSTDIR
