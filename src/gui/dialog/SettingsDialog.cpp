@@ -21,20 +21,29 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
     GtkWidget* vbox = get("zoomVBox");
     g_return_if_fail(vbox != nullptr);
 
-    GtkWidget* slider = get("zoomCallibSlider");
-    g_return_if_fail(slider != nullptr);
-
-    g_signal_connect(slider, "change-value",
+    GtkWidget* zoomCalibSlider = get("zoomCallibSlider");
+    g_return_if_fail(zoomCalibSlider != nullptr);
+    g_signal_connect(zoomCalibSlider, "change-value",
                      G_CALLBACK(+[](GtkRange* range, GtkScrollType scroll, gdouble value, SettingsDialog* self) {
                          self->setDpi((int)value);
                      }),
                      this);
 
     g_signal_connect(get("cbNewInputSystem"), "toggled", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
-                         self->touchWorkaroundStatusChanged();
+                         self->updateTouchDrawingOptions();
+                         self->updatePressureSensitivityOptions();
                      }),
                      this);
 
+    g_signal_connect(
+            get("cbEnablePressureInference"), "toggled",
+            G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->updatePressureSensitivityOptions(); }),
+            this);
+
+    g_signal_connect(
+            get("cbSettingPresureSensitivity"), "toggled",
+            G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->updatePressureSensitivityOptions(); }),
+            this);
 
     g_signal_connect(get("cbAutosave"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
                          self->enableWithCheckbox("cbAutosave", "boxAutosave");
@@ -103,10 +112,9 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
-    g_signal_connect(get("cbTouchWorkaround"), "toggled", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
-                         self->touchWorkaroundStatusChanged();
-                     }),
-                     this);
+    g_signal_connect(
+            get("cbTouchWorkaround"), "toggled",
+            G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->updateTouchDrawingOptions(); }), this);
 
     g_signal_connect(get("cbStylusCursorType"), "changed", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
                          self->customStylusIconTypeChanged();
@@ -230,6 +238,16 @@ auto SettingsDialog::getCheckbox(const char* name) -> bool {
     return gtk_toggle_button_get_active(b);
 }
 
+void SettingsDialog::loadSlider(const char* name, double value) {
+    GtkRange* range = GTK_RANGE(get(name));
+    gtk_range_set_value(range, value);
+}
+
+auto SettingsDialog::getSlider(const char* name) -> double {
+    GtkRange* range = GTK_RANGE(get(name));
+    return gtk_range_get_value(range);
+}
+
 /**
  * Checkbox was toggled, enable / disable it
  */
@@ -248,11 +266,11 @@ void SettingsDialog::disableWithCheckbox(const string& checkboxId, const string&
 /**
  * Listeners specific to portions of the settings pane.
  */
-void SettingsDialog::touchWorkaroundStatusChanged() {
+
+void SettingsDialog::updateTouchDrawingOptions() {
     GtkWidget* touchDrawingCheckbox = get("cbTouchDrawing");
 
     if (getCheckbox("cbTouchWorkaround")) {
-        // Set sensitive so we can load the value
         gtk_widget_set_sensitive(touchDrawingCheckbox, false);
 
         gtk_widget_set_tooltip_text(touchDrawingCheckbox,
@@ -274,6 +292,29 @@ void SettingsDialog::touchWorkaroundStatusChanged() {
         gtk_widget_set_sensitive(touchDrawingCheckbox, false);
     } else {
         disableWithCheckbox("cbTouchWorkaround", "cbTouchDrawing");
+    }
+}
+
+void SettingsDialog::updatePressureSensitivityOptions() {
+    GtkWidget* sensitivityOptionsFrame = get("framePressureSensitivityScale");
+    bool haveNewInputSystem = getCheckbox("cbNewInputSystem");
+    bool havePressureInput = getCheckbox("cbSettingPresureSensitivity") || getCheckbox("cbEnablePressureInference");
+
+    if (!havePressureInput) {
+        gtk_widget_set_tooltip_text(sensitivityOptionsFrame,
+                                    _("Enable pressure sensitivity or pressure inference to change this setting!"));
+    } else {
+    }
+
+    if (!haveNewInputSystem) {
+        gtk_widget_set_tooltip_text(sensitivityOptionsFrame,
+                                    _("The new input system must be enabled to change this setting. "));
+        gtk_widget_set_sensitive(sensitivityOptionsFrame, false);
+    } else {
+        gtk_widget_set_tooltip_text(sensitivityOptionsFrame,
+                                    _("Filter input pressure. Multiply the pressure by the pressure multiplier."
+                                      " If less than the minimum, use the minimum pressure."));
+        gtk_widget_set_sensitive(sensitivityOptionsFrame, havePressureInput);
     }
 }
 
@@ -382,10 +423,10 @@ void SettingsDialog::load() {
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime), successive);
     }
 
-    GtkWidget* slider = get("zoomCallibSlider");
-
     this->setDpi(settings->getDisplayDpi());
-    gtk_range_set_value(GTK_RANGE(slider), dpi);
+    loadSlider("zoomCallibSlider", dpi);
+    loadSlider("scaleMinimumPressure", settings->getMinimumPressure());
+    loadSlider("scalePressureMultiplier", settings->getPressureMultiplier());
 
     GdkRGBA color = Util::rgb_to_GdkRGBA(settings->getBorderColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
@@ -460,7 +501,8 @@ void SettingsDialog::load() {
     enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
     customHandRecognitionToggled();
     customStylusIconTypeChanged();
-    touchWorkaroundStatusChanged();
+    updateTouchDrawingOptions();
+    updatePressureSensitivityOptions();
 
 
     SElement& touch = settings->getCustomElement("touch");
@@ -584,6 +626,8 @@ void SettingsDialog::save() {
     settings->transactionStart();
 
     settings->setPressureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
+    settings->setMinimumPressure(getSlider("scaleMinimumPressure"));
+    settings->setPressureMultiplier(getSlider("scalePressureMultiplier"));
     settings->setZoomGesturesEnabled(getCheckbox("cbEnableZoomGestures"));
     settings->setSidebarOnRight(getCheckbox("cbShowSidebarRight"));
     settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));

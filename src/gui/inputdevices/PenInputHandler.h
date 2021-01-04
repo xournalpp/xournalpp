@@ -126,8 +126,20 @@ protected:
 
     /**
      * Estimate pressure based on pen speed using the previous event.
+     *
      * @param pos The position of the current event
      * @param page The page the event is relative to.
+     * @return The filtered pressure.
      */
     double inferPressureIfEnabled(PositionInputData const& pos, XojPageView* page);
+
+    /**
+     * @brief Apply filters (e.g. minimum pressure, pressure inference, etc.) to
+     * the pressure at pos.
+     *
+     * @param pos The position of the current event
+     * @param page The page the event is relative to
+     * @return The filtered pressure.
+     */
+    double filterPressure(PositionInputData const& pos, XojPageView* page);
 };

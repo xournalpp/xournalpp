@@ -43,14 +43,28 @@ public:
     /*
      * Listeners for changes to settings.
      */
-    void touchWorkaroundStatusChanged();
     void customHandRecognitionToggled();
     void customStylusIconTypeChanged();
+
+    /**
+     * Update sensitivity, tooltips, etc. for touch drawing based on
+     * its dependent settings.
+     */
+    void updateTouchDrawingOptions();
+
+    /**
+     * Update whether options can be selected, tooltips, etc. for
+     * pressure sensitivity options (e.g. pressure multiplier).
+     */
+    void updatePressureSensitivityOptions();
 
 private:
     void load();
     void loadCheckbox(const char* name, gboolean value);
     bool getCheckbox(const char* name);
+
+    void loadSlider(const char* name, double value);
+    double getSlider(const char* name);
 
     static string updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar);
 

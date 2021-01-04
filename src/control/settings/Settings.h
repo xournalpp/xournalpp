@@ -115,6 +115,15 @@ public:
     void setPressureSensitivity(gboolean presureSensitivity);
 
     /**
+     * Input device pressure options
+     */
+    double getMinimumPressure() const;
+    void setMinimumPressure(double minimumPressure);
+
+    double getPressureMultiplier() const;
+    void setPressureMultiplier(double multiplier);
+
+    /**
      * Getter, enable/disable
      */
     bool isZoomGesturesEnabled() const;
@@ -503,6 +512,12 @@ private:
      *  Use pen pressure to control stroke width?
      */
     bool pressureSensitivity{};
+
+    /**
+     * Adjust input pressure?
+     */
+    double minimumPressure{};
+    double pressureMultiplier{};
 
     /**
      * If the touch zoom gestures are enabled
