@@ -17,9 +17,9 @@ LINUXDEPLOY_PLUGIN_GTK="linuxdeploy-plugin-gtk.sh"
 
 
 # Download linuxdeploy and linuxdeploy-plugin-gtk, if they do not yet exist
-# Currently broken: "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh", see https://github.com/linuxdeploy/linuxdeploy-plugin-gtk/issues/7
+# Save backup option: "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/c008df652946408f357f502bab67bfcf6f303b4e/linuxdeploy-plugin-gtk.sh", see https://github.com/linuxdeploy/linuxdeploy-plugin-gtk/issues/7
 if [[ ! -f $LINUXDEPLOY_PLUGIN_GTK ]]; then
-wget -c "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/c008df652946408f357f502bab67bfcf6f303b4e/linuxdeploy-plugin-gtk.sh"
+wget -c "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh"
 chmod +x "$LINUXDEPLOY_PLUGIN_GTK"
 fi
 
