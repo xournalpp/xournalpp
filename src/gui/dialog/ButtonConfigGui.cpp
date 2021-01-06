@@ -12,6 +12,29 @@
 
 #define ADD_TYPE_CB(icon, name, action) addToolToList(typeModel, icon, name, action)
 
+ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_SIZE_NONE},  {1, TOOL_SIZE_VERY_FINE},
+                                                                       {2, TOOL_SIZE_FINE},  {3, TOOL_SIZE_MEDIUM},
+                                                                       {4, TOOL_SIZE_THICK}, {5, TOOL_SIZE_VERY_THICK}};
+
+string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
+    switch (size) {
+        case TOOL_SIZE_NONE:
+            return "Thickness - don't change";
+        case TOOL_SIZE_VERY_FINE:
+            return "Very thin";
+        case TOOL_SIZE_FINE:
+            return "Thin";
+        case TOOL_SIZE_MEDIUM:
+            return "Medium";
+        case TOOL_SIZE_THICK:
+            return "Thick";
+        case TOOL_SIZE_VERY_THICK:
+            return "Very thick";
+        default:
+            return "";
+    }
+}
+
 void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, ToolType action) {
     GtkTreeIter iter;
 
@@ -78,12 +101,10 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->cbTool), renderer, "text", 1, nullptr);
 
     this->cbThickness = get("cbThickness");
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thickness - don't change"));
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Very thin"));
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thin"));
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Medium"));
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Thick"));
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cbThickness), _("Very thick"));
+    for (auto const& size: toolSizeIndexMap) {
+        gtk_combo_box_text_insert_text(GTK_COMBO_BOX_TEXT(cbThickness), size.first,
+                                       toolSizeToLabel(size.second).c_str());
+    }
     gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
 
     this->colorButton = get("colorButton");
@@ -146,20 +167,13 @@ void ButtonConfigGui::loadSettings() {
         g_value_unset(&value);
     } while (gtk_tree_model_iter_next(model, &iter));
 
-    if (cfg->size == TOOL_SIZE_VERY_FINE) {
-        gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 1);
-    } else if (cfg->size == TOOL_SIZE_FINE) {
-        gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 2);
-    } else if (cfg->size == TOOL_SIZE_MEDIUM) {
-        gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 3);
-    } else if (cfg->size == TOOL_SIZE_THICK) {
-        gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 4);
-    } else if (cfg->size == TOOL_SIZE_VERY_THICK) {
-        gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 5);
-    } else {
-        gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
+    // select thickness in combo box
+    gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), 0);
+    for (auto const& size: toolSizeIndexMap) {
+        if (size.second == cfg->size) {
+            gtk_combo_box_set_active(GTK_COMBO_BOX(cbThickness), size.first);
+        }
     }
-
 
     GdkRGBA color = Util::rgb_to_GdkRGBA(cfg->color);
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(colorButton), &color);
@@ -210,19 +224,10 @@ void ButtonConfigGui::saveSettings() {
     cfg->action = action;
 
     int thickness = gtk_combo_box_get_active(GTK_COMBO_BOX(cbThickness));
-
-    if (thickness == 1) {
-        cfg->size = TOOL_SIZE_VERY_FINE;
-    } else if (thickness == 2) {
-        cfg->size = TOOL_SIZE_FINE;
-    } else if (thickness == 3) {
-        cfg->size = TOOL_SIZE_MEDIUM;
-    } else if (thickness == 4) {
-        cfg->size = TOOL_SIZE_THICK;
-    } else if (thickness == 5) {
-        cfg->size = TOOL_SIZE_VERY_THICK;
-    } else {
+    if (toolSizeIndexMap.count(thickness) == 0) {
         cfg->size = TOOL_SIZE_NONE;
+    } else {
+        cfg->size = toolSizeIndexMap[thickness];
     }
 
     GdkRGBA color;
