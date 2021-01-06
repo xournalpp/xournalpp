@@ -35,6 +35,7 @@ public:
 private:
     static void cbSelectCallback(GtkComboBox* widget, ButtonConfigGui* gui);
     void enableDisableTools();
+    string toolSizeToLabel(ToolSize size);
 
 private:
     Settings* settings;
@@ -52,4 +53,7 @@ private:
 
     int button = 0;
     bool withDevice = false;
+
+    typedef std::map<int, ToolSize> ToolSizeIndexMap;
+    static ToolSizeIndexMap toolSizeIndexMap;
 };
