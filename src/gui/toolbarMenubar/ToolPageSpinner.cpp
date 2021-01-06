@@ -37,8 +37,7 @@ auto ToolPageSpinner::getNewToolIcon() -> GtkWidget* {
 auto ToolPageSpinner::newItem() -> GtkToolItem* {
     GtkOrientation orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
 
-    GtkWidget* spinner = this->pageSpinner->getWidget();
-    gtk_widget_unparent(spinner);  // make spinner re-addable
+    GtkWidget* spinner = this->pageSpinner->newWidget();
     gtk_orientable_set_orientation(reinterpret_cast<GtkOrientable*>(spinner), orientation);
 
     GtkWidget* pageLabel = gtk_label_new(_("Page"));

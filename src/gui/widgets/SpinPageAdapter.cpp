@@ -2,11 +2,8 @@
 
 SpinPageAdapter::SpinPageAdapter() {
     this->lastTimeoutId = 0;
-    this->widget = gtk_spin_button_new_with_range(0, 0, 1);
-    g_object_ref(this->widget);
-
-    g_signal_connect(this->widget, "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
-
+    this->min=0;
+    this->max=1;
     this->page = -1;
 }
 
@@ -37,7 +34,16 @@ void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinP
     adapter->lastTimeoutId = g_timeout_add(100, reinterpret_cast<GSourceFunc>(pageNrSpinChangedTimerCallback), adapter);
 }
 
-auto SpinPageAdapter::getWidget() -> GtkWidget* { return this->widget; }
+auto SpinPageAdapter::newWidget() -> GtkWidget* {
+    g_object_unref(this->widget);
+    this->widget = gtk_spin_button_new_with_range(this->min, this->max, 1);
+    g_object_ref(this->widget);
+
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(this->widget), this->page);
+
+    g_signal_connect(this->widget, "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
+    return this->widget;
+}
 
 auto SpinPageAdapter::getPage() const -> int { return this->page; }
 
@@ -47,6 +53,8 @@ void SpinPageAdapter::setPage(size_t page) {
 }
 
 void SpinPageAdapter::setMinMaxPage(size_t min, size_t max) {
+    this->min = min;
+    this->max = max;
     gtk_spin_button_set_range(GTK_SPIN_BUTTON(this->widget), min, max);
 }
 
