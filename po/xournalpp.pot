@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:59+0000\n"
+"POT-Creation-Date: 2021-01-06 18:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -381,24 +381,24 @@ msgstr ""
 msgid "Dotted"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:101
+#: ../src/gui/dialog/ButtonConfigGui.cpp:124
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:30
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Draw Arrow"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:99
+#: ../src/gui/dialog/ButtonConfigGui.cpp:122
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Draw Circle"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:95
+#: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
 msgid "Draw Line"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:97
+#: ../src/gui/dialog/ButtonConfigGui.cpp:120
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:28
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:91
@@ -407,13 +407,13 @@ msgstr ""
 msgid "Draw Rectangle"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:107
+#: ../src/gui/dialog/ButtonConfigGui.cpp:130
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Draw Spline"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:103
+#: ../src/gui/dialog/ButtonConfigGui.cpp:126
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Draw coordinate system"
@@ -423,7 +423,7 @@ msgstr ""
 msgid "Draw stroke"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:91
+#: ../src/gui/dialog/ButtonConfigGui.cpp:114
 msgid "Drawing Type - don't change"
 msgstr ""
 
@@ -440,7 +440,7 @@ msgstr ""
 msgid "Erase stroke"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:58
+#: ../src/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
 msgid "Eraser"
 msgstr ""
@@ -572,7 +572,7 @@ msgstr ""
 msgid "Fine"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:66
+#: ../src/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Floating Toolbox (experimental)"
 msgstr ""
 
@@ -639,7 +639,7 @@ msgstr ""
 msgid "Grid Snapping"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:65
+#: ../src/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Hand"
 msgstr ""
@@ -648,7 +648,7 @@ msgstr ""
 msgid "Hide all"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:59
+#: ../src/gui/dialog/ButtonConfigGui.cpp:82
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Highlighter"
 msgstr ""
@@ -670,7 +670,7 @@ msgstr ""
 msgid "Insert elements"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:61 ../src/undo/InsertUndoAction.cpp:34
+#: ../src/gui/dialog/ButtonConfigGui.cpp:84 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
 msgstr ""
 
@@ -745,7 +745,6 @@ msgstr ""
 msgid "Manage Toolbars"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Medium"
 msgstr ""
@@ -790,7 +789,7 @@ msgstr ""
 msgid "Next annotated page"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:41
+#: ../src/gui/dialog/ButtonConfigGui.cpp:64
 msgid "No device"
 msgstr ""
 
@@ -804,7 +803,7 @@ msgid ""
 "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:93
+#: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
 msgstr ""
 
@@ -917,7 +916,7 @@ msgstr ""
 msgid "Pause / Play"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:57
+#: ../src/gui/dialog/ButtonConfigGui.cpp:80
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:231
 msgid "Pen"
 msgstr ""
@@ -1093,11 +1092,11 @@ msgstr ""
 msgid "Select color"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:64
+#: ../src/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Select rectangle"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:63
+#: ../src/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Select region"
 msgstr ""
 
@@ -1166,7 +1165,7 @@ msgstr ""
 msgid "Stop"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:105
+#: ../src/gui/dialog/ButtonConfigGui.cpp:128
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
 #: ../src/undo/RecognizerUndoAction.cpp:72
 msgid "Stroke recognizer"
@@ -1184,7 +1183,7 @@ msgstr ""
 msgid "System Default"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:60
+#: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Text"
 msgstr ""
@@ -1283,17 +1282,8 @@ msgstr ""
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 msgid "Thick"
-msgstr ""
-
-#: ../src/gui/dialog/ButtonConfigGui.cpp:81
-msgid "Thickness - don't change"
-msgstr ""
-
-#: ../src/gui/dialog/ButtonConfigGui.cpp:82
-msgid "Thin"
 msgstr ""
 
 #: ../src/control/Control.cpp:2431
@@ -1309,7 +1299,7 @@ msgstr ""
 msgid "Toggle fullscreen"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:56
+#: ../src/gui/dialog/ButtonConfigGui.cpp:79
 msgid "Tool - don't change"
 msgstr ""
 
@@ -1390,7 +1380,7 @@ msgstr ""
 msgid "Vertical Space"
 msgstr ""
 
-#: ../src/gui/dialog/ButtonConfigGui.cpp:62
+#: ../src/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Vertical space"
 msgstr ""
 
