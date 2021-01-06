@@ -2,8 +2,8 @@
 
 SpinPageAdapter::SpinPageAdapter() {
     this->lastTimeoutId = 0;
-    this->min=0;
-    this->max=1;
+    this->min = 0;
+    this->max = 1;
     this->page = -1;
 }
 
