@@ -174,7 +174,7 @@ private:
     // of the setting -- usingTouchWorkaround should only change
     // on application restart!
     bool usingTouchWorkaround;
-    std::atomic_bool gtkTouchscreenScrollingEnabled;
+    std::atomic_bool gtkTouchscreenScrollingEnabled{true};
 
     // Toolbars
     ToolMenuHandler* toolbar;
