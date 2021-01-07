@@ -73,7 +73,9 @@ void initLocalisation() {
     p /= "../Resources/share/locale/";
     const char* PACKAGE_LOCALE_DIR = p.c_str();
 #endif
-    bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+
+    fs::path localeDir = Util::getGettextFilepath(PACKAGE_LOCALE_DIR);
+    bindtextdomain(GETTEXT_PACKAGE, localeDir.c_str());
     textdomain(GETTEXT_PACKAGE);
 
 #ifdef _WIN32

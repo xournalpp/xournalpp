@@ -4,6 +4,7 @@
 
 #include "control/settings/Settings.h"
 
+#include "PathUtil.h"
 #include "StringUtils.h"
 #include "XojMsgBox.h"
 #include "config-paths.h"
@@ -31,7 +32,7 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
 
     // Fetch available locales
     try {
-        fs::path baseLocaleDir(PACKAGE_LOCALE_DIR);
+        fs::path baseLocaleDir = Util::getGettextFilepath(PACKAGE_LOCALE_DIR);
         for (auto const& d: fs::directory_iterator(baseLocaleDir)) {
             if (fs::exists(d.path() / "LC_MESSAGES" / (std::string(GETTEXT_PACKAGE) + ".mo"))) {
                 availableLocales.push_back(d.path().filename().u8string());
