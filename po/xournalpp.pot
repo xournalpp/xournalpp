@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-06 18:34+0000\n"
+"POT-Creation-Date: 2021-01-07 17:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,7 +58,7 @@ msgstr ""
 msgid "Add/Edit Tex"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:666
+#: ../src/control/XournalMain.cpp:668
 msgid "Advanced export options"
 msgstr ""
 
@@ -345,7 +345,7 @@ msgstr ""
 msgid "Discard"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:667
+#: ../src/control/XournalMain.cpp:669
 msgid "Display advanced export options"
 msgstr ""
 
@@ -526,10 +526,14 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:642
 msgid ""
-"Export in presentation mode\n"
-"                                 In PDF export, layers are rendered one by "
-"one,\n"
-"                                 suitable for presentation\n"
+"Export layers progressively\n"
+"                                 In PDF export, Render layers progressively "
+"one by one.\n"
+"                                 This results in N export pages per page "
+"with N layers,\n"
+"                                 building up the layer stack progressively.\n"
+"                                 The resulting PDF file can be used for a "
+"presentation.\n"
 msgstr ""
 
 #: ../src/control/XournalMain.cpp:637
@@ -811,7 +815,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:647
+#: ../src/control/XournalMain.cpp:649
 msgid ""
 "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--"
@@ -1108,13 +1112,13 @@ msgstr ""
 msgid "Separator"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:651
+#: ../src/control/XournalMain.cpp:653
 msgid ""
 "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:661
+#: ../src/control/XournalMain.cpp:663
 msgid ""
 "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
@@ -1122,7 +1126,7 @@ msgid ""
 "width is used"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:655
+#: ../src/control/XournalMain.cpp:657
 msgid ""
 "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
@@ -2299,12 +2303,12 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
-#: ../ui/exportSettings.glade:334
-msgid "Export as a presentation"
-msgstr ""
-
 #: ../ui/main.glade:247
 msgid "Export as..."
+msgstr ""
+
+#: ../ui/exportSettings.glade:334
+msgid "Export layers progressively"
 msgstr ""
 
 #: ../ui/main.glade:1615 ../ui/main.glade:1820
