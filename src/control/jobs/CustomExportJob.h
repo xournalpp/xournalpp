@@ -68,9 +68,9 @@ private:
     bool exportTypeXoj = false;
 
     /**
-     * Export Layers as pages
+     * Export all Layers progressively
      */
-    bool presentationMode = false;
+    bool progressiveMode = false;
 
     string lastError;
 

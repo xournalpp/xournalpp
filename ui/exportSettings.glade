@@ -330,8 +330,8 @@ Set export parameters</property>
                 </child>
 
 		<child>
-                  <object class="GtkCheckButton" id="cbPresentationMode">
-                    <property name="label" translatable="yes">Export as a presentation</property>
+                  <object class="GtkCheckButton" id="cbProgressiveMode">
+                    <property name="label" translatable="yes">Export layers progressively</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
