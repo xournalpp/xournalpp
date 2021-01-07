@@ -4,6 +4,7 @@
 #include <fstream>
 
 #include <glib.h>
+#include <stdlib.h>
 
 #include "StringUtils.h"
 #include "Util.h"
@@ -150,6 +151,22 @@ void Util::openFileWithFilebrowser(const fs::path& filename) {
                         filename.u8string());
         XojMsgBox::showErrorToUser(nullptr, msg);
     }
+}
+
+auto Util::getGettextFilepath(const char* localeDir) -> fs::path {
+    const char* gettextEnv = g_getenv("TEXTDOMAINDIR");
+    // Only consider first path in environment variable
+    std::string directories;
+    if (gettextEnv) {
+        directories = std::string(gettextEnv);
+        size_t firstDot = directories.find(':');
+        if (firstDot != std::string::npos) {
+            directories = directories.substr(0, firstDot);
+        }
+    }
+    const char* dir = (gettextEnv) ? directories.c_str() : localeDir;
+    g_message("TEXTDOMAINDIR = %s, PACKAGE_LOCALE_DIR = %s, chosen directory = %s", gettextEnv, localeDir, dir);
+    return fs::path(dir);
 }
 
 auto Util::getAutosaveFilepath() -> fs::path {

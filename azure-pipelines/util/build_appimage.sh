@@ -14,13 +14,18 @@ fi
 # linuxdeploy and linuxdeploy GTK plugin locations
 LINUXDEPLOY=${LINUXDEPLOY:-"linuxdeploy.AppImage"}
 LINUXDEPLOY_PLUGIN_GTK="linuxdeploy-plugin-gtk.sh"
+LINUXDEPLOY_PLUGIN_GETTEXT="linuxdeploy-plugin-gettext.sh"
 
 
-# Download linuxdeploy and linuxdeploy-plugin-gtk, if they do not yet exist
-# Save backup option: "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/c008df652946408f357f502bab67bfcf6f303b4e/linuxdeploy-plugin-gtk.sh", see https://github.com/linuxdeploy/linuxdeploy-plugin-gtk/issues/7
+# Download linuxdeploy and its Gtk and Gettext plugins, if they do not yet exist
 if [[ ! -f $LINUXDEPLOY_PLUGIN_GTK ]]; then
 wget -c "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh"
 chmod +x "$LINUXDEPLOY_PLUGIN_GTK"
+fi
+
+if [[ ! -f $LINUXDEPLOY_PLUGIN_GETTEXT ]]; then
+wget -c "https://raw.githubusercontent.com/linuxdeploy/misc-plugins/master/gettext/linuxdeploy-plugin-gettext.sh"
+chmod +x "$LINUXDEPLOY_PLUGIN_GETTEXT"
 fi
 
 if [[ ! -f $LINUXDEPLOY ]]; then
@@ -40,4 +45,4 @@ DESKTOP_FILE="$APPDIR"/usr/share/applications/com.github.xournalpp.xournalpp.des
 echo "Use the icon file $ICON_FILE and the desktop file $DESKTOP_FILE"
 
 # call through linuxdeploy
-./"$LINUXDEPLOY" --appdir="$APPDIR" --plugin gtk --output appimage --icon-file="$ICON_FILE" --desktop-file="$DESKTOP_FILE"
+./"$LINUXDEPLOY" --appdir="$APPDIR" --plugin gtk --plugin gettext --output appimage --icon-file="$ICON_FILE" --desktop-file="$DESKTOP_FILE"

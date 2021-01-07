@@ -118,5 +118,6 @@ void openFileWithFilebrowser(const fs::path& filename);
 [[maybe_unused]] [[nodiscard]] fs::path getCacheFile(const fs::path& relativeFileName = "");
 [[maybe_unused]] [[nodiscard]] fs::path getTmpDirSubfolder(const fs::path& subfolder = "");
 [[maybe_unused]] [[nodiscard]] fs::path getAutosaveFilepath();
+[[maybe_unused]] [[nodiscard]] fs::path getGettextFilepath(const char* localeDir);
 
 }  // namespace Util
