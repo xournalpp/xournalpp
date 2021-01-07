@@ -75,7 +75,7 @@ void initLocalisation() {
 #endif
 
     fs::path localeDir = Util::getGettextFilepath(PACKAGE_LOCALE_DIR);
-    bindtextdomain(GETTEXT_PACKAGE, localeDir.c_str());
+    bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
     textdomain(GETTEXT_PACKAGE);
 
 #ifdef _WIN32
