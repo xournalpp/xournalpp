@@ -23,8 +23,8 @@ public:
     virtual ~XojCairoPdfExport();
 
 public:
-    virtual bool createPdf(fs::path const& file, bool presentationMode);
-    virtual bool createPdf(fs::path const& file, PageRangeVector& range, bool presentationMode);
+    virtual bool createPdf(fs::path const& file, bool progressiveMode);
+    virtual bool createPdf(fs::path const& file, PageRangeVector& range, bool progressiveMode);
     virtual string getLastError();
 
     /**

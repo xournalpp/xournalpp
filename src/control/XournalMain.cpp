@@ -52,7 +52,7 @@ auto migrateSettings() -> MigrateResult;
 void checkForErrorlog();
 void checkForEmergencySave(Control* control);
 
-auto exportPdf(const char* input, const char* output, const char* range, bool noBackground, bool presentationMode)
+auto exportPdf(const char* input, const char* output, const char* range, bool noBackground, bool progressiveMode)
         -> int;
 auto exportImg(const char* input, const char* output, const char* range, int pngDpi, int pngWidth, int pngHeight,
                bool noBackground) -> int;
@@ -302,12 +302,12 @@ auto exportImg(const char* input, const char* output, const char* range, int png
  * @param output Path to the output file
  * @param range Page range to be parsed. If range=nullptr, exports the whole file
  * @param noBackground If true, the exported pdf file has white background
- * @param presentationMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
+ * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
  * rendered one by one to produce as many pages as there are layers.
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-auto exportPdf(const char* input, const char* output, const char* range, bool noBackground, bool presentationMode)
+auto exportPdf(const char* input, const char* output, const char* range, bool noBackground, bool progressiveMode)
         -> int {
     LoadHandler loader;
 
@@ -331,14 +331,14 @@ auto exportPdf(const char* input, const char* output, const char* range, bool no
         // Parse the range
         PageRangeVector exportRange = PageRange::parse(range, doc->getPageCount());
         // Do the export
-        exportSuccess = pdfe->createPdf(path, exportRange, presentationMode);
+        exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
         // Clean up
         for (PageRangeEntry* e: exportRange) {
             delete e;
         }
         exportRange.clear();
     } else {
-        exportSuccess = pdfe->createPdf(path, presentationMode);
+        exportSuccess = pdfe->createPdf(path, progressiveMode);
     }
 
     if (!exportSuccess) {
@@ -377,7 +377,7 @@ struct XournalMainPrivate {
     gboolean exportNoBackground =
             false;  // don't use bool, see
                     // https://stackoverflow.com/questions/21152042/is-glib-command-line-parsing-order-sensitive
-    gboolean presentationMode = false;
+    gboolean progressiveMode = false;
     std::unique_ptr<GladeSearchpath> gladePath;
     std::unique_ptr<Control> control;
     std::unique_ptr<MainWindow> win;
@@ -584,7 +584,7 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
 
     if (app_data->pdfFilename && app_data->optFilename && *app_data->optFilename) {
         return exportPdf(*app_data->optFilename, app_data->pdfFilename, app_data->exportRange,
-                         app_data->exportNoBackground, app_data->presentationMode);
+                         app_data->exportNoBackground, app_data->progressiveMode);
     }
     if (app_data->imgFilename && app_data->optFilename && *app_data->optFilename) {
         return exportImg(*app_data->optFilename, app_data->imgFilename, app_data->exportRange, app_data->exportPngDpi,
@@ -638,10 +638,12 @@ auto XournalMain::run(int argc, char** argv) -> int {
                            "                                 The exported file has transparent or white background,\n"
                            "                                 depending on what its format supports\n"),
                          0},
-            GOptionEntry{"export-presentation", 0, 0, G_OPTION_ARG_NONE, &app_data.presentationMode,
-                         _("Export in presentation mode\n"
-                           "                                 In PDF export, layers are rendered one by one,\n"
-                           "                                 suitable for presentation\n"),
+            GOptionEntry{"export-layers-progressively", 0, 0, G_OPTION_ARG_NONE, &app_data.progressiveMode,
+                         _("Export layers progressively\n"
+                           "                                 In PDF export, Render layers progressively one by one.\n"
+                           "                                 This results in N export pages per page with N layers,\n"
+                           "                                 building up the layer stack progressively.\n"
+                           "                                 The resulting PDF file can be used for a presentation.\n"),
                          0},
             GOptionEntry{"export-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportRange,
                          _("Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"

@@ -75,7 +75,7 @@ auto CustomExportJob::showFilechooser() -> bool {
     doc->lock();
     auto* dlg = new ExportDialog(control->getGladeSearchPath());
     if (filepath.extension() == ".pdf") {
-        dlg->showPresentationMode();
+        dlg->showProgressiveMode();
         format = EXPORT_GRAPHICS_PDF;
     } else if (filepath.extension() == ".svg") {
         dlg->removeQualitySetting();
@@ -94,7 +94,7 @@ auto CustomExportJob::showFilechooser() -> bool {
     }
 
     exportRange = dlg->getRange();
-    presentationMode = dlg->presentationMode();
+    progressiveMode = dlg->progressiveMode();
 
     if (format == EXPORT_GRAPHICS_PNG) {
         pngQualityParameter = dlg->getPngQualityParameter();
@@ -143,7 +143,7 @@ void CustomExportJob::run() {
 
         pdfe->setNoBackgroundExport(filters[this->chosenFilterName]->withoutBackground);
 
-        if (!pdfe->createPdf(this->filepath, exportRange, presentationMode)) {
+        if (!pdfe->createPdf(this->filepath, exportRange, progressiveMode)) {
             this->errorMsg = pdfe->getLastError();
         }
 

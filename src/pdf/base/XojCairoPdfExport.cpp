@@ -142,7 +142,7 @@ void XojCairoPdfExport::exportPageLayers(size_t page) {
     for (const auto& layer: *p->getLayers()) layer->setVisible(initialVisibility[layer]);
 }
 
-auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range, bool presentationMode) -> bool {
+auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range, bool progressiveMode) -> bool {
     if (range.empty()) {
         this->lastError = _("No pages to export!");
         return false;
@@ -168,7 +168,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range, 
                 continue;
             }
 
-            if (presentationMode) {
+            if (progressiveMode) {
                 exportPageLayers(i);
             } else {
                 exportPage(i);
@@ -184,7 +184,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range, 
     return true;
 }
 
-auto XojCairoPdfExport::createPdf(fs::path const& file, bool presentationMode) -> bool {
+auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) -> bool {
     if (doc->getPageCount() < 1) {
         lastError = _("No pages to export!");
         return false;
@@ -201,7 +201,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, bool presentationMode) -
 
     for (int i = 0; i < count; i++) {
 
-        if (presentationMode) {
+        if (progressiveMode) {
             exportPageLayers(i);
         } else {
             exportPage(i);
