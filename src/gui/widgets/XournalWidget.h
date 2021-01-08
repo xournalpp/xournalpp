@@ -20,14 +20,12 @@ G_BEGIN_DECLS
 #define GTK_XOURNAL_CLASS(klass) GTK_CHECK_CLASS_CAST(klass, gtk_xournal_get_type(), GtkXournalClass)
 #define GTK_IS_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, gtk_xournal_get_type())
 
-class AbstractInputDevice;
 class EditSelection;
 class Layout;
 class XojPageView;
 class ScrollHandling;
 class XournalView;
 class InputContext;
-class NewGtkInputDevice;
 
 
 typedef struct _GtkXournal GtkXournal;
@@ -64,11 +62,6 @@ struct _GtkXournal {
      * Input handling
      */
     InputContext* input = nullptr;
-
-    /**
-     * Deprecated input handling
-     */
-    NewGtkInputDevice* depInput = nullptr;
 };
 
 struct _GtkXournalClass {
@@ -78,7 +71,6 @@ struct _GtkXournalClass {
 GType gtk_xournal_get_type();
 
 GtkWidget* gtk_xournal_new(XournalView* view, InputContext* inputContext);
-GtkWidget* gtk_xournal_new_deprecated(XournalView* view, ScrollHandling* scrollHandling);
 
 Layout* gtk_xournal_get_layout(GtkWidget* widget);
 

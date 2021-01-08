@@ -13,7 +13,6 @@
 #include "gui/Shadow.h"
 #include "gui/XournalView.h"
 #include "gui/inputdevices/InputContext.h"
-#include "gui/inputdevices/old/NewGtkInputDevice.h"
 #include "gui/scroll/ScrollHandling.h"
 
 #include "Rectangle.h"
@@ -71,22 +70,6 @@ auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget
     xoj->input = inputContext;
 
     xoj->input->connect(GTK_WIDGET(xoj));
-
-    return GTK_WIDGET(xoj);
-}
-
-auto gtk_xournal_new_deprecated(XournalView* view, ScrollHandling* scrollHandling) -> GtkWidget* {
-    GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), nullptr));
-    xoj->view = view;
-    xoj->scrollHandling = scrollHandling;
-    xoj->x = 0;
-    xoj->y = 0;
-    xoj->layout = new Layout(view, scrollHandling);
-    xoj->selection = nullptr;
-
-    xoj->depInput = new NewGtkInputDevice(GTK_WIDGET(xoj), view, scrollHandling);
-
-    xoj->depInput->initWidget();
 
     return GTK_WIDGET(xoj);
 }
@@ -336,7 +319,4 @@ static void gtk_xournal_destroy(GtkWidget* object) {
 
     delete xournal->input;
     xournal->input = nullptr;
-
-    delete xournal->depInput;
-    xournal->depInput = nullptr;
 }
