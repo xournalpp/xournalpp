@@ -84,14 +84,11 @@ find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
 # libexec
 if (WIN32)
 	set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-mwindows")
+	# Need ImageMagick to generate icons on Windows
+	find_package(ImageMagick REQUIRED COMPONENTS convert)
 else ()
 	find_package(Backtrace REQUIRED)
 	add_includes_ldflags("${Backtrace_LIBRARIES}" "${Backtrace_INCLUDE_DIRS}")
-endif ()
-
-if (WIN32)
-	# Need ImageMagick to generate icons on Windows
-	find_package(ImageMagick REQUIRED COMPONENTS convert)
 endif ()
 
 # GLIB

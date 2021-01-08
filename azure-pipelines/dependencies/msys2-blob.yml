@@ -5,9 +5,6 @@ trigger:
   paths:
     include:
     - windows-setup/build-*.sh
-    exclude:
-    - windows-setup/build-launcher.sh
-    - windows-setup/build-setup.sh
 pr: none
 
 pool:
