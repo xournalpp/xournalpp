@@ -121,6 +121,10 @@ Section "Assign .xoj files" SecFileXoj
 	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".xoj" "Xournal file"
 SectionEnd
 
+Section "Assign .pdf files" SecFilePdf
+	${registerExtension} "$INSTDIR\bin\xournalpp.exe" ".pdf" "PDF file"
+SectionEnd
+
 ;--------------------------------
 ;Descriptions
 
@@ -129,6 +133,7 @@ SectionEnd
 	LangString DESC_SecFileXopp ${LANG_ENGLISH} "Open .xopp files with Xournal++"
 	LangString DESC_SecFileXopt ${LANG_ENGLISH} "Open .xopt files with Xournal++"
 	LangString DESC_SecFileXoj ${LANG_ENGLISH} "Open .xoj files with Xournal++"
+	LangString DESC_SecFilePdf ${LANG_ENGLISH} "Open .pdf files with Xournal++"
 
 	;Assign language strings to sections
 	!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
@@ -136,6 +141,7 @@ SectionEnd
 		!insertmacro MUI_DESCRIPTION_TEXT ${SecFileXopp} $(DESC_SecFileXopp)
 		!insertmacro MUI_DESCRIPTION_TEXT ${SecFileXopt} $(DESC_SecFileXopt)
 		!insertmacro MUI_DESCRIPTION_TEXT ${SecFileXoj} $(DESC_SecFileXoj)
+		!insertmacro MUI_DESCRIPTION_TEXT ${SecFilePdf} $(DESC_SecFilePdf)
 	!insertmacro MUI_FUNCTION_DESCRIPTION_END
  
 ;--------------------------------
