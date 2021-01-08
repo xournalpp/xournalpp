@@ -163,7 +163,6 @@ void Settings::loadDefault() {
 
     this->numIgnoredStylusEvents = 0;
 
-    this->newInputSystemEnabled = true;
     this->inputSystemTPCButton = false;
     this->inputSystemDrawOutsideWindow = true;
 
@@ -466,8 +465,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("numIgnoredStylusEvents")) == 0) {
         this->numIgnoredStylusEvents =
                 std::max<int>(g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10), 0);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("newInputSystemEnabled")) == 0) {
-        this->newInputSystemEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("inputSystemTPCButton")) == 0) {
         this->inputSystemTPCButton = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("inputSystemDrawOutsideWindow")) == 0) {
@@ -883,7 +880,6 @@ void Settings::save() {
 
     WRITE_INT_PROP(numIgnoredStylusEvents);
 
-    WRITE_BOOL_PROP(newInputSystemEnabled);
     WRITE_BOOL_PROP(inputSystemTPCButton);
     WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
@@ -1821,17 +1817,6 @@ void Settings::setIgnoredStylusEvents(int numEvents) {
 }
 
 auto Settings::getIgnoredStylusEvents() const -> int { return this->numIgnoredStylusEvents; }
-
-
-void Settings::setExperimentalInputSystemEnabled(bool systemEnabled) {
-    if (this->newInputSystemEnabled == systemEnabled) {
-        return;
-    }
-    this->newInputSystemEnabled = systemEnabled;
-    save();
-}
-
-auto Settings::getExperimentalInputSystemEnabled() const -> bool { return this->newInputSystemEnabled; }
 
 void Settings::setInputSystemTPCButtonEnabled(bool tpcButtonEnabled) {
     if (this->inputSystemTPCButton == tpcButtonEnabled) {

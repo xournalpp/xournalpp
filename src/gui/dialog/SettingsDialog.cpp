@@ -355,7 +355,6 @@ void SettingsDialog::load() {
     loadCheckbox("cbTouchDrawing", settings->getTouchDrawingEnabled());
     const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
     loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
-    loadCheckbox("cbNewInputSystem", settings->getExperimentalInputSystemEnabled());
     loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
 
@@ -651,7 +650,6 @@ void SettingsDialog::save() {
     settings->setPressureGuessingEnabled(getCheckbox("cbEnablePressureInference"));
     settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
     settings->setTouchDrawingEnabled(getCheckbox("cbTouchDrawing"));
-    settings->setExperimentalInputSystemEnabled(getCheckbox("cbNewInputSystem"));
     settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
     settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));

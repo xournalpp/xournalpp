@@ -22,8 +22,7 @@
     * Added an error message popup which displays when a recording fails to load
       or play (#1573)
 * Input System
-    * The new input system is now enabled by default (#1560). Should errors
-      occur please file a bug report and deactivate it in the settings.
+    * The old input system has been removed.
     * Reimplemented zoom gestures for better compatibility (#1528)
     * Added a `Mouse+Keyboard` device class for handling e.g. wireless USB
       mouse/keyboard receivers (#1769, #1785).

@@ -375,9 +375,6 @@ public:
      */
     int getIgnoredStylusEvents() const;
 
-    bool getExperimentalInputSystemEnabled() const;
-    void setExperimentalInputSystemEnabled(bool systemEnabled);
-
     bool getInputSystemTPCButtonEnabled() const;
     void setInputSystemTPCButtonEnabled(bool tpcButtonEnabled);
 
@@ -922,11 +919,6 @@ private:
      * 0, no event will be ignored. Should not be negative.
      */
     int numIgnoredStylusEvents{};
-
-    /**
-     * Whether the new experimental input system is activated
-     */
-    bool newInputSystemEnabled{};
 
     /**
      * Whether Wacom parameter TabletPCButton is enabled
