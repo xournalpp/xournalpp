@@ -41,6 +41,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_EXPORT_AS_PDF;
     }
 
+    if (value == "ACTION_PUBLISH_AS_PDF") {
+        return ACTION_PUBLISH_AS_PDF;
+    }
+
     if (value == "ACTION_EXPORT_AS") {
         return ACTION_EXPORT_AS;
     }
@@ -618,6 +622,10 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_EXPORT_AS_PDF) {
         return "ACTION_EXPORT_AS_PDF";
+    }
+
+    if (value == ACTION_PUBLISH_AS_PDF) {
+        return "ACTION_PUBLISH_AS_PDF";
     }
 
     if (value == ACTION_EXPORT_AS) {

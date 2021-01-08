@@ -46,7 +46,7 @@ auto BaseExportJob::getFilterName() const -> string {
     return gtk_file_filter_get_name(filter);
 }
 
-auto BaseExportJob::showFilechooser() -> bool {
+auto BaseExportJob::showFilechooser(bool silent) -> bool {
     initDialog();
     addFilterToDialog();
 
@@ -57,29 +57,37 @@ auto BaseExportJob::showFilechooser() -> bool {
     fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
     doc->unlock();
 
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(folder).c_str());
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(name).c_str());
-
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
-
-    while (true) {
-        if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-            gtk_widget_destroy(dialog);
+    if (silent) {
+        // act as if user has pressed ok everytime
+        fs::path suggestedname = folder;
+        suggestedname /= name;
+        Util::clearExtensions(suggestedname);
+        if (!testAndSetFilepath(std::move(suggestedname))) {
             return false;
         }
-        auto file = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
-        Util::clearExtensions(file);
-        // Since we add the extension after the OK button, we have to check manually on existing files
-        if (testAndSetFilepath(std::move(file)) && control->askToReplace(this->filepath)) {
-            break;
+    } else {
+        gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(folder).c_str());
+        gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(name).c_str());
+
+        gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
+
+        while (true) {
+            if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
+                gtk_widget_destroy(dialog);
+                return false;
+            }
+            auto file = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+            Util::clearExtensions(file);
+            // Since we add the extension after the OK button, we have to check manually on existing files
+            if (testAndSetFilepath(std::move(file)) && control->askToReplace(this->filepath)) {
+                break;
+            }
         }
+        gtk_widget_destroy(dialog);
     }
 
     settings->setLastSavePath(this->filepath.parent_path());
-
-    gtk_widget_destroy(dialog);
-
     return true;
 }
 

@@ -61,8 +61,8 @@ auto CustomExportJob::testAndSetFilepath(fs::path file) -> bool {
     return checkOverwriteBackgroundPDF(filepath);
 }
 
-auto CustomExportJob::showFilechooser() -> bool {
-    if (!BaseExportJob::showFilechooser()) {
+auto CustomExportJob::showFilechooser(bool silent) -> bool {
+    if (!BaseExportJob::showFilechooser(silent)) {
         return false;
     }
 

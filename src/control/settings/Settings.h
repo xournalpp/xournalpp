@@ -231,6 +231,11 @@ public:
     bool isAutosaveEnabled() const;
     void setAutosaveEnabled(bool autosave);
 
+    int getPublishTimeout() const;
+    void setPublishTimeout(int secs);
+    bool isPublishEnabled() const;
+    void setPublishEnabled(bool enabled);
+
     bool getAddVerticalSpace() const;
     void setAddVerticalSpace(bool space);
     int getAddVerticalSpaceAmount() const;
@@ -293,6 +298,9 @@ public:
 
     string const& getDefaultSaveName() const;
     void setDefaultSaveName(const string& name);
+
+    string const& getPublishScript() const;
+    void setPublishScript(const string& prg);
 
     ButtonConfig* getButtonConfig(int id);
 
@@ -703,6 +711,16 @@ private:
     bool autosaveEnabled{};
 
     /**
+     * Automatically publish PDF documents each x seconds(!)
+     */
+    int publishTimeout{};
+
+    /**
+     *  Enable automatic publish
+     */
+    bool publishEnabled{};
+
+    /**
      * Allow scroll outside the page display area (horizontal)
      */
     bool addHorizontalSpace{};
@@ -745,6 +763,11 @@ private:
      * Default name if you save a new document
      */
     string defaultSaveName;  // should be string - don't change to path
+
+    /**
+     * Program/script to be executed after publishing PDF
+     */
+    string publishScript;  // should be string - don't change to path
 
     /**
      * The button config

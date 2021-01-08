@@ -32,7 +32,7 @@ public:
     virtual void afterRun();
 
 public:
-    virtual bool showFilechooser();
+    virtual bool showFilechooser(bool silent);
     string getFilterName() const;
 
 protected:
