@@ -18,6 +18,7 @@
 #include "undo/FillUndoAction.h"
 #include "undo/FontUndoAction.h"
 #include "undo/InsertUndoAction.h"
+#include "undo/LineStyleUndoAction.h"
 #include "undo/MoveUndoAction.h"
 #include "undo/RotateUndoAction.h"
 #include "undo/ScaleUndoAction.h"
@@ -230,6 +231,37 @@ auto EditSelectionContents::setFont(XojFont& font) -> UndoAction* {
     }
     delete undo;
     return nullptr;
+}
+
+/**
+ * Set the line style of all strokes, return an undo action
+ * (Or nullptr if nothing done)
+ */
+auto EditSelectionContents::setLineStyle(LineStyle style) -> UndoActionPtr {
+    auto undo = std::make_unique<LineStyleUndoAction>(this->sourcePage, this->sourceLayer);
+
+    bool found = false;
+
+    for (Element* e: this->selected) {
+        if (e->getType() == ELEMENT_STROKE) {
+            auto s = static_cast<Stroke*>(e);
+            auto lastLineStyle = s->getLineStyle();
+            s->setLineStyle(style);
+            undo->addStroke(s, lastLineStyle, s->getLineStyle());
+
+            found = true;
+        }
+    }
+
+    if (found) {
+        this->deleteViewBuffer();
+        this->sourceView->getXournal()->repaintSelection();
+
+        return undo;
+    }
+
+
+    return {};
 }
 
 /**

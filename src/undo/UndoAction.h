@@ -42,3 +42,5 @@ protected:
     PageRef page;
     bool undone = false;
 };
+
+using UndoActionPtr = std::unique_ptr<UndoAction>;

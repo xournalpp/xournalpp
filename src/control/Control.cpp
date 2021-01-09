@@ -2748,12 +2748,8 @@ void Control::setLineStyle(const string& style) {
         sel = this->win->getXournal()->getSelection();
     }
 
-    // TODO(fabian): allow to change selection
     if (sel) {
-        //		UndoAction* undo = sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),
-        //										toolHandler->getToolThickness(TOOL_HIGHLIGHTER),
-        //										toolHandler->getToolThickness(TOOL_ERASER));
-        //		undoRedo->addUndoAction(undo);
+        undoRedo->addUndoAction(sel->setLineStyle(stl));
     }
 
     this->toolHandler->setLineStyle(stl);

@@ -20,6 +20,7 @@
 #include "model/Font.h"
 #include "model/PageRef.h"
 #include "model/Snapping.h"
+#include "undo/UndoAction.h"
 #include "view/ElementContainer.h"
 
 #include "CursorSelectionType.h"
@@ -31,7 +32,6 @@ class Layer;
 class XojPageView;
 class Selection;
 class Element;
-class UndoAction;
 class EditSelectionContents;
 class DeleteUndoAction;
 
@@ -121,6 +121,12 @@ public:
      */
     UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
                         const double* thicknessEraser);
+
+    /**
+     * Set the line style of all strokes, return an undo action
+     * (Or nullptr if nothing done)
+     */
+    UndoActionPtr setLineStyle(LineStyle style);
 
     /**
      * Set the color of all elements, return an undo action
