@@ -17,6 +17,7 @@
 #include "undo/ColorUndoAction.h"
 #include "undo/FontUndoAction.h"
 #include "undo/InsertUndoAction.h"
+#include "undo/LineStyleUndoAction.h"
 #include "undo/SizeUndoAction.h"
 #include "undo/UndoRedoHandler.h"
 
@@ -257,6 +258,12 @@ auto EditSelection::setSize(ToolSize size, const double* thicknessPen, const dou
 auto EditSelection::setFill(int alphaPen, int alphaHighligther) -> UndoAction* {
     return this->contents->setFill(alphaPen, alphaHighligther);
 }
+
+/**
+ * Set the line style of all elements, return an undo action
+ * (Or nullptr if nothing done)
+ */
+auto EditSelection::setLineStyle(LineStyle style) -> UndoActionPtr { return this->contents->setLineStyle(style); }
 
 /**
  * Set the color of all elements, return an undo action

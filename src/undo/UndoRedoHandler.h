@@ -22,8 +22,6 @@
 
 class Control;
 
-using UndoActionPtr = std::unique_ptr<UndoAction>;
-
 class UndoRedoListener {
 public:
     virtual void undoRedoChanged() = 0;
