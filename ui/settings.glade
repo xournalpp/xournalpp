@@ -2299,7 +2299,6 @@ This also enables touch drawing.&lt;/i&gt;</property>
                                             <property name="label" translatable="yes">&lt;i&gt;Use the touchscreen like a multi-touch-aware pen (requires new input system).&lt;/i&gt;</property>
                                             <property name="use-markup">True</property>
                                             <property name="wrap">True</property>
-                                            <property name="width-chars">85</property>
                                             <property name="max-width-chars">85</property>
                                             <property name="xalign">0</property>
                                           </object>
@@ -4385,7 +4384,6 @@ It must be short in time and length and we can't have ignored another stroke rec
 &lt;b&gt;Note:&lt;/b&gt; This should not affect print quality.&lt;/i&gt;</property>
                                             <property name="use-markup">True</property>
                                             <property name="wrap">True</property>
-                                            <property name="width-chars">85</property>
                                             <property name="max-width-chars">85</property>
                                             <property name="xalign">0</property>
                                           </object>
