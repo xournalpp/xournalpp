@@ -28,6 +28,7 @@ public:
     bool isConfirmed() const;
     PageRangeVector getRange();
     bool progressiveMode();
+    ExportBackgroundType getBackgroundType();
 
     /**
      * @brief Reads the quality parameter from the dialog

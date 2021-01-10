@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.1 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.16"/>
   <object class="GtkAdjustment" id="adjustmentDpi">
@@ -30,6 +30,23 @@
       </row>
       <row>
         <col id="0" translatable="yes">Height</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="listBackgroundType">
+    <columns>
+      <!-- column-name Text -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">None</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">No ruling</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">All</col>
       </row>
     </data>
   </object>
@@ -114,7 +131,7 @@ Set export parameters</property>
               </packing>
             </child>
             <child>
-              <!-- n-columns=3 n-rows=5 -->
+              <!-- n-columns=3 n-rows=6 -->
               <object class="GtkGrid" id="grid1">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -149,7 +166,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
+                    <property name="top-attach">2</property>
                   </packing>
                 </child>
                 <child>
@@ -165,7 +182,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
-                    <property name="top-attach">1</property>
+                    <property name="top-attach">2</property>
                   </packing>
                 </child>
                 <child>
@@ -181,7 +198,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
-                    <property name="top-attach">2</property>
+                    <property name="top-attach">3</property>
                   </packing>
                 </child>
                 <child>
@@ -197,7 +214,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
-                    <property name="top-attach">3</property>
+                    <property name="top-attach">4</property>
                   </packing>
                 </child>
                 <child>
@@ -213,7 +230,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">3</property>
+                    <property name="top-attach">4</property>
                   </packing>
                 </child>
                 <child>
@@ -226,7 +243,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">4</property>
+                    <property name="top-attach">5</property>
                   </packing>
                 </child>
                 <child>
@@ -242,7 +259,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">1</property>
+                    <property name="top-attach">2</property>
                   </packing>
                 </child>
                 <child>
@@ -258,7 +275,7 @@ Set export parameters</property>
                   </object>
                   <packing>
                     <property name="left-attach">2</property>
-                    <property name="top-attach">2</property>
+                    <property name="top-attach">3</property>
                   </packing>
                 </child>
                 <child>
@@ -328,24 +345,62 @@ Set export parameters</property>
                     <property name="top-attach">0</property>
                   </packing>
                 </child>
-
-		<child>
+                <child>
+                  <object class="GtkLabel" id="label2">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="tooltip-text" translatable="yes" comments="Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.">Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All).</property>
+                    <property name="label" translatable="yes">Background</property>
+                    <property name="ellipsize">middle</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkCheckButton" id="cbProgressiveMode">
                     <property name="label" translatable="yes">Export layers progressively</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="tooltip_text" translatable="yes">If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation.</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes">If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation.</property>
+                    <property name="draw-indicator">True</property>
                   </object>
                   <packing>
-		    <!-- Same place as "Image quality"; only one of them is shown -->
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">0</property>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
                     <property name="width">3</property>
                   </packing>
                 </child>
-
+                <child>
+                  <object class="GtkComboBox" id="cbBackgroundType">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="model">listBackgroundType</property>
+                    <property name="active">2</property>
+                    <property name="id-column">0</property>
+                    <property name="active-id">0</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cbBackgroundTypeCell"/>
+                      <attributes>
+                        <attribute name="markup">0</attribute>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
                 <child>
                   <placeholder/>
                 </child>
