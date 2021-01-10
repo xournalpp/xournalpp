@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-09 19:09+0000\n"
+"POT-Creation-Date: 2021-01-10 17:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,6 +159,10 @@ msgstr ""
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
+msgstr ""
+
+#: ../src/undo/LineStyleUndoAction.cpp:71
+msgid "Change line style"
 msgstr ""
 
 #: ../src/undo/FillUndoAction.cpp:79
