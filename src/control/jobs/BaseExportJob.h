@@ -21,7 +21,8 @@
 
 /**
  *  @brief List of types for the export of background components.
- *  Keep the order so that one can check for intermediate types using comparsion.
+ *  The order must agree with the corresponding listBackgroundType in ui/exportSettings.glade.
+ *  It is constructed so that one can check for intermediate types using comparison.
  */
 enum ExportBackgroundType { EXPORT_BACKGROUND_NONE, EXPORT_BACKGROUND_UNRULED, EXPORT_BACKGROUND_ALL };
 
@@ -62,8 +63,7 @@ protected:
     class ExportType {
     public:
         string extension;
-        ExportBackgroundType exportBackground;
 
-        ExportType(string ext, ExportBackgroundType exportBg): extension(ext), exportBackground(exportBg) {}
+        ExportType(string ext): extension(ext) {}
     };
 };

@@ -68,6 +68,11 @@ private:
     bool exportTypeXoj = false;
 
     /**
+     * Background export type
+     */
+    ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
+
+    /**
      * Export all Layers progressively
      */
     bool progressiveMode = false;

@@ -80,6 +80,10 @@ auto ExportDialog::progressiveMode() -> bool {
     return gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbProgressiveMode")));
 }
 
+auto ExportDialog::getBackgroundType() -> ExportBackgroundType {
+    return (ExportBackgroundType)gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbBackgroundType")));
+}
+
 auto ExportDialog::getRange() -> PageRangeVector {
     GtkWidget* rdRangeCurrent = get("rdRangeCurrent");
     GtkWidget* rdRangePages = get("rdRangePages");
