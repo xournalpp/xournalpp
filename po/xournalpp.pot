@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-10 18:02+0000\n"
+"POT-Creation-Date: 2021-01-11 12:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/control/XournalMain.cpp:472
+#: ../src/control/XournalMain.cpp:471
 msgid ""
 "\n"
 "\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:453
+#: ../src/control/XournalMain.cpp:452
 msgid ""
 "\n"
 "Will now attempt to run without this file."
@@ -44,7 +44,7 @@ msgid ""
 "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:467
+#: ../src/control/XournalMain.cpp:466
 msgid ""
 "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
@@ -58,7 +58,7 @@ msgstr ""
 msgid "Add/Edit Tex"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:668
+#: ../src/control/XournalMain.cpp:677
 msgid "Advanced export options"
 msgstr ""
 
@@ -349,7 +349,7 @@ msgstr ""
 msgid "Discard"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:669
+#: ../src/control/XournalMain.cpp:678
 msgid "Display advanced export options"
 msgstr ""
 
@@ -485,7 +485,7 @@ msgstr ""
 msgid "Error save image #1"
 msgstr ""
 
-#: ../src/control/jobs/ImageExport.cpp:158
+#: ../src/control/jobs/ImageExport.cpp:159
 msgid "Error save image #2"
 msgstr ""
 
@@ -517,11 +517,11 @@ msgid ""
 "Logfile: {1}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:630
+#: ../src/control/XournalMain.cpp:635
 msgid "Export FILE as PDF"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:632
+#: ../src/control/XournalMain.cpp:637
 msgid ""
 "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension "
@@ -533,7 +533,7 @@ msgstr ""
 msgid "Export PDF"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:642
+#: ../src/control/XournalMain.cpp:651
 msgid ""
 "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively "
@@ -545,12 +545,18 @@ msgid ""
 "presentation.\n"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:637
+#: ../src/control/XournalMain.cpp:642
 msgid ""
 "Export without background\n"
 "                                 The exported file has transparent or white "
 "background,\n"
 "                                 depending on what its format supports\n"
+msgstr ""
+
+#: ../src/control/XournalMain.cpp:647
+msgid ""
+"Export without ruling\n"
+"                                 The exported file has no paper ruling\n"
 msgstr ""
 
 #: ../src/control/latex/LatexGenerator.cpp:60
@@ -603,7 +609,7 @@ msgstr ""
 msgid "Forward"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:621
+#: ../src/control/XournalMain.cpp:626
 msgid "Get version of xournalpp"
 msgstr ""
 
@@ -713,7 +719,7 @@ msgstr ""
 msgid "Isometric Graph"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:617
+#: ../src/control/XournalMain.cpp:622
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
@@ -768,7 +774,7 @@ msgstr ""
 msgid "Medium"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:449
+#: ../src/control/XournalMain.cpp:448
 msgid ""
 "Missing the needed UI file:\n"
 "{1}\n"
@@ -812,8 +818,8 @@ msgstr ""
 msgid "No device"
 msgstr ""
 
-#: ../src/pdf/base/XojCairoPdfExport.cpp:147
-#: ../src/pdf/base/XojCairoPdfExport.cpp:189
+#: ../src/pdf/base/XojCairoPdfExport.cpp:148
+#: ../src/pdf/base/XojCairoPdfExport.cpp:190
 msgid "No pages to export!"
 msgstr ""
 
@@ -830,7 +836,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:649
+#: ../src/control/XournalMain.cpp:658
 msgid ""
 "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--"
@@ -887,15 +893,7 @@ msgid "PDF files"
 msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
-msgid "PDF with plain background"
-msgstr ""
-
-#: ../src/control/jobs/CustomExportJob.cpp:23
 msgid "PNG graphics"
-msgstr ""
-
-#: ../src/control/jobs/CustomExportJob.cpp:24
-msgid "PNG with transparent background"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:42
@@ -1032,12 +1030,8 @@ msgstr ""
 msgid "Ruler"
 msgstr ""
 
-#: ../src/control/jobs/CustomExportJob.cpp:25
+#: ../src/control/jobs/CustomExportJob.cpp:23
 msgid "SVG graphics"
-msgstr ""
-
-#: ../src/control/jobs/CustomExportJob.cpp:26
-msgid "SVG with transparent background"
 msgstr ""
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
@@ -1057,7 +1051,7 @@ msgstr ""
 msgid "Save File"
 msgstr ""
 
-#: ../src/control/jobs/CustomExportJob.cpp:133
+#: ../src/control/jobs/CustomExportJob.cpp:130
 #: ../src/control/jobs/SaveJob.cpp:111
 msgid "Save file error: {1}"
 msgstr ""
@@ -1127,13 +1121,13 @@ msgstr ""
 msgid "Separator"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:653
+#: ../src/control/XournalMain.cpp:662
 msgid ""
 "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:663
+#: ../src/control/XournalMain.cpp:672
 msgid ""
 "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
@@ -1141,7 +1135,7 @@ msgid ""
 "width is used"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:657
+#: ../src/control/XournalMain.cpp:666
 msgid ""
 "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
@@ -1164,13 +1158,13 @@ msgstr ""
 msgid "Show only not used pages ({1} unused pages)"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:538
+#: ../src/control/XournalMain.cpp:537
 msgid ""
 "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:553
+#: ../src/control/XournalMain.cpp:552
 msgid ""
 "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
@@ -1447,7 +1441,7 @@ msgstr ""
 msgid "XML Parser error: {1}"
 msgstr ""
 
-#: ../src/control/jobs/CustomExportJob.cpp:27
+#: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "Xournal (Compatibility)"
 msgstr ""
 
@@ -1775,7 +1769,7 @@ msgstr ""
 msgid "<b>Default</b>"
 msgstr ""
 
-#: ../ui/exportSettings.glade:105
+#: ../ui/exportSettings.glade:122
 msgid ""
 "<b>Document export settings</b>\n"
 "Set export parameters"
@@ -1828,7 +1822,7 @@ msgid ""
 "you release the button the previously selected tool will be selected.</i>"
 msgstr ""
 
-#: ../ui/exportSettings.glade:223
+#: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
 msgstr ""
 
@@ -1987,7 +1981,11 @@ msgid ""
 "as before the resizing operation. "
 msgstr ""
 
-#: ../ui/exportSettings.glade:157
+#: ../ui/exportSettings.glade:49
+msgid "All"
+msgstr ""
+
+#: ../ui/exportSettings.glade:174
 msgid "All pages"
 msgstr ""
 
@@ -2117,7 +2115,7 @@ msgid ""
 "above."
 msgstr ""
 
-#: ../ui/exportSettings.glade:173
+#: ../ui/exportSettings.glade:190
 msgid "Current page"
 msgstr ""
 
@@ -2325,7 +2323,7 @@ msgstr ""
 msgid "Experimental Input System"
 msgstr ""
 
-#: ../ui/exportSettings.glade:39
+#: ../ui/exportSettings.glade:56
 msgid "Export"
 msgstr ""
 
@@ -2333,8 +2331,15 @@ msgstr ""
 msgid "Export as..."
 msgstr ""
 
-#: ../ui/exportSettings.glade:334
+#: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
+msgstr ""
+
+#. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
+#: ../ui/exportSettings.glade:352
+msgid ""
+"Export the document without any background (None) or with PDF and image "
+"backgrounds only (No ruling) or with all background types (All)."
 msgstr ""
 
 #: ../ui/main.glade:1615 ../ui/main.glade:1820
@@ -2464,7 +2469,7 @@ msgid ""
 "LaTeX commands are available before running the LaTeX tool."
 msgstr ""
 
-#: ../ui/exportSettings.glade:338
+#: ../ui/exportSettings.glade:371
 msgid ""
 "If enabled, the layers of each page will be added one by one. The resulting "
 "PDF file can be used for a presentation."
@@ -2478,7 +2483,7 @@ msgstr ""
 msgid "Ignore the first"
 msgstr ""
 
-#: ../ui/exportSettings.glade:128
+#: ../ui/exportSettings.glade:145
 msgid "Image quality"
 msgstr ""
 
@@ -2618,6 +2623,14 @@ msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr ""
 
+#: ../ui/exportSettings.glade:46
+msgid "No ruling"
+msgstr ""
+
+#: ../ui/exportSettings.glade:43
+msgid "None"
+msgstr ""
+
 #: ../ui/settings.glade:3767
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr ""
@@ -2642,7 +2655,7 @@ msgstr ""
 msgid "P_revious annotated Page"
 msgstr ""
 
-#: ../ui/exportSettings.glade:189
+#: ../ui/exportSettings.glade:206
 msgid "Pages:"
 msgstr ""
 
@@ -2724,7 +2737,7 @@ msgstr ""
 msgid "Radius"
 msgstr ""
 
-#: ../ui/exportSettings.glade:143
+#: ../ui/exportSettings.glade:160
 msgid "Range"
 msgstr ""
 
@@ -3310,7 +3323,7 @@ msgstr ""
 msgid "change"
 msgstr ""
 
-#: ../ui/exportSettings.glade:293
+#: ../ui/exportSettings.glade:310
 msgid "dpi"
 msgstr ""
 
