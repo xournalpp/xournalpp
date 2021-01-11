@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 12:21+0000\n"
+"POT-Creation-Date: 2021-01-11 16:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgid ""
 "  Not in {2}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Add/Edit Tex"
 msgstr ""
 
@@ -128,13 +128,11 @@ msgid "Autosaving to {1}"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Back"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:19
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:191
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:231
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:192 ../src/model/XojPage.cpp:174
 msgid "Background"
 msgstr ""
 
@@ -155,6 +153,10 @@ msgstr ""
 
 #: ../src/undo/ColorUndoAction.cpp:85
 msgid "Change color"
+msgstr ""
+
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:394
+msgid "Change current layer name"
 msgstr ""
 
 #: ../src/undo/FontUndoAction.cpp:105
@@ -213,25 +215,25 @@ msgstr ""
 msgid "Could not load pagetemplates.ini file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:761
+#: ../src/control/xojfile/LoadHandler.cpp:777
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:770
+#: ../src/control/xojfile/LoadHandler.cpp:786
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:742
-#: ../src/control/xojfile/LoadHandler.cpp:993
-#: ../src/control/xojfile/LoadHandler.cpp:1011
+#: ../src/control/xojfile/LoadHandler.cpp:758
+#: ../src/control/xojfile/LoadHandler.cpp:1009
+#: ../src/control/xojfile/LoadHandler.cpp:1027
 msgid ""
 "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:733
 #: ../src/control/xojfile/LoadHandler.cpp:749
-#: ../src/control/xojfile/LoadHandler.cpp:984
+#: ../src/control/xojfile/LoadHandler.cpp:765
 #: ../src/control/xojfile/LoadHandler.cpp:1000
+#: ../src/control/xojfile/LoadHandler.cpp:1016
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
@@ -251,8 +253,8 @@ msgid ""
 "No Toolbars will be available"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:346
-#: ../src/control/xojfile/LoadHandler.cpp:370
+#: ../src/control/xojfile/LoadHandler.cpp:351
+#: ../src/control/xojfile/LoadHandler.cpp:375
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr ""
 
@@ -288,11 +290,11 @@ msgid ""
 "Something went wrong… Please write a bug report…"
 msgstr ""
 
-#: ../src/control/xojfile/SaveHandler.cpp:237
+#: ../src/control/xojfile/SaveHandler.cpp:243
 msgid "Could not write background \"{1}\", {2}"
 msgstr ""
 
-#: ../src/control/xojfile/SaveHandler.cpp:333
+#: ../src/control/xojfile/SaveHandler.cpp:345
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr ""
 
@@ -320,7 +322,7 @@ msgstr ""
 msgid "Cut"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Default Tool"
 msgstr ""
 
@@ -387,13 +389,13 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:124
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:30
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Draw Arrow"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:122
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Draw Circle"
 msgstr ""
 
@@ -407,19 +409,19 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:28
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:91
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:94
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Draw Rectangle"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:130
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Spline"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:126
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Draw coordinate system"
 msgstr ""
 
@@ -472,12 +474,12 @@ msgstr ""
 msgid "Error opening file: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:428
-#: ../src/control/xojfile/LoadHandler.cpp:448
+#: ../src/control/xojfile/LoadHandler.cpp:433
+#: ../src/control/xojfile/LoadHandler.cpp:453
 msgid "Error reading PDF: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:494
+#: ../src/control/xojfile/LoadHandler.cpp:510
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
@@ -583,7 +585,7 @@ msgid ""
 "URL: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:462
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 msgid "Fill"
 msgstr ""
 
@@ -593,7 +595,7 @@ msgid ""
 "less than the minimum, use the minimum pressure."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:476
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Fine"
 msgstr ""
 
@@ -605,7 +607,7 @@ msgstr ""
 msgid "Font"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Forward"
 msgstr ""
 
@@ -665,7 +667,7 @@ msgid "Grid Snapping"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Hand"
 msgstr ""
 
@@ -674,12 +676,12 @@ msgid "Hide all"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Highlighter"
 msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Image"
 msgstr ""
 
@@ -727,7 +729,7 @@ msgstr ""
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:246
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
 msgstr ""
 
@@ -735,13 +737,11 @@ msgstr ""
 msgid "Layer Preview"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:236
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:234
 msgid "Layer selection"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayerEntry.cpp:21
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:182
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:229
+#: ../src/control/layer/LayerController.cpp:329
 msgid "Layer {1}"
 msgstr ""
 
@@ -770,7 +770,7 @@ msgstr ""
 msgid "Manage Toolbars"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 msgid "Medium"
 msgstr ""
 
@@ -929,7 +929,7 @@ msgstr ""
 msgid "Paste"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Pause / Play"
 msgstr ""
 
@@ -942,7 +942,7 @@ msgstr ""
 msgid "Plain"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Play Object"
@@ -964,7 +964,7 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Record Audio / Stop Recording"
 msgstr ""
 
@@ -998,11 +998,15 @@ msgstr ""
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr ""
 
+#: ../src/undo/LayerRenameUndoAction.cpp:10
+msgid "Rename layer"
+msgstr ""
+
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:1030
+#: ../src/control/xojfile/LoadHandler.cpp:1046
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -1026,7 +1030,7 @@ msgstr ""
 msgid "Ruled with vertical line"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Ruler"
 msgstr ""
 
@@ -1064,17 +1068,17 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Select Font"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:66
 msgid "Select Object"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:56
@@ -1082,7 +1086,7 @@ msgstr ""
 msgid "Select Rectangle"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:61
 msgid "Select Region"
@@ -1142,7 +1146,7 @@ msgid ""
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Shape Recognizer"
 msgstr ""
 
@@ -1174,7 +1178,7 @@ msgstr ""
 msgid "Staves"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Stop"
 msgstr ""
 
@@ -1197,7 +1201,7 @@ msgid "System Default"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:402
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:403
 msgid "Text"
 msgstr ""
 
@@ -1299,7 +1303,7 @@ msgstr ""
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Thick"
 msgstr ""
 
@@ -1361,7 +1365,7 @@ msgstr ""
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:476
+#: ../src/control/xojfile/LoadHandler.cpp:486
 msgid "Unknown background type: {1}"
 msgstr ""
 
@@ -1369,7 +1373,7 @@ msgstr ""
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:435
+#: ../src/control/xojfile/LoadHandler.cpp:440
 msgid "Unknown domain type: {1}"
 msgstr ""
 
@@ -1377,11 +1381,11 @@ msgstr ""
 msgid "Unknown parser error"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:382
+#: ../src/control/xojfile/LoadHandler.cpp:387
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:567
+#: ../src/control/xojfile/LoadHandler.cpp:583
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
@@ -1393,7 +1397,7 @@ msgstr ""
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Vertical Space"
 msgstr ""
 
@@ -1401,11 +1405,11 @@ msgstr ""
 msgid "Vertical space"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:475
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 msgid "Very Fine"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:480
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 msgid "Very Thick"
 msgstr ""
 
@@ -1429,11 +1433,11 @@ msgstr ""
 msgid "Write text"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:884
+#: ../src/control/xojfile/LoadHandler.cpp:900
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:894
+#: ../src/control/xojfile/LoadHandler.cpp:910
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr ""
 
@@ -1624,7 +1628,7 @@ msgstr ""
 msgid "whiteout"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:893
+#: ../src/control/xojfile/LoadHandler.cpp:909
 msgid "xoj-File: {1}"
 msgstr ""
 
@@ -2159,7 +2163,7 @@ msgstr ""
 msgid "Delete stroke"
 msgstr ""
 
-#: ../ui/main.glade:2160
+#: ../ui/main.glade:2171
 msgid "Delete this page"
 msgstr ""
 
@@ -2223,11 +2227,11 @@ msgstr ""
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr ""
 
-#: ../ui/main.glade:1376
+#: ../ui/main.glade:1387
 msgid "Draw Coordinate System"
 msgstr ""
 
-#: ../ui/main.glade:1387
+#: ../ui/main.glade:1398
 msgid "Draw _Line"
 msgstr ""
 
@@ -2243,11 +2247,11 @@ msgstr ""
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/main.glade:2564
+#: ../ui/main.glade:2575
 msgid "Duplicate"
 msgstr ""
 
-#: ../ui/main.glade:2601
+#: ../ui/main.glade:2612
 msgid "Edit (not implemented yet)"
 msgstr ""
 
@@ -2311,7 +2315,7 @@ msgstr ""
 msgid "Enter / edit LaTeX Text"
 msgstr ""
 
-#: ../ui/main.glade:1639
+#: ../ui/main.glade:1650
 msgid "Eraser Optio_ns"
 msgstr ""
 
@@ -2342,19 +2346,19 @@ msgid ""
 "backgrounds only (No ruling) or with all background types (All)."
 msgstr ""
 
-#: ../ui/main.glade:1615 ../ui/main.glade:1820
+#: ../ui/main.glade:1626 ../ui/main.glade:1831
 msgid "Fi_ll"
 msgstr ""
 
-#: ../ui/main.glade:1625 ../ui/main.glade:1830
+#: ../ui/main.glade:1636 ../ui/main.glade:1841
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2358
+#: ../ui/main.glade:2369
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:2336
+#: ../ui/main.glade:2347
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -2402,7 +2406,7 @@ msgstr ""
 msgid "Grid snapping tolerance"
 msgstr ""
 
-#: ../ui/main.glade:1475
+#: ../ui/main.glade:1486
 msgid "H_and Tool"
 msgstr ""
 
@@ -2438,7 +2442,7 @@ msgstr ""
 msgid "Highlight cursor position"
 msgstr ""
 
-#: ../ui/main.glade:1748
+#: ../ui/main.glade:1759
 msgid "Highlighter Opti_ons"
 msgstr ""
 
@@ -2503,15 +2507,15 @@ msgstr ""
 msgid "Insert Latex"
 msgstr ""
 
-#: ../ui/main.glade:2556
+#: ../ui/main.glade:2567
 msgid "Insert Page After"
 msgstr ""
 
-#: ../ui/main.glade:2548
+#: ../ui/main.glade:2559
 msgid "Insert Page Before"
 msgstr ""
 
-#: ../ui/main.glade:2139
+#: ../ui/main.glade:2150
 msgid "Insert a copy of the current page below"
 msgstr ""
 
@@ -2590,11 +2594,11 @@ msgstr ""
 msgid "Mouse+Keyboard Combo"
 msgstr ""
 
-#: ../ui/main.glade:2586
+#: ../ui/main.glade:2597
 msgid "Move Down"
 msgstr ""
 
-#: ../ui/main.glade:2578
+#: ../ui/main.glade:2589
 msgid "Move Up"
 msgstr ""
 
@@ -2667,15 +2671,15 @@ msgstr ""
 msgid "Paper Format"
 msgstr ""
 
-#: ../ui/main.glade:1222
+#: ../ui/main.glade:1233
 msgid "Paper _Color"
 msgstr ""
 
-#: ../ui/main.glade:1212
+#: ../ui/main.glade:1223
 msgid "Paper _Format"
 msgstr ""
 
-#: ../ui/main.glade:1232
+#: ../ui/main.glade:1243
 msgid "Paper b_ackground"
 msgstr ""
 
@@ -2685,11 +2689,11 @@ msgid ""
 "by Denis Auroux"
 msgstr ""
 
-#: ../ui/main.glade:1866
+#: ../ui/main.glade:1877
 msgid "Pause"
 msgstr ""
 
-#: ../ui/main.glade:1493
+#: ../ui/main.glade:1504
 msgid "Pen _Options"
 msgstr ""
 
@@ -2701,7 +2705,7 @@ msgstr ""
 msgid "Plugin Manager"
 msgstr ""
 
-#: ../ui/main.glade:1931
+#: ../ui/main.glade:1942
 msgid "Plugin _Manager"
 msgstr ""
 
@@ -2749,12 +2753,20 @@ msgstr ""
 msgid "Recent _Documents"
 msgstr ""
 
-#: ../ui/main.glade:1856
+#: ../ui/main.glade:1867
 msgid "Record / Stop"
 msgstr ""
 
 #: ../ui/settings.glade:5007
 msgid "Recording Quality"
+msgstr ""
+
+#: ../ui/main.glade:1206
+msgid "Rename Layer"
+msgstr ""
+
+#: ../ui/renameLayerDialog.glade:8
+msgid "Rename selected layer"
 msgstr ""
 
 #: ../ui/settings.glade:3998
@@ -2775,6 +2787,10 @@ msgstr ""
 
 #: ../ui/settings.glade:4930
 msgid "Sample Rate"
+msgstr ""
+
+#: ../ui/renameLayerDialog.glade:65
+msgid "Sample layer name"
 msgstr ""
 
 #: ../ui/settings.glade:3052
@@ -2899,11 +2915,11 @@ msgstr ""
 msgid "Successive (ms)"
 msgstr ""
 
-#: ../ui/main.glade:2096
+#: ../ui/main.glade:2107
 msgid "Swap the current page with the one above"
 msgstr ""
 
-#: ../ui/main.glade:2118
+#: ../ui/main.glade:2129
 msgid "Swap the current page with the one below"
 msgstr ""
 
@@ -2933,7 +2949,7 @@ msgid ""
 "command on the global template file with a test formula."
 msgstr ""
 
-#: ../ui/main.glade:1844
+#: ../ui/main.glade:1855
 msgid "Text Font..."
 msgstr ""
 
@@ -3155,7 +3171,7 @@ msgstr ""
 msgid "_Customize"
 msgstr ""
 
-#: ../ui/main.glade:1316
+#: ../ui/main.glade:1327
 msgid "_Default Tools"
 msgstr ""
 
@@ -3167,7 +3183,7 @@ msgstr ""
 msgid "_Edit"
 msgstr ""
 
-#: ../ui/main.glade:1268
+#: ../ui/main.glade:1279
 msgid "_Eraser"
 msgstr ""
 
@@ -3187,11 +3203,11 @@ msgstr ""
 msgid "_Goto Page"
 msgstr ""
 
-#: ../ui/main.glade:1945
+#: ../ui/main.glade:1956
 msgid "_Help"
 msgstr ""
 
-#: ../ui/main.glade:1280
+#: ../ui/main.glade:1291
 msgid "_Highlighter"
 msgstr ""
 
@@ -3199,7 +3215,7 @@ msgstr ""
 msgid "_Horizontal"
 msgstr ""
 
-#: ../ui/main.glade:1304
+#: ../ui/main.glade:1315
 msgid "_Image"
 msgstr ""
 
@@ -3235,11 +3251,11 @@ msgstr ""
 msgid "_Pair Pages"
 msgstr ""
 
-#: ../ui/main.glade:1256
+#: ../ui/main.glade:1267
 msgid "_Pen"
 msgstr ""
 
-#: ../ui/main.glade:1920
+#: ../ui/main.glade:1931
 msgid "_Plugin"
 msgstr ""
 
@@ -3259,15 +3275,15 @@ msgstr ""
 msgid "_Right To Left"
 msgstr ""
 
-#: ../ui/main.glade:1332
+#: ../ui/main.glade:1343
 msgid "_Shape Recognizer"
 msgstr ""
 
-#: ../ui/main.glade:1292
+#: ../ui/main.glade:1303
 msgid "_Text"
 msgstr ""
 
-#: ../ui/main.glade:1245
+#: ../ui/main.glade:1256
 msgid "_Tools"
 msgstr ""
 
@@ -3283,7 +3299,7 @@ msgstr ""
 msgid "_Vertical"
 msgstr ""
 
-#: ../ui/main.glade:1451
+#: ../ui/main.glade:1462
 msgid "_Vertical Space"
 msgstr ""
 
@@ -3291,31 +3307,31 @@ msgstr ""
 msgid "_View"
 msgstr ""
 
-#: ../ui/main.glade:1733
+#: ../ui/main.glade:1744
 msgid "_delete strokes"
 msgstr ""
 
-#: ../ui/main.glade:1515 ../ui/main.glade:1661 ../ui/main.glade:1770
+#: ../ui/main.glade:1526 ../ui/main.glade:1672 ../ui/main.glade:1781
 msgid "_fine"
 msgstr ""
 
-#: ../ui/main.glade:1526 ../ui/main.glade:1672 ../ui/main.glade:1781
+#: ../ui/main.glade:1537 ../ui/main.glade:1683 ../ui/main.glade:1792
 msgid "_medium"
 msgstr ""
 
-#: ../ui/main.glade:1711
+#: ../ui/main.glade:1722
 msgid "_standard"
 msgstr ""
 
-#: ../ui/main.glade:1537 ../ui/main.glade:1683 ../ui/main.glade:1792
+#: ../ui/main.glade:1548 ../ui/main.glade:1694 ../ui/main.glade:1803
 msgid "_thick"
 msgstr ""
 
-#: ../ui/main.glade:1504 ../ui/main.glade:1650 ../ui/main.glade:1759
+#: ../ui/main.glade:1515 ../ui/main.glade:1661 ../ui/main.glade:1770
 msgid "_very fine"
 msgstr ""
 
-#: ../ui/main.glade:1722
+#: ../ui/main.glade:1733
 msgid "_whiteout"
 msgstr ""
 
@@ -3361,7 +3377,7 @@ msgstr ""
 msgid "save to file"
 msgstr ""
 
-#: ../ui/main.glade:1548 ../ui/main.glade:1694 ../ui/main.glade:1803
+#: ../ui/main.glade:1559 ../ui/main.glade:1705 ../ui/main.glade:1814
 msgid "ver_y thick"
 msgstr ""
 
