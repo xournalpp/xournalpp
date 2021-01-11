@@ -26,6 +26,35 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
     return zoom->isZoomPresentationMode();
 }
 
+auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom) -> bool {
+    if (event->type == GDK_TOUCHPAD_PINCH && event->n_fingers == 2) {
+        utl::Point<double> center;
+        switch (event->phase) {
+            case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN:
+                if (zoom->isZoomFitMode()) {
+                    zoom->setZoomFitMode(false);
+                }
+                center = {event->x, event->y};
+                // Need to adjust the center because the event coordinates are relative
+                // to the widget, not to the zoomed (and translated) view
+                center += {zoom->getVisibleRect().x, zoom->getVisibleRect().y};
+                zoom->startZoomSequence(center);
+                break;
+            case GDK_TOUCHPAD_GESTURE_PHASE_UPDATE:
+                zoom->zoomSequenceChange(event->scale, true);
+                break;
+            case GDK_TOUCHPAD_GESTURE_PHASE_END:
+                zoom->endZoomSequence();
+                break;
+            case GDK_TOUCHPAD_GESTURE_PHASE_CANCEL:
+                zoom->cancelZoomSequence();
+                break;
+        }
+        return true;
+    }
+    return false;
+}
+
 
 // Todo: try to connect this function with the "expose_event", it would be way cleaner and we dont need to align/layout
 //       the pages manually, but it only works with the top Widget (GtkWindow) for now this works "fine"
@@ -113,6 +142,13 @@ void ZoomControl::endZoomSequence() {
     zoomSequenceStart = -1;
 }
 
+void ZoomControl::cancelZoomSequence() {
+    if (zoomSequenceStart != -1) {
+        setZoom(zoomSequenceStart);
+        endZoomSequence();
+    }
+}
+
 auto ZoomControl::getVisibleRect() -> Rectangle<double> {
     GtkWidget* widget = view->getWidget();
     Layout* layout = gtk_xournal_get_layout(widget);
@@ -157,7 +193,9 @@ void ZoomControl::addZoomListener(ZoomListener* l) { this->listener.emplace_back
 void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c) {
     this->control = c;
     this->view = v;
+    gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
     g_signal_connect(widget, "scroll-event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
+    g_signal_connect(widget, "event", G_CALLBACK(onTouchpadPinchEvent), this);
     g_signal_connect(window, "configure-event", G_CALLBACK(onWindowSizeChangedEvent), this);
     registerListener(this->control);
 }

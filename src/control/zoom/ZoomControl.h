@@ -148,6 +148,9 @@ public:
     /// Clear all stored data from startZoomSequence()
     void endZoomSequence();
 
+    /// Revert and end the current zoom sequence
+    void cancelZoomSequence();
+
     /// Update the scroll position manually
     void setScrollPositionAfterZoom(utl::Point<double> scrollPos);
 
@@ -174,6 +177,7 @@ private:
 
     friend bool onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom);
     friend bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
+    friend bool onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom);
 
 private:
     XournalView* view = nullptr;
