@@ -35,6 +35,7 @@
 #include "control/tools/StrokeHandler.h"            // for StrokeHandler
 #include "control/tools/VerticalToolHandler.h"      // for VerticalToolHandler
 #include "control/zoom/ZoomControl.h"               // for ZoomControl
+#include "control/ScrollHandler.h"
 #include "gui/FloatingToolbox.h"                    // for FloatingToolbox
 #include "gui/MainWindow.h"                         // for MainWindow
 #include "gui/PdfFloatingToolbox.h"                 // for PdfFloatingToolbox
@@ -681,8 +682,27 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         } else {
             double zoom = xournal->getZoom();
             if (this->selection->userTapped(zoom)) {
-                SelectObject select(this);
-                select.at(pos.x / zoom, pos.y / zoom);
+                Layer* layer = this->page->getSelectedLayer();
+                const Layer::Index layerId = this->page->getSelectedLayerId();
+                const bool isBackgroundLayer = (layerId == 0);
+
+                // If there's nothing to select (e.g. the background layer)
+                // or we're holding alt...
+                if (isBackgroundLayer || !layer->isAnnotated() || pos.isAltDown()) {
+                    // Attempt PDF selection
+                    auto& pdfDoc = this->xournal->getDocument()->getPdfDocument();
+                    if (this->getPage()->getPdfPageNr() != npos) {
+                        auto page = pdfDoc.getPage(this->getPage()->getPdfPageNr());
+
+                        const double pageX = pos.x / zoom;
+                        const double pageY = pos.y / zoom;
+
+                        displayLinkPopover(page, pageX, pageY);
+                    }
+                } else {
+                    SelectObject select(this);
+                    select.at(pos.x / zoom, pos.y / zoom);
+                }
             }
         }
         this->selection.reset();
@@ -895,6 +915,52 @@ void XojPageView::drawLoadingPage(cairo_t* cr) {
     cairo_show_text(cr, txtLoading.c_str());
 
     rerenderPage();
+}
+
+bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pageX, double pageY) {
+    // Search for selected link
+    const auto links = page->getLinks();
+
+    for (auto&& [rect, uri]: links) {
+        if (!(rect.x1 <= pageX && pageX <= rect.x2 && rect.y1 <= pageY && pageY <= rect.y2)) {
+            continue;
+        }
+
+        char* uriStr = g_uri_to_string(uri);
+        char* uriText = g_markup_escape_text(uriStr, -1);
+        char* labelMarkup = g_strdup_printf("<a href=\"%s\">%s</a>", uriStr, uriText);
+        g_free(uriStr);
+        g_free(uriText);
+        GtkWidget* label = gtk_label_new(nullptr);
+        gtk_label_set_markup(GTK_LABEL(label), labelMarkup);
+        GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+        gtk_container_add(GTK_CONTAINER(box), label);
+
+        GtkWidget* popover = makePopover(rect, box);
+        gtk_widget_show_all(popover);
+        gtk_popover_popup(GTK_POPOVER(popover));
+        return true;
+    }
+
+    return false;
+}
+
+GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* child) {
+    double zoom = xournal->getZoom();
+
+    GtkWidget* popover = gtk_popover_new(this->getXournal()->getWidget());
+    gtk_container_add(GTK_CONTAINER(popover), child);
+
+    auto x = static_cast<int>(this->getX() + rect.x1 * zoom);
+    auto y = static_cast<int>(this->getY() + rect.y1 * zoom);
+    auto w = static_cast<int>((rect.x2 - rect.x1) * zoom);
+    auto h = static_cast<int>((rect.y2 - rect.y1) * zoom);
+
+    GdkRectangle canvasRect{x, y, w, h};
+    gtk_popover_set_pointing_to(GTK_POPOVER(popover), &canvasRect);
+    gtk_popover_set_constrain_to(GTK_POPOVER(popover), GTK_POPOVER_CONSTRAINT_WINDOW);
+
+    return popover;
 }
 
 auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
