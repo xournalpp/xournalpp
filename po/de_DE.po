@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-11 16:19+0000\n"
-"PO-Revision-Date: 2021-01-12 14:51\n"
+"PO-Revision-Date: 2021-01-12 16:02\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -62,7 +62,7 @@ msgstr "LaTeX editieren/hinzufügen"
 
 #: ../src/control/XournalMain.cpp:677
 msgid "Advanced export options"
-msgstr ""
+msgstr "Erweiterte Exportoptionen"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -159,7 +159,7 @@ msgstr "Farbe ändern"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:394
 msgid "Change current layer name"
-msgstr ""
+msgstr "Aktuellen Ebenennamen ändern"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
@@ -167,7 +167,7 @@ msgstr "Schriftart ändern"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "Linienstil ändern"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -202,7 +202,8 @@ msgstr "Kopiere Seite"
 #: ../src/util/PathUtil.cpp:213
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Ordner konnte nicht erstellt werden: {1}\n"
+"Abgebrochen mit Fehler: {2}"
 
 #: ../src/control/LatexController.cpp:257
 msgid "Could not load LaTeX PDF file"
@@ -282,7 +283,7 @@ msgstr "Konnte .tex Datei \"{1}\" nicht speichern"
 
 #: ../src/control/latex/LatexGenerator.cpp:85
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "Konnte {1} nicht starten: {2} (Ausstiegscode: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
@@ -353,7 +354,7 @@ msgstr "Verwerfen"
 
 #: ../src/control/XournalMain.cpp:678
 msgid "Display advanced export options"
-msgstr ""
+msgstr "Erweiterte Exportoptionen anzeigen"
 
 #: ../src/control/Control.cpp:1938
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -444,7 +445,7 @@ msgstr "Im Notfall gespeichertes Dokument"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:305
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "Aktiviere Druckempfindlichkeit oder Druckinferenz, um diese Einstellung zu ändern!"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
@@ -505,11 +506,11 @@ msgstr "Fehler: {1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "Fehler: {1} ist keine reguläre Datei. Bitte überprüfen Sie Ihre Einstellungen in der LaTeX-Vorlagen-Datei. "
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Fehler: {1}. Bitte überprüfen Sie den Inhalt von {2}"
 
 #: ../src/control/XournalMain.cpp:185
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -984,7 +985,7 @@ msgstr "Werkzeug {1} von der Werkzeugleiste {2} ID {3} entfernt"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Ebene umbenennen"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
@@ -1024,7 +1025,7 @@ msgstr "SVG Bild"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "Beispiel-LaTeX-Datei erfolgreich generiert."
 
 #: ../src/control/Control.cpp:2433 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:322
@@ -1679,7 +1680,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\tAbgekürzter Wochentag (z.B. Mit)\n"
+"%A\t\tWochentag (z.B. Mittwoch)\n"
+"%b\t\tAbgekürzter Monat (z.B. Aug)\n"
+"%B\t\tMonatsname (z.B. August)\n"
+"%c\t\tDatum und Zeit (z.B. Mit 16 Feb 2011 21:05:24 CET)\n"
+"%d\t\tTag des Monats (01-31)\n"
+"%F\t\tDatum (z.B. 2011-02-16)\n"
+"%H\t\tStunde in 24h Format (00-23)\n"
+"%I\t\tStunde in 12h Format (01-12)\n"
+"%j\t\tTag des Jahres (001-366)\n"
+"%m\t\tMonat als Zahl (01-12)\n"
+"%M\t\tMinute (00-59)\n"
+"%p\t\tAM oder PM (z.B. PM)\n"
+"%S\t\tSekunde (00-61)\n"
+"%U\t\tWochennummer mit Sonntag als den ersten Tag der Woche (00-53)\n"
+"%w\t\tWochentag als Nummer mit Sonntag als 0 (0-6)\n"
+"%W\t\tWochennummer mit Montag als den ersten Tag der Woche (00-53)\n"
+"%x\t\tDatum (z.B. 16.02.2011)\n"
+"%X\t\tZeit (z.B. 14:55:02\n"
+"%y\t\tJahr, zweistellig (00-99)\n"
+"%Y\t\tJahr (z.B. 2011)\n"
+"%Z\t\tZeitzone (z.B. CET)\n"
+"%%\t\tein % Zeichen"
 
 #: ../ui/settings.glade:4280
 msgid "... AND How much time must have passed since last stroke.\n\n"
