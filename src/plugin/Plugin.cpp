@@ -47,12 +47,12 @@ void Plugin::registerToolbar() {
     lua_getglobal(lua.get(), "initUi");
     if (lua_isfunction(lua.get(), -1) == 1) {
         if (callFunction("initUi")) {
-            g_message("Plugin «%s» UI initialized", name.c_str());
+            g_message("Plugin \"%s\" UI initialized", name.c_str());
         } else {
-            g_warning("Plugin «%s» init failed!", name.c_str());
+            g_warning("Plugin \"%s\" init failed!", name.c_str());
         }
     } else {
-        g_message("Plugin «%s» has no UI init", name.c_str());
+        g_message("Plugin \"%s\" has no UI init", name.c_str());
     }
 
     inInitUi = false;
@@ -192,7 +192,7 @@ void Plugin::loadScript() {
     }
 
     if (mainfile.find("..") != std::string::npos) {
-        g_warning("Plugin «%s» contains unsupported path «%s»", name.c_str(), mainfile.c_str());
+        g_warning("Plugin \"%s\" contains unsupported path \"%s\"", name.c_str(), mainfile.c_str());
         this->valid = false;
         return;
     }
@@ -212,7 +212,7 @@ void Plugin::loadScript() {
     auto luafile = path / mainfile;
     if (luaL_loadfile(lua.get(), luafile.string().c_str())) {
         // Error out if file can't be read
-        g_warning("Could not run plugin Lua file: «%s»", luafile.string().c_str());
+        g_warning("Could not run plugin Lua file: \"%s\"", luafile.string().c_str());
         this->valid = false;
         return;
     }
@@ -232,7 +232,7 @@ void Plugin::loadScript() {
         button.insert(std::pair<int, std::string>(0, _("OK")));
         XojMsgBox::showPluginMessage(name, errMsg, button, true);
 
-        g_warning("Could not run plugin Lua file: «%s», error: «%s»", luafile.string().c_str(), errMsg);
+        g_warning("Could not run plugin Lua file: \"%s\", error: \"%s\"", luafile.string().c_str(), errMsg);
         this->valid = false;
         return;
     }
@@ -248,7 +248,7 @@ auto Plugin::callFunction(const std::string& fnc) -> bool {
         button.insert(std::pair<int, std::string>(0, _("OK")));
         XojMsgBox::showPluginMessage(name, errMsg, button, true);
 
-        g_warning("Error in Plugin: «%s», error: «%s»", name.c_str(), errMsg);
+        g_warning("Error in Plugin: \"%s\", error: \"%s\"", name.c_str(), errMsg);
         return false;
     }
 
