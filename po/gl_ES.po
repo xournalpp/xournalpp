@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-12 22:24\n"
+"PO-Revision-Date: 2021-01-12 23:59\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -538,35 +538,43 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Exportar as capas progresivamente\n"
+"                                 Na exportación como PDF, renderizar progresivamente as capas unha a unha.\n"
+"                                 Isto resulta en N páxinas de exportación por páxina con N capas,\n"
+"                                 levantando a columna de capas progresivamente.\n"
+"                                 O ficheiro PDF resultante pódese utilizar para unha presentación.\n"
 
 #: ../src/control/XournalMain.cpp:644
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Exportar sen fondo\n"
+"                                 O ficheiro exportado ten transparencia ou fondo branco,\n"
+"                                 dependendo do que admita o formato\n"
 
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Exportar sen normas\n"
+"                                 O ficheiro exportado non ten unha norma regular\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Non se puido atopar o programa xerador LaTex na RUTA: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Fallou o procesamento da orde do xerador LaTeX: {1}"
 
 #: ../src/control/LatexController.cpp:49
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Fallou a lectura do ficheiro modelo xeral. Comprobe a súa configuración."
 
 #: ../src/control/jobs/BaseExportJob.cpp:93
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Fallou a resolución da ruta co seguinte erro:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -580,7 +588,7 @@ msgstr "Encher"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:315
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Presión do filtro de entrada. Multiplica a presión mediante o multiplicador de presión. Se é menor ao mínimo, utiliza a presión mínima."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Fine"
@@ -596,19 +604,19 @@ msgstr "Tipo de letra"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Forward"
-msgstr ""
+msgstr "Adiante"
 
 #: ../src/control/XournalMain.cpp:628
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "Obter versión de xournalpp"
 
 #: ../src/control/LatexController.cpp:44
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Non existe o ficheiro modelo global. Comprobe a súa configuración."
 
 #: ../src/control/LatexController.cpp:55
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "O ficheiro modelo global non é un ficheiro regular. Comprobe a súa configuración. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Go to first page"
@@ -701,11 +709,11 @@ msgstr "Inserir imaxe"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Punteado isométrico"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Curva isométrica"
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
@@ -713,7 +721,7 @@ msgstr "Saltar á páxina (primeira páxina: 1)"
 
 #: ../src/control/LatexController.cpp:181
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "A xeración de Latex atopou un erro: {1} (código de saída: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -1819,7 +1827,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5217
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>Seleccione o idioma (require reiniciar)</i>"
 
 #: ../ui/settings.glade:4545
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -2017,15 +2025,15 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "Copiar o fondo da páxina actual en cambio"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "Copiar o tamaño actual da páxina en cambio"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr ""
+msgstr "Copiar o fondo da páxina actual en lugar de utilizar o fondo definido arriba."
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
@@ -2037,7 +2045,7 @@ msgstr "Cursor"
 
 #: ../ui/settings.glade:2641
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Icona de curso para o lapis"
 
 #: ../ui/settings.glade:2058
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2053,7 +2061,7 @@ msgstr "Nome predeterminado ao gardar"
 
 #: ../ui/settings.glade:5040
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "Tempo de busca predeterminado (en segundos)"
 
 #: ../ui/settings.glade:430
 msgid "Default name: "
@@ -2112,7 +2120,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "\t    Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Arrastrar da ESQUERDA desde o punto de inicio actú como soster a tecla de maiúscula.\n"
+"\t    Arrastrar ARRIBA actúa como se se sostivese a tecla Control.\n\n"
+"\t    Radio de determinación: Radio ao cal os modificadores se bloquerán ata que se finalice o debuxo.\n\n"
+"\t    <i>Resulta práctico para operar sen teclado.</i>"
 
 #: ../ui/settings.glade:3856
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2130,7 +2141,7 @@ msgstr "Arrastrar e soltar compoñentes desde aquí ás barras de ferramentas e 
 
 #: ../ui/main.glade:1387
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Sistema de coordenadas de debuxo"
 
 #: ../ui/main.glade:1398
 msgid "Draw _Line"
@@ -2138,7 +2149,7 @@ msgstr "Debuxar _liña"
 
 #: ../ui/settings.glade:2688
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "Debuxar un círculo transparente arredor do curso"
 
 #: ../ui/settings.glade:4494
 msgid "Drawing Area"
@@ -2178,7 +2189,7 @@ msgstr "Activar a alternativa toque / desprazamento GTK (require reinicio)"
 
 #: ../ui/settings.glade:940
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Activa a inferencia de presión <i>(Adiviña a presión coa velocidade do debuxo cando non está dispoñíbel a presión fornecida polo dispositivo)</i>"
 
 #: ../ui/settings.glade:1233
 msgid "Enable Pressure Sensitivity"
@@ -2202,7 +2213,7 @@ msgstr "Activa novo sistema de entrada (require o reinicio)"
 
 #: ../ui/settings.glade:2313
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Activa o toque ao debuxar"
 
 #: ../ui/settings.glade:2126
 msgid "Enable zoom gestures (requires restart)"
@@ -2234,7 +2245,7 @@ msgstr "Exportar como..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Exportar as capas progresivamente"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
