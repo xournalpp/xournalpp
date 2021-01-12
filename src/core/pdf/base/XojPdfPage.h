@@ -48,6 +48,8 @@ public:
         std::vector<XojPdfRectangle> rects;
     };
 
+    using Link = std::pair<XojPdfRectangle, GUri*>;
+
     virtual double getWidth() = 0;
     virtual double getHeight() = 0;
 
@@ -75,6 +77,11 @@ public:
     /// @param style The text selection style
     /// @return The rectangles that cover the text that would be selected.
     virtual TextSelection selectTextLines(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) = 0;
+
+    /**
+     * @return A list of Links in the current page.
+     */
+    virtual auto getLinks() -> std::vector<Link> = 0;
 
     virtual int getPageId() = 0;
 

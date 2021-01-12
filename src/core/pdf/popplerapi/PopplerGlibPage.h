@@ -37,6 +37,7 @@ public:
 
     TextSelection selectTextLines(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) override;
 
+    auto getLinks() -> std::vector<Link> override;
 
     int getPageId() override;
 

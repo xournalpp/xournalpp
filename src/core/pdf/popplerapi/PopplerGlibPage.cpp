@@ -288,3 +288,23 @@ auto PopplerGlibPage::selectTextLines(const XojPdfRectangle& selectRect, XojPdfP
     g_assert_nonnull(region);
     return {.region = region, .rects = textRects};
 }
+
+auto PopplerGlibPage::getLinks() -> std::vector<Link> {
+    std::vector<Link> results;
+    const double height = getHeight();
+
+    GList* links = poppler_page_get_link_mapping(this->page);
+    for (GList* l = links; l != NULL; l = g_list_next(l)) {
+        auto* link = static_cast<PopplerLinkMapping*>(l->data);
+        if (link->action->type == POPPLER_ACTION_URI && link->action->uri.uri) {
+            GUri* uri = g_uri_parse(link->action->uri.uri, G_URI_FLAGS_NONE, nullptr);
+            if (uri) {
+                XojPdfRectangle rect{link->area.x1, height - link->area.y2, link->area.x2, height - link->area.y1};
+                results.emplace_back(rect, uri);
+            }
+        }
+    }
+    poppler_page_free_link_mapping(links);
+
+    return results;
+}
