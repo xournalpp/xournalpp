@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-11 16:19+0000\n"
-"PO-Revision-Date: 2021-01-12 14:51\n"
+"PO-Revision-Date: 2021-01-12 14:59\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -20,7 +20,8 @@ msgstr ""
 #: ../src/control/XournalMain.cpp:471
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr "このファイルがないまま実行します。"
+msgstr "\n\n"
+"このファイルがないまま実行します。"
 
 #: ../src/control/XournalMain.cpp:452
 msgid "\n"
