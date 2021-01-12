@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 16:19+0000\n"
-"PO-Revision-Date: 2021-01-12 14:51\n"
+"POT-Creation-Date: 2021-01-12 16:25+0000\n"
+"PO-Revision-Date: 2021-01-12 17:21\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -17,13 +17,13 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/control/XournalMain.cpp:471
+#: ../src/control/XournalMain.cpp:473
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Teď se pokusí spustit bez tohoto souboru."
 
-#: ../src/control/XournalMain.cpp:452
+#: ../src/control/XournalMain.cpp:454
 msgid "\n"
 "Will now attempt to run without this file."
 msgstr "\n"
@@ -42,7 +42,7 @@ msgstr "%F-Poznámka-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Žádná zařízení nebyla nalezena. Zdá se to být špatně - možná můžete nahlásit chybu?</b>"
 
-#: ../src/control/XournalMain.cpp:466
+#: ../src/control/XournalMain.cpp:468
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Chybí požadovaný soubor uživat
 msgid "Add/Edit Tex"
 msgstr "Přidat/Upravit TeX"
 
-#: ../src/control/XournalMain.cpp:677
+#: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
 msgstr ""
 
@@ -149,7 +149,7 @@ msgid "Blue"
 msgstr "Modrá"
 
 #: ../src/control/Control.cpp:1985 ../src/control/Control.cpp:2441
-#: ../src/control/XournalMain.cpp:166
+#: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -199,7 +199,7 @@ msgstr "Kopírovat aktuální"
 msgid "Copy page"
 msgstr "Kopírovat stránku"
 
-#: ../src/util/PathUtil.cpp:213
+#: ../src/util/PathUtil.cpp:230
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr ""
@@ -331,7 +331,7 @@ msgstr "Výchozí nástroj"
 msgid "Delete"
 msgstr "Smazat"
 
-#: ../src/control/XournalMain.cpp:165
+#: ../src/control/XournalMain.cpp:167
 msgid "Delete Logfile"
 msgstr "Smazat soubor protokolu"
 
@@ -339,7 +339,7 @@ msgstr "Smazat soubor protokolu"
 msgid "Delete current page"
 msgstr "Smazat aktuální stránku"
 
-#: ../src/control/XournalMain.cpp:207
+#: ../src/control/XournalMain.cpp:209
 msgid "Delete file"
 msgstr "Smazat soubor"
 
@@ -351,7 +351,7 @@ msgstr "Smazat vrstvu"
 msgid "Discard"
 msgstr "Zahodit"
 
-#: ../src/control/XournalMain.cpp:678
+#: ../src/control/XournalMain.cpp:680
 msgid "Display advanced export options"
 msgstr ""
 
@@ -511,17 +511,17 @@ msgstr ""
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:185
+#: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr "Nelze smazat chybový protokol. Udělejte to prosím ručně.\n"
 "Soubor protokolu: {1}"
 
-#: ../src/control/XournalMain.cpp:635
+#: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:637
+#: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -531,7 +531,7 @@ msgstr ""
 msgid "Export PDF"
 msgstr "Export do PDF"
 
-#: ../src/control/XournalMain.cpp:651
+#: ../src/control/XournalMain.cpp:653
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -539,13 +539,13 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:642
+#: ../src/control/XournalMain.cpp:644
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:647
+#: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
@@ -567,7 +567,7 @@ msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:131 ../src/util/PathUtil.cpp:148
+#: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Soubor se nepodařilo otevřít. Udělejte to prosím ručně:\n"
@@ -597,7 +597,7 @@ msgstr "Písmo"
 msgid "Forward"
 msgstr "Vpřed"
 
-#: ../src/control/XournalMain.cpp:626
+#: ../src/control/XournalMain.cpp:628
 msgid "Get version of xournalpp"
 msgstr ""
 
@@ -670,7 +670,7 @@ msgstr "Zvýrazňovač"
 msgid "Image"
 msgstr "Obrázek"
 
-#: ../src/control/XournalMain.cpp:294
+#: ../src/control/XournalMain.cpp:296
 msgid "Image file successfully created"
 msgstr "Obrázek úspěšně vytvořen"
 
@@ -706,7 +706,7 @@ msgstr ""
 msgid "Isometric Graph"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:622
+#: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
 msgstr "Přejít na stránku (první stránka: 1)"
 
@@ -759,7 +759,7 @@ msgstr "Spravovat lištu nástrojů"
 msgid "Medium"
 msgstr "Střední"
 
-#: ../src/control/XournalMain.cpp:448
+#: ../src/control/XournalMain.cpp:450
 msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
@@ -822,7 +822,7 @@ msgstr "Normální výkres"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/control/XournalMain.cpp:658
+#: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
@@ -831,11 +831,11 @@ msgstr ""
 msgid "Open Image"
 msgstr "Otevřít obrázek"
 
-#: ../src/control/XournalMain.cpp:163
+#: ../src/control/XournalMain.cpp:165
 msgid "Open Logfile"
 msgstr "Otevřít soubor protokolu"
 
-#: ../src/control/XournalMain.cpp:164
+#: ../src/control/XournalMain.cpp:166
 msgid "Open Logfile directory"
 msgstr "Otevřít složku s protokoly"
 
@@ -866,7 +866,7 @@ msgstr "PDF stránka {1}"
 msgid "PDF background missing"
 msgstr "PDF pozadí chybí"
 
-#: ../src/control/XournalMain.cpp:350
+#: ../src/control/XournalMain.cpp:352
 msgid "PDF file successfully created"
 msgstr "PDF soubor úspěšně vytvořen"
 
@@ -940,7 +940,7 @@ msgstr "Předdefinované"
 msgid "Presentation mode"
 msgstr "Prezentace"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:68
+#: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
 msgstr ""
 
@@ -994,7 +994,7 @@ msgstr "Nahradit"
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Požadovaný dočasný soubor nebyl nalezen pro přílohu {1}"
 
-#: ../src/control/XournalMain.cpp:208
+#: ../src/control/XournalMain.cpp:210
 msgid "Restore file"
 msgstr "Obnovit soubor"
 
@@ -1101,7 +1101,7 @@ msgstr "Obdélníkový výběr"
 msgid "Select region"
 msgstr "Výběr oblasti"
 
-#: ../src/control/XournalMain.cpp:162
+#: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
 msgstr "Zaslat hlášení o chybě"
 
@@ -1109,18 +1109,18 @@ msgstr "Zaslat hlášení o chybě"
 msgid "Separator"
 msgstr "Oddělovač"
 
-#: ../src/control/XournalMain.cpp:662
+#: ../src/control/XournalMain.cpp:664
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:672
+#: ../src/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:666
+#: ../src/control/XournalMain.cpp:668
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1142,13 +1142,13 @@ msgstr "Zobrazit pouze nevyužité stránky (jedna nevyužitá stránka)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Zobrazit pouze nevyužité stránky ({1} nevyužitých stránek)"
 
-#: ../src/control/XournalMain.cpp:537
+#: ../src/control/XournalMain.cpp:539
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Promiň, Xournal++ může otevřít pouze jeden soubor najednou.\n"
 "Ostatní jsou ignorovány."
 
-#: ../src/control/XournalMain.cpp:552
+#: ../src/control/XournalMain.cpp:554
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "Promiň, Xournal++ momentálně nemůže otevřít vzdálené soubory.\n"
@@ -1176,7 +1176,7 @@ msgstr "Dokument úspěšně uložen do \"\""
 msgid "Supported files"
 msgstr "Podporované soubory"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:52
+#: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
 msgstr ""
 
@@ -1250,7 +1250,7 @@ msgstr "Soubor není platný .xopp soubor (Version string je poškozený): \"{1}
 msgid "The formula is empty when rendered or invalid."
 msgstr "Vzorec je prázdný, když je vykreslený, nebo neplatný."
 
-#: ../src/control/XournalMain.cpp:157
+#: ../src/control/XournalMain.cpp:159
 msgid "The most recent log file name: {1}"
 msgstr "Název nejnovějšího souboru protokolu: {1}"
 
@@ -1262,11 +1262,11 @@ msgstr ""
 msgid "The touch workaround must be disabled to change this setting. "
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:152
+#: ../src/control/XournalMain.cpp:154
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Xournal++ vytvořil soubory se záznamy o chybách. Zašlete prosím hlášení o chybě, abychom ji mohli opravit."
 
-#: ../src/control/XournalMain.cpp:151
+#: ../src/control/XournalMain.cpp:153
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Xournal++ vytvořil soubor se záznamy o chybách. Zašlete prosím hlášení o chybě, abychom ji mohli opravit."
 
@@ -1421,7 +1421,7 @@ msgstr "Xournal (kompatibilita)"
 msgid "Xournal files"
 msgstr "Soubory Xournalu"
 
-#: ../src/control/XournalMain.cpp:202
+#: ../src/control/XournalMain.cpp:204
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ naposledy spadnul. Chcete obnovit poslední upravený soubor?"
 
@@ -1445,7 +1445,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Nemáte žádné PDF stránky k výběru. Zrušit operaci.\n"
 "Prosím vyberte jiný typ pozadí: Menu \"Journal\" → \"Konfigurovat šablonu stránky\"."
 
-#: ../src/control/XournalMain.cpp:154
+#: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr ""
 
@@ -1627,7 +1627,7 @@ msgstr "xoj-preview-extractor: otevírání výstupního souboru „{1}“ selha
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: úspěšně extrahováno"
 
-#: ../src/util/PathUtil.cpp:203
+#: ../src/util/PathUtil.cpp:220
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
