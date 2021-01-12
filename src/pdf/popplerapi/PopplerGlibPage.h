@@ -31,6 +31,8 @@ public:
 
     virtual vector<XojPdfRectangle> findText(string& text);
 
+    auto getLinks() -> std::vector<Link> override;
+
     virtual int getPageId();
 
 private:

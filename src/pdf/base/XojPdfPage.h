@@ -37,6 +37,8 @@ public:
     XojPdfPage();
     virtual ~XojPdfPage();
 
+    using Link = std::pair<XojPdfRectangle, GUri*>;
+
 public:
     virtual double getWidth() = 0;
     virtual double getHeight() = 0;
@@ -44,6 +46,8 @@ public:
     virtual void render(cairo_t* cr, bool forPrinting = false) = 0;
 
     virtual vector<XojPdfRectangle> findText(string& text) = 0;
+
+    virtual auto getLinks() -> std::vector<Link> = 0;
 
     virtual int getPageId() = 0;
 
