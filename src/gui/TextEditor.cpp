@@ -31,6 +31,7 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
     gtk_text_buffer_place_cursor(this->buffer, &first);
 
     GtkSettings* settings = gtk_widget_get_settings(this->widget);
+    g_object_get(settings, "gtk-cursor-blink", &this->cursorBlink, nullptr);
     g_object_get(settings, "gtk-cursor-blink-time", &this->cursorBlinkTime, nullptr);
     g_object_get(settings, "gtk-cursor-blink-timeout", &this->cursorBlinkTimeout, nullptr);
 
@@ -42,7 +43,11 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
     g_signal_connect(this->imContext, "retrieve-surrounding", G_CALLBACK(iMRetrieveSurroundingCallback), this);
     g_signal_connect(this->imContext, "delete-surrounding", G_CALLBACK(imDeleteSurroundingCallback), this);
 
-    blinkCallback(this);
+    if (this->cursorBlink) {
+        blinkCallback(this);
+    } else {
+        this->cursorVisible = true;
+    }
 }
 
 TextEditor::~TextEditor() {
@@ -523,11 +528,15 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
         gtk_widget_error_bell(this->widget);
     }
 
-    this->cursorVisible = false;
-    if (this->blinkTimeout) {
-        g_source_remove(this->blinkTimeout);
+    if (this->cursorBlink) {
+        this->cursorVisible = false;
+        if (this->blinkTimeout) {
+            g_source_remove(this->blinkTimeout);
+        }
+        blinkCallback(this);
+    } else {
+        repaintCursor();
     }
-    blinkCallback(this);
 }
 
 void TextEditor::findPos(GtkTextIter* iter, double xPos, double yPos) {
@@ -854,7 +863,11 @@ void TextEditor::resetImContext() {
     }
 }
 
-void TextEditor::repaintCursor() { repaintEditor(); }
+void TextEditor::repaintCursor() {
+    double x = this->text->getX();
+    double y = this->text->getY();
+    this->gui->repaintArea(x, y, x + this->text->getElementWidth(), y + this->text->getElementHeight());
+}
 
 #define CURSOR_ON_MULTIPLIER 2
 #define CURSOR_OFF_MULTIPLIER 1

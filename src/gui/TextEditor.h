@@ -105,6 +105,7 @@ private:
     double markPosX = 0;
     double markPosY = 0;
 
+    bool cursorBlink = true;
     int cursorBlinkTime = 0;
     int cursorBlinkTimeout = 0;
     int blinkTimeout = 0;  // handler id
