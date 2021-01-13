@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-13 08:53\n"
+"PO-Revision-Date: 2021-01-13 10:17\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1696,7 +1696,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\tNom abrégé du jour de la semaine (p.ex. jeu)\n"
+"%A\t\tNom complet du jour de la semaine (p.ex. jeudi)\n"
+"%b\t\tNom abrégé du mois (p.ex. aoû)\n"
+"%B\t\tNom complet du mois (p.ex. août)\n"
+"%c\t\tReprésentation de la date et de l’heure (p.ex. jeu 23 aoû 14:55:02 2001)\n"
+"%d\t\tJour du mois (01-31)\n"
+"%F\t\tReprésentation de la date (par exemple 2001-08-23)\n"
+"%H\t\tHeure au format 24h (00-23)\n"
+"%I\t\tHeure au format 12h (01-12)\n"
+"%j\t\tJour de l'année (001-366)\n"
+"%m\t\tMois sous forme décimale (01-12)\n"
+"%M\t\tMinute (00-59)\n"
+"%p\t\tDésignation AM ou PM (par exemple, PM)\n"
+"%S\t\tSeconde (00-60)\n"
+"%U\t\tNuméro de semaine avec le premier dimanche comme premier jour de la première semaine (00-52)\n"
+"%w\t\tJour de la semaine sous forme de nombre décimal avec dimanche comme 0 (0-6)\n"
+"%W\t\tNuméro de semaine avec le premier lundi comme premier jour de la première semaine (00-53)\n"
+"%x\t\tReprésentation de la date (par exemple, 23/08/01)\n"
+"%X\t\tReprésentation de l'heure (par exemple 14:55:02)\n"
+"%y\t\tAnnée, les deux derniers chiffres (00-99)\n"
+"%Y\t\tAnnée (par exemple 2001)\n"
+"%Z\t\tNom du fuseau horaire ou son abréviation (par exemple CDT)\n"
+"%%\t\tUn caractère %"
 
 #: ../ui/settings.glade:4280
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1706,23 +1728,23 @@ msgstr "... ET combien de temps doit être passé depuis le dernier trait.\n\n"
 
 #: ../ui/settings.glade:4424
 msgid "0.00"
-msgstr ""
+msgstr "0,00"
 
 #: ../ui/settings.glade:1440
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5053
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:2163
 msgid "1.0"
-msgstr ""
+msgstr "1,0"
 
 #: ../ui/settings.glade:2808
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1751,7 +1773,8 @@ msgstr "<b>Par défaut</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Paramètres d'exportation de document</b>\n"
+"Définir les paramètres d'exportation"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1762,7 +1785,8 @@ msgstr "<b>Boite à outil vide</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Configuration de l'opacité des remplissages</b>\n"
+"Sélectionner l'opacité de la couleur de remplissage"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -1831,11 +1855,12 @@ msgstr "<i>Mettez une règle sur votre écran et déplacez le curseur jusqu'à c
 #: ../ui/settings.glade:4383
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Redessiner plus souvent les arrière-plans PDF pendant le zoom pour une meilleure qualité de rendu. \n"
+"<b>Remarque :</b> Cela ne devrait pas affecter la qualité d'impression.</i>"
 
 #: ../ui/settings.glade:5217
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>Sélectionner la langue (nécessite un redémarrage)</i>"
 
 #: ../ui/settings.glade:4545
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
