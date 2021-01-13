@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-12 23:59\n"
+"PO-Revision-Date: 2021-01-13 00:55\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -821,7 +821,7 @@ msgstr "Non hai páxinas para exportar!"
 
 #: ../src/control/Control.cpp:1232
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Non hai páxinas pdf dispoñíbeis para engadir. Pode ser que se necesite reabrir o documento primeiro."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
@@ -834,7 +834,8 @@ msgstr "Aceptar"
 #: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportar unicamente as páxinas do INTERVALO (i.e. \"2-3,5,7-\")\n"
+"                                 Sen efecto sen -p/--create-pdf ou -i/--create-img"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -951,11 +952,11 @@ msgstr "Modo presentación"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "O idioma seleccionado previamente xa non está dispoñíbel!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Record Audio / Stop Recording"
@@ -993,7 +994,7 @@ msgstr "Retirouse o elemento {1} da barra de ferramentas {2} ID {3}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Renomear capa"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
@@ -2250,7 +2251,7 @@ msgstr "Exportar as capas progresivamente"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Exporta o documento sen ningún fondo (Ningún) ou só con PDF e fondo de imaxe (Sen norma) ou con todos os tipos de fondo (Todos)."
 
 #: ../ui/main.glade:1626 ../ui/main.glade:1831
 msgid "Fi_ll"
@@ -2258,7 +2259,7 @@ msgstr "En_cher"
 
 #: ../ui/main.glade:1636 ../ui/main.glade:1841
 msgid "Fill opacity"
-msgstr ""
+msgstr "Opacidade de recheo"
 
 #: ../ui/main.glade:2369
 msgid "Find next occurrence of the search string"
@@ -2286,7 +2287,7 @@ msgstr "Aumento"
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Configuración xeral da ferramenta LaTex"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
@@ -2298,7 +2299,7 @@ msgstr "Global"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "Ruta do ficheiro modelo glogal"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2306,7 +2307,7 @@ msgstr "Ir á páxina"
 
 #: ../ui/settings.glade:4094
 msgid "Grid size"
-msgstr ""
+msgstr "Tamaño da grella"
 
 #: ../ui/settings.glade:4051
 msgid "Grid snapping tolerance"
@@ -2322,7 +2323,7 @@ msgstr "Recoñecemento de man"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Altura"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2366,15 +2367,15 @@ msgstr "Como de curto (tempo) E...\n\n"
 
 #: ../ui/settings.glade:4139
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "Ao estar activada, as formas que fosen recoñecidas polo recoñecedor de formas pegaranse á grella automaticamente. Isto pode implicar resultados inesperados se ten o recoñecedor de formas aceso mentres escribe."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Ao estar activado, comprobe que os paquetes LaTex requiridos están instalados e que as ordes LaTex están dispoñíbeis antes de executar a ferramenta LaTex."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "Ao estar activado, as capas de cada páxina engadiranse unha a unha. O ficheiro PDF resultante pode utilizarse para unha presentación."
 
 #: ../ui/settings.glade:4205
 msgid "Ignore Time (ms)"
@@ -2382,11 +2383,11 @@ msgstr "Ignorar o tempo (ms)"
 
 #: ../ui/settings.glade:1421
 msgid "Ignore the first"
-msgstr ""
+msgstr "Ignorar o primeiro"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Calidade de imaxe"
 
 #: ../ui/settings.glade:4825
 msgid "Input Device"
@@ -2418,23 +2419,23 @@ msgstr "Inserir unha copia da páxina actual a seguir"
 
 #: ../ui/settings.glade:5165
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Axustes executábeis LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Orde de xeración LaTeX"
 
 #: ../ui/settings.glade:5254 ../ui/settings.glade:5302
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: ../ui/settings.glade:5272
 msgid "Language Settings"
-msgstr ""
+msgstr "Configuración de idioma"
 
 #: ../ui/main.glade:525
 msgid "Layout"
@@ -2467,7 +2468,8 @@ msgstr "Largura máxima (mm)"
 #: ../ui/settings.glade:911
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Combinar eventos de botón con eventos de punta do lapis\n"
+"\t    <i>(Marque isto se</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>devolve</i> \"<tt>aceso</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:1081
 msgid "Middle Mouse Button"
@@ -2475,7 +2477,7 @@ msgstr "Botón medio do rato"
 
 #: ../ui/settings.glade:1291
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Presión mínima:"
 
 #: ../ui/settings.glade:1168 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2487,7 +2489,7 @@ msgstr "Botóns do rato"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "Combinación rato+teclado"
 
 #: ../ui/main.glade:2597
 msgid "Move Down"
@@ -2520,15 +2522,15 @@ msgstr "Nova _Capa"
 #: ../ui/settings.glade:2657
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Sen icona"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "Sen norma"
 
 #: ../ui/exportSettings.glade:43
 msgid "None"
-msgstr ""
+msgstr "Ningún"
 
 #: ../ui/settings.glade:3767
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2536,7 +2538,7 @@ msgstr "Desprazar a primeira páxina certa cantidade de páxinas cando <b>Empare
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "Configuración de opacidade"
 
 #: ../ui/settings.glade:961
 msgid "Options"
@@ -2548,7 +2550,7 @@ msgstr "Dispositivo de saída"
 
 #: ../ui/settings.glade:4463
 msgid "PDF Cache"
-msgstr ""
+msgstr "Caché de PDF"
 
 #: ../ui/main.glade:1090
 msgid "P_revious annotated Page"
@@ -2594,7 +2596,7 @@ msgstr "_Opcións do lapis"
 
 #: ../ui/settings.glade:5094
 msgid "Playback Settings"
-msgstr ""
+msgstr "Configuración de reprodución"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -2618,11 +2620,11 @@ msgstr "Modo de presentación"
 
 #: ../ui/settings.glade:3951
 msgid "Preserve line width"
-msgstr ""
+msgstr "Preservar groso de liña"
 
 #: ../ui/settings.glade:1302
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Multiplicador de presión: "
 
 #: ../ui/settings.glade:1372
 msgid "Pressure Sensitivity"
@@ -2634,7 +2636,7 @@ msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/settings.glade:2772
 msgid "Radius"
-msgstr ""
+msgstr "Radio"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
@@ -2642,7 +2644,7 @@ msgstr "Intervalo"
 
 #: ../ui/settings.glade:4411
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "Volver renderizar cando o aumento da páxina cambia máis de "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2658,15 +2660,15 @@ msgstr "Calidade da gravación"
 
 #: ../ui/main.glade:1206
 msgid "Rename Layer"
-msgstr ""
+msgstr "Renomear capa"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Renomear a capa seleccionada"
 
 #: ../ui/settings.glade:3998
 msgid "Resizing"
-msgstr ""
+msgstr "Redimensionando"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -2686,7 +2688,7 @@ msgstr "Intervalo da mostra"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "Nome da capa de mostra"
 
 #: ../ui/settings.glade:3052
 msgid "Scrollbars"
@@ -2722,7 +2724,7 @@ msgstr "Cor da selección (texto, selección de trazo, etc.)"
 
 #: ../ui/settings.glade:1354
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Escala de sensibilidade"
 
 #: ../ui/main.glade:634
 msgid "Set Columns"
@@ -2754,7 +2756,7 @@ msgstr "Amosar a barra lateral á dereita"
 
 #: ../ui/main.glade:509
 msgid "Show toolbars"
-msgstr ""
+msgstr "Amosar as barras de ferramentas"
 
 #: ../ui/settings.glade:2951
 msgid "Show vertical scrollbar on the left side"
