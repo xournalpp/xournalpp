@@ -78,7 +78,7 @@ auto ToolPageSpinner::newItem() -> GtkToolItem* {
     } else {
         this->lbVerticalPdfPage = gtk_label_new("");
         gtk_widget_set_halign(pageLabel, GTK_ALIGN_BASELINE);
-        gtk_widget_set_halign(spinner, GTK_ALIGN_BASELINE);
+        gtk_widget_set_halign(spinner, GTK_ALIGN_CENTER);
         gtk_widget_set_halign(this->lbPageNo, GTK_ALIGN_BASELINE);
         gtk_widget_set_halign(lbVerticalPdfPage, GTK_ALIGN_BASELINE);
     }
