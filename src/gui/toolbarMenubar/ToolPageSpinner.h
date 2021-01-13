@@ -27,7 +27,7 @@ public:
 
 public:
     SpinPageAdapter* getPageSpinner();
-    void setText(const string& text);
+    void setPageInfo(size_t pagecount, size_t pdfpage);
     virtual string getToolDisplayName();
     GtkToolItem* createItem(bool horizontal);
     GtkToolItem* createTmpItem(bool horizontal);
@@ -37,9 +37,16 @@ protected:
     virtual GtkWidget* getNewToolIcon();
 
 private:
+    void updateLabels();
+
+private:
     GladeGui* gui = nullptr;
 
     SpinPageAdapter* pageSpinner = nullptr;
-    GtkWidget* lbPageNo = nullptr;
     bool horizontal = true;
+
+    GtkWidget* box = nullptr;
+    GtkWidget* lbPageNo = nullptr;
+    GtkWidget* lbVerticalPdfPage = nullptr;
+    size_t pagecount, pdfpage;
 };

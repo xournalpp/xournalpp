@@ -53,7 +53,7 @@ public:
     void setRedoDescription(const string& description);
 
     SpinPageAdapter* getPageSpinner();
-    void setPageText(const string& text);
+    void setPageInfo(size_t pagecount, size_t pdfpage = 0);
 
     void setFontButtonFont(XojFont& font);
     XojFont getFontButtonFont();
