@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-13 07:48\n"
+"PO-Revision-Date: 2021-01-13 08:53\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -506,11 +506,11 @@ msgstr "Erreur : {1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "Erreur : {1} n'est pas un fichier normal. Veuillez vérifier les paramètres de votre fichier de modèle LaTeX. "
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Erreur : {1}. Veuillez vérifier le contenu de {2}"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -520,13 +520,15 @@ msgstr "Impossible de supprimer le fichier d'erreurs. Vous devez le faire manuel
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Exporter le FICHIER en PDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "Exporter le FICHIER en tant que fichiers image (une par page)\n"
+"                                 Deviner le format de sortie à partir de l'extension de IMGFILE\n"
+"                                 formats pris en charge : .png, .svg"
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
@@ -538,35 +540,43 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Exporter progressivement les calques\n"
+"                                 Dans l'export PDF, rendre les calques progressivement un par un.\n"
+"                                 Il en résulte N pages d'exportation pour chaque page de N calques,\n"
+"                                 construisant progressivement la pile de calques.\n"
+"                                 Le fichier PDF généré peut être utilisé pour une présentation.\n"
 
 #: ../src/control/XournalMain.cpp:644
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Exporter sans arrière-plan\n"
+"                                 Le fichier exporté a un arrière-plan transparent ou blanc,\n"
+"                                 selon ce qui est supporté par son format\n"
 
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Exporter sans les règles\n"
+"                                 Le fichier exporté n'a aucune règle sur le papier\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Impossible de trouver le programme de génération LaTeX dans le PATH : {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Impossible d'analyser la commande du générateur LaTeX (erreur de parsing) : {1}"
 
 #: ../src/control/LatexController.cpp:49
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Impossible de lire le fichier de modèle global. Veuillez vérifier vos paramètres."
 
 #: ../src/control/jobs/BaseExportJob.cpp:93
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Erreur lors de la résolution de chemin :\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -580,7 +590,7 @@ msgstr "Remplir"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:315
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Filtrer la pression de la saisie. Multiplier la pression par le multiplicateur de pression. Si elle est inférieure au minimum, utiliser la pression minimale."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Fine"
@@ -604,11 +614,11 @@ msgstr "Récupérer la version de xournalpp"
 
 #: ../src/control/LatexController.cpp:44
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Le fichier de modèle global n'existe pas. Veuillez vérifier vos paramètres."
 
 #: ../src/control/LatexController.cpp:55
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Le fichier de modèle global n'est pas un fichier normal. Veuillez vérifier vos paramètres. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Go to first page"
@@ -713,7 +723,7 @@ msgstr "Aller à la page (première page : 1)"
 
 #: ../src/control/LatexController.cpp:181
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "La génération latex a rencontré une erreur : {1} (code de sortie : {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -813,7 +823,7 @@ msgstr "Aucune page à exporter !"
 
 #: ../src/control/Control.cpp:1232
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Aucune page PDF de disponible à ajouter. Vous devrez peut-être rouvrir le document d'abord."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
@@ -826,7 +836,8 @@ msgstr "OK"
 #: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exporter uniquement les pages spécifiées par INTERVALLE (par exemple \"2-3,5,7-\")\n"
+"                                 Aucun effet sans -p/--create-pdf ou -i/--create-img"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -943,7 +954,7 @@ msgstr "Mode présentation"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "La langue sélectionnée précédemment n'est plus disponible !"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Print"
@@ -985,7 +996,7 @@ msgstr "Outil supprimé {1} de la barre d'outils {2} ID {3}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Renommer le calque"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
@@ -1025,7 +1036,7 @@ msgstr "Graphiques SVG"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "Fichier LaTeX d'exemple généré avec succès."
 
 #: ../src/control/Control.cpp:2433 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:322
@@ -1113,19 +1124,24 @@ msgstr "Séparateur"
 #: ../src/control/XournalMain.cpp:664
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Définir le DPI pour les exportations PNG. La valeur par défaut est 300\n"
+"                                 Pas d'effet sans -i/--create-img=foo.png"
 
 #: ../src/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Définir la hauteur de page pour les exports PNG\n"
+"                                 Aucun effet sans -i/--create-img=foo.png\n"
+"                                 Ignoré si --export-png-dpi ou --export-png-width est utilisé"
 
 #: ../src/control/XournalMain.cpp:668
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Définir la largeur de page pour les exports PNG\n"
+"                                 Aucun effet sans -i/--create-img=foo.png\n"
+"                                 Ignoré si --export-png-dpi est utilisé"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Shape Recognizer"
@@ -1179,7 +1195,7 @@ msgstr "Fichiers pris en charge"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
-msgstr ""
+msgstr "Valeur par défaut du système"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:403
@@ -1229,7 +1245,7 @@ msgstr "Le PDF d'arrière-plan n'a pas pu être trouvé."
 
 #: ../src/control/Control.cpp:2015
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Le fichier en cours de chargement utilise une version du format de fichier plus récente que celle actuellement supportée par cette version de Xournal++, il pourrait par conséquent ne pas se charger correctement. L'ouvrir quand même ?"
 
 #: ../src/control/xojfile/LoadHandler.cpp:117
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1257,11 +1273,11 @@ msgstr "Le nom de fichier journal le plus récent : {1}"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:311
 msgid "The new input system must be enabled to change this setting. "
-msgstr ""
+msgstr "Le nouveau système de saisie doit être activé pour modifier ce paramètre. "
 
 #: ../src/gui/dialog/SettingsDialog.cpp:277
 msgid "The touch workaround must be disabled to change this setting. "
-msgstr ""
+msgstr "Le contournement tactile doit être désactivé pour modifier ce paramètre. "
 
 #: ../src/control/XournalMain.cpp:154
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
@@ -1310,7 +1326,7 @@ msgstr "Essai de sauvegarde d'urgence du document actuellement ouvert…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Impossible d'ouvrir le fichier de modèle global à {1}. Existe-t-il ?"
 
 #: ../src/gui/PageView.cpp:348
 msgid "Unable to play audio recording {1}"
@@ -1318,7 +1334,7 @@ msgstr "Impossible de lire l'enregistrement audio {1}"
 
 #: ../src/control/Control.cpp:1246
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Impossible de récupérer la page pdf."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 #: ../src/undo/UndoRedoHandler.cpp:203
@@ -1367,7 +1383,7 @@ msgstr "Document non enregistré"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Utilisez deux doigts pour déplacer la vue/zoomer et un doigt pour utiliser l'outil sélectionné."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Vertical Space"
@@ -1396,7 +1412,7 @@ msgstr "Avec fond PDF"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:288
 msgid "Without the new input system, two-finger gestures will not zoom/pan while drawing. Enable the new input system and disable the touch workaround to change this setting."
-msgstr ""
+msgstr "Sans le nouveau système d'entrée, les gestes à deux doigts ne zoomeront pas et ne déplaceront pas la vue pendant le dessin. Activez le nouveau système de saisie et désactivez le contournement tactile pour modifier ce paramètre."
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
@@ -1448,7 +1464,7 @@ msgstr "Vous n'avez pas de pages PDF à sélectionner. Annuler l'opération.\n"
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Vous utilisez la branche \"{1}/{2}\" . Envoyer un rapport de bogue vous dirigera vers le gestionnaire de tickets de ce dépôt."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1533,7 +1549,7 @@ msgstr "gomme"
 
 #: ../src/control/Control.cpp:1952
 msgid "file: {1}"
-msgstr ""
+msgstr "fichier : {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -1642,19 +1658,19 @@ msgstr "%"
 
 #: ../ui/settings.glade:2178
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% supérieur à la distance initiale entre les deux touches."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4440
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:469
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1864,7 +1880,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1403
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr "<i>Sur certaines configurations, les traits du stylet peuvent contenir des artéfacts au démarrage. Cela peut être évité en ignorant les premiers évènements ou les premiers points/traits activés lorsque le stylet touche l'écran.</i>"
+msgstr "<i>Sur certaines configurations, les traits du stylet peuvent contenir des artefacts au démarrage. Cela peut être évité en ignorant les premiers évènements ou les premiers points/traits activés lorsque le stylet touche l'écran.</i>"
 
 #: ../ui/settings.glade:1726
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
