@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-13 10:17\n"
+"PO-Revision-Date: 2021-01-15 16:48\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1412,7 +1412,7 @@ msgstr "Avec fond PDF"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:288
 msgid "Without the new input system, two-finger gestures will not zoom/pan while drawing. Enable the new input system and disable the touch workaround to change this setting."
-msgstr "Sans le nouveau système d'entrée, les gestes à deux doigts ne zoomeront pas et ne déplaceront pas la vue pendant le dessin. Activez le nouveau système de saisie et désactivez le contournement tactile pour modifier ce paramètre."
+msgstr "Sans le nouveau système de saisie, les gestes à deux doigts ne zoomeront pas et ne déplaceront pas la vue pendant le dessin. Activez le nouveau système de saisie et désactivez le contournement tactile pour modifier ce paramètre."
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
@@ -1868,7 +1868,7 @@ msgstr "<i>Sélectionnez l'outil et les paramètres si vous appuyez sur le bouto
 
 #: ../ui/settings.glade:1268
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>Certains appareils indiquent des pressions anormalement petites ou grandes. Pour contourner ce problème, Xournal++ peut définir une pression minimale ou ajuster l'échelle de pression indiquée par l'appareil.</i>"
 
 #: ../ui/settings.glade:1942
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -1877,7 +1877,8 @@ msgstr "<i>Spécifiez les commandes qui sont appelées une fois que la reconnais
 #: ../ui/settings.glade:4801
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>Définir les périphériques audio utilisés pour l'enregistrement et la lecture des pièces jointes auditives. \n"
+"Si disponible sélectionner <small><tt>pulse</tt></small> comme entrée / sortie périphérique.</i>"
 
 #: ../ui/settings.glade:1510
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -1901,7 +1902,7 @@ msgstr "<i>Utilisez le geste pincer pour zoomer les pages de journal.</i>"
 
 #: ../ui/settings.glade:2299
 msgid "<i>Use the touchscreen like a multi-touch-aware pen (requires new input system).</i>"
-msgstr ""
+msgstr "<i>Utiliser l'écran tactile comme un stylo compatible multi-touch (nécessite l'utilisation du nouveau système de saisie).</i>"
 
 #: ../ui/settings.glade:1403
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -1935,11 +1936,11 @@ msgstr "Ajouter un espace vertical supplémentaire de"
 
 #: ../ui/settings.glade:3956
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "Après avoir redimensionné une sélection, la grosseur de tous les traits sera la même qu'avant le redimensionnement. "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Tout"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -1953,11 +1954,11 @@ msgstr "Toutes les trois conditions doivent être remplies avant que le trait ne
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Toujours vérifier les dépendances LaTeX avant de lancer"
 
 #: ../ui/main.glade:1147
 msgid "Append New Pdf Pages"
-msgstr ""
+msgstr "Ajouter de nouvelles pages de Pdf"
 
 #: ../ui/settings.glade:1479
 msgid "Artifact workaround"
