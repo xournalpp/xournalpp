@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-12 17:20\n"
+"PO-Revision-Date: 2021-01-15 22:18\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1317,7 +1317,7 @@ msgstr "无法播放音频录音 {1}"
 
 #: ../src/control/Control.cpp:1246
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "无法获取 pdf 页面。"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 #: ../src/undo/UndoRedoHandler.cpp:203
@@ -1366,7 +1366,7 @@ msgstr "未保存文档"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "使用双指缩放，单指操作选定工具。"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Vertical Space"
