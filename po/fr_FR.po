@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-16 15:15\n"
+"PO-Revision-Date: 2021-01-16 16:10\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -87,7 +87,7 @@ msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre à virgule (do
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:95
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (double), la valeur est nullptr"
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre à virgule (double), la valeur est nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:119
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:138
@@ -498,7 +498,7 @@ msgstr "Erreur lors de la sauvegarde automatique : {1}"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr "Erreur {1} exécution de la commande système : {2}"
+msgstr "Erreur {1} lors de l'exécution d'une commande système : {2}"
 
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
@@ -1586,7 +1586,7 @@ msgstr "trait"
 
 #: ../src/util/DeviceListHelper.cpp:123
 msgid "tablet pad"
-msgstr "pavé tactile"
+msgstr "boutons de tablette"
 
 #: ../src/undo/AddUndoAction.cpp:103 ../src/undo/DeleteUndoAction.cpp:100
 msgid "text"
@@ -1594,7 +1594,7 @@ msgstr "texte"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "touchpad"
-msgstr "touchpad"
+msgstr "pavé tactile"
 
 #: ../src/util/DeviceListHelper.cpp:116
 msgid "touchscreen"
@@ -1602,7 +1602,7 @@ msgstr "écran tactile"
 
 #: ../src/util/DeviceListHelper.cpp:121
 msgid "trackpoint"
-msgstr "Points de tracé"
+msgstr "souris tactile (trackpoint)"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:253
 msgid "whiteout"
@@ -2011,7 +2011,7 @@ msgstr "Couleur de la bordure"
 
 #: ../ui/settings.glade:2824
 msgid "Border Width"
-msgstr "Epaisseur de bordure"
+msgstr "Épaisseur de bordure"
 
 #: ../ui/settings.glade:2493
 msgid "Border color"
