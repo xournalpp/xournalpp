@@ -32,7 +32,7 @@ void ToolPageSpinner::setPageInfo(const size_t pagecount, const size_t pdfpage) 
 
 void ToolPageSpinner::updateLabels() {
     string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % this->pagecount);
-    if (this->orientation==GTK_ORIENTATION_HORIZONTAL) {
+    if (this->orientation == GTK_ORIENTATION_HORIZONTAL) {
         string pdfString;
         if (this->pdfpage > 0) {  // zero means that theres no pdf currently
             pdfString = string(", ") + FS(_F("PDF Page {1}") % this->pdfpage);
