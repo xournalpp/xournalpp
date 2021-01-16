@@ -62,15 +62,13 @@ auto ToolPageSpinner::getNewToolIcon() -> GtkWidget* {
 }
 
 auto ToolPageSpinner::newItem() -> GtkToolItem* {
-    GtkOrientation orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
-
     GtkWidget* spinner = this->pageSpinner->newWidget();
     gtk_orientable_set_orientation(reinterpret_cast<GtkOrientable*>(spinner), orientation);
 
     GtkWidget* pageLabel = gtk_label_new(_("Page"));
     this->lbPageNo = gtk_label_new("");
 
-    if (horizontal) {
+    if (orientation == GTK_ORIENTATION_HORIZONTAL) {
         this->lbVerticalPdfPage = nullptr;
         gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);
         gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
@@ -97,7 +95,7 @@ auto ToolPageSpinner::newItem() -> GtkToolItem* {
 }
 
 auto ToolPageSpinner::createItem(bool horizontal) -> GtkToolItem* {
-    this->horizontal = horizontal;
+    this->orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
 
     this->item = createTmpItem(horizontal);
     g_object_ref(this->item);

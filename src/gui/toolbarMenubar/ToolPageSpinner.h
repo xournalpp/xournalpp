@@ -43,7 +43,7 @@ private:
     GladeGui* gui = nullptr;
 
     SpinPageAdapter* pageSpinner = nullptr;
-    bool horizontal = true;
+    GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
 
     GtkWidget* box = nullptr;
     GtkWidget* lbPageNo = nullptr;

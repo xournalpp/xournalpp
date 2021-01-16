@@ -512,7 +512,9 @@ void ToolMenuHandler::setRedoDescription(const string& description) {
 
 auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter* { return this->toolPageSpinner->getPageSpinner(); }
 
-void ToolMenuHandler::setPageInfo(const size_t pagecount, const size_t pdfpage) { this->toolPageSpinner->setPageInfo(pagecount, pdfpage); }
+void ToolMenuHandler::setPageInfo(const size_t pagecount, const size_t pdfpage) {
+    this->toolPageSpinner->setPageInfo(pagecount, pdfpage);
+}
 
 auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel; }
 
