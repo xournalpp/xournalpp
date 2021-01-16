@@ -62,6 +62,11 @@ void PreviewJob::drawBackgroundPdf(Document* doc) {
 void PreviewJob::drawPage(int layer) {
     DocumentView view;
     PageRef page = this->sidebarPreview->page;
+    Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
+
+    if (page->getBackgroundType().isPdfPage() && (layer == -100 || layer == -1)) {
+        drawBackgroundPdf(doc);
+    }
 
     if (layer == -100) {
         // render all layer
@@ -95,10 +100,6 @@ void PreviewJob::run() {
 
     if (RENDER_TYPE_PAGE_LAYER == type) {
         layer = (dynamic_cast<SidebarPreviewLayerEntry*>(this->sidebarPreview))->getLayer();
-    }
-
-    if (this->sidebarPreview->page->getBackgroundType().isPdfPage()) {
-        drawBackgroundPdf(doc);
     }
 
     drawPage(layer);
