@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <cassert>
 #include <list>
 #include <string>
 #include <vector>
@@ -27,7 +28,9 @@ public:
     virtual ~SpinPageAdapter();
 
 public:
-    GtkWidget* newWidget();
+    bool hasWidget();
+    void setWidget(GtkWidget* widget);
+    void removeWidget();
 
     int getPage() const;
     void setPage(size_t page);
@@ -44,6 +47,7 @@ private:
 
 private:
     GtkWidget* widget;
+    gulong pageNrSpinChangedHandlerId;
     size_t page;
 
     int lastTimeoutId;

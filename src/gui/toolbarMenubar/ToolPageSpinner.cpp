@@ -32,7 +32,7 @@ void ToolPageSpinner::setPageInfo(const size_t pagecount, const size_t pdfpage) 
 
 void ToolPageSpinner::updateLabels() {
     string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % this->pagecount);
-    if (this->horizontal) {
+    if (this->orientation==GTK_ORIENTATION_HORIZONTAL) {
         string pdfString;
         if (this->pdfpage > 0) {  // zero means that theres no pdf currently
             pdfString = string(", ") + FS(_F("PDF Page {1}") % this->pdfpage);
@@ -62,7 +62,11 @@ auto ToolPageSpinner::getNewToolIcon() -> GtkWidget* {
 }
 
 auto ToolPageSpinner::newItem() -> GtkToolItem* {
-    GtkWidget* spinner = this->pageSpinner->newWidget();
+    if (this->pageSpinner->hasWidget()) {
+        this->pageSpinner->removeWidget();
+    }
+    GtkWidget* spinner = gtk_spin_button_new_with_range(0, 1, 1);
+    this->pageSpinner->setWidget(spinner);
     gtk_orientable_set_orientation(reinterpret_cast<GtkOrientable*>(spinner), orientation);
 
     GtkWidget* pageLabel = gtk_label_new(_("Page"));
