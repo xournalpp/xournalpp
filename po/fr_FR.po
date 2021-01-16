@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-15 17:46\n"
+"PO-Revision-Date: 2021-01-16 13:57\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2175,7 +2175,7 @@ msgstr "Glissez et déposez des composants d'ici vers les barres barres d'outils
 
 #: ../ui/main.glade:1387
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Dessiner un Système de Coordonnées"
 
 #: ../ui/main.glade:1398
 msgid "Draw _Line"
@@ -2223,7 +2223,7 @@ msgstr "Activer le touché GTK / contournement de défilement (nécessite un red
 
 #: ../ui/settings.glade:940
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Activer l'Inférence de Pression <i>(Devine la pression à partir de la vitesse de dessin lorsque l'appareil ne fourni pas cette information)</i>"
 
 #: ../ui/settings.glade:1233
 msgid "Enable Pressure Sensitivity"
@@ -2247,7 +2247,7 @@ msgstr "Activer le nouveau système d'entrée (nécessite le redémarrage)"
 
 #: ../ui/settings.glade:2313
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Activer le dessin tactile"
 
 #: ../ui/settings.glade:2126
 msgid "Enable zoom gestures (requires restart)"
@@ -2279,7 +2279,7 @@ msgstr "Exporter en tant que..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Exporter progressivement les calques"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
