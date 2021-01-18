@@ -69,6 +69,11 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBS
     set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-lX11 -lXi")
 endif ()
 
+# OpenBSD needs the Xlibs too, but is different about where it stores them
+if (${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
+    set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-L/usr/X11R6/lib -lX11 -lXi")
+endif ()
+
 ## Libraries ##
 
 macro(add_includes_ldflags LDFLAGS INCLUDES)
