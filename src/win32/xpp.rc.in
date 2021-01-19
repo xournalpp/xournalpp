@@ -1,0 +1,33 @@
+#include "winver.h"
+
+0 ICON "xournalpp.ico"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION ${CPACK_PACKAGE_VERSION_MAJOR}, ${CPACK_PACKAGE_VERSION_MINOR}, ${CPACK_PACKAGE_VERSION_PATCH}, 0
+PRODUCTVERSION ${CPACK_PACKAGE_VERSION_MAJOR}, ${CPACK_PACKAGE_VERSION_MINOR}, ${CPACK_PACKAGE_VERSION_PATCH}, 0
+FILEOS VOS__WINDOWS32
+FILETYPE VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+	BEGIN
+		/* Lang = US English, Charset = Multilingual */
+		BLOCK "040904E4"
+		BEGIN
+			VALUE "CompanyName", "The Xournal++ Team\0"
+			VALUE "FileDescription", "Xournal++\0"
+			VALUE "FileVersion", "${PROJECT_VERSION}\0"
+			VALUE "ProductVersion", "${PROJECT_VERSION}\0"
+			VALUE "ProductName", "Xournal++\0"
+			VALUE "OriginalFilename", "xournalpp.exe\0"
+			VALUE "InternalName", "xournalpp\0"
+			VALUE "LegalCopyright", "\0"
+			VALUE "LegalTrademarks", "\0"
+			VALUE "Comments", "\0"
+		END
+	END
+
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x409, 1252
+	END
+END
