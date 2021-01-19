@@ -1,11 +1,9 @@
 #!/bin/bash
 
-## Windows Setup script
-## 1. do the build, will not be called from this script
-## 2. call this script
-## 3. all DLLs, and additional needed files are copied to
-##    the folder "setup"
-## 4. NSIS is called, to create the setup
+# Windows packaging script. This does the following:
+# 1. Run "install" target from CMake into setup folder
+# 2. Copy runtime dependencies into setup folder
+# 3. Create version file and execute NSIS to create installer
 
 # go to script directory
 cd $(dirname $(readlink -f "$0"))
@@ -61,6 +59,7 @@ cp /mingw64/bin/gspawn-win64-helper.exe "$setup_dir"/bin
 cp /mingw64/bin/gspawn-win64-helper-console.exe "$setup_dir"/bin
 
 echo "create installer"
+bash make_version_nsh.sh
 "/c/Program Files (x86)/NSIS/Bin/makensis.exe" xournalpp.nsi
 
 echo "finished"

@@ -8,6 +8,7 @@
 !include x64.nsh
 !include "FileAssociation.nsh"
 !include nsDialogs.nsh
+!include "xournalpp_version.nsh"
 
 ;--------------------------------
 ; Initialization
@@ -24,7 +25,7 @@ Function .onInit
 FunctionEnd
 
 ; Name and file
-Name "Xournal++"
+Name "Xournal++ ${XOURNALPP_VERSION}"
 OutFile "xournalpp-setup.exe"
 
 ; Default installation folder
