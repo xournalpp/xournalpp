@@ -89,7 +89,7 @@ stages:
               cmake_flags: '-GNinja -DCMAKE_CXX_FLAGS="-Os -s"'
           - script: |
               set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
-              C:\msys64\usr\bin\bash -lc "./build-setup.sh"
+              C:\msys64\usr\bin\bash -lc "./package.sh"
             workingDirectory: ./windows-setup
             env:
               MSYS2_ARCH: x86_64
