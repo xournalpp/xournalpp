@@ -23,18 +23,18 @@ class SpinPageAdapter;
 class ToolPageSpinner: public AbstractToolItem {
 public:
     ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
-    virtual ~ToolPageSpinner();
+    ~ToolPageSpinner() override;
 
 public:
     SpinPageAdapter* getPageSpinner();
     void setPageInfo(size_t pagecount, size_t pdfpage);
-    virtual string getToolDisplayName();
-    GtkToolItem* createItem(bool horizontal);
-    GtkToolItem* createTmpItem(bool horizontal);
+    string getToolDisplayName() override;
+    GtkToolItem* createItem(bool horizontal) override;
+    GtkToolItem* createTmpItem(bool horizontal) override;
 
 protected:
-    virtual GtkToolItem* newItem();
-    virtual GtkWidget* getNewToolIcon();
+    GtkToolItem* newItem() override;
+    GtkWidget* getNewToolIcon() override;
 
 private:
     void updateLabels();
