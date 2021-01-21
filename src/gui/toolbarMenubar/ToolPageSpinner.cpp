@@ -102,11 +102,6 @@ auto ToolPageSpinner::createItem(bool horizontal) -> GtkToolItem* {
     this->orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
 
     this->item = createTmpItem(horizontal);
-    g_object_ref(this->item);
-
-    if (GTK_IS_TOOL_BUTTON(this->item) || GTK_IS_TOGGLE_TOOL_BUTTON(this->item)) {
-        g_signal_connect(this->item, "clicked", G_CALLBACK(&toolButtonCallback), this);
-    }
 
     return this->item;
 }
