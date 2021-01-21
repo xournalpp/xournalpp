@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-21 22:10\n"
+"PO-Revision-Date: 2021-01-21 23:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -520,7 +520,7 @@ msgstr "错误日志未能删除，请手工处理。\n"
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "导出为 PDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
@@ -544,7 +544,9 @@ msgstr ""
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "无背景导出\n"
+"                                 导出文件可能具有白色或透明背景，\n"
+"                                 取决于文件的导出格式\n"
 
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
@@ -553,20 +555,20 @@ msgstr ""
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "路径中无法找到LaTeX generator程序: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "解析LaTeX generator命令失败:{1}"
 
 #: ../src/control/LatexController.cpp:49
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "无法读取全局模板文件，请检查你的设置。"
 
 #: ../src/control/jobs/BaseExportJob.cpp:93
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "因如下错误而无法解析路径:{1}"
 
 #: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -604,11 +606,11 @@ msgstr "获取xournalp版本信息"
 
 #: ../src/control/LatexController.cpp:44
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "缺少全局模板文件，请检查你的设置。"
 
 #: ../src/control/LatexController.cpp:55
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "全局模板文件格式不正确，请检查你的设置。 "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Go to first page"
@@ -713,7 +715,7 @@ msgstr "跳到页面(第一页:1)"
 
 #: ../src/control/LatexController.cpp:181
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "Latex generation遇到了一个错误:{1}(退出代码: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -943,7 +945,7 @@ msgstr "演讲模式"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "已选择的语言不再可用!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Print"
@@ -1025,7 +1027,7 @@ msgstr "SVG图形"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "已成功生成示例LaTeX文件。"
 
 #: ../src/control/Control.cpp:2433 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:322
@@ -1229,7 +1231,7 @@ msgstr "背景PDF未找到。"
 
 #: ../src/control/Control.cpp:2015
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "正在加载的文件格式版本比当前版本Xournal++支持的文件格式版本更新， 可能无法正确加载，仍要打开？"
 
 #: ../src/control/xojfile/LoadHandler.cpp:117
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
