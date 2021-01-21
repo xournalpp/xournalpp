@@ -15,8 +15,8 @@
 #include "Element.h"
 #include "LineStyle.h"
 #include "Point.h"
+#include "Spline.h"
 
-#include "SplineSegment.h"
 #include <list>
 
 enum StrokeTool { STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER };
@@ -81,7 +81,7 @@ public:
 
     const LineStyle& getLineStyle() const;
     void setLineStyle(const LineStyle& style);
-
+    
     bool intersects(double x, double y, double halfEraserSize) override;
     bool intersects(double x, double y, double halfEraserSize, double* gap) override;
 
@@ -140,14 +140,21 @@ private:
      */
     int fill = -1;
     
-    /**
-     * @brief Approximate the stroke by a spline using 
-     *  1- the centripetal Catmull-Rom method (replace each line segment by a spline segment to obtain a smooth path)
-     *  2- de Casteljau's algorithm (replace each spline segment by a series of points with higher density where the spline has high curvature)
-     *  3- Schneider's algorithm (approximate the resulting list of points by a (much) smaller number of splines)
-     */
-//     void approximateBySpline();
 public:
+    /**
+     * @brief The spline interpolating the stroke
+     */
+    Spline spline;
+    
+    /**
+     * @brief Approximate the points using Schneider's algorithm
+     */
+    void splineFromPoints();
+    
+    /**
+     * @brief Fill the vector points using the spline
+     */
+    void pointsFromSpline();
     
 //     std::list<SplineSegment> centripetalCatmullRomSmoothing();
     Stroke* schneider();

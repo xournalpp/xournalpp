@@ -151,6 +151,10 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
 
     const double w = stroke->getWidth();
 
+    /**
+     * We should not recompute the size of the stroke from scratch: we only added one point
+     * TODO Optimize this
+     */
     this->redrawable->repaintRect(stroke->getX() - w, stroke->getY() - w, stroke->getElementWidth() + 2 * w,
                                   stroke->getElementHeight() + 2 * w);
 }
@@ -265,21 +269,51 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     if (stroke->getPointCount() == 2) {
         this->redrawable->rerenderElement(stroke);
     }
-    
+
+    /**
+    stroke->splineFromPoints();
+    **/
     Stroke* splineStroke = stroke->schneider();
-    layer = page->getLayers()->at(1);
+    layer = page->getLayers()->back();
     layer->addElement(splineStroke);
     page->fireElementChanged(splineStroke);
     this->redrawable->rerenderElement(splineStroke);
+    
+    Rectangle<double> bb = splineStroke->spline.getBoundingBox();
+    Stroke* bbStroke = new Stroke();
+    bbStroke->applyStyleFrom(stroke);
+    bbStroke->setColor(Color(0xffff0000));
+    bbStroke->addPoint(Point(bb.x, bb.y));
+    bbStroke->addPoint(Point(bb.x, bb.y + bb.height));
+    bbStroke->addPoint(Point(bb.x + bb.width, bb.y + bb.height));
+    bbStroke->addPoint(Point(bb.x + bb.width, bb.y));
+    bbStroke->addPoint(Point(bb.x, bb.y));
+    layer->addElement(bbStroke);
+    page->fireElementChanged(bbStroke);
+    this->redrawable->rerenderElement(bbStroke);
+    
+    Point first = splineStroke->spline.getFirstKnot();
+    const Point* pt = &first;
+    for (auto&& seg: (splineStroke->spline.getSegments())) {
+        bbStroke = new Stroke();
+        bbStroke->applyStyleFrom(stroke);
+        bbStroke->setColor(Color(0xff0000ff));
+        bbStroke->setWidth( bbStroke->getWidth() / 2.0 );
+        bb = seg.getBoundingBox(*pt);
+        pt = &(seg.secondKnot);
+        bbStroke->deletePointsFrom(0);
+        bbStroke->addPoint(Point(bb.x, bb.y));
+        bbStroke->addPoint(Point(bb.x, bb.y + bb.height));
+        bbStroke->addPoint(Point(bb.x + bb.width, bb.y + bb.height));
+        bbStroke->addPoint(Point(bb.x + bb.width, bb.y));
+        bbStroke->addPoint(Point(bb.x, bb.y));
+        layer->addElement(bbStroke);
+        page->fireElementChanged(bbStroke);
+        this->redrawable->rerenderElement(bbStroke);
+    }
+    bbStroke = nullptr;
     splineStroke = nullptr;
-    
-    Stroke* CRS = stroke->CRS();
-    layer = page->getLayers()->back();
-    layer->addElement(CRS);
-    page->fireElementChanged(CRS);
-    this->redrawable->rerenderElement(CRS);
-    CRS = nullptr;
-    
+
 
     stroke = nullptr;
 }

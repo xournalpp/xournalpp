@@ -416,11 +416,11 @@ void Stroke::debugPrint() {
     g_message("\n");
 }
 
-auto Stroke::CRS() -> Stroke* {
-    
-    int pointCount = getPointCount();
+void Stroke::splineFromPoints() {
+    const int pointCount = getPointCount();
     if (pointCount == 0) {
-        return new Stroke();
+        spline.setFirstKnot({0.0, 0.0, Point::NO_PRESSURE});
+        return;
     }
     
     /**
@@ -430,32 +430,18 @@ auto Stroke::CRS() -> Stroke* {
         if (pointCount == 2) {
             setLastPressure(points[pointCount-2].z);
         } else {
-            // Linearly extrapolate the pressure using the second and third to last ppints
-            setLastPressure(2 * points[pointCount - 2].z - points[pointCount - 3].z);
+            // Linearly extrapolate the pressure using the second and third to last points
+            setLastPressure(std::max(2 * points[pointCount - 2].z - points[pointCount - 3].z, 0.0));
         }
     }
     
-    Spline catmullRom = Spline::getCentripetalCatmullRomInterpolation(points);
-    
-    std::list<Point> crpts =  catmullRom.toPointSequence();
-    std::vector<Point> newPoints;
-    newPoints.reserve(crpts.size());
-    for (Point p: crpts) {
-        newPoints.push_back(p);
-    }
+    spline = Spline::getSchneiderApproximation(points);
+}
 
-    Spline schneider_catmull_rom = Spline::getSchneiderApproximation(newPoints);
-    
-    g_message("                     CRS splines : %zu", schneider_catmull_rom.size());
-    
-    std::list<Point> pts = schneider_catmull_rom.toPointSequence();
-    Stroke* result = new Stroke();
-    for (auto&& p : pts) {
-        result->addPoint(p);
-    }
-    result->applyStyleFrom(this);
-    
-    return result;
+void Stroke::pointsFromSpline() {
+    points.clear();
+    spline.toPoints(points);
+    sizeCalculated = false;
 }
 
 auto Stroke::schneider() -> Stroke* {
@@ -476,29 +462,13 @@ auto Stroke::schneider() -> Stroke* {
             setLastPressure(2 * points[pointCount - 2].z - points[pointCount - 3].z);
         }
     }
-    
-//     Spline catmullRom = Spline::getCentripetalCatmullRomInterpolation(points);
-    
-    Spline schneider = Spline::getSchneiderApproximation(points);
 
-//     for (auto&& spline : catmullRom) {
-//         result.splice(result.end(), spline.toPointSequence());
-//     }
-//     std::list<Point> result =  catmullRom.toPointSequence();
-//     std::vector<Point> newPoints;
-//     newPoints.reserve(result.size());
-//     for (Point p: result) { newPoints.push_back(p); }
-    
-//     Spline schneider_catmull_rom = Spline::getSchneiderApproximation(newPoints);
-    
-    std::list<Point> pts = schneider.toPointSequence();
     Stroke* result = new Stroke();
-    for (auto&& p : pts) {
-        result->addPoint(p);
-    }
+    result->spline = Spline::getSchneiderApproximation(points);
+    result->pointsFromSpline();
     result->applyStyleFrom(this);
 
-    g_message("Nb points: %d, Schneider segments: %zu", getPointCount(), schneider.size());//, schneider_catmull_rom.size());
+//     g_message("Nb points: %d, Schneider segments: %zu", getPointCount(), schneider.size());//, schneider_catmull_rom.size());
 // #define PLOT_STROKE
 #ifdef PLOT_STROKE
     //     printf("\n\n");

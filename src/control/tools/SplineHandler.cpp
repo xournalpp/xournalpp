@@ -346,28 +346,22 @@ auto SplineHandler::getKnotCount() const -> int {
 }
 
 void SplineHandler::updateStroke() {
-    if (!stroke) {
+    if (!stroke || this->knots.empty()) {
         return;
     }
     // create spline segments
-    std::vector<SplineSegment> segments = {};
+    Spline& spline = stroke->spline;
+    spline.resize(0);
+    spline.setFirstKnot(this->knots[0]);
     Point cp1, cp2;
     for (size_t i = 0; i < this->getKnotCount() - 1; i++) {
         cp1 = Point(this->knots[i].x + this->tangents[i].x, this->knots[i].y + this->tangents[i].y);
         cp2 = Point(this->knots[i + 1].x - this->tangents[i + 1].x, this->knots[i + 1].y - this->tangents[i + 1].y);
-        segments.push_back(SplineSegment(this->knots[i], cp1, cp2, this->knots[i + 1]));
+        spline.addCubicSegment(cp1, cp2, this->knots[i + 1]);
     }
 
-    // convert collection of segments to stroke
-    stroke->deletePointsFrom(0);
-    for (auto s: segments) {
-        for (auto p: s.toPointSequence()) {
-            stroke->addPoint(p);
-        }
-    }
-    if (!segments.empty()) {
-        stroke->addPoint(segments.back().secondKnot);
-    }
+    // convert the spline to points
+    stroke->pointsFromSpline();
 }
 
 auto SplineHandler::computeRepaintRectangle() const -> Rectangle<double> {

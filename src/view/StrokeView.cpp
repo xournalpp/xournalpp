@@ -88,9 +88,12 @@ void StrokeView::drawNoPressure() {
     cairo_set_line_width(cr, width * scaleFactor);
     applyDashed(0);
 
-    for_first_then_each(
-            s->getPointVector(), [this](auto const& first) { cairo_move_to(cr, first.x, first.y); },
-            [this](auto const& other) { cairo_line_to(cr, other.x, other.y); });
+    const Point& firstKnot = s->spline.getFirstKnot();
+    cairo_move_to(cr, firstKnot.x, firstKnot.y);
+    for (auto&& seg: s->spline.getSegments()) {
+        cairo_curve_to(cr, seg.firstControlPoint.x, seg.firstControlPoint.y, seg.secondControlPoint.x,
+                       seg.secondControlPoint.y, seg.secondKnot.x, seg.secondKnot.y);
+    }
     cairo_stroke(cr);
 
     if (group) {

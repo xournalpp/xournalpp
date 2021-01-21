@@ -137,12 +137,12 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     /**
      * TODO Add support for spline segments in Stroke and replace this point sequence by a single spline segment
      */
-    std::list<Point> pointsToPaint = spline.toPointSequence();
+    std::vector<Point> pointsToPaint;
+    spline.toPoints(pointsToPaint);
 
-    pointsToPaint.pop_front();  // Point B has already been painted
-
-    for (auto&& point: pointsToPaint) {
-        strokeHandler->drawSegmentTo(point);
+    // Do not add the first point (B): it is already painted
+    for (auto it = pointsToPaint.cbegin() + 1 ; it != pointsToPaint.cend() ; ++it) {
+        strokeHandler->drawSegmentTo(*it);
     }
     C.z = ev.pressure;  // Normal state after having added a segment. Useful?
     strokeHandler->drawSegmentTo(C);

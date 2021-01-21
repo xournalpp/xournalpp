@@ -24,6 +24,7 @@
  */ 
 class PartialSplineSegment {
 public:
+    PartialSplineSegment() = default;
     /**
      * @brief Create a linear spline segment from p to q
      */
@@ -40,6 +41,58 @@ public:
      * @return Pair of the resulting two partial spline segments
      */
     std::pair<PartialSplineSegment, PartialSplineSegment> subdivide(const Point& firstKnot, double t) const;
+    
+    /**
+     * @brief Convert the spline segment to points and push them to the given vector. Do not push the first knot.
+     * @param firstKnot The first knot used for interpolation
+     * @param points Vector of points to which the interpolated points will be pushed
+     */
+    void toPoints(const Point& firstKnot, std::vector<Point>& points) const;
+    
+    /**
+     * @brief Get the x coordinate of the interpolated point at t
+     * @param firstKnot Used as the first knot of the segment
+     * @param t Parameter value
+     * @return The x coordinate of the point of parameter t
+     * 
+     * Use getPoint instead if you also need the other coordinates
+     */
+    double getX(const Point& firstKnot, double t) const;    
+
+    /**
+     * @brief Get the x coordinate of the interpolated point at t
+     * @param firstKnot Used as the first knot of the segment
+     * @param t Parameter value
+     * @return The x coordinate of the point of parameter t
+     * 
+     * Use getPoint instead if you also need the other coordinates
+     */
+    double getY(const Point& firstKnot, double t) const;
+    
+    /**
+     * @brief Get the interpolated point at t
+     * @param firstKnot Used as the first knot of the segment
+     * @param t Parameter value
+     * @return The point of parameter t
+     */
+    Point getPoint(const Point& firstKnot, double t) const;
+    
+    /**
+     * @brief Compute the bounding box of the segment
+     * @param firstKnot Used as the first knot of the segment
+     * @return Bounding box
+     */
+    Rectangle<double> getBoundingBox(const Point& firstKnot) const;
+
+private:
+    /**
+     * @brief Compute the roots of the polynomial equation a * t^2 + 2 * b * t + c
+     * @param a Quadratic coefficient
+     * @param b Half of linear coefficient
+     * @param c Constant coefficient
+     * @return Vector containing the roots
+     */
+    static std::vector<double> rootsOfPolynomialEquation(double a, double b, double c);
     
 protected:
     static constexpr double FLATNESS_TOLERANCE = 1.0001;
@@ -104,10 +157,10 @@ public:
     void draw(cairo_t* cr) const;
 
     /**
-     * @brief Convert the spline segment to a list of points.
-     * @return A point list which represents the spline segment without the end point.
+     * @brief Convert the spline segment to points and fill the given vector. Omit the second knot.
+     * @param points Vector of points to fill.
      */
-    std::list<Point> toPointSequence() const;
+    void toPoints(std::vector<Point>& points) const;
 
     /**
      * @brief Subdivide the spline into two parts with respect to parameter t.

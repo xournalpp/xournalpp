@@ -3,8 +3,8 @@
 #include <cmath>
 #include <numeric>
 
+// For debug purposes. Remove before merge
 #include "i18n.h"
-
 #define EXTRA_CAREFUL
 
 Spline::Spline(const Point& firstKnot): firstKnot(firstKnot) {}
@@ -27,9 +27,11 @@ void Spline::addCubicSegment(const MathVect3& fVelocity, const MathVect3 sVeloci
     segments.emplace_back(getLastKnot(), fVelocity, sVelocity, q);
 }
 
-auto Spline::getFirstKnot() const -> Point { return firstKnot; }
+void Spline::setFirstKnot(const Point& p) { firstKnot = p; }
 
-auto Spline::getLastKnot() const -> Point {
+auto Spline::getFirstKnot() const -> const Point& { return firstKnot; }
+
+auto Spline::getLastKnot() const -> const Point& {
     if (segments.empty()) {
         return firstKnot;
     }
@@ -38,22 +40,36 @@ auto Spline::getLastKnot() const -> Point {
 
 auto Spline::getSegments() const -> const std::vector<PartialSplineSegment>& { return segments; }
 
-auto Spline::toPointSequence() const -> std::list<Point> {
-    Point first = firstKnot;
-    std::list<Point> result;
+auto Spline::getBoundingBox() const -> Rectangle<double> {
+    Rectangle<double> result(firstKnot.x, firstKnot.y, 0.0, 0.0);
+    const Point* first = &firstKnot;
     for (auto&& seg: segments) {
-        result.splice(result.end(), SplineSegment(first, seg).toPointSequence());
-        first = seg.secondKnot;
+        result.unite(seg.getBoundingBox(*first));
+        first = &seg.secondKnot;
     }
-    result.push_back(segments.back().secondKnot);  // Add the final point
     return result;
+}
+
+void Spline::toPoints(std::vector<Point>& points) const {
+    const Point* first = &firstKnot;
+    points.push_back(*first);
+    for (auto&& seg: segments) {
+        seg.toPoints(*first, points);
+        first = &(seg.secondKnot);
+    }
 }
 
 auto Spline::size() const -> size_t { return segments.size(); }
 
-void Spline::debugPrint() {
+void Spline::resize(size_t n) {
+    if (n < segments.size()) {
+        segments.resize(n);
+    }
+}
+
+void Spline::debugPrint() const {
     /**
-     * svg-like dump of the spline
+     * 3D svg-like dump of the spline
      */
     g_message("%s", FC(FORMAT_STR("Spline {1}") % (uint64_t)this));
     g_message("M %f %f %f", firstKnot.x, firstKnot.y, firstKnot.z);
@@ -63,16 +79,6 @@ void Spline::debugPrint() {
                   seg.secondKnot.x, seg.secondKnot.y, seg.secondKnot.z);
     }
 }
-
-/**
- * Spline simplification, using Schneider's algorithm.
- *
- * Adapted from:
- * "An Algorithm for Automatically Fitting Digitized Curves"
- * by Philip J. Schneider, in "Graphics Gems", Academic Press, 1990
- */
-void Spline::simplify() {}
-
 
 /**
  * Catmull-Rom interpolation
@@ -172,6 +178,9 @@ auto Spline::getSchneiderApproximation(const std::vector<Point>& points) -> Spli
         return Spline(Point(0, 0));
     }
     SchneiderApproximater approximator(points);
+#ifdef EXTRA_CAREFUL
+    approximator.printStats();
+#endif
     return approximator.getSpline();
 }
 
@@ -211,6 +220,18 @@ Spline::SchneiderApproximater::SchneiderApproximater(const std::vector<Point>& p
     }
 }
 
+void Spline::SchneiderApproximater::printStats() {
+    size_t nbPoints = points.size();
+    size_t nbSegments = spline.size();
+    totalNbSegments += nbSegments;
+    totalNbPoints += nbPoints;
+    g_message("Schneider: %3zu pts => %3zu segs. Total %4zu pts => %4zu segs",
+              nbPoints, nbSegments, totalNbPoints, totalNbSegments);
+}
+size_t Spline::SchneiderApproximater::totalNbPoints = 0;
+size_t Spline::SchneiderApproximater::totalNbSegments = 0;
+
+
 auto Spline::SchneiderApproximater::getSpline() -> Spline { return spline; }
 
 void Spline::SchneiderApproximater::fitCubic(size_t lowerIndex, const MathVect3& firstTangentVector,
@@ -248,8 +269,9 @@ void Spline::SchneiderApproximater::fitCubic(size_t lowerIndex, const MathVect3&
     size_t middleIndex;
     MathVect3 middleTangentVector;
     { // Scope of segmentFitter
-        SingleSegmentFitter segmentFitter(firstTangentVector, secondTangentVector, getStandardParametrization(lowerIndex, upperIndex),
-                                std::next(points.cbegin(), lowerIndex), std::next(points.cbegin(), upperIndex));
+        SingleSegmentFitter segmentFitter(firstTangentVector, secondTangentVector,
+                                          std::next(points.cbegin(), lowerIndex), std::next(points.cbegin(), upperIndex),
+                                          getStandardParametrization(lowerIndex, upperIndex));
         
         bool parametrizationValid = true;
         double lastError = ITERATION_ERROR;
@@ -319,9 +341,9 @@ MathVect3 Spline::SchneiderApproximater::getMiddleTangent(std::vector<Point>::co
 
 
 Spline::SchneiderApproximater::SingleSegmentFitter::SingleSegmentFitter(const MathVect3& fTgt, const MathVect3& sTgt,
-                                                          std::vector<double> parametrization,
                                                           std::vector<Point>::const_iterator pointsBegin,
-                                                          std::vector<Point>::const_iterator pointsLast):
+                                                          std::vector<Point>::const_iterator pointsLast,
+                                                          std::vector<double> parametrization):
         fTgt(fTgt),
         sTgt(sTgt),
         diff(*pointsBegin, *pointsLast),
@@ -330,12 +352,11 @@ Spline::SchneiderApproximater::SingleSegmentFitter::SingleSegmentFitter(const Ma
         sp_sTgt_diff(MathVect3::scalarProduct(sTgt, diff)),
         fTgtZero(fTgt.dx == 0.0 && fTgt.dy == 0.0), // && fTgt.dz == 0.0),  // No need to fuzzy compare (see fTgt.normalize())
         sTgtZero(sTgt.dx == 0.0 && sTgt.dy == 0.0), // && sTgt.dz == 0.0),  // No need to fuzzy compare (see sTgt.normalize())
-        parametrization(parametrization),
         pointsBegin(pointsBegin),
         pointsEnd(std::next(pointsLast)),
-        worstPoint(std::next(pointsBegin, std::distance(pointsBegin, pointsEnd) / 2)) {
+        worstPoint(std::next(pointsBegin, std::distance(pointsBegin, pointsEnd) / 2)),
+        parametrization(parametrization) {
 #ifdef EXTRA_CAREFUL
-//     g_message("SingleSegmentFitter: %f, %f, %f", sp_fTgt_sTgt, sp_fTgt_diff, sp_sTgt_diff);
     if(parametrization.size() != std::distance(pointsBegin, pointsEnd)) {
         g_warning("Spline::SchneiderApproximater::SingleSegmentFitter::SingleSegmentFitter: wrong parametrization size %zu vs %zu", parametrization.size(), std::distance(pointsBegin, pointsEnd));
     }
@@ -486,15 +507,6 @@ double Spline::SchneiderApproximater::SingleSegmentFitter::computeMaxError() {
     return maxDistance;
 }
 
-MathVect3 Spline::SchneiderApproximater::SingleSegmentFitter::getFirstVelocity() const { return fVelocity; }
-
-MathVect3 Spline::SchneiderApproximater::SingleSegmentFitter::getSecondVelocity() const { return sVelocity; }
-
-std::vector<Point>::const_iterator Spline::SchneiderApproximater::SingleSegmentFitter::getWorstPoint() const {
-    return worstPoint;
-}
-
-
 bool Spline::SchneiderApproximater::SingleSegmentFitter::reparametrize() {
     
     auto errorIt = errors.cbegin();
@@ -533,4 +545,12 @@ bool Spline::SchneiderApproximater::SingleSegmentFitter::reparametrize() {
         it++;
     }
     return true;
+}
+
+MathVect3 Spline::SchneiderApproximater::SingleSegmentFitter::getFirstVelocity() const { return fVelocity; }
+
+MathVect3 Spline::SchneiderApproximater::SingleSegmentFitter::getSecondVelocity() const { return sVelocity; }
+
+std::vector<Point>::const_iterator Spline::SchneiderApproximater::SingleSegmentFitter::getWorstPoint() const {
+    return worstPoint;
 }
