@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-22 00:22\n"
+"PO-Revision-Date: 2021-01-22 01:22\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -830,7 +830,7 @@ msgstr "确定"
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "只导出RANGE指定的页面(例如“2-3,5,7-\")\n"
-"                                 当没有 -p/--create-pdf or -i/--create-img 无效果"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -1118,19 +1118,23 @@ msgstr "分割线"
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "设置PNG 导出的DPI ，默认是 300\n"
-"                                 当没有 -i/--create-img=foo.png 无效果"
+"                                 No effect without -i/--create-img=foo.png"
 
 #: ../src/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "设置PNG导出页面的高度\n"
+"                                 No effect without -i/--create-img=foo.png\n"
+"                                 Ignored if --export-png-dpi or --export-png-width is used"
 
 #: ../src/control/XournalMain.cpp:668
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "设置PNG导出页面的宽度\n"
+"                                 No effect without -i/--create-img=foo.png\n"
+"                                 Ignored if --export-png-dpi is used"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Shape Recognizer"
@@ -1453,7 +1457,7 @@ msgstr "您没有任何可以选择的 PDF 页面。操作取消。\n"
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "您正在使用 {1}/{2} 分支，发送错误报告将直接将您转向Git仓库的问题跟踪器。"
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1707,11 +1711,11 @@ msgstr "1,00"
 
 #: ../ui/settings.glade:2163
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:2808
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1834,7 +1838,7 @@ msgstr "<i>选择按下缺省按钮后的工具和设置</i>"
 
 #: ../ui/settings.glade:1268
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr "<i>某些设备压感过小或过大，可以通过设置更大或更小的压感反馈修复。</i>"
+msgstr "<i>某些设备压力过小或过大，可以通过设置更大或更小的压力反馈修复。</i>"
 
 #: ../ui/settings.glade:1942
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -1969,7 +1973,7 @@ msgstr "页面背景颜色"
 #: ../ui/settings.glade:2659
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "粗笔图标"
 
 #: ../ui/settings.glade:2863
 msgid "Border Color"
@@ -2005,7 +2009,7 @@ msgstr "选择LaTex全局模板文件"
 
 #: ../ui/settings.glade:2706 ../ui/settings.glade:2849
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "选择 “高亮光标位置” 所使用的颜色"
 
 #: ../ui/settings.glade:2720
 msgid "Circle Color"
@@ -2021,7 +2025,7 @@ msgstr "配置页模板"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr "配置新建页面模板"
+msgstr "配置新页面模板"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
@@ -2149,7 +2153,7 @@ msgstr "绘制直线"
 
 #: ../ui/settings.glade:2688
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "在光标周围绘制透明圆圈"
 
 #: ../ui/settings.glade:4494
 msgid "Drawing Area"
@@ -2258,7 +2262,7 @@ msgstr "填充(_l)"
 
 #: ../ui/main.glade:1636 ../ui/main.glade:1841
 msgid "Fill opacity"
-msgstr ""
+msgstr "透明度填充"
 
 #: ../ui/main.glade:2369
 msgid "Find next occurrence of the search string"
@@ -2286,7 +2290,7 @@ msgstr "收益"
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "常规LaTeX工具设置"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
@@ -2298,7 +2302,7 @@ msgstr "全局"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "全局模板文件路径"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2322,7 +2326,7 @@ msgstr "手势识别"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "高度"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2368,11 +2372,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "启用时，请检查是否安装了所需的 LaTeX 软件包以及运行 LaTeX 工具之前检查 LaTeX 命令是否可以使用。"
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "启用时，每个页面的图层将被逐一添加，由此产生的 PDF 文件可以用于演示。"
 
 #: ../ui/settings.glade:4205
 msgid "Ignore Time (ms)"
@@ -2380,11 +2384,11 @@ msgstr "忽略时间（毫秒）"
 
 #: ../ui/settings.glade:1421
 msgid "Ignore the first"
-msgstr ""
+msgstr "忽略第一个"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "图像质量"
 
 #: ../ui/settings.glade:4825
 msgid "Input Device"
@@ -2416,11 +2420,11 @@ msgstr "在下方插入当前页面的副本"
 
 #: ../ui/settings.glade:5165
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "LaTeX 可执行文件设置"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
@@ -2523,7 +2527,7 @@ msgstr "无图标"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "无序"
 
 #: ../ui/exportSettings.glade:43
 msgid "None"
@@ -2620,7 +2624,7 @@ msgstr "保留线宽"
 
 #: ../ui/settings.glade:1302
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "压力增量： "
 
 #: ../ui/settings.glade:1372
 msgid "Pressure Sensitivity"
@@ -2766,7 +2770,7 @@ msgstr ""
 #: ../ui/settings.glade:2658
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "小图标"
 
 #: ../ui/settings.glade:4157
 msgid "Snapping"
@@ -2818,7 +2822,7 @@ msgstr "工具条(_o)"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "模板文件设置"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -2842,11 +2846,11 @@ msgstr "文本字体..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "LaTeX 文件作为LaTeX 工具的模板。"
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "文本工具的当前颜色，为十六进制RGB格式。"
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
@@ -2899,7 +2903,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "使用的当前页的页面尺寸而不是前一页的页面尺寸。"
 
 #: ../ui/settings.glade:3780
 msgid "Usually 0 or 1"
@@ -2925,7 +2929,7 @@ msgstr ""
 #: ../ui/settings.glade:4408
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "当PDF放大至高分辨率时，每次重新渲染都可能需要很长时间，设置该值可以减少重新渲染的次数，设置为0%时则缩放时总是重新渲染。"
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
@@ -2933,7 +2937,7 @@ msgstr "涂白"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "宽度："
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3225,7 +3229,7 @@ msgstr "启用，"
 
 #: ../ui/settings.glade:1456
 msgid "events"
-msgstr ""
+msgstr "事件"
 
 #: ../ui/settings.glade:311
 msgid "every"
@@ -3259,5 +3263,5 @@ msgstr "极粗(_y)"
 
 #: ../ui/about.glade:178
 msgid "with libgtk"
-msgstr ""
+msgstr "使用 libgtk"
 
