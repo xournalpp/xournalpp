@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-22 02:19\n"
+"PO-Revision-Date: 2021-01-22 03:15\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -589,7 +589,7 @@ msgstr "填充"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:315
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "过滤输入压力，压力乘以压力乘数，如果小于最小压力，则使用最小压力。"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Fine"
@@ -1276,7 +1276,7 @@ msgstr ""
 
 #: ../src/gui/dialog/SettingsDialog.cpp:277
 msgid "The touch workaround must be disabled to change this setting. "
-msgstr "必须禁用触摸板才能更改此设置。 "
+msgstr "必须禁用触摸模式才能更改此设置 "
 
 #: ../src/control/XournalMain.cpp:154
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
@@ -2218,7 +2218,7 @@ msgstr "启用自动保存"
 
 #: ../ui/settings.glade:2246
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
-msgstr "启用GTK触摸/滚动特别修复模式【需重启】"
+msgstr "启用GTK触摸/滚动模式(需要重启)"
 
 #: ../ui/settings.glade:940
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
@@ -2388,7 +2388,8 @@ msgstr "高亮选项(_o)"
 #: ../ui/settings.glade:4237
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "笔画长短(屏幕毫米) 与...\n\n"
+"<i>推荐：1毫米</i>"
 
 #: ../ui/settings.glade:4217
 msgid "How short (time)  AND...\n\n"
@@ -2673,7 +2674,7 @@ msgstr "范围"
 
 #: ../ui/settings.glade:4411
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "重新渲染每当页面缩放变化大于 "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2820,7 +2821,7 @@ msgstr "标准"
 
 #: ../ui/settings.glade:2151
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "开始缩放当距离为 "
 
 #: ../ui/settings.glade:4712 ../ui/settings.glade:4770
 msgid "Storage Folder"
