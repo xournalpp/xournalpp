@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-22 01:22\n"
+"PO-Revision-Date: 2021-01-22 02:19\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -445,7 +445,7 @@ msgstr "紧急保存的文档"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:305
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "启用压感或压力提示以更改此设置！"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
@@ -526,7 +526,9 @@ msgstr "导出为 PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "导出文件为图像文件(每页一个)\n"
+"                                 从IMGFILE 扩展中测定输出格式\n"
+"                                 支持的格式：.png, .svg"
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
@@ -538,7 +540,11 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "逐步导出图层\n"
+"                                 在 PDF 导出中逐步呈现图层。\n"
+"                                 这将导致每页导出N页面含有N图层，\n"
+"                                 逐步建立图层堆栈。\n"
+"                                 生成的 PDF 文件可以用于演示文稿。\n"
 
 #: ../src/control/XournalMain.cpp:644
 msgid "Export without background\n"
@@ -551,16 +557,16 @@ msgstr "无背景导出\n"
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr "无序导出\n"
+msgstr "无规则导出\n"
 "                                 导出的文件没有文档结构\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr "路径中无法找到LaTeX generator程序: {1}"
+msgstr "路径中无法找到 LaTeX 生成器: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr "解析LaTeX generator命令失败:{1}"
+msgstr "解析 LaTeX 生成命令失败:{1}"
 
 #: ../src/control/LatexController.cpp:49
 msgid "Failed to read global template file. Please check your settings."
@@ -716,7 +722,7 @@ msgstr "跳到页面(第一页:1)"
 
 #: ../src/control/LatexController.cpp:181
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "Latex generation遇到了一个错误:{1}(退出代码: {2})"
+msgstr "LaTeX 生成器遇到了一个错误:{1}(退出代码: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -1029,7 +1035,7 @@ msgstr "SVG图形"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr "已成功生成示例LaTeX文件。"
+msgstr "已成功生成示例 LaTeX 文件。"
 
 #: ../src/control/Control.cpp:2433 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:322
@@ -1651,19 +1657,19 @@ msgstr "%"
 
 #: ../ui/settings.glade:2178
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "%大于两次触碰之间的初始距离。"
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4440
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:469
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1689,7 +1695,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\t星期几的缩写 (如周四）\n"
+"%A\t\t星期几的全称 (如星期四）\n"
+"%b\t\t月份缩写 （如八月）\n"
+"%B\t\t月份全称 （如八月）\n"
+"%c\t\t日期与时间的表示方式 (如 2011年8月23日星期四14:55:02)\n"
+"%d\t\t每个月的第几天 (01-31)\n"
+"%F\t\t日期表示方式 (如 2001-08-23)\n"
+"%H\t\t24小时表示的小时 (00-23)\n"
+"%I\t\t12小时表示的小时 (01-12)\n"
+"%j\t\t一年中第几天 (001-366)\n"
+"%m\t\t十进制月份 (01-12)\n"
+"%M\t\t分 (00-59)\n"
+"%p\t\t上下午的区分 (如下午)\n"
+"%S\t\t秒 (00-61)\n"
+"%U\t\t第几周 (按第一个周日是第一周的第一天计算） (00-53)\n"
+"%w\t\t周几（按周日为0计算) (0-6)\n"
+"%W\t\t第几周（按第一个周一是第一周的第一天计算） (00-53)\n"
+"%x\t\t日期表示方式 (如 08/23/01)\n"
+"%X\t\t时间表示方式 (如 14:55:02)\n"
+"%y\t\t年份最后两位 (00-99)\n"
+"%Y\t\t年份 (如 2001)\n"
+"%Z\t\t时区名或缩写 (如 CDT)\n"
+"%%\t A % 符号"
 
 #: ../ui/settings.glade:4280
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1756,7 +1784,8 @@ msgstr "<b>空工具箱</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>填充透明度设置</b>\n"
+"选择填充颜色的透明度"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -1816,7 +1845,7 @@ msgstr "<i>如果您的硬件不支持手动识别，Xournal++ 可以在您的�
 
 #: ../ui/settings.glade:1219
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr "<i>压力敏感度允许您根据笔压力的大小，绘制不同宽度的线条。 如果您的平板不支持此功能，这个设置将没有效果。</i>"
+msgstr "<i>压感允许您根据笔压力的大小，绘制不同宽度的线条，如果您的平板不支持此功能，这个设置将没有效果。</i>"
 
 #: ../ui/settings.glade:3447
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -1876,7 +1905,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1403
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
+msgstr "<i>因为某些设置，笔触在开始时会出现伪影， 通过忽略笔触摸屏幕时的前几个事件/笔触点，可以避免这种情况。</ i>"
 
 #: ../ui/settings.glade:1726
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -2037,7 +2066,7 @@ msgstr "复制当前页面尺寸"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr ""
+msgstr "复制当前页的页面背景，而不是使用上一页设置的页面背景。"
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
@@ -2193,7 +2222,7 @@ msgstr "启用GTK触摸/滚动特别修复模式【需重启】"
 
 #: ../ui/settings.glade:940
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "启用压力提示 <i>(当设备提供的压力不可用时根据绘制速度测定压力)</i>"
 
 #: ../ui/settings.glade:1233
 msgid "Enable Pressure Sensitivity"
@@ -2217,7 +2246,7 @@ msgstr "启用新的输入系统 (需要重启)"
 
 #: ../ui/settings.glade:2313
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "允许触摸板的绘画输入"
 
 #: ../ui/settings.glade:2126
 msgid "Enable zoom gestures (requires restart)"
@@ -2249,12 +2278,12 @@ msgstr "输出为..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "逐步导出图层"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "导出文档时不带任何背景(无) 或者仅具有PDF和图像背景(无规则) 或具有所有背景类型(全部)。"
 
 #: ../ui/main.glade:1626 ../ui/main.glade:1831
 msgid "Fi_ll"
@@ -2290,7 +2319,7 @@ msgstr "收益"
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr "常规LaTeX工具设置"
+msgstr "常规 LaTeX 工具设置"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
@@ -2368,7 +2397,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4139
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "激活时，由形状识别器识别的形状将自动被网格捕捉，如果在书写时打开了形状识别器，则可能导致意外结果。"
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2428,7 +2457,7 @@ msgstr "LaTeX 可执行文件设置"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "LaTeX 生成命令"
 
 #: ../ui/settings.glade:5254 ../ui/settings.glade:5302
 msgid "Language"
@@ -2527,11 +2556,11 @@ msgstr "无图标"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr "无序"
+msgstr "无规则"
 
 #: ../ui/exportSettings.glade:43
 msgid "None"
-msgstr ""
+msgstr "无"
 
 #: ../ui/settings.glade:3767
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2628,7 +2657,7 @@ msgstr "压力增量： "
 
 #: ../ui/settings.glade:1372
 msgid "Pressure Sensitivity"
-msgstr "压力感应度"
+msgstr "压感"
 
 #: ../ui/about.glade:167
 msgid "RELEASE_IDENTIFIER"
@@ -2724,7 +2753,7 @@ msgstr "选择颜色（文字，笔划等）"
 
 #: ../ui/settings.glade:1354
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "压感设置"
 
 #: ../ui/main.glade:634
 msgid "Set Columns"
@@ -2765,7 +2794,8 @@ msgstr "垂直滚动条左置"
 #: ../ui/settings.glade:931
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "如果缺少压力信息，缓速笔划的压力要大于更快的笔划。\n\n"
+"<i>此功能可能对缺乏压感的设备有用。例如，鼠标或触摸屏。</i>"
 
 #: ../ui/settings.glade:2658
 msgctxt "stylus cursor uses a small dot"
@@ -2834,11 +2864,11 @@ msgstr "测试"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "测试配置"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "通过使用测试公式在全局模板文件上运行LaTeX生成命令，以测试当前配置是否有效。"
 
 #: ../ui/main.glade:1855
 msgid "Text Font..."
@@ -2846,7 +2876,7 @@ msgstr "文本字体..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr "LaTeX 文件作为LaTeX 工具的模板。"
+msgstr "以 LaTeX 文件作为 LaTeX 工具的模板。"
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
@@ -2854,11 +2884,11 @@ msgstr "文本工具的当前颜色，为十六进制RGB格式。"
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "当运行 LaTeX 工具时，以下字符串将在全局模板文件中被替换："
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "在 LaTeX 工具中键入的数学模式公式。"
 
 #: ../ui/settings.glade:3495
 msgid "The unit of the ruler is cm"
@@ -2870,7 +2900,7 @@ msgstr "这些设置仅在实验性输入系统激活时生效"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "这些设置将用于新页面"
 
 #: ../ui/settings.glade:687
 msgid "This is an experimental feature! Use it with care."
@@ -2882,7 +2912,7 @@ msgstr "超时"
 
 #: ../ui/settings.glade:2335
 msgid "Touch Drawing"
-msgstr ""
+msgstr "触摸板绘图"
 
 #: ../ui/settings.glade:1761 ../ui/settings.glade:2366
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -2899,7 +2929,7 @@ msgstr "请先选择对象；如果没有选中，则显示浮动工具箱（需
 
 #: ../ui/settings.glade:4135
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "使用形状识别器识别形状"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
@@ -2924,7 +2954,8 @@ msgstr "视图"
 #: ../ui/settings.glade:2145
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "当与触摸绘制时，双指手势打算绘制视图则会导致视图缩放，导致性能问题。 \n"
+"此设置可以使触摸板绘制更容易。 "
 
 #: ../ui/settings.glade:4408
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
@@ -2953,7 +2984,7 @@ msgstr "特殊解决方案"
 
 #: ../ui/about.glade:192
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:160
 msgid "Xournal++ Preferences"
