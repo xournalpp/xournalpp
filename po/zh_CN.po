@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-21 23:12\n"
+"PO-Revision-Date: 2021-01-22 00:22\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -510,7 +510,7 @@ msgstr "错误： {1} 不是常规文件。请检查您的 LaTeX 模板文件设
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "错误： {1}。请检查 {2} 的内容"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -551,7 +551,8 @@ msgstr "无背景导出\n"
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "无序导出\n"
+"                                 导出的文件没有文档结构\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
@@ -703,11 +704,11 @@ msgstr "插入页面"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "等距网格点"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "等距网格线"
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
@@ -815,7 +816,7 @@ msgstr "没有要导出的页面！"
 
 #: ../src/control/Control.cpp:1232
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "没有可添加的pdf页面，你可能需要重新打开文档。"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
@@ -828,7 +829,8 @@ msgstr "确定"
 #: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "只导出RANGE指定的页面(例如“2-3,5,7-\")\n"
+"                                 当没有 -p/--create-pdf or -i/--create-img 无效果"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -1115,7 +1117,8 @@ msgstr "分割线"
 #: ../src/control/XournalMain.cpp:664
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "设置PNG 导出的DPI ，默认是 300\n"
+"                                 当没有 -i/--create-img=foo.png 无效果"
 
 #: ../src/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
@@ -1263,7 +1266,7 @@ msgstr ""
 
 #: ../src/gui/dialog/SettingsDialog.cpp:277
 msgid "The touch workaround must be disabled to change this setting. "
-msgstr ""
+msgstr "必须禁用触摸板才能更改此设置。 "
 
 #: ../src/control/XournalMain.cpp:154
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
@@ -1312,7 +1315,7 @@ msgstr "尝试紧急保存当前打开的文档…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "无法在 {1} 打开全局模板文件，它是否存在？"
 
 #: ../src/gui/PageView.cpp:348
 msgid "Unable to play audio recording {1}"
@@ -1535,7 +1538,7 @@ msgstr "橡皮"
 
 #: ../src/control/Control.cpp:1952
 msgid "file: {1}"
-msgstr ""
+msgstr "文件： {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -1692,15 +1695,15 @@ msgstr "... 以及自上次勾画以来必须经过多少时间。\n\n"
 
 #: ../ui/settings.glade:4424
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1440
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5053
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:2163
 msgid "1.0"
@@ -1737,7 +1740,8 @@ msgstr "<b>缺省</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>文档导出设置</b>\n"
+"设置导出参数"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1817,11 +1821,12 @@ msgstr "<i>在你的屏幕上放置一个尺子并移动滑动条直到刻度对
 #: ../ui/settings.glade:4383
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>缩放时重新渲染PDF背景以获得更好的渲染质量。\n"
+"<b>注意：</b> 这不会影响打印质量。</i>"
 
 #: ../ui/settings.glade:5217
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>选择语言 (需要重启)</i>"
 
 #: ../ui/settings.glade:4545
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -1829,7 +1834,7 @@ msgstr "<i>选择按下缺省按钮后的工具和设置</i>"
 
 #: ../ui/settings.glade:1268
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>某些设备压感过小或过大，可以通过设置更大或更小的压感反馈修复。</i>"
 
 #: ../ui/settings.glade:1942
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -1838,7 +1843,8 @@ msgstr "<i>设定在手势识别模式下触发的指令。这些指令会在UI�
 #: ../ui/settings.glade:4801
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>指定用于录制和播放音频附件的音频设备。\n"
+"如果可用，请选择 <small><tt>脉冲</tt></small> 作为输入/输出设备。</i>"
 
 #: ../ui/settings.glade:1510
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -1900,7 +1906,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "所有"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -1914,11 +1920,11 @@ msgstr "在忽略笔划之前，必须满足所有三个条件。\n"
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "运行前总是检查 LaTeX 依赖关系"
 
 #: ../ui/main.glade:1147
 msgid "Append New Pdf Pages"
-msgstr ""
+msgstr "添加新的 Pdf 页面"
 
 #: ../ui/settings.glade:1479
 msgid "Artifact workaround"
@@ -1995,7 +2001,7 @@ msgstr "按钮 2"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "选择LaTex全局模板文件"
 
 #: ../ui/settings.glade:2706 ../ui/settings.glade:2849
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2003,7 +2009,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2720
 msgid "Circle Color"
-msgstr ""
+msgstr "圆圈颜色"
 
 #: ../ui/settings.glade:2586
 msgid "Colors"
@@ -2015,15 +2021,15 @@ msgstr "配置页模板"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr ""
+msgstr "配置新建页面模板"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "复制当前页面背景"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "复制当前页面尺寸"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2039,7 +2045,7 @@ msgstr "光标"
 
 #: ../ui/settings.glade:2641
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "笔的光标图标"
 
 #: ../ui/settings.glade:2058
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2114,7 +2120,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "\t    Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "从起点向左拖拽，效果如同按住Shift键。\n"
+"向上拖拽，效果如同按住Ctrl键。\n\n"
+"临界半径：达到此半径后，设置会锁定，到笔划结束为止。\n\n"
+"<i>有助于无键盘操作。</i>"
 
 #: ../ui/settings.glade:3856
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2132,7 +2141,7 @@ msgstr "在这里和工具条之间可以来回拖动条目。"
 
 #: ../ui/main.glade:1387
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "绘制坐标系统"
 
 #: ../ui/main.glade:1398
 msgid "Draw _Line"
@@ -2419,11 +2428,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5254 ../ui/settings.glade:5302
 msgid "Language"
-msgstr ""
+msgstr "语言"
 
 #: ../ui/settings.glade:5272
 msgid "Language Settings"
-msgstr ""
+msgstr "语言设置"
 
 #: ../ui/main.glade:525
 msgid "Layout"
@@ -2456,7 +2465,8 @@ msgstr "最大长度 (毫米)"
 #: ../ui/settings.glade:911
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "将按钮事件与触控笔点击事件合并\n"
+"<i>(如果</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>返回</i> \"<tt>on</tt>\"<i> ，请选中这一项)</i>"
 
 #: ../ui/settings.glade:1081
 msgid "Middle Mouse Button"
@@ -2464,7 +2474,7 @@ msgstr "鼠标中键"
 
 #: ../ui/settings.glade:1291
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "最小压力："
 
 #: ../ui/settings.glade:1168 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2509,7 +2519,7 @@ msgstr "新建图层(_L)"
 #: ../ui/settings.glade:2657
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "无图标"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2525,7 +2535,7 @@ msgstr ""
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "透明度设置"
 
 #: ../ui/settings.glade:961
 msgid "Options"
@@ -2537,7 +2547,7 @@ msgstr "输出设备"
 
 #: ../ui/settings.glade:4463
 msgid "PDF Cache"
-msgstr ""
+msgstr "PDF 缓存"
 
 #: ../ui/main.glade:1090
 msgid "P_revious annotated Page"
@@ -2606,7 +2616,7 @@ msgstr "演示模式"
 
 #: ../ui/settings.glade:3951
 msgid "Preserve line width"
-msgstr ""
+msgstr "保留线宽"
 
 #: ../ui/settings.glade:1302
 msgid "Pressure Multiplier: "
@@ -2646,15 +2656,15 @@ msgstr "录制质量"
 
 #: ../ui/main.glade:1206
 msgid "Rename Layer"
-msgstr ""
+msgstr "重命名图层"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "重命名所选图层"
 
 #: ../ui/settings.glade:3998
 msgid "Resizing"
-msgstr ""
+msgstr "调整大小"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -2674,7 +2684,7 @@ msgstr "采样率"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "示例图层名称"
 
 #: ../ui/settings.glade:3052
 msgid "Scrollbars"
@@ -2742,7 +2752,7 @@ msgstr "侧边栏右置"
 
 #: ../ui/main.glade:509
 msgid "Show toolbars"
-msgstr ""
+msgstr "显示工具栏"
 
 #: ../ui/settings.glade:2951
 msgid "Show vertical scrollbar on the left side"
