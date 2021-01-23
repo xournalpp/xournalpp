@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-23 12:10\n"
+"PO-Revision-Date: 2021-01-23 13:12\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -553,19 +553,20 @@ msgstr "Export bez pozadí\n"
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Exportovat bez pravítka\n"
+"                                 Exportovaný soubor nemá pravítko\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Nepodařilo se najít program na generování LaTeX v PATH: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Nepodařilo se zpracovat příkaz generátoru LaTeX: {1}"
 
 #: ../src/control/LatexController.cpp:49
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Nepodařilo se přečíst soubor globálních šablon. Zkontrolujte prosím nastavení."
 
 #: ../src/control/jobs/BaseExportJob.cpp:93
 msgid "Failed to resolve path with the following error:\n"
@@ -584,7 +585,7 @@ msgstr "Vyplnit"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:315
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Filtrovat vstupní tlak. Násobí tlak tlakovým multiplikátorem. Pokud je menší než minimální, použije minimální tlak."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Fine"
@@ -604,15 +605,15 @@ msgstr "Vpřed"
 
 #: ../src/control/XournalMain.cpp:628
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "Získat verzi xournalpp"
 
 #: ../src/control/LatexController.cpp:44
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Soubor globálních šablon neexistuje. Zkontrolujte prosím nastavení."
 
 #: ../src/control/LatexController.cpp:55
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Soubor globálních šablon není běžný soubor. Zkontrolujte prosím nastavení. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Go to first page"
@@ -717,7 +718,7 @@ msgstr "Přejít na stránku (první stránka: 1)"
 
 #: ../src/control/LatexController.cpp:181
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "Generování Latex narazilo na chybu: {1} (exit kód: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -817,7 +818,7 @@ msgstr "Žádné stránky k exportu!"
 
 #: ../src/control/Control.cpp:1232
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Žádné pdf stránky k přidání nejsou k dispozici. Můžete potřebovat dokument znovu otevřít."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
@@ -830,7 +831,8 @@ msgstr "OK"
 #: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportovat pouze stránky specifikované příkazem RANGE (např. \"2-3,5,7-\")\n"
+"                                 Nemá efekt bez -p/--create-pdf nebo -i/--create-img"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -947,11 +949,11 @@ msgstr "Prezentace"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Dříve vybraný jazyk již není k dispozici!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Print"
-msgstr ""
+msgstr "Tisk"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Record Audio / Stop Recording"
@@ -989,7 +991,7 @@ msgstr "Nástroj {1} byl odstraněn z panelu nástrojů {2} ID {3}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Přejmenovat vrstvu"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
@@ -1029,7 +1031,7 @@ msgstr "SVG grafika"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "Vzorový LaTeX soubor úspěšně vygenerován."
 
 #: ../src/control/Control.cpp:2433 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:322
@@ -1117,19 +1119,24 @@ msgstr "Oddělovač"
 #: ../src/control/XournalMain.cpp:664
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Nastavte DPI pro export do PNG. Výchozí hodnota je 300\n"
+"                                 Nemá efekt bez -i/--create-img=foo.png"
 
 #: ../src/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Nastavte výšku stránky pro export do PNG\n"
+"                                 Nemá efekt bez -i/--create-img=foo.png\n"
+"                                 Ignorováno při použití --export-png-dpi nebo --export-png-width"
 
 #: ../src/control/XournalMain.cpp:668
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Nastavte šířku stránky pro export do PNG\n"
+"                                 Nemá efekt bez -i/--create-img=foo.png\n"
+"                                 Ignorováno při použit --export-png-dpi"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Shape Recognizer"
@@ -1233,7 +1240,7 @@ msgstr "PDF pozadí nebylo nalezeno."
 
 #: ../src/control/Control.cpp:2015
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Nahraný soubor má novější formát, než který je podporován touto verzí Xournal++, takže nemusí být načten správně. Přesto otevřít?"
 
 #: ../src/control/xojfile/LoadHandler.cpp:117
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1697,7 +1704,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1440
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5053
 msgid "1,00"
@@ -1709,7 +1716,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2808
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1738,7 +1745,8 @@ msgstr "<b>Výchozí</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Nastavení exportu dokumentu</b>\n"
+"Nastavit parametry exportu"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1749,7 +1757,8 @@ msgstr "<b>Prázdná složka nářadí</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Nastavení průhlednosti</b>\n"
+"Vyberte průhlednost pro vyplnění barvou"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -1818,11 +1827,12 @@ msgstr "<i>Dejte na obrazovku pravítko a přesuňte ho, dokud se obě pravítka
 #: ../ui/settings.glade:4383
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Při přiblížení častěji znovu vykreslovat pozadí PDF, pro lepší kvalitu vykreslení. \n"
+"<b>Poznámka:</b> Nemělo by ovlivnit kvalitu tisku.</i>"
 
 #: ../ui/settings.glade:5217
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>Vyberte jazyk (vyžaduje restart)</i>"
 
 #: ../ui/settings.glade:4545
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
