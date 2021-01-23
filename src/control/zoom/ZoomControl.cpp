@@ -28,7 +28,7 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
 
 auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom) -> bool {
     if (event->type == GDK_TOUCHPAD_PINCH && event->n_fingers == 2) {
-        utl::Point<double> center;
+        utl::Point<double> center, visibleRectPos;
         switch (event->phase) {
             case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN:
                 if (zoom->isZoomFitMode()) {
@@ -42,6 +42,9 @@ auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomC
                 break;
             case GDK_TOUCHPAD_GESTURE_PHASE_UPDATE:
                 zoom->zoomSequenceChange(event->scale, true);
+                visibleRectPos = {zoom->getVisibleRect().x, zoom->getVisibleRect().y};
+                // Use natural scrolling (the "-")
+                zoom->setScrollPositionAfterZoom(visibleRectPos - utl::Point{event->dx, event->dy});
                 break;
             case GDK_TOUCHPAD_GESTURE_PHASE_END:
                 zoom->endZoomSequence();
