@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-22 23:29\n"
+"PO-Revision-Date: 2021-01-23 00:34\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -506,11 +506,11 @@ msgstr "Fout: {1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "Fout: {1} is geen normaal bestand. Controleer uw LaTeX template bestand instellingen. "
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Fout: {1}. Controleer de inhoud van {2}"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -520,13 +520,15 @@ msgstr "Het foutlog kan niet worden verwijderd; doe dit handmatig.\n"
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Exporteer bestand als PDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "Exporteer FILE als afbeeldings bestanden (één per pagina)\n"
+"                                 Zie het uitvoerformaat van de extensie van IMGFILE\n"
+"                                 Ondersteunde formaten: .png, .svg"
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
@@ -538,35 +540,43 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Exporteer lagen progressief\n"
+"                                 In PDF export, Render lagen geleidelijk aan één voor één.\n"
+"                                 Dit resulteert in N export pagina's per pagina met N lagen,\n"
+"                                 bouw de laagstack progressief op.\n"
+"                                 Het resulterende PDF-bestand kan gebruikt worden voor een presentatie.\n"
 
 #: ../src/control/XournalMain.cpp:644
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Exporteren zonder achtergrond\n"
+"                                 Het geëxporteerde bestand heeft een transparante of witte achtergrond,\n"
+"                                 afhankelijk van wat het formaat ondersteunt\n"
 
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Exporteren zonder regels\n"
+"                                 Het geëxporteerde bestand heeft geen papieren regel\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Kan LaTeX generator programma niet vinden in PATH: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Fout bij het parsen van LaTeX generator commando: {1}"
 
 #: ../src/control/LatexController.cpp:49
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Lezen van globaal sjabloonbestand mislukt. Controleer uw instellingen."
 
 #: ../src/control/jobs/BaseExportJob.cpp:93
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Fout bij het oplossen van het pad met de volgende fout:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -580,7 +590,7 @@ msgstr "Opvullen"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:315
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Filter invoerdruk. Vermenigvuldig de druk met de drukvermenigvuldiger. Gebruik de minimale druk als deze kleiner is dan het minimum."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Fine"
@@ -600,15 +610,15 @@ msgstr "Doorsturen"
 
 #: ../src/control/XournalMain.cpp:628
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "Versie van xournalpp ophalen"
 
 #: ../src/control/LatexController.cpp:44
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Globaal sjabloonbestand bestaat niet. Controleer uw instellingen."
 
 #: ../src/control/LatexController.cpp:55
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Globaal sjabloonbestand is geen regulier bestand. Controleer uw instellingen. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Go to first page"
@@ -701,11 +711,11 @@ msgstr "Pagina invoegen"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Isometrisch gestippeld"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Isometrische Grafiek"
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
@@ -713,7 +723,7 @@ msgstr "Ga naar pagina (eerste pagina: 1)"
 
 #: ../src/control/LatexController.cpp:181
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "Latex generatie ondervond een fout: {1} (afsluitcode: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -813,7 +823,7 @@ msgstr "Geen te exporteren pagina's!"
 
 #: ../src/control/Control.cpp:1232
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Geen pdf pagina's beschikbaar om toe te voegen. Mogelijk moet u het document eerst heropenen."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
@@ -947,7 +957,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:323
 msgid "Print"
-msgstr ""
+msgstr "Afdrukken"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Record Audio / Stop Recording"
@@ -985,7 +995,7 @@ msgstr "Item {1} is verwijderd van werkbalk {2} (ID {2})"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Laag hernoemen"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
