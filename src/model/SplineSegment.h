@@ -83,6 +83,22 @@ public:
      * @return Bounding box
      */
     Rectangle<double> getBoundingBox(const Point& firstKnot) const;
+    
+    /**
+     * @brief Find the parameters (between 0 and 1) corresponding to the points where the spline segment crosses a given vertical line
+     * @param firstKnot Used as the first knot of the spline segment
+     * @param lineX The x coordinate of the vertical line
+     * @return The parameters
+     */
+    std::vector<double> intersectWithVerticalLine(const Point& firstKnot, double lineX) const;
+    
+    /**
+     * @brief Find the parameters (between 0 and 1) corresponding to the points where the spline segment crosses a given horizontal line
+     * @param firstKnot Used as the first knot of the spline segment
+     * @param lineY The y coordinate of the vertical line
+     * @return The parameters
+     */
+    std::vector<double> intersectWithHorizontalLine(const Point& firstKnot, double lineY) const;
 
 private:
     /**
@@ -90,9 +106,25 @@ private:
      * @param a Quadratic coefficient
      * @param b Half of linear coefficient
      * @param c Constant coefficient
-     * @return Vector containing the roots
+     * @return Vector containing the roots (sorted from smallest to biggest)
      */
-    static std::vector<double> rootsOfPolynomialEquation(double a, double b, double c);
+    static std::vector<double> rootsOfQuadraticEquation(double a, double b, double c);
+    
+    /**
+     * @brief Compute the roots of the polynomial equation a*t^3 + 3*b*t^2 + 3*c*t + d
+     * 
+     * Warning: double roots are (purposefully and totally) ignored.
+     * If the polynomial factors as a * (t - u) * (t - v)^2, the returned vector will only contain u.
+     * 
+     * A triple root will be returned (without multiplicities).
+     * 
+     * @param a Cubic coefficient
+     * @param b Quadratic coefficient
+     * @param c Linear coefficient
+     * @param d Constant coefficient
+     * @return Vector containing the roots (sorted from smallest to biggest)
+     */
+    static std::vector<double> rootsOfCubicEquation(double a, double b, double c, double d);
     
 protected:
     static constexpr double FLATNESS_TOLERANCE = 1.0001;

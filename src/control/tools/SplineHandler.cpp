@@ -76,6 +76,32 @@ void SplineHandler::draw(cairo_t* cr) {
     cairo_line_to(cr, lastKnot.x + lastTangent.x, lastKnot.y + lastTangent.y);
 
     cairo_stroke(cr);
+    
+    {
+    // Debug
+    PartialSplineSegment pss = PartialSplineSegment(cp1, cp2, otherKnot);
+//     PartialSplineSegment pss = PartialSplineSegment(Point(100,0), Point(-50,500), Point(0,500));
+//     Point lastKnot(0,0);
+    std::vector<double> intersection = pss.intersectWithVerticalLine(lastKnot, lastKnot.x + 20);
+    double shift = 0.1 * (lastKnot.y - otherKnot.y);
+    cairo_move_to(cr, lastKnot.x + 20, lastKnot.y + shift);
+    cairo_line_to(cr, lastKnot.x + 20, otherKnot.y - shift);
+    for (auto&& t:intersection) {
+        Point p = pss.getPoint(lastKnot, t);
+        cairo_move_to(cr, p.x, p.y);
+        cairo_arc(cr, p.x, p.y, 5.0, 0.0, 2*M_PI);
+    }
+//     intersection = pss.intersectWithHorizontalLine(lastKnot, lastKnot.y + 40);
+//     cairo_move_to(cr, lastKnot.x, lastKnot.y + 40);
+//     cairo_line_to(cr, otherKnot.x, lastKnot.y + 40);
+//     for (auto&& t:intersection) {
+//         Point p = pss.getPoint(lastKnot, t);
+//         cairo_move_to(cr, p.x, p.y);
+//         cairo_arc(cr, p.x, p.y, 5.0, 0.0, 2*M_PI);
+//     }
+    cairo_stroke(cr);
+    }
+    // end of debug
 
 
     // draw other tangents
