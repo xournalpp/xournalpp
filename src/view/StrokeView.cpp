@@ -117,7 +117,13 @@ void StrokeView::drawWithPressure() {
 
     for (auto p1i = begin(s->getPointVector()), p2i = std::next(p1i), endi = end(s->getPointVector());
          p1i != endi && p2i != endi; ++p1i, ++p2i) {
-        auto width = p1i->z != Point::NO_PRESSURE ? p1i->z : s->getWidth();
+        double width;
+        if (p1i->z == Point::NO_PRESSURE) {
+            width = p2i->z != Point::NO_PRESSURE ? p2i->z : s->getWidth();
+        } else {
+            width = p2i->z != Point::NO_PRESSURE ? (p1i->z + p2i->z) / 2 : p1i->z;
+        }
+//         auto width = p1i->z != Point::NO_PRESSURE ? p1i->z : s->getWidth();
         cairo_set_line_width(cr, width * scaleFactor);
         applyDashed(dashOffset);
         cairo_move_to(cr, p1i->x, p1i->y);

@@ -43,6 +43,9 @@ void InputHandler::createStroke(Point p) {
 
     if (h->getToolType() == TOOL_PEN) {
         stroke->setToolType(STROKE_TOOL_PEN);
+        if (p.z != Point::NO_PRESSURE) {
+            p.z *= stroke->getWidth();
+        }
 
         if (xournal->getControl()->getAudioController()->isRecording()) {
             string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();

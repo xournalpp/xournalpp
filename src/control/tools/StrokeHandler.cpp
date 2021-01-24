@@ -68,7 +68,7 @@ auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     return true;
 }
 
-void StrokeHandler::paintTo(const Point& point) {
+void StrokeHandler::paintTo(Point point) {
 
     int pointCount = stroke->getPointCount();
 
@@ -82,35 +82,28 @@ void StrokeHandler::paintTo(const Point& point) {
             /**
              * Both device and tool are pressure sensitive
              */
-            if (endPoint.z != Point::NO_PRESSURE) {
+            point.z *= stroke->getWidth();
+            if (const double widthDelta = point.z - endPoint.z, absWidthDelta = std::abs(widthDelta);
+                absWidthDelta > MAX_WIDTH_VARIATION) {
                 /**
-                 * Avoid issues at the beginning of the stroke
+                 * If the width variation is to big, decompose into shorter segments.
+                 * Those segments can not be shorter than PIXEL_MOTION_THRESHOLD
                  */
+                double nbSteps = std::min(std::ceil(absWidthDelta / MAX_WIDTH_VARIATION),
+                                            std::floor(distance / PIXEL_MOTION_THRESHOLD));
+                double stepLength = 1.0 / nbSteps;
+                Point increment((point.x - endPoint.x) * stepLength, (point.y - endPoint.y) * stepLength,
+                                widthDelta * stepLength);
+                endPoint.z *= stroke->getWidth();
+                endPoint.z += increment.z;
 
-                if (const double widthDelta = (point.z - endPoint.z) * stroke->getWidth();
-                    - widthDelta > MAX_WIDTH_VARIATION || widthDelta > MAX_WIDTH_VARIATION) {
-                    /**
-                     * If the width variation is to big, decompose into shorter segments.
-                     * Those segments can not be shorter than PIXEL_MOTION_THRESHOLD
-                     */
-                    double nbSteps = std::min(std::ceil(std::abs(widthDelta) / MAX_WIDTH_VARIATION),
-                                              std::floor(distance / PIXEL_MOTION_THRESHOLD));
-                    double stepLength = 1.0 / nbSteps;
-                    Point increment((point.x - endPoint.x) * stepLength, (point.y - endPoint.y) * stepLength,
-                                    widthDelta * stepLength);
-                    endPoint.z *= stroke->getWidth();
+                for (int i = 1; i < static_cast<int>(nbSteps); i++) {  // The last step is done below
+                    endPoint.x += increment.x;
+                    endPoint.y += increment.y;
                     endPoint.z += increment.z;
-                    stroke->setLastPressure(endPoint.z);
-
-                    for (int i = 1; i < static_cast<int>(nbSteps); i++) {  // The last step is done below
-                        endPoint.x += increment.x;
-                        endPoint.y += increment.y;
-                        endPoint.z += increment.z;
-                        drawSegmentTo(endPoint);
-                    }
+                    drawSegmentTo(endPoint);
                 }
             }
-            stroke->setLastPressure(point.z * stroke->getWidth());
         }
     }
     drawSegmentTo(point);
@@ -400,7 +393,7 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
         this->buttonDownPoint.x = pos.x / zoom;
         this->buttonDownPoint.y = pos.y / zoom;
 
-        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
+        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pos.pressure));
 
         this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
 

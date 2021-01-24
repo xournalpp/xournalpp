@@ -140,6 +140,8 @@ private:
      */
     int fill = -1;
     
+    bool splineComputed = false;
+    
 public:
     /**
      * @brief The spline interpolating the stroke

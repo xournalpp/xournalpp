@@ -56,7 +56,7 @@ public:
      * The line may be subdivided into smaller segments if the pressure variation is too big.
      * @param point The endpoint of the added line
      */
-    void paintTo(const Point& point);
+    void paintTo(Point point);
 
 protected:
     /**
