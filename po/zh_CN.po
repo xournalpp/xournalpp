@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-23 23:12\n"
+"PO-Revision-Date: 2021-01-24 03:51\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1272,7 +1272,7 @@ msgstr "最近的日志文件名：{1}"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:311
 msgid "The new input system must be enabled to change this setting. "
-msgstr ""
+msgstr "必须启用新的输入系统才能更改此设置。 "
 
 #: ../src/gui/dialog/SettingsDialog.cpp:277
 msgid "The touch workaround must be disabled to change this setting. "
