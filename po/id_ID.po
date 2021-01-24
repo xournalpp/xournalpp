@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-12 16:25+0000\n"
-"PO-Revision-Date: 2021-01-12 17:21\n"
+"POT-Creation-Date: 2021-01-24 18:20+0000\n"
+"PO-Revision-Date: 2021-01-24 18:23\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -148,7 +148,7 @@ msgstr "Hitam"
 msgid "Blue"
 msgstr "Biru"
 
-#: ../src/control/Control.cpp:1985 ../src/control/Control.cpp:2441
+#: ../src/control/Control.cpp:1982 ../src/control/Control.cpp:2438
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Batal"
@@ -347,7 +347,7 @@ msgstr "Hapus berkas"
 msgid "Delete layer"
 msgstr "Hapus lapisan"
 
-#: ../src/control/Control.cpp:2438
+#: ../src/control/Control.cpp:2435
 msgid "Discard"
 msgstr "Buang"
 
@@ -355,7 +355,7 @@ msgstr "Buang"
 msgid "Display advanced export options"
 msgstr ""
 
-#: ../src/control/Control.cpp:1938
+#: ../src/control/Control.cpp:1935
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -367,7 +367,7 @@ msgstr "Jangan membuka berkas Simpan Otomatis. Berkas itu mungkin akan ditimpa!\
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Jangan menimpa PDF latar belakang! Ini mungkin akan menyebabkan kesalahan!"
 
-#: ../src/control/Control.cpp:2432
+#: ../src/control/Control.cpp:2429
 msgid "Document file was removed."
 msgstr "Berkas dokumen telah dihapus."
 
@@ -456,7 +456,7 @@ msgstr "Hapus goresan"
 msgid "Eraser"
 msgstr "Penghapus"
 
-#: ../src/control/Control.cpp:2186
+#: ../src/control/Control.cpp:2183
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Kesalahan saat anotasi berkas PDF \"{1}\"\n"
@@ -466,7 +466,7 @@ msgstr "Kesalahan saat anotasi berkas PDF \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Kesalahan saat memuat berkas glade \"{1}\" (cobalah memuat \"{2}\")"
 
-#: ../src/control/Control.cpp:2007
+#: ../src/control/Control.cpp:2004
 msgid "Error opening file \"{1}\""
 msgstr "Kesalahan ketika membuka berkas \"{1}\""
 
@@ -970,7 +970,7 @@ msgstr "Ulangi"
 msgid "Redo: "
 msgstr "Ulangi: "
 
-#: ../src/control/Control.cpp:1984
+#: ../src/control/Control.cpp:1981
 msgid "Remove PDF Background"
 msgstr "Buang Latar Belakang PDF"
 
@@ -1026,16 +1026,16 @@ msgstr "Grafik SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2433 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2430 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:322
 msgid "Save"
 msgstr "Simpan"
 
-#: ../src/control/Control.cpp:2433
+#: ../src/control/Control.cpp:2430
 msgid "Save As..."
 msgstr "Simpan Sebagai..."
 
-#: ../src/control/Control.cpp:2276 ../src/gui/dialog/PageTemplateDialog.cpp:82
+#: ../src/control/Control.cpp:2273 ../src/gui/dialog/PageTemplateDialog.cpp:82
 msgid "Save File"
 msgstr "Simpan Berkas"
 
@@ -1076,7 +1076,7 @@ msgstr "Pilih Persegi"
 msgid "Select Region"
 msgstr "Pilih Bidang"
 
-#: ../src/control/Control.cpp:1983
+#: ../src/control/Control.cpp:1980
 msgid "Select another PDF"
 msgstr "Pilih PDF lain"
 
@@ -1218,15 +1218,15 @@ msgstr "Teks tidak ditemukan, mencari di semua halaman"
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Konfigurasi bilah alat \"{1}\" sudah ada secara bawaan, apakah Anda ingin membuat salinan untuk mengeditnya?"
 
-#: ../src/control/Control.cpp:1980
+#: ../src/control/Control.cpp:1977
 msgid "The attached background PDF could not be found."
 msgstr "Latar belakang PDF yang dilampirkan tidak dapat ditemukan."
 
-#: ../src/control/Control.cpp:1981
+#: ../src/control/Control.cpp:1978
 msgid "The background PDF could not be found."
 msgstr "Latar belakang PDF tidak dapat ditemukan."
 
-#: ../src/control/Control.cpp:2015
+#: ../src/control/Control.cpp:2012
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1278,7 +1278,7 @@ msgstr "Terjadi kesalahan saat menampilkan bantuan: {1}"
 msgid "Thick"
 msgstr "Tebal"
 
-#: ../src/control/Control.cpp:2432
+#: ../src/control/Control.cpp:2429
 msgid "This document is not saved yet."
 msgstr "Dokumen ini belum disimpan."
 
@@ -1360,7 +1360,7 @@ msgstr "Tipe pixmap::domain tidak diketahui: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tipe goresan tidak diketahui: \"{1}\", diasumsikan pena"
 
-#: ../src/control/Control.cpp:2333
+#: ../src/control/Control.cpp:2330
 msgid "Unsaved Document"
 msgstr "Dokumen Belum Disimpan"
 
@@ -1425,7 +1425,7 @@ msgstr "Berkas Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ telah mengalami crash. Apakah Anda ingin mengembalikan berkas yang terakhir diedit?"
 
-#: ../src/control/Control.cpp:2282 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2279 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Berkas Xournal++"
 
@@ -1477,7 +1477,7 @@ msgstr "Slider Perbesaran"
 msgid "Zoom to 100%"
 msgstr "Perbesar ke 100%"
 
-#: ../src/control/Control.cpp:2276 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2273 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:83
@@ -1489,7 +1489,7 @@ msgstr "_Batal"
 msgid "_Open"
 msgstr "B_uka"
 
-#: ../src/control/Control.cpp:2277 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2274 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "_Save"
 msgstr "_Simpan"
@@ -1530,7 +1530,7 @@ msgstr "elemen"
 msgid "eraser"
 msgstr "penghapus"
 
-#: ../src/control/Control.cpp:1952
+#: ../src/control/Control.cpp:1949
 msgid "file: {1}"
 msgstr ""
 
