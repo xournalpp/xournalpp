@@ -1622,12 +1622,9 @@ void Control::undoRedoChanged() {
 }
 
 void Control::undoRedoPageChanged(PageRef page) {
-    if (!this->changedPages.empty() &&
-        std::find(begin(this->changedPages), end(this->changedPages), page) == end(this->changedPages)) {
-        return;
+    if (std::find(begin(this->changedPages), end(this->changedPages), page) == end(this->changedPages)) {
+        this->changedPages.emplace_back(std::move(page));
     }
-
-    this->changedPages.emplace_back(std::move(page));
 }
 
 void Control::selectTool(ToolType type) {
