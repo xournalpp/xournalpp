@@ -92,10 +92,6 @@ desktop-file-install \
 
 %find_lang %{name}
 
-#Remove scripts from icons interface
-rm -r %{buildroot}%{_datadir}/%{name}/ui/icons/hicolor/update-icon-cache.sh
-rm -r %{buildroot}%{_datadir}/%{name}/ui/iconsDark/hicolor/update-icon-cache.sh
-
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/com.github.%{name}.%{name}.desktop
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{name}.%{name}.appdata.xml
