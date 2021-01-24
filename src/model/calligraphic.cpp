@@ -1,9 +1,5 @@
 #include <cairo.h>
 #include <cairo-svg.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
 #include <math.h>
 #include <vector>
 
@@ -213,7 +209,7 @@ int main (int argc, char *argv[]) {
   cairo_set_line_width(cr, 1);
 
   // Draw a real Stroke 
-  drawCalligraphicOnePolygon(cr, pointList, M_PI/8, 3);
+  drawCalligraphicOnePolygon(cr, pointList, M_PI/8, 3.0);
 
   cairo_surface_destroy (surface);
   cairo_destroy (cr);
