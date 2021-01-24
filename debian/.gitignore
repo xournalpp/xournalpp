@@ -1,0 +1,6 @@
+/*.debhelper
+/*.log
+/*.substvars
+/debhelper-build-stamp
+/files
+/xournalpp/

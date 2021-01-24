@@ -259,6 +259,9 @@ endif ()
 ## Source building ##
 add_subdirectory (src)
 
+## Man page generation ##
+add_subdirectory (man)
+
 ## Final targets and installing ##
 
 # Install resources
@@ -346,11 +349,11 @@ endif (CMAKE_DEBUG_INCLUDES_LDFLAGS)
 set (CPACK_OUTPUT_FILE_PREFIX packages)
 set (CPACK_PACKAGE_NAME "${PROJECT_PACKAGE}")
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Xournal++ - Open source hand note-taking program")
-file(READ "${PROJECT_SOURCE_DIR}/debian/package_description" CPACK_DEBIAN_PACKAGE_DESCRIPTION)
-string(REGEX REPLACE "\n$" "" CPACK_DEBIAN_PACKAGE_DESCRIPTION "${CPACK_DEBIAN_PACKAGE_DESCRIPTION}")  #Automatically generated trailing newline must be removed
+set (CPACK_PACKAGE_DESCRIPTION_FILE "${PROJECT_SOURCE_DIR}/package_description")
 set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 set (CPACK_PACKAGE_INSTALL_DIRECTORY "Xournal++")
 set (CPACK_PACKAGE_FILE_NAME "xournalpp-${PROJECT_VERSION}-${DISTRO_NAME}-${DISTRO_CODENAME}-${PACKAGE_ARCH}")
+set (CPACK_STRIP_FILES ON)  # Debian packages must be stripped from debug messages, so lintian doesn't complain
 
 # .deb package options
 set (CPACK_DEBIAN_PACKAGE_VERSION "${CPACK_PROJECT_VERSION}")
@@ -365,7 +368,7 @@ if (${PACKAGE_ARCH} STREQUAL "x86_64")
 	set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 endif()
 
-if(CPACK_GENERATOR STREQUAL "DEB")
+if(CPACK_GENERATOR MATCHES "DEB")
 	message("Preparing documentation for DEB package")
 	add_custom_target(package_documentation ALL)
 
