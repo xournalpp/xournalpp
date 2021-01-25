@@ -1,5 +1,7 @@
 #include "StrokeView.h"
 
+#include <math.h>
+
 #include "model/Stroke.h"
 #include "model/eraser/EraseableStroke.h"
 #include "util/LoopUtil.h"
@@ -124,6 +126,83 @@ void StrokeView::drawWithPressure() {
     }
 }
 
+void StrokeView::drawCalligraphicOnePolygon(double nibAngle, double thickness) {
+    // To save calculations in the loop
+    double rise = sin(nibAngle), run = cos(nibAngle);
+    // This is what gives the nib it's slant and thickness
+    double yShift = rise * thickness;
+    double xShift = run * thickness;
+
+    // Setting up for the first iteration
+    bool movingUp = false;
+
+    auto path = s->getPointVector();
+
+    size_t pathLen = path.size();
+
+    std::vector<Point> backAndForthList;
+
+    // Follow path in order it was created
+    for (int i = 0; i < pathLen; i++) {
+        backAndForthList.emplace_back(path[i]);
+    }
+
+    // Now reverse along the same path
+    for (int i = 2; i <= pathLen; i++) {
+        backAndForthList.emplace_back(path[pathLen - i]);
+    }
+
+    // backAndForthList now contains the path forwards, then backwards
+
+    bool firstIteration = true;
+    for (auto pCurr = begin(backAndForthList), pNext = std::next(pCurr), last = end(backAndForthList);
+         pCurr != last && pNext != last; ++pCurr, ++pNext) {
+
+
+        // Move everything to the origin, then check if the next point is above the line
+        bool nextIsAbove = rise * (pNext->x - pCurr->x) < run * (pNext->y - pCurr->y);
+
+        // Notice it will be false on first iteration due to the initial values of moving_(up/down)
+        // Also, it's value is based on the last iteration's moving_(up/down) value
+        bool switchedDirection = nextIsAbove ^ movingUp;
+
+        // Update movement direction for this iteration
+        movingUp = nextIsAbove;
+
+        // What if the next point is on the slope?
+        /*
+         * If you had two points laying on the same slope of then pen, then no matter how you connect the two
+         * the result is always identical, so long as you draw a line from one side to another once.
+         * Due to this, we don't have to check for if the next point lays on the same line or have any special
+         * behavior in this case
+         */
+        double multiplier = (nextIsAbove) ? 1.0 : -1.0;
+
+        // This section deals with drawing the corners/start/end points of the stroke
+        // It also makes sure that the winding number for intersections is exactly +-n != 0 (where n is the # of
+        // intersections)
+        if (firstIteration) {
+            cairo_line_to(cr, pCurr->x - multiplier * (xShift * pCurr->z), pCurr->y - multiplier * (yShift * pCurr->z));
+            cairo_line_to(cr, pCurr->x + multiplier * (xShift * pCurr->z), pCurr->y + multiplier * (yShift * pCurr->z));
+        } else {
+            if (switchedDirection) {
+                // The reason why this works, is because if movingUp is true, then
+                // previously you were moving down (because you switched), (or vise versa)
+                // this makes it so that you draw in the correct direction.
+                cairo_line_to(cr, pCurr->x + multiplier * (xShift * pCurr->z),
+                              pCurr->y + multiplier * (yShift * pCurr->z));
+            }
+        }
+        // Deals with drawing strokes in a single direction
+        cairo_line_to(cr, pNext->x + multiplier * (xShift * pNext->z), pNext->y + multiplier * (yShift * pNext->z));
+        firstIteration = false;
+    }
+    cairo_close_path(cr);
+    cairo_fill_preserve(cr);
+}
+
+static int count = 0;
+
 void StrokeView::paint(bool dontRenderEditingStroke) {
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
@@ -136,8 +215,12 @@ void StrokeView::paint(bool dontRenderEditingStroke) {
 
     // No pressure sensitivity, easy draw a line...
     if (!s->hasPressure() || s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
-        drawNoPressure();
+        // drawNoPressure();
+        drawCalligraphicOnePolygon(M_PI / 8, 3.0);
+        g_message("Draw calligraphic stroke (without Pressure), no %d!", ++count);
     } else {
-        drawWithPressure();
+        // drawWithPressure();
+        drawCalligraphicOnePolygon(M_PI / 8, 3.0);
+        g_message("Draw calligraphic stroke (with Pressure), no %d!", ++count);
     }
 }

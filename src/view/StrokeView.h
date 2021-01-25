@@ -45,6 +45,10 @@ private:
      */
     void drawWithPressure();
 
+    /**
+     * Draw a calligraphic stroke
+     */
+    void drawCalligraphicOnePolygon(double nibAngle, double thickness);
 
 private:
     cairo_t* cr;
