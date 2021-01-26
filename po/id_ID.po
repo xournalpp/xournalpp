@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-24 18:20+0000\n"
-"PO-Revision-Date: 2021-01-24 18:23\n"
+"POT-Creation-Date: 2021-01-26 19:20+0000\n"
+"PO-Revision-Date: 2021-01-26 19:23\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -1635,11 +1635,11 @@ msgstr "xournalpp-{1}"
 msgid " = Floating Toolbox (experimental) ="
 msgstr " = Kotak Alat Melayang (eksperimental) ="
 
-#: ../ui/settings.glade:3360 ../ui/settings.glade:3371
+#: ../ui/settings.glade:3470 ../ui/settings.glade:3481
 msgid "%"
 msgstr "%"
 
-#: ../ui/settings.glade:2178
+#: ../ui/settings.glade:2188
 msgid "% greater than the initial distance between the two touches."
 msgstr ""
 
@@ -1651,11 +1651,11 @@ msgstr ""
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr ""
 
-#: ../ui/settings.glade:4440
+#: ../ui/settings.glade:4550
 msgid "%."
 msgstr ""
 
-#: ../ui/settings.glade:469
+#: ../ui/settings.glade:479
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%A\t\tFull weekday name (e.g. Thursday)\n"
 "%b\t\tAbbreviated month name (e.g. Aug)\n"
@@ -1681,29 +1681,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%%\t\tA % sign"
 msgstr ""
 
-#: ../ui/settings.glade:4280
+#: ../ui/settings.glade:4390
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr "... DAN Berapa berapa lama waktu sejak goresan terakhir.\n\n"
 "<i>Direkomendasikan: 500ms</i>"
 
-#: ../ui/settings.glade:4424
+#: ../ui/settings.glade:4534
 msgid "0.00"
 msgstr ""
 
-#: ../ui/settings.glade:1440
+#: ../ui/settings.glade:1450
 msgid "1"
 msgstr ""
 
-#: ../ui/settings.glade:5053
+#: ../ui/settings.glade:5163
 msgid "1,00"
 msgstr ""
 
-#: ../ui/settings.glade:2163
+#: ../ui/settings.glade:2173
 msgid "1.0"
 msgstr ""
 
-#: ../ui/settings.glade:2808
+#: ../ui/settings.glade:2818
 msgid "30"
 msgstr ""
 
@@ -1727,7 +1727,7 @@ msgstr "<b>Warna</b>"
 msgid "<b>Default Tools</b>"
 msgstr "<b>Alat Bawaan</b>"
 
-#: ../ui/settings.glade:4599
+#: ../ui/settings.glade:4709
 msgid "<b>Default</b>"
 msgstr "<b>Bawaan</b>"
 
@@ -1759,19 +1759,19 @@ msgstr "<b>Ukuran Halaman</b>"
 msgid "<b>Separator</b>"
 msgstr "<b>Pemisah</b>"
 
-#: ../ui/settings.glade:792
+#: ../ui/settings.glade:802
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr "<i>Tetapkan kelas perangkat untuk setiap perangkat masukan pada sistem Anda. Hanya ubah nilai tersebut jika perangkat Anda tidak sesuai. (mis. pena muncul sebagai layar sentuh)</i>"
 
-#: ../ui/settings.glade:4690
+#: ../ui/settings.glade:4800
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>Rekaman audio saat ini disimpan pada sebuah folder terpisah dan direferensikan dari jurnal.</i>"
 
-#: ../ui/settings.glade:5108
+#: ../ui/settings.glade:5218
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>Perubahan hanya berlaku pada rekaman dan pemutaran baru.</i>"
 
-#: ../ui/settings.glade:1041
+#: ../ui/settings.glade:1051
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
 msgstr "<i>Tentukan alat yang akan dipilih jika Anda menekan sebuah tombol pada tetikus. Setelah tombol dilepas, alat yang dipilih sebelumnya akan dipilih.</i>"
 
@@ -1779,93 +1779,93 @@ msgstr "<i>Tentukan alat yang akan dipilih jika Anda menekan sebuah tombol pada 
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
 msgstr "<i>Contoh:</i> 1-3 atau 1,3,5-7 dsb."
 
-#: ../ui/settings.glade:2231
+#: ../ui/settings.glade:2241
 msgid "<i>For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.\n"
 "This also enables touch drawing.</i>"
 msgstr "<i>Untuk beberapa perangkat yang spesifik, perilaku gulir / sentuh pada sistem tidak seperti yang diharapkan. Pada kasus tersebut, Xournal++ memiliki sebuah solusi alternatif.\n"
 "Ini juga mengaktifkan menggambar sentuh.</i>"
 
-#: ../ui/settings.glade:268
+#: ../ui/settings.glade:278
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in your home directory, in ~/.xournalpp/autosave</i>"
 msgstr "<i>Jika dokumen sudah disimpan, Anda bisa menemukannya di folder yang sama dengan ekstensi .autosave.xoj\n"
 "Jika berkas belum disimpan, Anda bisa menemukannya di direktori home Anda, ~/.xournalpp/autosave</i>"
 
-#: ../ui/settings.glade:3600
+#: ../ui/settings.glade:3710
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>Jika Anda memberikan ruang tambahan di samping halaman, Anda bisa memilih area layar yang akan digunakan untuk bekerja.</i>"
 
-#: ../ui/settings.glade:573
+#: ../ui/settings.glade:583
 msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
 msgstr "<i>Jika Anda membuka PDF dan terdapat berkas Xournal dengan nama yang sama, maka akan membuka berkas xoj.</i>"
 
-#: ../ui/settings.glade:1792
+#: ../ui/settings.glade:1802
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr "<i>Jika perangkat Anda tidak mendukung pengenal tangan, Xournal++ bisa menonaktifkan layar sentuh Anda saat pena berada di dekat layar.</i>"
 
-#: ../ui/settings.glade:1219
+#: ../ui/settings.glade:1229
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr "<i>Sensitivitas Tekanan mengijinkan Anda menggambar garis dengan lebar yang berbeda, tergantung pada seberapa besar tekanan yang Anda berikan pada pena. Jika tablet Anda tidak mendukung fitur ini, maka pengaturan ini tidak berpengaruh.</i>"
 
-#: ../ui/settings.glade:3447
+#: ../ui/settings.glade:3557
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Letakkan sebuah penggaris pada layar Anda dan gerakkan slider sampai kedua penggaris cocok.</i>"
 
-#: ../ui/settings.glade:4383
+#: ../ui/settings.glade:4493
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5217
+#: ../ui/settings.glade:5327
 msgid "<i>Select language (requires restart)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4545
+#: ../ui/settings.glade:4655
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Pilih alat dan Pengaturan jika Anda menekan Tombol Bawaan.</i>"
 
-#: ../ui/settings.glade:1268
+#: ../ui/settings.glade:1278
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1942
+#: ../ui/settings.glade:1952
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>Tentukan perintah yang akan dipanggil ketika dipicu oleh Pengenal Tangan. Perintah akan dieksekusi pada Thread UI, pastikan mereka tidak menghalangi!</i>"
 
-#: ../ui/settings.glade:4801
+#: ../ui/settings.glade:4911
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1510
+#: ../ui/settings.glade:1520
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr "<i>Tentukan alat yang akan dipilih ketika sebuah tombol pada stylus ditekan atau penghapus sedang digunakan. Setelah tombol dilepas, alat sebelumnya akan dipilih.</i>"
 
-#: ../ui/settings.glade:398
+#: ../ui/settings.glade:408
 msgid "<i>This name will be proposed if you save a new document.</i>"
 msgstr "<i>Nama ini akan diusulkan ketika Anda menyimpan sebuah dokumen baru.</i>"
 
-#: ../ui/settings.glade:3426
+#: ../ui/settings.glade:3536
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
 msgstr "<i>Untuk memastikan pada perbesaran 100% setiap elemen memiliki ukuran natural. (perlu mulai ulang)</i>"
 
-#: ../ui/settings.glade:2439
+#: ../ui/settings.glade:2449
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr "<i>Alih visibilitas bilah menu dengan F10</i>"
 
-#: ../ui/settings.glade:2114
+#: ../ui/settings.glade:2124
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr "<i>Gunakan gestur cubit untuk mengatur perbesaran halaman jurnal.</i>"
 
-#: ../ui/settings.glade:2299
+#: ../ui/settings.glade:2309
 msgid "<i>Use the touchscreen like a multi-touch-aware pen (requires new input system).</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1403
+#: ../ui/settings.glade:1413
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1726
+#: ../ui/settings.glade:1736
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>Anda bisa mengkonfigurasi perangkat yang tidak dikenali oleh GTK sebagai layar sentuh, untuk berlaku sebagai sebuah perangkat layar sentuh.</i>"
 
@@ -1879,19 +1879,19 @@ msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 msgid "About Xournal++"
 msgstr "Tentang Xournal++"
 
-#: ../ui/settings.glade:4352
+#: ../ui/settings.glade:4462
 msgid "Action on Tool Tap"
 msgstr "Aksi pada Tap Alat"
 
-#: ../ui/settings.glade:3653
+#: ../ui/settings.glade:3763
 msgid "Add additional horizontal space of"
 msgstr "Tambah ruang horisontal tambahan dari"
 
-#: ../ui/settings.glade:3631
+#: ../ui/settings.glade:3741
 msgid "Add additional vertical space of"
 msgstr "Tambah ruang vertikal tambahan dari"
 
-#: ../ui/settings.glade:3956
+#: ../ui/settings.glade:4066
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr ""
 
@@ -1903,7 +1903,7 @@ msgstr ""
 msgid "All pages"
 msgstr "Semua halaman"
 
-#: ../ui/settings.glade:4317
+#: ../ui/settings.glade:4427
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "Keseluruhan ketiga kondisi harus dipenuhi sebelum goresan diabaikan.\n"
@@ -1917,15 +1917,15 @@ msgstr ""
 msgid "Append New Pdf Pages"
 msgstr ""
 
-#: ../ui/settings.glade:1479
+#: ../ui/settings.glade:1489
 msgid "Artifact workaround"
 msgstr ""
 
-#: ../ui/settings.glade:4897
+#: ../ui/settings.glade:5007
 msgid "Audio Devices"
 msgstr "Perangkat Audio"
 
-#: ../ui/settings.glade:5140
+#: ../ui/settings.glade:5250
 msgid "Audio Recording"
 msgstr "Rekaman Audio"
 
@@ -1937,44 +1937,44 @@ msgstr "Penulis: "
 msgid "Authors:"
 msgstr "Penulis:"
 
-#: ../ui/settings.glade:1863
+#: ../ui/settings.glade:1873
 msgid "Autodetect"
 msgstr "Deteksi Otomatis"
 
-#: ../ui/settings.glade:609
+#: ../ui/settings.glade:619
 msgid "Autoloading Journals"
 msgstr "Muat Jurnal Otomatis"
 
-#: ../ui/settings.glade:368
+#: ../ui/settings.glade:378
 msgid "Autosaving"
 msgstr "Simpan Otomatis"
 
-#: ../ui/settings.glade:516
+#: ../ui/settings.glade:526
 msgid "Available Placeholders"
 msgstr "Tempat Penampungan Tersedia"
 
-#: ../ui/settings.glade:2504
+#: ../ui/settings.glade:2514
 msgid "Background color between pages"
 msgstr "Warna latar belakang antar halaman"
 
-#: ../ui/settings.glade:2659
+#: ../ui/settings.glade:2669
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr ""
 
-#: ../ui/settings.glade:2863
+#: ../ui/settings.glade:2873
 msgid "Border Color"
 msgstr ""
 
-#: ../ui/settings.glade:2824
+#: ../ui/settings.glade:2834
 msgid "Border Width"
 msgstr ""
 
-#: ../ui/settings.glade:2493
+#: ../ui/settings.glade:2503
 msgid "Border color"
 msgstr "Warna garis tepi"
 
-#: ../ui/settings.glade:2478
+#: ../ui/settings.glade:2488
 msgid "Border color for current page and other selections"
 msgstr "Warna garis tepi untuk halaman saat ini dan item lain yang dipilih"
 
@@ -1982,11 +1982,11 @@ msgstr "Warna garis tepi untuk halaman saat ini dan item lain yang dipilih"
 msgid "Built on"
 msgstr "Dibuat pada"
 
-#: ../ui/settings.glade:1550
+#: ../ui/settings.glade:1560
 msgid "Button 1"
 msgstr "Tombol 1"
 
-#: ../ui/settings.glade:1588
+#: ../ui/settings.glade:1598
 msgid "Button 2"
 msgstr "Tombol 2"
 
@@ -1994,15 +1994,19 @@ msgstr "Tombol 2"
 msgid "Choose a global LaTeX template file"
 msgstr ""
 
-#: ../ui/settings.glade:2706 ../ui/settings.glade:2849
+#: ../ui/settings.glade:2716 ../ui/settings.glade:2859
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr ""
 
-#: ../ui/settings.glade:2720
+#: ../ui/settings.glade:2730
 msgid "Circle Color"
 msgstr ""
 
-#: ../ui/settings.glade:2586
+#: ../ui/settings.glade:3310
+msgid "Clear cached paged while scrolling"
+msgstr ""
+
+#: ../ui/settings.glade:2596
 msgid "Colors"
 msgstr "Warna"
 
@@ -2030,35 +2034,35 @@ msgstr ""
 msgid "Current page"
 msgstr "Halaman saat ini"
 
-#: ../ui/settings.glade:2906
+#: ../ui/settings.glade:2916
 msgid "Cursor"
 msgstr "Kursor"
 
-#: ../ui/settings.glade:2641
+#: ../ui/settings.glade:2651
 msgid "Cursor icon for pen"
 msgstr ""
 
-#: ../ui/settings.glade:2058
+#: ../ui/settings.glade:2068
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "Perintah Kustom (untuk Metode \"Kustom\")"
 
-#: ../ui/settings.glade:2552
+#: ../ui/settings.glade:2562
 msgid "Dark Theme (requires restart)"
 msgstr "Tema Gelap (perlu dimulai ulang)"
 
-#: ../ui/settings.glade:542
+#: ../ui/settings.glade:552
 msgid "Default Save Name"
 msgstr "Nama Simpan Bawaan"
 
-#: ../ui/settings.glade:5040
+#: ../ui/settings.glade:5150
 msgid "Default Seek Time (in seconds)"
 msgstr ""
 
-#: ../ui/settings.glade:430
+#: ../ui/settings.glade:440
 msgid "Default name: "
 msgstr "Nama bawaan: "
 
-#: ../ui/settings.glade:4639
+#: ../ui/settings.glade:4749
 msgid "Defaults"
 msgstr "Bawaan"
 
@@ -2078,7 +2082,7 @@ msgstr "Hapus halaman ini"
 msgid "Device"
 msgstr "Perangkat"
 
-#: ../ui/settings.glade:1977
+#: ../ui/settings.glade:1987
 msgid "Disable"
 msgstr "Nonaktifkan"
 
@@ -2086,7 +2090,7 @@ msgstr "Nonaktifkan"
 msgid "Disable drawing for this device"
 msgstr "Nonaktifkan menggambar untuk perangkat ini"
 
-#: ../ui/settings.glade:3032
+#: ../ui/settings.glade:3042
 msgid "Disable scrollbar fade out"
 msgstr "Nonaktifkan bilah gulir menghilang"
 
@@ -2094,26 +2098,26 @@ msgstr "Nonaktifkan bilah gulir menghilang"
 msgid "Disabled"
 msgstr "Dinonaktifkan"
 
-#: ../ui/settings.glade:1837
+#: ../ui/settings.glade:1847
 msgid "Disabling Method"
 msgstr "Metode Penonaktifan"
 
-#: ../ui/settings.glade:3518
+#: ../ui/settings.glade:3628
 msgid "Display DPI Calibration"
 msgstr "Kalibrasi DPI Layar"
 
-#: ../ui/settings.glade:4192
+#: ../ui/settings.glade:4302
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Jangan menggambar untuk masukan dalam waktu dan ukuran yang pendek, kecuali jika dilakukan secara berurutan. Sebagai gantinya, tampilkan kotak alat melayang."
 
-#: ../ui/settings.glade:708 ../ui/settings.glade:899
+#: ../ui/settings.glade:718 ../ui/settings.glade:909
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "\t    Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:3856
+#: ../ui/settings.glade:3966
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -2135,15 +2139,15 @@ msgstr ""
 msgid "Draw _Line"
 msgstr "Gambar _Garis"
 
-#: ../ui/settings.glade:2688
+#: ../ui/settings.glade:2698
 msgid "Draw a transparent circle around the cursor"
 msgstr ""
 
-#: ../ui/settings.glade:4494
+#: ../ui/settings.glade:4604
 msgid "Drawing Area"
 msgstr "Area Gambar"
 
-#: ../ui/settings.glade:3924
+#: ../ui/settings.glade:4034
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Alat Gambar - Setel Pengubah dengan Arah Gambar (Eksperimental)"
 
@@ -2155,55 +2159,55 @@ msgstr "Duplikasi"
 msgid "Edit (not implemented yet)"
 msgstr "Sunting (belum diimplementasikan)"
 
-#: ../ui/settings.glade:1965
+#: ../ui/settings.glade:1975
 msgid "Enable"
 msgstr "Aktifkan"
 
-#: ../ui/settings.glade:3851
+#: ../ui/settings.glade:3961
 msgid "Enable  with determination radius of "
 msgstr "Aktifkan dengan radius penentuan "
 
-#: ../ui/settings.glade:587
+#: ../ui/settings.glade:597
 msgid "Enable Autoloading of Journals"
 msgstr "Aktifkan Muat Jurnal Otomatis"
 
-#: ../ui/settings.glade:287
+#: ../ui/settings.glade:297
 msgid "Enable Autosaving"
 msgstr "Aktifkan Simpan Otomatis"
 
-#: ../ui/settings.glade:2246
+#: ../ui/settings.glade:2256
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
 msgstr "Aktifkan solusi masalah Sentuh / Gulir GTK (perlu mulai ulang)"
 
-#: ../ui/settings.glade:940
+#: ../ui/settings.glade:950
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1233
+#: ../ui/settings.glade:1243
 msgid "Enable Pressure Sensitivity"
 msgstr "Aktifkan Sensitivitas Tekanan"
 
-#: ../ui/settings.glade:4187
+#: ../ui/settings.glade:4297
 msgid "Enable Tap action"
 msgstr "Aksi Aktifkan Tap"
 
-#: ../ui/settings.glade:880
+#: ../ui/settings.glade:890
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
 msgstr "Aktifkan menggambar di luar jendela <i>(Gambar tidak akan berhenti di garis batas jendela)</i>"
 
-#: ../ui/settings.glade:1806
+#: ../ui/settings.glade:1816
 msgid "Enable internal Hand Recognition"
 msgstr "Aktifkan Pengenal Tangan internal"
 
-#: ../ui/settings.glade:703
+#: ../ui/settings.glade:713
 msgid "Enable new input system (Requires restart)"
 msgstr "Aktifkan sistem masukan baru (Perlu mulai ulang)"
 
-#: ../ui/settings.glade:2313
+#: ../ui/settings.glade:2323
 msgid "Enable touch drawing"
 msgstr ""
 
-#: ../ui/settings.glade:2126
+#: ../ui/settings.glade:2136
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Aktifkan gestur perbesaran (perlu mulai ulang)"
 
@@ -2219,7 +2223,7 @@ msgstr "Opsi Pe_nghapus"
 msgid "Eraser Type - don't change"
 msgstr "Tipe Penghapus - jangan diubah"
 
-#: ../ui/settings.glade:761
+#: ../ui/settings.glade:771
 msgid "Experimental Input System"
 msgstr "Sistem Masukan Eksperimental"
 
@@ -2256,11 +2260,11 @@ msgstr "Temukan kemunculan berikutnya untuk string pencarian"
 msgid "Find previous occurrence of the search string"
 msgstr "Temukan kemunculan sebelumnya untuk string pencarian"
 
-#: ../ui/settings.glade:3768
+#: ../ui/settings.glade:3878
 msgid "First Page Offset "
 msgstr "Offset Halaman Pertama "
 
-#: ../ui/main.glade:482 ../ui/settings.glade:3119
+#: ../ui/main.glade:482 ../ui/settings.glade:3129
 msgid "Fullscreen"
 msgstr "Layar penuh"
 
@@ -2268,7 +2272,7 @@ msgstr "Layar penuh"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 atau setelahnya"
 
-#: ../ui/settings.glade:4942
+#: ../ui/settings.glade:5052
 msgid "Gain"
 msgstr "Gain"
 
@@ -2280,7 +2284,7 @@ msgstr ""
 msgid "Git commit"
 msgstr "Git commit"
 
-#: ../ui/settings.glade:2604
+#: ../ui/settings.glade:2614
 msgid "Global"
 msgstr "Global"
 
@@ -2292,11 +2296,11 @@ msgstr ""
 msgid "Go to Page"
 msgstr "Ke Halaman"
 
-#: ../ui/settings.glade:4094
+#: ../ui/settings.glade:4204
 msgid "Grid size"
 msgstr ""
 
-#: ../ui/settings.glade:4051
+#: ../ui/settings.glade:4161
 msgid "Grid snapping tolerance"
 msgstr "Toleransi lengketkan ke kisi"
 
@@ -2304,7 +2308,7 @@ msgstr "Toleransi lengketkan ke kisi"
 msgid "H_and Tool"
 msgstr "_Alat Tangan"
 
-#: ../ui/settings.glade:2083
+#: ../ui/settings.glade:2093
 msgid "Hand Recognition"
 msgstr "Pengenal Tangan"
 
@@ -2316,23 +2320,23 @@ msgstr ""
 msgid "Height:"
 msgstr "Tinggi:"
 
-#: ../ui/main.glade:901 ../ui/settings.glade:3081 ../ui/settings.glade:3148
+#: ../ui/main.glade:901 ../ui/settings.glade:3091 ../ui/settings.glade:3158
 msgid "Hide Menubar"
 msgstr "Sembunyikan Bilah Menu"
 
-#: ../ui/settings.glade:3097 ../ui/settings.glade:3164
+#: ../ui/settings.glade:3107 ../ui/settings.glade:3174
 msgid "Hide Sidebar"
 msgstr "Sembunyikan Bilah Sisi"
 
-#: ../ui/settings.glade:3002
+#: ../ui/settings.glade:3012
 msgid "Hide the horizontal scrollbar"
 msgstr "Sembunyikan bilah gulir horisontal"
 
-#: ../ui/settings.glade:3017
+#: ../ui/settings.glade:3027
 msgid "Hide the vertical scrollbar"
 msgstr "Sembunyikan bilah gulir vertikal"
 
-#: ../ui/settings.glade:2683
+#: ../ui/settings.glade:2693
 msgid "Highlight cursor position"
 msgstr "Sorot posisi kursor"
 
@@ -2340,19 +2344,19 @@ msgstr "Sorot posisi kursor"
 msgid "Highlighter Opti_ons"
 msgstr "_Opsi Penyorot"
 
-#: ../ui/settings.glade:4237
+#: ../ui/settings.glade:4347
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr "Seberapa pendek (layar mm)  goresan  DAN...\n\n"
 "<i>Direkomendasikan: 1 mm</i>"
 
-#: ../ui/settings.glade:4217
+#: ../ui/settings.glade:4327
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr "Seberapa pendek (waktu)  DAN...\n\n"
 "<i>Direkomendasikan: 150 ms</i>"
 
-#: ../ui/settings.glade:4139
+#: ../ui/settings.glade:4249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr ""
 
@@ -2364,11 +2368,11 @@ msgstr ""
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
 msgstr ""
 
-#: ../ui/settings.glade:4205
+#: ../ui/settings.glade:4315
 msgid "Ignore Time (ms)"
 msgstr "Abaikan Waktu (ms)"
 
-#: ../ui/settings.glade:1421
+#: ../ui/settings.glade:1431
 msgid "Ignore the first"
 msgstr ""
 
@@ -2376,15 +2380,15 @@ msgstr ""
 msgid "Image quality"
 msgstr ""
 
-#: ../ui/settings.glade:4825
+#: ../ui/settings.glade:4935
 msgid "Input Device"
 msgstr "Perangkat Masukan"
 
-#: ../ui/settings.glade:828
+#: ../ui/settings.glade:838
 msgid "Input Devices"
 msgstr "Perangkat Masukan"
 
-#: ../ui/settings.glade:992
+#: ../ui/settings.glade:1002
 msgid "Input System"
 msgstr "Sistem Masukan"
 
@@ -2404,7 +2408,7 @@ msgstr "Sisipkan Halaman Sebelum"
 msgid "Insert a copy of the current page below"
 msgstr "Sisipkan salinan halaman saat ini di bawah"
 
-#: ../ui/settings.glade:5165
+#: ../ui/settings.glade:5275
 msgid "LaTeX"
 msgstr ""
 
@@ -2416,11 +2420,11 @@ msgstr ""
 msgid "LaTeX generation command"
 msgstr ""
 
-#: ../ui/settings.glade:5254 ../ui/settings.glade:5302
+#: ../ui/settings.glade:5364 ../ui/settings.glade:5412
 msgid "Language"
 msgstr ""
 
-#: ../ui/settings.glade:5272
+#: ../ui/settings.glade:5382
 msgid "Language Settings"
 msgstr ""
 
@@ -2428,7 +2432,7 @@ msgstr ""
 msgid "Layout"
 msgstr "Tata Letak"
 
-#: ../ui/settings.glade:2973
+#: ../ui/settings.glade:2983
 msgid "Left / Right-Handed"
 msgstr "Kidal / Normal"
 
@@ -2436,7 +2440,7 @@ msgstr "Kidal / Normal"
 msgid "License"
 msgstr "Lisensi"
 
-#: ../ui/settings.glade:637
+#: ../ui/settings.glade:647
 msgid "Load / Save"
 msgstr "Muat / Simpan"
 
@@ -2448,28 +2452,28 @@ msgstr "Muat berkas"
 msgid "Manage Toolbar"
 msgstr "Kelola Bilah Alat"
 
-#: ../ui/settings.glade:4257
+#: ../ui/settings.glade:4367
 msgid "Max Length (mm)"
 msgstr "Panjang Maksimum (mm)"
 
-#: ../ui/settings.glade:911
+#: ../ui/settings.glade:921
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1081
+#: ../ui/settings.glade:1091
 msgid "Middle Mouse Button"
 msgstr "Tombol Tengah Tetikus"
 
-#: ../ui/settings.glade:1291
+#: ../ui/settings.glade:1301
 msgid "Minimum Pressure:"
 msgstr ""
 
-#: ../ui/settings.glade:1168 ../ui/settingsDeviceClassConfig.glade:42
+#: ../ui/settings.glade:1178 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
 msgstr "Tetikus"
 
-#: ../ui/settings.glade:1137
+#: ../ui/settings.glade:1147
 msgid "Mouse Buttons"
 msgstr "Tombol Tetikus"
 
@@ -2505,7 +2509,7 @@ msgstr "Halaman Baru di _Akhir"
 msgid "New _Layer"
 msgstr "_Lapisan Baru"
 
-#: ../ui/settings.glade:2657
+#: ../ui/settings.glade:2667
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr ""
@@ -2518,7 +2522,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: ../ui/settings.glade:3767
+#: ../ui/settings.glade:3877
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "Offset halaman pertama sejumlah halaman ini saat <b>Pasangkan Halaman</b> diaktifkan"
 
@@ -2526,15 +2530,15 @@ msgstr "Offset halaman pertama sejumlah halaman ini saat <b>Pasangkan Halaman</b
 msgid "Opacity settings"
 msgstr ""
 
-#: ../ui/settings.glade:961
+#: ../ui/settings.glade:971
 msgid "Options"
 msgstr "Opsi"
 
-#: ../ui/settings.glade:4848
+#: ../ui/settings.glade:4958
 msgid "Output Device"
 msgstr "Perangkat Keluaran"
 
-#: ../ui/settings.glade:4463
+#: ../ui/settings.glade:4573
 msgid "PDF Cache"
 msgstr ""
 
@@ -2546,7 +2550,7 @@ msgstr "Halaman be_ranotasi sebelumnya"
 msgid "Pages:"
 msgstr "Halaman:"
 
-#: ../ui/settings.glade:3821
+#: ../ui/settings.glade:3931
 msgid "Paired Pages"
 msgstr "Halaman Berpasangan"
 
@@ -2580,7 +2584,11 @@ msgstr "Jeda"
 msgid "Pen _Options"
 msgstr "_Opsi Pena"
 
-#: ../ui/settings.glade:5094
+#: ../ui/settings.glade:3330
+msgid "Performance"
+msgstr ""
+
+#: ../ui/settings.glade:5204
 msgid "Playback Settings"
 msgstr ""
 
@@ -2596,23 +2604,31 @@ msgstr "_Pengelola Pengaya"
 msgid "Plugin changes are only applied after Xournal++ was restarted"
 msgstr "Perubahan pengaya hanya akan diterapkan setelah Xournal++ dimulai ulang"
 
+#: ../ui/settings.glade:3273
+msgid "Pre-load pages after"
+msgstr ""
+
+#: ../ui/settings.glade:3261
+msgid "Pre-load pages before"
+msgstr ""
+
 #: ../ui/main.glade:437
 msgid "Preferences"
 msgstr "Preferensi"
 
-#: ../ui/settings.glade:3220
+#: ../ui/settings.glade:3230
 msgid "Presentation Mode"
 msgstr "Mode Presentasi"
 
-#: ../ui/settings.glade:3951
+#: ../ui/settings.glade:4061
 msgid "Preserve line width"
 msgstr ""
 
-#: ../ui/settings.glade:1302
+#: ../ui/settings.glade:1312
 msgid "Pressure Multiplier: "
 msgstr ""
 
-#: ../ui/settings.glade:1372
+#: ../ui/settings.glade:1382
 msgid "Pressure Sensitivity"
 msgstr "Sensitivitas Tekanan"
 
@@ -2620,7 +2636,7 @@ msgstr "Sensitivitas Tekanan"
 msgid "RELEASE_IDENTIFIER"
 msgstr "RELEASE_IDENTIFIER"
 
-#: ../ui/settings.glade:2772
+#: ../ui/settings.glade:2782
 msgid "Radius"
 msgstr ""
 
@@ -2628,7 +2644,7 @@ msgstr ""
 msgid "Range"
 msgstr "Jangkauan"
 
-#: ../ui/settings.glade:4411
+#: ../ui/settings.glade:4521
 msgid "Re-render when the page's zoom changes by more than "
 msgstr ""
 
@@ -2640,7 +2656,7 @@ msgstr "_Dokumen Terkini"
 msgid "Record / Stop"
 msgstr "Rekam / Hentikan"
 
-#: ../ui/settings.glade:5007
+#: ../ui/settings.glade:5117
 msgid "Recording Quality"
 msgstr "Kualitas Rekaman"
 
@@ -2652,7 +2668,7 @@ msgstr ""
 msgid "Rename selected layer"
 msgstr ""
 
-#: ../ui/settings.glade:3998
+#: ../ui/settings.glade:4108
 msgid "Resizing"
 msgstr ""
 
@@ -2660,15 +2676,15 @@ msgstr ""
 msgid "Resolution"
 msgstr "Resolusi"
 
-#: ../ui/settings.glade:1119
+#: ../ui/settings.glade:1129
 msgid "Right Mouse Button"
 msgstr "Tombol Kanan Tetikus"
 
-#: ../ui/settings.glade:4038
+#: ../ui/settings.glade:4148
 msgid "Rotation snapping tolerance"
 msgstr "Toleransi lengketkan rotasi"
 
-#: ../ui/settings.glade:4930
+#: ../ui/settings.glade:5040
 msgid "Sample Rate"
 msgstr "Laju Sampel"
 
@@ -2676,11 +2692,11 @@ msgstr "Laju Sampel"
 msgid "Sample layer name"
 msgstr ""
 
-#: ../ui/settings.glade:3052
+#: ../ui/settings.glade:3062
 msgid "Scrollbars"
 msgstr "Bilah Gulir"
 
-#: ../ui/settings.glade:3734
+#: ../ui/settings.glade:3844
 msgid "Scrolling outside the page"
 msgstr "Gulir di luar halaman"
 
@@ -2688,7 +2704,7 @@ msgstr "Gulir di luar halaman"
 msgid "Select Background Color"
 msgstr "Pilih Warna Latar Belakang"
 
-#: ../ui/settings.glade:4727
+#: ../ui/settings.glade:4837
 msgid "Select Folder"
 msgstr "Pilih Folder"
 
@@ -2700,15 +2716,15 @@ msgstr "Pilih Gambar"
 msgid "Select PDF Page"
 msgstr "Pilih Halaman PDF"
 
-#: ../ui/settings.glade:3185
+#: ../ui/settings.glade:3195
 msgid "Select toolbar:"
 msgstr "Pilih bilah alat:"
 
-#: ../ui/settings.glade:2529
+#: ../ui/settings.glade:2539
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "Warna Pemilihan (Teks, Pemilihan Goresan, dsb.)"
 
-#: ../ui/settings.glade:1354
+#: ../ui/settings.glade:1364
 msgid "Sensitivity Scale"
 msgstr ""
 
@@ -2720,15 +2736,15 @@ msgstr "Setel Kolom"
 msgid "Set Rows"
 msgstr "Setel Baris"
 
-#: ../ui/settings.glade:4320
+#: ../ui/settings.glade:4430
 msgid "Settings:"
 msgstr "Setelan:"
 
-#: ../ui/settings.glade:4329
+#: ../ui/settings.glade:4439
 msgid "Show Floating Toolbox"
 msgstr "Tampilkan Kotak Alat Melayang"
 
-#: ../ui/settings.glade:2420
+#: ../ui/settings.glade:2430
 msgid "Show Menubar on Startup"
 msgstr "Tampilkan Bilah Menu saat Mulai"
 
@@ -2736,7 +2752,7 @@ msgstr "Tampilkan Bilah Menu saat Mulai"
 msgid "Show sidebar"
 msgstr "Tampilkan bilah sisi"
 
-#: ../ui/settings.glade:2935
+#: ../ui/settings.glade:2945
 msgid "Show sidebar on the right side"
 msgstr "Tampilkan bilah sisi di kanan"
 
@@ -2744,29 +2760,29 @@ msgstr "Tampilkan bilah sisi di kanan"
 msgid "Show toolbars"
 msgstr ""
 
-#: ../ui/settings.glade:2951
+#: ../ui/settings.glade:2961
 msgid "Show vertical scrollbar on the left side"
 msgstr "Tampilkan bilah gulir vertikal di kiri"
 
-#: ../ui/settings.glade:931
+#: ../ui/settings.glade:941
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2658
+#: ../ui/settings.glade:2668
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr ""
 
-#: ../ui/settings.glade:4157
+#: ../ui/settings.glade:4267
 msgid "Snapping"
 msgstr "Lengketkan"
 
-#: ../ui/settings.glade:3304
+#: ../ui/settings.glade:3414
 msgid "Speed for Ctrl + Scroll"
 msgstr "Kecepatan untuk Ctrl + Gulir"
 
-#: ../ui/settings.glade:3332
+#: ../ui/settings.glade:3442
 msgid "Speed for a Zoomstep"
 msgstr "Kecepatan langkah perbesaran"
 
@@ -2774,23 +2790,23 @@ msgstr "Kecepatan langkah perbesaran"
 msgid "Standard"
 msgstr "Standar"
 
-#: ../ui/settings.glade:2151
+#: ../ui/settings.glade:2161
 msgid "Start zooming after a distance "
 msgstr ""
 
-#: ../ui/settings.glade:4712 ../ui/settings.glade:4770
+#: ../ui/settings.glade:4822 ../ui/settings.glade:4880
 msgid "Storage Folder"
 msgstr "Folder Penyimpanan"
 
-#: ../ui/settings.glade:1675
+#: ../ui/settings.glade:1685
 msgid "Stylus"
 msgstr "Stylus"
 
-#: ../ui/settings.glade:1644
+#: ../ui/settings.glade:1654
 msgid "Stylus Buttons"
 msgstr "Tombol Stylus"
 
-#: ../ui/settings.glade:4268
+#: ../ui/settings.glade:4378
 msgid "Successive (ms)"
 msgstr "Berturut-turut (ms)"
 
@@ -2814,7 +2830,7 @@ msgstr ""
 msgid "Template:"
 msgstr "Templat:"
 
-#: ../ui/settings.glade:2010 ../ui/settings.glade:2023
+#: ../ui/settings.glade:2020 ../ui/settings.glade:2033
 msgid "Test"
 msgstr "Tes"
 
@@ -2846,11 +2862,11 @@ msgstr ""
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr ""
 
-#: ../ui/settings.glade:3495
+#: ../ui/settings.glade:3605
 msgid "The unit of the ruler is cm"
 msgstr "Satuan untuk penggaris adalah cm"
 
-#: ../ui/settings.glade:859
+#: ../ui/settings.glade:869
 msgid "These settings take only effect if the experimental input system is activated"
 msgstr "Setelan tersebut hanya akan berlaku jika sistem masukan eksperimental diaktifkan"
 
@@ -2858,32 +2874,32 @@ msgstr "Setelan tersebut hanya akan berlaku jika sistem masukan eksperimental di
 msgid "These settings will be used for new pages"
 msgstr ""
 
-#: ../ui/settings.glade:687
+#: ../ui/settings.glade:697
 msgid "This is an experimental feature! Use it with care."
 msgstr "Ini adalah fitur eksperimental! Gunakan dengan hati-hati."
 
-#: ../ui/settings.glade:1848
+#: ../ui/settings.glade:1858
 msgid "Timeout"
 msgstr "Waktu habis"
 
-#: ../ui/settings.glade:2335
+#: ../ui/settings.glade:2345
 msgid "Touch Drawing"
 msgstr ""
 
-#: ../ui/settings.glade:1761 ../ui/settings.glade:2366
+#: ../ui/settings.glade:1771 ../ui/settings.glade:2376
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
 msgstr "Layar sentuh"
 
-#: ../ui/settings.glade:4297
+#: ../ui/settings.glade:4407
 msgid "Try to select object first."
 msgstr "Cobalah memilih objek terlebih dahulu."
 
-#: ../ui/settings.glade:4302 ../ui/settings.glade:4334
+#: ../ui/settings.glade:4412 ../ui/settings.glade:4444
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Cobalah memilih objek terlebih dahulu; jika tidak ada yang dipilih, tampilkan kotak alat melayang jika diaktifkan."
 
-#: ../ui/settings.glade:4135
+#: ../ui/settings.glade:4245
 msgid "Use snapping for recognized shapes"
 msgstr ""
 
@@ -2891,7 +2907,7 @@ msgstr ""
 msgid "Use the current page size instead of the page size above."
 msgstr ""
 
-#: ../ui/settings.glade:3780
+#: ../ui/settings.glade:3890
 msgid "Usually 0 or 1"
 msgstr "Biasanya 0 atau 1"
 
@@ -2903,16 +2919,16 @@ msgstr "Versi"
 msgid "Version: "
 msgstr "Versi: "
 
-#: ../ui/settings.glade:3251
+#: ../ui/settings.glade:3361
 msgid "View"
 msgstr "Tampilan"
 
-#: ../ui/settings.glade:2145
+#: ../ui/settings.glade:2155
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
 msgstr ""
 
-#: ../ui/settings.glade:4408
+#: ../ui/settings.glade:4518
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr ""
@@ -2933,7 +2949,7 @@ msgstr "Lebar:"
 msgid "With help from the community"
 msgstr "Dengan bantuan dari komunitas"
 
-#: ../ui/settings.glade:2268
+#: ../ui/settings.glade:2278
 msgid "Workaround"
 msgstr "Solusi"
 
@@ -2941,19 +2957,19 @@ msgstr "Solusi"
 msgid "X.X.X"
 msgstr ""
 
-#: ../ui/settings.glade:160
+#: ../ui/settings.glade:170
 msgid "Xournal++ Preferences"
 msgstr "Preferensi Xournal++"
 
-#: ../ui/settings.glade:3549
+#: ../ui/settings.glade:3659
 msgid "Zoom"
 msgstr "Perbesaran"
 
-#: ../ui/settings.glade:2200
+#: ../ui/settings.glade:2210
 msgid "Zoom Gestures"
 msgstr "Gestur Perbesaran"
 
-#: ../ui/settings.glade:3395
+#: ../ui/settings.glade:3505
 msgid "Zoom Speed"
 msgstr "Kecepatan Perbesaran"
 
@@ -3213,11 +3229,11 @@ msgstr "dpi"
 msgid "enabled,"
 msgstr "diaktifkan,"
 
-#: ../ui/settings.glade:1456
+#: ../ui/settings.glade:1466
 msgid "events"
 msgstr ""
 
-#: ../ui/settings.glade:311
+#: ../ui/settings.glade:321
 msgid "every"
 msgstr "setiap"
 
@@ -3225,17 +3241,17 @@ msgstr "setiap"
 msgid "load from file"
 msgstr "muat dari berkas"
 
-#: ../ui/settings.glade:338
+#: ../ui/settings.glade:348
 msgid "minutes"
 msgstr "menit"
 
-#: ../ui/settings.glade:2744 ../ui/settings.glade:2795
-#: ../ui/settings.glade:3692 ../ui/settings.glade:3703
-#: ../ui/settings.glade:3891
+#: ../ui/settings.glade:2754 ../ui/settings.glade:2805
+#: ../ui/settings.glade:3802 ../ui/settings.glade:3813
+#: ../ui/settings.glade:4001
 msgid "pixels"
 msgstr "piksel"
 
-#: ../ui/settings.glade:1892
+#: ../ui/settings.glade:1902
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(setelah itu layar sentuh akan diaktifkan kembali)</i>"
 
