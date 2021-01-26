@@ -45,7 +45,8 @@ void CircleHandler::drawShape(Point& c, const PositionInputData& pos) {
         {
             int signW = width > 0 ? 1 : -1;
             int signH = height > 0 ? 1 : -1;
-            width = std::max(width * signW, height * signH) * signW;
+            width = (this->modControl) ? sqrt(pow(width, 2) + pow(height, 2)) :
+                                         std::max(width * signW, height * signH) * signW;
             height = (width * signW) * signH;
         }
 
