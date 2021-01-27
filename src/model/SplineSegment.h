@@ -21,7 +21,7 @@
 
 /**
  * @brief A class containing a partial (or relative) spline segment: the initial knot is missing
- */ 
+ */
 class PartialSplineSegment {
 public:
     PartialSplineSegment() = default;
@@ -29,9 +29,9 @@ public:
      * @brief Create a linear spline segment from p to q
      */
     PartialSplineSegment(const Point& p, const Point& q);
-    
+
     PartialSplineSegment(const Point& fp, const Point& sp, const Point& q);
-    
+
     PartialSplineSegment(const Point& p, const MathVect3& fVelocity, const MathVect3 sVelocity, const Point& q);
 
     /**
@@ -41,34 +41,34 @@ public:
      * @return Pair of the resulting two partial spline segments
      */
     std::pair<PartialSplineSegment, PartialSplineSegment> subdivide(const Point& firstKnot, double t) const;
-    
+
     /**
      * @brief Convert the spline segment to points and push them to the given vector. Do not push the first knot.
      * @param firstKnot The first knot used for interpolation
      * @param points Vector of points to which the interpolated points will be pushed
      */
     void toPoints(const Point& firstKnot, std::vector<Point>& points) const;
-    
-    /**
-     * @brief Get the x coordinate of the interpolated point at t
-     * @param firstKnot Used as the first knot of the segment
-     * @param t Parameter value
-     * @return The x coordinate of the point of parameter t
-     * 
-     * Use getPoint instead if you also need the other coordinates
-     */
-    double getX(const Point& firstKnot, double t) const;    
 
     /**
      * @brief Get the x coordinate of the interpolated point at t
      * @param firstKnot Used as the first knot of the segment
      * @param t Parameter value
      * @return The x coordinate of the point of parameter t
-     * 
+     *
+     * Use getPoint instead if you also need the other coordinates
+     */
+    double getX(const Point& firstKnot, double t) const;
+
+    /**
+     * @brief Get the x coordinate of the interpolated point at t
+     * @param firstKnot Used as the first knot of the segment
+     * @param t Parameter value
+     * @return The x coordinate of the point of parameter t
+     *
      * Use getPoint instead if you also need the other coordinates
      */
     double getY(const Point& firstKnot, double t) const;
-    
+
     /**
      * @brief Get the interpolated point at t
      * @param firstKnot Used as the first knot of the segment
@@ -76,24 +76,26 @@ public:
      * @return The point of parameter t
      */
     Point getPoint(const Point& firstKnot, double t) const;
-    
+
     /**
      * @brief Compute the bounding box of the segment
      * @param firstKnot Used as the first knot of the segment
      * @return Bounding box
      */
     Rectangle<double> getBoundingBox(const Point& firstKnot) const;
-    
+
     /**
-     * @brief Find the parameters (between 0 and 1) corresponding to the points where the spline segment crosses a given vertical line
+     * @brief Find the parameters (between 0 and 1) corresponding to the points where the spline segment crosses a given
+     * vertical line
      * @param firstKnot Used as the first knot of the spline segment
      * @param lineX The x coordinate of the vertical line
      * @return The parameters
      */
     std::vector<double> intersectWithVerticalLine(const Point& firstKnot, double lineX) const;
-    
+
     /**
-     * @brief Find the parameters (between 0 and 1) corresponding to the points where the spline segment crosses a given horizontal line
+     * @brief Find the parameters (between 0 and 1) corresponding to the points where the spline segment crosses a given
+     * horizontal line
      * @param firstKnot Used as the first knot of the spline segment
      * @param lineY The y coordinate of the vertical line
      * @return The parameters
@@ -109,15 +111,15 @@ private:
      * @return Vector containing the roots (sorted from smallest to biggest)
      */
     static std::vector<double> rootsOfQuadraticEquation(double a, double b, double c);
-    
+
     /**
      * @brief Compute the roots of the polynomial equation a*t^3 + 3*b*t^2 + 3*c*t + d
-     * 
+     *
      * Warning: double roots are (purposefully and totally) ignored.
      * If the polynomial factors as a * (t - u) * (t - v)^2, the returned vector will only contain u.
-     * 
+     *
      * A triple root will be returned (without multiplicities).
-     * 
+     *
      * @param a Cubic coefficient
      * @param b Quadratic coefficient
      * @param c Linear coefficient
@@ -125,12 +127,12 @@ private:
      * @return Vector containing the roots (sorted from smallest to biggest)
      */
     static std::vector<double> rootsOfCubicEquation(double a, double b, double c, double d);
-    
+
 protected:
     static constexpr double FLATNESS_TOLERANCE = 1.0001;
     static constexpr double MIN_KNOT_DISTANCE = 0.3;
     static constexpr double MAX_WIDTH_CHANGE = 0.1;
-    
+
 public:
     /**
      * @brief The second knot of the spline segment.
@@ -165,7 +167,7 @@ public:
      * @param q the second knot
      */
     SplineSegment(const Point& p, const Point& q);
-    
+
     /**
      * @brief A spline segment from four points
      * @param p the first knot
@@ -174,7 +176,7 @@ public:
      * @param q the second knot
      */
     SplineSegment(const Point& p, const Point& fp, const Point& sp, const Point& q);
-    
+
     /**
      * @brief A spline segment from one point and a PartialSplineSegment
      * @param p the first knot
@@ -213,9 +215,9 @@ public:
      * @brief The first knot of the spline segment.
      */
     Point firstKnot;
-    
-//     /**
-//      * @brief The length of the spline segment (once it has been computed)
-//      */
-//     double length = -1.0;
+
+    //     /**
+    //      * @brief The length of the spline segment (once it has been computed)
+    //      */
+    //     double length = -1.0;
 };

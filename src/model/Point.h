@@ -58,7 +58,7 @@ public:
      * @return The new Point.
      */
     Point lineTo(const Point& p, double length) const;
-    
+
     /**
      * @brief Compute new Point in the direction from this to another Point.
      * @param p The other Point.

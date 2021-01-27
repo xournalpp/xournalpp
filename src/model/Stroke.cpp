@@ -420,19 +420,19 @@ void Stroke::splineFromPoints() {
         spline.setFirstKnot({0.0, 0.0, Point::NO_PRESSURE});
         return;
     }
-    
-//     /**
-//      * Set the pressure value for the last point
-//      */
-//     if (pointCount >= 2 && points[pointCount-2].z != Point::NO_PRESSURE){
-//         if (pointCount == 2) {
-//             setLastPressure(points[pointCount-2].z);
-//         } else {
-//             // Linearly extrapolate the pressure using the second and third to last points
-//             setLastPressure(std::max(2 * points[pointCount - 2].z - points[pointCount - 3].z, 0.0));
-//         }
-//     }
-    
+
+    //     /**
+    //      * Set the pressure value for the last point
+    //      */
+    //     if (pointCount >= 2 && points[pointCount-2].z != Point::NO_PRESSURE){
+    //         if (pointCount == 2) {
+    //             setLastPressure(points[pointCount-2].z);
+    //         } else {
+    //             // Linearly extrapolate the pressure using the second and third to last points
+    //             setLastPressure(std::max(2 * points[pointCount - 2].z - points[pointCount - 3].z, 0.0));
+    //         }
+    //     }
+
     spline = Spline::getSchneiderApproximation(points);
     splineComputed = true;
 }
@@ -449,13 +449,13 @@ auto Stroke::schneider() -> Stroke* {
     if (pointCount == 0) {
         return new Stroke();
     }
-    
+
     /**
      * Set the pressure value for the last point
      */
-    if (pointCount >= 2 && points[pointCount-2].z != Point::NO_PRESSURE){
+    if (pointCount >= 2 && points[pointCount - 2].z != Point::NO_PRESSURE) {
         if (pointCount == 2) {
-            setLastPressure(points[pointCount-2].z);
+            setLastPressure(points[pointCount - 2].z);
         } else {
             // Linearly extrapolate the pressure using the second and third to last ppints
             setLastPressure(2 * points[pointCount - 2].z - points[pointCount - 3].z);
@@ -472,22 +472,26 @@ auto Stroke::schneider() -> Stroke* {
     string interpolatePressure = "Interpolated\n0,000000;" + std::to_string(catmullRom.firstKnot.z) + "\n";
     string originalPressure = "Original\n0,000000;" + std::to_string(points[0].z) + "\n";
     int i = 0;
-    for (auto&& seg : catmullRom.segments) {
+    for (auto&& seg: catmullRom.segments) {
         double dist = points[i].lineLengthTo(seg.secondKnot) / 10.0;
-        for (int j = 1 ; j<=10 ; j++) {
+        for (int j = 1; j <= 10; j++) {
             length += dist;
-            double p = pow(10 - j, 3) * points[i].z + 3 * pow(10 - j, 2) * j * seg.firstControlPoint.z + 3 * (10 - j) * pow(j, 2) * seg.secondControlPoint.z + pow(j, 3) * seg.secondKnot.z;
+            double p = pow(10 - j, 3) * points[i].z + 3 * pow(10 - j, 2) * j * seg.firstControlPoint.z +
+                       3 * (10 - j) * pow(j, 2) * seg.secondControlPoint.z + pow(j, 3) * seg.secondKnot.z;
             p /= 1000.0;
             interpolatePressure += std::to_string(length) + ";" + std::to_string(p) + "\n";
         }
         i++;
         originalPressure += std::to_string(length) + ";" + std::to_string(points[i].z) + "\n";
-//         i++;
+        //         i++;
     }
     printf("\n%s\n%s\n\n", originalPressure.c_str(), interpolatePressure.c_str());
 #endif
-    
+
     return result;
 }
+
+void Stroke::setSpline(const Spline& s) { spline = s; }
+
 
 // TODO: Change the StrokeHandler's behaviour on pressure

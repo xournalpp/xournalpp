@@ -108,21 +108,21 @@ auto Spline::getCentripetalCatmullRomInterpolation(const std::vector<Point>& poi
     MathVect3 v01(points[0], points[1]);
     MathVect3 v12(points[1], points[2]);
 
-//     if (pointCount == 3) { // Is this special case really necessary?
-//         /**
-//          * Heuristically produce two quadratic spline segments
-//          */
-//         MathVect3 u(points[0], points[2]);
-//         u /= u.norm();
-// 
-//         double c01 = -v01.norm() / 3.0;
-//         result.addCubicSegment(2.0 / 3.0 * v01 + c01 * u, c01 * u, points[1]);
-// 
-//         double c12 = v12.norm() / 3.0;
-//         result.addCubicSegment(c12 * u, c12 * u - 2.0 / 3.0 * v12, points[2]);
-// 
-//         return result;
-//     }
+    //     if (pointCount == 3) { // Is this special case really necessary?
+    //         /**
+    //          * Heuristically produce two quadratic spline segments
+    //          */
+    //         MathVect3 u(points[0], points[2]);
+    //         u /= u.norm();
+    //
+    //         double c01 = -v01.norm() / 3.0;
+    //         result.addCubicSegment(2.0 / 3.0 * v01 + c01 * u, c01 * u, points[1]);
+    //
+    //         double c12 = v12.norm() / 3.0;
+    //         result.addCubicSegment(c12 * u, c12 * u - 2.0 / 3.0 * v12, points[2]);
+    //
+    //         return result;
+    //     }
 
     CatmullRomComputer crc(v01, v12);
 
@@ -208,7 +208,7 @@ Spline::SchneiderApproximater::SchneiderApproximater(const std::vector<Point>& p
         secondTangentVector.normalize();
 
 #ifdef EXTRA_CAREFUL
-//         g_message("points.size() = %zu, chordLength.size() = %zu", points.size(), chordLength.size());
+        //         g_message("points.size() = %zu, chordLength.size() = %zu", points.size(), chordLength.size());
         if (firstTangentVector.dx == 0.0 && firstTangentVector.dy == 0.0) {  // && firstTangentVector.dz == 0.0) {
             g_warning("Spline::SchneiderApproximater::SchneiderApproximater: first tangent vector is 0");
         }
@@ -225,8 +225,8 @@ void Spline::SchneiderApproximater::printStats() {
     size_t nbSegments = spline.size();
     totalNbSegments += nbSegments;
     totalNbPoints += nbPoints;
-    g_message("Schneider: %3zu pts => %3zu segs. Total %4zu pts => %4zu segs",
-              nbPoints, nbSegments, totalNbPoints, totalNbSegments);
+    g_message("Schneider: %3zu pts => %3zu segs. Total %4zu pts => %4zu segs", nbPoints, nbSegments, totalNbPoints,
+              totalNbSegments);
 }
 size_t Spline::SchneiderApproximater::totalNbPoints = 0;
 size_t Spline::SchneiderApproximater::totalNbSegments = 0;
@@ -238,7 +238,7 @@ void Spline::SchneiderApproximater::fitCubic(size_t lowerIndex, const MathVect3&
                                              const MathVect3& secondTangentVector, size_t upperIndex) {
 
 #ifdef EXTRA_CAREFUL
-//     g_message("fitCubic: %zu, %zu", lowerIndex, upperIndex);
+    //     g_message("fitCubic: %zu, %zu", lowerIndex, upperIndex);
     if (lowerIndex >= upperIndex || upperIndex >= points.size()) {
         g_warning("Spline::SchneiderApproximater::fitCubic called on invalid indices");
         return;
@@ -255,7 +255,7 @@ void Spline::SchneiderApproximater::fitCubic(size_t lowerIndex, const MathVect3&
         double scale = points[lowerIndex].lineLengthTo(secondKnot) / 3.0;
 
 #ifdef EXTRA_CAREFUL
-//         g_message("   Bof: %zu -- %zu", lowerIndex, upperIndex);
+        //         g_message("   Bof: %zu -- %zu", lowerIndex, upperIndex);
         if ((!points[lowerIndex].equalsPos(spline.getLastKnot())) || points[lowerIndex].z != spline.getLastKnot().z) {
             g_warning("Spline::SchneiderApproximater::fitCubic: Wrong last knot!");
         }
@@ -268,41 +268,41 @@ void Spline::SchneiderApproximater::fitCubic(size_t lowerIndex, const MathVect3&
     // Declared before the scope starts
     size_t middleIndex;
     MathVect3 middleTangentVector;
-    { // Scope of segmentFitter
-        SingleSegmentFitter segmentFitter(firstTangentVector, secondTangentVector,
-                                          std::next(points.cbegin(), lowerIndex), std::next(points.cbegin(), upperIndex),
-                                          getStandardParametrization(lowerIndex, upperIndex));
-        
+    {  // Scope of segmentFitter
+        SingleSegmentFitter segmentFitter(
+                firstTangentVector, secondTangentVector, std::next(points.cbegin(), lowerIndex),
+                std::next(points.cbegin(), upperIndex), getStandardParametrization(lowerIndex, upperIndex));
+
         bool parametrizationValid = true;
         double lastError = ITERATION_ERROR;
-        
-        for (size_t i = 0 ; i < NUMBER_OF_ITERATIONS ; i++) {
+
+        for (size_t i = 0; i < NUMBER_OF_ITERATIONS; i++) {
             segmentFitter.findBestCubicSegment();
             double maxError = segmentFitter.computeMaxError();
             if (maxError < ERROR && parametrizationValid) {
-//                 g_message("   OK!!");
+                //                 g_message("   OK!!");
                 spline.addCubicSegment(segmentFitter.getFirstVelocity(), segmentFitter.getSecondVelocity(), secondKnot);
                 return;
             }
             if (maxError >= lastError) {
                 /**
-                * The error is either to big or getting bigger
-                */
+                 * The error is either to big or getting bigger
+                 */
                 break;
             }
             lastError = maxError;
             parametrizationValid = segmentFitter.reparametrize();
-//             g_message("  - reparametrize");
+            //             g_message("  - reparametrize");
         }
 
         /**
-        * Fitting failed. Split at worst point and try fitting both sides separately
-        */
+         * Fitting failed. Split at worst point and try fitting both sides separately
+         */
         auto worstPoint = segmentFitter.getWorstPoint();
         middleTangentVector = getMiddleTangent(worstPoint);
         middleIndex = std::distance(points.cbegin(), worstPoint);
     }  // End of scope of segmentFitter
-    
+
     fitCubic(lowerIndex, firstTangentVector, -middleTangentVector, middleIndex);
     fitCubic(middleIndex, middleTangentVector, secondTangentVector, upperIndex);
 }
@@ -341,24 +341,28 @@ MathVect3 Spline::SchneiderApproximater::getMiddleTangent(std::vector<Point>::co
 
 
 Spline::SchneiderApproximater::SingleSegmentFitter::SingleSegmentFitter(const MathVect3& fTgt, const MathVect3& sTgt,
-                                                          std::vector<Point>::const_iterator pointsBegin,
-                                                          std::vector<Point>::const_iterator pointsLast,
-                                                          std::vector<double> parametrization):
+                                                                        std::vector<Point>::const_iterator pointsBegin,
+                                                                        std::vector<Point>::const_iterator pointsLast,
+                                                                        std::vector<double> parametrization):
         fTgt(fTgt),
         sTgt(sTgt),
         diff(*pointsBegin, *pointsLast),
         sp_fTgt_sTgt(MathVect3::scalarProduct(fTgt, sTgt)),
         sp_fTgt_diff(MathVect3::scalarProduct(fTgt, diff)),
         sp_sTgt_diff(MathVect3::scalarProduct(sTgt, diff)),
-        fTgtZero(fTgt.dx == 0.0 && fTgt.dy == 0.0), // && fTgt.dz == 0.0),  // No need to fuzzy compare (see fTgt.normalize())
-        sTgtZero(sTgt.dx == 0.0 && sTgt.dy == 0.0), // && sTgt.dz == 0.0),  // No need to fuzzy compare (see sTgt.normalize())
+        fTgtZero(fTgt.dx == 0.0 &&
+                 fTgt.dy == 0.0),  // && fTgt.dz == 0.0),  // No need to fuzzy compare (see fTgt.normalize())
+        sTgtZero(sTgt.dx == 0.0 &&
+                 sTgt.dy == 0.0),  // && sTgt.dz == 0.0),  // No need to fuzzy compare (see sTgt.normalize())
         pointsBegin(pointsBegin),
         pointsEnd(std::next(pointsLast)),
         worstPoint(std::next(pointsBegin, std::distance(pointsBegin, pointsEnd) / 2)),
         parametrization(parametrization) {
 #ifdef EXTRA_CAREFUL
-    if(parametrization.size() != std::distance(pointsBegin, pointsEnd)) {
-        g_warning("Spline::SchneiderApproximater::SingleSegmentFitter::SingleSegmentFitter: wrong parametrization size %zu vs %zu", parametrization.size(), std::distance(pointsBegin, pointsEnd));
+    if (parametrization.size() != std::distance(pointsBegin, pointsEnd)) {
+        g_warning("Spline::SchneiderApproximater::SingleSegmentFitter::SingleSegmentFitter: wrong parametrization size "
+                  "%zu vs %zu",
+                  parametrization.size(), std::distance(pointsBegin, pointsEnd));
     }
 #endif
 }
@@ -415,7 +419,8 @@ void Spline::SchneiderApproximater::SingleSegmentFitter::findBestCubicSegment() 
     C[1][1] = (sTgtZero ? 0.0 : C[1][1]);
 #ifdef EXTRA_CAREFUL
     if (itParam != parametrization.cend()) {
-        g_warning("Spline::SchneiderApproximater::SingleSegmentFitter::findBestCubicSegment: Not the end of parametrization");
+        g_warning("Spline::SchneiderApproximater::SingleSegmentFitter::findBestCubicSegment: Not the end of "
+                  "parametrization");
     }
 #endif
 
@@ -426,27 +431,27 @@ void Spline::SchneiderApproximater::SingleSegmentFitter::findBestCubicSegment() 
     double alpha1;
 
     double detC = C[0][0] * C[1][1] - C[0][1] * C[1][0];
-//     g_message(" ======== detC = %f", detC);
-    if (!fuzzyVanish(detC)) { // detC != 0.0) {
+    //     g_message(" ======== detC = %f", detC);
+    if (!fuzzyVanish(detC)) {  // detC != 0.0) {
         /**
          * Use Kramer's rule to solve the system
          */
         alpha0 = (C[1][1] * X[0] - C[0][1] * X[1]) / detC;
         alpha1 = (C[0][0] * X[1] - C[1][0] * X[0]) / detC;
-        
-//         g_message(" --- Nominal fit: %f  %f", alpha0, alpha1);
+
+        //         g_message(" --- Nominal fit: %f  %f", alpha0, alpha1);
     } else {
         /**
          * The system is under-determined. Try assuming alpha0 == alpha1.
          */
         double c = C[0][0] + C[0][1];
         if (!fuzzyVanish(c)) {  //(c != 0.0) {
-//             g_message(" --- Subnominal fit");
+                                //             g_message(" --- Subnominal fit");
             alpha0 = X[0] / c;
         } else {
             c = C[1][0] + C[1][1];
             if (!fuzzyVanish(c)) {  //(c != 0.0) {
-//                 g_message(" --- Subnominal fit");
+                                    //                 g_message(" --- Subnominal fit");
                 alpha0 = X[1] / c;
             } else {
                 alpha0 = 0.0;
@@ -457,7 +462,7 @@ void Spline::SchneiderApproximater::SingleSegmentFitter::findBestCubicSegment() 
 
     // TODO: Should this test be fuzzy?
     if (alpha0 <= 0.0 || alpha1 <= 0.0) {
-//         g_message(" --- Wu-Barsky");
+        //         g_message(" --- Wu-Barsky");
         /**
          * Fallback to the Wu-Barsky heuristic
          * TODO: does it make sense to try out Catmull-Rom here?
@@ -471,17 +476,17 @@ void Spline::SchneiderApproximater::SingleSegmentFitter::findBestCubicSegment() 
      *          firstPoint -- points[upperIndex]
      * in the "right" order? This test was not present in Schneider's original algorithm. What are its benefits?
      */
-    
+
     fVelocity = alpha0 * fTgt;
     sVelocity = alpha1 * sTgt;
 }
 
 double Spline::SchneiderApproximater::SingleSegmentFitter::computeMaxError() {
     double maxDistance = 0.0;
-    
+
     errors.clear();
     errors.reserve(parametrization.size());
-    
+
     auto itPts = pointsBegin;
     auto itParam = parametrization.cbegin();
     while (itPts != pointsEnd) {
@@ -491,8 +496,9 @@ double Spline::SchneiderApproximater::SingleSegmentFitter::computeMaxError() {
         /**
          * Compute the error vector. To simplify the formulae, the origin is set to firstKnot = *pointBegin.
          */
-        MathVect3 error = (t * ut3) * fVelocity + (ut3 * u) * sVelocity + ((1 + 2 * t) * u * u) * diff - MathVect3(*pointsBegin, *itPts);
-        
+        MathVect3 error = (t * ut3) * fVelocity + (ut3 * u) * sVelocity + ((1 + 2 * t) * u * u) * diff -
+                          MathVect3(*pointsBegin, *itPts);
+
         double dist = MathVect3::scalarProduct(error, error);  // Squared norm
         if (dist > maxDistance) {
             maxDistance = dist;
@@ -503,28 +509,30 @@ double Spline::SchneiderApproximater::SingleSegmentFitter::computeMaxError() {
         itParam++;
         itPts++;
     }
-//     g_message(" ***** maxError = %f", maxDistance);
+    //     g_message(" ***** maxError = %f", maxDistance);
     return maxDistance;
 }
 
 bool Spline::SchneiderApproximater::SingleSegmentFitter::reparametrize() {
-    
+
     auto errorIt = errors.cbegin();
-    for (double& u : parametrization) {
+    for (double& u: parametrization) {
         double t = 1 - u;
         double threeUMinusTwo = 3.0 * u - 2.0;
         double oneMinusThreeU = -1.0 - threeUMinusTwo;
         double twoU = 2.0 * u;
-        
+
         /**
          * Compute the derivatives for Newton-Raphson iteration
          */
-        MathVect3 thirdQprimeOfU = t * oneMinusThreeU * fVelocity + (twoU * t) * diff + (-u * threeUMinusTwo) * sVelocity;
+        MathVect3 thirdQprimeOfU =
+                t * oneMinusThreeU * fVelocity + (twoU * t) * diff + (-u * threeUMinusTwo) * sVelocity;
         MathVect3 sixthQsecondOfU = threeUMinusTwo * fVelocity + (1 - twoU) * diff + oneMinusThreeU * sVelocity;
 
-        double denominator = 3.0 * MathVect3::scalarProduct(thirdQprimeOfU, thirdQprimeOfU) + 2.0 * MathVect3::scalarProduct(*errorIt, sixthQsecondOfU);
+        double denominator = 3.0 * MathVect3::scalarProduct(thirdQprimeOfU, thirdQprimeOfU) +
+                             2.0 * MathVect3::scalarProduct(*errorIt, sixthQsecondOfU);
 
-        if (fuzzyVanish(denominator)) { // denominator == 0.0) {
+        if (fuzzyVanish(denominator)) {  // denominator == 0.0) {
             g_warning("Spline::SchneiderApproximater::SingleSegmentFitter::reparametrize: zero denominator");
             errorIt++;
             continue;
@@ -533,7 +541,7 @@ bool Spline::SchneiderApproximater::SingleSegmentFitter::reparametrize() {
         u -= numerator / denominator;
         errorIt++;
     }
-    
+
     auto it = std::next(parametrization.cbegin());
     while (it != parametrization.cend()) {
         if (*it <= it[-1]) {

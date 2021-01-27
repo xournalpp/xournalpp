@@ -88,11 +88,17 @@ void StrokeView::drawNoPressure() {
     cairo_set_line_width(cr, width * scaleFactor);
     applyDashed(0);
 
-    const Point& firstKnot = s->spline.getFirstKnot();
-    cairo_move_to(cr, firstKnot.x, firstKnot.y);
-    for (auto&& seg: s->spline.getSegments()) {
-        cairo_curve_to(cr, seg.firstControlPoint.x, seg.firstControlPoint.y, seg.secondControlPoint.x,
-                       seg.secondControlPoint.y, seg.secondKnot.x, seg.secondKnot.y);
+    if (s->isSpline()) {
+        const Point& firstKnot = s->getSpline().getFirstKnot();
+        cairo_move_to(cr, firstKnot.x, firstKnot.y);
+        for (auto&& seg: s->getSpline().getSegments()) {
+            cairo_curve_to(cr, seg.firstControlPoint.x, seg.firstControlPoint.y, seg.secondControlPoint.x,
+                           seg.secondControlPoint.y, seg.secondKnot.x, seg.secondKnot.y);
+        }
+    } else {
+        for_first_then_each(
+                s->getPointVector(), [this](auto const& first) { cairo_move_to(cr, first.x, first.y); },
+                [this](auto const& other) { cairo_line_to(cr, other.x, other.y); });
     }
     cairo_stroke(cr);
 
@@ -123,7 +129,7 @@ void StrokeView::drawWithPressure() {
         } else {
             width = p2i->z != Point::NO_PRESSURE ? (p1i->z + p2i->z) / 2 : p1i->z;
         }
-//         auto width = p1i->z != Point::NO_PRESSURE ? p1i->z : s->getWidth();
+        //         auto width = p1i->z != Point::NO_PRESSURE ? p1i->z : s->getWidth();
         cairo_set_line_width(cr, width * scaleFactor);
         applyDashed(dashOffset);
         cairo_move_to(cr, p1i->x, p1i->y);

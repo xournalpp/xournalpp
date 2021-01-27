@@ -165,18 +165,20 @@ auto PartialSplineSegment::intersectWithHorizontalLine(const Point& firstKnot, d
     double c = firstControlPoint.y - firstKnot.y;
     double d = firstKnot.y - lineY;
     std::vector<double> roots = rootsOfCubicEquation(a, b, c, d);
-    
-    std::string msg = "Horizontal\nPoints: (" + 
-    std::to_string(firstKnot.x) + ";" + std::to_string(firstKnot.y) + ")  (" +
-    std::to_string(firstControlPoint.x) + ";" + std::to_string(firstControlPoint.y) + ")  (" +
-    std::to_string(secondControlPoint.x) + ";" + std::to_string(secondControlPoint.y) + ")  (" +
-    std::to_string(secondKnot.x) + ";" + std::to_string(secondKnot.y) + ")\n"
-    "Coeff: " + std::to_string(a) + " ; " + std::to_string(b) + " ; " + std::to_string(c) + " ; " + std::to_string(d) + "\nRoots: ";
+
+    std::string msg = "Horizontal\nPoints: (" + std::to_string(firstKnot.x) + ";" + std::to_string(firstKnot.y) +
+                      ")  (" + std::to_string(firstControlPoint.x) + ";" + std::to_string(firstControlPoint.y) +
+                      ")  (" + std::to_string(secondControlPoint.x) + ";" + std::to_string(secondControlPoint.y) +
+                      ")  (" + std::to_string(secondKnot.x) + ";" + std::to_string(secondKnot.y) +
+                      ")\n"
+                      "Coeff: " +
+                      std::to_string(a) + " ; " + std::to_string(b) + " ; " + std::to_string(c) + " ; " +
+                      std::to_string(d) + "\nRoots: ";
     for (auto&& val: roots) {
         msg += std::to_string(val) + " ";
     }
     g_message("%s", msg.c_str());
-    
+
     std::vector<double> result;
     std::remove_copy_if(roots.cbegin(), roots.cend(), std::back_inserter(result),
                         [](double value) { return value > 1.0 || value < 0.0; });
@@ -190,20 +192,22 @@ auto PartialSplineSegment::intersectWithVerticalLine(const Point& firstKnot, dou
     double c = firstControlPoint.x - firstKnot.x;
     double d = firstKnot.x - lineX;
     std::vector<double> roots = rootsOfCubicEquation(a, b, c, d);
-    
+
     g_message("firstKnot: %f %f", firstKnot.x, firstKnot.y);
-    
-    std::string msg = "Vertical\nPoints: (" + 
-    std::to_string(firstKnot.x) + ";" + std::to_string(firstKnot.y) + ")  (" +
-    std::to_string(firstControlPoint.x) + ";" + std::to_string(firstControlPoint.y) + ")  (" +
-    std::to_string(secondControlPoint.x) + ";" + std::to_string(secondControlPoint.y) + ")  (" +
-    std::to_string(secondKnot.x) + ";" + std::to_string(secondKnot.y) + ")\n"
-    "Coeff: " + std::to_string(a) + "*t^3 + 3*" + std::to_string(b) + "*t^2 + 3*" + std::to_string(c) + "*t + " + std::to_string(d) + "\nRoots: ";
+
+    std::string msg = "Vertical\nPoints: (" + std::to_string(firstKnot.x) + ";" + std::to_string(firstKnot.y) + ")  (" +
+                      std::to_string(firstControlPoint.x) + ";" + std::to_string(firstControlPoint.y) + ")  (" +
+                      std::to_string(secondControlPoint.x) + ";" + std::to_string(secondControlPoint.y) + ")  (" +
+                      std::to_string(secondKnot.x) + ";" + std::to_string(secondKnot.y) +
+                      ")\n"
+                      "Coeff: " +
+                      std::to_string(a) + "*t^3 + 3*" + std::to_string(b) + "*t^2 + 3*" + std::to_string(c) + "*t + " +
+                      std::to_string(d) + "\nRoots: ";
     for (auto&& val: roots) {
         msg += std::to_string(val) + " ";
     }
     g_message("%s", msg.c_str());
-    
+
     std::vector<double> result;
     std::remove_copy_if(roots.cbegin(), roots.cend(), std::back_inserter(result),
                         [](double value) { return value > 1.0 || value < 0.0; });
@@ -258,10 +262,9 @@ auto PartialSplineSegment::rootsOfCubicEquation(double a, double b, double c, do
     double cOverA = c / a;
     double p = cOverA - bOverASquared;
     double q = 0.5 * d / a + bOverA * (bOverASquared - 1.5 * cOverA);
-    
-    g_message("p = %f q = %f", p,q);
-    
-    
+
+    g_message("p = %f q = %f", p, q);
+
 
     /**
      * Discriminant

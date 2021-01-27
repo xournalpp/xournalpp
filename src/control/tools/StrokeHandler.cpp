@@ -271,8 +271,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     layer->addElement(splineStroke);
     page->fireElementChanged(splineStroke);
     this->redrawable->rerenderElement(splineStroke);
-    
-    Rectangle<double> bb = splineStroke->spline.getBoundingBox();
+
+    Rectangle<double> bb = splineStroke->getSpline().getBoundingBox();
     Stroke* bbStroke = new Stroke();
     bbStroke->applyStyleFrom(stroke);
     bbStroke->setColor(Color(0xffff0000));
@@ -284,14 +284,14 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     layer->addElement(bbStroke);
     page->fireElementChanged(bbStroke);
     this->redrawable->rerenderElement(bbStroke);
-    
-    Point first = splineStroke->spline.getFirstKnot();
+
+    Point first = splineStroke->getSpline().getFirstKnot();
     const Point* pt = &first;
-    for (auto&& seg: (splineStroke->spline.getSegments())) {
+    for (auto&& seg: (splineStroke->getSpline().getSegments())) {
         bbStroke = new Stroke();
         bbStroke->applyStyleFrom(stroke);
         bbStroke->setColor(Color(0xff0000ff));
-        bbStroke->setWidth( bbStroke->getWidth() / 2.0 );
+        bbStroke->setWidth(bbStroke->getWidth() / 2.0);
         bb = seg.getBoundingBox(*pt);
         pt = &(seg.secondKnot);
         bbStroke->deletePointsFrom(0);

@@ -11,13 +11,13 @@
 
 #pragma once
 
+#include <list>
+
 #include "AudioElement.h"
 #include "Element.h"
 #include "LineStyle.h"
 #include "Point.h"
 #include "Spline.h"
-
-#include <list>
 
 enum StrokeTool { STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER };
 
@@ -81,7 +81,7 @@ public:
 
     const LineStyle& getLineStyle() const;
     void setLineStyle(const LineStyle& style);
-    
+
     bool intersects(double x, double y, double halfEraserSize) override;
     bool intersects(double x, double y, double halfEraserSize, double* gap) override;
 
@@ -139,29 +139,35 @@ private:
      *   1: The shape is nearly fully transparent filled
      */
     int fill = -1;
-    
-    bool splineComputed = false;
-    
-public:
+
+private:
     /**
      * @brief The spline interpolating the stroke
      */
     Spline spline;
-    
+
+    bool splineComputed = false;
+
+public:
+    bool isSpline() const { return splineComputed; }
+
+    const Spline& getSpline() const { return spline; }
+
+    void setSpline(const Spline& s);
+
     /**
      * @brief Approximate the points using Schneider's algorithm
      */
     void splineFromPoints();
-    
+
     /**
      * @brief Fill the vector points using the spline
      */
     void pointsFromSpline();
-    
-//     std::list<SplineSegment> centripetalCatmullRomSmoothing();
+
+    //     std::list<SplineSegment> centripetalCatmullRomSmoothing();
     Stroke* schneider();
     Stroke* CRS();
-    
-//     SomeType splitAtSingularPoints();
-    
+
+    //     SomeType splitAtSingularPoints();
 };
