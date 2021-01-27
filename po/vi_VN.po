@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-26 19:20+0000\n"
-"PO-Revision-Date: 2021-01-26 19:23\n"
+"POT-Creation-Date: 2021-01-27 21:49+0000\n"
+"PO-Revision-Date: 2021-01-27 21:51\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -49,7 +49,7 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not in {2}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Add/Edit Tex"
 msgstr ""
 
@@ -121,8 +121,8 @@ msgstr ""
 msgid "Autosaving to {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Back"
 msgstr "Quay lại"
 
@@ -149,7 +149,7 @@ msgstr "Huỷ"
 msgid "Change color"
 msgstr "Đổi màu"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:394
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Change current layer name"
 msgstr ""
 
@@ -177,7 +177,7 @@ msgstr ""
 msgid "Contents"
 msgstr "Nội dung"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
@@ -298,7 +298,7 @@ msgstr ""
 msgid "Custom Export"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Customize Toolbars"
 msgstr "Thanh công cụ tùy chỉnh"
 
@@ -306,15 +306,15 @@ msgstr "Thanh công cụ tùy chỉnh"
 msgid "Customized"
 msgstr "Tùy chỉnh"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:340
 msgid "Cut"
 msgstr "Cắt"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Default Tool"
 msgstr "Công cụ mặc định"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:340
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:346
 #: ../src/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "Xóa"
@@ -323,7 +323,7 @@ msgstr "Xóa"
 msgid "Delete Logfile"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:389
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Delete current page"
 msgstr "Xóa trang hiện tại"
 
@@ -376,15 +376,15 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:124
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:30
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Arrow"
 msgstr "Vẽ mũi tên"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:122
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
-msgid "Draw Circle"
-msgstr "Vẽ hình tròn"
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+msgid "Draw Ellipse"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -396,19 +396,19 @@ msgstr "Vẽ đường thẳng"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:28
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:91
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:94
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Rectangle"
 msgstr "Vẽ tam giác"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:130
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Spline"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:126
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw coordinate system"
 msgstr "Vẽ trục tọa độ"
 
@@ -438,7 +438,7 @@ msgid "Erase stroke"
 msgstr "Xóa nét"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:81
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:256
 msgid "Eraser"
 msgstr "Tẩy"
 
@@ -556,7 +556,7 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:470
 msgid "Fill"
 msgstr "Lấp đầy"
 
@@ -564,7 +564,7 @@ msgstr "Lấp đầy"
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Fine"
 msgstr "Mịn"
 
@@ -576,7 +576,7 @@ msgstr ""
 msgid "Font"
 msgstr "Kiểu chữ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Forward"
 msgstr "Tới trước"
 
@@ -592,27 +592,27 @@ msgstr ""
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Go to first page"
 msgstr "Đến trang đầu tiên"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 msgid "Go to last page"
 msgstr "Đến trang cuối"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Go to next layer"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 msgid "Go to page"
 msgstr "Đi đến trang"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Go to previous layer"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Go to top layer"
 msgstr ""
 
@@ -630,12 +630,12 @@ msgstr "Xám"
 msgid "Green"
 msgstr "Xanh lục"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:346
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
 msgid "Grid Snapping"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Hand"
 msgstr ""
 
@@ -644,12 +644,12 @@ msgid "Hide all"
 msgstr "Ẩn tất cả"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Highlighter"
 msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Image"
 msgstr "Ảnh"
 
@@ -677,7 +677,7 @@ msgstr "Chèn latex"
 msgid "Insert layer"
 msgstr "Chèn lớp"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "Insert page"
 msgstr "Chèn trang"
 
@@ -734,11 +734,11 @@ msgstr "Đang tải..."
 msgid "Magenta"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:357
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:363
 msgid "Manage Toolbars"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Medium"
 msgstr ""
 
@@ -769,15 +769,15 @@ msgstr "Chuyển trang lên trên"
 msgid "New"
 msgstr "Mới"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:320
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "New Xournal"
 msgstr "Tạo Xournal mới"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 msgid "Next"
 msgstr "Tiếp"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "Next annotated page"
 msgstr ""
 
@@ -820,7 +820,7 @@ msgid "Open Logfile directory"
 msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:321
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Open file"
 msgstr "Mở tập tin"
 
@@ -884,21 +884,21 @@ msgstr ""
 msgid "Page number"
 msgstr "Số trang"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Paired pages"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 #: ../src/undo/AddUndoAction.cpp:77
 msgid "Paste"
 msgstr "Dán"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Pause / Play"
 msgstr "Tạm dừng / Chạy"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:231
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:237
 msgid "Pen"
 msgstr "Bút"
 
@@ -906,7 +906,7 @@ msgstr "Bút"
 msgid "Plain"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Play Object"
@@ -916,7 +916,7 @@ msgstr ""
 msgid "Predefined"
 msgstr "Xác định trước"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:354
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:360
 msgid "Presentation mode"
 msgstr "Chế độ trình chiếu"
 
@@ -924,11 +924,11 @@ msgstr "Chế độ trình chiếu"
 msgid "Previously selected language not available anymore!"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:323
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Print"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Record Audio / Stop Recording"
 msgstr "Thu âm / Ngừng"
 
@@ -941,7 +941,7 @@ msgstr "Không thể mở được máy ghi âm."
 msgid "Red"
 msgstr "Đỏ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 #: ../src/undo/UndoRedoHandler.cpp:215
 msgid "Redo"
 msgstr "Làm lại"
@@ -982,7 +982,7 @@ msgstr "Khôi phục tập tin"
 msgid "Rotation"
 msgstr "Xoay"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:344
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 msgid "Rotation Snapping"
 msgstr ""
 
@@ -994,7 +994,7 @@ msgstr ""
 msgid "Ruled with vertical line"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Ruler"
 msgstr "Thước kẻ"
 
@@ -1007,7 +1007,7 @@ msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
 #: ../src/control/Control.cpp:2430 ../src/control/jobs/SaveJob.cpp:15
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:322
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Save"
 msgstr "Lưu"
 
@@ -1028,21 +1028,21 @@ msgstr "Lỗi khi lưu tập tin: {1}"
 msgid "Scale"
 msgstr "Tỷ lệ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:338
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:344
 msgid "Search"
 msgstr "Tìm kiếm"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Select Font"
 msgstr "Chọn kiểu chữ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:66
 msgid "Select Object"
 msgstr "Chọn đối tượng"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:56
@@ -1050,7 +1050,7 @@ msgstr "Chọn đối tượng"
 msgid "Select Rectangle"
 msgstr "Chọn tam giác"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:61
 msgid "Select Region"
@@ -1106,7 +1106,7 @@ msgid "Set page width for PNG exports\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Shape Recognizer"
 msgstr ""
 
@@ -1137,7 +1137,7 @@ msgstr ""
 msgid "Staves"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Stop"
 msgstr "Dừng"
 
@@ -1160,7 +1160,7 @@ msgid "System Default"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Text"
 msgstr "Văn bản"
 
@@ -1253,7 +1253,7 @@ msgstr ""
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Thick"
 msgstr "Dày"
 
@@ -1266,7 +1266,7 @@ msgstr "Tài liệu này chưa được lưu."
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:355
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
 msgid "Toggle fullscreen"
 msgstr ""
 
@@ -1298,7 +1298,7 @@ msgstr ""
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
 #: ../src/undo/UndoRedoHandler.cpp:203
 msgid "Undo"
 msgstr "Hoàn tác"
@@ -1347,7 +1347,7 @@ msgstr ""
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Vertical Space"
 msgstr ""
 
@@ -1355,11 +1355,11 @@ msgstr ""
 msgid "Vertical space"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:476
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Very Fine"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Very Thick"
 msgstr "Rất dày"
 
@@ -1433,15 +1433,15 @@ msgid "Your current document does not contain PDF Page no {1}\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Zoom fit to screen"
 msgstr "Phóng vừa màn hình"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Zoom in"
 msgstr "Phóng to"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:360
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "Zoom out"
 msgstr "Thu nhỏ"
 
@@ -1449,7 +1449,7 @@ msgstr "Thu nhỏ"
 msgid "Zoom slider"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:363
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Zoom to 100%"
 msgstr "Hiện 100%"
 
@@ -1474,11 +1474,11 @@ msgstr ""
 msgid "cursor"
 msgstr "con trỏ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:239
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:245
 msgid "dash-/ dotted"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:236
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:242
 msgid "dashed"
 msgstr ""
 
@@ -1490,11 +1490,11 @@ msgstr ""
 msgid "default enabled"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:254
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:260
 msgid "delete stroke"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:242
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:248
 msgid "dotted"
 msgstr ""
 
@@ -1534,8 +1534,8 @@ msgstr "bút"
 msgid "show"
 msgstr "hiện"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:233
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:252
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:239
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:258
 msgid "standard"
 msgstr ""
 
@@ -1563,7 +1563,7 @@ msgstr "màn hình cảm ứng"
 msgid "trackpoint"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:253
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:259
 msgid "whiteout"
 msgstr ""
 
