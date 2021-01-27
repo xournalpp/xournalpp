@@ -228,8 +228,8 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_DRAW_RECT;
     }
 
-    if (value == "ACTION_TOOL_DRAW_CIRCLE") {
-        return ACTION_TOOL_DRAW_CIRCLE;
+    if (value == "ACTION_TOOL_DRAW_ELLIPSE") {
+        return ACTION_TOOL_DRAW_ELLIPSE;
     }
 
     if (value == "ACTION_TOOL_DRAW_ARROW") {
@@ -810,8 +810,8 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_TOOL_DRAW_RECT";
     }
 
-    if (value == ACTION_TOOL_DRAW_CIRCLE) {
-        return "ACTION_TOOL_DRAW_CIRCLE";
+    if (value == ACTION_TOOL_DRAW_ELLIPSE) {
+        return "ACTION_TOOL_DRAW_ELLIPSE";
     }
 
     if (value == ACTION_TOOL_DRAW_ARROW) {

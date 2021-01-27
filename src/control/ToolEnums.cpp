@@ -48,8 +48,8 @@ auto drawingTypeToString(DrawingType type) -> string {
             return "line";
         case DRAWING_TYPE_RECTANGLE:
             return "rectangle";
-        case DRAWING_TYPE_CIRCLE:
-            return "circle";
+        case DRAWING_TYPE_ELLIPSE:
+            return "ellipse";
         case DRAWING_TYPE_ARROW:
             return "arrow";
         case DRAWING_TYPE_STROKE_RECOGNIZER:
@@ -73,8 +73,8 @@ auto drawingTypeFromString(const string& type) -> DrawingType {
     if (type == "rectangle") {
         return DRAWING_TYPE_RECTANGLE;
     }
-    if (type == "circle") {
-        return DRAWING_TYPE_CIRCLE;
+    if (type == "ellipse") {
+        return DRAWING_TYPE_ELLIPSE;
     }
     if (type == "arrow") {
         return DRAWING_TYPE_ARROW;
@@ -119,8 +119,8 @@ auto toolTypeToString(ToolType type) -> string {
             return "hand";
         case TOOL_DRAW_RECT:
             return "drawRect";
-        case TOOL_DRAW_CIRCLE:
-            return "drawCircle";
+        case TOOL_DRAW_ELLIPSE:
+            return "drawEllipse";
         case TOOL_DRAW_ARROW:
             return "drawArrow";
         case TOOL_DRAW_COORDINATE_SYSTEM:
@@ -172,8 +172,9 @@ auto toolTypeFromString(const string& type) -> ToolType {
     if (type == "drawRect") {
         return TOOL_DRAW_RECT;
     }
-    if (type == "drawCircle") {
-        return TOOL_DRAW_CIRCLE;
+    // recognize previous spelling of Ellipse, V1.1.0+dev (Jan 2021) and earlier
+    if (type == "drawEllipse" || type == "drawCircle") {
+        return TOOL_DRAW_ELLIPSE;
     }
     if (type == "drawArrow") {
         return TOOL_DRAW_ARROW;

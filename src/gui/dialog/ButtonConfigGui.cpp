@@ -118,8 +118,8 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Line"));
     // DRAWING_TYPE_RECTANGLE
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Rectangle"));
-    // DRAWING_TYPE_CIRCLE
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Circle"));
+    // DRAWING_TYPE_ELLIPSE
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Ellipse"));
     // DRAWING_TYPE_ARROW
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Arrow"));
     // DRAWING_TYPE_COORDINATE_SYSTEM
@@ -294,7 +294,7 @@ void ButtonConfigGui::enableDisableTools() {
         case TOOL_NONE:
         case TOOL_IMAGE:
             // case TOOL_DRAW_RECT:
-            // case TOOL_DRAW_CIRCLE:
+            // case TOOL_DRAW_ELLIPSE:
         case TOOL_SELECT_RECT:
         case TOOL_SELECT_REGION:
         case TOOL_VERTICAL_SPACE:

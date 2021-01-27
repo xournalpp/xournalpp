@@ -75,5 +75,5 @@ protected:
     DocumentView view;
     Point currPoint;
     Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid. See startPoint defined in
-                            // derived classes such as CircleHandler.
+                            // derived classes such as EllipseHandler.
 };
