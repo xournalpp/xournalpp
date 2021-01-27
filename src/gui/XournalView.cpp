@@ -205,7 +205,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
 
-    if (event->keyval == GDK_KEY_Up) {
+    if (event->keyval == GDK_KEY_Up || event->keyval == GDK_KEY_k) {
         if (control->getSettings()->isPresentationMode()) {
             control->getScrollHandler()->goToPreviousPage();
             return true;
@@ -220,7 +220,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Down) {
+    if (event->keyval == GDK_KEY_Down || event->keyval == GDK_KEY_j) {
         if (control->getSettings()->isPresentationMode()) {
             control->getScrollHandler()->goToNextPage();
             return true;
@@ -235,7 +235,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Left) {
+    if (event->keyval == GDK_KEY_Left || event->keyval == GDK_KEY_h) {
         if (state & GDK_SHIFT_MASK) {
             this->pageRelativeXY(-1, 0);
         } else {
@@ -248,7 +248,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Right) {
+    if (event->keyval == GDK_KEY_Right || event->keyval == GDK_KEY_l) {
         if (state & GDK_SHIFT_MASK) {
             this->pageRelativeXY(1, 0);
         } else {
@@ -268,24 +268,6 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
 
     if (event->keyval == GDK_KEY_Home || event->keyval == GDK_KEY_KP_Home) {
         control->getScrollHandler()->goToFirstPage();
-        return true;
-    }
-
-    // vim like scrolling
-    if (event->keyval == GDK_KEY_j) {
-        layout->scrollRelative(0, 60);
-        return true;
-    }
-    if (event->keyval == GDK_KEY_k) {
-        layout->scrollRelative(0, -60);
-        return true;
-    }
-    if (event->keyval == GDK_KEY_h) {
-        layout->scrollRelative(-60, 0);
-        return true;
-    }
-    if (event->keyval == GDK_KEY_l) {
-        layout->scrollRelative(60, 0);
         return true;
     }
 
