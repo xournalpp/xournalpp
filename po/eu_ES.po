@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-26 19:20+0000\n"
-"PO-Revision-Date: 2021-01-26 19:24\n"
+"POT-Creation-Date: 2021-01-27 21:49+0000\n"
+"PO-Revision-Date: 2021-01-27 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -56,7 +56,7 @@ msgstr "<span foreground='red' size='x-large'>UI fitxategia falta da:\n"
 "  Ez dago Lanerako bidean\n"
 "  Ez dago hemen: {2}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Add/Edit Tex"
 msgstr "Gehitu/Editatu Tex"
 
@@ -129,8 +129,8 @@ msgstr "Gordetze automatikoak {1}-(r)i {2} izen berria eman dio"
 msgid "Autosaving to {1}"
 msgstr "Automatikoki gorde da hemen: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Back"
 msgstr "Atzera"
 
@@ -157,7 +157,7 @@ msgstr "Utzi"
 msgid "Change color"
 msgstr "Aldatu kolorea"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:394
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Change current layer name"
 msgstr ""
 
@@ -185,7 +185,7 @@ msgstr "'{1}' kolore ezezaguna (ez dago gogoko koloreen zerrendan)!"
 msgid "Contents"
 msgstr "Edukiak"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
@@ -310,7 +310,7 @@ msgstr "Pertsonalizatu"
 msgid "Custom Export"
 msgstr "Esportazio pertsonalizatua"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Customize Toolbars"
 msgstr "Pertsonalizatu tresna-barrak"
 
@@ -318,15 +318,15 @@ msgstr "Pertsonalizatu tresna-barrak"
 msgid "Customized"
 msgstr "Pertsonalizatua"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:340
 msgid "Cut"
 msgstr "Moztu"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:406
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Default Tool"
 msgstr "Tresna lehenetsia"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:340
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:346
 #: ../src/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "Ezabatu"
@@ -335,7 +335,7 @@ msgstr "Ezabatu"
 msgid "Delete Logfile"
 msgstr "Ezabatu erregistro fitxategia"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:389
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Delete current page"
 msgstr "Ezabatu uneko orria"
 
@@ -390,15 +390,15 @@ msgstr "Puntu-lerroa"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:124
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:30
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Arrow"
 msgstr "Marraztu gezia"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:122
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
-msgid "Draw Circle"
-msgstr "Marraztu zirkulua"
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+msgid "Draw Ellipse"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -410,19 +410,19 @@ msgstr "Marraztu lerroa"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:28
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:91
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:94
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Draw Rectangle"
 msgstr "Marraztu laukizuzena"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:130
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Spline"
 msgstr "Marraztu spline"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:126
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw coordinate system"
 msgstr "Koordenatuen sistema"
 
@@ -452,7 +452,7 @@ msgid "Erase stroke"
 msgstr "Ezabatu trazua"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:81
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:256
 msgid "Eraser"
 msgstr "Ezabagailua"
 
@@ -573,7 +573,7 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Ezin da fitxategia ireki. Eskuz egin behar duzu:\n"
 "URL: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:470
 msgid "Fill"
 msgstr "Bete"
 
@@ -581,7 +581,7 @@ msgstr "Bete"
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Fine"
 msgstr "Fina"
 
@@ -593,7 +593,7 @@ msgstr "Tresna-kutxa mugikorra (esperimentala)"
 msgid "Font"
 msgstr "Letra-tipoa"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Forward"
 msgstr "Aurrera"
 
@@ -609,27 +609,27 @@ msgstr ""
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Go to first page"
 msgstr "Joan lehenengo orrira"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 msgid "Go to last page"
 msgstr "Joan azken orrira"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Go to next layer"
 msgstr "Joan hurrengo geruzara"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 msgid "Go to page"
 msgstr "Joan orrira"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Go to previous layer"
 msgstr "Joan aurreko geruzara"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Go to top layer"
 msgstr "Joan goiko geruzara"
 
@@ -647,12 +647,12 @@ msgstr "Grisa"
 msgid "Green"
 msgstr "Berdea"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:346
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
 msgid "Grid Snapping"
 msgstr "Saretara atxikitzen"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Hand"
 msgstr "Eskua"
 
@@ -661,12 +661,12 @@ msgid "Hide all"
 msgstr "Ezkutatu denak"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Highlighter"
 msgstr "Nabarmengailua"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Image"
 msgstr "Irudia"
 
@@ -694,7 +694,7 @@ msgstr "Txertatu latex"
 msgid "Insert layer"
 msgstr "Txertatu geruza"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "Insert page"
 msgstr "Txertatu orria"
 
@@ -751,11 +751,11 @@ msgstr "Kargatzen..."
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:357
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:363
 msgid "Manage Toolbars"
 msgstr "Kudeatu tresna-barrak"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:478
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Medium"
 msgstr "Ertaina"
 
@@ -789,15 +789,15 @@ msgstr "Igo orria"
 msgid "New"
 msgstr "Berria"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:320
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:326
 msgid "New Xournal"
 msgstr "Xournal berria"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 msgid "Next"
 msgstr "Hurrengoa"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "Next annotated page"
 msgstr "Hurrengo ohar-orria"
 
@@ -840,7 +840,7 @@ msgid "Open Logfile directory"
 msgstr "Ireki erregistro-fitxategien direktorioa"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:321
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "Open file"
 msgstr "Ireki fitxategia"
 
@@ -904,21 +904,21 @@ msgstr "Orria txertatua"
 msgid "Page number"
 msgstr "Orriaren zenbakia"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Paired pages"
 msgstr "Parekatutako orriak"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 #: ../src/undo/AddUndoAction.cpp:77
 msgid "Paste"
 msgstr "Itsatsi"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:439
 msgid "Pause / Play"
 msgstr "Pausatu / erreproduzitu"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:231
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:237
 msgid "Pen"
 msgstr "Arkatza"
 
@@ -926,7 +926,7 @@ msgstr "Arkatza"
 msgid "Plain"
 msgstr "Arrunta"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Play Object"
@@ -936,7 +936,7 @@ msgstr "Erreproduzitu objektua"
 msgid "Predefined"
 msgstr "Aurrez zehaztuta"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:354
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:360
 msgid "Presentation mode"
 msgstr "Aurkezpen modua"
 
@@ -944,11 +944,11 @@ msgstr "Aurkezpen modua"
 msgid "Previously selected language not available anymore!"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:323
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Print"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Record Audio / Stop Recording"
 msgstr "Grabatu audioa / Gelditu grabazioa"
 
@@ -961,7 +961,7 @@ msgstr "Ezin izan da grabagailua abiatu."
 msgid "Red"
 msgstr "Gorria"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 #: ../src/undo/UndoRedoHandler.cpp:215
 msgid "Redo"
 msgstr "Berregin"
@@ -1002,7 +1002,7 @@ msgstr "Leheneratu fitxategia"
 msgid "Rotation"
 msgstr "Biraketa"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:344
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 msgid "Rotation Snapping"
 msgstr "Biraketaren atxikipena"
 
@@ -1014,7 +1014,7 @@ msgstr "Lerroduna"
 msgid "Ruled with vertical line"
 msgstr "Lerroduna marra bertikalarekin"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Ruler"
 msgstr "Erregela"
 
@@ -1027,7 +1027,7 @@ msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
 #: ../src/control/Control.cpp:2430 ../src/control/jobs/SaveJob.cpp:15
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:322
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Save"
 msgstr "Gorde"
 
@@ -1048,21 +1048,21 @@ msgstr "Errorea fitxategia gordetzean: {1}"
 msgid "Scale"
 msgstr "Jarri eskalan"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:338
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:344
 msgid "Search"
 msgstr "Bilatu"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Select Font"
 msgstr "Hautatu letra-tipoa"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:66
 msgid "Select Object"
 msgstr "Hautatu objektua"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:56
@@ -1070,7 +1070,7 @@ msgstr "Hautatu objektua"
 msgid "Select Rectangle"
 msgstr "Hautatu laukizuzena"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:61
 msgid "Select Region"
@@ -1126,7 +1126,7 @@ msgid "Set page width for PNG exports\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Shape Recognizer"
 msgstr "Formen identifikatzailea"
 
@@ -1158,7 +1158,7 @@ msgstr "Xournal++-ek ezin du urruneko fitxategirik ireki momentuz.\n"
 msgid "Staves"
 msgstr "Pentagramak"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Stop"
 msgstr "Gelditu"
 
@@ -1181,7 +1181,7 @@ msgid "System Default"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Text"
 msgstr "Testua"
 
@@ -1274,7 +1274,7 @@ msgstr "Xournal++-ek erroreko erregistro fitxategia sortu du. Bidali akats txost
 msgid "There was an error displaying help: {1}"
 msgstr "Laguntza erakusteak huts egin du: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Thick"
 msgstr "Lodia"
 
@@ -1287,7 +1287,7 @@ msgstr "Dokumentu hau oraindik ez da gorde."
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "Irudia ezin da kargatu. Errore mezua: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:355
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
 msgid "Toggle fullscreen"
 msgstr "Aldatu pantaila osora"
 
@@ -1319,7 +1319,7 @@ msgstr "Ezin da erreproduzitu audio grabazioa {1}"
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
 #: ../src/undo/UndoRedoHandler.cpp:203
 msgid "Undo"
 msgstr "Desegin"
@@ -1368,7 +1368,7 @@ msgstr "Gorde gabeko dokumentua"
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Vertical Space"
 msgstr "Tarte bertikala"
 
@@ -1376,11 +1376,11 @@ msgstr "Tarte bertikala"
 msgid "Vertical space"
 msgstr "Tarte bertikala"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:476
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Very Fine"
 msgstr "Oso fina"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:481
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Very Thick"
 msgstr "Oso lodia"
 
@@ -1457,15 +1457,15 @@ msgstr "Zure uneko dokumentuak ez du PDF {1} zenbakia duen orririk.\n"
 "Orrialde hau txertatu nahi zenuke?\n\n"
 "Aholkua: Hautatu dezakezu Koadernoa → Atzeko planoko papera → PDF atzeko planoa PDF orria txertatzeko."
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Zoom fit to screen"
 msgstr "Doitu pantailara"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Zoom in"
 msgstr "Handiagotu"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:360
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "Zoom out"
 msgstr "Txikiagotu"
 
@@ -1473,7 +1473,7 @@ msgstr "Txikiagotu"
 msgid "Zoom slider"
 msgstr "Zoom eskala"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:363
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Zoom to 100%"
 msgstr "%100 eskala"
 
@@ -1498,11 +1498,11 @@ msgstr "_Gorde"
 msgid "cursor"
 msgstr "kurtsorea"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:239
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:245
 msgid "dash-/ dotted"
 msgstr "marraduna/puntuduna"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:236
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:242
 msgid "dashed"
 msgstr "marraduna"
 
@@ -1514,11 +1514,11 @@ msgstr "berez desgaitua"
 msgid "default enabled"
 msgstr "berez aktibatua"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:254
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:260
 msgid "delete stroke"
 msgstr "ezabatu trazua"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:242
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:248
 msgid "dotted"
 msgstr "puntuduna"
 
@@ -1558,8 +1558,8 @@ msgstr "arkatza"
 msgid "show"
 msgstr "Erakutsi"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:233
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:252
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:239
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:258
 msgid "standard"
 msgstr "estandarra"
 
@@ -1587,7 +1587,7 @@ msgstr "ukipen-pantaila"
 msgid "trackpoint"
 msgstr "trackpoint"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:253
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:259
 msgid "whiteout"
 msgstr "tinta zuzentzailea"
 
