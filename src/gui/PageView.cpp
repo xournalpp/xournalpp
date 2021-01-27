@@ -13,8 +13,8 @@
 #include "control/settings/ButtonConfig.h"
 #include "control/settings/Settings.h"
 #include "control/tools/ArrowHandler.h"
-#include "control/tools/CircleHandler.h"
 #include "control/tools/CoordinateSystemHandler.h"
+#include "control/tools/EllipseHandler.h"
 #include "control/tools/EraseHandler.h"
 #include "control/tools/ImageHandler.h"
 #include "control/tools/InputHandler.h"
@@ -298,8 +298,8 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
             this->inputHandler = new RulerHandler(this->xournal, this, getPage());
         } else if (h->getDrawingType() == DRAWING_TYPE_RECTANGLE) {
             this->inputHandler = new RectangleHandler(this->xournal, this, getPage());
-        } else if (h->getDrawingType() == DRAWING_TYPE_CIRCLE) {
-            this->inputHandler = new CircleHandler(this->xournal, this, getPage());
+        } else if (h->getDrawingType() == DRAWING_TYPE_ELLIPSE) {
+            this->inputHandler = new EllipseHandler(this->xournal, this, getPage());
         } else if (h->getDrawingType() == DRAWING_TYPE_ARROW) {
             this->inputHandler = new ArrowHandler(this->xournal, this, getPage());
         } else if (h->getDrawingType() == DRAWING_TYPE_COORDINATE_SYSTEM) {

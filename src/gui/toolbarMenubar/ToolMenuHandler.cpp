@@ -104,8 +104,14 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                 }
 
                 // recognize previous name, V1.0.19 (Dec 2020) and earlier
-                if (name == "HILIGHTER")
+                if (name == "HILIGHTER") {
                     name = "HIGHLIGHTER";
+                }
+
+                // recognize previous name, V1.1.0+dev (Jan 2021) and earlier
+                if (name == "DRAW_CIRCLE") {
+                    name = "DRAW_ELLIPSE";
+                }
 
                 if (name == "SEPARATOR") {
                     GtkToolItem* it = gtk_separator_tool_item_new();
@@ -407,7 +413,8 @@ void ToolMenuHandler::initToolItems() {
     ADD_CUSTOM_ITEM_TGL("SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_RULER, false, "shape_recognizer",
                         _("Shape Recognizer"));
     ADD_CUSTOM_ITEM_TGL("DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw", _("Draw Rectangle"));
-    ADD_CUSTOM_ITEM_TGL("DRAW_CIRCLE", ACTION_TOOL_DRAW_CIRCLE, GROUP_RULER, false, "circle-draw", _("Draw Circle"));
+    ADD_CUSTOM_ITEM_TGL("DRAW_ELLIPSE", ACTION_TOOL_DRAW_ELLIPSE, GROUP_RULER, false, "ellipse-draw",
+                        _("Draw Ellipse"));
     ADD_CUSTOM_ITEM_TGL("DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false, "arrow-draw", _("Draw Arrow"));
     ADD_CUSTOM_ITEM_TGL("DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER, false,
                         "coordinate-system-draw", _("Draw coordinate system"));

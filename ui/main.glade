@@ -1358,13 +1358,13 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkCheckMenuItem" id="menuToolsDrawCircle">
-                            <property name="name">menuToolsDrawCircle</property>
+                          <object class="GtkCheckMenuItem" id="menuToolsDrawEllipse">
+                            <property name="name">menuToolsDrawEllipse</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Draw Circle</property>
+                            <property name="label" translatable="yes">Draw Ellipse</property>
                             <property name="use-underline">True</property>
-                            <signal name="toggled" handler="ACTION_TOOL_DRAW_CIRCLE" swapped="no"/>
+                            <signal name="toggled" handler="ACTION_TOOL_DRAW_ELLIPSE" swapped="no"/>
                             <accelerator key="3" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>

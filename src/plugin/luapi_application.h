@@ -164,8 +164,8 @@ static int applib_registerUi(lua_State* L) {
  * Example 1: app.uiAction({["action"] = "ACTION_PASTE"})
  * pastes the clipboard content into the document
  *
- * Example 2: app.uiAction({["action"] = "ACTION_TOOL_DRAW_CIRCLE", ["enabled"] = false})
- * turns off the Circle drawing type
+ * Example 2: app.uiAction({["action"] = "ACTION_TOOL_DRAW_ELLIPSE", ["enabled"] = false})
+ * turns off the Ellipse drawing type
  */
 static int applib_uiAction(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);

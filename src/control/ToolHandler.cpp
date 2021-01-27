@@ -32,7 +32,7 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_VERY_THICK] = 5.67;
     tools[TOOL_PEN - TOOL_PEN] = std::make_unique<Tool>(
             "pen", TOOL_PEN, Color{0x3333CCU},
-            TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_CIRCLE | TOOL_CAP_ARROW |
+            TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
                     TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE,
             thickness);
 
@@ -54,7 +54,7 @@ void ToolHandler::initTools() {
     thickness[TOOL_SIZE_VERY_THICK] = 30;
     tools[TOOL_HIGHLIGHTER - TOOL_PEN] = std::make_unique<Tool>(
             "highlighter", TOOL_HIGHLIGHTER, Color{0xFFFF00U},
-            TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_CIRCLE | TOOL_CAP_ARROW |
+            TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
                     TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
             thickness);
 
@@ -83,8 +83,8 @@ void ToolHandler::initTools() {
     tools[TOOL_DRAW_RECT - TOOL_PEN] =
             std::make_unique<Tool>("drawRect", TOOL_DRAW_RECT, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
-    tools[TOOL_DRAW_CIRCLE - TOOL_PEN] =
-            std::make_unique<Tool>("drawCircle", TOOL_DRAW_CIRCLE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+    tools[TOOL_DRAW_ELLIPSE - TOOL_PEN] =
+            std::make_unique<Tool>("drawEllipse", TOOL_DRAW_ELLIPSE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_DRAW_ARROW - TOOL_PEN] =
             std::make_unique<Tool>("drawArrow", TOOL_DRAW_ARROW, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
@@ -530,11 +530,11 @@ auto ToolHandler::isSinglePageTool() -> bool {
     ToolType toolType = this->getToolType();
     DrawingType drawingType = this->getDrawingType();
 
-    return toolType == (TOOL_PEN && (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_CIRCLE ||
+    return toolType == (TOOL_PEN && (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_ELLIPSE ||
                                      drawingType == DRAWING_TYPE_COORDINATE_SYSTEM ||
                                      drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE)) ||
            drawingType == DRAWING_TYPE_SPLINE || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT ||
-           toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_CIRCLE ||
+           toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE ||
            toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
            toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE;
 }

@@ -26,7 +26,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
     setPopupMenu(gtk_menu_new());
 
     drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"), "rect-draw", ACTION_TOOL_DRAW_RECT));
-    drawTypes.push_back(new ToolDrawType(_("Draw Circle"), "circle-draw", ACTION_TOOL_DRAW_CIRCLE));
+    drawTypes.push_back(new ToolDrawType(_("Draw Ellipse"), "ellipse-draw", ACTION_TOOL_DRAW_ELLIPSE));
     drawTypes.push_back(new ToolDrawType(_("Draw Arrow"), "arrow-draw", ACTION_TOOL_DRAW_ARROW));
     drawTypes.push_back(new ToolDrawType(_("Draw Line"), "ruler", ACTION_RULER));
     drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"), "coordinate-system-draw",

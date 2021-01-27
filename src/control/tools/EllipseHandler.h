@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Handles input to draw circle
+ * Handles input to draw ellipses
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -13,11 +13,11 @@
 
 #include "BaseStrokeHandler.h"
 
-class CircleHandler: public BaseStrokeHandler {
+class EllipseHandler: public BaseStrokeHandler {
 public:
-    CircleHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
-                  bool flipControl = false);
-    virtual ~CircleHandler();
+    EllipseHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
+                   bool flipControl = false);
+    virtual ~EllipseHandler();
 
 private:
     virtual void drawShape(Point& currentPoint, const PositionInputData& pos);

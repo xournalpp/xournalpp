@@ -561,7 +561,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             }
             break;
         case ACTION_TOOL_DRAW_RECT:
-        case ACTION_TOOL_DRAW_CIRCLE:
+        case ACTION_TOOL_DRAW_ELLIPSE:
         case ACTION_TOOL_DRAW_ARROW:
         case ACTION_TOOL_DRAW_COORDINATE_SYSTEM:
         case ACTION_RULER:
@@ -1097,7 +1097,7 @@ void Control::setShapeTool(ActionType type, bool enabled) {
         (this->toolHandler->getDrawingType() == DRAWING_TYPE_ARROW && type == ACTION_TOOL_DRAW_ARROW) ||
         (this->toolHandler->getDrawingType() == DRAWING_TYPE_COORDINATE_SYSTEM &&
          type == ACTION_TOOL_DRAW_COORDINATE_SYSTEM) ||
-        (this->toolHandler->getDrawingType() == DRAWING_TYPE_CIRCLE && type == ACTION_TOOL_DRAW_CIRCLE) ||
+        (this->toolHandler->getDrawingType() == DRAWING_TYPE_ELLIPSE && type == ACTION_TOOL_DRAW_ELLIPSE) ||
         (this->toolHandler->getDrawingType() == DRAWING_TYPE_SPLINE && type == ACTION_TOOL_DRAW_SPLINE) ||
         (this->toolHandler->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER && type == ACTION_SHAPE_RECOGNIZER)) {
         return;
@@ -1108,8 +1108,8 @@ void Control::setShapeTool(ActionType type, bool enabled) {
             this->toolHandler->setDrawingType(DRAWING_TYPE_RECTANGLE);
             break;
 
-        case ACTION_TOOL_DRAW_CIRCLE:
-            this->toolHandler->setDrawingType(DRAWING_TYPE_CIRCLE);
+        case ACTION_TOOL_DRAW_ELLIPSE:
+            this->toolHandler->setDrawingType(DRAWING_TYPE_ELLIPSE);
             break;
 
         case ACTION_TOOL_DRAW_ARROW:
@@ -1654,7 +1654,7 @@ void Control::toolChanged() {
 
     fireEnableAction(ACTION_RULER, toolHandler->hasCapability(TOOL_CAP_RULER));
     fireEnableAction(ACTION_TOOL_DRAW_RECT, toolHandler->hasCapability(TOOL_CAP_RECTANGLE));
-    fireEnableAction(ACTION_TOOL_DRAW_CIRCLE, toolHandler->hasCapability(TOOL_CAP_CIRCLE));
+    fireEnableAction(ACTION_TOOL_DRAW_ELLIPSE, toolHandler->hasCapability(TOOL_CAP_ELLIPSE));
     fireEnableAction(ACTION_TOOL_DRAW_ARROW, toolHandler->hasCapability(TOOL_CAP_ARROW));
     fireEnableAction(ACTION_TOOL_DRAW_COORDINATE_SYSTEM, toolHandler->hasCapability(TOOL_CAP_ARROW));
     fireEnableAction(ACTION_TOOL_DRAW_SPLINE, toolHandler->hasCapability(TOOL_CAP_SPLINE));
@@ -1688,8 +1688,8 @@ void Control::toolChanged() {
         rulerAction = ACTION_RULER;
     } else if (toolHandler->getDrawingType() == DRAWING_TYPE_RECTANGLE) {
         rulerAction = ACTION_TOOL_DRAW_RECT;
-    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_CIRCLE) {
-        rulerAction = ACTION_TOOL_DRAW_CIRCLE;
+    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_ELLIPSE) {
+        rulerAction = ACTION_TOOL_DRAW_ELLIPSE;
     } else if (toolHandler->getDrawingType() == DRAWING_TYPE_ARROW) {
         rulerAction = ACTION_TOOL_DRAW_ARROW;
     } else if (toolHandler->getDrawingType() == DRAWING_TYPE_COORDINATE_SYSTEM) {

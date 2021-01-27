@@ -1,4 +1,4 @@
-#include "CircleHandler.h"
+#include "EllipseHandler.h"
 
 #include <cmath>
 
@@ -7,14 +7,14 @@
 #include "undo/InsertUndoAction.h"
 
 
-CircleHandler::CircleHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
-                             bool flipControl):
+EllipseHandler::EllipseHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
+                               bool flipControl):
         BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl) {}
 
-CircleHandler::~CircleHandler() = default;
+EllipseHandler::~EllipseHandler() = default;
 
 
-void CircleHandler::drawShape(Point& c, const PositionInputData& pos) {
+void EllipseHandler::drawShape(Point& c, const PositionInputData& pos) {
     this->currPoint = c;
 
     /**
