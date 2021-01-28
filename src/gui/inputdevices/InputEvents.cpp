@@ -103,17 +103,19 @@ auto InputEvents::translateEvent(GdkEvent* sourceEvent, Settings* settings) -> I
         gdk_event_get_keyval(sourceEvent, &targetEvent.button);
     }
 
-    // Copy the event sequence if there is any
-    if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_UPDATE || sourceEventType == GDK_TOUCH_END ||
-        sourceEventType == GDK_TOUCH_CANCEL) {
-        targetEvent.sequence = gdk_event_get_event_sequence(sourceEvent);
-    }
 
     // Copy the timestamp
     targetEvent.timestamp = gdk_event_get_time(sourceEvent);
 
     // Copy the pressure data
     gdk_event_get_axis(sourceEvent, GDK_AXIS_PRESSURE, &targetEvent.pressure);
+
+    // Copy the event sequence if there is any, and report no pressure
+    if (sourceEventType == GDK_TOUCH_BEGIN || sourceEventType == GDK_TOUCH_UPDATE || sourceEventType == GDK_TOUCH_END ||
+        sourceEventType == GDK_TOUCH_CANCEL) {
+        targetEvent.sequence = gdk_event_get_event_sequence(sourceEvent);
+        targetEvent.pressure = Point::NO_PRESSURE;
+    }
 
     return targetEvent;
 }
