@@ -218,11 +218,11 @@ void StrokeView::paint(bool dontRenderEditingStroke) {
     // No pressure sensitivity, easy draw a line...
     if (!s->hasPressure() || s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
         // drawNoPressure();
-        drawCalligraphicOnePolygon(M_PI / 8, 3.0);
+        drawCalligraphicOnePolygon(M_PI / 8, 1.0);
         g_message("Draw calligraphic stroke (without Pressure), no %d!", ++count);
     } else {
         // drawWithPressure();
-        drawCalligraphicOnePolygon(M_PI / 8, 3.0);
+        drawCalligraphicOnePolygon(M_PI / 8, 1.0);
         g_message("Draw calligraphic stroke (with Pressure), no %d!", ++count);
     }
 }
