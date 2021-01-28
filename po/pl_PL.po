@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-27 21:49+0000\n"
-"PO-Revision-Date: 2021-01-28 20:40\n"
+"PO-Revision-Date: 2021-01-28 21:48\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -510,7 +510,7 @@ msgstr "Błąd: {1} nie jest zwykłym plikiem. Sprawdź ustawienia pliku szablon
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Błąd: {1}. Proszę sprawdzić zawartość {2}"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -520,13 +520,15 @@ msgstr "Nie można usunąć pliku z raportem błędu. Trzeba to zrobić ręcznie
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Eksportuj PLIK jako PDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "Eksportuj PLIK jako pliki obrazów (jeden na stronę)\n"
+"                                 Odgadnij format wyjścia z rozszerzenia IMGFILE\n"
+"                                 Obsługiwane formaty: .png, .svg"
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
@@ -943,7 +945,7 @@ msgstr "Tryb prezentacji"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Poprzednio wybrany język nie jest już dostępny!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Print"
@@ -985,7 +987,7 @@ msgstr "Usunięto element {1} z paska narzędzi {2} ID {3}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Zmień nazwę warstwy"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
@@ -1025,7 +1027,7 @@ msgstr "Obraz SVG"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "Przykładowy plik LaTeX został wygenerowany pomyślnie."
 
 #: ../src/control/Control.cpp:2430 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:328
@@ -1533,7 +1535,7 @@ msgstr "gumka"
 
 #: ../src/control/Control.cpp:1949
 msgid "file: {1}"
-msgstr ""
+msgstr "plik: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -1642,19 +1644,19 @@ msgstr "%"
 
 #: ../ui/settings.glade:2188
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% więcej niż początkowa odległość między dwoma dotknięciami."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4550
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:479
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1694,7 +1696,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1450
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5163
 msgid "1,00"
@@ -1706,7 +1708,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2818
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1898,7 +1900,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Wszystkie"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -1961,15 +1963,15 @@ msgstr "Kolor tła pomiędzy stronami"
 #: ../ui/settings.glade:2669
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Duża ikona pióra"
 
 #: ../ui/settings.glade:2873
 msgid "Border Color"
-msgstr ""
+msgstr "Kolor obramowania"
 
 #: ../ui/settings.glade:2834
 msgid "Border Width"
-msgstr ""
+msgstr "Szerokość obramowania"
 
 #: ../ui/settings.glade:2503
 msgid "Border color"
@@ -1993,7 +1995,7 @@ msgstr "Przycisk 2"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Wybierz globalny plik szablonu LaTeX"
 
 #: ../ui/settings.glade:2716 ../ui/settings.glade:2859
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2001,7 +2003,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2730
 msgid "Circle Color"
-msgstr ""
+msgstr "Kolor okręgu"
 
 #: ../ui/settings.glade:3310
 msgid "Clear cached paged while scrolling"
@@ -2017,7 +2019,7 @@ msgstr "Skonfiguruj szablon strony"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr ""
+msgstr "Skonfiguruj szablon nowej strony"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
@@ -2041,7 +2043,7 @@ msgstr "Kursor"
 
 #: ../ui/settings.glade:2651
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Ikona kursora dla pióra"
 
 #: ../ui/settings.glade:2068
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2134,7 +2136,7 @@ msgstr "Przeciągnij i upuść Komponenty na paski narzędzi i z powrotem."
 
 #: ../ui/main.glade:1387
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Rysuj układ współrzędnych"
 
 #: ../ui/main.glade:1398
 msgid "Draw _Line"
@@ -2142,7 +2144,7 @@ msgstr "Rysuj _Linię"
 
 #: ../ui/settings.glade:2698
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "Rysuj przeźroczysty okrąg wokół kursora"
 
 #: ../ui/settings.glade:4604
 msgid "Drawing Area"
@@ -2206,7 +2208,7 @@ msgstr "Włącz nowy system wprowadzania (wymaga ponownego uruchomienia)"
 
 #: ../ui/settings.glade:2323
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Włącz rysowanie dotykiem"
 
 #: ../ui/settings.glade:2136
 msgid "Enable zoom gestures (requires restart)"
@@ -2291,7 +2293,7 @@ msgstr "Ogólne"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "Globalna ścieżka pliku szablonu"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2299,7 +2301,7 @@ msgstr "Przejdź do strony"
 
 #: ../ui/settings.glade:4204
 msgid "Grid size"
-msgstr ""
+msgstr "Rozmiar siatki"
 
 #: ../ui/settings.glade:4161
 msgid "Grid snapping tolerance"
@@ -2315,7 +2317,7 @@ msgstr "Rozpoznawanie Tekstu"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Wysokość"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2377,7 +2379,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Jakość obrazu"
 
 #: ../ui/settings.glade:4935
 msgid "Input Device"
@@ -2409,11 +2411,11 @@ msgstr "Wstaw kopię tej strony poniżej"
 
 #: ../ui/settings.glade:5275
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Ustawienia pliku wykonywalnego LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
@@ -2421,11 +2423,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5364 ../ui/settings.glade:5412
 msgid "Language"
-msgstr ""
+msgstr "Język"
 
 #: ../ui/settings.glade:5382
 msgid "Language Settings"
-msgstr ""
+msgstr "Ustawienia językowe"
 
 #: ../ui/main.glade:525
 msgid "Layout"
@@ -2511,7 +2513,7 @@ msgstr "Nowa _warstwa"
 #: ../ui/settings.glade:2667
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Bez ikony"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2519,7 +2521,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:43
 msgid "None"
-msgstr ""
+msgstr "Żaden"
 
 #: ../ui/settings.glade:3877
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2584,7 +2586,7 @@ msgstr "_Opcje pióra"
 
 #: ../ui/settings.glade:3330
 msgid "Performance"
-msgstr ""
+msgstr "Wydajność"
 
 #: ../ui/settings.glade:5204
 msgid "Playback Settings"
@@ -2636,7 +2638,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2782
 msgid "Radius"
-msgstr ""
+msgstr "Promień"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
@@ -2660,15 +2662,15 @@ msgstr "Jakość nagrywania"
 
 #: ../ui/main.glade:1206
 msgid "Rename Layer"
-msgstr ""
+msgstr "Zmień nazwę warstwy"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Zmień nazwę wybranej warstwy"
 
 #: ../ui/settings.glade:4108
 msgid "Resizing"
-msgstr ""
+msgstr "Zmiana rozmiaru"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -2688,7 +2690,7 @@ msgstr "Częstotliwość próbkowania"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "Przykładowa nazwa warstwy"
 
 #: ../ui/settings.glade:3062
 msgid "Scrollbars"
@@ -2756,7 +2758,7 @@ msgstr "Pasek narzędzi po prawej stronie"
 
 #: ../ui/main.glade:509
 msgid "Show toolbars"
-msgstr ""
+msgstr "Pokaż paski narzędzi"
 
 #: ../ui/settings.glade:2961
 msgid "Show vertical scrollbar on the left side"
@@ -2822,7 +2824,7 @@ msgstr "_Paski narzędzi"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "Ustawienia pliku szablonu"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -2834,7 +2836,7 @@ msgstr "Test"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "Przetestuj konfigurację"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
@@ -2882,7 +2884,7 @@ msgstr "Limit czasu"
 
 #: ../ui/settings.glade:2345
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Rysowanie dotykiem"
 
 #: ../ui/settings.glade:1771 ../ui/settings.glade:2376
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -2937,7 +2939,7 @@ msgstr "Wybielanie"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Szerokość"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -2953,7 +2955,7 @@ msgstr "Obejście"
 
 #: ../ui/about.glade:192
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:170
 msgid "Xournal++ Preferences"
