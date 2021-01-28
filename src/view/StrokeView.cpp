@@ -128,39 +128,37 @@ void StrokeView::drawWithPressure() {
 
 void StrokeView::drawCalligraphicOnePolygon(double nibAngle, double thickness) {
     // To save calculations in the loop
-    double rise = sin(nibAngle), run = cos(nibAngle);
+    double rise = sin(nibAngle), run = cos(nibAngle) * 1;
     // This is what gives the nib it's slant and thickness
     double yShift = rise * thickness;
     double xShift = run * thickness;
 
     // Setting up for the first iteration
     bool movingUp = false;
-
     auto path = s->getPointVector();
 
-    size_t pathLen = path.size();
-
-    std::vector<Point> backAndForthList;
-
-    // Follow path in order it was created
-    for (int i = 0; i < pathLen; i++) {
-        backAndForthList.emplace_back(path[i]);
-    }
-
-    // Now reverse along the same path
-    for (int i = 2; i <= pathLen; i++) {
-        backAndForthList.emplace_back(path[pathLen - i]);
-    }
-
-    // backAndForthList now contains the path forwards, then backwards
+    int pathLen = path.size();
+    g_message("Path length, %d", pathLen);
 
     bool firstIteration = true;
-    for (auto pCurr = begin(backAndForthList), pNext = std::next(pCurr), last = end(backAndForthList);
-         pCurr != last && pNext != last; ++pCurr, ++pNext) {
+    int currReversingIndex, nextReversingIndex;
+    int backAndForthIterations = (2 * pathLen) - 1;
 
+    // We subtract one because we look ahead one
+    for (int i = 0; i < backAndForthIterations - 1; i++) {
+        if (i <= pathLen - 2) {
+            // Before midway point
+            currReversingIndex = i;
+            nextReversingIndex = currReversingIndex + 1;
+        } else {
+            currReversingIndex = (pathLen - 2) - (i - pathLen);
+            nextReversingIndex = currReversingIndex - 1;
+        }
+
+        Point pCurr = path[currReversingIndex], pNext = path[nextReversingIndex];
 
         // Move everything to the origin, then check if the next point is above the line
-        bool nextIsAbove = rise * (pNext->x - pCurr->x) < run * (pNext->y - pCurr->y);
+        bool nextIsAbove = rise * (pNext.x - pCurr.x) < run * (pNext.y - pCurr.y);
 
         // Notice it will be false on first iteration due to the initial values of moving_(up/down)
         // Also, it's value is based on the last iteration's moving_(up/down) value
@@ -182,24 +180,24 @@ void StrokeView::drawCalligraphicOnePolygon(double nibAngle, double thickness) {
         // It also makes sure that the winding number for intersections is exactly +-n != 0 (where n is the # of
         // intersections)
         if (firstIteration) {
-            cairo_line_to(cr, pCurr->x - multiplier * (xShift * pCurr->z), pCurr->y - multiplier * (yShift * pCurr->z));
-            cairo_line_to(cr, pCurr->x + multiplier * (xShift * pCurr->z), pCurr->y + multiplier * (yShift * pCurr->z));
+            cairo_line_to(cr, pCurr.x - multiplier * (xShift * pCurr.z), pCurr.y - multiplier * (yShift * pCurr.z));
+            cairo_line_to(cr, pCurr.x + multiplier * (xShift * pCurr.z), pCurr.y + multiplier * (yShift * pCurr.z));
         } else {
             if (switchedDirection) {
                 // The reason why this works, is because if movingUp is true, then
                 // previously you were moving down (because you switched), (or vise versa)
                 // this makes it so that you draw in the correct direction.
-                cairo_line_to(cr, pCurr->x + multiplier * (xShift * pCurr->z),
-                              pCurr->y + multiplier * (yShift * pCurr->z));
+                cairo_line_to(cr, pCurr.x + multiplier * (xShift * pCurr.z), pCurr.y + multiplier * (yShift * pCurr.z));
             }
         }
         // Deals with drawing strokes in a single direction
-        cairo_line_to(cr, pNext->x + multiplier * (xShift * pNext->z), pNext->y + multiplier * (yShift * pNext->z));
+        cairo_line_to(cr, pNext.x + multiplier * (xShift * pNext.z), pNext.y + multiplier * (yShift * pNext.z));
         firstIteration = false;
     }
     cairo_close_path(cr);
     cairo_fill_preserve(cr);
 }
+
 
 static int count = 0;
 
