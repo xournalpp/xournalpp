@@ -228,9 +228,9 @@ auto PartialSplineSegment::intersectWithRectangle(const Point& firstKnot, const 
         std::vector<double> roots2 = rootsOfCubicEquation(a, b, c, d);
 
         auto firstPositiveLine1 = std::find_if(roots1.cbegin(), roots1.cend(), [](double v) { return v > 0.0; });
-        auto firstBiggerThan1Line1 = std::find_if(firstPositiveLine1, roots1.cend(), [](double v) { return v >= 1.0; });
+        auto firstBiggerThan1Line1 = std::find_if(firstPositiveLine1, roots1.cend(), [](double v) { return v > 1.0; });
         auto firstPositiveLine2 = std::find_if(roots2.cbegin(), roots2.cend(), [](double v) { return v > 0.0; });
-        auto firstBiggerThan1Line2 = std::find_if(firstPositiveLine2, roots2.cend(), [](double v) { return v >= 1.0; });
+        auto firstBiggerThan1Line2 = std::find_if(firstPositiveLine2, roots2.cend(), [](double v) { return v > 1.0; });
 
         std::merge(firstPositiveLine1, firstBiggerThan1Line1, firstPositiveLine2, firstBiggerThan1Line2,
                    std::back_inserter(verticalIntersections));
@@ -242,9 +242,7 @@ auto PartialSplineSegment::intersectWithRectangle(const Point& firstKnot, const 
     std::vector<double> result;
     bool insideX = firstKnot.x >= rectangle.x && firstKnot.x <= rectangle.x + rectangle.width;
     bool insideY = firstKnot.y >= rectangle.y && firstKnot.y <= rectangle.y + rectangle.height;
-    if (insideX && insideY) {
-        result.push_back(0.0);
-    }
+
     auto itX = verticalIntersections.cbegin();
     auto itY = horizontalIntersections.cbegin();
     while (itX != verticalIntersections.cend() && itY != horizontalIntersections.cend()) {
@@ -269,11 +267,6 @@ auto PartialSplineSegment::intersectWithRectangle(const Point& firstKnot, const 
     }
     if (insideX) {
         std::copy(itY, horizontalIntersections.cend(), std::back_inserter(result));
-    }
-
-    if (result.size() % 2) {
-        // We entered the square more than we exited it: we are still in
-        result.push_back(1.0);
     }
 
     return result;

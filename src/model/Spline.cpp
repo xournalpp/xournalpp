@@ -85,6 +85,30 @@ void Spline::resize(size_t n) {
     }
 }
 
+auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle) const -> std::vector<Spline::Parameter> {
+    std::vector<Parameter> result;
+    size_t index = 0;
+    const Point* knot = &firstKnot;
+    for (auto&& seg: segments) {
+        Rectangle<double> box = seg.getBoundingBox(*knot);
+        if (box.intersects(rectangle) ||
+            /**
+             * In the improbable situation where a knot is exactly on the boundary, we still need to know whether the
+             * spline is crossing in or out of the rectangle:
+             */
+            (seg.secondKnot.x >= rectangle.x && seg.secondKnot.x <= rectangle.x + rectangle.width &&
+             seg.secondKnot.y >= rectangle.y && seg.secondKnot.y <= rectangle.y + rectangle.height)) {
+            std::vector<double> intersection = seg.intersectWithRectangle(*knot, rectangle);
+            std::transform(intersection.cbegin(), intersection.cend(), std::back_inserter(result),
+                           [&index](double t) { return Parameter(index, t); });
+        }
+        index++;
+        knot = &(seg.secondKnot);
+    }
+    return result;
+}
+
+
 void Spline::debugPrint() const {
     /**
      * 3D svg-like dump of the spline
@@ -245,7 +269,7 @@ void Spline::SchneiderApproximater::printStats() {
     totalNbSegments += nbSegments;
     totalNbPoints += nbPoints;
     g_message("Schneider: %3zu pts => %3zu segs. Total %4zu pts => %4zu segs (~ %4zu pts)", nbPoints, nbSegments,
-              totalNbPoints, totalNbSegments, (totalNbSegments * 10 + 3) / 3);
+              totalNbPoints, totalNbSegments, (totalNbSegments * 7 + 3) / 3);
 }
 size_t Spline::SchneiderApproximater::totalNbPoints = 0;
 size_t Spline::SchneiderApproximater::totalNbSegments = 0;

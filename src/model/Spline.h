@@ -133,6 +133,13 @@ public:
      */
     void resize(size_t n);
 
+    using Parameter = std::pair<size_t, double>;
+
+    /**
+     * @brief
+     */
+    std::vector<Parameter> intersectWithRectangle(const Rectangle<double>& rectangle) const;
+
     [[maybe_unused]] void debugPrint() const;
 
 private:

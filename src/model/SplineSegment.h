@@ -103,13 +103,12 @@ public:
     [[maybe_unused]] std::vector<double> intersectWithVerticalLine(const Point& firstKnot, double lineX) const;
 
     /**
-     * @brief Find the parameters (between 0 and 1) corresponding to the points where the spline segment crosses in or
+     * @brief Find the parameters (0 < t <= 1) corresponding to the points where the spline segment crosses in or
      * out of the given rectangle
      * @param firstKnot Used as the first knot of the spline segment
      * @param rectangle The rectangle
      * @return The parameters (sorted)
-     * Nb: the returned vector begins with 0.0 if firstKnot lies in the rectangle
-     * Nb: the returned vector ends with 1.0 if this->secondKnot lies in the rectangle
+     * Nb: A crossing at parameter t = 0 is always ignored. A crossing at parameter t = 1 is never ignored.
      *
      * Warning: this function does not test if the rectangle intersects this->getBoundingBox().
      * For optimization purposes, this test should be performed beforehand by the calling function.
