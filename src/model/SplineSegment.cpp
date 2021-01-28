@@ -160,24 +160,11 @@ auto PartialSplineSegment::getBoundingBox(const Point& firstKnot) const -> Recta
 
 auto PartialSplineSegment::intersectWithHorizontalLine(const Point& firstKnot, double lineY) const
         -> std::vector<double> {
-    double a = secondKnot.y - firstKnot.y + 3.0 * (firstControlPoint.y - secondControlPoint.y);
-    double b = firstKnot.y + secondControlPoint.y - 2.0 * firstControlPoint.y;
-    double c = firstControlPoint.y - firstKnot.y;
-    double d = firstKnot.y - lineY;
+    const double a = secondKnot.y - firstKnot.y + 3.0 * (firstControlPoint.y - secondControlPoint.y);
+    const double b = firstKnot.y + secondControlPoint.y - 2.0 * firstControlPoint.y;
+    const double c = firstControlPoint.y - firstKnot.y;
+    const double d = firstKnot.y - lineY;
     std::vector<double> roots = rootsOfCubicEquation(a, b, c, d);
-
-    std::string msg = "Horizontal\nPoints: (" + std::to_string(firstKnot.x) + ";" + std::to_string(firstKnot.y) +
-                      ")  (" + std::to_string(firstControlPoint.x) + ";" + std::to_string(firstControlPoint.y) +
-                      ")  (" + std::to_string(secondControlPoint.x) + ";" + std::to_string(secondControlPoint.y) +
-                      ")  (" + std::to_string(secondKnot.x) + ";" + std::to_string(secondKnot.y) +
-                      ")\n"
-                      "Coeff: " +
-                      std::to_string(a) + " ; " + std::to_string(b) + " ; " + std::to_string(c) + " ; " +
-                      std::to_string(d) + "\nRoots: ";
-    for (auto&& val: roots) {
-        msg += std::to_string(val) + " ";
-    }
-    g_message("%s", msg.c_str());
 
     std::vector<double> result;
     std::remove_copy_if(roots.cbegin(), roots.cend(), std::back_inserter(result),
@@ -187,32 +174,111 @@ auto PartialSplineSegment::intersectWithHorizontalLine(const Point& firstKnot, d
 
 auto PartialSplineSegment::intersectWithVerticalLine(const Point& firstKnot, double lineX) const
         -> std::vector<double> {
-    double a = secondKnot.x - firstKnot.x + 3.0 * (firstControlPoint.x - secondControlPoint.x);
-    double b = firstKnot.x + secondControlPoint.x - 2.0 * firstControlPoint.x;
-    double c = firstControlPoint.x - firstKnot.x;
-    double d = firstKnot.x - lineX;
+    const double a = secondKnot.x - firstKnot.x + 3.0 * (firstControlPoint.x - secondControlPoint.x);
+    const double b = firstKnot.x + secondControlPoint.x - 2.0 * firstControlPoint.x;
+    const double c = firstControlPoint.x - firstKnot.x;
+    const double d = firstKnot.x - lineX;
     std::vector<double> roots = rootsOfCubicEquation(a, b, c, d);
-
-    g_message("firstKnot: %f %f", firstKnot.x, firstKnot.y);
-
-    std::string msg = "Vertical\nPoints: (" + std::to_string(firstKnot.x) + ";" + std::to_string(firstKnot.y) + ")  (" +
-                      std::to_string(firstControlPoint.x) + ";" + std::to_string(firstControlPoint.y) + ")  (" +
-                      std::to_string(secondControlPoint.x) + ";" + std::to_string(secondControlPoint.y) + ")  (" +
-                      std::to_string(secondKnot.x) + ";" + std::to_string(secondKnot.y) +
-                      ")\n"
-                      "Coeff: " +
-                      std::to_string(a) + "*t^3 + 3*" + std::to_string(b) + "*t^2 + 3*" + std::to_string(c) + "*t + " +
-                      std::to_string(d) + "\nRoots: ";
-    for (auto&& val: roots) {
-        msg += std::to_string(val) + " ";
-    }
-    g_message("%s", msg.c_str());
 
     std::vector<double> result;
     std::remove_copy_if(roots.cbegin(), roots.cend(), std::back_inserter(result),
                         [](double value) { return value > 1.0 || value < 0.0; });
     return result;
 }
+
+auto PartialSplineSegment::intersectWithRectangle(const Point& firstKnot, const Rectangle<double>& rectangle) const
+        -> std::vector<double> {
+    /**
+     * Find where the spline segment enters or leaves the horizontal ribbon:
+     *          rectangle.y < y < rectangle.y + rectangle.height
+     */
+    std::vector<double> horizontalIntersections;
+    {
+        double a = secondKnot.y - firstKnot.y + 3.0 * (firstControlPoint.y - secondControlPoint.y);
+        double b = firstKnot.y + secondControlPoint.y - 2.0 * firstControlPoint.y;
+        double c = firstControlPoint.y - firstKnot.y;
+        double d = firstKnot.y - rectangle.y;
+        std::vector<double> roots1 = rootsOfCubicEquation(a, b, c, d);
+
+        d -= rectangle.height;
+        std::vector<double> roots2 = rootsOfCubicEquation(a, b, c, d);
+
+        auto firstPositiveLine1 = std::find_if(roots1.cbegin(), roots1.cend(), [](double v) { return v > 0.0; });
+        auto firstBiggerThan1Line1 = std::find_if(firstPositiveLine1, roots1.cend(), [](double v) { return v >= 1.0; });
+        auto firstPositiveLine2 = std::find_if(roots2.cbegin(), roots2.cend(), [](double v) { return v > 0.0; });
+        auto firstBiggerThan1Line2 = std::find_if(firstPositiveLine2, roots2.cend(), [](double v) { return v >= 1.0; });
+
+        std::merge(firstPositiveLine1, firstBiggerThan1Line1, firstPositiveLine2, firstBiggerThan1Line2,
+                   std::back_inserter(horizontalIntersections));
+    }
+
+    /**
+     * Find where the spline segment enters or leaves the vertical ribbon:
+     *          rectangle.x < x < rectangle.x + rectangle.width
+     */
+    std::vector<double> verticalIntersections;
+    {
+        double a = secondKnot.x - firstKnot.x + 3.0 * (firstControlPoint.x - secondControlPoint.x);
+        double b = firstKnot.x + secondControlPoint.x - 2.0 * firstControlPoint.x;
+        double c = firstControlPoint.x - firstKnot.x;
+        double d = firstKnot.x - rectangle.x;
+        std::vector<double> roots1 = rootsOfCubicEquation(a, b, c, d);
+
+        d -= rectangle.width;
+        std::vector<double> roots2 = rootsOfCubicEquation(a, b, c, d);
+
+        auto firstPositiveLine1 = std::find_if(roots1.cbegin(), roots1.cend(), [](double v) { return v > 0.0; });
+        auto firstBiggerThan1Line1 = std::find_if(firstPositiveLine1, roots1.cend(), [](double v) { return v >= 1.0; });
+        auto firstPositiveLine2 = std::find_if(roots2.cbegin(), roots2.cend(), [](double v) { return v > 0.0; });
+        auto firstBiggerThan1Line2 = std::find_if(firstPositiveLine2, roots2.cend(), [](double v) { return v >= 1.0; });
+
+        std::merge(firstPositiveLine1, firstBiggerThan1Line1, firstPositiveLine2, firstBiggerThan1Line2,
+                   std::back_inserter(verticalIntersections));
+    }
+
+    /**
+     * Compute the intersections of the spline segment with the edges of the rectangle
+     */
+    std::vector<double> result;
+    bool insideX = firstKnot.x >= rectangle.x && firstKnot.x <= rectangle.x + rectangle.width;
+    bool insideY = firstKnot.y >= rectangle.y && firstKnot.y <= rectangle.y + rectangle.height;
+    if (insideX && insideY) {
+        result.push_back(0.0);
+    }
+    auto itX = verticalIntersections.cbegin();
+    auto itY = horizontalIntersections.cbegin();
+    while (itX != verticalIntersections.cend() && itY != horizontalIntersections.cend()) {
+        if (*itX < *itY) {
+            insideX = !insideX;
+            if (insideY) {
+                result.push_back(*itX);
+            }
+            *itX++;
+        } else {
+            insideY = !insideY;
+            if (insideX) {
+                result.push_back(*itY);
+            }
+            *itY++;
+        }
+    }
+
+    // At most one of the following std::copy has a non-empty range
+    if (insideY) {
+        std::copy(itX, verticalIntersections.cend(), std::back_inserter(result));
+    }
+    if (insideX) {
+        std::copy(itY, horizontalIntersections.cend(), std::back_inserter(result));
+    }
+
+    if (result.size() % 2) {
+        // We entered the square more than we exited it: we are still in
+        result.push_back(1.0);
+    }
+
+    return result;
+}
+
 
 auto PartialSplineSegment::rootsOfQuadraticEquation(double a, double b, double c) -> std::vector<double> {
     if (a == 0.0) {

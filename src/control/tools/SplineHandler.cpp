@@ -77,8 +77,8 @@ void SplineHandler::draw(cairo_t* cr) {
 
     cairo_stroke(cr);
 
-    {
-        // Debug
+#ifdef DEBUG_DRAW_LINE_INTERSECTION
+    {  // Debug
         PartialSplineSegment pss = PartialSplineSegment(cp1, cp2, otherKnot);
         //     PartialSplineSegment pss = PartialSplineSegment(Point(100,0), Point(-50,500), Point(0,500));
         //     Point lastKnot(0,0);
@@ -91,18 +91,18 @@ void SplineHandler::draw(cairo_t* cr) {
             cairo_move_to(cr, p.x, p.y);
             cairo_arc(cr, p.x, p.y, 5.0, 0.0, 2 * M_PI);
         }
-        //     intersection = pss.intersectWithHorizontalLine(lastKnot, lastKnot.y + 40);
-        //     cairo_move_to(cr, lastKnot.x, lastKnot.y + 40);
-        //     cairo_line_to(cr, otherKnot.x, lastKnot.y + 40);
-        //     for (auto&& t:intersection) {
-        //         Point p = pss.getPoint(lastKnot, t);
-        //         cairo_move_to(cr, p.x, p.y);
-        //         cairo_arc(cr, p.x, p.y, 5.0, 0.0, 2*M_PI);
-        //     }
+        intersection = pss.intersectWithHorizontalLine(lastKnot, lastKnot.y + 40);
+        shift = 0.1 * (lastKnot.x - otherKnot.x);
+        cairo_move_to(cr, lastKnot.x + shift, lastKnot.y + 40);
+        cairo_line_to(cr, otherKnot.x - shift, lastKnot.y + 40);
+        for (auto&& t: intersection) {
+            Point p = pss.getPoint(lastKnot, t);
+            cairo_move_to(cr, p.x, p.y);
+            cairo_arc(cr, p.x, p.y, 5.0, 0.0, 2 * M_PI);
+        }
         cairo_stroke(cr);
-    }
-    // end of debug
-
+    }  // end of debug
+#endif
 
     // draw other tangents
     cairo_set_source_rgb(cr, 0, 1, 0);

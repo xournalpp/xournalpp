@@ -491,7 +491,10 @@ auto Stroke::schneider() -> Stroke* {
     return result;
 }
 
-void Stroke::setSpline(const Spline& s) { spline = s; }
+void Stroke::setSpline(const Spline& s) {
+    spline = s;
+    splineComputed = true;
+}
 
 
 // TODO: Change the StrokeHandler's behaviour on pressure

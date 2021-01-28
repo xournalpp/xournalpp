@@ -1,12 +1,19 @@
-/*
+/**
  * Xournal++
  *
- * A spline segment
+ * A spline
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
  *
  * @license GNU GPLv2 or later
+ */
+/**
+ * The algorithms implemented in the class Spline::SchneiderApproximater come from
+ *
+ * An Algorithm for Automatically Fitting Digitized Curves
+ * by Philip J. Schneider
+ * from "Graphics Gems", Academic Press, 1990
  */
 
 #pragma once
@@ -100,7 +107,7 @@ public:
      * @brief Get a reference to the vector containing the segments
      * @return The segments
      */
-    [[maybe_unused]] const std::vector<PartialSplineSegment>& getSegments() const;
+    const std::vector<PartialSplineSegment>& getSegments() const;
 
     /**
      * @brief Compute the smallest box containing the spline
@@ -394,6 +401,11 @@ private:
      * @brief Scalar product of sTgt and diff
      */
     const double sp_sTgt_diff;
+
+    /**
+     * @brief Squared norm of diff
+     */
+    const double squaredNormDiff;
 
     /**
      * @brief Whether fTgt is the 0 vector or not

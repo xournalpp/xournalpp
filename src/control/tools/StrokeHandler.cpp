@@ -247,32 +247,26 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         }
     }
 
-    if (stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
-        // The stroke is not filled on drawing time
-        // If the stroke has fill values, it needs to be re-rendered
-        // else the fill will not be visible.
-
-        view.drawStroke(crMask, stroke, 0, 1, true, true);
-    }
-
-    layer->addElement(stroke);
-    page->fireElementChanged(stroke);
-
-    // Manually force the rendering of the stroke, if no motion event occurred between, that would rerender the page.
-    if (stroke->getPointCount() == 2) {
-        this->redrawable->rerenderElement(stroke);
-    }
-
     /**
+     * Approximate the stroke by a spline using Schneider's algorithm
+     */
     stroke->splineFromPoints();
-    **/
-    Stroke* splineStroke = stroke->schneider();
-    layer = page->getLayers()->back();
-    layer->addElement(splineStroke);
-    page->fireElementChanged(splineStroke);
-    this->redrawable->rerenderElement(splineStroke);
 
-    Rectangle<double> bb = splineStroke->getSpline().getBoundingBox();
+    // TODO: Remove this when not needed (e.g. with no pressure) once the file format supports splines.
+    // Always needed for rendering stroke with pressure values
+    stroke->pointsFromSpline();
+
+    // Add the element
+    layer->addElement(stroke);
+
+    // Redraw after the spline approximation
+    this->redrawable->rerenderElement(stroke);
+
+// #define PAINT_BOUNDING_BOX
+#ifdef PAINT_BOUNDING_BOX
+    layer = page->getLayers()->back();
+
+    Rectangle<double> bb = stroke->getSpline().getBoundingBox();
     Stroke* bbStroke = new Stroke();
     bbStroke->applyStyleFrom(stroke);
     bbStroke->setColor(Color(0xffff0000));
@@ -282,12 +276,11 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     bbStroke->addPoint(Point(bb.x + bb.width, bb.y));
     bbStroke->addPoint(Point(bb.x, bb.y));
     layer->addElement(bbStroke);
-    page->fireElementChanged(bbStroke);
     this->redrawable->rerenderElement(bbStroke);
 
-    Point first = splineStroke->getSpline().getFirstKnot();
+    Point first = stroke->getSpline().getFirstKnot();
     const Point* pt = &first;
-    for (auto&& seg: (splineStroke->getSpline().getSegments())) {
+    for (auto&& seg: (stroke->getSpline().getSegments())) {
         bbStroke = new Stroke();
         bbStroke->applyStyleFrom(stroke);
         bbStroke->setColor(Color(0xff0000ff));
@@ -301,11 +294,10 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         bbStroke->addPoint(Point(bb.x + bb.width, bb.y));
         bbStroke->addPoint(Point(bb.x, bb.y));
         layer->addElement(bbStroke);
-        page->fireElementChanged(bbStroke);
         this->redrawable->rerenderElement(bbStroke);
     }
     bbStroke = nullptr;
-    splineStroke = nullptr;
+#endif
 
 
     stroke = nullptr;
