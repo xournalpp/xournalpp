@@ -180,18 +180,22 @@ void StrokeView::drawCalligraphicOnePolygon(double nibAngle, double thickness) {
         // It also makes sure that the winding number for intersections is exactly +-n != 0 (where n is the # of
         // intersections)
         if (firstIteration) {
-            cairo_line_to(cr, pCurr.x - multiplier * (xShift * pCurr.z), pCurr.y - multiplier * (yShift * pCurr.z));
-            cairo_line_to(cr, pCurr.x + multiplier * (xShift * pCurr.z), pCurr.y + multiplier * (yShift * pCurr.z));
+            cairo_line_to(cr, pCurr.x - multiplier * (xShift * std::abs(pCurr.z)),
+                          pCurr.y - multiplier * (yShift * std::abs(pCurr.z)));
+            cairo_line_to(cr, pCurr.x + multiplier * (xShift * std::abs(pCurr.z)),
+                          pCurr.y + multiplier * (yShift * std::abs(pCurr.z)));
         } else {
             if (switchedDirection) {
                 // The reason why this works, is because if movingUp is true, then
                 // previously you were moving down (because you switched), (or vise versa)
                 // this makes it so that you draw in the correct direction.
-                cairo_line_to(cr, pCurr.x + multiplier * (xShift * pCurr.z), pCurr.y + multiplier * (yShift * pCurr.z));
+                cairo_line_to(cr, pCurr.x + multiplier * (xShift * std::abs(pCurr.z)),
+                              pCurr.y + multiplier * (yShift * std::abs(pCurr.z)));
             }
         }
         // Deals with drawing strokes in a single direction
-        cairo_line_to(cr, pNext.x + multiplier * (xShift * pNext.z), pNext.y + multiplier * (yShift * pNext.z));
+        cairo_line_to(cr, pNext.x + multiplier * (xShift * std::abs(pNext.z)),
+                      pNext.y + multiplier * (yShift * std::abs(pNext.z)));
         firstIteration = false;
     }
     cairo_close_path(cr);
