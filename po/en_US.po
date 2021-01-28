@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-27 21:49+0000\n"
-"PO-Revision-Date: 2021-01-27 21:51\n"
+"PO-Revision-Date: 2021-01-28 14:44\n"
 "Last-Translator: \n"
 "Language-Team: English\n"
 "Language: en_US\n"
@@ -135,17 +135,17 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:94
 msgid "Black"
-msgstr ""
+msgstr "Black"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:98
 msgid "Blue"
-msgstr ""
+msgstr "Blue"
 
 #: ../src/control/Control.cpp:1982 ../src/control/Control.cpp:2438
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel"
 
 #: ../src/undo/ColorUndoAction.cpp:85
 msgid "Change color"
