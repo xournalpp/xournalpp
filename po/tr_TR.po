@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-27 21:49+0000\n"
-"PO-Revision-Date: 2021-01-27 21:51\n"
+"PO-Revision-Date: 2021-01-29 10:45\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -62,7 +62,7 @@ msgstr "Tex Ekle/Düzenle"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "Gelişmiş dışa aktarma seçenekleri"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -159,7 +159,7 @@ msgstr "Rengi değiştir"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Change current layer name"
-msgstr ""
+msgstr "Geçerli katman adını değiştir"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
@@ -167,7 +167,7 @@ msgstr "Yazı tipini değiştir"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "Satır tarzını değiştir"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -202,7 +202,8 @@ msgstr "Sayfayı kopyala"
 #: ../src/util/PathUtil.cpp:230
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Klasör oluşturulamadı: {1}\n"
+"Hatayla başarısız oldu: {2}"
 
 #: ../src/control/LatexController.cpp:257
 msgid "Could not load LaTeX PDF file"
@@ -282,7 +283,7 @@ msgstr ".tex dosyası kaydedilemedi: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:85
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "Başlatılamadı {1}: {2} (çıkış kodu: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
@@ -353,7 +354,7 @@ msgstr "Kaydetme"
 
 #: ../src/control/XournalMain.cpp:680
 msgid "Display advanced export options"
-msgstr ""
+msgstr "Gelişmiş dışa aktarma seçeneklerini görüntüle"
 
 #: ../src/control/Control.cpp:1935
 msgid "Do not open Autosave files. They may will be overwritten!\n"
