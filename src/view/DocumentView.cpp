@@ -58,6 +58,8 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
 }
 
 void DocumentView::drawText(cairo_t* cr, Text* t) {
+    cairo_matrix_t defaultMatrix = {0};
+    cairo_get_matrix(cr, &defaultMatrix);
     if (t->isInEditing()) {
         return;
     }
@@ -66,6 +68,7 @@ void DocumentView::drawText(cairo_t* cr, Text* t) {
     applyColor(cr, t);
 
     TextView::drawText(cr, t);
+    cairo_set_matrix(cr, &defaultMatrix);
 }
 
 void DocumentView::drawImage(cairo_t* cr, Image* i) {
