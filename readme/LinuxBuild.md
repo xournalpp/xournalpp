@@ -24,26 +24,26 @@ The minimum required CMake version is 3.10, but we recommend to use >=3.15.
 #### For Arch
 ```bash
 sudo pacman -S cmake gtk3 base-devel libxml2 cppunit portaudio libsndfile \
-poppler-glib texlive-bin texlive-pictures gettext libzip
+poppler-glib texlive-bin texlive-pictures gettext libzip lua53 lua53-lgi
 ```
 
 #### For Fedora/CentOS/RHEL:
 ```bash
 sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
 poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
-librsvg2-devel
+librsvg2-devel lua-devel lua-lgi
 ```
 
 #### For Ubuntu/Debian and Raspberry Pi OS:
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext
+libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext lua-lgi
 ````
 
 #### For openSUSE:
 ```bash
 sudo zypper install cmake gtk3-devel cppunit-devel portaudio-devel libsndfile-devel \
-texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel
+texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-lgi
 ```
 
 #### For Solus:

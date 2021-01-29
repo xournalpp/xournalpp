@@ -17,7 +17,9 @@
 #include "control/Tool.h"
 #include "control/layer/LayerController.h"
 #include "control/pagetype/PageTypeHandler.h"
+#include "gui/XournalView.h"
 #include "gui/widgets/XournalWidget.h"
+#include "model/Text.h"
 
 #include "StringUtils.h"
 #include "XojMsgBox.h"
@@ -784,6 +786,51 @@ static int applib_setBackgroundName(lua_State* L) {
 }
 
 
+/**
+ * Scales all text elements of the current layer by the given scale factor.
+ * This means the font sizes get scaled, wheras the position of the left upper corner
+ * of the bounding box remains unchanged
+ *
+ * Example: app.scaleTextElements(2.3)
+ * scales all text elements on the current layer with factor 2.3
+ **/
+static int applib_scaleTextElements(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+
+    double f = luaL_checknumber(L, 1);
+
+    control->clearSelectionEndText();
+
+    std::vector<Element*> elements = *control->getCurrentPage()->getSelectedLayer()->getElements();
+
+    for (Element* e: elements) {
+        if (e->getType() == ELEMENT_TEXT) {
+            Text* t = static_cast<Text*>(e);
+            t->scale(t->getX(), t->getY(), f, f, 0.0, false);
+        }
+    }
+
+    elements.clear();
+
+    return 1;
+}
+
+
+/**
+ * Gets the display DPI.
+ * Example: app.getDisplayDpi()
+ **/
+static int applib_getDisplayDpi(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    int dpi = control->getSettings()->getDisplayDpi();
+    lua_pushinteger(L, dpi);
+
+    return 1;
+}
+
+
 /*
  * The full Lua Plugin API.
  * See above for example usage of each function.
@@ -807,6 +854,8 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"setLayerVisibility", applib_setLayerVisibility},
                                   {"setCurrentLayerName", applib_setCurrentLayerName},
                                   {"setBackgroundName", applib_setBackgroundName},
+                                  {"scaleTextElements", applib_scaleTextElements},
+                                  {"getDisplayDpi", applib_getDisplayDpi},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
 
