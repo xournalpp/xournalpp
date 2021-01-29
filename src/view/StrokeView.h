@@ -50,6 +50,14 @@ private:
      */
     void drawCalligraphicOnePolygon(double nibAngle, double thickness);
 
+    void draw_path_calligraphic(cairo_path_t* path, double angle, double thickness, bool fill);
+
+    void stroke_calligraphic(double angle, double thickness);
+
+    void outline_calligraphic(double angle, double thickness);
+
+    void draw_calligraphic(double angle, double thickness);
+
 private:
     cairo_t* cr;
     Stroke* s;
