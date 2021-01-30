@@ -90,6 +90,7 @@ public:
     void setControlTmpDisabled(bool disabled);
 
     void updateToolbarMenu();
+    void updateColorscheme();
 
     GtkWidget** getToolbarWidgets(int& length);
     const char* getToolbarName(GtkToolbar* toolbar);

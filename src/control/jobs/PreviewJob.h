@@ -41,6 +41,7 @@ public:
 
 private:
     void initGraphics();
+    void clipToPage();
     void drawBorder();
     void finishPaint();
     void drawBackgroundPdf(Document* doc);
