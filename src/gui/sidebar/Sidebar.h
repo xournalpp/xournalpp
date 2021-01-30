@@ -30,7 +30,7 @@ public:
     virtual ~Sidebar();
 
 private:
-    void initPages(GtkWidget* sidebar, GladeGui* gui);
+    void initPages(GtkWidget* sidebarContents, GladeGui* gui);
     void addPage(AbstractSidebarPage* page);
 
     // SidebarToolbarActionListener
@@ -114,9 +114,9 @@ private:
     AbstractSidebarPage* currentPage = nullptr;
 
     /**
-     * The sidebar widget
+     * The sidebarContents widget
      */
-    GtkWidget* sidebar = nullptr;
+    GtkWidget* sidebarContents = nullptr;
 
     /**
      * Sidebar toolbar

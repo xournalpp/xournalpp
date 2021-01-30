@@ -15,14 +15,14 @@ Sidebar::Sidebar(GladeGui* gui, Control* control): toolbar(this, gui), control(c
     this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
     this->buttonCloseSidebar = gui->get("buttonCloseSidebar");
 
-    this->sidebar = gui->get("sidebarContents");
+    this->sidebarContents = gui->get("sidebarContents");
 
-    this->initPages(sidebar, gui);
+    this->initPages(sidebarContents, gui);
 
     registerListener(control);
 }
 
-void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui) {
+void Sidebar::initPages(GtkWidget* sidebarContents, GladeGui* gui) {
     addPage(new SidebarIndexPage(this->control, &this->toolbar));
     addPage(new SidebarPreviewPages(this->control, this->gui, &this->toolbar));
     addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar));
@@ -43,7 +43,7 @@ void Sidebar::initPages(GtkWidget* sidebar, GladeGui* gui) {
         gtk_toolbar_insert(tbSelectPage, it, -1);
 
         // Add widget to sidebar
-        gtk_box_pack_start(GTK_BOX(sidebar), p->getWidget(), true, true, 0);
+        gtk_box_pack_start(GTK_BOX(sidebarContents), p->getWidget(), true, true, 0);
 
         i++;
     }
@@ -73,7 +73,7 @@ Sidebar::~Sidebar() {
     }
     this->pages.clear();
 
-    this->sidebar = nullptr;
+    this->sidebarContents = nullptr;
     this->currentPage = nullptr;
 }
 
@@ -146,7 +146,7 @@ void Sidebar::setTmpDisabled(bool disabled) {
 
 void Sidebar::saveSize() {
     GtkAllocation alloc;
-    gtk_widget_get_allocation(this->sidebar, &alloc);
+    gtk_widget_get_allocation(this->sidebarContents, &alloc);
 
     this->control->getSettings()->setSidebarWidth(alloc.width);
 }
