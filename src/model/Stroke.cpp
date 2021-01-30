@@ -448,7 +448,7 @@ void Stroke::debugPrint() {
 void Stroke::splineFromPoints() {
     const int pointCount = getPointCount();
     if (pointCount == 0) {
-        spline.setFirstKnot({0.0, 0.0, Point::NO_PRESSURE});
+        spline.setFirstKnot({NAN, NAN, Point::NO_PRESSURE});
         return;
     }
 
