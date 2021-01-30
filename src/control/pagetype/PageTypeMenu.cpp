@@ -198,18 +198,9 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
 }
 
 auto PageTypeMenu::createApplyMenuItem(const char* text) -> GtkWidget* {
-    GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
-    GtkWidget* icon = gtk_image_new_from_icon_name("gtk-apply", GTK_ICON_SIZE_MENU);
-    GtkWidget* label = gtk_label_new(text);
     GtkWidget* menuItem = gtk_menu_item_new();
-
-    gtk_container_add(GTK_CONTAINER(box), icon);
-    gtk_container_add(GTK_CONTAINER(box), label);
-
-    gtk_container_add(GTK_CONTAINER(menuItem), box);
-
+    gtk_menu_item_set_label(GTK_MENU_ITEM(menuItem), text);
     gtk_widget_show_all(menuItem);
-
     return menuItem;
 }
 
