@@ -158,6 +158,16 @@ auto PartialSplineSegment::getBoundingBox(const Point& firstKnot) const -> Recta
     return Rectangle(minX, minY, maxX - minX, maxY - minY);
 }
 
+void PartialSplineSegment::move(double dx, double dy) {
+    secondKnot.x += dx;
+    firstControlPoint.x += dx;
+    secondControlPoint.x += dx;
+    secondKnot.y += dy;
+    firstControlPoint.y += dy;
+    secondControlPoint.y += dy;
+}
+
+
 auto PartialSplineSegment::intersectWithHorizontalLine(const Point& firstKnot, double lineY) const
         -> std::vector<double> {
     const double a = secondKnot.y - firstKnot.y + 3.0 * (firstControlPoint.y - secondControlPoint.y);
@@ -322,9 +332,6 @@ auto PartialSplineSegment::rootsOfCubicEquation(double a, double b, double c, do
     double p = cOverA - bOverASquared;
     double q = 0.5 * d / a + bOverA * (bOverASquared - 1.5 * cOverA);
 
-    g_message("p = %f q = %f", p, q);
-
-
     /**
      * Discriminant
      */
@@ -339,7 +346,8 @@ auto PartialSplineSegment::rootsOfCubicEquation(double a, double b, double c, do
     }
     if (minusDiscriminant == 0.0) {
         /**
-         * Three real solutions, twice the same
+         * Fairly improbable case...
+         * Three real solutions, at least twice the same
          */
         if (p == 0) {
             /**
@@ -368,12 +376,15 @@ auto PartialSplineSegment::rootsOfCubicEquation(double a, double b, double c, do
     double sine = sqrt(3) * sqrtMinusP * sin(angle);  // 3 / 2 * sqrtMinusP * [0, 1]
     return {-cosine - sine - bOverA, -cosine + sine - bOverA, 2 * cosine - bOverA};
 
-    //  sqrtMinusP < 2 cosine < 2 sqrtMinusP
-    //  -sqrtMinusP < sine - cosine < sqrtMinusP
-    //  -2.5 * sqrtMinusP < -sine - cosine < -0.5 * sqrtMinusP
-    //  -sine - cosine < sine - cosine
+    /**
+     *  sqrtMinusP < 2 cosine < 2 sqrtMinusP
+     *  -sqrtMinusP < sine - cosine < sqrtMinusP
+     *  -2.5 * sqrtMinusP < -sine - cosine < -0.5 * sqrtMinusP
+     *  -sine - cosine < sine - cosine
+     *
+     * Therefore the returned vector is already sorted.
+     */
 }
-
 
 /**
  * SplineSegment

@@ -85,6 +85,13 @@ public:
     Rectangle<double> getBoundingBox(const Point& firstKnot) const;
 
     /**
+     * @brief Move (translate) the segment
+     * @param dx Shift in the X coordinate
+     * @param dy Shift in the Y coordinate
+     */
+    void move(double dx, double dy);
+
+    /**
      * @brief Find the parameters (between 0 and 1) corresponding to the points where the spline segment crosses a given
      * horizontal line
      * @param firstKnot Used as the first knot of the spline segment

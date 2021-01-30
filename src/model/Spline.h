@@ -133,12 +133,24 @@ public:
      */
     void resize(size_t n);
 
+    /**
+     * @brief Move (translate) the spline
+     * @param dx Shift in the x coordinate
+     * @param dy Shift in the y coordinate
+     */
+    void move(double dx, double dy);
+
     using Parameter = std::pair<size_t, double>;
 
     /**
      * @brief
      */
     std::vector<Parameter> intersectWithRectangle(const Rectangle<double>& rectangle) const;
+
+    /**
+     * @brief
+     */
+    Point getPoint(Parameter parameter) const;
 
     [[maybe_unused]] void debugPrint() const;
 

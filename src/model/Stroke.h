@@ -148,6 +148,12 @@ private:
 
     bool splineComputed = false;
 
+    /**
+     * @brief Store the parameters of the intersection points found by a call to intersects()
+     * Avoid recomputing those intersection points when erasing...
+     */
+    std::vector<Spline::Parameter> intersectionParameters{};
+
 public:
     bool isSpline() const { return splineComputed; }
 

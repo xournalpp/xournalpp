@@ -37,6 +37,7 @@ auto Stroke::cloneStroke() const -> Stroke* {
     s->Element::height = this->Element::height;
     s->snappedBounds = this->snappedBounds;
     s->sizeCalculated = this->sizeCalculated;
+    s->spline = this->spline;
     return s;
 }
 
@@ -139,6 +140,7 @@ void Stroke::setLastPoint(const Point& p) {
 void Stroke::addPoint(const Point& p) {
     this->points.emplace_back(p);
     this->sizeCalculated = false;
+    this->splineComputed = false;
 }
 
 auto Stroke::getPointCount() const -> int { return this->points.size(); }
@@ -174,8 +176,14 @@ void Stroke::move(double dx, double dy) {
         point.x += dx;
         point.y += dy;
     }
+    spline.move(dx, dy);
 
-    this->sizeCalculated = false;
+    if (this->sizeCalculated) {
+        Element::x += dx;
+        Element::y += dy;
+        Element::snappedBounds.x += dx;
+        Element::snappedBounds.y += dy;
+    }
 }
 
 void Stroke::rotate(double x0, double y0, double th) {
@@ -189,7 +197,8 @@ void Stroke::rotate(double x0, double y0, double th) {
         cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y);
     }
     // Width and Height will likely be changed after this operation
-    calcSize();
+    //     calcSize();
+    this->sizeCalculated = false;
 }
 
 void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
@@ -279,6 +288,28 @@ auto Stroke::intersects(double x, double y, double halfEraserSize) -> bool {
  * checks if the stroke is intersected by the eraser rectangle
  */
 auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) -> bool {
+    if (this->splineComputed) {
+        Rectangle<double> eraserBox(x - halfEraserSize, y - halfEraserSize, 2 * halfEraserSize, 2 * halfEraserSize);
+        intersectionParameters = spline.intersectWithRectangle(eraserBox);
+
+#define DEBUG_SPLINE_INTERSECTS
+#ifdef DEBUG_SPLINE_INTERSECTS
+        if (!intersectionParameters.empty()) {
+            string msg = "spline inter (";
+            msg += std::to_string(eraserBox.x) + " ; " + std::to_string(eraserBox.y) + " --- " +
+                   std::to_string(eraserBox.x + eraserBox.width) + " ; " +
+                   std::to_string(eraserBox.y + eraserBox.height) + ") :";
+            for (auto&& param: intersectionParameters) {
+                Point p = spline.getPoint(param);
+                msg += "\n ---- i=" + std::to_string(param.first) + " t=" + std::to_string(param.second) + "   :  (" +
+                       std::to_string(p.x) + " ; " + std::to_string(p.y) + ")";
+            }
+            g_message("%s", msg.c_str());
+        }
+#endif
+        return !intersectionParameters.empty();
+    }
+
     if (this->points.empty()) {
         return false;
     }
@@ -498,3 +529,5 @@ void Stroke::setSpline(const Spline& s) {
 
 
 // TODO: Change the StrokeHandler's behaviour on pressure
+// TODO: Stroke::rotate Stroke::scale Stroke::calcSize Stroke::isInSelection
+// TODO: Stroke::intersects

@@ -85,6 +85,15 @@ void Spline::resize(size_t n) {
     }
 }
 
+void Spline::move(double dx, double dy) {
+    firstKnot.x += dx;
+    firstKnot.y += dy;
+    for (auto& seg: segments) {
+        seg.move(dx, dy);
+    }
+}
+
+
 auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle) const -> std::vector<Spline::Parameter> {
     std::vector<Parameter> result;
     size_t index = 0;
@@ -108,6 +117,17 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle) const ->
     return result;
 }
 
+auto Spline::getPoint(Spline::Parameter parameter) const -> Point {
+    size_t index = parameter.first;
+    double t = parameter.second;
+
+    if (index >= segments.size() || t < 0.0 || t >= 1.0) {
+        g_warning("Spline::getPoint: Parameter out of range");
+        return Point(NAN, NAN);
+    }
+    Point knot = (index == 0 ? firstKnot : segments[index - 1].secondKnot);
+    return segments[index].getPoint(knot, t);
+}
 
 void Spline::debugPrint() const {
     /**
