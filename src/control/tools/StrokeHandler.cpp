@@ -262,7 +262,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     // Redraw after the spline approximation
     this->redrawable->rerenderElement(stroke);
 
-#define PAINT_BOUNDING_BOX
+// #define PAINT_BOUNDING_BOX
 #ifdef PAINT_BOUNDING_BOX
     layer = page->getLayers()->back();
 
