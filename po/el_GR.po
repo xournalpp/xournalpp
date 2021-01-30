@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-27 21:49+0000\n"
-"PO-Revision-Date: 2021-01-27 21:52\n"
+"POT-Creation-Date: 2021-01-30 06:08+0000\n"
+"PO-Revision-Date: 2021-01-30 06:12\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -2074,7 +2074,7 @@ msgstr "Διαγραφή Στρώσης"
 msgid "Delete stroke"
 msgstr "Διαγραφή μολυβιάς"
 
-#: ../ui/main.glade:2171
+#: ../ui/main.glade:2203
 msgid "Delete this page"
 msgstr "Διαγραφή της σελίδας"
 
@@ -2151,11 +2151,11 @@ msgstr "Περιοχή Σχεδιασμού"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Εργαλεία Σχεδιασμού - Ορισμός Χαρακτηριστικών μέσω της Κατεύθυνσης Σχεδιασμού (Πειραματικό)"
 
-#: ../ui/main.glade:2575
+#: ../ui/main.glade:2571
 msgid "Duplicate"
 msgstr "Δημιουργία διπλοτύπου / αντιγράφου"
 
-#: ../ui/main.glade:2612
+#: ../ui/main.glade:2608
 msgid "Edit (not implemented yet)"
 msgstr "Επεξεργασία (μη υλοποιημένο)"
 
@@ -2252,11 +2252,11 @@ msgstr "Γε_μισμα"
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2369
+#: ../ui/main.glade:2365
 msgid "Find next occurrence of the search string"
 msgstr "Βρες την επόμενη εμφάνιση της αναζητούμενης συμβολοσειράς"
 
-#: ../ui/main.glade:2347
+#: ../ui/main.glade:2343
 msgid "Find previous occurrence of the search string"
 msgstr "Βρες την προηγούμενη εμφάνιση της αναζητούμενης συμβολοσειράς"
 
@@ -2396,15 +2396,15 @@ msgstr "Σύστημα Εισόδου"
 msgid "Insert Latex"
 msgstr "Εισαγωγή Latex"
 
-#: ../ui/main.glade:2567
+#: ../ui/main.glade:2563
 msgid "Insert Page After"
 msgstr "Εισαγωγή Σελίδας Μετά"
 
-#: ../ui/main.glade:2559
+#: ../ui/main.glade:2555
 msgid "Insert Page Before"
 msgstr "Εισαγωγή Σελίδας Πριν"
 
-#: ../ui/main.glade:2150
+#: ../ui/main.glade:2182
 msgid "Insert a copy of the current page below"
 msgstr "Εισαγωγή αντιγράφου της τρέχουσας σελίδας από κάτω"
 
@@ -2481,11 +2481,11 @@ msgstr "Πλήκτρα Ποντικιού"
 msgid "Mouse+Keyboard Combo"
 msgstr "Ποντίκι+Πληκτρολόγιο combo"
 
-#: ../ui/main.glade:2597
+#: ../ui/main.glade:2593
 msgid "Move Down"
 msgstr "Μετακίνηση προς τα Κάτω"
 
-#: ../ui/main.glade:2589
+#: ../ui/main.glade:2585
 msgid "Move Up"
 msgstr "Μετακίνηση προς τα Επάνω"
 
@@ -2810,11 +2810,11 @@ msgstr "Πλήκτρα Γραφίδας"
 msgid "Successive (ms)"
 msgstr "Συνεχόμενο (ms)"
 
-#: ../ui/main.glade:2107
+#: ../ui/main.glade:2139
 msgid "Swap the current page with the one above"
 msgstr "Αντιστροφή της θέσης της τρέχουσας σελίδας με της πάνω"
 
-#: ../ui/main.glade:2129
+#: ../ui/main.glade:2161
 msgid "Swap the current page with the one below"
 msgstr "Αντιστροφή της θέσης της τρέχουσας σελίδας με της κάτω"
 
