@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-27 21:49+0000\n"
-"PO-Revision-Date: 2021-01-27 21:52\n"
+"POT-Creation-Date: 2021-01-30 06:08+0000\n"
+"PO-Revision-Date: 2021-01-30 06:13\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -2052,7 +2052,7 @@ msgstr "מחיקת שכבה"
 msgid "Delete stroke"
 msgstr ""
 
-#: ../ui/main.glade:2171
+#: ../ui/main.glade:2203
 msgid "Delete this page"
 msgstr "מחיקת דף נוכחי"
 
@@ -2126,11 +2126,11 @@ msgstr ""
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/main.glade:2575
+#: ../ui/main.glade:2571
 msgid "Duplicate"
 msgstr ""
 
-#: ../ui/main.glade:2612
+#: ../ui/main.glade:2608
 msgid "Edit (not implemented yet)"
 msgstr ""
 
@@ -2227,11 +2227,11 @@ msgstr ""
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2369
+#: ../ui/main.glade:2365
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:2347
+#: ../ui/main.glade:2343
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -2369,15 +2369,15 @@ msgstr "מערכת קלט"
 msgid "Insert Latex"
 msgstr ""
 
-#: ../ui/main.glade:2567
+#: ../ui/main.glade:2563
 msgid "Insert Page After"
 msgstr "הכנס דף אחרי"
 
-#: ../ui/main.glade:2559
+#: ../ui/main.glade:2555
 msgid "Insert Page Before"
 msgstr "הכנס דף לפני"
 
-#: ../ui/main.glade:2150
+#: ../ui/main.glade:2182
 msgid "Insert a copy of the current page below"
 msgstr "הכנס העתק של הדף הנוכחי מתחת"
 
@@ -2454,11 +2454,11 @@ msgstr "לחצני עכבר"
 msgid "Mouse+Keyboard Combo"
 msgstr "שילוב עכבר+מקלדת"
 
-#: ../ui/main.glade:2597
+#: ../ui/main.glade:2593
 msgid "Move Down"
 msgstr "לרדת"
 
-#: ../ui/main.glade:2589
+#: ../ui/main.glade:2585
 msgid "Move Up"
 msgstr "לעלות"
 
@@ -2782,11 +2782,11 @@ msgstr "כפתורי עט סטיילוס"
 msgid "Successive (ms)"
 msgstr "רציף (מילישניות)"
 
-#: ../ui/main.glade:2107
+#: ../ui/main.glade:2139
 msgid "Swap the current page with the one above"
 msgstr "החלף את הדף הנוכחי עם זה שמעליו"
 
-#: ../ui/main.glade:2129
+#: ../ui/main.glade:2161
 msgid "Swap the current page with the one below"
 msgstr "החלף את הדף הנוכחי עם זה שמתחתיו"
 
