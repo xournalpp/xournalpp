@@ -140,15 +140,26 @@ public:
      */
     void move(double dx, double dy);
 
+    /**
+     * @brief Type for parameters of points on a spline.
+     * The first value is the index of the spline segment, the second is the parameter (0 <= t <= 1) on this segment
+     */
     using Parameter = std::pair<size_t, double>;
 
     /**
-     * @brief
+     * @brief Find the parameters) corresponding to the points where the spline crosses in or out of the given rectangle
+     * @param rectangle The rectangle
+     * @return The parameters (sorted)
+     *
+     * Warning: this function does not test if the rectangle intersects this->getBoundingBox().
+     * For optimization purposes, this test should be performed beforehand by the calling function.
      */
     std::vector<Parameter> intersectWithRectangle(const Rectangle<double>& rectangle) const;
 
     /**
-     * @brief
+     * @brief Get the point with given parameter on the spline
+     * @param parameter The point's parameter
+     * @return The point
      */
     Point getPoint(Parameter parameter) const;
 
