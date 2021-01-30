@@ -1,50 +1,103 @@
-/*  
+/*
  * Backup before modifying
  *
- * 
+ *
  *  Try running Xournal++ like this:    GTK_DEBUG=interactive  xournalpp
- * 
+ *
  *  See: https://wiki.gnome.org/action/show/Projects/GTK/Inspector
  */
 
-
-
 /*Style the Floating Toolbox!*/
 
-#floatingToolbox>GtkBox 
-{
-	background-color: rgba(0,0,0,0.05);
-	border-radius:10%;
-}
-#floatingToolbox GtkBox GtkToolbar 
-{
-	background-color: rgba(255,255,255,0);
-}
-#floatingToolbox GtkButton 
-{
-	background-color: rgba(255,255,255,1);
-	border-radius: 50%;
+#floatingToolbox > box {
+	background-color: white;
+	border-radius: 12px;
+
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+
+	/* Add a margin. If we don't have this, Gtk clips the shadow!  */
+	margin: 7px;
 }
 
+#floatingToolbox box toolbar {
+	background-color: rgba(255, 255, 255, 0);
+}
 
+#floatingToolbox button {
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 12px;
+}
+
+/*
+	Use :checked for a selected ToggleButton.
+	See https://stackoverflow.com/questions/39824345/use-css-to-style-gtktogglebutton-depending-on-the-state
+*/
+#floatingToolbox button:checked {
+	background-color: lightblue;
+	border-color: lightblue;
+	box-shadow: inset 0px 0px 3px lightblue;
+
+	transition: background-color 0.5s ease, border-color 0.5s ease, margin 0.3s ease;
+}
+
+#floatingToolbox toolbar {
+    /*
+      The Adaptia GTK theme adds box-shadows to toolbars.
+      Remove them to avoid horizontal lines that extend outside
+      the edge of the floating toolbox.
+     */
+
+    box-shadow: none;
+}
+
+window.darkMode #floatingToolbox button {
+	background: rgba(55, 53, 53, 0.5);
+}
+
+window.darkMode #floatingToolbox button:checked {
+	background: rgba(85, 85, 95, 0.1);
+	border-color: lightblue;
+	box-shadow: 0px 0px 3px lightblue;
+}
+
+window.darkMode #floatingToolbox > box {
+	background-color: black;
+
+	/*
+	  Lighter gray shadow for better contrast on dark
+	  backgrounds.
+	*/
+	box-shadow: 0px 0px 5px rgba(90, 90, 90, 0.7);
+}
+
+/* Add additional padding and a border to make editing toolbars easier. */
+toolbar.editing {
+	padding-top: 4px;
+	padding-bottom: 4px;
+
+	border: 4px dashed orange;
+	border-radius: 3px;
+
+	box-shadow: inset -2px -2px 8px orange;
+}
 
 /*Fix ugly Background drop down button
- * 
- * We need to select the button beside two labels or we will affect 
+ *
+ * We need to select the button beside two labels or we will affect
  * the pen tool when in FloatingToolbox (and can't see activation highlight).
- * 
- * Ideally we will give name properties to all of the widgets created in 
+ *
+ * Ideally we will give name properties to all of the widgets created in
  * code as well as specifying names in glade files.
- * 
+ *
  * Note: in glade files, property with name="name". i.e. <property name="name">floatingToolbox</property>
  */
 
 
-GtkToolItem>GtkBox>GtkLabel+GtkLabel+GtkButton 
+toolitem > box > label+label+button 
 {
 	border-width:0;
 	box-shadow:none;
-	background-image:none
+	background-image:none;
 }
 
 
@@ -54,7 +107,7 @@ GtkToolItem>GtkBox>GtkLabel+GtkLabel+GtkButton
 */
 
 /*
-GtkToolbar GtkButton
+toolbar button
 {
 	padding: 2
 }
@@ -62,11 +115,11 @@ GtkToolbar GtkButton
 
 
 
-/* Or for individual toolbars: tbLeft1 tbLeft2 tbTop1 tbTop2 tbBottom1 tbFloat4 etc: 
+/* Or for individual toolbars: tbLeft1 tbLeft2 tbTop1 tbTop2 tbBottom1 tbFloat4 etc:
  */
- 
+
 /*
-#tbLeft2 GtkButton
+#tbLeft2 button
 {
 	padding: 2
 }
@@ -76,7 +129,20 @@ GtkToolbar GtkButton
 /*
 Labels for subsections of the Settings dialog
 */
-notebook frame>label{
+notebook frame>label {
     color: #666;
     font-weight: bold;
 }
+
+
+/*
+  Sidebar (page select, layer select, etc)
+ */
+#sidebarContents {
+	background-color: white;
+}
+
+window.darkMode #sidebarContents {
+	background-color: #222;
+}
+

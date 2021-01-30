@@ -33,8 +33,6 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
     g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
 
     gtk_widget_show_all(this->scrollPreview);
-
-    g_signal_connect(this->iconViewPreview, "draw", G_CALLBACK(Util::paintBackgroundWhite), nullptr);
 }
 
 SidebarPreviewBase::~SidebarPreviewBase() {

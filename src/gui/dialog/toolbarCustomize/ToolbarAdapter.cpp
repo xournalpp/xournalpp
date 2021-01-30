@@ -31,6 +31,9 @@ ToolbarAdapter::ToolbarAdapter(GtkWidget* toolbar, string toolbarName, ToolMenuH
 
     showToolbar();
     prepareToolItems();
+
+    GtkStyleContext* ctx = gtk_widget_get_style_context(w);
+    gtk_style_context_add_class(ctx, "editing");
 }
 
 ToolbarAdapter::~ToolbarAdapter() {
@@ -40,6 +43,9 @@ ToolbarAdapter::~ToolbarAdapter() {
     g_signal_handlers_disconnect_by_func(this->w, (gpointer)toolbarDragDataReceivedCb, this);
 
     cleanupToolbars();
+
+    GtkStyleContext* ctx = gtk_widget_get_style_context(w);
+    gtk_style_context_remove_class(ctx, "editing");
 }
 
 void ToolbarAdapter::cleanupToolbars() {

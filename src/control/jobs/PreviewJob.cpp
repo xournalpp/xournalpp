@@ -55,6 +55,7 @@ void PreviewJob::finishPaint() {
 void PreviewJob::drawBackgroundPdf(Document* doc) {
     int pgNo = this->sidebarPreview->page->getPdfPageNr();
     XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
+
     PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom,
                       this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
 }
@@ -88,9 +89,17 @@ void PreviewJob::drawPage(int layer) {
     cairo_destroy(cr2);
 }
 
+void PreviewJob::clipToPage() {
+    // Only render within the preview page. Without this, the when preview jobs attempt
+    // to clear the display, we fill a region larger than the inside of the preview page!
+    cairo_rectangle(cr2, 0, 0, this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
+    cairo_clip(cr2);
+}
+
 void PreviewJob::run() {
     initGraphics();
     drawBorder();
+    clipToPage();
 
     Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
     doc->lock();

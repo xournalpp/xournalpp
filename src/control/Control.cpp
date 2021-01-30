@@ -1928,6 +1928,7 @@ void Control::showSettings() {
     this->zoom->setZoom100Value(settings->getDisplayDpi() / Util::DPI_NORMALIZATION_FACTOR);
 
     getWindow()->getXournal()->getHandRecognition()->reload();
+    getWindow()->updateColorscheme();
 
     TextView::setDpi(settings->getDisplayDpi());
 

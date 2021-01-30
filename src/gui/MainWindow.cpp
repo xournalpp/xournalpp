@@ -250,6 +250,17 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
     }
 }
 
+void MainWindow::updateColorscheme() {
+    bool darkMode = control->getSettings()->isDarkTheme();
+    GtkStyleContext* context = gtk_widget_get_style_context(GTK_WIDGET(this->window));
+
+    if (darkMode) {
+        gtk_style_context_add_class(context, "darkMode");
+    } else {
+        gtk_style_context_remove_class(context, "darkMode");
+    }
+}
+
 void MainWindow::initXournalWidget() {
     GtkWidget* boxContents = get("boxContents");
 
@@ -273,6 +284,8 @@ void MainWindow::initXournalWidget() {
 
     Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
     scrollHandling->init(this->xournal->getWidget(), layout);
+
+    updateColorscheme();
 }
 
 void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
