@@ -59,6 +59,12 @@ SidebarPreviewPages::~SidebarPreviewPages() {
     }
 }
 
+void SidebarPreviewPages::enableSidebar() {
+    SidebarPreviewBase::enableSidebar();
+
+    pageSelected(this->selectedEntry);
+}
+
 auto SidebarPreviewPages::getName() -> string { return _("Page Preview"); }
 
 auto SidebarPreviewPages::getIconName() -> string { return "sidebar-page-preview"; }
