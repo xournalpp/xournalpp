@@ -24,6 +24,10 @@ class PopupMenuButton;
 class PageTemplateDialog: public GladeGui, public PageTypeMenuChangeListener {
 public:
     PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types);
+    PageTemplateDialog(PageTemplateDialog&) = delete;
+    PageTemplateDialog(PageTemplateDialog&&) = delete;
+    PageTemplateDialog& operator=(PageTemplateDialog&) = delete;
+    PageTemplateDialog&& operator=(PageTemplateDialog&&) = delete;
     virtual ~PageTemplateDialog();
 
 public:
@@ -49,9 +53,9 @@ private:
 
     PageTemplateSettings model;
 
-    PageTypeMenu* pageMenu;
+    std::unique_ptr<PageTypeMenu> pageMenu;
 
-    PopupMenuButton* popupMenuButton;
+    std::unique_ptr<PopupMenuButton> popupMenuButton;
 
     /**
      * The dialog was confirmed / saved

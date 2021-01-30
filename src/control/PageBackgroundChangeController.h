@@ -24,6 +24,7 @@
 class PageTypeMenu;
 class Control;
 class XojPage;
+class UndoAction;
 
 class PageBackgroundChangeController:
         public PageTypeMenuChangeListener,
@@ -31,7 +32,7 @@ class PageBackgroundChangeController:
         public PageTypeApplyListener {
 public:
     PageBackgroundChangeController(Control* control);
-    virtual ~PageBackgroundChangeController();
+    virtual ~PageBackgroundChangeController() = default;
 
 public:
     virtual void changeCurrentPageBackground(PageType& pageType);
@@ -80,8 +81,13 @@ private:
      */
     bool applyImageBackground(PageRef page);
 
+    /**
+     * Perform the page type change.
+     */
+    auto commitPageTypeChange(size_t pageNum, const PageType& pageType) -> std::unique_ptr<UndoAction>;
+
 private:
     Control* control = nullptr;
-    PageTypeMenu* currentPageType = nullptr;
+    PageTypeMenu currentPageType;
     bool ignoreEvent = false;
 };

@@ -81,7 +81,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     TextView::setDpi(settings->getDisplayDpi());
 
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
-    this->newPageType = new PageTypeMenu(this->pageTypes, settings, true, true);
+    this->newPageType = std::make_unique<PageTypeMenu>(this->pageTypes, settings, true, true);
 
     this->audioController = new AudioController(this->settings, this);
 
@@ -147,8 +147,6 @@ Control::~Control() {
     this->searchBar = nullptr;
     delete this->scrollHandler;
     this->scrollHandler = nullptr;
-    delete this->newPageType;
-    this->newPageType = nullptr;
     delete this->pageTypes;
     this->pageTypes = nullptr;
     delete this->metadata;
@@ -1303,14 +1301,12 @@ void Control::updateBackgroundSizeButton() {
 }
 
 void Control::paperTemplate() {
-    auto* dlg = new PageTemplateDialog(this->gladeSearchPath, settings, pageTypes);
+    auto dlg = std::make_unique<PageTemplateDialog>(this->gladeSearchPath, settings, pageTypes);
     dlg->show(GTK_WINDOW(this->win->getWindow()));
 
     if (dlg->isSaved()) {
         newPageType->loadDefaultPage();
     }
-
-    delete dlg;
 }
 
 void Control::paperFormat() {
@@ -2847,7 +2843,7 @@ auto Control::getAudioController() -> AudioController* { return this->audioContr
 
 auto Control::getPageTypes() -> PageTypeHandler* { return this->pageTypes; }
 
-auto Control::getNewPageType() -> PageTypeMenu* { return this->newPageType; }
+auto Control::getNewPageType() -> PageTypeMenu* { return this->newPageType.get(); }
 
 auto Control::getPageBackgroundChangeController() -> PageBackgroundChangeController* {
     return this->pageBackgroundChangeController;
