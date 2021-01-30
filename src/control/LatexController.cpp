@@ -166,7 +166,9 @@ void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* s
 }
 
 void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, LatexController* self) {
-    g_assert(self->isUpdating);
+    if (!self->isUpdating) {
+        return;
+    }
     GError* err = nullptr;
     GSubprocess* proc = G_SUBPROCESS(procObj);
     g_subprocess_wait_check_finish(proc, res, &err);
