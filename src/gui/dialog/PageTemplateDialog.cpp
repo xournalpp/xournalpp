@@ -1,6 +1,7 @@
 #include "PageTemplateDialog.h"
 
 #include <fstream>
+#include <memory>
 #include <sstream>
 
 #include "control/pagetype/PageTypeHandler.h"
@@ -18,7 +19,8 @@ using std::ofstream;
 PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types):
         GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),
         settings(settings),
-        pageMenu(new PageTypeMenu(types, settings, true, false)) {
+        pageMenu(new PageTypeMenu(types, settings, true, false)),
+        popupMenuButton(new PopupMenuButton(get("btBackgroundDropdown"), pageMenu->getMenu())) {
     model.parse(settings->getPageTemplate());
 
     pageMenu->setListener(this);
@@ -36,17 +38,10 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
                      G_CALLBACK(+[](GtkToggleButton* togglebutton, PageTemplateDialog* self) { self->saveToFile(); }),
                      this);
 
-    popupMenuButton = new PopupMenuButton(get("btBackgroundDropdown"), pageMenu->getMenu());
-
     updateDataFromModel();
 }
 
-PageTemplateDialog::~PageTemplateDialog() {
-    delete pageMenu;
-    pageMenu = nullptr;
-    delete popupMenuButton;
-    popupMenuButton = nullptr;
-}
+PageTemplateDialog::~PageTemplateDialog() = default;
 
 void PageTemplateDialog::updateDataFromModel() {
     GdkRGBA color = Util::rgb_to_GdkRGBA(model.getBackgroundColor());
@@ -146,11 +141,12 @@ void PageTemplateDialog::updatePageSize() {
 }
 
 void PageTemplateDialog::showPageSizeDialog() {
-    auto* dlg = new FormatDialog(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
+    auto dlg =
+            std::make_unique<FormatDialog>(getGladeSearchPath(), settings, model.getPageWidth(), model.getPageHeight());
     dlg->show(GTK_WINDOW(this->window));
 
-    double width = dlg->getWidth();
-    double height = dlg->getHeight();
+    const double width = dlg->getWidth();
+    const double height = dlg->getHeight();
 
     if (width > 0) {
         model.setPageWidth(width);
@@ -158,8 +154,6 @@ void PageTemplateDialog::showPageSizeDialog() {
 
         updatePageSize();
     }
-
-    delete dlg;
 }
 
 /**

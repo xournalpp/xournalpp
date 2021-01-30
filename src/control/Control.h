@@ -401,7 +401,7 @@ private:
     MetadataManager* metadata;
 
     PageTypeHandler* pageTypes;
-    PageTypeMenu* newPageType;
+    std::unique_ptr<PageTypeMenu> newPageType;
 
     PageBackgroundChangeController* pageBackgroundChangeController;
 

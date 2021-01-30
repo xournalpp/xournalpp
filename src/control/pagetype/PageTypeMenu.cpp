@@ -22,7 +22,6 @@ PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool show
         listener(nullptr),
         menuX(0),
         menuY(0),
-        backgroundPainter(nullptr),
         showPreview(showPreview),
         pageTypeApplyListener(nullptr) {
     initDefaultMenu();
@@ -43,7 +42,7 @@ void PageTypeMenu::loadDefaultPage() {
     setSelected(model.getPageInsertType());
 }
 
-auto PageTypeMenu::createPreviewImage(const PageType& pt) -> cairo_surface_t* {
+auto PageTypeMenu::createPreviewImage(MainBackgroundPainter* bgPainter, const PageType& pt) -> cairo_surface_t* {
     int previewWidth = 100;
     int previewHeight = 141;
     double zoom = 0.5;
@@ -54,7 +53,7 @@ auto PageTypeMenu::createPreviewImage(const PageType& pt) -> cairo_surface_t* {
     cairo_t* cr = cairo_create(surface);
     cairo_scale(cr, zoom, zoom);
 
-    backgroundPainter->paint(pt, cr, std::move(page));
+    bgPainter->paint(pt, cr, std::move(page));
 
     cairo_identity_matrix(cr);
 
@@ -71,13 +70,13 @@ auto PageTypeMenu::createPreviewImage(const PageType& pt) -> cairo_surface_t* {
     return surface;
 }
 
-void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
+void PageTypeMenu::addMenuEntry(MainBackgroundPainter* bgPainter, PageTypeInfo* t) {
     bool special = t->page.isSpecial();
     bool showImg = !special && showPreview;
 
     GtkWidget* entry = nullptr;
     if (showImg) {
-        cairo_surface_t* img = createPreviewImage(t->page);
+        cairo_surface_t* img = createPreviewImage(bgPainter, t->page);
         GtkWidget* preview = gtk_image_new_from_surface(img);
         entry = gtk_check_menu_item_new();
 
@@ -220,8 +219,8 @@ auto PageTypeMenu::createApplyMenuItem(const char* text) -> GtkWidget* {
 }
 
 void PageTypeMenu::initDefaultMenu() {
-    this->backgroundPainter = new MainBackgroundPainter();
-    this->backgroundPainter->setLineWidthFactor(2);
+    auto bgPainter = std::make_unique<MainBackgroundPainter>();
+    bgPainter->setLineWidthFactor(2);
 
     bool special = false;
     for (PageTypeInfo* t: this->types->getPageTypes()) {
@@ -246,11 +245,8 @@ void PageTypeMenu::initDefaultMenu() {
                 gtk_container_add(GTK_CONTAINER(menu), separator);
             }
         }
-        addMenuEntry(t);
+        addMenuEntry(bgPainter.get(), t);
     }
-
-    delete this->backgroundPainter;
-    this->backgroundPainter = nullptr;
 }
 
 auto PageTypeMenu::getMenu() -> GtkWidget* { return menu; }

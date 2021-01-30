@@ -64,9 +64,9 @@ public:
 private:
     static GtkWidget* createApplyMenuItem(const char* text);
     void initDefaultMenu();
-    void addMenuEntry(PageTypeInfo* t);
+    void addMenuEntry(MainBackgroundPainter* bgPainter, PageTypeInfo* t);
     void entrySelected(PageTypeInfo* t);
-    cairo_surface_t* createPreviewImage(const PageType& pt);
+    cairo_surface_t* createPreviewImage(MainBackgroundPainter* bgPainter, const PageType& pt);
 
 private:
     bool showSpecial;
@@ -83,10 +83,8 @@ private:
 
     PageTypeMenuChangeListener* listener;
 
-    int menuX;
-    int menuY;
-
-    MainBackgroundPainter* backgroundPainter;
+    guint menuX;
+    guint menuY;
 
     bool showPreview;
 
