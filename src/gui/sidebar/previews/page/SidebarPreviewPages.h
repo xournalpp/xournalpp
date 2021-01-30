@@ -31,6 +31,8 @@ public:
      */
     void actionPerformed(SidebarActions action);
 
+    void enableSidebar();
+
     /**
      * @overwrite
      */
