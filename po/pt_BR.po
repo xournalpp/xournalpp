@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-27 21:49+0000\n"
-"PO-Revision-Date: 2021-01-27 21:51\n"
+"POT-Creation-Date: 2021-01-30 06:08+0000\n"
+"PO-Revision-Date: 2021-01-30 06:12\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2074,7 +2074,7 @@ msgstr "Excluir camada"
 msgid "Delete stroke"
 msgstr "Excluir traço"
 
-#: ../ui/main.glade:2171
+#: ../ui/main.glade:2203
 msgid "Delete this page"
 msgstr "Excluir esta página"
 
@@ -2151,11 +2151,11 @@ msgstr "Área de Desenho"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Ferramentas de Desenho - Defina Modificadores ao desenhar Direção (Experimental)"
 
-#: ../ui/main.glade:2575
+#: ../ui/main.glade:2571
 msgid "Duplicate"
 msgstr "Duplicar"
 
-#: ../ui/main.glade:2612
+#: ../ui/main.glade:2608
 msgid "Edit (not implemented yet)"
 msgstr "Editar (ainda não implementado)"
 
@@ -2252,11 +2252,11 @@ msgstr "Fi_ll"
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2369
+#: ../ui/main.glade:2365
 msgid "Find next occurrence of the search string"
 msgstr "Localizar próxima ocorrência da busca"
 
-#: ../ui/main.glade:2347
+#: ../ui/main.glade:2343
 msgid "Find previous occurrence of the search string"
 msgstr "Localizar próxima ocorrência de busca"
 
@@ -2396,15 +2396,15 @@ msgstr "Sistema de entrada"
 msgid "Insert Latex"
 msgstr "Inserir camada"
 
-#: ../ui/main.glade:2567
+#: ../ui/main.glade:2563
 msgid "Insert Page After"
 msgstr "Inserir Página Depois"
 
-#: ../ui/main.glade:2559
+#: ../ui/main.glade:2555
 msgid "Insert Page Before"
 msgstr "Inserir Página Antes"
 
-#: ../ui/main.glade:2150
+#: ../ui/main.glade:2182
 msgid "Insert a copy of the current page below"
 msgstr "Inserir uma cópia da página atual abaixo"
 
@@ -2481,11 +2481,11 @@ msgstr "Botões do Mouse"
 msgid "Mouse+Keyboard Combo"
 msgstr ""
 
-#: ../ui/main.glade:2597
+#: ../ui/main.glade:2593
 msgid "Move Down"
 msgstr "Mover para Baixo"
 
-#: ../ui/main.glade:2589
+#: ../ui/main.glade:2585
 msgid "Move Up"
 msgstr "Mover para Cima"
 
@@ -2810,11 +2810,11 @@ msgstr "Botões de caneta"
 msgid "Successive (ms)"
 msgstr "Sucessivo (ms)"
 
-#: ../ui/main.glade:2107
+#: ../ui/main.glade:2139
 msgid "Swap the current page with the one above"
 msgstr "Trocar a página atual pela página acima"
 
-#: ../ui/main.glade:2129
+#: ../ui/main.glade:2161
 msgid "Swap the current page with the one below"
 msgstr "Trocar a página atual pela página abaixo"
 
