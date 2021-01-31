@@ -4,6 +4,7 @@
 
 #include "control/Control.h"
 #include "control/pagetype/PageTypeHandler.h"
+#include "control/pagetype/PageTypeMenu.h"
 #include "gui/dialog/backgroundSelect/ImagesDialog.h"
 #include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
 #include "stockdlg/ImageOpenDlg.h"
@@ -20,7 +21,7 @@ PageBackgroundChangeController::PageBackgroundChangeController(Control* control)
 
     currentPageType.hideCopyPage();
 
-    currentPageType.addApplyBackgroundButton(this, true);
+    currentPageType.addApplyBackgroundButton(this, true, ApplyPageTypeSource::CURRENT);
 
     registerListener(control);
 }
@@ -291,8 +292,16 @@ void PageBackgroundChangeController::pageSelected(size_t page) {
     ignoreEvent = false;
 }
 
-void PageBackgroundChangeController::applyCurrentPageBackground(bool allPages) {
-    PageType pt = control->getNewPageType()->getSelected();
+void PageBackgroundChangeController::applySelectedPageBackground(bool allPages, ApplyPageTypeSource src) {
+    PageType pt;
+    switch (src) {
+        case ApplyPageTypeSource::SELECTED:
+            pt = control->getNewPageType()->getSelected();
+            break;
+        case ApplyPageTypeSource::CURRENT:
+            pt = control->getCurrentPage()->getBackgroundType();
+            break;
+    }
 
     if (allPages) {
         changeAllPagesBackground(pt);

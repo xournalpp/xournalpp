@@ -52,7 +52,7 @@ public:
 
     // PageTypeApplyListener
 public:
-    virtual void applyCurrentPageBackground(bool allPages);
+    virtual void applySelectedPageBackground(bool allPages, ApplyPageTypeSource src);
 
 private:
     /**
