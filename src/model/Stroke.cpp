@@ -29,6 +29,13 @@ auto Stroke::cloneStroke() const -> Stroke* {
     auto* s = new Stroke();
     s->applyStyleFrom(this);
     s->points = this->points;
+    s->x = this->x;
+    s->y = this->y;
+    s->width = this->width;  // stroke width, not bounding box width
+    s->Element::width = this->Element::width;
+    s->Element::height = this->Element::height;
+    s->snappedBounds = this->snappedBounds;
+    s->sizeCalculated = this->sizeCalculated;
     return s;
 }
 

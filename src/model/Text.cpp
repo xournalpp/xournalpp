@@ -22,8 +22,12 @@ auto Text::clone() -> Element* {
     text->setColor(this->getColor());
     text->x = this->x;
     text->y = this->y;
+    text->width = this->width;
+    text->height = this->height;
     text->cloneAudioData(this);
-    this->updateSnapping();
+    text->snappedBounds = this->snappedBounds;
+    text->sizeCalculated = this->sizeCalculated;
+    text->inEditing = this->inEditing;
 
     return text;
 }

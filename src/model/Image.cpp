@@ -27,7 +27,9 @@ auto Image::clone() -> Element* {
     img->data = this->data;
 
     img->image = cairo_surface_reference(this->image);
-    img->calcSize();
+    img->snappedBounds = this->snappedBounds;
+    img->sizeCalculated = this->sizeCalculated;
+    img->read = this->read;
 
     return img;
 }

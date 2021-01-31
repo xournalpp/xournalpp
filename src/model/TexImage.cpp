@@ -32,6 +32,9 @@ auto TexImage::clone() -> Element* {
     img->width = this->width;
     img->height = this->height;
     img->text = this->text;
+    img->snappedBounds = this->snappedBounds;
+    img->sizeCalculated = this->sizeCalculated;
+    img->pdf = this->pdf;
     return img;
 }
 
