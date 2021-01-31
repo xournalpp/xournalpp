@@ -393,6 +393,8 @@ void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<do
                                           XojPageView* targetView, UndoRedoHandler* undo, CursorSelectionType type) {
     double mx = snappedBounds.x - this->lastSnappedBounds.x;
     double my = snappedBounds.y - this->lastSnappedBounds.y;
+    bool move = mx != 0 || my != 0;
+
     this->rotation = rotation;
 
     double fx = snappedBounds.width / this->lastSnappedBounds.width;
@@ -404,13 +406,14 @@ void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<do
         fy = f;
     }
 
+    bool rotate = (std::abs(this->rotation - this->lastRotation) > __DBL_EPSILON__);
     bool scale = (snappedBounds.width != this->lastSnappedBounds.width ||
                   snappedBounds.height != this->lastSnappedBounds.height);
 
-    if (type == CURSOR_SELECTION_MOVE) {
+    if (type == CURSOR_SELECTION_MOVE && move) {
         undo->addUndoAction(std::make_unique<MoveUndoAction>(this->sourceLayer, this->sourcePage, &this->selected, mx,
                                                              my, layer, targetPage));
-    } else if (type == CURSOR_SELECTION_ROTATE) {
+    } else if (type == CURSOR_SELECTION_ROTATE && rotate) {
         undo->addUndoAction(std::make_unique<RotateUndoAction>(
                 this->sourcePage, &this->selected, snappedBounds.x + snappedBounds.width / 2,
                 snappedBounds.y + snappedBounds.height / 2, rotation - this->lastRotation));
