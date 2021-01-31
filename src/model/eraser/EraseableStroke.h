@@ -11,13 +11,16 @@
 
 #pragma once
 
+#include <list>
 #include <string>
 #include <vector>
 
 #include <gtk/gtk.h>
 
 #include "model/Point.h"
+#include "model/Spline.h"
 
+#include "UnionOfIntervals.h"
 #include "XournalType.h"
 
 class EraseableStrokePart;
@@ -34,6 +37,7 @@ public:
     /**
      * Returns a repaint rectangle or nullptr, the rectangle is own by the caller
      */
+    Range* beginErasure(double x, double y, double halfEraserSize, Range* range = nullptr);
     Range* erase(double x, double y, double halfEraserSize, Range* range = nullptr);
 
     GList* getStroke(Stroke* original);
@@ -54,4 +58,6 @@ private:
     Range* repaintRect = nullptr;
 
     Stroke* stroke = nullptr;
+
+    UnionOfIntervals<Spline::Parameter> remainingSections{};
 };

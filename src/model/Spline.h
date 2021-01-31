@@ -26,10 +26,17 @@
 #include "MathVect.h"
 #include "Point.h"
 #include "SplineSegment.h"
+#include "UnionOfIntervals.h"
 
 /**
  * @brief A class to handle splines
  * A spline is only assumed to be continuous.
+ *
+ * The spline is stored as a vector of points of the form
+ *  | knot | control | control | knot | control | control | knot | ... | control | knot |
+ * The size of this vector is always of the form 3 * n + 1.
+ *
+ * Iterators of type SplineSegment are implemented, allowing easy and efficient loops over the segments of the spline
  */
 class Spline {
 public:
@@ -43,18 +50,49 @@ public:
     Spline(const Point& firstKnot);
 
     /**
-     * @brief Create a spline with first knot and first segment
-     * @param firstKnot the first knot of the spline
-     * @param firstSegment the first segment of the spline
-     */
-    Spline(const Point& firstKnot, const PartialSplineSegment& firstSegment);
-
-    /**
      * @brief Create a spline with first knot prescribed and reserves the space for size segments
      * @param firstKnot the first knot of the spline
      * @param size Number of pre-allocated segments
      */
     Spline(const Point& firstKnot, size_t size);
+
+    /**
+     * @brief Iteratable adaptor for segment-based iterations (e.g. for(auto&& segment: spline.segments()) {})
+     *
+     * This is needed so that two consecutive segments share one knot
+     */
+    template <class value_type, class point_type>
+    class SegmentIteratable;
+    /**
+     * @brief Get an iteratable adaptor for segment-based iterations.
+     * @return The adaptor
+     * Warning, the returned adaptor will be invalidated if something is added or removed from this->data
+     */
+    SegmentIteratable<SplineSegment, Point> segments();
+    /**
+     * @brief Get an iteratable adaptor for segment-based iterations.
+     * @return The adaptor
+     * Warning, the returned adaptor will be invalidated if something is added or removed from this->data
+     */
+    SegmentIteratable<const SplineSegment, const Point> segments() const;
+
+    /**
+     * @brief Type for parameters of points on a spline.
+     * Similar to std::pair<size_t, double>, but with named variables
+     */
+    struct Parameter {
+        Parameter(size_t index, double t): index(index), t(t) {}
+        ~Parameter() = default;
+        bool operator==(const Parameter& p) const { return index == p.index && t == p.t; };
+        bool operator!=(const Parameter& p) const { return !(*this == p); };
+        bool operator<(const Parameter& p) const { return index < p.index || (index == p.index && t < p.t); };
+        bool operator>(const Parameter& p) const { return index > p.index || (index == p.index && t > p.t); };
+        bool operator<=(const Parameter& p) const { return index < p.index || (index == p.index && t <= p.t); };
+        bool operator>=(const Parameter& p) const { return index > p.index || (index == p.index && t >= p.t); };
+
+        size_t index;
+        double t;
+    };
 
     /**
      * @brief Add a line segment
@@ -95,19 +133,13 @@ public:
      * @brief Get the first knot
      * @return The first knot
      */
-    [[maybe_unused]] const Point& getFirstKnot() const;
+    inline const Point& getFirstKnot() const;
 
     /**
      * @brief Get the last knot
      * @return The last knot
      */
-    const Point& getLastKnot() const;
-
-    /**
-     * @brief Get a reference to the vector containing the segments
-     * @return The segments
-     */
-    const std::vector<PartialSplineSegment>& getSegments() const;
+    inline const Point& getLastKnot() const;
 
     /**
      * @brief Compute the smallest box containing the spline
@@ -124,12 +156,16 @@ public:
     /**
      * @brief Get the number of spline segments
      * @return The number of spline segments
+     *
+     * Nb: When size() == 0, the spline's first knot may or may not be set
      */
     size_t size() const;
 
     /**
      * @brief If n < size(), resize the spline to n segments
      * @param n Number of segments to keep
+     *
+     * Nb: resize(0) will not erase the first knot.
      */
     void resize(size_t n);
 
@@ -141,13 +177,7 @@ public:
     void move(double dx, double dy);
 
     /**
-     * @brief Type for parameters of points on a spline.
-     * The first value is the index of the spline segment, the second is the parameter (0 <= t <= 1) on this segment
-     */
-    using Parameter = std::pair<size_t, double>;
-
-    /**
-     * @brief Find the parameters) corresponding to the points where the spline crosses in or out of the given rectangle
+     * @brief Find the parameters corresponding to the points where the spline crosses in or out of the given rectangle
      * @param rectangle The rectangle
      * @return The parameters (sorted)
      *
@@ -155,6 +185,27 @@ public:
      * For optimization purposes, this test should be performed beforehand by the calling function.
      */
     std::vector<Parameter> intersectWithRectangle(const Rectangle<double>& rectangle) const;
+
+    /**
+     * @brief Find the parameters within a certain interval corresponding to the points where the spline crosses in
+     * or out of the given rectangle
+     * @param rectangle The rectangle
+     * @param begin The lower bound of the interval
+     * @param end The upper bound of the interval
+     * @return The parameters (sorted)
+     *
+     * Warning: this function does not test if the rectangle intersects this->getBoundingBox().
+     * For optimization purposes, this test should be performed beforehand by the calling function.
+     */
+    std::vector<Parameter> intersectWithRectangle(const Rectangle<double>& rectangle, size_t firstIndex,
+                                                  size_t lastIndex) const;
+
+    /**
+     * @brief Get a specific spline segment
+     * @param index The index of the spline segment
+     * @return A reference to the spline segment
+     */
+    const SplineSegment& getSegment(size_t index) const;
 
     /**
      * @brief Get the point with given parameter on the spline
@@ -169,8 +220,15 @@ private:
     /**
      * @brief The initial point of the spline
      */
-    Point firstKnot;
-    std::vector<PartialSplineSegment> segments;
+    //     Point firstKnot;
+    //     std::vector<PartialSplineSegment> segments;
+
+    std::vector<Point> data;
+
+    static bool isPointOnBoundary(const Point& p, const Rectangle<double> r) {
+        return ((p.x == r.x || p.x == r.x + r.width) && p.y >= r.y && p.y <= r.y + r.height) ||
+               ((p.y == r.y || p.y == r.y + r.height) && p.x >= r.x && p.x <= r.x + r.width);
+    }
 
     /**
      * Static material to generate splines:
@@ -485,3 +543,105 @@ private:
      */
     std::vector<MathVect3> errors;
 };
+
+
+/**
+ * Iteratable adaptor for segment-based iterations
+ */
+template <class value_type, class point_type>
+class Spline::SegmentIteratable {
+public:
+    SegmentIteratable(point_type* begin, point_type* end):
+            beginIt(reinterpret_cast<value_type*>(begin)), endIt(reinterpret_cast<value_type*>(end)) {}
+    ~SegmentIteratable() = default;
+
+    class Iterator {
+    public:
+        using iterator_category = std::random_access_iterator_tag;
+        using difference_type = std::ptrdiff_t;
+        using pointer = value_type*;
+        using reference = value_type&;
+
+        [[maybe_unused]] Iterator() = default;
+        [[maybe_unused]] Iterator(const Iterator& it) = default;
+        [[maybe_unused]] Iterator(pointer ptr): ptr(ptr) {}
+        [[maybe_unused]] ~Iterator() = default;
+
+        [[maybe_unused]] Iterator& operator=(const Iterator& other) = default;
+
+        /**
+         * @brief Increment/Decrement the iterator
+         *
+         * A SplineSegment consists of 4 Points, but its last Point (its second knot) is the next segment's first knot.
+         * This shared knot is stored only once, so two consecutive SplineSegments overlap in memory (by 1 Point).
+         * This gives the following formulae
+         */
+        [[maybe_unused]] Iterator operator++(int) {  // it++
+            Iterator it = *this;
+            ptr = (pointer)((point_type*)ptr + 3);
+            return it;
+        }
+        [[maybe_unused]] Iterator& operator++() {  // ++it
+            ptr = (pointer)((point_type*)ptr + 3);
+            return *this;
+        }
+        [[maybe_unused]] Iterator operator--(int) {  // it--
+            Iterator it = *this;
+            ptr = (pointer)((point_type*)ptr - 3);
+            return it;
+        }
+        [[maybe_unused]] Iterator& operator--() {  // --it
+            ptr = (pointer)((point_type*)ptr - 3);
+            return *this;
+        }
+        [[maybe_unused]] Iterator& operator+=(difference_type n) {
+            ptr = (pointer)((point_type*)ptr + 3 * n);
+            return *this;
+        }
+        [[maybe_unused]] Iterator& operator-=(difference_type n) {
+            ptr = (pointer)((point_type*)ptr - 3 * n);
+            return *this;
+        }
+
+        [[maybe_unused]] Iterator operator+(difference_type n) const {
+            return Iterator((pointer)((point_type*)ptr + 3 * n));
+        }
+        [[maybe_unused]] Iterator operator-(difference_type n) const {
+            return Iterator((pointer)((point_type*)ptr - 3 * n));
+        }
+
+        [[maybe_unused]] difference_type operator-(const Iterator& other) const {
+            return ((point_type*)this->ptr - (point_type*)other.ptr) / 3;
+        }
+
+        [[maybe_unused]] bool operator==(const Iterator& other) const { return this->ptr == other.ptr; }
+        [[maybe_unused]] bool operator!=(const Iterator& other) const { return this->ptr != other.ptr; }
+
+        [[maybe_unused]] reference operator*() { return *ptr; }
+        [[maybe_unused]] pointer operator->() { return ptr; }
+        [[maybe_unused]] reference operator[](difference_type n) { return *(pointer)((point_type*)ptr + 3 * n); }
+
+        [[maybe_unused]] bool operator<(const Iterator& other) const { return this->ptr < other.ptr; }
+        [[maybe_unused]] bool operator<=(const Iterator& other) const { return this->ptr <= other.ptr; }
+        [[maybe_unused]] bool operator>(const Iterator& other) const { return this->ptr > other.ptr; }
+        [[maybe_unused]] bool operator>=(const Iterator& other) const { return this->ptr >= other.ptr; }
+
+    private:
+        pointer ptr = nullptr;
+    };
+
+    Iterator begin() const { return beginIt; }
+    Iterator end() const { return endIt; }
+
+    Iterator iteratorAt(size_t i) { return beginIt + static_cast<typename Iterator::difference_type>(i); }
+
+    Iterator beginIt;
+    Iterator endIt;
+};
+
+template <class value_type, class point_type>
+[[maybe_unused]] typename Spline::SegmentIteratable<value_type, point_type>::Iterator operator+(
+        typename Spline::SegmentIteratable<value_type, point_type>::Iterator::difference_type n,
+        typename Spline::SegmentIteratable<value_type, point_type>::Iterator it) {
+    return it + n;
+}

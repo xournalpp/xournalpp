@@ -292,7 +292,7 @@ auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) 
         Rectangle<double> eraserBox(x - halfEraserSize, y - halfEraserSize, 2 * halfEraserSize, 2 * halfEraserSize);
         intersectionParameters = spline.intersectWithRectangle(eraserBox);
 
-#define DEBUG_SPLINE_INTERSECTS
+// #define DEBUG_SPLINE_INTERSECTS
 #ifdef DEBUG_SPLINE_INTERSECTS
         if (!intersectionParameters.empty()) {
             string msg = "spline inter (";
@@ -472,54 +472,6 @@ void Stroke::pointsFromSpline() {
     points.clear();
     spline.toPoints(points);
     sizeCalculated = false;
-}
-
-auto Stroke::schneider() -> Stroke* {
-
-    int pointCount = getPointCount();
-    if (pointCount == 0) {
-        return new Stroke();
-    }
-
-    /**
-     * Set the pressure value for the last point
-     */
-    if (pointCount >= 2 && points[pointCount - 2].z != Point::NO_PRESSURE) {
-        if (pointCount == 2) {
-            setLastPressure(points[pointCount - 2].z);
-        } else {
-            // Linearly extrapolate the pressure using the second and third to last ppints
-            setLastPressure(2 * points[pointCount - 2].z - points[pointCount - 3].z);
-        }
-    }
-
-    Stroke* result = new Stroke();
-    result->spline = Spline::getSchneiderApproximation(points);
-    result->pointsFromSpline();
-    result->applyStyleFrom(this);
-
-#ifdef DUMP_PRESSURE
-    double length = 0;
-    string interpolatePressure = "Interpolated\n0,000000;" + std::to_string(catmullRom.firstKnot.z) + "\n";
-    string originalPressure = "Original\n0,000000;" + std::to_string(points[0].z) + "\n";
-    int i = 0;
-    for (auto&& seg: catmullRom.segments) {
-        double dist = points[i].lineLengthTo(seg.secondKnot) / 10.0;
-        for (int j = 1; j <= 10; j++) {
-            length += dist;
-            double p = pow(10 - j, 3) * points[i].z + 3 * pow(10 - j, 2) * j * seg.firstControlPoint.z +
-                       3 * (10 - j) * pow(j, 2) * seg.secondControlPoint.z + pow(j, 3) * seg.secondKnot.z;
-            p /= 1000.0;
-            interpolatePressure += std::to_string(length) + ";" + std::to_string(p) + "\n";
-        }
-        i++;
-        originalPressure += std::to_string(length) + ";" + std::to_string(points[i].z) + "\n";
-        //         i++;
-    }
-    printf("\n%s\n%s\n\n", originalPressure.c_str(), interpolatePressure.c_str());
-#endif
-
-    return result;
 }
 
 void Stroke::setSpline(const Spline& s) {

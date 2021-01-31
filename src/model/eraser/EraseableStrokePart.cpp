@@ -1,5 +1,7 @@
 #include "EraseableStrokePart.h"
 
+#include "model/Stroke.h"
+
 EraseableStrokePart::EraseableStrokePart(Point a, Point b) {
     addPoint(a);
     addPoint(b);
@@ -9,6 +11,14 @@ EraseableStrokePart::EraseableStrokePart(Point a, Point b) {
 
     calcSize();
 }
+
+EraseableStrokePart::EraseableStrokePart(const Stroke& stroke) {
+    for (auto&& p: stroke.getPointVector()) {
+        this->points = g_list_append(this->points, new Point(p));
+    }
+    calcSize();
+}
+
 
 EraseableStrokePart::EraseableStrokePart(double width) {
     this->points = nullptr;
@@ -77,9 +87,8 @@ auto EraseableStrokePart::getElementWidth() const -> double { return this->eleme
 auto EraseableStrokePart::getElementHeight() const -> double { return this->elementHeight; }
 
 void EraseableStrokePart::addPoint(Point p) {
-    calcSize();
-
     this->points = g_list_append(this->points, new Point(p));
+    calcSize();
 }
 
 auto EraseableStrokePart::getWidth() const -> double { return this->width; }

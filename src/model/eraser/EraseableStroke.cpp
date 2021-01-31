@@ -1,12 +1,15 @@
 #include "EraseableStroke.h"
 
 #include <cmath>
+#include <iostream>
+#include <sstream>
 
 #include "model/Stroke.h"
 
 #include "EraseableStrokePart.h"
 #include "PartList.h"
 #include "Range.h"
+#include "UnionOfIntervals.h"
 
 EraseableStroke::EraseableStroke(Stroke* stroke): stroke(stroke) {
     this->parts = new PartList();
@@ -60,10 +63,128 @@ void EraseableStroke::draw(cairo_t* cr) {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+auto EraseableStroke::beginErasure(double x, double y, double halfEraserSize, Range* range) -> Range* {
+    if (stroke->isSpline()) {
+        const Spline& spline = stroke->getSpline();
+        if (spline.size() != 0) {
+            // First time around
+            remainingSections.unite(this->stroke->intersectionParameters);
+            remainingSections.complement({0, 0.0}, {spline.size() - 1, 1.0});
+            this->stroke->intersectionParameters = {};
+        }
+    }
+
+    this->repaintRect = range;
+
+    g_mutex_lock(&this->partLock);
+    PartList* tmpCopy = this->parts->clone();
+    g_mutex_unlock(&this->partLock);
+
+    for (GList* l = tmpCopy->data; l != nullptr;) {
+        auto* p = static_cast<EraseableStrokePart*>(l->data);
+        l = l->next;
+        erase(x, y, halfEraserSize, p, tmpCopy);
+    }
+
+    g_mutex_lock(&this->partLock);
+    PartList* old = this->parts;
+    this->parts = tmpCopy;
+    g_mutex_unlock(&this->partLock);
+
+    delete old;
+
+    return this->repaintRect;
+}
 /**
  * The only public method
  */
 auto EraseableStroke::erase(double x, double y, double halfEraserSize, Range* range) -> Range* {
+    if (stroke->isSpline()) {
+        const Spline& spline = stroke->getSpline();
+        if (spline.size() != 0) {
+            const std::list<Spline::Parameter>& remainingSectionsData = remainingSections.getData();
+            if (remainingSectionsData.empty()) {
+                /** Nothing left to erase! **/
+                return range;
+            } else {
+                Rectangle<double> eraserBox(x - halfEraserSize, y - halfEraserSize, 2 * halfEraserSize,
+                                            2 * halfEraserSize);
+
+                std::vector<Spline::Parameter> inter = spline.intersectWithRectangle(eraserBox);
+                UnionOfIntervals<Spline::Parameter> newErasedSections;
+
+                /**
+                 * Determine which stroke segments are still (partially) visible
+                 */
+                std::vector<std::pair<size_t, size_t>> indexIntervals;
+                auto itLowerBound = remainingSectionsData.begin();
+
+                // Do the first iteration by hand, to ensure indexIntervals is not empty in the loop
+                auto itUpperBound = std::next(itLowerBound);
+                indexIntervals.emplace_back(itLowerBound->index, itUpperBound->index);
+                itLowerBound = std::next(itUpperBound);
+
+                while (itLowerBound != remainingSectionsData.end()) {
+                    itUpperBound = std::next(itLowerBound);
+                    if (indexIntervals.back().second + 1 >= itLowerBound->index) {
+                        indexIntervals.back().second = itUpperBound->index;
+                    } else {
+                        indexIntervals.emplace_back(itLowerBound->index, itUpperBound->index);
+                    }
+                    itLowerBound = std::next(itUpperBound);
+                }
+
+                for (auto&& i: indexIntervals) {
+                    std::vector<Spline::Parameter> res = spline.intersectWithRectangle(eraserBox, i.first, i.second);
+                    newErasedSections.unite(res);
+                }
+
+                if (!newErasedSections.getData().empty()) {
+                    if (newErasedSections.getData().size() % 2) {
+                        printf("odd\n");
+                    }
+                    std::stringstream ss;
+                    ss << "newErasedSections :";
+                    bool even = true;
+                    for (auto&& p: newErasedSections.getData()) {
+                        ss << (even ? " [" : " -- ");
+                        ss << "(" << p.index << " ; " << p.t << ")";
+                        ss << (even ? "" : "] ");
+                        even = !even;
+                    }
+                    ss << "\n  * Complement :";
+                    newErasedSections.complement({0, 0.0}, {spline.size() - 1, 1.0});
+                    even = true;
+                    for (auto&& p: newErasedSections.getData()) {
+                        ss << (even ? " [" : " -- ");
+                        ss << "(" << p.index << " ; " << p.t << ")";
+                        ss << (even ? "" : "] ");
+                        even = !even;
+                    }
+                    ss << "\nremainingSections :";
+                    even = true;
+                    for (auto&& p: remainingSections.getData()) {
+                        ss << (even ? " [" : " -- ");
+                        ss << "(" << p.index << " ; " << p.t << ")";
+                        ss << (even ? "" : "] ");
+                        even = !even;
+                    }
+                    remainingSections.intersect(newErasedSections.getData());
+                    ss << "\n  * After :";
+                    even = true;
+                    for (auto&& p: remainingSections.getData()) {
+                        ss << (even ? " [" : " -- ");
+                        ss << "(" << p.index << " ; " << p.t << ")";
+                        ss << (even ? "" : "] ");
+                        even = !even;
+                    }
+                    //                     std::cout << ss.str() << "\n";
+                }
+            }
+        }
+    }
+
     this->repaintRect = range;
 
     g_mutex_lock(&this->partLock);

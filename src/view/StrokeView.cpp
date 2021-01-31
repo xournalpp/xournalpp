@@ -89,9 +89,10 @@ void StrokeView::drawNoPressure() {
     applyDashed(0);
 
     if (s->isSpline()) {
-        const Point& firstKnot = s->getSpline().getFirstKnot();
+        const Spline& spline = s->getSpline();
+        const Point& firstKnot = spline.getFirstKnot();
         cairo_move_to(cr, firstKnot.x, firstKnot.y);
-        for (auto&& seg: s->getSpline().getSegments()) {
+        for (auto&& seg: spline.segments()) {
             cairo_curve_to(cr, seg.firstControlPoint.x, seg.firstControlPoint.y, seg.secondControlPoint.x,
                            seg.secondControlPoint.y, seg.secondKnot.x, seg.secondKnot.y);
         }

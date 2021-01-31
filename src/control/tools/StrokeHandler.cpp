@@ -278,15 +278,12 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     layer->addElement(bbStroke);
     this->redrawable->rerenderElement(bbStroke);
 
-    Point first = stroke->getSpline().getFirstKnot();
-    const Point* pt = &first;
-    for (auto&& seg: (stroke->getSpline().getSegments())) {
+    for (auto&& seg: stroke->getSpline()) {
         bbStroke = new Stroke();
         bbStroke->applyStyleFrom(stroke);
         bbStroke->setColor(Color(0xff0000ff));
         bbStroke->setWidth(bbStroke->getWidth() / 2.0);
-        bb = seg.getBoundingBox(*pt);
-        pt = &(seg.secondKnot);
+        bb = seg.getBoundingBox();
         bbStroke->deletePointsFrom(0);
         bbStroke->addPoint(Point(bb.x, bb.y));
         bbStroke->addPoint(Point(bb.x, bb.y + bb.height));

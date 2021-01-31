@@ -62,57 +62,60 @@ void EraseHandler::erase(double x, double y) {
 }
 
 void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* range) {
-    if (!s->intersects(x, y, halfEraserSize)) {
-        return;
-    }
-
-    // delete complete element
-    if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
-        this->doc->lock();
-        int pos = l->removeElement(s, false);
-        this->doc->unlock();
-
-        if (pos == -1) {
-            return;
-        }
-        range->addPoint(s->getX(), s->getY());
-        range->addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
-
-        // removed the if statement - this prevents us from putting multiple elements into a
-        // stroke erase operation, but it also prevents the crashing and layer issues!
-        if (!this->eraseDeleteUndoAction) {
-            auto eraseDel = std::make_unique<DeleteUndoAction>(this->page, true);
-            // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
-            this->eraseDeleteUndoAction = eraseDel.get();
-            this->undo->addUndoAction(std::move(eraseDel));
-        }
-
-        this->eraseDeleteUndoAction->addElement(l, s, pos);
-    } else  // Default eraser
-    {
-        int pos = l->indexOf(s);
-        if (pos == -1) {
+    EraseableStroke* eraseable = s->getEraseable();
+    if (!eraseable) {
+        if (!s->intersects(x, y, halfEraserSize)) {
             return;
         }
 
-        if (this->eraseUndoAction == nullptr) {
-            auto eraseUndo = std::make_unique<EraseUndoAction>(this->page);
-            // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
-            this->eraseUndoAction = eraseUndo.get();
-            this->undo->addUndoAction(std::move(eraseUndo));
-        }
+        // delete complete element
+        if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
+            this->doc->lock();
+            int pos = l->removeElement(s, false);
+            this->doc->unlock();
 
-        EraseableStroke* eraseable = nullptr;
-        if (s->getEraseable() == nullptr) {
+            if (pos == -1) {
+                return;
+            }
+            range->addPoint(s->getX(), s->getY());
+            range->addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
+
+            // removed the if statement - this prevents us from putting multiple elements into a
+            // stroke erase operation, but it also prevents the crashing and layer issues!
+            if (!this->eraseDeleteUndoAction) {
+                auto eraseDel = std::make_unique<DeleteUndoAction>(this->page, true);
+                // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
+                this->eraseDeleteUndoAction = eraseDel.get();
+                this->undo->addUndoAction(std::move(eraseDel));
+            }
+
+            this->eraseDeleteUndoAction->addElement(l, s, pos);
+        } else  // Default eraser
+        {
+            int pos = l->indexOf(s);
+            if (pos == -1) {
+                return;
+            }
+
+            if (this->eraseUndoAction == nullptr) {
+                auto eraseUndo = std::make_unique<EraseUndoAction>(this->page);
+                // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
+                this->eraseUndoAction = eraseUndo.get();
+                this->undo->addUndoAction(std::move(eraseUndo));
+            }
+
             doc->lock();
             eraseable = new EraseableStroke(s);
             s->setEraseable(eraseable);
             doc->unlock();
             this->eraseUndoAction->addOriginal(l, s, pos);
-        } else {
-            eraseable = s->getEraseable();
+            eraseable->beginErasure(x, y, halfEraserSize, range);
         }
-
+    } else {  // Necessarily the default eraser
+        int pos = l->indexOf(s);
+        if (pos == -1) {
+            return;
+        }
         eraseable->erase(x, y, halfEraserSize, range);
     }
 }

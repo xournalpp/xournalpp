@@ -18,9 +18,12 @@
 
 #include "XournalType.h"
 
+class Stroke;
+
 class EraseableStrokePart {
 public:
     EraseableStrokePart(Point a, Point b);
+    EraseableStrokePart(const Stroke& stroke);
     EraseableStrokePart(double width);
     virtual ~EraseableStrokePart();
 

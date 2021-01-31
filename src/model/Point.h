@@ -14,6 +14,8 @@
 #include <string>
 #include <vector>
 
+#include "util/Rectangle.h"
+
 #include "XournalType.h"
 
 /**
@@ -73,6 +75,13 @@ public:
      * @return True if the coordinates are equal. False otherwise.
      */
     bool equalsPos(const Point& p) const;
+
+    /**
+     * @brief Test if the point lies (strictly) inside a given rectangle
+     * @param rectangle The rectangle
+     * @return True if the point is in rectangle, false otherwise
+     */
+    bool isInside(const Rectangle<double>& rect) const;
 
 public:
     /**

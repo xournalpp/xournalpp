@@ -171,9 +171,7 @@ public:
      */
     void pointsFromSpline();
 
-    //     std::list<SplineSegment> centripetalCatmullRomSmoothing();
-    Stroke* schneider();
-    Stroke* CRS();
-
     //     SomeType splitAtSingularPoints();
+
+    friend class EraseableStroke;
 };

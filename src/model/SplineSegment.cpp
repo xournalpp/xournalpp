@@ -3,32 +3,28 @@
 #include <cmath>
 #include <numeric>
 
-/**
- * PartialSplineSegment
- */
-PartialSplineSegment::PartialSplineSegment(const Point& p, const Point& q) {
-    secondKnot = q;
-    firstControlPoint = {2.0 / 3.0 * p.x + 1.0 / 3.0 * q.x, 2.0 / 3.0 * p.y + 1.0 / 3.0 * q.y,
-                         2.0 / 3.0 * p.z + 1.0 / 3.0 * q.z};
-    secondControlPoint = {1.0 / 3.0 * p.x + 2.0 / 3.0 * q.x, 1.0 / 3.0 * p.y + 2.0 / 3.0 * q.y,
-                          1.0 / 3.0 * p.z + 2.0 / 3.0 * q.z};
+
+SplineSegment::SplineSegment(const Point& p, const Point& fp, const Point& sp, const Point& q):
+        firstKnot(p), firstControlPoint(fp), secondControlPoint(sp), secondKnot(q) {}
+
+void SplineSegment::draw(cairo_t* cr) const {
+    cairo_move_to(cr, firstKnot.x, firstKnot.y);
+    cairo_curve_to(cr, firstControlPoint.x, firstControlPoint.y, secondControlPoint.x, secondControlPoint.y,
+                   secondKnot.x, secondKnot.y);
 }
 
-PartialSplineSegment::PartialSplineSegment(const Point& fp, const Point& sp, const Point& q) {
-    secondKnot = q;
-    firstControlPoint = fp;
-    secondControlPoint = sp;
+void SplineSegment::toPoints(std::vector<Point>& points) const {
+    if (isFlatEnough()) {
+        points.push_back(firstKnot);
+        return;
+    }
+    auto const& childSegments = subdivide(0.5);
+    childSegments.first.toPoints(points);
+    childSegments.second.toPoints(points);
 }
 
-PartialSplineSegment::PartialSplineSegment(const Point& p, const MathVect3& fVelocity, const MathVect3 sVelocity,
-                                           const Point& q) {
-    secondKnot = q;
-    firstControlPoint = fVelocity.translatePoint(p);
-    secondControlPoint = sVelocity.translatePoint(q);
-}
+auto SplineSegment::subdivide(float t) const -> std::pair<SplineSegment, SplineSegment> {
 
-auto PartialSplineSegment::subdivide(const Point& firstKnot, double t) const
-        -> std::pair<PartialSplineSegment, PartialSplineSegment> {
     Point b0 = firstKnot.relativeLineTo(firstControlPoint, t);  // Same as evaluating a Bézier
     Point b1 = firstControlPoint.relativeLineTo(secondControlPoint, t);
     Point b2 = secondControlPoint.relativeLineTo(secondKnot, t);
@@ -38,43 +34,53 @@ auto PartialSplineSegment::subdivide(const Point& firstKnot, double t) const
 
     Point d0 = c0.relativeLineTo(c1, t);  // This would be the interpolated point
 
-    PartialSplineSegment firstPart(b0, c0, d0);           // first point of each step
-    PartialSplineSegment secondPart(c1, b2, secondKnot);  // last point of each step
+    SplineSegment firstPart = SplineSegment(firstKnot, b0, c0, d0);    // first point of each step
+    SplineSegment secondPart = SplineSegment(d0, c1, b2, secondKnot);  // last point of each step
     return std::make_pair(firstPart, secondPart);
 }
 
-void PartialSplineSegment::toPoints(const Point& firstKnot, std::vector<Point>& points) const {
-    const double l1 = firstKnot.lineLengthTo(firstControlPoint);
-    const double l2 = firstControlPoint.lineLengthTo(secondControlPoint);
-    const double l3 = secondControlPoint.lineLengthTo(secondKnot);
-    const double l = firstKnot.lineLengthTo(secondKnot);
-    const double widthChange = std::abs(firstKnot.z - secondKnot.z);
-
-    if (l < MIN_KNOT_DISTANCE || (l1 + l2 + l3 < FLATNESS_TOLERANCE * l && widthChange < MAX_WIDTH_CHANGE)) {
-        points.push_back(secondKnot);
-        return;
-    }
-
-    auto const& childSegments = subdivide(firstKnot, 0.5);
-    childSegments.first.toPoints(firstKnot, points);
-    childSegments.second.toPoints(childSegments.first.secondKnot, points);
+auto SplineSegment::isFlatEnough() const -> bool {
+    double l1 = firstKnot.lineLengthTo(firstControlPoint);
+    double l2 = firstControlPoint.lineLengthTo(secondControlPoint);
+    double l3 = secondControlPoint.lineLengthTo(secondKnot);
+    double l = firstKnot.lineLengthTo(secondKnot);
+    double widthChange = std::abs(firstKnot.z - secondKnot.z);
+    return l < MIN_KNOT_DISTANCE || (l1 + l2 + l3 < FLATNESS_TOLERANCE * l && widthChange < MAX_WIDTH_CHANGE);
 }
 
-auto PartialSplineSegment::getX(const Point& firstKnot, double t) const -> double {
+auto SplineSegment::getX(double t) const -> double {
+    if (t == 0.0) {
+        return firstKnot.x;
+    }
+    if (t == 1.0) {
+        return secondKnot.x;
+    }
     double u = 1 - t;
     double ut3 = u * t * 3.0;
     return u * u * u * firstKnot.x + u * ut3 * firstControlPoint.x + t * ut3 * secondControlPoint.x +
            t * t * t * secondKnot.x;
 }
 
-auto PartialSplineSegment::getY(const Point& firstKnot, double t) const -> double {
+auto SplineSegment::getY(double t) const -> double {
+    if (t == 0.0) {
+        return firstKnot.y;
+    }
+    if (t == 1.0) {
+        return secondKnot.y;
+    }
     double u = 1 - t;
     double ut3 = u * t * 3.0;
     return u * u * u * firstKnot.y + u * ut3 * firstControlPoint.y + t * ut3 * secondControlPoint.y +
            t * t * t * secondKnot.y;
 }
 
-auto PartialSplineSegment::getPoint(const Point& firstKnot, double t) const -> Point {
+auto SplineSegment::getPoint(double t) const -> Point {
+    if (t == 0.0) {
+        return firstKnot;
+    }
+    if (t == 1.0) {
+        return secondKnot;
+    }
     double u = 1 - t;
     double ut3 = u * t * 3.0;
     double B0 = u * u * u;
@@ -86,7 +92,7 @@ auto PartialSplineSegment::getPoint(const Point& firstKnot, double t) const -> P
                  B0 * firstKnot.z + B1 * firstControlPoint.z + B2 * secondControlPoint.z + B3 * secondKnot.z);
 }
 
-auto PartialSplineSegment::getBoundingBox(const Point& firstKnot) const -> Rectangle<double> {
+auto SplineSegment::getBoundingBox() const -> Rectangle<double> {
     /**
      * Compute the extrema of the spline coordinates using the closed mathematical formula
      */
@@ -114,7 +120,7 @@ auto PartialSplineSegment::getBoundingBox(const Point& firstKnot) const -> Recta
 
     for (double t: roots) {
         if (t > 0.0 && t < 1.0) {
-            double x = getX(firstKnot, t);
+            double x = getX(t);
             if (x >= maxX) {
                 maxX = x;
             } else {
@@ -146,7 +152,7 @@ auto PartialSplineSegment::getBoundingBox(const Point& firstKnot) const -> Recta
 
     for (double t: roots) {
         if (t > 0.0 && t < 1.0) {
-            double y = getY(firstKnot, t);
+            double y = getY(t);
             if (y >= maxY) {
                 maxY = y;
             } else {
@@ -158,18 +164,7 @@ auto PartialSplineSegment::getBoundingBox(const Point& firstKnot) const -> Recta
     return Rectangle(minX, minY, maxX - minX, maxY - minY);
 }
 
-void PartialSplineSegment::move(double dx, double dy) {
-    secondKnot.x += dx;
-    firstControlPoint.x += dx;
-    secondControlPoint.x += dx;
-    secondKnot.y += dy;
-    firstControlPoint.y += dy;
-    secondControlPoint.y += dy;
-}
-
-
-auto PartialSplineSegment::intersectWithHorizontalLine(const Point& firstKnot, double lineY) const
-        -> std::vector<double> {
+auto SplineSegment::intersectWithHorizontalLine(double lineY) const -> std::vector<double> {
     const double a = secondKnot.y - firstKnot.y + 3.0 * (firstControlPoint.y - secondControlPoint.y);
     const double b = firstKnot.y + secondControlPoint.y - 2.0 * firstControlPoint.y;
     const double c = firstControlPoint.y - firstKnot.y;
@@ -182,8 +177,7 @@ auto PartialSplineSegment::intersectWithHorizontalLine(const Point& firstKnot, d
     return result;
 }
 
-auto PartialSplineSegment::intersectWithVerticalLine(const Point& firstKnot, double lineX) const
-        -> std::vector<double> {
+auto SplineSegment::intersectWithVerticalLine(double lineX) const -> std::vector<double> {
     const double a = secondKnot.x - firstKnot.x + 3.0 * (firstControlPoint.x - secondControlPoint.x);
     const double b = firstKnot.x + secondControlPoint.x - 2.0 * firstControlPoint.x;
     const double c = firstControlPoint.x - firstKnot.x;
@@ -196,14 +190,13 @@ auto PartialSplineSegment::intersectWithVerticalLine(const Point& firstKnot, dou
     return result;
 }
 
-auto PartialSplineSegment::intersectWithRectangle(const Point& firstKnot, const Rectangle<double>& rectangle) const
-        -> std::vector<double> {
+auto SplineSegment::intersectWithRectangle(const Rectangle<double>& rectangle) const -> std::vector<double> {
     /**
      * Find where the spline segment enters or leaves the horizontal ribbon:
      *          rectangle.y < y < rectangle.y + rectangle.height
      */
     std::vector<double> horizontalIntersections;
-    {
+    {  // Scope for populating horizontalIntersections
         double a = secondKnot.y - firstKnot.y + 3.0 * (firstControlPoint.y - secondControlPoint.y);
         double b = firstKnot.y + secondControlPoint.y - 2.0 * firstControlPoint.y;
         double c = firstControlPoint.y - firstKnot.y;
@@ -213,13 +206,16 @@ auto PartialSplineSegment::intersectWithRectangle(const Point& firstKnot, const 
         d -= rectangle.height;
         std::vector<double> roots2 = rootsOfCubicEquation(a, b, c, d);
 
-        auto firstPositiveLine1 = std::find_if(roots1.cbegin(), roots1.cend(), [](double v) { return v > 0.0; });
-        auto firstBiggerThan1Line1 = std::find_if(firstPositiveLine1, roots1.cend(), [](double v) { return v >= 1.0; });
-        auto firstPositiveLine2 = std::find_if(roots2.cbegin(), roots2.cend(), [](double v) { return v > 0.0; });
-        auto firstBiggerThan1Line2 = std::find_if(firstPositiveLine2, roots2.cend(), [](double v) { return v >= 1.0; });
+        /**
+         * We could use std::upper_bound() to find those iterators.
+         * Since roots{1,2}.size() <= 3, this is probably not worth it though.
+         */
+        auto beginLine1 = std::find_if(roots1.cbegin(), roots1.cend(), [](double v) { return v > 0.0; });
+        auto endLine1 = std::find_if(beginLine1, roots1.cend(), [](double v) { return v > 1.0; });
+        auto beginLine2 = std::find_if(roots2.cbegin(), roots2.cend(), [](double v) { return v > 0.0; });
+        auto endLine2 = std::find_if(beginLine2, roots2.cend(), [](double v) { return v > 1.0; });
 
-        std::merge(firstPositiveLine1, firstBiggerThan1Line1, firstPositiveLine2, firstBiggerThan1Line2,
-                   std::back_inserter(horizontalIntersections));
+        std::merge(beginLine1, endLine1, beginLine2, endLine2, std::back_inserter(horizontalIntersections));
     }
 
     /**
@@ -227,7 +223,7 @@ auto PartialSplineSegment::intersectWithRectangle(const Point& firstKnot, const 
      *          rectangle.x < x < rectangle.x + rectangle.width
      */
     std::vector<double> verticalIntersections;
-    {
+    {  // Scope for populating verticalIntersections
         double a = secondKnot.x - firstKnot.x + 3.0 * (firstControlPoint.x - secondControlPoint.x);
         double b = firstKnot.x + secondControlPoint.x - 2.0 * firstControlPoint.x;
         double c = firstControlPoint.x - firstKnot.x;
@@ -237,13 +233,12 @@ auto PartialSplineSegment::intersectWithRectangle(const Point& firstKnot, const 
         d -= rectangle.width;
         std::vector<double> roots2 = rootsOfCubicEquation(a, b, c, d);
 
-        auto firstPositiveLine1 = std::find_if(roots1.cbegin(), roots1.cend(), [](double v) { return v > 0.0; });
-        auto firstBiggerThan1Line1 = std::find_if(firstPositiveLine1, roots1.cend(), [](double v) { return v > 1.0; });
-        auto firstPositiveLine2 = std::find_if(roots2.cbegin(), roots2.cend(), [](double v) { return v > 0.0; });
-        auto firstBiggerThan1Line2 = std::find_if(firstPositiveLine2, roots2.cend(), [](double v) { return v > 1.0; });
+        auto beginLine1 = std::find_if(roots1.cbegin(), roots1.cend(), [](double v) { return v > 0.0; });
+        auto endLine1 = std::find_if(beginLine1, roots1.cend(), [](double v) { return v > 1.0; });
+        auto beginLine2 = std::find_if(roots2.cbegin(), roots2.cend(), [](double v) { return v > 0.0; });
+        auto endLine2 = std::find_if(beginLine2, roots2.cend(), [](double v) { return v > 1.0; });
 
-        std::merge(firstPositiveLine1, firstBiggerThan1Line1, firstPositiveLine2, firstBiggerThan1Line2,
-                   std::back_inserter(verticalIntersections));
+        std::merge(beginLine1, endLine1, beginLine2, endLine2, std::back_inserter(verticalIntersections));
     }
 
     /**
@@ -283,7 +278,7 @@ auto PartialSplineSegment::intersectWithRectangle(const Point& firstKnot, const 
 }
 
 
-auto PartialSplineSegment::rootsOfQuadraticEquation(double a, double b, double c) -> std::vector<double> {
+auto SplineSegment::rootsOfQuadraticEquation(double a, double b, double c) -> std::vector<double> {
     if (a == 0.0) {
         /**
          * The equation is linear
@@ -301,7 +296,7 @@ auto PartialSplineSegment::rootsOfQuadraticEquation(double a, double b, double c
 
     if (Delta > 0) {
         // Sort the two roots from smallest to biggest
-        double PMsqrtDelta = (a > 0.0 ? sqrt(Delta) : -sqrt(Delta));
+        double PMsqrtDelta = (a > 0.0 ? std::sqrt(Delta) : -std::sqrt(Delta));
         return {(-b - PMsqrtDelta) / a, (-b + PMsqrtDelta) / a};
     }
 
@@ -312,7 +307,7 @@ auto PartialSplineSegment::rootsOfQuadraticEquation(double a, double b, double c
     return {};
 }
 
-auto PartialSplineSegment::rootsOfCubicEquation(double a, double b, double c, double d) -> std::vector<double> {
+auto SplineSegment::rootsOfCubicEquation(double a, double b, double c, double d) -> std::vector<double> {
     /**
      * Solve the equation a*t^3 + 3*b*t^2 + 3*c*t + d
      * See https://en.wikipedia.org/wiki/Cubic_equation for the methods used here.
@@ -341,8 +336,8 @@ auto PartialSplineSegment::rootsOfCubicEquation(double a, double b, double c, do
          * One real solution, two complex ones (which we ignore)
          * Use Cardano's formula
          */
-        double sqrtMinusDiscriminant = sqrt(minusDiscriminant);
-        return {-bOverA + cbrt(-q + sqrtMinusDiscriminant) + cbrt(-q - sqrtMinusDiscriminant)};
+        double sqrtMinusDiscriminant = std::sqrt(minusDiscriminant);
+        return {-bOverA + std::cbrt(-q + sqrtMinusDiscriminant) + std::cbrt(-q - sqrtMinusDiscriminant)};
     }
     if (minusDiscriminant == 0.0) {
         /**
@@ -361,7 +356,7 @@ auto PartialSplineSegment::rootsOfCubicEquation(double a, double b, double c, do
          */
         return {-bOverA - 2 * q / p};
         /**
-         * Nb: q / p = - cbrt(q) because minusDiscriminant == 0
+         * Nb: q / p = - std::cbrt(q) because minusDiscriminant == 0
          * This trick is used because it (probably) reduces the computational cost
          */
     }
@@ -370,10 +365,10 @@ auto PartialSplineSegment::rootsOfCubicEquation(double a, double b, double c, do
      * Three distinct real solutions
      * Use the trigonometric solutions
      */
-    double sqrtMinusP = sqrt(-p);
-    double angle = acos(q / (p * sqrtMinusP)) / 3.0;  // [0, M_PI_3]
-    double cosine = sqrtMinusP * cos(angle);          // sqrtMinusP * [0.5, 1]
-    double sine = sqrt(3) * sqrtMinusP * sin(angle);  // 3 / 2 * sqrtMinusP * [0, 1]
+    double sqrtMinusP = std::sqrt(-p);
+    double angle = std::acos(q / (p * sqrtMinusP)) / 3.0;       // [0, M_PI_3]
+    double cosine = sqrtMinusP * std::cos(angle);               // sqrtMinusP * [0.5, 1]
+    double sine = std::sqrt(3) * sqrtMinusP * std::sin(angle);  // 3 / 2 * sqrtMinusP * [0, 1]
     return {-cosine - sine - bOverA, -cosine + sine - bOverA, 2 * cosine - bOverA};
 
     /**
@@ -384,58 +379,4 @@ auto PartialSplineSegment::rootsOfCubicEquation(double a, double b, double c, do
      *
      * Therefore the returned vector is already sorted.
      */
-}
-
-/**
- * SplineSegment
- */
-SplineSegment::SplineSegment(const Point& p, const Point& q): PartialSplineSegment(p, q), firstKnot(p) {}
-
-SplineSegment::SplineSegment(const Point& p, const Point& fp, const Point& sp, const Point& q):
-        PartialSplineSegment(fp, sp, q), firstKnot(p) {}
-
-SplineSegment::SplineSegment(Point& p, const PartialSplineSegment& partial):
-        PartialSplineSegment(partial), firstKnot(p) {}
-
-
-void SplineSegment::draw(cairo_t* cr) const {
-    cairo_move_to(cr, firstKnot.x, firstKnot.y);
-    cairo_curve_to(cr, firstControlPoint.x, firstControlPoint.y, secondControlPoint.x, secondControlPoint.y,
-                   secondKnot.x, secondKnot.y);
-}
-
-void SplineSegment::toPoints(std::vector<Point>& points) const {
-    if (isFlatEnough()) {
-        points.push_back(firstKnot);
-        return;
-    }
-    auto const& childSegments = subdivide(0.5);
-    childSegments.first.toPoints(points);
-    childSegments.second.toPoints(points);
-}
-
-auto SplineSegment::subdivide(float t) const -> std::pair<SplineSegment, SplineSegment> {
-
-    Point b0 = firstKnot.relativeLineTo(firstControlPoint, t);  // Same as evaluating a Bézier
-    Point b1 = firstControlPoint.relativeLineTo(secondControlPoint, t);
-    Point b2 = secondControlPoint.relativeLineTo(secondKnot, t);
-
-    Point c0 = b0.relativeLineTo(b1, t);
-    Point c1 = b1.relativeLineTo(b2, t);
-
-    Point d0 = c0.relativeLineTo(c1, t);  // This would be the interpolated point
-
-    SplineSegment firstPart = SplineSegment(firstKnot, b0, c0, d0);    // first point of each step
-    SplineSegment secondPart = SplineSegment(d0, c1, b2, secondKnot);  // last point of each step
-    return std::make_pair(firstPart, secondPart);
-}
-
-auto SplineSegment::isFlatEnough() const -> bool {
-    double l1 = firstKnot.lineLengthTo(firstControlPoint);
-    double l2 = firstControlPoint.lineLengthTo(secondControlPoint);
-    double l3 = secondControlPoint.lineLengthTo(secondKnot);
-    double l = firstKnot.lineLengthTo(secondKnot);
-    
-    double widthChange = std::abs(firstKnot.z - secondKnot.z);
-    return l < MIN_KNOT_DISTANCE || (l1 + l2 + l3 < FLATNESS_TOLERANCE * l && widthChange < MAX_WIDTH_CHANGE);
 }
