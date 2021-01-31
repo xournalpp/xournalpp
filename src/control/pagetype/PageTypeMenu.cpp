@@ -23,17 +23,10 @@ PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool show
         menuX(0),
         menuY(0),
         showPreview(showPreview),
-        pageTypeApplyListener(nullptr) {
+        pageTypeApplyListener(nullptr),
+        pageTypeSource(ApplyPageTypeSource::SELECTED) {
     initDefaultMenu();
     loadDefaultPage();
-}
-
-PageTypeMenu::~PageTypeMenu() {
-    /**
-     * The menu is used from the GUI
-     * Therefore the menu is not freed here, this will be done in the GUI
-     */
-    menu = nullptr;
 }
 
 void PageTypeMenu::loadDefaultPage() {
@@ -174,8 +167,10 @@ void PageTypeMenu::hideCopyPage() {
 /**
  * Apply background to current or to all pages button
  */
-void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu) {
+void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu,
+                                            ApplyPageTypeSource ptSource) {
     this->pageTypeApplyListener = pageTypeApplyListener;
+    this->pageTypeSource = ptSource;
 
     GtkWidget* separator = gtk_separator_menu_item_new();
     gtk_widget_show(separator);
@@ -188,7 +183,7 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
         gtk_menu_attach(GTK_MENU(menu), menuEntryApply, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
         menuY++;
         g_signal_connect(menuEntryApply, "activate", G_CALLBACK(+[](GtkWidget* menu, PageTypeMenu* self) {
-                             self->pageTypeApplyListener->applyCurrentPageBackground(false);
+                             self->pageTypeApplyListener->applySelectedPageBackground(false, self->pageTypeSource);
                          }),
                          this);
     }
@@ -197,7 +192,7 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
     gtk_menu_attach(GTK_MENU(menu), menuEntryApplyAll, 0, PREVIEW_COLUMNS, menuY, menuY + 1);
     menuY++;
     g_signal_connect(menuEntryApplyAll, "activate", G_CALLBACK(+[](GtkWidget* menu, PageTypeMenu* self) {
-                         self->pageTypeApplyListener->applyCurrentPageBackground(true);
+                         self->pageTypeApplyListener->applySelectedPageBackground(true, self->pageTypeSource);
                      }),
                      this);
 }

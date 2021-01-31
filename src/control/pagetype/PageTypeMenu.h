@@ -31,6 +31,13 @@ typedef struct {
     PageTypeInfo* info;
 } MenuCallbackInfo;
 
+enum class ApplyPageTypeSource {
+    /** Apply page type selected in dialog */
+    SELECTED,
+    /** Apply page type of current page */
+    CURRENT
+};
+
 class PageTypeMenuChangeListener {
 public:
     virtual void changeCurrentPageBackground(PageTypeInfo* info) = 0;
@@ -39,14 +46,13 @@ public:
 
 class PageTypeApplyListener {
 public:
-    virtual void applyCurrentPageBackground(bool allPages) = 0;
+    virtual void applySelectedPageBackground(bool allPages, ApplyPageTypeSource src) = 0;
     virtual ~PageTypeApplyListener();
 };
 
 class PageTypeMenu {
 public:
     PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showPreview, bool showSpecial);
-    virtual ~PageTypeMenu();
 
 public:
     GtkWidget* getMenu();
@@ -59,7 +65,8 @@ public:
     /**
      * Apply background to current or to all pages button
      */
-    void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu);
+    void addApplyBackgroundButton(PageTypeApplyListener* pageTypeApplyListener, bool onlyAllMenu,
+                                  ApplyPageTypeSource ptSource);
 
 private:
     static GtkWidget* createApplyMenuItem(const char* text);
@@ -80,6 +87,8 @@ private:
     PageType selected;
 
     bool ignoreEvents;
+
+    ApplyPageTypeSource pageTypeSource;
 
     PageTypeMenuChangeListener* listener;
 
