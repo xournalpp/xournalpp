@@ -642,13 +642,13 @@ void EditSelection::copySelection() {
     // apply transformations and add to layer
     finalizeSelection();
 
+    // restore insert order
+    contents->replaceInsertOrder(clonedInsertOrder);
+
     // add undo action
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
     undo->addUndoAction(std::unique_ptr<UndoAction>(new InsertsUndoAction(page, layer, *getElements())));
-
-    // restore insert order
-    contents->replaceInsertOrder(clonedInsertOrder);
 }
 
 /**
