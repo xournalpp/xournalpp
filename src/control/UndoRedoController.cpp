@@ -53,9 +53,10 @@ void UndoRedoController::after() {
 
         visibleElements.push_back(e);
     }
-
-    auto* selection = new EditSelection(control->getUndoRedoHandler(), visibleElements, view, page);
-    control->getWindow()->getXournal()->setSelection(selection);
+    if (!visibleElements.empty()) {
+        auto* selection = new EditSelection(control->getUndoRedoHandler(), visibleElements, view, page);
+        control->getWindow()->getXournal()->setSelection(selection);
+    }
 }
 
 void UndoRedoController::undo(Control* control) {
