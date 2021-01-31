@@ -43,6 +43,10 @@ void PageBackgroundChangeController::changeAllPagesBackground(const PageType& pt
     }
 
     control->getUndoRedoHandler()->addUndoAction(std::move(groupUndoAction));
+
+    ignoreEvent = true;
+    currentPageType.setSelected(pt);
+    ignoreEvent = false;
 }
 
 void PageBackgroundChangeController::changeCurrentPageBackground(PageTypeInfo* info) {
@@ -69,6 +73,10 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
     if (undoAction) {
         control->getUndoRedoHandler()->addUndoAction(std::move(undoAction));
     }
+
+    ignoreEvent = true;
+    currentPageType.setSelected(pageType);
+    ignoreEvent = false;
 }
 
 auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, const PageType& pageType)
