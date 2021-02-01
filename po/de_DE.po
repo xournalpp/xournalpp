@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-30 06:08+0000\n"
-"PO-Revision-Date: 2021-01-30 06:13\n"
+"PO-Revision-Date: 2021-02-01 15:01\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -399,7 +399,7 @@ msgstr "Pfeil zeichnen"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Ellipse zeichnen"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -566,7 +566,8 @@ msgstr ""
 #: ../src/control/jobs/BaseExportJob.cpp:93
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Fehler beim Auflösen des Pfades mit folgendem Fehler:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -1318,7 +1319,7 @@ msgstr "Audioaufnahme {1} kann nicht abgespielt werden"
 
 #: ../src/control/Control.cpp:1246
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "PDF-Seite konnte nicht abgerufen werden."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
 #: ../src/undo/UndoRedoHandler.cpp:203
@@ -1654,7 +1655,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4550
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:479
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1712,23 +1713,23 @@ msgstr "... UND Wie viel Zeit seit dem letzten Strich vergangen sein muss.\n\n"
 
 #: ../ui/settings.glade:4534
 msgid "0.00"
-msgstr ""
+msgstr "0,00"
 
 #: ../ui/settings.glade:1450
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5163
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:2173
 msgid "1.0"
-msgstr ""
+msgstr "1,0"
 
 #: ../ui/settings.glade:2818
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1842,7 +1843,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5327
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>Sprache wählen (Neustart erforderlich)</i>"
 
 #: ../ui/settings.glade:4655
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -1921,7 +1922,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -1939,7 +1940,7 @@ msgstr ""
 
 #: ../ui/main.glade:1147
 msgid "Append New Pdf Pages"
-msgstr ""
+msgstr "Neue Pdf-Seiten anhängen"
 
 #: ../ui/settings.glade:1489
 msgid "Artifact workaround"
@@ -2338,7 +2339,7 @@ msgstr "Handerkennung"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Höhe"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2386,7 +2387,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Falls aktiviert, überprüfen Sie das benötigte LaTeX-Pakete installiert sind und die LaTeX-Befehle verfügbar sind, bevor das LaTeX-Tool gestartet wird."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
@@ -2434,7 +2435,7 @@ msgstr "Eine Kopie der aktuellen Seite unten einfügen"
 
 #: ../ui/settings.glade:5275
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
@@ -2446,11 +2447,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5364 ../ui/settings.glade:5412
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: ../ui/settings.glade:5382
 msgid "Language Settings"
-msgstr ""
+msgstr "Spracheinstellungen"
 
 #: ../ui/main.glade:525
 msgid "Layout"
@@ -2536,7 +2537,7 @@ msgstr "Neue Ebene"
 #: ../ui/settings.glade:2667
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Kein Symbol"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2544,7 +2545,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:43
 msgid "None"
-msgstr ""
+msgstr "Keine"
 
 #: ../ui/settings.glade:3877
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
