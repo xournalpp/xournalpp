@@ -14,7 +14,7 @@
 
 #include <string>
 
-#include <gdk/gdk.h>
+#include <glib.h>
 
 #include "filesystem.h"
 
