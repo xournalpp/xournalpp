@@ -10,6 +10,7 @@
  */
 
 // Set to true to write a log with errors and debug logs to /tmp/xojtmb.log
+#include "filesystem.h"
 #define DEBUG_THUMBNAILER false
 
 
@@ -27,8 +28,7 @@ using std::cout;
 using std::endl;
 #include <cairo-svg.h>
 #include <cairo.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gtk/gtk.h>
+#include <librsvg/rsvg.h>
 
 void initLocalisation() {
 #ifdef ENABLE_NLS
@@ -61,6 +61,45 @@ void logMessage(string msg, bool error) {
 
     ofs.close();
 #endif
+}
+
+static const std::string iconName = "com.github.xournalpp.xournalpp";
+
+/**
+ * Search for Xournal++ icon based on the freedesktop icon theme specification
+ */
+fs::path findAppIcon() {
+    std::vector<fs::path> basedirs;
+#if DEBUG_THUMBNAILER
+    basedirs.emplace_back(fs::u8path("../ui/pixmaps"));
+#endif
+    // $HOME/.icons
+    basedirs.emplace_back(fs::u8path(g_get_home_dir()) / ".icons");
+    // $XDG_DATA_DIRS/icons
+    if (const char* datadirs = g_getenv("XDG_DATA_DIRS")) {
+        std::string dds = datadirs;
+        std::string::size_type lastp = 0;
+        std::string::size_type p;
+        while ((p = dds.find(":", lastp)) != std::string::npos) {
+            std::string path = dds.substr(lastp, p - lastp);
+            basedirs.emplace_back(fs::u8path(path) / "icons");
+            lastp = p + 1;
+        }
+    }
+    basedirs.emplace_back(fs::u8path("/usr/share/pixmaps"));
+
+    const auto iconFile = iconName + ".svg";
+    // Search through base directories
+    for (auto&& d: basedirs) {
+        fs::path svgPath;
+        if (fs::exists((svgPath = d / "hicolor/scalable/apps" / iconFile))) {
+            return svgPath;
+        } else if (fs::exists((svgPath = d / iconFile))) {
+            return svgPath;
+        }
+    }
+
+    return "";
 }
 
 int main(int argc, char* argv[]) {
@@ -130,23 +169,21 @@ int main(int argc, char* argv[]) {
         const auto width = cairo_image_surface_get_width(thumbnail);
         const auto height = cairo_image_surface_get_height(thumbnail);
         const auto iconSize = 0.5 * std::min(width, height);
-        const auto iconName = "com.github.xournalpp.xournalpp";
 
-        // Use GTK to load the icon directly. We're assuming that the icon is already installed
-        // since the thumbnailer should only be called when Xournal++ is installed (e.g. not run
-        // directly from build tree).
-        gtk_init(&argc, nullptr);
-        const GtkIconLookupFlags iconFlags = static_cast<GtkIconLookupFlags>(0);
-        GdkPixbuf* iconBuf =
-                gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName, iconSize, iconFlags, &err);
+        const auto svgPath = findAppIcon();
+        RsvgHandle* handle = rsvg_handle_new_from_file(svgPath.c_str(), &err);
         if (err) {
             logMessage((_F("xoj-preview-extractor: could not find icon \"{1}\"") % iconName).str(), true);
         } else {
+            rsvg_handle_set_dpi(handle, 90);  // does the dpi matter for an icon overlay?
+            RsvgDimensionData dims;
+            rsvg_handle_get_dimensions(handle, &dims);
+
+            // Render at bottom right
             cairo_t* cr = cairo_create(thumbnail);
-            auto iconWidth = static_cast<double>(gdk_pixbuf_get_width(iconBuf));
-            auto iconHeight = static_cast<double>(gdk_pixbuf_get_height(iconBuf));
-            gdk_cairo_set_source_pixbuf(cr, iconBuf, width - iconSize, height - iconSize);
-            cairo_paint(cr);
+            cairo_translate(cr, width - iconSize, height - iconSize);
+            cairo_scale(cr, iconSize / dims.width, iconSize / dims.height);
+            rsvg_handle_render_cairo(handle, cr);
         }
         cairo_surface_write_to_png(thumbnail, argv[2]);
     } else {

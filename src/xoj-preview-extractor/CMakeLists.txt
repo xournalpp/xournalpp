@@ -26,13 +26,16 @@ endif()
 add_dependencies(xournalpp-thumbnailer std::filesystem)
 
 target_link_libraries (xournalpp-thumbnailer
+  util
+  std::filesystem
+  ${thumbnailer_GTK_LDFLAGS}
   ${ZLIB_LIBRARIES}
+  ${librsvg_LDFLAGS}
   ${Glib_LDFLAGS}
   ${ZIP_LDFLAGS}
-  ${thumbnailer_GTK_LDFLAGS}
-  std::filesystem
-  util
-)
+  )
+
+target_include_directories (xournalpp-thumbnailer PRIVATE ${librsvg_INCLUDE_DIRS})
 
 set (THUMBNAILER_BIN "xournalpp-thumbnailer")
 

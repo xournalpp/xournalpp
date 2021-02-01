@@ -112,6 +112,9 @@ pkg_check_modules (PopplerGlib REQUIRED "poppler-glib >= 0.41.0")
 add_includes_ldflags ("${PopplerGlib_LDFLAGS}" "${PopplerGlib_INCLUDE_DIRS}")
 set(POPPLER_INCLUDE_DIR, "${PopplerGlib_INCLUDE_DIRS}")
 
+# librsvg
+pkg_check_modules (librsvg REQUIRED "librsvg-2.0 >= 2.40")
+
 # zlib
 find_package (ZLIB REQUIRED)
 add_includes_ldflags ("${ZLIB_LIBRARIES}" "${ZLIB_INCLUDE_DIRS}")
