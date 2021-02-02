@@ -854,7 +854,7 @@ bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pa
             size_t pageId = doc->findPdfPage(pdfPage);
             doc->unlock();
 
-            GtkWidget* button = gtk_button_new_with_label(FC(_F("Scroll to page {1}") % pageId));
+            GtkWidget* button = gtk_button_new_with_label(FC(_F("Scroll to page {1}") % (pageId + 1)));
             gtk_container_add(GTK_CONTAINER(box), button);
 
             g_signal_connect(
