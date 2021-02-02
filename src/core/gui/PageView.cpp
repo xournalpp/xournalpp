@@ -3,7 +3,9 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+#include <iomanip>
 #include <memory>
+#include <tuple>
 
 #include <gdk/gdk.h>
 #include <glib/gprintf.h>
@@ -30,6 +32,7 @@
 #include "gui/widgets/XournalWidget.h"
 #include "model/Image.h"
 #include "model/Layer.h"
+#include "model/LinkDestination.h"
 #include "model/PageRef.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
@@ -609,47 +612,22 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         } else {
             double zoom = xournal->getZoom();
             if (this->selection->userTapped(zoom)) {
-                if (pos.isAltDown()) {
+                Layer* layer = this->page->getSelectedLayer();
+                int layerId = this->page->getSelectedLayerId();
+                bool isBackgroundLayer = (layerId == 0);
+
+                // If there's nothing to select (e.g. the background layer)
+                // or we're holding alt...
+                if (isBackgroundLayer || !layer->isAnnotated() || pos.isAltDown()) {
                     // Attempt PDF selection
                     auto& pdfDoc = this->xournal->getDocument()->getPdfDocument();
                     if (this->getPage()->getPdfPageNr() != npos) {
                         auto page = pdfDoc.getPage(this->getPage()->getPdfPageNr());
 
-                        // Search for selected link
-                        const auto links = page->getLinks();
-                        for (auto&& [rect, uri]: links) {
-                            const double pageX = pos.x / zoom;
-                            const double pageY = pos.y / zoom;
-                            if (!(rect.x1 <= pageX && pageX <= rect.x2 && rect.y1 <= pageY && pageY <= rect.y2)) {
-                                continue;
-                            }
+                        const double pageX = pos.x / zoom;
+                        const double pageY = pos.y / zoom;
 
-                            char* uriStr = g_uri_to_string(uri);
-                            char* uriText = g_markup_escape_text(uriStr, -1);
-                            char* labelMarkup = g_strdup_printf("<a href=\"%s\">%s</a>", uriStr, uriText);
-                            g_free(uriStr);
-                            g_free(uriText);
-                            GtkWidget* label = gtk_label_new(nullptr);
-                            gtk_label_set_markup(GTK_LABEL(label), labelMarkup);
-
-                            GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-                            gtk_container_add(GTK_CONTAINER(box), label);
-                            gtk_widget_show_all(box);
-
-                            GtkWidget* popover = gtk_popover_new(this->getXournal()->getWidget());
-                            gtk_container_add(GTK_CONTAINER(popover), box);
-
-                            auto x = static_cast<int>(this->getX() + rect.x1 * zoom);
-                            auto y = static_cast<int>(this->getY() + rect.y1 * zoom);
-                            auto w = static_cast<int>((rect.x2 - rect.x1) * zoom);
-                            auto h = static_cast<int>((rect.y2 - rect.y1) * zoom);
-                            GdkRectangle canvasRect{x, y, w, h};
-                            gtk_popover_set_pointing_to(GTK_POPOVER(popover), &canvasRect);
-                            gtk_popover_set_constrain_to(GTK_POPOVER(popover), GTK_POPOVER_CONSTRAINT_WINDOW);
-                            gtk_popover_popup(GTK_POPOVER(popover));
-
-                            break;
-                        }
+                        displayLinkPopover(page, pageX, pageY);
                     }
                 } else {
                     SelectObject select(this);
@@ -836,6 +814,91 @@ void XojPageView::drawLoadingPage(cairo_t* cr) {
     cairo_show_text(cr, txtLoading.c_str());
 
     rerenderPage();
+}
+
+bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pageX, double pageY) {
+    // Search for selected link
+    const auto links = page->getLinks();
+
+    for (auto&& [rect, action]: links) {
+        std::shared_ptr<const LinkDestination> dest = action->getDestination();
+
+        if (!(rect.x1 <= pageX && pageX <= rect.x2 && rect.y1 <= pageY && pageY <= rect.y2)) {
+            continue;
+        }
+
+        GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+        GtkWidget* popover = makePopover(rect, box);
+
+        if (dest->isURI()) {
+            std::string uri = dest->getURI();
+            char* uriLabel = g_markup_escape_text(uri.c_str(), -1);
+
+            std::stringstream labelMarkup;
+            labelMarkup << "<a href=" << std::quoted(uri) << ">";
+            labelMarkup << uriLabel;
+            labelMarkup << "</a>";
+
+            std::string linkMarkup = labelMarkup.str();
+
+            g_free(uriLabel);
+
+            GtkWidget* label = gtk_label_new(nullptr);
+            gtk_label_set_markup(GTK_LABEL(label), linkMarkup.c_str());
+            gtk_container_add(GTK_CONTAINER(box), label);
+        } else {
+            size_t pdfPage = dest->getPdfPage();
+
+            Document* doc = xournal->getControl()->getDocument();
+            doc->lock();
+            size_t pageId = doc->findPdfPage(pdfPage);
+            doc->unlock();
+
+            GtkWidget* button = gtk_button_new_with_label(FC(_F("Scroll to page {1}") % pageId));
+            gtk_container_add(GTK_CONTAINER(box), button);
+
+            g_signal_connect(
+                    button, "clicked",
+                    G_CALLBACK(+[](GtkButton* bt,
+                                   std::tuple<XojPageView*, std::shared_ptr<LinkDestination>, GtkWidget*>* state) {
+                        XojPageView* self;
+                        std::shared_ptr<LinkDestination> dest;
+                        GtkWidget* popover;
+                        std::tie(self, dest, popover) = *state;
+
+                        self->getXournal()->getControl()->getScrollHandler()->scrollToLinkDest(*dest);
+                        gtk_popover_popdown(GTK_POPOVER(popover));
+
+                        free(state);
+                    }),
+                    new std::tuple(this, dest, popover));
+        }
+
+        gtk_widget_show_all(box);
+
+        return true;
+    }
+
+    return false;
+}
+
+GtkWidget* XojPageView::makePopover(const XojPdfRectangle& rect, GtkWidget* child) {
+    double zoom = xournal->getZoom();
+
+    GtkWidget* popover = gtk_popover_new(this->getXournal()->getWidget());
+    gtk_container_add(GTK_CONTAINER(popover), child);
+
+    auto x = static_cast<int>(this->getX() + rect.x1 * zoom);
+    auto y = static_cast<int>(this->getY() + rect.y1 * zoom);
+    auto w = static_cast<int>((rect.x2 - rect.x1) * zoom);
+    auto h = static_cast<int>((rect.y2 - rect.y1) * zoom);
+
+    GdkRectangle canvasRect{x, y, w, h};
+    gtk_popover_set_pointing_to(GTK_POPOVER(popover), &canvasRect);
+    gtk_popover_set_constrain_to(GTK_POPOVER(popover), GTK_POPOVER_CONSTRAINT_WINDOW);
+    gtk_popover_popup(GTK_POPOVER(popover));
+
+    return popover;
 }
 
 /**

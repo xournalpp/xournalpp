@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -18,7 +19,6 @@
 
 #include "model/LinkDestination.h"
 #include "pdf/base/XojPdfAction.h"
-
 
 class LinkDestination;
 
@@ -29,13 +29,15 @@ public:
     ~PopplerGlibAction() override;
 
 public:
-    XojLinkDest* getDestination() override;
-    std::string getTitle() override;
+    virtual std::shared_ptr<const LinkDestination> getDestination() override;
+    virtual std::string getTitle() override;
 
 private:
-    void linkFromDest(LinkDestination* link, PopplerDest* pDest);
+    virtual std::shared_ptr<const LinkDestination> getDestination(PopplerAction* action);
+    void linkFromDest(LinkDestination& link, PopplerDest* pDest);
 
 private:
-    PopplerAction* action;
     PopplerDocument* document;
+    std::shared_ptr<const LinkDestination> destination;
+    std::string title;
 };

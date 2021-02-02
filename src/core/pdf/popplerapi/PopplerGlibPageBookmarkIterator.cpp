@@ -35,5 +35,8 @@ auto PopplerGlibPageBookmarkIterator::getAction() -> XojPdfAction* {
         return nullptr;
     }
 
-    return new PopplerGlibAction(action, document);
+    XojPdfAction* result = new PopplerGlibAction(action, document);
+    poppler_action_free(action);  // XojPdfAction does not own action.
+
+    return result;
 }

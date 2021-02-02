@@ -2,28 +2,33 @@
 
 using std::string;
 
-PopplerGlibAction::PopplerGlibAction(PopplerAction* action, PopplerDocument* document):
-        action(action), document(document) {
+PopplerGlibAction::PopplerGlibAction(PopplerAction* action, PopplerDocument* document): document(document) {
     g_object_ref(document);
+
+    gchar* title_cstr = (reinterpret_cast<PopplerActionAny*>(action))->title;
+
+    if (title_cstr != nullptr) {
+        title = std::string{title_cstr};
+    }
+
+    destination = getDestination(action);
 }
 
 PopplerGlibAction::~PopplerGlibAction() {
-    poppler_action_free(action);
-    action = nullptr;
-
     if (document) {
         g_object_unref(document);
         document = nullptr;
     }
 }
 
-auto PopplerGlibAction::getDestination() -> XojLinkDest* {
-    XojLinkDest* dest = link_dest_new();
-    dest->dest = new LinkDestination();
-    dest->dest->setName(getTitle());
+auto PopplerGlibAction::getDestination(PopplerAction* action) -> std::shared_ptr<const LinkDestination> {
+    std::shared_ptr<LinkDestination> dest = std::make_shared<LinkDestination>();
+    dest->setName(getTitle());
 
     // every other action is not supported in Xournal
-    if (action->type == POPPLER_ACTION_GOTO_DEST) {
+    if (action->type == POPPLER_ACTION_URI && action->uri.uri) {
+        dest->setURI(std::string{action->uri.uri});
+    } else if (action->type == POPPLER_ACTION_GOTO_DEST) {
         auto* actionDest = reinterpret_cast<PopplerActionGotoDest*>(action);
         PopplerDest* pDest = actionDest->dest;
 
@@ -31,13 +36,15 @@ auto PopplerGlibAction::getDestination() -> XojLinkDest* {
             return dest;
         }
 
-        linkFromDest(dest->dest, pDest);
+        linkFromDest(*dest, pDest);
     }
 
     return dest;
 }
 
-void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest) {
+auto PopplerGlibAction::getDestination() -> std::shared_ptr<const LinkDestination> { return destination; }
+
+void PopplerGlibAction::linkFromDest(LinkDestination& link, PopplerDest* pDest) {
     switch (pDest->type) {
         case POPPLER_DEST_UNKNOWN:
             g_warning("PDF Contains unknown link destination");
@@ -53,19 +60,19 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest) 
             poppler_page_get_size(page, &pageWidth, &pageHeight);
 
             if (pDest->left) {
-                link->setChangeLeft(pDest->left);
+                link.setChangeLeft(pDest->left);
             } else if (pDest->right) {
-                link->setChangeLeft(pageWidth - pDest->right);
+                link.setChangeLeft(pageWidth - pDest->right);
             }
 
             if (pDest->top) {
-                link->setChangeTop(pageHeight - std::min(pageHeight, pDest->top));
+                link.setChangeTop(pageHeight - std::min(pageHeight, pDest->top));
             } else if (pDest->bottom) {
-                link->setChangeTop(pageHeight - std::min(pageHeight, pageHeight - pDest->bottom));
+                link.setChangeTop(pageHeight - std::min(pageHeight, pageHeight - pDest->bottom));
             }
 
             if (pDest->zoom != 0) {
-                link->setChangeZoom(pDest->zoom);
+                link.setChangeZoom(pDest->zoom);
             }
             g_object_unref(page);
         } break;
@@ -82,7 +89,7 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest) 
             break;
     }
 
-    link->setPdfPage(pDest->page_num - 1);
+    link.setPdfPage(pDest->page_num - 1);
 }
 
-auto PopplerGlibAction::getTitle() -> std::string { return (reinterpret_cast<PopplerActionAny*>(action))->title; }
+auto PopplerGlibAction::getTitle() -> std::string { return title; }

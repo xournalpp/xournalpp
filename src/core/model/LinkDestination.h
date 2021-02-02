@@ -46,19 +46,25 @@ public:
     void setName(std::string name);
     std::string getName();
 
+    bool isURI() const;
+    std::string getURI() const;
+    void setURI(std::string uri);
+
 private:
-    size_t page;
-    bool expand;
+    size_t page_;
 
-    double left;
-    double top;
-    double zoom;
+    bool changeLeft_;
+    bool changeZoom_;
+    bool changeTop_;
 
-    bool changeLeft;
-    bool changeZoom;
-    bool changeTop;
+    double zoom_;
+    double left_;
+    double top_;
 
-    std::string name;
+    bool expand_;
+    bool isURI_;
+
+    std::string name_, uri_;
 };
 
 struct _LinkDest {

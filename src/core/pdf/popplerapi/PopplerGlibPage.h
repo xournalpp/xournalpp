@@ -18,14 +18,14 @@
 
 class PopplerGlibPage: public XojPdfPage {
 public:
-    PopplerGlibPage(PopplerPage* page);
+    PopplerGlibPage(PopplerPage* page, PopplerDocument* doc);
     PopplerGlibPage(const PopplerGlibPage& other);
     virtual ~PopplerGlibPage();
     PopplerGlibPage& operator=(const PopplerGlibPage& other);
 
 public:
-    double getWidth() override;
-    double getHeight() override;
+    double getWidth() const override;
+    double getHeight() const override;
 
     void render(cairo_t* cr, bool forPrinting = false) override;  // NOLINT(google-default-arguments)
 
@@ -43,4 +43,5 @@ public:
 
 private:
     PopplerPage* page;
+    PopplerDocument* document;
 };

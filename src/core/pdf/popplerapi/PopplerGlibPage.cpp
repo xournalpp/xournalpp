@@ -8,19 +8,22 @@
 #include "pdf/base/XojPdfPage.h"
 #include "util/Rectangle.h"
 
+#include "PopplerGlibAction.h"
 #include "cairo.h"
 
 
-PopplerGlibPage::PopplerGlibPage(PopplerPage* page): page(page) {
+PopplerGlibPage::PopplerGlibPage(PopplerPage* page, PopplerDocument* parentDoc): page(page), document(parentDoc) {
     if (page != nullptr) {
         g_object_ref(page);
     }
 }
 
-PopplerGlibPage::PopplerGlibPage(const PopplerGlibPage& other): page(other.page) {
+PopplerGlibPage::PopplerGlibPage(const PopplerGlibPage& other): page(other.page), document(other.document) {
     if (page != nullptr) {
         g_object_ref(page);
     }
+
+    document = nullptr;
 }
 
 PopplerGlibPage::~PopplerGlibPage() {
@@ -43,19 +46,22 @@ PopplerGlibPage& PopplerGlibPage::operator=(const PopplerGlibPage& other) {
     if (page != nullptr) {
         g_object_ref(page);
     }
+
+    document = other.document;
+
     return *this;
 }
 
-auto PopplerGlibPage::getWidth() -> double {
+auto PopplerGlibPage::getWidth() const -> double {
     double width = 0;
-    poppler_page_get_size(page, &width, nullptr);
+    poppler_page_get_size(const_cast<PopplerPage*>(page), &width, nullptr);
 
     return width;
 }
 
-auto PopplerGlibPage::getHeight() -> double {
+auto PopplerGlibPage::getHeight() const -> double {
     double height = 0;
-    poppler_page_get_size(page, nullptr, &height);
+    poppler_page_get_size(const_cast<PopplerPage*>(page), nullptr, &height);
 
     return height;
 }
@@ -295,13 +301,11 @@ auto PopplerGlibPage::getLinks() -> std::vector<Link> {
 
     GList* links = poppler_page_get_link_mapping(this->page);
     for (GList* l = links; l != NULL; l = g_list_next(l)) {
-        auto* link = static_cast<PopplerLinkMapping*>(l->data);
-        if (link->action->type == POPPLER_ACTION_URI && link->action->uri.uri) {
-            GUri* uri = g_uri_parse(link->action->uri.uri, G_URI_FLAGS_NONE, nullptr);
-            if (uri) {
-                XojPdfRectangle rect{link->area.x1, height - link->area.y2, link->area.x2, height - link->area.y1};
-                results.emplace_back(rect, uri);
-            }
+        const auto& link = *static_cast<PopplerLinkMapping*>(l->data);
+
+        if (link.action) {
+            XojPdfRectangle rect{link.area.x1, height - link.area.y2, link.area.x2, height - link.area.y1};
+            results.emplace_back(rect, std::make_unique<PopplerGlibAction>(link.action, document));
         }
     }
     poppler_page_free_link_mapping(links);

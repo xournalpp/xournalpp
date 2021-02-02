@@ -17,6 +17,10 @@
 
 #include <cairo/cairo.h>
 
+#include "XojPdfAction.h"
+
+class XojPdfLink;
+
 /// Determines how text is selected on a user action.
 enum class XojPdfPageSelectionStyle : uint8_t {
     /// Standard selection, where all text between start and end positions is selected.
@@ -48,10 +52,10 @@ public:
         std::vector<XojPdfRectangle> rects;
     };
 
-    using Link = std::pair<XojPdfRectangle, GUri*>;
+    using Link = std::pair<XojPdfRectangle, std::unique_ptr<XojPdfAction>>;
 
-    virtual double getWidth() = 0;
-    virtual double getHeight() = 0;
+    virtual double getWidth() const = 0;
+    virtual double getHeight() const = 0;
 
     virtual void render(cairo_t* cr, bool forPrinting = false) = 0;
 
