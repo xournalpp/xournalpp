@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-02 08:50+0000\n"
-"PO-Revision-Date: 2021-02-02 09:50\n"
+"PO-Revision-Date: 2021-02-02 17:01\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -399,7 +399,7 @@ msgstr "绘制箭头"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "绘制椭圆"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -2046,7 +2046,7 @@ msgstr "圆圈颜色"
 
 #: ../ui/settings.glade:3310
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "滚动时清除缓存的分页"
 
 #: ../ui/settings.glade:2596
 msgid "Colors"
@@ -2630,7 +2630,7 @@ msgstr "画笔选项(_O)"
 
 #: ../ui/settings.glade:3330
 msgid "Performance"
-msgstr ""
+msgstr "性能"
 
 #: ../ui/settings.glade:5204
 msgid "Playback Settings"
@@ -2650,11 +2650,11 @@ msgstr "插件更改需要 Xournal++ 重启才会生效"
 
 #: ../ui/settings.glade:3273
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "预加载页面后"
 
 #: ../ui/settings.glade:3261
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "预加载页面前"
 
 #: ../ui/main.glade:437
 msgid "Preferences"
