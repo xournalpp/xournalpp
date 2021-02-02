@@ -149,7 +149,8 @@ void LatexController::triggerImageUpdate(const string& texString) {
         XojMsgBox::showErrorToUser(this->control->getGtkWindow(), err->message);
     } else if (auto** proc = std::get_if<GSubprocess*>(&result)) {
         updating_cancellable = g_cancellable_new();
-        g_subprocess_wait_check_async(*proc, updating_cancellable, reinterpret_cast<GAsyncReadyCallback>(onPdfRenderComplete), this);
+        g_subprocess_wait_check_async(*proc, updating_cancellable,
+                                      reinterpret_cast<GAsyncReadyCallback>(onPdfRenderComplete), this);
     }
 
     updateStatus();
@@ -182,8 +183,7 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
             // the render was canceled
             g_error_free(err);
             return;
-        }
-        else if (!g_error_matches(err, G_SPAWN_EXIT_ERROR, 1)) {
+        } else if (!g_error_matches(err, G_SPAWN_EXIT_ERROR, 1)) {
             // The error was not caused by invalid LaTeX.
             string message =
                     FS(_F("Latex generation encountered an error: {1} (exit code: {2})") % err->message % err->code);
