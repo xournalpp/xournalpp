@@ -11,8 +11,10 @@
 
 #pragma once
 
-#include <cstddef>  // for size_t
-#include <string>   // for string
+#include <cstddef>   // for size_t
+#include <optional>  // for optional
+#include <string>    // for string
+#include <variant>   // for variant
 
 #include <glib-object.h>  // for G_TYPE_CHECK_INSTANCE_CAST, GObject, GType
 #include <glib.h>         // for G_GNUC_CONST
@@ -27,6 +29,16 @@ class LinkDestination {
 public:
     LinkDestination();
     virtual ~LinkDestination();
+
+    /// A link to a URI.
+    struct LinkType {
+        std::string uri;
+    };
+    /// A link to some unknown PDF action.
+    struct UnknownType {};
+
+    /// Represents a possible PDF link action.
+    using Type = std::variant<UnknownType, LinkType>;
 
 public:
     size_t getPdfPage() const;
@@ -47,7 +59,15 @@ public:
     void setChangeTop(double top);
 
     void setName(std::string name);
-    std::string getName();
+    const std::string& getName() const;
+
+    /// \return Whether this link refers to a URI.
+    bool isURI() const;
+
+    std::optional<std::string> getURI() const;
+
+    /// \return Changes this link to refer to the given URI.
+    void setURI(std::string uri);
 
 private:
     size_t page;
@@ -62,6 +82,7 @@ private:
     bool changeTop;
 
     std::string name;
+    Type contents;
 };
 
 struct _LinkDest {

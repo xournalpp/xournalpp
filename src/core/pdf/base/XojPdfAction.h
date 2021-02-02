@@ -12,6 +12,8 @@
 #pragma once
 
 #include <string>  // for string
+#include <memory>
+#include <vector>
 
 #include "model/LinkDestination.h"  // for XojLinkDest
 
@@ -22,7 +24,7 @@ public:
     virtual ~XojPdfAction();
 
 public:
-    virtual XojLinkDest* getDestination() = 0;
+    virtual std::shared_ptr<const LinkDestination> getDestination() = 0;
     virtual std::string getTitle() = 0;
 
 private:

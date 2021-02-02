@@ -2,7 +2,8 @@
 
 #include <memory>  // for allocator, make...
 #include <string>  // for string
-
+#include <config-features.h>
+#include <gtk/gtk.h>
 #include <gdk/gdk.h>      // for gdk_display_get...
 #include <glib-object.h>  // for G_CALLBACK, g_s...
 
@@ -15,6 +16,9 @@
 #include "previews/layer/SidebarPreviewLayers.h"      // for SidebarPreviewL...
 #include "previews/page/SidebarPreviewPages.h"        // for SidebarPreviewP...
 #include "util/Util.h"                                // for npos
+#include "util/i18n.h"
+#include "model/Document.h"
+#include "model/XojPage.h"
 
 Sidebar::Sidebar(GladeGui* gui, Control* control): control(control), gui(gui), toolbar(this, gui) {
     this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
@@ -71,6 +75,47 @@ void Sidebar::buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* button
 }
 
 void Sidebar::addPage(AbstractSidebarPage* page) { this->pages.push_back(page); }
+
+void Sidebar::askInsertPdfPage(size_t pdfPage) {
+    GtkWidget* dialog = gtk_message_dialog_new(control->getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
+                                               GTK_BUTTONS_NONE, "%s",
+                                               FC(_F("Your current document does not contain PDF Page no {1}\n"
+                                                     "Would you like to insert this page?\n\n"
+                                                     "Tip: You can select Journal → Paper Background → PDF Background "
+                                                     "to insert a PDF page.") %
+                                                  (pdfPage + 1)));
+
+    gtk_dialog_add_button(GTK_DIALOG(dialog), "Cancel", 1);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert after", 2);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert at end", 3);
+
+    gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
+    int res = gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+    if (res == 1) {
+        return;
+    }
+
+    int position = 0;
+
+    Document* doc = control->getDocument();
+
+    if (res == 2) {
+        position = control->getCurrentPageNo() + 1;
+    } else if (res == 3) {
+        position = doc->getPageCount();
+    }
+
+    doc->lock();
+    XojPdfPageSPtr pdf = doc->getPdfPage(pdfPage);
+    doc->unlock();
+
+    if (pdf) {
+        auto page = std::make_shared<XojPage>(pdf->getWidth(), pdf->getHeight());
+        page->setBackgroundPdfPageNr(pdfPage);
+        control->insertPage(std::move(page), position);
+    }
+}
 
 Sidebar::~Sidebar() {
     this->control = nullptr;

@@ -1,6 +1,11 @@
 #include "ScrollHandler.h"
 
 #include <memory>  // for __shared_ptr_access
+#include "gui/Layout.h"
+#include "gui/XournalView.h"
+#include "gui/sidebar/Sidebar.h"
+#include "gui/widgets/SpinPageAdapter.h"
+#include "model/LinkDestination.h"
 
 #include <glib.h>  // for g_error
 
@@ -10,6 +15,7 @@
 #include "model/Document.h"               // for Document
 #include "model/XojPage.h"                // for XojPage
 #include "util/Util.h"                    // for npos
+#include "control/zoom/ZoomControl.h"     // for ZoomControl
 
 #include "Control.h"  // for Control
 
@@ -73,6 +79,30 @@ void ScrollHandler::scrollToSpinPage() {
         return;
     }
     scrollToPage(page - 1);
+}
+
+void ScrollHandler::scrollToLinkDest(const LinkDestination& dest) {
+    size_t pdfPage = dest.getPdfPage();
+    Sidebar* sidebar = control->getSidebar();
+
+    if (pdfPage != npos) {
+        Document* doc = control->getDocument();
+        doc->lock();
+        size_t page = doc->findPdfPage(pdfPage);
+        doc->unlock();
+
+        if (page == npos) {
+            sidebar->askInsertPdfPage(pdfPage);
+        } else {
+            if (dest.shouldChangeTop()) {
+                control->getScrollHandler()->scrollToPage(page, dest.getTop() * control->getZoomControl()->getZoom());
+            } else {
+                if (control->getCurrentPageNo() != page) {
+                    control->getScrollHandler()->scrollToPage(page);
+                }
+            }
+        }
+    }
 }
 
 void ScrollHandler::scrollToAnnotatedPage(bool next) {
