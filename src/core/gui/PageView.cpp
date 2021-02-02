@@ -6,6 +6,7 @@
 #include <memory>     // for __shared_ptr_access
 #include <optional>   // for optional
 #include <utility>    // for move
+#include <sstream>    // for stringstream
 
 #include <gdk/gdk.h>         // for GdkRectangle, Gdk...
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Escape
@@ -60,7 +61,10 @@
 #include "util/Rectangle.h"                         // for Rectangle
 #include "util/Util.h"                              // for npos
 #include "util/XojMsgBox.h"                         // for XojMsgBox
-#include "util/i18n.h"                              // for FS, _, _F
+#include "util/i18n.h"                              // for _F, FC, FS, _
+#include "util/raii/CLibrariesSPtr.h"               // for adopt
+#include "util/serdesstream.h"                      // for serdes_stream
+#include "util/gtk4_helper.h"                       // for gtk_box_append
 #include "view/DebugShowRepaintBounds.h"            // for IF_DEBUG_REPAINT
 #include "view/overlays/OverlayView.h"
 #include "view/overlays/PdfElementSelectionView.h"
@@ -921,22 +925,64 @@ bool XojPageView::displayLinkPopover(std::shared_ptr<XojPdfPage> page, double pa
     // Search for selected link
     const auto links = page->getLinks();
 
-    for (auto&& [rect, uri]: links) {
+    for (auto&& [rect, action]: links) {
+        std::shared_ptr<const LinkDestination> dest = action->getDestination();
+
         if (!(rect.x1 <= pageX && pageX <= rect.x2 && rect.y1 <= pageY && pageY <= rect.y2)) {
             continue;
         }
 
-        char* uriStr = g_uri_to_string(uri);
-        char* uriText = g_markup_escape_text(uriStr, -1);
-        char* labelMarkup = g_strdup_printf("<a href=\"%s\">%s</a>", uriStr, uriText);
-        g_free(uriStr);
-        g_free(uriText);
-        GtkWidget* label = gtk_label_new(nullptr);
-        gtk_label_set_markup(GTK_LABEL(label), labelMarkup);
         GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-        gtk_container_add(GTK_CONTAINER(box), label);
-
         GtkWidget* popover = makePopover(rect, box);
+
+        if (auto uriOpt = dest->getURI()) {
+            const std::string& uri = uriOpt.value();
+            char* uriLabel = g_markup_escape_text(uri.c_str(), -1);
+
+            auto labelMarkup = serdes_stream<std::stringstream>();
+            labelMarkup << "<a href=" << std::quoted(uri) << ">" << uriLabel << "</a>";
+
+            std::string linkMarkup = labelMarkup.str();
+
+            g_free(uriLabel);
+
+            GtkWidget* label = gtk_label_new(nullptr);
+            gtk_label_set_markup(GTK_LABEL(label), linkMarkup.c_str());
+            gtk_box_append(GTK_BOX(box), label);
+        } else {
+            size_t pdfPage = dest->getPdfPage();
+
+            Document* doc = xournal->getControl()->getDocument();
+            doc->lock();
+            const size_t pageId = doc->findPdfPage(pdfPage);
+            doc->unlock();
+
+            GtkWidget* button{};
+            if (pageId != npos) {
+                const auto pageNo = static_cast<int64_t>(pageId + 1);
+                button = gtk_button_new_with_label(FC(_F("Scroll to page {1}") % pageNo));
+            } else {
+                button = gtk_button_new_with_label(FC(_F("Add missing page")));
+            }
+            gtk_box_append(GTK_BOX(box), button);
+
+            g_signal_connect(
+                    button, "clicked",
+                    G_CALLBACK(+[](GtkButton* bt,
+                                   std::tuple<XojPageView*, std::shared_ptr<LinkDestination>, GtkWidget*>* state) {
+                        XojPageView* self;
+                        std::shared_ptr<LinkDestination> dest;
+                        GtkWidget* popover;
+                        std::tie(self, dest, popover) = *state;
+
+                        self->getXournal()->getControl()->getScrollHandler()->scrollToLinkDest(*dest);
+                        gtk_popover_popdown(GTK_POPOVER(popover));
+
+                        delete state;
+                    }),
+                    new std::tuple(this, dest, popover));
+        }
+
         gtk_widget_show_all(popover);
         gtk_popover_popup(GTK_POPOVER(popover));
         return true;

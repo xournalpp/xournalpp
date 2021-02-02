@@ -199,7 +199,9 @@ void Document::buildTreeContentsModel(GtkTreeIter* parent, XojPdfBookmarkIterato
         GtkTreeIter treeIter = {0};
 
         XojPdfAction* action = iter->getAction();
-        XojLinkDest* link = action->getDestination();
+        LinkDestination* dest = new LinkDestination(*action->getDestination());
+        XojLinkDest* link = link_dest_new();
+        link->dest = dest;
 
         if (action->getTitle().empty()) {
             g_object_unref(link);

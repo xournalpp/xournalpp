@@ -11,12 +11,17 @@
 
 #pragma once
 
+#include <memory>
 #include <string>  // for string
+#include <vector>
 
 #include <poppler.h>  // for PopplerAction, PopplerDocument
 
 #include "model/LinkDestination.h"  // for LinkDestination (ptr only), XojLi...
 #include "pdf/base/XojPdfAction.h"  // for XojPdfAction
+#include "util/raii/GObjectSPtr.h"  // for GObjectSPtr
+
+class LinkDestination;
 
 
 class PopplerGlibAction: public XojPdfAction {
@@ -25,13 +30,15 @@ public:
     ~PopplerGlibAction() override;
 
 public:
-    XojLinkDest* getDestination() override;
-    std::string getTitle() override;
+    virtual std::shared_ptr<const LinkDestination> getDestination() override;
+    virtual std::string getTitle() override;
 
 private:
-    void linkFromDest(LinkDestination* link, PopplerDest* pDest);
+    virtual std::shared_ptr<const LinkDestination> getDestination(PopplerAction* action);
+    void linkFromDest(LinkDestination& link, PopplerDest* pDest);
 
 private:
-    PopplerAction* action;
-    PopplerDocument* document;
+    xoj::util::raii::GObjectSPtr<PopplerDocument> document;
+    std::shared_ptr<const LinkDestination> destination;
+    std::string title;
 };

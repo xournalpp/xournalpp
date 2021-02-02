@@ -20,6 +20,9 @@
 #include <cairo.h>  // for cairo_region_t, cairo_t
 
 #include "util/raii/CairoWrappers.h"
+#include "XojPdfAction.h"
+
+class XojPdfLink;
 
 /// Determines how text is selected on a user action.
 enum class XojPdfPageSelectionStyle : uint8_t {
@@ -52,7 +55,10 @@ public:
         std::vector<XojPdfRectangle> rects;
     };
 
-    using Link = std::pair<XojPdfRectangle, GUri*>;
+    struct Link {
+        XojPdfRectangle bounds;
+        std::unique_ptr<XojPdfAction> action;
+    };
 
     virtual double getWidth() const = 0;
     virtual double getHeight() const = 0;

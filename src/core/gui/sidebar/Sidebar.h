@@ -74,6 +74,12 @@ public:
      */
     SidebarToolbar* getToolbar();
 
+    /**
+     * Ask the user whether a page with the given id
+     * should be added to the document.
+     */
+    void askInsertPdfPage(size_t pdfPage);
+
 public:
     // DocumentListener interface
     void documentChanged(DocumentChangeType type) override;

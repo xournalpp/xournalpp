@@ -13,6 +13,9 @@
 
 #include <cstddef>  // for size_t
 #include <string>   // for string
+#include <optional>
+#include <string>
+#include <vector>
 
 #include <glib.h>  // for GError, gpointer, gsize
 

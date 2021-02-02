@@ -22,7 +22,7 @@
 
 class PopplerGlibPage: public XojPdfPage {
 public:
-    PopplerGlibPage(PopplerPage* page);
+    PopplerGlibPage(PopplerPage* page, PopplerDocument* doc);
     PopplerGlibPage(const PopplerGlibPage& other);
     virtual ~PopplerGlibPage();
     PopplerGlibPage& operator=(const PopplerGlibPage& other);
@@ -48,4 +48,5 @@ public:
 
 private:
     PopplerPage* page;
+    PopplerDocument* document;
 };
