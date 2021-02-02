@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-30 06:08+0000\n"
-"PO-Revision-Date: 2021-01-30 06:12\n"
+"POT-Creation-Date: 2021-02-02 08:50+0000\n"
+"PO-Revision-Date: 2021-02-02 09:51\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -56,7 +56,7 @@ msgstr "<span foreground='red' size='x-large'>Отсутствует необх�
 "  Не в рабочей директории\n"
 "  Не в {2}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Add/Edit Tex"
 msgstr "Добавить/редактировать Tex"
 
@@ -68,11 +68,11 @@ msgstr ""
 msgid "All files"
 msgstr "Все файлы"
 
-#: ../src/control/pagetype/PageTypeMenu.cpp:197
+#: ../src/control/pagetype/PageTypeMenu.cpp:191
 msgid "Apply to all pages"
 msgstr "Применить ко всем страницам"
 
-#: ../src/control/pagetype/PageTypeMenu.cpp:188
+#: ../src/control/pagetype/PageTypeMenu.cpp:182
 msgid "Apply to current page"
 msgstr "Применить к текущей странице"
 
@@ -117,11 +117,11 @@ msgid "Audio folder not set! Recording won't work!\n"
 msgstr "Папка для аудио не установлена! Запись не будет работать!\n"
 "Пожалуйста, задайте папку для аудиозаписей в разделе «Настройки > Запись аудио»"
 
-#: ../src/control/Control.cpp:212
+#: ../src/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
 msgstr "Ошибка автосохранения: {1}"
 
-#: ../src/control/Control.cpp:192
+#: ../src/control/Control.cpp:190
 msgid "Autosave renamed from {1} to {2}"
 msgstr "Автосохранение переименовано из {1} в {2}"
 
@@ -129,8 +129,8 @@ msgstr "Автосохранение переименовано из {1} в {2}"
 msgid "Autosaving to {1}"
 msgstr "Автосохранение в {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Back"
 msgstr "Назад"
 
@@ -148,7 +148,7 @@ msgstr "Черный"
 msgid "Blue"
 msgstr "Синий"
 
-#: ../src/control/Control.cpp:1982 ../src/control/Control.cpp:2438
+#: ../src/control/Control.cpp:1978 ../src/control/Control.cpp:2434
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Отмена"
@@ -157,7 +157,7 @@ msgstr "Отмена"
 msgid "Change color"
 msgstr "Изменить цвет"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:400
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
 msgstr ""
 
@@ -185,7 +185,7 @@ msgstr "Неизвестный цвет «{1}» (не определен в сп
 msgid "Contents"
 msgstr "Содержание"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
@@ -272,7 +272,7 @@ msgstr "Не удалось удалить элемент инструмента
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "Не удалось удалить элемент инструмента {1} из панели инструментов {2} на позиции {3}"
 
-#: ../src/control/Control.cpp:203
+#: ../src/control/Control.cpp:201
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Не удалось переименовать файл автосохранения из «{1}» в «{2}»: {3}"
 
@@ -310,7 +310,7 @@ msgstr "Пользовательский"
 msgid "Custom Export"
 msgstr "Пользовательский экспорт"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Customize Toolbars"
 msgstr "Настроить панели инструментов"
 
@@ -318,15 +318,15 @@ msgstr "Настроить панели инструментов"
 msgid "Customized"
 msgstr "Модифицированный"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:340
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
 msgid "Cut"
 msgstr "Вырезать"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Default Tool"
 msgstr "Инструмент по умолчанию"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:346
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:347
 #: ../src/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "Удалить"
@@ -335,7 +335,7 @@ msgstr "Удалить"
 msgid "Delete Logfile"
 msgstr "Удалить лог-файл"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Delete current page"
 msgstr "Удалить текущую страницу"
 
@@ -347,7 +347,7 @@ msgstr "Удалить файл"
 msgid "Delete layer"
 msgstr "Удалить слой"
 
-#: ../src/control/Control.cpp:2435
+#: ../src/control/Control.cpp:2431
 msgid "Discard"
 msgstr "Не сохранять"
 
@@ -355,7 +355,7 @@ msgstr "Не сохранять"
 msgid "Display advanced export options"
 msgstr ""
 
-#: ../src/control/Control.cpp:1935
+#: ../src/control/Control.cpp:1931
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -367,7 +367,7 @@ msgstr "Не открывайте автоматически сохранённ�
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Не перезаписывайте фоновый PDF! Это приведёт к ошибкам!"
 
-#: ../src/control/Control.cpp:2429
+#: ../src/control/Control.cpp:2425
 msgid "Document file was removed."
 msgstr "Файл документа был удален."
 
@@ -390,13 +390,13 @@ msgstr "В точку"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:124
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:30
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Arrow"
 msgstr "Нарисовать стрелку"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:122
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
 msgstr ""
 
@@ -410,19 +410,19 @@ msgstr "Нарисовать линию"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:28
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:91
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:94
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Draw Rectangle"
 msgstr "Нарисовать прямоугольник"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:130
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Spline"
 msgstr "Построить сплайн"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:126
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw coordinate system"
 msgstr "Нарисовать систему координат"
 
@@ -452,11 +452,11 @@ msgid "Erase stroke"
 msgstr "Удалить черту"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:81
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:256
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:257
 msgid "Eraser"
 msgstr "Ластик"
 
-#: ../src/control/Control.cpp:2183
+#: ../src/control/Control.cpp:2179
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Ошибка аннотации PDF файла «{1}»\n"
@@ -466,7 +466,7 @@ msgstr "Ошибка аннотации PDF файла «{1}»\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Ошибка загрузки glade файла «{1}» (попробуйте загрузить «{2}»)"
 
-#: ../src/control/Control.cpp:2004
+#: ../src/control/Control.cpp:2000
 msgid "Error opening file \"{1}\""
 msgstr "Ошибка при открытии файла «{1}»"
 
@@ -573,7 +573,7 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Файл не может быть открыт. Вы должны сделать это вручную:\n"
 "URL: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:470
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Fill"
 msgstr "Заливка"
 
@@ -581,7 +581,7 @@ msgstr "Заливка"
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:484
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fine"
 msgstr "Тонкий"
 
@@ -593,7 +593,7 @@ msgstr "Плавающая панель инструментов (экспери
 msgid "Font"
 msgstr "Шрифт"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:445
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Forward"
 msgstr "Далее"
 
@@ -609,27 +609,27 @@ msgstr ""
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Go to first page"
 msgstr "Перейти на первую страницу"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 msgid "Go to last page"
 msgstr "Перейти на последнюю страницу"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Go to next layer"
 msgstr "Перейти к следующему слою"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 msgid "Go to page"
 msgstr "Перейти на страницу"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Go to previous layer"
 msgstr "Перейти к предыдущему слою"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Go to top layer"
 msgstr "Перейти к верхнему слою"
 
@@ -647,12 +647,12 @@ msgstr "Серый"
 msgid "Green"
 msgstr "Зеленый"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:353
 msgid "Grid Snapping"
 msgstr "Привязка к сетке"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Hand"
 msgstr "Рука"
 
@@ -661,12 +661,12 @@ msgid "Hide all"
 msgstr "Скрыть все"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Highlighter"
 msgstr "Маркер"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Image"
 msgstr "Изображение"
 
@@ -694,7 +694,7 @@ msgstr "Вставить latex"
 msgid "Insert layer"
 msgstr "Вставить слой"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Insert page"
 msgstr "Вставить страницу"
 
@@ -751,11 +751,11 @@ msgstr "Загрузка..."
 msgid "Magenta"
 msgstr "Пурпурный"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:363
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Manage Toolbars"
 msgstr "Управление панелями"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Medium"
 msgstr "Средний"
 
@@ -789,15 +789,15 @@ msgstr "Переместить страницу вверх"
 msgid "New"
 msgstr "Новый"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:326
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:327
 msgid "New Xournal"
 msgstr "Новый Xournal"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:377
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 msgid "Next"
 msgstr "Вперед"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "Next annotated page"
 msgstr "Следующая аннотированная страница"
 
@@ -810,7 +810,7 @@ msgstr "Нет устройства"
 msgid "No pages to export!"
 msgstr "Нет страниц для экспорта!"
 
-#: ../src/control/Control.cpp:1232
+#: ../src/control/Control.cpp:1230
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
@@ -840,7 +840,7 @@ msgid "Open Logfile directory"
 msgstr "Открыть папку с лог-файлами"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:327
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Open file"
 msgstr "Открыть файл"
 
@@ -904,21 +904,21 @@ msgstr "Страница вставлена"
 msgid "Page number"
 msgstr "Номер страницы"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
 msgid "Paired pages"
 msgstr "Парные страницы"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 #: ../src/undo/AddUndoAction.cpp:77
 msgid "Paste"
 msgstr "Вставить"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:439
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Pause / Play"
 msgstr "Пауза / воспроизведение"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:237
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:238
 msgid "Pen"
 msgstr "Перо"
 
@@ -926,7 +926,7 @@ msgstr "Перо"
 msgid "Plain"
 msgstr "Чистый"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Play Object"
@@ -936,7 +936,7 @@ msgstr "Воспроизвести объект"
 msgid "Predefined"
 msgstr "Предопределённый"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:360
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
 msgid "Presentation mode"
 msgstr "Режим презентации"
 
@@ -944,15 +944,15 @@ msgstr "Режим презентации"
 msgid "Previously selected language not available anymore!"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Print"
 msgstr "Печать"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Record Audio / Stop Recording"
 msgstr "Запись аудио / Остановить запись"
 
-#: ../src/control/Control.cpp:873
+#: ../src/control/Control.cpp:871
 msgid "Recorder could not be started."
 msgstr "Запись не может быть запущена."
 
@@ -961,7 +961,7 @@ msgstr "Запись не может быть запущена."
 msgid "Red"
 msgstr "Красный"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 #: ../src/undo/UndoRedoHandler.cpp:215
 msgid "Redo"
 msgstr "Вернуть"
@@ -970,7 +970,7 @@ msgstr "Вернуть"
 msgid "Redo: "
 msgstr "Вернуть: "
 
-#: ../src/control/Control.cpp:1981
+#: ../src/control/Control.cpp:1977
 msgid "Remove PDF Background"
 msgstr "Удалить PDF фон"
 
@@ -1002,7 +1002,7 @@ msgstr "Восстановить файл"
 msgid "Rotation"
 msgstr "Поворот"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:350
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 msgid "Rotation Snapping"
 msgstr "Фиксация повотора"
 
@@ -1014,7 +1014,7 @@ msgstr "В линейку"
 msgid "Ruled with vertical line"
 msgstr "В линейку с полями"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Ruler"
 msgstr "Линейка"
 
@@ -1026,16 +1026,16 @@ msgstr "SVG графика"
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2430 ../src/control/jobs/SaveJob.cpp:15
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:328
+#: ../src/control/Control.cpp:2426 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../src/control/Control.cpp:2430
+#: ../src/control/Control.cpp:2426
 msgid "Save As..."
 msgstr "Сохранить как..."
 
-#: ../src/control/Control.cpp:2273 ../src/gui/dialog/PageTemplateDialog.cpp:82
+#: ../src/control/Control.cpp:2269 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Сохранить файл"
 
@@ -1048,21 +1048,21 @@ msgstr "Ошибка сохранения файла: {1}"
 msgid "Scale"
 msgstr "Маштабирование"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:344
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:345
 msgid "Search"
 msgstr "Поиск"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Select Font"
 msgstr "Выбрать шрифт"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:66
 msgid "Select Object"
 msgstr "Выбрать объект"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:56
@@ -1070,13 +1070,13 @@ msgstr "Выбрать объект"
 msgid "Select Rectangle"
 msgstr "Прямоугольное выделение"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:61
 msgid "Select Region"
 msgstr "Выделение лассо"
 
-#: ../src/control/Control.cpp:1980
+#: ../src/control/Control.cpp:1976
 msgid "Select another PDF"
 msgstr "Выбрать другой PDF"
 
@@ -1126,7 +1126,7 @@ msgid "Set page width for PNG exports\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Shape Recognizer"
 msgstr "Распознавание форм"
 
@@ -1158,7 +1158,7 @@ msgstr "Xournal++ в данный момент не может открыват�
 msgid "Staves"
 msgstr "Нотный стан"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Stop"
 msgstr "Остановить"
 
@@ -1181,7 +1181,7 @@ msgid "System Default"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Text"
 msgstr "Текст"
 
@@ -1214,19 +1214,19 @@ msgstr "Текст не найден"
 msgid "Text not found, searched on all pages"
 msgstr "Текст не найден, поиск на всех страницах"
 
-#: ../src/control/Control.cpp:1032
+#: ../src/control/Control.cpp:1030
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Конфигурация панели инструментов \"{1}\" предопределена. Создать копию для редактирования?"
 
-#: ../src/control/Control.cpp:1977
+#: ../src/control/Control.cpp:1973
 msgid "The attached background PDF could not be found."
 msgstr "Присоединённый фоновый PDF не найден."
 
-#: ../src/control/Control.cpp:1978
+#: ../src/control/Control.cpp:1974
 msgid "The background PDF could not be found."
 msgstr "Фоновый PDF не найден."
 
-#: ../src/control/Control.cpp:2012
+#: ../src/control/Control.cpp:2008
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1274,11 +1274,11 @@ msgstr "Xournal++ создал лог-файл ошибок. Пожалуйст�
 msgid "There was an error displaying help: {1}"
 msgstr "Произошла ошибка при отображении справки: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Thick"
 msgstr "Жирный"
 
-#: ../src/control/Control.cpp:2429
+#: ../src/control/Control.cpp:2425
 msgid "This document is not saved yet."
 msgstr "Этот документ еще не сохранен."
 
@@ -1287,7 +1287,7 @@ msgstr "Этот документ еще не сохранен."
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "Это изображение не может быть загружено. Сообщение об ошибке: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
 msgid "Toggle fullscreen"
 msgstr "Полноэкранный режим"
 
@@ -1315,11 +1315,11 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr "Не удалось воспроизвести аудиозапись {1}"
 
-#: ../src/control/Control.cpp:1246
+#: ../src/control/Control.cpp:1244
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 #: ../src/undo/UndoRedoHandler.cpp:203
 msgid "Undo"
 msgstr "Отменить"
@@ -1360,7 +1360,7 @@ msgstr "Неизвестный тип pixmap::domain: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Неизвестный тип черты: \"{1}\", предполагается, что это перо"
 
-#: ../src/control/Control.cpp:2330
+#: ../src/control/Control.cpp:2326
 msgid "Unsaved Document"
 msgstr "Несохранённый документ"
 
@@ -1368,7 +1368,7 @@ msgstr "Несохранённый документ"
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Vertical Space"
 msgstr "Вертикальный отступ"
 
@@ -1376,11 +1376,11 @@ msgstr "Вертикальный отступ"
 msgid "Vertical space"
 msgstr "Вертикальный отступ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:483
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Very Fine"
 msgstr "Очень тонкий"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Very Thick"
 msgstr "Очень жирный"
 
@@ -1425,12 +1425,12 @@ msgstr "Xournal файлы"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "В последний раз программа Xournal++ аварийно завершилась. Хотите восстановить последний редактируемый файл?"
 
-#: ../src/control/Control.cpp:2279 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2275 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Xournal++ файлы"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:65
-#: ../src/gui/dialog/PageTemplateDialog.cpp:88
+#: ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "Xournal++ template"
 msgstr "Xournal++ шаблон"
 
@@ -1457,15 +1457,15 @@ msgstr "В вашем текущем документе отсутствует P
 "Хотите вставить эту страницу?\n\n"
 "Совет: Вы можете выбрать «Журнал → Фон бумаги → PDF фон» для вставки PDF страницы."
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Zoom fit to screen"
 msgstr "Уместить целиком на экране"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Zoom in"
 msgstr "Приблизить"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Zoom out"
 msgstr "Отдалить"
 
@@ -1473,14 +1473,14 @@ msgstr "Отдалить"
 msgid "Zoom slider"
 msgstr "Ползунок масштабирования"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Zoom to 100%"
 msgstr "Увеличить до 100%"
 
-#: ../src/control/Control.cpp:2273 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2269 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
-#: ../src/gui/dialog/PageTemplateDialog.cpp:83
+#: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Cancel"
 msgstr "_Отмена"
 
@@ -1489,8 +1489,8 @@ msgstr "_Отмена"
 msgid "_Open"
 msgstr "_Открыть"
 
-#: ../src/control/Control.cpp:2274 ../src/control/jobs/BaseExportJob.cpp:17
-#: ../src/gui/dialog/PageTemplateDialog.cpp:83
+#: ../src/control/Control.cpp:2270 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "_Сохранить"
 
@@ -1498,11 +1498,11 @@ msgstr "_Сохранить"
 msgid "cursor"
 msgstr "курсор"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:245
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:246
 msgid "dash-/ dotted"
 msgstr "штрихпунктир"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:242
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:243
 msgid "dashed"
 msgstr "штриховой пунктир"
 
@@ -1514,11 +1514,11 @@ msgstr "по умолчанию отключён"
 msgid "default enabled"
 msgstr "по умолчанию включен"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:260
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:261
 msgid "delete stroke"
 msgstr "удалить черту"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:248
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:249
 msgid "dotted"
 msgstr "точечный пунктир"
 
@@ -1530,7 +1530,7 @@ msgstr "элементы"
 msgid "eraser"
 msgstr "ластик"
 
-#: ../src/control/Control.cpp:1949
+#: ../src/control/Control.cpp:1945
 msgid "file: {1}"
 msgstr ""
 
@@ -1558,8 +1558,8 @@ msgstr "перо"
 msgid "show"
 msgstr "показать"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:239
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:258
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:240
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:259
 msgid "standard"
 msgstr "стандартный"
 
@@ -1587,7 +1587,7 @@ msgstr "сенсорный экран"
 msgid "trackpoint"
 msgstr "trackpoint"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:259
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:260
 msgid "whiteout"
 msgstr "забеливание"
 
