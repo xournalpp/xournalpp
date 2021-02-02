@@ -30,7 +30,10 @@ LatexController::LatexController(Control* control):
     Util::ensureFolderExists(this->texTmpDir);
 }
 
-LatexController::~LatexController() { this->control = nullptr; }
+LatexController::~LatexController() {
+    unsetUpdating();
+    this->control = nullptr;
+}
 
 /**
  * Find the tex executable, return false if not found
@@ -136,21 +139,20 @@ auto LatexController::showTexEditDialog() -> string {
 }
 
 void LatexController::triggerImageUpdate(const string& texString) {
-    if (this->isUpdating) {
-        return;
-    }
+    this->unsetUpdating();
 
-    this->setUpdating(true);
     this->lastPreviewedTex = texString;
     const std::string texContents = LatexGenerator::templateSub(
             texString, this->latexTemplate, this->control->getToolHandler()->getTool(TOOL_TEXT).getColor());
     auto result = generator.asyncRun(this->texTmpDir, texContents);
     if (auto* err = std::get_if<LatexGenerator::GenError>(&result)) {
-        this->setUpdating(false);
         XojMsgBox::showErrorToUser(this->control->getGtkWindow(), err->message);
     } else if (auto** proc = std::get_if<GSubprocess*>(&result)) {
-        g_subprocess_wait_check_async(*proc, nullptr, reinterpret_cast<GAsyncReadyCallback>(onPdfRenderComplete), this);
+        updating_cancellable = g_cancellable_new();
+        g_subprocess_wait_check_async(*proc, updating_cancellable, reinterpret_cast<GAsyncReadyCallback>(onPdfRenderComplete), this);
     }
+
+    updateStatus();
 }
 
 /**
@@ -166,7 +168,7 @@ void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* s
 }
 
 void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, LatexController* self) {
-    if (!self->isUpdating) {
+    if (!self->isUpdating()) {
         return;
     }
     GError* err = nullptr;
@@ -176,14 +178,19 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
     const string currentTex = self->dlg.getBufferContents();
     bool shouldUpdate = self->lastPreviewedTex != currentTex;
     if (err != nullptr) {
-        self->isValidTex = false;
-        if (!g_error_matches(err, G_SPAWN_EXIT_ERROR, 1)) {
+        if (g_error_matches(err, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
+            // the render was canceled
+            g_error_free(err);
+            return;
+        }
+        else if (!g_error_matches(err, G_SPAWN_EXIT_ERROR, 1)) {
             // The error was not caused by invalid LaTeX.
             string message =
                     FS(_F("Latex generation encountered an error: {1} (exit code: {2})") % err->message % err->code);
             g_warning("latex: %s", message.c_str());
             XojMsgBox::showErrorToUser(self->control->getGtkWindow(), message);
         }
+        self->isValidTex = false;
         fs::path pdfPath = self->texTmpDir / "tex.pdf";
         fs::remove(pdfPath);
         g_error_free(err);
@@ -195,23 +202,27 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
         }
     }
 
-    self->setUpdating(false);
+    self->unsetUpdating();
+    self->updateStatus();
     if (shouldUpdate) {
         self->triggerImageUpdate(currentTex);
     }
 }
 
-void LatexController::setUpdating(bool newValue) {
+bool LatexController::isUpdating() {
+    return !updating_cancellable || !g_cancellable_is_cancelled(updating_cancellable);
+}
+
+void LatexController::updateStatus() {
     GtkWidget* okButton = this->dlg.get("texokbutton");
     bool buttonEnabled = true;
-    if ((!this->isUpdating && newValue) || (this->isUpdating && !newValue)) {
-        // Disable LatexDialog OK button while updating. This is a workaround
-        // for the fact that 1) the LatexController only lives while the dialog
-        // is open; 2) the preview is generated asynchronously; and 3) the `run`
-        // method that inserts the TexImage object is called synchronously after
-        // the dialog is closed with the OK button.
-        buttonEnabled = !newValue;
-    }
+    bool updating = this->isUpdating();
+    // Disable LatexDialog OK button while updating. This is a workaround
+    // for the fact that 1) the LatexController only lives while the dialog
+    // is open; 2) the preview is generated asynchronously; and 3) the `run`
+    // method that inserts the TexImage object is called synchronously after
+    // the dialog is closed with the OK button.
+    buttonEnabled = !updating;
 
 
     // Invalid LaTeX will generate an invalid PDF, so disable the OK button if
@@ -222,8 +233,11 @@ void LatexController::setUpdating(bool newValue) {
 
     GtkLabel* errorLabel = GTK_LABEL(this->dlg.get("texErrorLabel"));
     gtk_label_set_text(errorLabel, this->isValidTex ? "" : N_("The formula is empty when rendered or invalid."));
+}
 
-    this->isUpdating = newValue;
+void LatexController::unsetUpdating() {
+    g_cancellable_cancel(updating_cancellable);
+    g_clear_object(&updating_cancellable);
 }
 
 void LatexController::deleteOldImage() {
