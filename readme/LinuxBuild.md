@@ -30,32 +30,34 @@ poppler-glib texlive-bin texlive-pictures gettext libzip
 #### For Fedora/CentOS/RHEL:
 ```bash
 sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
-poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel
+poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
+librsvg2-devel
 ```
 
 #### For Ubuntu/Debian:
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev
+libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext
 ````
 
 #### For Raspberry Pi OS (the same as Ubuntu/Debian with gettext added):
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev gettext
+libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext
 ````
 
 #### For openSUSE:
 ```bash
 sudo zypper install cmake gtk3-devel cppunit-devel portaudio-devel libsndfile-devel \
-texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel
+texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel
 ```
 
 #### For Solus:
 ```bash
 sudo eopkg it -c system.devel
 sudo eopkg it cmake libgtk-3-devel libxml2-devel poppler-devel libzip-devel \
-portaudio-devel libsndfile-devel alsa-lib-devel cppunit-devel lua-devel
+portaudio-devel libsndfile-devel alsa-lib-devel cppunit-devel lua-devel \
+librsvg-devel gettext
 ```
 
 ## Compiling
