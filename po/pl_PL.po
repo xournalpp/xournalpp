@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-02 08:50+0000\n"
-"PO-Revision-Date: 2021-02-02 09:51\n"
+"PO-Revision-Date: 2021-02-04 12:48\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -445,7 +445,7 @@ msgstr "Awaryjnie zapisany dokument"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:305
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "Włącz czułość lub preferencje nacisku, aby zmienić to ustawienie!"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
@@ -540,18 +540,25 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Progresywny export warstw\n"
+"                                 Podczas eksportu PDF, Renderuj warstwy stopniowo jadna po drugiej.\n"
+"                                 Daje to N stron eksportu na stronę z N warstwami,\n"
+"                                 buduje to progresywny stos warstw.\n"
+"                                 Wynikowy plik PDF może być użyty do prezentacji.\n"
 
 #: ../src/control/XournalMain.cpp:644
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Eksport bez tła\n"
+"                                 Eksportowany plik ma przezroczyste lub białe tło,\n"
+"                                 zalerznie od tego, co obsługuje format pliku\n"
 
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Eksport bez linii\n"
+"                                 Eksportowany plik pozbawiony jest linii\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
