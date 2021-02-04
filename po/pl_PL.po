@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-04 19:16+0000\n"
-"PO-Revision-Date: 2021-02-04 20:43\n"
+"PO-Revision-Date: 2021-02-04 21:50\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -2038,7 +2038,7 @@ msgstr "Wybierz globalny plik szablonu LaTeX"
 
 #: ../ui/settings.glade:2716 ../ui/settings.glade:2859
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "Wybierz kolor dla \"Podświetl pozycję kursora\""
 
 #: ../ui/settings.glade:2730
 msgid "Circle Color"
@@ -2046,7 +2046,7 @@ msgstr "Kolor okręgu"
 
 #: ../ui/settings.glade:3310
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "Wyczyść buforowane strony podczas przewijania"
 
 #: ../ui/settings.glade:2596
 msgid "Colors"
