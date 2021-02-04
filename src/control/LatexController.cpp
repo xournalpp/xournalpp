@@ -210,20 +210,18 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
 }
 
 bool LatexController::isUpdating() {
-    return !updating_cancellable || !g_cancellable_is_cancelled(updating_cancellable);
+    return updating_cancellable && !g_cancellable_is_cancelled(updating_cancellable);
 }
 
 void LatexController::updateStatus() {
     GtkWidget* okButton = this->dlg.get("texokbutton");
     bool buttonEnabled = true;
-    bool updating = this->isUpdating();
     // Disable LatexDialog OK button while updating. This is a workaround
     // for the fact that 1) the LatexController only lives while the dialog
     // is open; 2) the preview is generated asynchronously; and 3) the `run`
     // method that inserts the TexImage object is called synchronously after
     // the dialog is closed with the OK button.
-    buttonEnabled = !updating;
-
+    buttonEnabled = !this->isUpdating();
 
     // Invalid LaTeX will generate an invalid PDF, so disable the OK button if
     // needed.
