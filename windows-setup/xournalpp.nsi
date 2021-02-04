@@ -59,6 +59,7 @@ Page custom InstallScopePage InstallScopePageLeave
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKLM"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\Xournal++"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "StartMenuEntry"
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER "Xournal++"
 
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuFolder
 
@@ -93,13 +94,16 @@ Function InstallScopePage
 	nsDialogs::Show
 FunctionEnd
 
+Var IsUserInstall
 Function InstallScopePageLeave
 	${NSD_GetState} $ScopeAdminInstallRadio $0
 
 	${If} $0 == 1
 		SetShellVarContext all
+		StrCpy $IsUserInstall ""
 	${Else}
 		SetShellVarContext current
+		StrCpy $IsUserInstall 1
 		; Set default install location
 		ReadRegStr $INSTDIR HKCU "Software\Xournal++" ""
 		${IF} $INSTDIR == ""
@@ -116,7 +120,6 @@ Section "" SecUninstallPrevious
 	ReadRegStr $R0 SHCTX "Software\Xournal++" ""
 	${If} $R0 == ""
 		; check for legacy installation
-		SetRegView 32
 		ReadRegStr $R0 HKCU "Software\Xournalpp" ""
 		${If} $R0 != ""
 			StrCpy $IsLegacyInstall 1
@@ -124,17 +127,35 @@ Section "" SecUninstallPrevious
 		SetRegView 64
 	${ENDIF}
 	${If} $R0 != ""
-        DetailPrint "Removing previous version located at $INSTDIR"
+        DetailPrint "Removing previous version located at $R0"
 		ExecWait '"$R0\Uninstall.exe /S"'
 
 		${If} $IsLegacyInstall == 1
-			; remove old registry keys
-			DeleteRegKey HKCU "Software\Classes\Xournal++ file"
-			DeleteRegKey HKCU "Software\Classes\Xournal++ Template Files"
-			DeleteRegKey HKCU "Software\Classes\Xournal file"
-			SetRegView 32
+			DetailPrint "Detected legacy installation (version 1.0.20 and below), cleaning up old files."
+			RMDir /r "$R0\bin"
+			RMDir /r "$R0\lib"
+			RMDir /r "$R0\share"
+			RMDir /r "$R0\ui"
+			RMDir "$R0"
+
+			; delete old start menu entry
+			DetailPrint "Removing old start menu entries"
+			${If} "$IsUserInstall" == ""
+				SetShellVarContext current
+			${EndIf}
+			!insertmacro MUI_STARTMENU_GETFOLDER Application $StartMenuFolder
+			Delete "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk"
+			Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
+			RMDir "$SMPROGRAMS\$StartMenuFolder"
+			${If} "$IsUserInstall" == ""
+				SetShellVarContext all
+			${EndIf}
+			
+			DetailPrint "Removing old registry keys"
+			DeleteRegKey HKLM "Software\Classes\Xournal++ file"
+			DeleteRegKey HKLM "Software\Classes\Xournal++ Template Files"
+			DeleteRegKey HKLM "Software\Classes\Xournal file"
 			DeleteRegKey HKCU "Software\Xournalpp"
-			SetRegView 64
 		${EndIf}
     ${EndIf}
 SectionEnd
@@ -168,10 +189,23 @@ SectionEnd
 !macroend
 
 !define SHCNE_ASSOCCHANGED 0x08000000
+!define SHCNE_CREATE 0x2
+!define SHCNE_DELETE 0x4
+
+!define SHCNF_IDLIST 0x0
+!define SHCNF_PATH 0x1
 !define SHCNF_FLUSH 0x1000
 !macro RefreshShellIcons
 	; Refresh shell icons. See https://nsis.sourceforge.io/Refresh_shell_icons
 	System::Call "shell32::SHChangeNotify(i ${SHCNE_ASSOCCHANGED}, i ${SHCNF_FLUSH}, i 0, i 0)"
+!macroend
+
+!macro RefreshShellIconCreate FILEPATH
+	System::Call 'shell32::SHChangeNotify(i ${SHCNE_CREATE}, i (${SHCNF_FLUSH} | ${SHCNF_PATH}), w "${FILEPATH}", i 0)'
+!macroend
+
+!macro RefreshShellIconDelete FILEPATH
+	System::Call 'shell32::SHChangeNotify(i ${SHCNE_DELETE}, i (${SHCNF_FLUSH} | ${SHCNF_PATH}), w "${FILEPATH}", i 0)'
 !macroend
 
 ;-------------------------------
@@ -237,6 +271,8 @@ Section "Xournal++" SecXournalpp
 		CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
 		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk" '"$INSTDIR\bin\xournalpp.exe"'
 		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" '"$INSTDIR\Uninstall.exe"'
+		
+		!insertmacro RefreshShellIconCreate "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk"
 	!insertmacro MUI_STARTMENU_WRITE_END
 
 	!insertmacro RefreshShellIcons
@@ -290,11 +326,13 @@ Section "Uninstall"
 	Delete "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk"
 	Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
 	RMDir "$SMPROGRAMS\$StartMenuFolder"
+	!insertmacro RefreshShellIconDelete "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk"
 
 	; Remove files
 	RMDir /r "$INSTDIR\bin"
 	RMDir /r "$INSTDIR\lib"
 	RMDir /r "$INSTDIR\share"
+	RMDir /r "$INSTDIR\ui"
 	Delete "$INSTDIR\Uninstall.exe"
 	RMDir "$INSTDIR"
 
