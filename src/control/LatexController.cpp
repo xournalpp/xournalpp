@@ -209,9 +209,7 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
     }
 }
 
-bool LatexController::isUpdating() {
-    return updating_cancellable && !g_cancellable_is_cancelled(updating_cancellable);
-}
+bool LatexController::isUpdating() { return updating_cancellable && !g_cancellable_is_cancelled(updating_cancellable); }
 
 void LatexController::updateStatus() {
     GtkWidget* okButton = this->dlg.get("texokbutton");
