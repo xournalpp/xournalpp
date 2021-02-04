@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 08:50+0000\n"
-"PO-Revision-Date: 2021-02-04 12:48\n"
+"POT-Creation-Date: 2021-02-04 19:16+0000\n"
+"PO-Revision-Date: 2021-02-04 20:43\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -562,20 +562,20 @@ msgstr "Eksport bez linii\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Nie znaleziono programu generatora LaTeX w ŚCIEŻCE: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Nie udało się przetworzyć polecenia generatora LaTeX: {1}"
 
 #: ../src/control/LatexController.cpp:49
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Nie udało się odczytać pliku globalnego szablonu. Sprawdź swoje ustawienia."
 
 #: ../src/control/jobs/BaseExportJob.cpp:93
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Nie udało się odnaleźć ścieżki z następującym błędem: {1}"
 
 #: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -589,7 +589,7 @@ msgstr "Wypełnij"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:315
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Filtr nacisku wejściowego. Pomnóż nacisk przez mnożnik nacisku. Jeśli jest mniejszy niż minimum, użyty zostanie nacisk minimalny."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fine"
@@ -613,11 +613,11 @@ msgstr "Pobierz wersję xournalpp"
 
 #: ../src/control/LatexController.cpp:44
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Plik szablonu globalnego nie istnieje. Sprawdź swoje ustawienia."
 
 #: ../src/control/LatexController.cpp:55
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Plik szablonu globalnego nie jest zwykłym plikiem. Sprawdź swoje ustawienia. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Go to first page"
@@ -710,11 +710,11 @@ msgstr "Wstaw stronę"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Izometryczna kropkowana"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Wykres izometryczny"
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
@@ -722,7 +722,7 @@ msgstr "Skocz do strony (pierwsza strona: 1)"
 
 #: ../src/control/LatexController.cpp:181
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "LaTeX napotkał błąd: {1} (kod zakończenia: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -822,7 +822,7 @@ msgstr "Brak stron do wyeksportowania!"
 
 #: ../src/control/Control.cpp:1230
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Brak dostępnych stron pdf do dodania. Może być konieczne ponowne otwarcie dokumentu."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
@@ -835,7 +835,8 @@ msgstr "OK"
 #: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Eksportuj tylko strony określone przez ZAKRES (np. \"2-3,5,7-\")\n"
+"                                 Działa jedynie z -p/--create-pdf lub -i/--create-img"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -1122,19 +1123,24 @@ msgstr "Separator"
 #: ../src/control/XournalMain.cpp:664
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Ustaw DPI dla eksportu PNG. Domyślnie jest to 300\n"
+"                                 Działa jedynie z -i/--create-img=foo.png"
 
 #: ../src/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Ustaw wysokość strony dla eksportu PNG\n"
+"                                 Działa jedynie z -i/--create-img=foo.png\n"
+"                                 Ignorowane dla --export-png-dpi lub --export-png-width"
 
 #: ../src/control/XournalMain.cpp:668
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Ustaw szerokość strony dla eksportu PNG\n"
+"                                 Działa jedynie z -i/--create-img=foo.png\n"
+"                                 Ignorowane dla --export-png-dpi"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Shape Recognizer"
@@ -1188,7 +1194,7 @@ msgstr "Wspierane pliki"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
-msgstr ""
+msgstr "Domyślne ustawienie systemowe"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
@@ -1238,7 +1244,7 @@ msgstr "PDF w tle nie został znaleziony."
 
 #: ../src/control/Control.cpp:2008
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Załadowany plik ma nowszą wersję formatu niż ta obecnie obsługiwana przez tę wersję Xournal++, może to spowodować, że nie załaduje się prawidłowo. Otworzyć mimo to?"
 
 #: ../src/control/xojfile/LoadHandler.cpp:117
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1266,11 +1272,11 @@ msgstr "Najnowszy plik loggera: {1}"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:311
 msgid "The new input system must be enabled to change this setting. "
-msgstr ""
+msgstr "Nowy system wejścia musi być włączony, aby zmienić to ustawienie. "
 
 #: ../src/gui/dialog/SettingsDialog.cpp:277
 msgid "The touch workaround must be disabled to change this setting. "
-msgstr ""
+msgstr "Obejście funkcji dotyku musi być wyłączone, aby zmienić to ustawienie. "
 
 #: ../src/control/XournalMain.cpp:154
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
@@ -1319,7 +1325,7 @@ msgstr "Próba awaryjnego zapisu aktualnie otwartego dokumentu…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Nie można otworzyć pliku szablonu globalnego w {1}. Czy istnieje?"
 
 #: ../src/gui/PageView.cpp:348
 msgid "Unable to play audio recording {1}"
@@ -1327,7 +1333,7 @@ msgstr "Nie można odtworzyć nagrania audio: {1}"
 
 #: ../src/control/Control.cpp:1244
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Nie można pobrać strony pdf."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 #: ../src/undo/UndoRedoHandler.cpp:203
@@ -1376,7 +1382,7 @@ msgstr "Niezapisany dokument"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Użyj dwóch palców do przesuwania/powiększenia i jednego palca, aby użyć wybranego narzędzia."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Vertical Space"
@@ -1405,7 +1411,7 @@ msgstr "Z PDF w tle"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:288
 msgid "Without the new input system, two-finger gestures will not zoom/pan while drawing. Enable the new input system and disable the touch workaround to change this setting."
-msgstr ""
+msgstr "Bez nowego systemu wejściowego gesty przy pomocy dwóch palców nie będą powiększać/przesuwać widoku podczas rysowania. Włącz nowy system wejściowy i wyłącz obejście dotyku aby zmienić to ustawienie."
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
@@ -1457,7 +1463,7 @@ msgstr "Nie ma żadnych stron PDF do wybrania. Anulowano działanie.\n"
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Używasz gałęzi \"{1}/{2}. \"Wyślij raport błędu\" przekierowuje Cię do śledzenia błędów tego repozytorium."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1605,35 +1611,35 @@ msgstr "wybielanie"
 msgid "xoj-File: {1}"
 msgstr "Plik xoj: {1}"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:71
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:110
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr "xoj-preview-extractor: wywołaj z argumentami WEJŚCIE.xoj WYJŚCIE.png"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:143
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:176
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "xoj-preview-extractor: nie znaleziono ikony \"{1}\""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:92
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:131
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr "xoj-preview-extractor: plik \"{1}\" nie zawiera podglądu"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:84
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:123
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr "xoj-preview-extractor: plik \"{1}\" nie jest plikiem .xoj"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:97
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:136
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: nie znaleziono podglądu ani strony, możliwe że plik jest uszkodzony"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:88
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:127
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr "xoj-preview-extractor: otwieranie pliku wejściowego \"{1}\" nie powiodło się"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:156
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor: otwieranie pliku wyjściowego \"{1}\" nie powiodło się"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:163
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:200
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: stworzono miniaturkę"
 
@@ -1689,7 +1695,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\tSkrócona nazwa dnia tygodnia (np. Wt.)\n"
+"%A\t\tPełna nazwa dnia tygodnia (np. Czwartek)\n"
+"%b\t\tSkrócona nazwa miesiąca (np. Sierp.)\n"
+"%B\t\tPełna nazwa miesiąca (np. Sierpień)\n"
+"%c\t\tReprezentacja daty oraz czasu (np. wt. Sierp. 23 14:55:02 2001)\n"
+"%d\t\tDzień miesiąca (01-31)\n"
+"%F\t\tData (np. 2001-08-23)\n"
+"%H\t\tGodzina w formacie 24h (00-23)\n"
+"%I\t\tGodzina w formacie 12h (01-12)\n"
+"%j\t\tDzień roku (001-366)\n"
+"%m\t\tMiesiąc jako liczba dziesiętna (01-12)\n"
+"%M\t\tMinuta (00-59)\n"
+"%p\t\tAM lub oznaczenie PM (np. PM)\n"
+"%S\t\tSekundy (00-61)\n"
+"%U\t\tNumer tygodnia w pierwszą niedzielę jako pierwszy dzień tygodnia pierwszego (00-53)\n"
+"%w\t\tDni tygodnia jako liczba dziesiętna z niedzielą jako 0 (0-6)\n"
+"%W\t\tTydzień jako liczba dziesiętna z pierwszym poniedziałkiem jako pierwszy dzień pierwszego tygodnia (00-53)\n"
+"%x\t\tSkrócona data (np. 08/23/01)\n"
+"%X\t\tGodzina (np. 14:55:02)\n"
+"%y\t\tDwie ostatnie cyfry roku (00-99)\n"
+"%Y\t\tRok (np. 2001)\n"
+"%Z\t\tNazwa lub skrót strefy czasowej (np. CDT)\n"
+"%%\t\tZnak %"
 
 #: ../ui/settings.glade:4390
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1699,7 +1727,7 @@ msgstr "... ORAZ ile czasu musi upłynąć od ostatniego uderzenia.\n\n"
 
 #: ../ui/settings.glade:4534
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1450
 msgid "1"
@@ -1707,11 +1735,11 @@ msgstr "1"
 
 #: ../ui/settings.glade:5163
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:2173
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:2818
 msgid "30"
@@ -1744,7 +1772,8 @@ msgstr "<b>Domyślne</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Ustawienia eksportu dokumentu</b>\n"
+"Ustaw parametry eksportu"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1755,7 +1784,8 @@ msgstr "<b>Pusta skrzynia narzędzi</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Przeźroczystość wypełnienia</b>\n"
+"Wybierz poziom widoczności dla koloru wypełnienia"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -1824,11 +1854,12 @@ msgstr "<i>Umieść linijkę na ekranie i przesuń suwak, aż obie linijki będ�
 #: ../ui/settings.glade:4493
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Re-renderowanie tła PDF częściej podczas powiększania dla lepszej jakości renderowania. \n"
+"<b>Uwaga:</b> Nie powinno to mieć wpływu na jakość druku.</i>"
 
 #: ../ui/settings.glade:5327
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>Wybierz język (wymaga ponownego uruchomienia)</i>"
 
 #: ../ui/settings.glade:4655
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -1836,7 +1867,7 @@ msgstr "<i>Wybierz narzędzie i ustawienia naciśnięcia przycisku domyślnego.<
 
 #: ../ui/settings.glade:1278
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>Niektóre urządzenia zgłaszają niespodziewanie mały lub duży nacisk. Można to naprawić poprzez ustawienie minimalnego nacisku lub skalowanie nacisku zgłoszonego przez urządzenie.</i>"
 
 #: ../ui/settings.glade:1952
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -1845,7 +1876,8 @@ msgstr "<i>Sprecyzuj komendy które są wywoływane gdy Rozpoznawanie Dłoni zos
 #: ../ui/settings.glade:4911
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>Określ urządzenia audio używane do nagrywania i odtwarzania załączników audio. \n"
+"Jeśli jest dostępne wybierz <small><tt>pulse</tt></small> jako urządzenie wejścia / wyjścia.</i>"
 
 #: ../ui/settings.glade:1520
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -1869,11 +1901,11 @@ msgstr "<i>Użyj gestów uszczypnięcia aby przybliżyć strony dziennika.</i>"
 
 #: ../ui/settings.glade:2309
 msgid "<i>Use the touchscreen like a multi-touch-aware pen (requires new input system).</i>"
-msgstr ""
+msgstr "<i>Użyj ekranu dotykowego jak tablet wielodotykowy (wymaga użycia nowego systemu wprowadzania).</i>"
 
 #: ../ui/settings.glade:1413
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
+msgstr "<i>W pewnych zestawianiach sprzętowych, dane z tabletu mają artefakty na początku. Można tego uniknąć poprzez zignorowanie kilku pierwszych śladów kiedy długopis zaczyna pisać.</i>"
 
 #: ../ui/settings.glade:1736
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -1903,7 +1935,7 @@ msgstr "Dodaj opcjonalny odstęp pionowy"
 
 #: ../ui/settings.glade:4066
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "Po zmianie rozmiaru zaznaczenia, szerokość linii wszystkich uderzeń będzie taka sama jak przed operacją zmiany rozmiaru. "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
@@ -1921,15 +1953,15 @@ msgstr "Wszystkie trzy warunki muszą być spełnione przed zignorowaniem śladu
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Zawsze sprawdzaj zależności LaTeX przed uruchomieniem"
 
 #: ../ui/main.glade:1147
 msgid "Append New Pdf Pages"
-msgstr ""
+msgstr "Dołącz nowe strony PDF"
 
 #: ../ui/settings.glade:1489
 msgid "Artifact workaround"
-msgstr ""
+msgstr "Obejście artefaktu"
 
 #: ../ui/settings.glade:5007
 msgid "Audio Devices"
