@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-04 19:16+0000\n"
-"PO-Revision-Date: 2021-02-05 07:54\n"
+"PO-Revision-Date: 2021-02-05 08:54\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -2242,7 +2242,7 @@ msgstr "Włącz rysowanie poza oknem programu <i>(Rysunek nie zatrzyma się na o
 
 #: ../ui/settings.glade:1816
 msgid "Enable internal Hand Recognition"
-msgstr ""
+msgstr "Włącz wewnętrzne rozpoznawanie dłoni"
 
 #: ../ui/settings.glade:713
 msgid "Enable new input system (Requires restart)"
@@ -2266,7 +2266,7 @@ msgstr "Op_cje gumki"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "Typ gumki - nie zmieniaj"
 
 #: ../ui/settings.glade:771
 msgid "Experimental Input System"
@@ -2282,20 +2282,20 @@ msgstr "Eksportuj jako..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Stopniowy eksport warstw"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Eksportuj dokument bez żadnego tła (Brak) lub tylko z tłem PDF i obrazem (bez linii) lub ze wszystkimi typami tła (All)."
 
 #: ../ui/main.glade:1626 ../ui/main.glade:1831
 msgid "Fi_ll"
-msgstr ""
+msgstr "Wy_pełnij"
 
 #: ../ui/main.glade:1636 ../ui/main.glade:1841
 msgid "Fill opacity"
-msgstr ""
+msgstr "Krycie wypełnienia"
 
 #: ../ui/main.glade:2365
 msgid "Find next occurrence of the search string"
@@ -2323,7 +2323,7 @@ msgstr "Przyrost"
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Ustawienia ogólne LaTeX"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
@@ -2392,16 +2392,18 @@ msgstr "Usta_wienia zakreślacza"
 #: ../ui/settings.glade:4347
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Jak krótki (ekran mm) pociągnięcia I...\n\n"
+"<i>Zalecane: 1 mm</i>"
 
 #: ../ui/settings.glade:4327
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Jak krótki (czas) I...\n\n"
+"<i>Zalecane: 150 ms</i>"
 
 #: ../ui/settings.glade:4249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "Jeśli aktywowane, kształty, które zostały rozpoznane przez rozpoznawanie kształtu zostaną automatycznie dopasowane do siatki. Może to prowadzić do niespodziewanych wyników, jeśli podczas pisania włączysz rozpoznawanie kształtu."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
