@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-04 19:16+0000\n"
-"PO-Revision-Date: 2021-02-05 12:06\n"
+"PO-Revision-Date: 2021-02-05 17:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -835,7 +835,8 @@ msgstr "OK"
 #: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportiere nur die durch den Bereich angegebenen Seiten (z.B. \"2-3,5,7-\")\n"
+"                                 Kein Effekt ohne -p/--create-pdf oder -i/--create-img"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -952,7 +953,7 @@ msgstr "Präsentationsmodus"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Die zuvor ausgewählte Sprache ist nicht mehr verfügbar!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Print"
@@ -1122,19 +1123,24 @@ msgstr "Trenner"
 #: ../src/control/XournalMain.cpp:664
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "DPI für PNG-Exporte festlegen. Standard ist 300\n"
+"                                 Kein Effekt ohne -i/--create-img=foo.png"
 
 #: ../src/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Seitenhöhe für Export von PNG-Dateien festlegen\n"
+"                                 Kein Effekt ohne -i/--create-img=foo.png\n"
+"                                 Ignoriert wenn --export-png-dpi oder --export-png-width verwendet wird"
 
 #: ../src/control/XournalMain.cpp:668
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Seitenbreite für den Export von PNG-Dateien festlegen\n"
+"                                 Kein Effekt ohne -i/--create-img=foo.png\n"
+"                                 Ignoriert wenn --export-png-dpi verwendet wird"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Shape Recognizer"
@@ -1188,7 +1194,7 @@ msgstr "Unterstützte Dateiformate"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
-msgstr ""
+msgstr "Systemstandard"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
@@ -1542,7 +1548,7 @@ msgstr "Radierer"
 
 #: ../src/control/Control.cpp:1945
 msgid "file: {1}"
-msgstr ""
+msgstr "datei: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -2672,7 +2678,7 @@ msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/settings.glade:2782
 msgid "Radius"
-msgstr ""
+msgstr "Radius"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
@@ -2696,15 +2702,15 @@ msgstr "Aufnahmequalität"
 
 #: ../ui/main.glade:1206
 msgid "Rename Layer"
-msgstr ""
+msgstr "Ebene umbenennen"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Ausgewählte Ebene umbenennen"
 
 #: ../ui/settings.glade:4108
 msgid "Resizing"
-msgstr ""
+msgstr "Skalierung"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
