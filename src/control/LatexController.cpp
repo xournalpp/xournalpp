@@ -169,15 +169,10 @@ void LatexController::handleTexChanged(GtkTextBuffer* buffer, LatexController* s
 }
 
 void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, LatexController* self) {
-    if (!self->isUpdating()) {
-        return;
-    }
     GError* err = nullptr;
     GSubprocess* proc = G_SUBPROCESS(procObj);
     g_subprocess_wait_check_finish(proc, res, &err);
 
-    const string currentTex = self->dlg.getBufferContents();
-    bool shouldUpdate = self->lastPreviewedTex != currentTex;
     if (err != nullptr) {
         if (g_error_matches(err, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
             // the render was canceled
@@ -194,7 +189,11 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
         fs::path pdfPath = self->texTmpDir / "tex.pdf";
         fs::remove(pdfPath);
         g_error_free(err);
-    } else {
+    }
+
+    const string currentTex = self->dlg.getBufferContents();
+    bool shouldUpdate = self->lastPreviewedTex != currentTex;
+    if (err == nullptr) {
         self->isValidTex = true;
         self->temporaryRender = self->loadRendered(currentTex);
         if (self->temporaryRender != nullptr) {
