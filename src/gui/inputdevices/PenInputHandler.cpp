@@ -182,6 +182,11 @@ double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView
 }
 
 auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
+    // If we're not handling input, do nothing!
+    if (!this->inputRunning) {
+        return false;
+    }
+
     /*
      * Workaround for misbehaving devices where Enter events are not published every time
      * This is required to disable outside scrolling again
