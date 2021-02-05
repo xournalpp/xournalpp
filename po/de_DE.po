@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-04 19:16+0000\n"
-"PO-Revision-Date: 2021-02-05 17:28\n"
+"PO-Revision-Date: 2021-02-05 18:29\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1272,7 +1272,7 @@ msgstr "Der aktuellste Logdateiname: {1}"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:311
 msgid "The new input system must be enabled to change this setting. "
-msgstr ""
+msgstr "Das neue Eingabesystem muss aktiviert sein, um diese Einstellung zu ändern. "
 
 #: ../src/gui/dialog/SettingsDialog.cpp:277
 msgid "The touch workaround must be disabled to change this setting. "
@@ -1382,7 +1382,7 @@ msgstr "Ungespeichertes Dokument"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Verwenden Sie zwei Finger zum Vergrößern und einen Finger, um das ausgewählte Werkzeug zu verwenden."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Vertical Space"
@@ -1463,7 +1463,7 @@ msgstr "Es gibt keine PDF Seiten zum Auswählen. Abbruch.\n"
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Sie verwenden folgenden Branch: \"{1}/{2}\". Die Bug-Report-senden-Funktion wird Sie zum Fehlerverfolger dieses Repositories leiten."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1661,11 +1661,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4550
 msgid "%."
@@ -1950,7 +1950,7 @@ msgstr "Alle drei Bedingungen müssen erfüllt sein, bevor der Strich ignoriert 
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Überprüfen Sie vor dem Ausführen immer die LaTeX-Abhängigkeiten"
 
 #: ../ui/main.glade:1147
 msgid "Append New Pdf Pages"
@@ -1958,7 +1958,7 @@ msgstr "Neue PDF-Seiten anhängen"
 
 #: ../ui/settings.glade:1489
 msgid "Artifact workaround"
-msgstr "künstliche Notlösung"
+msgstr "Behebung von Artefakten"
 
 #: ../ui/settings.glade:5007
 msgid "Audio Devices"
@@ -1999,7 +1999,7 @@ msgstr "Hintergrundfarbe zwischen den Seiten"
 #: ../ui/settings.glade:2669
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Großes Stiftsymbol"
 
 #: ../ui/settings.glade:2873
 msgid "Border Color"
@@ -2031,7 +2031,7 @@ msgstr "Taste 2"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Wählen Sie eine globale LaTeX-Vorlagen-Datei"
 
 #: ../ui/settings.glade:2716 ../ui/settings.glade:2859
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2043,7 +2043,7 @@ msgstr "Farbe des Kreises"
 
 #: ../ui/settings.glade:3310
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "Cache beim Scrollen leeren"
 
 #: ../ui/settings.glade:2596
 msgid "Colors"
@@ -2317,7 +2317,7 @@ msgstr "Gain"
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Allgemeine LaTeX-Einstellungen"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
@@ -2413,7 +2413,7 @@ msgstr "Ignorier-Zeit ( ms)"
 
 #: ../ui/settings.glade:1431
 msgid "Ignore the first"
-msgstr "Den ersten ignorieren"
+msgstr "Die ersten"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
@@ -2453,7 +2453,7 @@ msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "LaTeX-Einstellungen"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
@@ -2499,7 +2499,7 @@ msgstr "Maximale Länge (mm)"
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 msgstr "Tastenereignisse mit Spitzenereignissen des Stifts zusammenfügen\n"
-"<i>(Wähle diese Option, wenn</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>als Rückgabe</i> \"<tt>on</tt> <i>zeigt)</i>"
+"<i>(Wähle diese Option, wenn</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>als Rückgabe</i> \"<tt>on</tt> <i>anzeigt)</i>"
 
 #: ../ui/settings.glade:1091
 msgid "Middle Mouse Button"
@@ -2650,7 +2650,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3261
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Seiten vorab laden"
 
 #: ../ui/main.glade:437
 msgid "Preferences"
@@ -2666,7 +2666,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1312
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Druckmultiplikator: "
 
 #: ../ui/settings.glade:1382
 msgid "Pressure Sensitivity"
@@ -2798,7 +2798,7 @@ msgstr "Seitenleiste auf der rechten Seite anzeigen"
 
 #: ../ui/main.glade:509
 msgid "Show toolbars"
-msgstr ""
+msgstr "Werkzeugleisten anzeigen"
 
 #: ../ui/settings.glade:2961
 msgid "Show vertical scrollbar on the left side"
@@ -2812,7 +2812,7 @@ msgstr ""
 #: ../ui/settings.glade:2668
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Kleines Punkt-Symbol"
 
 #: ../ui/settings.glade:4267
 msgid "Snapping"
@@ -2864,7 +2864,7 @@ msgstr "Werkzeugleisten"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "Vorlageneinstellungen"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -2979,7 +2979,7 @@ msgstr "Weiß übermalen"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Breite"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3271,7 +3271,7 @@ msgstr "aktiviert,"
 
 #: ../ui/settings.glade:1466
 msgid "events"
-msgstr "Ereignisse"
+msgstr "Ereignisse ignorieren"
 
 #: ../ui/settings.glade:321
 msgid "every"
