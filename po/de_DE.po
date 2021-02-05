@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-04 19:16+0000\n"
-"PO-Revision-Date: 2021-02-05 11:03\n"
+"PO-Revision-Date: 2021-02-05 12:06\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1851,7 +1851,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5327
 msgid "<i>Select language (requires restart)</i>"
-msgstr "<i>Sprache wählen (Neustart erforderlich)</i>"
+msgstr "<i>Sprache auswählen (Neustart erforderlich)</i>"
 
 #: ../ui/settings.glade:4655
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -1948,7 +1948,7 @@ msgstr ""
 
 #: ../ui/main.glade:1147
 msgid "Append New Pdf Pages"
-msgstr "Neue Pdf-Seiten anhängen"
+msgstr "Neue PDF-Seiten anhängen"
 
 #: ../ui/settings.glade:1489
 msgid "Artifact workaround"
@@ -2073,7 +2073,7 @@ msgstr "Mauszeiger"
 
 #: ../ui/settings.glade:2651
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Eingabezeiger-Symbol des Stifts"
 
 #: ../ui/settings.glade:2068
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2166,7 +2166,7 @@ msgstr "Ziehen Sie Objekte von hier in die Werkzeugleiste und zurück."
 
 #: ../ui/main.glade:1387
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Koordinatensystem zeichnen"
 
 #: ../ui/main.glade:1398
 msgid "Draw _Line"
@@ -2270,7 +2270,7 @@ msgstr "Exportieren als..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Exportiere Ebenen progressiv"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
@@ -2283,7 +2283,7 @@ msgstr "Ausfü_llen"
 
 #: ../ui/main.glade:1636 ../ui/main.glade:1841
 msgid "Fill opacity"
-msgstr ""
+msgstr "Füll-Deckkraft"
 
 #: ../ui/main.glade:2365
 msgid "Find next occurrence of the search string"
@@ -2323,7 +2323,7 @@ msgstr "Global"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "Dateipfad der globalen Vorlage"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2395,7 +2395,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr "Falls aktiviert, überprüfen Sie das benötigte LaTeX-Pakete installiert sind und die LaTeX-Befehle verfügbar sind, bevor das LaTeX-Tool gestartet wird."
+msgstr "Falls aktiviert, überprüfen Sie, dass die benötigten LaTeX-Pakete installiert sind und die LaTeX-Befehle verfügbar sind, bevor das LaTeX-Tool gestartet wird."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
@@ -2411,7 +2411,7 @@ msgstr "Den ersten ignorieren"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Bildqualität"
 
 #: ../ui/settings.glade:4935
 msgid "Input Device"
@@ -2451,7 +2451,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "LaTeX-Generierungsbefehl"
 
 #: ../ui/settings.glade:5364 ../ui/settings.glade:5412
 msgid "Language"
@@ -2492,7 +2492,8 @@ msgstr "Maximale Länge (mm)"
 #: ../ui/settings.glade:921
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Tastenereignisse mit Spitzenereignissen des Stifts zusammenfügen\n"
+"<i>(Wähle diese Option, wenn</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>als Rückgabe</i> \"<tt>on</tt> <i>zeigt)</i>"
 
 #: ../ui/settings.glade:1091
 msgid "Middle Mouse Button"
