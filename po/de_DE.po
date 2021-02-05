@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-04 19:16+0000\n"
-"PO-Revision-Date: 2021-02-04 20:43\n"
+"PO-Revision-Date: 2021-02-05 11:03\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -520,13 +520,15 @@ msgstr "Fehlerlog konnte nicht gelöscht werden. Sie müssen die Datei manuell l
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Exportieren als PDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "Als Bilddatei exportieren (Eine pro Seite)\n"
+"                                 Ausgabeformat anhand der Dateiendung schätzen\n"
+"                                 Unterstützte Formate: .png, .svg"
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
@@ -538,30 +540,36 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Schichten progressiv exportieren\n"
+"                                 Bei Export als PDF werden Ebenen nacheinander abgebildet.\n"
+"                                 Dies resultiert in N exportierte Seiten pro Seite mit N Ebenen\n"
+"                                 Die resultierende PDF-Datei kann als Präsentation benutzt werden.\n"
 
 #: ../src/control/XournalMain.cpp:644
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Exportiere ohne Hintergrund\n"
+"                                 Die exportierte Datei hat einen transparenten oder weißen Hintergrund.\n"
+"                                 Abhängig von der Unterstützung des jeweiligen Dateiformats\n"
 
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Exportiere ohne Zeilenlinien\n"
+"                                 Die exportierte Datei hat keine Zeilenlinien\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Konnte LaTeX nicht in \"PATH\" finden: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Fehler bei der Erkennung eines LaTeX-Befehls: {1}"
 
 #: ../src/control/LatexController.cpp:49
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Fehler beim Lesen der globalen Vorlagen-Datei. Bitte überprüfen Sie Ihre Einstellungen."
 
 #: ../src/control/jobs/BaseExportJob.cpp:93
 msgid "Failed to resolve path with the following error:\n"
@@ -581,7 +589,7 @@ msgstr "Füllung"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:315
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Druck vom Eingabegerät filtern. Passe den Druck mit dem Druckmultiplikator an. Falls dieser kleiner als das Minimum ist, benutze den minimalen Druck."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fine"
@@ -605,11 +613,11 @@ msgstr "Version von xournalpp herunterladen"
 
 #: ../src/control/LatexController.cpp:44
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Globale Vorlagen-Datei existiert nicht. Bitte überprüfen Sie die Einstellungen."
 
 #: ../src/control/LatexController.cpp:55
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Die globale Vorlagen-Datei ist keine reguläre Datei. Bitte überprüfen Sie Ihre Einstellungen. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Go to first page"
@@ -714,7 +722,7 @@ msgstr "Springe zur Seite (erste Seite: 1)"
 
 #: ../src/control/LatexController.cpp:181
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "Fehler bei der LaTeX-Generierung: {1} (Exit-Code: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -814,7 +822,7 @@ msgstr "Keine Seiten zu exportieren!"
 
 #: ../src/control/Control.cpp:1230
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Es stehen keine PDF-Seiten zum Anhängen zur Verfügung. Möglicherweise müssen Sie das Dokument erneut öffnen."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
@@ -2492,7 +2500,7 @@ msgstr "Mittlere Maustaste"
 
 #: ../ui/settings.glade:1301
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Minimaler Druck:"
 
 #: ../ui/settings.glade:1178 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2541,7 +2549,7 @@ msgstr "Kein Symbol"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "Keine Zeilenlinien"
 
 #: ../ui/exportSettings.glade:43
 msgid "None"
@@ -2553,7 +2561,7 @@ msgstr "Verschiebe die erste Seite um so viele Seiten wenn das <b>Mehrseitige La
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "Deckkraft-Einstellungen"
 
 #: ../ui/settings.glade:971
 msgid "Options"
@@ -2565,7 +2573,7 @@ msgstr "Ausgabegerät"
 
 #: ../ui/settings.glade:4573
 msgid "PDF Cache"
-msgstr ""
+msgstr "PDF-Zwischenspeicher"
 
 #: ../ui/main.glade:1090
 msgid "P_revious annotated Page"
@@ -2611,7 +2619,7 @@ msgstr "Stift Optionen"
 
 #: ../ui/settings.glade:3330
 msgid "Performance"
-msgstr ""
+msgstr "Leistung"
 
 #: ../ui/settings.glade:5204
 msgid "Playback Settings"
