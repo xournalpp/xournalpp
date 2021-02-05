@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-04 19:16+0000\n"
-"PO-Revision-Date: 2021-02-04 21:50\n"
+"PO-Revision-Date: 2021-02-05 07:54\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -2062,15 +2062,15 @@ msgstr "Skonfiguruj szablon nowej strony"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "Zamiast tego skopiuj tło bieżącej strony"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "Zamiast tego skopiuj bieżący rozmiar strony"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr ""
+msgstr "Skopiuj tło bieżącej strony zamiast używać tła ustawionego powyżej."
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
@@ -2098,7 +2098,7 @@ msgstr "Domyślna nazwa zapisu"
 
 #: ../ui/settings.glade:5150
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "Domyślny czas przewijania (w sekundach)"
 
 #: ../ui/settings.glade:440
 msgid "Default name: "
@@ -2157,7 +2157,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "\t    Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Przeciągnięcie w LEWO od punktu startowego zachowuje się jak przytrzymanie klawisza Shift.\n"
+"\tPrzeciągnięcie w górę działa tak, jakby był trzymany klawisz Control.\n\n"
+"\tPromień determinacji: Promień, w którym modyfikatory zostaną zachowane do momentu zakończenia rysowania.\n\n"
+"\t<i>Przydatne do pracy bez klawiatury.</i>"
 
 #: ../ui/settings.glade:3966
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2207,7 +2210,7 @@ msgstr "Aktywuj"
 
 #: ../ui/settings.glade:3961
 msgid "Enable  with determination radius of "
-msgstr ""
+msgstr "Włącz z promieniem określenia "
 
 #: ../ui/settings.glade:597
 msgid "Enable Autoloading of Journals"
@@ -2219,11 +2222,11 @@ msgstr "Aktywuj Automatyczny Zapis"
 
 #: ../ui/settings.glade:2256
 msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
-msgstr ""
+msgstr "Włącz obejście przewijania / GTK Touch (wymaga ponownego uruchomienia)"
 
 #: ../ui/settings.glade:950
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Włącz wnioskowanie nacisku <i>(Zgaduj siłę nacisku na podstawie prędkości rysowania, gdy nacisk dostarczany przez urządzenie jest niedostępny)</i>"
 
 #: ../ui/settings.glade:1243
 msgid "Enable Pressure Sensitivity"
@@ -2235,7 +2238,7 @@ msgstr "Włącz akcję dotknięcia"
 
 #: ../ui/settings.glade:890
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "Włącz rysowanie poza oknem programu <i>(Rysunek nie zatrzyma się na obramowaniu okna)</i>"
 
 #: ../ui/settings.glade:1816
 msgid "Enable internal Hand Recognition"
