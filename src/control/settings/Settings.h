@@ -258,9 +258,6 @@ public:
     bool getTouchDrawingEnabled() const;
     void setTouchDrawingEnabled(bool b);
 
-    bool isTouchWorkaround() const;
-    void setTouchWorkaround(bool b);
-
     bool isPressureGuessingEnabled() const;
     void setPressureGuessingEnabled(bool b);
 
@@ -842,10 +839,6 @@ private:
     /// Grid size for Snapping
     double snapGridSize{};
 
-    /**
-     * Do not use GTK Scrolling / Touch handling
-     */
-    bool touchWorkaround{};
 
     // Touchscreens act like multi-touch-aware pens.
     bool touchDrawing{};

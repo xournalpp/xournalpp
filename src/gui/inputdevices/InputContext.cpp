@@ -18,8 +18,6 @@ InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling) {
     this->mouseHandler = new MouseInputHandler(this);
     this->keyboardHandler = new KeyboardInputHandler(this);
 
-    this->touchWorkaroundEnabled = this->getSettings()->isTouchWorkaround();
-
     for (const InputDevice& savedDevices: this->view->getControl()->getSettings()->getKnownInputDevices()) {
         this->knownDevices.insert(savedDevices.getName());
     }
@@ -117,7 +115,7 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
         bool touchDrawingEnabled = this->getSettings()->getTouchDrawingEnabled();
 
         // trigger touch drawing depending on the setting
-        if (this->touchWorkaroundEnabled || touchDrawingEnabled) {
+        if (touchDrawingEnabled) {
             return this->touchDrawingHandler->handle(event) || this->touchHandler->handle(event);
         }
 

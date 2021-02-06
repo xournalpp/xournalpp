@@ -29,12 +29,6 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
-    g_signal_connect(get("cbNewInputSystem"), "toggled", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
-                         self->updateTouchDrawingOptions();
-                         self->updatePressureSensitivityOptions();
-                     }),
-                     this);
-
     g_signal_connect(
             get("cbEnablePressureInference"), "toggled",
             G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->updatePressureSensitivityOptions(); }),
@@ -111,10 +105,6 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                          self->enableWithCheckbox("cbEnableZoomGestures", "gdStartZoomAtSetting");
                      }),
                      this);
-
-    g_signal_connect(
-            get("cbTouchWorkaround"), "toggled",
-            G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) { self->updateTouchDrawingOptions(); }), this);
 
     g_signal_connect(get("cbStylusCursorType"), "changed", G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
                          self->customStylusIconTypeChanged();
@@ -263,59 +253,20 @@ void SettingsDialog::disableWithCheckbox(const string& checkboxId, const string&
     gtk_widget_set_sensitive(get(widgetId), !enabled);
 }
 
-/**
- * Listeners specific to portions of the settings pane.
- */
-
-void SettingsDialog::updateTouchDrawingOptions() {
-    GtkWidget* touchDrawingCheckbox = get("cbTouchDrawing");
-
-    if (getCheckbox("cbTouchWorkaround")) {
-        gtk_widget_set_sensitive(touchDrawingCheckbox, false);
-
-        gtk_widget_set_tooltip_text(touchDrawingCheckbox,
-                                    _("The touch workaround must be disabled to change this setting. "));
-
-        loadCheckbox("cbTouchDrawing", true);
-    } else {
-        gtk_widget_set_tooltip_text(touchDrawingCheckbox,
-                                    _("Use two fingers to pan/zoom and one finger to use the selected tool."));
-    }
-
-
-    if (!getCheckbox("cbNewInputSystem")) {
-        gtk_widget_set_tooltip_text(touchDrawingCheckbox,
-                                    _("Without the new input system, two-finger gestures will not zoom/pan while "
-                                      "drawing. Enable the new input system and disable the touch workaround to"
-                                      " change this setting."));
-        loadCheckbox("cbTouchDrawing", getCheckbox("cbTouchWorkaround"));
-        gtk_widget_set_sensitive(touchDrawingCheckbox, false);
-    } else {
-        disableWithCheckbox("cbTouchWorkaround", "cbTouchDrawing");
-    }
-}
-
 void SettingsDialog::updatePressureSensitivityOptions() {
     GtkWidget* sensitivityOptionsFrame = get("framePressureSensitivityScale");
-    bool haveNewInputSystem = getCheckbox("cbNewInputSystem");
     bool havePressureInput = getCheckbox("cbSettingPresureSensitivity") || getCheckbox("cbEnablePressureInference");
 
     if (!havePressureInput) {
         gtk_widget_set_tooltip_text(sensitivityOptionsFrame,
                                     _("Enable pressure sensitivity or pressure inference to change this setting!"));
     } else {
-    }
 
-    if (!haveNewInputSystem) {
-        gtk_widget_set_tooltip_text(sensitivityOptionsFrame,
-                                    _("The new input system must be enabled to change this setting. "));
-        gtk_widget_set_sensitive(sensitivityOptionsFrame, false);
-    } else {
         gtk_widget_set_tooltip_text(sensitivityOptionsFrame,
                                     _("Filter input pressure. Multiply the pressure by the pressure multiplier."
                                       " If less than the minimum, use the minimum pressure."));
-        gtk_widget_set_sensitive(sensitivityOptionsFrame, havePressureInput);
     }
+    gtk_widget_set_sensitive(sensitivityOptionsFrame, havePressureInput);
 }
 
 void SettingsDialog::customHandRecognitionToggled() {
@@ -351,7 +302,6 @@ void SettingsDialog::load() {
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
     loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
     loadCheckbox("cbEnablePressureInference", settings->isPressureGuessingEnabled());
-    loadCheckbox("cbTouchWorkaround", settings->isTouchWorkaround());
     loadCheckbox("cbTouchDrawing", settings->getTouchDrawingEnabled());
     const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
     loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
@@ -506,7 +456,6 @@ void SettingsDialog::load() {
     enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
     customHandRecognitionToggled();
     customStylusIconTypeChanged();
-    updateTouchDrawingOptions();
     updatePressureSensitivityOptions();
 
 
@@ -648,7 +597,6 @@ void SettingsDialog::save() {
     settings->setRestoreLineWidthEnabled(getCheckbox("cbRestoreLineWidthEnabled"));
     settings->setDarkTheme(getCheckbox("cbDarkTheme"));
     settings->setPressureGuessingEnabled(getCheckbox("cbEnablePressureInference"));
-    settings->setTouchWorkaround(getCheckbox("cbTouchWorkaround"));
     settings->setTouchDrawingEnabled(getCheckbox("cbTouchDrawing"));
     settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
