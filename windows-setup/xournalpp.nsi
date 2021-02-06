@@ -88,8 +88,8 @@ Function InstallScopePage
 	Pop $ScopeAdminInstallRadio
 	${NSD_SetState} $ScopeAdminInstallRadio ${BST_CHECKED}
 
-	${NSD_CreateRadioButton} 0 12u 100% 12u "Install for current user (beta)"
-	Pop $0
+	; ${NSD_CreateRadioButton} 0 12u 100% 12u "Install for current user (beta)"
+	; Pop $0
 
 	nsDialogs::Show
 FunctionEnd
