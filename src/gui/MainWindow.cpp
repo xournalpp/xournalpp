@@ -8,7 +8,6 @@
 #include "control/layer/LayerController.h"
 #include "gui/GladeSearchpath.h"
 #include "gui/scroll/ScrollHandlingGtk.h"
-#include "gui/scroll/ScrollHandlingXournalpp.h"
 #include "toolbarMenubar/ToolMenuHandler.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
@@ -254,40 +253,23 @@ void MainWindow::toggleMenuBar(MainWindow* win) {
 void MainWindow::initXournalWidget() {
     GtkWidget* boxContents = get("boxContents");
 
-    usingTouchWorkaround = control->getSettings()->isTouchWorkaround();
 
-    if (usingTouchWorkaround) {
-        GtkWidget* grid = gtk_grid_new();
-        gtk_container_add(GTK_CONTAINER(boxContents), grid);
-        this->scrollHandling = new ScrollHandlingXournalpp();
+    winXournal = gtk_scrolled_window_new(nullptr, nullptr);
 
-        this->xournal = new XournalView(grid, control, scrollHandling);
+    setGtkTouchscreenScrollingForDeviceMapping();
 
-        gtk_grid_attach(GTK_GRID(grid), gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, scrollHandling->getVertical()),  //
-                        1, 0, 1, 1);
-        gtk_grid_attach(GTK_GRID(grid),
-                        gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, scrollHandling->getHorizontal()),  //
-                        0, 1, 1, 1);
-        control->getZoomControl()->initZoomHandler(this->window, grid, xournal, control);
-        gtk_widget_show_all(grid);
-    } else {
-        winXournal = gtk_scrolled_window_new(nullptr, nullptr);
+    gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
 
-        setGtkTouchscreenScrollingForDeviceMapping();
+    GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
 
-        gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
+    gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
 
-        GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
+    scrollHandling = new ScrollHandlingGtk(GTK_SCROLLABLE(vpXournal));
 
-        gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
+    this->xournal = new XournalView(vpXournal, control, scrollHandling);
 
-        scrollHandling = new ScrollHandlingGtk(GTK_SCROLLABLE(vpXournal));
-
-        this->xournal = new XournalView(vpXournal, control, scrollHandling);
-
-        control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal, control);
-        gtk_widget_show_all(winXournal);
-    }
+    control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal, control);
+    gtk_widget_show_all(winXournal);
 
     Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
     scrollHandling->init(this->xournal->getWidget(), layout);
@@ -302,7 +284,7 @@ void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
 }
 
 void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
-    if (enabled == gtkTouchscreenScrollingEnabled.load() || usingTouchWorkaround || winXournal == nullptr) {
+    if (enabled == gtkTouchscreenScrollingEnabled.load() || winXournal == nullptr) {
         return;
     }
 
@@ -316,9 +298,7 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
             G_PRIORITY_HIGH);
 }
 
-bool MainWindow::getGtkTouchscreenScrollingEnabled() const {
-    return gtkTouchscreenScrollingEnabled.load() && !usingTouchWorkaround;
-}
+bool MainWindow::getGtkTouchscreenScrollingEnabled() const { return gtkTouchscreenScrollingEnabled.load(); }
 
 /**
  * Allow to hide menubar, but only if global menu is not enabled

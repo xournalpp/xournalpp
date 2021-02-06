@@ -105,7 +105,6 @@ void Settings::loadDefault() {
     this->snapGridTolerance = 0.50;
     this->snapGridSize = DEFAULT_GRID_SIZE;
 
-    this->touchWorkaround = false;
     this->touchDrawing = false;
 
     this->defaultSaveName = _("%F-Note-%H-%M");
@@ -434,8 +433,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapGridSize = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapGridTolerance")) == 0) {
         this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchWorkaround")) == 0) {
-        this->touchWorkaround = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchDrawing")) == 0) {
         this->touchDrawing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureGuessing")) == 0) {
@@ -836,7 +833,6 @@ void Settings::save() {
     WRITE_DOUBLE_PROP(snapGridTolerance);
     WRITE_DOUBLE_PROP(snapGridSize);
 
-    WRITE_BOOL_PROP(touchWorkaround);
     WRITE_BOOL_PROP(touchDrawing);
     WRITE_BOOL_PROP(pressureGuessing);
 
@@ -1205,17 +1201,6 @@ void Settings::setTouchDrawingEnabled(bool b) {
     }
 
     this->touchDrawing = b;
-    save();
-}
-
-auto Settings::isTouchWorkaround() const -> bool { return this->touchWorkaround; }
-
-void Settings::setTouchWorkaround(bool b) {
-    if (this->touchWorkaround == b) {
-        return;
-    }
-
-    this->touchWorkaround = b;
     save();
 }
 

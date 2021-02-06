@@ -47,12 +47,6 @@ public:
     void customStylusIconTypeChanged();
 
     /**
-     * Update sensitivity, tooltips, etc. for touch drawing based on
-     * its dependent settings.
-     */
-    void updateTouchDrawingOptions();
-
-    /**
      * Update whether options can be selected, tooltips, etc. for
      * pressure sensitivity options (e.g. pressure multiplier).
      */
