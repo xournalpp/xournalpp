@@ -187,4 +187,11 @@ private:
 
     MainWindowToolbarMenu* toolbarSelectMenu;
     GtkAccelGroup* globalAccelGroup;
+
+    bool sidebarVisible = true;
+
+    GtkWidget* boxContainerWidget;
+    GtkWidget* panedContainerWidget;
+    GtkWidget* mainContentWidget;
+    GtkWidget* sidebarWidget;
 };

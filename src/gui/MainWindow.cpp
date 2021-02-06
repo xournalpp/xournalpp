@@ -40,6 +40,15 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
     this->toolbarWidgets = new GtkWidget*[TOOLBAR_DEFINITIONS_LEN];
     this->toolbarSelectMenu = new MainWindowToolbarMenu(this);
 
+    panedContainerWidget = GTK_WIDGET(get("panelMainContents"));
+    boxContainerWidget = GTK_WIDGET(get("mainContentContainer"));
+    mainContentWidget = GTK_WIDGET(get("boxContents"));
+    sidebarWidget = GTK_WIDGET(get("sidebar"));
+    g_object_ref(panedContainerWidget);
+    g_object_ref(boxContainerWidget);
+    g_object_ref(mainContentWidget);
+    g_object_ref(sidebarWidget);
+
     loadMainCSS(gladeSearchPath, "xournalpp.css");
 
     GtkOverlay* overlay = GTK_OVERLAY(get("mainOverlay"));
@@ -220,6 +229,11 @@ MainWindow::~MainWindow() {
 
     delete scrollHandling;
     scrollHandling = nullptr;
+
+    g_object_unref(panedContainerWidget);
+    g_object_unref(boxContainerWidget);
+    g_object_unref(mainContentWidget);
+    g_object_unref(sidebarWidget);
 }
 
 /**
@@ -463,6 +477,11 @@ void MainWindow::updateScrollbarSidebarPosition() {
                                                   !control->getSettings()->isScrollbarFadeoutDisabled());
     }
 
+    // If the sidebar isn't visible, we can't change its position!
+    if (!this->sidebarVisible) {
+        return;
+    }
+
     GtkWidget* sidebar = get("sidebar");
     GtkWidget* boxContents = get("boxContents");
 
@@ -527,18 +546,36 @@ auto MainWindow::deleteEventCallback(GtkWidget* widget, GdkEvent* event, Control
 
 void MainWindow::setSidebarVisible(bool visible) {
     Settings* settings = control->getSettings();
-    GtkWidget* sidebar = get("sidebar");
-    GtkWidget* panel = get("panelMainContents");
 
-    gtk_widget_set_visible(sidebar, visible);
     settings->setSidebarVisible(visible);
-
     if (!visible && (control->getSidebar() != nullptr)) {
         saveSidebarSize();
     }
 
+    if (visible != this->sidebarVisible) {
+        // Due to a GTK bug, we can't just hide the sidebar widget in the GtkPaned.
+        // If we do this, we create a dead region where the pane separator was previously.
+        // In this region, we can't use the touchscreen to start horizontal strokes.
+        // As such:
+        if (!visible) {
+            gtk_container_remove(GTK_CONTAINER(panedContainerWidget), mainContentWidget);
+            gtk_container_remove(GTK_CONTAINER(boxContainerWidget), GTK_WIDGET(panedContainerWidget));
+            gtk_container_add(GTK_CONTAINER(boxContainerWidget), mainContentWidget);
+            this->sidebarVisible = false;
+        } else {
+            gtk_container_remove(GTK_CONTAINER(boxContainerWidget), mainContentWidget);
+            gtk_container_add(GTK_CONTAINER(panedContainerWidget), mainContentWidget);
+            gtk_container_add(GTK_CONTAINER(boxContainerWidget), GTK_WIDGET(panedContainerWidget));
+            this->sidebarVisible = true;
+
+            updateScrollbarSidebarPosition();
+        }
+    }
+
+    gtk_widget_set_visible(sidebarWidget, visible);
+
     if (visible) {
-        gtk_paned_set_position(GTK_PANED(panel), settings->getSidebarWidth());
+        gtk_paned_set_position(GTK_PANED(panedContainerWidget), settings->getSidebarWidth());
     }
 
     GtkWidget* w = get("menuViewSidebarVisible");
@@ -561,9 +598,7 @@ void MainWindow::setToolbarVisible(bool visible) {
 }
 
 void MainWindow::saveSidebarSize() {
-    GtkWidget* panel = get("panelMainContents");
-
-    this->control->getSettings()->setSidebarWidth(gtk_paned_get_position(GTK_PANED(panel)));
+    this->control->getSettings()->setSidebarWidth(gtk_paned_get_position(GTK_PANED(panedContainerWidget)));
 }
 
 void MainWindow::setMaximized(bool maximized) { this->maximized = maximized; }
