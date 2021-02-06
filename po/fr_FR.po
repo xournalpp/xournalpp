@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-04 19:16+0000\n"
-"PO-Revision-Date: 2021-02-04 20:42\n"
+"PO-Revision-Date: 2021-02-06 21:02\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -399,7 +399,7 @@ msgstr "Dessiner une flèche"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Dessiner l'ellipse"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -2047,7 +2047,7 @@ msgstr "Couleur du cercle"
 
 #: ../ui/settings.glade:3310
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "Vider le cache paginé lors du défilement"
 
 #: ../ui/settings.glade:2596
 msgid "Colors"
@@ -2633,7 +2633,7 @@ msgstr "_Option du stylo"
 
 #: ../ui/settings.glade:3330
 msgid "Performance"
-msgstr ""
+msgstr "Performance"
 
 #: ../ui/settings.glade:5204
 msgid "Playback Settings"
@@ -2653,11 +2653,11 @@ msgstr "Les modifications des plugins ne sont appliquées qu'après le redémarr
 
 #: ../ui/settings.glade:3273
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Précharger les pages après"
 
 #: ../ui/settings.glade:3261
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Précharger les pages avant"
 
 #: ../ui/main.glade:437
 msgid "Preferences"
