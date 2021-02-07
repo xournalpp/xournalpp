@@ -257,6 +257,10 @@ void SidebarPreviewPages::pageSelected(size_t page) {
     }
     this->selectedEntry = page;
 
+    if (!this->enabled) {
+        return;
+    }
+
     if (this->selectedEntry != npos && this->selectedEntry < this->previews.size()) {
         SidebarPreviewBaseEntry* p = this->previews[this->selectedEntry];
         p->setSelected(true);
