@@ -106,7 +106,9 @@ private:
      */
     static void onPdfRenderComplete(GObject* procObj, GAsyncResult* res, LatexController* self);
 
-    void setUpdating(bool newValue);
+    void unsetUpdating();
+    void updateStatus();
+    bool isUpdating();
 
     /**
      * Load the preview PDF from disk and create a TexImage object.
@@ -151,7 +153,7 @@ private:
     /**
      * Whether a preview is currently being generated.
      */
-    bool isUpdating = false;
+    GCancellable* updating_cancellable = nullptr;
 
     /**
      * Whether the current TeX string is valid.
