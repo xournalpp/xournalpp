@@ -124,6 +124,14 @@ public:
     void addCubicSegment(const MathVect3& fVelocity, const MathVect3 sVelocity, const Point& q);
 
     /**
+     * @brief Add a cubic spline segment
+     * @param seg The segment to add
+     *
+     * Assume seg.firstKnot == this->getLastKnot()
+     */
+    void addCubicSegment(const SplineSegment& seg);
+
+    /**
      * @brief Set the first knot of the spline
      * @param p The new first knot
      */
@@ -133,13 +141,35 @@ public:
      * @brief Get the first knot
      * @return The first knot
      */
-    inline const Point& getFirstKnot() const;
+    inline const Point& getFirstKnot() const { return data.front(); }
 
     /**
      * @brief Get the last knot
      * @return The last knot
      */
-    inline const Point& getLastKnot() const;
+    inline const Point& getLastKnot() const { return data.back(); }
+
+    /**
+     * @brief Get a segment
+     * @param index The index of the segment
+     * @return The segment
+     */
+    const SplineSegment& getSegment(size_t index) const;
+
+    /**
+     * @brief Get the point with given parameter on the spline
+     * @param parameter The point's parameter
+     * @return The point
+     */
+    Point getPoint(Parameter parameter) const;
+
+    /**
+     * @brief Clone the section of the spline between the given parameters
+     * @param lowerBound Beginning of the cloned spline
+     * @param upperBound End of the cloned spline
+     * @return The clone
+     */
+    Spline cloneSection(const Parameter& lowerBound, const Parameter& upperBound) const;
 
     /**
      * @brief Compute the smallest box containing the spline
@@ -200,29 +230,12 @@ public:
     std::vector<Parameter> intersectWithRectangle(const Rectangle<double>& rectangle, size_t firstIndex,
                                                   size_t lastIndex) const;
 
-    /**
-     * @brief Get a specific spline segment
-     * @param index The index of the spline segment
-     * @return A reference to the spline segment
-     */
-    const SplineSegment& getSegment(size_t index) const;
-
-    /**
-     * @brief Get the point with given parameter on the spline
-     * @param parameter The point's parameter
-     * @return The point
-     */
-    Point getPoint(Parameter parameter) const;
-
     [[maybe_unused]] void debugPrint() const;
 
 private:
     /**
-     * @brief The initial point of the spline
+     * @brief The data: stores knots and control points
      */
-    //     Point firstKnot;
-    //     std::vector<PartialSplineSegment> segments;
-
     std::vector<Point> data;
 
     static bool isPointOnBoundary(const Point& p, const Rectangle<double> r) {

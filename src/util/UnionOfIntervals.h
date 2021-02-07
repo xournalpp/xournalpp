@@ -13,11 +13,14 @@
 
 #include <list>
 
+#include "Interval.h"
+
 /**
  * @brief A data structure for unions of intervals of a numeric data type
  *
  * The intervals are stored as sorted list of their bound. The list must be of even length.
  * This data structure makes the computation of the union/intersection/complement of those intervals very simple.
+ * The downside is that it makes iterating through the structure a bit weird. See getIntervalVector below for an example
  */
 template <class T>
 class UnionOfIntervals final {
@@ -34,7 +37,7 @@ public:
 
     /**
      * @brief Add the intervals of other to this
-     * @param other Any iteratable sorted container of type T of even length
+     * @param other Any forward-iteratable sorted container of type T of **even length**
      * @return True if changes were made, false otherwise
      */
     template <class C>
@@ -86,7 +89,7 @@ public:
 
     /**
      * @brief Intersect the intervals of this with those of other
-     * @param other Any iteratable sorted container of type T of even length
+     * @param other Any forward-iteratable sorted container of type T of **even length**
      * @return True if changes were made, false otherwise
      */
     template <class C>
@@ -155,6 +158,25 @@ public:
         } else {
             data.push_back(upperBound);
         }
+    }
+
+    /**
+     * @brief Copy the data into a vector of type Interval
+     * @return The copied vector
+     */
+    std::vector<Interval<T>> getIntervalVector() {
+        std::vector<Interval<T>> result;
+        result.reserve(data.size() / 2);
+
+        auto itLowerBound = data.cbegin();
+        auto itUpperBound = itLowerBound;
+        auto itEnd = data.cend();
+        while (itLowerBound != itEnd) {
+            itUpperBound = std::next(itLowerBound);
+            result.emplace_back(*itLowerBound, *itUpperBound);
+            itLowerBound = std::next(itUpperBound);
+        }
+        return result;
     }
 
     /**

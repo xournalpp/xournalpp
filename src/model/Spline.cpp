@@ -19,12 +19,15 @@
 #include "Spline.h"
 
 #include <cmath>
-#include <iomanip>
-#include <iostream>
 #include <numeric>
-#include <sstream>
 
 #define EXTRA_CAREFUL
+
+#ifdef EXTRA_CAREFUL
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#endif
 
 Spline::Spline(const Point& firstKnot) { data.push_back(firstKnot); }
 
@@ -72,6 +75,12 @@ void Spline::addCubicSegment(const MathVect3& fVelocity, const MathVect3 sVeloci
     data.push_back(q);
 }
 
+void Spline::addCubicSegment(const SplineSegment& seg) {
+    data.push_back(seg.firstControlPoint);
+    data.push_back(seg.secondControlPoint);
+    data.push_back(seg.secondKnot);
+}
+
 void Spline::setFirstKnot(const Point& p) {
     if (data.empty()) {
         data.emplace_back(p);
@@ -80,9 +89,67 @@ void Spline::setFirstKnot(const Point& p) {
     }
 }
 
-auto Spline::getFirstKnot() const -> const Point& { return data.front(); }
+auto Spline::getSegment(size_t index) const -> const SplineSegment& {
+    return *(SplineSegment*)(data.data() + 3 * index);
+}
 
-auto Spline::getLastKnot() const -> const Point& { return data.back(); }
+auto Spline::getPoint(Spline::Parameter parameter) const -> Point {
+    if (data.empty()) {
+        g_warning("Spline::getPoint: Empty spline");
+        return Point(NAN, NAN);
+    }
+
+    size_t index = parameter.index;
+    double t = parameter.t;
+    size_t n = size();
+
+    if (index == 0 && t == 0.0) {
+        return data.front();
+    }
+    if (index == n - 1 && t == 1.0) {
+        return data.back();
+    }
+
+    if (index >= n || t < 0.0 || t >= 1.0) {
+        g_warning("Spline::getPoint: Parameter out of range: %zu >= %zu || %f < 0.0 || %f >= 1.0", index, n, t, t);
+        return Point(NAN, NAN);
+    }
+    return getSegment(index).getPoint(t);
+}
+
+auto Spline::cloneSection(const Spline::Parameter& lowerBound, const Spline::Parameter& upperBound) const -> Spline {
+    SplineSegment firstSegment = getSegment(lowerBound.index).subdivide(lowerBound.t).second;
+    // Create and reserve memory for the clone
+    Spline clone(firstSegment.firstKnot, upperBound.index - lowerBound.index + 1);
+
+    if (upperBound.index == lowerBound.index) {
+        // Parameter of upperBound inside firstSegment
+        SplineSegment segment = firstSegment.subdivide(upperBound.t * (1.0 - lowerBound.t) + lowerBound.t).first;
+        clone.addCubicSegment(segment);
+    } else {
+        clone.addCubicSegment(firstSegment);
+
+        // firstControlPoint of getSegment(lowerBound.index + 1)
+        auto it = data.cbegin() + 3 * (std::ptrdiff_t)lowerBound.index + 4;
+
+        // firstControlPoint of getSegment(upperBound.index)
+        auto endIt = data.cbegin() + 3 * (std::ptrdiff_t)upperBound.index + 1;
+
+        std::copy(it, endIt, std::back_inserter(clone.data));
+
+        SplineSegment lastSegment = getSegment(upperBound.index).subdivide(upperBound.t).first;
+        clone.addCubicSegment(lastSegment);
+    }
+
+#ifdef EXTRA_CAREFUL
+    if (clone.data.size() != 3 * (upperBound.index - lowerBound.index + 1) + 1) {
+        g_warning("Spline::cloneSection: wrong clone size: %zu. Indices: %zu and %zu", clone.data.size(),
+                  lowerBound.index, upperBound.index);
+    }
+#endif
+
+    return clone;
+}
 
 auto Spline::getBoundingBox() const -> Rectangle<double> {
     const Point& firstKnot = getFirstKnot();
@@ -166,10 +233,12 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle) const ->
 auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t firstIndex, size_t lastIndex) const
         -> std::vector<Spline::Parameter> {
 
+#ifdef EXTRA_CAREFUL
     std::stringstream ss;
     ss << "Call: ** rectangle (" << rectangle.x << " ; " << rectangle.y << ") -- (" << rectangle.x + rectangle.width
        << " ; " << rectangle.y + rectangle.height << ")\n";
     ss << "      ** param: (" << firstIndex << " ; " << lastIndex << ")\n";
+#endif
 
     std::vector<Parameter> result;
     auto inserter = std::back_inserter(result);
@@ -180,15 +249,18 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
 
     /**
      * The first (portion of a) segment
+     *
+     * Perform the bounding boxes tests first to save time
      */
-    Rectangle<double> bbox = it->getBoundingBox();
-    if (bbox.intersects(rectangle)) {
+    if (it->getCoarseBoundingBox().intersects(rectangle) && it->getBoundingBox().intersects(rectangle)) {
         std::vector<double> intersections = it->intersectWithRectangle(rectangle);
 
+#ifdef EXTRA_CAREFUL
         ss << "I ** " << index << " : ";
         for (auto&& t: intersections) {
             ss << t << " ; ";
         }
+#endif
 
         if (isPointOnBoundary(it->firstKnot, rectangle)) {
             /**
@@ -200,23 +272,30 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
                  * Exceptional case: The segment begins on the rectangle's boundary and goes inwards.
                  * Add an intersection point
                  */
+                result.emplace_back(index, 0.0);
+#ifdef EXTRA_CAREFUL
                 ss << "exc1";
                 g_message("Spline::intersectWithRectangle: Exceptional case 1");
-                result.emplace_back(index, 0.0);
             } else {
                 ss << "imp1";
                 g_message("Spline::intersectWithRectangle: Improbable case 1");
+#endif
             }
+
         } else {
             if (it->firstKnot.isInside(rectangle)) {
                 /**
                  * The spline starts in the rectangle. Add a fake intersection parameter
                  */
                 result.emplace_back(index, 0.0);
+#ifdef EXTRA_CAREFUL
                 ss << "start in";
+#endif
             }
         }
+#ifdef EXTRA_CAREFUL
         ss << "\n";
+#endif
 
         std::transform(intersections.begin(), intersections.end(), inserter,
                        [index](double v) { return Parameter(index, v); });
@@ -229,9 +308,10 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
     for (; it != endIt; it++, index++) {
         /**
          * Should we store the bounding boxes somewhere (and where? SplineSegment? Spline? Stroke? EraseableStroke?)
+         * Only test with getCoarseBoundingBox()?
          */
-        Rectangle<double> box = it->getBoundingBox();
-        if (box.intersects(rectangle) || isPointOnBoundary(it->secondKnot, rectangle)) {
+        if ((it->getCoarseBoundingBox().intersects(rectangle) && it->getBoundingBox().intersects(rectangle)) ||
+            isPointOnBoundary(it->secondKnot, rectangle)) {
             /**
              * Either the interiors meet
              * or
@@ -239,15 +319,17 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
              * Either way, we need to know whether the spline is crossing in or out of the rectangle.
              */
             std::vector<double> intersection = it->intersectWithRectangle(rectangle);
+            std::transform(intersection.cbegin(), intersection.cend(), inserter,
+                           [&index](double t) { return Parameter(index, t); });
+#ifdef EXTRA_CAREFUL
             ss << "I ** " << index << " : ";
             for (auto&& t: intersection) {
                 ss << t << " ; ";
             }
             ss << "\n";
-            std::transform(intersection.cbegin(), intersection.cend(), inserter,
-                           [&index](double t) { return Parameter(index, t); });
         } else {
             ss << "O ** " << index << "\n";
+#endif
         }
     }
 
@@ -257,7 +339,9 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
             /**
              * The spline ends in the rectangle (not on the boundary). Add a fake intersection parameter
              */
+#ifdef EXTRA_CAREFUL
             ss << "end in";
+#endif
             result.emplace_back(lastIndex, 1.0);
         } else {
             /**
@@ -274,78 +358,34 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
                 even = !even;
             }
             std::cout << ss.str() << "\n";
-#endif
-
             g_message("Spline::intersectWithRectangle: Improbable case 2. May also be a bug.");
+#endif
             result.pop_back();
         }
     }
-
-    //         if (last.index == lastIndex && last.t == 1.0) {
-    //             /**
-    //              * Improbable case: the segment ends on the rectangle's boundary
-    //              */
-    //             if (result.size() == 1) {
-    //                 /**
-    //                  * The spline is entirely outside of the rectangle but ends on its boundary
-    //                  */
-    //                 return {};
-    //             }
-    //             const Parameter& beforeLast = result[result.size() - 2];
-    //
-    //             const Point& p = beforeLast.index != lastIndex ? seg.firstKnot :
-    //                                                              seg.getPoint(0.5 * beforeLast.t + 0.5);
-    //             if (!p.isInside(rectangle)) {
-    //                 /**
-    //                  * Improbable case: The segment come from outside but ends on the rectangle's boundary.
-    //                  * Drop this last intersection.
-    //                  */
-    //                 ss << "imp2";
-    //                 g_message("Spline::intersectWithRectangle: Improbable case 2");
-    //                 result.pop_back();
-    //             } else {
-    //                 /**
-    //                  * Exceptional case: The segment come from inside and ends on the rectangle's boundary.
-    //                  * Do nothing.
-    //                  */
-    //                 ss << "exc2";
-    //                 g_message("Spline::intersectWithRectangle: Exceptional case 2");
-    //             }
-    //         }
-    //     }
-
     return result;
-}
-
-auto Spline::getSegment(size_t index) const -> const SplineSegment& { return *(SplineSegment*)(&(data[3 * index])); }
-
-auto Spline::getPoint(Spline::Parameter parameter) const -> Point {
-    size_t index = parameter.index;
-    double t = parameter.t;
-
-    if (index == 0 && t == 0.0 && !data.empty()) {
-        return data.front();
-    }
-
-    if (index >= size() || t < 0.0 || t >= 1.0) {
-        g_warning("Spline::getPoint: Parameter out of range");
-        return Point(NAN, NAN);
-    }
-    return getSegment(index).getPoint(t);
 }
 
 void Spline::debugPrint() const {
     /**
      * 3D svg-like dump of the spline
      */
-    g_message("Spline %zu", (uint64_t)this);
+    //     g_message("Spline %zu", (uint64_t)this);
+    //     if (!this->data.empty()) {
+    //         const Point& firstKnot = data.front();
+    //         g_message("M %f %f %f", firstKnot.x, firstKnot.y, firstKnot.z);
+    //         for (auto&& seg: *this) {
+    //             g_message("C %f %f %f, %f %f %f, %f %f %f", seg.firstControlPoint.x, seg.firstControlPoint.y,
+    //                       seg.firstControlPoint.z, seg.secondControlPoint.x, seg.secondControlPoint.y,
+    //                       seg.secondControlPoint.z, seg.secondKnot.x, seg.secondKnot.y, seg.secondKnot.z);
+    //         }
+    //     }
     if (!this->data.empty()) {
         const Point& firstKnot = data.front();
-        g_message("M %f %f %f", firstKnot.x, firstKnot.y, firstKnot.z);
         for (auto&& seg: this->segments()) {
-            g_message("C %f %f %f, %f %f %f, %f %f %f", seg.firstControlPoint.x, seg.firstControlPoint.y,
-                      seg.firstControlPoint.z, seg.secondControlPoint.x, seg.secondControlPoint.y,
-                      seg.secondControlPoint.z, seg.secondKnot.x, seg.secondKnot.y, seg.secondKnot.z);
+            printf("%f ; %f ; %f ; %f\n%f ; %f ; %f ; %f\n\n", seg.firstKnot.x, seg.firstControlPoint.x,
+                   seg.secondControlPoint.x, seg.secondKnot.x, seg.firstKnot.y, seg.firstControlPoint.y,
+                   seg.secondControlPoint.y, seg.secondKnot.y);
         }
     }
 }
@@ -493,7 +533,6 @@ void Spline::SchneiderApproximater::fitCubic(size_t lowerIndex, const MathVect3&
                                              const MathVect3& secondTangentVector, size_t upperIndex) {
 
 #ifdef EXTRA_CAREFUL
-    //     g_message("fitCubic: %zu, %zu", lowerIndex, upperIndex);
     if (lowerIndex >= upperIndex || upperIndex >= points.size()) {
         g_warning("Spline::SchneiderApproximater::fitCubic called on invalid indices");
         return;
@@ -510,7 +549,6 @@ void Spline::SchneiderApproximater::fitCubic(size_t lowerIndex, const MathVect3&
         double scale = points[lowerIndex].lineLengthTo(secondKnot) / 3.0;
 
 #ifdef EXTRA_CAREFUL
-        //         g_message("   Bof: %zu -- %zu", lowerIndex, upperIndex);
         if ((!points[lowerIndex].equalsPos(spline.getLastKnot())) || points[lowerIndex].z != spline.getLastKnot().z) {
             g_warning("Spline::SchneiderApproximater::fitCubic: Wrong last knot!");
         }

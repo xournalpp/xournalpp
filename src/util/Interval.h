@@ -1,0 +1,62 @@
+/*
+ * Xournal++
+ *
+ * A interval data structure over a numeric data type.
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+template <class T>
+class Interval final {
+public:
+    Interval() = default;
+    /**
+     * @brief Initialize the interval to [min,max]
+     * @param min the lower bound
+     * @param max the upper bound
+     */
+    Interval(const T& min, const T& max): min(min), max(max) {}
+
+    /**
+     * @brief Get the interval [a,b] or [b,a], depending on which is greater
+     * @param a One bound
+     * @param b The other bound
+     * @return The interval
+     */
+    static inline Interval getInterval(const T& a, const T& b) { return a < b ? Interval(a, b) : Interval(b, a); }
+
+    /**
+     * @brief Computes the convex envelop of this and the other interval
+     * @param other The other interval
+     */
+    [[maybe_unused]] void envelop(const Interval& other) {
+        min = std::min(min, other.min);
+        max = std::max(max, other.max);
+    }
+
+    /**
+     * @brief Computes the convex envelop of this and another value
+     * @param t The other value
+     */
+    [[maybe_unused]] void envelop(const T& t) {
+        if (t >= max) {
+            max = t;
+        } else {
+            min = std::min(min, t);
+        }
+    }
+
+    /**
+     * @brief Compute the length of the interval
+     * @return The length
+     */
+    [[maybe_unused]] T length() { return max - min; }
+
+    T min{};
+    T max{};
+};

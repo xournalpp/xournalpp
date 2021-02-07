@@ -3,6 +3,7 @@
 #include <cmath>
 #include <numeric>
 
+#include "util/Interval.h"
 
 SplineSegment::SplineSegment(const Point& p, const Point& fp, const Point& sp, const Point& q):
         firstKnot(p), firstControlPoint(fp), secondControlPoint(sp), secondKnot(q) {}
@@ -23,7 +24,7 @@ void SplineSegment::toPoints(std::vector<Point>& points) const {
     childSegments.second.toPoints(points);
 }
 
-auto SplineSegment::subdivide(float t) const -> std::pair<SplineSegment, SplineSegment> {
+auto SplineSegment::subdivide(double t) const -> std::pair<SplineSegment, SplineSegment> {
 
     Point b0 = firstKnot.relativeLineTo(firstControlPoint, t);  // Same as evaluating a Bézier
     Point b1 = firstControlPoint.relativeLineTo(secondControlPoint, t);
@@ -81,7 +82,7 @@ auto SplineSegment::getPoint(double t) const -> Point {
     if (t == 1.0) {
         return secondKnot;
     }
-    double u = 1 - t;
+    double u = 1.0 - t;
     double ut3 = u * t * 3.0;
     double B0 = u * u * u;
     double B1 = u * ut3;
@@ -92,6 +93,16 @@ auto SplineSegment::getPoint(double t) const -> Point {
                  B0 * firstKnot.z + B1 * firstControlPoint.z + B2 * secondControlPoint.z + B3 * secondKnot.z);
 }
 
+auto SplineSegment::getCoarseBoundingBox() const -> Rectangle<double> {
+    Interval<double> knotsX = Interval<double>::getInterval(firstKnot.x, secondKnot.x);
+    Interval<double> intervalX = Interval<double>::getInterval(firstControlPoint.x, secondControlPoint.x);
+    intervalX.envelop(knotsX);
+    Interval<double> knotsY = Interval<double>::getInterval(firstKnot.y, secondKnot.y);
+    Interval<double> intervalY = Interval<double>::getInterval(firstControlPoint.y, secondControlPoint.y);
+    intervalY.envelop(knotsY);
+    return Rectangle<double>(intervalX.min, intervalY.min, intervalX.length(), intervalY.length());
+}
+
 auto SplineSegment::getBoundingBox() const -> Rectangle<double> {
     /**
      * Compute the extrema of the spline coordinates using the closed mathematical formula
@@ -100,68 +111,38 @@ auto SplineSegment::getBoundingBox() const -> Rectangle<double> {
     /**
      * The x coordinates first
      */
-    double minX;
-    double maxX;
-    if (firstKnot.x < secondKnot.x) {
-        minX = firstKnot.x;
-        maxX = secondKnot.x;
-    } else {
-        maxX = firstKnot.x;
-        minX = secondKnot.x;
-    }
-
-    /**
-     * Polynomial coefficients of x'(t) / 3 = a * t^2 + 2 * b * t + c
-     */
+    //  Polynomial coefficients of x'(t) / 3 = a * t^2 + 2 * b * t + c
     double a = secondKnot.x + 3 * (firstControlPoint.x - secondControlPoint.x) - firstKnot.x;
     double b = secondControlPoint.x - 2 * firstControlPoint.x + firstKnot.x;
     double c = firstControlPoint.x - firstKnot.x;
     std::vector<double> roots = rootsOfQuadraticEquation(a, b, c);
 
+    Interval<double> intervalX = Interval<double>::getInterval(firstKnot.x, secondKnot.x);
     for (double t: roots) {
         if (t > 0.0 && t < 1.0) {
             double x = getX(t);
-            if (x >= maxX) {
-                maxX = x;
-            } else {
-                minX = std::min(x, minX);
-            }
+            intervalX.envelop(x);
         }
     }
 
     /**
      * Now the y coordinates
      */
-    double minY;
-    double maxY;
-    if (firstKnot.y < secondKnot.y) {
-        minY = firstKnot.y;
-        maxY = secondKnot.y;
-    } else {
-        maxY = firstKnot.y;
-        minY = secondKnot.y;
-    }
-
-    /**
-     * Polynomial coefficients of y'(t) / 3 = a * t^2 + 2 * b * t + c
-     */
+    //  Polynomial coefficients of y'(t) / 3 = a * t^2 + 2 * b * t + c
     a = secondKnot.y + 3 * (firstControlPoint.y - secondControlPoint.y) - firstKnot.y;
     b = secondControlPoint.y - 2 * firstControlPoint.y + firstKnot.y;
     c = firstControlPoint.y - firstKnot.y;
     roots = rootsOfQuadraticEquation(a, b, c);
 
+    Interval<double> intervalY = Interval<double>::getInterval(firstKnot.y, secondKnot.y);
     for (double t: roots) {
         if (t > 0.0 && t < 1.0) {
             double y = getY(t);
-            if (y >= maxY) {
-                maxY = y;
-            } else {
-                minY = std::min(y, minY);
-            }
+            intervalY.envelop(y);
         }
     }
 
-    return Rectangle(minX, minY, maxX - minX, maxY - minY);
+    return Rectangle(intervalX.min, intervalY.min, intervalX.length(), intervalY.length());
 }
 
 auto SplineSegment::intersectWithHorizontalLine(double lineY) const -> std::vector<double> {

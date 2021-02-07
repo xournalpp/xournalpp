@@ -71,7 +71,7 @@ public:
      * @param t the parameter between 0 and 1, which corresponds to the point where the spline is split
      * @return A pair of two spline segments corresponding to the two parts of the spline
      */
-    std::pair<SplineSegment, SplineSegment> subdivide(float t) const;
+    std::pair<SplineSegment, SplineSegment> subdivide(double t) const;
 
     /**
      * @brief checks if the spline segment is flat enough so that it can be drawn as a straight line
@@ -105,8 +105,20 @@ public:
     Point getPoint(double t) const;
 
     /**
+     * @brief Compute the smallest rectangle containing both knots and both control points
+     * @return The rectangle
+     *
+     * This rectangle contains the entire spline segment. It computation is faster than that of getBoundingBox()
+     * On average, the rectangle from getCoarseBoundingBox() is 25% bigger (area wise) than that of getBoundingBox()
+     */
+    Rectangle<double> getCoarseBoundingBox() const;
+
+    /**
      * @brief Compute the bounding box of the segment
      * @return Bounding box
+     *
+     * This function is more precise (exact) but slower than getCoarseBoundingBox()
+     * Cost 2 calls to rootsOfQuadraticEquation
      */
     Rectangle<double> getBoundingBox() const;
 
@@ -127,7 +139,7 @@ public:
     [[maybe_unused]] std::vector<double> intersectWithVerticalLine(double lineX) const;
 
     /**
-     * @brief Find the parameters within a given interval corresponding to the points where the spline segment crosses
+     * @brief Find the parameters (0 < t <= 1) corresponding to the points where the spline segment crosses
      * in or out of the given rectangle
      * @param rectangle The rectangle
      * @param min The lower bound of the interval
@@ -174,6 +186,8 @@ private:
      * @param b Half of linear coefficient
      * @param c Constant coefficient
      * @return Vector containing the roots (sorted from smallest to biggest)
+     *
+     * Benchmark: ~255,000 microseconds for 1,000,000 iterations
      */
     static std::vector<double> rootsOfQuadraticEquation(double a, double b, double c);
 
@@ -190,6 +204,8 @@ private:
      * @param c Linear coefficient
      * @param d Constant coefficient
      * @return Vector containing the roots (sorted from smallest to biggest)
+     *
+     * Benchmark: ~390,000 microseconds for 1,000,000 iterations
      */
     static std::vector<double> rootsOfCubicEquation(double a, double b, double c, double d);
 };
