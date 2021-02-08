@@ -7,7 +7,7 @@
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/GladeSearchpath.h"
-#include "gui/scroll/ScrollHandlingGtk.h"
+#include "gui/scroll/ScrollHandling.h"
 #include "toolbarMenubar/ToolMenuHandler.h"
 #include "toolbarMenubar/model/ToolbarData.h"
 #include "toolbarMenubar/model/ToolbarModel.h"
@@ -264,7 +264,7 @@ void MainWindow::initXournalWidget() {
 
     gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
 
-    scrollHandling = new ScrollHandlingGtk(GTK_SCROLLABLE(vpXournal));
+    scrollHandling = new ScrollHandling(GTK_SCROLLABLE(vpXournal));
 
     this->xournal = new XournalView(vpXournal, control, scrollHandling);
 

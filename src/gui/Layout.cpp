@@ -39,13 +39,11 @@ Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), s
 void Layout::horizontalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
     Layout::checkScroll(adjustment, layout->lastScrollHorizontal);
     layout->updateVisibility();
-    layout->scrollHandling->scrollChanged();
 }
 
 void Layout::verticalScrollChanged(GtkAdjustment* adjustment, Layout* layout) {
     Layout::checkScroll(adjustment, layout->lastScrollVertical);
     layout->updateVisibility();
-    layout->scrollHandling->scrollChanged();
 }
 
 

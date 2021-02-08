@@ -270,8 +270,6 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     cairo_rectangle(cr, x1, y1, x2 - x1, y2 - y1);
     cairo_fill(cr);
 
-    xournal->scrollHandling->translate(cr, x1, x2, y1, y2);
-
     Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 
     for (auto&& pv: xournal->view->getViewPages()) {

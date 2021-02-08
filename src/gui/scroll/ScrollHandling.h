@@ -23,25 +23,19 @@ class Layout;
 class ScrollHandling {
 public:
     ScrollHandling(GtkAdjustment* adjHorizontal, GtkAdjustment* adjVertical);
-    virtual ~ScrollHandling();
+    ScrollHandling(GtkScrollable* scrollable);
+    ~ScrollHandling();
 
 public:
     GtkAdjustment* getHorizontal();
     GtkAdjustment* getVertical();
 
-    virtual void init(GtkWidget* xournal, Layout* layout);
+    void init(GtkWidget* xournal, Layout* layout);
 
-    virtual void setLayoutSize(int width, int height) = 0;
+    void setLayoutSize(int width, int height);
 
-    virtual int getPreferredWidth() = 0;
-    virtual int getPreferredHeight() = 0;
-
-    virtual void translate(cairo_t* cr, double& x1, double& x2, double& y1, double& y2) = 0;
-    virtual void translate(double& x, double& y) = 0;
-
-    virtual bool fullRepaint() = 0;
-
-    virtual void scrollChanged() = 0;
+    int getPreferredWidth();
+    int getPreferredHeight();
 
 private:
 protected:
