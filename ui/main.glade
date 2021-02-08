@@ -2136,7 +2136,6 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">True</property>
-                                <property name="tooltip-text" translatable="yes">Swap the current page with the one above</property>
                                 <property name="margin-left">2</property>
                                 <child>
                                   <object class="GtkImage" id="image1">
@@ -2158,7 +2157,6 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">True</property>
-                                <property name="tooltip-text" translatable="yes">Swap the current page with the one below</property>
                                 <child>
                                   <object class="GtkImage" id="image5">
                                     <property name="visible">True</property>
@@ -2179,7 +2177,6 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">True</property>
-                                <property name="tooltip-text" translatable="yes">Insert a copy of the current page below</property>
                                 <child>
                                   <object class="GtkImage" id="image6">
                                     <property name="visible">True</property>
@@ -2200,7 +2197,6 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">True</property>
-                                <property name="tooltip-text" translatable="yes">Delete this page</property>
                                 <child>
                                   <object class="GtkImage" id="image7">
                                     <property name="visible">True</property>

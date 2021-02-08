@@ -62,6 +62,9 @@ SidebarPreviewPages::~SidebarPreviewPages() {
 void SidebarPreviewPages::enableSidebar() {
     SidebarPreviewBase::enableSidebar();
 
+    this->toolbar->setButtonTooltips(_("Swap the current page with the one above"),
+                                     _("Swap the current page with the one below"),
+                                     _("Insert a copy of the current page below"), _("Delete this page"));
     pageSelected(this->selectedEntry);
 }
 
