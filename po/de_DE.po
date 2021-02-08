@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-07 21:40+0000\n"
-"PO-Revision-Date: 2021-02-08 12:21\n"
+"PO-Revision-Date: 2021-02-08 13:19\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2653,11 +2653,11 @@ msgstr "Änderungen an den Plugins werden erst nach einem Neustart von Xournal++
 
 #: ../ui/settings.glade:3273
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Vorzuladende Seiten nach der Aktuellen"
 
 #: ../ui/settings.glade:3261
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Vorzuladende Seiten vor der Aktuellen"
 
 #: ../ui/main.glade:437
 msgid "Preferences"
@@ -2908,7 +2908,7 @@ msgstr "Die folgenden Zeichenketten werden in der globalen Vorlagen-Datei ersetz
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "Suffix und Präfix für den Mathe-Modus in LaTeX."
 
 #: ../ui/settings.glade:3605
 msgid "The unit of the ruler is cm"
