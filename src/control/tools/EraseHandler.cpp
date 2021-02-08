@@ -111,7 +111,11 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
             this->eraseUndoAction->addOriginal(l, s, pos);
             eraseable->beginErasure(x, y, halfEraserSize, range);
         }
-    } else {  // Necessarily the default eraser
+    } else {
+        /**
+         * This stroke has already been touched by the eraser
+         * (Necessarily the default eraser)
+         */
         int pos = l->indexOf(s);
         if (pos == -1) {
             return;

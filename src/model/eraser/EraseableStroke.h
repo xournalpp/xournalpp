@@ -12,6 +12,7 @@
 #pragma once
 
 #include <list>
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -31,33 +32,46 @@ class Stroke;
 class EraseableStroke {
 public:
     EraseableStroke(Stroke* stroke);
-    virtual ~EraseableStroke();
+    virtual ~EraseableStroke() = default;
 
 public:
     /**
      * Returns a repaint rectangle or nullptr, the rectangle is own by the caller
      */
-    Range* beginErasure(double x, double y, double halfEraserSize, Range* range = nullptr);
-    Range* erase(double x, double y, double halfEraserSize, Range* range = nullptr);
+    virtual Range* beginErasure(double x, double y, double halfEraserSize, Range* range = nullptr);
+    virtual Range* erase(double x, double y, double halfEraserSize, Range* range = nullptr);
 
-    GList* getStroke(Stroke* original);
+    //     GList* getStroke(Stroke* original);
+    std::vector<Stroke*> getStrokes();
 
-    void draw(cairo_t* cr);
+    virtual void draw(cairo_t* cr);
 
 private:
-    void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list);
-    static bool erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list,
-                          bool* deleteStrokeAfter);
+    //     void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list);
+    //     static bool erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list,
+    //                           bool* deleteStrokeAfter);
 
     void addRepaintRect(double x, double y, double width, double height);
 
 private:
-    GMutex partLock{};
-    PartList* parts = nullptr;
-
     Range* repaintRect = nullptr;
 
     Stroke* stroke = nullptr;
 
     UnionOfIntervals<Spline::Parameter> remainingSections{};
+    std::mutex sectionsMutex;
 };
+/*
+class EraseableStrokeWithPressure: public EraseableStroke {
+    EraseableStrokeWithPressure(Stroke* stroke);
+    virtual ~EraseableStrokeWithPressure() = default;
+
+private:
+    class ParametrizedPoint {
+    public:
+        Point point;
+        double t;
+    };
+    std::unordered_map<size_t, std::vector<ParametrizedPoint>> points;
+};
+*/

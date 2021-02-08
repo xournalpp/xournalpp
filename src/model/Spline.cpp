@@ -21,8 +21,6 @@
 #include <cmath>
 #include <numeric>
 
-#define EXTRA_CAREFUL
-
 #ifdef EXTRA_CAREFUL
 #include <iomanip>
 #include <iostream>
@@ -34,6 +32,10 @@ Spline::Spline(const Point& firstKnot) { data.push_back(firstKnot); }
 Spline::Spline(const Point& firstKnot, size_t size) {
     data.reserve(3 * size + 1);
     data.push_back(firstKnot);
+}
+
+Spline::Spline(const SplineSegment& segment) {
+    data = {segment.firstKnot, segment.firstControlPoint, segment.secondControlPoint, segment.secondKnot};
 }
 
 Spline::SegmentIteratable<SplineSegment, Point> Spline::segments() {
@@ -118,15 +120,15 @@ auto Spline::getPoint(Spline::Parameter parameter) const -> Point {
 }
 
 auto Spline::cloneSection(const Spline::Parameter& lowerBound, const Spline::Parameter& upperBound) const -> Spline {
-    SplineSegment firstSegment = getSegment(lowerBound.index).subdivide(lowerBound.t).second;
-    // Create and reserve memory for the clone
-    Spline clone(firstSegment.firstKnot, upperBound.index - lowerBound.index + 1);
 
     if (upperBound.index == lowerBound.index) {
-        // Parameter of upperBound inside firstSegment
-        SplineSegment segment = firstSegment.subdivide(upperBound.t * (1.0 - lowerBound.t) + lowerBound.t).first;
-        clone.addCubicSegment(segment);
+        SplineSegment segment = getSegment(lowerBound.index).getSubsegment(lowerBound.t, upperBound.t);
+        return Spline(segment);
     } else {
+        SplineSegment firstSegment = getSegment(lowerBound.index).subdivide(lowerBound.t).second;
+
+        // Create and reserve memory for the clone
+        Spline clone(firstSegment.firstKnot, upperBound.index - lowerBound.index + 1);
         clone.addCubicSegment(firstSegment);
 
         // firstControlPoint of getSegment(lowerBound.index + 1)
@@ -139,16 +141,15 @@ auto Spline::cloneSection(const Spline::Parameter& lowerBound, const Spline::Par
 
         SplineSegment lastSegment = getSegment(upperBound.index).subdivide(upperBound.t).first;
         clone.addCubicSegment(lastSegment);
-    }
 
 #ifdef EXTRA_CAREFUL
-    if (clone.data.size() != 3 * (upperBound.index - lowerBound.index + 1) + 1) {
-        g_warning("Spline::cloneSection: wrong clone size: %zu. Indices: %zu and %zu", clone.data.size(),
-                  lowerBound.index, upperBound.index);
-    }
+        if (clone.data.size() != 3 * (upperBound.index - lowerBound.index + 1) + 1) {
+            g_warning("Spline::cloneSection: wrong clone size: %zu. Indices: %zu and %zu", clone.data.size(),
+                      lowerBound.index, upperBound.index);
+        }
 #endif
-
-    return clone;
+        return clone;
+    }
 }
 
 auto Spline::getBoundingBox() const -> Rectangle<double> {

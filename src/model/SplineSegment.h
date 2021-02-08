@@ -74,6 +74,14 @@ public:
     std::pair<SplineSegment, SplineSegment> subdivide(double t) const;
 
     /**
+     * @brief Compute the subsegment corresponding to the parameter interval [tMin, tMax]
+     * @param tMin Interval lower bound
+     * @param tMax Interval upper bound
+     * @return The segment restricted to [tMin, tMax]
+     */
+    SplineSegment getSubsegment(double tMin, double tMax) const;
+
+    /**
      * @brief checks if the spline segment is flat enough so that it can be drawn as a straight line
      * @return true, if the spline segment is flat enough; false otherwise
      */
@@ -148,11 +156,36 @@ public:
      *
      * Nb: The values of min and max default so that the obtained parameters satisfy 0 < t <= 1.
      *
-     * Warning: this function does not test if the rectangle intersects this->getBoundingBox().
+     * Warning: this does not test if the rectangle intersects this->getBoundingBox() or this->getCoarseBoundingBox()
      * For optimization purposes, this test should be performed beforehand by the calling function.
      */
     std::vector<double> intersectWithRectangle(const Rectangle<double>& rectangle) const;
 
+    /**
+     * @brief Get the parameter value of the point seg.getPoint(t) in the subsegment seg.subdivide(u).first
+     * @param t parameter to transform
+     * @param u parameter of subdivision
+     *
+     * 0 <= t <= u <= 1
+     *
+     * seg.subdivide(u).first.getPoint(getParameterInFirstSubsegment(u,t)) == seg.getPoint(t)
+     */
+    [[maybe_unused]] static inline double getParameterInFirstSubsegment(double t, double u) {
+        return u == 0.0 ? 0.0 : t / u;
+    }
+
+    /**
+     * @brief Get the parameter value of the point seg.getPoint(t) in the subsegment seg.subdivide(u).second
+     * @param u parameter of subdivision
+     * @param t parameter to transform
+     *
+     * 0 <= u <= t <= 1
+     *
+     * seg.subdivide(u).second.getPoint(getParameterInSecondSubsegment(u,t)) == seg.getPoint(t)
+     */
+    [[maybe_unused]] static inline double getParameterInSecondSubsegment(double u, double t) {
+        return u == 1.0 ? 0.0 : (t - u) / (1 - u);
+    }
 
 public:
     /**

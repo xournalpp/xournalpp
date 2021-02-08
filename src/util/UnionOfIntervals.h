@@ -20,7 +20,7 @@
  *
  * The intervals are stored as sorted list of their bound. The list must be of even length.
  * This data structure makes the computation of the union/intersection/complement of those intervals very simple.
- * The downside is that it makes iterating through the structure a bit weird. See getIntervalVector below for an example
+ * The downside is: it makes iterating through the structure a bit weird. See cloneToIntervalVector below for an example
  */
 template <class T>
 class UnionOfIntervals final {
@@ -164,7 +164,7 @@ public:
      * @brief Copy the data into a vector of type Interval
      * @return The copied vector
      */
-    std::vector<Interval<T>> getIntervalVector() {
+    std::vector<Interval<T>> cloneToIntervalVector() {
         std::vector<Interval<T>> result;
         result.reserve(data.size() / 2);
 
@@ -178,6 +178,12 @@ public:
         }
         return result;
     }
+
+    /**
+     * @brief Determine if the union of intervals is empty or not
+     * @return true if it is empty, false otherwise
+     */
+    inline bool empty() { return data.empty(); }
 
     /**
      * @brief Get a reference to the data

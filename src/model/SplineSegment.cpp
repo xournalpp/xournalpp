@@ -40,6 +40,10 @@ auto SplineSegment::subdivide(double t) const -> std::pair<SplineSegment, Spline
     return std::make_pair(firstPart, secondPart);
 }
 
+auto SplineSegment::getSubsegment(double tMin, double tMax) const -> SplineSegment {
+    return subdivide(tMax).first.subdivide(getParameterInFirstSubsegment(tMin, tMax)).second;
+}
+
 auto SplineSegment::isFlatEnough() const -> bool {
     double l1 = firstKnot.lineLengthTo(firstControlPoint);
     double l2 = firstControlPoint.lineLengthTo(secondControlPoint);

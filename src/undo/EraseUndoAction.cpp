@@ -70,11 +70,17 @@ void EraseUndoAction::finalize() {
             int pos = p->layer->removeElement(p->element, false);
 
             EraseableStroke* e = p->element->getEraseable();
-            GList* stroke = e->getStroke(p->element);
-            for (GList* ls = stroke; ls != nullptr; ls = ls->next) {
-                auto* copy = static_cast<Stroke*>(ls->data);
-                p->layer->insertElement(copy, pos);
-                this->addEdited(p->layer, copy, pos);
+            //             GList* stroke = e->getStroke(p->element);
+            //             for (GList* ls = stroke; ls != nullptr; ls = ls->next) {
+            //                 auto* copy = static_cast<Stroke*>(ls->data);
+            //                 p->layer->insertElement(copy, pos);
+            //                 this->addEdited(p->layer, copy, pos);
+            //                 pos++;
+            //             }
+            std::vector<Stroke*> strokes = e->getStrokes();
+            for (auto&& s: strokes) {
+                p->layer->insertElement(s, pos);
+                this->addEdited(p->layer, s, pos);
                 pos++;
             }
 

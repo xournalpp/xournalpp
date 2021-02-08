@@ -28,6 +28,9 @@
 #include "SplineSegment.h"
 #include "UnionOfIntervals.h"
 
+#define EXTRA_CAREFUL
+
+
 /**
  * @brief A class to handle splines
  * A spline is only assumed to be continuous.
@@ -57,18 +60,26 @@ public:
     Spline(const Point& firstKnot, size_t size);
 
     /**
+     * @brief Create a spline with a single segment
+     * @param segment The single segment
+     */
+    Spline(const SplineSegment& segment);
+
+    /**
      * @brief Iteratable adaptor for segment-based iterations (e.g. for(auto&& segment: spline.segments()) {})
      *
      * This is needed so that two consecutive segments share one knot
      */
     template <class value_type, class point_type>
     class SegmentIteratable;
+    
     /**
      * @brief Get an iteratable adaptor for segment-based iterations.
      * @return The adaptor
      * Warning, the returned adaptor will be invalidated if something is added or removed from this->data
      */
     SegmentIteratable<SplineSegment, Point> segments();
+    
     /**
      * @brief Get an iteratable adaptor for segment-based iterations.
      * @return The adaptor
