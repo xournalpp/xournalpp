@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-07 21:40+0000\n"
-"PO-Revision-Date: 2021-02-07 22:20\n"
+"PO-Revision-Date: 2021-02-08 00:32\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -62,7 +62,7 @@ msgstr "Adăugare/Editare Tab"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "Opțiuni avansate de export"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -159,7 +159,7 @@ msgstr "Schimbă Culoarea"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
-msgstr ""
+msgstr "Schimbă numele stratului curent"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
@@ -167,7 +167,7 @@ msgstr "Schimbă fontul"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "Schimbă stilul de linie"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -202,7 +202,8 @@ msgstr "Copiază pagina"
 #: ../src/util/PathUtil.cpp:230
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Nu s-a putut crea directorul: {1}\n"
+"Eșuat cu eroare: {2}"
 
 #: ../src/control/LatexController.cpp:268
 msgid "Could not load LaTeX PDF file"
@@ -282,7 +283,7 @@ msgstr "Nu s-a putut salva fișierul .tex: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:85
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "Nu s-a putut porni {1}: {2} (cod de ieşire: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
@@ -353,7 +354,7 @@ msgstr "Renunțați"
 
 #: ../src/control/XournalMain.cpp:680
 msgid "Display advanced export options"
-msgstr ""
+msgstr "Afișează opțiuni avansate de export"
 
 #: ../src/control/Control.cpp:1931
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -398,7 +399,7 @@ msgstr "Desenează săgeată"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Desenează elipsă"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -505,11 +506,11 @@ msgstr "Eroare: {1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "Eroare: {1} nu este un fișier obișnuit. Vă rugăm să verificați setările șablonului LaTeX. "
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Eroare: {1}. Te rugăm să verifici conținutul {2}"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -519,7 +520,7 @@ msgstr "Eroarea nu poate fi ștearsă. Trebuie să o faceți manual.\n"
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Exportă FIȘIERUL ca PDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
@@ -543,7 +544,9 @@ msgstr ""
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Exportă fără fundal\n"
+"                                 Fișierul exportat are un fundal transparent sau alb,\n"
+"                                 în funcție de formatul suportat de acesta\n"
 
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
@@ -552,7 +555,7 @@ msgstr ""
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Nu s-a putut găsi programul de generare LaTeX în PATH: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -560,7 +563,7 @@ msgstr ""
 
 #: ../src/control/LatexController.cpp:52
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Nu s-a putut citi șablonul global. Vă rugăm să verificați setările."
 
 #: ../src/control/jobs/BaseExportJob.cpp:93
 msgid "Failed to resolve path with the following error:\n"
@@ -700,11 +703,11 @@ msgstr "Inserează pagină"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Punctat Izometric"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Grafic izometric"
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
@@ -942,7 +945,7 @@ msgstr "Mod de prezentare"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Limba selectată anterior nu mai este valabilă!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Print"
@@ -984,7 +987,7 @@ msgstr "Elimină instrumentul din bara de instrumente {1} ID {2}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Redenumiţi stratul"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
@@ -1024,7 +1027,7 @@ msgstr "Grafică SVG"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "Exemplu de fișier LaTeX generat cu succes."
 
 #: ../src/control/Control.cpp:2426 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
@@ -1118,7 +1121,9 @@ msgstr ""
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Setează înălțimea paginii pentru exporturile PNG\n"
+"                                 Niciun efect fără -i/--create-img=foo.png\n"
+"                                 Ignorat dacă --export-png-dpi sau --export-png-width este folosit"
 
 #: ../src/control/XournalMain.cpp:668
 msgid "Set page width for PNG exports\n"
