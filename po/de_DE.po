@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-07 21:40+0000\n"
-"PO-Revision-Date: 2021-02-08 11:17\n"
+"PO-Revision-Date: 2021-02-08 12:21\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1657,7 +1657,7 @@ msgstr "%"
 
 #: ../ui/settings.glade:2188
 msgid "% greater than the initial distance between the two touches."
-msgstr "% größer als der anfängliche Abstand zwischen den beiden Berührungen."
+msgstr "% größer als der Anfängliche zwischen den beiden Berührungen ist."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
@@ -1669,7 +1669,7 @@ msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4550
 msgid "%."
-msgstr "%."
+msgstr "% vergrößert wird."
 
 #: ../ui/settings.glade:479
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1936,7 +1936,7 @@ msgstr "Füge vertikalen Platz von"
 
 #: ../ui/settings.glade:4066
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "Größenanpassungen verändern die Breite von Strichen nicht. "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
@@ -2158,7 +2158,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "\t    Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Vom Startpunkt nach LINKS ziehen bewirkt ein Verhalten gemäß einer gedrückten Umschalttaste.\n"
+"Nach OBEN ziehen bewirkt ein Verhalten gemäß der Steuerungstaste.\n\n"
+"Erkennungsradius: Radius bei dessen Überschreiten die Modifizierer während des Zeichnens aktiviert werden.\n\n"
+"<i>Nützlich für die Verwendung ohne Tastatur.</i>"
 
 #: ../ui/settings.glade:3966
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2224,7 +2227,7 @@ msgstr "Abhilfe für GTK Touch-/Scrollverhalten aktivieren (erfordert Neustart)"
 
 #: ../ui/settings.glade:950
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Simulierung des Drucks aktivieren <i>(Schätze den Druck anhand der Geschwindigkeit, wenn das Gerät keine Druckinformationen liefert.)</i>"
 
 #: ../ui/settings.glade:1243
 msgid "Enable Pressure Sensitivity"
@@ -2248,7 +2251,7 @@ msgstr "Aktiviere neues Eingabesystem (erfordert Neustart)"
 
 #: ../ui/settings.glade:2323
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Aktiviere Zeichnung mit Touchscreen"
 
 #: ../ui/settings.glade:2136
 msgid "Enable zoom gestures (requires restart)"
@@ -2285,7 +2288,7 @@ msgstr "Exportiere Ebenen progressiv"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Exportiere das Dokumente ohne jeglichen Hintergrund (Keins). Alternativ nur mit PDF und Bildhintergrunden (Keine Zeilenlinien) oder mit allen HIntergrundtypen (Alle)."
 
 #: ../ui/main.glade:1626 ../ui/main.glade:1831
 msgid "Fi_ll"
@@ -2401,7 +2404,7 @@ msgstr "Wie kurz (zeitlich)  UND...\n\n"
 
 #: ../ui/settings.glade:4249
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "Falls aktiviert, werden erkannte Formeln automatisch eingerastet. Während des Schreibens kann dies mit aktiviertem Formenerkenner zu unerwarteten Ergebnissen führen."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2409,7 +2412,7 @@ msgstr "Falls aktiviert, überprüfen Sie, dass die benötigten LaTeX-Pakete ins
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "Aktivieren, um jede Ebene auf eine einzelne Seite zu rendern. Die resultierende PDF-Datei kann als Präsentation verwendet werden."
 
 #: ../ui/settings.glade:4315
 msgid "Ignore Time (ms)"
@@ -2564,7 +2567,7 @@ msgstr "Keine Zeilenlinien"
 
 #: ../ui/exportSettings.glade:43
 msgid "None"
-msgstr "Keine"
+msgstr "Keins"
 
 #: ../ui/settings.glade:3877
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2654,7 +2657,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3261
 msgid "Pre-load pages before"
-msgstr "Seiten vorab laden"
+msgstr ""
 
 #: ../ui/main.glade:437
 msgid "Preferences"
@@ -2666,7 +2669,7 @@ msgstr "Präsentationsmodus"
 
 #: ../ui/settings.glade:4061
 msgid "Preserve line width"
-msgstr ""
+msgstr "Linienbreite beibehalten"
 
 #: ../ui/settings.glade:1312
 msgid "Pressure Multiplier: "
@@ -2690,7 +2693,7 @@ msgstr "Bereich"
 
 #: ../ui/settings.glade:4521
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "Neu rendern, wenn die Seite um mehr als "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2734,7 +2737,7 @@ msgstr "Abtastrate"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "Bespielname für Ebenen"
 
 #: ../ui/settings.glade:3062
 msgid "Scrollbars"
@@ -2770,7 +2773,7 @@ msgstr "Auswahlfarbe (Text-, Figuren Selektion etc.)"
 
 #: ../ui/settings.glade:1364
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Empfindlichkeitsskala"
 
 #: ../ui/main.glade:634
 msgid "Set Columns"
@@ -2811,7 +2814,8 @@ msgstr "Vertikale Bildlaufleiste auf der linken Seite anzeigen"
 #: ../ui/settings.glade:941
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "Langsameren Bewegungen werden einen größeren Druck zugewiesen als Schnelleren (Falls Druckinformationen fehlen).\n\n"
+"<i>Diese Funktion kann für Geräte nützlich sein, welche keine Druckempfindlichkeit haben (z. B. Maus, Touchscreen).</i>"
 
 #: ../ui/settings.glade:2668
 msgctxt "stylus cursor uses a small dot"
@@ -2836,7 +2840,7 @@ msgstr "Standard"
 
 #: ../ui/settings.glade:2161
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "Fange mit dem zoomen an, wenn der Abstand "
 
 #: ../ui/settings.glade:4822 ../ui/settings.glade:4880
 msgid "Storage Folder"
@@ -2880,11 +2884,11 @@ msgstr "Testen"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "Konfiguration testen"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "Testen Sie, ob die aktuelle Konfiguration gültig ist, indem Sie den LaTeX-Befehl (pdflatex) auf der globalen Vorlagen-Datei mit einer Test-Formel ausführen."
 
 #: ../ui/main.glade:1855
 msgid "Text Font..."
@@ -2892,15 +2896,15 @@ msgstr "Schriftart..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "Die LaTeX-Datei, welche als Vorlage für LaTeX verwendet werden soll."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "Die aktuelle Farbe des Textwerkzeugs im hexadezimalen RGB-Format."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "Die folgenden Zeichenketten werden in der globalen Vorlagen-Datei ersetzt, wenn LaTeX ausgeführt wird:"
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
@@ -2928,7 +2932,7 @@ msgstr "Wartezeit"
 
 #: ../ui/settings.glade:2345
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Zeichnen mit Touchscreen"
 
 #: ../ui/settings.glade:1771 ../ui/settings.glade:2376
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -2945,7 +2949,7 @@ msgstr "Versuche Objekt als erstes auszuwählen; Wenn nichts ausgewählt wurde, 
 
 #: ../ui/settings.glade:4245
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Benutze Einrastung für bekannte Formen"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
@@ -2970,12 +2974,13 @@ msgstr "Ansicht"
 #: ../ui/settings.glade:2155
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Beim Zeichnen mit Berührungen sind Zweifinger-Gesten zum scrollen gedacht. Es kann allerdings dazu kommen, dass diese als Zoomen erkannt werden, was zu Leistungsproblemen führt. Diese Einstellung kann das Malen mit Touchscreen vereinfachen. "
 
 #: ../ui/settings.glade:4518
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "Wenn bei einer hochaufgelösten PDF hineingezoomt wird, kann jeder Renderschritt eine lange Zeit dauern. Um die Häufgkeit des renderns zu verringern kann dieser Wert höher gesetzt werden.\n\n"
+"Um die Seite so oft wie möglich neu zu rendern kann der Wert auf 0% gesetzt werden."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
@@ -2999,7 +3004,7 @@ msgstr "Abhilfe"
 
 #: ../ui/about.glade:192
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:170
 msgid "Xournal++ Preferences"
