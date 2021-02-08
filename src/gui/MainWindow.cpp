@@ -44,11 +44,13 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
     g_object_ref(mainContentWidget);
     g_object_ref(sidebarWidget);
 
+    GtkSettings* appSettings = gtk_settings_get_default();
+    g_object_set(appSettings, "gtk-application-prefer-dark-theme", control->getSettings()->isDarkTheme(), NULL);
+
     loadMainCSS(gladeSearchPath, "xournalpp.css");
 
     GtkOverlay* overlay = GTK_OVERLAY(get("mainOverlay"));
     this->floatingToolbox = new FloatingToolbox(this, overlay);
-
 
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         GtkWidget* w = get(TOOLBAR_DEFINITIONS[i].guiName);
