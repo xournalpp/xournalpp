@@ -50,6 +50,7 @@ public:
      * Sets the button enabled / disabled
      */
     void setButtonEnabled(SidebarActions enabledActions);
+    void setButtonTooltips(const string& tipUp, const string& tipDown, const string& tipCopy, const string& tipDelete);
 
     void setHidden(bool hidden);
 

@@ -46,6 +46,13 @@ void SidebarToolbar::setButtonEnabled(SidebarActions enabledActions) {
     gtk_widget_set_sensitive(GTK_WIDGET(this->btDelete), enabledActions & SIDEBAR_ACTION_DELETE);
 }
 
+void SidebarToolbar::setButtonTooltips(const string& tipUp, const string& tipDown, const string& tipCopy,
+                                       const string& tipDelete) {
+    gtk_widget_set_tooltip_text(GTK_WIDGET(this->btUp), tipUp.c_str());
+    gtk_widget_set_tooltip_text(GTK_WIDGET(this->btDown), tipDown.c_str());
+    gtk_widget_set_tooltip_text(GTK_WIDGET(this->btCopy), tipCopy.c_str());
+    gtk_widget_set_tooltip_text(GTK_WIDGET(this->btDelete), tipDelete.c_str());
+}
 
 SidebarToolbarActionListener::~SidebarToolbarActionListener() = default;
 
