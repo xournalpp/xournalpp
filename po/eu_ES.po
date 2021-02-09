@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 21:40+0000\n"
-"PO-Revision-Date: 2021-02-07 22:21\n"
+"POT-Creation-Date: 2021-02-09 19:41+0000\n"
+"PO-Revision-Date: 2021-02-09 19:47\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -347,6 +347,14 @@ msgstr "Ezabatu fitxategia"
 msgid "Delete layer"
 msgstr "Ezabatu geruza"
 
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+msgid "Delete this layer"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
+msgid "Delete this page"
+msgstr "Ezabatu orri hau"
+
 #: ../src/control/Control.cpp:2431
 msgid "Discard"
 msgstr "Baztertu"
@@ -678,6 +686,14 @@ msgstr "Irudi fitxategia behar bezala sortu da"
 msgid "Images"
 msgstr "Irudiak"
 
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+msgid "Insert a copy of the current layer below"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
+msgid "Insert a copy of the current page below"
+msgstr "Txertatu kopia bat uneko orriaren azpian"
+
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
 msgstr "Txertatu elementuak"
@@ -718,7 +734,7 @@ msgstr ""
 msgid "Layer"
 msgstr "Geruza"
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layer Preview"
 msgstr "Geruzaren aurrebista"
 
@@ -884,7 +900,7 @@ msgstr "SVG irudiak"
 msgid "Page"
 msgstr "Orria"
 
-#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:62
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:71
 msgid "Page Preview"
 msgstr "Orriaren aurrebista"
 
@@ -1175,6 +1191,22 @@ msgstr "Fitxategia behar bezala gorde hemen \"{1}\""
 #: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
 msgstr "Fitxategi onartuak"
+
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:53
+msgid "Swap the current layer with the one above"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
+msgid "Swap the current layer with the one below"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:65
+msgid "Swap the current page with the one above"
+msgstr "Ordeztu uneko orria aurrekoarekin"
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:66
+msgid "Swap the current page with the one below"
+msgstr "Ordeztu uneko orria hurrengoarekin"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
@@ -2074,10 +2106,6 @@ msgstr "Ezabatu geruza"
 msgid "Delete stroke"
 msgstr "Ezabatu trazua"
 
-#: ../ui/main.glade:2203
-msgid "Delete this page"
-msgstr "Ezabatu orri hau"
-
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
 msgstr "Gailua"
@@ -2151,11 +2179,11 @@ msgstr "Marrazteko area"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Marrazteko tresnak - Ezarri aldatzaileak marrazkiaren norabidearen arabera (esperimentala)"
 
-#: ../ui/main.glade:2571
+#: ../ui/main.glade:2567
 msgid "Duplicate"
 msgstr "Bikoiztu"
 
-#: ../ui/main.glade:2608
+#: ../ui/main.glade:2604
 msgid "Edit (not implemented yet)"
 msgstr "Editatu (oraindik ezarri gabe)"
 
@@ -2252,11 +2280,11 @@ msgstr "Bete"
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2365
+#: ../ui/main.glade:2361
 msgid "Find next occurrence of the search string"
 msgstr "Bilatu bilaketa-katearen hurrengo agerraldia"
 
-#: ../ui/main.glade:2343
+#: ../ui/main.glade:2339
 msgid "Find previous occurrence of the search string"
 msgstr "Bilatu bilaketa-katearen aurreko agerraldia"
 
@@ -2396,17 +2424,13 @@ msgstr "Sarreren sistema"
 msgid "Insert Latex"
 msgstr "Txertatu latex"
 
-#: ../ui/main.glade:2563
+#: ../ui/main.glade:2559
 msgid "Insert Page After"
 msgstr "Txertatu orria ondoren"
 
-#: ../ui/main.glade:2555
+#: ../ui/main.glade:2551
 msgid "Insert Page Before"
 msgstr "Txertatu orria aurretik"
-
-#: ../ui/main.glade:2182
-msgid "Insert a copy of the current page below"
-msgstr "Txertatu kopia bat uneko orriaren azpian"
 
 #: ../ui/settings.glade:5275
 msgid "LaTeX"
@@ -2481,11 +2505,11 @@ msgstr "Saguaren botoiak"
 msgid "Mouse+Keyboard Combo"
 msgstr "Sagua+teklatuaren konbinazioa"
 
-#: ../ui/main.glade:2593
+#: ../ui/main.glade:2589
 msgid "Move Down"
 msgstr "Mugitu behera"
 
-#: ../ui/main.glade:2585
+#: ../ui/main.glade:2581
 msgid "Move Up"
 msgstr "Mugitu gora"
 
@@ -2809,14 +2833,6 @@ msgstr "Stylus-aren botoiak"
 #: ../ui/settings.glade:4378
 msgid "Successive (ms)"
 msgstr "Ondorengoa (ms)"
-
-#: ../ui/main.glade:2139
-msgid "Swap the current page with the one above"
-msgstr "Ordeztu uneko orria aurrekoarekin"
-
-#: ../ui/main.glade:2161
-msgid "Swap the current page with the one below"
-msgstr "Ordeztu uneko orria hurrengoarekin"
 
 #: ../ui/main.glade:853
 msgid "T_oolbars"
