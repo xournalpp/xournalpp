@@ -959,9 +959,8 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
     if (!this->preeditString.empty()) {
         string text = this->text->getText();
         int offset = gtk_text_iter_get_offset(&cursorIter);
-        // int pos = getByteOffset(gtk_text_iter_get_offset(&cursorIter)); // wrong index.
         int pos = gtk_text_iter_get_line_index(&cursorIter);
-        for(gtk_text_iter_set_line_index(&cursorIter,0); gtk_text_iter_backward_line(&cursorIter); ){
+        for (gtk_text_iter_set_line_index(&cursorIter, 0); gtk_text_iter_backward_line(&cursorIter);) {
             pos += gtk_text_iter_get_bytes_in_line(&cursorIter);
         }
         gtk_text_iter_set_offset(&cursorIter, offset);
