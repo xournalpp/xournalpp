@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 21:40+0000\n"
-"PO-Revision-Date: 2021-02-07 22:20\n"
+"POT-Creation-Date: 2021-02-09 19:41+0000\n"
+"PO-Revision-Date: 2021-02-09 19:46\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -348,6 +348,14 @@ msgstr "删除文件"
 msgid "Delete layer"
 msgstr "删除层"
 
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+msgid "Delete this layer"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
+msgid "Delete this page"
+msgstr "删除此页面"
+
 #: ../src/control/Control.cpp:2431
 msgid "Discard"
 msgstr "丢弃"
@@ -688,6 +696,14 @@ msgstr "图片文件创建成功"
 msgid "Images"
 msgstr "图片"
 
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+msgid "Insert a copy of the current layer below"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
+msgid "Insert a copy of the current page below"
+msgstr "在下方插入当前页面的副本"
+
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
 msgstr "插入元素"
@@ -728,7 +744,7 @@ msgstr "LaTeX 生成器遇到了一个错误:{1}(退出代码: {2})"
 msgid "Layer"
 msgstr "图层"
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layer Preview"
 msgstr "图层预览"
 
@@ -895,7 +911,7 @@ msgstr "PNG 图形"
 msgid "Page"
 msgstr "页面"
 
-#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:62
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:71
 msgid "Page Preview"
 msgstr "页面预览"
 
@@ -1191,6 +1207,22 @@ msgstr "文档已经保存为\"{1}\""
 #: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
 msgstr "支撑文件"
+
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:53
+msgid "Swap the current layer with the one above"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
+msgid "Swap the current layer with the one below"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:65
+msgid "Swap the current page with the one above"
+msgstr "将当前页面与上页切换"
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:66
+msgid "Swap the current page with the one below"
+msgstr "将当前页面与下页切换"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
@@ -2116,10 +2148,6 @@ msgstr "删除层"
 msgid "Delete stroke"
 msgstr "删除笔划"
 
-#: ../ui/main.glade:2203
-msgid "Delete this page"
-msgstr "删除此页面"
-
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
 msgstr "设备"
@@ -2196,11 +2224,11 @@ msgstr "绘图区域"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "绘图工具 - 依据笔划方向调整设置【实验性】"
 
-#: ../ui/main.glade:2571
+#: ../ui/main.glade:2567
 msgid "Duplicate"
 msgstr "重复"
 
-#: ../ui/main.glade:2608
+#: ../ui/main.glade:2604
 msgid "Edit (not implemented yet)"
 msgstr "编辑(尚未实现)"
 
@@ -2297,11 +2325,11 @@ msgstr "填充(_l)"
 msgid "Fill opacity"
 msgstr "透明度填充"
 
-#: ../ui/main.glade:2365
+#: ../ui/main.glade:2361
 msgid "Find next occurrence of the search string"
 msgstr "向下查找搜索字符串"
 
-#: ../ui/main.glade:2343
+#: ../ui/main.glade:2339
 msgid "Find previous occurrence of the search string"
 msgstr "向上查找搜索字符串"
 
@@ -2440,17 +2468,13 @@ msgstr "输入系统"
 msgid "Insert Latex"
 msgstr "插入LaTeX"
 
-#: ../ui/main.glade:2563
+#: ../ui/main.glade:2559
 msgid "Insert Page After"
 msgstr "在此后插入页面"
 
-#: ../ui/main.glade:2555
+#: ../ui/main.glade:2551
 msgid "Insert Page Before"
 msgstr "在此前插入页面"
-
-#: ../ui/main.glade:2182
-msgid "Insert a copy of the current page below"
-msgstr "在下方插入当前页面的副本"
 
 #: ../ui/settings.glade:5275
 msgid "LaTeX"
@@ -2526,11 +2550,11 @@ msgstr "鼠标按钮"
 msgid "Mouse+Keyboard Combo"
 msgstr "鼠标+键盘结合"
 
-#: ../ui/main.glade:2593
+#: ../ui/main.glade:2589
 msgid "Move Down"
 msgstr "向下移动"
 
-#: ../ui/main.glade:2585
+#: ../ui/main.glade:2581
 msgid "Move Up"
 msgstr "向上移动"
 
@@ -2854,14 +2878,6 @@ msgstr "触控笔按钮"
 #: ../ui/settings.glade:4378
 msgid "Successive (ms)"
 msgstr "持续（ms）"
-
-#: ../ui/main.glade:2139
-msgid "Swap the current page with the one above"
-msgstr "将当前页面与上页切换"
-
-#: ../ui/main.glade:2161
-msgid "Swap the current page with the one below"
-msgstr "将当前页面与下页切换"
 
 #: ../ui/main.glade:853
 msgid "T_oolbars"
