@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-07 21:40+0000\n"
-"PO-Revision-Date: 2021-02-07 22:20\n"
+"POT-Creation-Date: 2021-02-09 19:41+0000\n"
+"PO-Revision-Date: 2021-02-09 19:46\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -347,6 +347,14 @@ msgstr "Apagar Arquivo"
 msgid "Delete layer"
 msgstr "Excluir camada"
 
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+msgid "Delete this layer"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
+msgid "Delete this page"
+msgstr "Excluir esta página"
+
 #: ../src/control/Control.cpp:2431
 msgid "Discard"
 msgstr "Descartar"
@@ -678,6 +686,14 @@ msgstr "Arquivo de imagem criado com sucesso"
 msgid "Images"
 msgstr "Imagens"
 
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+msgid "Insert a copy of the current layer below"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
+msgid "Insert a copy of the current page below"
+msgstr "Inserir uma cópia da página atual abaixo"
+
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
 msgstr "Inserir elementos"
@@ -718,7 +734,7 @@ msgstr ""
 msgid "Layer"
 msgstr "Camada"
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layer Preview"
 msgstr "Pré-visualização da camada"
 
@@ -884,7 +900,7 @@ msgstr "Gráficos PNG"
 msgid "Page"
 msgstr "Página"
 
-#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:62
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:71
 msgid "Page Preview"
 msgstr "Pré-visualização da Página"
 
@@ -1175,6 +1191,22 @@ msgstr "Documento salvo com sucesso em \"{1}\""
 #: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
 msgstr "Arquivos suportados"
+
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:53
+msgid "Swap the current layer with the one above"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
+msgid "Swap the current layer with the one below"
+msgstr ""
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:65
+msgid "Swap the current page with the one above"
+msgstr "Trocar a página atual pela página acima"
+
+#: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:66
+msgid "Swap the current page with the one below"
+msgstr "Trocar a página atual pela página abaixo"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
@@ -2074,10 +2106,6 @@ msgstr "Excluir camada"
 msgid "Delete stroke"
 msgstr "Excluir traço"
 
-#: ../ui/main.glade:2203
-msgid "Delete this page"
-msgstr "Excluir esta página"
-
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
 msgstr "Dispositivo"
@@ -2151,11 +2179,11 @@ msgstr "Área de Desenho"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Ferramentas de Desenho - Defina Modificadores ao desenhar Direção (Experimental)"
 
-#: ../ui/main.glade:2571
+#: ../ui/main.glade:2567
 msgid "Duplicate"
 msgstr "Duplicar"
 
-#: ../ui/main.glade:2608
+#: ../ui/main.glade:2604
 msgid "Edit (not implemented yet)"
 msgstr "Editar (ainda não implementado)"
 
@@ -2252,11 +2280,11 @@ msgstr "Fi_ll"
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2365
+#: ../ui/main.glade:2361
 msgid "Find next occurrence of the search string"
 msgstr "Localizar próxima ocorrência da busca"
 
-#: ../ui/main.glade:2343
+#: ../ui/main.glade:2339
 msgid "Find previous occurrence of the search string"
 msgstr "Localizar próxima ocorrência de busca"
 
@@ -2396,17 +2424,13 @@ msgstr "Sistema de entrada"
 msgid "Insert Latex"
 msgstr "Inserir camada"
 
-#: ../ui/main.glade:2563
+#: ../ui/main.glade:2559
 msgid "Insert Page After"
 msgstr "Inserir Página Depois"
 
-#: ../ui/main.glade:2555
+#: ../ui/main.glade:2551
 msgid "Insert Page Before"
 msgstr "Inserir Página Antes"
-
-#: ../ui/main.glade:2182
-msgid "Insert a copy of the current page below"
-msgstr "Inserir uma cópia da página atual abaixo"
 
 #: ../ui/settings.glade:5275
 msgid "LaTeX"
@@ -2481,11 +2505,11 @@ msgstr "Botões do Mouse"
 msgid "Mouse+Keyboard Combo"
 msgstr ""
 
-#: ../ui/main.glade:2593
+#: ../ui/main.glade:2589
 msgid "Move Down"
 msgstr "Mover para Baixo"
 
-#: ../ui/main.glade:2585
+#: ../ui/main.glade:2581
 msgid "Move Up"
 msgstr "Mover para Cima"
 
@@ -2809,14 +2833,6 @@ msgstr "Botões de caneta"
 #: ../ui/settings.glade:4378
 msgid "Successive (ms)"
 msgstr "Sucessivo (ms)"
-
-#: ../ui/main.glade:2139
-msgid "Swap the current page with the one above"
-msgstr "Trocar a página atual pela página acima"
-
-#: ../ui/main.glade:2161
-msgid "Swap the current page with the one below"
-msgstr "Trocar a página atual pela página abaixo"
 
 #: ../ui/main.glade:853
 msgid "T_oolbars"
