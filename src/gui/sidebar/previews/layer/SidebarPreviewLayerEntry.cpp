@@ -7,10 +7,11 @@
 
 
 SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer,
-                                                   const string& layerName, size_t index):
+                                                   const string& layerName, size_t index, bool stacked):
         SidebarPreviewBaseEntry(sidebar, page),
         index(index),
         layer(layer),
+        stacked(stacked),
         box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2)) {
     GtkWidget* toolbar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 
@@ -56,7 +57,9 @@ void SidebarPreviewLayerEntry::mouseButtonPressCallback() {
     (dynamic_cast<SidebarPreviewLayers*>(sidebar))->layerSelected(index);
 }
 
-auto SidebarPreviewLayerEntry::getRenderType() -> PreviewRenderType { return RENDER_TYPE_PAGE_LAYER; }
+auto SidebarPreviewLayerEntry::getRenderType() -> PreviewRenderType {
+    return stacked ? RENDER_TYPE_PAGE_LAYERSTACK : RENDER_TYPE_PAGE_LAYER;
+}
 
 auto SidebarPreviewLayerEntry::getHeight() -> int { return getWidgetHeight() + toolbarHeight; }
 

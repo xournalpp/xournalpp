@@ -7,8 +7,8 @@
 #include "SidebarPreviewLayerEntry.h"
 #include "i18n.h"
 
-SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
-        SidebarPreviewBase(control, gui, toolbar), lc(control->getLayerController()) {
+SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar, bool stacked):
+        SidebarPreviewBase(control, gui, toolbar), lc(control->getLayerController()), stacked(stacked) {
     LayerCtrlListener::registerListener(lc);
 
     this->toolbar->setButtonEnabled(SIDEBAR_ACTION_NONE);
@@ -56,9 +56,9 @@ void SidebarPreviewLayers::enableSidebar() {
     rebuildLayerMenu();
 }
 
-auto SidebarPreviewLayers::getName() -> string { return _("Layer Preview"); }
+auto SidebarPreviewLayers::getName() -> string { return stacked ? _("Layerstack Preview") : _("Layer Preview"); }
 
-auto SidebarPreviewLayers::getIconName() -> string { return "layer"; }
+auto SidebarPreviewLayers::getIconName() -> string { return stacked ? "sidebar-layerstack" : "layer"; }
 
 void SidebarPreviewLayers::pageSizeChanged(size_t page) {
     if (page != this->lc->getCurrentPageId() || !enabled) {
@@ -101,7 +101,7 @@ void SidebarPreviewLayers::updatePreviews() {
     size_t index = 0;
     for (int i = layerCount; i >= 0; i--) {
         std::string name = lc->getLayerNameById(i);
-        SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i - 1, name, index++);
+        SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i - 1, name, index++, this->stacked);
         this->previews.push_back(p);
         gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
     }

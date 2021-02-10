@@ -21,7 +21,7 @@
 
 class SidebarPreviewLayers: public SidebarPreviewBase, public LayerCtrlListener {
 public:
-    SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
+    SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar, bool stacked);
     virtual ~SidebarPreviewLayers();
 
 public:
@@ -75,4 +75,9 @@ private:
      * Layer Controller
      */
     LayerController* lc;
+
+    /**
+     * render as stacked
+     */
+    bool stacked;
 };

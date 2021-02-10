@@ -19,7 +19,7 @@ class SidebarPreviewBase;
 class SidebarPreviewLayerEntry: public SidebarPreviewBaseEntry {
 public:
     SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer, const string& layerName,
-                             size_t index);
+                             size_t index, bool stacked);
     virtual ~SidebarPreviewLayerEntry();
 
 public:
@@ -77,6 +77,11 @@ private:
      * Ignore events
      */
     bool inUpdate = false;
+
+    /**
+     * render as stacked
+     */
+    bool stacked = false;
 
     friend class PreviewJob;
 };
