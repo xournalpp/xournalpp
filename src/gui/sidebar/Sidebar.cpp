@@ -25,7 +25,8 @@ Sidebar::Sidebar(GladeGui* gui, Control* control): toolbar(this, gui), control(c
 void Sidebar::initPages(GtkWidget* sidebarContents, GladeGui* gui) {
     addPage(new SidebarIndexPage(this->control, &this->toolbar));
     addPage(new SidebarPreviewPages(this->control, this->gui, &this->toolbar));
-    addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar));
+    addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar, false));
+    addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar, true));
 
     // Init toolbar with icons
 

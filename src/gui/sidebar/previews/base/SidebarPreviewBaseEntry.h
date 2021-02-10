@@ -32,7 +32,12 @@ typedef enum {
     /**
      * Render only a layer
      */
-    RENDER_TYPE_PAGE_LAYER
+    RENDER_TYPE_PAGE_LAYER,
+
+    /**
+     * Render the stack up to a layer
+     */
+    RENDER_TYPE_PAGE_LAYERSTACK
 } PreviewRenderType;
 
 
