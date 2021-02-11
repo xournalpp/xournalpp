@@ -88,6 +88,22 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_SETTINGS;
     }
 
+    if (value == "ACTION_ARRANGE_BRING_TO_FRONT") {
+        return ACTION_ARRANGE_BRING_TO_FRONT;
+    }
+
+    if (value == "ACTION_ARRANGE_BRING_FORWARD") {
+        return ACTION_ARRANGE_BRING_FORWARD;
+    }
+
+    if (value == "ACTION_ARRANGE_SEND_BACKWARD") {
+        return ACTION_ARRANGE_SEND_BACKWARD;
+    }
+
+    if (value == "ACTION_ARRANGE_SEND_TO_BACK") {
+        return ACTION_ARRANGE_SEND_TO_BACK;
+    }
+
     if (value == "ACTION_GOTO_FIRST") {
         return ACTION_GOTO_FIRST;
     }
@@ -668,6 +684,22 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_SETTINGS) {
         return "ACTION_SETTINGS";
+    }
+
+    if (value == ACTION_ARRANGE_BRING_TO_FRONT) {
+        return "ACTION_ARRANGE_BRING_TO_FRONT";
+    }
+
+    if (value == ACTION_ARRANGE_BRING_FORWARD) {
+        return "ACTION_ARRANGE_BRING_FORWARD";
+    }
+
+    if (value == ACTION_ARRANGE_SEND_BACKWARD) {
+        return "ACTION_ARRANGE_SEND_BACKWARD";
+    }
+
+    if (value == ACTION_ARRANGE_SEND_TO_BACK) {
+        return "ACTION_ARRANGE_SEND_TO_BACK";
     }
 
     if (value == ACTION_GOTO_FIRST) {

@@ -6,6 +6,7 @@
 
 #include <glib/gstdio.h>
 
+#include "enums/ActionType.enum.h"
 #include "gui/TextEditor.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
@@ -422,6 +423,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_SETTINGS:
             showSettings();
+            break;
+
+        case ACTION_ARRANGE_BRING_TO_FRONT:
+        case ACTION_ARRANGE_BRING_FORWARD:
+        case ACTION_ARRANGE_SEND_BACKWARD:
+        case ACTION_ARRANGE_SEND_TO_BACK:
+            this->reorderSelection(type);
             break;
 
             // Menu Navigation
@@ -990,6 +998,34 @@ void Control::clearSelectionEndText() {
     if (win) {
         win->getXournal()->endTextAllPages();
     }
+}
+
+void Control::reorderSelection(const ActionType type) {
+    EditSelection* sel = win->getXournal()->getSelection();
+    if (!sel)
+        return;
+
+    EditSelection::OrderChange change;
+    switch (type) {
+        case ACTION_ARRANGE_BRING_TO_FRONT:
+            change = EditSelection::OrderChange::BringToFront;
+            break;
+        case ACTION_ARRANGE_BRING_FORWARD:
+            change = EditSelection::OrderChange::BringForward;
+            break;
+        case ACTION_ARRANGE_SEND_BACKWARD:
+            change = EditSelection::OrderChange::SendBackward;
+            break;
+        case ACTION_ARRANGE_SEND_TO_BACK:
+            change = EditSelection::OrderChange::SendToBack;
+            break;
+        default:
+            // Unknown selection order, do nothing.
+            return;
+    }
+
+    auto undoAction = sel->rearrangeInsertOrder(change);
+    this->undoRedo->addUndoAction(std::move(undoAction));
 }
 
 /**
