@@ -314,6 +314,11 @@ private:  // DATA
     bool aspectRatio{};
 
     /**
+     * If mirrors are allowed e.g. for strokes
+     */
+    bool mirror{};
+
+    /**
      * Size of the editing handles
      */
 

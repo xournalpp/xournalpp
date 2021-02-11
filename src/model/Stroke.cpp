@@ -102,6 +102,8 @@ void Stroke::setWidth(double width) { this->width = width; }
 
 auto Stroke::getWidth() const -> double { return this->width; }
 
+auto Stroke::rescaleWithMirror() -> bool { return true; }
+
 auto Stroke::isInSelection(ShapeContainer* container) -> bool {
     for (auto&& p: this->points) {
         double px = p.x;
@@ -190,7 +192,7 @@ void Stroke::rotate(double x0, double y0, double th) {
 }
 
 void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
-    double fz = (restoreLineWidth) ? 1 : sqrt(fx * fy);
+    double fz = (restoreLineWidth) ? 1 : sqrt(std::abs(fx * fy));
     cairo_matrix_t scaleMatrix;
     cairo_matrix_init_identity(&scaleMatrix);
     cairo_matrix_translate(&scaleMatrix, x0, y0);

@@ -117,6 +117,7 @@ auto Element::isInSelection(ShapeContainer* container) -> bool {
 }
 
 auto Element::rescaleOnlyAspectRatio() -> bool { return false; }
+auto Element::rescaleWithMirror() -> bool { return false; }
 
 void Element::serializeElement(ObjectOutputStream& out) const {
     out.writeObject("Element");

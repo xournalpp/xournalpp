@@ -66,6 +66,7 @@ public:
     virtual bool isInSelection(ShapeContainer* container);
 
     virtual bool rescaleOnlyAspectRatio();
+    virtual bool rescaleWithMirror();
 
     /**
      * Take 1:1 copy of this element

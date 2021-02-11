@@ -106,6 +106,8 @@ public:
     void serialize(ObjectOutputStream& out) override;
     void readSerialized(ObjectInputStream& in) override;
 
+    bool rescaleWithMirror() override;
+
 protected:
     void calcSize() const override;
 

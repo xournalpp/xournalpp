@@ -138,6 +138,7 @@ void XournalppCursor::setMouseSelectionType(CursorSelectionType selectionType) {
 }
 
 void XournalppCursor::setRotationAngle(double angle) { this->angle = angle; }
+void XournalppCursor::setMirror(bool mirror) { this->mirror = mirror; }
 
 /*This handles setting the busy cursor for the main window and calls
  * updateCursor to set the busy cursor for the XournalWidget region.
@@ -314,7 +315,10 @@ void XournalppCursor::updateCursor() {
 }
 
 auto XournalppCursor::getResizeCursor(double deltaAngle) -> GdkCursor* {
-    gulong flavour = static_cast<gulong>(RESIZE_CURSOR_HASH_PRECISION * (angle + deltaAngle));
+    if (this->mirror) {
+        deltaAngle = -deltaAngle;
+    }
+    gulong flavour = static_cast<gulong>(RESIZE_CURSOR_HASH_PRECISION * fmod(angle + deltaAngle, 180.0));
     if (CRSR_RESIZE == this->currentCursor && flavour == this->currentCursorFlavour) {
         return nullptr;
     }
