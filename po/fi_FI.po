@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 19:41+0000\n"
-"PO-Revision-Date: 2021-02-09 19:47\n"
+"PO-Revision-Date: 2021-02-11 16:09\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -20,12 +20,14 @@ msgstr ""
 #: ../src/control/XournalMain.cpp:473
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n\n"
+"Yritetään suorittaa ilman tätä tiedostoa."
 
 #: ../src/control/XournalMain.cpp:454
 msgid "\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n"
+"Yritetään suorittaa ilman tätä tiedostoa."
 
 #: ../src/gui/MainWindow.cpp:708
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -38,7 +40,7 @@ msgstr "%F-Muistiinpano-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:140
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
+msgstr "<b>Laitteita ei löytynyt. Tämä vaikuttaa virheeltä - lähetä ehkä vikailmoitus?</b>"
 
 #: ../src/control/XournalMain.cpp:468
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
