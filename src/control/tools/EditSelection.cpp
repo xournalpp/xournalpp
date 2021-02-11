@@ -1,6 +1,8 @@
 #include "EditSelection.h"
 
+#include <algorithm>
 #include <cmath>
+#include <limits>
 
 #include "control/Control.h"
 #include "gui/Layout.h"
@@ -14,6 +16,7 @@
 #include "model/Text.h"
 #include "serializing/ObjectInputStream.h"
 #include "serializing/ObjectOutputStream.h"
+#include "undo/ArrangeUndoAction.h"
 #include "undo/ColorUndoAction.h"
 #include "undo/FontUndoAction.h"
 #include "undo/InsertUndoAction.h"
@@ -23,6 +26,7 @@
 
 #include "EditSelectionContents.h"
 #include "Selection.h"
+#include "i18n.h"
 
 
 constexpr size_t MINPIXSIZE = 5;  // smallest can scale down to, in pixels.
@@ -326,6 +330,61 @@ auto EditSelection::getElements() -> vector<Element*>* { return this->contents->
  */
 auto EditSelection::getInsertOrder() const -> std::deque<std::pair<Element*, Layer::ElementIndex>> const& {
     return this->contents->getInsertOrder();
+}
+
+auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoActionPtr {
+    using InsertOrder = std::deque<std::pair<Element*, Layer::ElementIndex>>;
+    const InsertOrder oldOrd = this->getInsertOrder();
+    InsertOrder newOrd;
+    std::string desc = _("Arrange");
+    switch (change) {
+        case OrderChange::BringToFront:
+            // Set to largest positive signed integer
+            for (const auto& [e, _]: oldOrd) {
+                newOrd.emplace_back(e, std::numeric_limits<Layer::ElementIndex>::max());
+            }
+            desc = _("Bring to front");
+            break;
+        case OrderChange::BringForward:
+            // Set indices of elements to range from [max(indices) + 1, max(indices) + 1 + num elements)
+            newOrd = oldOrd;
+            std::stable_sort(newOrd.begin(), newOrd.end(), EditSelectionContents::insertOrderCmp);
+            if (!newOrd.empty()) {
+                Layer::ElementIndex i = newOrd.back().second + 1;
+                for (auto& it: newOrd) {
+                    it.second = i++;
+                }
+            }
+            desc = _("Bring forward");
+            break;
+        case OrderChange::SendBackward:
+            // Set indices of elements to range from [min(indices) - 1, min(indices) + num elements - 1)
+            newOrd = oldOrd;
+            std::stable_sort(newOrd.begin(), newOrd.end(), EditSelectionContents::insertOrderCmp);
+            if (!newOrd.empty()) {
+                Layer::ElementIndex i = newOrd.front().second;
+                i = i > 0 ? i - 1 : 0;
+                for (auto& it: newOrd) {
+                    it.second = i++;
+                }
+            }
+            desc = _("Send backward");
+            break;
+        case OrderChange::SendToBack:
+            Layer::ElementIndex i = 0;
+            for (const auto& [e, _]: oldOrd) {
+                newOrd.emplace_back(e, i);
+                i++;
+            }
+            desc = _("Send to back");
+            break;
+    }
+
+    this->contents->replaceInsertOrder(newOrd);
+    PageRef page = this->view->getPage();
+
+    return std::make_unique<ArrangeUndoAction>(page, page->getSelectedLayer(), desc, std::move(oldOrd),
+                                               std::move(newOrd));
 }
 
 /**

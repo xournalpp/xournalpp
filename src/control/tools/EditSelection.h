@@ -170,6 +170,19 @@ public:
      * Returns the insert order of this selection
      */
     std::deque<std::pair<Element*, Layer::ElementIndex>> const& getInsertOrder() const;
+
+    enum class OrderChange {
+        BringToFront,
+        BringForward,
+        SendBackward,
+        SendToBack,
+    };
+
+    /**
+     * Change the insert order of this selection.
+     */
+    UndoActionPtr rearrangeInsertOrder(const OrderChange change);
+
     /**
      * Finish the current movement
      * (should be called in the mouse-button-released event handler)

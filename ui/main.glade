@@ -296,6 +296,56 @@
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <child>
+                          <object class="GtkMenuItem" id="menuArrange">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Arrange</property>
+                            <property name="use-underline">True</property>
+                            <child type="submenu">
+                              <object class="GtkMenu">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <child>
+                                  <object class="GtkMenuItem" id="menuArrangeBringToFront">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Bring to Front</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_ARRANGE_BRING_TO_FRONT" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkMenuItem" id="menuArrangeBringForward">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Bring Forward</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_ARRANGE_BRING_FORWARD" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkMenuItem" id="menuArrangeSendBackward">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Send Backward</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_ARRANGE_SEND_BACKWARD" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkMenuItem" id="menuArrangeSendToBack">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Send to Back</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_ARRANGE_SEND_TO_BACK" swapped="no"/>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkImageMenuItem" id="menuEditUndo">
                             <property name="label">gtk-undo</property>
                             <property name="name">menuEditUndo</property>

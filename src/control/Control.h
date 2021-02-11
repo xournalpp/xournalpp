@@ -205,6 +205,8 @@ public:
 
     void clearSelectionEndText();
 
+    void reorderSelection(ActionType type);
+
     void setToolSize(ToolSize size);
 
     void setLineStyle(const string& style);
