@@ -31,7 +31,8 @@ LatexController::LatexController(Control* control):
 }
 
 LatexController::~LatexController() {
-    unsetUpdating();
+    g_cancellable_cancel(updating_cancellable);
+    g_object_unref(updating_cancellable);
     this->control = nullptr;
 }
 
@@ -139,7 +140,9 @@ auto LatexController::showTexEditDialog() -> string {
 }
 
 void LatexController::triggerImageUpdate(const string& texString) {
-    this->unsetUpdating();
+    if (this->isUpdating()) {
+        return;
+    }
 
     this->lastPreviewedTex = texString;
     const std::string texContents = LatexGenerator::templateSub(
@@ -201,14 +204,14 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
         }
     }
 
-    self->unsetUpdating();
+    g_clear_object(&self->updating_cancellable);
     self->updateStatus();
     if (shouldUpdate) {
         self->triggerImageUpdate(currentTex);
     }
 }
 
-bool LatexController::isUpdating() { return updating_cancellable && !g_cancellable_is_cancelled(updating_cancellable); }
+bool LatexController::isUpdating() { return updating_cancellable; }
 
 void LatexController::updateStatus() {
     GtkWidget* okButton = this->dlg.get("texokbutton");
@@ -228,11 +231,6 @@ void LatexController::updateStatus() {
 
     GtkLabel* errorLabel = GTK_LABEL(this->dlg.get("texErrorLabel"));
     gtk_label_set_text(errorLabel, this->isValidTex ? "" : N_("The formula is empty when rendered or invalid."));
-}
-
-void LatexController::unsetUpdating() {
-    g_cancellable_cancel(updating_cancellable);
-    g_clear_object(&updating_cancellable);
 }
 
 void LatexController::deleteOldImage() {

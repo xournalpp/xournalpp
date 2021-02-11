@@ -106,7 +106,6 @@ private:
      */
     static void onPdfRenderComplete(GObject* procObj, GAsyncResult* res, LatexController* self);
 
-    void unsetUpdating();
     void updateStatus();
     bool isUpdating();
 
