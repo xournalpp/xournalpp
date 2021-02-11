@@ -39,6 +39,7 @@ public:
     void activateDrawDirCursor(bool enable, bool shift = false, bool ctrl = false);
     void setInputDeviceClass(InputDeviceClass inputDevice);
     void setRotationAngle(double angle);
+    void setMirror(bool mirror);
 
 private:
     void setCursor(int id);
@@ -73,6 +74,7 @@ private:
     gulong currentCursorFlavour{};  // for different flavours of a cursor (i.e. drawdir, pen and highlighter custom
                                     // cursors)
 
-    // for resizing rotated selections
+    // for resizing rotated/mirrored selections
     double angle = 0;
+    bool mirror = false;
 };

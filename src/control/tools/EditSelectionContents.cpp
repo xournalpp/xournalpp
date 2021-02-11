@@ -484,12 +484,14 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
     }
 
     if (this->crBuffer == nullptr) {
-        this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width * zoom, height * zoom);
+        this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(std::abs(width) * zoom),
+                                                    static_cast<int>(std::abs(height) * zoom));
         cairo_t* cr2 = cairo_create(this->crBuffer);
 
         int dx = static_cast<int>(this->relativeX * zoom);
         int dy = static_cast<int>(this->relativeY * zoom);
 
+        cairo_translate(cr2, fx < 0 ? -width * zoom : 0, fy < 0 ? -height * zoom : 0);
         cairo_scale(cr2, fx, fy);
         cairo_translate(cr2, -dx, -dy);
         cairo_scale(cr2, zoom, zoom);
@@ -504,8 +506,8 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
     int wImg = cairo_image_surface_get_width(this->crBuffer);
     int hImg = cairo_image_surface_get_height(this->crBuffer);
 
-    int wTarget = static_cast<int>(width * zoom);
-    int hTarget = static_cast<int>(height * zoom);
+    int wTarget = static_cast<int>(std::abs(width) * zoom);
+    int hTarget = static_cast<int>(std::abs(height) * zoom);
 
     double sx = static_cast<double>(wTarget) / wImg;
     double sy = static_cast<double>(hTarget) / hImg;
@@ -517,8 +519,8 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
         cairo_scale(cr, sx, sy);
     }
 
-    double dx = static_cast<int>(x * zoom / sx);
-    double dy = static_cast<int>(y * zoom / sy);
+    double dx = static_cast<int>(std::min(x, x + width) * zoom / sx);
+    double dy = static_cast<int>(std::min(y, y + height) * zoom / sy);
 
     cairo_set_source_surface(cr, this->crBuffer, dx, dy);
     cairo_paint(cr);
