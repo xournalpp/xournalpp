@@ -13,9 +13,7 @@ ToolbarEntry::ToolbarEntry(ToolbarEntry&& e) { *this = std::move(e); }
 ToolbarEntry& ToolbarEntry::operator=(const ToolbarEntry& e) {
     this->name = e.name;
     std::vector<ToolbarItem*> entries;
-    for (ToolbarItem* item: e.entries) {
-        entries.push_back(new ToolbarItem(*item));
-    }
+    for (ToolbarItem* item: e.entries) { entries.push_back(new ToolbarItem(*item)); }
     clearList();
     this->entries = std::move(entries);
     return *this;

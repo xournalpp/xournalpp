@@ -27,4 +27,5 @@ public:
     static std::string rtrim(std::string str);
     static std::string trim(std::string str);
     static bool iequals(const std::string& a, const std::string& b);
+    static bool isNumber(const std::string& input);
 };

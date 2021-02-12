@@ -7,6 +7,11 @@ endif ()
 
 add_definitions (-DBUILD_THUMBNAILER)
 
+if (DEV_ENABLE_GCOV)
+  add_compile_options("--coverage")
+  add_link_options("--coverage")
+endif (DEV_ENABLE_GCOV)
+
 add_executable (xournalpp-thumbnailer
   xournalpp-thumbnailer.cpp
   "${PROJECT_SOURCE_DIR}/src/util/GzUtil.cpp"

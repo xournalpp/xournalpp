@@ -17,13 +17,21 @@
  * Menuitem handler
  */
 namespace ToolbarSeparatorImage {
-/**
- * Returns: (transfer full)
- */
-GdkPixbuf* newPixbuf();
 
 /**
- * Returns: (transfer floating)
+ * @brief Create Seperator Widget
+ * This is used in the toolbar for spacing between items.
+ *
+ * @return GtkWidget* Separator
  */
 GtkWidget* newImage();
-}  // namespace ToolbarSeparatorImage
+
+/**
+ * @brief Create Separator Pixbuf
+ * This is used in the toolbar customization to drag the separator
+ * from the Customization dialog to the toolbar and vice versa.
+ *
+ * @return GdkPixbuf* Seperator
+ */
+GdkPixbuf* getNewToolPixbuf();
+};  // namespace ToolbarSeparatorImage

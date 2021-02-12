@@ -12,7 +12,7 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, AbstractToolItem* ai
     d->id = id;
     d->item = ait;
     d->type = TOOL_ITEM_ITEM;
-    d->color = Color(0U);
+    d->namedColor = nullptr;
 
     g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, static_cast<GDestroyNotify>(g_free));
 }
@@ -23,7 +23,7 @@ auto ToolitemDragDrop::ToolItemDragDropData_new(AbstractToolItem* item) -> ToolI
     d->id = -1;
     d->item = item;
     d->type = TOOL_ITEM_ITEM;
-    d->color = Color(0U);
+    d->namedColor = nullptr;
 
     return d;
 }
@@ -34,18 +34,18 @@ void ToolitemDragDrop::attachMetadata(GtkWidget* w, int id, ToolItemType type) {
     d->id = id;
     d->item = nullptr;
     d->type = type;
-    d->color = Color(0U);
+    d->namedColor = nullptr;
 
     g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, static_cast<GDestroyNotify>(g_free));
 }
 
-void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, Color color, AbstractToolItem* item) {
+void ToolitemDragDrop::attachMetadataColor(GtkWidget* w, int id, const NamedColor* namedColor, AbstractToolItem* item) {
     ToolItemDragDropData* d = g_new(ToolItemDragDropData, 1);
     d->identify = ToolItemDragDropData_Identify;
     d->id = id;
     d->item = item;
     d->type = TOOL_ITEM_COLOR;
-    d->color = color;
+    d->namedColor = namedColor;
 
     g_object_set_data_full(G_OBJECT(w), ATTACH_DRAG_DROP_DATA, d, static_cast<GDestroyNotify>(g_free));
 }
@@ -60,6 +60,16 @@ auto ToolitemDragDrop::getIcon(ToolItemDragDropData* data) -> GtkWidget* {
 
     g_warning("ToolitemDragDrop::getIcon unhandled type: %i\n", data->type);
     return gtk_image_new();
+}
+
+auto ToolitemDragDrop::getPixbuf(ToolItemDragDropData* data) -> GdkPixbuf* {
+    if (data->type == TOOL_ITEM_ITEM || data->type == TOOL_ITEM_COLOR) {
+        return data->item->getNewToolPixbuf();
+    }
+    if (data->type == TOOL_ITEM_SEPARATOR) {
+        return ToolbarSeparatorImage::getNewToolPixbuf();
+    }
+    g_error("ToolitemDragDrop::getIcon unhandled type: %i\n", data->type);
 }
 
 auto ToolitemDragDrop::checkToolItemDragDropData(ToolItemDragDropData const* d) -> bool {

@@ -96,11 +96,14 @@ auto ToolButton::newItem() -> GtkToolItem* {
     return it;
 }
 
-auto ToolButton::getToolDisplayName() -> string { return this->description; }
+auto ToolButton::getToolDisplayName() const -> string { return this->description; }
 
-auto ToolButton::getNewToolIcon() -> GtkWidget* {
+auto ToolButton::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name(iconName.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
+
+auto ToolButton::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
+
 
 void ToolButton::setActive(bool active) {
     if (GTK_IS_TOGGLE_TOOL_BUTTON(item)) {

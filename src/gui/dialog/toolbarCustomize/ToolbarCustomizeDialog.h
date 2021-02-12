@@ -16,15 +16,16 @@
 #include <vector>
 
 #include "gui/GladeGui.h"
-
-#include "CustomizeableColorList.h"
-
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 
 class AbstractToolItem;
 class MainWindow;
 class ToolbarDragDropHandler;
 
-struct ToolItemDragData;
+typedef struct _ToolItemDragData ToolItemDragData;
+struct _ToolItemDragData;
+typedef struct _ColorToolItemDragData ColorToolItemDragData;
+struct _ColorToolItemDragData;
 
 class ToolbarCustomizeDialog: public GladeGui {
 public:
@@ -50,10 +51,10 @@ private:
     static void toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
                                     guint info, guint time, ToolItemDragData* data);
 
-    static void toolitemColorDragBegin(GtkWidget* widget, GdkDragContext* context, void* data);
-    static void toolitemColorDragEnd(GtkWidget* widget, GdkDragContext* context, ToolbarCustomizeDialog* dlg);
+    static void toolitemColorDragBegin(GtkWidget* widget, GdkDragContext* context, ColorToolItemDragData* data);
+    static void toolitemColorDragEnd(GtkWidget* widget, GdkDragContext* context, ColorToolItemDragData* data);
     static void toolitemColorDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
-                                         guint info, guint time, void* data);
+                                         guint info, guint time, ColorToolItemDragData* data);
 
     static void toolitemDragBeginSeparator(GtkWidget* widget, GdkDragContext* context, void* unused);
     static void toolitemDragEndSeparator(GtkWidget* widget, GdkDragContext* context, void* unused);
@@ -67,8 +68,6 @@ private:
     static void windowResponseCb(GtkDialog* dialog, int response, ToolbarCustomizeDialog* dlg);
 
 private:
-    CustomizeableColorList colorList;
-
     std::list<ToolItemDragData*> itemDatalist;
 
     MainWindow* win;

@@ -20,6 +20,7 @@
 
 #include "control/Tool.h"
 #include "control/tools/StrokeStabilizerEnum.h"
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 #include "model/Font.h"
 
 #include "LatexSettings.h"
@@ -515,6 +516,8 @@ public:
     void setStabilizerSigma(double sigma);
     void setStabilizerAveragingMethod(StrokeStabilizer::AveragingMethod averagingMethod);
     void setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor);
+
+    const Palette& getColorPalette();
 
 public:
     // Custom settings
@@ -1022,4 +1025,10 @@ private:
     double stabilizerSigma{};
     StrokeStabilizer::AveragingMethod stabilizerAveragingMethod{};
     StrokeStabilizer::Preprocessor stabilizerPreprocessor{};
+
+    /**
+     * @brief Color Palette for tool colors
+     *
+     */
+    std::unique_ptr<Palette> palette;
 };

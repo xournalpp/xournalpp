@@ -29,7 +29,7 @@ public:
     virtual ~ToolPageLayer();
 
 public:
-    virtual std::string getToolDisplayName();
+    virtual std::string getToolDisplayName() const;
 
     // LayerCtrlListener
 public:
@@ -56,7 +56,8 @@ protected:
     void updateLayerData();
 
     virtual GtkToolItem* newItem();
-    virtual GtkWidget* getNewToolIcon();
+    virtual GtkWidget* getNewToolIcon() const;
+    virtual GdkPixbuf* getNewToolPixbuf() const;
 
 private:
     void createLayerMenuItem(const std::string& text, int layerId);

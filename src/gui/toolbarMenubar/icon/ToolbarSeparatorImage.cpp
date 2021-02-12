@@ -1,6 +1,13 @@
 #include "ToolbarSeparatorImage.h"
 
-auto ToolbarSeparatorImage::newPixbuf() -> GdkPixbuf* {
+auto ToolbarSeparatorImage::newImage() -> GtkWidget* {
+    GdkPixbuf* pixbuf = ToolbarSeparatorImage::getNewToolPixbuf();
+    GtkWidget* w = gtk_image_new_from_pixbuf(pixbuf);
+    g_object_unref(pixbuf);
+    return w;
+}
+
+auto ToolbarSeparatorImage::getNewToolPixbuf() -> GdkPixbuf* {
     constexpr auto width = 30;
     constexpr auto height = 30;
     cairo_surface_t* crImage = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
@@ -15,11 +22,4 @@ auto ToolbarSeparatorImage::newPixbuf() -> GdkPixbuf* {
     GdkPixbuf* pixbuf = gdk_pixbuf_get_from_surface(crImage, 0, 0, width, height);
     cairo_surface_destroy(crImage);
     return pixbuf;
-}
-
-auto ToolbarSeparatorImage::newImage() -> GtkWidget* {
-    GdkPixbuf* pixbuf = ToolbarSeparatorImage::newPixbuf();
-    GtkWidget* w = gtk_image_new_from_pixbuf(pixbuf);
-    g_object_unref(pixbuf);
-    return w;
 }

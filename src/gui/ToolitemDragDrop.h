@@ -13,6 +13,7 @@
 
 #include <gtk/gtk.h>
 #include <util/Color.h>
+#include <util/NamedColor.h>
 
 class AbstractToolItem;
 
@@ -25,7 +26,7 @@ struct ToolItemDragDropData {
     ToolItemType type;
     int id;
     AbstractToolItem* item;
-    Color color;
+    const NamedColor* namedColor;
 };
 
 class ToolitemDragDrop {
@@ -36,7 +37,7 @@ private:
 public:
     static void attachMetadata(GtkWidget* w, int id, AbstractToolItem* ait);
     static void attachMetadata(GtkWidget* w, int id, ToolItemType type);
-    static void attachMetadataColor(GtkWidget* w, int id, Color color, AbstractToolItem* item);
+    static void attachMetadataColor(GtkWidget* w, int id, const NamedColor* namedColor, AbstractToolItem* item);
 
 public:
     static ToolItemDragDropData* ToolItemDragDropData_new(AbstractToolItem* item);
@@ -49,6 +50,13 @@ public:
      * Returns: (transfer floating)
      */
     static GtkWidget* getIcon(ToolItemDragDropData* data);
+    /**
+     * @brief Get Pixbuf for the respective tool contained in the DragDrop data
+     *
+     * @param data DragDropData relevant during toolbar customization
+     * @return GdkPixbuf* of the dragged tool
+     */
+    static GdkPixbuf* getPixbuf(ToolItemDragDropData* data);
 
 public:
     static void removeFromToolbarForMove(GtkWidget* widget);

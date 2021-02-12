@@ -35,7 +35,7 @@ public:
     virtual void actionEnabledAction(ActionType action, bool enabled);
     virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
-    virtual std::string getId();
+    virtual std::string getId() const;
 
     void setTmpDisabled(bool disabled);
     bool isEnabled() const;

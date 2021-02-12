@@ -44,6 +44,15 @@ public:
     void freeDynamicToolbarItems();
     static void unloadToolbar(GtkWidget* toolbar);
 
+    /**
+     * @brief Load the toolbar.ini file
+     * This file persists the customized toolbars and is loaded upon starting the application.
+     *
+     * @param d Data Object representing the selected toolbars (e.g Portrait)
+     * @param toolbar reference to the widget representing the toolbar
+     * @param toolbarName tollbarName which should be read from the file
+     * @param horizontal whether the toolbar is horizontal
+     */
     void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
 
     void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
@@ -69,6 +78,8 @@ public:
     ToolbarModel* getModel();
 
     std::vector<AbstractToolItem*>* getToolItems();
+
+    Control* getControl();
 
     bool isColorInUse(Color color);
 

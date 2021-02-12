@@ -93,8 +93,10 @@ void ToolbarAdapter::prepareToolItem(GtkToolItem* it) {
 
     gtk_tool_item_set_use_drag_window(it, true);
 
-    // Set cursor of drag drop to hand. Note: the tool item must be realized for
-    // this to work!
+    /*
+     * Set cursor of drag drop to hand. Note: the tool item must be realized for
+     * this to work!
+     */
     {
         gtk_widget_realize(GTK_WIDGET(it));
         GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(it));
@@ -227,7 +229,7 @@ auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
         GtkToolItem* it = gtk_separator_tool_item_new();
         gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        GtkWidget* iconWidget = ColorSelectImage::newColorIcon(d->color, 16, true);
+        GtkWidget* iconWidget = ColorSelectImage::newColorIcon(d->namedColor->getColor(), 16, true);
         GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
         gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else {
@@ -267,7 +269,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
     } else if (d->type == TOOL_ITEM_COLOR) {
         auto* item = new ColorToolItem(adapter->window->getControl(), adapter->window->getControl()->getToolHandler(),
-                                       GTK_WINDOW(adapter->window->getWindow()), d->color);
+                                       GTK_WINDOW(adapter->window->getWindow()), *(d->namedColor));
 
         GtkToolItem* it = item->createItem(horizontal);
 
@@ -281,7 +283,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         string id = item->getId();
 
         int newId = tb->insertItem(name, id, pos);
-        ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->color, item);
+        ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->namedColor, item);
 
         adapter->window->getToolMenuHandler()->addColorToolItem(item);
     } else if (d->type == TOOL_ITEM_SEPARATOR) {
@@ -301,9 +303,11 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
 }
 
 auto ToolbarAdapter::toolbarGetDropIndex(GtkToolbar* toolbar, gint x, gint y, bool horizontal) -> gint {
-    // gtk_toolbar_get_drop_index does not use the correct coordinate system for the y coordinate
-    // since the y coordinate is only relevant in vertical toolbars the transformation is NOT required for horizontal
-    // toolbars
+    /*
+     * gtk_toolbar_get_drop_index does not use the correct coordinate system for the y coordinate
+     * since the y coordinate is only relevant in vertical toolbars the transformation is NOT required for horizontal
+     * toolbars
+     */
     if (horizontal) {
         return gtk_toolbar_get_drop_index(toolbar, x, y);
     } else {

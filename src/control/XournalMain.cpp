@@ -5,7 +5,6 @@
 
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
-#include <gui/toolbarMenubar/model/ToolbarColorNames.h>
 #include <libintl.h>
 
 #include "control/jobs/ImageExport.h"
@@ -503,8 +502,6 @@ void on_startup(GApplication* application, XMPtr app_data) {
     initResourcePath(app_data->gladePath.get(), "ui/about.glade");
     initResourcePath(app_data->gladePath.get(), "ui/xournalpp.css", false);
 
-    // init singleton
-    // ToolbarColorNames::getInstance();
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
 
     // Set up icons
@@ -615,7 +612,6 @@ void on_shutdown(GApplication*, XMPtr app_data) {
     app_data->control->saveSettings();
     app_data->win->getXournal()->clearSelection();
     app_data->control->getScheduler()->stop();
-    ToolbarColorNames::getInstance().save();
 }
 
 }  // namespace
