@@ -119,7 +119,7 @@ void AbstractItem::actionPerformed(ActionType action, ActionGroup group, GdkEven
     handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 
-auto AbstractItem::getId() -> std::string { return id; }
+auto AbstractItem::getId() const -> std::string { return id; }
 
 void AbstractItem::setTmpDisabled(bool disabled) {
     bool ena = false;

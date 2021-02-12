@@ -6,7 +6,6 @@
 
 #include "control/ToolEnums.h"
 #include "gui/toolbarMenubar/icon/ColorSelectImage.h"
-#include "model/ToolbarColorNames.h"
 
 #include "StringUtils.h"
 #include "Util.h"
@@ -14,15 +13,12 @@
 
 bool ColorToolItem::inUpdate = false;
 
-ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, Color color,
+ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, NamedColor namedColor,
                              bool selektor):
         AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
-        color(color),
         toolHandler(toolHandler),
-        parent(parent) {
+        namedColor{std::move(namedColor)} {
     this->group = GROUP_COLOR;
-
-    updateName();
 }
 
 ColorToolItem::~ColorToolItem() { freeIcons(); }
@@ -35,15 +31,8 @@ void ColorToolItem::freeIcons() {
     this->icon = nullptr;
 }
 
-auto ColorToolItem::isSelector() -> bool { return this->action == ACTION_SELECT_COLOR_CUSTOM; }
+auto ColorToolItem::isSelector() const -> bool { return this->action == ACTION_SELECT_COLOR_CUSTOM; }
 
-void ColorToolItem::updateName() {
-    if (this->action == ACTION_SELECT_COLOR_CUSTOM) {
-        this->name = _("Select color");
-    } else {
-        this->name = ToolbarColorNames::getInstance().getColorName(this->color);
-    }
-}
 
 void ColorToolItem::actionSelected(ActionGroup group, ActionType action) {
     inUpdate = true;
@@ -62,26 +51,26 @@ void ColorToolItem::enableColor(Color color) {
             this->icon->setColor(color);
         }
 
-        this->color = color;
+        this->namedColor = NamedColor{color};
         if (GTK_IS_TOGGLE_BUTTON(this->item)) {
             gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), false);
         }
     } else {
         if (this->item) {
-            gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->color == color);
+            gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->namedColor.getColor() == color);
         }
     }
 }
 
-auto ColorToolItem::getColor() const -> Color { return this->color; }
+auto ColorToolItem::getColor() const -> Color { return this->namedColor.getColor(); }
 
-auto ColorToolItem::getId() -> std::string {
+auto ColorToolItem::getId() const -> std::string {
     if (isSelector()) {
         return "COLOR_SELECT";
     }
 
     char buffer[64];
-    snprintf(buffer, sizeof(buffer), "COLOR(0x%06" PRIx32 ")", uint32_t{this->color});
+    snprintf(buffer, sizeof(buffer), "COLOR(%zu)", this->namedColor.getIndex());
     std::string id = buffer;
 
     return id;
@@ -98,7 +87,7 @@ void ColorToolItem::showColorchooser() {
     if (response == GTK_RESPONSE_OK) {
         GdkRGBA color;
         gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
-        this->color = Util::GdkRGBA_to_argb(color);
+        this->namedColor = NamedColor{Util::GdkRGBA_to_argb(color)};
     }
 
     gtk_widget_destroy(dialog);
@@ -111,8 +100,10 @@ void ColorToolItem::enable(bool enabled) {
     if (!enabled && !toolHandler->hasCapability(TOOL_CAP_COLOR, SelectedTool::active) &&
         toolHandler->hasCapability(TOOL_CAP_COLOR, SelectedTool::toolbar)) {
         if (this->icon) {
-            // allow changes if currentTool has no colour capability
-            // and mainTool has Colour capability
+            /*
+             * allow changes if currentTool has no colour capability
+             * and mainTool has Colour capability
+             */
             icon->setState(COLOR_ICON_STATE_PEN);
             AbstractToolItem::enable(true);
         }
@@ -139,17 +130,17 @@ void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolBut
         showColorchooser();
     }
 
-    toolHandler->setColor(this->color, true);
+    toolHandler->setColor(this->namedColor.getColor(), true);
 
     inUpdate = false;
 }
 
 auto ColorToolItem::newItem() -> GtkToolItem* {
-    this->icon = new ColorSelectImage(this->color, !isSelector());
+    this->icon = new ColorSelectImage(this->namedColor.getColor(), !isSelector());
 
     GtkToolItem* it = gtk_toggle_tool_button_new();
 
-    const gchar* name = this->name.c_str();
+    const gchar* name = this->namedColor.getName().c_str();
     gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(it), name);
     gtk_tool_button_set_label(GTK_TOOL_BUTTON(it), name);
 
@@ -158,8 +149,12 @@ auto ColorToolItem::newItem() -> GtkToolItem* {
     return it;
 }
 
-auto ColorToolItem::getToolDisplayName() -> std::string { return this->name; }
+auto ColorToolItem::getToolDisplayName() const -> std::string { return this->namedColor.getName(); }
 
-auto ColorToolItem::getNewToolIcon() -> GtkWidget* {
-    return ColorSelectImage::newColorIcon(this->color, 16, !isSelector());
+auto ColorToolItem::getNewToolIcon() const -> GtkWidget* {
+    return ColorSelectImage::newColorIcon(this->namedColor.getColor(), 16, !isSelector());
+}
+
+auto ColorToolItem::getNewToolPixbuf() const -> GdkPixbuf* {
+    return ColorSelectImage::newColorIconPixbuf(this->namedColor.getColor(), 16, !isSelector());
 }

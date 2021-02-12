@@ -29,15 +29,16 @@ public:
     ~ToolPageSpinner() override;
 
 public:
-    SpinPageAdapter* getPageSpinner();
+    SpinPageAdapter* getPageSpinner() const;
     void setPageInfo(size_t pagecount, size_t pdfpage);
-    std::string getToolDisplayName() override;
+    std::string getToolDisplayName() const override;
     GtkToolItem* createItem(bool horizontal) override;
     GtkToolItem* createTmpItem(bool horizontal) override;
 
 protected:
     GtkToolItem* newItem() override;
-    GtkWidget* getNewToolIcon() override;
+    GtkWidget* getNewToolIcon() const override;
+    GdkPixbuf* getNewToolPixbuf() const override;
 
 private:
     void updateLabels();

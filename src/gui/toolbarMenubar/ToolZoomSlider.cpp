@@ -102,6 +102,8 @@ auto ToolZoomSlider::formatSliderValue(double value) const -> std::string {
     return out.str();
 }
 
+auto ToolZoomSlider::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
+
 void ToolZoomSlider::zoomChanged() {
     GtkRange* slider = getSliderWidget();
 
@@ -127,9 +129,9 @@ void ToolZoomSlider::zoomRangeValuesChanged() {
     pImpl->updateScaleMarks(GTK_SCALE(getSliderWidget()), isCurrentHorizontal());
 }
 
-auto ToolZoomSlider::getToolDisplayName() -> std::string { return _("Zoom Slider"); }
+auto ToolZoomSlider::getToolDisplayName() const -> std::string { return _("Zoom Slider"); }
 
-auto ToolZoomSlider::getNewToolIcon() -> GtkWidget* {
+auto ToolZoomSlider::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name(pImpl->iconNameHelper_.iconName("zoom-slider").c_str(),
                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
 }

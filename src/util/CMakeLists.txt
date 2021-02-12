@@ -4,6 +4,10 @@ file (GLOB_RECURSE util_SOURCES *.cpp *.h)
 
 add_library (util STATIC ${util_SOURCES})
 add_dependencies(util std::filesystem)
+if (DEV_ENABLE_GCOV)
+  add_compile_options("--coverage")
+  add_link_options("--coverage")
+endif (DEV_ENABLE_GCOV)
 target_link_libraries(util PUBLIC std::filesystem cxx17)
 target_compile_features(util PUBLIC ${PROJECT_CXX_FEATURES})
 target_include_directories(util PUBLIC

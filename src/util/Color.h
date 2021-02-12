@@ -97,6 +97,7 @@ constexpr auto argb_to_GdkRGBA(Color color) -> GdkRGBA;
 constexpr auto argb_to_GdkRGBA(Color color, double alpha) -> GdkRGBA;
 constexpr auto GdkRGBA_to_argb(const GdkRGBA& color) -> Color;
 constexpr auto GdkRGBA_to_rgb(const GdkRGBA& color) -> Color;
+constexpr auto colorU16_to_argb(const ColorU16& color) -> Color;
 
 constexpr auto GdkRGBA_to_ColorU16(const GdkRGBA& color) -> ColorU16;
 
@@ -137,10 +138,19 @@ constexpr auto Util::GdkRGBA_to_rgb(const GdkRGBA& color) -> Color {
            floatToUIntColor(color.blue);
 }
 
-constexpr auto Util::floatToUIntColor(const double color) -> uint32_t {  //
-    // Splits the double into a equal sized distribution between [0,256[ and rounding down
-    // inspired by, which isn't completely correct:
-    // https://stackoverflow.com/questions/1914115/converting-color-value-from-float-0-1-to-byte-0-255
+constexpr auto Util::colorU16_to_argb(const ColorU16& color) -> Color {
+    return color.alpha << 24U |  //
+           color.red << 16U |    //
+           color.green << 8U |   //
+           color.blue;
+}
+
+constexpr auto Util::floatToUIntColor(const double color) -> uint32_t {
+    /*
+     * Splits the double into a equal sized distribution between [0,256[ and rounding down
+     * inspired by, which isn't completely correct:
+     * https://stackoverflow.com/questions/1914115/converting-color-value-from-float-0-1-to-byte-0-255
+     */
     constexpr double MAX_COLOR = 256.0 - std::numeric_limits<double>::epsilon() * 128;
     static_assert(MAX_COLOR < 256.0, "MAX_COLOR isn't smaller than 256");
     return static_cast<uint32_t>(color * MAX_COLOR);

@@ -1,5 +1,6 @@
 #include "ToolMenuHandler.h"
 
+#include <sstream>
 #include <utility>
 
 #include <config-features.h>
@@ -9,6 +10,7 @@
 #include "control/Control.h"
 #include "control/PageBackgroundChangeController.h"
 #include "gui/ToolitemDragDrop.h"
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 #include "model/ToolbarData.h"
 #include "model/ToolbarModel.h"
 
@@ -88,6 +90,9 @@ void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
 void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal) {
     int count = 0;
 
+    const Palette& palette = this->control->getSettings()->getColorPalette();
+    size_t colorIndex{};
+
     for (ToolbarEntry* e: d->contents) {
         if (e->getName() == toolbarName) {
             for (ToolbarItem* dataItem: e->getItems()) {
@@ -134,25 +139,45 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
                     continue;
                 }
-                if (StringUtils::startsWith(name, "COLOR(") && name.length() == 15) {
-                    string color = name.substr(6, 8);
-                    if (!StringUtils::startsWith(color, "0x")) {
-                        g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s", color.c_str());
-                        continue;
+                if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
+                    string arg = name.substr(6, name.length() - 7);
+                    /*
+                     * namedColor needs to be a pointer to enable attachMetadataColor to reference to the
+                     * non local scoped namedColor instance
+                     */
+
+                    size_t paletteIndex{};
+
+                    // check for old color format of toolbar.ini
+                    if (StringUtils::startsWith(arg, "0x")) {
+                        // use tmpColor only to get Index
+                        NamedColor tmpColor = palette.getColorAt(colorIndex);
+                        paletteIndex = tmpColor.getIndex();
+
+                        // set new COLOR Toolbar entry
+                        std::ostringstream newColor("");
+                        newColor << "COLOR(" << paletteIndex << ")";
+                        dataItem->setName(newColor.str());
+                        colorIndex++;
+                    } else {
+                        std::istringstream colorStream(arg);
+                        colorStream >> paletteIndex;
+                        if (!colorStream.eof() || colorStream.fail()) {
+                            g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s", arg.c_str());
+                            continue;
+                        }
                     }
+
                     count++;
-
-                    color = color.substr(2);
-                    auto c = Color(g_ascii_strtoull(color.c_str(), nullptr, 16));
-
-                    auto* item = new ColorToolItem(listener, toolHandler, this->parent, c);
+                    const NamedColor& namedColor = palette.getColorAt(paletteIndex);
+                    auto* item = new ColorToolItem(listener, toolHandler, this->parent, namedColor);
                     this->toolbarColorItems.push_back(item);
 
                     GtkToolItem* it = item->createItem(horizontal);
                     gtk_widget_show_all(GTK_WIDGET(it));
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), c, item);
+                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item);
 
                     continue;
                 }
@@ -309,26 +334,34 @@ void ToolMenuHandler::initToolItems() {
         addToolItem(new ToolButton(listener, name, action, iconName(icon), text));
     };
 
-    // Use Custom loading Icon, toggle item
-    // switchOnly: You can select pen, eraser etc. but you cannot unselect pen.
+    /*
+     * Use Custom loading Icon, toggle item
+     * switchOnly: You can select pen, eraser etc. but you cannot unselect pen.
+     */
     auto addCustomItemTgl = [=](std::string name, ActionType action, ActionGroup group, bool switchOnly,
                                 const char* icon, std::string text) {
         addToolItem(new ToolButton(listener, name, action, group, switchOnly, iconName(icon), text));
     };
 
-    // Use Stock Icon, toggle item
-    // switchOnly: You can select pen, eraser etc. but you cannot unselect pen.
+    /*
+     * Use Stock Icon, toggle item
+     * switchOnly: You can select pen, eraser etc. but you cannot unselect pen.
+     */
     auto addStockItemTgl = [=](std::string name, ActionType action, ActionGroup group, bool switchOnly,
                                std::string stockIcon, std::string text) {
         addToolItem(new ToolButton(listener, name, action, group, switchOnly, stockIcon, text));
     };
 
-    // Items ordered by menu, if possible.
-    // There are some entries which are not available in the menu, like the Zoom slider
-    // All menu items without tool icon are not listed here - they are connected by Glade Signals
+    /*
+     * Items ordered by menu, if possible.
+     * There are some entries which are not available in the menu, like the Zoom slider
+     * All menu items without tool icon are not listed here - they are connected by Glade Signals
+     */
 
-    // Menu File
-    // ************************************************************************
+    /*
+     * Menu File
+     * ------------------------------------------------------------------------
+     */
 
     addCustomItem("NEW", ACTION_NEW, "document-new", _("New Xournal"));
     addCustomItem("OPEN", ACTION_OPEN, "document-open", _("Open file"));
@@ -336,8 +369,10 @@ void ToolMenuHandler::initToolItems() {
     addCustomItem("SAVEPDF", ACTION_EXPORT_AS_PDF, "document-export-pdf", _("Export as PDF"));
     addCustomItem("PRINT", ACTION_PRINT, "document-print", _("Print"));
 
-    // Menu Edit
-    // ************************************************************************
+    /*
+     * Menu Edit
+     * ------------------------------------------------------------------------
+     */
 
     // Undo / Redo Texts are updated from code, therefore a reference is hold for this items
     undoButton = new ToolButton(listener, "UNDO", ACTION_UNDO, iconName("edit-undo"), _("Undo"));
@@ -358,8 +393,10 @@ void ToolMenuHandler::initToolItems() {
     addCustomItemTgl("GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false, "snapping-grid",
                      _("Grid Snapping"));
 
-    // Menu View
-    // ************************************************************************
+    /*
+     * Menu View
+     * ------------------------------------------------------------------------
+     */
 
     addCustomItemTgl("PAIRED_PAGES", ACTION_VIEW_PAIRED_PAGES, GROUP_PAIRED_PAGES, false, "show-paired-pages",
                      _("Paired pages"));
@@ -375,8 +412,10 @@ void ToolMenuHandler::initToolItems() {
     addStockItemTgl("ZOOM_FIT", ACTION_ZOOM_FIT, GROUP_ZOOM_FIT, false, "zoom-fit-best", _("Zoom fit to screen"));
     addStockItem("ZOOM_100", ACTION_ZOOM_100, "zoom-original", _("Zoom to 100%"));
 
-    // Menu Navigation
-    // ************************************************************************
+    /*
+     * Menu Navigation
+     * ------------------------------------------------------------------------
+     */
 
     addStockItem("GOTO_FIRST", ACTION_GOTO_FIRST, "go-first", _("Go to first page"));
     addStockItem("GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _("Back"));
@@ -391,8 +430,9 @@ void ToolMenuHandler::initToolItems() {
     addCustomItem("GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE, "page-annotated-next",
                   _("Next annotated page"));
 
-    // Menu Journal
-    // ************************************************************************
+    /* Menu Journal
+     * ------------------------------------------------------------------------
+     */
 
     auto* tbInsertNewPage = new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
                                            iconName("page-add").c_str(), _("Insert page"));
@@ -404,8 +444,10 @@ void ToolMenuHandler::initToolItems() {
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")),
                               pageBackgroundChangeController->getMenu());
 
-    // Menu Tool
-    // ************************************************************************
+    /*
+     * Menu Tool
+     * ------------------------------------------------------------------------
+     */
 
     initPenToolItem();
     initEraserToolItem();
@@ -452,16 +494,20 @@ void ToolMenuHandler::initToolItems() {
                                               iconName("audio-seek-backwards"), _("Back"));
     addToolItem(audioSeekBackwardsButton);
 
-    // Menu Help
-    // ************************************************************************
-    // All tools are registered by the Glade Signals
+    /*
+     * Menu Help
+     * ------------------------------------------------------------------------
+     * All tools are registered by the Glade Signals
+     */
 
 
     ///////////////////////////////////////////////////////////////////////////
 
 
-    // Footer tools
-    // ************************************************************************
+    /*
+     * Footer tools
+     * ------------------------------------------------------------------------
+     */
     toolPageSpinner = new ToolPageSpinner(gui, listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN, iconNameHelper);
     addToolItem(toolPageSpinner);
 
@@ -475,11 +521,16 @@ void ToolMenuHandler::initToolItems() {
     addCustomItemTgl("TOOL_FILL", ACTION_TOOL_FILL, GROUP_FILL, false, "fill", _("Fill"));
 
 
-    // Non-menu items
-    // ************************************************************************
+    /*
+     * Non-menu items
+     * ------------------------------------------------------------------------
+     */
 
-    // Color item - not in the menu
-    addToolItem(new ColorToolItem(listener, toolHandler, this->parent, Color{0xff0000U}, true));
+    /*
+     * Color item - not in the menu
+     * aka. COLOR_SELECT
+     */
+    addToolItem(new ColorToolItem(listener, toolHandler, this->parent, NamedColor{}, true));
 
     addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT"));
     addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
@@ -520,6 +571,8 @@ void ToolMenuHandler::setPageInfo(const size_t pagecount, const size_t pdfpage) 
 }
 
 auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel; }
+
+auto ToolMenuHandler::getControl() -> Control* { return this->control; }
 
 auto ToolMenuHandler::isColorInUse(Color color) -> bool {
     for (ColorToolItem* it: this->toolbarColorItems) {

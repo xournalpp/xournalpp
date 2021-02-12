@@ -29,8 +29,8 @@ public:
 public:
     virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
     void setFont(XojFont& font);
-    XojFont getFont();
-    virtual std::string getToolDisplayName();
+    XojFont getFont() const;
+    virtual std::string getToolDisplayName() const;
     void showFontDialog();
 
 protected:
@@ -41,7 +41,8 @@ protected:
     static GtkWidget* newFontButton();
     static void setFontFontButton(GtkWidget* fontButton, XojFont& font);
 
-    virtual GtkWidget* getNewToolIcon();
+    virtual GtkWidget* getNewToolIcon() const;
+    virtual GdkPixbuf* getNewToolPixbuf() const;
 
 private:
     GtkWidget* fontButton = nullptr;

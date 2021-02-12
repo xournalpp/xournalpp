@@ -169,8 +169,10 @@ void ToolPageLayer::createLayerMenuItemShow(int layerId) {
  * Rebuild the Menu
  */
 void ToolPageLayer::updateMenu() {
-    // Remove all items from Menu (does sometimes not work)
-    // gtk_container_foreach(GTK_CONTAINER(menu), (GtkCallback) gtk_widget_destroy, nullptr);
+    /*
+     * Remove all items from Menu (does sometimes not work)
+     * gtk_container_foreach(GTK_CONTAINER(menu), (GtkCallback) gtk_widget_destroy, nullptr);
+     */
 
     // Create a new menu on refresh
     menu = gtk_menu_new();
@@ -236,12 +238,15 @@ void ToolPageLayer::updateLayerData() {
     gtk_label_set_text(GTK_LABEL(layerLabel), lc->getCurrentLayerName().c_str());
 }
 
-auto ToolPageLayer::getToolDisplayName() -> std::string { return _("Layer Combo"); }
+auto ToolPageLayer::getToolDisplayName() const -> std::string { return _("Layer Combo"); }
 
-auto ToolPageLayer::getNewToolIcon() -> GtkWidget* {
+auto ToolPageLayer::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name(this->iconNameHelper.iconName("combo-layer").c_str(),
                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
+
+auto ToolPageLayer::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
+
 
 auto ToolPageLayer::newItem() -> GtkToolItem* {
     GtkToolItem* it = gtk_tool_item_new();

@@ -23,7 +23,7 @@ class ColorSelectImage;
 
 class ColorToolItem: public AbstractToolItem {
 public:
-    ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, Color color,
+    ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, NamedColor namedColor,
                   bool selektor = false);
     virtual ~ColorToolItem();
 
@@ -32,10 +32,11 @@ public:
     void enableColor(Color color);
     virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
-    virtual std::string getToolDisplayName();
-    virtual GtkWidget* getNewToolIcon();
+    virtual std::string getToolDisplayName() const;
+    virtual GtkWidget* getNewToolIcon() const;
+    virtual GdkPixbuf* getNewToolPixbuf() const;
 
-    virtual std::string getId();
+    std::string getId() const final;
 
     Color getColor() const;
 
@@ -46,8 +47,7 @@ public:
 
 protected:
     virtual GtkToolItem* newItem();
-    void updateName();
-    bool isSelector();
+    bool isSelector() const;
 
     /**
      * Free the allocated icons
@@ -60,15 +60,7 @@ protected:
     void showColorchooser();
 
 private:
-    /**
-     * Color
-     */
-    Color color;
-
-    /**
-     * Name of the Color
-     */
-    std::string name;
+    NamedColor namedColor;
 
     /**
      * Icon to display

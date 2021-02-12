@@ -35,13 +35,14 @@ public:
     GtkWidget* registerPopupMenuEntry(const std::string& name, const std::string& iconName = "");
 
     void updateDescription(const std::string& description);
-    virtual std::string getToolDisplayName();
+    virtual std::string getToolDisplayName() const;
     void setActive(bool active);
 
 protected:
     virtual GtkToolItem* newItem();
 
-    virtual GtkWidget* getNewToolIcon();
+    virtual GtkWidget* getNewToolIcon() const;
+    virtual GdkPixbuf* getNewToolPixbuf() const;
 
 private:
     std::string iconName;

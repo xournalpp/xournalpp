@@ -2,6 +2,8 @@
 
 #include <utility>
 
+#include <PathUtil.h>
+
 #include "model/FormatDefinitions.h"
 #include "util/DeviceListHelper.h"
 
@@ -676,6 +678,24 @@ auto Settings::load() -> bool {
     loadButtonConfig();
     loadDeviceClasses();
 
+    /*
+     * load Color Palette
+     *  - if path does not exist create default palette file
+     *  - if error during parsing load default, but do not overwrite
+     *    existing palette file (would be annoying for users)
+     */
+    auto paletteFile = Util::getConfigFile(PALETTE_FILE);
+    if (!fs::exists(paletteFile)) {
+        Palette::create_default(paletteFile);
+    }
+    this->palette = std::make_unique<Palette>(std::move(paletteFile));
+    try {
+        this->palette->load();
+    } catch (const std::exception& e) {
+        this->palette->parseErrorDialog(e);
+        this->palette->load_default();
+    }
+
     return true;
 }
 
@@ -868,8 +888,8 @@ void Settings::save() {
     } else {
         xmlNode = saveProperty("scrollbarHideType", "none", root);
     }
-    ATTACH_COMMENT(
-            "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"");
+    ATTACH_COMMENT("Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", "
+                   "\"both\"");
 
     SAVE_BOOL_PROP(autoloadMostRecent);
     SAVE_BOOL_PROP(autoloadPdfXoj);
@@ -972,7 +992,8 @@ void Settings::save() {
 
     char sSize[G_ASCII_DTOSTR_BUF_SIZE];
 
-    g_ascii_formatd(sSize, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING, this->font.getSize());  // no locale
+    g_ascii_formatd(sSize, G_ASCII_DTOSTR_BUF_SIZE, Util::PRECISION_FORMAT_STRING,
+                    this->font.getSize());  // no locale
     xmlSetProp(xmlFont, reinterpret_cast<const xmlChar*>("size"), reinterpret_cast<const xmlChar*>(sSize));
 
 
@@ -2234,3 +2255,10 @@ void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preproce
     stabilizerPreprocessor = p;
     save();
 }
+
+/**
+ * @brief Get Color Palette used for Tools
+ *
+ * @return Palette&
+ */
+auto Settings::getColorPalette() -> const Palette& { return *(this->palette); }

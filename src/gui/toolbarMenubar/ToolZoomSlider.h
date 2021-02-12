@@ -38,10 +38,11 @@ protected:
     void zoomChanged() override;
     void zoomRangeValuesChanged() override;
 
-    std::string getToolDisplayName() override;
+    virtual std::string getToolDisplayName() const override;
 
 protected:
-    virtual GtkWidget* getNewToolIcon() override;
+    virtual GtkWidget* getNewToolIcon() const override;
+    virtual GdkPixbuf* getNewToolPixbuf() const override;
 
     double scaleFunc(double x) const override;
     double scaleFuncInv(double x) const override;

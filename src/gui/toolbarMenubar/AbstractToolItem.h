@@ -29,12 +29,23 @@ public:
 
     static void toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item);
 
-    virtual std::string getToolDisplayName() = 0;
+    /**
+     * @brief Get the Pixbuf representation of the instantiation of the abstract tool item
+     * Only usable for GTK images with image type: GTK_IMAGE_ICON_NAME.
+     *
+     * @throw g_error if image type not GTK_IMAGE_ICON_NAME
+     * @return GdkPixbuf* of the tool item
+     */
+    GdkPixbuf* getPixbufFromImageIconName() const;
+
+
+    virtual std::string getToolDisplayName() const = 0;
 
     /**
      * Returns: (transfer floating)
      */
-    virtual GtkWidget* getNewToolIcon() = 0;
+    virtual GtkWidget* getNewToolIcon() const = 0;
+    virtual GdkPixbuf* getNewToolPixbuf() const = 0;
 
     /**
      * Enable / Disable the tool item

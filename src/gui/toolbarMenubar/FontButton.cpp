@@ -50,7 +50,7 @@ void FontButton::setFont(XojFont& font) {
     setFontFontButton(this->fontButton, font);
 }
 
-auto FontButton::getFont() -> XojFont {
+auto FontButton::getFont() const -> XojFont {
     // essentially, copy the font object to prevent a memory leak.
     XojFont newfont;
     newfont.setName(font.getName());
@@ -59,11 +59,13 @@ auto FontButton::getFont() -> XojFont {
     return newfont;
 }
 
-auto FontButton::getToolDisplayName() -> string { return _("Font"); }
+auto FontButton::getToolDisplayName() const -> string { return _("Font"); }
 
-auto FontButton::getNewToolIcon() -> GtkWidget* {
+auto FontButton::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name("font-x-generic", GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
+
+auto FontButton::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
 
 auto FontButton::createItem(bool horizontal) -> GtkToolItem* {
     if (this->item) {

@@ -12,9 +12,7 @@ using std::string;
 ToolbarModel::ToolbarModel() = default;
 
 ToolbarModel::~ToolbarModel() {
-    for (ToolbarData* data: this->toolbars) {
-        delete data;
-    }
+    for (ToolbarData* data: this->toolbars) { delete data; }
     this->toolbars.clear();
 }
 
@@ -53,9 +51,7 @@ auto ToolbarModel::parse(fs::path const& filepath, bool predefined) -> bool {
     gsize length = 0;
     gchar** groups = g_key_file_get_groups(config, &length);
 
-    for (gsize i = 0; i < length; i++) {
-        parseGroup(config, groups[i], predefined);
-    }
+    for (gsize i = 0; i < length; i++) { parseGroup(config, groups[i], predefined); }
 
     g_strfreev(groups);
     g_key_file_free(config);
@@ -114,9 +110,14 @@ const char* TOOLBAR_INI_HEADER =
         " Zoom: ZOOM_OUT,ZOOM_IN,ZOOM_FIT,ZOOM_100,FULLSCREEN,PAIRED_PAGES\n"
         "\n"
         " Color: "
-        "COLOR(0xffffff),COLOR(0xffff00),COLOR(0xff8000),COLOR(0xff00ff),COLOR(0x00ff00),COLOR(0x00c0ff),COLOR("
-        "0x808080),COLOR(0x008000),COLOR(0xff0000),COLOR(0x3333cc),COLOR(0x000000),COLOR_SELECT\n"
-        "  Notice: This are the default Xournal colors, each other color in HEX can also be used, eg COLOR(0x12ABCF);\n"
+        "COLOR(0),COLOR(1),COLOR(2),COLOR(3),COLOR(4),COLOR(5),COLOR(6),COLOR(7),COLOR(8),COLOR(9),COLOR(10),COLOR_"
+        "SELECT\n"
+        "  Notice: The colors reference the respective color in the palette.gpl file.\n"
+        "          For backwards compatibility the hex representation, e.g. COLOR(0xff8000), is still permitted. "
+        "However, the hex value\n"
+        "          will be IGNORED in favour of the \"next\""
+        " palette color. They will be automatically migrated when the user customizes\n"
+        "          the respective toolbar configuration.\n"
         "\n"
         " Tools: ERASER,PEN,HIGHLIGHTER,IMAGE,TEXT,IMAGE,SELECT,SELECT_REGION,SELECT_RECTANGLE,VERTICAL_SPACE,HAND\n"
         "  Notice: ERASER also has a drop down menu to select the eraser type, SELECT are all selection tools, with "

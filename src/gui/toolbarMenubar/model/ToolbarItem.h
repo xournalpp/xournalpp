@@ -21,13 +21,19 @@ public:
     ToolbarItem();
 
 public:
-    const std::string& getName() const;
+    std::string getName() const;
+    void setName(std::string name);
 
     bool operator==(ToolbarItem& other);
 
     int getId() const;
 
 private:
+    /**
+     * @brief This is the name of the ToolbarItem
+     * This is also what is stored in the toolbar.ini verbatim.
+     *
+     */
     std::string name;
     int id;
 

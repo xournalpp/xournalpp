@@ -22,7 +22,7 @@ ToolPageSpinner::~ToolPageSpinner() {
     g_clear_object(&this->box);
 }
 
-auto ToolPageSpinner::getPageSpinner() -> SpinPageAdapter* { return pageSpinner; }
+auto ToolPageSpinner::getPageSpinner() const -> SpinPageAdapter* { return pageSpinner; }
 
 void ToolPageSpinner::setPageInfo(const size_t pageCount, const size_t pdfPage) {
     this->pageCount = pageCount;
@@ -57,11 +57,13 @@ void ToolPageSpinner::updateLabels() {
     }
 }
 
-auto ToolPageSpinner::getToolDisplayName() -> std::string { return _("Page number"); }
+auto ToolPageSpinner::getToolDisplayName() const -> std::string { return _("Page number"); }
 
-auto ToolPageSpinner::getNewToolIcon() -> GtkWidget* {
+auto ToolPageSpinner::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name(iconNameHelper.iconName("page-spinner").c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
+
+auto ToolPageSpinner::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
 
 auto ToolPageSpinner::newItem() -> GtkToolItem* {
     if (this->pageSpinner->hasWidget()) {

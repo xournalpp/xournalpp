@@ -1,8 +1,13 @@
 /**
- * @file InputUtils.h
- * @author idotobi
- * @brief Helper functions in use in the different InputHandlers as for example StylusInputHandler.h
+ * Xournal++
  *
+ * Part of the customizable toolbars
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ * @brief Helper functions in use in the different InputHandlers as for example StylusInputHandler.h
  */
 
 #pragma once
