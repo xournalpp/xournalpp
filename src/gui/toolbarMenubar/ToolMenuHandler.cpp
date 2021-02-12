@@ -92,7 +92,6 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
     int count = 0;
 
     Palette* palette = this->control->getSettings()->palette;
-    palette->reset();
     int colorIndex{};
 
     for (ToolbarEntry* e: d->contents) {
@@ -146,31 +145,31 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     NamedColor namedColor;
                     int paletteIndex{};
                     if (StringUtils::startsWith(arg, "0x")) {
-                        namedColor = palette->getNext();
-                        paletteIndex = colorIndex;
-                        colorIndex++;
+                        namedColor = palette->getColorAt(colorIndex);
+                        paletteIndex = namedColor.getIndex();
+
+                        // set new COLOR Toolbar entry
                         std::ostringstream newColor("");
                         newColor << "COLOR(" << paletteIndex << ")";
                         dataItem->setName(newColor.str());
+                        colorIndex++;
                     } else if (StringUtils::isNumber(arg)) {
                         paletteIndex = std::stoi(arg);
-                        namedColor = palette->colors.at(paletteIndex);
+                        namedColor = palette->getColorAt(paletteIndex);
                     } else {
                         g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s", arg.c_str());
                         continue;
                     }
                     count++;
-                    auto c = Util::colorU16_to_rgb(namedColor.color);
-                    auto colorName = namedColor.name;
 
-                    auto* item = new ColorToolItem(listener, toolHandler, this->parent, c, colorName, paletteIndex);
+                    auto* item = new ColorToolItem(listener, toolHandler, this->parent, namedColor);
                     this->toolbarColorItems.push_back(item);
 
                     GtkToolItem* it = item->createItem(horizontal);
                     gtk_widget_show_all(GTK_WIDGET(it));
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), c, item);
+                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item);
 
                     continue;
                 }
@@ -220,8 +219,6 @@ void ToolMenuHandler::removeColorToolItem(AbstractToolItem* it) {
             break;
         }
     }
-    // [idotobi]: find cleaner solution for this hack
-    this->control->getSettings()->palette->getNext(-1);
     delete dynamic_cast<ColorToolItem*>(it);
 }
 
@@ -495,7 +492,7 @@ void ToolMenuHandler::initToolItems() {
 
     // Color item - not in the menu
     // aka. COLOR_SELECT
-    addToolItem(new ColorToolItem(listener, toolHandler, this->parent, Color{0xff0000U}, "Custom Color", -1, true));
+    addToolItem(new ColorToolItem(listener, toolHandler, this->parent, NamedColor{}, true));
 
     addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT"));
     addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));

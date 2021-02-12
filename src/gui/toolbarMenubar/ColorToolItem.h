@@ -23,8 +23,8 @@ class ColorSelectImage;
 
 class ColorToolItem: public AbstractToolItem {
 public:
-    ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, Color color, string name,
-                  size_t paletteIndex, bool selektor = false);
+    ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, const NamedColor& namedColor,
+                  bool selektor = false);
     virtual ~ColorToolItem();
 
 public:
@@ -60,17 +60,7 @@ protected:
     void showColorchooser();
 
 private:
-    /**
-     * Color
-     */
-    Color color;
-
-    /**
-     * Name of the Color
-     */
-    string name;
-
-    size_t paletteIndex;
+    NamedColor namedColor;
 
     /**
      * Icon to display

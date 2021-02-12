@@ -157,10 +157,9 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragConte
  */
 void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragContext* context,
                                                     ColorToolItemDragData* data) {
-    Color color = Util::colorU16_to_rgb(data->namedColor->color);
-    ToolItemDragCurrentData::setDataColor(-1, color, data->namedColor->paletteIndex);
+    ToolItemDragCurrentData::setDataColor(-1, data->namedColor);
 
-    GdkPixbuf* image = ColorSelectImage::newColorIconPixbuf(color, 16, true);
+    GdkPixbuf* image = ColorSelectImage::newColorIconPixbuf(data->namedColor->getColor(), 16, true);
 
     gtk_drag_set_icon_pixbuf(context, image, -2, -2);
 }
@@ -179,13 +178,11 @@ void ToolbarCustomizeDialog::toolitemColorDragEnd(GtkWidget* widget, GdkDragCont
 void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget, GdkDragContext* context,
                                                       GtkSelectionData* selection_data, guint info, guint time,
                                                       ColorToolItemDragData* data) {
-    Color color = Util::colorU16_to_rgb(data->namedColor->color);
-    ToolItemDragCurrentData::setDataColor(-1, color, data->namedColor->paletteIndex);
+    ToolItemDragCurrentData::setDataColor(-1, data->namedColor);
 
     ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
-    it->color = color;
     it->type = TOOL_ITEM_COLOR;
-    it->paletteIndex = data->namedColor->paletteIndex;
+    it->namedColor = data->namedColor;
 
     gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, reinterpret_cast<const guchar*>(it),
                            sizeof(ToolItemDragDropData));
@@ -318,17 +315,20 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
 
     Palette* palette = this->win->getToolMenuHandler()->getControl()->getSettings()->palette;
 
-    size_t i = 0;
-    // [idotobi]: cleanup
-    for (auto& namedColor: palette->colors) {
-        Color c = Util::colorU16_to_rgb(namedColor.color);
+    for (int i{}; i < palette->size(); i++) {
+        // Here we need the pointer to ensure that the memory still contains the relevant data
+        // when the toolitemColorDragBegin callback is raised later on.
+        // If we would use NamedColor namedColor it would automatically fall out of scope at the end of this function
+        // and then toolitemColorDragBegin would point to memory that has already been deallocated.
+        NamedColor* namedColor = palette->getColorPointerAt(i);
+        Color c = namedColor->getColor();
         GtkWidget* icon = ColorSelectImage::newColorIcon(c, 16, true);
 
 
         GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
         gtk_widget_show(box);
 
-        GtkWidget* label = gtk_label_new(namedColor.name.c_str());
+        GtkWidget* label = gtk_label_new(namedColor->getName().c_str());
         gtk_widget_show(label);
         gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
 
@@ -347,7 +347,7 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
         ColorToolItemDragData* data = g_new(ColorToolItemDragData, 1);
         data->dlg = this;
         data->icon = nullptr;
-        data->namedColor = &namedColor;
+        data->namedColor = namedColor;
         data->ebox = ebox;
 
         g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemColorDragBegin), data);
@@ -356,7 +356,7 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
 
         int x = i % 5;
         int y = i / 5;
-        i++;
+
         gtk_grid_attach(table, ebox, x, y, 1, 1);
     }
 

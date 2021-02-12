@@ -13,6 +13,7 @@
 
 #include <gtk/gtk.h>
 #include <util/Color.h>
+#include <util/NamedColor.h>
 
 class AbstractToolItem;
 
@@ -25,8 +26,7 @@ struct ToolItemDragDropData {
     ToolItemType type;
     int id;
     AbstractToolItem* item;
-    Color color;
-    size_t paletteIndex;
+    NamedColor* namedColor;
 };
 
 class ToolitemDragDrop {
@@ -37,7 +37,7 @@ private:
 public:
     static void attachMetadata(GtkWidget* w, int id, AbstractToolItem* ait);
     static void attachMetadata(GtkWidget* w, int id, ToolItemType type);
-    static void attachMetadataColor(GtkWidget* w, int id, Color color, AbstractToolItem* item);
+    static void attachMetadataColor(GtkWidget* w, int id, NamedColor* namedColor, AbstractToolItem* item);
 
 public:
     static ToolItemDragDropData* ToolItemDragDropData_new(AbstractToolItem* item);

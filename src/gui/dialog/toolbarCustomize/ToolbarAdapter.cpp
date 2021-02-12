@@ -241,7 +241,7 @@ auto ToolbarAdapter::toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* co
         GtkToolItem* it = gtk_separator_tool_item_new();
         gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        GtkWidget* iconWidget = ColorSelectImage::newColorIcon(d->color, 16, true);
+        GtkWidget* iconWidget = ColorSelectImage::newColorIcon(d->namedColor->getColor(), 16, true);
         GtkToolItem* it = gtk_tool_button_new(iconWidget, "");
         gtk_toolbar_set_drop_highlight_item(toolbar, it, ipos);
     } else {
@@ -286,15 +286,8 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         int newId = tb->insertItem(name, id, pos);
         ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
     } else if (d->type == TOOL_ITEM_COLOR) {
-        // [idotobi]: TODO fix
-        auto palette = adapter->window->getControl()->getSettings()->palette;
-        auto namedColor = palette->getNext();
-        auto colorName = namedColor.name;
-
-        // [idotobi]
-        // only need to pass paletteIndex (the rest should be obtained from the palette itself)
         auto* item = new ColorToolItem(adapter->window->getControl(), adapter->window->getControl()->getToolHandler(),
-                                       GTK_WINDOW(adapter->window->getWindow()), d->color, colorName, d->paletteIndex);
+                                       GTK_WINDOW(adapter->window->getWindow()), *(d->namedColor));
 
         bool horizontal = gtk_orientable_get_orientation(GTK_ORIENTABLE(toolbar)) == GTK_ORIENTATION_HORIZONTAL;
         GtkToolItem* it = item->createItem(horizontal);
@@ -309,9 +302,8 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
 
         string id = item->getId();
 
-        // here, the name is stored for the item
         int newId = tb->insertItem(name, id, pos);
-        ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->color, item);
+        ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->namedColor, item);
 
         adapter->window->getToolMenuHandler()->addColorToolItem(item);
     } else if (d->type == TOOL_ITEM_SEPARATOR) {

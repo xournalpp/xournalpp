@@ -7,52 +7,80 @@
 #include <gtk/gtk.h>
 #include <util/StringUtils.h>
 
-Palette::Palette(fs::path path): filepath{std::move(path)}, header{}, colors{}, next{0} {}
+Palette::Palette(fs::path path): filepath{std::move(path)}, header{}, namedColors{} {}
 
 void Palette::load() {
-    std::ifstream myfile{filepath};
+    header.clear();
+    namedColors.clear();
+
+    std::ifstream gptFile{filepath};
     std::string line;
-    Header h;
-    if (myfile.is_open()) {
-        getline(myfile, line);
-        line = StringUtils::trim(line);
-        if (line != "GIMP Palette") {
-            g_error(".gpt file needs to start with \"GIMP Palette\" in the "
-                    "first line");
-        }
-        while (getline(myfile, line)) {
-            std::istringstream iss{line};
-            if (iss >> h) {
-                header[h.attribute] = h.value;
-            } else {
-                NamedColor color;
-                std::istringstream iss2{line};
-                if (iss2 >> color) {
-                    color.paletteIndex = colors.size();
-                    colors.push_back(color);
-                }
-            }
+
+    if (gptFile.is_open()) {
+        getline(gptFile, line);
+        if (!parseFirstGimpPaletteLine(line))
+            return;
+        while (getline(gptFile, line)) {
+            parseHeaderLine(line) || parseColorLine(line);
         }
     }
 }
 
-NamedColor Palette::getNext(int inc) {
-    NamedColor result = colors.at(next);
-    next += inc;
-    if (next < 0) {
-        next = colors.size() - 1;
-    } else if (next >= colors.size()) {
-        next = 0;
+auto Palette::parseFirstGimpPaletteLine(const std::string& line) -> bool {
+    if (StringUtils::trim(line) != "GIMP Palette") {
+        g_error(".gpt file needs to start with \"GIMP Palette\" in the "
+                "first line");
+        return false;
+    }
+    return true;
+}
+
+auto Palette::parseHeaderLine(const std::string& line) -> bool {
+    Header headerEntry;
+    NamedColor color;
+    std::istringstream iss{line};
+    if (iss >> headerEntry) {
+        header[headerEntry.attribute] = headerEntry.value;
+        return true;
+    }
+    return false;
+}
+
+auto Palette::parseColorLine(const std::string& line) -> bool {
+    NamedColor color;
+    std::istringstream iss{line};
+    if (iss >> color) {
+        // call to private variable paletteIndex allowed because of friend class
+        color.paletteIndex = namedColors.size();
+        namedColors.push_back(color);
+        return true;
+    }
+    return false;
+}
+
+
+NamedColor Palette::getColorAt(size_t i) const {
+    if (i >= namedColors.size()) {
+        i = i % namedColors.size();
         g_warning("There are more Coloritems in the Toolbar then your Palette defines.\n"
                   "Hence, cycling through palette from the beginning.");
     }
 
-    return result;
+    return namedColors.at(i);
 }
 
-size_t Palette::getIndex() { return next; }
+NamedColor* Palette::getColorPointerAt(size_t i) {
+    if (i >= namedColors.size()) {
+        i = i % namedColors.size();
+        g_warning("There are more Coloritems in the Toolbar then your Palette defines.\n"
+                  "Hence, cycling through palette from the beginning.");
+    }
 
-void Palette::reset() { next = 0; };
+    return &namedColors.at(i);
+}
+
+size_t Palette::size() const { return namedColors.size(); }
+
 
 void Palette::create_default(fs::path filepath) {
     std::ofstream myfile{filepath};
@@ -97,7 +125,9 @@ void Palette::create_default(fs::path filepath) {
            << "\n";
 }
 
-std::istream& operator>>(std::istream& str, Header& data) {
+std::istream& operator>>(std::istream& str, Header& header) {
+    // inspired by
+    // https://codereview.stackexchange.com/questions/38879/parsing-text-file-in-c
     std::string line;
     Header tmp;
     if (std::getline(str, line)) {
@@ -106,8 +136,8 @@ std::istream& operator>>(std::istream& str, Header& data) {
             tmp.attribute = StringUtils::trim(tmp.attribute);
             tmp.value = StringUtils::trim(tmp.value);
 
-            /* OK: All read operations worked */
-            data.swap(tmp);  // C++03 as this answer was written a long time ago.
+            // parsing was successful hence results can be stored permanently
+            header.swap(tmp);
         } else {
             // One operation failed.
             // So set the state on the main stream
@@ -118,21 +148,7 @@ std::istream& operator>>(std::istream& str, Header& data) {
     return str;
 }
 
-void Header::swap(Header& other)  // C++03 as this answer was written a long time ago.
-{
+void Header::swap(Header& other) {
     std::swap(attribute, other.attribute);
     std::swap(value, other.value);
 }
-
-// Default xournal
-// 0 0 0 Black
-// 0 128 0 Green
-// 0 192 255 Light Blue
-// 0 255 0 Light Green
-// 51 51 204 Blue
-// 128 128 128 Gray
-// 255 0 0 Red
-// 255 0 255 Magenta
-// 255 128 0 Orange
-// 255 255 0 Yellow
-// 255 255 255 White
