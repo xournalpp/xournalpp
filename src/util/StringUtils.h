@@ -29,4 +29,5 @@ public:
     static string rtrim(string str);
     static string trim(string str);
     static bool iequals(const string& a, const string& b);
+    static bool isNumber(const string& input);
 };

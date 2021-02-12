@@ -27,6 +27,8 @@ ToolbarItem::~ToolbarItem() = default;
 
 auto ToolbarItem::getName() -> string { return this->name; }
 
+void ToolbarItem::setName(const string& name) { this->name = name; }
+
 auto ToolbarItem::operator==(ToolbarItem& other) -> bool { return this->name == other.name; }
 
 auto ToolbarItem::getId() const -> int { return this->id; }

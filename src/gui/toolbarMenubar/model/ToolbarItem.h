@@ -28,6 +28,7 @@ private:
 
 public:
     string getName();
+    void setName(const string& name);
 
     bool operator==(ToolbarItem& other);
 

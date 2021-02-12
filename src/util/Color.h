@@ -97,6 +97,7 @@ constexpr auto argb_to_GdkRGBA(Color color) -> GdkRGBA;
 constexpr auto argb_to_GdkRGBA(Color color, double alpha) -> GdkRGBA;
 constexpr auto GdkRGBA_to_argb(const GdkRGBA& color) -> Color;
 constexpr auto GdkRGBA_to_rgb(const GdkRGBA& color) -> Color;
+constexpr auto colorU16_to_rgb(const ColorU16& color) -> Color;
 
 constexpr auto GdkRGBA_to_ColorU16(const GdkRGBA& color) -> ColorU16;
 
@@ -135,6 +136,12 @@ constexpr auto Util::GdkRGBA_to_rgb(const GdkRGBA& color) -> Color {
     return floatToUIntColor(color.red) << 16U |   //
            floatToUIntColor(color.green) << 8U |  //
            floatToUIntColor(color.blue);
+}
+
+constexpr auto Util::colorU16_to_rgb(const ColorU16& color) -> Color {
+    return color.red << 16U |  //
+           color.blue << 8U |  //
+           color.green;
 }
 
 constexpr auto Util::floatToUIntColor(const double color) -> uint32_t {  //

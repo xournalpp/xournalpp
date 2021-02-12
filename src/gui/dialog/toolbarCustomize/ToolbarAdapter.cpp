@@ -89,10 +89,14 @@ void ToolbarAdapter::prepareToolItem(GtkToolItem* it) {
 
     gtk_tool_item_set_use_drag_window(it, true);
 
-    GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(it));
-    GdkCursor* cursor = gdk_cursor_new_for_display(gdk_screen_get_display(screen), GDK_HAND2);
-    gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(it)), cursor);
-    g_object_unref(cursor);
+
+    // [idotobi]: Throws (xournalpp:24603): Gdk-CRITICAL **: 18:30:05.903: gdk_window_set_cursor: assertion
+    // 'GDK_IS_WINDOW (window)' failed (if the widget is not visible because of limited window size!)
+    // (when dragging from customization window to main window)
+    // GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(it));
+    // GdkCursor* cursor = gdk_cursor_new_for_display(gdk_screen_get_display(screen), GDK_HAND2);
+    // gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(it)), cursor);
+    // g_object_unref(cursor);
 
     gtk_drag_source_set(GTK_WIDGET(it), GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
     ToolbarDragDropHelper::dragSourceAddToolbar(GTK_WIDGET(it));
@@ -128,12 +132,15 @@ void ToolbarAdapter::toolitemDragBegin(GtkWidget* widget, GdkDragContext* contex
     g_return_if_fail(data != nullptr);
 
     ToolItemDragCurrentData::setData(data);
+    GdkPixbuf* pb = ToolitemDragDrop::getPixbuf(data);
 
-    GtkWidget* icon = ToolitemDragDrop::getIcon(data);
+    gtk_drag_set_icon_pixbuf(context, pb, -2, -2);
 
-    gtk_drag_set_icon_pixbuf(context, ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
-
-    g_object_unref(icon);
+    // Causes:
+    // (xournalpp:13051): Gtk-WARNING **: 12:47:45.924: A floating object was finalized. This means that someone
+    // called g_object_unref() on an object that had only a floating reference;
+    // the initial floating reference is not owned by anyone and must be removed with g_object_ref_sink().
+    // g_object_unref(icon);
 
     gtk_widget_hide(widget);
 }
@@ -279,8 +286,15 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         int newId = tb->insertItem(name, id, pos);
         ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), newId, d->item);
     } else if (d->type == TOOL_ITEM_COLOR) {
+        // [idotobi]: TODO fix
+        auto palette = adapter->window->getControl()->getSettings()->palette;
+        auto namedColor = palette->getNext();
+        auto colorName = namedColor.name;
+
+        // [idotobi]
+        // only need to pass paletteIndex (the rest should be obtained from the palette itself)
         auto* item = new ColorToolItem(adapter->window->getControl(), adapter->window->getControl()->getToolHandler(),
-                                       GTK_WINDOW(adapter->window->getWindow()), d->color);
+                                       GTK_WINDOW(adapter->window->getWindow()), d->color, colorName, d->paletteIndex);
 
         bool horizontal = gtk_orientable_get_orientation(GTK_ORIENTABLE(toolbar)) == GTK_ORIENTATION_HORIZONTAL;
         GtkToolItem* it = item->createItem(horizontal);
@@ -295,6 +309,7 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
 
         string id = item->getId();
 
+        // here, the name is stored for the item
         int newId = tb->insertItem(name, id, pos);
         ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), newId, d->color, item);
 

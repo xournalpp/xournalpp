@@ -78,3 +78,11 @@ auto StringUtils::iequals(const string& a, const string& b) -> bool {
 
     return result == 0;
 }
+
+auto StringUtils::isNumber(const string& input) -> bool {
+    for (char const& c: input) {
+        if (std::isdigit(c) == 0)
+            return false;
+    }
+    return true;
+}

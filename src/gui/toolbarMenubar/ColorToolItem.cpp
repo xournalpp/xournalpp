@@ -6,7 +6,6 @@
 
 #include "control/ToolEnums.h"
 #include "gui/toolbarMenubar/icon/ColorSelectImage.h"
-#include "model/ToolbarColorNames.h"
 
 #include "StringUtils.h"
 #include "Util.h"
@@ -15,14 +14,14 @@
 bool ColorToolItem::inUpdate = false;
 
 ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, Color color,
-                             bool selektor):
+                             string name, size_t paletteIndex, bool selektor):
         AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
         color(color),
         toolHandler(toolHandler),
-        parent(parent) {
+        parent(parent),
+        name{name},
+        paletteIndex{paletteIndex} {
     this->group = GROUP_COLOR;
-
-    updateName();
 }
 
 ColorToolItem::~ColorToolItem() { freeIcons(); }
@@ -37,13 +36,6 @@ void ColorToolItem::freeIcons() {
 
 auto ColorToolItem::isSelector() -> bool { return this->action == ACTION_SELECT_COLOR_CUSTOM; }
 
-void ColorToolItem::updateName() {
-    if (this->action == ACTION_SELECT_COLOR_CUSTOM) {
-        this->name = _("Select color");
-    } else {
-        this->name = ToolbarColorNames::getInstance().getColorName(this->color);
-    }
-}
 
 void ColorToolItem::actionSelected(ActionGroup group, ActionType action) {
     inUpdate = true;
@@ -81,7 +73,7 @@ auto ColorToolItem::getId() -> string {
     }
 
     char buffer[64];
-    snprintf(buffer, sizeof(buffer), "COLOR(0x%06" PRIx32 ")", uint32_t{this->color});
+    snprintf(buffer, sizeof(buffer), "COLOR(%zu)", this->paletteIndex);
     string id = buffer;
 
     return id;
@@ -162,4 +154,8 @@ auto ColorToolItem::getToolDisplayName() -> string { return this->name; }
 
 auto ColorToolItem::getNewToolIcon() -> GtkWidget* {
     return ColorSelectImage::newColorIcon(this->color, 16, !isSelector());
+}
+
+auto ColorToolItem::getNewToolPixbuf() -> GdkPixbuf* {
+    return ColorSelectImage::newColorIconPixbuf(this->color, 16, !isSelector());
 }

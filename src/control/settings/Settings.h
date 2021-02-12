@@ -15,6 +15,7 @@
 #include <memory>
 
 #include <config-dev.h>
+#include <gui/toolbarMenubar/model/ColorPalette.h>
 #include <libxml/xmlreader.h>
 #include <portaudio.h>
 
@@ -946,6 +947,7 @@ private:
      * e.g. "en_US"
      */
     std::string preferredLocale;
+
     /**
      * The number of pages to pre-load before the current page.
      */
@@ -960,4 +962,8 @@ private:
      * Whether to evict from the page buffer cache when scrolling.
      */
     bool eagerPageCleanup{};
+
+public:
+    Palette* palette;
+    fs::path paletteFilePath;
 };
