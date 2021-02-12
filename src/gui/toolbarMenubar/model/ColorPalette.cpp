@@ -5,22 +5,46 @@
 #include <sstream>
 
 #include <gtk/gtk.h>
-#include <util/StringUtils.h>
+
+#include "util/StringUtils.h"
 
 Palette::Palette(fs::path path): filepath{std::move(path)}, header{}, namedColors{} {}
 
 void Palette::load() {
     header.clear();
     namedColors.clear();
+    try {
+        std::ifstream gptFile{filepath};
+        std::string line;
 
-    std::ifstream gptFile{filepath};
-    std::string line;
+        if (gptFile.is_open()) {
+            getline(gptFile, line);
+            if (!parseFirstGimpPaletteLine(line))
+                throw std::invalid_argument("This is not a gpt file, using default palette instead.");
+            while (getline(gptFile, line)) {
+                parseHeaderLine(line) || parseColorLine(line);
+            }
+            if (namedColors.size() < 1)
+                throw std::invalid_argument("Your Palettefile has no parsable color. It needs at least one!");
+        }
+    } catch (const std::exception& e) {
+        g_warning("There has been a problem parsing the palette.gpl file at %s. \n"
+                  "What happened: %s \n"
+                  "What to do: %s \n",
+                  filepath.c_str(), e.what(),
+                  "Please fix your palette file, or rename it so xournalpp creates a new default one for you which you "
+                  "can use as a template.");
 
-    if (gptFile.is_open()) {
-        getline(gptFile, line);
+        // Parse Default Palette string instead
+        // This is not computationally efficient but this ways there is only one place (default_palette()) where the
+        // palette is defined.
+        std::stringstream defaultFile{default_palette()};
+        std::string line;
+
+        getline(defaultFile, line);
         if (!parseFirstGimpPaletteLine(line))
-            return;
-        while (getline(gptFile, line)) {
+            g_error("The default file was mallformed. This should never happen!");
+        while (getline(defaultFile, line)) {
             parseHeaderLine(line) || parseColorLine(line);
         }
     }
@@ -37,7 +61,6 @@ auto Palette::parseFirstGimpPaletteLine(const std::string& line) -> bool {
 
 auto Palette::parseHeaderLine(const std::string& line) -> bool {
     Header headerEntry;
-    NamedColor color;
     std::istringstream iss{line};
     if (iss >> headerEntry) {
         header[headerEntry.attribute] = headerEntry.value;
@@ -52,14 +75,13 @@ auto Palette::parseColorLine(const std::string& line) -> bool {
     if (iss >> color) {
         // call to private variable paletteIndex allowed because of friend class
         color.paletteIndex = namedColors.size();
-        namedColors.push_back(color);
+        namedColors.emplace_back(std::move(color));
         return true;
     }
     return false;
 }
 
-
-NamedColor Palette::getColorAt(size_t i) const {
+NamedColor const& Palette::getColorAt(size_t i) const {
     if (i >= namedColors.size()) {
         i = i % namedColors.size();
         g_warning("There are more Coloritems in the Toolbar then your Palette defines.\n"
@@ -69,60 +91,56 @@ NamedColor Palette::getColorAt(size_t i) const {
     return namedColors.at(i);
 }
 
-NamedColor* Palette::getColorPointerAt(size_t i) {
-    if (i >= namedColors.size()) {
-        i = i % namedColors.size();
-        g_warning("There are more Coloritems in the Toolbar then your Palette defines.\n"
-                  "Hence, cycling through palette from the beginning.");
-    }
-
-    return &namedColors.at(i);
-}
-
 size_t Palette::size() const { return namedColors.size(); }
 
 
+const std::string Palette::default_palette() {
+    std::stringstream d{};
+    d << "GIMP Palette"
+      << "\n";
+    d << "Name: Xournal Default Palette"
+      << "\n";
+    d << "#"
+      << "\n";
+    d << 0 << " " << 0 << " " << 0 << " "
+      << "Black"
+      << "\n";
+    d << 0 << " " << 128 << " " << 0 << " "
+      << "Green"
+      << "\n";
+    d << 0 << " " << 192 << " " << 255 << " "
+      << "Light Blue"
+      << "\n";
+    d << 0 << " " << 255 << " " << 0 << " "
+      << "Light Green"
+      << "\n";
+    d << 51 << " " << 51 << " " << 204 << " "
+      << "Blue"
+      << "\n";
+    d << 128 << " " << 128 << " " << 128 << " "
+      << "Gray"
+      << "\n";
+    d << 255 << " " << 0 << " " << 0 << " "
+      << "Red"
+      << "\n";
+    d << 255 << " " << 0 << " " << 255 << " "
+      << "Magenta"
+      << "\n";
+    d << 255 << " " << 128 << " " << 0 << " "
+      << "Orange"
+      << "\n";
+    d << 255 << " " << 255 << " " << 0 << " "
+      << "Yellow"
+      << "\n";
+    d << 255 << " " << 255 << " " << 255 << " "
+      << "White"
+      << "\n";
+    return d.str();
+}
+
 void Palette::create_default(fs::path filepath) {
     std::ofstream myfile{filepath};
-    myfile << "GIMP Palette"
-           << "\n";
-    myfile << "Name: Xournal Default Palette"
-           << "\n";
-    myfile << "#"
-           << "\n";
-    myfile << 0 << " " << 0 << " " << 0 << " "
-           << "Black"
-           << "\n";
-    myfile << 0 << " " << 128 << " " << 0 << " "
-           << "Green"
-           << "\n";
-    myfile << 0 << " " << 192 << " " << 255 << " "
-           << "Light Blue"
-           << "\n";
-    myfile << 0 << " " << 255 << " " << 0 << " "
-           << "Light Green"
-           << "\n";
-    myfile << 51 << " " << 51 << " " << 204 << " "
-           << "Blue"
-           << "\n";
-    myfile << 128 << " " << 128 << " " << 128 << " "
-           << "Gray"
-           << "\n";
-    myfile << 255 << " " << 0 << " " << 0 << " "
-           << "Red"
-           << "\n";
-    myfile << 255 << " " << 0 << " " << 255 << " "
-           << "Magenta"
-           << "\n";
-    myfile << 255 << " " << 128 << " " << 0 << " "
-           << "Orange"
-           << "\n";
-    myfile << 255 << " " << 255 << " " << 0 << " "
-           << "Yellow"
-           << "\n";
-    myfile << 255 << " " << 255 << " " << 255 << " "
-           << "White"
-           << "\n";
+    myfile << default_palette();
 }
 
 std::istream& operator>>(std::istream& str, Header& header) {
@@ -137,7 +155,7 @@ std::istream& operator>>(std::istream& str, Header& header) {
             tmp.value = StringUtils::trim(tmp.value);
 
             // parsing was successful hence results can be stored permanently
-            header.swap(tmp);
+            header = std::move(tmp);
         } else {
             // One operation failed.
             // So set the state on the main stream
@@ -146,9 +164,4 @@ std::istream& operator>>(std::istream& str, Header& header) {
         }
     }
     return str;
-}
-
-void Header::swap(Header& other) {
-    std::swap(attribute, other.attribute);
-    std::swap(value, other.value);
 }

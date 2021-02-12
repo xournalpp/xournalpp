@@ -627,15 +627,14 @@ auto Settings::load() -> bool {
     loadButtonConfig();
     loadDeviceClasses();
 
-    paletteFilePath = PALETTE_FILE;
-    auto paletteFile = Util::getConfigFile(paletteFilePath);
+    // load Color Palette
+    auto paletteFile = Util::getConfigFile(PALETTE_FILE);
     if (!fs::exists(paletteFile)) {
         Palette::create_default(paletteFile);
     }
-    this->palette = new Palette(std::move(paletteFile));
+    this->palette = std::make_unique<Palette>(std::move(paletteFile));
     this->palette->load();
 
-    // load Palette
     return true;
 }
 

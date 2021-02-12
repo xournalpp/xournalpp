@@ -964,6 +964,5 @@ private:
     bool eagerPageCleanup{};
 
 public:
-    Palette* palette;
-    fs::path paletteFilePath;
+    std::unique_ptr<Palette> palette;
 };

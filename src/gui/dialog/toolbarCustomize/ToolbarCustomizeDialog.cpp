@@ -30,7 +30,7 @@ struct _ToolItemDragData {
 struct _ColorToolItemDragData {
     ToolbarCustomizeDialog* dlg;
     GdkPixbuf* icon;
-    NamedColor* namedColor;
+    const NamedColor* namedColor;
     GtkWidget* ebox;
 };
 
@@ -313,14 +313,11 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
 
     freeColorIconview();
 
-    Palette* palette = this->win->getToolMenuHandler()->getControl()->getSettings()->palette;
+    Palette* palette = this->win->getToolMenuHandler()->getControl()->getSettings()->palette.get();
 
-    for (int i{}; i < palette->size(); i++) {
-        // Here we need the pointer to ensure that the memory still contains the relevant data
-        // when the toolitemColorDragBegin callback is raised later on.
-        // If we would use NamedColor namedColor it would automatically fall out of scope at the end of this function
-        // and then toolitemColorDragBegin would point to memory that has already been deallocated.
-        NamedColor* namedColor = palette->getColorPointerAt(i);
+    for (size_t i{}; i < palette->size(); i++) {
+        // namedColor needs to be a pointer to pass it into a ColorToolItemDragData
+        const NamedColor* namedColor = &(palette->getColorAt(i));
         Color c = namedColor->getColor();
         GtkWidget* icon = ColorSelectImage::newColorIcon(c, 16, true);
 
@@ -347,6 +344,8 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
         ColorToolItemDragData* data = g_new(ColorToolItemDragData, 1);
         data->dlg = this;
         data->icon = nullptr;
+        // Since namedColor actually is a const reference, the reference will be valid even once namedColor goes out of
+        // scope
         data->namedColor = namedColor;
         data->ebox = ebox;
 
@@ -354,8 +353,12 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
         g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemColorDragEnd), data);
         g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemColorDragDataGet), data);
 
-        int x = i % 5;
-        int y = i / 5;
+        if (i >= std::numeric_limits<int>::max())
+            g_error("Int overflow because of two many colors defined in Palette");
+        auto ii = static_cast<int>(i);
+
+        int x = ii % 5;
+        int y = ii / 5;
 
         gtk_grid_attach(table, ebox, x, y, 1, 1);
     }

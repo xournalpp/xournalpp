@@ -91,8 +91,8 @@ void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
 void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal) {
     int count = 0;
 
-    Palette* palette = this->control->getSettings()->palette;
-    int colorIndex{};
+    Palette* palette = this->control->getSettings()->palette.get();
+    size_t colorIndex{};
 
     for (ToolbarEntry* e: d->contents) {
         if (e->getName() == toolbarName) {
@@ -142,34 +142,41 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                 }
                 if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
                     string arg = name.substr(6, name.length() - 7);
-                    NamedColor namedColor;
-                    int paletteIndex{};
+                    // namedColor needs to be a pointer to enable attachMetadataColor to reference to the
+                    // non local scoped namedColor instance
+                    const NamedColor* namedColor;
+                    size_t paletteIndex{};
+
+                    // check for old color format of toolbar.ini
                     if (StringUtils::startsWith(arg, "0x")) {
-                        namedColor = palette->getColorAt(colorIndex);
-                        paletteIndex = namedColor.getIndex();
+                        namedColor = &(palette->getColorAt(colorIndex));
+                        paletteIndex = namedColor->getIndex();
 
                         // set new COLOR Toolbar entry
                         std::ostringstream newColor("");
                         newColor << "COLOR(" << paletteIndex << ")";
                         dataItem->setName(newColor.str());
                         colorIndex++;
-                    } else if (StringUtils::isNumber(arg)) {
-                        paletteIndex = std::stoi(arg);
-                        namedColor = palette->getColorAt(paletteIndex);
                     } else {
-                        g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s", arg.c_str());
-                        continue;
+                        std::istringstream colorStream(arg);
+                        colorStream >> paletteIndex;
+                        if (!colorStream.eof() || colorStream.fail()) {
+                            g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s", arg.c_str());
+                            continue;
+                        }
+                        namedColor = &palette->getColorAt(paletteIndex);
                     }
+
                     count++;
 
-                    auto* item = new ColorToolItem(listener, toolHandler, this->parent, namedColor);
+                    auto* item = new ColorToolItem(listener, toolHandler, this->parent, *namedColor);
                     this->toolbarColorItems.push_back(item);
 
                     GtkToolItem* it = item->createItem(horizontal);
                     gtk_widget_show_all(GTK_WIDGET(it));
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item);
+                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), namedColor, item);
 
                     continue;
                 }

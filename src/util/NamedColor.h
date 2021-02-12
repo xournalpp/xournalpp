@@ -8,7 +8,7 @@
 #pragma once
 #include <string>
 
-#include <util/Color.h>
+#include "util/Color.h"
 
 struct Palette;
 /**
@@ -26,36 +26,6 @@ struct NamedColor {
     NamedColor();
 
     /**
-     * @brief Copy Construct a new NamedColor instance
-     *
-     * @param other NamedColor instance to copy from
-     */
-    NamedColor(const NamedColor& other);
-
-    /**
-     * @brief Copy assignment operator
-     *
-     * @param other NamedColor instance to copy from
-     * @return NamedColor& NamedColor instance to copy to
-     */
-    NamedColor& operator=(const NamedColor& other);
-
-    /**
-     * @brief Move Construct a new NamedColor instance
-     *
-     * @param other NamedColor instance to move from
-     */
-    NamedColor(NamedColor&& other) noexcept;
-
-    /**
-     * @brief Move assignment  opearator
-     *
-     * @param other NamedColor instance to move from
-     * @return NamedColor& NamedColor instance to move to
-     */
-    NamedColor& operator=(NamedColor&& other) noexcept;
-
-    /**
      * @brief Construct a new NamedColor instance
      * This automatically sets the isPaletteColor to negative as NamedColors from a color palette can only be
      * constructed using the input operator.
@@ -65,7 +35,6 @@ struct NamedColor {
      */
     NamedColor(const Color& color);
 
-    ~NamedColor();
     /**
      * @brief Input operator for parsing NamedColor from input string stream
      *
@@ -126,11 +95,4 @@ private:
      *
      */
     bool isPaletteColor;
-
-    /**
-     * @brief Swap all properties between two NamedColor instances
-     *
-     * @param other other NamedColor instance to swap properties with
-     */
-    void swap(NamedColor& other);
 };

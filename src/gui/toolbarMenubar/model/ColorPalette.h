@@ -58,7 +58,7 @@ struct Palette {
     Palette(fs::path path);
 
     /**
-     * @brief Create a default gpt file for the xournalpp color scheme
+     * @brief Create default gpt file string
      * Default xournalpp color scheme
      *   0 0 0 Black
      *   0 128 0 Green
@@ -71,6 +71,14 @@ struct Palette {
      *   255 128 0 Orange
      *   255 255 0 Yellow
      *   255 255 255 White
+     *
+     * @return const std::string
+     */
+    static const std::string default_palette();
+
+    /**
+     * @brief Create a default gpt file for the xournalpp color scheme
+     * See default_palette() for further information.
      *
      * @param path to write gpt file to
      */
@@ -96,15 +104,7 @@ struct Palette {
      * @param i palette index
      * @return NamedColor of palette at palette index
      */
-    NamedColor getColorAt(size_t i) const;
-
-    /**
-     * @brief Get the pointer to a NamedColor from the palette
-     *
-     * @param i palette index
-     * @return NamedColor* pointer to a NamedColor from the palette
-     */
-    NamedColor* getColorPointerAt(size_t i);
+    NamedColor const& getColorAt(size_t i) const;
 
 
 private:

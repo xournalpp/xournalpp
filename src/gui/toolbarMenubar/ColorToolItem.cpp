@@ -13,11 +13,11 @@
 
 bool ColorToolItem::inUpdate = false;
 
-ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent,
-                             const NamedColor& namedColor, bool selektor):
+ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, NamedColor namedColor,
+                             bool selektor):
         AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
         toolHandler(toolHandler),
-        namedColor{namedColor} {
+        namedColor{std::move(namedColor)} {
     this->group = GROUP_COLOR;
 }
 
