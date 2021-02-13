@@ -25,8 +25,7 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
 
     // Trigger start of action when pen/mouse is pressed
     if (event.type == BUTTON_PRESS_EVENT) {
-
-        if (event.button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
+        if (event.button > 0 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
             this->eventsToIgnore = this->inputContext->getSettings()->getIgnoredStylusEvents();
             if (this->eventsToIgnore > 0) {
                 this->eventsToIgnore--;  // This is already the first ignored event
@@ -90,7 +89,7 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
 
     // Trigger end of action if pen tip leaves screen or mouse button is released
     if (event.type == BUTTON_RELEASE_EVENT) {
-        if (event.button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
+        if (event.button > 0 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
             if (this->eventsToIgnore < 0) {
                 this->actionEnd(event);
             } else {
