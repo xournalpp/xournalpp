@@ -65,7 +65,7 @@ public:
     void setFirstPoint(double x, double y);
     void setLastPoint(const Point& p);
     int getPointCount() const;
-    void freeUnusedPointItems();
+    [[deprecated("Memory should be std::reserve'd beforehand instead")]] void freeUnusedPointItems();
     std::vector<Point> const& getPointVector() const;
     Point getPoint(int index) const;
     const Point* getPoints() const;

@@ -158,7 +158,13 @@ auto Stroke::getPoint(int index) const -> Point {
 
 auto Stroke::getPoints() const -> const Point* { return this->points.data(); }
 
-void Stroke::freeUnusedPointItems() { this->points = {begin(this->points), end(this->points)}; }
+void Stroke::freeUnusedPointItems() {
+    size_t capacity = this->points.capacity();
+    // Reduce the vector's memory footprint if it has to much unused memory
+    if (capacity > 1024 && 4 * this->points.size() < 3 * capacity) {
+        this->points = {this->points.begin(), this->points.end()};
+    }
+}
 
 void Stroke::setToolType(StrokeTool type) { this->toolType = type; }
 
