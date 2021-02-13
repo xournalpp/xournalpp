@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "BaseStrokeHandler.h"
+#include "PLShapeHandler.h"
 
-class CoordinateSystemHandler: public BaseStrokeHandler {
+class CoordinateSystemHandler: public PLShapeHandler {
 public:
     CoordinateSystemHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
                             bool flipControl = false);
@@ -21,8 +21,4 @@ public:
 
 private:
     virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
-
-private:
-    Point startPoint;
-    bool started = false;
 };

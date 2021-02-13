@@ -351,9 +351,9 @@ auto SplineSegment::rootsOfCubicEquation(double a, double b, double c, double d)
      * Use the trigonometric solutions
      */
     double sqrtMinusP = std::sqrt(-p);
-    double angle = std::acos(q / (p * sqrtMinusP)) / 3.0;       // [0, M_PI_3]
-    double cosine = sqrtMinusP * std::cos(angle);               // sqrtMinusP * [0.5, 1]
-    double sine = std::sqrt(3) * sqrtMinusP * std::sin(angle);  // 3 / 2 * sqrtMinusP * [0, 1]
+    double angle = std::acos(q / (p * sqrtMinusP)) / 3.0;  // in [0, M_PI_3]
+    double cosine = sqrtMinusP * std::cos(angle);          // in [0.5 * sqrtMinusP, sqrtMinusP ]
+    double sine = SQRT3 * sqrtMinusP * std::sin(angle);    // in [0, 1.5 * sqrtMinusP]
     return {-cosine - sine - bOverA, -cosine + sine - bOverA, 2 * cosine - bOverA};
 
     /**

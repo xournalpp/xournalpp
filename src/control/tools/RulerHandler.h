@@ -11,15 +11,15 @@
 
 #pragma once
 
-#include "BaseStrokeHandler.h"
+#include "PLShapeHandler.h"
 
-class RulerHandler: public BaseStrokeHandler {
+class RulerHandler: public PLShapeHandler {
 public:
     RulerHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
     virtual ~RulerHandler();
 
 private:
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    virtual void drawShape(Point& currentPoint, const PositionInputData& pos) override;
 
 private:
 };

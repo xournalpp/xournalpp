@@ -77,33 +77,6 @@ void SplineHandler::draw(cairo_t* cr) {
 
     cairo_stroke(cr);
 
-#ifdef DEBUG_DRAW_LINE_INTERSECTION
-    {  // Debug
-        PartialSplineSegment pss = PartialSplineSegment(cp1, cp2, otherKnot);
-        //     PartialSplineSegment pss = PartialSplineSegment(Point(100,0), Point(-50,500), Point(0,500));
-        //     Point lastKnot(0,0);
-        std::vector<double> intersection = pss.intersectWithVerticalLine(lastKnot, lastKnot.x + 20);
-        double shift = 0.1 * (lastKnot.y - otherKnot.y);
-        cairo_move_to(cr, lastKnot.x + 20, lastKnot.y + shift);
-        cairo_line_to(cr, lastKnot.x + 20, otherKnot.y - shift);
-        for (auto&& t: intersection) {
-            Point p = pss.getPoint(lastKnot, t);
-            cairo_move_to(cr, p.x, p.y);
-            cairo_arc(cr, p.x, p.y, 5.0, 0.0, 2 * M_PI);
-        }
-        intersection = pss.intersectWithHorizontalLine(lastKnot, lastKnot.y + 40);
-        shift = 0.1 * (lastKnot.x - otherKnot.x);
-        cairo_move_to(cr, lastKnot.x + shift, lastKnot.y + 40);
-        cairo_line_to(cr, otherKnot.x - shift, lastKnot.y + 40);
-        for (auto&& t: intersection) {
-            Point p = pss.getPoint(lastKnot, t);
-            cairo_move_to(cr, p.x, p.y);
-            cairo_arc(cr, p.x, p.y, 5.0, 0.0, 2 * M_PI);
-        }
-        cairo_stroke(cr);
-    }  // end of debug
-#endif
-
     // draw other tangents
     cairo_set_source_rgb(cr, 0, 1, 0);
     for (size_t i = 0; i < this->getKnotCount(); i++) {
@@ -286,7 +259,7 @@ void SplineHandler::onButtonPressEvent(const PositionInputData& pos) {
     }
 
     if (!stroke) {
-        createStroke(this->currPoint);
+        createStroke();
         this->addKnot(this->currPoint);
         this->redrawable->rerenderRect(this->currPoint.x - radius, this->currPoint.y - radius, 2 * radius, 2 * radius);
     } else {
@@ -376,18 +349,14 @@ void SplineHandler::updateStroke() {
         return;
     }
     // create spline segments
-    Spline spline;
-    spline.setFirstKnot(this->knots[0]);
+    std::shared_ptr<Spline> spline = std::make_shared<Spline>(this->knots[0], this->getKnotCount() - 1);
     Point cp1, cp2;
     for (size_t i = 0; i < this->getKnotCount() - 1; i++) {
         cp1 = Point(this->knots[i].x + this->tangents[i].x, this->knots[i].y + this->tangents[i].y);
         cp2 = Point(this->knots[i + 1].x - this->tangents[i + 1].x, this->knots[i + 1].y - this->tangents[i + 1].y);
-        spline.addCubicSegment(cp1, cp2, this->knots[i + 1]);
+        spline->addCubicSegment(cp1, cp2, this->knots[i + 1]);
     }
-    stroke->setSpline(spline);
-
-    // convert the spline to points
-    stroke->pointsFromSpline();
+    stroke->setPath(std::move(spline));
 }
 
 auto SplineHandler::computeRepaintRectangle() const -> Rectangle<double> {

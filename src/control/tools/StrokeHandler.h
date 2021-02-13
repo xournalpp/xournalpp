@@ -74,6 +74,8 @@ protected:
     SnapToGridInputHandler snappingHandler;
 
 private:
+    std::shared_ptr<PiecewiseLinearPath> path;
+
     /**
      * The masking surface
      */

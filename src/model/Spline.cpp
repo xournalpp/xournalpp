@@ -1,14 +1,4 @@
 /**
- * Xournal++
- *
- * A spline
- *
- * @author Xournal++ Team
- * https://github.com/xournalpp/xournalpp
- *
- * @license GNU GPLv2 or later
- */
-/**
  * The algorithms implemented in the class Spline::SchneiderApproximater come from
  *
  * An Algorithm for Automatically Fitting Digitized Curves
@@ -21,11 +11,19 @@
 #include <cmath>
 #include <numeric>
 
+#include "serializing/ObjectInputStream.h"
+#include "serializing/ObjectOutputStream.h"
+
 #ifdef EXTRA_CAREFUL
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 #endif
+
+Spline& Spline::operator=(const std::vector<Point>& pts) {
+    this->data = pts;
+    return *this;
+}
 
 Spline::Spline(const Point& firstKnot) { data.push_back(firstKnot); }
 
@@ -36,6 +34,24 @@ Spline::Spline(const Point& firstKnot, size_t size) {
 
 Spline::Spline(const SplineSegment& segment) {
     data = {segment.firstKnot, segment.firstControlPoint, segment.secondControlPoint, segment.secondKnot};
+}
+
+Spline::Spline(ObjectInputStream& in) {
+    in.readObject("Spline");
+
+    Point* p{};
+    int count{};
+    in.readData(reinterpret_cast<void**>(&p), &count);
+    this->data = std::vector<Point>{p, p + count};
+    g_free(p);
+
+    in.endObject();
+}
+
+void Spline::serialize(ObjectOutputStream& out) const {
+    out.writeObject("Spline");
+    out.writeData(this->data.data(), this->data.size(), sizeof(Point));
+    out.endObject();
 }
 
 Spline::SegmentIteratable<SplineSegment, Point> Spline::segments() {
@@ -91,11 +107,15 @@ void Spline::setFirstKnot(const Point& p) {
     }
 }
 
+auto Spline::getFirstKnot() const -> const Point& { return this->data.front(); }
+
+auto Spline::getLastKnot() const -> const Point& { return this->data.back(); }
+
 auto Spline::getSegment(size_t index) const -> const SplineSegment& {
     return *(SplineSegment*)(data.data() + 3 * index);
 }
 
-auto Spline::getPoint(Spline::Parameter parameter) const -> Point {
+auto Spline::getPoint(const Parameter& parameter) const -> Point {
     if (data.empty()) {
         g_warning("Spline::getPoint: Empty spline");
         return Point(NAN, NAN);
@@ -103,7 +123,7 @@ auto Spline::getPoint(Spline::Parameter parameter) const -> Point {
 
     size_t index = parameter.index;
     double t = parameter.t;
-    size_t n = size();
+    size_t n = nbSegments();
 
     if (index == 0 && t == 0.0) {
         return data.front();
@@ -119,17 +139,25 @@ auto Spline::getPoint(Spline::Parameter parameter) const -> Point {
     return getSegment(index).getPoint(t);
 }
 
-auto Spline::cloneSection(const Spline::Parameter& lowerBound, const Spline::Parameter& upperBound) const -> Spline {
+auto Spline::clone() const -> std::unique_ptr<Path> {
+    std::unique_ptr<Spline> clone = std::make_unique<Spline>(*this);
+    //     clone.data.reserve(this->data.size());
+    //     std::copy(this->data.cbegin(), this->data.cend(), std::back_inserter(clone.data));
+    return clone;
+}
+
+auto Spline::cloneSection(const Parameter& lowerBound, const Parameter& upperBound) const -> std::unique_ptr<Path> {
 
     if (upperBound.index == lowerBound.index) {
         SplineSegment segment = getSegment(lowerBound.index).getSubsegment(lowerBound.t, upperBound.t);
-        return Spline(segment);
+        return std::make_unique<Spline>(segment);
     } else {
         SplineSegment firstSegment = getSegment(lowerBound.index).subdivide(lowerBound.t).second;
 
         // Create and reserve memory for the clone
-        Spline clone(firstSegment.firstKnot, upperBound.index - lowerBound.index + 1);
-        clone.addCubicSegment(firstSegment);
+        std::unique_ptr<Spline> clone =
+                std::make_unique<Spline>(firstSegment.firstKnot, upperBound.index - lowerBound.index + 1);
+        clone->addCubicSegment(firstSegment);
 
         // firstControlPoint of getSegment(lowerBound.index + 1)
         auto it = data.cbegin() + 3 * (std::ptrdiff_t)lowerBound.index + 4;
@@ -137,14 +165,14 @@ auto Spline::cloneSection(const Spline::Parameter& lowerBound, const Spline::Par
         // firstControlPoint of getSegment(upperBound.index)
         auto endIt = data.cbegin() + 3 * (std::ptrdiff_t)upperBound.index + 1;
 
-        std::copy(it, endIt, std::back_inserter(clone.data));
+        std::copy(it, endIt, std::back_inserter(clone->data));
 
         SplineSegment lastSegment = getSegment(upperBound.index).subdivide(upperBound.t).first;
-        clone.addCubicSegment(lastSegment);
+        clone->addCubicSegment(lastSegment);
 
 #ifdef EXTRA_CAREFUL
-        if (clone.data.size() != 3 * (upperBound.index - lowerBound.index + 1) + 1) {
-            g_warning("Spline::cloneSection: wrong clone size: %zu. Indices: %zu and %zu", clone.data.size(),
+        if (clone->data.size() != 3 * (upperBound.index - lowerBound.index + 1) + 1) {
+            g_warning("Spline::cloneSection: wrong clone size: %zu. Indices: %zu and %zu", clone->data.size(),
                       lowerBound.index, upperBound.index);
         }
 #endif
@@ -152,7 +180,10 @@ auto Spline::cloneSection(const Spline::Parameter& lowerBound, const Spline::Par
     }
 }
 
-auto Spline::getBoundingBox() const -> Rectangle<double> {
+auto Spline::getThinBoundingBox() const -> Rectangle<double> {
+    if (data.empty()) {
+        return {0.0, 0.0, 0.0, 0.0};
+    }
     const Point& firstKnot = getFirstKnot();
     Rectangle<double> result{firstKnot.x, firstKnot.y, 0.0, 0.0};
     for (auto&& segment: this->segments()) {
@@ -172,7 +203,7 @@ void Spline::toPoints(std::vector<Point>& points) const {
     points.push_back(data.back());
 }
 
-auto Spline::size() const -> size_t { return data.empty() ? 0 : (data.size() - 1) / 3; }
+auto Spline::nbSegments() const -> size_t { return data.empty() ? 0 : (data.size() - 1) / 3; }
 
 void Spline::resize(size_t n) {
     n *= 3;
@@ -182,14 +213,7 @@ void Spline::resize(size_t n) {
     }
 }
 
-void Spline::move(double dx, double dy) {
-    for (auto& p: data) {
-        p.x += dx;
-        p.y += dy;
-    }
-}
-
-auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle) const -> std::vector<Spline::Parameter> {
+auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle) const -> std::vector<Parameter> {
     if (data.empty()) {
         return {};
     }
@@ -215,7 +239,7 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle) const ->
         index++;
     }
     if (data.back().isInside(rectangle)) {
-        size_t n = data.size() >= 4 ? size() - 1 : 0;
+        size_t n = data.size() >= 4 ? nbSegments() - 1 : 0;
         result.emplace_back(n, 1.0);
     }
     /**
@@ -232,7 +256,7 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle) const ->
 }
 
 auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t firstIndex, size_t lastIndex) const
-        -> std::vector<Spline::Parameter> {
+        -> std::vector<Parameter> {
 
 #ifdef EXTRA_CAREFUL
     std::stringstream ss;
@@ -367,29 +391,6 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
     return result;
 }
 
-void Spline::debugPrint() const {
-    /**
-     * 3D svg-like dump of the spline
-     */
-    //     g_message("Spline %zu", (uint64_t)this);
-    //     if (!this->data.empty()) {
-    //         const Point& firstKnot = data.front();
-    //         g_message("M %f %f %f", firstKnot.x, firstKnot.y, firstKnot.z);
-    //         for (auto&& seg: *this) {
-    //             g_message("C %f %f %f, %f %f %f, %f %f %f", seg.firstControlPoint.x, seg.firstControlPoint.y,
-    //                       seg.firstControlPoint.z, seg.secondControlPoint.x, seg.secondControlPoint.y,
-    //                       seg.secondControlPoint.z, seg.secondKnot.x, seg.secondKnot.y, seg.secondKnot.z);
-    //         }
-    //     }
-    if (!this->data.empty()) {
-        const Point& firstKnot = data.front();
-        for (auto&& seg: this->segments()) {
-            printf("%f ; %f ; %f ; %f\n%f ; %f ; %f ; %f\n\n", seg.firstKnot.x, seg.firstControlPoint.x,
-                   seg.secondControlPoint.x, seg.secondKnot.x, seg.firstKnot.y, seg.firstControlPoint.y,
-                   seg.secondControlPoint.y, seg.secondKnot.y);
-        }
-    }
-}
 
 /**
  * Catmull-Rom interpolation
@@ -518,7 +519,7 @@ Spline::SchneiderApproximater::SchneiderApproximater(const std::vector<Point>& p
 
 void Spline::SchneiderApproximater::printStats() {
     size_t nbPoints = points.size();
-    size_t nbSegments = spline.size();
+    size_t nbSegments = spline.nbSegments();
     totalNbSegments += nbSegments;
     totalNbPoints += nbPoints;
     g_message("Schneider: %3zu pts => %3zu segs. Total %4zu pts => %4zu segs (~ %4zu pts)", nbPoints, nbSegments,

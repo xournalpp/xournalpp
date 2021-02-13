@@ -18,18 +18,13 @@
 
 #pragma once
 
-#include <list>
+#include "gtk/gtk.h"
 
-#include <gtk/gtk.h>
-
-#include "Element.h"
 #include "MathVect.h"
-#include "Point.h"
+#include "Path.h"
 #include "SplineSegment.h"
-#include "UnionOfIntervals.h"
 
-#define EXTRA_CAREFUL
-
+class ObjectInputStream;
 
 /**
  * @brief A class to handle splines
@@ -41,10 +36,17 @@
  *
  * Iterators of type SplineSegment are implemented, allowing easy and efficient loops over the segments of the spline
  */
-class Spline {
+class Spline: public Path {
 public:
     Spline() = default;
-    Spline& operator=(const Spline& spline) = default;
+    Spline(const Spline&) = default;
+    Spline(Spline&&) = default;
+    virtual ~Spline() override = default;
+
+    Spline& operator=(const Spline&) = default;
+    Spline& operator=(const std::vector<Point>& pts);
+
+    Type getType() const override { return SPLINE; }
 
     /**
      * @brief Create a spline with first knot firstKnot
@@ -64,6 +66,18 @@ public:
      * @param segment The single segment
      */
     Spline(const SplineSegment& segment);
+
+    /**
+     * @brief Read the spline from a stream
+     * @param in The input stream
+     */
+    Spline(ObjectInputStream& in);
+
+    /**
+     * @brief Serialize the spline
+     * @param out The output stream to serialize to
+     */
+    void serialize(ObjectOutputStream& out) const override;
 
     /**
      * @brief Iteratable adaptor for segment-based iterations (e.g. for(auto&& segment: spline.segments()) {})
@@ -86,24 +100,6 @@ public:
      * Warning, the returned adaptor will be invalidated if something is added or removed from this->data
      */
     SegmentIteratable<const SplineSegment, const Point> segments() const;
-
-    /**
-     * @brief Type for parameters of points on a spline.
-     * Similar to std::pair<size_t, double>, but with named variables
-     */
-    struct Parameter {
-        Parameter(size_t index, double t): index(index), t(t) {}
-        ~Parameter() = default;
-        bool operator==(const Parameter& p) const { return index == p.index && t == p.t; };
-        bool operator!=(const Parameter& p) const { return !(*this == p); };
-        bool operator<(const Parameter& p) const { return index < p.index || (index == p.index && t < p.t); };
-        bool operator>(const Parameter& p) const { return index > p.index || (index == p.index && t > p.t); };
-        bool operator<=(const Parameter& p) const { return index < p.index || (index == p.index && t <= p.t); };
-        bool operator>=(const Parameter& p) const { return index > p.index || (index == p.index && t >= p.t); };
-
-        size_t index;
-        double t;
-    };
 
     /**
      * @brief Add a line segment
@@ -149,16 +145,16 @@ public:
     void setFirstKnot(const Point& p);
 
     /**
-     * @brief Get the first knot
+     * @brief Get the first knot of the spline. Assume the spline data is not empty!
      * @return The first knot
      */
-    inline const Point& getFirstKnot() const { return data.front(); }
+    const Point& getFirstKnot() const;
 
     /**
-     * @brief Get the last knot
+     * @brief Get the last knot of the spline. Assume the spline data is not empty!
      * @return The last knot
      */
-    inline const Point& getLastKnot() const { return data.back(); }
+    const Point& getLastKnot() const;
 
     /**
      * @brief Get a segment
@@ -172,7 +168,13 @@ public:
      * @param parameter The point's parameter
      * @return The point
      */
-    Point getPoint(Parameter parameter) const;
+    Point getPoint(const Parameter& parameter) const override;
+
+    /**
+     * @brief Clone the path
+     * @return The clone
+     */
+    std::unique_ptr<Path> clone() const override;
 
     /**
      * @brief Clone the section of the spline between the given parameters
@@ -180,13 +182,13 @@ public:
      * @param upperBound End of the cloned spline
      * @return The clone
      */
-    Spline cloneSection(const Parameter& lowerBound, const Parameter& upperBound) const;
+    std::unique_ptr<Path> cloneSection(const Parameter& lowerBound, const Parameter& upperBound) const override;
 
     /**
-     * @brief Compute the smallest box containing the spline
-     * @return The bounding box
+     * @brief Compute the smallest box containing the spline. No width taken into account
+     * @return The thin bounding box
      */
-    Rectangle<double> getBoundingBox() const;
+    Rectangle<double> getThinBoundingBox() const override;
 
     /**
      * @brief Convert the spline to points and fill the given vector
@@ -198,9 +200,9 @@ public:
      * @brief Get the number of spline segments
      * @return The number of spline segments
      *
-     * Nb: When size() == 0, the spline's first knot may or may not be set
+     * Nb: When nbSegments() == 0, the spline's first knot may or may not be set
      */
-    size_t size() const;
+    size_t nbSegments() const override;
 
     /**
      * @brief If n < size(), resize the spline to n segments
@@ -208,14 +210,7 @@ public:
      *
      * Nb: resize(0) will not erase the first knot.
      */
-    void resize(size_t n);
-
-    /**
-     * @brief Move (translate) the spline
-     * @param dx Shift in the x coordinate
-     * @param dy Shift in the y coordinate
-     */
-    void move(double dx, double dy);
+    void resize(size_t n) override;
 
     /**
      * @brief Find the parameters corresponding to the points where the spline crosses in or out of the given rectangle
@@ -240,19 +235,6 @@ public:
      */
     std::vector<Parameter> intersectWithRectangle(const Rectangle<double>& rectangle, size_t firstIndex,
                                                   size_t lastIndex) const;
-
-    [[maybe_unused]] void debugPrint() const;
-
-private:
-    /**
-     * @brief The data: stores knots and control points
-     */
-    std::vector<Point> data;
-
-    static bool isPointOnBoundary(const Point& p, const Rectangle<double> r) {
-        return ((p.x == r.x || p.x == r.x + r.width) && p.y >= r.y && p.y <= r.y + r.height) ||
-               ((p.y == r.y || p.y == r.y + r.height) && p.x >= r.x && p.x <= r.x + r.width);
-    }
 
     /**
      * Static material to generate splines:

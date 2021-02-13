@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <cmath>
+
 #include "BaseStrokeHandler.h"
 
 class EllipseHandler: public BaseStrokeHandler {
@@ -20,9 +22,16 @@ public:
     virtual ~EllipseHandler();
 
 private:
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    void createPath(const Point& p, bool snapToGrid) override;
+    const Path& getPath() const override;
+    virtual void drawShape(Point& currentPoint, const PositionInputData& pos) override;
 
-private:
-    Point startPoint;
-    bool started = false;
+protected:
+    std::shared_ptr<Spline> path;
+
+    /**
+     * Length of the velocity vectors of a spline segment approximating a quarter of a (unit) circle
+     * With this length, the error (the max distance between the spline and the circle) is smaller than 3e-4
+     */
+    static constexpr double TANGENT_LENGTH = (M_SQRT2 - 1.0) * 4.0 / 3.0;
 };

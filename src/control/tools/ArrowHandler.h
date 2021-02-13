@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "BaseStrokeHandler.h"
+#include "PLShapeHandler.h"
 
-class ArrowHandler: public BaseStrokeHandler {
+class ArrowHandler: public PLShapeHandler {
 public:
     ArrowHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
     virtual ~ArrowHandler();

@@ -18,6 +18,8 @@
 #include "InputHandler.h"
 #include "SnapToGridInputHandler.h"
 
+class Path;
+
 enum DIRSET_MODIFIERS { NONE = 0, SET = 1, SHIFT = 1 << 1, CONTROL = 1 << 2 };
 
 
@@ -38,6 +40,8 @@ public:
     virtual bool onKeyEvent(GdkEventKey* event);
 
 private:
+    virtual void createPath(const Point& p, bool snapToGrip) = 0;
+    virtual const Path& getPath() const = 0;
     virtual void drawShape(Point& currentPoint, const PositionInputData& pos) = 0;
     DIRSET_MODIFIERS drawModifierFixed = NONE;
     int lastCursor = -1;  // avoid same setCursor
@@ -59,8 +63,10 @@ protected:
 protected:
     DocumentView view;
     Point currPoint;
-    Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid. See startPoint defined in
-                            // derived classes such as CircleHandler.
+
+    Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.
+    Point startPoint;       // Snapped to grid
+
     bool modShift = false;
     bool modControl = false;
     SnapToGridInputHandler snappingHandler;

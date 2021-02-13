@@ -42,7 +42,7 @@ void DocumentView::applyColor(cairo_t* cr, Color c, uint8_t alpha) {
 
 void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource,
                               bool noAlpha) const {
-    if (s->getPointCount() < 2) {
+    if (s->getPath().getType() == Path::PIECEWISE_LINEAR && s->getPointCount() < 2) {
         // Should not happen
         g_warning("DocumentView::drawStroke empty stroke...");
         return;

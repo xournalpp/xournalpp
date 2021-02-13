@@ -11,19 +11,24 @@
 
 #pragma once
 
+#include <optional>
+
+/**
+ * @brief A templated class for (half open) intervals (a,b]
+ */
 template <class T>
 class Interval final {
 public:
     Interval() = default;
     /**
-     * @brief Initialize the interval to [min,max]
+     * @brief Initialize the interval to (min,max]
      * @param min the lower bound
      * @param max the upper bound
      */
     Interval(const T& min, const T& max): min(min), max(max) {}
 
     /**
-     * @brief Get the interval [a,b] or [b,a], depending on which is greater
+     * @brief Get the interval (a,b] or (b,a], depending on which is greater
      * @param a One bound
      * @param b The other bound
      * @return The interval
@@ -49,6 +54,31 @@ public:
         } else {
             min = std::min(min, t);
         }
+    }
+
+    /**
+     * @brief Test if this interval contains a value
+     * @param t The value
+     * @return true if t lies in *this, false otherwise
+     */
+    [[maybe_unused]] bool contains(const T& t) const { return t > min && t <= max; }
+
+    /**
+     * @brief Test if this interval is contained in another
+     * @param other The other interval
+     * @return true if *this lies inside other, false otherwise
+     */
+    [[maybe_unused]] bool isContainedIn(const Interval& other) const { return min >= other.min && max <= other.max; }
+
+    /**
+     * @brief Test if this interval intersects another
+     * @param other The other interval
+     * @return true if *this and other intersect, false otherwise
+     */
+    [[maybe_unused]] std::optional<Interval<T>> intersect(const Interval& other) const {
+        double newMin = std::max(min, other.min);
+        double newMax = std::min(max, other.max);
+        return (newMin < newMax) ? std::optional(Interval(newMin, newMax)) : std::nullopt;
     }
 
     /**

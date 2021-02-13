@@ -119,9 +119,6 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     bool usePressure = ev.pressure != Point::NO_PRESSURE;
     if (usePressure) {
         C.z = ev.pressure * stroke->getWidth();
-        double coeff = 0.5 * normBC + distance;  // Very rough estimation of the spline's length
-        B.z = (coeff * A.z + normAB * C.z) / (normAB + coeff);
-        stroke->setLastPressure(B.z);
     }
 
     // Quadratic control point

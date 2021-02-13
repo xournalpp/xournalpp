@@ -11,21 +11,13 @@
 
 #pragma once
 
-#include <list>
+// #include <list>
 
 #include <gtk/gtk.h>
 
-#include "Element.h"
+// #include "Element.h"
 #include "MathVect.h"
 #include "Point.h"
-
-
-/**
- * @brief Move (translate) the segment
- * @param dx Shift in the X coordinate
- * @param dy Shift in the Y coordinate
- */
-//     void move(double dx, double dy);
 
 /**
  * @brief A class to handle splines segments
@@ -212,6 +204,8 @@ private:
     static constexpr double FLATNESS_TOLERANCE = 1.0001;
     static constexpr double MIN_KNOT_DISTANCE = 0.3;
     static constexpr double MAX_WIDTH_CHANGE = 0.1;
+
+    static constexpr double SQRT3 = 1.7320508075688772935274463415058723669428;
 
     /**
      * @brief Compute the roots of the polynomial equation a * t^2 + 2 * b * t + c

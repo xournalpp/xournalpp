@@ -7,7 +7,7 @@
 #include "undo/InsertUndoAction.h"
 
 RulerHandler::RulerHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
-        BaseStrokeHandler(xournal, redrawable, page) {}
+        PLShapeHandler(xournal, redrawable, page) {}
 
 RulerHandler::~RulerHandler() = default;
 
@@ -19,13 +19,11 @@ void RulerHandler::drawShape(Point& currentPoint, const PositionInputData& pos) 
      */
     bool altDown = pos.isAltDown();
 
-    Point firstPoint = snappingHandler.snapToGrid(stroke->getPoint(0), altDown);
-    stroke->setFirstPoint(firstPoint.x, firstPoint.y);
+    Point firstPoint = snappingHandler.snapToGrid(path->getFirstKnot(), altDown);
+    path->setFirstPoint(firstPoint);
 
-    if (stroke->getPointCount() < 2) {
-        stroke->addPoint(currentPoint);
-    } else {
-        Point secondPoint = snappingHandler.snap(currentPoint, firstPoint, altDown);
-        stroke->setLastPoint(secondPoint.x, secondPoint.y);
-    }
+    path->resize(0);  // Remove every segment. Keep the starting point
+
+    Point secondPoint = snappingHandler.snap(currentPoint, firstPoint, altDown);
+    path->addLineSegmentTo(secondPoint);
 }

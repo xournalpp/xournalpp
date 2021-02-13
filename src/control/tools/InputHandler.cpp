@@ -32,7 +32,7 @@ void InputHandler::resetShapeRecognizer() {
     // Does nothing here. Implemented in the extending classes
 }
 
-void InputHandler::createStroke(Point p) {
+void InputHandler::createStroke() {
     ToolHandler* h = xournal->getControl()->getToolHandler();
 
     stroke = new Stroke();
@@ -43,9 +43,6 @@ void InputHandler::createStroke(Point p) {
 
     if (h->getToolType() == TOOL_PEN) {
         stroke->setToolType(STROKE_TOOL_PEN);
-        if (p.z != Point::NO_PRESSURE) {
-            p.z *= stroke->getWidth();
-        }
 
         if (xournal->getControl()->getAudioController()->isRecording()) {
             string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
@@ -60,8 +57,6 @@ void InputHandler::createStroke(Point p) {
         stroke->setToolType(STROKE_TOOL_ERASER);
         stroke->setColor(0xffffffU);
     }
-
-    stroke->addPoint(p);
 }
 
 auto InputHandler::validMotion(Point p, Point q) -> bool {
