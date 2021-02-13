@@ -47,8 +47,15 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPag
 
     contstruct(undo, view, view->getPage());
 
+    // Construct the insert order
+    std::vector<std::pair<Element*, Layer::ElementIndex>> order;
     for (Element* e: selection->selectedElements) {
-        addElement(e, this->sourceLayer->indexOf(e));
+        auto i = std::make_pair(e, this->sourceLayer->indexOf(e));
+        order.insert(std::upper_bound(order.begin(), order.end(), i, EditSelectionContents::insertOrderCmp), i);
+    }
+
+    for (const auto& [e, i]: order) {
+        this->addElement(e, i);
         this->sourceLayer->removeElement(e, false);
     }
 

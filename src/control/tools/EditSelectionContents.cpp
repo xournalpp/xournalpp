@@ -56,11 +56,9 @@ EditSelectionContents::~EditSelectionContents() {
 void EditSelectionContents::addElement(Element* e, Layer::ElementIndex order) {
     g_assert(this->selected.size() == this->insertOrder.size());
     this->selected.emplace_back(e);
-    if (order == Layer::InvalidElementIndex) {
-        this->insertOrder.emplace_back(e, order);
-    } else {
-        this->insertOrder.emplace_front(e, order);
-    }
+    auto item = std::make_pair(e, order);
+    this->insertOrder.insert(std::upper_bound(this->insertOrder.begin(), this->insertOrder.end(), item, insertOrderCmp),
+                             item);
 }
 
 void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, Layer::ElementIndex>> newInsertOrder) {

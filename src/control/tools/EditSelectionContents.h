@@ -147,6 +147,12 @@ public:
 
     UndoAction* copySelection(PageRef page, XojPageView* view, double x, double y);
 
+    const static struct {
+        bool operator()(std::pair<Element*, Layer::ElementIndex> p1, std::pair<Element*, Layer::ElementIndex> p2) {
+            return p1.second < p2.second;
+        }
+    } insertOrderCmp;
+
 public:
     // Serialize interface
     void serialize(ObjectOutputStream& out);
@@ -186,6 +192,8 @@ private:
     /**
      * Mapping of elements in the selection to the indexes from the original selection layer.
      * Defines a insert order over the selection.
+     *
+     * Invariant: the insert order must be sorted by index in ascending order.
      */
     std::deque<std::pair<Element*, Layer::ElementIndex>> insertOrder;
 
