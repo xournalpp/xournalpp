@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 19:41+0000\n"
-"PO-Revision-Date: 2021-02-14 18:26\n"
+"PO-Revision-Date: 2021-02-14 19:22\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -159,7 +159,7 @@ msgstr "Ubah warna"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
-msgstr ""
+msgstr "Ganti nama layer aktif"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
@@ -603,11 +603,11 @@ msgstr "Fonta"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Forward"
-msgstr ""
+msgstr "Maju"
 
 #: ../src/control/XournalMain.cpp:628
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "Dapatkan versi xournalpp"
 
 #: ../src/control/LatexController.cpp:47
 msgid "Global template file does not exist. Please check your settings."
@@ -962,7 +962,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Print"
-msgstr ""
+msgstr "Cetak"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Record Audio / Stop Recording"
@@ -1000,7 +1000,7 @@ msgstr "Item alat {1} dibuang dari Bilah Alat {2} ID {3}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Ganti nama layer"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
