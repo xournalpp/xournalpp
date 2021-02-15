@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 19:41+0000\n"
-"PO-Revision-Date: 2021-02-15 13:08\n"
+"PO-Revision-Date: 2021-02-15 14:15\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1214,7 +1214,7 @@ msgstr "Intercambia la capa actual con la de arriba"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Intercambia la capa actual con la de abajo"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:65
 msgid "Swap the current page with the one above"
