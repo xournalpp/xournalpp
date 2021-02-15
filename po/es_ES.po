@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 19:41+0000\n"
-"PO-Revision-Date: 2021-02-15 14:15\n"
+"PO-Revision-Date: 2021-02-15 15:22\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1276,7 +1276,7 @@ msgstr "No se encontró el PDF de fondo."
 
 #: ../src/control/Control.cpp:2008
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "El archivo que se está cargando tiene una versión del formato más nueva que la que está soportada por esta versión de Xournal++, así que podría no cargarse correctamente. ¿Deseas abrirlo igualmente?"
 
 #: ../src/control/xojfile/LoadHandler.cpp:117
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1304,11 +1304,11 @@ msgstr "Nombre del archivo de registro más reciente: {1}"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:311
 msgid "The new input system must be enabled to change this setting. "
-msgstr ""
+msgstr "El nuevo sistema de entrada debe estar activado para cambiar esta opción. "
 
 #: ../src/gui/dialog/SettingsDialog.cpp:277
 msgid "The touch workaround must be disabled to change this setting. "
-msgstr ""
+msgstr "La solución alternativa para el toque táctil debe estar desactivada para cambiar esta opción. "
 
 #: ../src/control/XournalMain.cpp:154
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
