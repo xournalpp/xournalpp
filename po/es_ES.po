@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 19:41+0000\n"
-"PO-Revision-Date: 2021-02-15 15:22\n"
+"PO-Revision-Date: 2021-02-15 16:21\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1357,7 +1357,7 @@ msgstr "Intentando guardar de emergencia el documento abierto actualmente…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "No se ha podido abrir el archivo global de plantillas en {1}. ¿Existe?"
 
 #: ../src/gui/PageView.cpp:348
 msgid "Unable to play audio recording {1}"
@@ -1365,7 +1365,7 @@ msgstr "No se puede reproducir la grabación de audio {1}"
 
 #: ../src/control/Control.cpp:1244
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "No se ha podido obtener la página del pdf."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 #: ../src/undo/UndoRedoHandler.cpp:203
@@ -1414,7 +1414,7 @@ msgstr "Documento no guardado"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Usa dos dedos para desplazarte/hacer zoom y un dedo para usar la herramienta seleccionada."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Vertical Space"
@@ -1443,7 +1443,7 @@ msgstr "Con fondo PDF"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:288
 msgid "Without the new input system, two-finger gestures will not zoom/pan while drawing. Enable the new input system and disable the touch workaround to change this setting."
-msgstr ""
+msgstr "Con el nuevo sistema de entrada, los gestos con 2 dedos no desplazarán/harán zoom mientras dibujes. Activa el nuevo sistema de entrada y desactiva la solución alternativa del toque táctil para cambiar esta opción."
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
@@ -1495,7 +1495,7 @@ msgstr "No hay ninguna página seleccionable de PDF. Se cancela la operación.\n
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Estás usando la rama \"{1}/{2}\". \"Enviar informe de error\" te dirigirá al \"issue tracker\" del repositorio."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1580,7 +1580,7 @@ msgstr "borrador"
 
 #: ../src/control/Control.cpp:1945
 msgid "file: {1}"
-msgstr ""
+msgstr "archivo: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -1689,19 +1689,19 @@ msgstr " %"
 
 #: ../ui/settings.glade:2188
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% mayor que la distancia inicial entre los dos toques."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4550
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:479
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1737,23 +1737,23 @@ msgstr "... Y cuánto tiempo debe haber pasado desde la última carrera.\n\n"
 
 #: ../ui/settings.glade:4534
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1450
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5163
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:2173
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:2818
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
