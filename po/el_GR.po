@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 19:41+0000\n"
-"PO-Revision-Date: 2021-02-09 19:47\n"
+"POT-Creation-Date: 2021-02-16 01:30+0000\n"
+"PO-Revision-Date: 2021-02-16 02:34\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -204,11 +204,11 @@ msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:268
+#: ../src/control/LatexController.cpp:266
 msgid "Could not load LaTeX PDF file"
 msgstr "Δεν ήταν δυνατό να φορτωθεί το αρχείο LaTeX PDF"
 
-#: ../src/control/LatexController.cpp:262
+#: ../src/control/LatexController.cpp:260
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Δεν ήταν δυνατό να φορτωθεί το αρχείο LaTeX PDF: {1}"
 
@@ -566,7 +566,7 @@ msgstr ""
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:52
+#: ../src/control/LatexController.cpp:53
 msgid "Failed to read global template file. Please check your settings."
 msgstr ""
 
@@ -609,11 +609,11 @@ msgstr "Επόμενη σελίδα"
 msgid "Get version of xournalpp"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:47
+#: ../src/control/LatexController.cpp:48
 msgid "Global template file does not exist. Please check your settings."
 msgstr ""
 
-#: ../src/control/LatexController.cpp:58
+#: ../src/control/LatexController.cpp:59
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
@@ -726,7 +726,7 @@ msgstr ""
 msgid "Jump to Page (first Page: 1)"
 msgstr "Μετάβαση στη σελίδα (πρώτη σελίδα: 1)"
 
-#: ../src/control/LatexController.cpp:184
+#: ../src/control/LatexController.cpp:187
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr ""
 
@@ -1278,7 +1278,7 @@ msgstr "Το αρχείο δεν είναι έγκυρο .xopp αρχείο (έ�
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Το αρχείο δεν είναι έγκυρο .xopp αρχείο (Version string κατεστραμμένο): \"{1}\""
 
-#: ../src/control/LatexController.cpp:230
+#: ../src/control/LatexController.cpp:233
 msgid "The formula is empty when rendered or invalid."
 msgstr "Ο τύπος είναι κενός όταν αποδίδεται ή μη έγκυρος."
 
