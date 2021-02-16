@@ -16,6 +16,8 @@
 #include "control/settings/LatexSettings.h"
 #include "gui/GladeGui.h"
 
+class Settings;
+
 class LatexSettingsPanel: public GladeGui {
 public:
     LatexSettingsPanel(GladeSearchpath*);
@@ -35,4 +37,5 @@ private:
 
     GtkToggleButton* cbAutoDepCheck;
     GtkFileChooser* globalTemplateChooser;
+    GtkWidget* sourceViewThemeSelector;
 };
