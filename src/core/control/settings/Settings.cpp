@@ -524,6 +524,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->latexSettings.globalTemplatePath = fs::u8path(v);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.genCmd")) == 0) {
         this->latexSettings.genCmd = reinterpret_cast<char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewThemeId")) == 0) {
+        this->latexSettings.sourceViewThemeId = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("snapRecognizedShapesEnabled")) == 0) {
         this->snapRecognizedShapesEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("restoreLineWidthEnabled")) == 0) {
@@ -990,6 +992,8 @@ void Settings::save() {
     fs::path& p = latexSettings.globalTemplatePath;
     xmlNode = saveProperty("latexSettings.globalTemplatePath", p.empty() ? "" : p.u8string().c_str(), root);
     SAVE_STRING_PROP(latexSettings.genCmd);
+    SAVE_STRING_PROP(latexSettings.genCmd);
+    SAVE_STRING_PROP(latexSettings.sourceViewThemeId);
 
     xmlNodePtr xmlFont = nullptr;
     xmlFont = xmlNewChild(root, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);

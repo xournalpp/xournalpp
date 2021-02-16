@@ -16,13 +16,15 @@
 #include "gui/GladeGui.h"
 #include "model/TexImage.h"
 
+class LatexSettings;
+
 class LatexDialog: public GladeGui {
 public:
     LatexDialog() = delete;
     LatexDialog(const LatexDialog& other) = delete;
     LatexDialog& operator=(const LatexDialog& other) = delete;
-    LatexDialog(GladeSearchpath* gladeSearchPath);
-    ~LatexDialog() override;
+    LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& settings);
+    virtual ~LatexDialog();
 
 public:
     /**
