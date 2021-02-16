@@ -103,6 +103,20 @@ pkg_check_modules (GTK REQUIRED "gtk+-3.0 >= 3.18.9")
 add_definitions (-DGDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_18)
 add_includes_ldflags ("${GTK_LDFLAGS}" "${GTK_INCLUDE_DIRS}")
 
+# GtkSourceView
+# Optional
+pkg_check_modules (GtkSourceView3 "gtksourceview-3.0 >= 3.18.0")
+if (GtkSourceView3_FOUND)
+	add_definitions (-DHAVE_GTK_SOURCEVIEW_LIB -DGTK_SOURCEVIEW_VERSION=3)
+	add_includes_ldflags ("${GtkSourceView3_LDFLAGS}" "${GtkSourceView3_INCLUDE_DIRS}")
+else()
+	pkg_check_modules (GtkSourceView4 "gtksourceview-4 >= 4.0.0")
+	if (GtkSourceView4_FOUND)
+		add_definitions (-DHAVE_GTK_SOURCEVIEW_LIB -DGTK_SOURCEVIEW_VERSION=4)
+		add_includes_ldflags ("${GtkSourceView4_LDFLAGS}" "${GtkSourceView4_INCLUDE_DIRS}")
+	endif()
+endif()
+
 # GThread
 pkg_check_modules (GThread REQUIRED "gthread-2.0 >= 2.4.0")
 add_includes_ldflags ("${GThread_LDFLAGS}" "${GThread_INCLUDE_DIRS}")
