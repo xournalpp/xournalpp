@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkDialog" id="texDialog">
     <property name="name">texDialog</property>
-    <property name="width_request">320</property>
-    <property name="can_focus">False</property>
+    <property name="width-request">320</property>
+    <property name="can-focus">False</property>
     <property name="title" translatable="yes">Insert Latex</property>
-    <property name="resizable">False</property>
-    <property name="window_position">center</property>
-    <property name="icon_name">dialog-information</property>
-    <property name="type_hint">dialog</property>
-    <child>
-      <placeholder/>
-    </child>
+    <property name="window-position">center</property>
+    <property name="icon-name">dialog-information</property>
+    <property name="type-hint">dialog</property>
+    <property name="has-resize-grip">True</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area2">
             <property name="name">dialog-action_area2</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
+            <property name="can-focus">False</property>
+            <property name="layout-style">end</property>
             <child>
               <object class="GtkButton" id="texcancelbutton">
-                <property name="name">texcancelbutton</property>
                 <property name="label">gtk-cancel</property>
+                <property name="name">texcancelbutton</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="use_stock">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="use-stock">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -42,13 +39,13 @@
             </child>
             <child>
               <object class="GtkButton" id="texokbutton">
-                <property name="name">texokbutton</property>
                 <property name="label">gtk-ok</property>
+                <property name="name">texokbutton</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-                <accelerator key="Return" signal="activate"/>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="use-stock">True</property>
+                <accelerator key="Return" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -60,7 +57,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="pack_type">end</property>
+            <property name="pack-type">end</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -68,9 +65,9 @@
           <object class="GtkLabel" id="labelTitle">
             <property name="name">labelTitle</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Enter / edit LaTeX Text</property>
-            <property name="use_markup">True</property>
+            <property name="use-markup">True</property>
             <property name="justify">center</property>
           </object>
           <packing>
@@ -81,15 +78,42 @@
           </packing>
         </child>
         <child>
-          <object class="GtkImage" id="texImage">
-            <property name="name">texImage</property>
+          <object class="GtkPaned">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">True</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkDrawingArea" id="texImage">
+                <property name="height-request">48</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+              </object>
+              <packing>
+                <property name="resize">True</property>
+                <property name="shrink">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="texBoxContainer">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="shadow-type">in</property>
+                <property name="min-content-height">10</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="resize">True</property>
+                <property name="shrink">False</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="padding">12</property>
             <property name="position">2</property>
           </packing>
         </child>
@@ -98,25 +122,13 @@
             <property name="name">texErrorLabel</property>
             <property name="visible">True</property>
             <property name="sensitive">False</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="justify">right</property>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkTextView" id="texView">
-            <property name="name">texView</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">4</property>
+            <property name="position">5</property>
           </packing>
         </child>
       </object>
