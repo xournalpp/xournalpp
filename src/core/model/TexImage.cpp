@@ -35,11 +35,14 @@ auto TexImage::clone() const -> Element* {
     img->snappedBounds = this->snappedBounds;
     img->sizeCalculated = this->sizeCalculated;
 
+    // Clone has a copy of our PDF.
     img->pdf = this->pdf;
     g_object_ref(this->pdf);
 
+    // Load a copy of our data (must be called after
+    // giving the clone a copy of our PDF -- it may change
+    // the PDF we've given it).
     img->loadData(std::string(this->binaryData), nullptr);
-
 
     return img;
 }
