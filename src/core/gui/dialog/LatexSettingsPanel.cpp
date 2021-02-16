@@ -3,7 +3,10 @@
 #include <fstream>
 #include <variant>
 
+#include <gtksourceview/gtksource.h>
+
 #include "control/latex/LatexGenerator.h"
+#include "control/settings/Settings.h"
 #include "util/PathUtil.h"
 #include "util/i18n.h"
 
@@ -17,6 +20,13 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
     g_object_ref(this->globalTemplateChooser);
     g_signal_connect(this->get("latexSettingsTestBtn"), "clicked",
                      G_CALLBACK(+[](GtkWidget*, LatexSettingsPanel* self) { self->checkDeps(); }), this);
+
+    GtkContainer* themeSelectionBoxContainer = GTK_CONTAINER(this->get("bxThemeSelectionContainer"));
+    gtk_label_set_text(GTK_LABEL(this->get("lbSourceviewSettingsDescription")), _("LaTeX editor theme:"));
+    this->sourceViewThemeSelector = gtk_source_style_scheme_chooser_button_new();
+
+    gtk_container_add(themeSelectionBoxContainer, sourceViewThemeSelector);
+    gtk_widget_show_all(GTK_WIDGET(themeSelectionBoxContainer));
 }
 
 LatexSettingsPanel::~LatexSettingsPanel() {
@@ -31,12 +41,25 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
                                       Util::toGFilename(settings.globalTemplatePath).c_str());
     }
     gtk_entry_set_text(GTK_ENTRY(this->get("latexSettingsGenCmd")), settings.genCmd.c_str());
+
+    std::string themeId = settings.sourceViewThemeId;
+    GtkSourceStyleSchemeManager* themeManager = gtk_source_style_scheme_manager_get_default();
+    GtkSourceStyleScheme* theme = gtk_source_style_scheme_manager_get_scheme(themeManager, themeId.c_str());
+
+    if (theme) {
+        gtk_source_style_scheme_chooser_set_style_scheme(GTK_SOURCE_STYLE_SCHEME_CHOOSER(this->sourceViewThemeSelector),
+                                                         theme);
+    }
 }
 
 void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.autoCheckDependencies = gtk_toggle_button_get_active(this->cbAutoDepCheck);
     settings.globalTemplatePath = Util::fromGFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
     settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
+
+    GtkSourceStyleScheme* theme = gtk_source_style_scheme_chooser_get_style_scheme(
+            GTK_SOURCE_STYLE_SCHEME_CHOOSER(this->sourceViewThemeSelector));
+    settings.sourceViewThemeId = gtk_source_style_scheme_get_id(theme);
 }
 
 void LatexSettingsPanel::show(GtkWindow* parent) {}
