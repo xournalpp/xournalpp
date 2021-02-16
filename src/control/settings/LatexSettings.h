@@ -24,4 +24,10 @@ public:
 #else
     std::string genCmd{"pdflatex -halt-on-error -interaction=nonstopmode '{}'"};
 #endif
+
+    /**
+     * LaTeX editor theme. Only used if linked with the GtkSourceView
+     * libaray.
+     */
+    std::string sourceViewThemeId{};
 };
