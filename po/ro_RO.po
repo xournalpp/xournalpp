@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 19:41+0000\n"
-"PO-Revision-Date: 2021-02-09 19:46\n"
+"POT-Creation-Date: 2021-02-16 01:30+0000\n"
+"PO-Revision-Date: 2021-02-16 02:33\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -205,11 +205,11 @@ msgid "Could not create folder: {1}\n"
 msgstr "Nu s-a putut crea directorul: {1}\n"
 "Eșuat cu eroare: {2}"
 
-#: ../src/control/LatexController.cpp:268
+#: ../src/control/LatexController.cpp:266
 msgid "Could not load LaTeX PDF file"
 msgstr "Nu s-a putut încărca fișierul LaTeX PDF"
 
-#: ../src/control/LatexController.cpp:262
+#: ../src/control/LatexController.cpp:260
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Nu s-a putut încărca fișierul LaTeX PDF:{1}"
 
@@ -569,7 +569,7 @@ msgstr "Nu s-a putut găsi programul de generare LaTeX în PATH: {1}"
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:52
+#: ../src/control/LatexController.cpp:53
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Nu s-a putut citi șablonul global. Vă rugăm să verificați setările."
 
@@ -612,11 +612,11 @@ msgstr "Mergi înainte"
 msgid "Get version of xournalpp"
 msgstr "Obține versiunea xournalpp"
 
-#: ../src/control/LatexController.cpp:47
+#: ../src/control/LatexController.cpp:48
 msgid "Global template file does not exist. Please check your settings."
 msgstr ""
 
-#: ../src/control/LatexController.cpp:58
+#: ../src/control/LatexController.cpp:59
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
@@ -729,7 +729,7 @@ msgstr "Grafic izometric"
 msgid "Jump to Page (first Page: 1)"
 msgstr "Salt la pagina (prima pagină: 1)"
 
-#: ../src/control/LatexController.cpp:184
+#: ../src/control/LatexController.cpp:187
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr ""
 
@@ -1283,7 +1283,7 @@ msgstr "Fisierul nu este un fisier .xopp valid (Lipseste Mimetype): \"{1}\""
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Fișierul nu este un fișier .xopp valid (Șirul Versiunii este corupt): \"{1}\""
 
-#: ../src/control/LatexController.cpp:230
+#: ../src/control/LatexController.cpp:233
 msgid "The formula is empty when rendered or invalid."
 msgstr "Formula este goală la randare sau nevalidă."
 
