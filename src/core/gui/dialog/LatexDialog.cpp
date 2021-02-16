@@ -15,6 +15,8 @@
 
 #include <utility>
 
+#include <gtksourceview/gtksource.h>
+
 #include "control/settings/Settings.h"
 
 // Callbacks for gtk to render the dialog's preview.
@@ -27,15 +29,36 @@ extern "C" {
 static void resizePreviewCallback(GtkWidget* widget, GdkRectangle* allocation, gpointer _unused);
 }
 
-LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearchPath, "texdialog.glade", "texDialog") {
+LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& settings):
+        GladeGui(gladeSearchPath, "texdialog.glade", "texDialog") {
     GtkContainer* texBoxContainer = GTK_CONTAINER(get("texBoxContainer"));
-    this->texBox = gtk_text_view_new();
+
+    this->texBox = gtk_source_view_new();
     gtk_container_add(texBoxContainer, this->texBox);
     gtk_text_view_set_editable(GTK_TEXT_VIEW(this->texBox), true);
     gtk_widget_show_all(GTK_WIDGET(texBoxContainer));
 
     this->textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(this->texBox));
     this->texTempRender = get("texImage");
+
+    // We own neither the languageManager, the styleSchemeManager, nor the sourceLanguage.
+    // Do not attempt to free them.
+    GtkSourceStyleSchemeManager* styleSchemeManager = gtk_source_style_scheme_manager_get_default();
+    GtkSourceLanguageManager* lm = gtk_source_language_manager_get_default();
+
+    // Select the TeX highlighting scheme
+    GtkSourceLanguage* lang = gtk_source_language_manager_guess_language(lm, "file.tex", NULL);
+    std::string styleSchemeId = settings.sourceViewThemeId;
+    GtkSourceStyleScheme* styleScheme =
+            gtk_source_style_scheme_manager_get_scheme(styleSchemeManager, styleSchemeId.c_str());
+
+    gtk_source_buffer_set_language(GTK_SOURCE_BUFFER(this->textBuffer), lang);
+    gtk_source_view_set_auto_indent(GTK_SOURCE_VIEW(this->texBox), true);
+    gtk_source_view_set_indent_on_tab(GTK_SOURCE_VIEW(this->texBox), true);
+
+    if (styleScheme) {
+        gtk_source_buffer_set_style_scheme(GTK_SOURCE_BUFFER(this->textBuffer), styleScheme);
+    }
 
     // increase the maximum length to something reasonable.
     // gtk_entry_set_max_length(GTK_TEXT_BUFFER(this->texBox), 500);
