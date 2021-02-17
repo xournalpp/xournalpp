@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 05:57+0000\n"
-"PO-Revision-Date: 2021-02-17 07:46\n"
+"POT-Creation-Date: 2021-02-17 18:58+0000\n"
+"PO-Revision-Date: 2021-02-17 19:09\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -2173,11 +2173,11 @@ msgstr ""
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/main.glade:2628
+#: ../ui/main.glade:2636
 msgid "Duplicate"
 msgstr ""
 
-#: ../ui/main.glade:2665
+#: ../ui/main.glade:2673
 msgid "Edit (not implemented yet)"
 msgstr ""
 
@@ -2274,11 +2274,11 @@ msgstr ""
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2422
+#: ../ui/main.glade:2430
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:2400
+#: ../ui/main.glade:2408
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -2416,11 +2416,11 @@ msgstr ""
 msgid "Insert Latex"
 msgstr ""
 
-#: ../ui/main.glade:2620
+#: ../ui/main.glade:2628
 msgid "Insert Page After"
 msgstr ""
 
-#: ../ui/main.glade:2612
+#: ../ui/main.glade:2620
 msgid "Insert Page Before"
 msgstr ""
 
@@ -2497,11 +2497,11 @@ msgstr ""
 msgid "Mouse+Keyboard Combo"
 msgstr ""
 
-#: ../ui/main.glade:2650
+#: ../ui/main.glade:2658
 msgid "Move Down"
 msgstr ""
 
-#: ../ui/main.glade:2642
+#: ../ui/main.glade:2650
 msgid "Move Up"
 msgstr ""
 
