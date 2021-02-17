@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 05:57+0000\n"
-"PO-Revision-Date: 2021-02-17 06:25\n"
+"POT-Creation-Date: 2021-02-17 18:58+0000\n"
+"PO-Revision-Date: 2021-02-17 19:08\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -2251,11 +2251,11 @@ msgstr "Debuxar área"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Ferramentas de debuxo - Definir modificadores vía dirección de debuxo (experimental)"
 
-#: ../ui/main.glade:2628
+#: ../ui/main.glade:2636
 msgid "Duplicate"
 msgstr "Duplicar"
 
-#: ../ui/main.glade:2665
+#: ../ui/main.glade:2673
 msgid "Edit (not implemented yet)"
 msgstr "Editar (aínda non implementado)"
 
@@ -2352,11 +2352,11 @@ msgstr "En_cher"
 msgid "Fill opacity"
 msgstr "Opacidade de recheo"
 
-#: ../ui/main.glade:2422
+#: ../ui/main.glade:2430
 msgid "Find next occurrence of the search string"
 msgstr "Atopar a seguinte ocorrencia da cadea de busca"
 
-#: ../ui/main.glade:2400
+#: ../ui/main.glade:2408
 msgid "Find previous occurrence of the search string"
 msgstr "Atopar a ocorrencia anterior da cadea de busca"
 
@@ -2496,11 +2496,11 @@ msgstr "Sistema de entrada"
 msgid "Insert Latex"
 msgstr "Inserir latex"
 
-#: ../ui/main.glade:2620
+#: ../ui/main.glade:2628
 msgid "Insert Page After"
 msgstr "Inserir páxina despois"
 
-#: ../ui/main.glade:2612
+#: ../ui/main.glade:2620
 msgid "Insert Page Before"
 msgstr "Inserir páxina antes"
 
@@ -2578,11 +2578,11 @@ msgstr "Botóns do rato"
 msgid "Mouse+Keyboard Combo"
 msgstr "Combinación rato+teclado"
 
-#: ../ui/main.glade:2650
+#: ../ui/main.glade:2658
 msgid "Move Down"
 msgstr "Mover cara abaixo"
 
-#: ../ui/main.glade:2642
+#: ../ui/main.glade:2650
 msgid "Move Up"
 msgstr "Mover cara arriba"
 
