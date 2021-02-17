@@ -257,7 +257,7 @@ auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool {
     this->zoomFitValue = zoom_fit_width;
     fireZoomRangeValueChanged();
     if (this->zoomFitMode && !this->zoomPresentationMode) {
-        this->setZoomFitMode(true);
+        this->zoomFit();
     }
     return true;
 }
@@ -281,7 +281,7 @@ auto ZoomControl::updateZoomPresentationValue(size_t pageNo) -> bool {
 
     this->zoomPresentationValue = zoom_presentation;
     if (this->zoomPresentationMode) {
-        this->setZoomPresentationMode(true);
+        this->zoomPresentation();
     }
     return true;
 }
@@ -351,6 +351,16 @@ void ZoomControl::pageSizeChanged(size_t page) {
 }
 
 void ZoomControl::pageSelected(size_t page) {
-    updateZoomPresentationValue(page);
-    updateZoomFitValue(page);
+    // Todo (fabian): page selected should do nothing here, since Zoom Controls, which page is selected.
+    //               This results in a logical loop
+    if (current_page != page) {
+        this->last_page = this->current_page;
+        this->current_page = page;
+    }
+
+    updateZoomPresentationValue(this->current_page);
+    if (view->isPageVisible(this->last_page, nullptr)) {
+        return;
+    }
+    updateZoomFitValue(this->current_page);
 }
