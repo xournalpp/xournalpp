@@ -3,12 +3,12 @@ Maintainer: Andreas Butti <andreasbutti@gmail.com>
 Section: misc
 Priority: optional
 Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 9), cmake, git, libgtk-3-dev, libpoppler-glib-dev, libxml2-dev, portaudio19-dev, libsndfile-dev, liblua5.3-dev, libzip-dev
+Build-Depends: debhelper (>= 9), cmake, git, libgtk-3-dev, libpoppler-glib-dev, libxml2-dev, portaudio19-dev, libsndfile-dev, liblua5.3-dev, libzip-dev, librsvg2-dev
 Homepage: https://github.com/xournalpp/xournalpp/
 
 Package: xournalpp
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6
+Depends: ${shlibs:Depends}, ${misc:Depends}, libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, librsvg-2.0 (>= 2.40)
 Suggests: texlive-base, texlive-latex-extra
 Description: Xournal++ - Open source hand note-taking program
  Xournal++ is a hand note taking software written in C++ with the target of 
