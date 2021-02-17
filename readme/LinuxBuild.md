@@ -24,26 +24,37 @@ The minimum required CMake version is 3.10, but we recommend to use >=3.15.
 #### For Arch
 ```bash
 sudo pacman -S cmake gtk3 base-devel libxml2 cppunit portaudio libsndfile \
-poppler-glib texlive-bin texlive-pictures gettext libzip lua53 lua53-lgi
+poppler-glib texlive-bin texlive-pictures gettext libzip lua53 lua53-lgi \
+gtksourceview4
 ```
 
-#### For Fedora/CentOS/RHEL:
+#### For Fedora:
 ```bash
 sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
 poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
-librsvg2-devel lua-devel lua-lgi
+librsvg2-devel lua-devel lua-lgi gtksourceview4-devel
 ```
+
+#### For CentOS/RHEL:
+```bash
+sudo dnf install gcc-c++ cmake gtk3-devel libxml2-devel cppunit-devel portaudio-devel libsndfile-devel \
+poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' gettext libzip-devel \
+librsvg2-devel gtksourceview3-devel
+```
+
 
 #### For Ubuntu/Debian and Raspberry Pi OS:
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext lua-lgi
+libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext lua-lgi \
+libgtksourceview-4-dev
 ````
 
 #### For openSUSE:
 ```bash
 sudo zypper install cmake gtk3-devel cppunit-devel portaudio-devel libsndfile-devel \
-texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-lgi
+texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-lgi \
+gtksourceview4-devel
 ```
 
 #### For Solus:
@@ -51,7 +62,7 @@ texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-
 sudo eopkg it -c system.devel
 sudo eopkg it cmake libgtk-3-devel libxml2-devel poppler-devel libzip-devel \
 portaudio-devel libsndfile-devel alsa-lib-devel cppunit-devel lua-devel \
-librsvg-devel gettext
+librsvg-devel gettext libgtksourceview-devel
 ```
 
 ## Compiling
