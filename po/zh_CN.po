@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 05:57+0000\n"
-"PO-Revision-Date: 2021-02-17 06:25\n"
+"POT-Creation-Date: 2021-02-17 18:58+0000\n"
+"PO-Revision-Date: 2021-02-17 19:08\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2252,11 +2252,11 @@ msgstr "绘图区域"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "绘图工具 - 依据笔划方向调整设置【实验性】"
 
-#: ../ui/main.glade:2628
+#: ../ui/main.glade:2636
 msgid "Duplicate"
 msgstr "重复"
 
-#: ../ui/main.glade:2665
+#: ../ui/main.glade:2673
 msgid "Edit (not implemented yet)"
 msgstr "编辑(尚未实现)"
 
@@ -2353,11 +2353,11 @@ msgstr "填充(_l)"
 msgid "Fill opacity"
 msgstr "透明度填充"
 
-#: ../ui/main.glade:2422
+#: ../ui/main.glade:2430
 msgid "Find next occurrence of the search string"
 msgstr "向下查找搜索字符串"
 
-#: ../ui/main.glade:2400
+#: ../ui/main.glade:2408
 msgid "Find previous occurrence of the search string"
 msgstr "向上查找搜索字符串"
 
@@ -2496,11 +2496,11 @@ msgstr "输入系统"
 msgid "Insert Latex"
 msgstr "插入LaTeX"
 
-#: ../ui/main.glade:2620
+#: ../ui/main.glade:2628
 msgid "Insert Page After"
 msgstr "在此后插入页面"
 
-#: ../ui/main.glade:2612
+#: ../ui/main.glade:2620
 msgid "Insert Page Before"
 msgstr "在此前插入页面"
 
@@ -2578,11 +2578,11 @@ msgstr "鼠标按钮"
 msgid "Mouse+Keyboard Combo"
 msgstr "鼠标+键盘结合"
 
-#: ../ui/main.glade:2650
+#: ../ui/main.glade:2658
 msgid "Move Down"
 msgstr "向下移动"
 
-#: ../ui/main.glade:2642
+#: ../ui/main.glade:2650
 msgid "Move Up"
 msgstr "向上移动"
 
