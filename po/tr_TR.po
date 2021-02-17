@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-16 21:32+0000\n"
-"PO-Revision-Date: 2021-02-16 22:27\n"
+"POT-Creation-Date: 2021-02-17 05:57+0000\n"
+"PO-Revision-Date: 2021-02-17 06:24\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Şimdi bu dosya olmadan çalıştırma denenecek."
 
-#: ../src/gui/MainWindow.cpp:708
+#: ../src/gui/MainWindow.cpp:743
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " of {1}{2}"
@@ -254,13 +254,13 @@ msgstr "Ek açılamadı: {1}. Hata mesajı: {2}"
 msgid "Could not open file: \"{1}\""
 msgstr "Dosya açılamadı: \"{1}\""
 
-#: ../src/gui/MainWindow.cpp:86
+#: ../src/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Özel toolbar.ini dosyası ayrıştırılamadı: {1}\n"
 "Araç çubukları kullanılamayacak"
 
-#: ../src/gui/MainWindow.cpp:77
+#: ../src/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Genel toolbar.ini dosyası ayrıştırılamadı: {1}\n"
@@ -889,7 +889,7 @@ msgstr "Turuncu"
 msgid "PDF Export"
 msgstr "Pdf Olarak Dışa Aktar"
 
-#: ../src/gui/MainWindow.cpp:706
+#: ../src/gui/MainWindow.cpp:741
 msgid "PDF Page {1}"
 msgstr "PDF Sayfası {1}"
 
@@ -2210,11 +2210,11 @@ msgstr "Çizim Alanı"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Çizim Araçları - Değiştiricileri Çizim Yönüne Göre Ayarla (Deneysel)"
 
-#: ../ui/main.glade:2617
+#: ../ui/main.glade:2628
 msgid "Duplicate"
 msgstr "Çoğalt"
 
-#: ../ui/main.glade:2654
+#: ../ui/main.glade:2665
 msgid "Edit (not implemented yet)"
 msgstr "Düzenle (henüz uygulanmadı)"
 
@@ -2311,11 +2311,11 @@ msgstr "Do_ldur"
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2411
+#: ../ui/main.glade:2422
 msgid "Find next occurrence of the search string"
 msgstr "Arama dizesinin bir sonraki tekrarlamasını bul"
 
-#: ../ui/main.glade:2389
+#: ../ui/main.glade:2400
 msgid "Find previous occurrence of the search string"
 msgstr "Arama dizesinin bir önceki tekrarlamasını bul"
 
@@ -2455,11 +2455,11 @@ msgstr "Giriş Sistemi"
 msgid "Insert Latex"
 msgstr "Lateks Ekle"
 
-#: ../ui/main.glade:2609
+#: ../ui/main.glade:2620
 msgid "Insert Page After"
 msgstr "Sonra Sayfa Ekle"
 
-#: ../ui/main.glade:2601
+#: ../ui/main.glade:2612
 msgid "Insert Page Before"
 msgstr "Önce Sayfa Ekle"
 
@@ -2536,11 +2536,11 @@ msgstr "Fare Düğmeleri"
 msgid "Mouse+Keyboard Combo"
 msgstr "Fare + Klavye Kombinasyonu"
 
-#: ../ui/main.glade:2639
+#: ../ui/main.glade:2650
 msgid "Move Down"
 msgstr "Aşağı Taşı"
 
-#: ../ui/main.glade:2631
+#: ../ui/main.glade:2642
 msgid "Move Up"
 msgstr "Yukarı Taşı"
 
