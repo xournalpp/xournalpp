@@ -43,6 +43,7 @@ BuildRequires:  pkgconfig(poppler-glib) >= 0.41.0
 BuildRequires:  pkgconfig(portaudiocpp) >= 12
 BuildRequires:  pkgconfig(sndfile) >= 1.0.25
 BuildRequires:  pkgconfig(zlib)
+BuildRequires:  pkgconfig(gtksourceview-4) >= 4.0
 Recommends:     texlive-scheme-basic
 Recommends:     texlive-dvipng
 Recommends:     texlive-standalone
