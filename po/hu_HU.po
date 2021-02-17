@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-16 21:32+0000\n"
-"PO-Revision-Date: 2021-02-16 22:27\n"
+"POT-Creation-Date: 2021-02-17 05:57+0000\n"
+"PO-Revision-Date: 2021-02-17 07:46\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Indulási kísérlet e fájl nélkül."
 
-#: ../src/gui/MainWindow.cpp:708
+#: ../src/gui/MainWindow.cpp:743
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr ""
@@ -253,13 +253,13 @@ msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: {2}"
 msgid "Could not open file: \"{1}\""
 msgstr "Nem sikerült megnyitni a \"{1}\" fájlt"
 
-#: ../src/gui/MainWindow.cpp:86
+#: ../src/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Nem sikerült beolvasni az egyedi toolbar.ini fájlt: {1}\n"
 "Az eszköztár nem lesz elérhető"
 
-#: ../src/gui/MainWindow.cpp:77
+#: ../src/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Nem sikerült beolvasni az egyedi toolbar.ini fájlt: {1}\n"
@@ -886,7 +886,7 @@ msgstr "Narancssárga"
 msgid "PDF Export"
 msgstr "PDF exportálás"
 
-#: ../src/gui/MainWindow.cpp:706
+#: ../src/gui/MainWindow.cpp:741
 msgid "PDF Page {1}"
 msgstr "PDF oldal {1}"
 
@@ -2193,11 +2193,11 @@ msgstr ""
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/main.glade:2617
+#: ../ui/main.glade:2628
 msgid "Duplicate"
 msgstr ""
 
-#: ../ui/main.glade:2654
+#: ../ui/main.glade:2665
 msgid "Edit (not implemented yet)"
 msgstr ""
 
@@ -2294,11 +2294,11 @@ msgstr ""
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2411
+#: ../ui/main.glade:2422
 msgid "Find next occurrence of the search string"
 msgstr "Keresett szöveg következő előfordulása"
 
-#: ../ui/main.glade:2389
+#: ../ui/main.glade:2400
 msgid "Find previous occurrence of the search string"
 msgstr "Keresett szöveg előző előfordulása"
 
@@ -2436,11 +2436,11 @@ msgstr ""
 msgid "Insert Latex"
 msgstr ""
 
-#: ../ui/main.glade:2609
+#: ../ui/main.glade:2620
 msgid "Insert Page After"
 msgstr ""
 
-#: ../ui/main.glade:2601
+#: ../ui/main.glade:2612
 msgid "Insert Page Before"
 msgstr ""
 
@@ -2517,11 +2517,11 @@ msgstr "Egérgombok"
 msgid "Mouse+Keyboard Combo"
 msgstr ""
 
-#: ../ui/main.glade:2639
+#: ../ui/main.glade:2650
 msgid "Move Down"
 msgstr "Mozgatás le"
 
-#: ../ui/main.glade:2631
+#: ../ui/main.glade:2642
 msgid "Move Up"
 msgstr "Mozgatás fel"
 
