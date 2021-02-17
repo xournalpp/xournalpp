@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-16 21:32+0000\n"
-"PO-Revision-Date: 2021-02-16 22:27\n"
+"POT-Creation-Date: 2021-02-17 18:58+0000\n"
+"PO-Revision-Date: 2021-02-17 19:09\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Попытаемся запустить без этого файла."
 
-#: ../src/gui/MainWindow.cpp:708
+#: ../src/gui/MainWindow.cpp:743
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " из {1}{2}"
@@ -253,13 +253,13 @@ msgstr "Не удалось открыть вложение: {1}. Сообщен
 msgid "Could not open file: \"{1}\""
 msgstr "Не удалось открыть файл: «{1}»"
 
-#: ../src/gui/MainWindow.cpp:86
+#: ../src/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Не удалось разобрать пользовательский файл toolbar.ini: {1}\n"
 "Панели инструментов не будут доступны"
 
-#: ../src/gui/MainWindow.cpp:77
+#: ../src/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Не удалось разобрать файл toolbar.ini: {1}\n"
@@ -886,7 +886,7 @@ msgstr "Оранжевый"
 msgid "PDF Export"
 msgstr "Экспорт в PDF"
 
-#: ../src/gui/MainWindow.cpp:706
+#: ../src/gui/MainWindow.cpp:741
 msgid "PDF Page {1}"
 msgstr "PDF страница {1}"
 
@@ -2207,11 +2207,11 @@ msgstr "Область рисования"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Инструменты рисования - настройка параметров с помощью направления рисования (экспериментально)"
 
-#: ../ui/main.glade:2617
+#: ../ui/main.glade:2636
 msgid "Duplicate"
 msgstr "Дублировать"
 
-#: ../ui/main.glade:2654
+#: ../ui/main.glade:2673
 msgid "Edit (not implemented yet)"
 msgstr "Редактировать (пока не реализовано)"
 
@@ -2308,11 +2308,11 @@ msgstr "_Заливка"
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2411
+#: ../ui/main.glade:2430
 msgid "Find next occurrence of the search string"
 msgstr "Найти следующее вхождение искомой строки"
 
-#: ../ui/main.glade:2389
+#: ../ui/main.glade:2408
 msgid "Find previous occurrence of the search string"
 msgstr "Найти предыдущее вхождение искомой строки"
 
@@ -2452,11 +2452,11 @@ msgstr "Система ввода"
 msgid "Insert Latex"
 msgstr "Вставить Latex"
 
-#: ../ui/main.glade:2609
+#: ../ui/main.glade:2628
 msgid "Insert Page After"
 msgstr "Вставить страницу после"
 
-#: ../ui/main.glade:2601
+#: ../ui/main.glade:2620
 msgid "Insert Page Before"
 msgstr "Вставить страницу перед"
 
@@ -2533,11 +2533,11 @@ msgstr "Кнопки мыши"
 msgid "Mouse+Keyboard Combo"
 msgstr "Клавиатура+мышь"
 
-#: ../ui/main.glade:2639
+#: ../ui/main.glade:2658
 msgid "Move Down"
 msgstr "Переместить вниз"
 
-#: ../ui/main.glade:2631
+#: ../ui/main.glade:2650
 msgid "Move Up"
 msgstr "Переместить вверх"
 
