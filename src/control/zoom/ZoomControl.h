@@ -236,4 +236,7 @@ private:
      * depends on dpi (REAL_PERCENTAGE_VALUE * zoom100Value)
      */
     double zoomMin = DEFAULT_ZOOM_MIN;
+
+    size_t current_page = static_cast<size_t>(-1);
+    size_t last_page = static_cast<size_t>(-1);
 };
