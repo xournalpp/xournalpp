@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-16 21:32+0000\n"
-"PO-Revision-Date: 2021-02-16 22:27\n"
+"POT-Creation-Date: 2021-02-17 05:57+0000\n"
+"PO-Revision-Date: 2021-02-17 07:46\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Se intentará ejecutar sin este archivo."
 
-#: ../src/gui/MainWindow.cpp:708
+#: ../src/gui/MainWindow.cpp:743
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " de {1}{2}"
@@ -254,13 +254,13 @@ msgstr "No se pudo abrir el archivo adjunto: {1}. Mensaje de error: {2}"
 msgid "Could not open file: \"{1}\""
 msgstr "No se pudo abrir el archivo: «{1}»"
 
-#: ../src/gui/MainWindow.cpp:86
+#: ../src/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "No se pudo procesar el archivo personalizado «toolbar.ini»: {1}\n"
 "No estarán disponibles las barras de herramientas"
 
-#: ../src/gui/MainWindow.cpp:77
+#: ../src/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "No se pudo procesar el archivo general «toolbar.ini»: {1}\n"
@@ -898,7 +898,7 @@ msgstr "Naranja"
 msgid "PDF Export"
 msgstr "Exportación a PDF"
 
-#: ../src/gui/MainWindow.cpp:706
+#: ../src/gui/MainWindow.cpp:741
 msgid "PDF Page {1}"
 msgstr "Página de PDF {1}"
 
@@ -2223,11 +2223,11 @@ msgstr "Área de dibujo"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Herramientas de dibujo - Establecer modificadores por Dirección de dibujo (Experimental)"
 
-#: ../ui/main.glade:2617
+#: ../ui/main.glade:2628
 msgid "Duplicate"
 msgstr "Duplicar"
 
-#: ../ui/main.glade:2654
+#: ../ui/main.glade:2665
 msgid "Edit (not implemented yet)"
 msgstr "Editar (aún no implementado)"
 
@@ -2324,11 +2324,11 @@ msgstr "Re_llenar"
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2411
+#: ../ui/main.glade:2422
 msgid "Find next occurrence of the search string"
 msgstr "Encontrar la ocurrencia siguiente del término de búsqueda"
 
-#: ../ui/main.glade:2389
+#: ../ui/main.glade:2400
 msgid "Find previous occurrence of the search string"
 msgstr "Encontrar la ocurrencia anterior del término de búsqueda"
 
@@ -2468,11 +2468,11 @@ msgstr "Sistema de entrada"
 msgid "Insert Latex"
 msgstr "Insertar LaTeX"
 
-#: ../ui/main.glade:2609
+#: ../ui/main.glade:2620
 msgid "Insert Page After"
 msgstr "Insertar página después"
 
-#: ../ui/main.glade:2601
+#: ../ui/main.glade:2612
 msgid "Insert Page Before"
 msgstr "Insertar página antes"
 
@@ -2549,11 +2549,11 @@ msgstr "Botones del ratón"
 msgid "Mouse+Keyboard Combo"
 msgstr "Combinación teclado + ratón"
 
-#: ../ui/main.glade:2639
+#: ../ui/main.glade:2650
 msgid "Move Down"
 msgstr "Bajar"
 
-#: ../ui/main.glade:2631
+#: ../ui/main.glade:2642
 msgid "Move Up"
 msgstr "Subir"
 
