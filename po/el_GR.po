@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 05:57+0000\n"
-"PO-Revision-Date: 2021-02-17 07:46\n"
+"POT-Creation-Date: 2021-02-17 18:58+0000\n"
+"PO-Revision-Date: 2021-02-17 19:09\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -2207,11 +2207,11 @@ msgstr "Περιοχή Σχεδιασμού"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Εργαλεία Σχεδιασμού - Ορισμός Χαρακτηριστικών μέσω της Κατεύθυνσης Σχεδιασμού (Πειραματικό)"
 
-#: ../ui/main.glade:2628
+#: ../ui/main.glade:2636
 msgid "Duplicate"
 msgstr "Δημιουργία διπλοτύπου / αντιγράφου"
 
-#: ../ui/main.glade:2665
+#: ../ui/main.glade:2673
 msgid "Edit (not implemented yet)"
 msgstr "Επεξεργασία (μη υλοποιημένο)"
 
@@ -2308,11 +2308,11 @@ msgstr "Γε_μισμα"
 msgid "Fill opacity"
 msgstr ""
 
-#: ../ui/main.glade:2422
+#: ../ui/main.glade:2430
 msgid "Find next occurrence of the search string"
 msgstr "Βρες την επόμενη εμφάνιση της αναζητούμενης συμβολοσειράς"
 
-#: ../ui/main.glade:2400
+#: ../ui/main.glade:2408
 msgid "Find previous occurrence of the search string"
 msgstr "Βρες την προηγούμενη εμφάνιση της αναζητούμενης συμβολοσειράς"
 
@@ -2452,11 +2452,11 @@ msgstr "Σύστημα Εισόδου"
 msgid "Insert Latex"
 msgstr "Εισαγωγή Latex"
 
-#: ../ui/main.glade:2620
+#: ../ui/main.glade:2628
 msgid "Insert Page After"
 msgstr "Εισαγωγή Σελίδας Μετά"
 
-#: ../ui/main.glade:2612
+#: ../ui/main.glade:2620
 msgid "Insert Page Before"
 msgstr "Εισαγωγή Σελίδας Πριν"
 
@@ -2533,11 +2533,11 @@ msgstr "Πλήκτρα Ποντικιού"
 msgid "Mouse+Keyboard Combo"
 msgstr "Ποντίκι+Πληκτρολόγιο combo"
 
-#: ../ui/main.glade:2650
+#: ../ui/main.glade:2658
 msgid "Move Down"
 msgstr "Μετακίνηση προς τα Κάτω"
 
-#: ../ui/main.glade:2642
+#: ../ui/main.glade:2650
 msgid "Move Up"
 msgstr "Μετακίνηση προς τα Επάνω"
 
