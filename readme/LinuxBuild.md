@@ -34,13 +34,7 @@ poppler-glib-devel texlive-scheme-basic texlive-dvipng 'tex(standalone.cls)' get
 librsvg2-devel
 ```
 
-#### For Ubuntu/Debian:
-````bash
-sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
-libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext
-````
-
-#### For Raspberry Pi OS (the same as Ubuntu/Debian with gettext added):
+#### For Ubuntu/Debian and Raspberry Pi OS:
 ````bash
 sudo apt-get install cmake libgtk-3-dev libpoppler-glib-dev portaudio19-dev libsndfile-dev \
 libcppunit-dev dvipng texlive libxml2-dev liblua5.3-dev libzip-dev librsvg2-dev gettext
