@@ -91,6 +91,10 @@ TextEditor::~TextEditor() {
         g_object_unref(this->layout);
         this->layout = nullptr;
     }
+
+    if (this->preeditAttrList) {
+        pango_attr_list_unref(this->preeditAttrList);
+    }
 }
 
 auto TextEditor::getText() -> Text* {
@@ -183,6 +187,15 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
      */
     gtk_im_context_get_preedit_string(context, &str, &attrs, &cursor_pos);
 
+    if (attrs == nullptr) {
+        attrs = pango_attr_list_new();
+    }
+    if (te->preeditAttrList) {
+        pango_attr_list_unref(te->preeditAttrList);
+    }
+    te->preeditAttrList = attrs;
+    attrs = nullptr;
+
     if (str && str[0] && !gtk_text_iter_can_insert(&iter, true)) {
         gtk_widget_error_bell(te->widget);
         goto out;
@@ -198,7 +211,6 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
 
 out:
 
-    pango_attr_list_unref(attrs);
     g_free(str);
 }
 
@@ -960,53 +972,54 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
         string text = this->text->getText();
         int offset = gtk_text_iter_get_offset(&cursorIter);
         int pos = gtk_text_iter_get_line_index(&cursorIter);
+
         for (gtk_text_iter_set_line_index(&cursorIter, 0); gtk_text_iter_backward_line(&cursorIter);) {
             pos += gtk_text_iter_get_bytes_in_line(&cursorIter);
         }
         gtk_text_iter_set_offset(&cursorIter, offset);
-
         string txt = text.substr(0, pos) + preeditString + text.substr(pos);
 
-        PangoAttribute* attrib = pango_attr_underline_new(PANGO_UNDERLINE_SINGLE);
-        PangoAttrList* list = pango_layout_get_attributes(this->layout);
-
-        attrib->start_index = pos;
-        attrib->end_index = pos + preeditString.length();
-
-        if (list == nullptr) {
-            list = pango_attr_list_new();
-            pango_layout_set_attributes(this->layout, list);
-        }
-        pango_attr_list_insert(list, attrib);
-
+        PangoAttrList* attrlist = pango_attr_list_new();
+        PangoAttrList* preedit_attrlist = this->preeditAttrList;
+        pango_attr_list_splice(attrlist, preedit_attrlist, pos, preeditString.length());
+        pango_layout_set_attributes(this->layout, attrlist);
+        pango_attr_list_unref(attrlist);
+        attrlist = nullptr;
         pango_layout_set_text(this->layout, txt.c_str(), txt.length());
     } else {
         string txt = this->text->getText();
         pango_layout_set_text(this->layout, txt.c_str(), txt.length());
-    }
 
-    GtkTextIter start;
-    GtkTextIter end;
-    bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer, &start, &end);
+        GtkTextIter start;
+        GtkTextIter end;
+        bool hasSelection = gtk_text_buffer_get_selection_bounds(this->buffer, &start, &end);
 
-    if (hasSelection) {
-        auto selectionColorU16 = Util::GdkRGBA_to_ColorU16(selectionColor);
-        PangoAttribute* attrib =
-                pango_attr_background_new(selectionColorU16.red, selectionColorU16.green, selectionColorU16.blue);
-        PangoAttrList* list = pango_layout_get_attributes(this->layout);
+        if (hasSelection) {
+            auto selectionColorU16 = Util::GdkRGBA_to_ColorU16(selectionColor);
+            PangoAttribute* attrib =
+                    pango_attr_background_new(selectionColorU16.red, selectionColorU16.green, selectionColorU16.blue);
+            PangoAttrList* attrlist = pango_layout_get_attributes(this->layout);
 
-        attrib->start_index = getByteOffset(gtk_text_iter_get_offset(&start));
-        attrib->end_index = getByteOffset(gtk_text_iter_get_offset(&end));
+            attrib->start_index = getByteOffset(gtk_text_iter_get_offset(&start));
+            attrib->end_index = getByteOffset(gtk_text_iter_get_offset(&end));
 
-        if (list == nullptr) {
-            list = pango_attr_list_new();
-            pango_layout_set_attributes(this->layout, list);
+            const bool isNewAttrlist = attrlist == nullptr;
+            if (isNewAttrlist) {
+                attrlist = pango_attr_list_new();
+                pango_layout_set_attributes(this->layout, attrlist);
+            }
+            pango_attr_list_insert(attrlist, attrib);
+            if (isNewAttrlist) {
+                pango_attr_list_unref(attrlist);
+                attrlist = nullptr;
+            }
+        } else {
+            // remove all attributes
+            PangoAttrList* attrlist = pango_attr_list_new();
+            pango_layout_set_attributes(this->layout, attrlist);
+            pango_attr_list_unref(attrlist);
+            attrlist = nullptr;
         }
-        pango_attr_list_insert(list, attrib);
-    } else {
-        // remove all attributes
-        PangoAttrList* list = pango_attr_list_new();
-        pango_layout_set_attributes(this->layout, list);
     }
 
     pango_cairo_show_layout(cr, this->layout);
