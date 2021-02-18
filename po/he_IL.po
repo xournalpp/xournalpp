@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-17 18:58+0000\n"
-"PO-Revision-Date: 2021-02-17 19:09\n"
+"PO-Revision-Date: 2021-02-18 10:38\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -62,7 +62,7 @@ msgstr "הוסף/ערוך Tex"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "הגדרות יצוא מתקדמות"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -78,7 +78,7 @@ msgstr "יישם לדף הנוכחי"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "ארגן"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -154,11 +154,11 @@ msgstr "כחול"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring forward"
-msgstr ""
+msgstr "הבא שכבה קדימה"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "העבר לחזית"
 
 #: ../src/control/Control.cpp:2014 ../src/control/Control.cpp:2470
 #: ../src/control/XournalMain.cpp:168
@@ -171,7 +171,7 @@ msgstr "שנה צבע"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
-msgstr ""
+msgstr "שנה שם שכבה נוכחית"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
@@ -179,7 +179,7 @@ msgstr "שנה גופן"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "שנה סגנון שורה"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -214,7 +214,8 @@ msgstr "העתק דף"
 #: ../src/util/PathUtil.cpp:230
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "יצירת תיקייה נכשלה: {1}\n"
+"כישלון עם שגיאה: {2}"
 
 #: ../src/control/LatexController.cpp:266
 msgid "Could not load LaTeX PDF file"
@@ -358,7 +359,7 @@ msgstr "מחק שכבה"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Delete this layer"
-msgstr ""
+msgstr "מחק שכבה זו"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Delete this page"
@@ -370,7 +371,7 @@ msgstr "השלך"
 
 #: ../src/control/XournalMain.cpp:680
 msgid "Display advanced export options"
-msgstr ""
+msgstr "הצג הגדרות יצוא מתקדמות"
 
 #: ../src/control/Control.cpp:1967
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -401,7 +402,7 @@ msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Dotted"
-msgstr ""
+msgstr "מנוקד"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:124
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:30
@@ -491,7 +492,7 @@ msgstr "שגיאה בפתיחת קובץ \"{1}\""
 #: ../src/control/xojfile/LoadHandler.cpp:433
 #: ../src/control/xojfile/LoadHandler.cpp:453
 msgid "Error reading PDF: {1}"
-msgstr ""
+msgstr "קריאת קובץ PDF נכשלה: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:510
 msgid "Error reading width of a stroke: {1}"
