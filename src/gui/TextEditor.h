@@ -96,6 +96,7 @@ private:
     PangoLayout* layout = nullptr;
     Text* text = nullptr;
 
+    PangoAttrList* preeditAttrList = nullptr;
     string preeditString;
     string lastText;
 
