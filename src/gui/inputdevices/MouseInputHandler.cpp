@@ -93,6 +93,7 @@ void MouseInputHandler::setPressedState(InputEvent const& event) {
                 break;
         }
     }
+
     if (event.type == BUTTON_RELEASE_EVENT)  // mouse button released or pen not touching surface anymore
     {
         this->deviceClassPressed = false;

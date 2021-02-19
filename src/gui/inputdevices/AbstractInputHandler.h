@@ -35,6 +35,11 @@ private:
 
 protected:
     InputContext* inputContext;
+
+    /**
+     *  Whether we're in a press-move-up event sequence.
+     * E.g. the user has clicked and is currently moving the mouse.
+     */
     bool inputRunning = false;
 
 protected:

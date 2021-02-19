@@ -182,11 +182,6 @@ double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView
 }
 
 auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
-    // If we're not handling input, do nothing!
-    if (!this->inputRunning) {
-        return false;
-    }
-
     /*
      * Workaround for misbehaving devices where Enter events are not published every time
      * This is required to disable outside scrolling again
@@ -223,6 +218,7 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         }
         return false;
     }
+
     if (xournal->selection) {
         EditSelection* selection = xournal->selection;
         XojPageView* view = selection->getView();
@@ -279,28 +275,29 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
     // Update the cursor
     xournal->view->getCursor()->setInsidePage(currentPage != nullptr);
 
-    // Selections and single-page elements will always work on one page so we need to handle them differently
-    if (this->sequenceStartPage && toolHandler->isSinglePageTool()) {
-        // Relay the event to the page
-        PositionInputData pos = getInputDataRelativeToCurrentPage(sequenceStartPage, event);
+    // If we're in a click-move-up event sequence,
+    if (this->inputRunning) {
+        // Selections and single-page elements will always work on one page so we need to handle them differently
+        if (this->sequenceStartPage && toolHandler->isSinglePageTool()) {
+            // Relay the event to the page
+            PositionInputData pos = getInputDataRelativeToCurrentPage(sequenceStartPage, event);
 
-        // Enforce input to stay within page
-        pos.x = std::max(0.0, pos.x);
-        pos.y = std::max(0.0, pos.y);
-        pos.x = std::min(pos.x, static_cast<double>(sequenceStartPage->getDisplayWidth()));
-        pos.y = std::min(pos.y, static_cast<double>(sequenceStartPage->getDisplayHeight()));
+            // Enforce input to stay within page
+            pos.x = std::max(0.0, pos.x);
+            pos.y = std::max(0.0, pos.y);
+            pos.x = std::min(pos.x, static_cast<double>(sequenceStartPage->getDisplayWidth()));
+            pos.y = std::min(pos.y, static_cast<double>(sequenceStartPage->getDisplayHeight()));
 
-        pos.pressure = this->filterPressure(pos, sequenceStartPage);
+            pos.pressure = this->filterPressure(pos, sequenceStartPage);
 
-        result = sequenceStartPage->onMotionNotifyEvent(pos);
-    }
+            result = sequenceStartPage->onMotionNotifyEvent(pos);
+        } else if (currentPage && this->penInWidget) {
+            // Relay the event to the page
+            PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
+            pos.pressure = this->filterPressure(pos, currentPage);
 
-    if (currentPage && this->penInWidget) {
-        // Relay the event to the page
-        PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
-        pos.pressure = this->filterPressure(pos, currentPage);
-
-        result = currentPage->onMotionNotifyEvent(pos);
+            result = currentPage->onMotionNotifyEvent(pos);
+        }
     }
 
     // Update the last position of the input device
