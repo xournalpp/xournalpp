@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-17 18:58+0000\n"
-"PO-Revision-Date: 2021-02-17 19:08\n"
+"PO-Revision-Date: 2021-02-19 13:26\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -62,7 +62,7 @@ msgstr "Adicionar/Editar TeX"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "Opções de exportação avançadas"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -78,7 +78,7 @@ msgstr "Aplicar à página atual"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "Dispor"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -154,11 +154,11 @@ msgstr "Azul"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring forward"
-msgstr ""
+msgstr "Trazer para a frente"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "Trazer para o primeiro plano"
 
 #: ../src/control/Control.cpp:2014 ../src/control/Control.cpp:2470
 #: ../src/control/XournalMain.cpp:168
@@ -418,7 +418,7 @@ msgstr "Desenhar seta"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Desenhar Elipse"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -438,7 +438,7 @@ msgstr "Desenhar Retângulo"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Spline"
-msgstr ""
+msgstr "Desenhar Curva"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:126
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
@@ -1052,7 +1052,7 @@ msgstr "Gráficos SVG"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "Arquivo de exemplo LaTeX gerado com sucesso."
 
 #: ../src/control/Control.cpp:2462 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
@@ -1135,11 +1135,11 @@ msgstr "Enviar relatório de bug"
 
 #: ../src/control/tools/EditSelection.cpp:371
 msgid "Send backward"
-msgstr ""
+msgstr "Enviar para trás"
 
 #: ../src/control/tools/EditSelection.cpp:379
 msgid "Send to back"
-msgstr ""
+msgstr "Enviar para o fundo"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
 msgid "Separator"
@@ -1148,7 +1148,8 @@ msgstr "Separador"
 #: ../src/control/XournalMain.cpp:664
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Configurar DPI para exportação em PNG. O padrão é 300.\n"
+"Sem efeito sem -i/--create-img=foo.png"
 
 #: ../src/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
@@ -1230,7 +1231,7 @@ msgstr "Trocar a página atual pela página abaixo"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
-msgstr ""
+msgstr "Padrão do sistema"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
@@ -2052,7 +2053,7 @@ msgstr "Botão 2"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Escolha um arquivo de modelo LaTeX global"
 
 #: ../ui/settings.glade:2716 ../ui/settings.glade:2859
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2462,7 +2463,7 @@ msgstr "Inserir Página Antes"
 
 #: ../ui/settings.glade:5275
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
@@ -2470,11 +2471,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Comando para gerar LaTeX"
 
 #: ../ui/settings.glade:5364 ../ui/settings.glade:5412
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: ../ui/settings.glade:5382
 msgid "Language Settings"
@@ -2690,7 +2691,7 @@ msgstr "Identificador da versão"
 
 #: ../ui/settings.glade:2782
 msgid "Radius"
-msgstr ""
+msgstr "Raio"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
@@ -3317,5 +3318,5 @@ msgstr "muito espesso"
 
 #: ../ui/about.glade:178
 msgid "with libgtk"
-msgstr ""
+msgstr "com libgtk"
 
