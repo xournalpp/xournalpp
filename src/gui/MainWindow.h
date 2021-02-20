@@ -98,6 +98,8 @@ public:
 
     bool isGestureActive();
 
+    GtkWidget* getWinXournal();
+
 
     /**
      * Disable kinetic scrolling if there is a touchscreen device that was manually mapped to another enabled input

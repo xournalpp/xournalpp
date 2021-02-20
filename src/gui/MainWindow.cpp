@@ -334,6 +334,8 @@ void MainWindow::initHideMenu() {
 
 auto MainWindow::getLayout() -> Layout* { return gtk_xournal_get_layout(GTK_WIDGET(this->xournal->getWidget())); }
 
+auto MainWindow::getWinXournal() -> GtkWidget* { return this->winXournal; }
+
 auto cancellable_cancel(GCancellable* cancel) -> bool {
     g_cancellable_cancel(cancel);
 

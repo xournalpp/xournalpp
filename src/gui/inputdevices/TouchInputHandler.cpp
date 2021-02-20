@@ -32,21 +32,26 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
                  this->secondarySequence == nullptr) {
             this->secondarySequence = event.sequence;
 
+            // Even if zoom gestures are disabled,
+            // this is still the start of a sequence.
+
             // Set sequence data
             sequenceStart(event);
 
-            // Even if zoom gestures are disabled,
-            // this is still the start of a sequence. Just
-            // don't start zooming.
-            if (zoomGesturesEnabled) {
-                zoomStart();
-            }
+            startZoomReady = true;
         }
     }
 
     if (event.type == MOTION_EVENT && this->primarySequence) {
         if (this->primarySequence && this->secondarySequence && zoomGesturesEnabled) {
-            zoomMotion(event);
+            if (startZoomReady) {
+                if (this->primarySequence == event.sequence) {
+                    sequenceStart(event);
+                    zoomStart();
+                }
+            } else {
+                zoomMotion(event);
+            }
         } else if (event.sequence == this->primarySequence) {
             scrollMotion(event);
         } else if (this->primarySequence && this->secondarySequence) {
@@ -107,16 +112,6 @@ void TouchInputHandler::scrollMotion(InputEvent const& event) {
 }
 
 void TouchInputHandler::zoomStart() {
-    // Take horizontal and vertical padding of view into account when calculating the center of the gesture
-    int vPadding = inputContext->getSettings()->getAddVerticalSpace() ?
-                           inputContext->getSettings()->getAddVerticalSpaceAmount() :
-                           0;
-    int hPadding = inputContext->getSettings()->getAddHorizontalSpace() ?
-                           inputContext->getSettings()->getAddHorizontalSpaceAmount() :
-                           0;
-
-    auto center = (this->priLastRel + this->secLastRel) / 2.0 - utl::Point<double>{double(hPadding), double(vPadding)};
-
     this->startZoomDistance = this->priLastAbs.distance(this->secLastAbs);
 
     if (this->startZoomDistance == 0.0) {
@@ -137,16 +132,25 @@ void TouchInputHandler::zoomStart() {
         zoomControl->setZoomFitMode(false);
     }
 
+    auto center = (this->priLastAbs + this->secLastAbs) / 2.0;
+
     auto* mainWindow = inputContext->getView()->getControl()->getWindow();
+    // use screen pixel coordinates for the zoom center
+    // as relative coordinates depend on the changing zoom level
+    int rx, ry;
+    gdk_window_get_root_coords(gtk_widget_get_window(mainWindow->getWinXournal()), 0, 0, &rx, &ry);
+    center.x -= rx;
+    center.y -= ry;
 
     // When not using touch drawing, we're using a different scrolling method.
     // This requires different centering.
-    if (!mainWindow->getGtkTouchscreenScrollingEnabled()) {
-        Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
-        center += utl::Point<double>{zoomSequenceRectangle.x, zoomSequenceRectangle.y};
-    }
+    /*if (!mainWindow->getGtkTouchscreenScrollingEnabled()) {
+        center = (this->priLastRel + this->secLastRel) / 2.0;  // TODO check!
+    }*/
 
     zoomControl->startZoomSequence(center);
+
+    startZoomReady = false;
 }
 
 void TouchInputHandler::zoomMotion(InputEvent const& event) {
@@ -172,13 +176,8 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
     }
 
     ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
-    zoomControl->zoomSequenceChange(zoom, true);
-
     auto center = (this->priLastAbs + this->secLastAbs) / 2;
-    auto lastScrollPosition = zoomControl->getScrollPositionAfterZoom();
-    auto offset = lastScrollPosition - (center - lastZoomScrollCenter);
-
-    zoomControl->setScrollPositionAfterZoom(offset);
+    zoomControl->zoomSequenceChange(zoom, true, center - lastZoomScrollCenter);
     lastZoomScrollCenter = center;
 }
 
