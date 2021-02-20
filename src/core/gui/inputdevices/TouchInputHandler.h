@@ -34,6 +34,8 @@ private:
     utl::Point<double> priLastRel{-1.0, -1.0};
     utl::Point<double> secLastRel{-1.0, -1.0};
 
+    bool startZoomReady = false;
+
     bool canBlockZoom{false};
 
 private:

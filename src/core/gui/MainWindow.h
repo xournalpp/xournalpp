@@ -114,6 +114,9 @@ public:
 
     [[maybe_unused]] Menubar* getMenubar() const;
 
+    GtkWidget* getWinXournal();
+
+
     /**
      * Disable kinetic scrolling if there is a touchscreen device that was manually mapped to another enabled input
      * device class. This is required so the GtkScrolledWindow does not swallow all the events.

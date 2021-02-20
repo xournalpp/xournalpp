@@ -292,6 +292,8 @@ void MainWindow::initHideMenu() {
 
 auto MainWindow::getLayout() const -> Layout* { return gtk_xournal_get_layout(this->xournal->getWidget()); }
 
+auto MainWindow::getWinXournal() -> GtkWidget* { return this->winXournal; }
+
 auto cancellable_cancel(GCancellable* cancel) -> bool {
     g_cancellable_cancel(cancel);
 
