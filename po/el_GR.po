@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 18:58+0000\n"
-"PO-Revision-Date: 2021-02-17 19:09\n"
+"POT-Creation-Date: 2021-02-20 06:58+0000\n"
+"PO-Revision-Date: 2021-02-20 07:01\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -29,16 +29,16 @@ msgid "\n"
 msgstr "\n"
 "Θα προσπαθήσουμε να εκτελέσουμε χωρίς αυτό το αρχείο."
 
-#: ../src/gui/MainWindow.cpp:743
+#: ../src/gui/MainWindow.cpp:723
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " από {1}{2}"
 
-#: ../src/control/settings/Settings.cpp:111
+#: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
 msgstr "%F-Σημείωση-%H-%M"
 
-#: ../src/gui/dialog/SettingsDialog.cpp:140
+#: ../src/gui/dialog/SettingsDialog.cpp:130
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Δεν βρέθηκαν συσκευές. Κάτι δεν πάει καλά - μήπως να κάνετε μια αναφορά σφάλματος;</b>"
 
@@ -253,13 +253,13 @@ msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μ�
 msgid "Could not open file: \"{1}\""
 msgstr "Δεν ήταν δυνατό το άνοιγμα αρχείου: \"{1}\""
 
-#: ../src/gui/MainWindow.cpp:95
+#: ../src/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Αδύνατη προσπέλαση προσαρμοσμένου αρχείου toolbar.ini: {1}\n"
 "Οι γραμμές εργαλείων δεν θα είναι διαθέσιμες"
 
-#: ../src/gui/MainWindow.cpp:86
+#: ../src/gui/MainWindow.cpp:85
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Αδύνατη προσπέλαση γενικού αρχείου toolbar.ini: {1}\n"
@@ -462,7 +462,7 @@ msgstr "Επεξεργασία κειμένου"
 msgid "Emergency saved document"
 msgstr "Αρχείο από επείγουσα αποθήκευση"
 
-#: ../src/gui/dialog/SettingsDialog.cpp:305
+#: ../src/gui/dialog/SettingsDialog.cpp:262
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr ""
 
@@ -597,7 +597,7 @@ msgstr "Δεν ήταν δυνατό το άνοιγμα του αρχείου �
 msgid "Fill"
 msgstr "Γέμισμα"
 
-#: ../src/gui/dialog/SettingsDialog.cpp:315
+#: ../src/gui/dialog/SettingsDialog.cpp:266
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
@@ -886,7 +886,7 @@ msgstr "Πορτοκαλί"
 msgid "PDF Export"
 msgstr "Εξαγωγή σε PDF"
 
-#: ../src/gui/MainWindow.cpp:741
+#: ../src/gui/MainWindow.cpp:721
 msgid "PDF Page {1}"
 msgstr "PDF σελίδα {1}"
 
@@ -1306,14 +1306,6 @@ msgstr "Ο τύπος είναι κενός όταν αποδίδεται ή μ�
 msgid "The most recent log file name: {1}"
 msgstr "Το πιο πρόσφατο όνομα αρχείου καταγραφής: {1}"
 
-#: ../src/gui/dialog/SettingsDialog.cpp:311
-msgid "The new input system must be enabled to change this setting. "
-msgstr ""
-
-#: ../src/gui/dialog/SettingsDialog.cpp:277
-msgid "The touch workaround must be disabled to change this setting. "
-msgstr ""
-
 #: ../src/control/XournalMain.cpp:154
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Υπάρχουν αρχεία σφαλμάτων από το Xournal++. Παρακαλώ στείλτε μια αναφορά σφάλματος έτσι ώστε να διορθωθεί το πρόβλημα."
@@ -1416,10 +1408,6 @@ msgstr "Άγνωστος τύπος μολυβιάς: \"{1}\", υποθέτω σ
 msgid "Unsaved Document"
 msgstr "Μη Αποθηκευμένο Έγγραφο"
 
-#: ../src/gui/dialog/SettingsDialog.cpp:282
-msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
-
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Vertical Space"
 msgstr "Κατακόρυφος Χώρος"
@@ -1444,10 +1432,6 @@ msgstr "Λευκό"
 #: ../src/control/pagetype/PageTypeHandler.cpp:31
 msgid "With PDF background"
 msgstr "Με φόντο PDF"
-
-#: ../src/gui/dialog/SettingsDialog.cpp:288
-msgid "Without the new input system, two-finger gestures will not zoom/pan while drawing. Enable the new input system and disable the touch workaround to change this setting."
-msgstr ""
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
@@ -1687,11 +1671,11 @@ msgstr "xournalpp-{1}"
 msgid " = Floating Toolbox (experimental) ="
 msgstr " = Αιωρούμενο κουτί εργαλείων (πειραματικό) ="
 
-#: ../ui/settings.glade:3470 ../ui/settings.glade:3481
+#: ../ui/settings.glade:3285 ../ui/settings.glade:3296
 msgid "%"
 msgstr "%"
 
-#: ../ui/settings.glade:2188
+#: ../ui/settings.glade:2070
 msgid "% greater than the initial distance between the two touches."
 msgstr ""
 
@@ -1703,7 +1687,7 @@ msgstr ""
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr ""
 
-#: ../ui/settings.glade:4550
+#: ../ui/settings.glade:4365
 msgid "%."
 msgstr ""
 
@@ -1733,29 +1717,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%%\t\tA % sign"
 msgstr ""
 
-#: ../ui/settings.glade:4390
+#: ../ui/settings.glade:4205
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr "... ΚΑΙ πόσος χρόνος πρέπει να έχει περάσει από την τελευταία μολυβιά.\n\n"
 "<i>Προτεινόμενος: 500ms</i>"
 
-#: ../ui/settings.glade:4534
+#: ../ui/settings.glade:4349
 msgid "0.00"
 msgstr ""
 
-#: ../ui/settings.glade:1450
+#: ../ui/settings.glade:1332
 msgid "1"
 msgstr ""
 
-#: ../ui/settings.glade:5163
+#: ../ui/settings.glade:4978
 msgid "1,00"
 msgstr ""
 
-#: ../ui/settings.glade:2173
+#: ../ui/settings.glade:2055
 msgid "1.0"
 msgstr ""
 
-#: ../ui/settings.glade:2818
+#: ../ui/settings.glade:2633
 msgid "30"
 msgstr ""
 
@@ -1779,7 +1763,7 @@ msgstr "<b>Χρωμά</b>"
 msgid "<b>Default Tools</b>"
 msgstr "<b>Προεπιλεγμένα Εργαλεία</b>"
 
-#: ../ui/settings.glade:4709
+#: ../ui/settings.glade:4524
 msgid "<b>Default</b>"
 msgstr "<b>Προεπιλογή</b>"
 
@@ -1811,19 +1795,19 @@ msgstr "<b>Μέγεθος σελίδας</b>"
 msgid "<b>Separator</b>"
 msgstr "<b>Διαχωριστικό</b>"
 
-#: ../ui/settings.glade:802
+#: ../ui/settings.glade:697
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr "<i>Θέστε κατηγορίες συσκευών σε κάθε συσκευή εισόδου του συστήματός σας. Αλλάξτε τις τιμές μόνο αν οι συσκευές σας δεν είναι σωστά κατηγοριοποιημένες. (π.χ. η γραφίδα σας έχει οριστεί σαν οθόνη αφής)</i>"
 
-#: ../ui/settings.glade:4800
+#: ../ui/settings.glade:4615
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>Οι εγγραφές ήχου αποθηκεύονται σε ξεχωριστό φάκελο και αναφέρονται από το journal.</i>"
 
-#: ../ui/settings.glade:5218
+#: ../ui/settings.glade:5033
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>Οι αλλαγές εφαρμόζονται μόνο σε νέες εγγραφές και αναπαραγωγές ήχου.</i>"
 
-#: ../ui/settings.glade:1051
+#: ../ui/settings.glade:933
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
 msgstr "<i>Ορίστε ποια εργαλεία θα επιλεγούν αν πιέσετε κουμπί ποντικιού. Όταν ελευθερώσετε κουμπί το εργαλείο που επιλέξατε πριν θα επιλεγεί.</i>"
 
@@ -1831,19 +1815,13 @@ msgstr "<i>Ορίστε ποια εργαλεία θα επιλεγούν αν �
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
 msgstr "<i>Παράδειγμα:</i> 1-3 ή 1,3,5-7 κοκ."
 
-#: ../ui/settings.glade:2241
-msgid "<i>For some specific hardware the scroll / touch behaviour of the system is not as expected. For these cases Xournal++ has a workaround.\n"
-"This also enables touch drawing.</i>"
-msgstr "<i>Για κάποιες συσκευές η συμπεριφορά κύλισης / αφής του συστήματος είναι διαφορετική από την αναμενόμενη. Για τις περιπτώσεις αυτές το Xournal++ έχει λύση.\n"
-"Αυτό ενεργοποιεί επίσης το σχεδιασμό με αφή.</i>"
-
 #: ../ui/settings.glade:278
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in your home directory, in ~/.xournalpp/autosave</i>"
 msgstr "<i>Αν το έγγραφο είχε ήδη αποθηκευτεί μπορείτε να το βρείτε στο φάκελο με την επέκταση .autosave.xoj\n"
 "Αν το αρχείο δεν είχε αποθηκευτεί ακόμα μπορείτε να το βρείτε στον φάκελο home σας, στο ~/.xournalpp/autosave</i>"
 
-#: ../ui/settings.glade:3710
+#: ../ui/settings.glade:3525
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>Αν προσθέσετε επιπλέον χώρο στις σελίδες μπορείτε να επιλέξετε την περιοχή της οθόνης στην οποία θα θέλατε να δουλέψετε </i>"
 
@@ -1851,45 +1829,45 @@ msgstr "<i>Αν προσθέσετε επιπλέον χώρο στις σελί
 msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
 msgstr "<i>Αν ανοίξετε ένα PDF και υπάρχει Xournal αρχείο με το ίδιο όνομα θα ανοιχθεί το αρχείο xoj.</i>"
 
-#: ../ui/settings.glade:1802
+#: ../ui/settings.glade:1684
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr "<i>Αν οι συσκευές σας δεν υποστηρίζουν αναγνώριση γραφής, το Xournal++ μπορεί να απενεργοποιήσει την οθόνη αφής σας όταν η γραφίδα σας είναι κοντά στην οθόνη.</i>"
 
-#: ../ui/settings.glade:1229
+#: ../ui/settings.glade:1111
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr "<i>Η ευαισθησία πίεσης επιτρέπει τον σχεδιασμό γραμμών διαφορετικού πάχους, ανάλογα με το πόσο πιέζετε την γραφίδα. Αν το tablet σας δεν υποστηρίζει αυτό το χαρακτηριστικό η επιλογή αυτή δεν επηρεάζει τίποτα.</i>"
 
-#: ../ui/settings.glade:3557
+#: ../ui/settings.glade:3372
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Τοποθετήστε έναν χάρακα στην οθόνη σας και μετακινήστε την μπάρα μέχρι να ταυτίζονται οι δύο χάρακες</i>"
 
-#: ../ui/settings.glade:4493
+#: ../ui/settings.glade:4308
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5327
+#: ../ui/settings.glade:5142
 msgid "<i>Select language (requires restart)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4655
+#: ../ui/settings.glade:4470
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Επιλέξτε το εργαλείο και τις ρυθμίσεις αν πιέσετε το προεπιλεγμένο κουμπί,</i>"
 
-#: ../ui/settings.glade:1278
+#: ../ui/settings.glade:1160
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1952
+#: ../ui/settings.glade:1834
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>Καθορίστε τις εντολές που εκτελούνται όταν λειτουργεί η Αναγνώριση Χεριού. Οι εντολές θα εκτελεστούν στο νήμα του UI, σιγουρευτείτε ότι δεν το μπλοκάρουν!</i>"
 
-#: ../ui/settings.glade:4911
+#: ../ui/settings.glade:4726
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1520
+#: ../ui/settings.glade:1402
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr "<i>Καθορίστε τα εργαλεία που θα επιλεγούν αν πιέζετε κουμπί στην γραφίδα ή χρησιμοποιηθεί η γόμα. Μετά την απελευθέρωση του κουμπιού, το προηγούμενο εργαλείο θα επιλεγεί.</i>"
 
@@ -1897,27 +1875,27 @@ msgstr "<i>Καθορίστε τα εργαλεία που θα επιλεγού
 msgid "<i>This name will be proposed if you save a new document.</i>"
 msgstr "<i>Αυτό το όνομα θα προτείνετε όταν αποθηκεύετε νέο έγγραφο.</i>"
 
-#: ../ui/settings.glade:3536
+#: ../ui/settings.glade:3351
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
 msgstr "<i>Για να είναι σίγουρο ότι στο 100% της μεγέθυνσης τα στοιχεία είναι στο φυσικό τους μέγεθος. (απαιτεί επανεκκίνηση) </i>"
 
-#: ../ui/settings.glade:2449
+#: ../ui/settings.glade:2264
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr "<i>Εναλλαγή προβολής της γραμμής μενού με το F10</i>"
 
-#: ../ui/settings.glade:2124
+#: ../ui/settings.glade:2006
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr "<i>Χρήση χειρονομιών τσιμπήματος για μεγέθυνση σε σελίδες του journal</i>"
 
-#: ../ui/settings.glade:2309
+#: ../ui/settings.glade:2123
 msgid "<i>Use the touchscreen like a multi-touch-aware pen (requires new input system).</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1413
+#: ../ui/settings.glade:1295
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1736
+#: ../ui/settings.glade:1618
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>Μπορείτε να ρυθμίσετε συσκευές, που δεν αναγνωρίζονται από το GTK σαν οθόνες αφής, να συμπεριφέρονται σαν οθόνες αφής</i>"
 
@@ -1931,19 +1909,19 @@ msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 msgid "About Xournal++"
 msgstr "Σχετικά με το Xournal++"
 
-#: ../ui/settings.glade:4462
+#: ../ui/settings.glade:4277
 msgid "Action on Tool Tap"
 msgstr "Ενέργεια κατά το στιγμιαίο κλικ"
 
-#: ../ui/settings.glade:3763
+#: ../ui/settings.glade:3578
 msgid "Add additional horizontal space of"
 msgstr "Προσθήκη οριζόντιου χώρου μεγέθους"
 
-#: ../ui/settings.glade:3741
+#: ../ui/settings.glade:3556
 msgid "Add additional vertical space of"
 msgstr "Προσθήκη κατακόρυφου χώρου μεγέθους"
 
-#: ../ui/settings.glade:4066
+#: ../ui/settings.glade:3881
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr ""
 
@@ -1955,7 +1933,7 @@ msgstr ""
 msgid "All pages"
 msgstr "Όλες οι σελίδες"
 
-#: ../ui/settings.glade:4427
+#: ../ui/settings.glade:4242
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "Πρέπει να ικανοποιηθούν και οι τρεις συνθήκες για να αγνοηθεί η μολυβιά.\n"
@@ -1969,15 +1947,15 @@ msgstr ""
 msgid "Append New Pdf Pages"
 msgstr ""
 
-#: ../ui/settings.glade:1489
+#: ../ui/settings.glade:1371
 msgid "Artifact workaround"
 msgstr ""
 
-#: ../ui/settings.glade:5007
+#: ../ui/settings.glade:4822
 msgid "Audio Devices"
 msgstr "Συσκευές Ήχου"
 
-#: ../ui/settings.glade:5250
+#: ../ui/settings.glade:5065
 msgid "Audio Recording"
 msgstr "Καταγραφή ήχου"
 
@@ -1989,7 +1967,7 @@ msgstr "Συγγραφέας: "
 msgid "Authors:"
 msgstr "Συγγραφείς:"
 
-#: ../ui/settings.glade:1873
+#: ../ui/settings.glade:1755
 msgid "Autodetect"
 msgstr "Αυτόματος Εντοπισμός"
 
@@ -2005,28 +1983,28 @@ msgstr "Γίνεται αυτόματη αποθήκευση"
 msgid "Available Placeholders"
 msgstr "Διαθέσιμοι κωδικοποιημένοι χαρακτήρες"
 
-#: ../ui/settings.glade:2514
+#: ../ui/settings.glade:2329
 msgid "Background color between pages"
 msgstr "Χρώμα φόντου μεταξύ σελίδων"
 
-#: ../ui/settings.glade:2669
+#: ../ui/settings.glade:2484
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr ""
 
-#: ../ui/settings.glade:2873
+#: ../ui/settings.glade:2688
 msgid "Border Color"
 msgstr ""
 
-#: ../ui/settings.glade:2834
+#: ../ui/settings.glade:2649
 msgid "Border Width"
 msgstr ""
 
-#: ../ui/settings.glade:2503
+#: ../ui/settings.glade:2318
 msgid "Border color"
 msgstr "Χρώμα περιγράμματος"
 
-#: ../ui/settings.glade:2488
+#: ../ui/settings.glade:2303
 msgid "Border color for current page and other selections"
 msgstr "Χρώμα περιγράμματος για την τρέχουσα σελίδα και τις άλλες επιλεγμένες"
 
@@ -2042,11 +2020,11 @@ msgstr ""
 msgid "Built on"
 msgstr "Χτίστηκε στις"
 
-#: ../ui/settings.glade:1560
+#: ../ui/settings.glade:1442
 msgid "Button 1"
 msgstr "Κουμπί 1"
 
-#: ../ui/settings.glade:1598
+#: ../ui/settings.glade:1480
 msgid "Button 2"
 msgstr "Κουμπί 2"
 
@@ -2054,19 +2032,19 @@ msgstr "Κουμπί 2"
 msgid "Choose a global LaTeX template file"
 msgstr ""
 
-#: ../ui/settings.glade:2716 ../ui/settings.glade:2859
+#: ../ui/settings.glade:2531 ../ui/settings.glade:2674
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr ""
 
-#: ../ui/settings.glade:2730
+#: ../ui/settings.glade:2545
 msgid "Circle Color"
 msgstr ""
 
-#: ../ui/settings.glade:3310
+#: ../ui/settings.glade:3125
 msgid "Clear cached paged while scrolling"
 msgstr ""
 
-#: ../ui/settings.glade:2596
+#: ../ui/settings.glade:2411
 msgid "Colors"
 msgstr "Χρώματα"
 
@@ -2094,19 +2072,19 @@ msgstr ""
 msgid "Current page"
 msgstr "Τρέχουσα σελίδα"
 
-#: ../ui/settings.glade:2916
+#: ../ui/settings.glade:2731
 msgid "Cursor"
 msgstr "Κέρσορας"
 
-#: ../ui/settings.glade:2651
+#: ../ui/settings.glade:2466
 msgid "Cursor icon for pen"
 msgstr ""
 
-#: ../ui/settings.glade:2068
+#: ../ui/settings.glade:1950
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "Προσαρμοσμένες Εντολές (για Μέθοδο \"Προσαρμοσμένο/η\")"
 
-#: ../ui/settings.glade:2562
+#: ../ui/settings.glade:2377
 msgid "Dark Theme (requires restart)"
 msgstr "Σκούρο θέμα (απαιτεί επανεκκίνηση)"
 
@@ -2114,7 +2092,7 @@ msgstr "Σκούρο θέμα (απαιτεί επανεκκίνηση)"
 msgid "Default Save Name"
 msgstr "Προεπιλεγμένο όνομα αποθήκευσης"
 
-#: ../ui/settings.glade:5150
+#: ../ui/settings.glade:4965
 msgid "Default Seek Time (in seconds)"
 msgstr "Προεπιλεγμένος χρόνος αναζήτησης (σε δευτερόλεπτα)"
 
@@ -2122,7 +2100,7 @@ msgstr "Προεπιλεγμένος χρόνος αναζήτησης (σε δ�
 msgid "Default name: "
 msgstr "Προεπιλεγμένο όνομα: "
 
-#: ../ui/settings.glade:4749
+#: ../ui/settings.glade:4564
 msgid "Defaults"
 msgstr "Προεπιλογές"
 
@@ -2138,7 +2116,7 @@ msgstr "Διαγραφή μολυβιάς"
 msgid "Device"
 msgstr "Συσκευή"
 
-#: ../ui/settings.glade:1987
+#: ../ui/settings.glade:1869
 msgid "Disable"
 msgstr "Απενεργοποίηση"
 
@@ -2146,7 +2124,7 @@ msgstr "Απενεργοποίηση"
 msgid "Disable drawing for this device"
 msgstr "Απενεργοποίηση σχεδιασμού για την συσκευή"
 
-#: ../ui/settings.glade:3042
+#: ../ui/settings.glade:2857
 msgid "Disable scrollbar fade out"
 msgstr "Απενεργοποίηση απόκρυψης μπάρας κύλισης"
 
@@ -2154,26 +2132,26 @@ msgstr "Απενεργοποίηση απόκρυψης μπάρας κύλισ�
 msgid "Disabled"
 msgstr "Ανενεργό"
 
-#: ../ui/settings.glade:1847
+#: ../ui/settings.glade:1729
 msgid "Disabling Method"
 msgstr "Μέθοδος απενεργοποίησης"
 
-#: ../ui/settings.glade:3628
+#: ../ui/settings.glade:3443
 msgid "Display DPI Calibration"
 msgstr "Βαθμονόμηση DPI Οθόνης"
 
-#: ../ui/settings.glade:4302
+#: ../ui/settings.glade:4117
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Να μην σχεδιάζονται είσοδοι μικρού μήκους και χρόνου εκτός αν γίνονται σε κοντά η μία στην άλλη. Αντ' αυτού να εμφανίζεται το αιωρούμενο κουτί εργαλείων."
 
-#: ../ui/settings.glade:718 ../ui/settings.glade:909
+#: ../ui/settings.glade:791
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "\t    Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:3966
+#: ../ui/settings.glade:3781
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -2195,15 +2173,15 @@ msgstr ""
 msgid "Draw _Line"
 msgstr "Σχεδίασε _Γραμμή"
 
-#: ../ui/settings.glade:2698
+#: ../ui/settings.glade:2513
 msgid "Draw a transparent circle around the cursor"
 msgstr ""
 
-#: ../ui/settings.glade:4604
+#: ../ui/settings.glade:4419
 msgid "Drawing Area"
 msgstr "Περιοχή Σχεδιασμού"
 
-#: ../ui/settings.glade:4034
+#: ../ui/settings.glade:3849
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Εργαλεία Σχεδιασμού - Ορισμός Χαρακτηριστικών μέσω της Κατεύθυνσης Σχεδιασμού (Πειραματικό)"
 
@@ -2215,11 +2193,11 @@ msgstr "Δημιουργία διπλοτύπου / αντιγράφου"
 msgid "Edit (not implemented yet)"
 msgstr "Επεξεργασία (μη υλοποιημένο)"
 
-#: ../ui/settings.glade:1975
+#: ../ui/settings.glade:1857
 msgid "Enable"
 msgstr "Ενεργοποίηση"
 
-#: ../ui/settings.glade:3961
+#: ../ui/settings.glade:3776
 msgid "Enable  with determination radius of "
 msgstr "Ενεργοποίση με αναγνωριστική ακτίνα "
 
@@ -2231,39 +2209,31 @@ msgstr "Ενεργοποίηση Αυτόματη Φόρτωση Journal"
 msgid "Enable Autosaving"
 msgstr "Ενεργοποίηση Αυτόματης Αποθήκευσης"
 
-#: ../ui/settings.glade:2256
-msgid "Enable GTK Touch / Scrolling workaround  (requires restart)"
-msgstr "Ενεργοποίηση λύσης του GTK  για Αφής / Scrolling (Απαιτεί επανεκκίνηση)"
-
-#: ../ui/settings.glade:950
+#: ../ui/settings.glade:832
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1243
+#: ../ui/settings.glade:1125
 msgid "Enable Pressure Sensitivity"
 msgstr "Ενεργοποίηση Ευαισθησίας Πίεσης"
 
-#: ../ui/settings.glade:4297
+#: ../ui/settings.glade:4112
 msgid "Enable Tap action"
 msgstr "Ενεργοποίηση ενέργειας κατά το στιγμιαίο κλίκ"
 
-#: ../ui/settings.glade:890
+#: ../ui/settings.glade:772
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
 msgstr "Ενεργοποίηση σχεδιασμού εκτός παραθύρου <i>(Ο σχεδιασμός δεν θα σταματήσει στο σύνορο παραθύρου)</i>"
 
-#: ../ui/settings.glade:1816
+#: ../ui/settings.glade:1698
 msgid "Enable internal Hand Recognition"
 msgstr "Ενεργοποιείστε της εσωτερικής Αναγνώρισης Παλάμης"
 
-#: ../ui/settings.glade:713
-msgid "Enable new input system (Requires restart)"
-msgstr "Ενεργοποίησης νέο συστήματος εισόδου (Απαιτεί επανεκκίνηση)"
-
-#: ../ui/settings.glade:2323
+#: ../ui/settings.glade:2137
 msgid "Enable touch drawing"
 msgstr ""
 
-#: ../ui/settings.glade:2136
+#: ../ui/settings.glade:2018
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Ενεργοποίηση χειρονομιών μεγέθυνσης (Απαιτεί επανεκκίνηση)"
 
@@ -2278,10 +2248,6 @@ msgstr "Ρυθ_μίσεις Γόμας"
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
 msgstr "Τύπος γόμας - καμία αλλαγή"
-
-#: ../ui/settings.glade:771
-msgid "Experimental Input System"
-msgstr "Πειραματικό Σύστημα Εισόδου"
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
@@ -2316,11 +2282,11 @@ msgstr "Βρες την επόμενη εμφάνιση της αναζητού�
 msgid "Find previous occurrence of the search string"
 msgstr "Βρες την προηγούμενη εμφάνιση της αναζητούμενης συμβολοσειράς"
 
-#: ../ui/settings.glade:3878
+#: ../ui/settings.glade:3693
 msgid "First Page Offset "
 msgstr "Μετατόπιση Πρώτης Σελίδας "
 
-#: ../ui/main.glade:532 ../ui/settings.glade:3129
+#: ../ui/main.glade:532 ../ui/settings.glade:2944
 msgid "Fullscreen"
 msgstr "Πλήρης οθόνη"
 
@@ -2328,7 +2294,7 @@ msgstr "Πλήρης οθόνη"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 ή νεότερη έκδοση"
 
-#: ../ui/settings.glade:5052
+#: ../ui/settings.glade:4867
 msgid "Gain"
 msgstr "Ενίσχυση"
 
@@ -2340,7 +2306,7 @@ msgstr ""
 msgid "Git commit"
 msgstr "Git commit"
 
-#: ../ui/settings.glade:2614
+#: ../ui/settings.glade:2429
 msgid "Global"
 msgstr "Γενικό"
 
@@ -2352,11 +2318,11 @@ msgstr ""
 msgid "Go to Page"
 msgstr "Μεταβείτε Στη Σελίδα"
 
-#: ../ui/settings.glade:4204
+#: ../ui/settings.glade:4019
 msgid "Grid size"
 msgstr ""
 
-#: ../ui/settings.glade:4161
+#: ../ui/settings.glade:3976
 msgid "Grid snapping tolerance"
 msgstr "Ευαισθησία προσκόλλησης στον καμβά"
 
@@ -2364,7 +2330,7 @@ msgstr "Ευαισθησία προσκόλλησης στον καμβά"
 msgid "H_and Tool"
 msgstr "Εργαλείο Χ_εριού"
 
-#: ../ui/settings.glade:2093
+#: ../ui/settings.glade:1975
 msgid "Hand Recognition"
 msgstr "Αναγνώριση Παλάμης"
 
@@ -2376,23 +2342,23 @@ msgstr ""
 msgid "Height:"
 msgstr "Ύψος:"
 
-#: ../ui/main.glade:951 ../ui/settings.glade:3091 ../ui/settings.glade:3158
+#: ../ui/main.glade:951 ../ui/settings.glade:2906 ../ui/settings.glade:2973
 msgid "Hide Menubar"
 msgstr "Απόκρυψη γραμμής μενού"
 
-#: ../ui/settings.glade:3107 ../ui/settings.glade:3174
+#: ../ui/settings.glade:2922 ../ui/settings.glade:2989
 msgid "Hide Sidebar"
 msgstr "Απόκρυψη πλευρικής μπάρας"
 
-#: ../ui/settings.glade:3012
+#: ../ui/settings.glade:2827
 msgid "Hide the horizontal scrollbar"
 msgstr "Απόκρυψη της οριζόντιας μπάρας κύλισης"
 
-#: ../ui/settings.glade:3027
+#: ../ui/settings.glade:2842
 msgid "Hide the vertical scrollbar"
 msgstr "Απόκρυψη της κατακόρυφης μπάρας κύλισης"
 
-#: ../ui/settings.glade:2693
+#: ../ui/settings.glade:2508
 msgid "Highlight cursor position"
 msgstr "Έμφαση στην θέση του κέρσορα"
 
@@ -2400,19 +2366,19 @@ msgstr "Έμφαση στην θέση του κέρσορα"
 msgid "Highlighter Opti_ons"
 msgstr "Επι_λογές Υπογραμμισμού"
 
-#: ../ui/settings.glade:4347
+#: ../ui/settings.glade:4162
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr "Πόσο μικρή (μμ στην οθόνης) μολυβιά ΚΑΙ...\n\n"
 "<i>Προτεινόμενο: 1 μμ</i>"
 
-#: ../ui/settings.glade:4327
+#: ../ui/settings.glade:4142
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr "Πόσο σύντομη (χρόνος) ΚΑΙ...\n\n"
 "<i>Προτεινόμενο: 150 ms</i>"
 
-#: ../ui/settings.glade:4249
+#: ../ui/settings.glade:4064
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr ""
 
@@ -2424,11 +2390,11 @@ msgstr ""
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
 msgstr ""
 
-#: ../ui/settings.glade:4315
+#: ../ui/settings.glade:4130
 msgid "Ignore Time (ms)"
 msgstr "Αγνόησε Χρόνο (ms)"
 
-#: ../ui/settings.glade:1431
+#: ../ui/settings.glade:1313
 msgid "Ignore the first"
 msgstr ""
 
@@ -2436,15 +2402,15 @@ msgstr ""
 msgid "Image quality"
 msgstr ""
 
-#: ../ui/settings.glade:4935
+#: ../ui/settings.glade:4750
 msgid "Input Device"
 msgstr "Συσκευή Εισόδου"
 
-#: ../ui/settings.glade:838
+#: ../ui/settings.glade:733
 msgid "Input Devices"
 msgstr "Συσκευές Εισόδου"
 
-#: ../ui/settings.glade:1002
+#: ../ui/settings.glade:884
 msgid "Input System"
 msgstr "Σύστημα Εισόδου"
 
@@ -2460,7 +2426,7 @@ msgstr "Εισαγωγή Σελίδας Μετά"
 msgid "Insert Page Before"
 msgstr "Εισαγωγή Σελίδας Πριν"
 
-#: ../ui/settings.glade:5275
+#: ../ui/settings.glade:5090
 msgid "LaTeX"
 msgstr ""
 
@@ -2472,11 +2438,11 @@ msgstr ""
 msgid "LaTeX generation command"
 msgstr ""
 
-#: ../ui/settings.glade:5364 ../ui/settings.glade:5412
+#: ../ui/settings.glade:5179 ../ui/settings.glade:5227
 msgid "Language"
 msgstr ""
 
-#: ../ui/settings.glade:5382
+#: ../ui/settings.glade:5197
 msgid "Language Settings"
 msgstr ""
 
@@ -2484,7 +2450,7 @@ msgstr ""
 msgid "Layout"
 msgstr "Διάταξη"
 
-#: ../ui/settings.glade:2983
+#: ../ui/settings.glade:2798
 msgid "Left / Right-Handed"
 msgstr "Αριστερό-/Δεξιόχειρας"
 
@@ -2504,28 +2470,28 @@ msgstr "Φόρτωση αρχείου"
 msgid "Manage Toolbar"
 msgstr "Διαχείριση Γραμμής Εργαλείων"
 
-#: ../ui/settings.glade:4367
+#: ../ui/settings.glade:4182
 msgid "Max Length (mm)"
 msgstr "Μέγιστο μήκος (μμ)"
 
-#: ../ui/settings.glade:921
+#: ../ui/settings.glade:803
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:1091
+#: ../ui/settings.glade:973
 msgid "Middle Mouse Button"
 msgstr "Μεσαίο Πλήκτρο Ποντικιού"
 
-#: ../ui/settings.glade:1301
+#: ../ui/settings.glade:1183
 msgid "Minimum Pressure:"
 msgstr ""
 
-#: ../ui/settings.glade:1178 ../ui/settingsDeviceClassConfig.glade:42
+#: ../ui/settings.glade:1060 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
 msgstr "Ποντίκι"
 
-#: ../ui/settings.glade:1147
+#: ../ui/settings.glade:1029
 msgid "Mouse Buttons"
 msgstr "Πλήκτρα Ποντικιού"
 
@@ -2561,7 +2527,7 @@ msgstr "Νέα Σελίδα στο _Τέλος"
 msgid "New _Layer"
 msgstr "Νέα _Στρώση"
 
-#: ../ui/settings.glade:2667
+#: ../ui/settings.glade:2482
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr ""
@@ -2574,7 +2540,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: ../ui/settings.glade:3877
+#: ../ui/settings.glade:3692
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "Μετατόπιση της πρώτης σελίδας αυτό τον αριθμό σελίδων όταν η επιλογή <b>Διπλές Σελίδες</b> είναι ενεργοποιημένη"
 
@@ -2582,15 +2548,15 @@ msgstr "Μετατόπιση της πρώτης σελίδας αυτό τον 
 msgid "Opacity settings"
 msgstr ""
 
-#: ../ui/settings.glade:971
+#: ../ui/settings.glade:853
 msgid "Options"
 msgstr "Επιλογές"
 
-#: ../ui/settings.glade:4958
+#: ../ui/settings.glade:4773
 msgid "Output Device"
 msgstr "Συσκευή Εξόδου"
 
-#: ../ui/settings.glade:4573
+#: ../ui/settings.glade:4388
 msgid "PDF Cache"
 msgstr ""
 
@@ -2602,7 +2568,7 @@ msgstr "Π_ροηγούμενη σημειωμένη Σελίδα"
 msgid "Pages:"
 msgstr "Σελίδες:"
 
-#: ../ui/settings.glade:3931
+#: ../ui/settings.glade:3746
 msgid "Paired Pages"
 msgstr "Διπλές σελίδες"
 
@@ -2636,11 +2602,11 @@ msgstr "Παύση"
 msgid "Pen _Options"
 msgstr "Επιλογές _Στυλό"
 
-#: ../ui/settings.glade:3330
+#: ../ui/settings.glade:3145
 msgid "Performance"
 msgstr ""
 
-#: ../ui/settings.glade:5204
+#: ../ui/settings.glade:5019
 msgid "Playback Settings"
 msgstr "Ρυθμίσεις αναπαραγωγής"
 
@@ -2656,11 +2622,11 @@ msgstr "Διαχείριση _Προσθέτων"
 msgid "Plugin changes are only applied after Xournal++ was restarted"
 msgstr "Αλλαγές στα πρόσθετα εφαρμόζονται μόνο μετά από επανεκκίνηση του Xournal++"
 
-#: ../ui/settings.glade:3273
+#: ../ui/settings.glade:3088
 msgid "Pre-load pages after"
 msgstr ""
 
-#: ../ui/settings.glade:3261
+#: ../ui/settings.glade:3076
 msgid "Pre-load pages before"
 msgstr ""
 
@@ -2668,19 +2634,19 @@ msgstr ""
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
-#: ../ui/settings.glade:3230
+#: ../ui/settings.glade:3045
 msgid "Presentation Mode"
 msgstr "Λειτουργία Παρουσίασης"
 
-#: ../ui/settings.glade:4061
+#: ../ui/settings.glade:3876
 msgid "Preserve line width"
 msgstr ""
 
-#: ../ui/settings.glade:1312
+#: ../ui/settings.glade:1194
 msgid "Pressure Multiplier: "
 msgstr ""
 
-#: ../ui/settings.glade:1382
+#: ../ui/settings.glade:1264
 msgid "Pressure Sensitivity"
 msgstr "Ευαισθησία Πίεσης"
 
@@ -2688,7 +2654,7 @@ msgstr "Ευαισθησία Πίεσης"
 msgid "RELEASE_IDENTIFIER"
 msgstr "ΑΝΑΓΝΩΡΙΣΤΙΚΟ_ΕΚΔΟΣΗΣ"
 
-#: ../ui/settings.glade:2782
+#: ../ui/settings.glade:2597
 msgid "Radius"
 msgstr ""
 
@@ -2696,7 +2662,7 @@ msgstr ""
 msgid "Range"
 msgstr "Εύρος"
 
-#: ../ui/settings.glade:4521
+#: ../ui/settings.glade:4336
 msgid "Re-render when the page's zoom changes by more than "
 msgstr ""
 
@@ -2708,7 +2674,7 @@ msgstr "Πρόσφατα _Έγγραφα"
 msgid "Record / Stop"
 msgstr "Έναρξη / Διακοπή Εγγραφής"
 
-#: ../ui/settings.glade:5117
+#: ../ui/settings.glade:4932
 msgid "Recording Quality"
 msgstr "Ποιότητα Εγγραφής"
 
@@ -2720,7 +2686,7 @@ msgstr ""
 msgid "Rename selected layer"
 msgstr ""
 
-#: ../ui/settings.glade:4108
+#: ../ui/settings.glade:3923
 msgid "Resizing"
 msgstr ""
 
@@ -2728,15 +2694,15 @@ msgstr ""
 msgid "Resolution"
 msgstr "Ανάλυση"
 
-#: ../ui/settings.glade:1129
+#: ../ui/settings.glade:1011
 msgid "Right Mouse Button"
 msgstr "Δεξιό κουμπί ποντικιού"
 
-#: ../ui/settings.glade:4148
+#: ../ui/settings.glade:3963
 msgid "Rotation snapping tolerance"
 msgstr "Ευαισθησία περιστροφής με σκάλες"
 
-#: ../ui/settings.glade:5040
+#: ../ui/settings.glade:4855
 msgid "Sample Rate"
 msgstr "Ρυθμός Δειγματοληψίας"
 
@@ -2744,11 +2710,11 @@ msgstr "Ρυθμός Δειγματοληψίας"
 msgid "Sample layer name"
 msgstr ""
 
-#: ../ui/settings.glade:3062
+#: ../ui/settings.glade:2877
 msgid "Scrollbars"
 msgstr "Μπάρες κύλισης"
 
-#: ../ui/settings.glade:3844
+#: ../ui/settings.glade:3659
 msgid "Scrolling outside the page"
 msgstr "Κύλιση εκτός της σελίδας"
 
@@ -2756,7 +2722,7 @@ msgstr "Κύλιση εκτός της σελίδας"
 msgid "Select Background Color"
 msgstr "Επιλογή Χρώματος Φόντου"
 
-#: ../ui/settings.glade:4837
+#: ../ui/settings.glade:4652
 msgid "Select Folder"
 msgstr "Επιλογή Φακέλου"
 
@@ -2768,11 +2734,11 @@ msgstr "Επιλογή Εικόνας"
 msgid "Select PDF Page"
 msgstr "Επιλογή Σελίδας PDF"
 
-#: ../ui/settings.glade:3195
+#: ../ui/settings.glade:3010
 msgid "Select toolbar:"
 msgstr "Επιλογή γραμμής εργαλείων:"
 
-#: ../ui/settings.glade:2539
+#: ../ui/settings.glade:2354
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "Χρώμα επιλεγμένων (Κείμενο, Μολυβιάς κτλ.)"
 
@@ -2784,7 +2750,7 @@ msgstr ""
 msgid "Send to Back"
 msgstr ""
 
-#: ../ui/settings.glade:1364
+#: ../ui/settings.glade:1246
 msgid "Sensitivity Scale"
 msgstr ""
 
@@ -2796,15 +2762,15 @@ msgstr "Ορισμός Στηλών"
 msgid "Set Rows"
 msgstr "Ορισμός Γραμμών"
 
-#: ../ui/settings.glade:4430
+#: ../ui/settings.glade:4245
 msgid "Settings:"
 msgstr "Ρυθμίσεις:"
 
-#: ../ui/settings.glade:4439
+#: ../ui/settings.glade:4254
 msgid "Show Floating Toolbox"
 msgstr "Εμφάνιση Αιωρούμενου Κουτιού Εργαλείων"
 
-#: ../ui/settings.glade:2430
+#: ../ui/settings.glade:2245
 msgid "Show Menubar on Startup"
 msgstr "Εμφάνιση Γραμμής Μενού κατά την Εκκίνηση"
 
@@ -2812,7 +2778,7 @@ msgstr "Εμφάνιση Γραμμής Μενού κατά την Εκκίνη�
 msgid "Show sidebar"
 msgstr "Εμφάνιση πλαϊνής μπάρας"
 
-#: ../ui/settings.glade:2945
+#: ../ui/settings.glade:2760
 msgid "Show sidebar on the right side"
 msgstr "Εμφάνιση πλαϊνής μπάρας στην δεξιά πλευρά"
 
@@ -2820,29 +2786,29 @@ msgstr "Εμφάνιση πλαϊνής μπάρας στην δεξιά πλε�
 msgid "Show toolbars"
 msgstr ""
 
-#: ../ui/settings.glade:2961
+#: ../ui/settings.glade:2776
 msgid "Show vertical scrollbar on the left side"
 msgstr "Εμφάνιση κάθετης μπάρας κύλισης στην αριστερή πλευρά"
 
-#: ../ui/settings.glade:941
+#: ../ui/settings.glade:823
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2668
+#: ../ui/settings.glade:2483
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr ""
 
-#: ../ui/settings.glade:4267
+#: ../ui/settings.glade:4082
 msgid "Snapping"
 msgstr "Προσκόλληση"
 
-#: ../ui/settings.glade:3414
+#: ../ui/settings.glade:3229
 msgid "Speed for Ctrl + Scroll"
 msgstr "Ταχύτητα Ctrl + Scroll"
 
-#: ../ui/settings.glade:3442
+#: ../ui/settings.glade:3257
 msgid "Speed for a Zoomstep"
 msgstr "Ταχύτητα για κάθε βήμα μεγέθυνσης"
 
@@ -2850,23 +2816,23 @@ msgstr "Ταχύτητα για κάθε βήμα μεγέθυνσης"
 msgid "Standard"
 msgstr "Τυπικό"
 
-#: ../ui/settings.glade:2161
+#: ../ui/settings.glade:2043
 msgid "Start zooming after a distance "
 msgstr ""
 
-#: ../ui/settings.glade:4822 ../ui/settings.glade:4880
+#: ../ui/settings.glade:4637 ../ui/settings.glade:4695
 msgid "Storage Folder"
 msgstr "Φάκελος Αποθήκευσης"
 
-#: ../ui/settings.glade:1685
+#: ../ui/settings.glade:1567
 msgid "Stylus"
 msgstr "Γραφίδα"
 
-#: ../ui/settings.glade:1654
+#: ../ui/settings.glade:1536
 msgid "Stylus Buttons"
 msgstr "Πλήκτρα Γραφίδας"
 
-#: ../ui/settings.glade:4378
+#: ../ui/settings.glade:4193
 msgid "Successive (ms)"
 msgstr "Συνεχόμενο (ms)"
 
@@ -2882,7 +2848,7 @@ msgstr ""
 msgid "Template:"
 msgstr "Πρότυπο:"
 
-#: ../ui/settings.glade:2020 ../ui/settings.glade:2033
+#: ../ui/settings.glade:1902 ../ui/settings.glade:1915
 msgid "Test"
 msgstr "Δοκιμή"
 
@@ -2914,44 +2880,36 @@ msgstr ""
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr ""
 
-#: ../ui/settings.glade:3605
+#: ../ui/settings.glade:3420
 msgid "The unit of the ruler is cm"
 msgstr "Η μονάδα μέτρησης του χάρακα είναι εκ"
-
-#: ../ui/settings.glade:869
-msgid "These settings take only effect if the experimental input system is activated"
-msgstr "Αυτές οι ρυθμίσεις ενεργοποιούνται μόνο αν το πειραματικό σύστημα εισόδου είναι ενεργοποιημένο"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
 msgstr ""
 
-#: ../ui/settings.glade:697
-msgid "This is an experimental feature! Use it with care."
-msgstr "Αυτό το χαρακτηριστικό είναι πειραματικό! Χρησιμοποιήστε με προσοχή."
-
-#: ../ui/settings.glade:1858
+#: ../ui/settings.glade:1740
 msgid "Timeout"
 msgstr "Χρονικό όριο"
 
-#: ../ui/settings.glade:2345
+#: ../ui/settings.glade:2160
 msgid "Touch Drawing"
 msgstr ""
 
-#: ../ui/settings.glade:1771 ../ui/settings.glade:2376
+#: ../ui/settings.glade:1653 ../ui/settings.glade:2191
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
 msgstr "Οθόνη Αφής"
 
-#: ../ui/settings.glade:4407
+#: ../ui/settings.glade:4222
 msgid "Try to select object first."
 msgstr "Προσπαθήστε να επιλέξετε αντικείμενο πρώτα."
 
-#: ../ui/settings.glade:4412 ../ui/settings.glade:4444
+#: ../ui/settings.glade:4227 ../ui/settings.glade:4259
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Να δοκιμαστεί η επιλογή αντικειμένου πρώτα, αν δεν έχει επιλεγεί τίποτε τότε να εμφανιστεί το αιωρούμενο κουτί εργαλείων."
 
-#: ../ui/settings.glade:4245
+#: ../ui/settings.glade:4060
 msgid "Use snapping for recognized shapes"
 msgstr ""
 
@@ -2959,7 +2917,11 @@ msgstr ""
 msgid "Use the current page size instead of the page size above."
 msgstr ""
 
-#: ../ui/settings.glade:3890
+#: ../ui/settings.glade:2142
+msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
+msgstr ""
+
+#: ../ui/settings.glade:3705
 msgid "Usually 0 or 1"
 msgstr "Συνήθως, 0 ή 1"
 
@@ -2971,16 +2933,16 @@ msgstr "Έκδοση"
 msgid "Version: "
 msgstr "Έκδοση: "
 
-#: ../ui/settings.glade:3361
+#: ../ui/settings.glade:3176
 msgid "View"
 msgstr "Προβολή"
 
-#: ../ui/settings.glade:2155
+#: ../ui/settings.glade:2037
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
 msgstr ""
 
-#: ../ui/settings.glade:4518
+#: ../ui/settings.glade:4333
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr ""
@@ -3001,10 +2963,6 @@ msgstr "Πλάτος:"
 msgid "With help from the community"
 msgstr "Με βοήθεια από την κοινότητα"
 
-#: ../ui/settings.glade:2278
-msgid "Workaround"
-msgstr "Λύση"
-
 #: ../ui/about.glade:192
 msgid "X.X.X"
 msgstr ""
@@ -3013,15 +2971,15 @@ msgstr ""
 msgid "Xournal++ Preferences"
 msgstr "Προτιμήσεις του Xournal++"
 
-#: ../ui/settings.glade:3659
+#: ../ui/settings.glade:3474
 msgid "Zoom"
 msgstr "Μεγέθυνση"
 
-#: ../ui/settings.glade:2210
+#: ../ui/settings.glade:2092
 msgid "Zoom Gestures"
 msgstr "Χειρονομίες Μεγέθυνσης"
 
-#: ../ui/settings.glade:3505
+#: ../ui/settings.glade:3320
 msgid "Zoom Speed"
 msgstr "Ταχύτητα Μεγέθυνσης"
 
@@ -3281,7 +3239,7 @@ msgstr "dpi"
 msgid "enabled,"
 msgstr "ενεργοποιημένο,"
 
-#: ../ui/settings.glade:1466
+#: ../ui/settings.glade:1348
 msgid "events"
 msgstr "συμβάντα"
 
@@ -3297,13 +3255,13 @@ msgstr "φόρτωση από αρχείο"
 msgid "minutes"
 msgstr "λεπτά"
 
-#: ../ui/settings.glade:2754 ../ui/settings.glade:2805
-#: ../ui/settings.glade:3802 ../ui/settings.glade:3813
-#: ../ui/settings.glade:4001
+#: ../ui/settings.glade:2569 ../ui/settings.glade:2620
+#: ../ui/settings.glade:3617 ../ui/settings.glade:3628
+#: ../ui/settings.glade:3816
 msgid "pixels"
 msgstr "pixels"
 
-#: ../ui/settings.glade:1902
+#: ../ui/settings.glade:1784
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(μετά από το οποίο θα ενεργοποιηθεί ξανά η οθόνη αφής)</i>"
 
