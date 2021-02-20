@@ -119,11 +119,13 @@ public:
      * on the display taking into account the current zoom
      */
     int getDisplayWidth() const;
+    double getDisplayWidthDouble() const;
     /**
      * Returns the height of this XojPageView as displayed
      * on the display taking into account the current zoom
      */
     int getDisplayHeight() const;
+    double getDisplayHeightDouble() const;
 
     /**
      * Returns the x coordinate of this XojPageView with
