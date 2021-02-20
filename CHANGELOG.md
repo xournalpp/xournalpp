@@ -2,6 +2,10 @@
 
 ## 1.1.0 / Nightly (Unreleased)
 
+This is a new major version of Xournal++ with many new features, improvements,
+and bug fixes thanks to over one year's worth of contributions from the
+community.
+
 * **Breaking changes**:
     * Xournal++ now follows the [XDG Base Directory
       Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)
@@ -10,11 +14,40 @@
       will be copied automatically if the new user data folder does not exist.
     * The code has been updated to use C++17 (#1485) and must now be compiled
       using a supported compiler version, such as GCC 7 or Clang 5 (or newer).
+    * Windows: the installer has been changed to correctly set up registry keys,
+      an uninstaller entry, and selections to the Open With context menu in
+      Explorer (#, #, #, # , # ).
     * Linux: Support for Ubuntu 16.04 (and older distros) has been dropped.
       Please use a distro from 2018 or later, such as Ubuntu 18.04 or Debian
-      Buster.
+      Buster. The dependency versions have been updated accordingly.
     * Linux: The thumbnailer program has been renamed from `xournal-thumbnailer`
       to `xournalpp-thumbnailer` in order to fix tab completion (#1752).
+    * Xournal++ now has a hard dependency on `librsvg`. This should not affect
+      end-users, only maintainers and packagers.
+* Packaging changes
+    * AppImage: Fix AppImages not running on more recent Linux distros (#2600).
+* Document viewing
+    * Changed page selection system to now selected pages during scrolling (#).
+    * Improved page load performance and memory consumption with new page
+      preload mechanism (#2603).
+    * Fixed a bug where scrolling would not work with zoom fit enabled until the
+    zoom level changes (#2541).
+    * Fixed some bugs that preventing documents from being displayed on ARM and
+      32-bit devices (#2576).
+    * Fixed vim-style `hjlk` keybindings being inconsistent with the arrow keys
+      (#2712).
+* Document export
+    * Added a "progressive mode" option to PDF file export dialog. This will
+      render layers from bottom to top, exporting a new page every time a layer
+      is rendered (#2589, #2609).
+    * Simplified background rendering to improve compatibility of exported SVGs
+      (#2598).
+* Sidebar preview panel
+    * Changed layer previews to only show background in background layer (#2674)
+    * Moved close button from the bottom to the top.
+    * Fixed button tooltips not reflecting the page/layer tabs (#2776).
+    * Fixed a bug where the buttons would be enabled/disabled inconsistently
+      (#2776).
 * Audio playback
     * Added seeking functionality during playback (#1520)
     * Fixed crashes caused by race conditions in the audio system
@@ -26,13 +59,21 @@
     * Reimplemented zoom gestures for better compatibility (#1528)
     * Added a `Mouse+Keyboard` device class for handling e.g. wireless USB
       mouse/keyboard receivers (#1769, #1785).
-* LaTeX
+    * Added Preference settings for minimum pressure level and pressure
+      multiplier (#2622).
+    * Fixed a bug where two-finger zoom would be triggered even when zoom
+      gestures are disabled (#2510).
+    * Added a touchpad pinch gesture for zooming (#2651).
+    * Fixed touch drawing not working with the pen tool (#2123).
+* LaTeX tool
     * Reworked LaTeX tool implementation (#1952).
     * Added a new tab in the Preferences window for LaTeX configuration.
     * Added a `global template file` setting for custom LaTeX template files
       to be used when rendering LaTeX formulas (#1188).
     * Added a button in the Preferences window for testing LaTeX setup.
-* Splines
+    * Fixed a bug where closing the dialog before the initial render would crash
+      the application (#2728, 2798).
+* Spline tool
     * Added cubic splines as a drawing tool (#1688, #1798, #1861).
     * Click to add anchor points (knots) and drag to create non-trivial
       tangents. Backspace key, arrow keys, s and Shift+s allow to delete/modifiy
@@ -46,28 +87,54 @@
       selection (#2011)
     * Added a Preferences setting to change the snap grid size (#1920).
     * Fixed a bug in the object selection algorithm (#2478)
-* Pen
+    * Added Preference settings to configure the grid size (#1920).
+    * Fixed a bug in the grid snapping tolerance (#2779).
+* Pen tool
     * Added Preferences settings to configure the radius, color, and border of
       the cursor highlight when `Highlight cursor position` is enabled (#1891,
       #1898).
-* Misc
-    * Added a menu toggle item for showing/hiding the toolbar, bound to F9
-      (#2112).
     * Added a new mode for drawing without pen icon (#2111).
+    * Renamed "fill transparency" to "fill opacity" to avoid confusion (#2590).
+    * Added thick/thin settings to default tool preferences (#2611).
+    * Added ability to change line styles of existing strokes (#2641).
+    * Changed name of "Draw Circle" to "Draw Ellipse" (#2708).
+    * Improved circle drawing controls (#2707).
+* Text tool
+    * Fixed a bug where the font button would not be updated when editing a text
+      field (#2620).
+    * Fixed a bug where text elements would not be displayed at the correct
+      positions when an image is used as the page background (#2725).
+    * Fixed a bug where IME pre-edit strings would destroy preceding multi-byte
+      characters (#2788).
+* Plugins
+    * Extended plugin API with many new features and functions, including page
+      and layer operations (#2406).
     * Added a Lua plugin for taking a screenshot and saving it to a file
       (#2086).
     * Added a Lua plugin for cycling though a color list (#1835, #2251).
-    * Added Ubuntu 20.04 as a release build (#2060).
+* Misc
+    * New application icon (#2557)
+    * Added a menu toggle item for showing/hiding the toolbar, bound to F9
+      (#2112).
     * Added a language setting in the Preferences window (#2188)
-    * Non-visible refactoring and code cleanup (see #1279 for details)
-    * Switch to std::filesystem (#2150)
+    * Added ability to mirror selected elements when scaling in a negative
+      direction (#2723).
+    * Added `Edit > Arrange` menu items and the corresponding actions for
+      rearranging selected elements (#2794).
+    * Fixed the confusing behavior of the `Apply to current/all pages` buttons
+      used to change the page backgrounds (#2730).
+    * Fixed bugs in element cloning, which previously could have caused elements
+      to become invalid (#2733, #2720, #2464).
+    * Fixed a bug where the thumbnailer would not correctly render icons in file
+      managers that sandbox their thumbnailers (#2738).
+    * Improved look of the the Preferences window (#2592).
+    * Non-visible refactoring and code cleanup (#1279, #2150)
     * Updated translations
     * Made the eraser more accurate (#1818).
     * Fixed a cursor update bug (#1954).
-    * Made the grid size configurable (#1920).
     * Fixed keyboard shortcuts not working when the menubar is hidden (#2324)
     * Added support for more export options in command line and GUI (#2449)
-    * Switched from deprecated gtk2 initialisation to gtk3 initialisation (#2252)
+    * Switched from deprecated GTK 2 initialisation to GTK 3 initialisation (#2252)
     * Improved tool handling and performance improvement (#2339)
     * Added menu entry to append new pdf pages (#2146)
 
@@ -86,7 +153,7 @@ More bugfixes.
 More bugfixes and improvements due to help from the various community
 contributors!
 
-* Changed select object algorithm to be more intuitive (#1881).
+* Changed select object algorithm to be more intuitive (#1881, #2478).
 * Added ability for taps with Select Rectangle and Select Region to act like
   Select Object (#1980)
 * Improved document loading speed (#2002)
