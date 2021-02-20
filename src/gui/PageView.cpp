@@ -867,6 +867,12 @@ auto XojPageView::getDisplayHeight() const -> int {
     return std::lround(this->page->getHeight() * this->xournal->getZoom());
 }
 
+auto XojPageView::getDisplayWidthDouble() const -> double { return this->page->getWidth() * this->xournal->getZoom(); }
+
+auto XojPageView::getDisplayHeightDouble() const -> double {
+    return this->page->getHeight() * this->xournal->getZoom();
+}
+
 auto XojPageView::getSelectedTex() -> TexImage* {
     EditSelection* theSelection = this->xournal->getSelection();
     if (!theSelection) {

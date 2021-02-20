@@ -42,8 +42,8 @@ public:
         // The width and height of all our pages
         size_t minWidth = 0;
         size_t minHeight = 0;
-        std::vector<unsigned> widthCols;
-        std::vector<unsigned> heightRows;
+        std::vector<double> widthCols;
+        std::vector<double> heightRows;
         bool valid = false;
     };
 

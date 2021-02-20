@@ -486,7 +486,6 @@ void XournalView::zoomChanged() {
     } else {
         auto pos = zoom->getScrollPositionAfterZoom();
         if (pos.x != -1 && pos.y != -1) {
-            // Todo: This could be one source of all evil:
             Layout* layout = gtk_xournal_get_layout(this->widget);
             layout->scrollAbs(pos.x, pos.y);
         }
