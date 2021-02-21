@@ -72,7 +72,7 @@ community.
       to be used when rendering LaTeX formulas (#1188).
     * Added a button in the Preferences window for testing LaTeX setup.
     * Fixed a bug where closing the dialog before the initial render would crash
-      the application (#2728, 2798).
+      the application (#2728, #2798).
 * Spline tool
     * Added cubic splines as a drawing tool (#1688, #1798, #1861).
     * Click to add anchor points (knots) and drag to create non-trivial
@@ -127,7 +127,7 @@ community.
       to become invalid (#2733, #2720, #2464).
     * Fixed a bug where the thumbnailer would not correctly render icons in file
       managers that sandbox their thumbnailers (#2738).
-    * Improved look of the the Preferences window (#2592).
+    * Improved look of the Preferences window (#2592).
     * Non-visible refactoring and code cleanup (#1279, #2150)
     * Updated translations
     * Made the eraser more accurate (#1818).
