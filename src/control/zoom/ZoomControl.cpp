@@ -101,7 +101,7 @@ void ZoomControl::zoomScroll(ZoomDirection zoomIn, utl::Point<double> zoomCenter
         return;
     }
 
-    if (this->zoomFitMode) {
+    if (this->isZoomFitMode()) {
         this->setZoomFitMode(false);
     }
 
@@ -256,7 +256,7 @@ auto ZoomControl::updateZoomFitValue(size_t pageNo) -> bool {
 
     this->zoomFitValue = zoom_fit_width;
     fireZoomRangeValueChanged();
-    if (this->zoomFitMode && !this->zoomPresentationMode) {
+    if (this->isZoomFitMode() && !this->zoomPresentationMode) {
         this->zoomFit();
     }
     return true;
@@ -303,7 +303,7 @@ void ZoomControl::zoom100() {
 }
 
 void ZoomControl::zoomFit() {
-    if (this->zoomFitMode && !this->zoomPresentationMode && this->zoom != this->zoomFitValue) {
+    if (this->isZoomFitMode() && !this->zoomPresentationMode && this->zoom != this->zoomFitValue) {
         startZoomSequence();
         this->zoomSequenceChange(this->zoomFitValue, false);
         endZoomSequence();
@@ -321,15 +321,24 @@ void ZoomControl::zoomPresentation() {
 void ZoomControl::setZoomFitMode(bool isZoomFitMode) {
     if (this->zoomFitMode != isZoomFitMode) {
         this->zoomFitMode = isZoomFitMode;
-        this->control->fireActionSelected(GROUP_ZOOM_FIT, isZoomFitMode ? ACTION_ZOOM_FIT : ACTION_NOT_SELECTED);
+        this->control->fireActionSelected(GROUP_ZOOM_FIT, this->zoomFitMode ? ACTION_ZOOM_FIT : ACTION_NOT_SELECTED);
     }
 
-    if (isZoomFitMode) {
+    if (this->isZoomFitMode()) {
         zoomFit();
     }
 }
 
-auto ZoomControl::isZoomFitMode() const -> bool { return this->zoomFitMode; }
+auto ZoomControl::isZoomFitMode() const -> bool {
+    // Todo(fabian): Remove this fix and make both modes possible in parallel, after fixing the infinite loop.
+    //  Explanation: First of all, zoomFit never worked with paired pages. Also, using both resulted in a stackoverflow
+    //               when different page sizes are used. This is caused by a logical loop.
+    //               We decided to deactivate it in PR#2821 & I#2770. instead of fixing it, to get release 1.1.0 ready.
+    //               Zoom presentation mode is also excluded, because it was never intended to work together.
+    //               It is also excluded everywhere else (duplicate code).
+    auto infiniteLoopFixup = !this->zoomPresentationMode && !this->control->getSettings()->isShowPairedPages();
+    return this->zoomFitMode && infiniteLoopFixup;
+}
 
 void ZoomControl::setZoomPresentationMode(bool isZoomPresentationMode) {
     this->zoomPresentationMode = isZoomPresentationMode;
@@ -352,7 +361,7 @@ void ZoomControl::pageSizeChanged(size_t page) {
 
 void ZoomControl::pageSelected(size_t page) {
     // Todo (fabian): page selected should do nothing here, since Zoom Controls, which page is selected.
-    //               This results in a logical loop
+    //                This results in a logical loop. See PR#2821 & I#2770
     if (current_page != page) {
         this->last_page = this->current_page;
         this->current_page = page;
