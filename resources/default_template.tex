@@ -25,7 +25,7 @@
 
 \begin{document}
   % Check if the formula is empty
-  \settoheight{\pheight}{\getstored[1]{preview}}
+  \settoheight{\pheight}{\getstored[1]{preview}}%
   \ifthenelse{\pheight=0}{\GenericError{}{xournalpp:blankformula}{}{}}
 
   % Render the user input
