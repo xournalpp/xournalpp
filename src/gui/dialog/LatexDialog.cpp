@@ -13,6 +13,7 @@
 
 #include "LatexDialog.h"
 
+#include <sstream>
 #include <utility>
 
 #include "control/settings/Settings.h"
@@ -36,17 +37,22 @@ static void resizePreviewCallback(GtkWidget* widget, GdkRectangle* allocation, g
 LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& settings):
         GladeGui(gladeSearchPath, "texdialog.glade", "texDialog") {
     GtkContainer* texBoxContainer = GTK_CONTAINER(get("texBoxContainer"));
+    std::stringstream widgetCss;
+
 #ifdef HAVE_GTK_SOURCEVIEW_LIB
     this->texBox = gtk_source_view_new();
 #else
     this->texBox = gtk_text_view_new();
 #endif
+    gtk_widget_set_name(this->texBox, "texBox");
+
     gtk_container_add(texBoxContainer, this->texBox);
     gtk_text_view_set_editable(GTK_TEXT_VIEW(this->texBox), true);
     gtk_widget_show_all(GTK_WIDGET(texBoxContainer));
 
     this->textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(this->texBox));
     this->texTempRender = get("texImage");
+    gtk_widget_set_name(GTK_WIDGET(this->texTempRender), "texImage");
 
 #ifdef HAVE_GTK_SOURCEVIEW_LIB
     // If wer're using a GtkSourceView, try to select the LaTeX
@@ -71,15 +77,37 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
     }
 #endif
 
+    widgetCss << "#texBox {";
+
+    if (settings.useCustomEditorFont) {
+        widgetCss << "  font-size: " << settings.editorFont.getSize() << "pt;";
+        widgetCss << "  font-family: " << settings.editorFont.getName() << ";";
+    }
+
+    widgetCss << "} ";
+
+
     // increase the maximum length to something reasonable.
     // gtk_entry_set_max_length(GTK_TEXT_BUFFER(this->texBox), 500);
 
     // Background color for the temporary render, default is white because
-    // on dark themed DE the LaTex is hard to read
+    // on dark themed DE the LaTeX is hard to read
+    widgetCss << "#texImage {";
+    widgetCss << "    background-color: white;";
+    widgetCss << "    padding: 10px;";
+    widgetCss << "} ";
+
+    std::string widgetCssStr = widgetCss.str();
+
     this->cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_data(this->cssProvider, "*{background-color:white;padding:10px;}", -1, nullptr);
-    gtk_style_context_add_provider(gtk_widget_get_style_context(this->texTempRender),
+    gtk_css_provider_load_from_data(this->cssProvider, widgetCssStr.c_str(), -1, nullptr);
+
+    // Apply the CSS to both the texBox and the drawing area.
+    gtk_style_context_add_provider(gtk_widget_get_style_context(GTK_WIDGET(this->texTempRender)),
                                    GTK_STYLE_PROVIDER(this->cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_style_context_add_provider(gtk_widget_get_style_context(GTK_WIDGET(this->texBox)),
+                                   GTK_STYLE_PROVIDER(this->cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
 
     // Connect to redraw events for the texImage.
     g_signal_connect(G_OBJECT(this->texTempRender), "draw", G_CALLBACK(drawPreviewCallback), this);
