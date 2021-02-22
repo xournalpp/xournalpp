@@ -13,6 +13,8 @@
 
 #include <string>
 
+#include "model/Font.h"
+
 #include "filesystem.h"
 
 class LatexSettings {
@@ -30,4 +32,10 @@ public:
      * libaray.
      */
     std::string sourceViewThemeId{};
+
+    /**
+     * Font to be used by the editor.
+     */
+    XojFont editorFont{"Monospace", 12};
+    bool useCustomEditorFont{false};
 };

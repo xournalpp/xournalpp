@@ -9,15 +9,15 @@
     <property name="title" translatable="yes">Insert Latex</property>
     <property name="window-position">center</property>
     <property name="icon-name">dialog-information</property>
-    <property name="type-hint">dialog</property>
+    <property name="type-hint">normal</property>
     <property name="has-resize-grip">True</property>
     <child internal-child="vbox">
-      <object class="GtkBox" id="dialog-vbox2">
+      <object class="GtkBox" id="dialog-vbox">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area2">
+          <object class="GtkButtonBox" id="dialog-action_area">
             <property name="name">dialog-action_area2</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
