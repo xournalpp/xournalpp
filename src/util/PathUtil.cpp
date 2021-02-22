@@ -159,7 +159,7 @@ auto Util::getGettextFilepath(const char* localeDir) -> fs::path {
     std::string directories;
     if (gettextEnv) {
         directories = std::string(gettextEnv);
-        size_t firstDot = directories.find(':');
+        size_t firstDot = directories.find(G_SEARCHPATH_SEPARATOR);
         if (firstDot != std::string::npos) {
             directories = directories.substr(0, firstDot);
         }
