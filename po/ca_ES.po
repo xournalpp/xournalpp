@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-20 06:58+0000\n"
-"PO-Revision-Date: 2021-02-20 07:01\n"
+"PO-Revision-Date: 2021-02-22 10:04\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -20,25 +20,27 @@ msgstr ""
 #: ../src/control/XournalMain.cpp:473
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n\n"
+"S'intentarà executar sense aquest arxiu."
 
 #: ../src/control/XournalMain.cpp:454
 msgid "\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n"
+"S'intentarà executar sense aquest arxiu."
 
 #: ../src/gui/MainWindow.cpp:723
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
-msgstr ""
+msgstr " de {1}{2}"
 
 #: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Nota-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:130
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
+msgstr "<b>No s'ha trobat cap dispositiu. Això és inusual; recomanem que envií un informe d'error.</b>"
 
 #: ../src/control/XournalMain.cpp:468
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -47,44 +49,49 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>Falta el  arxiu de IU necessari:\n"
+"<b>{1}</b></span>\n"
+"No s'ha pogut trobar en cap ubicació.\n"
+"  No és relatiu\n"
+"  No està en la ruta de treball\n"
+"  No està en {2}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Add/Edit Tex"
-msgstr ""
+msgstr "Afegir/editar Tex"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "Opcions avançades d'exportació"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
-msgstr ""
+msgstr "Tots els arxius"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:191
 msgid "Apply to all pages"
-msgstr ""
+msgstr "Aplicar a totes les pàgines"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:182
 msgid "Apply to current page"
-msgstr ""
+msgstr "Aplicar a la pàgina actual"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "Ordenar"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
 msgid "Attach file to the journal"
-msgstr ""
+msgstr "Adjuntar arxiu al quadern"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:102
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
+msgstr "No es pot processar l'atribut «{1}» com a «double»; el valor és «{2}»"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:95
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "No es pot processar l'atribut «{1}» com a «double»; el valor és «nullptr»"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:119
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:138
