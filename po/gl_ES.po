@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-20 06:58+0000\n"
-"PO-Revision-Date: 2021-02-20 07:00\n"
+"PO-Revision-Date: 2021-02-22 21:03\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -78,7 +78,7 @@ msgstr "Aplicar á páxina actual"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "Dispor"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -154,11 +154,11 @@ msgstr "Azul"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring forward"
-msgstr ""
+msgstr "Traer cara adiante"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "Traer á fronte"
 
 #: ../src/control/Control.cpp:2014 ../src/control/Control.cpp:2470
 #: ../src/control/XournalMain.cpp:168
@@ -360,7 +360,7 @@ msgstr "Eliminar a capa"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Delete this layer"
-msgstr ""
+msgstr "Eliminar esta capa"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Delete this page"
@@ -417,7 +417,7 @@ msgstr "Debuxar frecha"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Debuxar elipse"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -709,7 +709,7 @@ msgstr "Imaxes"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Inserir unha copia da seguinte capa actual"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Insert a copy of the current page below"
@@ -1145,11 +1145,11 @@ msgstr "Enviar informe de erro"
 
 #: ../src/control/tools/EditSelection.cpp:371
 msgid "Send backward"
-msgstr ""
+msgstr "Enviar ao fondo"
 
 #: ../src/control/tools/EditSelection.cpp:379
 msgid "Send to back"
-msgstr ""
+msgstr "Enviar cara atrás"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
 msgid "Separator"
@@ -1229,11 +1229,11 @@ msgstr "Ficheiros admitidos"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:53
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Trocar a capa actual coa inmediata anterior"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Trocar a capa actual coa inmediata posterior"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:65
 msgid "Swap the current page with the one above"
@@ -2051,11 +2051,11 @@ msgstr "Cor do bordo da páxina actual e outras seleccións"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Traer cara adiante"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "Traer á fronte"
 
 #: ../ui/about.glade:127
 msgid "Built on"
@@ -2083,7 +2083,7 @@ msgstr "Cor do círculo"
 
 #: ../ui/settings.glade:3125
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "Despexar o paxinado cacheado ao desprazar"
 
 #: ../ui/settings.glade:2411
 msgid "Colors"
@@ -2649,7 +2649,7 @@ msgstr "_Opcións do lapis"
 
 #: ../ui/settings.glade:3145
 msgid "Performance"
-msgstr ""
+msgstr "Rendemento"
 
 #: ../ui/settings.glade:5019
 msgid "Playback Settings"
@@ -2669,11 +2669,11 @@ msgstr "Os cambios do complemento soamente se aprecian tras rearrancar Xournal++
 
 #: ../ui/settings.glade:3088
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Precargar as páxinas desde a"
 
 #: ../ui/settings.glade:3076
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Precargar as páxinas antes de"
 
 #: ../ui/main.glade:487
 msgid "Preferences"
@@ -2789,11 +2789,11 @@ msgstr "Cor da selección (texto, selección de trazo, etc.)"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Enviar ao fondo"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "Enviar cara atrás"
 
 #: ../ui/settings.glade:1246
 msgid "Sensitivity Scale"
