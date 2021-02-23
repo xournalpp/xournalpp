@@ -19,9 +19,11 @@ class ToolbarEntry {
 public:
     ToolbarEntry();
     ToolbarEntry(const ToolbarEntry& e);
+    ToolbarEntry(ToolbarEntry&& e);
     ~ToolbarEntry();
 
-    void operator=(const ToolbarEntry& e);
+    ToolbarEntry& operator=(const ToolbarEntry& e);
+    ToolbarEntry& operator=(ToolbarEntry&& e);
 
 public:
     void clearList();

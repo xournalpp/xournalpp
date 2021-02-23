@@ -13,19 +13,12 @@ ToolbarItem::ToolbarItem(string name) {
     }
 }
 
-ToolbarItem::ToolbarItem(const ToolbarItem& item) {
-    this->id = item.id;
-    this->name = item.name;
-}
-
 ToolbarItem::ToolbarItem() {
     this->name = "";
     this->id = -100;
 }
 
-ToolbarItem::~ToolbarItem() = default;
-
-auto ToolbarItem::getName() -> string { return this->name; }
+auto ToolbarItem::getName() const -> const std::string& { return this->name; }
 
 auto ToolbarItem::operator==(ToolbarItem& other) -> bool { return this->name == other.name; }
 
