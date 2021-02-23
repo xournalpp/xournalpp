@@ -1,16 +1,14 @@
 #include "ToolbarDragDropHelper.h"
 
-GdkAtom ToolbarDragDropHelper::atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
-GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = {const_cast<char*>("move-buffer"), GTK_TARGET_SAME_APP, 1};
+namespace ToolbarDragDropHelper {
 
-ToolbarDragDropHelper::ToolbarDragDropHelper() = default;
-
-ToolbarDragDropHelper::~ToolbarDragDropHelper() = default;
+const GdkAtom atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
+const GtkTargetEntry dropTargetEntry = {const_cast<char*>("move-buffer"), GTK_TARGET_SAME_APP, 1};
 
 /**
  * Get a GDK Pixbuf from GTK widget image
  */
-auto ToolbarDragDropHelper::getImagePixbuf(GtkImage* image) -> GdkPixbuf* {
+auto getImagePixbuf(GtkImage* image) -> GdkPixbuf* {
     switch (gtk_image_get_storage_type(image)) {
         case GTK_IMAGE_PIXBUF:
             return static_cast<GdkPixbuf*>(g_object_ref(gtk_image_get_pixbuf(image)));
@@ -28,7 +26,7 @@ auto ToolbarDragDropHelper::getImagePixbuf(GtkImage* image) -> GdkPixbuf* {
     }
 }
 
-void ToolbarDragDropHelper::dragDestAddToolbar(GtkWidget* target) {
+void dragDestAddToolbar(GtkWidget* target) {
     GtkTargetList* targetList = gtk_drag_dest_get_target_list(target);
     if (targetList) {
         gtk_target_list_ref(targetList);
@@ -45,7 +43,7 @@ void ToolbarDragDropHelper::dragDestAddToolbar(GtkWidget* target) {
     gtk_target_list_unref(targetList);
 }
 
-void ToolbarDragDropHelper::dragSourceAddToolbar(GtkWidget* widget) {
+void dragSourceAddToolbar(GtkWidget* widget) {
     GtkTargetList* targetList = gtk_drag_source_get_target_list(widget);
     if (targetList) {
         // List contains already this type
@@ -61,3 +59,4 @@ void ToolbarDragDropHelper::dragSourceAddToolbar(GtkWidget* widget) {
     gtk_drag_source_set_target_list(widget, targetList);
     gtk_target_list_unref(targetList);
 }
+}  // namespace ToolbarDragDropHelper

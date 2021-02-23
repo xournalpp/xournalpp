@@ -19,15 +19,10 @@
 class ToolbarItem {
 public:
     ToolbarItem(string name);
-    ToolbarItem(const ToolbarItem& item);
     ToolbarItem();
-    virtual ~ToolbarItem();
-
-private:
-    void operator=(const ToolbarItem& other);
 
 public:
-    string getName();
+    const std::string& getName() const;
 
     bool operator==(ToolbarItem& other);
 

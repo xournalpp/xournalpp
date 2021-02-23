@@ -1,18 +1,28 @@
 #include "ToolbarEntry.h"
 
+#include <algorithm>
 #include <utility>
 
 ToolbarEntry::ToolbarEntry() = default;
 
 ToolbarEntry::ToolbarEntry(const ToolbarEntry& e) { *this = e; }
+ToolbarEntry::ToolbarEntry(ToolbarEntry&& e) { *this = std::move(e); }
 
-void ToolbarEntry::operator=(const ToolbarEntry& e) {
+ToolbarEntry& ToolbarEntry::operator=(const ToolbarEntry& e) {
     this->name = e.name;
-    clearList();
-
+    std::vector<ToolbarItem*> entries;
     for (ToolbarItem* item: e.entries) {
         entries.push_back(new ToolbarItem(*item));
     }
+    clearList();
+    this->entries = std::move(entries);
+    return *this;
+}
+
+ToolbarEntry& ToolbarEntry::operator=(ToolbarEntry&& e) {
+    this->name = std::move(e.name);
+    std::swap(this->entries, e.entries);
+    return *this;
 }
 
 ToolbarEntry::~ToolbarEntry() { clearList(); }
@@ -36,11 +46,10 @@ auto ToolbarEntry::addItem(string item) -> int {
 }
 
 auto ToolbarEntry::removeItemById(int id) -> bool {
-    for (unsigned int i = 0; i < this->entries.size(); i++) {
-        if (this->entries[i]->getId() == id) {
-            delete this->entries[i];
-            entries[i] = nullptr;
-            entries.erase(entries.begin() + i);
+    for (auto it = this->entries.begin(); it != this->entries.end(); it++) {
+        if ((*it)->getId() == id) {
+            delete *it;
+            this->entries.erase(it);
             return true;
         }
     }
