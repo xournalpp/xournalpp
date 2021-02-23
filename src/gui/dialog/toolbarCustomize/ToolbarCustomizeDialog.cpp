@@ -80,7 +80,10 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
     // We can only delete this list at the end, it would be better to delete this list
     // after a refresh and after drag_end is called...
     for (ToolItemDragData* data: this->itemDatalist) {
-        g_object_unref(data->icon);
+        if (data->icon != nullptr) {
+            g_object_unref(data->icon);
+        }
+        g_object_unref(data->ebox);
         g_free(data);
     }
 }
@@ -115,8 +118,9 @@ void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget* widget, Gdk
  */
 void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, ToolItemDragData* data) {
     ToolItemDragCurrentData::setData(TOOL_ITEM_ITEM, -1, data->item);
-
-    gtk_drag_set_icon_pixbuf(context, data->icon, -2, -2);
+    if (data->icon) {
+        gtk_drag_set_icon_pixbuf(context, data->icon, -2, -2);
+    }
     gtk_widget_hide(data->ebox);
 }
 
@@ -272,7 +276,9 @@ void ToolbarCustomizeDialog::rebuildIconview() {
         data->dlg = this;
         data->icon = ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon));
         data->item = item;
+        // store reference to ebox
         data->ebox = ebox;
+        g_object_ref(ebox);
 
         this->itemDatalist.push_front(data);
 
