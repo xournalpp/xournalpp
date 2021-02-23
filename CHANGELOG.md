@@ -12,18 +12,23 @@ community.
       (#1101, #1384). The configuration files will now be stored in an
       appropriate platform-specific user data folder. Old configuration files
       will be copied automatically if the new user data folder does not exist.
-    * The code has been updated to use C++17 (#1485) and must now be compiled
-      using a supported compiler version, such as GCC 7 or Clang 5 (or newer).
-    * Windows: the installer has been changed to correctly set up registry keys,
-      an uninstaller entry, and selections to the Open With context menu in
-      Explorer (#, #, #, # , # ).
+    * Windows: the installer has been updated, fixing many issues such as:
+      incorrectly set up registry keys, missing uninstaller entry, missing
+      entries in Open With context menu in Explorer, missing icons, etc. (#2606,
+      #2585, #2387, #2141, #2036, #1903, #2666). When upgrading from 1.0.18, you
+      **must not run the uninstaller**; instead, run the updated installer,
+      which will clean up files from the old install and fix the registry key
+      entries. **If you are downgrading from 1.1.0 to 1.0.18 or older, you must
+      run the uninstaller first.**
     * Linux: Support for Ubuntu 16.04 (and older distros) has been dropped.
       Please use a distro from 2018 or later, such as Ubuntu 18.04 or Debian
       Buster. The dependency versions have been updated accordingly.
     * Linux: The thumbnailer program has been renamed from `xournal-thumbnailer`
       to `xournalpp-thumbnailer` in order to fix tab completion (#1752).
-    * Xournal++ now has a hard dependency on `librsvg`. This should not affect
+    * Linux: Xournal++ now has a hard dependency on `librsvg`. This should not affect
       end-users, only maintainers and packagers.
+    * The code has been updated to use C++17 (#1485) and must now be compiled
+      using a supported compiler version, such as GCC 7 or Clang 5 (or newer).
 * Packaging changes
     * AppImage: Fix AppImages not running on more recent Linux distros (#2600).
 * Document viewing
@@ -36,6 +41,8 @@ community.
       32-bit devices (#2576).
     * Fixed vim-style `hjlk` keybindings being inconsistent with the arrow keys
       (#2712).
+    * Fixed various issues related to zooming and scrolling (#2435, #2743,
+      #2023, #1830)
 * Document export
     * Added a "progressive mode" option to PDF file export dialog. This will
       render layers from bottom to top, exporting a new page every time a layer
@@ -44,7 +51,8 @@ community.
       (#2598).
 * Sidebar preview panel
     * Changed layer previews to only show background in background layer (#2674)
-    * Moved close button from the bottom to the top.
+    * Moved close button from the bottom to the top to improve usability
+      (#2727).
     * Fixed button tooltips not reflecting the page/layer tabs (#2776).
     * Fixed a bug where the buttons would be enabled/disabled inconsistently
       (#2776).
@@ -55,15 +63,21 @@ community.
     * Added an error message popup which displays when a recording fails to load
       or play (#1573)
 * Input System
-    * The old input system has been removed.
-    * Reimplemented zoom gestures for better compatibility (#1528)
+    * Removed the old input system and touch workaround, both of which have been
+      deprecated (#2308).
     * Added a `Mouse+Keyboard` device class for handling e.g. wireless USB
       mouse/keyboard receivers (#1769, #1785).
     * Added Preference settings for minimum pressure level and pressure
       multiplier (#2622).
+    * Added a touchpad pinch gesture for zooming (#2651).
+    * Added a Preferences setting to ignore the first few pen input events when
+      starting a new stroke (#1854).
+    * Reimplemented zoom gestures for better compatibility (#1528)
+    * Improved tool handling (#2339)
+    * Fixed a bug where the touchscreen could not be used to pan and zoom when
+      touch drawing is enabled (#2435).
     * Fixed a bug where two-finger zoom would be triggered even when zoom
       gestures are disabled (#2510).
-    * Added a touchpad pinch gesture for zooming (#2651).
     * Fixed touch drawing not working with the pen tool (#2123).
 * LaTeX tool
     * Reworked LaTeX tool implementation (#1952).
@@ -73,6 +87,7 @@ community.
     * Added a button in the Preferences window for testing LaTeX setup.
     * Fixed a bug where closing the dialog before the initial render would crash
       the application (#2728, #2798).
+    * Fixed a bug where line breaks would not be saved correctly (#2849).
 * Spline tool
     * Added cubic splines as a drawing tool (#1688, #1798, #1861).
     * Click to add anchor points (knots) and drag to create non-trivial
@@ -86,57 +101,71 @@ community.
     * Added a Preferences settings to preserve line width while resizing a
       selection (#2011)
     * Added a Preferences setting to change the snap grid size (#1920).
-    * Fixed a bug in the object selection algorithm (#2478)
     * Added Preference settings to configure the grid size (#1920).
     * Fixed a bug in the grid snapping tolerance (#2779).
-* Pen tool
+* Selections
+    * Added ability to mirror selected elements when scaling in a negative
+      direction (#2723).
+    * Added `Edit > Arrange` menu items and the corresponding actions for
+      rearranging selected elements (#2794).
+    * Fixed some bugs where selections would not be copied correctly (#2277,
+      #2090, #2733).
+* Pen and eraser tools
     * Added Preferences settings to configure the radius, color, and border of
       the cursor highlight when `Highlight cursor position` is enabled (#1891,
       #1898).
-    * Added a new mode for drawing without pen icon (#2111).
+    * Added a new "no cursor" cursor type and changed "Big pen" checkbox in
+      Preferences into a combo box (#2111).
     * Renamed "fill transparency" to "fill opacity" to avoid confusion (#2590).
     * Added thick/thin settings to default tool preferences (#2611).
     * Added ability to change line styles of existing strokes (#2641).
     * Changed name of "Draw Circle" to "Draw Ellipse" (#2708).
     * Improved circle drawing controls (#2707).
+    * Improved the accuracy of the eraser tool (#1818).
+    * Changed pen/highlighter cursor to be in the shape of a circle with the
+      approximate stroke size (#1945, #1513).
+    * Fixed a cursor update bug (#1954).
+    * Fixed strange behavior of color switches when temporarily using the eraser
+      (#2004, #1546, #1712).
 * Text tool
+    * Added support for text edit blinking to be enabled/disabled through
+      standard GTK configuration settings (#2170).
+    * Fixed several serious bugs with IME pre-edit strings (#2789, #2788, #2826).
     * Fixed a bug where the font button would not be updated when editing a text
       field (#2620).
     * Fixed a bug where text elements would not be displayed at the correct
       positions when an image is used as the page background (#2725).
-    * Fixed a bug where IME pre-edit strings would destroy preceding multi-byte
-      characters (#2788).
 * Plugins
     * Extended plugin API with many new features and functions, including page
       and layer operations (#2406).
     * Added a Lua plugin for taking a screenshot and saving it to a file
       (#2086).
     * Added a Lua plugin for cycling though a color list (#1835, #2251).
+* Paper backgrounds
+    * Added an isometric paper background type (#1994).
+    * Changed background types to use lighter line colors when a dark background
+      is set. The colors can be set in `pagetemplates.ini` (#2055, #2352).
+    * Fixed the confusing behavior of the `Apply to current/all pages` buttons
+      used to change the page backgrounds (#2730).
 * Misc
     * New application icon (#2557)
     * Added a menu toggle item for showing/hiding the toolbar, bound to F9
       (#2112).
     * Added a language setting in the Preferences window (#2188)
-    * Added ability to mirror selected elements when scaling in a negative
-      direction (#2723).
-    * Added `Edit > Arrange` menu items and the corresponding actions for
-      rearranging selected elements (#2794).
-    * Fixed the confusing behavior of the `Apply to current/all pages` buttons
-      used to change the page backgrounds (#2730).
+    * Added menu entry to append new pdf pages (#2146)
+    * Added support for more export options in command line and GUI (#2449)
+    * Added a command line option to create an xopp file (#1919).
+    * Added a print button to the default toolbar (#1921).
     * Fixed bugs in element cloning, which previously could have caused elements
       to become invalid (#2733, #2720, #2464).
-    * Fixed a bug where the thumbnailer would not correctly render icons in file
-      managers that sandbox their thumbnailers (#2738).
+    * Fixed a bug where the thumbnailer would not correctly render previews in
+      file managers that sandbox their thumbnailers (#2738).
     * Improved look of the Preferences window (#2592).
-    * Non-visible refactoring and code cleanup (#1279, #2150)
     * Updated translations
-    * Made the eraser more accurate (#1818).
-    * Fixed a cursor update bug (#1954).
     * Fixed keyboard shortcuts not working when the menubar is hidden (#2324)
-    * Added support for more export options in command line and GUI (#2449)
+    * Non-visible refactoring and code cleanup (#1279, #2150, #1944, #2199, #2213, etc.)
     * Switched from deprecated GTK 2 initialisation to GTK 3 initialisation (#2252)
-    * Improved tool handling and performance improvement (#2339)
-    * Added menu entry to append new pdf pages (#2146)
+    * Windows: Fixed crash that occurs when closing the application (#2218).
 
 ## 1.0.20
 
