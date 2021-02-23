@@ -84,6 +84,7 @@ public:
 
     void setPressure(const vector<double>& pressure);
     void setLastPressure(double pressure);
+    void setSecondToLastPressure(double pressure);
     void clearPressure();
     void scalePressure(double factor);
 

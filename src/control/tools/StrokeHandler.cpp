@@ -14,18 +14,16 @@
 #include "undo/InsertUndoAction.h"
 #include "undo/RecognizerUndoAction.h"
 
+#include "StrokeStabilizer.h"
 #include "config-features.h"
-
 
 guint32 StrokeHandler::lastStrokeTime;  // persist for next stroke
 
 
 StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
         InputHandler(xournal, redrawable, page),
-        surfMask(nullptr),
         snappingHandler(xournal->getControl()->getSettings()),
-        crMask(nullptr),
-        reco(nullptr) {}
+        stabilizer(StrokeStabilizer::get(xournal->getControl()->getSettings())) {}
 
 StrokeHandler::~StrokeHandler() {
     destroySurface();
@@ -58,24 +56,69 @@ auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         return false;
     }
 
-    double zoom = xournal->getZoom();
-    double x = pos.x / zoom;
-    double y = pos.y / zoom;
+    if (pos.pressure == 0) {
+        /**
+         * Some devices emit a move event with pressure 0 when lifting the stylus tip
+         * Ignore those events
+         */
+        return true;
+    }
+
+    stabilizer->processEvent(pos);
+    return true;
+}
+
+void StrokeHandler::paintTo(const Point& point) {
+
     int pointCount = stroke->getPointCount();
 
-    Point currentPoint(x, y);
-
     if (pointCount > 0) {
-        if (!validMotion(currentPoint, stroke->getPoint(pointCount - 1))) {
-            return true;
+        Point endPoint = stroke->getPoint(pointCount - 1);
+        double distance = point.lineLengthTo(endPoint);
+        if (distance < PIXEL_MOTION_THRESHOLD) {  //(!validMotion(point, endPoint)) {
+            return;
+        }
+        if (point.z != Point::NO_PRESSURE && stroke->getToolType() == STROKE_TOOL_PEN) {
+            /**
+             * Both device and tool are pressure sensitive
+             */
+            if (endPoint.z != Point::NO_PRESSURE) {
+                /**
+                 * Avoid issues at the beginning of the stroke
+                 */
+
+                if (const double widthDelta = (point.z - endPoint.z) * stroke->getWidth();
+                    - widthDelta > MAX_WIDTH_VARIATION || widthDelta > MAX_WIDTH_VARIATION) {
+                    /**
+                     * If the width variation is to big, decompose into shorter segments.
+                     * Those segments can not be shorter than PIXEL_MOTION_THRESHOLD
+                     */
+                    double nbSteps = std::min(std::ceil(std::abs(widthDelta) / MAX_WIDTH_VARIATION),
+                                              std::floor(distance / PIXEL_MOTION_THRESHOLD));
+                    double stepLength = 1.0 / nbSteps;
+                    Point increment((point.x - endPoint.x) * stepLength, (point.y - endPoint.y) * stepLength,
+                                    widthDelta * stepLength);
+                    endPoint.z *= stroke->getWidth();
+                    endPoint.z += increment.z;
+                    stroke->setLastPressure(endPoint.z);
+
+                    for (int i = 1; i < static_cast<int>(nbSteps); i++) {  // The last step is done below
+                        endPoint.x += increment.x;
+                        endPoint.y += increment.y;
+                        endPoint.z += increment.z;
+                        drawSegmentTo(endPoint);
+                    }
+                }
+            }
+            stroke->setLastPressure(point.z * stroke->getWidth());
         }
     }
+    drawSegmentTo(point);
+}
 
-    if (Point::NO_PRESSURE != pos.pressure && stroke->getToolType() == STROKE_TOOL_PEN) {
-        stroke->setLastPressure(pos.pressure * stroke->getWidth());
-    }
+void StrokeHandler::drawSegmentTo(const Point& point) {
 
-    stroke->addPoint(currentPoint);
+    stroke->addPoint(point);
 
     if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes()) &&
         !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)) {
@@ -90,13 +133,13 @@ auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 
         view.drawStroke(crMask, stroke, 0, 1, true, true);
     } else {
-        if (pointCount > 0) {
-            Point prevPoint(stroke->getPoint(pointCount - 1));
+        if (auto const pointCount = stroke->getPointCount(); pointCount > 1) {
+            Point prevPoint(stroke->getPoint(pointCount - 2));
 
             Stroke lastSegment;
 
             lastSegment.addPoint(prevPoint);
-            lastSegment.addPoint(currentPoint);
+            lastSegment.addPoint(point);
             lastSegment.setWidth(stroke->getWidth());
 
             cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
@@ -110,8 +153,6 @@ auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 
     this->redrawable->repaintRect(stroke->getX() - w, stroke->getY() - w, stroke->getElementWidth() + 2 * w,
                                   stroke->getElementHeight() + 2 * w);
-
-    return true;
 }
 
 void StrokeHandler::onMotionCancelEvent() {
@@ -123,6 +164,13 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     if (!stroke) {
         return;
     }
+
+    /**
+     * The stabilizer may have added a gap between the end of the stroke and the input device
+     * Fill this gap.
+     */
+    stabilizer->finalizeStroke();
+
 
     Control* control = xournal->getControl();
     Settings* settings = control->getSettings();
@@ -137,6 +185,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         double dpmm = settings->getDisplayDpi() / 25.4;
 
         double zoom = xournal->getZoom();
+
         double lengthSqrd = (pow(((pos.x / zoom) - (this->buttonDownPoint.x)), 2) +
                              pow(((pos.y / zoom) - (this->buttonDownPoint.y)), 2)) *
                             pow(xournal->getZoom(), 2);
@@ -303,6 +352,8 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
         this->buttonDownPoint.y = pos.y / zoom;
 
         createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
+
+        stabilizer->initialize(this, zoom, pos);
     }
 
     this->startStrokeTime = pos.timestamp;

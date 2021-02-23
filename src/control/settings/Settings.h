@@ -19,6 +19,7 @@
 #include <portaudio.h>
 
 #include "control/Tool.h"
+#include "control/tools/StrokeStabilizerEnum.h"
 #include "model/Font.h"
 
 #include "LatexSettings.h"
@@ -478,6 +479,29 @@ public:
      */
     std::string getPreferredLocale() const;
 
+    /**
+     * Stabilizer related getters and setters
+     */
+    bool getStabilizerCuspDetection() const;
+    bool getStabilizerFinalizeStroke() const;
+    size_t getStabilizerBuffersize() const;
+    double getStabilizerDeadzoneRadius() const;
+    double getStabilizerDrag() const;
+    double getStabilizerMass() const;
+    double getStabilizerSigma() const;
+    StrokeStabilizer::AveragingMethod getStabilizerAveragingMethod() const;
+    StrokeStabilizer::Preprocessor getStabilizerPreprocessor() const;
+
+    void setStabilizerCuspDetection(bool cuspDetection);
+    void setStabilizerFinalizeStroke(bool finalizeStroke);
+    void setStabilizerBuffersize(size_t buffersize);
+    void setStabilizerDeadzoneRadius(double deadzoneRadius);
+    void setStabilizerDrag(double drag);
+    void setStabilizerMass(double mass);
+    void setStabilizerSigma(double sigma);
+    void setStabilizerAveragingMethod(StrokeStabilizer::AveragingMethod averagingMethod);
+    void setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor);
+
 public:
     // Custom settings
     SElement& getCustomElement(const string& name);
@@ -931,6 +955,7 @@ private:
      * e.g. "en_US"
      */
     std::string preferredLocale;
+
     /**
      * The number of pages to pre-load before the current page.
      */
@@ -945,4 +970,18 @@ private:
      * Whether to evict from the page buffer cache when scrolling.
      */
     bool eagerPageCleanup{};
+
+    /**
+     * Stabilizer related settings
+     */
+    bool stabilizerCuspDetection{};
+    bool stabilizerFinalizeStroke{};
+
+    size_t stabilizerBuffersize{};
+    double stabilizerDeadzoneRadius{};
+    double stabilizerDrag{};
+    double stabilizerMass{};
+    double stabilizerSigma{};
+    StrokeStabilizer::AveragingMethod stabilizerAveragingMethod{};
+    StrokeStabilizer::Preprocessor stabilizerPreprocessor{};
 };

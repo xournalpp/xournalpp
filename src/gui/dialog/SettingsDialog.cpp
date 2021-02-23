@@ -4,6 +4,7 @@
 
 #include <config.h>
 
+#include "control/tools/StrokeStabilizerEnum.h"
 #include "gui/widgets/ZoomCallib.h"
 
 #include "ButtonConfigGui.h"
@@ -110,6 +111,21 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                          self->customStylusIconTypeChanged();
                      }),
                      this);
+
+    g_signal_connect(get("cbStabilizerAveragingMethods"), "changed",
+                     G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
+                         self->showStabilizerAvMethodOptions(
+                                 static_cast<StrokeStabilizer::AveragingMethod>(gtk_combo_box_get_active(comboBox)));
+                     }),
+                     this);
+
+    g_signal_connect(get("cbStabilizerPreprocessors"), "changed",
+                     G_CALLBACK(+[](GtkComboBox* comboBox, SettingsDialog* self) {
+                         self->showStabilizerPreprocessorOptions(
+                                 static_cast<StrokeStabilizer::Preprocessor>(gtk_combo_box_get_active(comboBox)));
+                     }),
+                     this);
+
 
     gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
     gtk_widget_show(callib);
@@ -282,6 +298,39 @@ void SettingsDialog::customStylusIconTypeChanged() {
     gtk_widget_set_sensitive(get("highlightCursorGrid"), showCursorHighlightOptions);
 }
 
+void SettingsDialog::showStabilizerAvMethodOptions(StrokeStabilizer::AveragingMethod method) {
+    bool showArithmetic = method == StrokeStabilizer::AveragingMethod::ARITHMETIC;
+    gtk_widget_set_visible(get("lbStabilizerBuffersize"), showArithmetic);
+    gtk_widget_set_visible(get("sbStabilizerBuffersize"), showArithmetic);
+
+    bool showSigma = method == StrokeStabilizer::AveragingMethod::VELOCITY_GAUSSIAN;
+    gtk_widget_set_visible(get("lbStabilizerSigma"), showSigma);
+    gtk_widget_set_visible(get("sbStabilizerSigma"), showSigma);
+
+    bool preprocessorOn = static_cast<StrokeStabilizer::Preprocessor>(gtk_combo_box_get_active(GTK_COMBO_BOX(
+                                  get("cbStabilizerPreprocessors")))) != StrokeStabilizer::Preprocessor::NONE;
+    bool sensitive = showSigma || showArithmetic || preprocessorOn;
+    gtk_widget_set_sensitive(get("cbStabilizerEnableFinalizeStroke"), sensitive);
+}
+
+void SettingsDialog::showStabilizerPreprocessorOptions(StrokeStabilizer::Preprocessor preprocessor) {
+    bool showDeadzone = preprocessor == StrokeStabilizer::Preprocessor::DEADZONE;
+    gtk_widget_set_visible(get("lbStabilizerDeadzoneRadius"), showDeadzone);
+    gtk_widget_set_visible(get("sbStabilizerDeadzoneRadius"), showDeadzone);
+    gtk_widget_set_visible(get("cbStabilizerEnableCuspDetection"), showDeadzone);
+
+    bool showInertia = preprocessor == StrokeStabilizer::Preprocessor::INERTIA;
+    gtk_widget_set_visible(get("lbStabilizerDrag"), showInertia);
+    gtk_widget_set_visible(get("sbStabilizerDrag"), showInertia);
+    gtk_widget_set_visible(get("lbStabilizerMass"), showInertia);
+    gtk_widget_set_visible(get("sbStabilizerMass"), showInertia);
+
+    bool averagingOn = static_cast<StrokeStabilizer::AveragingMethod>(gtk_combo_box_get_active(GTK_COMBO_BOX(
+                               get("cbStabilizerAveragingMethods")))) != StrokeStabilizer::AveragingMethod::NONE;
+    bool sensitive = showDeadzone || showInertia || averagingOn;
+    gtk_widget_set_sensitive(get("cbStabilizerEnableFinalizeStroke"), sensitive);
+}
+
 void SettingsDialog::load() {
     loadCheckbox("cbSettingPresureSensitivity", settings->isPressureSensitivity());
     loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
@@ -308,6 +357,31 @@ void SettingsDialog::load() {
     loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
 
+
+    /**
+     * Stabilizer related settings
+     */
+    loadCheckbox("cbStabilizerEnableCuspDetection", settings->getStabilizerCuspDetection());
+    loadCheckbox("cbStabilizerEnableFinalizeStroke", settings->getStabilizerFinalizeStroke());
+
+    GtkWidget* sbStabilizerBuffersize = get("sbStabilizerBuffersize");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerBuffersize), settings->getStabilizerBuffersize());
+    GtkWidget* sbStabilizerDeadzoneRadius = get("sbStabilizerDeadzoneRadius");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerDeadzoneRadius), settings->getStabilizerDeadzoneRadius());
+    GtkWidget* sbStabilizerDrag = get("sbStabilizerDrag");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerDrag), settings->getStabilizerDrag());
+    GtkWidget* sbStabilizerMass = get("sbStabilizerMass");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerMass), settings->getStabilizerMass());
+    GtkWidget* sbStabilizerSigma = get("sbStabilizerSigma");
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(sbStabilizerSigma), settings->getStabilizerSigma());
+
+    GtkComboBox* cbStabilizerAveragingMethods = GTK_COMBO_BOX(get("cbStabilizerAveragingMethods"));
+    gtk_combo_box_set_active(cbStabilizerAveragingMethods, static_cast<int>(settings->getStabilizerAveragingMethod()));
+    showStabilizerAvMethodOptions(settings->getStabilizerAveragingMethod());
+    GtkComboBox* cbStabilizerPreprocessors = GTK_COMBO_BOX(get("cbStabilizerPreprocessors"));
+    gtk_combo_box_set_active(cbStabilizerPreprocessors, static_cast<int>(settings->getStabilizerPreprocessor()));
+    showStabilizerPreprocessorOptions(settings->getStabilizerPreprocessor());
+    /***********/
 
     GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
     string txt = settings->getDefaultSaveName();
@@ -601,6 +675,19 @@ void SettingsDialog::save() {
     settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
     settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));
+
+    settings->setStabilizerAveragingMethod(static_cast<StrokeStabilizer::AveragingMethod>(
+            gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbStabilizerAveragingMethods")))));
+    settings->setStabilizerPreprocessor(static_cast<StrokeStabilizer::Preprocessor>(
+            gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbStabilizerPreprocessors")))));
+    settings->setStabilizerBuffersize(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(get("sbStabilizerBuffersize"))));
+    settings->setStabilizerDeadzoneRadius(
+            gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("sbStabilizerDeadzoneRadius"))));
+    settings->setStabilizerDrag(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("sbStabilizerDrag"))));
+    settings->setStabilizerMass(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("sbStabilizerMass"))));
+    settings->setStabilizerSigma(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("sbStabilizerSigma"))));
+    settings->setStabilizerCuspDetection(getCheckbox("cbStabilizerEnableCuspDetection"));
+    settings->setStabilizerFinalizeStroke(getCheckbox("cbStabilizerEnableFinalizeStroke"));
 
     auto scrollbarHideType =
             static_cast<std::make_unsigned<std::underlying_type<ScrollbarHideType>::type>::type>(SCROLLBAR_HIDE_NONE);

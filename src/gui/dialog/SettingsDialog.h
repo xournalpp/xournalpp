@@ -67,6 +67,9 @@ private:
 
     void initLanguageSettings();
 
+    void showStabilizerAvMethodOptions(StrokeStabilizer::AveragingMethod method);
+    void showStabilizerPreprocessorOptions(StrokeStabilizer::Preprocessor preprocessor);
+
 private:
     Settings* settings = nullptr;
     Control* control = nullptr;

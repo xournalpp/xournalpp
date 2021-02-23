@@ -113,6 +113,8 @@ protected:
 
     void createStroke(Point p);
 
+    static constexpr double PIXEL_MOTION_THRESHOLD = 0.3;
+
 protected:
     XournalView* xournal;
     XojPageView* redrawable;

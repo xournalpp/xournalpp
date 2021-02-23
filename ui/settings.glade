@@ -99,6 +99,40 @@
     <property name="step-increment">0.05</property>
     <property name="page-increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adjustmentStabilizerDeadzoneRadius">
+    <property name="lower">0.10</property>
+    <property name="upper">50</property>
+    <property name="value">1.3</property>
+    <property name="step-increment">0.10</property>
+    <property name="page-increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentStabilizerDrag">
+    <property name="upper">1</property>
+    <property name="value">0.40</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">0.20</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentStabilizerMass">
+    <property name="lower">1</property>
+    <property name="upper">30</property>
+    <property name="value">5</property>
+    <property name="step-increment">0.10</property>
+    <property name="page-increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentStabilizerSigma">
+    <property name="lower">0.05</property>
+    <property name="upper">5</property>
+    <property name="value">0.5</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentStabilizingBuffersize">
+    <property name="lower">2</property>
+    <property name="upper">100</property>
+    <property name="value">20</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
   <object class="GtkAdjustment" id="adjustmentStrokeIgnoreLength">
     <property name="lower">0.01000000000000001</property>
     <property name="upper">100</property>
@@ -162,6 +196,40 @@
     <property name="value">2</property>
     <property name="step-increment">0.5</property>
     <property name="page-increment">10</property>
+  </object>
+  <object class="GtkListStore" id="listStabilizerAveragingMethods">
+    <columns>
+      <!-- column-name Name -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">None</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Arithmetic mean</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Velocity based Gaussian weights</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="listStabilizerPreprocessors">
+    <columns>
+      <!-- column-name Name -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">None</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Deadzone</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Inertia</col>
+      </row>
+    </data>
   </object>
   <object class="GtkDialog" id="settingsDialog">
     <property name="name">settingsDialog</property>
@@ -791,7 +859,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="tooltip-markup" translatable="yes">Drag LEFT from start point acts like shift key is being held.
 	    Drag UP acts as if Control key is being held.
 
-	    Determination Radius: Radius at which modifiers will lock in until finished drawing.
+            Determination Radius: Radius at which modifiers will lock in until finished drawing.
 
 	    &lt;i&gt;Useful for operating without keyboard.&lt;/i&gt;</property>
                                             <property name="xalign">0</property>
@@ -858,6 +926,320 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="frameStabilizerSettings">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.009999999776482582</property>
+                                <child>
+                                  <object class="GtkAlignment" id="alignmentStabilizer">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="bottom-padding">12</property>
+                                    <property name="left-padding">12</property>
+                                    <property name="right-padding">12</property>
+                                    <child>
+                                      <!-- n-columns=4 n-rows=4 -->
+                                      <object class="GtkGrid" id="gridStabilizer">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="column-spacing">10</property>
+                                        <child>
+                                          <object class="GtkLabel" id="lbStabilizerAveragingMethod">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="halign">start</property>
+                                            <property name="margin-start">16</property>
+                                            <property name="label" translatable="yes">Averaging method</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">0</property>
+                                            <property name="top-attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkComboBox" id="cbStabilizerAveragingMethods">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="model">listStabilizerAveragingMethods</property>
+                                            <property name="active">0</property>
+                                            <property name="id-column">0</property>
+                                            <property name="active-id">0</property>
+                                            <child>
+                                              <object class="GtkCellRendererText"/>
+                                              <attributes>
+                                                <attribute name="markup">0</attribute>
+                                                <attribute name="text">0</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">1</property>
+                                            <property name="top-attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="lbStabilizerDescription">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">&lt;i&gt;Pick an input stabilization algorithm and its parameters&lt;/i&gt;</property>
+                                            <property name="use-markup">True</property>
+                                            <property name="wrap">True</property>
+                                            <property name="width-chars">85</property>
+                                            <property name="max-width-chars">85</property>
+                                            <property name="xalign">0</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">0</property>
+                                            <property name="top-attach">0</property>
+                                            <property name="width">4</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="lbStabilizerBuffersize">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">Buffersize</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">2</property>
+                                            <property name="top-attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="sbStabilizerBuffersize">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="text" translatable="yes">20</property>
+                                            <property name="input-purpose">number</property>
+                                            <property name="adjustment">adjustmentStabilizingBuffersize</property>
+                                            <property name="climb-rate">1</property>
+                                            <property name="snap-to-ticks">True</property>
+                                            <property name="numeric">True</property>
+                                            <property name="value">20</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">3</property>
+                                            <property name="top-attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="lbStabilizerDeadzoneRadius">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">Deadzone radius</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">2</property>
+                                            <property name="top-attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="sbStabilizerDeadzoneRadius">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="text" translatable="yes">1,30</property>
+                                            <property name="input-purpose">number</property>
+                                            <property name="adjustment">adjustmentStabilizerDeadzoneRadius</property>
+                                            <property name="climb-rate">2</property>
+                                            <property name="digits">2</property>
+                                            <property name="snap-to-ticks">True</property>
+                                            <property name="numeric">True</property>
+                                            <property name="value">1.3</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">3</property>
+                                            <property name="top-attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="lbStabilizerDrag">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="tooltip-text" translatable="yes">Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization.</property>
+                                            <property name="label" translatable="yes">Drag</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">2</property>
+                                            <property name="top-attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="sbStabilizerDrag">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="tooltip-text" translatable="yes">Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization.</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="text" translatable="yes">0,4</property>
+                                            <property name="input-purpose">number</property>
+                                            <property name="adjustment">adjustmentStabilizerDrag</property>
+                                            <property name="climb-rate">2</property>
+                                            <property name="digits">2</property>
+                                            <property name="snap-to-ticks">True</property>
+                                            <property name="numeric">True</property>
+                                            <property name="value">0.40</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">3</property>
+                                            <property name="top-attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="lbStabilizerMass">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="tooltip-text" translatable="yes">Mass: the higher the mass, the more inertia and the more stabilization</property>
+                                            <property name="label" translatable="yes">Mass</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">2</property>
+                                            <property name="top-attach">3</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="sbStabilizerMass">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="tooltip-text" translatable="yes">Mass: the higher the mass, the more inertia and the more stabilization</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="text" translatable="yes">5</property>
+                                            <property name="input-purpose">number</property>
+                                            <property name="adjustment">adjustmentStabilizerMass</property>
+                                            <property name="climb-rate">2</property>
+                                            <property name="digits">2</property>
+                                            <property name="snap-to-ticks">True</property>
+                                            <property name="numeric">True</property>
+                                            <property name="value">5</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">3</property>
+                                            <property name="top-attach">3</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="sbStabilizerSigma">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="tooltip-text" translatable="yes">Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip.</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="text" translatable="yes">0,50</property>
+                                            <property name="input-purpose">number</property>
+                                            <property name="adjustment">adjustmentStabilizerSigma</property>
+                                            <property name="climb-rate">0.99999999977648257</property>
+                                            <property name="digits">2</property>
+                                            <property name="snap-to-ticks">True</property>
+                                            <property name="numeric">True</property>
+                                            <property name="value">0.5</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">3</property>
+                                            <property name="top-attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="lbStabilizerSigma">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="tooltip-text" translatable="yes">Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip.</property>
+                                            <property name="label" translatable="yes">σ</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">2</property>
+                                            <property name="top-attach">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="lbStabilizerPreprocessor">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="halign">start</property>
+                                            <property name="margin-start">15</property>
+                                            <property name="label" translatable="yes">Preprocessor</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">0</property>
+                                            <property name="top-attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkComboBox" id="cbStabilizerPreprocessors">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="model">listStabilizerPreprocessors</property>
+                                            <property name="active">0</property>
+                                            <property name="id-column">0</property>
+                                            <property name="active-id">0</property>
+                                            <child>
+                                              <object class="GtkCellRendererText"/>
+                                              <attributes>
+                                                <attribute name="markup">0</attribute>
+                                                <attribute name="text">0</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">1</property>
+                                            <property name="top-attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbStabilizerEnableCuspDetection">
+                                            <property name="label" translatable="yes">Cusp detection</property>
+                                            <property name="name">cbStabilizerEnableCuspDetection</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="halign">start</property>
+                                            <property name="active">True</property>
+                                            <property name="draw-indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">2</property>
+                                            <property name="top-attach">3</property>
+                                            <property name="width">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbStabilizerEnableFinalizeStroke">
+                                            <property name="label" translatable="yes">Finalize the stroke</property>
+                                            <property name="name">cbStabilizerEnableFinalizeStroke</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="tooltip-text" translatable="yes">Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled.</property>
+                                            <property name="active">True</property>
+                                            <property name="draw-indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">0</property>
+                                            <property name="top-attach">3</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="lbStabilizerSettings">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Input stabilization</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                           </object>

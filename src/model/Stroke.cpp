@@ -247,6 +247,13 @@ void Stroke::setLastPressure(double pressure) {
     }
 }
 
+void Stroke::setSecondToLastPressure(double pressure) {
+    auto const pointCount = this->getPointCount();
+    if (pointCount >= 2) {
+        this->points[pointCount - 2].z = pressure;
+    }
+}
+
 void Stroke::setPressure(const vector<double>& pressure) {
     // The last pressure is not used - as there is no line drawn from this point
     if (this->points.size() - 1 != pressure.size()) {

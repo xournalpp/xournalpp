@@ -14,8 +14,6 @@
 #include "util/Rectangle.h"
 #include "view/DocumentView.h"
 
-#define PIXEL_MOTION_THRESHOLD 0.3
-
 InputHandler::InputHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
         xournal(xournal), redrawable(redrawable), page(page), stroke(nullptr) {}
 
