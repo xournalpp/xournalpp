@@ -35,10 +35,14 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
 
     gtk_container_add(themeSelectionBoxContainer, sourceViewThemeSelector);
     gtk_widget_show_all(GTK_WIDGET(themeSelectionBoxContainer));
+    gtk_widget_show(this->get("bxGtkSourceviewMainSettings"));
 #else
     gtk_label_set_text(GTK_LABEL(this->get("lbSourceviewSettingsDescription")),
                        _("A suitable version of the GtkSourceView library was not found at compile time!"));
     this->sourceViewThemeSelector = nullptr;
+
+    // Hide general options specific to GtkSourceView
+    gtk_widget_hide(this->get("bxGtkSourceviewMainSetting"));
 #endif
 }
 
@@ -65,6 +69,10 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
         gtk_source_style_scheme_chooser_set_style_scheme(GTK_SOURCE_STYLE_SCHEME_CHOOSER(this->sourceViewThemeSelector),
                                                          theme);
     }
+
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbShowLineNumbers")), settings.sourceViewShowLineNumbers);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbAutoIndent")), settings.sourceViewAutoIndent);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbSyntaxHighlight")), settings.sourceViewSyntaxHighlight);
 #endif
 
     // Editor font
@@ -86,6 +94,12 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_chooser_get_style_scheme(
             GTK_SOURCE_STYLE_SCHEME_CHOOSER(this->sourceViewThemeSelector));
     settings.sourceViewThemeId = gtk_source_style_scheme_get_id(theme);
+
+    settings.sourceViewShowLineNumbers =
+            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbShowLineNumbers")));
+    settings.sourceViewAutoIndent = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbAutoIndent")));
+    settings.sourceViewSyntaxHighlight =
+            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbSyntaxHighlight")));
 #endif
 
     GtkFontChooser* fontSelector = GTK_FONT_CHOOSER(this->get("selBtnEditorFont"));

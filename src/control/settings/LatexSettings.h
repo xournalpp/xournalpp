@@ -32,6 +32,9 @@ public:
      * libaray.
      */
     std::string sourceViewThemeId{};
+    bool sourceViewAutoIndent{true};
+    bool sourceViewSyntaxHighlight{true};
+    bool sourceViewShowLineNumbers{false};
 
     /**
      * Font to be used by the editor.
