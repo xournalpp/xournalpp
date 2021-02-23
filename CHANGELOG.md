@@ -32,7 +32,8 @@ community.
 * Packaging changes
     * AppImage: Fix AppImages not running on more recent Linux distros (#2600).
 * Document viewing
-    * Changed page selection system to now selected pages during scrolling (#1613, #1184).
+    * Changed page selection system to now select the current page during
+      scrolling (#1613, #1184).
     * Improved page load performance and memory consumption with new page
       preload mechanism (#2603).
     * Fixed a bug where scrolling would not work with zoom fit enabled until the
@@ -42,7 +43,7 @@ community.
     * Fixed vim-style `hjlk` keybindings being inconsistent with the arrow keys
       (#2712).
     * Fixed various issues related to zooming and scrolling (#2435, #2743,
-      #2023, #1830)
+      #2023, #1830, #2821)
 * Document export
     * Added a "progressive mode" option to PDF file export dialog. This will
       render layers from bottom to top, exporting a new page every time a layer
@@ -69,6 +70,8 @@ community.
       mouse/keyboard receivers (#1769, #1785).
     * Added Preference settings for minimum pressure level and pressure
       multiplier (#2622).
+    * Added an experimental stroke smoothing / input stabilization feature
+      (#2512).
     * Added a touchpad pinch gesture for zooming (#2651).
     * Added a Preferences setting to ignore the first few pen input events when
       starting a new stroke (#1854).
