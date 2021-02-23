@@ -58,9 +58,14 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
     GtkSourceStyleScheme* styleScheme =
             gtk_source_style_scheme_manager_get_scheme(styleSchemeManager, styleSchemeId.c_str());
 
-    gtk_source_buffer_set_language(GTK_SOURCE_BUFFER(this->textBuffer), lang);
-    gtk_source_view_set_auto_indent(GTK_SOURCE_VIEW(this->texBox), true);
-    gtk_source_view_set_indent_on_tab(GTK_SOURCE_VIEW(this->texBox), true);
+    if (settings.sourceViewSyntaxHighlight) {
+        gtk_source_buffer_set_language(GTK_SOURCE_BUFFER(this->textBuffer), lang);
+    }
+
+    gtk_source_view_set_auto_indent(GTK_SOURCE_VIEW(this->texBox), settings.sourceViewAutoIndent);
+    gtk_source_view_set_indent_on_tab(GTK_SOURCE_VIEW(this->texBox), settings.sourceViewAutoIndent);
+
+    gtk_source_view_set_show_line_numbers(GTK_SOURCE_VIEW(this->texBox), settings.sourceViewShowLineNumbers);
 
     if (styleScheme) {
         gtk_source_buffer_set_style_scheme(GTK_SOURCE_BUFFER(this->textBuffer), styleScheme);
