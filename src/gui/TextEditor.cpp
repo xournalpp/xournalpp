@@ -206,6 +206,7 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
     } else {
         te->preeditString = "";
     }
+    te->preeditCursor = cursor_pos;
     te->repaintEditor();
     te->contentsChanged();
 
@@ -963,6 +964,8 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
     double x0 = this->text->getX();
     double y0 = this->text->getY();
     cairo_translate(cr, x0, y0);
+    double x1 = this->gui->getX();
+    double y1 = this->gui->getY();
 
     if (this->layout == nullptr) {
         this->layout = TextView::initPango(cr, this->text);
@@ -1031,7 +1034,12 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
 
     int offset = gtk_text_iter_get_offset(&cursorIter);
     PangoRectangle rect = {0};
-    int pangoOffset = getByteOffset(offset) + preeditString.length();
+    int pcursInd = 0;
+    if (!this->preeditString.empty() && this->preeditCursor != 0) {
+        const gchar* preeditText = this->preeditString.c_str();
+        pcursInd = g_utf8_offset_to_pointer(preeditText, preeditCursor) - preeditText;
+    }
+    int pangoOffset = getByteOffset(offset) + pcursInd;
     pango_layout_index_to_pos(this->layout, pangoOffset, &rect);
     double cX = (static_cast<double>(rect.x)) / PANGO_SCALE;
     double cY = (static_cast<double>(rect.y)) / PANGO_SCALE;
@@ -1047,6 +1055,20 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
 
     cairo_rectangle(cr, x0 - 5 / zoom, y0 - 5 / zoom, width + 10 / zoom, height + 10 / zoom);
     cairo_stroke(cr);
+
+    // Notify window and cursor position to IM.
+    gtk_im_context_set_client_window(this->imContext, gtk_widget_get_window(this->widget));
+    GdkRectangle cursorRect;
+    cursorRect.x = static_cast<int>(zoom * x0 + x1 + zoom * cX);
+    cursorRect.y = static_cast<int>(zoom * y0 + y1 + zoom * cY);
+    cursorRect.height = static_cast<int>(zoom * cHeight);
+    // // The next setting treat the text box as if it were a cursor rectangle.
+    // cursorRect.x = static_cast<int>(zoom * x0 + x1 - 10);
+    // cursorRect.y = static_cast<int>(zoom * y0 + y1 - 10);
+    // cursorRect.width = static_cast<int>(zoom * width + 20);
+    // cursorRect.height = static_cast<int>(zoom * height + 20);
+    // // This is also useful, so it is good to make it user's preference.
+    gtk_im_context_set_cursor_location(this->imContext, &cursorRect);
 
     this->text->setWidth(width);
     this->text->setHeight(height);

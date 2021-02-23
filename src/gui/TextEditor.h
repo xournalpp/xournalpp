@@ -97,6 +97,7 @@ private:
     Text* text = nullptr;
 
     PangoAttrList* preeditAttrList = nullptr;
+    int preeditCursor;
     string preeditString;
     string lastText;
 
