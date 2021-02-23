@@ -141,6 +141,7 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
             lastSegment.addPoint(prevPoint);
             lastSegment.addPoint(point);
             lastSegment.setWidth(stroke->getWidth());
+            lastSegment.setToolType(stroke->getToolType());
 
             cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
             cairo_set_source_rgba(crMask, 1, 1, 1, 1);
