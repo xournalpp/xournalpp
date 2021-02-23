@@ -68,7 +68,7 @@ private:
     static void windowResponseCb(GtkDialog* dialog, int response, ToolbarCustomizeDialog* dlg);
 
 private:
-    CustomizeableColorList* colorList;
+    CustomizeableColorList colorList;
 
     std::list<ToolItemDragData*> itemDatalist;
 
