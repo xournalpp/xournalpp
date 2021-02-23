@@ -91,9 +91,9 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
 void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDragContext* context, void* unused) {
     ToolItemDragCurrentData::setData(TOOL_ITEM_SEPARATOR, -1, nullptr);
 
-    GtkWidget* icon = ToolbarSeparatorImage::newSepeartorImage();
-    gtk_drag_set_icon_pixbuf(context, ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
-    g_object_unref(icon);
+    GdkPixbuf* pixbuf = ToolbarSeparatorImage::newPixbuf();
+    gtk_drag_set_icon_pixbuf(context, pixbuf, -2, -2);
+    g_object_unref(pixbuf);
 }
 
 void ToolbarCustomizeDialog::toolitemDragEndSeparator(GtkWidget* widget, GdkDragContext* context, void* unused) {
@@ -250,7 +250,7 @@ void ToolbarCustomizeDialog::rebuildIconview() {
         }
 
         string name = item->getToolDisplayName();
-        GtkWidget* icon = item->getNewToolIcon();
+        GtkWidget* icon = item->getNewToolIcon(); /* floating */
         g_return_if_fail(icon != nullptr);
 
         GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);

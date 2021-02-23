@@ -16,11 +16,14 @@
 /**
  * Menuitem handler
  */
-class ToolbarSeparatorImage {
-private:
-    ToolbarSeparatorImage();
-    virtual ~ToolbarSeparatorImage();
+namespace ToolbarSeparatorImage {
+/**
+ * Returns: (transfer full)
+ */
+GdkPixbuf* newPixbuf();
 
-public:
-    static GtkWidget* newSepeartorImage();
-};
+/**
+ * Returns: (transfer floating)
+ */
+GtkWidget* newImage();
+}  // namespace ToolbarSeparatorImage

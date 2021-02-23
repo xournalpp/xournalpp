@@ -45,6 +45,9 @@ public:
 
     static ToolItemDragDropData* metadataGetMetadata(GtkWidget* w);
 
+    /**
+     * Returns: (transfer floating)
+     */
     static GtkWidget* getIcon(ToolItemDragDropData* data);
 
 public:
