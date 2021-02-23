@@ -55,7 +55,7 @@ auto ToolitemDragDrop::getIcon(ToolItemDragDropData* data) -> GtkWidget* {
         return data->item->getNewToolIcon();
     }
     if (data->type == TOOL_ITEM_SEPARATOR) {
-        return ToolbarSeparatorImage::newSepeartorImage();
+        return ToolbarSeparatorImage::newImage();
     }
 
     g_warning("ToolitemDragDrop::getIcon unhandled type: %i\n", data->type);

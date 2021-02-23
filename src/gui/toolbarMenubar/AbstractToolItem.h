@@ -30,6 +30,10 @@ public:
     static void toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item);
 
     virtual string getToolDisplayName() = 0;
+
+    /**
+     * Returns: (transfer floating)
+     */
     virtual GtkWidget* getNewToolIcon() = 0;
 
     /**
