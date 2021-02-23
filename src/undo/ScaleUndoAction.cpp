@@ -1,5 +1,7 @@
 #include "ScaleUndoAction.h"
 
+#include <cmath>
+
 #include "model/Element.h"
 #include "model/PageRef.h"
 
@@ -13,8 +15,8 @@ ScaleUndoAction::ScaleUndoAction(const PageRef& page, vector<Element*>* elements
     this->elements = *elements;
     this->x0 = x0;
     this->y0 = y0;
-    this->fx = fx;
-    this->fy = fy;
+    this->fx = std::isfinite(fx) ? fx : 1.0;
+    this->fy = std::isfinite(fy) ? fy : 1.0;
     this->rotation = rotation;
     this->restoreLineWidth = restoreLineWidth;
 }
