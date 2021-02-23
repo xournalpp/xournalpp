@@ -32,7 +32,7 @@ community.
 * Packaging changes
     * AppImage: Fix AppImages not running on more recent Linux distros (#2600).
 * Document viewing
-    * Changed page selection system to now selected pages during scrolling (#).
+    * Changed page selection system to now selected pages during scrolling (#1613, #1184).
     * Improved page load performance and memory consumption with new page
       preload mechanism (#2603).
     * Fixed a bug where scrolling would not work with zoom fit enabled until the
