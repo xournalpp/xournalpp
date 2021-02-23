@@ -922,8 +922,8 @@ void Settings::save() {
     /**
      * Stabilizer related settings
      */
-    WRITE_INT_PROP(static_cast<int>(stabilizerAveragingMethod));
-    WRITE_INT_PROP(static_cast<int>(stabilizerPreprocessor));
+    saveProperty("stabilizerAveragingMethod", static_cast<int>(stabilizerAveragingMethod), root);
+    saveProperty("stabilizerPreprocessor", static_cast<int>(stabilizerPreprocessor), root);
     WRITE_UINT_PROP(stabilizerBuffersize);
     WRITE_DOUBLE_PROP(stabilizerSigma);
     WRITE_DOUBLE_PROP(stabilizerDeadzoneRadius);
