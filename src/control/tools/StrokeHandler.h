@@ -18,6 +18,11 @@
 
 class ShapeRecognizer;
 
+namespace StrokeStabilizer {
+class Base;
+class Active;
+}  // namespace StrokeStabilizer
+
 /**
  * @brief The stroke handler draws a stroke on a XojPageView
  *
@@ -46,7 +51,21 @@ public:
      */
     virtual void resetShapeRecognizer();
 
+    /**
+     * @brief Add a straight line to the stroke (if the movement is valid).
+     * The line may be subdivided into smaller segments if the pressure variation is too big.
+     * @param point The endpoint of the added line
+     */
+    void paintTo(const Point& point);
+
 protected:
+    /**
+     * @brief Unconditionally add a segment to the stroke.
+     * Warning: it does not set the width properly nor test if the motion is valid. Use paintTo instead.
+     * @param point The endpoint of the added segment
+     */
+    void drawSegmentTo(const Point& point);
+
     void strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer);
     void destroySurface();
 
@@ -58,19 +77,28 @@ private:
     /**
      * The masking surface
      */
-    cairo_surface_t* surfMask;
+    cairo_surface_t* surfMask = nullptr;
 
     /**
      * And the corresponding cairo_t*
      */
-    cairo_t* crMask;
+    cairo_t* crMask = nullptr;
 
     DocumentView view;
 
-    ShapeRecognizer* reco;
+    ShapeRecognizer* reco = nullptr;
 
 
     // to filter out short strokes (usually the user tapping on the page to select it)
     guint32 startStrokeTime{};
     static guint32 lastStrokeTime;  // persist across strokes - allow us to not ignore persistent dotting.
+
+    /**
+     * @brief Pointer to the Stabilizer instance
+     */
+    std::unique_ptr<StrokeStabilizer::Base> stabilizer;
+
+    friend class StrokeStabilizer::Active;
+
+    static constexpr double MAX_WIDTH_VARIATION = 0.3;
 };

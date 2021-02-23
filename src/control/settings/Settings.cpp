@@ -176,6 +176,20 @@ void Settings::loadDefault() {
     this->restoreLineWidthEnabled = false;
 
     this->inTransaction = false;
+
+    /**
+     * Stabilizer related settings
+     */
+    this->stabilizerAveragingMethod = StrokeStabilizer::AveragingMethod::NONE;
+    this->stabilizerPreprocessor = StrokeStabilizer::Preprocessor::NONE;
+    this->stabilizerBuffersize = 20;
+    this->stabilizerSigma = 0.5;
+    this->stabilizerDeadzoneRadius = 1.3;
+    this->stabilizerCuspDetection = true;
+    this->stabilizerDrag = 0.4;
+    this->stabilizerMass = 5.0;
+    this->stabilizerFinalizeStroke = true;
+    /**/
 }
 
 /**
@@ -491,7 +505,31 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->restoreLineWidthEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preferredLocale")) == 0) {
         this->preferredLocale = reinterpret_cast<char*>(value);
+        /**
+         * Stabilizer related settings
+         */
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerAveragingMethod")) == 0) {
+        this->stabilizerAveragingMethod =
+                (StrokeStabilizer::AveragingMethod)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerPreprocessor")) == 0) {
+        this->stabilizerPreprocessor =
+                (StrokeStabilizer::Preprocessor)g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerBuffersize")) == 0) {
+        this->stabilizerBuffersize = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerSigma")) == 0) {
+        this->stabilizerSigma = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerDeadzoneRadius")) == 0) {
+        this->stabilizerDeadzoneRadius = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerDrag")) == 0) {
+        this->stabilizerDrag = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerMass")) == 0) {
+        this->stabilizerMass = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerCuspDetection")) == 0) {
+        this->stabilizerCuspDetection = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerFinalizeStroke")) == 0) {
+        this->stabilizerFinalizeStroke = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     }
+    /**/
 
     xmlFree(name);
     xmlFree(value);
@@ -880,6 +918,20 @@ void Settings::save() {
     WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
     WRITE_STRING_PROP(preferredLocale);
+
+    /**
+     * Stabilizer related settings
+     */
+    WRITE_INT_PROP(static_cast<int>(stabilizerAveragingMethod));
+    WRITE_INT_PROP(static_cast<int>(stabilizerPreprocessor));
+    WRITE_UINT_PROP(stabilizerBuffersize);
+    WRITE_DOUBLE_PROP(stabilizerSigma);
+    WRITE_DOUBLE_PROP(stabilizerDeadzoneRadius);
+    WRITE_DOUBLE_PROP(stabilizerDrag);
+    WRITE_DOUBLE_PROP(stabilizerMass);
+    WRITE_BOOL_PROP(stabilizerCuspDetection);
+    WRITE_BOOL_PROP(stabilizerFinalizeStroke);
+    /**/
 
     WRITE_BOOL_PROP(latexSettings.autoCheckDependencies);
     // Inline WRITE_STRING_PROP(latexSettings.globalTemplatePath) since it
@@ -2026,4 +2078,89 @@ auto SElement::getString(const string& name, string& value) -> bool {
     value = attrib.sValue;
 
     return true;
+}
+
+/**
+ * Stabilizer related getters and setters
+ */
+auto Settings::getStabilizerCuspDetection() const -> bool { return stabilizerCuspDetection; }
+auto Settings::getStabilizerFinalizeStroke() const -> bool { return stabilizerFinalizeStroke; }
+auto Settings::getStabilizerBuffersize() const -> size_t { return stabilizerBuffersize; }
+auto Settings::getStabilizerDeadzoneRadius() const -> double { return stabilizerDeadzoneRadius; }
+auto Settings::getStabilizerDrag() const -> double { return stabilizerDrag; }
+auto Settings::getStabilizerMass() const -> double { return stabilizerMass; }
+auto Settings::getStabilizerSigma() const -> double { return stabilizerSigma; }
+auto Settings::getStabilizerAveragingMethod() const -> StrokeStabilizer::AveragingMethod {
+    return stabilizerAveragingMethod;
+}
+auto Settings::getStabilizerPreprocessor() const -> StrokeStabilizer::Preprocessor { return stabilizerPreprocessor; }
+
+void Settings::setStabilizerCuspDetection(bool cuspDetection) {
+    if (stabilizerCuspDetection == cuspDetection) {
+        return;
+    }
+    stabilizerCuspDetection = cuspDetection;
+    save();
+}
+void Settings::setStabilizerFinalizeStroke(bool finalizeStroke) {
+    if (stabilizerFinalizeStroke == finalizeStroke) {
+        return;
+    }
+    stabilizerFinalizeStroke = finalizeStroke;
+    save();
+}
+void Settings::setStabilizerBuffersize(size_t buffersize) {
+    if (stabilizerBuffersize == buffersize) {
+        return;
+    }
+    stabilizerBuffersize = buffersize;
+    save();
+}
+void Settings::setStabilizerDeadzoneRadius(double deadzoneRadius) {
+    if (stabilizerDeadzoneRadius == deadzoneRadius) {
+        return;
+    }
+    stabilizerDeadzoneRadius = deadzoneRadius;
+    save();
+}
+void Settings::setStabilizerDrag(double drag) {
+    if (stabilizerDrag == drag) {
+        return;
+    }
+    stabilizerDrag = drag;
+    save();
+}
+void Settings::setStabilizerMass(double mass) {
+    if (stabilizerMass == mass) {
+        return;
+    }
+    stabilizerMass = mass;
+    save();
+}
+void Settings::setStabilizerSigma(double sigma) {
+    if (stabilizerSigma == sigma) {
+        return;
+    }
+    stabilizerSigma = sigma;
+    save();
+}
+void Settings::setStabilizerAveragingMethod(StrokeStabilizer::AveragingMethod averagingMethod) {
+    const StrokeStabilizer::AveragingMethod method =
+            StrokeStabilizer::isValid(averagingMethod) ? averagingMethod : StrokeStabilizer::AveragingMethod::NONE;
+
+    if (stabilizerAveragingMethod == method) {
+        return;
+    }
+    stabilizerAveragingMethod = method;
+    save();
+}
+void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor) {
+    const StrokeStabilizer::Preprocessor p =
+            StrokeStabilizer::isValid(preprocessor) ? preprocessor : StrokeStabilizer::Preprocessor::NONE;
+
+    if (stabilizerPreprocessor == p) {
+        return;
+    }
+    stabilizerPreprocessor = p;
+    save();
 }
