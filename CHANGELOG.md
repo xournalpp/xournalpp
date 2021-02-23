@@ -94,14 +94,13 @@ community.
       tangents. Backspace key, arrow keys, s and Shift+s allow to delete/modifiy
       the last set knot/its tangent. Escape key and double click exit the spline
       drawing mode.
-* Snapping and selections
+* Snapping
     * Added snapping for vertical space (#2011)
     * Added snapping for moving and resizing selections (#1972, #2011)
     * Added snapping for recognized shapes (optional setting; #2011)
     * Added a Preferences settings to preserve line width while resizing a
       selection (#2011)
     * Added a Preferences setting to change the snap grid size (#1920).
-    * Added Preference settings to configure the grid size (#1920).
     * Fixed a bug in the grid snapping tolerance (#2779).
 * Selections
     * Added ability to mirror selected elements when scaling in a negative
@@ -110,6 +109,7 @@ community.
       rearranging selected elements (#2794).
     * Fixed some bugs where selections would not be copied correctly (#2277,
       #2090, #2733).
+    * Fixed a bug in the Select Object algorithm (#2478)
 * Pen and eraser tools
     * Added Preferences settings to configure the radius, color, and border of
       the cursor highlight when `Highlight cursor position` is enabled (#1891,
@@ -182,7 +182,7 @@ More bugfixes.
 More bugfixes and improvements due to help from the various community
 contributors!
 
-* Changed select object algorithm to be more intuitive (#1881, #2478).
+* Changed select object algorithm to be more intuitive (#1881).
 * Added ability for taps with Select Rectangle and Select Region to act like
   Select Object (#1980)
 * Improved document loading speed (#2002)
