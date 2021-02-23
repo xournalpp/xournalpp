@@ -95,10 +95,18 @@ void ToolbarAdapter::prepareToolItem(GtkToolItem* it) {
 
     gtk_tool_item_set_use_drag_window(it, true);
 
-    GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(it));
-    GdkCursor* cursor = gdk_cursor_new_for_display(gdk_screen_get_display(screen), GDK_HAND2);
-    gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(it)), cursor);
-    g_object_unref(cursor);
+    // Set cursor of drag drop to hand. Note: the tool item must be realized for
+    // this to work!
+    {
+        gtk_widget_realize(GTK_WIDGET(it));
+        GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(it));
+        GdkCursor* cursor = gdk_cursor_new_for_display(gdk_screen_get_display(screen), GDK_HAND2);
+        g_assert_nonnull(cursor);
+        GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(it));
+        g_assert_nonnull(window);
+        gdk_window_set_cursor(window, cursor);
+        g_object_unref(cursor);
+    }
 
     gtk_drag_source_set(GTK_WIDGET(it), GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
     ToolbarDragDropHelper::dragSourceAddToolbar(GTK_WIDGET(it));
@@ -272,10 +280,9 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         bool horizontal = gtk_orientable_get_orientation(GTK_ORIENTABLE(toolbar)) == GTK_ORIENTATION_HORIZONTAL;
         GtkToolItem* it = d->item->createItem(horizontal);
 
-        adapter->prepareToolItem(it);
-
         gtk_widget_show_all(GTK_WIDGET(it));
         gtk_toolbar_insert(toolbar, it, pos);
+        adapter->prepareToolItem(it);
 
         ToolbarData* tb = adapter->window->getSelectedToolbar();
         const char* name = adapter->window->getToolbarName(toolbar);
@@ -291,10 +298,9 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         bool horizontal = gtk_orientable_get_orientation(GTK_ORIENTABLE(toolbar)) == GTK_ORIENTATION_HORIZONTAL;
         GtkToolItem* it = item->createItem(horizontal);
 
-        adapter->prepareToolItem(it);
-
         gtk_widget_show_all(GTK_WIDGET(it));
         gtk_toolbar_insert(toolbar, it, pos);
+        adapter->prepareToolItem(it);
 
         ToolbarData* tb = adapter->window->getSelectedToolbar();
         const char* name = adapter->window->getToolbarName(toolbar);
@@ -309,7 +315,6 @@ void ToolbarAdapter::toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragConte
         GtkToolItem* it = gtk_separator_tool_item_new();
         gtk_widget_show_all(GTK_WIDGET(it));
         gtk_toolbar_insert(toolbar, it, pos);
-
         adapter->prepareToolItem(it);
 
         ToolbarData* tb = adapter->window->getSelectedToolbar();
