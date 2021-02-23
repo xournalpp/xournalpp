@@ -58,16 +58,18 @@ public:
 
     /**
      * @brief Convert the spline segment to a list of points.
+     * @param usePressure If true, interpolate the pressure along the spline. Default: false
      * @return A point list which represents the spline segment without the end point.
      */
-    std::list<Point> toPointSequence() const;
+    std::list<Point> toPointSequence(bool usePressure = false) const;
 
     /**
      * @brief Subdivide the spline into two parts with respect to parameter t.
      * @param t the parameter between 0 and 1, which corresponds to the point where the spline is split
+     * @param usePressure If true, infer pressure values for the resulting SplineSegments' endpoints. Default: false.
      * @return A pair of two spline segments corresponding to the two parts of the spline
      */
-    std::pair<SplineSegment, SplineSegment> subdivide(float t) const;
+    std::pair<SplineSegment, SplineSegment> subdivide(float t, bool usePressure = false) const;
 
     /**
      * @brief Interpolate a line segment with respect to parameter t
@@ -80,9 +82,10 @@ public:
 
     /**
      * @brief checks if the spline segment is flat enough so that it can be drawn as a straight line
+     * @param usePressure If true, return false if the endpoints' pressure values are to far appart. Default: false.
      * @return true, if the spline segment is flat enough; false otherwise
      */
-    bool isFlatEnough() const;
+    bool isFlatEnough(bool usePressure = false) const;
 
 
 public:

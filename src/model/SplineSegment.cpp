@@ -16,17 +16,17 @@ void SplineSegment::draw(cairo_t* cr) const {
                    secondKnot.x, secondKnot.y);
 }
 
-auto SplineSegment::toPointSequence() const -> std::list<Point> {
-    if (isFlatEnough()) {
+auto SplineSegment::toPointSequence(bool usePressure) const -> std::list<Point> {
+    if (isFlatEnough(usePressure)) {
         return {firstKnot};
     }
-    auto const& childSegments = subdivide(0.5);
-    auto left_points = childSegments.first.toPointSequence();
-    left_points.splice(end(left_points), childSegments.second.toPointSequence());
+    auto const& childSegments = subdivide(0.5, usePressure);
+    auto left_points = childSegments.first.toPointSequence(usePressure);
+    left_points.splice(end(left_points), childSegments.second.toPointSequence(usePressure));
     return left_points;
 }
 
-auto SplineSegment::subdivide(float t) const -> std::pair<SplineSegment, SplineSegment> {
+auto SplineSegment::subdivide(float t, bool usePressure) const -> std::pair<SplineSegment, SplineSegment> {
 
     Point b0 = SplineSegment::linearInterpolate(firstKnot, firstControlPoint, t);  // Same as evaluating a Bezier
     Point b1 = SplineSegment::linearInterpolate(firstControlPoint, secondControlPoint, t);
@@ -36,6 +36,13 @@ auto SplineSegment::subdivide(float t) const -> std::pair<SplineSegment, SplineS
     Point c1 = SplineSegment::linearInterpolate(b1, b2, t);
 
     Point d0 = SplineSegment::linearInterpolate(c0, c1, t);  // This would be the interpolated point
+
+    if (usePressure) {
+        /**
+         * Beware: with this quite imperfect formula, the pressure does not change linearly with the lengths
+         */
+        d0.z = t * firstKnot.z + (1 - t) * secondKnot.z;
+    }
 
     SplineSegment firstPart = SplineSegment(firstKnot, b0, c0, d0);    // first point of each step
     SplineSegment secondPart = SplineSegment(d0, c1, b2, secondKnot);  // last point of each step
@@ -48,11 +55,13 @@ auto SplineSegment::linearInterpolate(const Point& p, const Point& q, float t) -
 
 constexpr double FLATNESS_TOLERANCE = 1.0001;
 constexpr double MIN_KNOT_DISTANCE = 0.3;
+constexpr double MAX_WIDTH_VARIATION = 0.1;
 
-auto SplineSegment::isFlatEnough() const -> bool {
+auto SplineSegment::isFlatEnough(bool usePressure) const -> bool {
     double l1 = firstKnot.lineLengthTo(firstControlPoint);
     double l2 = firstControlPoint.lineLengthTo(secondControlPoint);
     double l3 = secondControlPoint.lineLengthTo(secondKnot);
     double l = firstKnot.lineLengthTo(secondKnot);
-    return l1 + l2 + l3 < FLATNESS_TOLERANCE * l || l < MIN_KNOT_DISTANCE;
+    return l < MIN_KNOT_DISTANCE || (l1 + l2 + l3 < FLATNESS_TOLERANCE * l &&
+                                     ((!usePressure) || std::abs(firstKnot.z - secondKnot.z) <= MAX_WIDTH_VARIATION));
 }
