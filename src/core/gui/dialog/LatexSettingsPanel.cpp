@@ -32,6 +32,7 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
 
     gtk_container_add(themeSelectionBoxContainer, sourceViewThemeSelector);
     gtk_widget_show_all(GTK_WIDGET(themeSelectionBoxContainer));
+    gtk_widget_show(this->get("bxGtkSourceviewMainSettings"));
 }
 
 LatexSettingsPanel::~LatexSettingsPanel() {
@@ -57,6 +58,10 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
                                                          theme);
     }
 
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbShowLineNumbers")), settings.sourceViewShowLineNumbers);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbAutoIndent")), settings.sourceViewAutoIndent);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbSyntaxHighlight")), settings.sourceViewSyntaxHighlight);
+
     // Editor font
     std::string editorFontDescription{settings.editorFont.asString()};
     gtk_font_chooser_set_font(GTK_FONT_CHOOSER(this->get("selBtnEditorFont")), editorFontDescription.c_str());
@@ -75,6 +80,12 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_chooser_get_style_scheme(
             GTK_SOURCE_STYLE_SCHEME_CHOOSER(this->sourceViewThemeSelector));
     settings.sourceViewThemeId = gtk_source_style_scheme_get_id(theme);
+
+    settings.sourceViewShowLineNumbers =
+            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbShowLineNumbers")));
+    settings.sourceViewAutoIndent = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbAutoIndent")));
+    settings.sourceViewSyntaxHighlight =
+            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbSyntaxHighlight")));
 
     GtkFontChooser* fontSelector = GTK_FONT_CHOOSER(this->get("selBtnEditorFont"));
     std::string fontDescription{gtk_font_chooser_get_font(fontSelector)};

@@ -335,27 +335,54 @@
                 <property name="can-focus">False</property>
                 <property name="label-xalign">0.009999999776482582</property>
                 <child>
-                  <object class="GtkAlignment">
+                  <object class="GtkAlignment" id="alignmentSourceViewSettings">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="bottom-padding">8</property>
                     <property name="left-padding">12</property>
                     <property name="right-padding">12</property>
                     <child>
-                      <object class="GtkBox">
+                      <object class="GtkBox" id="bxSourceViewSettingsRootContainer">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="bxGtkSourceviewSettings">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
+                            <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkLabel" id="lbSourceviewSettingsDescription">
+                              <object class="GtkBox" id="bxGtkSourceviewDescription">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="halign">start</property>
-                                <property name="xpad">5</property>
+                                <child>
+                                  <object class="GtkLabel" id="lbSourceviewSettingsDescription">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="xpad">5</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkBox" id="bxThemeSelectionContainer">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -364,12 +391,52 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkBox" id="bxThemeSelectionContainer">
+                              <object class="GtkBox" id="bxGtkSourceviewMainSettings">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="no-show-all">True</property>
                                 <property name="orientation">vertical</property>
                                 <child>
-                                  <placeholder/>
+                                  <object class="GtkCheckButton" id="cbShowLineNumbers">
+                                    <property name="label" translatable="yes">Line numbers</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">False</property>
+                                    <property name="draw-indicator">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckButton" id="cbAutoIndent">
+                                    <property name="label" translatable="yes">Auto-indent</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">False</property>
+                                    <property name="draw-indicator">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckButton" id="cbSyntaxHighlight">
+                                    <property name="label" translatable="yes">Syntax highlighting</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">False</property>
+                                    <property name="draw-indicator">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">2</property>
+                                  </packing>
                                 </child>
                               </object>
                               <packing>
@@ -386,7 +453,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkFrame">
+                          <object class="GtkFrame" id="frameSourceViewFontSettings">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="label-xalign">0.009999999776482582</property>
