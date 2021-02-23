@@ -22,5 +22,6 @@ private:
     virtual ~ToolbarSeparatorImage();
 
 public:
-    static GtkWidget* newSepeartorImage();
+    static GtkWidget* newSeperatorImage();
+    static GdkPixbuf* getNewToolPixbuf();
 };

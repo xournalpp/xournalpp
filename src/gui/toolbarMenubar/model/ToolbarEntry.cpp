@@ -54,7 +54,8 @@ auto ToolbarEntry::insertItem(string item, int position) -> int {
         return it->getId();
     }
 
-    entries.insert(entries.begin() + position, it);
+    // -1 required to store the correct order in toolbar.ini
+    entries.insert(entries.begin() + position - 1, it);
     return it->getId();
 }
 

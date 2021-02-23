@@ -2,6 +2,8 @@
 
 #include <utility>
 
+#include <PathUtil.h>
+
 #include "model/FormatDefinitions.h"
 #include "util/DeviceListHelper.h"
 
@@ -618,6 +620,14 @@ auto Settings::load() -> bool {
 
     loadButtonConfig();
     loadDeviceClasses();
+
+    // load Color Palette
+    auto paletteFile = Util::getConfigFile(PALETTE_FILE);
+    if (!fs::exists(paletteFile)) {
+        Palette::create_default(paletteFile);
+    }
+    this->palette = std::make_unique<Palette>(std::move(paletteFile));
+    this->palette->load();
 
     return true;
 }

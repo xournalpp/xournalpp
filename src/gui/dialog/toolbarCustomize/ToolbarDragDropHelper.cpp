@@ -1,5 +1,7 @@
 #include "ToolbarDragDropHelper.h"
 
+#include "gui/toolbarMenubar/icon/ColorSelectImage.h"
+
 GdkAtom ToolbarDragDropHelper::atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");
 GtkTargetEntry ToolbarDragDropHelper::dropTargetEntry = {const_cast<char*>("move-buffer"), GTK_TARGET_SAME_APP, 1};
 
@@ -7,26 +9,6 @@ ToolbarDragDropHelper::ToolbarDragDropHelper() = default;
 
 ToolbarDragDropHelper::~ToolbarDragDropHelper() = default;
 
-/**
- * Get a GDK Pixbuf from GTK widget image
- */
-auto ToolbarDragDropHelper::getImagePixbuf(GtkImage* image) -> GdkPixbuf* {
-    switch (gtk_image_get_storage_type(image)) {
-        case GTK_IMAGE_PIXBUF:
-            return static_cast<GdkPixbuf*>(g_object_ref(gtk_image_get_pixbuf(image)));
-
-        case GTK_IMAGE_ICON_NAME: {
-            const gchar* iconName = nullptr;
-            gtk_image_get_icon_name(image, &iconName, nullptr);
-            return gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName, 22,
-                                            static_cast<GtkIconLookupFlags>(0), nullptr);
-        }
-
-        default:
-            g_warning("Image storage type %d not handled", gtk_image_get_storage_type(image));
-            return nullptr;
-    }
-}
 
 void ToolbarDragDropHelper::dragDestAddToolbar(GtkWidget* target) {
     GtkTargetList* targetList = gtk_drag_dest_get_target_list(target);

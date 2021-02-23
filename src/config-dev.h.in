@@ -22,6 +22,11 @@
 #define SETTINGS_XML_FILE "@DEV_SETTINGS_XML_FILE@"
 
 /**
+ * Gimp Palette File
+ */
+#define PALETTE_FILE "@DEV_PALETTE_FILE@"
+
+/**
  * Print config file name
  */
 #define PRINT_CONFIG_FILE "@DEV_PRINT_CONFIG_FILE@"
@@ -34,7 +39,7 @@
 /**
  * Maximal amount of metadata elements
  */
-#define METADATA_MAX_ITEMS @DEV_METADATA_MAX_ITEMS@
+#define METADATA_MAX_ITEMS "@DEV_METADATA_MAX_ITEMS@"
 
 /**
  * Directory where errorlogfiles will be placed

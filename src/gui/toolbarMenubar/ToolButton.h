@@ -42,6 +42,7 @@ protected:
     virtual GtkToolItem* newItem();
 
     virtual GtkWidget* getNewToolIcon();
+    virtual GdkPixbuf* getNewToolPixbuf();
 
 private:
     string iconName;

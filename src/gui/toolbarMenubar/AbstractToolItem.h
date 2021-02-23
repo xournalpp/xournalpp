@@ -28,9 +28,13 @@ public:
     void setUsed(bool used);
 
     static void toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item);
+    GdkPixbuf* getPixbufFromImageIconName();
+    GdkPixbuf* getPixbufFromImagePixbuf();
+
 
     virtual string getToolDisplayName() = 0;
     virtual GtkWidget* getNewToolIcon() = 0;
+    virtual GdkPixbuf* getNewToolPixbuf() = 0;
 
     /**
      * Enable / Disable the tool item

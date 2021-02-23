@@ -210,6 +210,7 @@ mark_as_advanced (FORCE
 # Advanced development config
 set (DEV_TOOLBAR_CONFIG "toolbar.ini" CACHE STRING "Toolbar config file name")
 set (DEV_SETTINGS_XML_FILE "settings.xml" CACHE STRING "Settings file name")
+set (DEV_PALETTE_FILE "palette.gpl" CACHE STRING "Color Palette")
 set (DEV_PRINT_CONFIG_FILE "print-config.ini" CACHE STRING "Print config file name")
 set (DEV_METADATA_FILE "metadata.ini" CACHE STRING "Metadata file name")
 set (DEV_METADATA_MAX_ITEMS 50 CACHE STRING "Maximal amount of metadata elements")

@@ -1,5 +1,6 @@
 #include "ToolMenuHandler.h"
 
+#include <sstream>
 #include <utility>
 
 #include <config-features.h>
@@ -9,6 +10,7 @@
 #include "control/Control.h"
 #include "control/PageBackgroundChangeController.h"
 #include "gui/ToolitemDragDrop.h"
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 #include "model/ToolbarData.h"
 #include "model/ToolbarModel.h"
 
@@ -89,6 +91,9 @@ void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
 void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal) {
     int count = 0;
 
+    Palette* palette = this->control->getSettings()->palette.get();
+    size_t colorIndex{};
+
     for (ToolbarEntry* e: d->contents) {
         if (e->getName() == toolbarName) {
             for (ToolbarItem* dataItem: e->getItems()) {
@@ -135,25 +140,43 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
 
                     continue;
                 }
-                if (StringUtils::startsWith(name, "COLOR(") && name.length() == 15) {
-                    string color = name.substr(6, 8);
-                    if (!StringUtils::startsWith(color, "0x")) {
-                        g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s", color.c_str());
-                        continue;
+                if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
+                    string arg = name.substr(6, name.length() - 7);
+                    // namedColor needs to be a pointer to enable attachMetadataColor to reference to the
+                    // non local scoped namedColor instance
+                    const NamedColor* namedColor;
+                    size_t paletteIndex{};
+
+                    // check for old color format of toolbar.ini
+                    if (StringUtils::startsWith(arg, "0x")) {
+                        namedColor = &(palette->getColorAt(colorIndex));
+                        paletteIndex = namedColor->getIndex();
+
+                        // set new COLOR Toolbar entry
+                        std::ostringstream newColor("");
+                        newColor << "COLOR(" << paletteIndex << ")";
+                        dataItem->setName(newColor.str());
+                        colorIndex++;
+                    } else {
+                        std::istringstream colorStream(arg);
+                        colorStream >> paletteIndex;
+                        if (!colorStream.eof() || colorStream.fail()) {
+                            g_warning("Toolbar:COLOR(...) has to start with 0x, get color: %s", arg.c_str());
+                            continue;
+                        }
+                        namedColor = &palette->getColorAt(paletteIndex);
                     }
+
                     count++;
 
-                    color = color.substr(2);
-                    auto c = Color(g_ascii_strtoull(color.c_str(), nullptr, 16));
-
-                    auto* item = new ColorToolItem(listener, toolHandler, this->parent, c);
+                    auto* item = new ColorToolItem(listener, toolHandler, this->parent, *namedColor);
                     this->toolbarColorItems.push_back(item);
 
                     GtkToolItem* it = item->createItem(horizontal);
                     gtk_widget_show_all(GTK_WIDGET(it));
                     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
 
-                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), c, item);
+                    ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), namedColor, item);
 
                     continue;
                 }
@@ -475,7 +498,8 @@ void ToolMenuHandler::initToolItems() {
     // ************************************************************************
 
     // Color item - not in the menu
-    addToolItem(new ColorToolItem(listener, toolHandler, this->parent, Color{0xff0000U}, true));
+    // aka. COLOR_SELECT
+    addToolItem(new ColorToolItem(listener, toolHandler, this->parent, NamedColor{}, true));
 
     addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT"));
     addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
@@ -515,6 +539,8 @@ auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter* { return this->toolPa
 void ToolMenuHandler::setPageText(const string& text) { this->toolPageSpinner->setText(text); }
 
 auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel; }
+
+auto ToolMenuHandler::getControl() -> Control* { return this->control; }
 
 auto ToolMenuHandler::isColorInUse(Color color) -> bool {
     for (ColorToolItem* it: this->toolbarColorItems) {

@@ -25,7 +25,7 @@ public:
     static void setData(ToolItemDragDropData* d);
     static void setData(ToolItemType type, int id, AbstractToolItem* item);
     static void setData(GtkWidget* widget);
-    static void setDataColor(int id, Color color);
+    static void setDataColor(int id, const NamedColor* namedColor);
     static ToolItemDragDropData* getData();
 
 private:

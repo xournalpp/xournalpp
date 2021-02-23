@@ -75,6 +75,8 @@ auto ToolZoomSlider::getNewToolIcon() -> GtkWidget* {
     return gtk_image_new_from_icon_name("zoom-in", GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
+auto ToolZoomSlider::getNewToolPixbuf() -> GdkPixbuf* { return getPixbufFromImageIconName(); }
+
 // Should be called when the window size changes
 void ToolZoomSlider::updateScaleMarks() {
     if (this->slider == nullptr) {

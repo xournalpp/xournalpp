@@ -2,6 +2,7 @@
 
 #include <utility>
 
+
 AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem):
         AbstractItem(std::move(id), handler, type, menuitem) {}
 
@@ -98,4 +99,22 @@ void AbstractToolItem::enable(bool enabled) {
     if (this->item) {
         gtk_widget_set_sensitive(GTK_WIDGET(this->item), enabled);
     }
+}
+
+auto AbstractToolItem::getPixbufFromImageIconName() -> GdkPixbuf* {
+    GtkImage* image = GTK_IMAGE(getNewToolIcon());
+    if (gtk_image_get_storage_type(image) != GTK_IMAGE_ICON_NAME) {
+        g_error("getPixbufFromImageIconName is only intended for image type: GTK_IMAGE_ICON_NAME");
+    }
+    const gchar* iconName = nullptr;
+    gtk_image_get_icon_name(image, &iconName, nullptr);
+    return gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName, 16, static_cast<GtkIconLookupFlags>(0),
+                                    nullptr);
+}
+auto AbstractToolItem::getPixbufFromImagePixbuf() -> GdkPixbuf* {
+    GtkImage* image = GTK_IMAGE(getNewToolIcon());
+    if (gtk_image_get_storage_type(image) != GTK_IMAGE_PIXBUF) {
+        g_error("getPixbufFromImagePixbuf is only intended for image type: GTK_IMAGE_PIXBUF");
+    }
+    return static_cast<GdkPixbuf*>(g_object_ref(gtk_image_get_pixbuf(image)));
 }

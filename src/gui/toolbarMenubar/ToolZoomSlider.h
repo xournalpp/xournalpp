@@ -48,6 +48,7 @@ protected:
     virtual void enable(bool enabled);
     virtual GtkToolItem* newItem();
     virtual GtkWidget* getNewToolIcon();
+    virtual GdkPixbuf* getNewToolPixbuf();
 
 private:
     static double scaleFunc(double x);

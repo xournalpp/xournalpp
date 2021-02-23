@@ -18,6 +18,7 @@
 #include "gui/SearchBar.h"
 #include "gui/dialog/LatexDialog.h"
 #include "gui/sidebar/Sidebar.h"
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 #include "jobs/ProgressListener.h"
 #include "jobs/XournalScheduler.h"
 #include "model/Document.h"

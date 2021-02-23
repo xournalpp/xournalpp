@@ -42,6 +42,7 @@ protected:
     static void setFontFontButton(GtkWidget* fontButton, XojFont& font);
 
     virtual GtkWidget* getNewToolIcon();
+    virtual GdkPixbuf* getNewToolPixbuf();
 
 private:
     GtkWidget* fontButton = nullptr;

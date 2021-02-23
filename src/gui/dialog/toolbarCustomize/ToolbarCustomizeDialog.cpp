@@ -2,6 +2,7 @@
 
 #include <config.h>
 
+#include "control/Control.h"
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
@@ -9,8 +10,8 @@
 #include "gui/toolbarMenubar/icon/ToolbarSeparatorImage.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
+#include "util/Color.h"
 
-#include "CustomizeableColorList.h"
 #include "ToolItemDragCurrentData.h"
 #include "ToolbarDragDropHandler.h"
 #include "ToolbarDragDropHelper.h"
@@ -26,12 +27,18 @@ struct _ToolItemDragData {
     GtkWidget* ebox;
 };
 
+struct _ColorToolItemDragData {
+    ToolbarCustomizeDialog* dlg;
+    GdkPixbuf* icon;
+    const NamedColor* namedColor;
+    GtkWidget* ebox;
+};
+
 ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win,
                                                ToolbarDragDropHandler* handler):
         GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar") {
     this->win = win;
     this->handler = handler;
-    this->colorList = new CustomizeableColorList();
 
     rebuildIconview();
     rebuildColorIcons();
@@ -44,6 +51,9 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
 
     g_signal_connect(target, "drag-data-received", G_CALLBACK(dragDataReceived), this);
 
+
+    GtkWidget* icon = ToolbarSeparatorImage::newSeperatorImage();
+    g_return_if_fail(icon != nullptr);
     GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
     gtk_widget_show(box);
 
@@ -55,10 +65,8 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
     gtk_container_add(GTK_CONTAINER(ebox), box);
     gtk_widget_show(ebox);
 
-    GtkWidget* separator = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
-    gtk_widget_set_size_request(separator, 2, 22);
-    gtk_widget_show(separator);
-    gtk_box_pack_end(GTK_BOX(box), separator, false, false, 0);
+    gtk_widget_show(icon);
+    gtk_box_pack_end(GTK_BOX(box), icon, false, false, 0);
 
     // make ebox a drag source
     gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
@@ -84,17 +92,12 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
         g_object_unref(data->icon);
         g_free(data);
     }
-
-    delete this->colorList;
-    this->colorList = nullptr;
 }
 
 void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDragContext* context, void* unused) {
     ToolItemDragCurrentData::setData(TOOL_ITEM_SEPARATOR, -1, nullptr);
 
-    GtkWidget* icon = ToolbarSeparatorImage::newSepeartorImage();
-    gtk_drag_set_icon_pixbuf(context, ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon)), -2, -2);
-    g_object_unref(icon);
+    gtk_drag_set_icon_pixbuf(context, ToolbarSeparatorImage::getNewToolPixbuf(), -2, -2);
 }
 
 void ToolbarCustomizeDialog::toolitemDragEndSeparator(GtkWidget* widget, GdkDragContext* context, void* unused) {
@@ -119,7 +122,7 @@ void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget* widget, Gdk
  */
 void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, ToolItemDragData* data) {
     ToolItemDragCurrentData::setData(TOOL_ITEM_ITEM, -1, data->item);
-
+    g_message("Data->Icon: %p", data->icon);
     gtk_drag_set_icon_pixbuf(context, data->icon, -2, -2);
     gtk_widget_hide(data->ebox);
 }
@@ -152,38 +155,34 @@ void ToolbarCustomizeDialog::toolitemDragDataGet(GtkWidget* widget, GdkDragConte
 /**
  * Drag a Toolitem from dialog
  */
-void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragContext* context, void* data) {
-    Color color = GPOINTER_TO_UINT(data);
-    ToolItemDragCurrentData::setDataColor(-1, color);
+void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragContext* context,
+                                                    ColorToolItemDragData* data) {
+    ToolItemDragCurrentData::setDataColor(-1, data->namedColor);
 
-    GdkPixbuf* image = ColorSelectImage::newColorIconPixbuf(color, 32, true);
+    GdkPixbuf* image = ColorSelectImage::newColorIconPixbuf(data->namedColor->getColor(), 16, true);
 
     gtk_drag_set_icon_pixbuf(context, image, -2, -2);
-
-    g_object_unref(image);
-    gtk_widget_hide(widget);
 }
 
 /**
  * Drag a Toolitem from dialog STOPPED
  */
 void ToolbarCustomizeDialog::toolitemColorDragEnd(GtkWidget* widget, GdkDragContext* context,
-                                                  ToolbarCustomizeDialog* dlg) {
+                                                  ColorToolItemDragData* data) {
     ToolItemDragCurrentData::clearData();
     gtk_widget_show(widget);
 
-    dlg->rebuildColorIcons();
+    data->dlg->rebuildColorIcons();
 }
 
 void ToolbarCustomizeDialog::toolitemColorDragDataGet(GtkWidget* widget, GdkDragContext* context,
                                                       GtkSelectionData* selection_data, guint info, guint time,
-                                                      void* data) {
-
-    Color color = GPOINTER_TO_UINT(data);
+                                                      ColorToolItemDragData* data) {
+    ToolItemDragCurrentData::setDataColor(-1, data->namedColor);
 
     ToolItemDragDropData* it = ToolitemDragDrop::ToolItemDragDropData_new(nullptr);
-    it->color = color;
     it->type = TOOL_ITEM_COLOR;
+    it->namedColor = data->namedColor;
 
     gtk_selection_data_set(selection_data, ToolbarDragDropHelper::atomToolItem, 0, reinterpret_cast<const guchar*>(it),
                            sizeof(ToolItemDragDropData));
@@ -211,8 +210,7 @@ void ToolbarCustomizeDialog::dragDataReceived(GtkWidget* widget, GdkDragContext*
     } else if (d->type == TOOL_ITEM_SEPARATOR) {
         // simple ignore the separator
     } else if (d->type == TOOL_ITEM_COLOR) {
-        dlg->win->getToolMenuHandler()->removeColorToolItem(d->item);
-        dlg->rebuildColorIcons();
+        // nothing to do here
     } else {
         g_warning("ToolbarCustomizeDialog::dragDataReceived unhandled type: %i", d->type);
     }
@@ -248,8 +246,9 @@ void ToolbarCustomizeDialog::rebuildIconview() {
         if (item->isUsed()) {
             continue;
         }
-
         string name = item->getToolDisplayName();
+
+
         GtkWidget* icon = item->getNewToolIcon();
         g_return_if_fail(icon != nullptr);
 
@@ -274,7 +273,7 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 
         ToolItemDragData* data = g_new(ToolItemDragData, 1);
         data->dlg = this;
-        data->icon = ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon));
+        data->icon = item->getNewToolPixbuf();
         data->item = item;
         data->ebox = ebox;
 
@@ -314,20 +313,19 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
 
     freeColorIconview();
 
-    ToolMenuHandler* tmh = this->win->getToolMenuHandler();
+    Palette* palette = this->win->getToolMenuHandler()->getControl()->getSettings()->palette.get();
 
-    int i = 0;
-    for (XojColor* color: *this->colorList->getPredefinedColors()) {
-        if (tmh->isColorInUse(color->getColor())) {
-            continue;
-        }
+    for (size_t i{}; i < palette->size(); i++) {
+        // namedColor needs to be a pointer to pass it into a ColorToolItemDragData
+        const NamedColor* namedColor = &(palette->getColorAt(i));
+        Color c = namedColor->getColor();
+        GtkWidget* icon = ColorSelectImage::newColorIcon(c, 16, true);
 
-        GtkWidget* icon = ColorSelectImage::newColorIcon(color->getColor(), 16, true);
 
         GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
         gtk_widget_show(box);
 
-        GtkWidget* label = gtk_label_new(color->getName().c_str());
+        GtkWidget* label = gtk_label_new(namedColor->getName().c_str());
         gtk_widget_show(label);
         gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
 
@@ -343,14 +341,25 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
         gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
         ToolbarDragDropHelper::dragSourceAddToolbar(ebox);
 
-        g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemColorDragBegin), GUINT_TO_POINTER(color->getColor()));
-        g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemColorDragEnd), this);
-        g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemColorDragDataGet),
-                         GUINT_TO_POINTER(color->getColor()));
+        ColorToolItemDragData* data = g_new(ColorToolItemDragData, 1);
+        data->dlg = this;
+        data->icon = nullptr;
+        // Since namedColor actually is a const reference, the reference will be valid even once namedColor goes out of
+        // scope
+        data->namedColor = namedColor;
+        data->ebox = ebox;
 
-        int x = i % 5;
-        int y = i / 5;
-        i++;
+        g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemColorDragBegin), data);
+        g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemColorDragEnd), data);
+        g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemColorDragDataGet), data);
+
+        if (i >= std::numeric_limits<int>::max())
+            g_error("Int overflow because of two many colors defined in Palette");
+        auto ii = static_cast<int>(i);
+
+        int x = ii % 5;
+        int y = ii / 5;
+
         gtk_grid_attach(table, ebox, x, y, 1, 1);
     }
 
