@@ -20,15 +20,8 @@ CustomizeableColorList::CustomizeableColorList() {
     this->addPredefinedColor(0xffffffU, _("White"));
 }
 
-CustomizeableColorList::~CustomizeableColorList() {
-    for (XojColor* c: this->colors) {
-        delete c;
-    }
-    this->colors.clear();
-}
-
-auto CustomizeableColorList::getPredefinedColors() -> vector<XojColor*>* { return &this->colors; }
+auto CustomizeableColorList::getPredefinedColors() const -> const vector<XojColor>& { return this->colors; }
 
 void CustomizeableColorList::addPredefinedColor(Color color, string name) {
-    this->colors.push_back(new XojColor(color, std::move(name)));
+    this->colors.push_back(XojColor(color, std::move(name)));
 }

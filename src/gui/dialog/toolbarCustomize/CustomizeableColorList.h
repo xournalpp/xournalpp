@@ -21,14 +21,13 @@
 class CustomizeableColorList {
 public:
     CustomizeableColorList();
-    virtual ~CustomizeableColorList();
 
 public:
-    vector<XojColor*>* getPredefinedColors();
+    const vector<XojColor>& getPredefinedColors() const;
 
 private:
     void addPredefinedColor(Color color, string name);
 
 private:
-    vector<XojColor*> colors;
+    vector<XojColor> colors;
 };

@@ -18,17 +18,16 @@
 
 #include "XournalType.h"
 
-class XojColor {
+struct XojColor {
 public:
-    XojColor(Color color, string name);
-    virtual ~XojColor();
+    XojColor(Color color, std::string name);
 
 public:
     Color getColor() const;
-    string getName();
+    string getName() const;
 
 private:
     Color color;
     // the localized name of the color
-    string name;
+    std::string name;
 };

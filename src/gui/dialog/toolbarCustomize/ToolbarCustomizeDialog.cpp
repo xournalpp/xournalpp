@@ -31,7 +31,6 @@ ToolbarCustomizeDialog::ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath,
         GladeGui(gladeSearchPath, "toolbarCustomizeDialog.glade", "DialogCustomizeToolbar") {
     this->win = win;
     this->handler = handler;
-    this->colorList = new CustomizeableColorList();
 
     rebuildIconview();
     rebuildColorIcons();
@@ -84,9 +83,6 @@ ToolbarCustomizeDialog::~ToolbarCustomizeDialog() {
         g_object_unref(data->icon);
         g_free(data);
     }
-
-    delete this->colorList;
-    this->colorList = nullptr;
 }
 
 void ToolbarCustomizeDialog::toolitemDragBeginSeparator(GtkWidget* widget, GdkDragContext* context, void* unused) {
@@ -285,8 +281,8 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 
         g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemDragDataGet), data);
 
-        int x = i % 3;
-        int y = i / 3;
+        const int x = i % 3;
+        const int y = i / 3;
         gtk_grid_attach(table, ebox, x, y, 1, 1);
 
         i++;
@@ -317,17 +313,17 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
     ToolMenuHandler* tmh = this->win->getToolMenuHandler();
 
     int i = 0;
-    for (XojColor* color: *this->colorList->getPredefinedColors()) {
-        if (tmh->isColorInUse(color->getColor())) {
+    for (const XojColor& color: this->colorList.getPredefinedColors()) {
+        if (tmh->isColorInUse(color.getColor())) {
             continue;
         }
 
-        GtkWidget* icon = ColorSelectImage::newColorIcon(color->getColor(), 16, true);
+        GtkWidget* icon = ColorSelectImage::newColorIcon(color.getColor(), 16, true);
 
         GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
         gtk_widget_show(box);
 
-        GtkWidget* label = gtk_label_new(color->getName().c_str());
+        GtkWidget* label = gtk_label_new(color.getName().c_str());
         gtk_widget_show(label);
         gtk_box_pack_end(GTK_BOX(box), label, false, false, 0);
 
@@ -343,10 +339,10 @@ void ToolbarCustomizeDialog::rebuildColorIcons() {
         gtk_drag_source_set(ebox, GDK_BUTTON1_MASK, &ToolbarDragDropHelper::dropTargetEntry, 1, GDK_ACTION_MOVE);
         ToolbarDragDropHelper::dragSourceAddToolbar(ebox);
 
-        g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemColorDragBegin), GUINT_TO_POINTER(color->getColor()));
+        g_signal_connect(ebox, "drag-begin", G_CALLBACK(toolitemColorDragBegin), GUINT_TO_POINTER(color.getColor()));
         g_signal_connect(ebox, "drag-end", G_CALLBACK(toolitemColorDragEnd), this);
         g_signal_connect(ebox, "drag-data-get", G_CALLBACK(toolitemColorDragDataGet),
-                         GUINT_TO_POINTER(color->getColor()));
+                         GUINT_TO_POINTER(color.getColor()));
 
         int x = i % 5;
         int y = i / 5;
