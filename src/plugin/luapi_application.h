@@ -12,6 +12,8 @@
 #include <cstring>
 #include <map>
 
+#include <gtk/gtk.h>
+
 #include "control/Control.h"
 #include "control/PageBackgroundChangeController.h"
 #include "control/Tool.h"
@@ -26,23 +28,60 @@
 using std::map;
 
 /**
+ * Renames file 'from' to file 'to' in the file system.
+ * Overwrites 'to' if it already exists.
+ *
+ * Example:
+ *   assert(app.glib_rename("path/to/foo", "other/bar"))
+ *
+ * Preferred to os.rename() because it works across
+ * partitions. Uses glib's rename function.
+ *
+ * Returns 1 on success, and (nil, message) on failure.
+ */
+static int applib_glib_rename(lua_State* L) {
+    GError* err = nullptr;
+    GFile* to = g_file_new_for_path(lua_tostring(L, -1));
+    GFile* from = g_file_new_for_path(lua_tostring(L, -2));
+
+    g_file_move(from, to, G_FILE_COPY_OVERWRITE, nullptr, nullptr, nullptr, &err);
+    g_object_unref(from);
+    g_object_unref(to);
+    if (err) {
+        lua_pushnil(L);
+        lua_pushfstring(L, "%s (error code: %d)", err->message, err->code);
+        g_error_free(err);
+        return 2;
+    } else {
+        lua_pushinteger(L, 1);
+        return 1;
+    }
+}
+
+
+/**
  * Create a 'Save As' native dialog and return as a string
  * the filepath of the location the user chose to save.
  *
- * Example: local filename = app.saveAs()
+ * Examples:
+ *   local filename = app.saveAs() -- defaults to suggestion "Untitled"
+ *   local filename = app.saveAs("foo") -- suggests "foo" as filename
  */
 static int applib_saveAs(lua_State* L) {
     GtkFileChooserNative* native;
     gint res;
     int args_returned = 0;  // change to 1 if user chooses file
 
+    const char* filename = luaL_checkstring(L, -1);
+
     // Create a 'Save As' native dialog
     native = gtk_file_chooser_native_new(_("Save file"), nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, nullptr, nullptr);
 
     // If user tries to overwrite a file, ask if it's OK
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native), TRUE);
-    // Offer a suggestion for the filename
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native), (std::string{_("Untitled")} += ".png").c_str());
+    // Offer a suggestion for the filename if filename absent
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native),
+                                      filename ? filename : (std::string{_("Untitled")}).c_str());
 
     // Wait until user responds to dialog
     res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native));
@@ -836,6 +875,7 @@ static int applib_getDisplayDpi(lua_State* L) {
  * See above for example usage of each function.
  */
 static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
+                                  {"glib_rename", applib_glib_rename},
                                   {"saveAs", applib_saveAs},
                                   {"registerUi", applib_registerUi},
                                   {"uiAction", applib_uiAction},
