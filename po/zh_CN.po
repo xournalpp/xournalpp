@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-24 06:45+0000\n"
-"PO-Revision-Date: 2021-02-24 06:48\n"
+"POT-Creation-Date: 2021-02-24 20:33+0000\n"
+"PO-Revision-Date: 2021-02-24 20:40\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "将尝试在不使用此文件的情况下运行。"
 
-#: ../src/gui/MainWindow.cpp:723
+#: ../src/gui/MainWindow.cpp:736
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr "页，共{1}页"
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Bring to front"
 msgstr ""
 
-#: ../src/control/Control.cpp:2014 ../src/control/Control.cpp:2470
+#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "取消"
@@ -277,11 +277,11 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "未能重复操作\"{1}\"\n"
 "有错误发生***请提交一个错误报告***"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "无法从工具栏 {1} 位置 {2} 移除工具项"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "无法移除工具栏 {2} 位置 {3} 上的工具项 {1}"
 
@@ -368,7 +368,7 @@ msgstr ""
 msgid "Delete this page"
 msgstr "删除此页面"
 
-#: ../src/control/Control.cpp:2467
+#: ../src/control/Control.cpp:2468
 msgid "Discard"
 msgstr "丢弃"
 
@@ -376,7 +376,7 @@ msgstr "丢弃"
 msgid "Display advanced export options"
 msgstr "显示高级导出选项"
 
-#: ../src/control/Control.cpp:1967
+#: ../src/control/Control.cpp:1968
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -388,7 +388,7 @@ msgstr "请勿打开自动保存文件。它们可能会被覆盖！\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "请勿覆盖背景 PDF！这将造成故障！"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2462
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
@@ -477,7 +477,7 @@ msgstr "擦除笔划"
 msgid "Eraser"
 msgstr "橡皮"
 
-#: ../src/control/Control.cpp:2215
+#: ../src/control/Control.cpp:2216
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "PDF文件\"{1}\"标注出错\n"
@@ -487,7 +487,7 @@ msgstr "PDF文件\"{1}\"标注出错\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "加载glade文件\"{1}\"出错(尝试加载\"{2}\")"
 
-#: ../src/control/Control.cpp:2036
+#: ../src/control/Control.cpp:2037
 msgid "Error opening file \"{1}\""
 msgstr "打开文件\"{1}\"出错"
 
@@ -897,7 +897,7 @@ msgstr "橙色"
 msgid "PDF Export"
 msgstr "输出为PDF"
 
-#: ../src/gui/MainWindow.cpp:721
+#: ../src/gui/MainWindow.cpp:734
 msgid "PDF Page {1}"
 msgstr "PDF页码{1}"
 
@@ -1009,15 +1009,15 @@ msgstr "重复"
 msgid "Redo: "
 msgstr "重复："
 
-#: ../src/control/Control.cpp:2013
+#: ../src/control/Control.cpp:2014
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:160
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "已从工具栏 {1} 移除工具项 ID {2}"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:158
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "已从ID为 {3} 的工具栏 {2} 中移除工具 {1}"
 
@@ -1065,16 +1065,16 @@ msgstr "SVG图形"
 msgid "Sample LaTeX file generated successfully."
 msgstr "已成功生成示例 LaTeX 文件。"
 
-#: ../src/control/Control.cpp:2462 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2463 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "保存"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2463
 msgid "Save As..."
 msgstr "另存为..."
 
-#: ../src/control/Control.cpp:2305 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2306 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "保存文件"
 
@@ -1115,7 +1115,7 @@ msgstr "选择矩形"
 msgid "Select Region"
 msgstr "选择区域"
 
-#: ../src/control/Control.cpp:2012
+#: ../src/control/Control.cpp:2013
 msgid "Select another PDF"
 msgstr "选择其他PDF"
 
@@ -1286,15 +1286,15 @@ msgstr "找遍所有页面未找到文本"
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "工具条配置\"{1}\"是预置的，要产生一个拷贝到编辑?"
 
-#: ../src/control/Control.cpp:2009
+#: ../src/control/Control.cpp:2010
 msgid "The attached background PDF could not be found."
 msgstr "附加的背景PDF未找到。"
 
-#: ../src/control/Control.cpp:2010
+#: ../src/control/Control.cpp:2011
 msgid "The background PDF could not be found."
 msgstr "背景PDF未找到。"
 
-#: ../src/control/Control.cpp:2044
+#: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "正在加载的文件格式版本比当前版本Xournal++支持的文件格式版本更新， 可能无法正确加载，仍要打开？"
 
@@ -1338,7 +1338,7 @@ msgstr "显示帮助时出错: {1}"
 msgid "Thick"
 msgstr "粗"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2462
 msgid "This document is not saved yet."
 msgstr "此文档尚未保存。"
 
@@ -1420,7 +1420,7 @@ msgstr "未知的 pixmap::domain 类型: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "未知笔划类型: \"{1}\"，将假设为笔"
 
-#: ../src/control/Control.cpp:2362
+#: ../src/control/Control.cpp:2363
 msgid "Unsaved Document"
 msgstr "未保存文档"
 
@@ -1477,7 +1477,7 @@ msgstr "Xournal文件"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ 上次崩溃了。您想恢复最后一个编辑的文件？"
 
-#: ../src/control/Control.cpp:2311 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2312 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Xournal++ 文件"
 
@@ -1529,7 +1529,7 @@ msgstr "缩放游标"
 msgid "Zoom to 100%"
 msgstr "原始尺寸"
 
-#: ../src/control/Control.cpp:2305 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1541,7 +1541,7 @@ msgstr "取消 (_C)"
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2307 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "保存(_S)"
@@ -1582,7 +1582,7 @@ msgstr "元素"
 msgid "eraser"
 msgstr "橡皮"
 
-#: ../src/control/Control.cpp:1981
+#: ../src/control/Control.cpp:1982
 msgid "file: {1}"
 msgstr "文件： {1}"
 
