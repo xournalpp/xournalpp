@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-24 06:45+0000\n"
-"PO-Revision-Date: 2021-02-24 06:48\n"
+"POT-Creation-Date: 2021-02-24 20:33+0000\n"
+"PO-Revision-Date: 2021-02-24 20:40\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Va încerca acum să ruleze fără acest fișier."
 
-#: ../src/gui/MainWindow.cpp:723
+#: ../src/gui/MainWindow.cpp:736
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " din {1}{2}"
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Bring to front"
 msgstr ""
 
-#: ../src/control/Control.cpp:2014 ../src/control/Control.cpp:2470
+#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Anulează"
@@ -277,11 +277,11 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "Nu s-a putut reface \"{1}\"\n"
 "Ceva nu a mers bine… Te rugăm să scrii un raport de eroare…"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "Nu s-a putut elimina elementul din bara de instrumente {1} pe poziția {2}"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "Nu s-a putut elimina elementul {1} din bara de instrumente {2} pe poziția {3}"
 
@@ -368,7 +368,7 @@ msgstr ""
 msgid "Delete this page"
 msgstr "Ștergeți această pagină"
 
-#: ../src/control/Control.cpp:2467
+#: ../src/control/Control.cpp:2468
 msgid "Discard"
 msgstr "Renunțați"
 
@@ -376,7 +376,7 @@ msgstr "Renunțați"
 msgid "Display advanced export options"
 msgstr "Afișează opțiuni avansate de export"
 
-#: ../src/control/Control.cpp:1967
+#: ../src/control/Control.cpp:1968
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -388,7 +388,7 @@ msgstr "Nu deschide fişierele Salvare automată. Acestea pot fi suprascrise!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Nu suprascrieți fișierul PDF de fundal! Acest lucru va provoca erori!"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2462
 msgid "Document file was removed."
 msgstr "Fișierul documentului a fost șters."
 
@@ -477,7 +477,7 @@ msgstr "Șterge linie"
 msgid "Eraser"
 msgstr "Radieră"
 
-#: ../src/control/Control.cpp:2215
+#: ../src/control/Control.cpp:2216
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Eroare adnotare fisier PDF \"{1}\"\n"
@@ -487,7 +487,7 @@ msgstr "Eroare adnotare fisier PDF \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Eroare la încărcarea fișierului glade \"{1}\" (încercați să încărcați \"{2}\")"
 
-#: ../src/control/Control.cpp:2036
+#: ../src/control/Control.cpp:2037
 msgid "Error opening file \"{1}\""
 msgstr "Eroare de deschidere fişier \"{1}\""
 
@@ -889,7 +889,7 @@ msgstr "Portocaliu"
 msgid "PDF Export"
 msgstr "Export PDF"
 
-#: ../src/gui/MainWindow.cpp:721
+#: ../src/gui/MainWindow.cpp:734
 msgid "PDF Page {1}"
 msgstr "Pagina PDF {1}"
 
@@ -1001,15 +1001,15 @@ msgstr "Refacere"
 msgid "Redo: "
 msgstr "Refacere: "
 
-#: ../src/control/Control.cpp:2013
+#: ../src/control/Control.cpp:2014
 msgid "Remove PDF Background"
 msgstr "Elimină fundal PDF"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:160
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "Elimină instrumentul din bara de instrumente {1} ID {2}"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:158
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "Elimină instrumentul din bara de instrumente {1} ID {2}"
 
@@ -1057,16 +1057,16 @@ msgstr "Grafică SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Exemplu de fișier LaTeX generat cu succes."
 
-#: ../src/control/Control.cpp:2462 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2463 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "Salvează"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2463
 msgid "Save As..."
 msgstr "Salvează ca..."
 
-#: ../src/control/Control.cpp:2305 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2306 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Salvează fișierul"
 
@@ -1107,7 +1107,7 @@ msgstr "Selectaţi dreptunghiul"
 msgid "Select Region"
 msgstr "Selectează regiunea"
 
-#: ../src/control/Control.cpp:2012
+#: ../src/control/Control.cpp:2013
 msgid "Select another PDF"
 msgstr "Selectaţi un alt PDF"
 
@@ -1275,15 +1275,15 @@ msgstr "Textul nu a fost găsit, căutat pe toate paginile"
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Configurarea barei de instrumente \"{1}\" este predefinită, ai crea o copie pentru a o edita?"
 
-#: ../src/control/Control.cpp:2009
+#: ../src/control/Control.cpp:2010
 msgid "The attached background PDF could not be found."
 msgstr "Fundalul PDF atașat nu a putut fi găsit."
 
-#: ../src/control/Control.cpp:2010
+#: ../src/control/Control.cpp:2011
 msgid "The background PDF could not be found."
 msgstr "Fundalul PDF atașat nu a putut fi găsit."
 
-#: ../src/control/Control.cpp:2044
+#: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1327,7 +1327,7 @@ msgstr "A apărut o eroare la afișarea ajutorului: {1}"
 msgid "Thick"
 msgstr "Gros"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2462
 msgid "This document is not saved yet."
 msgstr "Acest document nu este salvat încă."
 
@@ -1409,7 +1409,7 @@ msgstr "Tip domeniu necunoscut: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tip de AVC necunoscut: \"{1}\", presupunând un stilou"
 
-#: ../src/control/Control.cpp:2362
+#: ../src/control/Control.cpp:2363
 msgid "Unsaved Document"
 msgstr "Document nesalvat"
 
@@ -1466,7 +1466,7 @@ msgstr "Fișiere Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ s-a prăbușit ultima dată. Doriți să restaurați ultimul fișier editat?"
 
-#: ../src/control/Control.cpp:2311 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2312 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Fișiere Xournal++"
 
@@ -1518,7 +1518,7 @@ msgstr "Glisor zoom"
 msgid "Zoom to 100%"
 msgstr "Zoom până la 100%"
 
-#: ../src/control/Control.cpp:2305 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1530,7 +1530,7 @@ msgstr "Revocă"
 msgid "_Open"
 msgstr "Deschide"
 
-#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2307 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "Salvează"
@@ -1571,7 +1571,7 @@ msgstr "elemente"
 msgid "eraser"
 msgstr "Radieră"
 
-#: ../src/control/Control.cpp:1981
+#: ../src/control/Control.cpp:1982
 msgid "file: {1}"
 msgstr ""
 
