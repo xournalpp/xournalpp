@@ -78,7 +78,7 @@ void StrokeHandler::paintTo(const Point& point) {
         if (distance < PIXEL_MOTION_THRESHOLD) {  //(!validMotion(point, endPoint)) {
             return;
         }
-        if (point.z != Point::NO_PRESSURE && stroke->getToolType() == STROKE_TOOL_PEN) {
+        if (this->hasPressure) {
             /**
              * Both device and tool are pressure sensitive
              */
@@ -118,7 +118,7 @@ void StrokeHandler::paintTo(const Point& point) {
 
 void StrokeHandler::drawSegmentTo(const Point& point) {
 
-    stroke->addPoint(point);
+    stroke->addPoint(this->hasPressure ? point : Point(point.x, point.y));
 
     if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes()) &&
         !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)) {
@@ -352,6 +352,8 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
         this->buttonDownPoint.y = pos.y / zoom;
 
         createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
+
+        this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
 
         stabilizer->initialize(this, zoom, pos);
     }

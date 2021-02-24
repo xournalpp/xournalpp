@@ -98,6 +98,8 @@ private:
      */
     std::unique_ptr<StrokeStabilizer::Base> stabilizer;
 
+    bool hasPressure;
+
     friend class StrokeStabilizer::Active;
 
     static constexpr double MAX_WIDTH_VARIATION = 0.3;
