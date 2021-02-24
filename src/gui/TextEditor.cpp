@@ -1056,7 +1056,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
     cairo_rectangle(cr, x0 - 5 / zoom, y0 - 5 / zoom, width + 10 / zoom, height + 10 / zoom);
     cairo_stroke(cr);
 
-    // Notify window and cursor position to IM.
+    // Notify the IM of the app's window and cursor position.
     gtk_im_context_set_client_window(this->imContext, gtk_widget_get_window(this->widget));
     GdkRectangle cursorRect;
     cursorRect.x = static_cast<int>(zoom * x0 + x1 + zoom * cX);
