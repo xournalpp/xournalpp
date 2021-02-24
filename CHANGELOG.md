@@ -51,6 +51,7 @@ community.
     * Simplified background rendering to improve compatibility of exported SVGs
       (#2598).
 * Sidebar preview panel
+    * Changed sidebar colors to be dark when using a dark theme (#2726 PENDING).
     * Changed layer previews to only show background in background layer (#2674)
     * Moved close button from the bottom to the top to improve usability
       (#2727).
@@ -111,7 +112,8 @@ community.
     * Added `Edit > Arrange` menu items and the corresponding actions for
       rearranging selected elements (#2794).
     * Fixed some bugs where selections would not be copied correctly (#2277,
-      #2090, #2733).
+      #2090, #2733) and would cause strokes to become invalid/missing when
+      saving (#2857 PENDING, #2464).
     * Fixed a bug in the Select Object algorithm (#2478)
 * Pen and eraser tools
     * Added Preferences settings to configure the radius, color, and border of
@@ -138,6 +140,17 @@ community.
       field (#2620).
     * Fixed a bug where text elements would not be displayed at the correct
       positions when an image is used as the page background (#2725).
+* Toolbars
+    * Added a print button to the default toolbar (#1921).
+    * Added a menu toggle item for showing/hiding the toolbar, bound to F9
+      (#2112).
+    * Added color indicators to toolbars when customizing (#2726 PENDING).
+    * Improved appearance of floating toolbar (#2726 PENDING).
+    * Fixed a crash that occurs when the application is closed with the toolbar
+      customization dialog open  (#1189).
+    * Fixed multiple other bugs involving the toolbar customizer (#2860 PENDING).
+    * Fixed an issue where the page spinner would remain horizontal when added
+      to a vertical toolbar (#2624 PENDING).
 * Plugins
     * Extended plugin API with many new features and functions, including page
       and layer operations (#2406).
@@ -151,14 +164,11 @@ community.
     * Fixed the confusing behavior of the `Apply to current/all pages` buttons
       used to change the page backgrounds (#2730).
 * Misc
-    * New application icon (#2557)
-    * Added a menu toggle item for showing/hiding the toolbar, bound to F9
-      (#2112).
+    * New application icon (#2557) and new action icons (#1735 PENDING)
     * Added a language setting in the Preferences window (#2188)
     * Added menu entry to append new pdf pages (#2146)
     * Added support for more export options in command line and GUI (#2449)
     * Added a command line option to create an xopp file (#1919).
-    * Added a print button to the default toolbar (#1921).
     * Fixed bugs in element cloning, which previously could have caused elements
       to become invalid (#2733, #2720, #2464).
     * Fixed a bug where the thumbnailer would not correctly render previews in
