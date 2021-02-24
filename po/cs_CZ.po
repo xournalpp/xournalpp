@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-23 09:52+0000\n"
-"PO-Revision-Date: 2021-02-23 10:04\n"
+"POT-Creation-Date: 2021-02-24 06:45+0000\n"
+"PO-Revision-Date: 2021-02-24 06:49\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -1079,7 +1079,7 @@ msgstr "Uložit soubor"
 msgid "Save file error: {1}"
 msgstr "Chyba ukládání souboru: {1}"
 
-#: ../src/undo/ScaleUndoAction.cpp:54
+#: ../src/undo/ScaleUndoAction.cpp:56
 msgid "Scale"
 msgstr "Škálovat"
 
