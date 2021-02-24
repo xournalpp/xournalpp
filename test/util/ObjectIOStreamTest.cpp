@@ -23,6 +23,7 @@ class ObjectIOStreamTest: public CppUnit::TestFixture {
     CPPUNIT_TEST(testReadString);
     CPPUNIT_TEST(testReadImage);
     CPPUNIT_TEST(testReadData);
+    CPPUNIT_TEST(testReadComplexObject);
     CPPUNIT_TEST_SUITE_END();
 
 
@@ -73,6 +74,37 @@ public:
         return string(outStr->str, outStr->len);
     }
 
+    void testReadComplexObject() {
+
+        string objectName = "TestObject";
+        double d = 42.;
+        string s = "Test";
+        int i = -1337;
+
+        ObjectOutputStream outStream(new BinObjectEncoding);
+        outStream.writeObject(objectName.c_str());
+        outStream.writeDouble(d);
+        outStream.writeString(s);
+        outStream.writeInt(i);
+        outStream.endObject();
+
+        auto gstr = outStream.getStr();
+        string str(gstr->str, gstr->len);
+
+        ObjectInputStream stream;
+        CPPUNIT_ASSERT(stream.read(&str[0], (int)str.size() + 1));
+
+        string outputName = stream.readObject();
+        CPPUNIT_ASSERT_EQUAL(outputName, objectName);
+        double outputD = stream.readDouble();
+        CPPUNIT_ASSERT_EQUAL(outputD, d);
+        string outputS = stream.readString();
+        CPPUNIT_ASSERT_EQUAL(outputS, s);
+        int outputI = stream.readInt();
+        CPPUNIT_ASSERT_EQUAL(outputI, i);
+        stream.endObject();
+    }
+
     template <typename T, unsigned int N>
     void testReadDataType(const array<T, N>& data) {
         string str = serializeData<T, N>(data);
@@ -120,21 +152,21 @@ public:
         ObjectInputStream stream;
         CPPUNIT_ASSERT(stream.read(&strSurface[0], (int)strSurface.size() + 1));
 
-        cairo_surface_t* output_surface = stream.readImage();
-        int width_output = cairo_image_surface_get_width(output_surface);
-        int height_output = cairo_image_surface_get_height(output_surface);
+        cairo_surface_t* outputSurface = stream.readImage();
+        int widthOutput = cairo_image_surface_get_width(outputSurface);
+        int heightOutput = cairo_image_surface_get_height(outputSurface);
         unsigned char* outputData = cairo_image_surface_get_data(surface);
 
 
-        CPPUNIT_ASSERT_EQUAL(width, width_output);
-        CPPUNIT_ASSERT_EQUAL(height, height_output);
+        CPPUNIT_ASSERT_EQUAL(width, widthOutput);
+        CPPUNIT_ASSERT_EQUAL(height, heightOutput);
 
         for (unsigned i = 0; i < width * height * 4; ++i) {
             CPPUNIT_ASSERT_EQUAL(surfaceData[i], outputData[i]);
         }
 
         cairo_surface_destroy(surface);
-        cairo_surface_destroy(output_surface);
+        cairo_surface_destroy(outputSurface);
     }
 
     void testReadString() {
