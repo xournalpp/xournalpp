@@ -33,9 +33,12 @@ void EraseableStroke::draw(cairo_t* cr) {
 
     double w = this->stroke->getWidth();
 
+    // Some tools ignore pressure sensitivity.
+    bool usePressure = this->stroke->getToolType() != STROKE_TOOL_HIGHLIGHTER;
+
     for (GList* l = tmpCopy->data; l != nullptr; l = l->next) {
         auto* part = static_cast<EraseableStrokePart*>(l->data);
-        if (part->getWidth() == Point::NO_PRESSURE) {
+        if (!usePressure || part->getWidth() == Point::NO_PRESSURE) {
             cairo_set_line_width(cr, w);
         } else {
             cairo_set_line_width(cr, part->getWidth());
