@@ -22,12 +22,21 @@ class ObjectIOStreamTest: public CppUnit::TestFixture {
     CPPUNIT_TEST(testReadSizeT);
     CPPUNIT_TEST(testReadString);
     CPPUNIT_TEST(testReadImage);
+    CPPUNIT_TEST(testReadData);
     CPPUNIT_TEST_SUITE_END();
 
 
 public:
-    void setUp() {}
-    void tearDown() {}
+    void setUp() override {}
+    void tearDown() override {}
+
+    template <typename T, unsigned N>
+    string serializeData(const array<T, N>& data) {
+        ObjectOutputStream outStream(new BinObjectEncoding);
+        outStream.writeData(&data[0], N, sizeof(T));
+        auto outStr = outStream.getStr();
+        return string(outStr->str, outStr->len);
+    }
 
     string serializeImage(cairo_surface_t* surf) {
         ObjectOutputStream outStream(new BinObjectEncoding);
@@ -64,6 +73,31 @@ public:
         return string(outStr->str, outStr->len);
     }
 
+    template <typename T, unsigned int N>
+    void testReadDataType(const array<T, N>& data) {
+        string str = serializeData<T, N>(data);
+
+        ObjectInputStream stream;
+        CPPUNIT_ASSERT(stream.read(&str[0], (int)str.size() + 1));
+
+        int length = 0;
+        T* outputData = nullptr;
+        stream.readData((void**)&outputData, &length);
+        CPPUNIT_ASSERT_EQUAL(length, (int)N);
+
+        for (size_t i = 0; i < (size_t)length / sizeof(T); ++i) {
+            CPPUNIT_ASSERT_EQUAL(outputData[i], data.at(i));
+        }
+    }
+
+    void testReadData() {
+        testReadDataType<char, 3>({0, 42, -42});
+        testReadDataType<long, 3>({0, 42, -42});
+        testReadDataType<long long, 3>({0, 420000000000, -42000000000});
+        testReadDataType<double, 3>({0, 42., -42.});
+        testReadDataType<float, 3>({0, 42., -42.});
+    }
+
     void testReadImage() {
 
         // Generate a "random" image and serialize/deserialize it.
@@ -84,7 +118,7 @@ public:
 
 
         ObjectInputStream stream;
-        CPPUNIT_ASSERT(stream.read(&strSurface[0], strSurface.size() + 1));
+        CPPUNIT_ASSERT(stream.read(&strSurface[0], (int)strSurface.size() + 1));
 
         cairo_surface_t* output_surface = stream.readImage();
         int width_output = cairo_image_surface_get_width(output_surface);
@@ -120,7 +154,7 @@ public:
 
             ObjectInputStream stream;
             // The +1 stands for the \0 character
-            CPPUNIT_ASSERT(stream.read(&str[0], str.size() + 1));
+            CPPUNIT_ASSERT(stream.read(&str[0], (int)str.size() + 1));
             string output = stream.readString();
             CPPUNIT_ASSERT_EQUAL(x, output);
         }
@@ -140,7 +174,7 @@ public:
 
             ObjectInputStream stream;
             // The +1 stands for the \0 character
-            CPPUNIT_ASSERT(stream.read(&str[0], str.size() + 1));
+            CPPUNIT_ASSERT(stream.read(&str[0], (int)str.size() + 1));
             size_t output = stream.readSizeT();
             CPPUNIT_ASSERT_EQUAL(x, output);
         }
@@ -160,7 +194,7 @@ public:
 
             ObjectInputStream stream;
             // The +1 stands for the \0 character
-            CPPUNIT_ASSERT(stream.read(&str[0], str.size() + 1));
+            CPPUNIT_ASSERT(stream.read(&str[0], (int)str.size() + 1));
             int output = stream.readInt();
             CPPUNIT_ASSERT_EQUAL(x, output);
         }
@@ -181,7 +215,7 @@ public:
 
             ObjectInputStream stream;
             // The +1 stands for the \0 character
-            CPPUNIT_ASSERT(stream.read(&str[0], str.size() + 1));
+            CPPUNIT_ASSERT(stream.read(&str[0], (int)str.size() + 1));
             double output = stream.readDouble();
             CPPUNIT_ASSERT_DOUBLES_EQUAL(dbl, output, 0.001);
         }
