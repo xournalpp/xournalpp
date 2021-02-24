@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-24 06:45+0000\n"
-"PO-Revision-Date: 2021-02-24 06:49\n"
+"POT-Creation-Date: 2021-02-24 20:33+0000\n"
+"PO-Revision-Date: 2021-02-24 20:41\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Yritetään suorittaa ilman tätä tiedostoa."
 
-#: ../src/gui/MainWindow.cpp:723
+#: ../src/gui/MainWindow.cpp:736
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr ""
@@ -154,7 +154,7 @@ msgstr ""
 msgid "Bring to front"
 msgstr ""
 
-#: ../src/control/Control.cpp:2014 ../src/control/Control.cpp:2470
+#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Peruuta"
@@ -267,11 +267,11 @@ msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
@@ -357,7 +357,7 @@ msgstr ""
 msgid "Delete this page"
 msgstr ""
 
-#: ../src/control/Control.cpp:2467
+#: ../src/control/Control.cpp:2468
 msgid "Discard"
 msgstr "Hylkää"
 
@@ -365,7 +365,7 @@ msgstr "Hylkää"
 msgid "Display advanced export options"
 msgstr ""
 
-#: ../src/control/Control.cpp:1967
+#: ../src/control/Control.cpp:1968
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -375,7 +375,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2462
 msgid "Document file was removed."
 msgstr ""
 
@@ -464,7 +464,7 @@ msgstr ""
 msgid "Eraser"
 msgstr "Pyyhekumi"
 
-#: ../src/control/Control.cpp:2215
+#: ../src/control/Control.cpp:2216
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
@@ -473,7 +473,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/control/Control.cpp:2036
+#: ../src/control/Control.cpp:2037
 msgid "Error opening file \"{1}\""
 msgstr "Virhe tiedoston avaamisessa \"{1}\""
 
@@ -868,7 +868,7 @@ msgstr "Oranssi"
 msgid "PDF Export"
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:721
+#: ../src/gui/MainWindow.cpp:734
 msgid "PDF Page {1}"
 msgstr "PDF-sivu {1}"
 
@@ -980,15 +980,15 @@ msgstr "Tee uudelleen"
 msgid "Redo: "
 msgstr "Tee uudelleen: "
 
-#: ../src/control/Control.cpp:2013
+#: ../src/control/Control.cpp:2014
 msgid "Remove PDF Background"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:160
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:158
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr ""
 
@@ -1036,16 +1036,16 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2462 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2463 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "Tallenna"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2463
 msgid "Save As..."
 msgstr "Tallenna nimellä..."
 
-#: ../src/control/Control.cpp:2305 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2306 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Tallenna tiedosto"
 
@@ -1086,7 +1086,7 @@ msgstr ""
 msgid "Select Region"
 msgstr ""
 
-#: ../src/control/Control.cpp:2012
+#: ../src/control/Control.cpp:2013
 msgid "Select another PDF"
 msgstr "Valitse toinen PDF"
 
@@ -1250,15 +1250,15 @@ msgstr ""
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2009
+#: ../src/control/Control.cpp:2010
 msgid "The attached background PDF could not be found."
 msgstr ""
 
-#: ../src/control/Control.cpp:2010
+#: ../src/control/Control.cpp:2011
 msgid "The background PDF could not be found."
 msgstr ""
 
-#: ../src/control/Control.cpp:2044
+#: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1302,7 +1302,7 @@ msgstr ""
 msgid "Thick"
 msgstr "Paksu"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2462
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1384,7 +1384,7 @@ msgstr "Tuntematon pixmap::domain tyyppi: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2362
+#: ../src/control/Control.cpp:2363
 msgid "Unsaved Document"
 msgstr "Tallentamaton asiakirja"
 
@@ -1441,7 +1441,7 @@ msgstr "Xournal-tiedostot"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2311 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2312 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Xournal++-tiedostot"
 
@@ -1490,7 +1490,7 @@ msgstr ""
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/control/Control.cpp:2305 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1502,7 +1502,7 @@ msgstr ""
 msgid "_Open"
 msgstr "_Avaa"
 
-#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2307 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "_Tallenna"
@@ -1543,7 +1543,7 @@ msgstr ""
 msgid "eraser"
 msgstr "pyyhekumi"
 
-#: ../src/control/Control.cpp:1981
+#: ../src/control/Control.cpp:1982
 msgid "file: {1}"
 msgstr ""
 
