@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-24 20:33+0000\n"
-"PO-Revision-Date: 2021-02-24 20:40\n"
+"PO-Revision-Date: 2021-02-25 16:27\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -419,7 +419,7 @@ msgstr "Kreslit šipku"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Nakreslit elipsu"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
