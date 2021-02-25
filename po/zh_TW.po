@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-24 20:33+0000\n"
-"PO-Revision-Date: 2021-02-24 20:40\n"
+"POT-Creation-Date: 2021-02-25 20:48+0000\n"
+"PO-Revision-Date: 2021-02-25 21:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -2207,11 +2207,11 @@ msgstr ""
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
 msgstr ""
 
-#: ../ui/main.glade:1437
+#: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
 msgstr ""
 
-#: ../ui/main.glade:1448
+#: ../ui/main.glade:1449
 msgid "Draw _Line"
 msgstr ""
 
@@ -2227,11 +2227,11 @@ msgstr ""
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/main.glade:2636
+#: ../ui/main.glade:2637
 msgid "Duplicate"
 msgstr ""
 
-#: ../ui/main.glade:2673
+#: ../ui/main.glade:2674
 msgid "Edit (not implemented yet)"
 msgstr ""
 
@@ -2283,7 +2283,7 @@ msgstr ""
 msgid "Enter / edit LaTeX Text"
 msgstr ""
 
-#: ../ui/main.glade:1700
+#: ../ui/main.glade:1701
 msgid "Eraser Optio_ns"
 msgstr "橡皮選項(_n)"
 
@@ -2308,11 +2308,11 @@ msgstr ""
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr ""
 
-#: ../ui/main.glade:1676 ../ui/main.glade:1881
+#: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
 msgstr ""
 
-#: ../ui/main.glade:1686 ../ui/main.glade:1891
+#: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
 msgstr ""
 
@@ -2320,11 +2320,11 @@ msgstr ""
 msgid "Finalize the stroke"
 msgstr ""
 
-#: ../ui/main.glade:2430
+#: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:2408
+#: ../ui/main.glade:2409
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -2376,7 +2376,7 @@ msgstr ""
 msgid "Grid snapping tolerance"
 msgstr ""
 
-#: ../ui/main.glade:1536
+#: ../ui/main.glade:1537
 msgid "H_and Tool"
 msgstr "手形工具(_a)"
 
@@ -2412,7 +2412,7 @@ msgstr ""
 msgid "Highlight cursor position"
 msgstr ""
 
-#: ../ui/main.glade:1809
+#: ../ui/main.glade:1810
 msgid "Highlighter Opti_ons"
 msgstr "螢光筆選項(_o)"
 
@@ -2478,11 +2478,11 @@ msgstr ""
 msgid "Insert Latex"
 msgstr "插入LaTeX"
 
-#: ../ui/main.glade:2628
+#: ../ui/main.glade:2629
 msgid "Insert Page After"
 msgstr ""
 
-#: ../ui/main.glade:2620
+#: ../ui/main.glade:2621
 msgid "Insert Page Before"
 msgstr ""
 
@@ -2567,11 +2567,11 @@ msgstr ""
 msgid "Mouse+Keyboard Combo"
 msgstr ""
 
-#: ../ui/main.glade:2658
+#: ../ui/main.glade:2659
 msgid "Move Down"
 msgstr ""
 
-#: ../ui/main.glade:2650
+#: ../ui/main.glade:2651
 msgid "Move Up"
 msgstr ""
 
@@ -2662,11 +2662,11 @@ msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
 
-#: ../ui/main.glade:1927
+#: ../ui/main.glade:1928
 msgid "Pause"
 msgstr ""
 
-#: ../ui/main.glade:1554
+#: ../ui/main.glade:1555
 msgid "Pen _Options"
 msgstr "畫筆選項(_O)"
 
@@ -2682,7 +2682,7 @@ msgstr ""
 msgid "Plugin Manager"
 msgstr "外掛總管"
 
-#: ../ui/main.glade:1992
+#: ../ui/main.glade:1993
 msgid "Plugin _Manager"
 msgstr "外掛總管(_M)"
 
@@ -2742,7 +2742,7 @@ msgstr ""
 msgid "Recent _Documents"
 msgstr "最近文檔(_D)"
 
-#: ../ui/main.glade:1917
+#: ../ui/main.glade:1918
 msgid "Record / Stop"
 msgstr ""
 
@@ -2932,7 +2932,7 @@ msgstr ""
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr ""
 
-#: ../ui/main.glade:1905
+#: ../ui/main.glade:1906
 msgid "Text Font..."
 msgstr "文本字型..."
 
@@ -3171,7 +3171,7 @@ msgstr "首頁(_F)"
 msgid "_Goto Page"
 msgstr ""
 
-#: ../ui/main.glade:2006
+#: ../ui/main.glade:2007
 msgid "_Help"
 msgstr "幫助(_H)"
 
@@ -3223,7 +3223,7 @@ msgstr ""
 msgid "_Pen"
 msgstr "畫筆(_P)"
 
-#: ../ui/main.glade:1981
+#: ../ui/main.glade:1982
 msgid "_Plugin"
 msgstr "外掛(_P)"
 
@@ -3243,7 +3243,7 @@ msgstr "前一頁(_P)"
 msgid "_Right To Left"
 msgstr ""
 
-#: ../ui/main.glade:1393
+#: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
 msgstr "形狀識別(_S)"
 
@@ -3267,7 +3267,7 @@ msgstr ""
 msgid "_Vertical"
 msgstr ""
 
-#: ../ui/main.glade:1512
+#: ../ui/main.glade:1513
 msgid "_Vertical Space"
 msgstr "垂直間距(_V)"
 
@@ -3275,31 +3275,31 @@ msgstr "垂直間距(_V)"
 msgid "_View"
 msgstr "視圖(_V)"
 
-#: ../ui/main.glade:1794
+#: ../ui/main.glade:1795
 msgid "_delete strokes"
 msgstr "刪除筆劃(_d)"
 
-#: ../ui/main.glade:1576 ../ui/main.glade:1722 ../ui/main.glade:1831
+#: ../ui/main.glade:1577 ../ui/main.glade:1723 ../ui/main.glade:1832
 msgid "_fine"
 msgstr "細(_f)"
 
-#: ../ui/main.glade:1587 ../ui/main.glade:1733 ../ui/main.glade:1842
+#: ../ui/main.glade:1588 ../ui/main.glade:1734 ../ui/main.glade:1843
 msgid "_medium"
 msgstr "中(_m)"
 
-#: ../ui/main.glade:1772
+#: ../ui/main.glade:1773
 msgid "_standard"
 msgstr "標準(_s)"
 
-#: ../ui/main.glade:1598 ../ui/main.glade:1744 ../ui/main.glade:1853
+#: ../ui/main.glade:1599 ../ui/main.glade:1745 ../ui/main.glade:1854
 msgid "_thick"
 msgstr "粗(_t)"
 
-#: ../ui/main.glade:1565 ../ui/main.glade:1711 ../ui/main.glade:1820
+#: ../ui/main.glade:1566 ../ui/main.glade:1712 ../ui/main.glade:1821
 msgid "_very fine"
 msgstr "極細(_v)"
 
-#: ../ui/main.glade:1783
+#: ../ui/main.glade:1784
 msgid "_whiteout"
 msgstr "涂白(_w)"
 
@@ -3345,7 +3345,7 @@ msgstr ""
 msgid "save to file"
 msgstr ""
 
-#: ../ui/main.glade:1609 ../ui/main.glade:1755 ../ui/main.glade:1864
+#: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
 msgstr "極粗(_y)"
 
