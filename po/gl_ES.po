@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-24 20:33+0000\n"
-"PO-Revision-Date: 2021-02-24 20:40\n"
+"POT-Creation-Date: 2021-02-25 20:48+0000\n"
+"PO-Revision-Date: 2021-02-25 21:25\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -2266,11 +2266,11 @@ msgstr ""
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
 msgstr ""
 
-#: ../ui/main.glade:1437
+#: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
 msgstr "Sistema de coordenadas de debuxo"
 
-#: ../ui/main.glade:1448
+#: ../ui/main.glade:1449
 msgid "Draw _Line"
 msgstr "Debuxar _liña"
 
@@ -2286,11 +2286,11 @@ msgstr "Debuxar área"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Ferramentas de debuxo - Definir modificadores vía dirección de debuxo (experimental)"
 
-#: ../ui/main.glade:2636
+#: ../ui/main.glade:2637
 msgid "Duplicate"
 msgstr "Duplicar"
 
-#: ../ui/main.glade:2673
+#: ../ui/main.glade:2674
 msgid "Edit (not implemented yet)"
 msgstr "Editar (aínda non implementado)"
 
@@ -2342,7 +2342,7 @@ msgstr "Activar xestos de ampliación (require o reinicio)"
 msgid "Enter / edit LaTeX Text"
 msgstr "Inserir /editar texto LaTeX"
 
-#: ../ui/main.glade:1700
+#: ../ui/main.glade:1701
 msgid "Eraser Optio_ns"
 msgstr "Opcións da goma de borrar"
 
@@ -2367,11 +2367,11 @@ msgstr "Exportar as capas progresivamente"
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr "Exporta o documento sen ningún fondo (Ningún) ou só con PDF e fondo de imaxe (Sen norma) ou con todos os tipos de fondo (Todos)."
 
-#: ../ui/main.glade:1676 ../ui/main.glade:1881
+#: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
 msgstr "En_cher"
 
-#: ../ui/main.glade:1686 ../ui/main.glade:1891
+#: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
 msgstr "Opacidade de recheo"
 
@@ -2379,11 +2379,11 @@ msgstr "Opacidade de recheo"
 msgid "Finalize the stroke"
 msgstr ""
 
-#: ../ui/main.glade:2430
+#: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
 msgstr "Atopar a seguinte ocorrencia da cadea de busca"
 
-#: ../ui/main.glade:2408
+#: ../ui/main.glade:2409
 msgid "Find previous occurrence of the search string"
 msgstr "Atopar a ocorrencia anterior da cadea de busca"
 
@@ -2435,7 +2435,7 @@ msgstr "Tamaño da grella"
 msgid "Grid snapping tolerance"
 msgstr "Tolerancia do axuste á grade"
 
-#: ../ui/main.glade:1536
+#: ../ui/main.glade:1537
 msgid "H_and Tool"
 msgstr "Ferramenta m_an"
 
@@ -2471,7 +2471,7 @@ msgstr "Agochar a barra de desprazamento vertical"
 msgid "Highlight cursor position"
 msgstr "Realzar a posición do cursor"
 
-#: ../ui/main.glade:1809
+#: ../ui/main.glade:1810
 msgid "Highlighter Opti_ons"
 msgstr "_Opcións do realzador"
 
@@ -2539,11 +2539,11 @@ msgstr ""
 msgid "Insert Latex"
 msgstr "Inserir latex"
 
-#: ../ui/main.glade:2628
+#: ../ui/main.glade:2629
 msgid "Insert Page After"
 msgstr "Inserir páxina despois"
 
-#: ../ui/main.glade:2620
+#: ../ui/main.glade:2621
 msgid "Insert Page Before"
 msgstr "Inserir páxina antes"
 
@@ -2629,11 +2629,11 @@ msgstr "Botóns do rato"
 msgid "Mouse+Keyboard Combo"
 msgstr "Combinación rato+teclado"
 
-#: ../ui/main.glade:2658
+#: ../ui/main.glade:2659
 msgid "Move Down"
 msgstr "Mover cara abaixo"
 
-#: ../ui/main.glade:2650
+#: ../ui/main.glade:2651
 msgid "Move Up"
 msgstr "Mover cara arriba"
 
@@ -2725,11 +2725,11 @@ msgid "Partially based on Xournal\n"
 msgstr "Parcialmente baseado en Xournal\n"
 "de Denis Auroux"
 
-#: ../ui/main.glade:1927
+#: ../ui/main.glade:1928
 msgid "Pause"
 msgstr "Pausa"
 
-#: ../ui/main.glade:1554
+#: ../ui/main.glade:1555
 msgid "Pen _Options"
 msgstr "_Opcións do lapis"
 
@@ -2745,7 +2745,7 @@ msgstr "Configuración de reprodución"
 msgid "Plugin Manager"
 msgstr "Xestor de complentos"
 
-#: ../ui/main.glade:1992
+#: ../ui/main.glade:1993
 msgid "Plugin _Manager"
 msgstr "Xestor de comple_mentos"
 
@@ -2805,7 +2805,7 @@ msgstr "Volver renderizar cando o aumento da páxina cambia máis de "
 msgid "Recent _Documents"
 msgstr "_Documentos recentes"
 
-#: ../ui/main.glade:1917
+#: ../ui/main.glade:1918
 msgid "Record / Stop"
 msgstr "Gravar / Parar"
 
@@ -2996,7 +2996,7 @@ msgstr "Configuración de proba"
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Probar se a configuración actual é correcta executando a orde de xeración LaTeX no ficheiro modelo global cunha fórmula de proba."
 
-#: ../ui/main.glade:1905
+#: ../ui/main.glade:1906
 msgid "Text Font..."
 msgstr "Tipo para texto..."
 
@@ -3237,7 +3237,7 @@ msgstr "_Primeira páxina"
 msgid "_Goto Page"
 msgstr "_Ir á páxina"
 
-#: ../ui/main.glade:2006
+#: ../ui/main.glade:2007
 msgid "_Help"
 msgstr "_Axuda"
 
@@ -3289,7 +3289,7 @@ msgstr "_Emparellar páxinas"
 msgid "_Pen"
 msgstr "_Lapis"
 
-#: ../ui/main.glade:1981
+#: ../ui/main.glade:1982
 msgid "_Plugin"
 msgstr "_Complemento"
 
@@ -3309,7 +3309,7 @@ msgstr "Páxina _anterior"
 msgid "_Right To Left"
 msgstr "De _dereita a esquerda"
 
-#: ../ui/main.glade:1393
+#: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
 msgstr "_Recoñecedor de forma"
 
@@ -3333,7 +3333,7 @@ msgstr "De _superior a inferior"
 msgid "_Vertical"
 msgstr "_Vertical"
 
-#: ../ui/main.glade:1512
+#: ../ui/main.glade:1513
 msgid "_Vertical Space"
 msgstr "_Espazo vertical"
 
@@ -3341,31 +3341,31 @@ msgstr "_Espazo vertical"
 msgid "_View"
 msgstr "_Ver"
 
-#: ../ui/main.glade:1794
+#: ../ui/main.glade:1795
 msgid "_delete strokes"
 msgstr "_eliminar trazos"
 
-#: ../ui/main.glade:1576 ../ui/main.glade:1722 ../ui/main.glade:1831
+#: ../ui/main.glade:1577 ../ui/main.glade:1723 ../ui/main.glade:1832
 msgid "_fine"
 msgstr "_fino"
 
-#: ../ui/main.glade:1587 ../ui/main.glade:1733 ../ui/main.glade:1842
+#: ../ui/main.glade:1588 ../ui/main.glade:1734 ../ui/main.glade:1843
 msgid "_medium"
 msgstr "_medio"
 
-#: ../ui/main.glade:1772
+#: ../ui/main.glade:1773
 msgid "_standard"
 msgstr "_estándar"
 
-#: ../ui/main.glade:1598 ../ui/main.glade:1744 ../ui/main.glade:1853
+#: ../ui/main.glade:1599 ../ui/main.glade:1745 ../ui/main.glade:1854
 msgid "_thick"
 msgstr "_groso"
 
-#: ../ui/main.glade:1565 ../ui/main.glade:1711 ../ui/main.glade:1820
+#: ../ui/main.glade:1566 ../ui/main.glade:1712 ../ui/main.glade:1821
 msgid "_very fine"
 msgstr "_moi fino"
 
-#: ../ui/main.glade:1783
+#: ../ui/main.glade:1784
 msgid "_whiteout"
 msgstr "_branqueador"
 
@@ -3411,7 +3411,7 @@ msgstr "s<i>(despois do que a pantalla táctil reactivarase outra vez)</i>"
 msgid "save to file"
 msgstr "gardar nun ficheiro"
 
-#: ../ui/main.glade:1609 ../ui/main.glade:1755 ../ui/main.glade:1864
+#: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
 msgstr "mo_i groso"
 
