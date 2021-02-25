@@ -230,6 +230,12 @@ public:
                                                   size_t lastIndex) const override;
 
     /**
+     * @brief Add the path to cairo. Does not actually paint.
+     * @param cr The cairo instance
+     */
+    void addToCairo(cairo_t* cr) const override;
+
+    /**
      * Static material to generate splines:
      *
      *  ** Catmull-Rom interpolation **

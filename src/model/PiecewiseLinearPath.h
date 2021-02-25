@@ -192,6 +192,12 @@ public:
     std::vector<Parameter> intersectWithRectangle(const Rectangle<double>& rectangle, size_t firstIndex,
                                                   size_t lastIndex) const override;
 
+    /**
+     * @brief Add the path to cairo. Does not actually paint.
+     * @param cr The cairo instance
+     */
+    void addToCairo(cairo_t* cr) const override;
+
 private:
     static std::vector<double> intersectSegmentWithRectangle(const Point& p, const Point& q,
                                                              const Rectangle<double>& rectangle);

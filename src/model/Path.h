@@ -170,8 +170,9 @@ public:
      * @param x0 X coordinate of the rotation center
      * @param y0 Y coordinate of the rotation center
      * @param th Angle of the rotation
+     * @return The matrix applied to every point
      */
-    void rotate(double x0, double y0, double th);
+    cairo_matrix_t rotate(double x0, double y0, double th);
 
     /**
      * @brief Rescale the path around a reference point (x0, y0) and along two arbitrary orthogonal axis
@@ -185,6 +186,12 @@ public:
      */
     std::pair<cairo_matrix_t, double> scale(double x0, double y0, double fx, double fy, double rotation,
                                             bool restoreLineWidth);
+
+    /**
+     * @brief Add the path to cairo. Does not actually paint.
+     * @param cr The cairo instance
+     */
+    virtual void addToCairo(cairo_t* cr) const = 0;
 
 protected:
     static bool isPointOnBoundary(const Point& p, const Rectangle<double>& r);

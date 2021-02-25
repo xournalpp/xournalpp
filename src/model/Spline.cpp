@@ -385,6 +385,16 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
     return result;
 }
 
+void Spline::addToCairo(cairo_t* cr) const {
+    if (!this->empty()) {
+        const Point& p = this->getFirstKnot();
+        cairo_move_to(cr, p.x, p.y);
+        for (auto&& seg: this->segments()) {
+            cairo_curve_to(cr, seg.firstControlPoint.x, seg.firstControlPoint.y, seg.secondControlPoint.x,
+                           seg.secondControlPoint.y, seg.secondKnot.x, seg.secondKnot.y);
+        }
+    }
+}
 
 /**
  * Catmull-Rom interpolation

@@ -92,8 +92,6 @@ void StrokeHandler::paintTo(Point point) {
             double stepLength = 1.0 / nbSteps;
             Point increment((point.x - endPoint.x) * stepLength, (point.y - endPoint.y) * stepLength,
                             widthDelta * stepLength);
-            endPoint.z *= stroke->getWidth();
-            endPoint.z += increment.z;
 
             for (int i = 1; i < static_cast<int>(nbSteps); i++) {  // The last step is done below
                 endPoint.x += increment.x;
@@ -133,6 +131,7 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
         Stroke lastSegment;
         lastSegment.setPath(std::make_shared<PiecewiseLinearPath>(previousPoint, point));
         lastSegment.setWidth(width);
+        lastSegment.setPressureSensitive(this->stroke->hasPressure());
 
         cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
         cairo_set_source_rgba(crMask, 1, 1, 1, 1);
@@ -206,6 +205,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         // Todo: check if the following is the reason for a bug, that single points have no pressure:
         // No pressure sensitivity,
         this->path->clearPressure();
+        this->stroke->setPressureSensitive(false);
     }
 
     stroke->freeUnusedPointItems();
@@ -238,17 +238,11 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         }
     }
 
-    //     stroke->PLFromPoints();
-
     /**
      * Approximate the stroke by a spline using Schneider's algorithm
      */
     stroke->splineFromPLPath();
     this->path.reset();
-
-    // TODO: Remove this when not needed (e.g. with no pressure) once the file format supports splines.
-    // Always needed for rendering stroke with pressure values
-    //     stroke->pointsFromPath();
 
     // Add the element
     layer->addElement(stroke);
@@ -289,7 +283,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     }
     bbStroke = nullptr;
 #endif
-
 
     stroke = nullptr;
 }
@@ -377,7 +370,11 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
         this->buttonDownPoint.y = pos.y / zoom;
 
         createStroke();
-        double pressure = pos.pressure != Point::NO_PRESSURE ? pos.pressure * stroke->getWidth() : Point::NO_PRESSURE;
+
+        this->stroke->setPressureSensitive(pos.pressure != Point::NO_PRESSURE &&
+                                           this->stroke->getToolType() == STROKE_TOOL_PEN);
+
+        double pressure = this->stroke->hasPressure() ? pos.pressure * stroke->getWidth() : Point::NO_PRESSURE;
         this->path = std::make_shared<PiecewiseLinearPath>(
                 Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pressure));
 

@@ -111,7 +111,7 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
      * The std::min and its second argument ensure the spline segment stays reasonably close to its nodes
      */
     double distance = std::min(std::abs(squaredNormBC * normAB / (2 * MathVect::scalarProduct(vAB, vBC))), normBC);
-    
+
     /**
      * Set the pressure values. We assume the tool is pressure sensitive:
      *      stroke->getToolType() == STROKE_TOOL_PEN
@@ -138,7 +138,7 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     spline.toPoints(pointsToPaint);
 
     // Do not add the first point (B): it is already painted
-    for (auto it = pointsToPaint.cbegin() + 1 ; it != pointsToPaint.cend() ; ++it) {
+    for (auto it = pointsToPaint.cbegin() + 1; it != pointsToPaint.cend(); ++it) {
         strokeHandler->drawSegmentTo(*it);
     }
     C.z = ev.pressure;  // Normal state after having added a segment. Useful?

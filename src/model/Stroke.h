@@ -117,8 +117,10 @@ public:
     //     [[deprecated("Use class Path or its descendants")]] void clearPressure();
     [[deprecated("Use class Path or its descendants")]] void scalePressure(double factor);
 
-    [[deprecated("Use class Path or its descendants")]] bool hasPressure() const;
     [[deprecated("Use class Path or its descendants")]] double getAvgPressure() const;
+
+    bool hasPressure() const;
+    void setPressureSensitive(bool b);
 
 public:
     // Serialize interface
@@ -162,10 +164,21 @@ private:
     std::shared_ptr<Path> path;
 
     /**
+     * @brief Cache of sampled spline points for drawing pressure-sensitive splines
+     * Empty for other types of strokes.
+     */
+    std::vector<Point> pointCache{};
+
+    /**
+     * @brief Flag: is the stroke pressure sensitive?
+     */
+    bool pressureSensitive = false;
+
+    /**
      * @brief Store the parameters of the intersection points found by a call to intersects()
      * Avoid recomputing those intersection points when erasing...
      */
-    std::vector<Spline::Parameter> intersectionParameters{};
+    std::vector<Path::Parameter> intersectionParameters{};
 
 public:
     bool isSpline() const { return path && path->getType() != Path::PIECEWISE_LINEAR; }
@@ -173,27 +186,23 @@ public:
     //     const Spline& getSpline() const { return spline; }
     const Spline& getSpline() const { return *dynamic_cast<Spline*>(path.get()); }
 
+    const std::vector<Point>& getPointsToDraw();
+
     const Path& getPath() { return *(path.get()); }
 
     void setPath(std::shared_ptr<Path> p);
 
     void unsetSizeCalculated();
 
-
     /**
      * @brief Approximate the points using Schneider's algorithm
      */
     void splineFromPLPath();
 
-    /**
-     * @brief Fill the vector points using the spline
-     */
-    //     void pointsFromSpline();
-    //     void pointsFromPath();
-
     //     SomeType splitAtSingularPoints();
 
     friend class EraseableStroke;
+    friend class EraseablePressureSpline;
 
     /**
      * @brief Attorney class to allow some stroke handlers to directly set the stroke bounding boxes

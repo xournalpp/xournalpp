@@ -39,6 +39,7 @@ auto Stroke::cloneStroke() const -> Stroke* {
     s->snappedBounds = this->snappedBounds;
     s->sizeCalculated = this->sizeCalculated;
     s->path = this->path->clone();
+    s->pressureSensitive = this->pressureSensitive;
     return s;
 }
 
@@ -55,7 +56,6 @@ void Stroke::serialize(ObjectOutputStream& out) {
 
     out.writeInt(fill);
 
-    //     out.writeData(this->points.data(), this->points.size(), sizeof(Point));
     this->path->serialize(out);
 
     this->lineStyle.serialize(out);
@@ -86,6 +86,9 @@ void Stroke::readSerialized(ObjectInputStream& in) {
     this->lineStyle.readSerialized(in);
 
     in.endObject();
+
+    this->pressureSensitive = this->toolType == STROKE_TOOL_PEN && this->path && !this->path->empty() &&
+                              this->path->getFirstKnot().z != Point::NO_PRESSURE;
 }
 
 /**
@@ -153,8 +156,7 @@ void Stroke::addPoint(const Point& p) {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
         g_warning("Use of deprecated Stroke::addPoint on stroke without piecewise linear path");
         void* array[10];
-        size_t size;
-        size = backtrace(array, 10);
+        int size = backtrace(array, 10);
         backtrace_symbols_fd(array, size, STDERR_FILENO);
         return;
     }
@@ -167,8 +169,7 @@ auto Stroke::getPointCount() const -> int {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
         g_warning("Use of deprecated Stroke::getPointCount on stroke without piecewise linear path");
         void* array[10];
-        size_t size;
-        size = backtrace(array, 10);
+        int size = backtrace(array, 10);
         backtrace_symbols_fd(array, size, STDERR_FILENO);
         return 0;
     }
@@ -179,8 +180,7 @@ auto Stroke::getPointVector() const -> std::vector<Point> const& {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
         g_warning("Use of deprecated Stroke::getPointVector on stroke without piecewise linear path");
         void* array[10];
-        size_t size;
-        size = backtrace(array, 10);
+        int size = backtrace(array, 10);
         backtrace_symbols_fd(array, size, STDERR_FILENO);
     }
     return this->path->getData();
@@ -194,8 +194,7 @@ auto Stroke::getPoint(int index) const -> Point {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
         g_warning("Use of deprecated Stroke::getPoint on stroke without piecewise linear path");
         void* array[10];
-        size_t size;
-        size = backtrace(array, 10);
+        int size = backtrace(array, 10);
         backtrace_symbols_fd(array, size, STDERR_FILENO);
         return Point(0, 0);
     }
@@ -211,8 +210,7 @@ auto Stroke::getPoints() const -> const Point* {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
         g_warning("Use of deprecated Stroke::getPoint on stroke without piecewise linear path");
         void* array[10];
-        size_t size;
-        size = backtrace(array, 10);
+        int size = backtrace(array, 10);
         backtrace_symbols_fd(array, size, STDERR_FILENO);
     }
     return this->path->getData().data();
@@ -235,6 +233,11 @@ auto Stroke::getLineStyle() const -> const LineStyle& { return this->lineStyle; 
 void Stroke::move(double dx, double dy) {
     path->move(dx, dy);
 
+    for (auto&& p: pointCache) {
+        p.x += dx;
+        p.y += dy;
+    }
+
     if (this->sizeCalculated) {
         Element::x += dx;
         Element::y += dy;
@@ -244,24 +247,35 @@ void Stroke::move(double dx, double dy) {
 }
 
 void Stroke::rotate(double x0, double y0, double th) {
-    this->path->rotate(x0, y0, th);
+    cairo_matrix_t mat = this->path->rotate(x0, y0, th);
+
+    for (auto&& p: pointCache) {
+        cairo_matrix_transform_point(&mat, &p.x, &p.y);
+    }
+
     this->sizeCalculated = false;
 }
 
 void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
-    double fz = this->path->scale(x0, y0, fx, fy, rotation, restoreLineWidth).second;
-    if (!restoreLineWidth) {
-        this->width *= fz;
+    std::pair<cairo_matrix_t, double> res = this->path->scale(x0, y0, fx, fy, rotation, restoreLineWidth);
+
+    if (restoreLineWidth) {
+        for (auto&& p: pointCache) {
+            cairo_matrix_transform_point(&(res.first), &p.x, &p.y);
+        }
+    } else {
+        for (auto&& p: pointCache) {
+            cairo_matrix_transform_point(&(res.first), &p.x, &p.y);
+            p.z *= res.second;
+        }
+        this->width *= res.second;
     }
+
     this->sizeCalculated = false;
 }
 
-auto Stroke::hasPressure() const -> bool {
-    if (this->path->getType() == Path::PIECEWISE_LINEAR) {
-        return !this->path->empty() && this->path->getFirstKnot().z != Point::NO_PRESSURE;
-    }
-    return false;  // this->path->getType() == Path::SPLINE_WITH_PRESSURE;
-}
+auto Stroke::hasPressure() const -> bool { return pressureSensitive; }
+void Stroke::setPressureSensitive(bool b) { pressureSensitive = b; }
 
 auto Stroke::getAvgPressure() const -> double {
     if (!hasPressure()) {
@@ -439,7 +453,7 @@ void Stroke::splineFromPLPath() {
         return;
     }
 
-    if (this->path->getFirstKnot().z != Point::NO_PRESSURE && this->path->getLastKnot().z == Point::NO_PRESSURE) {
+    if (this->hasPressure() && this->path->getLastKnot().z == Point::NO_PRESSURE) {
         /**
          * Backward compatiblity
          * Set an extrapolated pressure value for the last point
@@ -451,21 +465,26 @@ void Stroke::splineFromPLPath() {
     this->path = std::make_shared<Spline>(Spline::getSchneiderApproximation(this->path->getData()));
 }
 
-// void Stroke::pointsFromSpline() {
-//     points.clear();
-//     dynamic_cast<Spline*>(path.get())->toPoints(points);
-//     sizeCalculated = false;
-// }
-
-// void Stroke::pointsFromPath() {
-//     points.clear();
-//     if (path->getType() == Path::PIECEWISE_LINEAR) {
-//         points = path->getData();
-//     } else {
-//         dynamic_cast<Spline*>(path.get())->toPoints(points);
-//     }
-//     sizeCalculated = false;
-// }
+const std::vector<Point>& Stroke::getPointsToDraw() {
+    if (!this->path) {
+        g_warning("Stroke::getPointsToDraw call on empty stroke. This should never happen.");
+        return pointCache;
+    }
+    if (this->path->getType() == Path::SPLINE) {
+        if (!this->hasPressure()) {
+            g_warning("Stroke::getPointsToDraw call on pressureless spline. This should never happen.");
+        } else if (this->pointCache.empty()) {
+            // Fill the cache now
+            dynamic_cast<Spline*>(path.get())->toPoints(pointCache);
+        }
+        return pointCache;
+    }
+    if (this->path->getType() == Path::PIECEWISE_LINEAR) {
+        return this->path->getData();
+    }
+    g_warning("Stroke::getPointsToDraw call on unknown path type. This should never happen.");
+    return pointCache;
+}
 
 void Stroke::setPath(std::shared_ptr<Path> p) { path = p; }
 

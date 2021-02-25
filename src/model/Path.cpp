@@ -33,7 +33,7 @@ void Path::move(double dx, double dy) {
     }
 }
 
-void Path::rotate(double x0, double y0, double th) {
+cairo_matrix_t Path::rotate(double x0, double y0, double th) {
     cairo_matrix_t rotMatrix;
     cairo_matrix_init_identity(&rotMatrix);
     cairo_matrix_translate(&rotMatrix, x0, y0);
@@ -43,6 +43,8 @@ void Path::rotate(double x0, double y0, double th) {
     for (auto&& p: data) {
         cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y);
     }
+
+    return rotMatrix;
 }
 
 std::pair<cairo_matrix_t, double> Path::scale(double x0, double y0, double fx, double fy, double rotation,

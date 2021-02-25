@@ -16,6 +16,7 @@
 #include "serializing/ObjectOutputStream.h"
 
 #include "Interval.h"
+#include "LoopUtil.h"
 
 #ifdef EXTRA_CAREFUL
 #include <iomanip>
@@ -441,6 +442,13 @@ auto PiecewiseLinearPath::intersectWithRectangle(const Rectangle<double>& rectan
     }
     return result;
 }
+
+void PiecewiseLinearPath::addToCairo(cairo_t* cr) const {
+    for_first_then_each(
+            this->data, [cr](auto const& first) { cairo_move_to(cr, first.x, first.y); },
+            [cr](auto const& other) { cairo_line_to(cr, other.x, other.y); });
+}
+
 
 std::vector<double> PiecewiseLinearPath::intersectSegmentWithRectangle(const Point& p, const Point& q,
                                                                        const Rectangle<double>& rectangle) {
