@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-24 20:33+0000\n"
-"PO-Revision-Date: 2021-02-25 16:27\n"
+"PO-Revision-Date: 2021-02-25 17:25\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -362,7 +362,7 @@ msgstr "Smazat vrstvu"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Delete this layer"
-msgstr ""
+msgstr "Smazat tuto vrstvu"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Delete this page"
@@ -1242,7 +1242,7 @@ msgstr "Prohodit aktuální stránku s níže uvedenou"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
-msgstr ""
+msgstr "Výchozí nastavení systému"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
@@ -1580,7 +1580,7 @@ msgstr "guma"
 
 #: ../src/control/Control.cpp:1982
 msgid "file: {1}"
-msgstr ""
+msgstr "soubor: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -1983,11 +1983,11 @@ msgstr ""
 
 #: ../ui/main.glade:1197
 msgid "Append New Pdf Pages"
-msgstr ""
+msgstr "Přidat nové Pdf stránky"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Aritmetický průměr"
 
 #: ../ui/settings.glade:1753
 msgid "Artifact workaround"
@@ -2036,7 +2036,7 @@ msgstr "Barva pozadí mezi stránkami"
 #: ../ui/settings.glade:2866
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Ikona velkého pera"
 
 #: ../ui/settings.glade:3070
 msgid "Border Color"
@@ -2241,7 +2241,7 @@ msgstr ""
 
 #: ../ui/main.glade:1437
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Nakreslit soustavu souřadnic"
 
 #: ../ui/main.glade:1448
 msgid "Draw _Line"
@@ -2305,7 +2305,7 @@ msgstr "Povol interní rozpoznávání ruky"
 
 #: ../ui/settings.glade:2519
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Povolit kreslení dotykem"
 
 #: ../ui/settings.glade:2400
 msgid "Enable zoom gestures (requires restart)"
@@ -2402,7 +2402,7 @@ msgstr "Přejít na stránku"
 
 #: ../ui/settings.glade:4401
 msgid "Grid size"
-msgstr ""
+msgstr "Velikost mřížky"
 
 #: ../ui/settings.glade:4358
 msgid "Grid snapping tolerance"
@@ -2418,7 +2418,7 @@ msgstr "Rozpoznání ruky"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Výška"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2482,7 +2482,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Kvalita obrázku"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
@@ -2522,7 +2522,7 @@ msgstr "Vložit stránku před"
 
 #: ../ui/settings.glade:5472
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
@@ -2534,11 +2534,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5561 ../ui/settings.glade:5609
 msgid "Language"
-msgstr ""
+msgstr "Jazyk"
 
 #: ../ui/settings.glade:5579
 msgid "Language Settings"
-msgstr ""
+msgstr "Nastavení jazyka"
 
 #: ../ui/main.glade:575
 msgid "Layout"
@@ -2587,7 +2587,7 @@ msgstr "Prostřední tlačítko myši"
 
 #: ../ui/settings.glade:1565
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Minimální tlak:"
 
 #: ../ui/settings.glade:1442 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2632,7 +2632,7 @@ msgstr "_Nová vrstva"
 #: ../ui/settings.glade:2864
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Žádná ikona"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2707,7 +2707,7 @@ msgstr "N_astavení pera"
 
 #: ../ui/settings.glade:3527
 msgid "Performance"
-msgstr ""
+msgstr "Výkon"
 
 #: ../ui/settings.glade:5401
 msgid "Playback Settings"
@@ -2747,7 +2747,7 @@ msgstr "Režim prezentace"
 
 #: ../ui/settings.glade:4258
 msgid "Preserve line width"
-msgstr ""
+msgstr "Zachovat šířku čáry"
 
 #: ../ui/settings.glade:1576
 msgid "Pressure Multiplier: "
@@ -2993,7 +2993,7 @@ msgstr "Jednotkou pravítka jsou cm"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "Tato nastavení budou použita pro nové stránky"
 
 #: ../ui/settings.glade:2122
 msgid "Timeout"
@@ -3001,7 +3001,7 @@ msgstr "Časový limit"
 
 #: ../ui/settings.glade:2542
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Kreslení dotykem"
 
 #: ../ui/settings.glade:2035 ../ui/settings.glade:2573
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -3064,7 +3064,7 @@ msgstr "Bělení"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Šířka"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3352,7 +3352,7 @@ msgstr "zapnuto,"
 
 #: ../ui/settings.glade:1730
 msgid "events"
-msgstr ""
+msgstr "události"
 
 #: ../ui/settings.glade:389
 msgid "every"
