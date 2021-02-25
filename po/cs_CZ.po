@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-24 20:33+0000\n"
-"PO-Revision-Date: 2021-02-25 17:25\n"
+"POT-Creation-Date: 2021-02-25 20:48+0000\n"
+"PO-Revision-Date: 2021-02-25 21:25\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -2239,11 +2239,11 @@ msgstr ""
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
 msgstr ""
 
-#: ../ui/main.glade:1437
+#: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
 msgstr "Nakreslit soustavu souřadnic"
 
-#: ../ui/main.glade:1448
+#: ../ui/main.glade:1449
 msgid "Draw _Line"
 msgstr "Nakreslit _čáru"
 
@@ -2259,11 +2259,11 @@ msgstr "Oblast kreslení"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Nástroje kreslení - nastavit modifikátory podle směru kreslení (experimentální)"
 
-#: ../ui/main.glade:2636
+#: ../ui/main.glade:2637
 msgid "Duplicate"
 msgstr "Duplikovat"
 
-#: ../ui/main.glade:2673
+#: ../ui/main.glade:2674
 msgid "Edit (not implemented yet)"
 msgstr "Upravit (zatím neimplementováno)"
 
@@ -2315,7 +2315,7 @@ msgstr "Zapnout gesta přiblížení (vyžaduje restart)"
 msgid "Enter / edit LaTeX Text"
 msgstr "Zadejte/upravte LaTeX Text"
 
-#: ../ui/main.glade:1700
+#: ../ui/main.glade:1701
 msgid "Eraser Optio_ns"
 msgstr "_Nastavení gumy"
 
@@ -2340,11 +2340,11 @@ msgstr ""
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr ""
 
-#: ../ui/main.glade:1676 ../ui/main.glade:1881
+#: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
 msgstr "Fi_ll"
 
-#: ../ui/main.glade:1686 ../ui/main.glade:1891
+#: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
 msgstr ""
 
@@ -2352,11 +2352,11 @@ msgstr ""
 msgid "Finalize the stroke"
 msgstr ""
 
-#: ../ui/main.glade:2430
+#: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
 msgstr "Najít další výskyt vyhledávacího řetězce"
 
-#: ../ui/main.glade:2408
+#: ../ui/main.glade:2409
 msgid "Find previous occurrence of the search string"
 msgstr "Najít předchozí výskyt vyhledávacího řetězce"
 
@@ -2408,7 +2408,7 @@ msgstr "Velikost mřížky"
 msgid "Grid snapping tolerance"
 msgstr "Tolerance přichytávání na mřížku"
 
-#: ../ui/main.glade:1536
+#: ../ui/main.glade:1537
 msgid "H_and Tool"
 msgstr "_Nástroj prohlížení"
 
@@ -2444,7 +2444,7 @@ msgstr "Skrýt vertikální posuvník"
 msgid "Highlight cursor position"
 msgstr "Zvýraznit pozici kurzoru"
 
-#: ../ui/main.glade:1809
+#: ../ui/main.glade:1810
 msgid "Highlighter Opti_ons"
 msgstr "Zvýraznit Opti_ons"
 
@@ -2512,11 +2512,11 @@ msgstr ""
 msgid "Insert Latex"
 msgstr "Vložit LaTeX"
 
-#: ../ui/main.glade:2628
+#: ../ui/main.glade:2629
 msgid "Insert Page After"
 msgstr "Vložit stránku za"
 
-#: ../ui/main.glade:2620
+#: ../ui/main.glade:2621
 msgid "Insert Page Before"
 msgstr "Vložit stránku před"
 
@@ -2601,11 +2601,11 @@ msgstr "Tlačítko myši"
 msgid "Mouse+Keyboard Combo"
 msgstr "Kombo myš+klávesnice"
 
-#: ../ui/main.glade:2658
+#: ../ui/main.glade:2659
 msgid "Move Down"
 msgstr "Posunout dolů"
 
-#: ../ui/main.glade:2650
+#: ../ui/main.glade:2651
 msgid "Move Up"
 msgstr "Posunout nahoru"
 
@@ -2697,11 +2697,11 @@ msgid "Partially based on Xournal\n"
 msgstr "Částečně založeno na Xournal\n"
 "od Denis Auroux"
 
-#: ../ui/main.glade:1927
+#: ../ui/main.glade:1928
 msgid "Pause"
 msgstr "Pozastavit"
 
-#: ../ui/main.glade:1554
+#: ../ui/main.glade:1555
 msgid "Pen _Options"
 msgstr "N_astavení pera"
 
@@ -2717,7 +2717,7 @@ msgstr "Nastavení přehrávání"
 msgid "Plugin Manager"
 msgstr "Správce doplňků"
 
-#: ../ui/main.glade:1992
+#: ../ui/main.glade:1993
 msgid "Plugin _Manager"
 msgstr "_Správce doplňků"
 
@@ -2777,7 +2777,7 @@ msgstr ""
 msgid "Recent _Documents"
 msgstr "Nedávné _dokumenty"
 
-#: ../ui/main.glade:1917
+#: ../ui/main.glade:1918
 msgid "Record / Stop"
 msgstr "Nahrávat / Zastavit"
 
@@ -2967,7 +2967,7 @@ msgstr ""
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr ""
 
-#: ../ui/main.glade:1905
+#: ../ui/main.glade:1906
 msgid "Text Font..."
 msgstr "Písmo textu..."
 
@@ -3206,7 +3206,7 @@ msgstr "_První stránka"
 msgid "_Goto Page"
 msgstr "_Přejít na stránku"
 
-#: ../ui/main.glade:2006
+#: ../ui/main.glade:2007
 msgid "_Help"
 msgstr "_Nápověda"
 
@@ -3258,7 +3258,7 @@ msgstr "_Spárovat stránky"
 msgid "_Pen"
 msgstr "_Pero"
 
-#: ../ui/main.glade:1981
+#: ../ui/main.glade:1982
 msgid "_Plugin"
 msgstr "_Zásuvný modul"
 
@@ -3278,7 +3278,7 @@ msgstr "_Předchozí stránka"
 msgid "_Right To Left"
 msgstr "_Zprava do leva"
 
-#: ../ui/main.glade:1393
+#: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
 msgstr "_Rozpoznávání tvarů"
 
@@ -3302,7 +3302,7 @@ msgstr "_Shora Dolů"
 msgid "_Vertical"
 msgstr "_Svisle"
 
-#: ../ui/main.glade:1512
+#: ../ui/main.glade:1513
 msgid "_Vertical Space"
 msgstr "_Vertikální místo"
 
@@ -3310,31 +3310,31 @@ msgstr "_Vertikální místo"
 msgid "_View"
 msgstr "_Zobrazení"
 
-#: ../ui/main.glade:1794
+#: ../ui/main.glade:1795
 msgid "_delete strokes"
 msgstr "_smazat čáry"
 
-#: ../ui/main.glade:1576 ../ui/main.glade:1722 ../ui/main.glade:1831
+#: ../ui/main.glade:1577 ../ui/main.glade:1723 ../ui/main.glade:1832
 msgid "_fine"
 msgstr "_tenká"
 
-#: ../ui/main.glade:1587 ../ui/main.glade:1733 ../ui/main.glade:1842
+#: ../ui/main.glade:1588 ../ui/main.glade:1734 ../ui/main.glade:1843
 msgid "_medium"
 msgstr "_střední"
 
-#: ../ui/main.glade:1772
+#: ../ui/main.glade:1773
 msgid "_standard"
 msgstr "_výchozí"
 
-#: ../ui/main.glade:1598 ../ui/main.glade:1744 ../ui/main.glade:1853
+#: ../ui/main.glade:1599 ../ui/main.glade:1745 ../ui/main.glade:1854
 msgid "_thick"
 msgstr "_tlustá"
 
-#: ../ui/main.glade:1565 ../ui/main.glade:1711 ../ui/main.glade:1820
+#: ../ui/main.glade:1566 ../ui/main.glade:1712 ../ui/main.glade:1821
 msgid "_very fine"
 msgstr "_velmi tenká"
 
-#: ../ui/main.glade:1783
+#: ../ui/main.glade:1784
 msgid "_whiteout"
 msgstr "_bělení"
 
@@ -3380,7 +3380,7 @@ msgstr "s <i>(poté bude dotyková obrazovka znovu aktivována)</i>"
 msgid "save to file"
 msgstr "ulož do souboru"
 
-#: ../ui/main.glade:1609 ../ui/main.glade:1755 ../ui/main.glade:1864
+#: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
 msgstr "vel_mi tlustá"
 
