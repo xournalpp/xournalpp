@@ -42,10 +42,11 @@ void StrokeView::changeCairoSource(bool markAudioStroke) {
     ///////////////////////////////////////////////////////
     // Fill stroke
     ///////////////////////////////////////////////////////
+    bool audioStrokebutNoAudio = markAudioStroke && s->getAudioFilename().length() == 0;
     if (s->getFill() != -1 && s->getToolType() != STROKE_TOOL_HIGHLIGHTER) {
         cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
-        if (markAudioStroke && s->getAudioFilename().length() == 0) {
+        if (audioStrokebutNoAudio) {
             DocumentView::applyColor(cr, s, AudioElement::opacityNoAudio);
         } else {
             // Set the color and opacity
@@ -56,16 +57,15 @@ void StrokeView::changeCairoSource(bool markAudioStroke) {
     }
 
 
-    if (markAudioStroke && s->getAudioFilename().length() == 0) {
-        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-        DocumentView::applyColor(cr, s, AudioElement::opacityNoAudio);
-    }
-    else if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+    if ((s->getToolType() == STROKE_TOOL_HIGHLIGHTER) && !audioStrokebutNoAudio) {
             cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
             // Set the color
             DocumentView::applyColor(cr, s, 120);
     }
-    else {
+    else if (audioStrokebutNoAudio) {
+        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+        DocumentView::applyColor(cr, s, AudioElement::opacityNoAudio);
+    } else {
         cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
         // Set the color
         DocumentView::applyColor(cr, s);
