@@ -24,8 +24,6 @@
 #include "UnionOfIntervals.h"
 #include "XournalType.h"
 
-class EraseableStrokePart;
-class PartList;
 class Range;
 class Stroke;
 
@@ -46,14 +44,14 @@ public:
 
     virtual void draw(cairo_t* cr);
 
-private:
+protected:
     //     void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list);
     //     static bool erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list,
     //                           bool* deleteStrokeAfter);
 
     void addRepaintRect(double x, double y, double width, double height);
 
-private:
+protected:
     Range* repaintRect = nullptr;
 
     Stroke* stroke = nullptr;

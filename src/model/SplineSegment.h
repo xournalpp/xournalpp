@@ -20,6 +20,15 @@
 #include "Point.h"
 
 /**
+ * @brief A small helper structure for points with a parameter
+ */
+struct ParametrizedPoint: public Point {
+    ParametrizedPoint() = default;
+    ParametrizedPoint(const Point& p, double t): Point(p), t(t) {}
+    double t;
+};
+
+/**
  * @brief A class to handle splines segments
  *
  * Every spline segment is defined by two knot points and two control points.
@@ -57,6 +66,14 @@ public:
      * @param points Vector of points to fill.
      */
     void toPoints(std::vector<Point>& points) const;
+
+    /**
+     * @brief Convert the spline segment to parametrized points and fill the given vector. Omit the second knot.
+     * @param points Vector of parametrized points to fill.
+     * @param start Parameter value assigned to the first knot
+     * @param end Parameter value assigned to the second knot
+     */
+    void toParametrizedPoints(std::vector<ParametrizedPoint>& points, double start = 0.0, double end = 1.0) const;
 
     /**
      * @brief Subdivide the spline into two parts with respect to parameter t.

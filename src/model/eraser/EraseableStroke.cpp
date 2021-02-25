@@ -26,25 +26,46 @@ void EraseableStroke::draw(cairo_t* cr) {  // no pressure
         sections = remainingSections.cloneToIntervalVector();
     }  // Release the mutex
 
-    cairo_set_line_width(cr, this->stroke->getWidth());
-
     if (stroke->path->getType() == Path::PIECEWISE_LINEAR) {
         const std::vector<Point>& data = stroke->path->getData();
-        for (auto&& interval: sections) {
-            Point p = stroke->path->getPoint(interval.min);
-            cairo_move_to(cr, p.x, p.y);
+        if (this->stroke->hasPressure()) {
+            for (auto&& interval: sections) {
+                Point p = stroke->path->getPoint(interval.min);
+                cairo_set_line_width(cr, p.z);
+                cairo_move_to(cr, p.x, p.y);
 
-            auto endIt = data.cbegin() + (std::ptrdiff_t)interval.max.index + 1;
-            for (auto it = data.cbegin() + (std::ptrdiff_t)interval.min.index + 1; it != endIt; ++it) {
-                cairo_line_to(cr, it->x, it->y);
+                auto endIt = data.cbegin() + (std::ptrdiff_t)interval.max.index + 1;
+                for (auto it = data.cbegin() + (std::ptrdiff_t)interval.min.index + 1; it != endIt; ++it) {
+                    cairo_line_to(cr, it->x, it->y);
+                    cairo_stroke(cr);
+                    cairo_set_line_width(cr, it->z);
+                    cairo_move_to(cr, it->x, it->y);
+                }
+
+                Point q = stroke->path->getPoint(interval.max);
+                cairo_line_to(cr, q.x, q.y);
+                cairo_stroke(cr);
             }
+        } else {
+            cairo_set_line_width(cr, this->stroke->getWidth());
+            for (auto&& interval: sections) {
+                Point p = stroke->path->getPoint(interval.min);
+                cairo_move_to(cr, p.x, p.y);
 
-            Point q = stroke->path->getPoint(interval.max);
-            cairo_line_to(cr, q.x, q.y);
-            cairo_stroke(cr);
+                auto endIt = data.cbegin() + (std::ptrdiff_t)interval.max.index + 1;
+                for (auto it = data.cbegin() + (std::ptrdiff_t)interval.min.index + 1; it != endIt; ++it) {
+                    cairo_line_to(cr, it->x, it->y);
+                }
+
+                Point q = stroke->path->getPoint(interval.max);
+                cairo_line_to(cr, q.x, q.y);
+                cairo_stroke(cr);
+            }
         }
-    } else {  //  SPLINE
+    } else {  //  SPLINE -- no pressure. Pressure sensitive spline are handled by EraseablePressureSpline
         Spline::SegmentIteratable segments = this->stroke->getSpline().segments();
+
+        cairo_set_line_width(cr, this->stroke->getWidth());
 
         for (auto&& interval: sections) {
             // Similar to Spline::cloneSection (without the cloning)
@@ -220,6 +241,7 @@ auto EraseableStroke::getStrokes() -> std::vector<Stroke*> {
         s->setLineStyle(stroke->getLineStyle());
         s->setWidth(stroke->getWidth());
         s->path = stroke->path->cloneSection(interval.min, interval.max);
+        s->pressureSensitive = stroke->pressureSensitive;
         strokes.push_back(s);
     }
 

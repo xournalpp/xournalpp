@@ -24,6 +24,17 @@ void SplineSegment::toPoints(std::vector<Point>& points) const {
     childSegments.second.toPoints(points);
 }
 
+void SplineSegment::toParametrizedPoints(std::vector<ParametrizedPoint>& points, double start, double end) const {
+    if (isFlatEnough()) {
+        points.emplace_back(firstKnot, start);
+        return;
+    }
+    auto const& childSegments = subdivide(0.5);
+    const double middle = 0.5 * (start + end);
+    childSegments.first.toParametrizedPoints(points, start, middle);
+    childSegments.second.toParametrizedPoints(points, middle, end);
+}
+
 auto SplineSegment::subdivide(double t) const -> std::pair<SplineSegment, SplineSegment> {
 
     Point b0 = firstKnot.relativeLineTo(firstControlPoint, t);  // Same as evaluating a Bézier

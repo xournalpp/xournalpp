@@ -10,6 +10,7 @@
 #include "model/Document.h"
 #include "model/Layer.h"
 #include "model/Stroke.h"
+#include "model/eraser/EraseablePressureSpline.h"
 #include "model/eraser/EraseableStroke.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/EraseUndoAction.h"
@@ -105,7 +106,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
             }
 
             doc->lock();
-            eraseable = new EraseableStroke(s);
+            eraseable = (s->hasPressure() && s->isSpline()) ? new EraseablePressureSpline(s) : new EraseableStroke(s);
             s->setEraseable(eraseable);
             doc->unlock();
             this->eraseUndoAction->addOriginal(l, s, pos);
