@@ -51,7 +51,9 @@ community.
     * Simplified background rendering to improve compatibility of exported SVGs
       (#2598).
 * Sidebar preview panel
-    * Changed sidebar colors to be dark when using a dark theme (#2726 PENDING).
+    * Added new "Layerstack Preview" tab that shows all layers up to the current
+      layer (#2795).
+    * Changed sidebar colors to be dark when using a dark theme (#2726).
     * Changed layer previews to only show background in background layer (#2674)
     * Moved close button from the bottom to the top to improve usability
       (#2727).
@@ -72,7 +74,7 @@ community.
     * Added Preference settings for minimum pressure level and pressure
       multiplier (#2622).
     * Added an experimental stroke smoothing / input stabilization feature
-      (#2512).
+      (#2512, #2856, #2863).
     * Added a touchpad pinch gesture for zooming (#2651).
     * Added a Preferences setting to ignore the first few pen input events when
       starting a new stroke (#1854).
@@ -113,7 +115,7 @@ community.
       rearranging selected elements (#2794).
     * Fixed some bugs where selections would not be copied correctly (#2277,
       #2090, #2733) and would cause strokes to become invalid/missing when
-      saving (#2857 PENDING, #2464).
+      saving (#2857, #2464).
     * Fixed a bug in the Select Object algorithm (#2478)
 * Pen and eraser tools
     * Added Preferences settings to configure the radius, color, and border of
@@ -144,18 +146,16 @@ community.
     * Added a print button to the default toolbar (#1921).
     * Added a menu toggle item for showing/hiding the toolbar, bound to F9
       (#2112).
-    * Added color indicators to toolbars when customizing (#2726 PENDING).
-    * Improved appearance of floating toolbar (#2726 PENDING).
+    * Added color indicators to toolbars when customizing (#2726).
+    * Improved appearance of floating toolbar (#2726);
     * Fixed a crash that occurs when the application is closed with the toolbar
       customization dialog open  (#1189).
     * Fixed multiple other bugs involving the toolbar customizer (#2860 PENDING).
-    * Fixed an issue where the page spinner would remain horizontal when added
-      to a vertical toolbar (#2624 PENDING).
 * Plugins
     * Extended plugin API with many new features and functions, including page
       and layer operations (#2406).
     * Added a Lua plugin for taking a screenshot and saving it to a file
-      (#2086).
+      (#2086, #2787).
     * Added a Lua plugin for cycling though a color list (#1835, #2251).
 * Paper backgrounds
     * Added an isometric paper background type (#1994).
@@ -169,6 +169,7 @@ community.
     * Added menu entry to append new pdf pages (#2146)
     * Added support for more export options in command line and GUI (#2449)
     * Added a command line option to create an xopp file (#1919).
+    * Added a new Ctrl+Shift+D shortcut for the Default Tool (#2872).
     * Fixed bugs in element cloning, which previously could have caused elements
       to become invalid (#2733, #2720, #2464).
     * Fixed a bug where the thumbnailer would not correctly render previews in
