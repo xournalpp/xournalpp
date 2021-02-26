@@ -3,7 +3,7 @@
 #include <cmath>
 #include <numeric>
 
-#include <execinfo.h>
+// #include <execinfo.h>
 
 #include "model/Path.h"
 #include "serializing/ObjectInputStream.h"
@@ -155,9 +155,9 @@ auto Stroke::isInSelection(ShapeContainer* container) -> bool {
 void Stroke::addPoint(const Point& p) {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
         g_warning("Use of deprecated Stroke::addPoint on stroke without piecewise linear path");
-        void* array[10];
-        int size = backtrace(array, 10);
-        backtrace_symbols_fd(array, size, STDERR_FILENO);
+        //         void* array[10];
+        //         int size = backtrace(array, 10);
+        //         backtrace_symbols_fd(array, size, STDERR_FILENO);
         return;
     }
     std::shared_ptr<PiecewiseLinearPath> PLPath = std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path);
@@ -168,9 +168,9 @@ void Stroke::addPoint(const Point& p) {
 auto Stroke::getPointCount() const -> int {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
         g_warning("Use of deprecated Stroke::getPointCount on stroke without piecewise linear path");
-        void* array[10];
-        int size = backtrace(array, 10);
-        backtrace_symbols_fd(array, size, STDERR_FILENO);
+        //         void* array[10];
+        //         int size = backtrace(array, 10);
+        //         backtrace_symbols_fd(array, size, STDERR_FILENO);
         return 0;
     }
     return this->path->getData().size();
@@ -179,9 +179,9 @@ auto Stroke::getPointCount() const -> int {
 auto Stroke::getPointVector() const -> std::vector<Point> const& {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
         g_warning("Use of deprecated Stroke::getPointVector on stroke without piecewise linear path");
-        void* array[10];
-        int size = backtrace(array, 10);
-        backtrace_symbols_fd(array, size, STDERR_FILENO);
+        //         void* array[10];
+        //         int size = backtrace(array, 10);
+        //         backtrace_symbols_fd(array, size, STDERR_FILENO);
     }
     return this->path->getData();
 }
@@ -193,9 +193,9 @@ auto Stroke::getPointVector() const -> std::vector<Point> const& {
 auto Stroke::getPoint(int index) const -> Point {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
         g_warning("Use of deprecated Stroke::getPoint on stroke without piecewise linear path");
-        void* array[10];
-        int size = backtrace(array, 10);
-        backtrace_symbols_fd(array, size, STDERR_FILENO);
+        //         void* array[10];
+        //         int size = backtrace(array, 10);
+        //         backtrace_symbols_fd(array, size, STDERR_FILENO);
         return Point(0, 0);
     }
     const std::vector<Point>& data = this->path->getData();
@@ -209,9 +209,9 @@ auto Stroke::getPoint(int index) const -> Point {
 auto Stroke::getPoints() const -> const Point* {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
         g_warning("Use of deprecated Stroke::getPoint on stroke without piecewise linear path");
-        void* array[10];
-        int size = backtrace(array, 10);
-        backtrace_symbols_fd(array, size, STDERR_FILENO);
+        //         void* array[10];
+        //         int size = backtrace(array, 10);
+        //         backtrace_symbols_fd(array, size, STDERR_FILENO);
     }
     return this->path->getData().data();
 }
