@@ -45,7 +45,7 @@ private:
     void drawBorder();
     void finishPaint();
     void drawBackgroundPdf(Document* doc);
-    void drawPage(int layer);
+    void drawPage();
 
 private:
     /**

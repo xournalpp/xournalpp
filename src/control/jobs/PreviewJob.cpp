@@ -60,33 +60,64 @@ void PreviewJob::drawBackgroundPdf(Document* doc) {
                       this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
 }
 
-void PreviewJob::drawPage(int layer) {
+void PreviewJob::drawPage() {
     DocumentView view;
     PageRef page = this->sidebarPreview->page;
     Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
+    PreviewRenderType type = this->sidebarPreview->getRenderType();
+    int layer;
 
-    if (page->getBackgroundType().isPdfPage() && (layer == -100 || layer == -1)) {
-        drawBackgroundPdf(doc);
+    doc->lock();
+
+    // getLayer is not defined for page preview
+    if (type != RENDER_TYPE_PAGE_PREVIEW) {
+        layer = (dynamic_cast<SidebarPreviewLayerEntry*>(this->sidebarPreview))->getLayer();
     }
 
-    if (layer == -100) {
-        // render all layer
-        view.drawPage(page, cr2, true);
-    } else if (layer == -1) {
-        // draw only background
-        view.initDrawing(page, cr2, true);
-        view.drawBackground();
-        view.finializeDrawing();
-    } else {
-        view.initDrawing(page, cr2, true);
+    // Pdf::drawPage needs to go before DocumentView::initDrawing until DocumentView learns to do it and the first
+    // switch block can go away and the layer assignment into the remaining switch block.
+    switch (type) {
+        case RENDER_TYPE_PAGE_LAYER:
+            if (layer != -1) {
+                break;  // out
+            }           // else fall through for layer == -1
 
-        Layer* drawLayer = (*page->getLayers())[layer];
-        view.drawLayer(cr2, drawLayer);
+        case RENDER_TYPE_PAGE_PREVIEW:
+            if (page->getBackgroundType().isPdfPage()) {
+                drawBackgroundPdf(doc);
+            }
+            break;
 
-        view.finializeDrawing();
+        default:
+            // unknown type
+            break;
+    }
+
+    switch (type) {
+        case RENDER_TYPE_PAGE_PREVIEW:
+            // render all layers
+            view.drawPage(page, cr2, true);
+            break;
+
+        case RENDER_TYPE_PAGE_LAYER:
+            // render single layer
+            view.initDrawing(page, cr2, true);
+            if (layer == -1) {
+                view.drawBackground();
+            } else {
+                Layer* drawLayer = (*page->getLayers())[layer];
+                view.drawLayer(cr2, drawLayer);
+            }
+            view.finializeDrawing();
+            break;
+
+        default:
+            // unknown type
+            break;
     }
 
     cairo_destroy(cr2);
+    doc->unlock();
 }
 
 void PreviewJob::clipToPage() {
@@ -101,19 +132,7 @@ void PreviewJob::run() {
     drawBorder();
     clipToPage();
 
-    Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
-    doc->lock();
-
-    PreviewRenderType type = this->sidebarPreview->getRenderType();
-    int layer = -100;  // all layer
-
-    if (RENDER_TYPE_PAGE_LAYER == type) {
-        layer = (dynamic_cast<SidebarPreviewLayerEntry*>(this->sidebarPreview))->getLayer();
-    }
-
-    drawPage(layer);
-
-    doc->unlock();
+    drawPage();
 
     finishPaint();
 }
