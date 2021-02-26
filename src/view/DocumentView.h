@@ -100,7 +100,7 @@ public:
 private:
     void drawText(cairo_t* cr, Text* t) const;
     void drawImage(cairo_t* cr, Image* i) const;
-    static void drawTexImage(cairo_t* cr, TexImage* texImage);
+    void drawTexImage(cairo_t* cr, TexImage* texImage) const;
 
     void drawElement(cairo_t* cr, Element* e) const;
 
