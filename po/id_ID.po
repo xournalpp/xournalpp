@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-25 20:48+0000\n"
-"PO-Revision-Date: 2021-02-25 21:25\n"
+"POT-Creation-Date: 2021-02-26 22:48+0000\n"
+"PO-Revision-Date: 2021-02-26 23:03\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -757,6 +757,10 @@ msgstr "Pemilihan lapisan"
 #: ../src/control/layer/LayerController.cpp:329
 msgid "Layer {1}"
 msgstr "Lapisan {1}"
+
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
+msgid "Layerstack Preview"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
