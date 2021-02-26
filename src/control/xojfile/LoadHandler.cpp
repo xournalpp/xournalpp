@@ -9,6 +9,7 @@
 
 #include "control/pagetype/PageTypeHandler.h"
 #include "model/BackgroundImage.h"
+#include "model/PiecewiseLinearPath.h"
 #include "model/StrokeStyle.h"
 #include "model/XojPage.h"
 
@@ -877,6 +878,9 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
         bool xRead = false;
         double x = 0;
 
+        std::shared_ptr<PiecewiseLinearPath> path = std::make_shared<PiecewiseLinearPath>();
+        handler->stroke->setPath(path);
+
         while (textLen > 0) {
             double tmp = g_ascii_strtod(text, const_cast<char**>(&ptr));
             if (ptr == text) {
@@ -891,7 +895,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
                 x = tmp;
             } else {
                 xRead = false;
-                handler->stroke->addPoint(Point(x, tmp));
+                path->addLineSegmentTo(Point(x, tmp));
             }
         }
         handler->stroke->freeUnusedPointItems();
@@ -902,13 +906,14 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
         }
 
         if (!handler->pressureBuffer.empty()) {
-            if (static_cast<int>(handler->pressureBuffer.size()) >= handler->stroke->getPointCount() - 1) {
+            if (static_cast<int>(handler->pressureBuffer.size()) >= path->nbSegments()) {
                 handler->stroke->setPressure(handler->pressureBuffer);
+                handler->stroke->setPressureSensitive(true);
                 handler->pressureBuffer.clear();
             } else {
                 g_warning("%s", FC(_F("xoj-File: {1}") % handler->filepath.string().c_str()));
                 g_warning("%s", FC(_F("Wrong number of points, got {1}, expected {2}") %
-                                   handler->pressureBuffer.size() % (handler->stroke->getPointCount() - 1)));
+                                   handler->pressureBuffer.size() % path->nbSegments()));
             }
         }
         handler->pressureBuffer.clear();
