@@ -30,7 +30,10 @@ community.
     * The code has been updated to use C++17 (#1485) and must now be compiled
       using a supported compiler version, such as GCC 7 or Clang 5 (or newer).
 * Packaging changes
-    * AppImage: Fix AppImages not running on more recent Linux distros (#2600).
+    * AppImage: Fixed AppImages not running on more recent Linux distros
+      (#2600).
+    * Linux: Fixed an issue with dock icons not appearing correctly in some
+      desktop environments (#2881, #1791).
 * Document viewing
     * Changed page selection system to now select the current page during
       scrolling (#1613, #1184).
@@ -137,7 +140,8 @@ community.
 * Text tool
     * Added support for text edit blinking to be enabled/disabled through
       standard GTK configuration settings (#2170).
-    * Fixed several serious bugs with IME pre-edit strings (#2789, #2788, #2826).
+    * Fixed several serious bugs and user experience issues with IME pre-edit
+      strings (#2789, #2788, #2826, #2851).
     * Fixed a bug where the font button would not be updated when editing a text
       field (#2620).
     * Fixed a bug where text elements would not be displayed at the correct
