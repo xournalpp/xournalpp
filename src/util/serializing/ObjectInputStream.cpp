@@ -92,17 +92,14 @@ auto ObjectInputStream::readString() -> string {
 void ObjectInputStream::readData(void** data, int* length) {
     checkType('b');
 
-    if (this->pos + 2 * sizeof(int) >= this->str->len) {
-        throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
+    if (istream.str().size() < 2 * sizeof(int)) {
+        throw InputStreamException("End reached, but try to read data len and width", __FILE__, __LINE__);
     }
 
-    int len = *(reinterpret_cast<int*>(this->str->str + this->pos));
-    this->pos += sizeof(int);
+    int len = readTypeFromSStream<int>(istream, "int");
+    int width = readTypeFromSStream<int>(istream, "int");
 
-    int width = *(reinterpret_cast<int*>(this->str->str + this->pos));
-    this->pos += sizeof(int);
-
-    if (this->pos + (len * width) >= this->str->len) {
+    if (istream.str().size() < (len * width)) {
         throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
     }
 
@@ -110,12 +107,11 @@ void ObjectInputStream::readData(void** data, int* length) {
         *length = 0;
         *data = nullptr;
     } else {
-        *data = g_malloc(len * width);
+        *data = (void*)new char[(size_t)(len * width)];
         *length = len;
 
-        memcpy(*data, this->str->str + this->pos, len * width);
-
-        this->pos += len * width;
+        istream.read((char*)*data, len * width);
+        pos += (size_t)(len * width);
     }
 }
 
