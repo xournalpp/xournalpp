@@ -47,7 +47,6 @@ private:
 
 private:
     std::istringstream istream;
-    GString* str = nullptr;
     size_t pos = 0;
     size_t len = 0;
 };

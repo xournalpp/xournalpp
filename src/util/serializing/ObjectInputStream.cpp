@@ -143,23 +143,22 @@ auto ObjectInputStream::readImage() -> cairo_surface_t* {
 
 void ObjectInputStream::checkType(char type) {
     if (istream.str().size() < 2) {
-        throw InputStreamException(
-                FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}") % getType(type) % pos % len),
-                __FILE__, __LINE__);
+        throw InputStreamException(FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}") % getType(type) %
+                                      (uint32_t)pos % (uint32_t)len),
+                                   __FILE__, __LINE__);
     }
     char t = 0, underscore = 0;
     istream >> underscore >> t;
 
     if (underscore != '_') {
         throw InputStreamException(FS(FORMAT_STR("Expected type signature of {1}, index {2} of {3}, but read '{4}'") %
-                                      getType(type) % (pos + 1) % len % underscore),
+                                      getType(type) % ((uint32_t)pos + 1) % (uint32_t)len % underscore),
                                    __FILE__, __LINE__);
     }
 
     if (t != type) {
-        throw InputStreamException(
-                FS(FORMAT_STR("Expected {1} but read {2}") % getType(type) % getType(this->str->str[this->pos])),
-                __FILE__, __LINE__);
+        throw InputStreamException(FS(FORMAT_STR("Expected {1} but read {2}") % getType(type) % getType(t)), __FILE__,
+                                   __LINE__);
     }
 
     pos += 2;
