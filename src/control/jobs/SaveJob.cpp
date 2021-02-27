@@ -90,17 +90,19 @@ auto SaveJob::save() -> bool {
     fs::path const filepath = doc->getFilepath();
     doc->unlock();
 
+    auto const target = fs::path{filepath}.replace_extension(".xopp");
+
     if (doc->shouldCreateBackupOnSave()) {
         try {
-            Util::safeRenameFile(filepath, fs::path{filepath} += "~");
+            // Note: The backup must be created for the target as this is the filepath
+            // which will be written to. Do not use the `filepath` variable!
+            Util::safeRenameFile(target, fs::path{target} += "~");
         } catch (fs::filesystem_error const& fe) {
             g_warning("Could not create backup! Failed with %s", fe.what());
             return false;
         }
         doc->setCreateBackupOnSave(false);
     }
-
-    auto const target = fs::path{filepath}.replace_extension(".xopp");
 
     doc->lock();
     h.saveTo(target, this->control);
