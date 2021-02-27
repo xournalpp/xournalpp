@@ -15,9 +15,10 @@
 
 #include <gtk/gtk.h>
 
-// #include "Element.h"
 #include "MathVect.h"
 #include "Point.h"
+
+class ShapeContainer;
 
 /**
  * @brief A small helper structure for points with a parameter
@@ -169,6 +170,16 @@ public:
      * For optimization purposes, this test should be performed beforehand by the calling function.
      */
     std::vector<double> intersectWithRectangle(const Rectangle<double>& rectangle) const;
+
+    /**
+     * @brief Test if the spline segment is entirely in the given shape, assuming the first knot is in the shape
+     * @param container Container for the shape
+     * @param assumeSecondKnotIn If true, assume the second knot is inside the shape
+     * @return true if the segment is entirely in the shape, false otherwise
+     *
+     * Warning: this function always assumes the first knot is already known to be inside the shape
+     */
+    bool isTailInSelection(ShapeContainer* container, bool assumeSecondKnotIn) const;
 
     /**
      * @brief Get the parameter value of the point seg.getPoint(t) in the subsegment seg.subdivide(u).first

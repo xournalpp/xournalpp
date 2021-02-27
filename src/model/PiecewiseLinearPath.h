@@ -193,6 +193,13 @@ public:
                                                   size_t lastIndex) const override;
 
     /**
+     * @brief Test if the path is entirely in the given shape
+     * @param container Container for the shape
+     * @return true if the path is entirely in the shape, false otherwise
+     */
+    bool isInSelection(ShapeContainer* container) override;
+
+    /**
      * @brief Add the path to cairo. Does not actually paint.
      * @param cr The cairo instance
      */

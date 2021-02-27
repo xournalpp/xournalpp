@@ -116,18 +116,7 @@ auto Stroke::getWidth() const -> double { return this->width; }
 auto Stroke::rescaleWithMirror() -> bool { return true; }
 
 auto Stroke::isInSelection(ShapeContainer* container) -> bool {
-
-    // TODO: Adatp to splines
-    for (auto&& p: this->path->getData()) {
-        double px = p.x;
-        double py = p.y;
-
-        if (!container->contains(px, py)) {
-            return false;
-        }
-    }
-
-    return true;
+    return this->path && (this->Element::isInSelection(container) || this->path->isInSelection(container));
 }
 
 // void Stroke::setFirstPoint(double x, double y) {

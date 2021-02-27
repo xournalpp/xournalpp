@@ -15,6 +15,7 @@
 #include "serializing/ObjectInputStream.h"
 #include "serializing/ObjectOutputStream.h"
 
+#include "Element.h"
 #include "Interval.h"
 #include "LoopUtil.h"
 
@@ -441,6 +442,19 @@ auto PiecewiseLinearPath::intersectWithRectangle(const Rectangle<double>& rectan
         }
     }
     return result;
+}
+
+bool PiecewiseLinearPath::isInSelection(ShapeContainer* container) {
+    for (auto&& p: this->data) {
+        double px = p.x;
+        double py = p.y;
+
+        if (!container->contains(px, py)) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void PiecewiseLinearPath::addToCairo(cairo_t* cr) const {

@@ -3,7 +3,8 @@
 #include <cmath>
 #include <numeric>
 
-#include "util/Interval.h"
+#include "Element.h"
+#include "Interval.h"
 
 SplineSegment::SplineSegment(const Point& p, const Point& fp, const Point& sp, const Point& q):
         firstKnot(p), firstControlPoint(fp), secondControlPoint(sp), secondKnot(q) {}
@@ -273,6 +274,21 @@ auto SplineSegment::intersectWithRectangle(const Rectangle<double>& rectangle) c
     return result;
 }
 
+bool SplineSegment::isTailInSelection(ShapeContainer* container, bool assumeSecondKnotIn) const {
+    if (!assumeSecondKnotIn && !container->contains(this->secondKnot.x, this->secondKnot.y)) {
+        return false;
+    }
+    if (!container->contains(this->firstControlPoint.x, this->firstControlPoint.y) ||
+        !container->contains(this->secondControlPoint.x, this->secondControlPoint.y)) {
+        if (this->isFlatEnough()) {
+            return true;
+        }
+        auto const& childSegments = subdivide(0.5);
+        return childSegments.first.isTailInSelection(container, false) &&
+               childSegments.second.isTailInSelection(container, true);
+    }
+    return true;
+}
 
 auto SplineSegment::rootsOfQuadraticEquation(double a, double b, double c) -> std::vector<double> {
     if (a == 0.0) {

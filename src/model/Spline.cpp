@@ -6,6 +6,7 @@
 #include "serializing/ObjectInputStream.h"
 #include "serializing/ObjectOutputStream.h"
 
+#include "Element.h"
 #include "SplineSchneiderApproximator.h"
 
 #ifdef EXTRA_CAREFUL
@@ -383,6 +384,21 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
         }
     }
     return result;
+}
+
+bool Spline::isInSelection(ShapeContainer* container) {
+    if (this->data.empty()) {
+        return false;
+    }
+    if (const Point& p = this->data.front(); !container->contains(p.x, p.y)) {
+        return false;
+    }
+    for (auto&& seg: segments()) {
+        if (!seg.isTailInSelection(container, false)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void Spline::addToCairo(cairo_t* cr) const {

@@ -20,6 +20,7 @@
 
 class ObjectOutputStream;
 class Point;
+class ShapeContainer;
 
 #define EXTRA_CAREFUL
 /**
@@ -128,6 +129,13 @@ public:
      */
     virtual std::vector<Parameter> intersectWithRectangle(const Rectangle<double>& rectangle, size_t firstIndex,
                                                           size_t lastIndex) const = 0;
+
+    /**
+     * @brief Test if the path is entirely in the given shape
+     * @param container Container for the shape
+     * @return true if the path is entirely in the shape, false otherwise
+     */
+    virtual bool isInSelection(ShapeContainer* container) = 0;
 
     /**
      * @brief Test if the data vector is empty
