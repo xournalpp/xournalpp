@@ -115,55 +115,30 @@ void ObjectInputStream::readData(void** data, int* length) {
     }
 }
 
-class PngDatasource {
-public:
-    PngDatasource(char* start, int len) {
-        this->data = start;
-        this->len = len;
-        this->pos = 0;
+cairo_status_t cairoReadFunction(std::istringstream* iss, unsigned char* data, unsigned int length) {
+    if (iss->str().size() < length) {
+        return CAIRO_STATUS_READ_ERROR;
     }
-
-    char* data;
-    int len;
-    int pos;
-};
-
-auto cairoReadFunction(PngDatasource* obj, unsigned char* data, unsigned int length) -> cairo_status_t {
-    for (unsigned int i = 0; i < length; i++, obj->pos++) {
-        if (obj->pos >= obj->len) {
-            return CAIRO_STATUS_READ_ERROR;
-        }
-        data[i] = obj->data[obj->pos];
-    }
-
+    iss->read((char*)data, length);
     return CAIRO_STATUS_SUCCESS;
 }
 
 auto ObjectInputStream::readImage() -> cairo_surface_t* {
     checkType('m');
 
-    if (this->pos + sizeof(int) >= this->str->len) {
+    if (istream.str().size() < sizeof(size_t)) {
+        throw InputStreamException("End reached, but try to read an image's data's length", __FILE__, __LINE__);
+    }
+
+    size_t len = readTypeFromSStream<size_t>(istream, "gsize");
+
+    if (istream.str().size() < len) {
         throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
     }
 
-    int len = *(reinterpret_cast<int*>(this->str->str + this->pos));
-    // this->pos += sizeof(int);
-    // totally not equivalent!
-    this->pos += sizeof(gsize);
+    pos += len;
 
-    if (this->pos + len >= this->str->len) {
-        throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
-    }
-
-    PngDatasource source(this->str->str + this->pos, len);
-    // cairo_surface_t * img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) cairoReadFunction,
-    // &source);
-    cairo_surface_t* img = cairo_image_surface_create_from_png_stream(
-            reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), &source);
-
-    this->pos += len;
-
-    return img;
+    return cairo_image_surface_create_from_png_stream((cairo_read_func_t)(&cairoReadFunction), &istream);
 }
 
 void ObjectInputStream::checkType(char type) {
