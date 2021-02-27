@@ -20,6 +20,7 @@ Name[ru]=Xournal++
 Comment[ru]=Делайте рукописные заметки
 
 Exec=xournalpp %f
+StartupWMClass=xournalpp
 Terminal=false
 StartupNotify=true
 MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;application/x-xopt;application/pdf;
