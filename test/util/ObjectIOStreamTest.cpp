@@ -123,11 +123,11 @@ public:
     }
 
     void testReadData() {
-        testReadDataType<char, 3>({0, 42, -42});
-        testReadDataType<long, 3>({0, 42, -42});
-        testReadDataType<long long, 3>({0, 420000000000, -42000000000});
-        testReadDataType<double, 3>({0, 42., -42.});
-        testReadDataType<float, 3>({0, 42., -42.});
+        testReadDataType<char, 3>(array<char, 3>{0, 42, -42});
+        testReadDataType<long, 3>(array<long, 3>{0, 42, -42});
+        testReadDataType<long long, 3>(array<long long, 3>{0, 420000000000, -42000000000});
+        testReadDataType<double, 3>(array<double, 3>{0, 42., -42.});
+        testReadDataType<float, 3>(array<float, 3>{0, 42., -42.});
     }
 
     void testReadImage() {
@@ -170,13 +170,13 @@ public:
     }
 
     void testReadString() {
-        vector<string> intToTest = {
+        vector<string> stringToTest{
                 "", "Hello World", XML_VERSION_STR, "1337",
                 "Laborum beatae sit at. Tempore ex odio et non et iste et. Deleniti magni beatae quod praesentium dicta quas ducimus hic. Nemo vel est saepe voluptatibus. Sunt eveniet aut saepe consequatur fuga ad molestias.\n \
                 Culpa nulla saepe alias magni nemo magni. Sed sit sint repellat doloremque. Quo ipsum debitis quos impedit. Omnis expedita veritatis nihil sint et itaque possimus. Nobis est fugit vel omnis. Dolores architecto laudantium nihil rerum."};
 
         vector<pair<string, string>> testData;
-        for (string str: intToTest) {
+        for (string str: stringToTest) {
             testData.push_back({serializeString(str), str});
         }
 
@@ -193,10 +193,10 @@ public:
     }
 
     void testReadSizeT() {
-        vector<size_t> intToTest = {0, 1, 42, 1337, 10000000, 10000000000};
+        vector<size_t> sizeTToTest{0, 1, 42, 1337, 10000000, 10000000000};
 
         vector<pair<string, size_t>> testData;
-        for (size_t number: intToTest) {
+        for (size_t number: sizeTToTest) {
             testData.push_back({serializeSizeT(number), number});
         }
 
@@ -213,7 +213,7 @@ public:
     }
 
     void testReadInt() {
-        vector<int> intToTest = {0, 1, -1, 42, -50000, -1337, 10000};
+        vector<int> intToTest{0, 1, -1, 42, -50000, -1337, 10000};
 
         vector<pair<string, int>> testData;
         for (int number: intToTest) {
@@ -234,7 +234,7 @@ public:
 
 
     void testReadDouble() {
-        vector<double> doubleToTest = {0., 0.5, 42., 46.5, -85.2, -1337, 1e50};
+        vector<double> doubleToTest{0., 0.5, 42., 46.5, -85.2, -1337, 1e50};
 
         vector<pair<string, double>> testData;
         for (double number: doubleToTest) {
