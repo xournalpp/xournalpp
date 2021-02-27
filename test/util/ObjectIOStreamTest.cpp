@@ -1,3 +1,4 @@
+#include <array>
 #include <random>
 #include <string>
 #include <tuple>
