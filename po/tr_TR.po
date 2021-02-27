@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-26 22:48+0000\n"
-"PO-Revision-Date: 2021-02-27 12:31\n"
+"PO-Revision-Date: 2021-02-27 13:35\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1142,11 +1142,11 @@ msgstr "Hata Raporu Gönder"
 
 #: ../src/control/tools/EditSelection.cpp:371
 msgid "Send backward"
-msgstr ""
+msgstr "Geriye gönder"
 
 #: ../src/control/tools/EditSelection.cpp:379
 msgid "Send to back"
-msgstr ""
+msgstr "En arkaya gönder"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
 msgid "Separator"
@@ -1732,31 +1732,31 @@ msgstr "... VE Son vuruştan bu yana ne kadar zaman geçmiş olmalı.\n\n"
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1714
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5360
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:1017
 msgid "20"
@@ -1958,7 +1958,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Tümü"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -1972,7 +1972,7 @@ msgstr "Vuruş yok sayılmadan önce her üç koşul da yerine getirilmelidir.\n
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Çalıştırmadan önce LaTeX bağımlılıklarını kontrol et"
 
 #: ../ui/main.glade:1197
 msgid "Append New Pdf Pages"
