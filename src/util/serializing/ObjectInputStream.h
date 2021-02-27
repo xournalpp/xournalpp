@@ -47,6 +47,6 @@ private:
 
 private:
     std::istringstream istream;
-    size_t pos = 0;
+    size_t pos();
     size_t len = 0;
 };
