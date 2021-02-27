@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <sstream>
+
 #include <gtk/gtk.h>
 
 #include "InputStreamException.h"
@@ -19,8 +21,8 @@ class Serializeable;
 
 class ObjectInputStream {
 public:
-    ObjectInputStream();
-    virtual ~ObjectInputStream();
+    ObjectInputStream() = default;
+    virtual ~ObjectInputStream() = default;
 
 public:
     bool read(const char* data, int len);
@@ -44,6 +46,8 @@ private:
     static std::string getType(char type);
 
 private:
+    std::istringstream istream;
     GString* str = nullptr;
-    gsize pos = 0;
+    size_t pos = 0;
+    size_t len = 0;
 };
