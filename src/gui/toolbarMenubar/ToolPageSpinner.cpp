@@ -73,11 +73,14 @@ auto ToolPageSpinner::newItem() -> GtkToolItem* {
     this->lbPageNo = gtk_label_new("");
 
     if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-        this->lbVerticalPdfPage = nullptr;
+        g_clear_object(&this->lbVerticalPdfPage);
         gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);
         gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
         gtk_widget_set_valign(this->lbPageNo, GTK_ALIGN_BASELINE);
     } else {
+        if (this->lbVerticalPdfPage) {
+            g_object_unref(this->lbVerticalPdfPage);
+        }
         this->lbVerticalPdfPage = gtk_label_new("");
         gtk_widget_set_halign(pageLabel, GTK_ALIGN_BASELINE);
         gtk_widget_set_halign(spinner, GTK_ALIGN_CENTER);
