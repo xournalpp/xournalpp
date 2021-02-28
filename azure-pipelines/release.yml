@@ -110,7 +110,6 @@ stages:
           - template: steps/build_mac.yml
             parameters:
               build_type: 'RelWithDebInfo'
-              cmake_flags: '-DCMAKE_OSX_DEPLOYMENT_TARGET=10.13'
           - bash: |
               export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
               ./build-app.sh /Users/git-bin/gtk
