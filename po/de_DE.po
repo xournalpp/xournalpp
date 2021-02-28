@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-26 22:48+0000\n"
-"PO-Revision-Date: 2021-02-26 23:03\n"
+"PO-Revision-Date: 2021-02-28 19:27\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -78,7 +78,7 @@ msgstr "Auf aktuelle Seite anwenden"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "Anordnen"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -154,11 +154,11 @@ msgstr "Blau"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring forward"
-msgstr ""
+msgstr "Eine Ebene nach vorne"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "In den Vordergrund"
 
 #: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
 #: ../src/control/XournalMain.cpp:168
@@ -771,7 +771,7 @@ msgstr "Ebene {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Ebenen-Vorschau"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -1151,11 +1151,11 @@ msgstr "Fehlerbericht senden"
 
 #: ../src/control/tools/EditSelection.cpp:371
 msgid "Send backward"
-msgstr ""
+msgstr "Eine Ebene nach hinten"
 
 #: ../src/control/tools/EditSelection.cpp:379
 msgid "Send to back"
-msgstr ""
+msgstr "In den Hintergrund"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
 msgid "Separator"
@@ -1768,11 +1768,11 @@ msgstr "... UND Wie viel Zeit seit dem letzten Strich vergangen sein muss.\n\n"
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
@@ -1788,7 +1788,7 @@ msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
@@ -1796,7 +1796,7 @@ msgstr "1,0"
 
 #: ../ui/settings.glade:1017
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3015
 msgid "30"
@@ -1804,7 +1804,7 @@ msgstr "30"
 
 #: ../ui/settings.glade:1110
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1901,7 +1901,7 @@ msgstr "<i>Wenn keine hardwareseitige Unterstützung für Handerkennung vorhande
 
 #: ../ui/settings.glade:988
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Wählen Sie einen Stabilisierungsalgorithmus und seine Parameter</i>"
 
 #: ../ui/settings.glade:1493
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -2021,7 +2021,7 @@ msgstr "Neue PDF-Seiten anhängen"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Arithmetischer Mittelwert"
 
 #: ../ui/settings.glade:1753
 msgid "Artifact workaround"
@@ -2061,7 +2061,7 @@ msgstr "Verfügbare Platzhalter"
 
 #: ../ui/settings.glade:955
 msgid "Averaging method"
-msgstr ""
+msgstr "Mittelungsmethode"
 
 #: ../ui/settings.glade:2711
 msgid "Background color between pages"
@@ -2090,15 +2090,15 @@ msgstr "Rahmenfarbe der gewählten Seite und anderer Auswahlen"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Eine Ebene nach vorne"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "In den Vordergrund"
 
 #: ../ui/settings.glade:1005
 msgid "Buffersize"
-msgstr ""
+msgstr "Puffergröße"
 
 #: ../ui/about.glade:127
 msgid "Built on"
@@ -2166,7 +2166,7 @@ msgstr "Mauszeiger-Symbol des Stifts"
 
 #: ../ui/settings.glade:1193
 msgid "Cusp detection"
-msgstr ""
+msgstr "Spitzenerkennung"
 
 #: ../ui/settings.glade:2332
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2242,14 +2242,17 @@ msgstr "Ignoriere Eingaben mit kurzer Länge (zeitlich und räumlich), sofern si
 
 #: ../ui/settings.glade:1065
 msgid "Drag"
-msgstr ""
+msgstr "Ziehen"
 
 #: ../ui/settings.glade:859
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Vom Startpunkt LINKS ziehen verhält sich als wäre die Umschalttaste gedrückt.\n"
+"            HINAUF ziehen verhält sich als wäre die Steuerungstaste gedrückt.\n\n"
+"            Erkennungsradius: Radius in dem Modifikatoren bis zum beenden der Zeichnung gesperrt sind.\n\n"
+"\t    <i>Praktisch für die Verwendung ohne Tastatur.</i>"
 
 #: ../ui/settings.glade:4163
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2520,7 +2523,7 @@ msgstr "Bildqualität"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
-msgstr ""
+msgstr "Trägheit"
 
 #: ../ui/settings.glade:5132
 msgid "Input Device"
@@ -2536,7 +2539,7 @@ msgstr "Eingabesystem"
 
 #: ../ui/settings.glade:1235
 msgid "Input stabilization"
-msgstr ""
+msgstr "Bildstabilisierung"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
