@@ -166,6 +166,9 @@ public:
     void setDarkTheme(bool dark);
     bool isDarkTheme() const;
 
+    void setIconStyle(IconStyle sty);
+    IconStyle getIconStyle() const;
+
     /**
      * The last saved path
      */
@@ -607,6 +610,12 @@ private:
      * (white icons)
      */
     bool darkTheme{};
+
+    /**
+     * Sets the icon load order, e.g. to prefer colored icons over monochrome
+     * icons.
+     */
+    IconStyle iconStyle{};
 
     /**
      * If the menu bar is visible on startup

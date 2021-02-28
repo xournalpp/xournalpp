@@ -2673,7 +2673,7 @@ This setting can make it easier to draw with touch. </property>
                                                 <property name="left-padding">12</property>
                                                 <property name="right-padding">12</property>
                                                 <child>
-                                                  <!-- n-columns=3 n-rows=4 -->
+                                                  <!-- n-columns=3 n-rows=5 -->
                                                   <object class="GtkGrid" id="grid2">
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
@@ -2771,7 +2771,46 @@ This setting can make it easier to draw with touch. </property>
                                                       </packing>
                                                     </child>
                                                     <child>
-                                                      <placeholder />
+                                                      <object class="GtkBox">
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">False</property>
+                                                        <property name="tooltip-text" translatable="yes">Set which icon style should be preferred</property>
+                                                        <property name="spacing">5</property>
+                                                        <child>
+                                                          <object class="GtkLabel">
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">False</property>
+                                                            <property name="label" translatable="yes">Icon Style (requires restart)</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">0</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkComboBoxText" id="cbIconStyle">
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">False</property>
+                                                            <property name="active">0</property>
+                                                            <property name="active-id">1</property>
+                                                            <items>
+                                                            <item id="Color" translatable="yes">Colored</item>
+                                                            <item id="Mono" translatable="yes">Monochrome</item>
+                                                            </items>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">1</property>
+                                                          </packing>
+                                                        </child>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="left-attach">0</property>
+                                                        <property name="top-attach">4</property>
+                                                        <property name="width">2</property>
+                                                      </packing>
                                                     </child>
                                                     <child>
                                                       <placeholder />

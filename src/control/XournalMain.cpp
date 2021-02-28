@@ -511,8 +511,18 @@ void on_startup(GApplication* application, XMPtr app_data) {
     {
         const auto monoIcons = app_data->gladePath->getFirstSearchPath() / "iconsMono";
         const auto colorIcons = app_data->gladePath->getFirstSearchPath() / "iconsColor";
-        gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), monoIcons.u8string().c_str());
-        gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), colorIcons.u8string().c_str());
+
+        // icon load order from lowest priority to highest priority
+        std::vector<std::string> iconLoadOrder = {monoIcons.u8string()};
+        if (app_data->control->getSettings()->getIconStyle() == IconStyle::Color) {
+            iconLoadOrder.emplace_back(colorIcons.u8string());
+        } else {
+            iconLoadOrder.insert(iconLoadOrder.begin(), colorIcons.u8string());
+        }
+
+        for (auto& p: iconLoadOrder) {
+            gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str());
+        }
     }
 
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
