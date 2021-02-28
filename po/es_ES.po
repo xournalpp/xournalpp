@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-26 22:48+0000\n"
-"PO-Revision-Date: 2021-02-26 23:03\n"
+"PO-Revision-Date: 2021-02-28 15:54\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1250,7 +1250,7 @@ msgstr "Intercambiar la página actual con la siguiente"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
-msgstr "Predeterminado del Sistema"
+msgstr "Predeterminado del sistema"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
@@ -1795,7 +1795,7 @@ msgstr "1.0"
 
 #: ../ui/settings.glade:1017
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3015
 msgid "30"
@@ -1803,7 +1803,7 @@ msgstr "30"
 
 #: ../ui/settings.glade:1110
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1899,7 +1899,7 @@ msgstr "<i>Si su equipo no admite el reconocimiento de manos, Xournal++ puede de
 
 #: ../ui/settings.glade:988
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Escoger un algoritmo de estabilización de entrada y sus parámetros</i>"
 
 #: ../ui/settings.glade:1493
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -2019,7 +2019,7 @@ msgstr "Adjuntar nuevas páginas Pdf"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Media aritmética"
 
 #: ../ui/settings.glade:1753
 msgid "Artifact workaround"
@@ -2518,7 +2518,7 @@ msgstr "Calidad de la imagen"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
-msgstr ""
+msgstr "Inercia"
 
 #: ../ui/settings.glade:5132
 msgid "Input Device"
@@ -2598,7 +2598,7 @@ msgstr "Gestionar barra de herramientas"
 
 #: ../ui/settings.glade:1097
 msgid "Mass"
-msgstr ""
+msgstr "Masa"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
@@ -2740,7 +2740,7 @@ msgstr "_Opciones de lápiz"
 
 #: ../ui/settings.glade:3527
 msgid "Performance"
-msgstr "Alto rendimiento"
+msgstr "Rendimiento"
 
 #: ../ui/settings.glade:5401
 msgid "Playback Settings"
@@ -2772,7 +2772,7 @@ msgstr "Preferencias"
 
 #: ../ui/settings.glade:1162
 msgid "Preprocessor"
-msgstr ""
+msgstr "Preprocesador"
 
 #: ../ui/settings.glade:3427
 msgid "Presentation Mode"
