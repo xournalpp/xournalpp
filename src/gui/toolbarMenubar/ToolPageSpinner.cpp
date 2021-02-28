@@ -72,6 +72,9 @@ auto ToolPageSpinner::newItem() -> GtkToolItem* {
     GtkWidget* pageLabel = gtk_label_new(_("Page"));
     this->lbPageNo = gtk_label_new("");
 
+    box = gtk_box_new(orientation, 1);
+    updateLabels();
+
     if (orientation == GTK_ORIENTATION_HORIZONTAL) {
         g_clear_object(&this->lbVerticalPdfPage);
         gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);
@@ -88,9 +91,6 @@ auto ToolPageSpinner::newItem() -> GtkToolItem* {
         gtk_widget_set_halign(lbVerticalPdfPage, GTK_ALIGN_BASELINE);
     }
 
-    updateLabels();
-
-    box = gtk_box_new(orientation, 1);
     gtk_box_pack_start(GTK_BOX(box), pageLabel, false, false, 7);
     gtk_box_pack_start(GTK_BOX(box), spinner, false, false, 0);
     gtk_box_pack_start(GTK_BOX(box), this->lbPageNo, false, false, 7);
