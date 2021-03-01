@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-26 22:48+0000\n"
-"PO-Revision-Date: 2021-02-28 19:27\n"
+"POT-Creation-Date: 2021-03-01 18:01+0000\n"
+"PO-Revision-Date: 2021-03-01 18:31\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1084,7 +1084,7 @@ msgid "Save File"
 msgstr "Speichere Datei"
 
 #: ../src/control/jobs/CustomExportJob.cpp:130
-#: ../src/control/jobs/SaveJob.cpp:111
+#: ../src/control/jobs/SaveJob.cpp:113
 msgid "Save file error: {1}"
 msgstr "Fehler beim Speichern der Datei: {1}"
 
