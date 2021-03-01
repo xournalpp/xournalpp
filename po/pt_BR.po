@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-26 22:48+0000\n"
-"PO-Revision-Date: 2021-02-26 23:03\n"
+"PO-Revision-Date: 2021-03-01 13:53\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -171,7 +171,7 @@ msgstr "Alterar cor"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
-msgstr ""
+msgstr "Alterar o nome da camada atual"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
@@ -179,7 +179,7 @@ msgstr "Alterar fonte"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "Alterar estilo da linha"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -214,7 +214,8 @@ msgstr "Copiar página"
 #: ../src/util/PathUtil.cpp:230
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Não foi possível criar a pasta: {1}\n"
+"Falha com o erro: {2}"
 
 #: ../src/control/LatexController.cpp:266
 msgid "Could not load LaTeX PDF file"
@@ -1730,7 +1731,7 @@ msgstr "... E quanto tempo deve ter se passado desde o último golpe.\n\n"
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
@@ -1750,23 +1751,23 @@ msgstr ""
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:1017
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3015
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1110
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -2199,7 +2200,7 @@ msgstr "Não use entradas de curto período de tempo e duração, a menos que oc
 
 #: ../ui/settings.glade:1065
 msgid "Drag"
-msgstr ""
+msgstr "Arrastar"
 
 #: ../ui/settings.glade:859
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
