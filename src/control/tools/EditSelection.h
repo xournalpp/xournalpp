@@ -281,6 +281,13 @@ private:
      */
     void scaleShift(double fx, double fy, bool changeLeft, bool changeTop);
 
+    /**
+     * Set edge panning signal.
+     */
+    void setEdgePan(bool edgePan);
+
+    static bool handleEdgePan(EditSelection* self);
+
 private:  // DATA
     /**
      * Support rotation
@@ -367,4 +374,9 @@ private:  // HANDLER
      * The handler for snapping points
      */
     SnapToGridInputHandler snappingHandler;
+
+    /**
+     * Edge pan timer
+     */
+    GSource* edgePanHandler = nullptr;
 };

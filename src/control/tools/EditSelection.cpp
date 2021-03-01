@@ -9,6 +9,7 @@
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
+#include "gui/widgets/XournalWidget.h"
 #include "model/Document.h"
 #include "model/Element.h"
 #include "model/Layer.h"
@@ -160,6 +161,11 @@ EditSelection::~EditSelection() {
 
     this->view = nullptr;
     this->undo = nullptr;
+
+    if (this->edgePanHandler) {
+        g_source_destroy(this->edgePanHandler);
+        g_source_unref(this->edgePanHandler);
+    }
 }
 
 /**
@@ -690,11 +696,39 @@ void EditSelection::moveSelection(double dx, double dy) {
     this->snappedBounds.x += dx;
     this->snappedBounds.y += dy;
 
-    ensureWithinVisibleArea();
+    if (this->edgePanHandler == nullptr) {
+        this->edgePanHandler = g_timeout_source_new(1000 / 30);
+        g_source_set_callback(this->edgePanHandler, reinterpret_cast<int (*)(void*)>(EditSelection::handleEdgePan),
+                              this, nullptr);
+        g_source_attach(this->edgePanHandler, nullptr);
+    }
 
     updateMatrix();
 
     this->view->getXournal()->repaintSelection();
+}
+
+bool EditSelection::handleEdgePan(EditSelection* self) {
+    Layout* layout = gtk_xournal_get_layout(self->view->getXournal()->getWidget());
+    const auto visRect = layout->getVisibleRect();
+    const double zoom = self->view->getXournal()->getZoom();
+    const double boundTop = static_cast<double>(self->view->getY()) + self->y * zoom;
+    const double boundBot = static_cast<double>(self->view->getY()) + (self->y + self->height) * zoom;
+    const double scrollYDir = boundBot > visRect.y + visRect.height ? 1.0 : boundTop < visRect.y ? -1.0 : 0.0;
+    bool edgePanned = false;
+    if (scrollYDir != 0) {
+        Layout* layout = gtk_xournal_get_layout(self->view->getXournal()->getWidget());
+        const double SCROLL_SPEED = 5.0;
+        self->moveSelection(0, SCROLL_SPEED / zoom * scrollYDir);
+        layout->scrollRelative(0, SCROLL_SPEED * scrollYDir);
+        edgePanned = true;
+    }
+
+    if (!edgePanned) {
+        g_source_unref(self->edgePanHandler);
+        self->edgePanHandler = nullptr;
+    }
+    return edgePanned;
 }
 
 /**
