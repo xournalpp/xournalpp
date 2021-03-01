@@ -1,24 +1,33 @@
 parameters:
   build_type: ''
   cmake_flags: ''
+  jhbuild_user: 'git-bin'
 
 steps:
   - bash: |
-      # Ignore Homebrew uninstall errors
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)" || true
-    displayName: 'Uninstall brew'
+      sudo dscl . -create /Users/${{ parameters.jhbuild_user }}
+      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} UserShell /bin/bash
+      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} RealName "Joe Admin"
+      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} UniqueID "1011"
+      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} PrimaryGroupID 20
+      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} NFSHomeDirectory /Users/${{ parameters.jhbuild_user }}
+      sudo dscl . -passwd /Users/${{ parameters.jhbuild_user }} password
+    displayName: "create new user"
   - bash: |
-      cd /Users
-      sudo mkdir git-bin
-      sudo chown $USER git-bin
-      cd git-bin
-      curl -L -o gtk-bin.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/gtk/mac/10.13/gtk-bin.tar.gz
-      tar -xzf gtk-bin.tar.gz
-    displayName: 'Unpack GTK'
+      cd ~/
+      curl -L -O https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-setup.sh
+      chmod +x gtk-osx-setup.sh
+      ./gtk-osx-setup.sh
+      jhbuild bootstrap-gtk-osx
+      jhbuild build meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
+    displayName: 'Install jhbuild and build gtk+'
   - bash: |
-      curl -L -o libxml.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/libxml/mac/10.13/libxml.tar.gz
-      sudo tar -xzf libxml.tar.gz -C /
-    displayName: 'Unpack libxml'
+      jhbuild run ./build-poppler.sh
+      jhbuild run ./build-portaudio.sh
+      jhbuild run ./build-libzip.sh
+      jhbuild run ./build-sndfile.sh
+      jhbuild run jhbuild build adwaita-icon-theme
+    displayName: 'Build Deps'
   - bash: |
       mkdir build
     displayName: 'Create Build Directory'
