@@ -40,6 +40,7 @@ auto KeyboardInputHandler::handleImpl(InputEvent const& event) -> bool {
             }
             if (xdir != 0 || ydir != 0) {
                 selection->moveSelection(d * xdir, d * ydir);
+                selection->ensureWithinVisibleArea();
                 return true;
             }
         }

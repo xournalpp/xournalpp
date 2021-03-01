@@ -287,6 +287,18 @@ private:
      */
     void scaleShift(double fx, double fy, bool changeLeft, bool changeTop);
 
+    /**
+     * Set edge panning signal.
+     */
+    void setEdgePan(bool edgePan);
+
+    /**
+     * Whether the edge pan signal is set.
+     */
+    bool isEdgePanning() const;
+
+    static bool handleEdgePan(EditSelection* self);
+
 private:  // DATA
     /**
      * Support rotation
@@ -373,4 +385,17 @@ private:  // HANDLER
      * The handler for snapping points
      */
     SnapToGridInputHandler snappingHandler;
+
+    /**
+     * Edge pan timer
+     */
+    GSource* edgePanHandler = nullptr;
+
+    /**
+     * Inhibit the next move event after edge panning finishes. This prevents
+     * the selection from teleporting if the page has changed during panning.
+     * Additionally, this reduces the amount of "jitter" resulting from moving
+     * the selection in mouseDown while edge panning.
+     */
+    bool edgePanInhibitNext = false;
 };
