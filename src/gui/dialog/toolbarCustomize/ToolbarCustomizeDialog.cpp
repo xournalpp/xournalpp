@@ -17,11 +17,9 @@
 #include "Util.h"
 #include "i18n.h"
 
-using ToolItemDragData = struct _ToolItemDragData;
-
-struct _ToolItemDragData {
+struct ToolItemDragData {
     ToolbarCustomizeDialog* dlg;
-    GdkPixbuf* icon;
+    GtkWidget* icon;  ///< Currently must be an GtkImage
     AbstractToolItem* item;
     GtkWidget* ebox;
 };
@@ -119,7 +117,7 @@ void ToolbarCustomizeDialog::toolitemDragDataGetSeparator(GtkWidget* widget, Gdk
 void ToolbarCustomizeDialog::toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, ToolItemDragData* data) {
     ToolItemDragCurrentData::setData(TOOL_ITEM_ITEM, -1, data->item);
     if (data->icon) {
-        gtk_drag_set_icon_pixbuf(context, data->icon, -2, -2);
+        ToolbarDragDropHelper::gdk_context_set_icon_from_image(context, data->icon);
     }
     gtk_widget_hide(data->ebox);
 }
@@ -274,7 +272,7 @@ void ToolbarCustomizeDialog::rebuildIconview() {
 
         ToolItemDragData* data = g_new(ToolItemDragData, 1);
         data->dlg = this;
-        data->icon = ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon));
+        data->icon = GTK_WIDGET(g_object_ref(icon));
         data->item = item;
         // store reference to ebox
         data->ebox = ebox;
