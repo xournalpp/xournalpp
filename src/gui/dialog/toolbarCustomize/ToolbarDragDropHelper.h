@@ -17,7 +17,7 @@ namespace ToolbarDragDropHelper {
 void dragDestAddToolbar(GtkWidget* target);
 void dragSourceAddToolbar(GtkWidget* widget);
 
-GdkPixbuf* getImagePixbuf(GtkImage* image);
+auto gdk_context_set_icon_from_image(GdkDragContext* ctx, GtkWidget* image) -> bool;
 
 extern const GdkAtom atomToolItem;
 extern const GtkTargetEntry dropTargetEntry;

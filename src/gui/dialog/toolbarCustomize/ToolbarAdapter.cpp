@@ -138,20 +138,12 @@ void ToolbarAdapter::showToolbar() {
  */
 void ToolbarAdapter::toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, void* unused) {
     ToolItemDragDropData* data = ToolitemDragDrop::metadataGetMetadata(widget);
-
     g_return_if_fail(data != nullptr);
-
     ToolItemDragCurrentData::setData(data);
 
-    GtkWidget* icon = ToolitemDragDrop::getIcon(data);
+    auto* icon = ToolitemDragDrop::getIcon(data);
     g_object_ref_sink(icon);
-
-    GdkPixbuf* pixbuf = ToolbarDragDropHelper::getImagePixbuf(GTK_IMAGE(icon));
-    g_assert_nonnull(pixbuf);
-
-    gtk_drag_set_icon_pixbuf(context, pixbuf, -2, -2);
-    g_object_unref(pixbuf);
-
+    ToolbarDragDropHelper::gdk_context_set_icon_from_image(context, icon);
     g_object_unref(icon);
 
     gtk_widget_hide(widget);
