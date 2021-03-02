@@ -21,6 +21,7 @@ steps:
       sudo ./gtk-osx-setup.sh
       sudo jhbuild bootstrap-gtk-osx
       sudo jhbuild build meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
+      exit
     displayName: 'Install jhbuild and build gtk+'
   - bash: |
       jhbuild run ./build-poppler.sh
