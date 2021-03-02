@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-01 18:30\n"
+"PO-Revision-Date: 2021-03-02 17:08\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -36,7 +36,7 @@ msgstr " av {1}{2}"
 
 #: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Anteckning-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:146
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -170,7 +170,7 @@ msgstr "Byt färg"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
-msgstr ""
+msgstr "Ändra nuvarande lagernamn"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
@@ -178,7 +178,7 @@ msgstr "Ändra teckensnitt"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "Ändra radstil"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -217,11 +217,11 @@ msgstr ""
 
 #: ../src/control/LatexController.cpp:266
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "Kunde inte ladda LaTeX PDF-fil"
 
 #: ../src/control/LatexController.cpp:260
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "Kunde inte ladda LaTeX PDF-fil: {1}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:15
 msgid "Could not load pagetemplates.ini file"
@@ -229,7 +229,7 @@ msgstr "Kunde inte läsa in pagetemplates.ini-fil"
 
 #: ../src/control/xojfile/LoadHandler.cpp:777
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr ""
+msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte läsa filen"
 
 #: ../src/control/xojfile/LoadHandler.cpp:786
 msgid "Could not open attachment: {1}. Error message: Could not write file"
@@ -250,7 +250,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:157
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "Kunde inte öppna filen: \"{1}\""
 
 #: ../src/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
@@ -286,7 +286,7 @@ msgstr ""
 
 #: ../src/control/latex/LatexGenerator.cpp:69
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "Kunde inte spara .tex-filen: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:85
 msgid "Could not start {1}: {2} (exit code: {3})"
@@ -307,7 +307,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:74
 msgid "Create new layer"
-msgstr ""
+msgstr "Skapa nytt lager"
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
@@ -315,7 +315,7 @@ msgstr "Anpassad"
 
 #: ../src/control/jobs/CustomExportJob.cpp:19
 msgid "Custom Export"
-msgstr ""
+msgstr "Anpassad export"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Customize Toolbars"
@@ -352,11 +352,11 @@ msgstr "Ta bort fil"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:28
 msgid "Delete layer"
-msgstr ""
+msgstr "Ta bort lager"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Delete this layer"
-msgstr ""
+msgstr "Ta bort detta lager"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Delete this page"
@@ -364,7 +364,7 @@ msgstr "Ta bort denna sida"
 
 #: ../src/control/Control.cpp:2468
 msgid "Discard"
-msgstr ""
+msgstr "Släng"
 
 #: ../src/control/XournalMain.cpp:680
 msgid "Display advanced export options"
@@ -1233,19 +1233,19 @@ msgstr ""
 
 #: ../src/undo/TextUndoAction.cpp:29
 msgid "Text changes"
-msgstr ""
+msgstr "Textändringar"
 
 #: ../src/gui/SearchBar.cpp:65
 msgid "Text found on this page"
-msgstr ""
+msgstr "Text hittades på denna sida"
 
 #: ../src/gui/SearchBar.cpp:123 ../src/gui/SearchBar.cpp:167
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "Texten hittades en gång på sidan {1}"
 
 #: ../src/gui/SearchBar.cpp:124 ../src/gui/SearchBar.cpp:168
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "Texten hittades {1} gånger på sidan {2}"
 
 #: ../src/gui/SearchBar.cpp:72
 msgid "Text not found"
@@ -1253,7 +1253,7 @@ msgstr "Text hittades inte"
 
 #: ../src/gui/SearchBar.cpp:134 ../src/gui/SearchBar.cpp:178
 msgid "Text not found, searched on all pages"
-msgstr ""
+msgstr "Text hittades inte, sökte på alla sidor"
 
 #: ../src/control/Control.cpp:1066
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -1305,7 +1305,7 @@ msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:89
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "Det gick inte att visa hjälp: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Thick"
@@ -1395,7 +1395,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2363
 msgid "Unsaved Document"
-msgstr ""
+msgstr "Osparat dokument"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Vertical Space"
@@ -1407,7 +1407,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Very Fine"
-msgstr ""
+msgstr "Mycket fint"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Very Thick"
@@ -1436,7 +1436,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:221
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "Fel vid XML-parsning: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "Xournal (Compatibility)"
