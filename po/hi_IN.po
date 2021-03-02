@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-02 16:09\n"
+"PO-Revision-Date: 2021-03-02 17:08\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -58,7 +58,7 @@ msgstr "<span foreground='red' size='x-large'>ui  की एक महेत्�
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Add/Edit Tex"
-msgstr ""
+msgstr "TeX बनाऐं/बदले"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
@@ -74,7 +74,7 @@ msgstr "सभी उत्पादों के लिए लागू कर�
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:182
 msgid "Apply to current page"
-msgstr ""
+msgstr "इस पूष्ठ में जौडें"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
@@ -83,7 +83,7 @@ msgstr "व्यवस्थित करें"
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
 msgid "Attach file to the journal"
-msgstr ""
+msgstr "फाइल कौ जरनल में जौडें"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:102
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
