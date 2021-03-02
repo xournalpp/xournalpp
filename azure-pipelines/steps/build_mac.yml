@@ -14,21 +14,19 @@ steps:
       sudo dscl . -passwd /Users/${{ parameters.jhbuild_user }} password
     displayName: "create new user"
   - bash: |
-      sudo -u ${{ parameters.jhbuild_user }} /bin/bash
-      cd ~/
-      curl -L -O https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-setup.sh
-      chmod +x gtk-osx-setup.sh
-      sudo ./gtk-osx-setup.sh
-      sudo jhbuild bootstrap-gtk-osx
-      sudo jhbuild build meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
-      exit
+      cd /Users/${{ parameters.jhbuild_user }}
+      sudo -s -u ${{ parameters.jhbuild_user }} curl -L -O https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-setup.sh
+      sudo -s -u ${{ parameters.jhbuild_user }} chmod +x gtk-osx-setup.sh
+      sudo -s -u ${{ parameters.jhbuild_user }} sudo ./gtk-osx-setup.sh
+      sudo -s -u ${{ parameters.jhbuild_user }} sudo jhbuild bootstrap-gtk-osx
+      sudo -s -u ${{ parameters.jhbuild_user }} sudo jhbuild build meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
     displayName: 'Install jhbuild and build gtk+'
   - bash: |
-      jhbuild run ./build-poppler.sh
-      jhbuild run ./build-portaudio.sh
-      jhbuild run ./build-libzip.sh
-      jhbuild run ./build-sndfile.sh
-      jhbuild run jhbuild build adwaita-icon-theme
+      sudo jhbuild run ./build-poppler.sh
+      sudo jhbuild run ./build-portaudio.sh
+      sudo jhbuild run ./build-libzip.sh
+      sudo jhbuild run ./build-sndfile.sh
+      sudo jhbuild run jhbuild build adwaita-icon-theme
     displayName: 'Build Deps'
   - bash: |
       mkdir build
