@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-01 18:31\n"
+"PO-Revision-Date: 2021-03-02 12:34\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2178,11 +2178,11 @@ msgstr "Dunkles Thema (benötigt Neustart)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr ""
+msgstr "Verbotener Bereich"
 
 #: ../ui/settings.glade:1034
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Verbotener Bereich im Radius"
 
 #: ../ui/settings.glade:620
 msgid "Default Save Name"
@@ -2270,11 +2270,11 @@ msgstr "Ziehen Sie Objekte von hier in die Werkzeugleiste und zurück."
 
 #: ../ui/settings.glade:1064
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr ""
+msgstr "Ziehen: Wenn der Wert klein ist, kann es zu unerwünschten Schwingungen kommen. Wenn der Wert hoch ist, wird keine Stabilisierung angezeigt."
 
 #: ../ui/settings.glade:1076
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr ""
+msgstr "Ziehen: Wenn der Wert klein ist, kann es zu unerwünschten Schwingungen kommen. Wenn der Wert zu klein ist, wird keine Stabilisierung angezeigt."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
@@ -2387,7 +2387,7 @@ msgstr "Füll-Deckkraft"
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Strich abschließen"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
@@ -2415,7 +2415,7 @@ msgstr "Gain"
 
 #: ../ui/settings.glade:1128 ../ui/settings.glade:1148
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Gaußscher Parameter: Je höher, desto stabiler und desto mehr Verzögerung zwischen dem Cursor und der Malspitze."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
@@ -2543,7 +2543,7 @@ msgstr "Bildstabilisierung"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "Die Eingabestabilisierung kann eine Lücke am Ende des Strichs erzeugen. Wenn aktiviert, wird diese Lücke gefüllt."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2603,11 +2603,11 @@ msgstr "Werkzeugleisten verwalten"
 
 #: ../ui/settings.glade:1097
 msgid "Mass"
-msgstr ""
+msgstr "Masse"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Masse: Je höher die Masse, desto mehr Trägheit und Stabilisierung"
 
 #: ../ui/settings.glade:4564
 msgid "Max Length (mm)"
@@ -2777,7 +2777,7 @@ msgstr "Einstellungen"
 
 #: ../ui/settings.glade:1162
 msgid "Preprocessor"
-msgstr ""
+msgstr "Präprozessor"
 
 #: ../ui/settings.glade:3427
 msgid "Presentation Mode"
@@ -2889,11 +2889,11 @@ msgstr "Auswahlfarbe (Text-, Figuren Selektion etc.)"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Eine Ebene nach hinten"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "In den Hintergrund"
 
 #: ../ui/settings.glade:1628
 msgid "Sensitivity Scale"
@@ -3073,7 +3073,7 @@ msgstr "Normalerweise 0 oder 1"
 
 #: ../ui/settings.glade:213
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Gaußsche Gewichtung auf Geschwindigkeit"
 
 #: ../ui/about.glade:101
 msgid "Version"
