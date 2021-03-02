@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-01 18:30\n"
+"PO-Revision-Date: 2021-03-02 16:09\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -78,7 +78,7 @@ msgstr ""
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "व्यवस्थित करें"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -153,20 +153,20 @@ msgstr "नीला"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring forward"
-msgstr ""
+msgstr "सामने लाएं"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "सबके सामने लाएँ"
 
 #: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
-msgstr ""
+msgstr "रद्द करें"
 
 #: ../src/undo/ColorUndoAction.cpp:85
 msgid "Change color"
-msgstr ""
+msgstr "रंग बदलें"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
@@ -174,7 +174,7 @@ msgstr ""
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
-msgstr ""
+msgstr "फ़ॉन्ट बदलें"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
@@ -194,21 +194,21 @@ msgstr ""
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:226
 msgid "Contents"
-msgstr ""
+msgstr "अन्तर्वस्तु"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
-msgstr ""
+msgstr "प्रतिलिपि बनाएँ"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:30
 msgid "Copy current"
-msgstr ""
+msgstr "इसे प्रतिलिपि बनाएँ"
 
 #: ../src/undo/CopyUndoAction.cpp:60
 msgid "Copy page"
-msgstr ""
+msgstr "पृष्ठ प्रतिलिपि"
 
 #: ../src/util/PathUtil.cpp:230
 msgid "Could not create folder: {1}\n"
