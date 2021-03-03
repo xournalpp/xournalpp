@@ -154,6 +154,12 @@ private:
     GCancellable* updating_cancellable = nullptr;
 
     /**
+     * The output of the last run of the
+     * TeX command.
+     */
+    std::string texProcessOutput;
+
+    /**
      * Whether the current TeX string is valid.
      */
     bool isValidTex = false;

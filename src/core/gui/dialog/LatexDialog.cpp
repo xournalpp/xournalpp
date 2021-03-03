@@ -17,12 +17,6 @@
 
 #include "control/settings/Settings.h"
 
-#ifdef HAVE_GTK_SOURCEVIEW_LIB
-
-#include <gtksourceview/gtksource.h>
-
-#endif
-
 // Callbacks for gtk to render the dialog's preview.
 extern "C" {
 /**

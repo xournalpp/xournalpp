@@ -72,7 +72,7 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
         return fail({FS(_F("Could not save .tex file: {1}") % err->message)});
     }
 
-    auto flags = static_cast<GSubprocessFlags>(G_SUBPROCESS_FLAGS_STDOUT_SILENCE | G_SUBPROCESS_FLAGS_STDERR_SILENCE);
+    auto flags = static_cast<GSubprocessFlags>(G_SUBPROCESS_FLAGS_STDOUT_PIPE | G_SUBPROCESS_FLAGS_STDERR_MERGE);
     GSubprocessLauncher* launcher = g_subprocess_launcher_new(flags);
     g_subprocess_launcher_set_cwd(launcher, texDir.u8string().c_str());
     auto* proc = g_subprocess_launcher_spawnv(launcher, argv, &err);
