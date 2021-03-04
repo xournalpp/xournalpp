@@ -54,7 +54,9 @@ void LatexDialog::setTempRender(PopplerDocument* pdf) {
 
     poppler_page_render(page, cr);
 
+    // Free resources.
     cairo_destroy(cr);
+    g_clear_object(&page);
 
     // Update GTK widget
     gtk_image_set_from_surface(GTK_IMAGE(this->texTempRender), this->scaledRender);

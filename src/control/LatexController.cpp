@@ -31,8 +31,11 @@ LatexController::LatexController(Control* control):
 }
 
 LatexController::~LatexController() {
-    g_cancellable_cancel(updating_cancellable);
-    g_object_unref(updating_cancellable);
+    if (updating_cancellable) {
+        g_cancellable_cancel(updating_cancellable);
+        g_object_unref(updating_cancellable);
+    }
+
     this->control = nullptr;
 }
 
@@ -205,6 +208,8 @@ void LatexController::onPdfRenderComplete(GObject* procObj, GAsyncResult* res, L
     }
 
     g_clear_object(&self->updating_cancellable);
+    g_clear_object(&proc);
+
     self->updateStatus();
     if (shouldUpdate) {
         self->triggerImageUpdate(currentTex);
