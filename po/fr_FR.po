@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-04 02:37\n"
+"PO-Revision-Date: 2021-03-04 13:15\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -771,7 +771,7 @@ msgstr "Calque {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Aperçu de la pile de calques"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -1900,7 +1900,7 @@ msgstr "<i>Si votre matériel ne supporte pas la reconnaissance manuelle, Xourna
 
 #: ../ui/settings.glade:988
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Choisir un algorithme de stabilisation du tracé et ses paramètres</i>"
 
 #: ../ui/settings.glade:1493
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -2020,7 +2020,7 @@ msgstr "Ajouter de nouvelles pages de Pdf"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Moyenne arithmétique"
 
 #: ../ui/settings.glade:1753
 msgid "Artifact workaround"
@@ -2097,7 +2097,7 @@ msgstr "Mettre en avant"
 
 #: ../ui/settings.glade:1005
 msgid "Buffersize"
-msgstr ""
+msgstr "Taille du tampon"
 
 #: ../ui/about.glade:127
 msgid "Built on"
@@ -2241,7 +2241,7 @@ msgstr "Ne pas dessiner pour les entrées de courte durée et de longue durée s
 
 #: ../ui/settings.glade:1065
 msgid "Drag"
-msgstr ""
+msgstr "Faire glisser"
 
 #: ../ui/settings.glade:859
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2383,7 +2383,7 @@ msgstr "Opacité du remplissage"
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Terminer le tracé"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
@@ -2535,11 +2535,11 @@ msgstr "Système d'entrée"
 
 #: ../ui/settings.glade:1235
 msgid "Input stabilization"
-msgstr ""
+msgstr "Stabilisation du tracé"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "La stabilisation du tracé peut générer un espace à la fin de votre trait. Si l'option est activée, cet espace sera comblé."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2603,7 +2603,7 @@ msgstr "Masse"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Masse : plus la masse est élevée, plus l'inertie est élevée et plus la stabilisation est importante"
 
 #: ../ui/settings.glade:4564
 msgid "Max Length (mm)"
@@ -3069,7 +3069,7 @@ msgstr "Généralement 0 ou 1"
 
 #: ../ui/settings.glade:213
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Pondération Gaussienne basée sur la vitesse"
 
 #: ../ui/about.glade:101
 msgid "Version"
