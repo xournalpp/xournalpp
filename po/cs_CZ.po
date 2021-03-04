@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-04 20:03\n"
+"PO-Revision-Date: 2021-03-04 21:18\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -1504,7 +1504,7 @@ msgstr "Nemáte žádné PDF stránky k výběru. Zrušit operaci.\n"
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Používáte vývojovou větev \"{1}/{2}\". \"Odeslat zprávu o chybě\" vás přesměruje do správce problémů tohoto repozitáře."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1736,7 +1736,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\tZkrácený název dne (například Čt)\n"
+"%A\t\tCelý název dne (například Čtvrtek)\n"
+"%b\t\tZkrácený název měsíce (například Srp)\n"
+"%B\t\tCelý název měsíce (například Srpen)\n"
+"%c\t\tDatum a čas (například Čt Srp 23 14:55:02 2001)\n"
+"%d\t\tDen měsíce (01-31)\n"
+"%F\t\tDatum (například 2001-08-23)\n"
+"%H\t\tHodiny v 24h formátu (00-23)\n"
+"%I\t\tHodiny v 12h formátu (01-12)\n"
+"%j\t\tDen roku (001-366)\n"
+"%m\t        Měsíc jako číslo (01-12)\n"
+"%M\t        Minuta (00-59)\n"
+"%p\t\tDopoledne/odpoledne ve formátu AM nebo PM\n"
+"%S\t\tSekundy (00-61)\n"
+"%U\t\tČíslo týdne, první Neděle jako první den prvního týdne (00-53)\n"
+"%w\t\tDen týdne jako číslo, Neděle je 0 (0-6)\n"
+"%W\t        Číslo týdne s prvním Pondělím jako první den týdne (00-53)\n"
+"%x\t\tDatum (například 08/23/01)\n"
+"%X\t\tČas (například 14:55:02)\n"
+"%y\t\tRok, poslední dvě čísla (00-99)\n"
+"%Y\t\tRok (například 2001)\n"
+"%Z\t\tNázev časové zóny, zkratka (například CDT)\n"
+"%%\t        Znak procenta"
 
 #: ../ui/settings.glade:4587
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1745,15 +1767,15 @@ msgstr "<i>Doporučeno: 500ms</i>"
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1714
 msgid "1"
@@ -1761,19 +1783,19 @@ msgstr "1"
 
 #: ../ui/settings.glade:5360
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:1017
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3015
 msgid "30"
@@ -1781,7 +1803,7 @@ msgstr "30"
 
 #: ../ui/settings.glade:1110
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1877,7 +1899,7 @@ msgstr "<i>Pokud váš hardware nepodporuje rozpoznávání ruky, Xournal++ mů�
 
 #: ../ui/settings.glade:988
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Vyberte algoritmus stabilizace vstupu a jeho parametry</i>"
 
 #: ../ui/settings.glade:1493
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -1903,7 +1925,7 @@ msgstr "<i>Vyberte nástroj a nastavení když stisknete defaultní tlačítko.<
 
 #: ../ui/settings.glade:1542
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>Některá zařízení vykazují neočekávaně malé nebo velké hodnoty přítlaku. Toto lze opravit nastavením minimálního přítlaku nebo násobením přítlaku zaznamenaného zařízením.</i>"
 
 #: ../ui/settings.glade:2216
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -1912,7 +1934,8 @@ msgstr "<i>Určete příkazy, které jsou volány, jakmile se spustí rozpoznán
 #: ../ui/settings.glade:5108
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>Určete zvuková zařízení používaná pro nahrávání a přehrávání zvukových příloh. \n"
+"Je-li k dispozici, vyberte <small><tt>pulse</tt></small> jako vstupní / výstupní zařízení.</i>"
 
 #: ../ui/settings.glade:1784
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -1936,11 +1959,11 @@ msgstr "<i>Přiblížit stránky deníků pomocí gesta.</i>"
 
 #: ../ui/settings.glade:2505
 msgid "<i>Use the touchscreen like a multi-touch-aware pen (requires new input system).</i>"
-msgstr ""
+msgstr "<i>Použijte dotykovou obrazovku jako pero s podporou pro více dotyků (vyžaduje nový systém zadávání).</i>"
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
+msgstr "<i>Některá pera zanechávají nepřesnosti na začátcích tahů. Tomu lze zabránit ignorováním několika prvních událostí/tahových bodů, v okamžiku kdy se pero dotkne obrazovky.</i>"
 
 #: ../ui/settings.glade:2000
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
