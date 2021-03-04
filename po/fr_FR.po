@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-04 13:15\n"
+"PO-Revision-Date: 2021-03-04 14:32\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2060,7 +2060,7 @@ msgstr "Espaces réservés disponibles"
 
 #: ../ui/settings.glade:955
 msgid "Averaging method"
-msgstr ""
+msgstr "Méthode de calcul de moyenne"
 
 #: ../ui/settings.glade:2711
 msgid "Background color between pages"
@@ -2165,7 +2165,7 @@ msgstr "Icône du curseur pour le stylo"
 
 #: ../ui/settings.glade:1193
 msgid "Cusp detection"
-msgstr ""
+msgstr "Détection des points de rebroussement"
 
 #: ../ui/settings.glade:2332
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2411,7 +2411,7 @@ msgstr "Gain"
 
 #: ../ui/settings.glade:1128 ../ui/settings.glade:1148
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Paramètre de Gauss : augmenter sa valeur, améliore la stabilisation, mais accentue le décalage entre le curseur et le point dessiné."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
