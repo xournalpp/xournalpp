@@ -29,14 +29,22 @@ void BaseExportJob::addFileFilterToDialog(const string& name, const string& patt
 auto BaseExportJob::checkOverwriteBackgroundPDF(fs::path const& file) const -> bool {
     auto backgroundPDF = control->getDocument()->getPdfFilepath();
     // If there is no background, we can return
-    if (!fs::exists(backgroundPDF)) {
-        return true;
-    }
-    // If the new file name (with the selected extension) is the previously selected pdf, warn the user
-    if (fs::equivalent(file, backgroundPDF)) {
-        string msg = _("Do not overwrite the background PDF! This will cause errors!");
-        XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
-        return false;
+    try {
+        if (!fs::exists(backgroundPDF)) {
+            return true;
+        }
+        // If the new file name (with the selected extension) is the previously selected pdf, warn the user
+
+        if (fs::weakly_canonical(file) == fs::weakly_canonical(backgroundPDF)) {
+            string msg = _("Do not overwrite the background PDF! This will cause errors!");
+            XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
+            return false;
+        }
+    } catch (fs::filesystem_error const& fe) {
+        g_warning("%s", fe.what());
+        auto msg = std::string(_("The check for overwriting the background failed with:\n")) + fe.what() +
+                   _("\n Do you want to continue?");
+        return XojMsgBox::replaceFileQuestion(control->getGtkWindow(), msg) == GTK_RESPONSE_OK;
     }
     return true;
 }
