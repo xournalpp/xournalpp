@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-04 00:35\n"
+"PO-Revision-Date: 2021-03-04 01:38\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2519,7 +2519,7 @@ msgstr "Qualité d’image"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
-msgstr ""
+msgstr "Inertie"
 
 #: ../ui/settings.glade:5132
 msgid "Input Device"
