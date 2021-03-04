@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-01 18:30\n"
+"PO-Revision-Date: 2021-03-04 00:35\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -986,7 +986,7 @@ msgstr "Mode présentation"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
-msgstr "La langue précédemment sélectionnée n'est plus disponible !"
+msgstr "La langue sélectionnée précédemment n'est plus disponible !"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Print"
@@ -1068,7 +1068,7 @@ msgstr "Graphiques SVG"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr "Fichier d'exemple LaTeX généré avec succès."
+msgstr "Fichier LaTeX d'exemple généré avec succès."
 
 #: ../src/control/Control.cpp:2463 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
@@ -2805,7 +2805,7 @@ msgstr "Plage"
 
 #: ../ui/settings.glade:4718
 msgid "Re-render when the page's zoom changes by more than "
-msgstr "Re-calculer le rendu lorsque le zoom de la page change de plus de "
+msgstr "Recalculer le rendu lorsque le zoom de la page change de plus de "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
