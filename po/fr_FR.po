@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-04 01:38\n"
+"PO-Revision-Date: 2021-03-04 02:37\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1768,11 +1768,11 @@ msgstr "... ET combien de temps doit être passé depuis le dernier trait.\n\n"
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
@@ -1788,7 +1788,7 @@ msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
@@ -1796,7 +1796,7 @@ msgstr "1,0"
 
 #: ../ui/settings.glade:1017
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3015
 msgid "30"
@@ -1804,7 +1804,7 @@ msgstr "30"
 
 #: ../ui/settings.glade:1110
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -2599,7 +2599,7 @@ msgstr "Gérer les barres d'outils"
 
 #: ../ui/settings.glade:1097
 msgid "Mass"
-msgstr ""
+msgstr "Masse"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
@@ -2773,7 +2773,7 @@ msgstr "Préférences"
 
 #: ../ui/settings.glade:1162
 msgid "Preprocessor"
-msgstr ""
+msgstr "Préprocesseur"
 
 #: ../ui/settings.glade:3427
 msgid "Presentation Mode"
