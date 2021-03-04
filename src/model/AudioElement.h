@@ -35,6 +35,7 @@ public:
 
     virtual bool intersects(double x, double y, double halfSize) = 0;
     virtual bool intersects(double x, double y, double halfSize, double* gap) = 0;
+    static const uint8_t opacityNoAudio = 50;
 
 protected:
     void serializeAudioElement(ObjectOutputStream& out);

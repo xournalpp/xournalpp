@@ -57,7 +57,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
     sv.paint(this->dontRenderEditingStroke);
 }
 
-void DocumentView::drawText(cairo_t* cr, Text* t) {
+void DocumentView::drawText(cairo_t* cr, Text* t) const{
     cairo_matrix_t defaultMatrix = {0};
     cairo_get_matrix(cr, &defaultMatrix);
     if (t->isInEditing()) {
@@ -65,13 +65,18 @@ void DocumentView::drawText(cairo_t* cr, Text* t) {
     }
 
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-    applyColor(cr, t);
+    if(this->markAudioStroke && t->getAudioFilename().length() == 0){
+        applyColor(cr, t, AudioElement::opacityNoAudio);
+    }
+    else{
+        applyColor(cr, t);
+    }
 
     TextView::drawText(cr, t);
     cairo_set_matrix(cr, &defaultMatrix);
 }
 
-void DocumentView::drawImage(cairo_t* cr, Image* i) {
+void DocumentView::drawImage(cairo_t* cr, Image* i) const {
     cairo_matrix_t defaultMatrix = {0};
     cairo_get_matrix(cr, &defaultMatrix);
 
@@ -87,12 +92,16 @@ void DocumentView::drawImage(cairo_t* cr, Image* i) {
     cairo_scale(cr, xFactor, yFactor);
 
     cairo_set_source_surface(cr, img, i->getX() / xFactor, i->getY() / yFactor);
-    cairo_paint(cr);
+    if(this->markAudioStroke){
+        cairo_paint_with_alpha(cr, AudioElement::opacityNoAudio / 255.0);
+    } else{
+        cairo_paint(cr);
+    }
 
     cairo_set_matrix(cr, &defaultMatrix);
 }
 
-void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) {
+void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) const{
     cairo_matrix_t defaultMatrix = {0};
     cairo_get_matrix(cr, &defaultMatrix);
 
@@ -116,7 +125,14 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) {
 
         cairo_translate(cr, texImage->getX(), texImage->getY());
         cairo_scale(cr, xFactor, yFactor);
-        poppler_page_render(page, cr);
+        if(this->markAudioStroke){ // make non-Audio strokes translucent when markAudioStroke
+            cairo_push_group(cr); // switch to temporary surface
+            poppler_page_render(page, cr); // render page
+            cairo_pop_group_to_source(cr); // return to original surface and set temp surface as pattern
+            cairo_paint_with_alpha(cr, AudioElement::opacityNoAudio / 255.0); // paint the temporary surface w/ opacity level
+        } else {
+            poppler_page_render(page, cr);
+        }
     } else if (img != nullptr) {
         int width = cairo_image_surface_get_width(img);
         int height = cairo_image_surface_get_height(img);
@@ -129,7 +145,11 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) {
         cairo_scale(cr, xFactor, yFactor);
 
         cairo_set_source_surface(cr, img, texImage->getX() / xFactor, texImage->getY() / yFactor);
-        cairo_paint(cr);
+        if (this->markAudioStroke) {
+            cairo_paint_with_alpha(cr, AudioElement::opacityNoAudio / 255.0);
+        } else {
+            cairo_paint(cr);
+        }
     }
 
     cairo_set_matrix(cr, &defaultMatrix);
