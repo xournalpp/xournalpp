@@ -5,28 +5,34 @@ parameters:
 
 steps:
   - bash: |
+      sudo mkdir /Users/${{ parameters.jhbuild_user }}
       sudo dscl . -create /Users/${{ parameters.jhbuild_user }}
       sudo dscl . -create /Users/${{ parameters.jhbuild_user }} UserShell /bin/bash
-      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} RealName "Joe Admin"
+      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} RealName "gtk-bin"
       sudo dscl . -create /Users/${{ parameters.jhbuild_user }} UniqueID "1011"
       sudo dscl . -create /Users/${{ parameters.jhbuild_user }} PrimaryGroupID 20
       sudo dscl . -create /Users/${{ parameters.jhbuild_user }} NFSHomeDirectory /Users/${{ parameters.jhbuild_user }}
       sudo dscl . -passwd /Users/${{ parameters.jhbuild_user }} password
-    displayName: "create new user"
-  - bash: |
       cd /Users/${{ parameters.jhbuild_user }}
-      sudo -s -u ${{ parameters.jhbuild_user }} curl -L -O https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-setup.sh
-      sudo -s -u ${{ parameters.jhbuild_user }} chmod +x gtk-osx-setup.sh
-      sudo -s -u ${{ parameters.jhbuild_user }} sudo ./gtk-osx-setup.sh
-      sudo -s -u ${{ parameters.jhbuild_user }} sudo jhbuild bootstrap-gtk-osx
-      sudo -s -u ${{ parameters.jhbuild_user }} sudo jhbuild build meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
+      sudo chown -R ${{ parameters.jhbuild_user }} .
+    displayName: "create new user"
+    timeoutInMinutes: 5
+  - bash: |
+      whoami
+      sudo -i -u ${{ parameters.jhbuild_user }} echo 'export PATH=/Users/git-bin/.new_local/bin:$PATH' >> ~/.bashrc
+      sudo -i -u ${{ parameters.jhbuild_user }} export PATH=/Users/git-bin/.new_local/bin:$PATH
+      sudo -i -u ${{ parameters.jhbuild_user }} curl -L -O https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-setup.sh
+      sudo -i -u ${{ parameters.jhbuild_user }} chmod +x gtk-osx-setup.sh
+      sudo -i -u ${{ parameters.jhbuild_user }} ./gtk-osx-setup.sh
+      sudo -i -u ${{ parameters.jhbuild_user }} jhbuild bootstrap-gtk-osx
+      sudo -i -u ${{ parameters.jhbuild_user }} jhbuild build meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
     displayName: 'Install jhbuild and build gtk+'
   - bash: |
-      sudo jhbuild run ./build-poppler.sh
-      sudo jhbuild run ./build-portaudio.sh
-      sudo jhbuild run ./build-libzip.sh
-      sudo jhbuild run ./build-sndfile.sh
-      sudo jhbuild run jhbuild build adwaita-icon-theme
+      sudo -s -u ${{ parameters.jhbuild_user }} jhbuild run ./build-poppler.sh
+      sudo -s -u ${{ parameters.jhbuild_user }} jhbuild run ./build-portaudio.sh
+      sudo -s -u ${{ parameters.jhbuild_user }} jhbuild run ./build-libzip.sh
+      sudo -s -u ${{ parameters.jhbuild_user }} jhbuild run ./build-sndfile.sh
+      sudo -s -u ${{ parameters.jhbuild_user }} jhbuild run jhbuild build adwaita-icon-theme
     displayName: 'Build Deps'
   - bash: |
       mkdir build
