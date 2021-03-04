@@ -117,6 +117,8 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) {
         cairo_translate(cr, texImage->getX(), texImage->getY());
         cairo_scale(cr, xFactor, yFactor);
         poppler_page_render(page, cr);
+
+        g_clear_object(&page);
     } else if (img != nullptr) {
         int width = cairo_image_surface_get_width(img);
         int height = cairo_image_surface_get_height(img);

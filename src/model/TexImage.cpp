@@ -25,7 +25,6 @@ void TexImage::freeImageAndPdf() {
 
 auto TexImage::clone() -> Element* {
     auto* img = new TexImage();
-    img->loadData(std::string(this->binaryData), nullptr);
     img->x = this->x;
     img->y = this->y;
     img->setColor(this->getColor());
@@ -34,7 +33,13 @@ auto TexImage::clone() -> Element* {
     img->text = this->text;
     img->snappedBounds = this->snappedBounds;
     img->sizeCalculated = this->sizeCalculated;
+
     img->pdf = this->pdf;
+    g_object_ref(this->pdf);
+
+    img->loadData(std::string(this->binaryData), nullptr);
+
+
     return img;
 }
 
@@ -85,6 +90,7 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
         if (!this->width && !this->height) {
             PopplerPage* page = poppler_document_get_page(this->pdf, 0);
             poppler_page_get_size(page, &this->width, &this->height);
+            g_object_unref(page);
         }
     } else if (type == "PNG") {
         this->image = cairo_image_surface_create_from_png_stream(
