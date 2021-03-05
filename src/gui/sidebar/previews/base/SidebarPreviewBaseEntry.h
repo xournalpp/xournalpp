@@ -11,8 +11,9 @@
 
 #pragma once
 
+#include <functional>
+#include <map>
 #include <string>
-#include <vector>
 
 #include <gtk/gtk.h>
 
@@ -65,6 +66,9 @@ private:
     static gboolean drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview);
 
 protected:
+    using OnDestroyListener = std::function<void(void)>;
+    using OnDestroyListenerID = int;
+
     virtual void mouseButtonPressCallback() = 0;
 
     virtual int getWidgetWidth();
@@ -72,6 +76,12 @@ protected:
 
     virtual void drawLoadingPage();
     virtual void paint(cairo_t* cr);
+
+    /**
+     * @brief Adds a listener that will be called once -- when this is destroyed.
+     */
+    OnDestroyListenerID addOnDestroyListener(OnDestroyListener&& listener);
+    void removeOnDestroyListener(const OnDestroyListenerID& listenerID);
 
 private:
 protected:
@@ -104,6 +114,12 @@ protected:
      * Buffer because of performance reasons
      */
     cairo_surface_t* crBuffer = nullptr;
+
+    /**
+     * onDestroy listeners
+     */
+    std::map<OnDestroyListenerID, OnDestroyListener> onDestroyListeners;
+    OnDestroyListenerID nextOnDestroyListenerID{0};
 
     friend class PreviewJob;
 };

@@ -16,6 +16,8 @@
 
 #include <gtk/gtk.h>
 
+#include "gui/sidebar/previews/base/SidebarPreviewBaseEntry.h"
+
 #include "Job.h"
 #include "XournalType.h"
 
@@ -62,6 +64,12 @@ private:
      * Zoom factor
      */
     double zoom = 0;
+
+    /**
+     * ID for sidebar's onDestroy listener (for cases where the sidebar
+     * is destroyed before this).
+     */
+    SidebarPreviewBaseEntry::OnDestroyListenerID previewDestroyListenerID{};
 
     /**
      * Sidebar preview

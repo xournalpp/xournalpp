@@ -28,6 +28,8 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, co
 }
 
 SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry() {
+    for (const auto& [id, listener]: this->onDestroyListeners) { listener(); }
+
     this->sidebar->getControl()->getScheduler()->removeSidebar(this);
     this->page = nullptr;
 
@@ -38,6 +40,18 @@ SidebarPreviewBaseEntry::~SidebarPreviewBaseEntry() {
         cairo_surface_destroy(this->crBuffer);
         this->crBuffer = nullptr;
     }
+}
+
+auto SidebarPreviewBaseEntry::addOnDestroyListener(OnDestroyListener&& listener) -> OnDestroyListenerID {
+    OnDestroyListenerID resultListenerID = nextOnDestroyListenerID;
+    nextOnDestroyListenerID++;
+
+    this->onDestroyListeners.emplace(resultListenerID, listener);
+    return resultListenerID;
+}
+
+void SidebarPreviewBaseEntry::removeOnDestroyListener(const OnDestroyListenerID& id) {
+    this->onDestroyListeners.erase(id);
 }
 
 auto SidebarPreviewBaseEntry::drawCallback(GtkWidget* widget, cairo_t* cr, SidebarPreviewBaseEntry* preview)

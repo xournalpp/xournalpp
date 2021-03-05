@@ -3,21 +3,34 @@
 #include "control/Control.h"
 #include "gui/Shadow.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
-#include "gui/sidebar/previews/base/SidebarPreviewBaseEntry.h"
 #include "gui/sidebar/previews/layer/SidebarPreviewLayerEntry.h"
 #include "model/Document.h"
 #include "view/DocumentView.h"
 #include "view/PdfView.h"
 
-PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar): sidebarPreview(sidebar) {}
+PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar): sidebarPreview(sidebar) {
+    g_object_ref(sidebar->widget);
 
-PreviewJob::~PreviewJob() { this->sidebarPreview = nullptr; }
+    previewDestroyListenerID = sidebarPreview->addOnDestroyListener([&]() { this->sidebarPreview = nullptr; });
+}
+
+PreviewJob::~PreviewJob() {
+    if (this->sidebarPreview) {
+        this->sidebarPreview->removeOnDestroyListener(previewDestroyListenerID);
+
+        g_object_unref(this->sidebarPreview->widget);
+        this->sidebarPreview = nullptr;
+    }
+}
 
 auto PreviewJob::getSource() -> void* { return this->sidebarPreview; }
 
 auto PreviewJob::getType() -> JobType { return JOB_TYPE_PREVIEW; }
 
 void PreviewJob::initGraphics() {
+    if (!this->sidebarPreview)
+        return;
+
     GtkAllocation alloc;
     gtk_widget_get_allocation(this->sidebarPreview->widget, &alloc);
     crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, alloc.width, alloc.height);
@@ -26,11 +39,17 @@ void PreviewJob::initGraphics() {
 }
 
 void PreviewJob::drawBorder() {
+    if (!this->sidebarPreview)
+        return;
+
     cairo_translate(cr2, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2);
     cairo_scale(cr2, zoom, zoom);
 }
 
 void PreviewJob::finishPaint() {
+    if (!this->sidebarPreview)
+        return;
+
     g_mutex_lock(&this->sidebarPreview->drawingMutex);
 
     if (this->sidebarPreview->crBuffer) {
@@ -42,17 +61,22 @@ void PreviewJob::finishPaint() {
     // Repaint is also finished in UI Thread
     ref();
 
-    Util::execInUiThread([=]() {
-        gtk_widget_queue_draw(this->sidebarPreview->widget);
+    GtkWidget* previewWidget = this->sidebarPreview->widget;
+    g_object_ref(previewWidget);
 
-        // After the UI job is also done, it can be unreferenced
-        unref();
+    Util::execInUiThread([previewWidget]() {
+        gtk_widget_queue_draw(previewWidget);
+        g_object_unref(previewWidget);
     });
 
     g_mutex_unlock(&this->sidebarPreview->drawingMutex);
+    unref();
 }
 
 void PreviewJob::drawBackgroundPdf(Document* doc) {
+    if (!this->sidebarPreview)
+        return;
+
     int pgNo = this->sidebarPreview->page->getPdfPageNr();
     XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
@@ -61,6 +85,9 @@ void PreviewJob::drawBackgroundPdf(Document* doc) {
 }
 
 void PreviewJob::drawPage() {
+    if (!this->sidebarPreview)
+        return;
+
     DocumentView view;
     PageRef page = this->sidebarPreview->page;
     Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
@@ -134,6 +161,9 @@ void PreviewJob::drawPage() {
 }
 
 void PreviewJob::clipToPage() {
+    if (!this->sidebarPreview)
+        return;
+
     // Only render within the preview page. Without this, the when preview jobs attempt
     // to clear the display, we fill a region larger than the inside of the preview page!
     cairo_rectangle(cr2, 0, 0, this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
@@ -141,6 +171,9 @@ void PreviewJob::clipToPage() {
 }
 
 void PreviewJob::run() {
+    if (!this->sidebarPreview)
+        return;
+
     initGraphics();
     drawBorder();
     clipToPage();
