@@ -29,7 +29,8 @@ public:
 
 public:
     /**
-     * Remove source, e.g. if a page is removed they don't need to repaint
+     * Remove source, e.g. if a page is removed they don't need to repaint.
+     * Blocks until all jobs that could be using the source have finished.
      */
     void removeSidebar(SidebarPreviewBaseEntry* preview);
     void removePage(XojPageView* view);

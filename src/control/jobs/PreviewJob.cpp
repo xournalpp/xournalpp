@@ -13,6 +13,8 @@ PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar): sidebarPreview(sidebar
 
 PreviewJob::~PreviewJob() { this->sidebarPreview = nullptr; }
 
+void PreviewJob::onDelete() { this->sidebarPreview = nullptr; }
+
 auto PreviewJob::getSource() -> void* { return this->sidebarPreview; }
 
 auto PreviewJob::getType() -> JobType { return JOB_TYPE_PREVIEW; }
@@ -38,15 +40,14 @@ void PreviewJob::finishPaint() {
     }
     this->sidebarPreview->crBuffer = crBuffer;
 
-    // Make sure the Job does not get deleted until the
-    // Repaint is also finished in UI Thread
-    ref();
+    // The preview widget can be referenced after this is deleted.
+    // Only it should be referenced in the callback.
+    GtkWidget* previewWidget = this->sidebarPreview->widget;
+    g_object_ref(previewWidget);
 
-    Util::execInUiThread([=]() {
-        gtk_widget_queue_draw(this->sidebarPreview->widget);
-
-        // After the UI job is also done, it can be unreferenced
-        unref();
+    Util::execInUiThread([previewWidget]() {
+        gtk_widget_queue_draw(previewWidget);
+        g_object_unref(previewWidget);
     });
 
     g_mutex_unlock(&this->sidebarPreview->drawingMutex);
@@ -141,11 +142,13 @@ void PreviewJob::clipToPage() {
 }
 
 void PreviewJob::run() {
+    if (this->sidebarPreview == nullptr) {
+        return;
+    }
+
     initGraphics();
     drawBorder();
     clipToPage();
-
     drawPage();
-
     finishPaint();
 }

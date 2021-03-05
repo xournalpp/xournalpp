@@ -3,60 +3,66 @@
 #include "PreviewJob.h"
 #include "RenderJob.h"
 
-XournalScheduler::XournalScheduler()
-
-{
-    this->name = "XournalScheduler";
-}
+XournalScheduler::XournalScheduler() { this->name = "XournalScheduler"; }
 
 XournalScheduler::~XournalScheduler() = default;
 
 void XournalScheduler::removeSidebar(SidebarPreviewBaseEntry* preview) {
-    // Dont await for tasks, as it completly blocks whole program.
-    // Not sure why.
-    removeSource(preview, JOB_TYPE_PREVIEW, JOB_PRIORITY_HIGH, false);
+    // Wait for running jobs to finish: Currently running jobs may still be
+    //  using `preview`, and, as such, it is not completely removed.
+    bool waitForTaskCompletion = true;
+    removeSource(preview, JOB_TYPE_PREVIEW, JOB_PRIORITY_HIGH, waitForTaskCompletion);
 }
 
 void XournalScheduler::removePage(XojPageView* view) { removeSource(view, JOB_TYPE_RENDER, JOB_PRIORITY_URGENT); }
 
 void XournalScheduler::removeAllJobs() {
-    g_mutex_lock(&this->jobQueueMutex);
+    std::lock_guard lock{this->jobQueueMutex};
 
     for (int priority = JOB_PRIORITY_URGENT; priority < JOB_N_PRIORITIES; priority++) {
-        int length = g_queue_get_length(this->jobQueue[priority]);
-        for (int i = 0; i < length; i++) {
-            Job* job = static_cast<Job*>(g_queue_peek_nth(this->jobQueue[priority], i));
+        std::deque<Job*>& queue = *this->jobQueue[priority];
+        auto it = queue.begin();
 
+        while (it != queue.end()) {
+            Job* job = *it;
+
+            // Only remove PREVIEW and RENDER jobs; we aren't
+            // responsible for other types of jobs.
             JobType type = job->getType();
             if (type == JOB_TYPE_PREVIEW || type == JOB_TYPE_RENDER) {
                 job->deleteJob();
-                g_queue_remove(this->jobQueue[priority], job);
+
+                it = queue.erase(it);
+
                 job->unref();
+                job = nullptr;
+            } else {
+                ++it;
             }
         }
     }
-
-    g_mutex_unlock(&this->jobQueueMutex);
 }
 
-void XournalScheduler::finishTask() {
-    g_mutex_lock(&this->jobRunningMutex);
-    g_mutex_unlock(&this->jobRunningMutex);
-}
+void XournalScheduler::finishTask() { std::lock_guard lock{this->jobRunningMutex}; }
 
 void XournalScheduler::removeSource(void* source, JobType type, JobPriority priority, bool awaitFinishTask) {
-    g_mutex_lock(&this->jobQueueMutex);
+    {
+        std::lock_guard lock{this->jobQueueMutex};
+        std::deque<Job*>& queue = *this->jobQueue[priority];
 
-    int length = g_queue_get_length(this->jobQueue[priority]);
-    for (int i = 0; i < length; i++) {
-        Job* job = static_cast<Job*>(g_queue_peek_nth(this->jobQueue[priority], i));
+        auto it = queue.begin();
 
-        if (job->getType() == type) {
-            if (job->getSource() == source) {
+        while (it != queue.end()) {
+            Job* job = *it;
+
+            if (job->getType() == type && job->getSource() == source) {
+                it = queue.erase(it);
+
                 job->deleteJob();
-                g_queue_remove(this->jobQueue[priority], job);
                 job->unref();
-                break;
+                job = nullptr;
+            } else {
+                ++it;
             }
         }
     }
@@ -66,27 +72,18 @@ void XournalScheduler::removeSource(void* source, JobType type, JobPriority prio
     if (awaitFinishTask) {
         finishTask();
     }
-
-    g_mutex_unlock(&this->jobQueueMutex);
 }
 
 auto XournalScheduler::existsSource(void* source, JobType type, JobPriority priority) -> bool {
     bool exists = false;
-    g_mutex_lock(&this->jobQueueMutex);
+    std::lock_guard lock{this->jobQueueMutex};
 
-    int length = g_queue_get_length(this->jobQueue[priority]);
-    for (int i = 0; i < length; i++) {
-        Job* job = static_cast<Job*>(g_queue_peek_nth(this->jobQueue[priority], i));
-
-        if (job->getType() == type) {
-            if (job->getSource() == source) {
-                exists = true;
-                break;
-            }
+    for (Job* job: *this->jobQueue[priority]) {
+        if (job->getType() == type && job->getSource() == source) {
+            exists = true;
+            break;
         }
     }
-
-    g_mutex_unlock(&this->jobQueueMutex);
 
     return exists;
 }

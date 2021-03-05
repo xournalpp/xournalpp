@@ -13,8 +13,11 @@
 
 #pragma once
 
+#include <array>
+#include <condition_variable>
+#include <deque>
+#include <mutex>
 #include <string>
-#include <vector>
 
 #include "Job.h"
 #include "XournalType.h"
@@ -111,25 +114,34 @@ protected:
 
     GThread* thread = nullptr;
 
-    GCond jobQueueCond{};
-    GMutex jobQueueMutex{};
-
-    GMutex schedulerMutex{};
+    std::condition_variable jobQueueCond{};
+    std::mutex jobQueueMutex{};
+    std::mutex schedulerMutex{};
 
     /**
-     * This is need to be sure there is no job running if we delete a page, else we may access delete memory...
+     * This is need to be sure there is no job running if we delete a page.
+     * If a job is, we may access deleted memory.
      */
-    GMutex jobRunningMutex{};
+    std::mutex jobRunningMutex{};
 
-    GQueue queueUrgent{};
-    GQueue queueHigh{};
-    GQueue queueLow{};
-    GQueue queueNone{};
+    /**
+     * Jobs of each priority. New jobs
+     * are added to the back of each queue.
+     */
+    std::deque<Job*> queueUrgent{};
+    std::deque<Job*> queueHigh{};
+    std::deque<Job*> queueLow{};
+    std::deque<Job*> queueNone{};
 
-    GQueue* jobQueue[JOB_N_PRIORITIES]{};
+    /**
+     * Map (JobPriority) -> queue of that priority.
+     * For example,
+     *   jobQueue[JOB_PRIORITY_URGENT] is &queueUrgent.
+     */
+    std::array<std::deque<Job*>*, JOB_N_PRIORITIES> jobQueue{};
 
     GTimeVal* blockRenderZoomTime = nullptr;
-    GMutex blockRenderMutex{};
+    std::mutex blockRenderMutex{};
 
-    string name;
+    std::string name;
 };
