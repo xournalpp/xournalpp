@@ -11,9 +11,9 @@
 
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <numeric>
-#include <algorithm>
 #include <vector>
 
 #include "Interval.h"
@@ -22,16 +22,19 @@
 #include <stdio.h>
 
 namespace PolynomialSolver {
-    
+
+constexpr double FUZZY_ZERO = 1e-10;
 constexpr double MAX_ERROR = 1e-6;
 constexpr double SQRT3 = 1.7320508075688772935274463415058723669428;
 
 /**
  * @brief Compute the roots (in [min, max]) of the polynomial equation a * t^2 + 2 * b * t + c
  *
- * Warning: double roots are (purposefully and totally) ignored.
+ * Warning: double roots are (purposefully) ignored.
  * If the polynomial factors as a * (t - u)^2, the returned vector will be empty
  * [This means we only get roots at which the sign of the polynomial function changes]
+ *
+ * Warning: Very small values for the leading coefficient a will result in very high numerical errors
  *
  * @param a Quadratic coefficient
  * @param b Half of linear coefficient
@@ -40,22 +43,24 @@ constexpr double SQRT3 = 1.7320508075688772935274463415058723669428;
  * @param max Maximal value for the roots
  * @return Vector containing the roots (sorted from smallest to biggest)
  *
- * Benchmark (on a modest laptop): ~3,998,731 microseconds for 10,000,000 iterations
+ * Benchmark (on a modest laptop): 3,998,731 microseconds for 10,000,000 iterations
  */
 std::vector<double> rootsOfQuadratic(double a, double b, double c, double min, double max);
 
 /**
  * @brief Compute the roots (in [min, max]) of the polynomial equation a*t^3 + 3*b*t^2 + 3*c*t + d
  *
- * Warning: double roots are (purposefully and totally) ignored.
+ * Warning: double roots are (purposefully) ignored.
  * If the polynomial factors as a * (t - u) * (t - v)^2, the returned vector will only contain u.
  * [This means we only get roots at which the sign of the polynomial function changes]
  *
  * A triple root will be returned (without multiplicities).
  *
+ * Warning: Very small values for the leading coefficient a will result in very high numerical errors
+ *
  * @param a Cubic coefficient
- * @param b Quadratic coefficient
- * @param c Linear coefficient
+ * @param b Third of quadratic coefficient
+ * @param c Third of linear coefficient
  * @param d Constant coefficient
  * @param min Minimal value for the roots
  * @param max Maximal value for the roots
@@ -65,7 +70,49 @@ std::vector<double> rootsOfQuadratic(double a, double b, double c, double min, d
  */
 std::vector<double> rootsOfCubic(double a, double b, double c, double d, double min, double max);
 
-// std::vector<double> truncate(const std::vector<double>& input, double min, double max);
+/**
+ * @brief Find roots (in [min, max]) of a*t^4 + 4*b*t^3 + 6*c*t^2 + 4*d*t + e
+ *
+ * Warning: double and quadruple roots are (purposefully) ignored.
+ * [This means we only get roots at which the sign of the polynomial function changes]
+ *
+ * A triple root will be returned (without multiplicities).
+ *
+ * Warning: Very small values for the leading coefficient a will result in very high numerical errors
+ *
+ * @param a Quartic coefficient
+ * @param b Fourth of cubic coefficient
+ * @param c Sixth of quadratic coefficient
+ * @param d Fourth of linear coefficient
+ * @param e Constant coefficient
+ * @param min Minimal value for the roots
+ * @param max Maximal value for the roots
+ * @return Vector containing the roots (sorted from smallest to biggest)
+ *
+ * Benchmark (on a modest laptop): 7,400,889 microseconds for 10,000,000 iterations
+ */
+std::vector<double> rootsOfQuartic(double a, double b, double c, double d, double e, double min, double max);
+
+/**
+ * @brief Remove all entries below min or above max from the sorted vector input and return the resulting vector
+ * @param input A sorted input vector
+ * @param min Lower bound
+ * @param max Upper bound
+ * @return A sorted vector containing those elements of input between min and max.
+ */
+std::vector<double> truncate(const std::vector<double>& input, double min, double max);
+
+/**
+ * @brief Returns a sortec vector containing the values of r1 and r2 that are between min and max. Assume r1 < r2.
+ * @param r1 First value
+ * @param r2 Second value
+ * @param min Lower bound
+ * @param max Upper bound
+ * @return A sorted vector containing those elements of {r1, r2} between min and max.
+ *
+ * This is equivalent to but much faster than truncate({r1, r2}, min, max)
+ */
+std::vector<double> truncate2(double r1, double r2, double min, double max);
 
 // Test
 void test();
@@ -78,9 +125,10 @@ template <size_t N>
 class Polynomial {
 public:
     Polynomial() = default;
-    Polynomial(const std::array<double, N + 1>& coeff): coeff(coeff) {}
 
     [[maybe_unused]] double evaluate(double t) const;
+
+    [[maybe_unused]] std::pair<double, double> getMinimum(double min, double max);
 
     [[maybe_unused]] Polynomial<N - 1> getDerivative() const;
 
@@ -100,7 +148,8 @@ template <size_t N>
 Polynomial<N - 1> Polynomial<N>::getDerivative() const {
     Polynomial<N - 1> derivative;
     double n = N + 1;
-    std::transform(this->coeff.begin(), this->coeff.end() - 1, derivative.coeff.begin(), [&n](double c) { return c * (--n); });
+    std::transform(this->coeff.begin(), this->coeff.end() - 1, derivative.coeff.begin(),
+                   [&n](double c) { return c * (--n); });
     return derivative;
 }
 
@@ -108,39 +157,148 @@ Polynomial<N - 1> Polynomial<N>::getDerivative() const {
  * PolynomialSolver *
  ********************/
 /**
- * Benchmark (on a modest laptop): 1,000,000 resolutions of degree 6 polynomials in 12,060,228 µs (~12 µs per resolutions)
+ * Benchmark (on a modest laptop): 1,000,000 resolutions of degree 6 polynomials in 12,060,228 µs (~12 µs per
+ * resolutions)
+ *
+ * New version 7,705,411 µs (no Ferrari)
+ * New version 6,182,490 µs (with Ferrari)
  */
 template <size_t N>
-class PolynomialSolver: public Polynomial<N> {
+class PolynomialSolver {
+    static_assert(N > 4, "Error: PolynomialSolver::PolynomialSolver<N> can only be used with N > 4. Use "
+                         "PolynomialSolver::rootsOfQuadratic, PolynomialSolver::rootsOfCubic or "
+                         "PolynomialSolver::rootsOfQuartic instead.");
+
 public:
-    PolynomialSolver(const Polynomial<N>& poly, const Polynomial<N - 1>& derivative):
-    Polynomial<N>(poly), derivative(derivative), secondDerivative(derivative.getDerivative()) {}
-    
-    PolynomialSolver(const std::array<double, N + 1>& coeff): Polynomial<N>(coeff), derivative(this->getDerivative()), secondDerivative(derivative.getDerivative()) {}
+    PolynomialSolver(const std::array<double, N + 1>& coeff) {
+        // convert higher degree coeff first to lower degree coeff first
+        std::copy(coeff.rbegin(), coeff.rend(), derivatives[0]);
+
+        // Compute the coefficients of the derivatives
+        for (double *it = derivatives[0] + 1, *end = it + N; it != derivatives[N - 2] + 1; it += N + 1, end += N) {
+            double mult = 1.0;
+            for (double *it2 = it, *it3 = it + N; it2 != end; ++it2, ++it3) {
+                *it3 = mult * *it2;
+                ++mult;
+            }
+        }
+    }
     std::vector<double> findRoots(double min, double max);
 
-    Polynomial<N - 1> derivative;
-    Polynomial<N - 2> secondDerivative;
-    
-    std::vector<double> rootsOfDerivative;
-    std::vector<double> rootsOfSecondDerivative;
-    std::vector<double> rootsOfThirdDerivative;
+private:
+    /**
+     * @brief Compute the roots of the n-th derivative our the original polynomial equation P
+     * Assumes rootsOfDerivative, rootsOfSecondDerivative and rootsOfThirdDerivative contain the roots of the n+1-st,
+     * n+2nd and n+3rd derivatives. After returning, rootsOfDerivative contains the roots of the n-th derivative, while
+     * rootsOfSecondDerivative and rootsOfThirdDerivative contain the roots of the n+1st and n+2nd derivatives.
+     * @param n the rank of the derivative
+     */
+    void findRootOfNthDerivative(size_t n);
+
+    /**
+     * @brief Compute P^{(n)}(t) (the value of the n-th derivative at t)
+     * @param n Rank of the derivative
+     * @param t Parameter at which we evaluate
+     * @return The value P^{(n)}(t)
+     */
+    double evaluateNthDerivative(size_t n, double t);
+
+    /**
+     * @brief Array containing the coefficients of the iterated derivatives P = P^{(0)}, P^{(1)}, ..., P^{(N-2)} of the
+     * target polynomial equation P. The value of derivatives[i][j] is the coefficient of order j in P^{(i)}. Note that
+     * derivatives[i][j] is not initialized (nor used) if j > N - i + 1 = deg(P^{(i)}).
+     */
+    double derivatives[N - 1][N + 1];
+
+    /**
+     * @brief After a call to findRootOfNthDerivative(n), contains the roots (between min and max) of the iterated
+     * derivative P^{(n)}.
+     */
+    std::vector<double> rootsOfDerivative{};
+
+    /**
+     * @brief After a call to findRootOfNthDerivative(n), contains the roots (between min and max) of the iterated
+     * derivative P^{(n+1)}.
+     */
+    std::vector<double> rootsOfSecondDerivative{};
+
+    /**
+     * @brief After a call to findRootOfNthDerivative(n), contains the roots (between min and max) of the iterated
+     * derivative P^{(n+2)}.
+     */
+    std::vector<double> rootsOfThirdDerivative{};
+
+    /**
+     * @brief Lower bound: only look for real roots greater than min.
+     */
+    double min;
+
+    /**
+     * @brief Upper bound: only look for real roots lower than max.
+     */
+    double max;
 };
 
 template <size_t N>
 std::vector<double> PolynomialSolver<N>::findRoots(double min, double max) {
-    /**
-     * First compute the roots in (min, max) of the derivatives
-     */
-    { // scope for derivativeSolver
-        PolynomialSolver<N - 1> derivativeSolver(derivative, secondDerivative);
 
-        this->rootsOfDerivative = derivativeSolver.findRoots(min, max);
-        this->rootsOfSecondDerivative.swap(derivativeSolver.rootsOfDerivative);
-        this->rootsOfThirdDerivative.swap(derivativeSolver.rootsOfSecondDerivative);
-    } // end of scope of derivativeSolver
-    
+    this->min = min;
+    this->max = max;
+
+#define USE_FERRARI
+#ifdef USE_FERRARI
+
     /**
+     * First compute the roots in (min, max) of the N-2nd, N-3rd and N-4th derivatives
+     */
+    double* deg2Der = derivatives[N - 2];
+    double* deg3Der = derivatives[N - 3];
+    double* deg4Der = derivatives[N - 4];
+
+    this->rootsOfThirdDerivative = rootsOfQuadratic(deg2Der[2], 0.5 * deg2Der[1], deg2Der[0], min, max);
+    this->rootsOfSecondDerivative = rootsOfCubic(deg3Der[3], deg3Der[2] / 3.0, deg3Der[1] / 3.0, deg3Der[0], min, max);
+    this->rootsOfDerivative =
+            rootsOfQuartic(deg4Der[4], 0.25 * deg4Der[3], deg4Der[2] / 6.0, 0.25 * deg4Der[1], deg4Der[0], min, max);
+
+    for (size_t n = N - 5; n < N; --n) {
+        findRootOfNthDerivative(n);
+    }
+#else
+
+    /**
+     * First compute the roots in (min, max) of the N-1st, N-2nd and N-3rd derivatives
+     */
+    double* deg2Der = derivatives[N - 2];
+    double* deg3Der = derivatives[N - 3];
+    if (deg2Der[2] != 0.0) {
+        double root = -deg3Der[2] / deg2Der[2];
+        if (root >= min && root < max) {
+            this->rootsOfThirdDerivative = {root};
+        }
+    }
+
+    this->rootsOfSecondDerivative = rootsOfQuadratic(deg2Der[2], 0.5 * deg2Der[1], deg2Der[0], min, max);
+
+    this->rootsOfDerivative = rootsOfCubic(deg3Der[3], deg3Der[2] / 3.0, deg3Der[1] / 3.0, deg3Der[0], min, max);
+
+
+    /**
+     * Iteratively compute the roots of the n-th derivatives. Stop once the roots of the 0-th derivative (the original
+     * polynomial) have been computed.
+     */
+    // Stop once the index underflows
+    for (size_t n = N - 4; n < N; --n) {
+        findRootOfNthDerivative(n);
+    }
+#endif
+
+    return this->rootsOfDerivative;
+}
+
+template <size_t N>
+void PolynomialSolver<N>::findRootOfNthDerivative(size_t n) {
+    /**
+     * Find the roots of P the n-th derivative of our target polynomial equation.
      * Compute basins of attraction for Halley's method.
      * Those basins are intervals in which P', P'' and P''' do not vanish (assuming P has simple roots)
      * The boolean represents the sign of P at the interval's bound (true = positive, false = negative)
@@ -149,22 +307,26 @@ std::vector<double> PolynomialSolver<N>::findRoots(double min, double max) {
      * First find intervals that must contain exactly one root and on which P' does not vanish
      */
     std::vector<Interval<std::pair<double, bool>>> basins;
-    if (this->rootsOfDerivative.empty()) {
-        if (bool signMin = this->evaluate(min) > 0.0, signMax = this->evaluate(max) > 0.0; signMin != signMax) {
+    if (rootsOfDerivative.empty()) {
+        if (bool signMin = evaluateNthDerivative(n, min) > 0.0, signMax = evaluateNthDerivative(n, max) > 0.0;
+            signMin != signMax) {
             basins = {{{min, signMin}, {max, signMax}}};
         } else {
             // The function is monotonous and has same sign on endpoints: it does not have roots between min and max
-            return {};
+            rootsOfThirdDerivative.swap(rootsOfSecondDerivative);
+            rootsOfSecondDerivative.swap(rootsOfDerivative);
+            rootsOfDerivative.clear();
+            return;
         }
     } else {
-        basins.reserve(this->rootsOfDerivative.size() + 1);
-        double firstRoot = this->rootsOfDerivative.front();
-        double lastSign = this->evaluate(firstRoot) > 0.0;
-        if (bool signMin = this->evaluate(min) > 0.0; signMin != lastSign) {
+        basins.reserve(rootsOfDerivative.size() + 1);
+        double firstRoot = rootsOfDerivative.front();
+        double lastSign = evaluateNthDerivative(n, firstRoot) > 0.0;
+        if (bool signMin = evaluateNthDerivative(n, min) > 0.0; signMin != lastSign) {
             basins.emplace_back(std::make_pair(min, signMin), std::make_pair(firstRoot, lastSign));
         }
-        for (auto it1 = this->rootsOfDerivative.begin(), it2 = it1 + 1; it2 != this->rootsOfDerivative.end() ; it1 = it2++) {
-            bool sign = this->evaluate(*it2) > 0.0;
+        for (auto it1 = rootsOfDerivative.begin(), it2 = it1 + 1; it2 != rootsOfDerivative.end(); it1 = it2++) {
+            bool sign = evaluateNthDerivative(n, *it2) > 0.0;
             if (sign != lastSign) {
                 /**
                  * P(*it1) and P(*it2) have different signs (and P'(t) != 0 for t in (*it1, *it2))
@@ -174,20 +336,20 @@ std::vector<double> PolynomialSolver<N>::findRoots(double min, double max) {
                 lastSign = sign;
             }
         }
-        if (bool signMax = this->evaluate(max) > 0.0; signMax != lastSign) {
-            basins.emplace_back(std::make_pair(this->rootsOfDerivative.back(), lastSign), std::make_pair(max, signMax));
+        if (bool signMax = evaluateNthDerivative(n, max) > 0.0; signMax != lastSign) {
+            basins.emplace_back(std::make_pair(rootsOfDerivative.back(), lastSign), std::make_pair(max, signMax));
         }
     }
     /**
      * Shrink those interval so that P'' does not vanish
      */
-    if (!this->rootsOfSecondDerivative.empty()) {
-        auto it = this->rootsOfSecondDerivative.begin();
-        auto end = this->rootsOfSecondDerivative.end();
+    if (!rootsOfSecondDerivative.empty()) {
+        auto it = rootsOfSecondDerivative.begin();
+        auto end = rootsOfSecondDerivative.end();
         for (auto&& basin: basins) {
             while (it != end && basin.max.first > *it) {
                 if (basin.min.first < *it) {
-                    if (bool sign = this->evaluate(*it) > 0.0; sign != basin.min.second) {
+                    if (bool sign = evaluateNthDerivative(n, *it) > 0.0; sign != basin.min.second) {
                         basin.max = {*it, sign};
                     } else {
                         basin.min = {*it, sign};
@@ -203,13 +365,13 @@ std::vector<double> PolynomialSolver<N>::findRoots(double min, double max) {
     /**
      * Shrink those interval so that P''' does not vanish
      */
-    if (!this->rootsOfThirdDerivative.empty()) {
-        auto it = this->rootsOfThirdDerivative.begin();
-        auto end = this->rootsOfThirdDerivative.end();
+    if (!rootsOfThirdDerivative.empty()) {
+        auto it = rootsOfThirdDerivative.begin();
+        auto end = rootsOfThirdDerivative.end();
         for (auto&& basin: basins) {
             while (it != end && basin.max.first > *it) {
                 if (basin.min.first < *it) {
-                    if (bool sign = this->evaluate(*it) > 0.0; sign != basin.min.second) {
+                    if (bool sign = evaluateNthDerivative(n, *it) > 0.0; sign != basin.min.second) {
                         basin.max = {*it, sign};
                     } else {
                         basin.min = {*it, sign};
@@ -224,124 +386,76 @@ std::vector<double> PolynomialSolver<N>::findRoots(double min, double max) {
     }
     /**
      * Now compute the root within each basin
+     * Shift the derivative roots
      */
-    std::vector<double> result;
-    result.reserve(basins.size());
+    rootsOfThirdDerivative.swap(rootsOfSecondDerivative);
+    rootsOfSecondDerivative.swap(rootsOfDerivative);
+    rootsOfDerivative.clear();
+    rootsOfDerivative.reserve(basins.size());
     for (auto&& basin: basins) {
         double t = 0.5 * (basin.min.first + basin.max.first);
-        double value = this->evaluate(t);
-        size_t n = 0;
-        
-        while (std::abs(value) > MAX_ERROR && n < 10) {
-            n++;
+        double value = evaluateNthDerivative(n, t);
+        size_t count = 0;
+
+        while (std::abs(value) > MAX_ERROR && count < 10) {
+            count++;
             /* Halley iteration */
-            double derValue = derivative.evaluate(t);
-            double secValue = secondDerivative.evaluate(t);
+            double derValue = evaluateNthDerivative(n + 1, t);
+            double secValue = evaluateNthDerivative(n + 2, t);
             t -= value * derValue / (derValue * derValue - 0.5 * value * secValue);
             /********************/
-            value = this->evaluate(t);
+            value = evaluateNthDerivative(n, t);
         }
-        result.push_back(t);
+        rootsOfDerivative.push_back(t);
 
 #define POLY_DEBUG
 #ifdef POLY_DEBUG
-        if (n == 10) {
+        if (count == 10) {
             printf("\ndegree %zu. Iterations: %zu. t = %f. value = %f\n", N, n, t, value);
-            printf("*** Polynomial: ");
-            for (size_t i = 0; i <= N; i++) {
-                printf("%f ; ", this->coeff[i]);
-            }
-            printf("\n");
+            //             printf("*** Polynomial: ");
+            //             for (size_t i = 0; i <= N; i++) {
+            //                 printf("%f ; ", this->coeff[i]);
+            //             }
+            //             printf("\n");
             printf("  ** Interval: [%f ; %f]\n", min, max);
-            
-            printf("  ** Derivative: ");
-            for (size_t i = 0; i < N; i++) {
-                printf("%f ; ", derivative.coeff[i]);
-            }
-            printf("\n");
+
+            //             printf("  ** Derivative: ");
+            //             for (size_t i = 0; i < N; i++) {
+            //                 printf("%f ; ", derivative.coeff[i]);
+            //             }
+            //             printf("\n");
             printf("    ** roots of der:\n");
             for (auto&& t: rootsOfDerivative) {
-                printf("      ** t = %f ; P'(t) = %f ; P(t) = %f\n", t, derivative.evaluate(t), this->evaluate(t));
+                printf("      ** t = %f ; P'(t) = %f ; P(t) = %f\n", t, evaluateNthDerivative(n + 1, t),
+                       evaluateNthDerivative(n, t));
             }
             printf("\n");
-            printf("  ** Second Derivative: ");
-            for (size_t i = 0; i < N-1; i++) {
-                printf("%f ; ", secondDerivative.coeff[i]);
-            }
-            printf("\n");
+            /*            printf("  ** Second Derivative: ");
+                        for (size_t i = 0; i < N-1; i++) {
+                            printf("%f ; ", secondDerivative.coeff[i]);
+                        }
+                        printf("\n")*/
+            ;
             printf("    ** roots of secDer:\n");
             for (auto&& t: rootsOfSecondDerivative) {
-                printf("      ** t = %f ; P''(t) = %f ; P(t) = %f\n", t, secondDerivative.evaluate(t), this->evaluate(t));
+                printf("      ** t = %f ; P''(t) = %f ; P(t) = %f\n", t, evaluateNthDerivative(n + 2, t),
+                       evaluateNthDerivative(n, t));
             }
             printf("\n");
             printf("\n");
         }
 #endif
     }
-    return result;
 }
 
-/**
- * For cubic polynomial equations, using the exact method here is about 25% faster. Overload the solver.
- * 
- * Nb: This class is used in the recursive resolution of higher degree polynomials.
- * For solving a given cubic equation, use PolynomialSolver::rootsOfCubic instead which is another 17% faster.
- */
-template <>
-class PolynomialSolver<3>: public Polynomial<3> {
-public:
-    PolynomialSolver(Polynomial<3> poly, Polynomial<2> derivative):
-    Polynomial<3>(poly) {}
-
-    PolynomialSolver(const std::array<double, 4>& coeff): Polynomial<3>(coeff) {}
-
-    std::vector<double> findRoots(double min, double max) {
-        this->rootsOfDerivative = rootsOfQuadratic(coeff[0] * 3.0, coeff[1], coeff[2], min, max);
-        this->rootsOfSecondDerivative.clear();
-        if (coeff[0] != 0.0) {
-            double root = - coeff[1] / (3.0 * coeff[0]);
-            if (root > min && root < max) {
-                this->rootsOfSecondDerivative = {root};
-            }
-        }
-        return rootsOfCubic(coeff[0], coeff[1] / 3.0, coeff[2] / 3.0, coeff[3], min, max);
-    }
-
-    std::vector<double> rootsOfDerivative;
-    std::vector<double> rootsOfSecondDerivative;
-};
-
-template <>
-class PolynomialSolver<2>: public Polynomial<2> {
-public:
-    PolynomialSolver(const Polynomial<2>& poly, const Polynomial<1>& derivative):
-    Polynomial<2>(poly) {}
-
-    PolynomialSolver(const std::array<double, 3>& li): Polynomial<2>(li) {}
-
-    std::vector<double> findRoots(double min, double max) {
-        return rootsOfQuadratic(coeff[0], 0.5 * coeff[1], coeff[2], min, max);
-    }
-};
-
-template <>
-class PolynomialSolver<1>: public Polynomial<1> {
-public:
-    PolynomialSolver(const Polynomial<1>& poly, const Polynomial<0>& derivative):
-    Polynomial<1>(poly) {}
-    
-    PolynomialSolver(const std::array<double, 2>& coeff): Polynomial<1>(coeff) {}
-    
-    std::vector<double> findRoots(double min, double max) {
-        if (coeff[0] == 0.0) {
-            return {};
-        }
-        double root = -coeff[1] / coeff[0];
-        if (root >= min && root <= max) {
-            return {root};
-        }
-        return {};
-    }
-};
+template <size_t N>
+double PolynomialSolver<N>::evaluateNthDerivative(size_t n, double t) {
+    return std::accumulate(std::reverse_iterator<const double*>(this->derivatives[n] + N + 1 - n),
+                           std::reverse_iterator<const double*>(this->derivatives[n]), 0.0, [t](double r, double s) {
+                               r *= t;
+                               r += s;
+                               return r;
+                           });
+}
 
 };  // namespace PolynomialSolver
