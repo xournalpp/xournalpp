@@ -154,7 +154,7 @@ void ToolbarCustomizeDialog::toolitemColorDragBegin(GtkWidget* widget, GdkDragCo
     Color color = GPOINTER_TO_UINT(data);
     ToolItemDragCurrentData::setDataColor(-1, color);
 
-    GdkPixbuf* image = ColorSelectImage::newColorIconPixbuf(color, 32, true);
+    GdkPixbuf* image = ColorSelectImage::newColorIconPixbuf(color, 16, true);
 
     gtk_drag_set_icon_pixbuf(context, image, -2, -2);
 
