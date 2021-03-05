@@ -72,6 +72,12 @@ protected:
      */
     virtual void afterRun();
 
+    /**
+     * Called when the job is to be removed from the
+     * scheduler.
+     */
+    virtual void onDelete();
+
 private:
     static bool callAfterCallback(Job* job);
 

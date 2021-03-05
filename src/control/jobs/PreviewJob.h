@@ -30,6 +30,7 @@ public:
     PreviewJob(SidebarPreviewBaseEntry* sidebar);
 
 protected:
+    virtual void onDelete() override;
     virtual ~PreviewJob();
 
 public:

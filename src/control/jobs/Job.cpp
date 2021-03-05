@@ -25,11 +25,15 @@ void Job::ref() {
 }
 
 void Job::deleteJob() {
+    this->onDelete();
+
     if (this->afterRunId) {
         g_source_remove(this->afterRunId);
         this->unref();
     }
 }
+
+void Job::onDelete() {}
 
 void Job::execute() { this->run(); }
 
