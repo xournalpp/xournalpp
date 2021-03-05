@@ -82,13 +82,13 @@ if (WIN32)
 	unset (RESIZED_ICON)
   endforeach()
   add_custom_command (
-    OUTPUT ${PROJECT_BINARY_DIR}/xournalpp.ico
-	COMMAND convert ${ICON_DEPS} ${PROJECT_BINARY_DIR}/xournalpp.ico
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
+	COMMAND convert ${ICON_DEPS} ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
 	DEPENDS ${ICON_DEPS}
   )
   unset (ICON_SIZES)
   unset (ICON_DEPS)
-  add_custom_target (xournalpp_icon DEPENDS ${PROJECT_BINARY_DIR}/xournalpp.ico)
+  add_custom_target (xournalpp_icon DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico)
 endif()
 
 # Concatenate SOURCES lists
