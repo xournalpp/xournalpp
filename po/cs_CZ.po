@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-06 19:11\n"
+"POT-Creation-Date: 2021-03-06 20:18+0000\n"
+"PO-Revision-Date: 2021-03-06 20:36\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -217,11 +217,11 @@ msgid "Could not create folder: {1}\n"
 msgstr "Nelze vytvořit složku: {1}\n"
 "Selhání s chybou: {2}"
 
-#: ../src/control/LatexController.cpp:266
+#: ../src/control/LatexController.cpp:271
 msgid "Could not load LaTeX PDF file"
 msgstr "Nelze načíst LaTeX PDF soubor"
 
-#: ../src/control/LatexController.cpp:260
+#: ../src/control/LatexController.cpp:265
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Nelze načíst LaTeX PDF soubor: {1}"
 
@@ -588,7 +588,7 @@ msgstr "Nepodařilo se najít program na generování LaTeX v PATH: {1}"
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Nepodařilo se zpracovat příkaz generátoru LaTeX: {1}"
 
-#: ../src/control/LatexController.cpp:53
+#: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Nepodařilo se přečíst soubor globálních šablon. Zkontrolujte prosím nastavení."
 
@@ -632,11 +632,11 @@ msgstr "Vpřed"
 msgid "Get version of xournalpp"
 msgstr "Získat verzi xournalpp"
 
-#: ../src/control/LatexController.cpp:48
+#: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
 msgstr "Soubor globálních šablon neexistuje. Zkontrolujte prosím nastavení."
 
-#: ../src/control/LatexController.cpp:59
+#: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Soubor globálních šablon není běžný soubor. Zkontrolujte prosím nastavení. "
 
@@ -749,7 +749,7 @@ msgstr "Isometrický čtverečkovaný"
 msgid "Jump to Page (first Page: 1)"
 msgstr "Přejít na stránku (první stránka: 1)"
 
-#: ../src/control/LatexController.cpp:187
+#: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Generování Latex narazilo na chybu: {1} (exit kód: {2})"
 
@@ -1319,7 +1319,7 @@ msgstr "Soubor není platný .xopp soubor (chybí verze): \"{1}\""
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Soubor není platný .xopp soubor (Version string je poškozený): \"{1}\""
 
-#: ../src/control/LatexController.cpp:233
+#: ../src/control/LatexController.cpp:238
 msgid "The formula is empty when rendered or invalid."
 msgstr "Vzorec je prázdný, když je vykreslený, nebo neplatný."
 
