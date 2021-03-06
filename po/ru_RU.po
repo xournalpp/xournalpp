@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-06 14:39\n"
+"PO-Revision-Date: 2021-03-06 15:35\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -529,7 +529,7 @@ msgstr ""
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Ошибка: {1}. Пожалуйста, проверьте содержимое {2}"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -1016,7 +1016,7 @@ msgstr "Инструмент {1} удалён с панели инструмен
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Переименовать слой"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
@@ -1218,7 +1218,7 @@ msgstr "Поддерживаемые файлы"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:53
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Поменять слой выше с текущим"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one below"
@@ -1572,7 +1572,7 @@ msgstr "ластик"
 
 #: ../src/control/Control.cpp:1982
 msgid "file: {1}"
-msgstr ""
+msgstr "файл: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -2408,7 +2408,7 @@ msgstr "Распознавание руки"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Высота"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2472,7 +2472,7 @@ msgstr "Игнорировать первые"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Качество изображения"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
@@ -2524,7 +2524,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5561 ../ui/settings.glade:5609
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: ../ui/settings.glade:5579
 msgid "Language Settings"
@@ -2639,7 +2639,7 @@ msgstr "Переместить первую страницу на столько
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "Настройки прозрачности"
 
 #: ../ui/settings.glade:921
 msgid "Options"
@@ -2651,7 +2651,7 @@ msgstr "Устройство вывода"
 
 #: ../ui/settings.glade:4770
 msgid "PDF Cache"
-msgstr ""
+msgstr "Кэш PDF"
 
 #: ../ui/main.glade:1140
 msgid "P_revious annotated Page"
@@ -2697,7 +2697,7 @@ msgstr "Параметры _пера"
 
 #: ../ui/settings.glade:3527
 msgid "Performance"
-msgstr ""
+msgstr "Производительность"
 
 #: ../ui/settings.glade:5401
 msgid "Playback Settings"
@@ -2729,7 +2729,7 @@ msgstr "Настройки"
 
 #: ../ui/settings.glade:1162
 msgid "Preprocessor"
-msgstr ""
+msgstr "Препроцессор"
 
 #: ../ui/settings.glade:3427
 msgid "Presentation Mode"
@@ -3054,7 +3054,7 @@ msgstr "Забеливание"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Ширина"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
