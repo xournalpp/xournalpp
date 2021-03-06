@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-06 18:07\n"
+"PO-Revision-Date: 2021-03-06 19:11\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
-"Teď se pokusí spustit bez tohoto souboru."
+"Nyní se pokusí o spuštění bez tohoto souboru."
 
 #: ../src/control/XournalMain.cpp:454
 msgid "\n"
@@ -2320,7 +2320,7 @@ msgstr "Zapnout automatické ukládání"
 
 #: ../ui/settings.glade:900
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Povolit odvozování tlaku <i>(odvodit tlak při kreslení na základě rychlosti, pokuk snímání tlaku není k dispozici)</i>"
 
 #: ../ui/settings.glade:1507
 msgid "Enable Pressure Sensitivity"
@@ -2373,7 +2373,7 @@ msgstr "Exportovat vrstvy postupně"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Exportovat dokument bez jakéhokoli pozadí (žádné) nebo pouze PDF a obrázkem (bez měřítek) nebo se všemi typy pozadí (vše)."
 
 #: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
@@ -2381,7 +2381,7 @@ msgstr "Fi_ll"
 
 #: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
-msgstr ""
+msgstr "Průhlednost vyplně"
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
@@ -2417,7 +2417,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Obecné nastavení nástroje LaTeX"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
@@ -2497,15 +2497,15 @@ msgstr "Jak krátké (čas) AND...\n\n"
 
 #: ../ui/settings.glade:4446
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "Pokud je aktivovní, tvary, které byly rozpoznány rozpoznávačem tvarů, budou automaticky přichyceny dle mřížky. To může vést k neočekávaným výsledkům pokud máte při psaní zapnuto rozpoznávání tvarů."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Pokud je povoleno, zkontrolujte, zda jsou nainstalovány LaTeX balíčky a zda jsou k dispozici LaTeX příkazy ještě před spuštěním nástroje LaTeX."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "Pokud je povoleno, vrstvy každé stránky budou přidávány jedna po druhé. Výsledný PDF soubor může být použit pro prezentaci."
 
 #: ../ui/settings.glade:4512
 msgid "Ignore Time (ms)"
@@ -2541,7 +2541,7 @@ msgstr "Stabilizace vstupu"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "Stabilizace vstupu může na konci tahu vytvořit mezeru. Pokud je povoleno, tato mezera je vyplněna."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2680,7 +2680,7 @@ msgstr "Žádný"
 
 #: ../ui/settings.glade:4074
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr "Posunout první stránku o tento počet stránek, když je povoleno <b>Spárové stránky</b>"
+msgstr "Posunout první stránku o tento počet stránek, pokud je povoleno <b>Spárové stránky</b>"
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
@@ -3021,7 +3021,7 @@ msgstr "Následující řetězce budou nahrazeny v globálním souboru šablony 
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "Vzorec matematického režimu zadaný v nástroji LaTeX."
 
 #: ../ui/settings.glade:3802
 msgid "The unit of the ruler is cm"
@@ -3058,11 +3058,11 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "Použít aktuální velikost stránky namísto velikosti stránky výše."
 
 #: ../ui/settings.glade:2524
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Použijte dva prsty pro posouvání/zvětšení a jeden prst pro použití vybraného nástroje."
 
 #: ../ui/settings.glade:4087
 msgid "Usually 0 or 1"
@@ -3070,7 +3070,7 @@ msgstr "Obvykle 0 nebo 1"
 
 #: ../ui/settings.glade:213
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Rychlost založená na Gaussovských váhách"
 
 #: ../ui/about.glade:101
 msgid "Version"
@@ -3087,12 +3087,14 @@ msgstr "Zobrazení"
 #: ../ui/settings.glade:2419
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Při kreslení pomocí dotyku, gesta dvou prstů, která jsou určena k posunutí náhledu, může namísto toho způsobit zvětšení a způsobit problémy s výkonem. \n"
+"Toto nastavení může usnadnit kreslení dotykem. "
 
 #: ../ui/settings.glade:4715
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "Při přiblížení na PDF ve vysokém rozlišení, může každé opětovné vykreslení trvat dlouho. Nastavením na vysokou hodnotu způsobí, že se tyto překreslování odehrávají méně často.\n\n"
+"Nastavte na 0% pro opětovné vykreslení při každém přiblížení."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
