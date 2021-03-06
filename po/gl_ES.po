@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-01 18:30\n"
+"POT-Creation-Date: 2021-03-06 20:18+0000\n"
+"PO-Revision-Date: 2021-03-06 20:35\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -217,11 +217,11 @@ msgid "Could not create folder: {1}\n"
 msgstr "Non se puido crear o cartafol: {1}\n"
 "O fallo produciur o erro: {2}"
 
-#: ../src/control/LatexController.cpp:266
+#: ../src/control/LatexController.cpp:271
 msgid "Could not load LaTeX PDF file"
 msgstr "Non se puido cargar o ficheiro PDF de LaTeX"
 
-#: ../src/control/LatexController.cpp:260
+#: ../src/control/LatexController.cpp:265
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Non se puido cargar o ficheiro PDF de LaTeX:{1}"
 
@@ -586,7 +586,7 @@ msgstr "Non se puido atopar o programa xerador LaTex na RUTA: {1}"
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Fallou o procesamento da orde do xerador LaTeX: {1}"
 
-#: ../src/control/LatexController.cpp:53
+#: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Fallou a lectura do ficheiro modelo xeral. Comprobe a súa configuración."
 
@@ -630,11 +630,11 @@ msgstr "Adiante"
 msgid "Get version of xournalpp"
 msgstr "Obter versión de xournalpp"
 
-#: ../src/control/LatexController.cpp:48
+#: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
 msgstr "Non existe o ficheiro modelo global. Comprobe a súa configuración."
 
-#: ../src/control/LatexController.cpp:59
+#: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "O ficheiro modelo global non é un ficheiro regular. Comprobe a súa configuración. "
 
@@ -747,7 +747,7 @@ msgstr "Curva isométrica"
 msgid "Jump to Page (first Page: 1)"
 msgstr "Saltar á páxina (primeira páxina: 1)"
 
-#: ../src/control/LatexController.cpp:187
+#: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "A xeración de Latex atopou un erro: {1} (código de saída: {2})"
 
@@ -1317,7 +1317,7 @@ msgstr "O ficheiro .xopp non é válido (Falta a versión): «{1}»"
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "O ficheiro .xopp non é válido (Versión da cadea danada): «{1}»"
 
-#: ../src/control/LatexController.cpp:233
+#: ../src/control/LatexController.cpp:238
 msgid "The formula is empty when rendered or invalid."
 msgstr "A fórmula está baleira ao se renderizar ou non é válida."
 
