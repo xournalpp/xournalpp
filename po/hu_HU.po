@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-01 18:31\n"
+"PO-Revision-Date: 2021-03-06 12:42\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -32,7 +32,7 @@ msgstr "\n"
 #: ../src/gui/MainWindow.cpp:736
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
-msgstr ""
+msgstr " / {1}{2}"
 
 #: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
@@ -62,7 +62,7 @@ msgstr "Tex hozzáadása/szerkesztése"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "Haladó exportálási lehetőségek"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -78,7 +78,7 @@ msgstr "Alkalmazás a jelenlegi oldalra"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "Elrendezés"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -154,11 +154,11 @@ msgstr "Kék"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring forward"
-msgstr ""
+msgstr "Előrébb hozás"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "Előtérbe hozás"
 
 #: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
 #: ../src/control/XournalMain.cpp:168
@@ -171,7 +171,7 @@ msgstr "Szín változtatása"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
-msgstr ""
+msgstr "Aktuális réteg átnevezése"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
@@ -179,7 +179,7 @@ msgstr "Betűtípus megváltoztatása"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "Vonalstílus módosítása"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -214,7 +214,8 @@ msgstr "Oldal másolása"
 #: ../src/util/PathUtil.cpp:230
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Nem sikerült létrehozni a(z) {1} mappát\n"
+"Hiba: {2}"
 
 #: ../src/control/LatexController.cpp:266
 msgid "Could not load LaTeX PDF file"
@@ -294,7 +295,7 @@ msgstr "Nem sikerült elmenteni a .tex fájlt: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:85
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "A(z) {1} elindítása sikertelen: {2} (kilépési kód: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
@@ -361,11 +362,11 @@ msgstr "Réteg törlése"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Delete this layer"
-msgstr ""
+msgstr "Réteg törlése"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Delete this page"
-msgstr ""
+msgstr "Oldal törlése"
 
 #: ../src/control/Control.cpp:2468
 msgid "Discard"
@@ -373,7 +374,7 @@ msgstr "Elvetés"
 
 #: ../src/control/XournalMain.cpp:680
 msgid "Display advanced export options"
-msgstr ""
+msgstr "A haladó exportálási lehetőségek megjelenítése"
 
 #: ../src/control/Control.cpp:1968
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -418,7 +419,7 @@ msgstr "Nyíl rajzolása"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Ellipszis rajzolása"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -438,7 +439,7 @@ msgstr "Téglalap rajzolása"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Spline"
-msgstr ""
+msgstr "Görbe rajzolása"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:126
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
@@ -464,7 +465,7 @@ msgstr "Biztonsági mentett dokumentum"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "Az opció módosításához engedélyezd a nyomásérzékelést vagy a nyomáskövetkeztetést!"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
@@ -517,7 +518,7 @@ msgstr "Hiba az automatikus mentés közben: {1}"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "Hibakód {1} a(z) {2} rendszerutasítás végrehajtása közben"
 
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
