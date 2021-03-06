@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-01 18:30\n"
+"POT-Creation-Date: 2021-03-06 20:18+0000\n"
+"PO-Revision-Date: 2021-03-06 20:35\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -215,11 +215,11 @@ msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:266
+#: ../src/control/LatexController.cpp:271
 msgid "Could not load LaTeX PDF file"
 msgstr "無法加載LaTeX PDF文檔"
 
-#: ../src/control/LatexController.cpp:260
+#: ../src/control/LatexController.cpp:265
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "無法加載LaTeX PDF文檔: {1}"
 
@@ -575,7 +575,7 @@ msgstr ""
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:53
+#: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
 msgstr ""
 
@@ -618,11 +618,11 @@ msgstr ""
 msgid "Get version of xournalpp"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:48
+#: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
 msgstr ""
 
-#: ../src/control/LatexController.cpp:59
+#: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
@@ -735,7 +735,7 @@ msgstr ""
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到頁面(第一頁:1)"
 
-#: ../src/control/LatexController.cpp:187
+#: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr ""
 
@@ -1294,7 +1294,7 @@ msgstr ""
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr ""
 
-#: ../src/control/LatexController.cpp:233
+#: ../src/control/LatexController.cpp:238
 msgid "The formula is empty when rendered or invalid."
 msgstr ""
 
