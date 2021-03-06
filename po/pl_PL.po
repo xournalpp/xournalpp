@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-01 18:30\n"
+"POT-Creation-Date: 2021-03-06 20:18+0000\n"
+"PO-Revision-Date: 2021-03-06 20:36\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -217,11 +217,11 @@ msgid "Could not create folder: {1}\n"
 msgstr "Nie można utworzyć folderu: {1}\n"
 "Nie powiodło się z błędem: {2}"
 
-#: ../src/control/LatexController.cpp:266
+#: ../src/control/LatexController.cpp:271
 msgid "Could not load LaTeX PDF file"
 msgstr "Nie udało się wgrać pliku LaTeX PDF"
 
-#: ../src/control/LatexController.cpp:260
+#: ../src/control/LatexController.cpp:265
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Nie udało się wgrać pliku LaTeX PDF: {1}"
 
@@ -588,7 +588,7 @@ msgstr "Nie znaleziono programu generatora LaTeX w ŚCIEŻCE: {1}"
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Nie udało się przetworzyć polecenia generatora LaTeX: {1}"
 
-#: ../src/control/LatexController.cpp:53
+#: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Nie udało się odczytać pliku globalnego szablonu. Sprawdź swoje ustawienia."
 
@@ -631,11 +631,11 @@ msgstr "Dalej"
 msgid "Get version of xournalpp"
 msgstr "Pokaż wersję xournalpp"
 
-#: ../src/control/LatexController.cpp:48
+#: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
 msgstr "Plik szablonu globalnego nie istnieje. Sprawdź swoje ustawienia."
 
-#: ../src/control/LatexController.cpp:59
+#: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Plik szablonu globalnego nie jest zwykłym plikiem. Sprawdź swoje ustawienia. "
 
@@ -748,7 +748,7 @@ msgstr "Wykres izometryczny"
 msgid "Jump to Page (first Page: 1)"
 msgstr "Skocz do strony (pierwsza strona: 1)"
 
-#: ../src/control/LatexController.cpp:187
+#: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "LaTeX napotkał błąd: {1} (kod zakończenia: {2})"
 
@@ -1318,7 +1318,7 @@ msgstr "Plik nie jest prawidłowym plikiem .xopp (brak znacznika wersji): \"{1}\
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Plik nie jest prawidłowym plikiem .xopp (Uszkodzony znacznik wersji): \"{1}\""
 
-#: ../src/control/LatexController.cpp:233
+#: ../src/control/LatexController.cpp:238
 msgid "The formula is empty when rendered or invalid."
 msgstr "Pusty lub nieprawidłowy wzór podczas renderowania."
 
