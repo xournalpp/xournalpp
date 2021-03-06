@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-06 11:40\n"
+"PO-Revision-Date: 2021-03-06 12:42\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -2671,7 +2671,7 @@ msgstr "Žádná ikona"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "Bez měřítek"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:207
 #: ../ui/settings.glade:224
@@ -2696,7 +2696,7 @@ msgstr "Výstupní zařízení"
 
 #: ../ui/settings.glade:4770
 msgid "PDF Cache"
-msgstr ""
+msgstr "PDF Cache"
 
 #: ../ui/main.glade:1140
 msgid "P_revious annotated Page"
@@ -2984,7 +2984,7 @@ msgstr "Ná_strojové lišty"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "Nastavení souboru šablony"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -2996,7 +2996,7 @@ msgstr "Test"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "Test konfigurace"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
