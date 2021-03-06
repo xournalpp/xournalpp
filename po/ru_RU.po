@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-01 18:01+0000\n"
-"PO-Revision-Date: 2021-03-01 18:30\n"
+"PO-Revision-Date: 2021-03-06 14:39\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -62,7 +62,7 @@ msgstr "Добавить/редактировать Tex"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "Расширенные параметры экспорта"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -418,7 +418,7 @@ msgstr "Нарисовать стрелку"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Нарисовать эллипс"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -1222,7 +1222,7 @@ msgstr ""
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Поменять слой ниже с текущим"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:65
 msgid "Swap the current page with the one above"
