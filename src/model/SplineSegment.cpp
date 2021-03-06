@@ -5,6 +5,7 @@
 
 #include "Element.h"
 #include "Interval.h"
+#include "PolynomialSolver.h"
 
 SplineSegment::SplineSegment(const Point& p, const Point& fp, const Point& sp, const Point& q):
         firstKnot(p), firstControlPoint(fp), secondControlPoint(sp), secondKnot(q) {}
@@ -131,14 +132,12 @@ auto SplineSegment::getBoundingBox() const -> Rectangle<double> {
     double a = secondKnot.x + 3 * (firstControlPoint.x - secondControlPoint.x) - firstKnot.x;
     double b = secondControlPoint.x - 2 * firstControlPoint.x + firstKnot.x;
     double c = firstControlPoint.x - firstKnot.x;
-    std::vector<double> roots = rootsOfQuadraticEquation(a, b, c);
+    std::vector<double> roots = PolynomialSolver::rootsOfQuadratic(a, b, c, 0.0, 1.0);
 
     Interval<double> intervalX = Interval<double>::getInterval(firstKnot.x, secondKnot.x);
     for (double t: roots) {
-        if (t > 0.0 && t < 1.0) {
-            double x = getX(t);
-            intervalX.envelop(x);
-        }
+        double x = getX(t);
+        intervalX.envelop(x);
     }
 
     /**
@@ -148,14 +147,12 @@ auto SplineSegment::getBoundingBox() const -> Rectangle<double> {
     a = secondKnot.y + 3 * (firstControlPoint.y - secondControlPoint.y) - firstKnot.y;
     b = secondControlPoint.y - 2 * firstControlPoint.y + firstKnot.y;
     c = firstControlPoint.y - firstKnot.y;
-    roots = rootsOfQuadraticEquation(a, b, c);
+    roots = PolynomialSolver::rootsOfQuadratic(a, b, c, 0.0, 1.0);
 
     Interval<double> intervalY = Interval<double>::getInterval(firstKnot.y, secondKnot.y);
     for (double t: roots) {
-        if (t > 0.0 && t < 1.0) {
-            double y = getY(t);
-            intervalY.envelop(y);
-        }
+        double y = getY(t);
+        intervalY.envelop(y);
     }
 
     return Rectangle(intervalX.min, intervalY.min, intervalX.length(), intervalY.length());
@@ -166,12 +163,7 @@ auto SplineSegment::intersectWithHorizontalLine(double lineY) const -> std::vect
     const double b = firstKnot.y + secondControlPoint.y - 2.0 * firstControlPoint.y;
     const double c = firstControlPoint.y - firstKnot.y;
     const double d = firstKnot.y - lineY;
-    std::vector<double> roots = rootsOfCubicEquation(a, b, c, d);
-
-    std::vector<double> result;
-    std::remove_copy_if(roots.cbegin(), roots.cend(), std::back_inserter(result),
-                        [](double value) { return value > 1.0 || value < 0.0; });
-    return result;
+    return PolynomialSolver::rootsOfCubic(a, b, c, d, 0.0, 1.0);
 }
 
 auto SplineSegment::intersectWithVerticalLine(double lineX) const -> std::vector<double> {
@@ -179,12 +171,7 @@ auto SplineSegment::intersectWithVerticalLine(double lineX) const -> std::vector
     const double b = firstKnot.x + secondControlPoint.x - 2.0 * firstControlPoint.x;
     const double c = firstControlPoint.x - firstKnot.x;
     const double d = firstKnot.x - lineX;
-    std::vector<double> roots = rootsOfCubicEquation(a, b, c, d);
-
-    std::vector<double> result;
-    std::remove_copy_if(roots.cbegin(), roots.cend(), std::back_inserter(result),
-                        [](double value) { return value > 1.0 || value < 0.0; });
-    return result;
+    return PolynomialSolver::rootsOfCubic(a, b, c, d, 0.0, 1.0);
 }
 
 auto SplineSegment::intersectWithRectangle(const Rectangle<double>& rectangle) const -> std::vector<double> {
@@ -198,21 +185,13 @@ auto SplineSegment::intersectWithRectangle(const Rectangle<double>& rectangle) c
         double b = firstKnot.y + secondControlPoint.y - 2.0 * firstControlPoint.y;
         double c = firstControlPoint.y - firstKnot.y;
         double d = firstKnot.y - rectangle.y;
-        std::vector<double> roots1 = rootsOfCubicEquation(a, b, c, d);
+        std::vector<double> roots1 = PolynomialSolver::rootsOfCubic(a, b, c, d, 0.0, 1.0);
 
         d -= rectangle.height;
-        std::vector<double> roots2 = rootsOfCubicEquation(a, b, c, d);
+        std::vector<double> roots2 = PolynomialSolver::rootsOfCubic(a, b, c, d, 0.0, 1.0);
 
-        /**
-         * We could use std::upper_bound() to find those iterators.
-         * Since roots{1,2}.size() <= 3, this is probably not worth it though.
-         */
-        auto beginLine1 = std::find_if(roots1.cbegin(), roots1.cend(), [](double v) { return v > 0.0; });
-        auto endLine1 = std::find_if(beginLine1, roots1.cend(), [](double v) { return v > 1.0; });
-        auto beginLine2 = std::find_if(roots2.cbegin(), roots2.cend(), [](double v) { return v > 0.0; });
-        auto endLine2 = std::find_if(beginLine2, roots2.cend(), [](double v) { return v > 1.0; });
-
-        std::merge(beginLine1, endLine1, beginLine2, endLine2, std::back_inserter(horizontalIntersections));
+        std::merge(roots1.begin(), roots1.end(), roots2.begin(), roots2.end(),
+                   std::back_inserter(horizontalIntersections));
     }
 
     /**
@@ -225,17 +204,13 @@ auto SplineSegment::intersectWithRectangle(const Rectangle<double>& rectangle) c
         double b = firstKnot.x + secondControlPoint.x - 2.0 * firstControlPoint.x;
         double c = firstControlPoint.x - firstKnot.x;
         double d = firstKnot.x - rectangle.x;
-        std::vector<double> roots1 = rootsOfCubicEquation(a, b, c, d);
+        std::vector<double> roots1 = PolynomialSolver::rootsOfCubic(a, b, c, d, 0.0, 1.0);
 
         d -= rectangle.width;
-        std::vector<double> roots2 = rootsOfCubicEquation(a, b, c, d);
+        std::vector<double> roots2 = PolynomialSolver::rootsOfCubic(a, b, c, d, 0.0, 1.0);
 
-        auto beginLine1 = std::find_if(roots1.cbegin(), roots1.cend(), [](double v) { return v > 0.0; });
-        auto endLine1 = std::find_if(beginLine1, roots1.cend(), [](double v) { return v > 1.0; });
-        auto beginLine2 = std::find_if(roots2.cbegin(), roots2.cend(), [](double v) { return v > 0.0; });
-        auto endLine2 = std::find_if(beginLine2, roots2.cend(), [](double v) { return v > 1.0; });
-
-        std::merge(beginLine1, endLine1, beginLine2, endLine2, std::back_inserter(verticalIntersections));
+        std::merge(roots1.begin(), roots1.end(), roots2.begin(), roots2.end(),
+                   std::back_inserter(verticalIntersections));
     }
 
     /**
@@ -288,107 +263,4 @@ bool SplineSegment::isTailInSelection(ShapeContainer* container, bool assumeSeco
                childSegments.second.isTailInSelection(container, true);
     }
     return true;
-}
-
-auto SplineSegment::rootsOfQuadraticEquation(double a, double b, double c) -> std::vector<double> {
-    if (a == 0.0) {
-        /**
-         * The equation is linear
-         */
-        if (b != 0.0) {
-            return {-c / (2.0 * b)};
-        }
-        return {};
-    }
-
-    /**
-     * Reduced discriminant of the polynomial equation
-     */
-    double Delta = b * b - a * c;
-
-    if (Delta > 0) {
-        // Sort the two roots from smallest to biggest
-        double PMsqrtDelta = (a > 0.0 ? std::sqrt(Delta) : -std::sqrt(Delta));
-        return {(-b - PMsqrtDelta) / a, (-b + PMsqrtDelta) / a};
-    }
-
-    if (Delta == 0.0) {
-        return {-b / a};
-    }
-
-    return {};
-}
-
-auto SplineSegment::rootsOfCubicEquation(double a, double b, double c, double d) -> std::vector<double> {
-    /**
-     * Solve the equation a*t^3 + 3*b*t^2 + 3*c*t + d
-     * See https://en.wikipedia.org/wiki/Cubic_equation for the methods used here.
-     */
-    if (a == 0.0) {
-        return rootsOfQuadraticEquation(3.0 * b, 1.5 * c, d);
-    }
-
-    /**
-     * The equivalent depressed equation u^3 + 3 * p * u + 2 * q = 0 is obtain by the change of variable u = t + b / a
-     *
-     * Coefficients of the depressed equation
-     */
-    double bOverA = b / a;
-    double bOverASquared = bOverA * bOverA;
-    double cOverA = c / a;
-    double p = cOverA - bOverASquared;
-    double q = 0.5 * d / a + bOverA * (bOverASquared - 1.5 * cOverA);
-
-    /**
-     * Discriminant
-     */
-    double minusDiscriminant = p * p * p + q * q;
-    if (minusDiscriminant > 0.0) {
-        /**
-         * One real solution, two complex ones (which we ignore)
-         * Use Cardano's formula
-         */
-        double sqrtMinusDiscriminant = std::sqrt(minusDiscriminant);
-        return {-bOverA + std::cbrt(-q + sqrtMinusDiscriminant) + std::cbrt(-q - sqrtMinusDiscriminant)};
-    }
-    if (minusDiscriminant == 0.0) {
-        /**
-         * Fairly improbable case...
-         * Three real solutions, at least twice the same
-         */
-        if (p == 0) {
-            /**
-             * A triple solution. We don't care for the multiplicity
-             */
-            return {-bOverA};
-        }
-        /**
-         * Ignore the solution of multiplicity 2:
-         * the spline is tangent to the line WITHOUT crossing it
-         */
-        return {-bOverA - 2 * q / p};
-        /**
-         * Nb: q / p = - std::cbrt(q) because minusDiscriminant == 0
-         * This trick is used because it (probably) reduces the computational cost
-         */
-    }
-    /**
-     * minusDiscriminant < 0.0:
-     * Three distinct real solutions
-     * Use the trigonometric solutions
-     */
-    double sqrtMinusP = std::sqrt(-p);
-    double angle = std::acos(q / (p * sqrtMinusP)) / 3.0;  // in [0, M_PI_3]
-    double cosine = sqrtMinusP * std::cos(angle);          // in [0.5 * sqrtMinusP, sqrtMinusP ]
-    double sine = SQRT3 * sqrtMinusP * std::sin(angle);    // in [0, 1.5 * sqrtMinusP]
-    return {-cosine - sine - bOverA, -cosine + sine - bOverA, 2 * cosine - bOverA};
-
-    /**
-     *  sqrtMinusP < 2 cosine < 2 sqrtMinusP
-     *  -sqrtMinusP < sine - cosine < sqrtMinusP
-     *  -2.5 * sqrtMinusP < -sine - cosine < -0.5 * sqrtMinusP
-     *  -sine - cosine < sine - cosine
-     *
-     * Therefore the returned vector is already sorted.
-     */
 }

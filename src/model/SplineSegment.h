@@ -182,6 +182,11 @@ public:
     bool isTailInSelection(ShapeContainer* container, bool assumeSecondKnotIn) const;
 
     /**
+     * @brief Compute the smallest distance between the given point and the segment
+     */
+    double distanceToPoint(const Point& p) const;
+
+    /**
      * @brief Get the parameter value of the point seg.getPoint(t) in the subsegment seg.subdivide(u).first
      * @param t parameter to transform
      * @param u parameter of subdivision
@@ -232,35 +237,4 @@ private:
     static constexpr double FLATNESS_TOLERANCE = 1.0001;
     static constexpr double MIN_KNOT_DISTANCE = 0.3;
     static constexpr double MAX_WIDTH_CHANGE = 0.1;
-
-    static constexpr double SQRT3 = 1.7320508075688772935274463415058723669428;
-
-    /**
-     * @brief Compute the roots of the polynomial equation a * t^2 + 2 * b * t + c
-     * @param a Quadratic coefficient
-     * @param b Half of linear coefficient
-     * @param c Constant coefficient
-     * @return Vector containing the roots (sorted from smallest to biggest)
-     *
-     * Benchmark: ~255,000 microseconds for 1,000,000 iterations
-     */
-    static std::vector<double> rootsOfQuadraticEquation(double a, double b, double c);
-
-    /**
-     * @brief Compute the roots of the polynomial equation a*t^3 + 3*b*t^2 + 3*c*t + d
-     *
-     * Warning: double roots are (purposefully and totally) ignored.
-     * If the polynomial factors as a * (t - u) * (t - v)^2, the returned vector will only contain u.
-     *
-     * A triple root will be returned (without multiplicities).
-     *
-     * @param a Cubic coefficient
-     * @param b Quadratic coefficient
-     * @param c Linear coefficient
-     * @param d Constant coefficient
-     * @return Vector containing the roots (sorted from smallest to biggest)
-     *
-     * Benchmark: ~390,000 microseconds for 1,000,000 iterations
-     */
-    static std::vector<double> rootsOfCubicEquation(double a, double b, double c, double d);
 };
