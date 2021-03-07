@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-06 20:18+0000\n"
-"PO-Revision-Date: 2021-03-06 20:36\n"
+"POT-Creation-Date: 2021-03-07 16:51+0000\n"
+"PO-Revision-Date: 2021-03-07 16:55\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -22,6 +22,11 @@ msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
 "Versuche nun, ohne die Datei zu starten."
+
+#: ../src/control/jobs/BaseExportJob.cpp:46
+msgid "\n"
+" Do you want to continue?"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:454
 msgid "\n"
@@ -384,7 +389,7 @@ msgstr "Öffnen sie keine automatisch gespeicherten Dateien. Diese werden ansons
 "Kopieren Sie diese Dateien an einen anderen Ort.\n"
 "Dateien aus dem Ordner {1} können nicht geöffnet werden."
 
-#: ../src/control/jobs/BaseExportJob.cpp:37
+#: ../src/control/jobs/BaseExportJob.cpp:39
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Das Hintergrund PDF darf nicht überschrieben werden! Dies verursacht Fehler!"
 
@@ -592,7 +597,7 @@ msgstr "Fehler bei der Erkennung eines LaTeX-Befehls: {1}"
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Fehler beim Lesen der globalen Vorlagen-Datei. Bitte überprüfen Sie Ihre Einstellungen."
 
-#: ../src/control/jobs/BaseExportJob.cpp:93
+#: ../src/control/jobs/BaseExportJob.cpp:101
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr "Fehler beim Auflösen von PATH mit folgendem Fehler:\n"
@@ -1298,6 +1303,10 @@ msgstr "Der angehängte PDF-Hintergrund konnte nicht gefunden werden."
 #: ../src/control/Control.cpp:2011
 msgid "The background PDF could not be found."
 msgstr "Der PDF-Hintergrund konnte nicht gefunden werden."
+
+#: ../src/control/jobs/BaseExportJob.cpp:45
+msgid "The check for overwriting the background failed with:\n"
+msgstr ""
 
 #: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
