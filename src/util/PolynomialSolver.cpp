@@ -1,7 +1,5 @@
 #include "PolynomialSolver.h"
 
-#include <cmath>
-
 auto PolynomialSolver::rootsOfQuadratic(double a, double b, double c, double min, double max) -> std::vector<double> {
     if (std::abs(a) < FUZZY_ZERO) {
         /**
@@ -201,19 +199,6 @@ std::vector<double> PolynomialSolver::rootsOfQuartic(double a, double b, double 
 
     double argSqrt = 1.5 * quarticP + 0.5 * biggestRoot;
 
-    //     if (argSqrt < FUZZY_ZERO) {
-    //         printf(" ***** negative: %13.11f  -- %13.11f\n", argSqrt, quarticQ);
-    //
-    //         double r = biggestRoot;
-    //         double quarticR = eOverA - 4.0 * bOverATimesdOverA + 6.0 * bOverASquared * cOverA - 3.0 * bOverASquared *
-    //         bOverASquared;
-    //
-    //         double f = ((r + 15.0 * quarticP) * r + 72.0 * quarticP*quarticP - quarticR) * r + 36.0 * 3.0 *
-    //         quarticP*quarticP * quarticP - 3.0 * quarticP * quarticR - 2.0 * quarticQ * quarticQ; printf("P(t) = %f *
-    //         t^4 + %f * t^3 + %f * t^2 + %f * t + %f\n", a, 4.0*b, 6.0*c,4.0*d,e); printf("Resolvent(%f) = %12.10f\n",
-    //         r, f); return{};
-    //     }
-
     if (solveAsBiquadratic || argSqrt < FUZZY_ZERO) {
         /**
          * Exceptional case of a biquadratic equation
@@ -315,41 +300,40 @@ std::vector<double> PolynomialSolver::truncate2(double r1, double r2, double min
 
 
 ////////////////////////////
+#ifdef POLY_DEBUG
+
 #include <chrono>
 #include <random>
 
 #include <stdio.h>
+
 using namespace std::chrono;
 
-void PolynomialSolver::test() {
+void PolynomialSolver::benchmark() {
     std::random_device rd;
     std::default_random_engine e(rd());
-    std::uniform_real_distribution<double> d(-10.0, 10.0);
+    std::uniform_real_distribution<double> d(-100.0, 100.0);
     size_t n = 0;
 
     // (x-2)*(x-1.1)*(x-0.5)*(x-0.3)*(x-0.2)*(x+0.1)
-    //     PolynomialSolver<6> toto({1.0, -4.0, 5.2, -2.63, 0.4559, 0.0115, -0.0066});
-    //     std::vector<double> tata = toto.findRoots(0, 1);
-    //     printf("roots = \n");
-    //     for (auto d : tata) { printf("%f  ", d); }
-    //     printf("\n");
-    std::vector<double> tata = rootsOfQuartic(1, -9.0 / 4.0, 28.0 / 6.0, -36.0 / 4.0, 16, 0.0, 1.0);
+    PolynomialSolver<6> toto({1.0, -4.0, 5.2, -2.63, 0.4559, 0.0115, -0.0066});
+    std::vector<double> tata = toto.findRoots(-3, 3);
     printf("roots = ");
-    for (auto d: tata) {
-        printf("%f  ", d);
-    }
+    for (auto d: tata) { printf("%f  ", d); }
     printf("\n");
 
     auto start = high_resolution_clock::now();
-    for (int i = 0; i < 1; ++i) {
-        PolynomialSolver<6> toto({d(e), d(e), d(e), d(e), d(e), d(e), d(e)});
+    for (int i = 0; i < 1000000; ++i) {
+        PolynomialSolver<5> toto({d(e), d(e), d(e), d(e), d(e), d(e)});
         std::vector<double> tata = toto.findRoots(0.0, 1.0);
-        //         std::vector<double> tata = rootsOfCubic(d(e), d(e), d(e),d(e), 0.0, 1.0);
-        //         std::vector<double> tata = rootsOfQuartic(d(e), d(e), d(e), d(e), d(e), 0.0, 1.0);
-        //         std::vector<double> tata = rootsOfQuadratic(d(e), d(e),d(e), 0.0, 1.0);
+        //  std::vector<double> tata = rootsOfCubic(d(e), d(e), d(e),d(e), 0.0, 1.0);
+        //  std::vector<double> tata = rootsOfQuartic(d(e), d(e), d(e), d(e), d(e), 0.0, 1.0);
+        //  std::vector<double> tata = rootsOfQuadratic(d(e), d(e),d(e), 0.0, 1.0);
+
         n += tata.size();
     }
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
-    printf("Found %zu roots in %zu microseconds.", n, duration.count());
+    printf("Found %zu roots in %zu microseconds.\n", n, duration.count());
 }
+#endif
