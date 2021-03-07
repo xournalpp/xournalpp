@@ -11,7 +11,28 @@
 
 #pragma once
 
-#include "Point.h"
+#include <cmath>
+
+class Point;
+
+struct MathVect2 {
+public:
+    MathVect2() = default;
+    MathVect2(const Point& p, const Point& q);
+    MathVect2(double dx, double dy);
+
+    double dx{};
+    double dy{};
+    static double scalarProduct(const MathVect2 u, const MathVect2 v);
+    double norm() const;
+    double squaredNorm() const;
+    bool isZero() const;
+    MathVect2 operator+(const MathVect2& u) const;
+    MathVect2 operator-(const MathVect2& u) const;
+};
+
+MathVect2 operator*(const double c, const MathVect2& u);
+
 
 struct MathVect3 {
 public:
