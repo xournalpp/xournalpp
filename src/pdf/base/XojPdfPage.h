@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-#include <cairo/cairo.h>
+#include <cairo.h>
 
 #include "XournalType.h"
 
