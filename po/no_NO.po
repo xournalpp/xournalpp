@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-07 16:51+0000\n"
-"PO-Revision-Date: 2021-03-08 15:46\n"
+"PO-Revision-Date: 2021-03-08 17:02\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -2382,15 +2382,15 @@ msgstr ""
 
 #: ../ui/settings.glade:2357
 msgid "Hand Recognition"
-msgstr ""
+msgstr "Håndgjenkjenning"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Høyde"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
-msgstr ""
+msgstr "Høyde:"
 
 #: ../ui/main.glade:951 ../ui/settings.glade:3288 ../ui/settings.glade:3355
 msgid "Hide Menubar"
@@ -2448,7 +2448,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Bildekvalitet"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
@@ -2553,27 +2553,27 @@ msgstr ""
 
 #: ../ui/settings.glade:1565
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Minimum trykk:"
 
 #: ../ui/settings.glade:1442 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "Mus"
 
 #: ../ui/settings.glade:1411
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "Museknapper"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "Mus og Tastaturkombinasjon"
 
 #: ../ui/main.glade:2659
 msgid "Move Down"
-msgstr ""
+msgstr "Flytt ned"
 
 #: ../ui/main.glade:2651
 msgid "Move Up"
-msgstr ""
+msgstr "Flytt opp"
 
 #: ../ui/main.glade:1129
 msgid "N_ext annotated page"
@@ -2607,7 +2607,7 @@ msgstr ""
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:207
 #: ../ui/settings.glade:224
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 #: ../ui/settings.glade:4074
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2619,7 +2619,7 @@ msgstr ""
 
 #: ../ui/settings.glade:921
 msgid "Options"
-msgstr ""
+msgstr "Innstillingar"
 
 #: ../ui/settings.glade:5155
 msgid "Output Device"
@@ -2635,7 +2635,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
-msgstr ""
+msgstr "Sider:"
 
 #: ../ui/settings.glade:4128
 msgid "Paired Pages"
@@ -2664,7 +2664,7 @@ msgstr ""
 
 #: ../ui/main.glade:1928
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: ../ui/main.glade:1555
 msgid "Pen _Options"
@@ -2672,11 +2672,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3527
 msgid "Performance"
-msgstr ""
+msgstr "Ytelse"
 
 #: ../ui/settings.glade:5401
 msgid "Playback Settings"
-msgstr ""
+msgstr "Innstillinger for avspilling"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -2700,7 +2700,7 @@ msgstr ""
 
 #: ../ui/main.glade:487
 msgid "Preferences"
-msgstr ""
+msgstr "Innstillinger"
 
 #: ../ui/settings.glade:1162
 msgid "Preprocessor"
@@ -2720,19 +2720,19 @@ msgstr ""
 
 #: ../ui/settings.glade:1646
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "Trykkfølsomhet"
 
 #: ../ui/about.glade:167
 msgid "RELEASE_IDENTIFIER"
-msgstr ""
+msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/settings.glade:2979
 msgid "Radius"
-msgstr ""
+msgstr "Radius"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
-msgstr ""
+msgstr "Område"
 
 #: ../ui/settings.glade:4718
 msgid "Re-render when the page's zoom changes by more than "
@@ -2824,7 +2824,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1628
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Sensitivitetskala"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
