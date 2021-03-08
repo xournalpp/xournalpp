@@ -61,3 +61,5 @@ stages:
             exit 1
         fi
       displayName: 'Check for badly formatted modified files'
+  enabled: false
+enabled: false
