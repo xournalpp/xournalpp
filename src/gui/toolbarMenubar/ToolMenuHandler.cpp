@@ -398,7 +398,6 @@ void ToolMenuHandler::initToolItems() {
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")),
                               pageBackgroundChangeController->getMenu());
 
-    ADD_STOCK_ITEM("CHANGE_LAYER_NAME", ACTION_RENAME_LAYER, "changeLayer", _("Change current layer name"));
     // Menu Tool
     // ************************************************************************
 
