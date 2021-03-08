@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <cairo/cairo.h>
+#include <cairo.h>
 
 #include "control/PdfCache.h"
 #include "pdf/base/XojPdfPage.h"

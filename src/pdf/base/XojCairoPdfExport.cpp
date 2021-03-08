@@ -4,7 +4,7 @@
 #include <sstream>
 #include <stack>
 
-#include <cairo/cairo-pdf.h>
+#include <cairo-pdf.h>
 
 #include "view/DocumentView.h"
 
