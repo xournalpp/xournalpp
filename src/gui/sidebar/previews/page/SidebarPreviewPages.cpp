@@ -70,7 +70,12 @@ void SidebarPreviewPages::enableSidebar() {
 
 auto SidebarPreviewPages::getName() -> string { return _("Page Preview"); }
 
-auto SidebarPreviewPages::getIconName() -> string { return "sidebar-page-preview"; }
+auto SidebarPreviewPages::getIconName() -> string {
+    return this->control->getSettings()->getStockIconsUsage() &&
+                           gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), "sidebar-page-preview") ?
+                   "sidebar-page-preview" :
+                   "xopp-sidebar-page-preview";
+}
 
 /**
  * Called when an action is performed

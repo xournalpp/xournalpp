@@ -169,6 +169,9 @@ public:
     void setIconStyle(IconStyle sty);
     IconStyle getIconStyle() const;
 
+    void setStockIconsUsage(bool use);
+    bool getStockIconsUsage() const;
+
     /**
      * The last saved path
      */
@@ -616,6 +619,11 @@ private:
      * icons.
      */
     IconStyle iconStyle{};
+
+    /**
+     * If stock icons are used instead of Xournal++ icons when available
+     */
+    bool useStockIcons{};
 
     /**
      * If the menu bar is visible on startup

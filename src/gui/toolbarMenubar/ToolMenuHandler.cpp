@@ -235,26 +235,26 @@ void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type, Acti
 }
 
 void ToolMenuHandler::initPenToolItem() {
-    auto* tbPen = new ToolButton(listener, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool-pencil", _("Pen"));
+    auto* tbPen = new ToolButton(listener, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, iconName("tool-pencil"), _("Pen"));
 
-    registerMenupoint(tbPen->registerPopupMenuEntry(_("standard"), "line-style-plain"), ACTION_TOOL_LINE_STYLE_PLAIN,
-                      GROUP_LINE_STYLE);
+    registerMenupoint(tbPen->registerPopupMenuEntry(_("standard"), iconName("line-style-plain")),
+                      ACTION_TOOL_LINE_STYLE_PLAIN, GROUP_LINE_STYLE);
 
-    registerMenupoint(tbPen->registerPopupMenuEntry(_("dashed"), "line-style-dash"), ACTION_TOOL_LINE_STYLE_DASH,
-                      GROUP_LINE_STYLE);
+    registerMenupoint(tbPen->registerPopupMenuEntry(_("dashed"), iconName("line-style-dash")),
+                      ACTION_TOOL_LINE_STYLE_DASH, GROUP_LINE_STYLE);
 
-    registerMenupoint(tbPen->registerPopupMenuEntry(_("dash-/ dotted"), "line-style-dash-dot"),
+    registerMenupoint(tbPen->registerPopupMenuEntry(_("dash-/ dotted"), iconName("line-style-dash-dot")),
                       ACTION_TOOL_LINE_STYLE_DASH_DOT, GROUP_LINE_STYLE);
 
-    registerMenupoint(tbPen->registerPopupMenuEntry(_("dotted"), "line-style-dot"), ACTION_TOOL_LINE_STYLE_DOT,
-                      GROUP_LINE_STYLE);
+    registerMenupoint(tbPen->registerPopupMenuEntry(_("dotted"), iconName("line-style-dot")),
+                      ACTION_TOOL_LINE_STYLE_DOT, GROUP_LINE_STYLE);
 
     addToolItem(tbPen);
 }
 
 void ToolMenuHandler::initEraserToolItem() {
-    auto* tbEraser =
-            new ToolButton(listener, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true, "tool-eraser", _("Eraser"));
+    auto* tbEraser = new ToolButton(listener, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true, iconName("tool-eraser"),
+                                    _("Eraser"));
 
     registerMenupoint(tbEraser->registerPopupMenuEntry(_("standard")), ACTION_TOOL_ERASER_STANDARD, GROUP_ERASER_MODE);
     registerMenupoint(tbEraser->registerPopupMenuEntry(_("whiteout")), ACTION_TOOL_ERASER_WHITEOUT, GROUP_ERASER_MODE);
@@ -309,12 +309,18 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
     addToolItem(new ToolButton(listener, name, action, stockIcon, text))
 
 // Use Custom loading Icon
-#define ADD_CUSTOM_ITEM(name, action, icon, text) addToolItem(new ToolButton(listener, name, action, icon, text))
+#define ADD_CUSTOM_ITEM(name, action, icon, text) \
+    addToolItem(new ToolButton(listener, name, action, iconName(icon), text))
 
 // Use Custom loading Icon, toggle item
 // switchOnly: You can select pen, eraser etc. but you cannot unselect pen.
 #define ADD_CUSTOM_ITEM_TGL(name, action, group, switchOnly, icon, text) \
-    addToolItem(new ToolButton(listener, name, action, group, switchOnly, icon, text))
+    addToolItem(new ToolButton(listener, name, action, group, switchOnly, iconName(icon), text))
+
+// Use Stock Icon, toggle item
+// switchOnly: You can select pen, eraser etc. but you cannot unselect pen.
+#define ADD_STOCK_ITEM_TGL(name, action, group, switchOnly, stockIcon, text) \
+    addToolItem(new ToolButton(listener, name, action, group, switchOnly, stockIcon, text))
 
 void ToolMenuHandler::initToolItems() {
     // Items ordered by menu, if possible.
@@ -324,29 +330,28 @@ void ToolMenuHandler::initToolItems() {
     // Menu File
     // ************************************************************************
 
-    ADD_STOCK_ITEM("NEW", ACTION_NEW, "document-new", _("New Xournal"));
-    ADD_STOCK_ITEM("OPEN", ACTION_OPEN, "document-open", _("Open file"));
-    ADD_STOCK_ITEM("SAVE", ACTION_SAVE, "document-save", _("Save"));
+    ADD_CUSTOM_ITEM("NEW", ACTION_NEW, "document-new", _("New Xournal"));
+    ADD_CUSTOM_ITEM("OPEN", ACTION_OPEN, "document-open", _("Open file"));
+    ADD_CUSTOM_ITEM("SAVE", ACTION_SAVE, "document-save", _("Save"));
     ADD_STOCK_ITEM("PRINT", ACTION_PRINT, "document-print", _("Print"));
 
     // Menu Edit
     // ************************************************************************
 
     // Undo / Redo Texts are updated from code, therefore a reference is hold for this items
-    undoButton = new ToolButton(listener, "UNDO", ACTION_UNDO, "edit-undo", _("Undo"));
-    redoButton = new ToolButton(listener, "REDO", ACTION_REDO, "edit-redo", _("Redo"));
+    undoButton = new ToolButton(listener, "UNDO", ACTION_UNDO, iconName("edit-undo"), _("Undo"));
+    redoButton = new ToolButton(listener, "REDO", ACTION_REDO, iconName("edit-redo"), _("Redo"));
     addToolItem(undoButton);
     addToolItem(redoButton);
 
-    ADD_STOCK_ITEM("CUT", ACTION_CUT, "edit-cut", _("Cut"));
-    ADD_STOCK_ITEM("COPY", ACTION_COPY, "edit-copy", _("Copy"));
-    ADD_STOCK_ITEM("PASTE", ACTION_PASTE, "edit-paste", _("Paste"));
+    ADD_CUSTOM_ITEM("CUT", ACTION_CUT, "edit-cut", _("Cut"));
+    ADD_CUSTOM_ITEM("COPY", ACTION_COPY, "edit-copy", _("Copy"));
+    ADD_CUSTOM_ITEM("PASTE", ACTION_PASTE, "edit-paste", _("Paste"));
 
     ADD_STOCK_ITEM("SEARCH", ACTION_SEARCH, "edit-find", _("Search"));
 
     ADD_STOCK_ITEM("DELETE", ACTION_DELETE, "edit-delete", _("Delete"));
 
-    // Icon snapping.svg made by www.freepik.com from www.flaticon.com
     ADD_CUSTOM_ITEM_TGL("ROTATION_SNAPPING", ACTION_ROTATION_SNAPPING, GROUP_SNAPPING, false, "snapping-rotation",
                         _("Rotation Snapping"));
     ADD_CUSTOM_ITEM_TGL("GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false, "snapping-grid",
@@ -361,12 +366,12 @@ void ToolMenuHandler::initToolItems() {
                         "presentation-mode", _("Presentation mode"));
     ADD_CUSTOM_ITEM_TGL("FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false, "fullscreen", _("Toggle fullscreen"));
 
-    ADD_STOCK_ITEM("MANAGE_TOOLBAR", ACTION_MANAGE_TOOLBAR, "toolbars-manage", _("Manage Toolbars"));
-    ADD_STOCK_ITEM("CUSTOMIZE_TOOLBAR", ACTION_CUSTOMIZE_TOOLBAR, "toolbars-customize", _("Customize Toolbars"));
+    ADD_CUSTOM_ITEM("MANAGE_TOOLBAR", ACTION_MANAGE_TOOLBAR, "toolbars-manage", _("Manage Toolbars"));
+    ADD_CUSTOM_ITEM("CUSTOMIZE_TOOLBAR", ACTION_CUSTOMIZE_TOOLBAR, "toolbars-customize", _("Customize Toolbars"));
 
     ADD_STOCK_ITEM("ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _("Zoom out"));
     ADD_STOCK_ITEM("ZOOM_IN", ACTION_ZOOM_IN, "zoom-in", _("Zoom in"));
-    ADD_CUSTOM_ITEM_TGL("ZOOM_FIT", ACTION_ZOOM_FIT, GROUP_ZOOM_FIT, false, "zoom-fit-best", _("Zoom fit to screen"));
+    ADD_STOCK_ITEM_TGL("ZOOM_FIT", ACTION_ZOOM_FIT, GROUP_ZOOM_FIT, false, "zoom-fit-best", _("Zoom fit to screen"));
     ADD_STOCK_ITEM("ZOOM_100", ACTION_ZOOM_100, "zoom-original", _("Zoom to 100%"));
 
     // Menu Navigation
@@ -388,8 +393,8 @@ void ToolMenuHandler::initToolItems() {
     // Menu Journal
     // ************************************************************************
 
-    auto* tbInsertNewPage =
-            new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER, "page-add", _("Insert page"));
+    auto* tbInsertNewPage = new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
+                                           iconName("page-add").c_str(), _("Insert page"));
     addToolItem(tbInsertNewPage);
     tbInsertNewPage->setPopupMenu(this->newPageType->getMenu());
 
@@ -437,16 +442,16 @@ void ToolMenuHandler::initToolItems() {
     ADD_CUSTOM_ITEM_TGL("AUDIO_RECORDING", ACTION_AUDIO_RECORD, GROUP_AUDIO, false, "audio-record",
                         _("Record Audio / Stop Recording"));
     audioPausePlaybackButton = new ToolButton(listener, "AUDIO_PAUSE_PLAYBACK", ACTION_AUDIO_PAUSE_PLAYBACK,
-                                              GROUP_AUDIO, false, "audio-playback-pause", _("Pause / Play"));
+                                              GROUP_AUDIO, false, iconName("audio-playback-pause"), _("Pause / Play"));
     addToolItem(audioPausePlaybackButton);
     audioStopPlaybackButton = new ToolButton(listener, "AUDIO_STOP_PLAYBACK", ACTION_AUDIO_STOP_PLAYBACK,
-                                             "audio-playback-stop", _("Stop"));
+                                             iconName("audio-playback-stop"), _("Stop"));
     addToolItem(audioStopPlaybackButton);
     audioSeekForwardsButton = new ToolButton(listener, "AUDIO_SEEK_FORWARDS", ACTION_AUDIO_SEEK_FORWARDS,
-                                             "audio-seek-forwards", _("Forward"));
+                                             iconName("audio-seek-forwards"), _("Forward"));
     addToolItem(audioSeekForwardsButton);
     audioSeekBackwardsButton = new ToolButton(listener, "AUDIO_SEEK_BACKWARDS", ACTION_AUDIO_SEEK_BACKWARDS,
-                                              "audio-seek-backwards", _("Back"));
+                                              iconName("audio-seek-backwards"), _("Back"));
     addToolItem(audioSeekBackwardsButton);
 
     // Menu Help
@@ -556,4 +561,13 @@ void ToolMenuHandler::enableAudioPlaybackButtons() {
 void ToolMenuHandler::setAudioPlaybackPaused(bool paused) {
     this->audioPausePlaybackButton->setActive(paused);
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gui->get("menuAudioPausePlayback")), paused);
+}
+
+auto ToolMenuHandler::iconName(const char* icon) -> std::string {
+    std::string xoppName = std::string("xopp-") + icon;
+    auto iconName = control->getSettings()->getStockIconsUsage() &&
+                                    gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), icon) ?
+                            std::string(icon) :
+                            xoppName;
+    return iconName;
 }

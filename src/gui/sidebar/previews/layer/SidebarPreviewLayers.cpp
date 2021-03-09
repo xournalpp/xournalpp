@@ -58,7 +58,13 @@ void SidebarPreviewLayers::enableSidebar() {
 
 auto SidebarPreviewLayers::getName() -> string { return stacked ? _("Layerstack Preview") : _("Layer Preview"); }
 
-auto SidebarPreviewLayers::getIconName() -> string { return stacked ? "sidebar-layerstack" : "sidebar-layer"; }
+auto SidebarPreviewLayers::getIconName() -> string {
+    string iconName = stacked ? "sidebar-layerstack" : "sidebar-layer";
+    return this->control->getSettings()->getStockIconsUsage() &&
+                           gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), iconName.c_str()) ?
+                   iconName :
+                   std::string("xopp-") + iconName;
+}
 
 void SidebarPreviewLayers::pageSizeChanged(size_t page) {
     if (page != this->lc->getCurrentPageId() || !enabled) {

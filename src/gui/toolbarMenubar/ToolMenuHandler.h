@@ -76,6 +76,7 @@ public:
     void enableAudioPlaybackButtons();
 
     void setAudioPlaybackPaused(bool paused);
+    std::string iconName(const char* icon);
 
 private:
     void addToolItem(AbstractToolItem* it);

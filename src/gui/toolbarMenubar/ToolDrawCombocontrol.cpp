@@ -20,19 +20,25 @@ public:
 };
 
 ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id):
-        ToolButton(handler, std::move(id), ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "draw-rect.png",
-                   _("Draw Rectangle")),
+        ToolButton(handler, std::move(id), ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
+                   toolMenuHandler->iconName("draw-rect"), _("Draw Rectangle")),
         toolMenuHandler(toolMenuHandler) {
     setPopupMenu(gtk_menu_new());
 
-    drawTypes.push_back(new ToolDrawType(_("Draw Rectangle"), "draw-rect", ACTION_TOOL_DRAW_RECT));
-    drawTypes.push_back(new ToolDrawType(_("Draw Ellipse"), "draw-ellipse", ACTION_TOOL_DRAW_ELLIPSE));
-    drawTypes.push_back(new ToolDrawType(_("Draw Arrow"), "draw-arrow", ACTION_TOOL_DRAW_ARROW));
-    drawTypes.push_back(new ToolDrawType(_("Draw Line"), "draw-line", ACTION_RULER));
-    drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"), "draw-coordinate-system",
+    drawTypes.push_back(
+            new ToolDrawType(_("Draw Rectangle"), toolMenuHandler->iconName("draw-rect"), ACTION_TOOL_DRAW_RECT));
+    drawTypes.push_back(
+            new ToolDrawType(_("Draw Ellipse"), toolMenuHandler->iconName("draw-ellipse"), ACTION_TOOL_DRAW_ELLIPSE));
+    drawTypes.push_back(
+            new ToolDrawType(_("Draw Arrow"), toolMenuHandler->iconName("draw-arrow"), ACTION_TOOL_DRAW_ARROW));
+    drawTypes.push_back(new ToolDrawType(_("Draw Line"), toolMenuHandler->iconName("draw-line"), ACTION_RULER));
+    drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),
+                                         toolMenuHandler->iconName("draw-coordinate-system"),
                                          ACTION_TOOL_DRAW_COORDINATE_SYSTEM));
-    drawTypes.push_back(new ToolDrawType(_("Draw Spline"), "draw-spline", ACTION_TOOL_DRAW_SPLINE));
-    drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"), "shape-recognizer", ACTION_SHAPE_RECOGNIZER));
+    drawTypes.push_back(
+            new ToolDrawType(_("Draw Spline"), toolMenuHandler->iconName("draw-spline"), ACTION_TOOL_DRAW_SPLINE));
+    drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"), toolMenuHandler->iconName("shape-recognizer"),
+                                         ACTION_SHAPE_RECOGNIZER));
 
     for (ToolDrawType* t: drawTypes) {
         createMenuItem(t->name, t->icon, t->type);

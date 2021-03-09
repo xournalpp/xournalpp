@@ -10,7 +10,7 @@
 #include "Util.h"
 #include "i18n.h"
 
-#define ADD_TYPE_CB(icon, name, action) addToolToList(typeModel, icon, name, action)
+#define ADD_TYPE_CB(icon, name, action) addToolToList(typeModel, useStockIcons, icon, name, action)
 
 ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_SIZE_NONE},  {1, TOOL_SIZE_VERY_FINE},
                                                                        {2, TOOL_SIZE_FINE},  {3, TOOL_SIZE_MEDIUM},
@@ -35,11 +35,14 @@ string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
     }
 }
 
-void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, ToolType action) {
+void addToolToList(GtkListStore* typeModel, bool useStockIcons, const char* icon, const char* name, ToolType action) {
     GtkTreeIter iter;
 
+    std::string iconName = useStockIcons && gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), icon) ?
+                                   std::string(icon) :
+                                   std::string("xopp-") + icon;
     gtk_list_store_append(typeModel, &iter);
-    GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24,
+    GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), iconName.c_str(), 24,
                                                  static_cast<GtkIconLookupFlags>(0), nullptr);
     gtk_list_store_set(typeModel, &iter, 0, pixbuf, -1);
     gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
@@ -75,6 +78,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     }
 
     GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);  // NOLINT
+    bool useStockIcons = this->settings->getStockIconsUsage();
 
     ADD_TYPE_CB("transparent", _("Tool - don't change"), TOOL_NONE);
     ADD_TYPE_CB("tool-pencil", _("Pen"), TOOL_PEN);

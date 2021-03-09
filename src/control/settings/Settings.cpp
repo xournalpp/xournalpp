@@ -82,6 +82,7 @@ void Settings::loadDefault() {
     this->cursorHighlightBorderColor = 0x800000FF;  // Blue with 50% opacity
     this->cursorHighlightBorderWidth = 0.0;
     this->darkTheme = false;
+    this->useStockIcons = false;
     this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
     this->disableScrollbarFadeout = false;
 
@@ -389,6 +390,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->darkTheme = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("iconStyle")) == 0) {
         this->iconStyle = static_cast<IconStyle>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useStockIcons")) == 0) {
+        this->useStockIcons = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
         this->defaultSaveName = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
@@ -837,6 +840,7 @@ void Settings::save() {
     WRITE_DOUBLE_PROP(cursorHighlightBorderWidth);
     WRITE_BOOL_PROP(darkTheme);
     savePropertyUnsigned("iconStyle", static_cast<unsigned int>(iconStyle), root);
+    WRITE_BOOL_PROP(useStockIcons);
 
     WRITE_BOOL_PROP(disableScrollbarFadeout);
 
@@ -1567,6 +1571,16 @@ void Settings::setIconStyle(IconStyle sty) {
 }
 
 auto Settings::getIconStyle() const -> IconStyle { return this->iconStyle; }
+
+void Settings::setStockIconsUsage(bool use) {
+    if (this->useStockIcons == use) {
+        return;
+    }
+    this->useStockIcons = use;
+    save();
+}
+
+auto Settings::getStockIconsUsage() const -> bool { return this->useStockIcons; }
 
 auto Settings::isSidebarVisible() const -> bool { return this->showSidebar; }
 
