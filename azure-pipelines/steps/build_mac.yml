@@ -10,8 +10,8 @@ steps:
     enabled: true
     displayName: "nuke brew"
   - bash: |
-      curl -O -L https://www.python.org/ftp/python/3.8.0/python-3.8.0-macosx10.9.pkg
-      sudo installer -pkg python-3.9.2-macosx10.9.pkg -target ~/
+      curl -o pyinst.pkg -L https://www.python.org/ftp/python/3.8.0/python-3.8.0-macosx10.9.pkg
+      sudo installer -pkg pyinst.pkg -target /
     displayName: "install python"
   #  - task: UsePythonVersion@0 #does not work without brew
   - bash: |
