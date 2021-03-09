@@ -10,11 +10,12 @@ steps:
     enabled: true
     displayName: "nuke brew"
   - bash: |
-      curl -O -L https://www.python.org/ftp/python/3.9.2/python-3.9.2-macosx10.9.pkg
+      curl -O -L https://www.python.org/ftp/python/3.8.0/python-3.8.0-macosx10.9.pkg
       sudo installer -pkg python-3.9.2-macosx10.9.pkg -target ~/
     displayName: "install python"
   #  - task: UsePythonVersion@0 #does not work without brew
   - bash: |
+      set -x
       export PATH="$HOME/.new_local/bin:$PATH"
       curl -L -O https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-setup.sh
       chmod +x gtk-osx-setup.sh
