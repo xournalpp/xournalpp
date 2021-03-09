@@ -14,6 +14,7 @@ stages:
 - stage: 'Build_Test_Stage'
   jobs:
   - job: 'Build_Test'
+    enabled: false
     pool:
       vmImage: 'ubuntu-18.04'
     displayName: 'Test for correct Clang formatting'
