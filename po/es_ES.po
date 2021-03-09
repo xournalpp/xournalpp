@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-07 16:51+0000\n"
-"PO-Revision-Date: 2021-03-07 16:55\n"
+"PO-Revision-Date: 2021-03-09 04:07\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -26,7 +26,7 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "¿Quieres continuar?"
 
 #: ../src/control/XournalMain.cpp:454
 msgid "\n"
@@ -776,7 +776,7 @@ msgstr "Capa {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Previsualización de capa"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
