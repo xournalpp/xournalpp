@@ -7,7 +7,7 @@ steps:
   - bash: |
       rm -R /Users/runner/hostedtoolcache
       sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh)"
-    enabled: false
+    enabled: true
     displayName: "nuke brew"
   - bash: |
       curl -O -L https://www.python.org/ftp/python/3.9.2/python-3.9.2-macosx10.9.pkg
