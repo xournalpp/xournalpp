@@ -19,5 +19,5 @@ class LatexSettings {
 public:
     bool autoCheckDependencies{true};
     fs::path globalTemplatePath{};
-    std::string genCmd{"pdflatex -interaction=nonstopmode '{}'"};
+    std::string genCmd{"pdflatex -halt-on-error -interaction=nonstopmode '{}'"};
 };
