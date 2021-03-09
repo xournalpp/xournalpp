@@ -5,32 +5,30 @@ parameters:
 
 steps:
   - bash: |
-      sudo mkdir /Users/${{ parameters.jhbuild_user }}
-      sudo dscl . -create /Users/${{ parameters.jhbuild_user }}
-      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} UserShell /bin/bash
-      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} RealName "gtk-bin"
-      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} UniqueID "1011"
-      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} PrimaryGroupID 20
-      sudo dscl . -create /Users/${{ parameters.jhbuild_user }} NFSHomeDirectory /Users/${{ parameters.jhbuild_user }}
-      sudo dscl . -passwd /Users/${{ parameters.jhbuild_user }} password
-      cd /Users/${{ parameters.jhbuild_user }}
-      sudo chown -R ${{ parameters.jhbuild_user }}: /Users/${{ parameters.jhbuild_user }}
-      sudo -H -i -u ${{ parameters.jhbuild_user }} chmod -R 777 /Users/${{ parameters.jhbuild_user }}
-      #echo "${{ parameters.jhbuild_user }}     ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
-    displayName: "create new user"
-    timeoutInMinutes: 5
+      rm -R /Users/runner/hostedtoolcache
+      sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh)"
+    enabled: false
+    displayName: "nuke brew"
   - bash: |
-      whoami
-      cd mac-setup
-      sudo -H -i -u ${{ parameters.jhbuild_user }} "$PWD"/build-gtk3.sh
+      curl -O -L https://www.python.org/ftp/python/3.9.2/python-3.9.2-macosx10.9.pkg
+      sudo installer -pkg python-3.9.2-macosx10.9.pkg -target ~/
+    displayName: "install python"
+  #  - task: UsePythonVersion@0 #does not work without brew
+  - bash: |
+      export PATH="$HOME/.new_local/bin:$PATH"
+      curl -L -O https://gitlab.gnome.org/GNOME/gtk-osx/raw/master/gtk-osx-setup.sh
+      chmod +x gtk-osx-setup.sh
+      ./gtk-osx-setup.sh
+      jhbuild bootstrap-gtk-osx
+      jhbuild build meta-gtk-osx-bootstrap meta-gtk-osx-gtk3
     displayName: 'Install jhbuild and build gtk+'
   - bash: |
       cd mac-setup
-      sudo -s -u ${{ parameters.jhbuild_user }} jhbuild run ./build-poppler.sh
-      sudo -s -u ${{ parameters.jhbuild_user }} jhbuild run ./build-portaudio.sh
-      sudo -s -u ${{ parameters.jhbuild_user }} jhbuild run ./build-libzip.sh
-      sudo -s -u ${{ parameters.jhbuild_user }} jhbuild run ./build-sndfile.sh
-      sudo -s -u ${{ parameters.jhbuild_user }} jhbuild build adwaita-icon-theme
+      jhbuild run ./build-poppler.sh
+      jhbuild run ./build-portaudio.sh
+      jhbuild run ./build-libzip.sh
+      jhbuild run ./build-sndfile.sh
+      jhbuild build adwaita-icon-theme
     displayName: 'Build Deps'
   - bash: |
       mkdir build

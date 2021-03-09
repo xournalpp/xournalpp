@@ -62,4 +62,3 @@ stages:
         fi
       displayName: 'Check for badly formatted modified files'
   enabled: false
-enabled: false
