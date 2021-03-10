@@ -9,7 +9,8 @@
 #include "Util.h"
 #include "i18n.h"
 
-SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar): AbstractSidebarPage(control, toolbar) {
+SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
+        AbstractSidebarPage(control, toolbar), iconNameHelper(control->getSettings()) {
     this->treeViewBookmarks = gtk_tree_view_new();
     g_object_ref(this->treeViewBookmarks);
 
@@ -225,12 +226,7 @@ auto SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, cons
 
 auto SidebarIndexPage::getName() -> string { return _("Contents"); }
 
-auto SidebarIndexPage::getIconName() -> string {
-    return this->control->getSettings()->getStockIconsUsage() &&
-                           gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), "sidebar-index") ?
-                   "sidebar-index" :
-                   "xopp-sidebar-index";
-}
+auto SidebarIndexPage::getIconName() -> string { return this->iconNameHelper.iconName("sidebar-index"); }
 
 auto SidebarIndexPage::hasData() -> bool { return this->hasContents; }
 

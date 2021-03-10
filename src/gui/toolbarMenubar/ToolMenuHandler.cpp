@@ -23,15 +23,16 @@
 #include "ToolZoomSlider.h"
 #include "i18n.h"
 
-ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent) {
-    this->parent = parent;
-    this->control = control;
-    this->listener = control;
-    this->zoom = control->getZoomControl();
-    this->gui = gui;
-    this->toolHandler = control->getToolHandler();
-    this->tbModel = new ToolbarModel();
+ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent):
+        parent(parent),
+        control(control),
+        listener(control),
+        zoom(control->getZoomControl()),
+        gui(gui),
+        toolHandler(control->getToolHandler()),
+        iconNameHelper(control->getSettings()) {
 
+    this->tbModel = new ToolbarModel();
     // still owned by Control
     this->newPageType = control->getNewPageType();
     this->newPageType->addApplyBackgroundButton(control->getPageBackgroundChangeController(), false,
@@ -563,11 +564,4 @@ void ToolMenuHandler::setAudioPlaybackPaused(bool paused) {
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gui->get("menuAudioPausePlayback")), paused);
 }
 
-auto ToolMenuHandler::iconName(const char* icon) -> std::string {
-    std::string xoppName = std::string("xopp-") + icon;
-    auto iconName = control->getSettings()->getStockIconsUsage() &&
-                                    gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), icon) ?
-                            std::string(icon) :
-                            xoppName;
-    return iconName;
-}
+auto ToolMenuHandler::iconName(const char* icon) -> std::string { return iconNameHelper.iconName(icon); }

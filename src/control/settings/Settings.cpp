@@ -1572,7 +1572,7 @@ void Settings::setIconStyle(IconStyle sty) {
 
 auto Settings::getIconStyle() const -> IconStyle { return this->iconStyle; }
 
-void Settings::setStockIconsUsage(bool use) {
+void Settings::setAreStockIconsUsed(bool use) {
     if (this->useStockIcons == use) {
         return;
     }
@@ -1580,7 +1580,7 @@ void Settings::setStockIconsUsage(bool use) {
     save();
 }
 
-auto Settings::getStockIconsUsage() const -> bool { return this->useStockIcons; }
+auto Settings::areStockIconsUsed() const -> bool { return this->useStockIcons; }
 
 auto Settings::isSidebarVisible() const -> bool { return this->showSidebar; }
 

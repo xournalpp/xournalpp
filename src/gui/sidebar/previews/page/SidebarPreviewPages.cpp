@@ -12,7 +12,9 @@
 #include "i18n.h"
 
 SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
-        SidebarPreviewBase(control, gui, toolbar), contextMenu(gui->get("sidebarPreviewContextMenu")) {
+        SidebarPreviewBase(control, gui, toolbar),
+        contextMenu(gui->get("sidebarPreviewContextMenu")),
+        iconNameHelper(control->getSettings()) {
     // Connect the context menu actions
     const std::map<std::string, SidebarActions> ctxMenuActions = {
             {"sidebarPreviewDuplicate", SIDEBAR_ACTION_COPY},
@@ -70,12 +72,7 @@ void SidebarPreviewPages::enableSidebar() {
 
 auto SidebarPreviewPages::getName() -> string { return _("Page Preview"); }
 
-auto SidebarPreviewPages::getIconName() -> string {
-    return this->control->getSettings()->getStockIconsUsage() &&
-                           gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), "sidebar-page-preview") ?
-                   "sidebar-page-preview" :
-                   "xopp-sidebar-page-preview";
-}
+auto SidebarPreviewPages::getIconName() -> string { return this->iconNameHelper.iconName("sidebar-page-preview"); }
 
 /**
  * Called when an action is performed

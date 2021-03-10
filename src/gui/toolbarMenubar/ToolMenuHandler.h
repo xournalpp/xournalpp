@@ -14,6 +14,7 @@
 #include <gtk/gtk.h>
 
 #include "control/Actions.h"
+#include "util/IconNameHelper.h"
 
 #include "ColorToolItem.h"
 #include "MenuItem.h"
@@ -116,4 +117,5 @@ private:
 
     PageTypeMenu* newPageType = nullptr;
     PageBackgroundChangeController* pageBackgroundChangeController = nullptr;
+    IconNameHelper iconNameHelper;
 };

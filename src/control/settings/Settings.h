@@ -169,8 +169,8 @@ public:
     void setIconStyle(IconStyle sty);
     IconStyle getIconStyle() const;
 
-    void setStockIconsUsage(bool use);
-    bool getStockIconsUsage() const;
+    void setAreStockIconsUsed(bool use);
+    bool areStockIconsUsed() const;
 
     /**
      * The last saved path
