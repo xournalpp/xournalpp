@@ -82,9 +82,8 @@ void ToolZoomSlider::updateScaleMarks() {
     }
 
     gtk_scale_clear_marks(GTK_SCALE(this->slider));
-    gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoom100Value()),
-                       horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, nullptr);
-    gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoomFitValue()),
+    gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(1.0), horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, nullptr);
+    gtk_scale_add_mark(GTK_SCALE(this->slider), scaleFunc(zoom->getZoomFitValue() / zoom->getZoom100Value()),
                        horizontal ? GTK_POS_BOTTOM : GTK_POS_RIGHT, nullptr);
 }
 
