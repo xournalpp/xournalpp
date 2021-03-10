@@ -10,8 +10,7 @@
 #include "Util.h"
 #include "i18n.h"
 
-#define ADD_TYPE_CB(icon, name, action) \
-    addToolToList(typeModel, useStockIcons, iconNameHelper.iconName(icon).c_str(), name, action)
+#define ADD_TYPE_CB(icon, name, action) addToolToList(typeModel, iconNameHelper.iconName(icon).c_str(), name, action)
 
 ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_SIZE_NONE},  {1, TOOL_SIZE_VERY_FINE},
                                                                        {2, TOOL_SIZE_FINE},  {3, TOOL_SIZE_MEDIUM},
@@ -36,7 +35,7 @@ string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
     }
 }
 
-void addToolToList(GtkListStore* typeModel, bool useStockIcons, const char* icon, const char* name, ToolType action) {
+void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, ToolType action) {
     GtkTreeIter iter;
 
     gtk_list_store_append(typeModel, &iter);
@@ -77,7 +76,6 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     }
 
     GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);  // NOLINT
-    bool useStockIcons = this->settings->areStockIconsUsed();
 
     ADD_TYPE_CB("transparent", _("Tool - don't change"), TOOL_NONE);
     ADD_TYPE_CB("tool-pencil", _("Pen"), TOOL_PEN);
