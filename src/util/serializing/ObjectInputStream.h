@@ -26,14 +26,14 @@ public:
     bool read(const char* data, int len);
 
     void readObject(const char* name);
-    string readObject();
-    string getNextObjectName();
+    std::string readObject();
+    std::string getNextObjectName();
     void endObject();
 
     int readInt();
     double readDouble();
     size_t readSizeT();
-    string readString();
+    std::string readString();
 
     void readData(void** data, int* len);
     cairo_surface_t* readImage();
@@ -41,7 +41,7 @@ public:
 private:
     void checkType(char type);
 
-    static string getType(char type);
+    static std::string getType(char type);
 
 private:
     GString* str = nullptr;

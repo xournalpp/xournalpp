@@ -32,7 +32,6 @@
 #include "StylusInputHandler.h"
 #include "TouchDrawingInputHandler.h"
 #include "TouchInputHandler.h"
-#include "XournalType.h"
 #include "config-debug.h"
 
 class InputContext {
@@ -50,7 +49,7 @@ private:
 
     GdkModifierType modifierState = (GdkModifierType)0;
 
-    std::set<string> knownDevices;
+    std::set<std::string> knownDevices;
 
 public:
     enum DeviceType {

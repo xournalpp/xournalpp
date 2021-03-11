@@ -17,7 +17,7 @@
 #include "control/ToolHandler.h"
 
 #include "AbstractToolItem.h"
-#include "XournalType.h"
+
 
 class ColorSelectImage;
 
@@ -32,10 +32,10 @@ public:
     void enableColor(Color color);
     virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
-    virtual string getToolDisplayName();
+    virtual std::string getToolDisplayName();
     virtual GtkWidget* getNewToolIcon();
 
-    virtual string getId();
+    virtual std::string getId();
 
     Color getColor() const;
 
@@ -68,7 +68,7 @@ private:
     /**
      * Name of the Color
      */
-    string name;
+    std::string name;
 
     /**
      * Icon to display

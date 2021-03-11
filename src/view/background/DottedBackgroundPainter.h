@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "BaseBackgroundPainter.h"
-#include "XournalType.h"
+
 
 class DottedBackgroundPainter: public BaseBackgroundPainter {
 public:

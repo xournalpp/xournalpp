@@ -19,7 +19,6 @@
 #include "gui/sidebar/AbstractSidebarPage.h"
 #include "util/IconNameHelper.h"
 
-#include "XournalType.h"
 
 class Control;
 
@@ -35,12 +34,12 @@ public:
     /**
      * @overwrite
      */
-    virtual string getName();
+    virtual std::string getName();
 
     /**
      * @overwrite
      */
-    virtual string getIconName();
+    virtual std::string getIconName();
 
     /**
      * @overwrite

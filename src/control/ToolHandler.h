@@ -23,7 +23,7 @@
 #include "settings/SettingsEnums.h"
 
 #include "Tool.h"
-#include "XournalType.h"
+
 
 // enum for ptrs that are dynamically pointing to different tools
 /**

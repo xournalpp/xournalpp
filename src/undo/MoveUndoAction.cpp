@@ -8,8 +8,8 @@
 
 #include "i18n.h"
 
-MoveUndoAction::MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, vector<Element*>* selected, double mx,
-                               double my, Layer* targetLayer, PageRef targetPage):
+MoveUndoAction::MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, std::vector<Element*>* selected,
+                               double mx, double my, Layer* targetLayer, PageRef targetPage):
         UndoAction("MoveUndoAction") {
     this->page = sourcePage;
     this->sourceLayer = sourceLayer;
@@ -64,7 +64,7 @@ auto MoveUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-void MoveUndoAction::switchLayer(vector<Element*>* entries, Layer* oldLayer, Layer* newLayer) {
+void MoveUndoAction::switchLayer(std::vector<Element*>* entries, Layer* oldLayer, Layer* newLayer) {
     for (Element* e: this->elements) {
         oldLayer->removeElement(e, false);
         newLayer->addElement(e);
@@ -83,11 +83,11 @@ void MoveUndoAction::repaint() {
     }
 }
 
-auto MoveUndoAction::getPages() -> vector<PageRef> {
-    vector<PageRef> pages;
+auto MoveUndoAction::getPages() -> std::vector<PageRef> {
+    std::vector<PageRef> pages;
     pages.push_back(this->page);
     pages.push_back(this->targetPage);
     return pages;
 }
 
-auto MoveUndoAction::getText() -> string { return text; }
+auto MoveUndoAction::getText() -> std::string { return text; }

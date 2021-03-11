@@ -27,7 +27,7 @@ auto StrokeStyle::parseStyle(const char* style) -> LineStyle {
         return LineStyle();
     }
 
-    vector<double> dash;
+    std::vector<double> dash;
 
     const char* widths = style + 6;
     while (*widths != 0) {
@@ -61,12 +61,12 @@ auto StrokeStyle::parseStyle(const char* style) -> LineStyle {
         return name;                                                                                       \
     }
 
-auto StrokeStyle::formatStyle(const double* dashes, int count) -> string {
+auto StrokeStyle::formatStyle(const double* dashes, int count) -> std::string {
     FORMAT_STYLE("dash", dashLinePattern);
     FORMAT_STYLE("dashdot", dashDotLinePattern);
     FORMAT_STYLE("dot", dotLinePattern);
 
-    string custom = "cust:";
+    std::string custom = "cust:";
 
     for (int i = 0; i < count; i++) {
         custom += " ";
@@ -78,7 +78,7 @@ auto StrokeStyle::formatStyle(const double* dashes, int count) -> string {
     return custom;
 }
 
-auto StrokeStyle::formatStyle(const LineStyle& style) -> string {
+auto StrokeStyle::formatStyle(const LineStyle& style) -> std::string {
     const double* dashes = nullptr;
     int dashCount = 0;
     if (style.getDashes(dashes, dashCount)) {

@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "PenInputHandler.h"
-#include "XournalType.h"
+
 
 class MouseInputHandler: public PenInputHandler {
 private:

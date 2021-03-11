@@ -19,29 +19,29 @@ class XojPage;
 
 class MoveUndoAction: public UndoAction {
 public:
-    MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, vector<Element*>* selected, double mx, double my,
+    MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, std::vector<Element*>* selected, double mx, double my,
                    Layer* targetLayer, PageRef targetPage);
     virtual ~MoveUndoAction();
 
 public:
     virtual bool undo(Control* control);
     virtual bool redo(Control* control);
-    vector<PageRef> getPages();
-    virtual string getText();
+    std::vector<PageRef> getPages();
+    virtual std::string getText();
 
 private:
-    void switchLayer(vector<Element*>* entries, Layer* oldLayer, Layer* newLayer);
+    void switchLayer(std::vector<Element*>* entries, Layer* oldLayer, Layer* newLayer);
     void repaint();
     void move();
 
 private:
-    vector<Element*> elements;
+    std::vector<Element*> elements;
     PageRef targetPage;
 
     Layer* sourceLayer = nullptr;
     Layer* targetLayer = nullptr;
 
-    string text;
+    std::string text;
 
     double dx = 0;
     double dy = 0;

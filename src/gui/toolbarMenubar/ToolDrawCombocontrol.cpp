@@ -9,6 +9,8 @@
 #include "ToolMenuHandler.h"
 #include "i18n.h"
 
+using std::string;
+
 class ToolDrawType {
 public:
     ToolDrawType(string name, string icon, ActionType type): name(std::move(name)), icon(std::move(icon)), type(type) {}

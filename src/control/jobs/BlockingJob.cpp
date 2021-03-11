@@ -4,7 +4,7 @@
 #include "control/xojfile/SaveHandler.h"
 #include "gui/XournalView.h"
 
-BlockingJob::BlockingJob(Control* control, const string& name): control(control) { control->block(name); }
+BlockingJob::BlockingJob(Control* control, const std::string& name): control(control) { control->block(name); }
 
 BlockingJob::~BlockingJob() { this->control = nullptr; }
 

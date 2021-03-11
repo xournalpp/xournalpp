@@ -16,7 +16,6 @@
 
 #include "model/LinkDestination.h"
 
-#include "XournalType.h"
 
 class XojPdfAction {
 public:
@@ -25,7 +24,7 @@ public:
 
 public:
     virtual XojLinkDest* getDestination() = 0;
-    virtual string getTitle() = 0;
+    virtual std::string getTitle() = 0;
 
 private:
 };

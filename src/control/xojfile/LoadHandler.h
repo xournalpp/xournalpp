@@ -25,7 +25,7 @@
 #include "model/Text.h"
 
 #include "LoadHandlerHelper.h"
-#include "XournalType.h"
+
 
 enum ParserPosition {
     PARSER_POS_NOT_STARTED = 1,  // Waiting for opening <xounal> tag
@@ -48,9 +48,9 @@ public:
 public:
     Document* loadDocument(fs::path const& filepath);
 
-    string getLastError();
+    std::string getLastError();
     bool isAttachedPdfMissing() const;
-    string getMissingPdfFilename();
+    std::string getMissingPdfFilename();
 
     void removePdfBackground();
     void setPdfReplacement(fs::path filepath, bool attachToDocument);
@@ -73,7 +73,7 @@ private:
 private:
     void initAttributes();
 
-    string readLine();
+    std::string readLine();
     zip_int64_t readContentFile(char* buffer, zip_uint64_t len);
     bool closeFile();
     bool openFile(fs::path const& filepath);
@@ -99,13 +99,13 @@ private:
     void readTexImage(const gchar* base64string, gsize base64stringLen);
 
 private:
-    static string parseBase64(const gchar* base64, gsize length);
+    static std::string parseBase64(const gchar* base64, gsize length);
     bool readZipAttachment(fs::path const& filename, gpointer& data, gsize& length);
     fs::path getTempFileForPath(fs::path const& filename);
 
 private:
-    string lastError;
-    string pdfMissing;
+    std::string lastError;
+    std::string pdfMissing;
     bool attachedPdfMissing;
 
     bool removePdfBackgroundFlag;
@@ -118,7 +118,7 @@ private:
 
     ParserPosition pos;
 
-    string creator;
+    std::string creator;
     int fileVersion;
     int minimalFileVersion;
 
@@ -127,7 +127,7 @@ private:
     gzFile gzFp;
     bool isGzFile = false;
 
-    vector<double> pressureBuffer;
+    std::vector<double> pressureBuffer;
 
     std::vector<PageRef> pages;
     PageRef page;
@@ -148,7 +148,7 @@ private:
     const gchar* elementName;
 
     int loadedTimeStamp;
-    string loadedFilename;
+    std::string loadedFilename;
 
     DocumentHandler dHanlder;
     Document doc;

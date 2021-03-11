@@ -15,12 +15,12 @@
 
 class TextAttribute: public XMLAttribute {
 public:
-    TextAttribute(string name, string value);
+    TextAttribute(std::string name, std::string value);
     virtual ~TextAttribute();
 
 public:
     virtual void writeOut(OutputStream* out);
 
 private:
-    string value;
+    std::string value;
 };

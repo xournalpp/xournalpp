@@ -16,7 +16,6 @@
 
 #include <gtk/gtk.h>
 
-#include "XournalType.h"
 
 class Settings;
 class ToolbarData;
@@ -46,8 +45,8 @@ private:
 private:
     MainWindow* win = nullptr;
 
-    vector<GtkWidget*> menuitems;
-    vector<MenuSelectToolbarData*> toolbarMenuData;
+    std::vector<GtkWidget*> menuitems;
+    std::vector<MenuSelectToolbarData*> toolbarMenuData;
 
     ToolbarData* selectedToolbar = nullptr;
     bool inPredefinedSection = false;

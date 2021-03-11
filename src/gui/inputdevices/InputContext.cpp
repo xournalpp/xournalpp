@@ -74,11 +74,12 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
     GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
     if (inputSource != GDK_SOURCE_KEYBOARD && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
-        this->knownDevices.find(string(event.deviceName)) == this->knownDevices.end()) {
+        this->knownDevices.find(std::string(event.deviceName)) == this->knownDevices.end()) {
 
-        this->knownDevices.insert(string(event.deviceName));
+        this->knownDevices.insert(std::string(event.deviceName));
         this->getSettings()->transactionStart();
-        auto deviceClassOption = this->getSettings()->getDeviceClassForDevice(string(event.deviceName), inputSource);
+        auto deviceClassOption =
+                this->getSettings()->getDeviceClassForDevice(std::string(event.deviceName), inputSource);
         this->getSettings()->setDeviceClassForDevice(sourceDevice, deviceClassOption);
         this->getSettings()->transactionEnd();
     }

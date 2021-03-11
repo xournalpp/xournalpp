@@ -12,6 +12,8 @@
 #include "Util.h"
 #include "i18n.h"
 
+using std::string;
+
 
 ImageExport::ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format,
                          ExportBackgroundType exportBackground, PageRangeVector& exportRange):

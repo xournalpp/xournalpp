@@ -9,6 +9,8 @@
 #include "config.h"
 #include "i18n.h"
 
+using std::string;
+
 
 template <typename T>
 T* GetPtr(T* ptr) {
@@ -215,7 +217,7 @@ auto UndoRedoHandler::redoDescription() -> string {
     return _("Redo");
 }
 
-void UndoRedoHandler::fireUpdateUndoRedoButtons(const vector<PageRef>& pages) {
+void UndoRedoHandler::fireUpdateUndoRedoButtons(const std::vector<PageRef>& pages) {
     for (auto&& undoRedoListener: this->listener) {
         undoRedoListener->undoRedoChanged();
     }

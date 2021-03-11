@@ -19,7 +19,6 @@
 #include "PageHandler.h"
 #include "PageType.h"
 #include "Util.h"
-#include "XournalType.h"
 
 template <class T>
 using optional = std::optional<T>;
@@ -61,7 +60,7 @@ public:
     void setBackgroundColor(Color color);
     Color getBackgroundColor() const;
 
-    vector<Layer*>* getLayers();
+    std::vector<Layer*>* getLayers();
     size_t getLayerCount();
     int getSelectedLayerId();
     void setSelectedLayerId(int id);
@@ -73,9 +72,9 @@ public:
     BackgroundImage& getBackgroundImage();
     void setBackgroundImage(BackgroundImage img);
 
-    string getBackgroundName() const;
+    std::string getBackgroundName() const;
     bool backgroundHasName() const;
-    void setBackgroundName(const string& newName);
+    void setBackgroundName(const std::string& newName);
 
     /**
      * Copies this page an all it's contents to a new page
@@ -97,7 +96,7 @@ private:
     /**
      * The layer list
      */
-    vector<Layer*> layer;
+    std::vector<Layer*> layer;
 
     /**
      * The current selected layer ID
@@ -127,7 +126,7 @@ private:
     /**
      * Background name
      */
-    optional<string> backgroundName;
+    optional<std::string> backgroundName;
 
     // Allow LoadHandler to add layers directly
     friend class LoadHandler;

@@ -8,6 +8,8 @@
 #include "Range.h"
 #include "i18n.h"
 
+using std::vector;
+
 class SizeUndoActionEntry {
 public:
     SizeUndoActionEntry(Stroke* s, double orignalWidth, double newWidth, vector<double> originalPressure,
@@ -101,4 +103,4 @@ auto SizeUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-auto SizeUndoAction::getText() -> string { return _("Change stroke width"); }
+auto SizeUndoAction::getText() -> std::string { return _("Change stroke width"); }

@@ -18,8 +18,8 @@ void PluginDialog::loadPluginList(PluginController const* pc) {
 }
 
 void PluginDialog::saveSettings() {
-    string pluginEnabled;
-    string pluginDisabled;
+    std::string pluginEnabled;
+    std::string pluginDisabled;
 
     // Save plugin settings
     for (auto&& bcg: this->plugins) {

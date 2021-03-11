@@ -10,8 +10,8 @@
 
 #include "i18n.h"
 
-ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type,
-                             IconNameHelper iconNameHelper):
+ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, std::string id,
+                             ActionType type, IconNameHelper iconNameHelper):
         AbstractToolItem(std::move(id), handler, type, nullptr),
         lc(lc),
         gui(gui),
@@ -45,7 +45,7 @@ void ToolPageLayer::createSeparator() {
     menuY++;
 }
 
-auto ToolPageLayer::createSpecialMenuEntry(const string& name) -> GtkWidget* {
+auto ToolPageLayer::createSpecialMenuEntry(const std::string& name) -> GtkWidget* {
     GtkWidget* it = gtk_menu_item_new();
     GtkWidget* lb = gtk_label_new(name.c_str());
     gtk_widget_set_halign(lb, GTK_ALIGN_START);
@@ -143,7 +143,7 @@ void ToolPageLayer::layerMenuShowClicked(GtkWidget* menu) {
     lc->setLayerVisible(layerId, checked);
 }
 
-void ToolPageLayer::createLayerMenuItem(const string& text, int layerId) {
+void ToolPageLayer::createLayerMenuItem(const std::string& text, int layerId) {
     GtkWidget* itLayer = gtk_check_menu_item_new_with_label(text.c_str());
     gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(itLayer), true);
     gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);
@@ -236,7 +236,7 @@ void ToolPageLayer::updateLayerData() {
     gtk_label_set_text(GTK_LABEL(layerLabel), lc->getCurrentLayerName().c_str());
 }
 
-auto ToolPageLayer::getToolDisplayName() -> string { return _("Layer Combo"); }
+auto ToolPageLayer::getToolDisplayName() -> std::string { return _("Layer Combo"); }
 
 auto ToolPageLayer::getNewToolIcon() -> GtkWidget* {
     return gtk_image_new_from_icon_name(this->iconNameHelper.iconName("combo-layer").c_str(),

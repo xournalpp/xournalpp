@@ -53,11 +53,11 @@ void SwapUndoAction::swap(Control* control) {
     doc->lock();
 }
 
-auto SwapUndoAction::getPages() -> vector<PageRef> {
-    vector<PageRef> pages;
+auto SwapUndoAction::getPages() -> std::vector<PageRef> {
+    std::vector<PageRef> pages;
     pages.push_back(this->swappedPage);
     pages.push_back(this->otherPage);
     return pages;
 }
 
-auto SwapUndoAction::getText() -> string { return moveUp ? _("Move page upwards") : _("Move page downwards"); }
+auto SwapUndoAction::getText() -> std::string { return moveUp ? _("Move page upwards") : _("Move page downwards"); }

@@ -2,7 +2,7 @@
 
 #include <utility>
 
-AbstractToolItem::AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem):
+AbstractToolItem::AbstractToolItem(std::string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem):
         AbstractItem(std::move(id), handler, type, menuitem) {}
 
 AbstractToolItem::~AbstractToolItem() {

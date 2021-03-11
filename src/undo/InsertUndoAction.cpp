@@ -24,7 +24,7 @@ InsertUndoAction::~InsertUndoAction() {
     this->element = nullptr;
 }
 
-auto InsertUndoAction::getText() -> string {
+auto InsertUndoAction::getText() -> std::string {
     switch (element->getType()) {
         case ELEMENT_STROKE:
             return _("Draw stroke");
@@ -59,7 +59,7 @@ auto InsertUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-InsertsUndoAction::InsertsUndoAction(const PageRef& page, Layer* layer, vector<Element*> elements):
+InsertsUndoAction::InsertsUndoAction(const PageRef& page, Layer* layer, std::vector<Element*> elements):
         UndoAction("InsertsUndoAction") {
     this->page = page;
     this->layer = layer;
@@ -76,7 +76,7 @@ InsertsUndoAction::~InsertsUndoAction() {
     }
 }
 
-auto InsertsUndoAction::getText() -> string { return _("Insert elements"); }
+auto InsertsUndoAction::getText() -> std::string { return _("Insert elements"); }
 
 auto InsertsUndoAction::undo(Control* control) -> bool {
     for (Element* elem: this->elements) {

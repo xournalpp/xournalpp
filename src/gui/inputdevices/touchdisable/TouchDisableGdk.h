@@ -17,7 +17,7 @@
 #include "gtk/gtk.h"
 
 #include "TouchDisableInterface.h"
-#include "XournalType.h"
+
 
 class TouchDisableGdk: public TouchDisableInterface {
 public:

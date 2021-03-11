@@ -33,9 +33,9 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearch
 
 LatexDialog::~LatexDialog() = default;
 
-void LatexDialog::setFinalTex(string texString) { this->finalLatex = std::move(texString); }
+void LatexDialog::setFinalTex(std::string texString) { this->finalLatex = std::move(texString); }
 
-auto LatexDialog::getFinalTex() -> string { return this->finalLatex; }
+auto LatexDialog::getFinalTex() -> std::string { return this->finalLatex; }
 
 void LatexDialog::setTempRender(PopplerDocument* pdf) {
     if (poppler_document_get_n_pages(pdf) < 1) {
@@ -77,11 +77,11 @@ void LatexDialog::setTempRender(PopplerDocument* pdf) {
 
 auto LatexDialog::getTextBuffer() -> GtkTextBuffer* { return this->textBuffer; }
 
-auto LatexDialog::getBufferContents() -> string {
+auto LatexDialog::getBufferContents() -> std::string {
     GtkTextIter start, end;
     gtk_text_buffer_get_bounds(this->textBuffer, &start, &end);
     gchar* chars = gtk_text_buffer_get_text(this->textBuffer, &start, &end, false);
-    string s = chars;
+    std::string s = chars;
     g_free(chars);
     return s;
 }

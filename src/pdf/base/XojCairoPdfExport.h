@@ -26,7 +26,7 @@ public:
 public:
     virtual bool createPdf(fs::path const& file, bool progressiveMode);
     virtual bool createPdf(fs::path const& file, PageRangeVector& range, bool progressiveMode);
-    virtual string getLastError();
+    virtual std::string getLastError();
 
     /**
      * Export without background
@@ -62,5 +62,5 @@ private:
 
     ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
 
-    string lastError;
+    std::string lastError;
 };

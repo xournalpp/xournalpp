@@ -28,6 +28,7 @@
 #include "Selection.h"
 #include "i18n.h"
 
+using std::vector;
 
 constexpr size_t MINPIXSIZE = 5;  // smallest can scale down to, in pixels.
 

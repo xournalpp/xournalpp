@@ -16,7 +16,6 @@
 
 #include <gtk/gtk.h>
 
-#include "XournalType.h"
 
 class ObjectEncoding;
 class Serializeable;
@@ -34,7 +33,7 @@ public:
     void writeDouble(double d);
     void writeSizeT(size_t st);
     void writeString(const char* str);
-    void writeString(const string& s);
+    void writeString(const std::string& s);
 
     void writeData(const void* data, int len, int width);
     void writeImage(cairo_surface_t* img);

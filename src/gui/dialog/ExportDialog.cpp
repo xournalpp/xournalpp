@@ -30,9 +30,9 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
 ExportDialog::~ExportDialog() = default;
 
 void ExportDialog::initPages(int current, int count) {
-    string allPages = "1 - " + std::to_string(count);
+    std::string allPages = "1 - " + std::to_string(count);
     gtk_label_set_text(GTK_LABEL(get("lbAllPagesInfo")), allPages.c_str());
-    string currentPages = std::to_string(current);
+    std::string currentPages = std::to_string(current);
     gtk_label_set_text(GTK_LABEL(get("lbCurrentPage")), currentPages.c_str());
 
     this->currentPage = current;

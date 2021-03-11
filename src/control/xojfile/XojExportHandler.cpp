@@ -44,7 +44,7 @@ void XojExportHandler::writeSolidBackground(XmlNode* background, PageRef p) {
     background->setAttrib("color", getColorStr(p->getBackgroundColor()));
 
     PageTypeFormat bgFormat = p->getBackgroundType().format;
-    string format;
+    std::string format;
 
     format = PageTypeHandler::getStringForPageTypeFormat(bgFormat);
     if (bgFormat != PageTypeFormat::Plain && bgFormat != PageTypeFormat::Ruled && bgFormat != PageTypeFormat::Lined &&

@@ -16,7 +16,6 @@
 
 #include "model/PageRef.h"
 
-#include "XournalType.h"
 
 class DeleteUndoAction;
 class Document;

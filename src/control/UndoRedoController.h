@@ -14,7 +14,6 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
 
 class Control;
 class Layer;
@@ -47,5 +46,5 @@ private:
     /**
      * Selected elements
      */
-    vector<Element*> elements;
+    std::vector<Element*> elements;
 };

@@ -42,7 +42,7 @@ auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
     }
 }
 
-auto InputEvents::translateDeviceType(const string& name, GdkInputSource source, Settings* settings)
+auto InputEvents::translateDeviceType(const std::string& name, GdkInputSource source, Settings* settings)
         -> InputDeviceClass {
     InputDeviceTypeOption deviceType = settings->getDeviceClassForDevice(name, source);
     switch (deviceType) {

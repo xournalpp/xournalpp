@@ -18,7 +18,6 @@
 
 #include "model/Point.h"
 
-#include "XournalType.h"
 
 class EraseableStrokePart;
 class PartList;

@@ -19,7 +19,6 @@
 #include "pdf/base/XojPdfBookmarkIterator.h"
 
 #include "PopplerGlibAction.h"
-#include "XournalType.h"
 
 
 class PopplerGlibPageBookmarkIterator: public XojPdfBookmarkIterator {

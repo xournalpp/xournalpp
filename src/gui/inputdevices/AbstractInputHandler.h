@@ -22,7 +22,7 @@
 #include "model/Point.h"
 
 #include "InputEvents.h"
-#include "XournalType.h"
+
 
 class InputContext;
 

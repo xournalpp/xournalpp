@@ -16,8 +16,6 @@
 
 #include "serializing/Serializeable.h"
 
-#include "XournalType.h"
-
 
 class LineStyle: public Serializeable {
 public:

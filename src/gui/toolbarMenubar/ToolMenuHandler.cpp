@@ -23,6 +23,8 @@
 #include "ToolZoomSlider.h"
 #include "i18n.h"
 
+using std::string;
+
 ToolMenuHandler::ToolMenuHandler(Control* control, GladeGui* gui, GtkWindow* parent):
         parent(parent),
         control(control),
@@ -528,7 +530,7 @@ auto ToolMenuHandler::isColorInUse(Color color) -> bool {
     return false;
 }
 
-auto ToolMenuHandler::getToolItems() -> vector<AbstractToolItem*>* { return &this->toolItems; }
+auto ToolMenuHandler::getToolItems() -> std::vector<AbstractToolItem*>* { return &this->toolItems; }
 
 void ToolMenuHandler::disableAudioPlaybackButtons() {
     setAudioPlaybackPaused(false);

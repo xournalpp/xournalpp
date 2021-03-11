@@ -50,6 +50,7 @@
 #include "config.h"
 #include "i18n.h"
 
+using std::string;
 
 Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp(gtkApp) {
     this->recent = new RecentManager();
@@ -2518,8 +2519,8 @@ void Control::applyPreferredLanguage() {
 }
 
 void Control::initButtonTool() {
-    vector<Button> buttons{Button::BUTTON_ERASER,       Button::BUTTON_STYLUS_ONE,  Button::BUTTON_STYLUS_TWO,
-                           Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT, Button::BUTTON_TOUCH};
+    std::vector<Button> buttons{Button::BUTTON_ERASER,       Button::BUTTON_STYLUS_ONE,  Button::BUTTON_STYLUS_TWO,
+                                Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT, Button::BUTTON_TOUCH};
     ButtonConfig* cfg;
     for (auto b: buttons) {
         cfg = settings->getButtonConfig(b);
@@ -2529,8 +2530,8 @@ void Control::initButtonTool() {
 
 auto Control::askToReplace(fs::path const& filepath) const -> bool {
     if (fs::exists(filepath)) {
-        string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") %
-                        filepath.filename().u8string());
+        std::string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") %
+                             filepath.filename().u8string());
         int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
         return res == GTK_RESPONSE_OK;
     }

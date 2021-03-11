@@ -26,12 +26,12 @@ class LayerController;
 
 class ToolPageLayer: public AbstractToolItem, public LayerCtrlListener {
 public:
-    ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type,
+    ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, std::string id, ActionType type,
                   IconNameHelper iconNameHelper);
     virtual ~ToolPageLayer();
 
 public:
-    virtual string getToolDisplayName();
+    virtual std::string getToolDisplayName();
 
     // LayerCtrlListener
 public:
@@ -39,7 +39,7 @@ public:
     virtual void layerVisibilityChanged();
 
 protected:
-    GtkWidget* createSpecialMenuEntry(const string& name);
+    GtkWidget* createSpecialMenuEntry(const std::string& name);
     void createSeparator();
 
     /**
@@ -61,7 +61,7 @@ protected:
     virtual GtkWidget* getNewToolIcon();
 
 private:
-    void createLayerMenuItem(const string& text, int layerId);
+    void createLayerMenuItem(const std::string& text, int layerId);
     void layerMenuClicked(GtkWidget* menu);
     void createLayerMenuItemShow(int layerId);
     void layerMenuShowClicked(GtkWidget* menu);
@@ -76,8 +76,8 @@ private:
     GtkWidget* layerButton = nullptr;
     GtkWidget* menu = nullptr;
 
-    map<int, GtkWidget*> layerItems;
-    map<int, GtkWidget*> showLayerItems;
+    std::map<int, GtkWidget*> layerItems;
+    std::map<int, GtkWidget*> showLayerItems;
 
     PopupMenuButton* popupMenuButton = nullptr;
     int menuY = 0;

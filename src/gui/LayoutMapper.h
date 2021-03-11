@@ -19,7 +19,6 @@
 #include "control/settings/Settings.h"
 #include "util/hashcombine.h"
 
-#include "XournalType.h"
 
 namespace std {
 template <>

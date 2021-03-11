@@ -41,7 +41,7 @@ public:
 public:
     bool undo(Control* control) override;
     bool redo(Control* control) override;
-    string getText() override;
+    std::string getText() override;
 
     void addStroke(Stroke* s, LineStyle originalStyle, LineStyle newStyle);
 

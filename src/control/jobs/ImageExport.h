@@ -20,7 +20,6 @@
 
 #include "BaseExportJob.h"
 #include "PageRange.h"
-#include "XournalType.h"
 #include "filesystem.h"
 
 class Document;
@@ -77,7 +76,7 @@ public:
      * @brief Get the last error message
      * @return The last error message to show to the user
      */
-    string getLastErrorMsg() const;
+    std::string getLastErrorMsg() const;
 
     /**
      * @brief Create one Graphics file per page
@@ -180,5 +179,5 @@ public:
     /**
      * The last error message to show to the user
      */
-    string lastError;
+    std::string lastError;
 };

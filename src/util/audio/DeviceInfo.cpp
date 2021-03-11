@@ -8,7 +8,7 @@ DeviceInfo::DeviceInfo(portaudio::Device* device, bool selected):
         outputChannels((device->isFullDuplexDevice() || device->isOutputOnlyDevice()) ? device->maxOutputChannels() :
                                                                                         0) {}
 
-auto DeviceInfo::getDeviceName() const -> const string& { return deviceName; }
+auto DeviceInfo::getDeviceName() const -> const std::string& { return deviceName; }
 
 auto DeviceInfo::getIndex() const -> PaDeviceIndex { return index; }
 

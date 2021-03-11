@@ -66,12 +66,12 @@ auto DeleteUndoAction::redo(Control*) -> bool {
     return true;
 }
 
-auto DeleteUndoAction::getText() -> string {
+auto DeleteUndoAction::getText() -> std::string {
     if (eraser) {
         return _("Erase stroke");
     }
 
-    string text = _("Delete");
+    std::string text = _("Delete");
 
     if (this->elements != nullptr) {
         ElementType type = (static_cast<PageLayerPosEntry<Element>*>(this->elements->data))->element->getType();

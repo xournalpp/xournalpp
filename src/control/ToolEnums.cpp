@@ -1,5 +1,7 @@
 #include "ToolEnums.h"
 
+using std::string;
+
 auto toolSizeToString(ToolSize size) -> string {
     switch (size) {
         case TOOL_SIZE_NONE:

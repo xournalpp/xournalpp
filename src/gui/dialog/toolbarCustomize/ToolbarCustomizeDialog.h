@@ -18,7 +18,7 @@
 #include "gui/GladeGui.h"
 
 #include "CustomizeableColorList.h"
-#include "XournalType.h"
+
 
 class AbstractToolItem;
 class MainWindow;

@@ -14,21 +14,19 @@
 #include <map>
 #include <string>
 
-#include "XournalType.h"
-using std::map;
 
 class BackgroundConfig {
 public:
-    BackgroundConfig(const string& config);
+    BackgroundConfig(const std::string& config);
     virtual ~BackgroundConfig();
 
 public:
-    bool loadValue(const string& key, string& value) const;
-    bool loadValue(const string& key, int& value) const;
-    bool loadValue(const string& key, double& value) const;
-    bool loadValueHex(const string& key, int& value) const;
-    bool loadValueHex(const string& key, uint32_t& value) const;
+    bool loadValue(const std::string& key, std::string& value) const;
+    bool loadValue(const std::string& key, int& value) const;
+    bool loadValue(const std::string& key, double& value) const;
+    bool loadValueHex(const std::string& key, int& value) const;
+    bool loadValueHex(const std::string& key, uint32_t& value) const;
 
 private:
-    map<string, string> data;
+    std::map<std::string, std::string> data;
 };

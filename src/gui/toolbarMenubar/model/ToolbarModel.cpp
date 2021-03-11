@@ -7,6 +7,8 @@
 #include "filesystem.h"
 #include "i18n.h"
 
+using std::string;
+
 ToolbarModel::ToolbarModel() = default;
 
 ToolbarModel::~ToolbarModel() {
@@ -16,7 +18,7 @@ ToolbarModel::~ToolbarModel() {
     this->toolbars.clear();
 }
 
-auto ToolbarModel::getToolbars() -> vector<ToolbarData*>* { return &this->toolbars; }
+auto ToolbarModel::getToolbars() -> std::vector<ToolbarData*>* { return &this->toolbars; }
 
 void ToolbarModel::parseGroup(GKeyFile* config, const char* group, bool predefined) {
     auto* data = new ToolbarData(predefined);

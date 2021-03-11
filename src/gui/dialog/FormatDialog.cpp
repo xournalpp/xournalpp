@@ -50,7 +50,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
     for (GList* l = list; l != nullptr; l = l->next) {
         auto* s = static_cast<GtkPaperSize*>(l->data);
 
-        string displayName = gtk_paper_size_get_display_name(s);
+        std::string displayName = gtk_paper_size_get_display_name(s);
         if (StringUtils::startsWith(displayName, "custom_")) {
             displayName = displayName.substr(7);
         }
@@ -106,7 +106,7 @@ void FormatDialog::loadPageFormats() {
         next = l->next;
         auto* s = static_cast<GtkPaperSize*>(l->data);
 
-        string name = gtk_paper_size_get_name(s);
+        std::string name = gtk_paper_size_get_name(s);
         if (name == GTK_PAPER_NAME_A3 || name == GTK_PAPER_NAME_A4 || name == GTK_PAPER_NAME_A5 ||
             name == GTK_PAPER_NAME_LETTER || name == GTK_PAPER_NAME_LEGAL) {
             continue;

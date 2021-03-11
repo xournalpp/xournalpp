@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "UndoAction.h"
-#include "XournalType.h"
+
 
 class FontUndoActionEntry;
 class Layer;
@@ -31,7 +31,7 @@ public:
 public:
     virtual bool undo(Control* control);
     virtual bool redo(Control* control);
-    virtual string getText();
+    virtual std::string getText();
 
     void addStroke(Text* e, XojFont& oldFont, XojFont& newFont);
 

@@ -14,7 +14,8 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
+#include <glib.h>
+
 #include "filesystem.h"
 
 class ToolbarData;
@@ -29,17 +30,17 @@ private:
     void operator=(const ToolbarModel& other);
 
 public:
-    vector<ToolbarData*>* getToolbars();
+    std::vector<ToolbarData*>* getToolbars();
     bool parse(fs::path const& filepath, bool predefined);
     void add(ToolbarData* data);
     void remove(ToolbarData* data);
     void save(const fs::path& filepath);
-    bool existsId(const string& id);
+    bool existsId(const std::string& id);
     void initCopyNameId(ToolbarData* data);
 
 private:
     void parseGroup(GKeyFile* config, const char* group, bool predefined);
 
 private:
-    vector<ToolbarData*> toolbars;
+    std::vector<ToolbarData*> toolbars;
 };

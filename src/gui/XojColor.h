@@ -16,7 +16,6 @@
 
 #include "util/Color.h"
 
-#include "XournalType.h"
 
 struct XojColor {
 public:
@@ -24,7 +23,7 @@ public:
 
 public:
     Color getColor() const;
-    string getName() const;
+    std::string getName() const;
 
 private:
     Color color;

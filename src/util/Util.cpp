@@ -73,7 +73,7 @@ void Util::writeCoordinateString(OutputStream* out, double xVal, double yVal) {
 
 void Util::systemWithMessage(const char* command) {
     if (auto errc = std::system(command); errc != 0) {
-        string msg = FS(_F("Error {1} executing system command: {2}") % errc % command);
+        std::string msg = FS(_F("Error {1} executing system command: {2}") % errc % command);
         XojMsgBox::showErrorToUser(nullptr, msg);
     }
 }

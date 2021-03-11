@@ -14,8 +14,6 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
-
 
 enum ToolSize {
     TOOL_SIZE_VERY_FINE = 0,
@@ -26,8 +24,8 @@ enum ToolSize {
     // None has to be at the end, because this enum is used as memory offset
     TOOL_SIZE_NONE
 };
-string toolSizeToString(ToolSize size);
-ToolSize toolSizeFromString(const string& size);
+std::string toolSizeToString(ToolSize size);
+ToolSize toolSizeFromString(const std::string& size);
 
 
 enum DrawingType {
@@ -48,8 +46,8 @@ enum DrawingType {
     DRAWING_TYPE_STROKE_RECOGNIZER,
     DRAWING_TYPE_SPLINE
 };
-string drawingTypeToString(DrawingType type);
-DrawingType drawingTypeFromString(const string& type);
+std::string drawingTypeToString(DrawingType type);
+DrawingType drawingTypeFromString(const std::string& type);
 
 
 // Has to be in the same order as in Action.h: ActionType!
@@ -81,13 +79,13 @@ enum ToolType {
 // The count of tools
 #define TOOL_COUNT (TOOL_END_ENTRY - 1)
 
-string toolTypeToString(ToolType type);
-ToolType toolTypeFromString(const string& type);
+std::string toolTypeToString(ToolType type);
+ToolType toolTypeFromString(const std::string& type);
 
 
 enum EraserType { ERASER_TYPE_NONE = 0, ERASER_TYPE_DEFAULT, ERASER_TYPE_WHITEOUT, ERASER_TYPE_DELETE_STROKE };
-string eraserTypeToString(EraserType type);
-EraserType eraserTypeFromString(const string& type);
+std::string eraserTypeToString(EraserType type);
+EraserType eraserTypeFromString(const std::string& type);
 
 
 enum ToolCapabilities {

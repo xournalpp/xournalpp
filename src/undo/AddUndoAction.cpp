@@ -68,8 +68,8 @@ auto AddUndoAction::undo(Control*) -> bool {
     return true;
 }
 
-auto AddUndoAction::getText() -> string {
-    string text;
+auto AddUndoAction::getText() -> std::string {
+    std::string text;
 
     if (eraser) {
         text = _("Erase stroke");

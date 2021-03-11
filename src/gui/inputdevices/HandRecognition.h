@@ -18,7 +18,7 @@
 
 #include "InputContext.h"
 #include "InputEvents.h"
-#include "XournalType.h"
+
 
 class Settings;
 class TouchDisableInterface;

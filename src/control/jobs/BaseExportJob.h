@@ -16,7 +16,6 @@
 
 #include "BlockingJob.h"
 #include "PathUtil.h"
-#include "XournalType.h"
 #include "filesystem.h"
 
 /**
@@ -30,7 +29,7 @@ class Control;
 
 class BaseExportJob: public BlockingJob {
 public:
-    BaseExportJob(Control* control, const string& name);
+    BaseExportJob(Control* control, const std::string& name);
 
 protected:
     virtual ~BaseExportJob();
@@ -40,12 +39,12 @@ public:
 
 public:
     virtual bool showFilechooser();
-    string getFilterName() const;
+    std::string getFilterName() const;
 
 protected:
     void initDialog();
     virtual void addFilterToDialog() = 0;
-    void addFileFilterToDialog(const string& name, const string& pattern);
+    void addFileFilterToDialog(const std::string& name, const std::string& pattern);
     bool checkOverwriteBackgroundPDF(fs::path const& file) const;
     virtual bool testAndSetFilepath(fs::path file);
 
@@ -58,12 +57,12 @@ protected:
     /**
      * Error message to show to the user
      */
-    string errorMsg;
+    std::string errorMsg;
 
     class ExportType {
     public:
-        string extension;
+        std::string extension;
 
-        ExportType(string ext): extension(ext) {}
+        ExportType(std::string ext): extension(ext) {}
     };
 };

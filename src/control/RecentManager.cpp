@@ -15,6 +15,8 @@
 #define MIME_PDF "application/x-pdf"
 #define GROUP "xournal++"
 
+using std::string;
+
 RecentManagerListener::~RecentManagerListener() = default;
 
 RecentManager::RecentManager() {

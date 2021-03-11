@@ -14,9 +14,10 @@
 #include <string>
 #include <vector>
 
+#include <glib.h>
+
 #include "model/Point.h"
 
-#include "XournalType.h"
 
 class EraseableStrokePart {
 public:

@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "XojPdfAction.h"
-#include "XournalType.h"
+
 
 class XojPdfBookmarkIterator {
 public:

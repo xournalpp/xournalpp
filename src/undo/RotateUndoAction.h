@@ -15,19 +15,19 @@
 
 class RotateUndoAction: public UndoAction {
 public:
-    RotateUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double rotation);
+    RotateUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0, double rotation);
     virtual ~RotateUndoAction();
 
 public:
     virtual bool undo(Control* control);
     virtual bool redo(Control* control);
-    virtual string getText();
+    virtual std::string getText();
 
 private:
     void applyRotation(double rotation);
 
 private:
-    vector<Element*> elements;
+    std::vector<Element*> elements;
 
     double x0;
     double y0;

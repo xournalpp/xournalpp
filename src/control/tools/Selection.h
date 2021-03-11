@@ -19,7 +19,7 @@
 #include "model/PageRef.h"
 
 #include "Util.h"
-#include "XournalType.h"
+
 
 class Selection: public ShapeContainer {
 public:
@@ -34,7 +34,7 @@ public:
 
 private:
 protected:
-    vector<Element*> selectedElements;
+    std::vector<Element*> selectedElements;
     PageRef page;
     Redrawable* view;
 

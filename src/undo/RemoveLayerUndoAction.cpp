@@ -25,7 +25,7 @@ RemoveLayerUndoAction::~RemoveLayerUndoAction() {
     this->layer = nullptr;
 }
 
-auto RemoveLayerUndoAction::getText() -> string { return _("Delete layer"); }
+auto RemoveLayerUndoAction::getText() -> std::string { return _("Delete layer"); }
 
 auto RemoveLayerUndoAction::undo(Control* control) -> bool {
     layerController->insertLayer(this->page, this->layer, this->layerPos);

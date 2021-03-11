@@ -17,7 +17,7 @@
 #include <gtk/gtk.h>
 
 #include "Job.h"
-#include "XournalType.h"
+
 
 class SidebarPreviewBaseEntry;
 class Document;

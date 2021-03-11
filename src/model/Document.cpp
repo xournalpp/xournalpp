@@ -120,7 +120,7 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
-auto Document::createSaveFilename(DocumentType type, const string& defaultSaveName) -> fs::path {
+auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName) -> fs::path {
     if (!filepath.empty()) {
         // This can be any extension
         fs::path p = filepath.filename();
@@ -338,7 +338,7 @@ auto Document::getPageHeight(PageRef p) -> double { return p->getHeight(); }
 /**
  * @return The last error message to show to the user
  */
-auto Document::getLastErrorMsg() -> string { return lastError; }
+auto Document::getLastErrorMsg() -> std::string { return lastError; }
 
 void Document::deletePage(size_t pNr) {
     auto it = this->pages.begin() + pNr;

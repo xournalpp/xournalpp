@@ -10,6 +10,8 @@
 #include "filesystem.h"
 #include "i18n.h"
 
+using std::string;
+
 constexpr auto const* DEFAULT_FONT = "Sans";
 constexpr auto DEFAULT_FONT_SIZE = 12;
 

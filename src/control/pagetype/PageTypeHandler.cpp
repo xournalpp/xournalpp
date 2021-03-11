@@ -7,6 +7,8 @@
 #include "XojMsgBox.h"
 #include "i18n.h"
 
+using std::string;
+
 PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath) {
     auto file = gladeSearchPath->findFile("", "pagetemplates.ini");
 
@@ -93,7 +95,7 @@ void PageTypeHandler::addPageTypeInfo(string name, PageTypeFormat format, string
     this->types.push_back(pt);
 }
 
-auto PageTypeHandler::getPageTypes() -> vector<PageTypeInfo*>& { return this->types; }
+auto PageTypeHandler::getPageTypes() -> std::vector<PageTypeInfo*>& { return this->types; }
 
 auto PageTypeHandler::getPageTypeFormatForString(const string& format) -> PageTypeFormat {
     if (format == "plain") {

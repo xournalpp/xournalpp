@@ -4,7 +4,7 @@
 
 int ToolbarItem::sid = 0;
 
-ToolbarItem::ToolbarItem(string name) {
+ToolbarItem::ToolbarItem(std::string name) {
     this->name = std::move(name);
     this->id = ToolbarItem::sid++;
 

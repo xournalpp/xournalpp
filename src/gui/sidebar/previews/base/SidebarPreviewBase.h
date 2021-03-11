@@ -19,7 +19,6 @@
 #include "gui/GladeGui.h"
 #include "gui/sidebar/AbstractSidebarPage.h"
 
-#include "XournalType.h"
 
 class PdfCache;
 class SidebarLayout;
@@ -120,7 +119,7 @@ protected:
     /**
      * The previews
      */
-    vector<SidebarPreviewBaseEntry*> previews;
+    std::vector<SidebarPreviewBaseEntry*> previews;
 
     /**
      * The sidebar is enabled

@@ -16,7 +16,6 @@
 
 #include <zlib.h>
 
-#include "XournalType.h"
 #include "filesystem.h"
 
 class OutputStream {
@@ -27,7 +26,7 @@ public:
 public:
     virtual void write(const char* str);
     virtual void write(const char* data, int len) = 0;
-    virtual void write(const string& str);
+    virtual void write(const std::string& str);
 
     virtual void close() = 0;
 };
@@ -42,13 +41,13 @@ public:
 
     virtual void close();
 
-    string& getLastError();
+    std::string& getLastError();
 
 private:
     gzFile fp = nullptr;
 
-    string error;
+    std::string error;
 
-    string target;
+    std::string target;
     fs::path file;
 };

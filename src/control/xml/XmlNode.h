@@ -27,7 +27,7 @@ private:
     void operator=(const XmlNode& node);
 
 public:
-    void setAttrib(const char* attrib, string value);
+    void setAttrib(const char* attrib, std::string value);
     void setAttrib(const char* attrib, const char* value);
     void setAttrib(const char* attrib, double value);
     void setAttrib(const char* attrib, int value);

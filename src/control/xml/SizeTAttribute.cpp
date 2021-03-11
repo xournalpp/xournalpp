@@ -1,5 +1,7 @@
 #include "SizeTAttribute.h"
 
+#include <glib.h>
+
 SizeTAttribute::SizeTAttribute(const char* name, size_t value): XMLAttribute(name) { this->value = value; }
 
 SizeTAttribute::~SizeTAttribute() = default;

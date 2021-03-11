@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "XojPdfExport.h"
-#include "XournalType.h"
+
 
 class Document;
 class ProgressListener;

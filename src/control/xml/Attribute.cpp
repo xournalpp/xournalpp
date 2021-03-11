@@ -2,8 +2,8 @@
 
 #include <utility>
 
-XMLAttribute::XMLAttribute(string name): name(std::move(name)) {}
+XMLAttribute::XMLAttribute(std::string name): name(std::move(name)) {}
 
 XMLAttribute::~XMLAttribute() = default;
 
-auto XMLAttribute::getName() -> string { return name; }
+auto XMLAttribute::getName() -> std::string { return name; }

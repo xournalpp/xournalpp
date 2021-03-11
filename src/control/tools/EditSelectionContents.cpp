@@ -28,6 +28,8 @@
 
 #include "Selection.h"
 
+using std::vector;
+
 EditSelectionContents::EditSelectionContents(Rectangle<double> bounds, Rectangle<double> snappedBounds,
                                              const PageRef& sourcePage, Layer* sourceLayer, XojPageView* sourceView):
         lastBounds(bounds),

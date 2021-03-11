@@ -1,5 +1,7 @@
 #include "IntAttribute.h"
 
+#include <glib.h>
+
 IntAttribute::IntAttribute(const char* name, int value): XMLAttribute(name) { this->value = value; }
 
 IntAttribute::~IntAttribute() = default;

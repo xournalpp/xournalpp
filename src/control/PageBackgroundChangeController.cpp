@@ -176,8 +176,8 @@ auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool {
 
     if (doc->getPdfPageCount() == 0) {
 
-        string msg = _("You don't have any PDF pages to select from. Cancel operation.\n"
-                       "Please select another background type: Menu \"Journal\" → \"Configure Page Template\".");
+        std::string msg = _("You don't have any PDF pages to select from. Cancel operation.\n"
+                            "Please select another background type: Menu \"Journal\" → \"Configure Page Template\".");
         XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
         return false;
     }

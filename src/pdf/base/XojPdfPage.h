@@ -17,8 +17,6 @@
 
 #include <cairo.h>
 
-#include "XournalType.h"
-
 
 class XojPdfRectangle {
 public:
@@ -43,7 +41,7 @@ public:
 
     virtual void render(cairo_t* cr, bool forPrinting = false) = 0;
 
-    virtual vector<XojPdfRectangle> findText(string& text) = 0;
+    virtual std::vector<XojPdfRectangle> findText(std::string& text) = 0;
 
     virtual int getPageId() = 0;
 

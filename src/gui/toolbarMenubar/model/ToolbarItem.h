@@ -14,11 +14,10 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
 
 class ToolbarItem {
 public:
-    ToolbarItem(string name);
+    ToolbarItem(std::string name);
     ToolbarItem();
 
 public:
@@ -29,7 +28,7 @@ public:
     int getId() const;
 
 private:
-    string name;
+    std::string name;
     int id;
 
     static int sid;

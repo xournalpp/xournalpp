@@ -22,7 +22,7 @@
 #include "view/ElementContainer.h"
 
 #include "SnapToGridInputHandler.h"
-#include "XournalType.h"
+
 
 class VerticalToolHandler: public ElementContainer {
 public:
@@ -34,13 +34,13 @@ public:
 
     std::unique_ptr<MoveUndoAction> finalize();
 
-    vector<Element*>* getElements() override;
+    std::vector<Element*>* getElements() override;
 
 private:
     Redrawable* view = nullptr;
     PageRef page;
     Layer* layer = nullptr;
-    vector<Element*> elements;
+    std::vector<Element*> elements;
 
     cairo_surface_t* crBuffer = nullptr;
 

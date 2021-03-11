@@ -254,7 +254,7 @@ void Stroke::setSecondToLastPressure(double pressure) {
     }
 }
 
-void Stroke::setPressure(const vector<double>& pressure) {
+void Stroke::setPressure(const std::vector<double>& pressure) {
     // The last pressure is not used - as there is no line drawn from this point
     if (this->points.size() - 1 != pressure.size()) {
         g_warning("invalid pressure point count: %s, expected %s", std::to_string(pressure.size()).data(),

@@ -14,6 +14,8 @@
 #include "Util.h"
 #include "i18n.h"
 
+using std::string;
+
 ToolbarAdapter::ToolbarAdapter(GtkWidget* toolbar, string toolbarName, ToolMenuHandler* toolHandler,
                                MainWindow* window) {
     this->w = toolbar;

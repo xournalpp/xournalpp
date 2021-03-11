@@ -20,7 +20,7 @@
 #include "model/Stroke.h"
 
 #include "OutputStream.h"
-#include "XournalType.h"
+
 
 class XmlNode;
 class XmlPointNode;
@@ -35,10 +35,10 @@ public:
     void prepareSave(Document* doc);
     void saveTo(const fs::path& filepath, ProgressListener* listener = nullptr);
     void saveTo(OutputStream* out, const fs::path& filepath, ProgressListener* listener = nullptr);
-    string getErrorMessage();
+    std::string getErrorMessage();
 
 protected:
-    static string getColorStr(Color c, unsigned char alpha = 0xff);
+    static std::string getColorStr(Color c, unsigned char alpha = 0xff);
 
     virtual void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
     virtual void visitLayer(XmlNode* page, Layer* l);
@@ -59,7 +59,7 @@ protected:
     bool firstPdfPageVisited;
     int attachBgId;
 
-    string errorMessage;
+    std::string errorMessage;
 
     GList* backgroundImages;
 };

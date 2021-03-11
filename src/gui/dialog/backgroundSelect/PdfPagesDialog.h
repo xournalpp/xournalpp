@@ -16,7 +16,7 @@
 
 #include "BackgroundSelectDialogBase.h"
 #include "BaseElementView.h"
-#include "XournalType.h"
+
 
 class PdfPagesDialog: public BackgroundSelectDialogBase {
 public:

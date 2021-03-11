@@ -15,7 +15,7 @@
 
 class AbstractToolItem: public AbstractItem {
 public:
-    AbstractToolItem(string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = nullptr);
+    AbstractToolItem(std::string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = nullptr);
     virtual ~AbstractToolItem();
 
 public:
@@ -29,7 +29,7 @@ public:
 
     static void toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item);
 
-    virtual string getToolDisplayName() = 0;
+    virtual std::string getToolDisplayName() = 0;
 
     /**
      * Returns: (transfer floating)

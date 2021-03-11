@@ -34,4 +34,4 @@ void ShapeRecognizerResult::addSourceStroke(Stroke* s) {
 
 auto ShapeRecognizerResult::getRecognized() -> Stroke* { return this->recognized; }
 
-auto ShapeRecognizerResult::getSources() -> vector<Stroke*>* { return &this->source; }
+auto ShapeRecognizerResult::getSources() -> std::vector<Stroke*>* { return &this->source; }

@@ -16,7 +16,6 @@
 
 #include <gtk/gtk.h>
 
-#include "XournalType.h"
 
 typedef struct _LinkDest XojLinkDest;
 typedef struct _LinkDestClass XojLinkDestClass;
@@ -44,8 +43,8 @@ public:
     void setChangeZoom(double zoom);
     void setChangeTop(double top);
 
-    void setName(string name);
-    string getName();
+    void setName(std::string name);
+    std::string getName();
 
 private:
     size_t page;
@@ -59,7 +58,7 @@ private:
     bool changeZoom;
     bool changeTop;
 
-    string name;
+    std::string name;
 };
 
 struct _LinkDest {

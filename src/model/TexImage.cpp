@@ -69,9 +69,9 @@ auto TexImage::cairoReadFunction(TexImage* image, unsigned char* data, unsigned 
  */
 auto TexImage::getBinaryData() const -> std::string const& { return this->binaryData; }
 
-void TexImage::setText(string text) { this->text = std::move(text); }
+void TexImage::setText(std::string text) { this->text = std::move(text); }
 
-auto TexImage::getText() -> string { return this->text; }
+auto TexImage::getText() -> std::string { return this->text; }
 
 auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
     this->freeImageAndPdf();

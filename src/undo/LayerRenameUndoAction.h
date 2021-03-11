@@ -22,7 +22,7 @@ class XojPage;
 
 class LayerRenameUndoAction: public UndoAction {
 public:
-    LayerRenameUndoAction(Layer* layer, const string& newName, const string& oldName);
+    LayerRenameUndoAction(Layer* layer, const std::string& newName, const std::string& oldName);
     virtual ~LayerRenameUndoAction();
 
 public:

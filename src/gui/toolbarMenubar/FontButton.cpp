@@ -8,6 +8,8 @@
 
 #include "i18n.h"
 
+using std::string;
+
 FontButton::FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
                        GtkWidget* menuitem):
         AbstractToolItem(std::move(id), handler, type, menuitem) {

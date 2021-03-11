@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "UndoAction.h"
-#include "XournalType.h"
+
 
 class ColorUndoActionEntry;
 class Element;
@@ -30,7 +30,7 @@ public:
 public:
     virtual bool undo(Control* control);
     virtual bool redo(Control* control);
-    virtual string getText();
+    virtual std::string getText();
 
     void addStroke(Element* e, Color originalColor, Color newColor);
 

@@ -7,7 +7,8 @@
 
 
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,
-                                                       Settings* settings, const string& glade, const string& mainWnd):
+                                                       Settings* settings, const std::string& glade,
+                                                       const std::string& mainWnd):
         GladeGui(gladeSearchPath, glade, std::move(mainWnd)), settings(settings), doc(doc) {
     this->layoutContainer = gtk_layout_new(nullptr, nullptr);
     gtk_widget_show(this->layoutContainer);

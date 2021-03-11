@@ -3,6 +3,8 @@
 #include "Serializeable.h"
 #include "i18n.h"
 
+using std::string;
+
 ObjectInputStream::ObjectInputStream() = default;
 
 ObjectInputStream::~ObjectInputStream() {

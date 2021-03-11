@@ -12,7 +12,7 @@ AutosaveJob::AutosaveJob(Control* control): control(control) {}
 AutosaveJob::~AutosaveJob() = default;
 
 void AutosaveJob::afterRun() {
-    string msg = FS(_F("Error while autosaving: {1}") % this->error);
+    std::string msg = FS(_F("Error while autosaving: {1}") % this->error);
     g_warning("%s", msg.c_str());
     XojMsgBox::showErrorToUser(control->getGtkWindow(), msg);
 }

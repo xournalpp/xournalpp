@@ -16,7 +16,7 @@
 #include <vector>
 
 #include "SaveHandler.h"
-#include "XournalType.h"
+
 
 class XojExportHandler: public SaveHandler {
 public:

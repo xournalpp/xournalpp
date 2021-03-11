@@ -38,11 +38,11 @@ void Text::setFont(const XojFont& font) { this->font = font; }
 
 auto Text::getFontSize() const -> double { return font.getSize(); }
 
-auto Text::getFontName() const -> string { return font.getName(); }
+auto Text::getFontName() const -> std::string { return font.getName(); }
 
-auto Text::getText() const -> string { return this->text; }
+auto Text::getText() const -> std::string { return this->text; }
 
-void Text::setText(string text) {
+void Text::setText(std::string text) {
     this->text = std::move(text);
 
     calcSize();

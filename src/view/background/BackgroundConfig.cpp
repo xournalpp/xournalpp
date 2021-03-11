@@ -4,6 +4,8 @@
 
 #include "StringUtils.h"
 
+using std::string;
+
 BackgroundConfig::BackgroundConfig(const string& config) {
     for (const string& s: StringUtils::split(config, ',')) {
         size_t dotPos = s.find_last_of('=');

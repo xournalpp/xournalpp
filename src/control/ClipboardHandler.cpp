@@ -14,6 +14,8 @@
 #include "Util.h"
 #include "pixbuf-utils.h"
 
+using std::string;
+
 ClipboardListener::~ClipboardListener() = default;
 
 ClipboardHandler::ClipboardHandler(ClipboardListener* listener, GtkWidget* widget) {

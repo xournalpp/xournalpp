@@ -15,12 +15,11 @@
 #include <vector>
 
 #include "ToolBase.h"
-#include "XournalType.h"
 
 
 class Tool: public ToolBase {
 public:
-    Tool(string name, ToolType type, Color color, int capabilities, double* thickness);
+    Tool(std::string name, ToolType type, Color color, int capabilities, double* thickness);
     /**
      * @brief Construct a new Tool object based on the pointer to another tool
      * Ideally this should be refactored to a copy constructor like Tool(const Tool& tool).
@@ -38,7 +37,7 @@ public:
     static const int toolSizes = 5;
 
 public:
-    string getName();
+    std::string getName();
 
     bool hasCapability(ToolCapabilities cap) const;
 
@@ -64,7 +63,7 @@ private:
     void operator=(const Tool& t);
 
 private:
-    string name;
+    std::string name;
     ToolType type;
 
     double* thickness;

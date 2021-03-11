@@ -13,6 +13,9 @@
 #include "Util.h"
 #include "i18n.h"
 
+using std::string;
+using std::vector;
+
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control):
         GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
         settings(settings),

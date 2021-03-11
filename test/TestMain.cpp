@@ -12,7 +12,6 @@
 #include <iostream>
 
 #include <CrashHandler.h>
-#include <XournalType.h>
 #include <config-dev.h>
 #include <config-test.h>
 #include <cppunit/CompilerOutputter.h>

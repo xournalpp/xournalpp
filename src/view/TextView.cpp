@@ -7,6 +7,8 @@
 #include "StringUtils.h"
 #include "Util.h"
 
+using std::string;
+
 TextView::TextView() = default;
 
 TextView::~TextView() = default;
@@ -58,7 +60,7 @@ void TextView::drawText(cairo_t* cr, const Text* t) {
     cairo_restore(cr);
 }
 
-auto TextView::findText(const Text* t, string& search) -> vector<XojPdfRectangle> {
+auto TextView::findText(const Text* t, string& search) -> std::vector<XojPdfRectangle> {
     cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
     cairo_t* cr = cairo_create(surface);
 
@@ -71,7 +73,7 @@ auto TextView::findText(const Text* t, string& search) -> vector<XojPdfRectangle
 
     string srch = StringUtils::toLowerCase(search);
 
-    vector<XojPdfRectangle> list;
+    std::vector<XojPdfRectangle> list;
 
     int pos = -1;
     do {

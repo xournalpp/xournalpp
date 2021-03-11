@@ -20,7 +20,6 @@
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 
-#include "XournalType.h"
 
 class LayerCtrlListener;
 class Control;

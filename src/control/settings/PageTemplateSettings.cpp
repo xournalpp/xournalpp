@@ -6,6 +6,7 @@
 #include "control/pagetype/PageTypeHandler.h"
 #include "control/xojfile/SaveHandler.h"
 
+using std::string;
 using std::stringstream;
 
 PageTemplateSettings::PageTemplateSettings():
@@ -58,7 +59,7 @@ void PageTemplateSettings::setBackgroundType(const PageType& backgroundType) { t
  *
  * @return true if valid
  */
-auto PageTemplateSettings::parse(const string& tpl) -> bool {
+auto PageTemplateSettings::parse(const std::string& tpl) -> bool {
     stringstream ss(tpl);
     string line;
 

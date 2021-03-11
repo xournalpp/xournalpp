@@ -17,20 +17,21 @@
 #include "util/IconNameHelper.h"
 
 #include "AbstractToolItem.h"
-#include "XournalType.h"
+
 
 class GladeGui;
 class SpinPageAdapter;
 
 class ToolPageSpinner: public AbstractToolItem {
 public:
-    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type, IconNameHelper iconNameHelper);
+    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, std::string id, ActionType type,
+                    IconNameHelper iconNameHelper);
     ~ToolPageSpinner() override;
 
 public:
     SpinPageAdapter* getPageSpinner();
     void setPageInfo(size_t pagecount, size_t pdfpage);
-    string getToolDisplayName() override;
+    std::string getToolDisplayName() override;
     GtkToolItem* createItem(bool horizontal) override;
     GtkToolItem* createTmpItem(bool horizontal) override;
 

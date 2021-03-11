@@ -17,7 +17,7 @@
 #include "model/BackgroundImage.h"
 
 #include "BaseElementView.h"
-#include "XournalType.h"
+
 
 class ImageElementView: public BaseElementView {
 public:

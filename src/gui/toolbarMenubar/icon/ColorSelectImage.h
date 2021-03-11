@@ -18,7 +18,6 @@
 
 #include "util/Color.h"
 
-#include "XournalType.h"
 
 enum ColorIconState {
     /**
