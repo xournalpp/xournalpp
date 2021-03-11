@@ -5,8 +5,12 @@ parameters:
 
 steps:
   - bash: |
+      whereis ps
+      ps --help
       rm -R /Users/runner/hostedtoolcache
       sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh)"
+      whereis ps
+      ps --help
     enabled: true
     displayName: "nuke brew"
   - bash: |
