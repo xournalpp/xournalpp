@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.2 -->
 <interface>
-  <requires lib="gtk+" version="3.18"/>
+  <requires lib="gtk+" version="3.18" />
   <object class="GtkAdjustment" id="adjustmentAudioGain">
     <property name="upper">10</property>
     <property name="value">1</property>
@@ -200,7 +200,7 @@
   <object class="GtkListStore" id="listStabilizerAveragingMethods">
     <columns>
       <!-- column-name Name -->
-      <column type="gchararray"/>
+      <column type="gchararray" />
     </columns>
     <data>
       <row>
@@ -217,7 +217,7 @@
   <object class="GtkListStore" id="listStabilizerPreprocessors">
     <columns>
       <!-- column-name Name -->
-      <column type="gchararray"/>
+      <column type="gchararray" />
     </columns>
     <data>
       <row>
@@ -240,9 +240,9 @@
     <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <property name="type_hint">normal</property>
     <property name="gravity">center</property>
-    <signal name="close" handler="gtk_widget_hide" swapped="no"/>
+    <signal name="close" handler="gtk_widget_hide" swapped="no" />
     <child type="titlebar">
-      <placeholder/>
+      <placeholder />
     </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox3">
@@ -784,7 +784,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="can_focus">False</property>
                                             <property name="orientation">vertical</property>
                                             <child>
-                                              <placeholder/>
+                                              <placeholder />
                                             </child>
                                           </object>
                                           <packing>
@@ -971,7 +971,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="id_column">0</property>
                                             <property name="active_id">0</property>
                                             <child>
-                                              <object class="GtkCellRendererText"/>
+                                              <object class="GtkCellRendererText" />
                                               <attributes>
                                                 <attribute name="markup">0</attribute>
                                                 <attribute name="text">0</attribute>
@@ -1178,7 +1178,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="id_column">0</property>
                                             <property name="active_id">0</property>
                                             <child>
-                                              <object class="GtkCellRendererText"/>
+                                              <object class="GtkCellRendererText" />
                                               <attributes>
                                                 <attribute name="markup">0</attribute>
                                                 <attribute name="text">0</attribute>
@@ -1224,7 +1224,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder/>
+                                          <placeholder />
                                         </child>
                                       </object>
                                     </child>
@@ -1344,7 +1344,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1382,7 +1382,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1812,7 +1812,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1850,7 +1850,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1888,7 +1888,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
@@ -2016,7 +2016,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <child>
-                                              <placeholder/>
+                                              <placeholder />
                                             </child>
                                           </object>
                                           <packing>
@@ -2173,7 +2173,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <placeholder/>
+                                                  <placeholder />
                                                 </child>
                                               </object>
                                               <packing>
@@ -2223,77 +2223,77 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                             <property name="row_spacing">5</property>
                                                             <property name="column_spacing">5</property>
                                                             <child>
-                                                            <object class="GtkLabel" id="label52">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Enable</property>
-                                                            <property name="xalign">0</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">0</property>
-                                                            <property name="top_attach">0</property>
-                                                            </packing>
+                                                              <object class="GtkLabel" id="label52">
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">False</property>
+                                                                <property name="label" translatable="yes">Enable</property>
+                                                                <property name="xalign">0</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">0</property>
+                                                                <property name="top_attach">0</property>
+                                                              </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkLabel" id="label53">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Disable</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">0</property>
-                                                            <property name="top_attach">1</property>
-                                                            </packing>
+                                                              <object class="GtkLabel" id="label53">
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">False</property>
+                                                                <property name="label" translatable="yes">Disable</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">0</property>
+                                                                <property name="top_attach">1</property>
+                                                              </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkEntry" id="txtEnableTouchCommand">
-                                                            <property name="name">txtEnableTouchCommand</property>
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="hexpand">True</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="top_attach">0</property>
-                                                            </packing>
+                                                              <object class="GtkEntry" id="txtEnableTouchCommand">
+                                                                <property name="name">txtEnableTouchCommand</property>
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">True</property>
+                                                                <property name="hexpand">True</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">1</property>
+                                                                <property name="top_attach">0</property>
+                                                              </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkEntry" id="txtDisableTouchCommand">
-                                                            <property name="name">txtDisableTouchCommand</property>
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="hexpand">True</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="top_attach">1</property>
-                                                            </packing>
+                                                              <object class="GtkEntry" id="txtDisableTouchCommand">
+                                                                <property name="name">txtDisableTouchCommand</property>
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">True</property>
+                                                                <property name="hexpand">True</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">1</property>
+                                                                <property name="top_attach">1</property>
+                                                              </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkButton" id="btTestEnable">
-                                                            <property name="label" translatable="yes">Test</property>
-                                                            <property name="name">btTestEnable</property>
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="receives_default">True</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">2</property>
-                                                            <property name="top_attach">0</property>
-                                                            </packing>
+                                                              <object class="GtkButton" id="btTestEnable">
+                                                                <property name="label" translatable="yes">Test</property>
+                                                                <property name="name">btTestEnable</property>
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">True</property>
+                                                                <property name="receives_default">True</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">2</property>
+                                                                <property name="top_attach">0</property>
+                                                              </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkButton" id="btTestDisable">
-                                                            <property name="label" translatable="yes">Test</property>
-                                                            <property name="name">btTestDisable</property>
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="receives_default">True</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">2</property>
-                                                            <property name="top_attach">1</property>
-                                                            </packing>
+                                                              <object class="GtkButton" id="btTestDisable">
+                                                                <property name="label" translatable="yes">Test</property>
+                                                                <property name="name">btTestDisable</property>
+                                                                <property name="visible">True</property>
+                                                                <property name="can_focus">True</property>
+                                                                <property name="receives_default">True</property>
+                                                              </object>
+                                                              <packing>
+                                                                <property name="left_attach">2</property>
+                                                                <property name="top_attach">1</property>
+                                                              </packing>
                                                             </child>
                                                           </object>
                                                           <packing>
@@ -2774,8 +2774,8 @@ This setting can make it easier to draw with touch. </property>
                                                             <property name="active">0</property>
                                                             <property name="active_id">1</property>
                                                             <items>
-                                                            <item id="Color" translatable="yes">Colored</item>
-                                                            <item id="Mono" translatable="yes">Monochrome</item>
+                                                              <item id="Color" translatable="yes">Colored</item>
+                                                              <item id="Mono" translatable="yes">Monochrome</item>
                                                             </items>
                                                           </object>
                                                           <packing>
@@ -3108,7 +3108,7 @@ This setting can make it easier to draw with touch. </property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <placeholder/>
+                                              <placeholder />
                                             </child>
                                           </object>
                                           <packing>
@@ -3790,7 +3790,7 @@ This setting can make it easier to draw with touch. </property>
                                                 <property name="can_focus">False</property>
                                                 <property name="orientation">vertical</property>
                                                 <child>
-                                                  <placeholder/>
+                                                  <placeholder />
                                                 </child>
                                               </object>
                                               <packing>
@@ -4783,7 +4783,7 @@ Set this to 0% to always re-render on zoom.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <child>
-                                              <placeholder/>
+                                              <placeholder />
                                             </child>
                                           </object>
                                           <packing>
@@ -4793,7 +4793,7 @@ Set this to 0% to always re-render on zoom.</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder/>
+                                          <placeholder />
                                         </child>
                                       </object>
                                     </child>
@@ -4807,7 +4807,7 @@ Set this to 0% to always re-render on zoom.</property>
                                       <object class="GtkImage" id="image2">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="pixbuf">pixmaps/default.svg</property>
+                                        <property name="pixbuf">iconsColor/hicolor/scalable/actions/xopp-default.svg</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -5298,7 +5298,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                 <property name="margin_left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <placeholder/>
+                  <placeholder />
                 </child>
               </object>
               <packing>
@@ -5388,7 +5388,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                                     <property name="can_focus">False</property>
                                                     <property name="orientation">vertical</property>
                                                     <child>
-                                                      <placeholder/>
+                                                      <placeholder />
                                                     </child>
                                                   </object>
                                                 </child>
