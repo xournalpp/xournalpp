@@ -11,22 +11,6 @@
 
 #pragma once
 
-#ifdef __unix__
-#define X11_ENABLED
-#endif
-
-#ifdef __APPLE__
-#undef X11_ENABLED
-#endif
-
-#ifdef _WIN32
-#undef X11_ENABLED
-#endif
-
-#ifdef _WIN64
-#undef X11_ENABLED
-#endif
-
 #ifdef X11_ENABLED
 
 #include <string>
