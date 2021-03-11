@@ -217,4 +217,4 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) ->
     return true;
 }
 
-auto XojCairoPdfExport::getLastError() -> string { return lastError; }
+auto XojCairoPdfExport::getLastError() -> std::string { return lastError; }

@@ -82,6 +82,6 @@ void LinkDestination::setChangeTop(double top) {
     this->changeTop = true;
 }
 
-void LinkDestination::setName(string name) { this->name = std::move(name); }
+void LinkDestination::setName(std::string name) { this->name = std::move(name); }
 
-auto LinkDestination::getName() -> string { return this->name; }
+auto LinkDestination::getName() -> std::string { return this->name; }

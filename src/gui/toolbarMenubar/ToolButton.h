@@ -17,10 +17,10 @@
 
 class ToolButton: public AbstractToolItem {
 public:
-    ToolButton(ActionHandler* handler, string id, ActionType type, string iconName, string description,
+    ToolButton(ActionHandler* handler, std::string id, ActionType type, std::string iconName, std::string description,
                GtkWidget* menuitem = nullptr);
-    ToolButton(ActionHandler* handler, string id, ActionType type, ActionGroup group, bool toolToggleOnlyEnable,
-               string iconName, string description, GtkWidget* menuitem = nullptr);
+    ToolButton(ActionHandler* handler, std::string id, ActionType type, ActionGroup group, bool toolToggleOnlyEnable,
+               std::string iconName, std::string description, GtkWidget* menuitem = nullptr);
 
     virtual ~ToolButton();
 
@@ -32,10 +32,10 @@ public:
      * @param iconName To load an icon
      * @return The created menu item
      */
-    GtkWidget* registerPopupMenuEntry(const string& name, const string& iconName = "");
+    GtkWidget* registerPopupMenuEntry(const std::string& name, const std::string& iconName = "");
 
-    void updateDescription(const string& description);
-    virtual string getToolDisplayName();
+    void updateDescription(const std::string& description);
+    virtual std::string getToolDisplayName();
     void setActive(bool active);
 
 protected:
@@ -44,6 +44,6 @@ protected:
     virtual GtkWidget* getNewToolIcon();
 
 private:
-    string iconName;
-    string description;
+    std::string iconName;
+    std::string description;
 };

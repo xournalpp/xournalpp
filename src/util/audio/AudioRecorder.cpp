@@ -4,7 +4,7 @@
 
 AudioRecorder::~AudioRecorder() { this->stop(); }
 
-auto AudioRecorder::start(const string& filename) -> bool {
+auto AudioRecorder::start(const std::string& filename) -> bool {
     // Start recording
     bool status = this->portAudioProducer->startRecording();
 

@@ -20,21 +20,21 @@
 #include "AudioQueue.h"
 #include "PortAudioConsumer.h"
 #include "VorbisProducer.h"
-#include "XournalType.h"
+
 
 class AudioPlayer final {
 public:
     explicit AudioPlayer(Control& control, Settings& settings): control(control), settings(settings) {}
 
     ~AudioPlayer();
-    bool start(const string& filename, unsigned int timestamp = 0);
+    bool start(const std::string& filename, unsigned int timestamp = 0);
     bool isPlaying();
     void stop();
     bool play();
     void pause();
     void seek(int seconds);
 
-    vector<DeviceInfo> getOutputDevices();
+    std::vector<DeviceInfo> getOutputDevices();
 
     Settings& getSettings();
     void disableAudioPlaybackButtons();

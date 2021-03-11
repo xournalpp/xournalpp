@@ -16,7 +16,7 @@
 #include <vector>
 
 #include "Rectangle.h"
-#include "XournalType.h"
+
 
 class Element;
 class PageListener;

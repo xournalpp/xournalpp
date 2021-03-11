@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include <config-dev.h>
 #include <gtk/gtk.h>
 #include <util/safe_casts.h>
 

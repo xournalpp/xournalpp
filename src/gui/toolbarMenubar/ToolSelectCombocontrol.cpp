@@ -9,6 +9,8 @@
 #include "ToolMenuHandler.h"
 #include "i18n.h"
 
+using std::string;
+
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id):
         ToolButton(handler, std::move(id), ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true,
                    toolMenuHandler->iconName("combo-selection"), _("Selection Combo")),

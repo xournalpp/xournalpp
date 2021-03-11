@@ -21,8 +21,6 @@
 #include "OutputStream.h"
 #include "filesystem.h"
 
-using std::string;
-
 namespace Util {
 
 pid_t getPid();

@@ -15,20 +15,20 @@
 
 class ScaleUndoAction: public UndoAction {
 public:
-    ScaleUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double fx, double fy,
+    ScaleUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0, double fx, double fy,
                     double rotation, bool restoreLineWidth);
     virtual ~ScaleUndoAction();
 
 public:
     virtual bool undo(Control* control);
     virtual bool redo(Control* control);
-    virtual string getText();
+    virtual std::string getText();
 
 private:
     void applyScale(double fx, double fy, bool restoreLineWidth);
 
 private:
-    vector<Element*> elements;
+    std::vector<Element*> elements;
 
     double x0;
     double y0;

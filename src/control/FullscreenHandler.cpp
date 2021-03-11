@@ -5,6 +5,8 @@
 #include "Control.h"
 #include "StringUtils.h"
 
+using std::string;
+
 
 FullscreenHandler::FullscreenHandler(Settings* settings): settings(settings) {}
 
@@ -12,7 +14,7 @@ FullscreenHandler::~FullscreenHandler() = default;
 
 auto FullscreenHandler::isFullscreen() const -> bool { return this->fullscreen; }
 
-void FullscreenHandler::hideWidget(MainWindow* win, const string& widgetName) {
+void FullscreenHandler::hideWidget(MainWindow* win, const std::string& widgetName) {
     if ("sidebarContents" == widgetName && settings->isSidebarVisible()) {
         this->sidebarHidden = true;
         win->setSidebarVisible(false);

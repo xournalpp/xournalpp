@@ -19,7 +19,7 @@
 
 #include "Point.h"
 #include "Rectangle.h"
-#include "XournalType.h"
+
 
 constexpr auto DEFAULT_ZOOM_MAX{7};
 constexpr auto DEFAULT_ZOOM_MIN{0.3};

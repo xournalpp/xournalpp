@@ -18,7 +18,6 @@
 
 #include "gui/GladeGui.h"
 
-#include "XournalType.h"
 
 enum SidebarActions {
     SIDEBAR_ACTION_NONE = 0,
@@ -50,7 +49,8 @@ public:
      * Sets the button enabled / disabled
      */
     void setButtonEnabled(SidebarActions enabledActions);
-    void setButtonTooltips(const string& tipUp, const string& tipDown, const string& tipCopy, const string& tipDelete);
+    void setButtonTooltips(const std::string& tipUp, const std::string& tipDown, const std::string& tipCopy,
+                           const std::string& tipDelete);
 
     void setHidden(bool hidden);
 

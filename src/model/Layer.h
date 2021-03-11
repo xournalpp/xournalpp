@@ -15,7 +15,6 @@
 #include <vector>
 
 #include "Element.h"
-#include "XournalType.h"
 
 template <class T>
 using optional = std::optional<T>;
@@ -56,7 +55,7 @@ public:
     /**
      * Returns an iterator over the Element%s contained in this Layer
      */
-    vector<Element*>* getElements();
+    std::vector<Element*>* getElements();
 
     /**
      * Returns whether or not the Layer is empty
@@ -87,17 +86,17 @@ public:
     /**
      * @return layer custom name or empty string if custom name is not set
      */
-    string getName() const;
+    std::string getName() const;
 
     /**
      * Sets custom name for the layer
      */
-    void setName(const string& newName);
+    void setName(const std::string& newName);
 
 private:
-    vector<Element*> elements;
+    std::vector<Element*> elements;
 
     bool visible = true;
 
-    optional<string> name;
+    optional<std::string> name;
 };

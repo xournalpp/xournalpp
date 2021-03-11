@@ -41,8 +41,8 @@ void addDevicesToList(std::vector<InputDevice>& deviceList, GList* devList, bool
     }
 }
 
-auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices) -> vector<InputDevice> {
-    vector<InputDevice> deviceList = settings->getKnownInputDevices();
+auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices) -> std::vector<InputDevice> {
+    std::vector<InputDevice> deviceList = settings->getKnownInputDevices();
     if (ignoreTouchDevices) {
         deviceList.erase(
                 std::remove_if(deviceList.begin(), deviceList.end(),
@@ -91,15 +91,15 @@ InputDeviceClass DeviceListHelper::getSourceMapping(GdkInputSource source, Setti
 
 InputDevice::InputDevice(GdkDevice* device): name(gdk_device_get_name(device)), source(gdk_device_get_source(device)) {}
 
-InputDevice::InputDevice(string name, GdkInputSource source): name(std::move(name)), source(source) {}
+InputDevice::InputDevice(std::string name, GdkInputSource source): name(std::move(name)), source(source) {}
 
-auto InputDevice::getName() const -> string { return this->name; }
+auto InputDevice::getName() const -> std::string { return this->name; }
 
 auto InputDevice::getSource() const -> GdkInputSource { return this->source; }
 
 void InputDevice::updateType(GdkInputSource newSource) { this->source = newSource; }
 
-auto InputDevice::getType() const -> string {
+auto InputDevice::getType() const -> std::string {
     switch (source) {
         case GDK_SOURCE_MOUSE:
             return _("mouse");

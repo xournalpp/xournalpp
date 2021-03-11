@@ -84,7 +84,7 @@ public:
      */
     virtual void finalizeStroke() {}
 
-    [[maybe_unused]] virtual auto getInfo() -> string { return "No stabilizer"; }
+    [[maybe_unused]] virtual auto getInfo() -> std::string { return "No stabilizer"; }
 
 protected:
     /**
@@ -212,7 +212,7 @@ public:
      */
     virtual void processEvent(const PositionInputData& pos) override;
 
-    [[maybe_unused]] virtual auto getInfo() -> string override {
+    [[maybe_unused]] virtual auto getInfo() -> std::string override {
         return "Deadzone stabilizer with deadzoneRadius = " + std::to_string(deadzoneRadius) +
                ", cusp detection = " + (cuspDetection ? "on" : "off");
     }
@@ -293,7 +293,7 @@ public:
      */
     virtual void processEvent(const PositionInputData& pos) override;
 
-    [[maybe_unused]] virtual auto getInfo() -> string override {
+    [[maybe_unused]] virtual auto getInfo() -> std::string override {
         return "Inertia stabilizer with mass = " + std::to_string(mass) +
                ", drag = " + std::to_string(1 - oneMinusDrag);
     }
@@ -362,7 +362,7 @@ public:
     VelocityGaussian(bool finalize, double sigma): Active(finalize), twoSigmaSquared(2 * sigma * sigma) {}
     virtual ~VelocityGaussian() = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> string override {
+    [[maybe_unused]] virtual auto getInfo() -> std::string override {
         return "Velocity-based gaussian weight stabilizer with "
                "2σ² = " +
                std::to_string(twoSigmaSquared);
@@ -431,7 +431,7 @@ public:
     Arithmetic(bool finalize, size_t buffersize): Active(finalize), bufferLength(buffersize), eventBuffer(buffersize) {}
     virtual ~Arithmetic() = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> string override {
+    [[maybe_unused]] virtual auto getInfo() -> std::string override {
         return "Arithmetic stabilizer with bufferLength " + std::to_string(bufferLength);
     }
 
@@ -487,7 +487,7 @@ public:
             Active(finalize), Arithmetic(finalize, buffersize), Deadzone(finalize, dzRadius, cuspDetection) {}
     virtual ~ArithmeticDeadzone() = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> string override {
+    [[maybe_unused]] virtual auto getInfo() -> std::string override {
         return "Hybrid stabilizer:\n   * " + Arithmetic::getInfo() + "\n   * " + Deadzone::getInfo();
     }
 
@@ -513,7 +513,7 @@ public:
             Active(finalize), Arithmetic(finalize, buffersize), Inertia(finalize, drag, mass) {}
     virtual ~ArithmeticInertia() = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> string override {
+    [[maybe_unused]] virtual auto getInfo() -> std::string override {
         return "Hybrid stabilizer:\n   * " + Arithmetic::getInfo() + "\n   * " + Inertia::getInfo();
     }
 
@@ -539,7 +539,7 @@ public:
             Active(finalize), VelocityGaussian(finalize, sigma), Deadzone(finalize, dzRadius, cuspDetection) {}
     virtual ~VelocityGaussianDeadzone() = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> string override {
+    [[maybe_unused]] virtual auto getInfo() -> std::string override {
         return "Hybrid stabilizer:\n   * " + VelocityGaussian::getInfo() + "\n   * " + Deadzone::getInfo();
     }
 
@@ -565,7 +565,7 @@ public:
             Active(finalize), VelocityGaussian(finalize, sigma), Inertia(finalize, drag, mass) {}
     virtual ~VelocityGaussianInertia() = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> string override {
+    [[maybe_unused]] virtual auto getInfo() -> std::string override {
         return "Hybrid stabilizer:\n   * " + VelocityGaussian::getInfo() + "\n   * " + Inertia::getInfo();
     }
 

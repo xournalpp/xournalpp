@@ -24,7 +24,7 @@ public:
 
 public:
     void loadSettings();
-    void saveSettings(string& pluginEnabled, string& pluginDisabled);
+    void saveSettings(std::string& pluginEnabled, std::string& pluginDisabled);
 
     // Not implemented! This is not a dialog!
     void show(GtkWindow* parent) override;

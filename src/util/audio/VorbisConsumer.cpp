@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cmath>
 
-auto VorbisConsumer::start(const string& filename) -> bool {
+auto VorbisConsumer::start(const std::string& filename) -> bool {
     auto [sampleRate, channels] = this->audioQueue.getAudioAttributes();
 
     if (sampleRate == -1) {

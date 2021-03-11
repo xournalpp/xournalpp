@@ -20,7 +20,7 @@
 #include "gui/LayoutMapper.h"
 
 #include "Rectangle.h"
-#include "XournalType.h"
+
 
 class XojPageView;
 class XournalView;

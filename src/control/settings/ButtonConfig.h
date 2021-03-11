@@ -17,7 +17,6 @@
 #include "control/Tool.h"
 #include "control/settings/SettingsEnums.h"
 
-#include "XournalType.h"
 
 class ToolHandler;
 
@@ -73,7 +72,7 @@ private:
     bool disableDrawing;
 
 public:
-    string device;
+    std::string device;
 
     friend class Settings;
     friend class ButtonConfigGui;

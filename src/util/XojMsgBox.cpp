@@ -7,6 +7,9 @@
 #include <shlwapi.h>
 #endif
 
+using std::map;
+using std::string;
+
 GtkWindow* defaultWindow = nullptr;
 
 /**

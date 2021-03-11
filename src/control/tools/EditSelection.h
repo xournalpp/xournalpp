@@ -25,7 +25,7 @@
 
 #include "CursorSelectionType.h"
 #include "SnapToGridInputHandler.h"
-#include "XournalType.h"
+
 
 class UndoRedoHandler;
 class Layer;
@@ -40,7 +40,7 @@ public:
     EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view);
     EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view);
     EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, const PageRef& page);
-    EditSelection(UndoRedoHandler* undo, const vector<Element*>& elements, XojPageView* view, const PageRef& page);
+    EditSelection(UndoRedoHandler* undo, const std::vector<Element*>& elements, XojPageView* view, const PageRef& page);
     virtual ~EditSelection();
 
 private:
@@ -52,7 +52,7 @@ private:
     /**
      * Calculate the size from the element list
      */
-    void calcSizeFromElements(vector<Element*> elements);
+    void calcSizeFromElements(std::vector<Element*> elements);
 
 public:
     /**
@@ -164,7 +164,7 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    vector<Element*>* getElements();
+    std::vector<Element*>* getElements();
 
     /**
      * Returns the insert order of this selection

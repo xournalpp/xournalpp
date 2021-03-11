@@ -1,5 +1,7 @@
 #include "PopplerGlibAction.h"
 
+using std::string;
+
 PopplerGlibAction::PopplerGlibAction(PopplerAction* action, PopplerDocument* document):
         action(action), document(document) {
     g_object_ref(document);
@@ -83,4 +85,4 @@ void PopplerGlibAction::linkFromDest(LinkDestination* link, PopplerDest* pDest) 
     link->setPdfPage(pDest->page_num - 1);
 }
 
-auto PopplerGlibAction::getTitle() -> string { return (reinterpret_cast<PopplerActionAny*>(action))->title; }
+auto PopplerGlibAction::getTitle() -> std::string { return (reinterpret_cast<PopplerActionAny*>(action))->title; }

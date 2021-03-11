@@ -16,7 +16,6 @@
 
 #include <gtk/gtk.h>
 
-#include "XournalType.h"
 
 class EraseableStrokePart;
 

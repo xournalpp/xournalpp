@@ -89,7 +89,7 @@ auto InsertDeletePageUndoAction::deletePage(Control* control) -> bool {
     return true;
 }
 
-auto InsertDeletePageUndoAction::getText() -> string {
+auto InsertDeletePageUndoAction::getText() -> std::string {
     if (this->inserted) {
         return _("Page inserted");
     }

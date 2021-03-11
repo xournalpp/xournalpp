@@ -9,9 +9,9 @@ XojFont::XojFont() = default;
 
 XojFont::~XojFont() = default;
 
-auto XojFont::getName() const -> string { return this->name; }
+auto XojFont::getName() const -> std::string { return this->name; }
 
-void XojFont::setName(string name) { this->name = std::move(name); }
+void XojFont::setName(std::string name) { this->name = std::move(name); }
 
 auto XojFont::getSize() const -> double { return size; }
 

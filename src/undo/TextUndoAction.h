@@ -20,24 +20,24 @@ class TextEditor;
 
 class TextUndoAction: public UndoAction {
 public:
-    TextUndoAction(const PageRef& page, Layer* layer, Text* text, string lastText, TextEditor* textEditor);
+    TextUndoAction(const PageRef& page, Layer* layer, Text* text, std::string lastText, TextEditor* textEditor);
     virtual ~TextUndoAction();
 
 public:
     virtual bool undo(Control* control);
     virtual bool redo(Control* control);
 
-    virtual string getText();
+    virtual std::string getText();
 
-    string getUndoText();
+    std::string getUndoText();
 
     void textEditFinished();
 
 private:
     Layer* layer;
     Text* text;
-    string lastText;
-    string newText;
+    std::string lastText;
+    std::string newText;
 
     TextEditor* textEditor;
 };

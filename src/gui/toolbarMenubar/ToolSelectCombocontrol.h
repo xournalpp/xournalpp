@@ -17,13 +17,13 @@
 #include "gui/GladeGui.h"
 
 #include "ToolButton.h"
-#include "XournalType.h"
+
 
 class ToolMenuHandler;
 
 class ToolSelectCombocontrol: public ToolButton {
 public:
-    ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id);
+    ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, std::string id);
     virtual ~ToolSelectCombocontrol();
 
 public:
@@ -31,7 +31,7 @@ public:
 
 protected:
     virtual GtkToolItem* newItem();
-    void addMenuitem(const string& text, const string& icon, ActionType type, ActionGroup group);
+    void addMenuitem(const std::string& text, const std::string& icon, ActionType type, ActionGroup group);
 
 private:
     ToolMenuHandler* toolMenuHandler = nullptr;

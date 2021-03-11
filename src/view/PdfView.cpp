@@ -28,7 +28,7 @@ void PdfView::drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo
         cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
 
         cairo_text_extents_t extents = {0};
-        string strMissing = _("PDF background missing");
+        std::string strMissing = _("PDF background missing");
 
         cairo_text_extents(cr, strMissing.c_str(), &extents);
         cairo_move_to(cr, width / 2 - extents.width / 2, height / 2 - extents.height / 2);

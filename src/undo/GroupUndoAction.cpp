@@ -12,8 +12,8 @@ GroupUndoAction::~GroupUndoAction() {
 
 void GroupUndoAction::addAction(UndoAction* action) { actions.push_back(action); }
 
-auto GroupUndoAction::getPages() -> vector<PageRef> {
-    vector<PageRef> pages;
+auto GroupUndoAction::getPages() -> std::vector<PageRef> {
+    std::vector<PageRef> pages;
 
     for (UndoAction* a: actions) {
         for (PageRef addPage: a->getPages()) {
@@ -56,7 +56,7 @@ auto GroupUndoAction::undo(Control* control) -> bool {
     return result;
 }
 
-auto GroupUndoAction::getText() -> string {
+auto GroupUndoAction::getText() -> std::string {
     if (actions.empty()) {
         return "!! NOTHING !!";
     }

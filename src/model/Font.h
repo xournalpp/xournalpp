@@ -18,7 +18,6 @@
 
 #include "serializing/Serializeable.h"
 
-#include "XournalType.h"
 
 class XojFont: public Serializeable {
 public:
@@ -26,8 +25,8 @@ public:
     virtual ~XojFont();
 
 public:
-    string getName() const;
-    void setName(string name);
+    std::string getName() const;
+    void setName(std::string name);
 
     double getSize() const;
     void setSize(double size);
@@ -43,6 +42,6 @@ private:
     void updateFontDesc();
 
 private:
-    string name;
+    std::string name;
     double size = 0;
 };

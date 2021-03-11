@@ -92,7 +92,7 @@ void PageTemplateDialog::saveToFile() {
     time_t curtime = time(nullptr);
     char stime[128];
     strftime(stime, sizeof(stime), "%F-Template-%H-%M.xopt", localtime(&curtime));
-    string saveFilename = stime;
+    std::string saveFilename = stime;
 
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
     gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
@@ -129,7 +129,7 @@ void PageTemplateDialog::updatePageSize() {
 
     char buffer[64];
     sprintf(buffer, "%0.2lf", model.getPageWidth() / formatUnit->scale);
-    string pageSize = buffer;
+    std::string pageSize = buffer;
     pageSize += formatUnit->name;
     pageSize += " x ";
 

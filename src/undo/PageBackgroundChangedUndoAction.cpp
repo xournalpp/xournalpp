@@ -78,4 +78,4 @@ auto PageBackgroundChangedUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-auto PageBackgroundChangedUndoAction::getText() -> string { return _("Page background changed"); }
+auto PageBackgroundChangedUndoAction::getText() -> std::string { return _("Page background changed"); }

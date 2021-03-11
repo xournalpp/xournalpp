@@ -24,7 +24,7 @@ MoveLayerUndoAction::~MoveLayerUndoAction() {
     this->layer = nullptr;
 }
 
-auto MoveLayerUndoAction::getText() -> string { return _("Move layer"); }
+auto MoveLayerUndoAction::getText() -> std::string { return _("Move layer"); }
 
 auto MoveLayerUndoAction::undo(Control* control) -> bool {
     layerController->removeLayer(this->page, this->layer);

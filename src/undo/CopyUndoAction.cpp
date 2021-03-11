@@ -57,4 +57,4 @@ auto CopyUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-auto CopyUndoAction::getText() -> string { return _("Copy page"); }
+auto CopyUndoAction::getText() -> std::string { return _("Copy page"); }

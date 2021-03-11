@@ -77,9 +77,9 @@ private:
      */
     bool progressiveMode = false;
 
-    string lastError;
+    std::string lastError;
 
-    string chosenFilterName;
+    std::string chosenFilterName;
 
-    std::map<string, ExportType*> filters;
+    std::map<std::string, ExportType*> filters;
 };

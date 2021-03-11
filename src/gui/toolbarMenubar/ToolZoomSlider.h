@@ -18,7 +18,7 @@
 #include "util/IconNameHelper.h"
 
 #include "AbstractToolItem.h"
-#include "XournalType.h"
+
 
 #define SCALE_LOG_OFFSET 0.20753
 
@@ -26,7 +26,7 @@ class ZoomControl;
 
 class ToolZoomSlider: public AbstractToolItem, public ZoomListener {
 public:
-    ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom,
+    ToolZoomSlider(ActionHandler* handler, std::string id, ActionType type, ZoomControl* zoom,
                    IconNameHelper iconNameHelper);
     virtual ~ToolZoomSlider();
 
@@ -39,7 +39,7 @@ public:
 
     virtual void zoomChanged();
     virtual void zoomRangeValuesChanged();
-    virtual string getToolDisplayName();
+    virtual std::string getToolDisplayName();
 
     // Should be called when the window size changes
     void updateScaleMarks();

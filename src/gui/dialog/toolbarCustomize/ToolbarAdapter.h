@@ -17,7 +17,7 @@
 
 class ToolbarAdapter {
 public:
-    ToolbarAdapter(GtkWidget* toolbar, string toolbarName, ToolMenuHandler* toolHandler, MainWindow* window);
+    ToolbarAdapter(GtkWidget* toolbar, std::string toolbarName, ToolMenuHandler* toolHandler, MainWindow* window);
     ~ToolbarAdapter();
 
 private:
@@ -41,7 +41,7 @@ private:
     /**
      * Remove a toolbar item from the tool where it was
      */
-    void removeFromToolbar(AbstractToolItem* item, const string& toolbarName, int id);
+    void removeFromToolbar(AbstractToolItem* item, const std::string& toolbarName, int id);
     static void toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
                                     guint info, guint time, ToolbarAdapter* adapter);
 
@@ -56,7 +56,7 @@ private:
 
 private:
     GtkWidget* w;
-    string toolbarName;
+    std::string toolbarName;
     MainWindow* window;
 
     GtkToolItem* spacerItem{};

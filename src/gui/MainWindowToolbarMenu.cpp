@@ -45,7 +45,7 @@ void MainWindowToolbarMenu::setTmpDisabled(bool disabled) {
 void MainWindowToolbarMenu::selectToolbar(Settings* settings, ToolMenuHandler* toolbar) {
     selectedToolbar = nullptr;
 
-    const string& selectedId = settings->getSelectedToolbar();
+    const std::string& selectedId = settings->getSelectedToolbar();
 
     for (ToolbarData* d: *toolbar->getModel()->getToolbars()) {
         if (selectedToolbar == nullptr) {

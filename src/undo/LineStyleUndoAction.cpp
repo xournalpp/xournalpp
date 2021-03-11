@@ -68,4 +68,4 @@ auto LineStyleUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-auto LineStyleUndoAction::getText() -> string { return _("Change line style"); }
+auto LineStyleUndoAction::getText() -> std::string { return _("Change line style"); }

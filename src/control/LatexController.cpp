@@ -20,6 +20,8 @@
 #include "i18n.h"
 #include "pixbuf-utils.h"
 
+using std::string;
+
 LatexController::LatexController(Control* control):
         control(control),
         settings(control->getSettings()->latexSettings),

@@ -20,7 +20,7 @@
 
 #include "Color.h"
 #include "Rectangle.h"
-#include "XournalType.h"
+
 
 enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT };
 

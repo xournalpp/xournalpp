@@ -14,7 +14,6 @@
 #include <execinfo.h>
 
 #include "PathUtil.h"
-using std::ofstream;
 
 static bool alreadyCrashed = false;
 
@@ -73,7 +72,7 @@ static void crashHandler(int sig) {
     char stime[128];
     strftime(stime, sizeof(stime), "%Y%m%d-%H%M%S", localtime(&curtime));
     auto const& errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR) / (std::string("errorlog.") + stime + ".log");
-    ofstream fp(errorlogPath);
+    std::ofstream fp(errorlogPath);
     if (fp) {
         g_warning("[Crash Handler] Wrote crash log to: %s", errorlogPath.c_str());
     }

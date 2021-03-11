@@ -18,7 +18,6 @@
 
 #include "model/PageType.h"
 
-#include "XournalType.h"
 
 class PageTypeHandler;
 class PageTypeHandler;
@@ -82,7 +81,7 @@ private:
     PageTypeHandler* types;
     Settings* settings;
 
-    vector<MenuCallbackInfo> menuInfos;
+    std::vector<MenuCallbackInfo> menuInfos;
 
     PageType selected;
 

@@ -14,13 +14,11 @@
 #include <string>
 #include <vector>
 
+#include <poppler.h>
+
 #include "model/LinkDestination.h"
 #include "pdf/base/XojPdfAction.h"
 
-#include "XournalType.h"
-using std::string;
-
-#include <poppler.h>
 
 class LinkDestination;
 
@@ -32,7 +30,7 @@ public:
 
 public:
     virtual XojLinkDest* getDestination();
-    virtual string getTitle();
+    virtual std::string getTitle();
 
 private:
     void linkFromDest(LinkDestination* link, PopplerDest* pDest);

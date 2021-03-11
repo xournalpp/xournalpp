@@ -4,7 +4,7 @@
 
 AudioPlayer::~AudioPlayer() { this->stop(); }
 
-auto AudioPlayer::start(const string& filename, unsigned int timestamp) -> bool {
+auto AudioPlayer::start(const std::string& filename, unsigned int timestamp) -> bool {
     // Start the producer for reading the data
     bool status = this->vorbisProducer->start(filename, timestamp);
 
@@ -59,6 +59,6 @@ void AudioPlayer::seek(int seconds) {
     this->vorbisProducer->seek(seconds);
 }
 
-auto AudioPlayer::getOutputDevices() -> vector<DeviceInfo> { return this->portAudioConsumer->getOutputDevices(); }
+auto AudioPlayer::getOutputDevices() -> std::vector<DeviceInfo> { return this->portAudioConsumer->getOutputDevices(); }
 
 auto AudioPlayer::getSettings() -> Settings& { return this->settings; }

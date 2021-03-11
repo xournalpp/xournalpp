@@ -20,16 +20,16 @@
 #include "AudioQueue.h"
 #include "PortAudioProducer.h"
 #include "VorbisConsumer.h"
-#include "XournalType.h"
+
 
 struct AudioRecorder {
     explicit AudioRecorder(Settings& settings): settings(settings) {}
     ~AudioRecorder();
 
-    bool start(const string& filename);
+    bool start(const std::string& filename);
     void stop();
     bool isRecording() const;
-    vector<DeviceInfo> getInputDevices() const;
+    std::vector<DeviceInfo> getInputDevices() const;
 
 private:
     Settings& settings;

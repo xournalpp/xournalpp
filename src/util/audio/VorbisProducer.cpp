@@ -1,5 +1,7 @@
 #include "VorbisProducer.h"
 
+#include <glib.h>
+
 constexpr auto sample_buffer_size = size_t{16384U};
 
 auto VorbisProducer::start(const std::string& filename, unsigned int timestamp) -> bool {

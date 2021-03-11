@@ -15,16 +15,15 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
 
 class InputStreamException: public std::exception {
 public:
-    InputStreamException(const string& message, const string& filename, int line);
+    InputStreamException(const std::string& message, const std::string& filename, int line);
     virtual ~InputStreamException();
 
 public:
     virtual const char* what();
 
 private:
-    string message;
+    std::string message;
 };

@@ -17,13 +17,13 @@
 #include <gtk/gtk.h>
 
 #include "Job.h"
-#include "XournalType.h"
+
 
 class Control;
 
 class BlockingJob: public Job {
 public:
-    BlockingJob(Control* control, const string& name);
+    BlockingJob(Control* control, const std::string& name);
 
 protected:
     virtual ~BlockingJob();

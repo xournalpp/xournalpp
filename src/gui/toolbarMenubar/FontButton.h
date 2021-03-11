@@ -18,11 +18,11 @@
 #include "model/Font.h"
 
 #include "AbstractToolItem.h"
-#include "XournalType.h"
+
 
 class FontButton: public AbstractToolItem {
 public:
-    FontButton(ActionHandler* handler, GladeGui* gui, string id, ActionType type, string description,
+    FontButton(ActionHandler* handler, GladeGui* gui, std::string id, ActionType type, std::string description,
                GtkWidget* menuitem = nullptr);
     virtual ~FontButton();
 
@@ -30,7 +30,7 @@ public:
     virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
     void setFont(XojFont& font);
     XojFont getFont();
-    virtual string getToolDisplayName();
+    virtual std::string getToolDisplayName();
     void showFontDialog();
 
 protected:
@@ -46,7 +46,7 @@ protected:
 private:
     GtkWidget* fontButton = nullptr;
     GladeGui* gui = nullptr;
-    string description;
+    std::string description;
 
     XojFont font;
 };

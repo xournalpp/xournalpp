@@ -49,6 +49,8 @@
 #include "i18n.h"
 #include "pixbuf-utils.h"
 
+using std::string;
+
 XojPageView::XojPageView(XournalView* xournal, const PageRef& page) {
     this->page = page;
     this->registerListener(this->page);

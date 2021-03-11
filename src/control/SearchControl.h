@@ -19,7 +19,7 @@ public:
     SearchControl(const PageRef& page, XojPdfPageSPtr pdf);
     virtual ~SearchControl();
 
-    bool search(string text, int* occures, double* top);
+    bool search(std::string text, int* occures, double* top);
     void paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GdkRGBA& color);
 
 private:
@@ -29,5 +29,5 @@ private:
     PageRef page;
     XojPdfPageSPtr pdf;
 
-    vector<XojPdfRectangle> results;
+    std::vector<XojPdfRectangle> results;
 };

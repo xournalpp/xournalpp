@@ -14,7 +14,8 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
+#include <glib.h>
+
 
 /**
  * @brief Buttons that can have a configuration attached to them
@@ -101,4 +102,4 @@ constexpr auto stylusCursorTypeToString(StylusCursorType stylusCursorType) -> co
     }
 }
 
-StylusCursorType stylusCursorTypeFromString(const string& stylusCursorTypeStr);
+StylusCursorType stylusCursorTypeFromString(const std::string& stylusCursorTypeStr);

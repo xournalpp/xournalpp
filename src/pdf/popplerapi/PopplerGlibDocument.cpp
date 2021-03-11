@@ -8,6 +8,7 @@
 #include "Util.h"
 #include "filesystem.h"
 
+using std::string;
 
 PopplerGlibDocument::PopplerGlibDocument() = default;
 

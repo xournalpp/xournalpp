@@ -149,7 +149,7 @@ protected:
         if ((s->intersects(x, y, 15, &tmpGap))) {
             size_t ts = s->getTimestamp();
 
-            string fn = s->getAudioFilename();
+            std::string fn = s->getAudioFilename();
 
             if (!fn.empty()) {
                 if (fn.rfind(G_DIR_SEPARATOR, 0) != 0) {

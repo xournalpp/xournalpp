@@ -82,7 +82,7 @@ public:
     bool intersects(double x, double y, double halfEraserSize) override;
     bool intersects(double x, double y, double halfEraserSize, double* gap) override;
 
-    void setPressure(const vector<double>& pressure);
+    void setPressure(const std::vector<double>& pressure);
     void setLastPressure(double pressure);
     void setSecondToLastPressure(double pressure);
     void clearPressure();

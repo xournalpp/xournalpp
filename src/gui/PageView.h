@@ -54,7 +54,7 @@ public:
 
     void endText();
 
-    bool searchTextOnPage(string& text, int* occures, double* top);
+    bool searchTextOnPage(std::string& text, int* occures, double* top);
 
     bool onKeyPressEvent(GdkEventKey* event);
     bool onKeyReleaseEvent(GdkEventKey* event);
@@ -228,7 +228,7 @@ private:
     int lastVisibleTime = -1;
 
     GMutex repaintRectMutex{};
-    vector<Rectangle<double>> rerenderRects;
+    std::vector<Rectangle<double>> rerenderRects;
     bool rerenderComplete = false;
 
     GMutex drawingMutex{};

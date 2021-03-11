@@ -2,7 +2,6 @@
 
 #include <config-dev.h>
 
-#include "XournalType.h"
 
 #ifdef DEV_CALL_LOG
 

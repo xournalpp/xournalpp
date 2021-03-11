@@ -14,7 +14,6 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
 #include "filesystem.h"
 
 class GladeSearchpath {
@@ -39,5 +38,5 @@ private:
     /**
      * Search directory for icons and Glade files
      */
-    vector<fs::path> directories;
+    std::vector<fs::path> directories;
 };

@@ -36,8 +36,8 @@ public:
     void show(GtkWindow* parent, bool selectTex);
 
     // Set and retrieve text from text box
-    void setFinalTex(string texString);
-    string getFinalTex();
+    void setFinalTex(std::string texString);
+    std::string getFinalTex();
 
     // Set and retrieve temporary Tex render
     void setTempRender(PopplerDocument* pdf);
@@ -49,7 +49,7 @@ public:
     /**
      * @return The contents of the formula input text buffer.
      */
-    string getBufferContents();
+    std::string getBufferContents();
 
 private:
     // Temporary render
@@ -64,5 +64,5 @@ private:
     /**
      * The final LaTeX string to save once the dialog is closed.
      */
-    string finalLatex;
+    std::string finalLatex;
 };

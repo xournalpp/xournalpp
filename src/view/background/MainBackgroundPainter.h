@@ -19,8 +19,6 @@
 
 #include "model/PageRef.h"
 
-#include "XournalType.h"
-using std::map;
 
 class BaseBackgroundPainter;
 
@@ -38,6 +36,6 @@ public:
     void setLineWidthFactor(double factor);
 
 private:
-    map<PageTypeFormat, BaseBackgroundPainter*> painter;
+    std::map<PageTypeFormat, BaseBackgroundPainter*> painter;
     BaseBackgroundPainter* defaultPainter;
 };

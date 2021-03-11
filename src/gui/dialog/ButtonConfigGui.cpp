@@ -14,7 +14,7 @@ ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_
                                                                        {2, TOOL_SIZE_FINE},  {3, TOOL_SIZE_MEDIUM},
                                                                        {4, TOOL_SIZE_THICK}, {5, TOOL_SIZE_VERY_THICK}};
 
-string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
+std::string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
     switch (size) {
         case TOOL_SIZE_NONE:
             return "Thickness - don't change";
@@ -64,7 +64,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 
         this->deviceList = DeviceListHelper::getDeviceList(this->settings, true);
         for (InputDevice const& dev: this->deviceList) {
-            string txt = dev.getName() + " (" + dev.getType() + ")";
+            std::string txt = dev.getName() + " (" + dev.getType() + ")";
             gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt.c_str());
         }
     } else {

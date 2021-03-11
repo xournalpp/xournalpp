@@ -16,4 +16,4 @@ auto EmergencySaveRestore::undo(Control* control) -> bool {
     return true;
 }
 
-auto EmergencySaveRestore::getText() -> string { return _("Emergency saved document"); }
+auto EmergencySaveRestore::getText() -> std::string { return _("Emergency saved document"); }

@@ -14,6 +14,8 @@
 #include "XournalView.h"
 #include "XournalppCursor.h"
 
+using std::string;
+
 TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText):
         gui(gui), widget(widget), text(text), ownText(ownText) {
     this->text->setInEditing(true);

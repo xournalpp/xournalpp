@@ -21,7 +21,7 @@
 #include <X11/extensions/XInput.h>
 
 #include "TouchDisableInterface.h"
-#include "XournalType.h"
+
 
 class TouchDisableX11: public TouchDisableInterface {
 public:

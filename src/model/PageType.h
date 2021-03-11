@@ -14,7 +14,6 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
 
 enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, IsoDotted, IsoGraph, Pdf, Image, Copy };
 
@@ -56,5 +55,5 @@ public:
     /**
      * Arguments for the format
      */
-    string config;
+    std::string config;
 };

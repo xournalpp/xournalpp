@@ -6,6 +6,8 @@
 #include "model/Text.h"
 #include "view/TextView.h"
 
+using std::string;
+
 SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf) {
     this->page = page;
     this->pdf = std::move(pdf);
@@ -29,7 +31,7 @@ void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, const Gd
     }
 }
 
-auto SearchControl::search(string text, int* occures, double* top) -> bool {
+auto SearchControl::search(std::string text, int* occures, double* top) -> bool {
     freeSearchResults();
 
     if (text.empty()) {
@@ -49,7 +51,7 @@ auto SearchControl::search(string text, int* occures, double* top) -> bool {
             if (e->getType() == ELEMENT_TEXT) {
                 Text* t = dynamic_cast<Text*>(e);
 
-                vector<XojPdfRectangle> textResult = TextView::findText(t, text);
+                std::vector<XojPdfRectangle> textResult = TextView::findText(t, text);
 
                 this->results.insert(this->results.end(), textResult.begin(), textResult.end());
             }

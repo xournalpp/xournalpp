@@ -33,7 +33,7 @@ TextBoxUndoAction::~TextBoxUndoAction() {
     this->oldelement = nullptr;
 }
 
-auto TextBoxUndoAction::getText() -> string { return _("Edit text"); }
+auto TextBoxUndoAction::getText() -> std::string { return _("Edit text"); }
 
 auto TextBoxUndoAction::undo(Control* control) -> bool {
     this->layer->removeElement(this->element, false);

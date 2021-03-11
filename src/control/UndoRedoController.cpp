@@ -44,7 +44,7 @@ void UndoRedoController::after() {
         return;
     }
 
-    vector<Element*> visibleElements;
+    std::vector<Element*> visibleElements;
     for (Element* e: elements) {
         if (layer->indexOf(e) == -1) {
             // Element is gone - so it's not selectable

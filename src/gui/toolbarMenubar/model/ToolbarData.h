@@ -14,8 +14,10 @@
 #include <string>
 #include <vector>
 
+#include <glib.h>
+
 #include "ToolbarEntry.h"
-#include "XournalType.h"
+
 
 class ToolbarData {
 public:
@@ -26,22 +28,22 @@ public:
     void operator=(const ToolbarData& other);
 
 public:
-    string getName();
-    void setName(string name);
-    string getId();
-    void setId(string id);
+    std::string getName();
+    void setName(std::string name);
+    std::string getId();
+    void setId(std::string id);
     bool isPredefined() const;
 
     void load(GKeyFile* config, const char* group);
     void saveToKeyFile(GKeyFile* config);
 
     // Editing API
-    int insertItem(const string& toolbar, const string& item, int position);
-    bool removeItemByID(const string& toolbar, int id);
+    int insertItem(const std::string& toolbar, const std::string& item, int position);
+    bool removeItemByID(const std::string& toolbar, int id);
 
 private:
-    string id;
-    string name;
+    std::string id;
+    std::string name;
     std::vector<ToolbarEntry*> contents;
 
     bool predefined = false;

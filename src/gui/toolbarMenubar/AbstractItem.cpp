@@ -2,7 +2,7 @@
 
 #include <utility>
 
-AbstractItem::AbstractItem(string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem):
+AbstractItem::AbstractItem(std::string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem):
         action(action), id(std::move(id)), handler(handler) {
     ActionEnabledListener::registerListener(handler);
     ActionSelectionListener::registerListener(handler);
@@ -119,7 +119,7 @@ void AbstractItem::actionPerformed(ActionType action, ActionGroup group, GdkEven
     handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 
-auto AbstractItem::getId() -> string { return id; }
+auto AbstractItem::getId() -> std::string { return id; }
 
 void AbstractItem::setTmpDisabled(bool disabled) {
     bool ena = false;

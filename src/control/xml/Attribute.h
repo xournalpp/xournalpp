@@ -15,18 +15,18 @@
 #include <vector>
 
 #include "OutputStream.h"
-#include "XournalType.h"
+
 
 class XMLAttribute {
 public:
-    XMLAttribute(string name);
+    XMLAttribute(std::string name);
     virtual ~XMLAttribute();
 
 public:
     virtual void writeOut(OutputStream* out) = 0;
 
-    string getName();
+    std::string getName();
 
 private:
-    string name;
+    std::string name;
 };

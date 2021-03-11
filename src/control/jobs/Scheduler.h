@@ -20,7 +20,7 @@
 #include <string>
 
 #include "Job.h"
-#include "XournalType.h"
+
 
 /**
  * @file Scheduler.h

@@ -84,10 +84,10 @@ void SaveHandler::writeHeader() {
     this->root->addChild(new XmlTextNode("title", std::string{"Xournal++ document - see "} + PROJECT_URL));
 }
 
-auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> string {
+auto SaveHandler::getColorStr(Color c, unsigned char alpha) -> std::string {
     char str[10];
     sprintf(str, "#%08" PRIx32, uint32_t(c) << 8U | alpha);
-    string color(str);
+    std::string color(str);
     return color;
 }
 
@@ -347,4 +347,4 @@ void SaveHandler::saveTo(OutputStream* out, const fs::path& filepath, ProgressLi
     }
 }
 
-auto SaveHandler::getErrorMessage() -> string { return this->errorMessage; }
+auto SaveHandler::getErrorMessage() -> std::string { return this->errorMessage; }

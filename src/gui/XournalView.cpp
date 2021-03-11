@@ -295,7 +295,7 @@ void XournalView::onRealized(GtkWidget* widget, XournalView* view) {
 // send the focus back to the appropriate widget
 void XournalView::requestFocus() { gtk_widget_grab_focus(this->widget); }
 
-auto XournalView::searchTextOnPage(string text, size_t p, int* occures, double* top) -> bool {
+auto XournalView::searchTextOnPage(std::string text, size_t p, int* occures, double* top) -> bool {
     if (p == npos || p >= this->viewPages.size()) {
         return false;
     }

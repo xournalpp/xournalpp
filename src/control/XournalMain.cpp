@@ -148,7 +148,7 @@ void checkForErrorlog() {
     }
 
     std::sort(errorList.begin(), errorList.end());
-    string msg =
+    std::string msg =
             errorList.size() == 1 ?
                     _("There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed.") :
                     _("There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed.");
@@ -201,7 +201,7 @@ void checkForEmergencySave(Control* control) {
         return;
     }
 
-    string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
+    std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
     GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
                                                msg.c_str());
@@ -286,7 +286,7 @@ auto exportImg(const char* input, const char* output, const char* range, int png
     for (PageRangeEntry* e: exportRange) { delete e; }
     exportRange.clear();
 
-    string errorMsg = imgExport.getLastErrorMsg();
+    std::string errorMsg = imgExport.getLastErrorMsg();
     if (!errorMsg.empty()) {
         g_message("Error exporting image: %s\n", errorMsg.c_str());
     }
@@ -321,7 +321,7 @@ auto exportPdf(const char* input, const char* output, const char* range, ExportB
     XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, nullptr);
     pdfe->setExportBackground(exportBackground);
     char* cpath = g_file_get_path(file);
-    string path = cpath;
+    std::string path = cpath;
     g_free(cpath);
     g_object_unref(file);
 
@@ -443,8 +443,8 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
         return;
     }
 
-    string msg = FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile %
-                    p.u8string());
+    std::string msg = FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile %
+                         p.u8string());
 
     if (!failIfNotFound) {
         msg += _("\nWill now attempt to run without this file.");
@@ -461,9 +461,10 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
         return;
     }
 
-    string msg = FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
-                       "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
-                    relativePathAndFile % PACKAGE_DATA_DIR);
+    std::string msg =
+            FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
+                  "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
+               relativePathAndFile % PACKAGE_DATA_DIR);
 
     if (!failIfNotFound) {
         msg += _("\n\nWill now attempt to run without this file.");
@@ -539,8 +540,8 @@ void on_startup(GApplication* application, XMPtr app_data) {
     bool opened = false;
     if (app_data->optFilename) {
         if (g_strv_length(app_data->optFilename) != 1) {
-            string msg = _("Sorry, Xournal++ can only open one file at once.\n"
-                           "Others are ignored.");
+            std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
+                                "Others are ignored.");
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
         }
 
@@ -554,9 +555,9 @@ void on_startup(GApplication* application, XMPtr app_data) {
                 opened = app_data->control->newFile("", p);
             }
         } catch (fs::filesystem_error const& e) {
-            string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
-                               "You have to copy the file to a local directory.") %
-                            p.u8string() % e.what());
+            std::string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
+                                    "You have to copy the file to a local directory.") %
+                                 p.u8string() % e.what());
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
             opened = app_data->control->newFile("", p);
         }

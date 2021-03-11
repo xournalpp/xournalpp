@@ -16,7 +16,6 @@
 
 #include "gui/GladeGui.h"
 
-#include "XournalType.h"
 
 class Document;
 class Settings;
@@ -24,8 +23,8 @@ class BaseElementView;
 
 class BackgroundSelectDialogBase: public GladeGui {
 public:
-    BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings, const string& glade,
-                               const string& mainWnd);
+    BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings,
+                               const std::string& glade, const std::string& mainWnd);
     ~BackgroundSelectDialogBase();
 
 public:
@@ -65,5 +64,5 @@ protected:
     /**
      * Elements to display
      */
-    vector<BaseElementView*> elements;
+    std::vector<BaseElementView*> elements;
 };

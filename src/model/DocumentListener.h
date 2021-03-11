@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "DocumentChangeType.h"
-#include "XournalType.h"
+
 
 class DocumentHandler;
 

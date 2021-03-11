@@ -56,7 +56,7 @@ auto Image::cairoReadFunction(Image* image, unsigned char* data, unsigned int le
     return CAIRO_STATUS_SUCCESS;
 }
 
-void Image::setImage(string data) {
+void Image::setImage(std::string data) {
     if (this->image) {
         cairo_surface_destroy(this->image);
         this->image = nullptr;

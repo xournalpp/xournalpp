@@ -25,7 +25,6 @@
 
 #include "StringUtils.h"
 #include "XojMsgBox.h"
-using std::map;
 
 /**
  * Renames file 'from' to file 'to' in the file system.
@@ -114,14 +113,14 @@ static int applib_msgbox(lua_State* L) {
 
     lua_pushnil(L);
 
-    map<int, string> button;
+    std::map<int, std::string> button;
 
     while (lua_next(L, 2) != 0) {
         int index = lua_tointeger(L, -2);
         const char* buttonText = luaL_checkstring(L, -1);
         lua_pop(L, 1);
 
-        button.insert(button.begin(), std::pair<int, string>(index, buttonText));
+        button.insert(button.begin(), std::pair<int, std::string>(index, buttonText));
     }
 
     Plugin* plugin = Plugin::getPluginFromLua(L);

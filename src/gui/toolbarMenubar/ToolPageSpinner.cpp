@@ -9,7 +9,7 @@
 
 #include "i18n.h"
 
-ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type,
+ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, std::string id, ActionType type,
                                  IconNameHelper iconNameHelper):
         AbstractToolItem(std::move(id), handler, type, nullptr), gui(gui), iconNameHelper(iconNameHelper) {
     this->pageSpinner = new SpinPageAdapter();
@@ -33,11 +33,11 @@ void ToolPageSpinner::setPageInfo(const size_t pageCount, const size_t pdfPage) 
 }
 
 void ToolPageSpinner::updateLabels() {
-    string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % this->pageCount);
+    std::string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % this->pageCount);
     if (this->orientation == GTK_ORIENTATION_HORIZONTAL) {
-        string pdfString;
+        std::string pdfString;
         if (this->pdfPage > 0) {  // zero means that theres no pdf currently
-            pdfString = string(", ") + FS(_F("PDF Page {1}") % this->pdfPage);
+            pdfString = std::string(", ") + FS(_F("PDF Page {1}") % this->pdfPage);
         }
         gtk_label_set_text(GTK_LABEL(lbPageNo), (ofString + pdfString).c_str());
     } else {
@@ -57,7 +57,7 @@ void ToolPageSpinner::updateLabels() {
     }
 }
 
-auto ToolPageSpinner::getToolDisplayName() -> string { return _("Page number"); }
+auto ToolPageSpinner::getToolDisplayName() -> std::string { return _("Page number"); }
 
 auto ToolPageSpinner::getNewToolIcon() -> GtkWidget* {
     return gtk_image_new_from_icon_name(iconNameHelper.iconName("page-spinner").c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);

@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <utility>
 
+using std::string;
+
 ToolbarEntry::ToolbarEntry() = default;
 
 ToolbarEntry::ToolbarEntry(const ToolbarEntry& e) { *this = e; }

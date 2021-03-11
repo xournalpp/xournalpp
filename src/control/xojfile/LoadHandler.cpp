@@ -16,6 +16,8 @@
 #include "LoadHandlerHelper.h"
 #include "i18n.h"
 
+using std::string;
+
 #define error2(var, ...)                                                                \
     if (var == nullptr) {                                                               \
         var = g_error_new(G_MARKUP_ERROR, G_MARKUP_ERROR_INVALID_CONTENT, __VA_ARGS__); \

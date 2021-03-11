@@ -14,7 +14,8 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
+#include <glib.h>
+
 
 class ObjectEncoding {
 public:

@@ -29,7 +29,7 @@ public:
             settings(settings), audioQueue(audioQueue) {}
 
 public:
-    bool start(const string& filename);
+    bool start(const std::string& filename);
     void join();
     void stop();
 

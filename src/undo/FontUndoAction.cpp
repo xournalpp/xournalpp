@@ -102,4 +102,4 @@ auto FontUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-auto FontUndoAction::getText() -> string { return _("Change font"); }
+auto FontUndoAction::getText() -> std::string { return _("Change font"); }

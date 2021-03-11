@@ -17,14 +17,14 @@
 #include "gui/GladeGui.h"
 
 #include "ToolButton.h"
-#include "XournalType.h"
+
 
 class ToolMenuHandler;
 class ToolDrawType;
 
 class ToolDrawCombocontrol: public ToolButton {
 public:
-    ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id);
+    ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, std::string id);
     virtual ~ToolDrawCombocontrol();
 
 public:
@@ -32,7 +32,7 @@ public:
 
 protected:
     virtual GtkToolItem* newItem();
-    void createMenuItem(const string& name, const string& icon, ActionType type);
+    void createMenuItem(const std::string& name, const std::string& icon, ActionType type);
 
 private:
     ToolMenuHandler* toolMenuHandler = nullptr;
@@ -40,5 +40,5 @@ private:
     GtkWidget* iconWidget = nullptr;
     GtkWidget* labelWidget = nullptr;
 
-    vector<ToolDrawType*> drawTypes;
+    std::vector<ToolDrawType*> drawTypes;
 };
