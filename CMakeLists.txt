@@ -64,11 +64,6 @@ else ()
     set(LIB_ENDING "so")
 endif ()
 
-## For touch workaround, may need to be disabled for a Wayland Build
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
-    set (xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-lX11 -lXi")
-endif ()
-
 ## Libraries ##
 
 macro(add_includes_ldflags LDFLAGS INCLUDES)
@@ -80,6 +75,13 @@ endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
 find_package(CXX17 REQUIRED COMPONENTS optional)
 find_package(Filesystem REQUIRED COMPONENTS ghc Final Experimental)
+
+find_package(X11)
+if(X11_FOUND AND X11_Xi_FOUND)
+	add_definitions (-DX11_ENABLED)
+	add_includes_ldflags ("${X11_X11_LIB}" "${X11_INCLUDE_DIR}")
+	add_includes_ldflags ("${X11_Xi_LIB}" "${X11_Xi_INCLUDE_PATH}")
+endif()
 
 # libexec
 if (WIN32)
