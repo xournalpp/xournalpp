@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-07 16:51+0000\n"
-"PO-Revision-Date: 2021-03-07 16:55\n"
+"PO-Revision-Date: 2021-03-11 00:41\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+" Voulez-vous continuer ?"
 
 #: ../src/control/XournalMain.cpp:454
 msgid "\n"
@@ -1306,7 +1307,7 @@ msgstr "Le PDF d'arrière-plan n'a pas pu être trouvé."
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "La vérification pour le remplacement de l'arrière-plan a échoué avec :\n"
 
 #: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -2186,11 +2187,11 @@ msgstr "Thème foncé (nécessite un redémarrage)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr ""
+msgstr "Zone aveugle"
 
 #: ../ui/settings.glade:1034
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Angle de la zone aveugle"
 
 #: ../ui/settings.glade:620
 msgid "Default Save Name"
