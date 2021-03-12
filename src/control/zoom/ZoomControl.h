@@ -120,6 +120,7 @@ public:
     bool updateZoomPresentationValue(size_t pageNo = 0);
 
     void addZoomListener(ZoomListener* listener);
+    void removeZoomListener(ZoomListener* listener);
 
     void initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c);
 

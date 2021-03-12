@@ -40,6 +40,7 @@ public:
     virtual ~ToolMenuHandler();
 
 public:
+    void deleteAllToolbarItems();
     void freeDynamicToolbarItems();
     static void unloadToolbar(GtkWidget* toolbar);
 
@@ -47,7 +48,9 @@ public:
 
     void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
 
-    void initToolItems();
+    void initToolItems();  // default one
+    AbstractToolItem* addToolItemsfromName(string name);
+    void connectSignalsOfToolItems();  // function to call after the composition of toolItems vector
 
     void setUndoDescription(const string& description);
     void setRedoDescription(const string& description);
@@ -78,13 +81,13 @@ public:
     void setAudioPlaybackPaused(bool paused);
 
 private:
-    void addToolItem(AbstractToolItem* it);
+    AbstractToolItem* addToolItem(AbstractToolItem* it);
 
     static void signalConnectCallback(GtkBuilder* builder, GObject* object, const gchar* signalName,
                                       const gchar* handlerName, GObject* connectObject, GConnectFlags flags,
                                       ToolMenuHandler* self);
-    void initPenToolItem();
-    void initEraserToolItem();
+    ToolButton* initPenToolItem();
+    ToolButton* initEraserToolItem();
 
 private:
     vector<ColorToolItem*> toolbarColorItems;
@@ -93,17 +96,18 @@ private:
     vector<AbstractToolItem*> toolItems;
     vector<MenuItem*> menuItems;
 
-    ToolButton* undoButton = nullptr;
-    ToolButton* redoButton = nullptr;
+    vector<ToolButton*> undoButton;
+    vector<ToolButton*> redoButton;
 
-    ToolButton* audioPausePlaybackButton = nullptr;
-    ToolButton* audioStopPlaybackButton = nullptr;
-    ToolButton* audioSeekBackwardsButton = nullptr;
-    ToolButton* audioSeekForwardsButton = nullptr;
+    vector<ToolButton*> audioPausePlaybackButton;
+    vector<ToolButton*> audioStopPlaybackButton;
+    vector<ToolButton*> audioSeekBackwardsButton;
+    vector<ToolButton*> audioSeekForwardsButton;
 
-    ToolPageSpinner* toolPageSpinner = nullptr;
-    ToolPageLayer* toolPageLayer = nullptr;
-    FontButton* fontButton = nullptr;
+    vector<ToolPageSpinner*> toolPageSpinner;
+    vector<ToolPageLayer*> toolPageLayer;
+
+    vector<FontButton*> fontButton;
 
     Control* control = nullptr;
     ActionHandler* listener = nullptr;
