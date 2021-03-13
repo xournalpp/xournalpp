@@ -41,13 +41,6 @@ public:
     SplineSegment() = default;
 
     /**
-     * @brief A linear spline segment from two points
-     * @param p the first knot
-     * @param q the second knot
-     */
-    SplineSegment(const Point& p, const Point& q);
-
-    /**
      * @brief A spline segment from four points
      * @param p the first knot
      * @param fp the first control point
@@ -182,9 +175,18 @@ public:
     bool isTailInSelection(ShapeContainer* container, bool assumeSecondKnotIn) const;
 
     /**
-     * @brief Compute the smallest distance between the given point and the segment
+     * @brief Find the point on the segment that is closest to p.
+     * @param p The point
+     * @return A pair (t,d) where t is the parameter of the closest point, and d is the square of the smallest distance
      */
-    double distanceToPoint(const Point& p) const;
+    std::pair<double, double> closestPointTo(const Point& p) const;
+
+    /**
+     * @brief Give the square distance between a point and the convex hull of the segment's knots and control points
+     * @param p The point
+     * @return The squared distance
+     */
+    double squaredDistanceToHull(const Point& p) const;
 
     /**
      * @brief Get the parameter value of the point seg.getPoint(t) in the subsegment seg.subdivide(u).first

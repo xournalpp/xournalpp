@@ -401,6 +401,26 @@ bool Spline::isInSelection(ShapeContainer* container) {
     return true;
 }
 
+double Spline::squaredDistanceToPoint(const Point& p, double veryClose, double toFar) {
+    if (this->data.empty()) {
+        return toFar;
+    }
+    double min = toFar;
+    for (auto&& seg: this->segments()) {
+        // Coarse test to save time
+        if (seg.squaredDistanceToHull(p) < min) {
+            double d = seg.closestPointTo(p).second;
+            if (d < min) {
+                if (d < veryClose) {
+                    return veryClose;
+                }
+                min = d;
+            }
+        }
+    }
+    return min;
+}
+
 void Spline::addToCairo(cairo_t* cr) const {
     if (!this->empty()) {
         const Point& p = this->getFirstKnot();

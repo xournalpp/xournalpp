@@ -138,6 +138,20 @@ public:
     virtual bool isInSelection(ShapeContainer* container) = 0;
 
     /**
+     * @brief Get the squared distance between a point and the path
+     * @param p The point
+     * @param veryClose Lower bound for the distance
+     * @param toFar Upper bound for the distance
+     * @return The squared distance, unless this distance is bigger than toFar (in this case, returns toFar) or the
+     * distance is smaller than veryClose (returns veryClose)
+     *
+     * In practice, veryClose and toFar is used to limit the computation time:
+     * we stop as soon as we have found a point closer than veryClose and
+     * we skip segments that we know to be to far away using some coarse estimate.
+     */
+    virtual double squaredDistanceToPoint(const Point& p, double veryClose, double toFar) = 0;
+
+    /**
      * @brief Test if the data vector is empty
      * @return true if data is empty, false otherwize
      */

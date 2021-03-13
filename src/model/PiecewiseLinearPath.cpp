@@ -457,6 +457,30 @@ bool PiecewiseLinearPath::isInSelection(ShapeContainer* container) {
     return true;
 }
 
+double PiecewiseLinearPath::squaredDistanceToPoint(const Point& p, double veryClose, double toFar) {
+    if (this->data.empty()) {
+        return toFar;
+    }
+    MathVect2 u(p, this->data.front());
+    double min = std::min(toFar, u.squaredNorm());
+    for (auto it1 = this->data.cbegin(), it2 = it1 + 1, end = this->data.cend(); it2 != end; it1 = it2++) {
+        MathVect2 v(*it1, *it2);
+        double t = -MathVect2::scalarProduct(u, v) / v.squaredNorm();
+        MathVect2 w(p, *it2);
+        if (t > 0.0) {
+            double m = (t >= 1.0 ? w.squaredNorm() : (u + t * v).squaredNorm());
+            if (m < min) {
+                if (m <= veryClose) {
+                    return veryClose;
+                }
+                min = m;
+            }
+        }
+        u = w;
+    }
+    return min;
+}
+
 void PiecewiseLinearPath::addToCairo(cairo_t* cr) const {
     for_first_then_each(
             this->data, [cr](auto const& first) { cairo_move_to(cr, first.x, first.y); },

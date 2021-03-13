@@ -264,3 +264,119 @@ bool SplineSegment::isTailInSelection(ShapeContainer* container, bool assumeSeco
     }
     return true;
 }
+
+std::pair<double, double> SplineSegment::closestPointTo(const Point& p) const {
+    /**
+     * Find a minimum to the degree 6 polynomial computing the distance from p to the segment
+     *
+     * Even if the segment has already been converted into line segments (with toPoints),
+     * this is still twice as fast as working with those line segments
+     */
+
+    /**
+     * A = firstKnot
+     * B = firstControlPoint
+     * C = secondControlPoint
+     * D = secondKnot
+     * P = p
+     */
+    MathVect2 PA(p, firstKnot);
+    MathVect2 AB(firstKnot, firstControlPoint);
+    MathVect2 BCminusAB(firstKnot.x - 2.0 * firstControlPoint.x + secondControlPoint.x,
+                        firstKnot.y - 2.0 * firstControlPoint.y + secondControlPoint.y);
+    MathVect2 ABminus2BCplusCD(-firstKnot.x + 3.0 * (firstControlPoint.x - secondControlPoint.x) + secondKnot.x,
+                               -firstKnot.y + 3.0 * (firstControlPoint.y - secondControlPoint.y) + secondKnot.y);
+
+    double a0 = PA.squaredNorm();
+    double a1 = 6.0 * MathVect2::scalarProduct(PA, AB);
+    double a2 = 6.0 * MathVect2::scalarProduct(PA, BCminusAB) + 9.0 * AB.squaredNorm();
+    double a3 = 2.0 * MathVect2::scalarProduct(PA, ABminus2BCplusCD) + 18.0 * MathVect2::scalarProduct(AB, BCminusAB);
+    double a4 = 6.0 * MathVect2::scalarProduct(AB, ABminus2BCplusCD) + 9.0 * BCminusAB.squaredNorm();
+    double a5 = 6.0 * MathVect2::scalarProduct(BCminusAB, ABminus2BCplusCD);
+    double a6 = ABminus2BCplusCD.squaredNorm();
+
+    PolynomialSolver::Polynomial<6> squaredDistance({a6, a5, a4, a3, a2, a1, a0});
+    PolynomialSolver::PolynomialSolver<5> solver(squaredDistance.getDerivative());
+    std::vector<double> roots = solver.findRoots(0.0, 1.0);
+
+    double min = a0;
+    double t = 0.0;
+    if (double d = a0 + a1 + a2 + a3 + a4 + a5 + a6; min > d) {
+        min = d;
+        t = 1.0;
+    }
+    for (double r: roots) {
+        if (double d = squaredDistance.evaluate(r); min > d) {
+            min = d;
+            t = r;
+        }
+    }
+    return {t, min};
+}
+
+double SplineSegment::squaredDistanceToHull(const Point& p) const {
+    /**
+     * We compute the squared distance between p and the 6 possible segments based on two points of
+     * {firstKnot, firstControlPoint, secondControlPoint, secondKnot}
+     */
+    MathVect2 u1(p, firstKnot);
+    MathVect2 u2(p, firstControlPoint);
+    MathVect2 u3(p, secondControlPoint);
+    MathVect2 u4(p, secondKnot);
+    double min;
+
+    // v = MathVect2(firstKnot, firstControlPoint);
+    if (MathVect2 v = u2 - u1; v.isZero()) {
+        min = u1.squaredNorm();
+    } else {
+        /**
+         * t is the relative linear coordinate of the projection of p onto the line passing through firstKnot and
+         * firstControlPoint
+         */
+        double t = -MathVect2::scalarProduct(u1, v) / v.squaredNorm();
+        min = (t <= 0.0 ? u1.squaredNorm() : (t >= 1.0 ? u2.squaredNorm() : (u1 + t * v).squaredNorm()));
+    }
+
+    // v = MathVect2(firstKnot, secondControlPoint);
+    if (MathVect2 v = u3 - u1; !v.isZero()) {
+        double t = -MathVect2::scalarProduct(u1, v) / v.squaredNorm();
+        if (t > 0.0) {
+            double m = (t >= 1.0 ? u3.squaredNorm() : (u1 + t * v).squaredNorm());
+            min = std::min(m, min);
+        }
+    }
+
+    // v = MathVect2(firstKnot, secondKnot);
+    if (MathVect2 v = u4 - u1; !v.isZero()) {
+        double t = -MathVect2::scalarProduct(u1, v) / v.squaredNorm();
+        if (t > 0.0) {
+            double m = (t >= 1.0 ? u4.squaredNorm() : (u1 + t * v).squaredNorm());
+            min = std::min(m, min);
+        }
+    }
+
+    // v = MathVect2(firstControlPoint, secondControlPoint);
+    if (MathVect2 v = u3 - u2; !v.isZero()) {
+        double t = -MathVect2::scalarProduct(u2, v) / v.squaredNorm();
+        if (t > 0.0 && t < 1.0) {
+            min = std::min(min, (u2 + t * v).squaredNorm());
+        }
+    }
+
+    // v = MathVect2(firstControlPoint, secondKnot);
+    if (MathVect2 v = u4 - u2; !v.isZero()) {
+        double t = -MathVect2::scalarProduct(u2, v) / v.squaredNorm();
+        if (t > 0.0 && t < 1.0) {
+            min = std::min(min, (u2 + t * v).squaredNorm());
+        }
+    }
+
+    // v = MathVect2(secondControlPoint, secondKnot);
+    if (MathVect2 v = u4 - u3; !v.isZero()) {
+        double t = -MathVect2::scalarProduct(u3, v) / v.squaredNorm();
+        if (t > 0.0 && t < 1.0) {
+            min = std::min(min, (u3 + t * v).squaredNorm());
+        }
+    }
+    return min;
+}

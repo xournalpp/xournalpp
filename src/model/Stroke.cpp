@@ -321,72 +321,16 @@ auto Stroke::intersects(double x, double y, double halfEraserSize) -> bool {
  * checks if the stroke is intersected by the eraser rectangle
  */
 auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) -> bool {
-
-    return intersects(x, y, halfEraserSize);
-
-    //     if (this->points.empty()) {
-    //         return false;
-    //     }
-    //
-    //     double x1 = x - halfEraserSize;
-    //     double x2 = x + halfEraserSize;
-    //     double y1 = y - halfEraserSize;
-    //     double y2 = y + halfEraserSize;
-    //
-    //     double lastX = points[0].x;
-    //     double lastY = points[0].y;
-    //     for (auto&& point: points) {
-    //         double px = point.x;
-    //         double py = point.y;
-    //
-    //         if (px >= x1 && py >= y1 && px <= x2 && py <= y2) {
-    //             if (gap) {
-    //                 *gap = 0;
-    //             }
-    //             return true;
-    //         }
-    //
-    //         double len = hypot(px - lastX, py - lastY);
-    //         if (len >= halfEraserSize) {
-    //             /**
-    //              * The distance of the center of the eraser box to the line passing through (lastx, lasty) and (px,
-    //              py)
-    //              */
-    //             double p = std::abs((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / len;
-    //
-    //             // If the distance p of the center of the eraser box to the (full) line is in the range,
-    //             // we check whether the eraser box is not too far from the line segment through the two points.
-    //
-    //             if (p <= halfEraserSize) {
-    //                 double centerX = (lastX + px) / 2;
-    //                 double centerY = (lastY + py) / 2;
-    //                 double distance = hypot(x - centerX, y - centerY);
-    //
-    //                 // For the above check we imagine a circle whose center is the mid point of the two points of the
-    //                 stroke
-    //                 // and whose radius is half the length of the line segment plus half the diameter of the eraser
-    //                 box
-    //                 // plus some small padding
-    //                 // If the center of the eraser box lies within that circle then we consider it to be close enough
-    //
-    //                 distance -= halfEraserSize * std::sqrt(2);
-    //
-    //                 constexpr double PADDING = 0.1;
-    //
-    //                 if (distance <= len / 2 + PADDING) {
-    //                     if (gap) {
-    //                         *gap = distance;
-    //                     }
-    //                     return true;
-    //                 }
-    //             }
-    //         }
-    //
-    //         lastX = px;
-    //         lastY = py;
-    //     }
-    //
-    //     return false;
+    double dMin = halfEraserSize * halfEraserSize;
+    double dMax = 4.0 * dMin;
+    double dSquared = this->path->squaredDistanceToPoint(Point(x, y), dMin, dMax);
+    if (dSquared < dMax) {
+        if (gap) {
+            *gap = std::max(0.0, std::sqrt(dSquared) - halfEraserSize);
+        }
+        return true;
+    }
+    return false;
 }
 
 /**
