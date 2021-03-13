@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-07 16:51+0000\n"
-"PO-Revision-Date: 2021-03-13 21:25\n"
+"PO-Revision-Date: 2021-03-13 22:26\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -160,11 +160,11 @@ msgstr "Niebieski"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring forward"
-msgstr ""
+msgstr "Przesuń warstwę wyżej"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "Przenieś przed inne warstwy"
 
 #: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
 #: ../src/control/XournalMain.cpp:168
@@ -776,7 +776,7 @@ msgstr "Warstwa {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Podgląd warstw"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -1156,11 +1156,11 @@ msgstr "Wyślij raport błędu"
 
 #: ../src/control/tools/EditSelection.cpp:371
 msgid "Send backward"
-msgstr ""
+msgstr "Przenieś warstwę niżej"
 
 #: ../src/control/tools/EditSelection.cpp:379
 msgid "Send to back"
-msgstr ""
+msgstr "Przenieś na tył warstw"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
 msgid "Separator"
@@ -1306,7 +1306,7 @@ msgstr "PDF w tle nie został znaleziony."
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "Próba nadpisania tła wywołała błąd:\n"
 
 #: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -1777,11 +1777,11 @@ msgstr "... ORAZ ile czasu musi upłynąć od ostatniego uderzenia.\n\n"
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
@@ -1797,7 +1797,7 @@ msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
@@ -1805,7 +1805,7 @@ msgstr "1.0"
 
 #: ../ui/settings.glade:1017
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3015
 msgid "30"
@@ -1813,7 +1813,7 @@ msgstr "30"
 
 #: ../ui/settings.glade:1110
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1909,7 +1909,7 @@ msgstr "<i>Jeśli twój sprzęt nie obsługuje rozpoznawania dłoni, Xournal++ m
 
 #: ../ui/settings.glade:988
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Wybierz algorytm stabilizacji kursora i jego parametry</i>"
 
 #: ../ui/settings.glade:1493
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -2029,7 +2029,7 @@ msgstr "Dołącz nowe strony PDF"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Średnia arytmetyczna"
 
 #: ../ui/settings.glade:1753
 msgid "Artifact workaround"
@@ -2069,7 +2069,7 @@ msgstr "Dostępne zmienne tymczasowe"
 
 #: ../ui/settings.glade:955
 msgid "Averaging method"
-msgstr ""
+msgstr "Metoda uśredniania"
 
 #: ../ui/settings.glade:2711
 msgid "Background color between pages"
@@ -2098,15 +2098,15 @@ msgstr "Kolor ramki dla bieżącej strony oraz innych wybranych elementów"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Przesuń warstwę wyżej"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "Przenieś przed inne warstwy"
 
 #: ../ui/settings.glade:1005
 msgid "Buffersize"
-msgstr ""
+msgstr "Rozmiar bufora"
 
 #: ../ui/about.glade:127
 msgid "Built on"
@@ -2186,11 +2186,11 @@ msgstr "Ciemny motyw (wymaga restartu)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr ""
+msgstr "Martwa strefa"
 
 #: ../ui/settings.glade:1034
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Promień martwej strefy"
 
 #: ../ui/settings.glade:620
 msgid "Default Save Name"
@@ -2544,7 +2544,7 @@ msgstr "System wprowadzania"
 
 #: ../ui/settings.glade:1235
 msgid "Input stabilization"
-msgstr ""
+msgstr "Stabilizacja kursora"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
@@ -2608,7 +2608,7 @@ msgstr "Zarządzaj paskiem narzędzi"
 
 #: ../ui/settings.glade:1097
 msgid "Mass"
-msgstr ""
+msgstr "Masa"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
@@ -2781,7 +2781,7 @@ msgstr "Preferencje"
 
 #: ../ui/settings.glade:1162
 msgid "Preprocessor"
-msgstr ""
+msgstr "Preprocesor"
 
 #: ../ui/settings.glade:3427
 msgid "Presentation Mode"
@@ -2893,11 +2893,11 @@ msgstr "Kolor zaznaczenia (Tekst, Wybór śladów itp.)"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Przenieś warstwę niżej"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "Przenieś na tył warstw"
 
 #: ../ui/settings.glade:1628
 msgid "Sensitivity Scale"
