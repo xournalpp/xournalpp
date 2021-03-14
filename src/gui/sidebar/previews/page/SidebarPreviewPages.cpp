@@ -87,6 +87,12 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
             doc->lock();
             size_t page = doc->indexOf(swappedPage);
             PageRef otherPage = doc->getPage(page - 1);
+
+            if (!otherPage) {
+                doc->unlock();
+                return;
+            }
+
             if (page != npos) {
                 doc->deletePage(page);
                 doc->insertPage(swappedPage, page - 1);
@@ -113,6 +119,12 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
             doc->lock();
             size_t page = doc->indexOf(swappedPage);
             PageRef otherPage = doc->getPage(page + 1);
+
+            if (!otherPage) {
+                doc->unlock();
+                return;
+            }
+
             if (page != npos) {
                 doc->deletePage(page);
                 doc->insertPage(swappedPage, page + 1);
