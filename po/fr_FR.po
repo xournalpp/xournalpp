@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-07 16:51+0000\n"
-"PO-Revision-Date: 2021-03-11 00:41\n"
+"PO-Revision-Date: 2021-03-14 23:53\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2026,7 +2026,7 @@ msgstr "Toujours vérifier les dépendances LaTeX avant de lancer"
 
 #: ../ui/main.glade:1197
 msgid "Append New Pdf Pages"
-msgstr "Ajouter de nouvelles pages de Pdf"
+msgstr "Ajouter de nouvelles pages Pdf"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
@@ -2258,7 +2258,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Glisser VERS LA GAUCHE à partir du point de départ agit comme un appui maintenu sur la touche SHIFT.\n"
+"\t    Glisser VERS LE HAUT agit comme un appui maintenu sur la touche CONTRÔLE.\n\n"
+"\t    Rayon de détermination : rayon auquel les modificateurs se verrouilleront jusqu'à la fin du dessin.\n\n"
+"\t    <i>Utile pour opérer sans clavier.</i>"
 
 #: ../ui/settings.glade:4163
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2276,11 +2279,11 @@ msgstr "Glissez et déposez des composants d'ici vers les barres barres d'outils
 
 #: ../ui/settings.glade:1064
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr ""
+msgstr "Glisser: Si la valeur est trop petite, des oscillations indésirables peuvent apparaître. Si la valeur est trop élevée, il n'y aura pas de stabilisation."
 
 #: ../ui/settings.glade:1076
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr ""
+msgstr "Glisser: Si la valeur est trop petite, des oscillations indésirables peuvent apparaître. Si la valeur est trop élevée, il n'y aura pas de stabilisation."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
