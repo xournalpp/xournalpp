@@ -280,7 +280,7 @@ static int applib_uiActionSelected(lua_State* L) {
 /**
  * Execute action from sidebar menu
  *
- * Example: app.sidebar_Action("MOVE_DOWN")
+ * Example: app.sidebarAction("MOVE_DOWN")
  * moves down the current page
  */
 static int applib_sidebarAction(lua_State* L) {
