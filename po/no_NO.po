@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-07 16:51+0000\n"
-"PO-Revision-Date: 2021-03-08 18:11\n"
+"PO-Revision-Date: 2021-03-15 14:55\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -140,7 +140,7 @@ msgstr "Tilbake"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:192 ../src/model/XojPage.cpp:174
 msgid "Background"
-msgstr ""
+msgstr "Bakgrunn"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:94
@@ -205,28 +205,29 @@ msgstr "Kopier"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:30
 msgid "Copy current"
-msgstr ""
+msgstr "Kopier gjeldende"
 
 #: ../src/undo/CopyUndoAction.cpp:60
 msgid "Copy page"
-msgstr ""
+msgstr "Kopier side"
 
 #: ../src/util/PathUtil.cpp:230
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Kunne ikke opprette mappe: {1}\n"
+"Feilet med feil: {2}"
 
 #: ../src/control/LatexController.cpp:271
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "Kunne ikke laste LaTeX PDF-fil"
 
 #: ../src/control/LatexController.cpp:265
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "Kunne ikke laste LaTeX PDF-fil: {1}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:15
 msgid "Could not load pagetemplates.ini file"
-msgstr ""
+msgstr "Kunne ikke laste filen pagetemplates.ini"
 
 #: ../src/control/xojfile/LoadHandler.cpp:777
 msgid "Could not open attachment: {1}. Error message: Could not read file"
@@ -251,7 +252,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:157
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "Kan ikke åpne filen: \"{1}\""
 
 #: ../src/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
@@ -312,7 +313,7 @@ msgstr ""
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
-msgstr ""
+msgstr "Egendefinert"
 
 #: ../src/control/jobs/CustomExportJob.cpp:19
 msgid "Custom Export"
@@ -357,11 +358,11 @@ msgstr "Slett lag"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Delete this layer"
-msgstr ""
+msgstr "Slett lag"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Delete this page"
-msgstr ""
+msgstr "Slett denne siden"
 
 #: ../src/control/Control.cpp:2468
 msgid "Discard"
@@ -531,7 +532,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Eksporter FILE som PDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
@@ -602,11 +603,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:60
 msgid "Font"
-msgstr ""
+msgstr "Skrifttype"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Forward"
-msgstr ""
+msgstr "Fremover"
 
 #: ../src/control/XournalMain.cpp:628
 msgid "Get version of xournalpp"
@@ -622,7 +623,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Go to first page"
-msgstr ""
+msgstr "Gå til første side"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 msgid "Go to last page"
@@ -630,19 +631,19 @@ msgstr "Gå til siste side"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Go to next layer"
-msgstr ""
+msgstr "Gå til neste lag"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 msgid "Go to page"
-msgstr ""
+msgstr "Gå til side"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Go to previous layer"
-msgstr ""
+msgstr "Gå til forrige lag"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Go to top layer"
-msgstr ""
+msgstr "Gå til øverste lag"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Graph"
