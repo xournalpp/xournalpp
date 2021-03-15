@@ -638,7 +638,7 @@ static int applib_scrollToPage(lua_State* L) {
  * Example 1: app.scrollToPos(20,10)
  * scrolls 20pt right and 10pt down (relative mode)
  *
- * Example 2: app.scrollToPage(200, 50, false)
+ * Example 2: app.scrollToPos(200, 50, false)
  * scrolls to page position 200pt right and 50pt down from the left page corner  (absolute mode)
  **/
 static int applib_scrollToPos(lua_State* L) {
