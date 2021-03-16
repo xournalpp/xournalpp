@@ -250,40 +250,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     // Redraw after the spline approximation
     this->redrawable->rerenderElement(stroke);
 
-// #define PAINT_BOUNDING_BOX
-#ifdef PAINT_BOUNDING_BOX
-    layer = page->getLayers()->back();
-
-    Rectangle<double> bb = stroke->getSpline().getBoundingBox();
-    Stroke* bbStroke = new Stroke();
-    bbStroke->applyStyleFrom(stroke);
-    bbStroke->setColor(Color(0xffff0000));
-    bbStroke->addPoint(Point(bb.x, bb.y));
-    bbStroke->addPoint(Point(bb.x, bb.y + bb.height));
-    bbStroke->addPoint(Point(bb.x + bb.width, bb.y + bb.height));
-    bbStroke->addPoint(Point(bb.x + bb.width, bb.y));
-    bbStroke->addPoint(Point(bb.x, bb.y));
-    layer->addElement(bbStroke);
-    this->redrawable->rerenderElement(bbStroke);
-
-    for (auto&& seg: stroke->getSpline()) {
-        bbStroke = new Stroke();
-        bbStroke->applyStyleFrom(stroke);
-        bbStroke->setColor(Color(0xff0000ff));
-        bbStroke->setWidth(bbStroke->getWidth() / 2.0);
-        bb = seg.getBoundingBox();
-        bbStroke->deletePointsFrom(0);
-        bbStroke->addPoint(Point(bb.x, bb.y));
-        bbStroke->addPoint(Point(bb.x, bb.y + bb.height));
-        bbStroke->addPoint(Point(bb.x + bb.width, bb.y + bb.height));
-        bbStroke->addPoint(Point(bb.x + bb.width, bb.y));
-        bbStroke->addPoint(Point(bb.x, bb.y));
-        layer->addElement(bbStroke);
-        this->redrawable->rerenderElement(bbStroke);
-    }
-    bbStroke = nullptr;
-#endif
-
     stroke = nullptr;
 }
 

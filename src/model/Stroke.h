@@ -87,19 +87,22 @@ public:
 
 public:
     // Deprecated use of Stroke::points
+
+    // Used in StrokeRecognizer (and satellite classes)
     [[deprecated("Use class Path or its descendants")]] void addPoint(const Point& p);
+
     //     [[deprecated("Use class Path or its descendants")]] void setFirstPoint(double x, double y);
     //     [[deprecated("Use class Path or its descendants")]] void setLastPoint(double x, double y);
     //     [[deprecated("Use class Path or its descendants")]] void setLastPoint(const Point& p);
 
-    // Used in StrokeRecognizer (and satellite classes), LoadHandler, SaveHandler, EditSelectionContents,
+    // Used in StrokeRecognizer (and satellite classes), EditSelectionContents,
     // SizeUndoAction, DocumentView
     [[deprecated("Use class Path or its descendants")]] int getPointCount() const;
 
     // Used in StrokeRecognizer (and satellite classes) and StrokeView
     [[deprecated("Use class Path or its descendants")]] std::vector<Point> const& getPointVector() const;
 
-    // Used in SaveHandler and SizeUndoAction
+    // Used in SizeUndoAction
     [[deprecated("Use class Path or its descendants")]] Point getPoint(int index) const;
 
     // Used only in StrokeRecognizer (and satellite classes)
@@ -138,9 +141,6 @@ private:
 
     StrokeTool toolType = STROKE_TOOL_PEN;
 
-    // The array with the points
-    //     std::vector<Point> points{};
-
     /**
      * Dashed line
      */
@@ -170,7 +170,7 @@ private:
     std::vector<Point> pointCache{};
 
     /**
-     * @brief Flag: is the stroke pressure sensitive?
+     * @brief Flag: is the stroke pressure-sensitive?
      */
     bool pressureSensitive = false;
 
