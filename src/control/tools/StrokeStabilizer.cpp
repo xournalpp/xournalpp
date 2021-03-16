@@ -138,9 +138,7 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     spline.toPoints(pointsToPaint);
 
     // Do not add the first point (B): it is already painted
-    for (auto it = pointsToPaint.cbegin() + 1; it != pointsToPaint.cend(); ++it) {
-        strokeHandler->drawSegmentTo(*it);
-    }
+    for (auto it = pointsToPaint.cbegin() + 1; it != pointsToPaint.cend(); ++it) { strokeHandler->drawSegmentTo(*it); }
     C.z = ev.pressure;  // Normal state after having added a segment. Useful?
     strokeHandler->drawSegmentTo(C);
 }

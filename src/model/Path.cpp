@@ -40,9 +40,7 @@ cairo_matrix_t Path::rotate(double x0, double y0, double th) {
     cairo_matrix_rotate(&rotMatrix, th);
     cairo_matrix_translate(&rotMatrix, -x0, -y0);
 
-    for (auto&& p: data) {
-        cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y);
-    }
+    for (auto&& p: data) { cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y); }
 
     return rotMatrix;
 }
@@ -59,9 +57,7 @@ std::pair<cairo_matrix_t, double> Path::scale(double x0, double y0, double fx, d
     cairo_matrix_translate(scaleMatrix, -x0, -y0);
 
     if (restoreLineWidth) {
-        for (auto&& p: data) {
-            cairo_matrix_transform_point(scaleMatrix, &p.x, &p.y);
-        }
+        for (auto&& p: data) { cairo_matrix_transform_point(scaleMatrix, &p.x, &p.y); }
         result.second = 1.0;
     } else {
         double fz = std::sqrt(std::abs(fx * fy));

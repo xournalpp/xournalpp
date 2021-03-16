@@ -238,9 +238,7 @@ void Stroke::move(double dx, double dy) {
 void Stroke::rotate(double x0, double y0, double th) {
     cairo_matrix_t mat = this->path->rotate(x0, y0, th);
 
-    for (auto&& p: pointCache) {
-        cairo_matrix_transform_point(&mat, &p.x, &p.y);
-    }
+    for (auto&& p: pointCache) { cairo_matrix_transform_point(&mat, &p.x, &p.y); }
 
     this->sizeCalculated = false;
 }
@@ -249,9 +247,7 @@ void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, 
     std::pair<cairo_matrix_t, double> res = this->path->scale(x0, y0, fx, fy, rotation, restoreLineWidth);
 
     if (restoreLineWidth) {
-        for (auto&& p: pointCache) {
-            cairo_matrix_transform_point(&(res.first), &p.x, &p.y);
-        }
+        for (auto&& p: pointCache) { cairo_matrix_transform_point(&(res.first), &p.x, &p.y); }
     } else {
         for (auto&& p: pointCache) {
             cairo_matrix_transform_point(&(res.first), &p.x, &p.y);
@@ -368,9 +364,7 @@ void Stroke::debugPrint() {
     g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t)this % this->hasPressure()));
 
     const std::vector<Point>& data = this->path->getData();
-    for (auto&& p: data) {
-        g_message("%lf / %lf", p.x, p.y);
-    }
+    for (auto&& p: data) { g_message("%lf / %lf", p.x, p.y); }
 
     g_message("\n");
 }

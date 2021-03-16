@@ -224,9 +224,7 @@ auto PiecewiseLinearPath::getBoundingBoxes() const -> std::pair<Rectangle<double
 }
 
 void PiecewiseLinearPath::scalePressure(double factor) {
-    for (auto&& p: data) {
-        p.z *= factor;
-    }
+    for (auto&& p: data) { p.z *= factor; }
 }
 
 void PiecewiseLinearPath::setPressure(const vector<double>& pressure) {
@@ -236,9 +234,7 @@ void PiecewiseLinearPath::setPressure(const vector<double>& pressure) {
     }
 
     auto max_size = std::min(pressure.size(), this->nbSegments());
-    for (size_t i = 0U; i != max_size; ++i) {
-        this->data[i].z = pressure[i];
-    }
+    for (size_t i = 0U; i != max_size; ++i) { this->data[i].z = pressure[i]; }
 }
 
 void PiecewiseLinearPath::setSecondToLastPressure(double pressure) {
@@ -249,9 +245,7 @@ void PiecewiseLinearPath::setSecondToLastPressure(double pressure) {
 
 
 void PiecewiseLinearPath::clearPressure() {
-    for (auto&& p: data) {
-        p.z = Point::NO_PRESSURE;
-    }
+    for (auto&& p: data) { p.z = Point::NO_PRESSURE; }
 }
 
 void PiecewiseLinearPath::extrapolateLastPressureValue() {
@@ -347,9 +341,7 @@ auto PiecewiseLinearPath::intersectWithRectangle(const Rectangle<double>& rectan
 
 #ifdef EXTRA_CAREFUL
     ss << "I ** " << index << " : ";
-    for (auto&& t: intersections) {
-        ss << t << " ; ";
-    }
+    for (auto&& t: intersections) { ss << t << " ; "; }
 #endif
 
     if (it1->isInside(rectangle)) {
@@ -405,9 +397,7 @@ auto PiecewiseLinearPath::intersectWithRectangle(const Rectangle<double>& rectan
                        [&index](double t) { return Parameter(index, t); });
 #ifdef EXTRA_CAREFUL
         ss << "I ** " << index << " : ";
-        for (auto&& t: intersection) {
-            ss << t << " ; ";
-        }
+        for (auto&& t: intersection) { ss << t << " ; "; }
         ss << "\n";
 #endif
     }

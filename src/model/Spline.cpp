@@ -181,9 +181,7 @@ auto Spline::getThinBoundingBox() const -> Rectangle<double> {
     }
     const Point& firstKnot = getFirstKnot();
     Rectangle<double> result{firstKnot.x, firstKnot.y, 0.0, 0.0};
-    for (auto&& segment: this->segments()) {
-        result.unite(segment.getBoundingBox());
-    }
+    for (auto&& segment: this->segments()) { result.unite(segment.getBoundingBox()); }
     return result;
 }
 
@@ -191,9 +189,7 @@ void Spline::toPoints(std::vector<Point>& points) const {
     if (data.empty()) {
         return;
     }
-    for (auto&& segment: this->segments()) {
-        segment.toPoints(points);
-    }
+    for (auto&& segment: this->segments()) { segment.toPoints(points); }
 
     points.push_back(data.back());
 }
@@ -277,9 +273,7 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
 
 #ifdef EXTRA_CAREFUL
         ss << "I ** " << index << " : ";
-        for (auto&& t: intersections) {
-            ss << t << " ; ";
-        }
+        for (auto&& t: intersections) { ss << t << " ; "; }
 #endif
 
         if (isPointOnBoundary(it->firstKnot, rectangle)) {
@@ -343,9 +337,7 @@ auto Spline::intersectWithRectangle(const Rectangle<double>& rectangle, size_t f
                            [&index](double t) { return Parameter(index, t); });
 #ifdef EXTRA_CAREFUL
             ss << "I ** " << index << " : ";
-            for (auto&& t: intersection) {
-                ss << t << " ; ";
-            }
+            for (auto&& t: intersection) { ss << t << " ; "; }
             ss << "\n";
         } else {
             ss << "O ** " << index << "\n";

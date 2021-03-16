@@ -79,14 +79,14 @@ public:
      */
     template <class value_type, class point_type>
     class SegmentIteratable;
-    
+
     /**
      * @brief Get an iteratable adaptor for segment-based iterations.
      * @return The adaptor
      * Warning, the returned adaptor will be invalidated if something is added or removed from this->data
      */
     SegmentIteratable<SplineSegment, Point> segments();
-    
+
     /**
      * @brief Get an iteratable adaptor for segment-based iterations.
      * @return The adaptor
