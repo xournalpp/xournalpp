@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-07 16:51+0000\n"
+"POT-Creation-Date: 2021-03-17 19:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -427,6 +427,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Line"
 msgstr ""
 
@@ -1066,10 +1067,6 @@ msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled with vertical line"
-msgstr ""
-
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
-msgid "Ruler"
 msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:23
