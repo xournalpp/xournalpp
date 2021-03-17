@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-07 16:51+0000\n"
-"PO-Revision-Date: 2021-03-14 23:53\n"
+"POT-Creation-Date: 2021-03-17 19:46+0000\n"
+"PO-Revision-Date: 2021-03-17 20:08\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -429,6 +429,7 @@ msgstr "Dessiner une ellipse"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Line"
 msgstr "Tracer une ligne"
 
@@ -1063,10 +1064,6 @@ msgstr "Tracé"
 #: ../src/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled with vertical line"
 msgstr "Tracé avec ligne verticale"
-
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
-msgid "Ruler"
-msgstr "Règle"
 
 #: ../src/control/jobs/CustomExportJob.cpp:23
 msgid "SVG graphics"
