@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-07 16:51+0000\n"
-"PO-Revision-Date: 2021-03-07 16:55\n"
+"PO-Revision-Date: 2021-03-17 17:12\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"Jarraitu nahi duzu?"
 
 #: ../src/control/XournalMain.cpp:454
 msgid "\n"
@@ -67,7 +68,7 @@ msgstr "Gehitu/Editatu Tex"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "Esportatzeko aukera aurreratuak"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
