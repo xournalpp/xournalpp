@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-17 20:08\n"
+"PO-Revision-Date: 2021-03-17 21:22\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2184,11 +2184,11 @@ msgstr "Gai iluna (berrabiaraztea eskatzen du)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr ""
+msgstr "Deadzone"
 
 #: ../ui/settings.glade:1034
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Deadzone-erradioa"
 
 #: ../ui/settings.glade:620
 msgid "Default Save Name"
@@ -2248,14 +2248,17 @@ msgstr "Ez ezazu denbora eta luzera laburreko sarrerak marraztu, ondoz ondo ez b
 
 #: ../ui/settings.glade:1065
 msgid "Drag"
-msgstr ""
+msgstr "Arrastatu"
 
 #: ../ui/settings.glade:859
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Abiapuntutik EZKERRERA arrastatzeak Maius tekla zanpatzearen baliokidea da.\n"
+"GORA arrastatzeak Kontrol tekla zanpatzearen baliokidea da.\n\n"
+"Zehaztapen erradioa: zehazten du aldagailuak zein erradioan blokeatuko diren marrazkia bukatu arte.\n\n"
+"<i> Teklaturik gabe funtzionatzeko erabilgarria. </i>"
 
 #: ../ui/settings.glade:4163
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2273,15 +2276,15 @@ msgstr "Arrastatu eta jaregin osagaiak hemendik tresna-barrara eta atzera."
 
 #: ../ui/settings.glade:1064
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr ""
+msgstr "Arrastatu: balioa txikiegia bada, nahigabeko oszilazioak ager daitezke. Balioa handiegia bada, ez da egonkortuko."
 
 #: ../ui/settings.glade:1076
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr ""
+msgstr "Arrastatu: balioa txikiegia bada, nahigabeko oszilazioak ager daitezke. Balioa handiegia bada, ez da egonkortuko."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Marraztu koordenatuen sistema"
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
@@ -2289,7 +2292,7 @@ msgstr "Marraztu _lerroa"
 
 #: ../ui/settings.glade:2895
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "Marraztu zirkulu garden bat kurtsorearen inguruan"
 
 #: ../ui/settings.glade:4801
 msgid "Drawing Area"
