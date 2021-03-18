@@ -11,7 +11,6 @@ steps:
       sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh)"
       whereis ps
       ps -ww -o pid= -o ppid= -o args=
-      ps -help
     enabled: true
     continueOnError: true
     displayName: "nuke brew"
@@ -19,6 +18,7 @@ steps:
       curl -o pyinst.pkg -L https://www.python.org/ftp/python/3.8.0/python-3.8.0-macosx10.9.pkg
       sudo installer -pkg pyinst.pkg -target /
     displayName: "install python"
+    enabled: false
   #  - task: UsePythonVersion@0 #does not work without brew
   - bash: |
       set -x
