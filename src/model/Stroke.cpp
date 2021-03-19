@@ -292,6 +292,15 @@ void Stroke::setPressure(const vector<double>& pressure) {
     std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path)->setPressure(pressure);
 }
 
+double Stroke::getAvgPressure() {
+    if (!this->hasPressure()) {
+        return Point::NO_PRESSURE;
+    }
+    const std::vector<Point>& data = this->path->getData();
+    return std::accumulate(data.begin(), data.end(), 0.0, [](double l, Point const& p) { return l + p.z; }) /
+           (double)data.size();
+}
+
 /**
  * checks if the stroke is intersected by the eraser rectangle
  */

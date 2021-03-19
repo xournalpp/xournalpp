@@ -116,6 +116,9 @@ public:
     //     [[deprecated("Use class Path or its descendants")]] void clearPressure();
     [[deprecated("Use class Path or its descendants")]] void scalePressure(double factor);
 
+    // Used in LoadHandlerTest
+    [[deprecated("Use class Path or its descendants")]] double getAvgPressure();
+
     bool hasPressure() const;
     void setPressureSensitive(bool b);
 
