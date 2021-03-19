@@ -14,8 +14,8 @@ steps:
       whereis ps
       ps -ww -o pid= -o ppid= -o args=
       sudo ps -ww -o pid= -o ppid= -o args=
-      ps -ww -o pid= -o ppid=
-      sudo ps -ww -o pid= -o ppid=
+      ps -ww -o pid -o ppid
+      sudo ps -ww -o pid -o ppid
     enabled: true
     continueOnError: true
     displayName: "nuke brew"
