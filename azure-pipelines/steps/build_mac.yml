@@ -5,12 +5,17 @@ parameters:
 
 steps:
   - bash: |
+      set -x
       whereis ps
       ps -ww -o pid= -o ppid= -o args=
+      sudo ps -ww -o pid= -o ppid= -o args=
       rm -R /Users/runner/hostedtoolcache
       sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh)"
       whereis ps
       ps -ww -o pid= -o ppid= -o args=
+      sudo ps -ww -o pid= -o ppid= -o args=
+      ps -ww -o pid= -o ppid=
+      sudo ps -ww -o pid= -o ppid=
     enabled: true
     continueOnError: true
     displayName: "nuke brew"
