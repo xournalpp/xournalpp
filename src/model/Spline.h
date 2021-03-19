@@ -67,6 +67,14 @@ public:
     Spline(ObjectInputStream& in);
 
     /**
+     * @brief Clear the spline and make it an ellipse (whose axis are horizontal and vertical)
+     * @param center The center of the ellipse
+     * @param radiusX The radius in the X direction
+     * @param radiusY The radius in the Y direction
+     */
+    void makeEllipse(const Point& center, double radiusX, double radiusY);
+
+    /**
      * @brief Serialize the spline
      * @param out The output stream to serialize to
      */

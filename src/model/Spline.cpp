@@ -43,6 +43,29 @@ Spline::Spline(ObjectInputStream& in) {
     in.endObject();
 }
 
+void Spline::makeEllipse(const Point& center, double radiusX, double radiusY) {
+    /**
+     * Length of the velocity vectors of a spline segment approximating a quarter of a (unit) circle
+     * With this length, the error (the max distance between the spline and the circle) is smaller than 3e-4
+     */
+    constexpr double TANGENT_LENGTH = (M_SQRT2 - 1.0) * 4.0 / 3.0;
+
+    this->clear();
+    this->setFirstKnot(Point(center.x + radiusX, center.y));
+    this->addCubicSegment(Point(center.x + radiusX, center.y + radiusY * TANGENT_LENGTH),
+                              Point(center.x + radiusX * TANGENT_LENGTH, center.y + radiusY),
+                              Point(center.x, center.y + radiusY));
+    this->addCubicSegment(Point(center.x - radiusX * TANGENT_LENGTH, center.y + radiusY),
+                              Point(center.x - radiusX, center.y + radiusY * TANGENT_LENGTH),
+                              Point(center.x - radiusX, center.y));
+    this->addCubicSegment(Point(center.x - radiusX, center.y - radiusY * TANGENT_LENGTH),
+                              Point(center.x - radiusX * TANGENT_LENGTH, center.y - radiusY),
+                              Point(center.x, center.y - radiusY));
+    this->addCubicSegment(Point(center.x + radiusX * TANGENT_LENGTH, center.y - radiusY),
+                              Point(center.x + radiusX, center.y - radiusY * TANGENT_LENGTH),
+                              Point(center.x + radiusX, center.y));
+}
+
 void Spline::serialize(ObjectOutputStream& out) const {
     out.writeObject("Spline");
     out.writeData(this->data.data(), this->data.size(), sizeof(Point));

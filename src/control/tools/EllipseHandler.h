@@ -28,10 +28,4 @@ private:
 
 protected:
     std::shared_ptr<Spline> path;
-
-    /**
-     * Length of the velocity vectors of a spline segment approximating a quarter of a (unit) circle
-     * With this length, the error (the max distance between the spline and the circle) is smaller than 3e-4
-     */
-    static constexpr double TANGENT_LENGTH = (M_SQRT2 - 1.0) * 4.0 / 3.0;
 };

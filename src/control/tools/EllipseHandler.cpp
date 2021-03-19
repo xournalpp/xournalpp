@@ -17,6 +17,7 @@ void EllipseHandler::createPath(const Point& p, bool snapToGrid) {
     this->path = std::make_shared<Spline>();
     this->stroke->setPath(this->path);
 }
+
 const Path& EllipseHandler::getPath() const { return *path; }
 
 void EllipseHandler::drawShape(Point& c, const PositionInputData& pos) {
@@ -67,21 +68,7 @@ void EllipseHandler::drawShape(Point& c, const PositionInputData& pos) {
     radiusX = std::abs(radiusX);  //  For bounding box computation
     radiusY = std::abs(radiusY);  //
 
-    // remove previous points
-    path->clear();
-    path->setFirstKnot(Point(centerX + radiusX, centerY));
-    path->addCubicSegment(Point(centerX + radiusX, centerY + radiusY * TANGENT_LENGTH),
-                          Point(centerX + radiusX * TANGENT_LENGTH, centerY + radiusY),
-                          Point(centerX, centerY + radiusY));
-    path->addCubicSegment(Point(centerX - radiusX * TANGENT_LENGTH, centerY + radiusY),
-                          Point(centerX - radiusX, centerY + radiusY * TANGENT_LENGTH),
-                          Point(centerX - radiusX, centerY));
-    path->addCubicSegment(Point(centerX - radiusX, centerY - radiusY * TANGENT_LENGTH),
-                          Point(centerX - radiusX * TANGENT_LENGTH, centerY - radiusY),
-                          Point(centerX, centerY - radiusY));
-    path->addCubicSegment(Point(centerX + radiusX * TANGENT_LENGTH, centerY - radiusY),
-                          Point(centerX + radiusX, centerY - radiusY * TANGENT_LENGTH),
-                          Point(centerX + radiusX, centerY));
+    path->makeEllipse(Point(centerX, centerY), radiusX, radiusY);
 
     double strokeWidth = this->stroke->getWidth();
     double halfStrokeWidth = 0.5 * strokeWidth;
