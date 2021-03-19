@@ -53,17 +53,17 @@ void Spline::makeEllipse(const Point& center, double radiusX, double radiusY) {
     this->clear();
     this->setFirstKnot(Point(center.x + radiusX, center.y));
     this->addCubicSegment(Point(center.x + radiusX, center.y + radiusY * TANGENT_LENGTH),
-                              Point(center.x + radiusX * TANGENT_LENGTH, center.y + radiusY),
-                              Point(center.x, center.y + radiusY));
+                          Point(center.x + radiusX * TANGENT_LENGTH, center.y + radiusY),
+                          Point(center.x, center.y + radiusY));
     this->addCubicSegment(Point(center.x - radiusX * TANGENT_LENGTH, center.y + radiusY),
-                              Point(center.x - radiusX, center.y + radiusY * TANGENT_LENGTH),
-                              Point(center.x - radiusX, center.y));
+                          Point(center.x - radiusX, center.y + radiusY * TANGENT_LENGTH),
+                          Point(center.x - radiusX, center.y));
     this->addCubicSegment(Point(center.x - radiusX, center.y - radiusY * TANGENT_LENGTH),
-                              Point(center.x - radiusX * TANGENT_LENGTH, center.y - radiusY),
-                              Point(center.x, center.y - radiusY));
+                          Point(center.x - radiusX * TANGENT_LENGTH, center.y - radiusY),
+                          Point(center.x, center.y - radiusY));
     this->addCubicSegment(Point(center.x + radiusX * TANGENT_LENGTH, center.y - radiusY),
-                              Point(center.x + radiusX, center.y - radiusY * TANGENT_LENGTH),
-                              Point(center.x + radiusX, center.y));
+                          Point(center.x + radiusX, center.y - radiusY * TANGENT_LENGTH),
+                          Point(center.x + radiusX, center.y));
 }
 
 void Spline::serialize(ObjectOutputStream& out) const {
