@@ -11,6 +11,7 @@
 #include "PiecewiseLinearPath.h"
 
 #include <cmath>
+#include <numeric>
 
 #include "serializing/ObjectInputStream.h"
 #include "serializing/ObjectOutputStream.h"
@@ -68,6 +69,12 @@ void PiecewiseLinearPath::setFirstPoint(const Point& p) {
 }
 
 void PiecewiseLinearPath::addLineSegmentTo(const Point& q) { data.push_back(q); }
+
+void PiecewiseLinearPath::close() {
+    if (!data.empty()) {
+        data.push_back(data.front());
+    }
+}
 
 const LineSegment& PiecewiseLinearPath::getSegment(size_t index) const {
     return *(reinterpret_cast<const LineSegment*>(this->data.data() + index));
@@ -260,6 +267,11 @@ void PiecewiseLinearPath::extrapolateLastPressureValue() {
         // Remember that size is the number of segments (= nb of points - 1)
         this->data.back().z = std::max(2 * data[size - 1].z - data[size - 2].z, 0.05);
     }
+}
+
+double PiecewiseLinearPath::getAveragePressure() {
+    return std::accumulate(begin(this->data), end(this->data), 0.0, [](double l, Point const& p) { return l + p.z; }) /
+           (double)this->data.size();
 }
 
 auto PiecewiseLinearPath::nbSegments() const -> size_t { return data.empty() ? 0 : data.size() - 1; }

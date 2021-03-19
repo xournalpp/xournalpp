@@ -3,7 +3,6 @@
 #include <cmath>
 
 #include "control/Control.h"
-#include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/MainWindow.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"

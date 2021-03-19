@@ -91,6 +91,11 @@ public:
     void addLineSegmentTo(const Point& q);
 
     /**
+     * @brief Closes the path by adding a line segment to its first knot.
+     */
+    void close();
+
+    /**
      * @brief Get a segment
      * @param index The index of the segment
      * @return The segment
@@ -151,6 +156,12 @@ public:
     /**
      */
     void extrapolateLastPressureValue();
+
+    /**
+     * @brief Compute the average pressure value of the points
+     * @return The average pressure
+     */
+    double getAveragePressure();
 
     /**
      * @brief Get the number of line segments

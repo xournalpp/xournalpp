@@ -141,18 +141,18 @@ auto Stroke::isInSelection(ShapeContainer* container) -> bool {
 //     }
 // }
 
-void Stroke::addPoint(const Point& p) {
-    if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
-        g_warning("Use of deprecated Stroke::addPoint on stroke without piecewise linear path");
-        //         void* array[10];
-        //         int size = backtrace(array, 10);
-        //         backtrace_symbols_fd(array, size, STDERR_FILENO);
-        return;
-    }
-    std::shared_ptr<PiecewiseLinearPath> PLPath = std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path);
-    PLPath->addLineSegmentTo(p);
-    this->sizeCalculated = false;
-}
+// void Stroke::addPoint(const Point& p) {
+//     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+//         g_warning("Use of deprecated Stroke::addPoint on stroke without piecewise linear path");
+//         //         void* array[10];
+//         //         int size = backtrace(array, 10);
+//         //         backtrace_symbols_fd(array, size, STDERR_FILENO);
+//         return;
+//     }
+//     std::shared_ptr<PiecewiseLinearPath> PLPath = std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path);
+//     PLPath->addLineSegmentTo(p);
+//     this->sizeCalculated = false;
+// }
 
 auto Stroke::getPointCount() const -> int {
     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
@@ -165,15 +165,15 @@ auto Stroke::getPointCount() const -> int {
     return this->path->getData().size();
 }
 
-auto Stroke::getPointVector() const -> std::vector<Point> const& {
-    if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
-        g_warning("Use of deprecated Stroke::getPointVector on stroke without piecewise linear path");
-        //         void* array[10];
-        //         int size = backtrace(array, 10);
-        //         backtrace_symbols_fd(array, size, STDERR_FILENO);
-    }
-    return this->path->getData();
-}
+// auto Stroke::getPointVector() const -> std::vector<Point> const& {
+//     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+//         g_warning("Use of deprecated Stroke::getPointVector on stroke without piecewise linear path");
+//         //         void* array[10];
+//         //         int size = backtrace(array, 10);
+//         //         backtrace_symbols_fd(array, size, STDERR_FILENO);
+//     }
+//     return this->path->getData();
+// }
 
 // void Stroke::deletePointsFrom(int index) { points.resize(std::min(size_t(index), points.size())); }
 
@@ -195,15 +195,15 @@ auto Stroke::getPoint(int index) const -> Point {
     return data.at(index);
 }
 
-auto Stroke::getPoints() const -> const Point* {
-    if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
-        g_warning("Use of deprecated Stroke::getPoint on stroke without piecewise linear path");
-        //         void* array[10];
-        //         int size = backtrace(array, 10);
-        //         backtrace_symbols_fd(array, size, STDERR_FILENO);
-    }
-    return this->path->getData().data();
-}
+// auto Stroke::getPoints() const -> const Point* {
+//     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+//         g_warning("Use of deprecated Stroke::getPoint on stroke without piecewise linear path");
+//         //         void* array[10];
+//         //         int size = backtrace(array, 10);
+//         //         backtrace_symbols_fd(array, size, STDERR_FILENO);
+//     }
+//     return this->path->getData().data();
+// }
 
 void Stroke::freeUnusedPointItems() {
     if (path) {
@@ -261,18 +261,6 @@ void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, 
 
 auto Stroke::hasPressure() const -> bool { return pressureSensitive; }
 void Stroke::setPressureSensitive(bool b) { pressureSensitive = b; }
-
-auto Stroke::getAvgPressure() const -> double {
-    if (!hasPressure()) {
-        return Point::NO_PRESSURE;
-    }
-    /**
-     * This formula is imperfect for splines, but it does not matter much
-     */
-    const std::vector<Point>& data = this->path->getData();
-    return std::accumulate(begin(data), end(data), 0.0, [](double l, Point const& p) { return l + p.z; }) /
-           (double)data.size();
-}
 
 void Stroke::scalePressure(double factor){};  // this->path->scalePressure(factor); }
 

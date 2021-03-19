@@ -66,7 +66,7 @@ protected:
      */
     void drawSegmentTo(const Point& point);
 
-    void strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer);
+    void strokeRecognizerDetected(std::shared_ptr<Path> result, Layer* layer);
     void destroySurface();
 
 protected:

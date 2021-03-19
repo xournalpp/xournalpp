@@ -8,7 +8,6 @@
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "control/settings/Settings.h"
-#include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "model/PiecewiseLinearPath.h"
@@ -222,10 +221,10 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
 
     if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
         if (reco == nullptr) {
-            reco = new ShapeRecognizer();
+            reco = new ShapeRecognizer(*this->path);
         }
 
-        ShapeRecognizerResult* result = reco->recognizePatterns(stroke);
+        std::shared_ptr<Path> result = reco->recognizePatterns();
 
         if (result) {
             strokeRecognizerDetected(result, layer);
@@ -253,58 +252,49 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     stroke = nullptr;
 }
 
-void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer) {
-    Stroke* recognized = result->getRecognized();
-    recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
+void StrokeHandler::strokeRecognizerDetected(std::shared_ptr<Path> result, Layer* layer) {
 
     // snapping
-    Stroke* snappedStroke = recognized->cloneStroke();
     if (xournal->getControl()->getSettings()->getSnapRecognizedShapesEnabled()) {
-        Rectangle<double> oldSnappedBounds = recognized->getSnappedBounds();
+        Rectangle<double> oldSnappedBounds = result->getThinBoundingBox();
+
         Point topLeft = Point(oldSnappedBounds.x, oldSnappedBounds.y);
         Point topLeftSnapped = snappingHandler.snapToGrid(topLeft, false);
 
-        snappedStroke->move(topLeftSnapped.x - topLeft.x, topLeftSnapped.y - topLeft.y);
-        Rectangle<double> snappedBounds = snappedStroke->getSnappedBounds();
-        Point belowRight = Point(snappedBounds.x + snappedBounds.width, snappedBounds.y + snappedBounds.height);
+        result->move(topLeftSnapped.x - topLeft.x, topLeftSnapped.y - topLeft.y);
+
+        Point belowRight = Point(topLeftSnapped.x + oldSnappedBounds.width, topLeftSnapped.y + oldSnappedBounds.height);
         Point belowRightSnapped = snappingHandler.snapToGrid(belowRight, false);
 
-        double fx = (std::abs(snappedBounds.width) > DBL_EPSILON) ?
-                            (belowRightSnapped.x - topLeftSnapped.x) / snappedBounds.width :
+        double fx = (std::abs(oldSnappedBounds.width) > DBL_EPSILON) ?
+                            (belowRightSnapped.x - topLeftSnapped.x) / oldSnappedBounds.width :
                             1;
-        double fy = (std::abs(snappedBounds.height) > DBL_EPSILON) ?
-                            (belowRightSnapped.y - topLeftSnapped.y) / snappedBounds.height :
+        double fy = (std::abs(oldSnappedBounds.height) > DBL_EPSILON) ?
+                            (belowRightSnapped.y - topLeftSnapped.y) / oldSnappedBounds.height :
                             1;
-        snappedStroke->scale(topLeftSnapped.x, topLeftSnapped.y, fx, fy, 0, false);
+        result->scale(topLeftSnapped.x, topLeftSnapped.y, fx, fy, 0, false);
     }
 
-    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, snappedStroke);
-    auto& locRecUndo = *recognizerUndo;
+    Stroke* recognized = new Stroke();
+    recognized->setPath(result);
+
+    recognized->applyStyleFrom(this->stroke);
+    recognized->setWidth(this->stroke->hasPressure() ? this->path->getAveragePressure() : this->stroke->getWidth());
+
+    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, recognized);
 
     UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
     undo->addUndoAction(std::move(recognizerUndo));
-    layer->addElement(snappedStroke);
+    layer->addElement(recognized);
 
-    Range range(snappedStroke->getX(), snappedStroke->getY());
-    range.addPoint(snappedStroke->getX() + snappedStroke->getElementWidth(),
-                   snappedStroke->getY() + snappedStroke->getElementHeight());
+    Range range(recognized->getX(), recognized->getY());
+    range.addPoint(recognized->getX() + recognized->getElementWidth(),
+                   recognized->getY() + recognized->getElementHeight());
 
     range.addPoint(stroke->getX(), stroke->getY());
     range.addPoint(stroke->getX() + stroke->getElementWidth(), stroke->getY() + stroke->getElementHeight());
 
-    for (Stroke* s: *result->getSources()) {
-        layer->removeElement(s, false);
-
-        locRecUndo.addSourceElement(s);
-
-        range.addPoint(s->getX(), s->getY());
-        range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
-    }
-
     page->fireRangeChanged(range);
-
-    // delete the result object, this is not needed anymore, the stroke are not deleted with this
-    delete result;
 }
 
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {

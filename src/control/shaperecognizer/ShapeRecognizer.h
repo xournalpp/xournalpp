@@ -12,25 +12,26 @@
 #pragma once
 
 #include <array>
+#include <memory>
 
 #include "CircleRecognizer.h"
 #include "RecoSegment.h"
 #include "ShapeRecognizerConfig.h"
 
-class Stroke;
+class Path;
+class PiecewiseLinearPath;
 class Point;
-class ShapeRecognizerResult;
 
 class ShapeRecognizer {
 public:
-    ShapeRecognizer();
-    virtual ~ShapeRecognizer();
+    ShapeRecognizer(const PiecewiseLinearPath& path);
+    ~ShapeRecognizer() = default;
 
-    ShapeRecognizerResult* recognizePatterns(Stroke* stroke);
+    std::shared_ptr<Path> recognizePatterns();
     void resetRecognizer();
 
 private:
-    Stroke* tryRectangle();
+    std::shared_ptr<PiecewiseLinearPath> tryRectangle();
     // function Stroke* tryArrow(); removed after commit a3f7a251282dcfea8b4de695f28ce52bf2035da2
 
     static void optimizePolygonal(const Point* pt, int nsides, int* breaks, Inertia* ss);
@@ -39,9 +40,7 @@ private:
 
 private:
     std::array<RecoSegment, MAX_POLYGON_SIDES + 1> queue{};
-    int queueLength;
+    int queueLength = 0;
 
-    Stroke* stroke;
-
-    friend class ShapeRecognizerResult;
+    const PiecewiseLinearPath& path;
 };

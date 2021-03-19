@@ -4,19 +4,13 @@
 
 #include <config-debug.h>
 
-#include "model/Stroke.h"
+#include "model/PiecewiseLinearPath.h"
+#include "model/Spline.h"
 
 #include "CircleRecognizer.h"
 #include "Inertia.h"
-#include "ShapeRecognizerResult.h"
 
-ShapeRecognizer::ShapeRecognizer() {
-    resetRecognizer();
-    this->stroke = nullptr;
-    this->queueLength = 0;
-}
-
-ShapeRecognizer::~ShapeRecognizer() { resetRecognizer(); }
+ShapeRecognizer::ShapeRecognizer(const PiecewiseLinearPath& path): path(path) {}
 
 void ShapeRecognizer::resetRecognizer() {
     RDEBUG("reset");
@@ -27,7 +21,7 @@ void ShapeRecognizer::resetRecognizer() {
 /**
  *  Test if segments form standard shapes
  */
-auto ShapeRecognizer::tryRectangle() -> Stroke* {
+auto ShapeRecognizer::tryRectangle() -> std::shared_ptr<PiecewiseLinearPath> {
     // first, we need whole strokes to combine to 4 segments...
     if (this->queueLength < 4) {
         return nullptr;
@@ -77,8 +71,7 @@ auto ShapeRecognizer::tryRectangle() -> Stroke* {
         avgAngle = M_PI / 2;
     }
 
-    auto* s = new Stroke();
-    s->applyStyleFrom(this->stroke);
+    std::shared_ptr<PiecewiseLinearPath> path = std::make_shared<PiecewiseLinearPath>();
 
     for (int i = 0; i <= 3; i++) {
         rs[i].angle = avgAngle + i * M_PI / 2;
@@ -86,12 +79,13 @@ auto ShapeRecognizer::tryRectangle() -> Stroke* {
 
     for (int i = 0; i <= 3; i++) {
         Point p = rs[i].calcEdgeIsect(&rs[(i + 1) % 4]);
-        s->addPoint(p);
+        path->addLineSegmentTo(p);
     }
 
-    s->addPoint(s->getPoint(0));
+    // Close the rectangle
+    path->close();
 
-    return s;
+    return path;
 }
 
 /*
@@ -240,20 +234,21 @@ void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks
 /**
  * The main pattern recognition function
  */
-auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult* {
-    this->stroke = stroke;
+auto ShapeRecognizer::recognizePatterns() -> std::shared_ptr<Path> {
 
-    if (stroke->getPointCount() < 3) {
+    if (this->path.nbSegments() < 2) {
         return nullptr;
     }
+
+    const Point* pts = this->path.getData().data();
 
     Inertia ss[4];
     int brk[5] = {0};
 
     // first see if it's a polygon
-    int n = findPolygonal(stroke->getPoints(), 0, stroke->getPointCount() - 1, MAX_POLYGON_SIDES, brk, ss);
+    int n = findPolygonal(pts, 0, this->path.nbSegments(), MAX_POLYGON_SIDES, brk, ss);
     if (n > 0) {
-        optimizePolygonal(stroke->getPoints(), n, brk, ss);
+        optimizePolygonal(pts, n, brk, ss);
 #ifdef DEBUG_RECOGNIZER
         g_message("--");
         g_message("ShapeReco:: Polygon, %d edges:", n);
@@ -264,6 +259,9 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
 #endif
         // update recognizer segment queue (most recent at end)
         while (n + queueLength > MAX_POLYGON_SIDES) {
+            /**
+             * This loop is probably no longer of any use
+             */
             // remove oldest polygonal stroke
             int i = 1;
             while (i < queueLength && queue[i].startpt != 0) {
@@ -281,16 +279,14 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
         for (int i = 0; i < n; i++) {
             rs[i].startpt = brk[i];
             rs[i].endpt = brk[i + 1];
-            rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
+            rs[i].calcSegmentGeometry(pts, brk[i], brk[i + 1], ss + i);
         }
 
-        Stroke* tmp = nullptr;
+        std::shared_ptr<PiecewiseLinearPath> rectangle = tryRectangle();
 
-        if ((tmp = tryRectangle()) != nullptr) {
-            auto* result = new ShapeRecognizerResult(tmp, this);
-            resetRecognizer();
+        if (rectangle) {
             RDEBUG("return tryRectangle()");
-            return result;
+            return rectangle;
         }
 
         // Removed complicated recognition in commit 5494bd002050182cde3af70bd1924f4062579be5
@@ -308,23 +304,18 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
                 rs->x1 = rs->x2 = rs->xcenter;
             }
 
-            auto* s = new Stroke();
-            s->applyStyleFrom(this->stroke);
-
-            s->addPoint(Point(rs->x1, rs->y1));
-            s->addPoint(Point(rs->x2, rs->y2));
-            rs->stroke = s;
-            auto* result = new ShapeRecognizerResult(s);
+            std::shared_ptr<PiecewiseLinearPath> line =
+                    std::make_shared<PiecewiseLinearPath>(Point(rs->x1, rs->y1), Point(rs->x2, rs->y2));
             RDEBUG("return line");
-            return result;
+            return line;
         }
     }
 
     // not a polygon: maybe a circle ?
-    Stroke* s = CircleRecognizer::recognize(stroke);
-    if (s) {
+    std::shared_ptr<Spline> circle = CircleRecognizer::recognize(this->path);
+    if (circle) {
         RDEBUG("return circle");
-        return new ShapeRecognizerResult(s);
+        return circle;
     }
 
     return nullptr;
