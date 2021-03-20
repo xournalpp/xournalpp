@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-17 20:08\n"
+"PO-Revision-Date: 2021-03-20 12:39\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"Desideri continuare?"
 
 #: ../src/control/XournalMain.cpp:454
 msgid "\n"
@@ -67,7 +68,7 @@ msgstr "Aggiungi/Modifica Tex"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "Opzioni avanzate di esportazione"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
