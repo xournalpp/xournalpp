@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-20 12:39\n"
+"PO-Revision-Date: 2021-03-20 13:39\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -160,11 +160,11 @@ msgstr "Blu"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring forward"
-msgstr ""
+msgstr "Porta avanti"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "Porta in primo piano"
 
 #: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
 #: ../src/control/XournalMain.cpp:168
@@ -177,7 +177,7 @@ msgstr "Cambia colore"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
-msgstr ""
+msgstr "Cambia il nome del livello corrente"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
@@ -185,7 +185,7 @@ msgstr "Cambia font"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "Cambia stile linea"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
