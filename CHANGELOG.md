@@ -47,6 +47,8 @@ community.
       (#2712).
     * Fixed various issues related to zooming and scrolling (#2435, #2743,
       #2023, #1830, #2821)
+    * Fixed zoom slider tick marks being set to the wrong values when DPI
+      calibration setting is different from the default (#2923)
 * Document export
     * Added a "progressive mode" option to PDF file export dialog. This will
       render layers from bottom to top, exporting a new page every time a layer
@@ -130,6 +132,7 @@ community.
     * Added thick/thin settings to default tool preferences (#2611).
     * Added ability to change line styles of existing strokes (#2641).
     * Changed name of "Draw Circle" to "Draw Ellipse" (#2708).
+    * Changed name of "Ruler" to "Draw Line" (#2959).
     * Improved circle drawing controls (#2707).
     * Improved the accuracy of the eraser tool (#1818).
     * Changed pen/highlighter cursor to be in the shape of a circle with the
@@ -157,7 +160,7 @@ community.
     * Fixed multiple other bugs involving the toolbar customizer (#2860 PENDING).
 * Plugins
     * Extended plugin API with many new features and functions, including page
-      and layer operations (#2406).
+      and layer operations (#2406, #2950).
     * Added a Lua plugin for taking a screenshot and saving it to a file
       (#2086, #2787).
     * Added a Lua plugin for cycling though a color list (#1835, #2251).
