@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-17 20:08\n"
+"PO-Revision-Date: 2021-03-22 13:37\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -309,7 +309,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:74
 msgid "Create new layer"
-msgstr ""
+msgstr "Opprett nytt lag"
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
@@ -317,7 +317,7 @@ msgstr "Egendefinert"
 
 #: ../src/control/jobs/CustomExportJob.cpp:19
 msgid "Custom Export"
-msgstr ""
+msgstr "Egendefinert eksport"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Customize Toolbars"
@@ -325,7 +325,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:29
 msgid "Customized"
-msgstr ""
+msgstr "Tilpasset"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
 msgid "Cut"
@@ -346,7 +346,7 @@ msgstr "Slett loggfil"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Delete current page"
-msgstr ""
+msgstr "Slett gjeldende side"
 
 #: ../src/control/XournalMain.cpp:209
 msgid "Delete file"
@@ -370,7 +370,7 @@ msgstr "Forkast"
 
 #: ../src/control/XournalMain.cpp:680
 msgid "Display advanced export options"
-msgstr ""
+msgstr "Vis avanserte eksportinnstillinger"
 
 #: ../src/control/Control.cpp:1968
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -384,7 +384,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2462
 msgid "Document file was removed."
-msgstr ""
+msgstr "Dokumentfilen ble fjernet."
 
 #: ../src/control/xojfile/LoadHandler.cpp:239
 msgid "Document is corrupted (no pages found in file)"
@@ -401,7 +401,7 @@ msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Dotted"
-msgstr ""
+msgstr "Prikket"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:124
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:30
@@ -465,7 +465,7 @@ msgstr ""
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
 msgid "Erase stroke"
-msgstr ""
+msgstr "Slett strek"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:257
@@ -508,7 +508,7 @@ msgstr ""
 
 #: ../src/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "Feil mens autolagring: {1}"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
@@ -524,12 +524,13 @@ msgstr ""
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Feil: {1}. Sjekk innholdet i {2}"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr ""
+msgstr "Feillogg kan ikke slettes. Du må gjøre det manuelt.\n"
+"Loggfil: {1}"
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
@@ -557,7 +558,9 @@ msgstr ""
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Eksporter uten bakgrunn\n"
+"                                 Den eksporterte filen har gjennomsiktig eller hvit bakgrunn,\n"
+"                                 avhengig av hva formatet støtter\n"
 
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
@@ -588,7 +591,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Fill"
-msgstr ""
+msgstr "Fyll"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
