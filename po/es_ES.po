@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-17 20:08\n"
+"PO-Revision-Date: 2021-03-22 00:32\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1773,11 +1773,11 @@ msgstr "... Y cuánto tiempo debe haber pasado desde la última carrera.\n\n"
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
@@ -1793,7 +1793,7 @@ msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
