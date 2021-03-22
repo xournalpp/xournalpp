@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-22 13:37\n"
+"PO-Revision-Date: 2021-03-22 14:37\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -587,7 +587,8 @@ msgstr ""
 #: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "Filen kunne ikke åpnes. Du må gjøre det manuelt:\n"
+"URL: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Fill"
@@ -599,11 +600,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fine"
-msgstr ""
+msgstr "Fin"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "Flytende verktøykasse (eksperimentell)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:60
 msgid "Font"
@@ -688,7 +689,7 @@ msgstr "Bilde"
 
 #: ../src/control/XournalMain.cpp:296
 msgid "Image file successfully created"
-msgstr ""
+msgstr "Bildefilen ble opprettet"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
@@ -696,31 +697,31 @@ msgstr "Bilder"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Sett inn en kopi av gjeldende lag under"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "Sett inn en kopi av gjeldende lag under"
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
-msgstr ""
+msgstr "Sett inn elementer"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
-msgstr ""
+msgstr "Sett inn bilde"
 
 #: ../src/undo/InsertUndoAction.cpp:36
 msgid "Insert latex"
-msgstr ""
+msgstr "Sett inn latex"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:26
 msgid "Insert layer"
-msgstr ""
+msgstr "Sett inn lag"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Insert page"
-msgstr ""
+msgstr "Sett inn side"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
@@ -732,7 +733,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "Gå til side (første side: 1)"
 
 #: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -744,11 +745,11 @@ msgstr "Lag"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layer Preview"
-msgstr ""
+msgstr "Forhåndsvis lag"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:234
 msgid "Layer selection"
-msgstr ""
+msgstr "Velg lag"
 
 #: ../src/control/layer/LayerController.cpp:329
 msgid "Layer {1}"
@@ -781,11 +782,11 @@ msgstr "Lilla"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Manage Toolbars"
-msgstr ""
+msgstr "Tilpass verktøylinjer"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Medium"
-msgstr ""
+msgstr "Middels"
 
 #: ../src/control/XournalMain.cpp:450
 msgid "Missing the needed UI file:\n"
@@ -804,11 +805,11 @@ msgstr "Flytt lag"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page downwards"
-msgstr ""
+msgstr "Flytt siden ned"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page upwards"
-msgstr ""
+msgstr "Flytt side oppover"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:70
 msgid "New"
@@ -911,7 +912,7 @@ msgstr "Side"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:71
 msgid "Page Preview"
-msgstr ""
+msgstr "Forhåndsvis side"
 
 #: ../src/undo/PageBackgroundChangedUndoAction.cpp:81
 msgid "Page background changed"
