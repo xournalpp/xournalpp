@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-22 00:32\n"
+"PO-Revision-Date: 2021-03-23 17:09\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1302,7 +1302,7 @@ msgstr "No se encontró el PDF de fondo."
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "La comprobación al sobrescribir el fondo ha fallado por:\n"
 
 #: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -2065,7 +2065,7 @@ msgstr "Sustitutos disponibles"
 
 #: ../ui/settings.glade:955
 msgid "Averaging method"
-msgstr ""
+msgstr "Método del promedio"
 
 #: ../ui/settings.glade:2711
 msgid "Background color between pages"
@@ -2102,7 +2102,7 @@ msgstr "Traer al frente"
 
 #: ../ui/settings.glade:1005
 msgid "Buffersize"
-msgstr ""
+msgstr "Tamaño del buffer"
 
 #: ../ui/about.glade:127
 msgid "Built on"
@@ -2170,7 +2170,7 @@ msgstr "Icono del cursor para el lápiz"
 
 #: ../ui/settings.glade:1193
 msgid "Cusp detection"
-msgstr ""
+msgstr "Detección de la cúspide"
 
 #: ../ui/settings.glade:2332
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2182,11 +2182,11 @@ msgstr "Tema oscuro (es necesario reiniciar)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr ""
+msgstr "Zona muerta"
 
 #: ../ui/settings.glade:1034
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Radio de la zona muerta"
 
 #: ../ui/settings.glade:620
 msgid "Default Save Name"
@@ -2246,7 +2246,7 @@ msgstr "No dibujar entradas de corto tiempo y longitud a menos que venga en una 
 
 #: ../ui/settings.glade:1065
 msgid "Drag"
-msgstr ""
+msgstr "Arrastre"
 
 #: ../ui/settings.glade:859
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
