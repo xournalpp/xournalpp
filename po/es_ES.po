@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-23 17:09\n"
+"PO-Revision-Date: 2021-03-23 18:08\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2253,7 +2253,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Arrastrar a la IZQUIERDA desde el punto de inicio actúa como si se mantuviera presionada la tecla Shift.\n"
+"\t    Arrastrar hacia ARRIBA actúa como si se mantuviera presionada la tecla Control.\n\n"
+"\t    Determinación del Radio: Radio en el que los modificadores estarán bloqueados hasta que se termine de dibujar.\n\n"
+"\t   <i>Útil para trabajar sin un teclado.</i>"
 
 #: ../ui/settings.glade:4163
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -3074,7 +3077,7 @@ msgstr "Habitualmente 0 o 1"
 
 #: ../ui/settings.glade:213
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Velocidad basada en pesos gaussianos"
 
 #: ../ui/about.glade:101
 msgid "Version"
