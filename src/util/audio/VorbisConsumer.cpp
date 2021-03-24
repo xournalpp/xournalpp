@@ -16,9 +16,9 @@ auto VorbisConsumer::start(const string& filename) -> bool {
     sfInfo.format = SF_FORMAT_OGG | SF_FORMAT_VORBIS;
     sfInfo.samplerate = static_cast<int>(this->settings.getAudioSampleRate());
 
-    auto SNDFILE_tag_closer = [](SNDFILE_tag* tag) { sf_close(tag); };
-    std::unique_ptr<SNDFILE_tag, decltype(SNDFILE_tag_closer)> sfFile{sf_open(filename.c_str(), SFM_WRITE, &sfInfo),
-                                                                      std::move(SNDFILE_tag_closer)};
+    auto SNDFILE_closer = [](SNDFILE* tag) { sf_close(tag); };
+    std::unique_ptr<SNDFILE, decltype(SNDFILE_closer)> sfFile{sf_open(filename.c_str(), SFM_WRITE, &sfInfo),
+                                                              std::move(SNDFILE_closer)};
     if (!sfFile) {
         g_warning("VorbisConsumer: output file \"%s\" could not be opened\ncaused by:%s", filename.c_str(),
                   sf_strerror(sfFile.get()));
