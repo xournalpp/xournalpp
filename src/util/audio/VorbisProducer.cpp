@@ -4,9 +4,9 @@ constexpr auto sample_buffer_size = size_t{16384U};
 
 auto VorbisProducer::start(const std::string& filename, unsigned int timestamp) -> bool {
     SF_INFO sfInfo{};
-    auto SNDFILE_tag_deleter = [](SNDFILE_tag* p) { sf_close(p); };
-    std::unique_ptr<SNDFILE_tag, decltype(SNDFILE_tag_deleter)> sfFile = {sf_open(filename.c_str(), SFM_READ, &sfInfo),
-                                                                          SNDFILE_tag_deleter};
+    auto SNDFILE_deleter = [](SNDFILE* p) { sf_close(p); };
+    std::unique_ptr<SNDFILE, decltype(SNDFILE_deleter)> sfFile = {sf_open(filename.c_str(), SFM_READ, &sfInfo),
+                                                                  SNDFILE_deleter};
     if (!sfFile) {
         g_warning("VorbisProducer: input file \"%s\" could not be opened\ncaused by:%s", filename.c_str(),
                   sf_strerror(sfFile.get()));
