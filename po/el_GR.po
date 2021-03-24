@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-17 20:08\n"
+"PO-Revision-Date: 2021-03-24 12:00\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -3060,7 +3060,7 @@ msgstr "Διορθωτικό υγρό"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Πλάτος"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3072,7 +3072,7 @@ msgstr "Με βοήθεια από την κοινότητα"
 
 #: ../ui/about.glade:192
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:238
 msgid "Xournal++ Preferences"
@@ -3382,5 +3382,5 @@ msgstr "πολ_ύ παχύ"
 
 #: ../ui/about.glade:178
 msgid "with libgtk"
-msgstr ""
+msgstr "με libgtk"
 
