@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-17 20:08\n"
+"POT-Creation-Date: 2021-03-25 16:23+0000\n"
+"PO-Revision-Date: 2021-03-25 17:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"您是否想要继续？"
 
 #: ../src/control/XournalMain.cpp:454
 msgid "\n"
@@ -83,7 +84,7 @@ msgstr "应用到当前页面"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "排列"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -159,11 +160,11 @@ msgstr "蓝色"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring forward"
-msgstr ""
+msgstr "上移一层"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "置于顶层"
 
 #: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
 #: ../src/control/XournalMain.cpp:168
@@ -367,7 +368,7 @@ msgstr "删除层"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Delete this layer"
-msgstr ""
+msgstr "删除此图层"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Delete this page"
@@ -716,7 +717,7 @@ msgstr "图片"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "在下方插入当前图层的副本"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Insert a copy of the current page below"
@@ -776,7 +777,7 @@ msgstr "{1}图层"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "图层堆叠浏览"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -1152,11 +1153,11 @@ msgstr "选择错误报告"
 
 #: ../src/control/tools/EditSelection.cpp:371
 msgid "Send backward"
-msgstr ""
+msgstr "下移一层"
 
 #: ../src/control/tools/EditSelection.cpp:379
 msgid "Send to back"
-msgstr ""
+msgstr "置于底层"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
 msgid "Separator"
@@ -1236,11 +1237,11 @@ msgstr "支撑文件"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:53
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "将当前图层与上层图层切换"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "将当前图层与下层图层切换"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:65
 msgid "Swap the current page with the one above"
@@ -1302,7 +1303,7 @@ msgstr "背景PDF未找到。"
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "覆盖背景失败：\n"
 
 #: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -1773,11 +1774,11 @@ msgstr "... 以及自上次勾画以来必须经过多少时间。\n\n"
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
@@ -1793,7 +1794,7 @@ msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
@@ -1801,7 +1802,7 @@ msgstr "1.0"
 
 #: ../ui/settings.glade:1017
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3015
 msgid "30"
@@ -1809,7 +1810,7 @@ msgstr "30"
 
 #: ../ui/settings.glade:1110
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1905,7 +1906,7 @@ msgstr "<i>如果您的硬件不支持手动识别，Xournal++ 可以在您的�
 
 #: ../ui/settings.glade:988
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>选择一种输入稳定算法及其参数</i>"
 
 #: ../ui/settings.glade:1493
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -1965,7 +1966,7 @@ msgstr "<i>使用缩放手势来缩放日记页。</i>"
 
 #: ../ui/settings.glade:2505
 msgid "<i>Use the touchscreen like a multi-touch-aware pen (requires new input system).</i>"
-msgstr ""
+msgstr "<i>以多点触摸笔的方式使用触摸屏（需要新输入系统）。</i>"
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -2759,8 +2760,8 @@ msgid "Plugin _Manager"
 msgstr "插件管理器(_M)"
 
 #: ../ui/plugin.glade:121
-msgid "Plugin changes are only applied after Xournal++ was restarted"
-msgstr "插件更改需要 Xournal++ 重启才会生效"
+msgid "Plugin changes are only applied after Xournal++ is restarted"
+msgstr ""
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
