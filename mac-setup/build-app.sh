@@ -66,9 +66,6 @@ for locale in */ ; do
 
 	# Xournal Translation
 	cp ../build/po/$locale.gmo ./Xournal++.app/Contents/Resources/share/locale/$locale/LC_MESSAGES/xournalpp.mo
-
-    # Mac Integration
-    cp $1/inst/share/locale/zh_CN/LC_MESSAGES/gtk-mac-integration.mo ./Xournal++.app/Contents/Resources/share/locale/$locale/LC_MESSAGES/gtk-mac-integration.mo
   fi
 done
 
