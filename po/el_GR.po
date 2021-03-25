@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-17 19:46+0000\n"
-"PO-Revision-Date: 2021-03-24 12:00\n"
+"POT-Creation-Date: 2021-03-25 16:23+0000\n"
+"PO-Revision-Date: 2021-03-25 17:13\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -2718,8 +2718,8 @@ msgid "Plugin _Manager"
 msgstr "Διαχείριση _Προσθέτων"
 
 #: ../ui/plugin.glade:121
-msgid "Plugin changes are only applied after Xournal++ was restarted"
-msgstr "Αλλαγές στα πρόσθετα εφαρμόζονται μόνο μετά από επανεκκίνηση του Xournal++"
+msgid "Plugin changes are only applied after Xournal++ is restarted"
+msgstr ""
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
