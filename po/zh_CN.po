@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-25 16:23+0000\n"
-"PO-Revision-Date: 2021-03-25 17:13\n"
+"PO-Revision-Date: 2021-03-25 18:10\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2000,7 +2000,7 @@ msgstr "增加额外的垂直间距"
 
 #: ../ui/settings.glade:4263
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "调整选区大小后，所有笔画将会保持操作前的相同宽度。 "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
@@ -2026,7 +2026,7 @@ msgstr "添加新的 Pdf 页面"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "算术平均"
 
 #: ../ui/settings.glade:1753
 msgid "Artifact workaround"
