@@ -146,14 +146,6 @@ if (ENABLE_CPPUNIT)
 	enable_testing()
 endif (ENABLE_CPPUNIT)
 
-# Mac integration
-pkg_check_modules (MacIntegration "gtk-mac-integration")
-if (MacIntegration_FOUND)
-	message("Enable Mac integration")
-	add_includes_ldflags ("${MacIntegration_LDFLAGS}" "${MacIntegration_INCLUDE_DIRS}")
-	add_definitions (-DMAC_INTEGRATION)
-endif ()
-
 # Plugins / scripting
 pkg_check_modules (Lua "lua5.3")
 if (NOT Lua_FOUND)

@@ -70,6 +70,7 @@
     * Switched from deprecated gtk2 initialisation to gtk3 initialisation (#2252)
     * Improved tool handling and performance improvement (#2339)
     * Added menu entry to append new pdf pages (#2146)
+    * Fixed the startup crash on macOS (#2836)
 
 ## 1.0.20
 

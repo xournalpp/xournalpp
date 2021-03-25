@@ -22,10 +22,6 @@
 #include "XournalView.h"
 #include "i18n.h"
 
-#ifdef MAC_INTEGRATION
-#include <gtkosxapplication.h>
-#endif
-
 #include <utility>
 
 #include <gdk/gdk.h>
@@ -136,26 +132,6 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
     gtk_drag_dest_add_text_targets(this->window);
 
     LayerCtrlListener::registerListener(control->getLayerController());
-
-#ifdef MAC_INTEGRATION
-    GtkosxApplication* osxApp = gtkosx_application_get();
-
-    GtkWidget* menubar = get("mainMenubar");
-    gtk_widget_hide(menubar);
-    gtkosx_application_set_menu_bar(osxApp, GTK_MENU_SHELL(menubar));
-
-    g_signal_connect(osxApp, "NSApplicationWillTerminate",
-                     G_CALLBACK(+[](GtkosxApplication* osxApp, MainWindow* self) { self->control->quit(false); }),
-                     this);
-
-    g_signal_connect(osxApp, "NSApplicationOpenFile",
-                     G_CALLBACK(+[](GtkosxApplication* osxApp, char* path, MainWindow* self) {
-                         return self->control->openFile(path);
-                     }),
-                     this);
-
-    gtkosx_application_ready(osxApp);
-#endif
 }
 
 gboolean MainWindow::isKeyForClosure(GtkAccelKey* key, GClosure* closure, gpointer data) { return closure == data; }
