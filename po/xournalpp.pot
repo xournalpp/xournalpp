@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-17 19:46+0000\n"
+"POT-Creation-Date: 2021-03-25 16:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2840,7 +2840,7 @@ msgid "Plugin _Manager"
 msgstr ""
 
 #: ../ui/plugin.glade:121
-msgid "Plugin changes are only applied after Xournal++ was restarted"
+msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr ""
 
 #: ../ui/settings.glade:3470
