@@ -7,7 +7,11 @@ SpinPageAdapter::SpinPageAdapter() {
     this->page = -1;
 }
 
-SpinPageAdapter::~SpinPageAdapter() { g_clear_object(&this->widget); }
+SpinPageAdapter::~SpinPageAdapter() {
+    if (this->hasWidget()) {
+        this->removeWidget();
+    }
+}
 
 auto SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter) -> bool {
     adapter->lastTimeoutId = 0;
@@ -50,7 +54,9 @@ void SpinPageAdapter::removeWidget() {
     assert(this->hasWidget());
 
     g_signal_handler_disconnect(this->widget, this->pageNrSpinChangedHandlerId);
-    g_clear_object(&this->widget);
+
+    g_object_unref(this->widget);
+    this->widget = nullptr;
 }
 
 auto SpinPageAdapter::getPage() const -> int { return this->page; }

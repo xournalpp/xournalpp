@@ -17,7 +17,11 @@ ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string i
 
 ToolPageSpinner::~ToolPageSpinner() {
     delete this->pageSpinner;
-    this->pageSpinner = nullptr;
+    if (this->lbVerticalPdfPage) {
+        g_object_unref(this->lbVerticalPdfPage);
+    }
+    g_object_unref(this->lbPageNo);
+    g_object_unref(this->box);
 }
 
 auto ToolPageSpinner::getPageSpinner() -> SpinPageAdapter* { return pageSpinner; }
@@ -25,7 +29,7 @@ auto ToolPageSpinner::getPageSpinner() -> SpinPageAdapter* { return pageSpinner;
 void ToolPageSpinner::setPageInfo(const size_t pagecount, const size_t pdfpage) {
     this->pagecount = pagecount;
     this->pdfpage = pdfpage;
-    if (lbPageNo) {
+    if (this->lbPageNo) {
         updateLabels();
     }
 }
@@ -66,37 +70,45 @@ auto ToolPageSpinner::newItem() -> GtkToolItem* {
         this->pageSpinner->removeWidget();
     }
     GtkWidget* spinner = gtk_spin_button_new_with_range(0, 1, 1);
-    this->pageSpinner->setWidget(spinner);
     gtk_orientable_set_orientation(reinterpret_cast<GtkOrientable*>(spinner), orientation);
 
     GtkWidget* pageLabel = gtk_label_new(_("Page"));
+
+    if (this->lbPageNo) {
+        g_object_unref(this->lbPageNo);
+    }
     this->lbPageNo = gtk_label_new("");
 
-    box = gtk_box_new(orientation, 1);
-    updateLabels();
-
+    if (this->lbVerticalPdfPage) {
+        g_object_unref(this->lbVerticalPdfPage);
+    }
     if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-        g_clear_object(&this->lbVerticalPdfPage);
+        this->lbVerticalPdfPage = nullptr;
         gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);
         gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
         gtk_widget_set_valign(this->lbPageNo, GTK_ALIGN_BASELINE);
     } else {
-        if (this->lbVerticalPdfPage) {
-            g_object_unref(this->lbVerticalPdfPage);
-        }
         this->lbVerticalPdfPage = gtk_label_new("");
         gtk_widget_set_halign(pageLabel, GTK_ALIGN_BASELINE);
         gtk_widget_set_halign(spinner, GTK_ALIGN_CENTER);
         gtk_widget_set_halign(this->lbPageNo, GTK_ALIGN_BASELINE);
         gtk_widget_set_halign(lbVerticalPdfPage, GTK_ALIGN_BASELINE);
     }
+    this->pageSpinner->setWidget(spinner);  // takes ownership of spinner reference
 
+    if (this->box) {
+        g_object_unref(box);
+    }
+    box = gtk_box_new(orientation, 1);
     gtk_box_pack_start(GTK_BOX(box), pageLabel, false, false, 7);
+    g_object_unref(pageLabel);
     gtk_box_pack_start(GTK_BOX(box), spinner, false, false, 0);
     gtk_box_pack_start(GTK_BOX(box), this->lbPageNo, false, false, 7);
 
     GtkToolItem* it = gtk_tool_item_new();
     gtk_container_add(GTK_CONTAINER(it), box);
+
+    updateLabels();
 
     return it;
 }
