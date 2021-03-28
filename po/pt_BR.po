@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-25 16:23+0000\n"
-"PO-Revision-Date: 2021-03-28 14:30\n"
+"PO-Revision-Date: 2021-03-28 15:30\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -537,7 +537,7 @@ msgstr "Erro: {1} não é um arquivo normal. Por favor, verifique as configuraç
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Erro: {1}. Por favor, verifique o conteúdo de {2}"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -547,7 +547,7 @@ msgstr "Registro de erro não pode ser deletado. Você precisa fazer isso manual
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Exportar ARQUIVO como PDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
@@ -565,13 +565,19 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Exportar camadas progressivamente\n"
+"                                 na exportação de PDF, Renderizar camadas progressivamente uma por uma.\n"
+"                                 Isso resulta em N páginas de exportação por página com N camadas,\n"
+"                                 aumentando progressivamente a pilha de camadas.\n"
+"                                 O arquivo PDF resultante pode ser usado para uma apresentação.\n"
 
 #: ../src/control/XournalMain.cpp:644
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Exportar sem plano de fundo\n"
+"                                 O arquivo exportado tem fundo transparente ou branco,\n"
+"                                 dependendo do suporte do formato\n"
 
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
@@ -580,20 +586,21 @@ msgstr ""
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Falha ao encontrar o programa gerador de LaTeX no PATH: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Falha ao analisar o comando do gerador LaTeX: {1}"
 
 #: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Falha ao ler o arquivo de modelo global. Por favor, verifique suas configurações."
 
 #: ../src/control/jobs/BaseExportJob.cpp:101
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Falha ao determinar o caminho com o seguinte erro:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -607,7 +614,7 @@ msgstr "Preencher"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Filtrar pressão de entrada. Multiplique a pressão pelo multiplicador de pressão. Se menor que o mínimo, use a pressão mínima."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fine"
@@ -627,15 +634,15 @@ msgstr "Avançar"
 
 #: ../src/control/XournalMain.cpp:628
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "Obter versão do xournalpp"
 
 #: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Arquivo de modelo global não existe. Por favor, verifique suas configurações."
 
 #: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Arquivo de tema global não é um arquivo regular. Por favor, verifique suas configurações. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Go to first page"
@@ -708,7 +715,7 @@ msgstr "Imagens"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Inserir uma cópia da camada atual abaixo"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Insert a copy of the current page below"
@@ -736,11 +743,11 @@ msgstr "Inserir página"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Pontilhado Isométrico"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Gráfico Isométrico"
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
@@ -748,7 +755,7 @@ msgstr "Ir para página (primeira página: 1)"
 
 #: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "pdflatex encontrou um erro: {1} (Código de Saída: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -852,7 +859,7 @@ msgstr "Sem páginas para exportar!"
 
 #: ../src/control/Control.cpp:1266
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Nenhuma página de PDF disponível para ser adicionada. Primeiro você precisa reabrir o documento."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
@@ -982,11 +989,11 @@ msgstr "Modo de apresentação"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Idioma previamente selecionado não está mais disponível!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Record Audio / Stop Recording"
@@ -1024,7 +1031,7 @@ msgstr "Item removido {1} da barra de ferramentas {2} ID {3}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Renomear camada"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
@@ -1163,13 +1170,17 @@ msgstr "Configurar DPI para exportação em PNG. O padrão é 300.\n"
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Define a altura da página para exportação em PNG\n"
+"                                 Nenhum efeito sem -i/--create-img=foo.png\n"
+"                                 Ignorado se --export-png-dpi ou --export-png-width for usado"
 
 #: ../src/control/XournalMain.cpp:668
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Define a largura da página para exportação em PNG\n"
+"                                 Nenhum efeito sem -i/--create-img=foo.png\n"
+"                                 Ignorado se --export-png-dpi for usado"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Shape Recognizer"
@@ -1223,11 +1234,11 @@ msgstr "Arquivos suportados"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:53
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Trocar a camada atual pela camada acima"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Trocar a camada atual pela camada abaixo"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:65
 msgid "Swap the current page with the one above"
@@ -1289,11 +1300,11 @@ msgstr "O plano de fundo do PDF não foi encontrado."
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "A verificação de substituição do plano de fundo falhou com:\n"
 
 #: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "O arquivo que está sendo carregado tem uma versão de formato mais recente que a atualmente suportada por esta versão Xournal++, assim pode não carregar corretamente. Abrir mesmo assim?"
 
 #: ../src/control/xojfile/LoadHandler.cpp:117
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1366,15 +1377,15 @@ msgstr "Tentando realizar o salvamento de emergência para o atual documento…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Não é possível abrir o arquivo de modelo global em {1}. O arquivo existe?"
 
 #: ../src/gui/PageView.cpp:348
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "Não é possível reproduzir a gravação de áudio {1}"
 
 #: ../src/control/Control.cpp:1280
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Não é possível recuperar a página PDF."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 #: ../src/undo/UndoRedoHandler.cpp:203
@@ -1496,7 +1507,7 @@ msgstr "Você não tem nenhuma página PDF para selecionar. Cancelar operação.
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Você está usando a ramificação {1}/{2}. Enviar relatório de erro irá direcioná-lo para o rastreador de problemas deste repositório."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1581,7 +1592,7 @@ msgstr "borracha"
 
 #: ../src/control/Control.cpp:1982
 msgid "file: {1}"
-msgstr ""
+msgstr "arquivo: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -1618,7 +1629,7 @@ msgstr "traço"
 
 #: ../src/util/DeviceListHelper.cpp:123
 msgid "tablet pad"
-msgstr ""
+msgstr "mesa digitalizadora"
 
 #: ../src/undo/AddUndoAction.cpp:103 ../src/undo/DeleteUndoAction.cpp:100
 msgid "text"
@@ -1690,7 +1701,7 @@ msgstr "%"
 
 #: ../ui/settings.glade:2452
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% maior do que a distância inicial entre os dois toques."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
@@ -1728,7 +1739,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\tNome do dia da semana abreviado (por exemplo, Qui.)\n"
+"%A\t\tNome do dia da semana completo (por exemplo, Quinta-feira)\n"
+"%b\t\tNome do mês abreviado (por exemplo, Ago.)\n"
+"%B\t\tNome completo do mês (por exemplo, Agosto)\n"
+"%c\t\tRepresentação da data e hora (por exemplo, Qui. 23 de agosto 14:55:02 2001)\n"
+"%d\t\tDia do mês (01-31)\n"
+"%F\t\tRepresentação da data (exemplo, 2001-08-23)\n"
+"%H\t\tHora em formato de 24h (00-23)\n"
+"%I\t\tHora em formato de 12h (01-12)\n"
+"%j\t\tDia do ano (001-366)\n"
+"%m\t\tMês como um número decimal (01-12)\n"
+"%M\t\tMinuto (00-59)\n"
+"%p\t\tDesignação AM ou PM  (exemplo, PM)\n"
+"%S\t\tSegundo (00-61)\n"
+"%U\t\tNúmero da semana com o primeiro domingo como primeiro dia da semana (00-53)\n"
+"%w\t\tDia na semana como número decimal, com o domingo indicando 0 (0-6)\n"
+"%W\t\tNúmero da semana com a primeira segunda-feira como primeiro dia da semana (00-53)\n"
+"%x\t\tRepresentação de data (exemplo, 08/23/01)\n"
+"%X\t\tRepresentação de hora (por exemplo, 14:55:02)\n"
+"%y\t\tAno, com os últimos dois dígitos (00-99)\n"
+"%Y\t\tAno (exemplo, 2001)\n"
+"%Z\t\tNome ou abreviação do fuso horário (por exemplo, CDT)\n"
+"%%\t\tUm sinal de %"
 
 #: ../ui/settings.glade:4587
 msgid "... AND How much time must have passed since last stroke.\n\n"
