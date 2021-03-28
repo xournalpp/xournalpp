@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-25 16:23+0000\n"
-"PO-Revision-Date: 2021-03-28 06:28\n"
+"PO-Revision-Date: 2021-03-28 07:41\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2499,7 +2499,8 @@ msgstr "笔画长短(屏幕毫米) 与...\n\n"
 #: ../ui/settings.glade:4524
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "(时间) 多短，且...\n\n"
+"<i>推荐: 150毫秒</i>"
 
 #: ../ui/settings.glade:4446
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
