@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-25 16:23+0000\n"
-"PO-Revision-Date: 2021-03-28 07:41\n"
+"PO-Revision-Date: 2021-03-28 10:29\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2030,7 +2030,7 @@ msgstr "算术平均"
 
 #: ../ui/settings.glade:1753
 msgid "Artifact workaround"
-msgstr ""
+msgstr "手工痕迹处理"
 
 #: ../ui/settings.glade:5204
 msgid "Audio Devices"
