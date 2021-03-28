@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-25 16:23+0000\n"
-"PO-Revision-Date: 2021-03-28 10:29\n"
+"PO-Revision-Date: 2021-03-28 11:29\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2688,7 +2688,7 @@ msgstr "无"
 
 #: ../ui/settings.glade:4074
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
+msgstr "当启用 <b>双页</b> 显示时，偏移多个页面中的第一页"
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
