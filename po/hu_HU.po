@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-25 16:23+0000\n"
-"PO-Revision-Date: 2021-03-25 17:13\n"
+"POT-Creation-Date: 2021-03-28 17:44+0000\n"
+"PO-Revision-Date: 2021-03-28 17:45\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -34,7 +34,7 @@ msgid "\n"
 msgstr "\n"
 "Indulási kísérlet e fájl nélkül."
 
-#: ../src/gui/MainWindow.cpp:736
+#: ../src/gui/MainWindow.cpp:712
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " / {1}{2}"
@@ -259,13 +259,13 @@ msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: {2}"
 msgid "Could not open file: \"{1}\""
 msgstr "Nem sikerült megnyitni a \"{1}\" fájlt"
 
-#: ../src/gui/MainWindow.cpp:94
+#: ../src/gui/MainWindow.cpp:90
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Nem sikerült beolvasni az egyedi toolbar.ini fájlt: {1}\n"
 "Az eszköztár nem lesz elérhető"
 
-#: ../src/gui/MainWindow.cpp:85
+#: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Nem sikerült beolvasni az egyedi toolbar.ini fájlt: {1}\n"
@@ -897,7 +897,7 @@ msgstr "Narancssárga"
 msgid "PDF Export"
 msgstr "PDF exportálás"
 
-#: ../src/gui/MainWindow.cpp:734
+#: ../src/gui/MainWindow.cpp:710
 msgid "PDF Page {1}"
 msgstr "PDF oldal {1}"
 
