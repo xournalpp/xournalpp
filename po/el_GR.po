@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-25 16:23+0000\n"
-"PO-Revision-Date: 2021-03-25 17:13\n"
+"POT-Creation-Date: 2021-03-28 17:44+0000\n"
+"PO-Revision-Date: 2021-03-28 17:45\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -34,7 +34,7 @@ msgid "\n"
 msgstr "\n"
 "Θα προσπαθήσουμε να εκτελέσουμε χωρίς αυτό το αρχείο."
 
-#: ../src/gui/MainWindow.cpp:736
+#: ../src/gui/MainWindow.cpp:712
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr " από {1}{2}"
@@ -258,13 +258,13 @@ msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μ�
 msgid "Could not open file: \"{1}\""
 msgstr "Δεν ήταν δυνατό το άνοιγμα αρχείου: \"{1}\""
 
-#: ../src/gui/MainWindow.cpp:94
+#: ../src/gui/MainWindow.cpp:90
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Αδύνατη προσπέλαση προσαρμοσμένου αρχείου toolbar.ini: {1}\n"
 "Οι γραμμές εργαλείων δεν θα είναι διαθέσιμες"
 
-#: ../src/gui/MainWindow.cpp:85
+#: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Αδύνατη προσπέλαση γενικού αρχείου toolbar.ini: {1}\n"
@@ -896,7 +896,7 @@ msgstr "Πορτοκαλί"
 msgid "PDF Export"
 msgstr "Εξαγωγή σε PDF"
 
-#: ../src/gui/MainWindow.cpp:734
+#: ../src/gui/MainWindow.cpp:710
 msgid "PDF Page {1}"
 msgstr "PDF σελίδα {1}"
 
