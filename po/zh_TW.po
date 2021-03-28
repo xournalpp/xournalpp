@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-25 16:23+0000\n"
-"PO-Revision-Date: 2021-03-25 17:13\n"
+"POT-Creation-Date: 2021-03-28 17:44+0000\n"
+"PO-Revision-Date: 2021-03-28 17:45\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -34,7 +34,7 @@ msgid "\n"
 msgstr "\n"
 "現在將嘗試在沒有此檔案的情況下執行。"
 
-#: ../src/gui/MainWindow.cpp:736
+#: ../src/gui/MainWindow.cpp:712
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
 msgstr "頁，共{1}頁"
@@ -257,13 +257,13 @@ msgstr ""
 msgid "Could not open file: \"{1}\""
 msgstr "不能打開檔案\"{1}\""
 
-#: ../src/gui/MainWindow.cpp:94
+#: ../src/gui/MainWindow.cpp:90
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "未能解析配置檔案toolbar.ini: {1}\n"
 "工具條將不可用"
 
-#: ../src/gui/MainWindow.cpp:85
+#: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "未能解析一般檔案toolbar.ini: {1}\n"
@@ -890,7 +890,7 @@ msgstr "橙色"
 msgid "PDF Export"
 msgstr "輸出為PDF"
 
-#: ../src/gui/MainWindow.cpp:734
+#: ../src/gui/MainWindow.cpp:710
 msgid "PDF Page {1}"
 msgstr "PDF頁碼{1}"
 
