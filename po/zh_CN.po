@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-25 16:23+0000\n"
-"PO-Revision-Date: 2021-03-28 05:30\n"
+"PO-Revision-Date: 2021-03-28 06:28\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2066,7 +2066,7 @@ msgstr "可用的占位符"
 
 #: ../ui/settings.glade:955
 msgid "Averaging method"
-msgstr ""
+msgstr "平均方法"
 
 #: ../ui/settings.glade:2711
 msgid "Background color between pages"
@@ -2171,7 +2171,7 @@ msgstr "笔的光标图标"
 
 #: ../ui/settings.glade:1193
 msgid "Cusp detection"
-msgstr ""
+msgstr "尖端检测"
 
 #: ../ui/settings.glade:2332
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2183,11 +2183,11 @@ msgstr "暗色主题 (需要重启)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr ""
+msgstr "盲区"
 
 #: ../ui/settings.glade:1034
 msgid "Deadzone radius"
-msgstr ""
+msgstr "盲区半径"
 
 #: ../ui/settings.glade:620
 msgid "Default Save Name"
@@ -2247,14 +2247,17 @@ msgstr "不要绘制短时间和短距离的输入，而是显示浮动工具箱
 
 #: ../ui/settings.glade:1065
 msgid "Drag"
-msgstr ""
+msgstr "拖拽"
 
 #: ../ui/settings.glade:859
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "从起点向左拖拽，效果如同按住Shift键。\n"
+"向上拖拽，效果如同按住Ctrl键。\n\n"
+"限定半径：半径修改器将被锁定直到笔划结束为止。\n\n"
+"<i>有助于无键盘操作。</i>"
 
 #: ../ui/settings.glade:4163
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2272,11 +2275,11 @@ msgstr "在这里和工具条之间可以来回拖动条目。"
 
 #: ../ui/settings.glade:1064
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr ""
+msgstr "拖拽：值减小，可能出现会不想要的抖动；如果值太小，会没有防抖效果。"
 
 #: ../ui/settings.glade:1076
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr ""
+msgstr "拖拽：值减小，可能出现会不想要的抖动；如果值太小，会没有防抖效果。"
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
@@ -2389,7 +2392,7 @@ msgstr "透明度填充"
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "笔画补全"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
@@ -2417,7 +2420,7 @@ msgstr "收益"
 
 #: ../ui/settings.glade:1128 ../ui/settings.glade:1148
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "高斯参数：值越大，线条越稳定，光标到笔画末端的缺口也越大"
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
@@ -2524,7 +2527,7 @@ msgstr "图像质量"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
-msgstr ""
+msgstr "惯性"
 
 #: ../ui/settings.glade:5132
 msgid "Input Device"
@@ -2540,11 +2543,11 @@ msgstr "输入系统"
 
 #: ../ui/settings.glade:1235
 msgid "Input stabilization"
-msgstr ""
+msgstr "抖动处理（输入稳定化）"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "抖动处理会在笔画末端产生一个缺口。勾选此项可填补缺口。"
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2604,11 +2607,11 @@ msgstr "定制工具条"
 
 #: ../ui/settings.glade:1097
 msgid "Mass"
-msgstr ""
+msgstr "质量"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "质量：质量越大惯性越大、越稳定"
 
 #: ../ui/settings.glade:4564
 msgid "Max Length (mm)"
@@ -2761,7 +2764,7 @@ msgstr "插件管理器(_M)"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "插件改变仅在Xournal++重启后应用"
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
@@ -2777,7 +2780,7 @@ msgstr "偏好设置"
 
 #: ../ui/settings.glade:1162
 msgid "Preprocessor"
-msgstr ""
+msgstr "预处理器"
 
 #: ../ui/settings.glade:3427
 msgid "Presentation Mode"
@@ -3073,7 +3076,7 @@ msgstr "通常为 0 或 1"
 
 #: ../ui/settings.glade:213
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "基于速度的高斯权重"
 
 #: ../ui/about.glade:101
 msgid "Version"
