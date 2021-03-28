@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-25 16:23+0000\n"
-"PO-Revision-Date: 2021-03-25 18:10\n"
+"PO-Revision-Date: 2021-03-28 05:30\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2095,15 +2095,15 @@ msgstr "当前页面和其他选择的边框颜色"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "上移一层"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "移到最前"
 
 #: ../ui/settings.glade:1005
 msgid "Buffersize"
-msgstr ""
+msgstr "缓冲区大小"
 
 #: ../ui/about.glade:127
 msgid "Built on"
@@ -2889,11 +2889,11 @@ msgstr "选择颜色（文字，笔划等）"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "下移一层"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "移到最后"
 
 #: ../ui/settings.glade:1628
 msgid "Sensitivity Scale"
