@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-28 17:44+0000\n"
-"PO-Revision-Date: 2021-03-28 21:28\n"
+"PO-Revision-Date: 2021-03-29 01:01\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2385,7 +2385,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Finalize o traço"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
@@ -2413,11 +2413,11 @@ msgstr "Ganho"
 
 #: ../ui/settings.glade:1128 ../ui/settings.glade:1148
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Parâmetro gaussiano: quanto maior, maior a estabilização e maior o atraso entre seu cursor e a ponta da pintura."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Configurações gerais da ferramenta LaTeX"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
@@ -2429,7 +2429,7 @@ msgstr "Sistema"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "Caminho do arquivo de modelo global"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2437,7 +2437,7 @@ msgstr "Ir para a página"
 
 #: ../ui/settings.glade:4401
 msgid "Grid size"
-msgstr ""
+msgstr "Tamanho da grade"
 
 #: ../ui/settings.glade:4358
 msgid "Grid snapping tolerance"
@@ -2453,7 +2453,7 @@ msgstr "Reconhecimento da Mão"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Altura"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2501,11 +2501,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Se ativado, verifique se os pacotes LaTeX necessários estão instalados e se os comandos LaTeX estão disponíveis antes de executar a ferramenta LaTeX."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "Se ativado, as camadas de cada página serão adicionadas uma por uma. O arquivo PDF resultante pode ser usado para uma apresentação."
 
 #: ../ui/settings.glade:4512
 msgid "Ignore Time (ms)"
@@ -2513,15 +2513,15 @@ msgstr "Ignorar Tempo (ms)"
 
 #: ../ui/settings.glade:1695
 msgid "Ignore the first"
-msgstr ""
+msgstr "Ignorar o primeiro"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Qualidade da imagem"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
-msgstr ""
+msgstr "Inércia"
 
 #: ../ui/settings.glade:5132
 msgid "Input Device"
@@ -2537,11 +2537,11 @@ msgstr "Sistema de entrada"
 
 #: ../ui/settings.glade:1235
 msgid "Input stabilization"
-msgstr ""
+msgstr "Estabilização de entrada"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "A estabilização de entrada pode criar uma lacuna no final do seu traço. Se habilitada, esta lacuna é preenchida."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2561,7 +2561,7 @@ msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Configurações do executável LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
@@ -2573,7 +2573,7 @@ msgstr "Idioma"
 
 #: ../ui/settings.glade:5579
 msgid "Language Settings"
-msgstr ""
+msgstr "Configurações de idioma"
 
 #: ../ui/main.glade:575
 msgid "Layout"
@@ -2601,11 +2601,11 @@ msgstr "Gerenciar barra de ferramentas"
 
 #: ../ui/settings.glade:1097
 msgid "Mass"
-msgstr ""
+msgstr "Massa"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Massa: quanto maior a massa, mais inércia e mais estabilização"
 
 #: ../ui/settings.glade:4564
 msgid "Max Length (mm)"
@@ -2614,7 +2614,8 @@ msgstr "Comprimento máximo (mm)"
 #: ../ui/settings.glade:871
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Mesclar eventos do botão com eventos de ponta da caneta\n"
+"<i> (Marque se </i> \"<tt> xsetwacom get *deviceId* TabletPCButton </tt>\" <i> retorna </i> \"<tt> on </tt>\" <i>) </i>"
 
 #: ../ui/settings.glade:1355
 msgid "Middle Mouse Button"
@@ -2622,7 +2623,7 @@ msgstr "Botão do meio do mouse"
 
 #: ../ui/settings.glade:1565
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Pressão mínima:"
 
 #: ../ui/settings.glade:1442 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2634,7 +2635,7 @@ msgstr "Botões do Mouse"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "Combo Mouse+Teclado"
 
 #: ../ui/main.glade:2659
 msgid "Move Down"
@@ -2667,7 +2668,7 @@ msgstr "Nova _camada"
 #: ../ui/settings.glade:2864
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Sem Ícone"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2676,7 +2677,7 @@ msgstr ""
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:207
 #: ../ui/settings.glade:224
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 #: ../ui/settings.glade:4074
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2684,7 +2685,7 @@ msgstr "Deslocar a primeira página com esta quantidade de páginas quando <b>em
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "Configurações de opacidade"
 
 #: ../ui/settings.glade:921
 msgid "Options"
@@ -2696,7 +2697,7 @@ msgstr "Dispositivo de Saída"
 
 #: ../ui/settings.glade:4770
 msgid "PDF Cache"
-msgstr ""
+msgstr "Cache PDF"
 
 #: ../ui/main.glade:1140
 msgid "P_revious annotated Page"
@@ -2742,7 +2743,7 @@ msgstr "Opções da Caneta"
 
 #: ../ui/settings.glade:3527
 msgid "Performance"
-msgstr ""
+msgstr "Desempenho"
 
 #: ../ui/settings.glade:5401
 msgid "Playback Settings"
@@ -2758,15 +2759,15 @@ msgstr "Gerenciador de Plugins"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "As alterações de plugin só são aplicadas após Xournal++ ser reiniciado"
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Pré-carregar páginas após"
 
 #: ../ui/settings.glade:3458
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Pré-carregar páginas antes"
 
 #: ../ui/main.glade:487
 msgid "Preferences"
@@ -2774,7 +2775,7 @@ msgstr "Preferências"
 
 #: ../ui/settings.glade:1162
 msgid "Preprocessor"
-msgstr ""
+msgstr "Pré-processador"
 
 #: ../ui/settings.glade:3427
 msgid "Presentation Mode"
@@ -2782,11 +2783,11 @@ msgstr "Modo de Apresentação"
 
 #: ../ui/settings.glade:4258
 msgid "Preserve line width"
-msgstr ""
+msgstr "Preservar largura da linha"
 
 #: ../ui/settings.glade:1576
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Multiplicador de Pressão: "
 
 #: ../ui/settings.glade:1646
 msgid "Pressure Sensitivity"
@@ -2822,15 +2823,15 @@ msgstr "Qualidade da gravação"
 
 #: ../ui/main.glade:1256
 msgid "Rename Layer"
-msgstr ""
+msgstr "Renomear camada"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Renomear camada selecionada"
 
 #: ../ui/settings.glade:4305
 msgid "Resizing"
-msgstr ""
+msgstr "Redimensionamento"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -2850,7 +2851,7 @@ msgstr "Taxa de Amostragem"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "Amostra de nome de camada"
 
 #: ../ui/settings.glade:3259
 msgid "Scrollbars"
@@ -2886,15 +2887,15 @@ msgstr "Cor de Seleção (Texto, Seleção de Traçado etc.)"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Enviar para o fundo"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "Enviar para trás"
 
 #: ../ui/settings.glade:1628
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Escala de Sensibilidade"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
@@ -2926,7 +2927,7 @@ msgstr "Mostrar barra lateral no lado direito"
 
 #: ../ui/main.glade:559
 msgid "Show toolbars"
-msgstr ""
+msgstr "Mostrar barra de ferramentas"
 
 #: ../ui/settings.glade:3158
 msgid "Show vertical scrollbar on the left side"
@@ -2940,7 +2941,7 @@ msgstr ""
 #: ../ui/settings.glade:2865
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Ícone de ponto pequeno"
 
 #: ../ui/settings.glade:4464
 msgid "Snapping"
@@ -3028,7 +3029,7 @@ msgstr "A unidade da régua é cm"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "Estas configurações serão utilizadas para novas páginas"
 
 #: ../ui/settings.glade:2122
 msgid "Timeout"
@@ -3099,7 +3100,7 @@ msgstr "Borracha pontual"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Largura"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3111,7 +3112,7 @@ msgstr "Obter ajuda da comunidade"
 
 #: ../ui/about.glade:192
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:238
 msgid "Xournal++ Preferences"
@@ -3387,7 +3388,7 @@ msgstr "habilitado,"
 
 #: ../ui/settings.glade:1730
 msgid "events"
-msgstr ""
+msgstr "eventos"
 
 #: ../ui/settings.glade:389
 msgid "every"
