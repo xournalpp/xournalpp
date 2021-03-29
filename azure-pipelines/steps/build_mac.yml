@@ -1,6 +1,7 @@
 parameters:
   build_type: ''
   cmake_flags: ''
+  generation_path: ''
 
 steps:
   - bash: |
@@ -8,16 +9,16 @@ steps:
       ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)" || true
     displayName: 'Uninstall brew'
   - bash: |
-      cd /Users
-      sudo mkdir git-bin
-      sudo chown $USER git-bin
-      cd git-bin
-      curl -L -o gtk-bin.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/gtk/mac/10.13/gtk-bin.tar.gz
+      sudo mkdir "${{parameters.generation_path}}"
+      sudo chown $USER "${{parameters.generation_path}}"
+      cd "${{parameters.generation_path}}"
+      curl -L -o gtk-bin.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/macos-10.15-jhbuild/gtk/gtk-bin.tar.gz
       tar -xzf gtk-bin.tar.gz
     displayName: 'Unpack GTK'
   - bash: |
-      curl -L -o libxml.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/master/libxml/mac/10.13/libxml.tar.gz
+      curl -L -o libxml.tar.gz https://github.com/xournalpp/xournalpp-pipeline-dependencies/raw/macos-10.15-jhbuild/libxml/libxml.tar.gz
       sudo tar -xzf libxml.tar.gz -C /
+    enabled: false
     displayName: 'Unpack libxml'
   - bash: |
       mkdir build
@@ -31,11 +32,13 @@ steps:
       if [ ! -f ninja-mac.zip ]; then
         curl -L -o ninja-mac.zip https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-mac.zip
       fi
-      unzip ninja-mac.zip -d /Users/git-bin/gtk/inst/bin
+      unzip ninja-mac.zip -d "${{parameters.generation_path}}"/gtk/inst/bin
     displayName: 'Get Ninja'
   - bash: |
-      export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
-      cmake -GNinja -DCMAKE_INSTALL_PREFIX:PATH=/Users/git-bin/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type }} ${{ parameters.cmake_flags }}
+      export PKG_CONFIG_PATH="${{parameters.generation_path}}"/gtk/inst/lib/pkgconfig:"${{parameters.generation_path}}"/gtk/inst/share/pkgconfig:/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/pkgconfig
+      export PREFIX="${{parameters.generation_path}}"/gtk/inst
+      export PATH="$HOME/.local/bin:"${{parameters.generation_path}}"/gtk/inst/bin:$PATH"
+      cmake -GNinja -DCMAKE_INSTALL_PREFIX:PATH="${{parameters.generation_path}}"/gtk/inst .. -DCMAKE_BUILD_TYPE=${{ parameters.build_type }} ${{ parameters.cmake_flags }}
       # Make sure pot is up to date with sources (maybe translation pipeline is currently running)
       cmake --build . --target pot
       cmake --build . --target translations
