@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-28 17:44+0000\n"
-"PO-Revision-Date: 2021-03-29 01:01\n"
+"PO-Revision-Date: 2021-03-29 02:03\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -3037,7 +3037,7 @@ msgstr "Tempo limite"
 
 #: ../ui/settings.glade:2542
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Desenho por toque"
 
 #: ../ui/settings.glade:2035 ../ui/settings.glade:2573
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -3070,7 +3070,7 @@ msgstr "Usualmente 0 ou 1"
 
 #: ../ui/settings.glade:213
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Pesos gaussianos baseados em velocidade"
 
 #: ../ui/about.glade:101
 msgid "Version"
