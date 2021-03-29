@@ -27,6 +27,12 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
     if (event.type == BUTTON_PRESS_EVENT) {
 
         if (event.button == 1 || this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
+            if (this->eventsToIgnore < 0 && this->inputRunning) {
+                // end last action if it was not ended already
+                this->actionEnd(event);
+                g_message(
+                        "Impossible press event without release event - this is a sign of bugged hardware or drivers");
+            }
             this->eventsToIgnore = this->inputContext->getSettings()->getIgnoredStylusEvents();
             if (this->eventsToIgnore > 0) {
                 this->eventsToIgnore--;  // This is already the first ignored event
@@ -54,8 +60,31 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
 
     // Trigger motion action when pen/mouse is pressed and moved
-    if (event.type == MOTION_EVENT)  // mouse or pen moved
-    {
+    if (event.type == MOTION_EVENT) {  // mouse or pen moved
+        // Update cursor
+        XournalppCursor* cursor = xournal->view->getCursor();
+        cursor->setInvisible(false);
+        cursor->updateCursor();
+        // Check if pressure is in possible range. This is a bug of the hardware (there are such devices!)
+        if (event.pressure <= 0.0 && this->inputRunning) {
+            if (event.pressure == 0.0) {
+                // end action (this is needed as some buggy drivers sometimes don't send the release event)
+                if (this->eventsToIgnore < 0) {
+                    this->actionEnd(event);
+                } else {
+                    this->eventsToIgnore = -1;
+                }
+                this->deviceClassPressed = false;
+                return true;
+            } else if (this->inputContext->getSettings()->isPressureSensitivity()) {
+                // discard motion events with negative pressures caused by glitches of drivers
+                // this will also prevent a stylus without pressure sensitivity to draw with pressure sensitivity on
+                // g_message("Discard impossible event with negative pressure - check pressure sensitivity setting, can
+                // also be a sign of bugged hardware or drivers");
+                return true;
+            }
+        }
+        // Trigger normal motion action
         if (this->eventsToIgnore > 0) {
             this->eventsToIgnore--;
         } else if (this->eventsToIgnore == 0) {
@@ -64,9 +93,6 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
         } else {
             this->actionMotion(event);
         }
-        XournalppCursor* cursor = xournal->view->getCursor();
-        cursor->setInvisible(false);
-        cursor->updateCursor();
     }
 
 
@@ -74,7 +100,7 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
     if ((event.type == ENTER_EVENT || event.type == LEAVE_EVENT) && this->deviceClassPressed && this->lastEvent) {
         if (std::abs(event.relativeX - lastEvent.relativeX) > 100 ||
             std::abs(event.relativeY - lastEvent.relativeY) > 100) {
-            g_message("Discard impossible event - this is a sign of bugged hardware or drivers");
+            g_message("Discard impossible leave/enter event - this is a sign of bugged hardware or drivers");
             return true;
         }
     }
