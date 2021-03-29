@@ -61,10 +61,11 @@ stages:
             parameters:
               build_type: 'Debug'
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
+              generation_path: '/Users/xournal-dev'
           - bash: |
-              export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
-              install_name_tool -add_rpath /Users/git-bin/gtk/inst/lib/. test/test-loadHandler
-              install_name_tool -add_rpath /Users/git-bin/gtk/inst/lib/. test/test-util
+              export PATH="$HOME/.local/bin:/Users/xournal-dev/gtk/inst/bin:$PATH"
+              install_name_tool -add_rpath /Users/xournal-dev/gtk/inst/lib/. test/test-loadHandler
+              install_name_tool -add_rpath /Users/xournal-dev/gtk/inst/lib/. test/test-util
               CI=true ctest --verbose
             workingDirectory: ./build
             displayName: 'Run tests'

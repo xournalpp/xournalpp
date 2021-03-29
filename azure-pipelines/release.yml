@@ -110,9 +110,10 @@ stages:
           - template: steps/build_mac.yml
             parameters:
               build_type: 'RelWithDebInfo'
+              generation_path: '/Users/xournal-dev'
           - bash: |
-              export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
-              ./build-app.sh /Users/git-bin/gtk
+              export PATH="$HOME/.local/bin:/Users/xournal-dev/gtk/inst/bin:$PATH"
+              ./build-app.sh /Users/xournal-dev/gtk
             workingDirectory: ./mac-setup
             displayName: 'Create App'
           - task: PublishPipelineArtifact@0
