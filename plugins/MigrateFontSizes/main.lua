@@ -40,6 +40,7 @@ function showDialog()
   end
   ui.spbtOldDpi:set_value(currDpi)
   ui.lblCurrentDpi:set_text(app.getDisplayDpi())
+  ui.spbtScaleFactor:set_value(currDpi/72)
 
 -- Connect actions
   function ui.btApply.on_clicked()
