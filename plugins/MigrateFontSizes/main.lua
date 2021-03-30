@@ -3,9 +3,6 @@ function initUi()
   app.registerUi({["menu"] = "Migrate font sizes with factor displayDPI / 72", ["callback"] = "migrate"});
   app.registerUi({["menu"] = "Show font size migration dialog", ["callback"] = "showDialog"});
 
-  lgiInstallPaths = "/usr/share/lua/5.3/?.lua; /usr/local/share/lua/5.3/?.lua" -- change this if your lgi.lua file is located in a different directory
-  package.path = package.path .. ";../?.lua;" .. lgiInstallPaths 
-
   sourcePath = debug.getinfo(1).source:match("@?(.*/)")
 end
 
@@ -25,7 +22,7 @@ local currDpi
 function showDialog()
   local hasLgi, lgi = pcall(require, "lgi")
   if not hasLgi then
-    app.msgbox("You need to have the Lua lgi-module installed in order to use the GUI for migrating font sizes. \n\n Also check the lgi module install paths in the file \n\n " .. sourcePath .. "main.lua \n\n Currently \n\n" .. lgiInstallPaths .. "\n\n is specified", {[1]="OK"})
+    app.msgbox("You need to have the Lua lgi-module installed and included in your Lua package path in order to use the GUI for migrating font sizes. \n\n", {[1]="OK"})
     return
   end
 
