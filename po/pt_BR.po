@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-28 17:44+0000\n"
-"PO-Revision-Date: 2021-03-30 21:15\n"
+"PO-Revision-Date: 2021-03-30 22:24\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -553,7 +553,9 @@ msgstr "Exportar ARQUIVO como PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr "Exportar como arquivos de imagem (um arquivo por página)"
+msgstr "Exportar como arquivos de imagem (um arquivo para cada página)\n"
+"                                 Adivinhe o formato de saída pela extensão IMGFILE\n"
+"                                 Formatos suportados: .png, .svg"
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
@@ -775,7 +777,7 @@ msgstr "Camada {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Pré-visualização da pilha de camadas"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -1848,7 +1850,8 @@ msgstr "<b>Ferramentas vazias</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Preencha as configurações de opacidade</b>\n"
+"Selecione a opacidade para a cor de preenchimento"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -1928,7 +1931,7 @@ msgstr "<i>Selecione a ferramenta e as configurações se você pressionar o bot
 
 #: ../ui/settings.glade:1542
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>Alguns dispositivos reportam pressões inesperadamente pequenas ou grandes. Isso pode ser corrigido definindo uma pressão mínima ou dimensionando a pressão relatada pelo dispositivo.</i>"
 
 #: ../ui/settings.glade:2216
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -1962,11 +1965,11 @@ msgstr "<i>Use o gesto de pinça para ampliar as páginas.</i>"
 
 #: ../ui/settings.glade:2505
 msgid "<i>Use the touchscreen like a multi-touch-aware pen (requires new input system).</i>"
-msgstr ""
+msgstr "<i>Use a tela sensível ao toque como uma caneta multitoque (requer um novo sistema de entrada).</i>"
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
+msgstr "<i>Em algumas configurações, os traços das canetas possuem problemas no início. Isso pode ser evitado ignorando os primeiros eventos/pontos traçados quando a caneta toca a tela.</i>"
 
 #: ../ui/settings.glade:2000
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
