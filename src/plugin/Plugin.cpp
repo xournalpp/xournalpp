@@ -166,17 +166,18 @@ void Plugin::addPluginToLuaPath() {
     // get field "path" from table at top of stack (-1)
     lua_getfield(lua.get(), -1, "path");
 
-    // For now: limit the include path to the current plugin folder, for security and compatibility reasons
     // grab path string from top of stack
-    // std::string curPath = lua_tostring(lua, -1);
-    // curPath.append(";");
-    auto curPath = path / "?.lua";
+    std::string luaPath = lua_tostring(lua.get(), -1);
 
-    // get rid of the std::string on the stack we just pushed on line 5
+    // prepend the path of the current plugin
+    auto curPath = this->path / "?.lua";
+    std::string combinedPath = curPath.string() + ";" + luaPath;
+
+    // get rid of the std::string on the stack we just pushed
     lua_pop(lua.get(), 1);
 
     // push the new one
-    lua_pushstring(lua.get(), curPath.string().c_str());
+    lua_pushstring(lua.get(), combinedPath.c_str());
 
     // set the field "path" in table at -2 with value at top of stack
     lua_setfield(lua.get(), -2, "path");
