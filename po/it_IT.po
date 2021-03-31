@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-28 17:44+0000\n"
-"PO-Revision-Date: 2021-03-28 17:45\n"
+"PO-Revision-Date: 2021-03-31 18:03\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -472,7 +472,7 @@ msgstr "Documento da salvataggio d'emergenza"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "Abilita la sensibilità della pressione o l'inferenza della pressione per modificare questa impostazione!"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
@@ -533,7 +533,7 @@ msgstr "Errore: {1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "Errore: {1} non è un file normale. Controlla le impostazioni del tuo modello LaTeX. "
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
@@ -547,7 +547,7 @@ msgstr "Il Log di errore non può essere eliminato. Devi farlo manualmente.\n"
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Esporta FILE come PDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
