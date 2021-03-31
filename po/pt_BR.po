@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-28 17:44+0000\n"
-"PO-Revision-Date: 2021-03-31 19:06\n"
+"PO-Revision-Date: 2021-03-31 20:13\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -584,7 +584,8 @@ msgstr "Exportar sem plano de fundo\n"
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Exportar sem configurar\n"
+"                                 O arquivo exportado não tem nenhum papel configurado\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
@@ -1708,15 +1709,15 @@ msgstr "% maior do que a distância inicial entre os dois toques."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4747
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:547
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1778,19 +1779,19 @@ msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
-msgstr ""
+msgstr "0,00"
 
 #: ../ui/settings.glade:1714
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5360
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
@@ -2171,7 +2172,7 @@ msgstr "Ícone do cursor para caneta"
 
 #: ../ui/settings.glade:1193
 msgid "Cusp detection"
-msgstr ""
+msgstr "Detecção de cúspide (bicos)"
 
 #: ../ui/settings.glade:2332
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2679,7 +2680,7 @@ msgstr "Sem Ícone"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "Sem linhas"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:207
 #: ../ui/settings.glade:224
@@ -2814,7 +2815,7 @@ msgstr "Intervalo"
 
 #: ../ui/settings.glade:4718
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "Renderizar novamente quando o zoom da página mudar por mais de "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2943,7 +2944,8 @@ msgstr "Mostrar barra de rolagem vertical no lado esquerdo"
 #: ../ui/settings.glade:891
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "Traços mais lentos são associados a uma pressão maior do que os traços mais rápidos, se a informação de pressão estiver ausente.\n\n"
+"<i>Este recurso pode ser útil para dispositivos sem sensibilidade à pressão. Por exemplo, um mouse ou tela sensível ao toque.</i>"
 
 #: ../ui/settings.glade:2865
 msgctxt "stylus cursor uses a small dot"
@@ -2968,7 +2970,7 @@ msgstr "Padrão"
 
 #: ../ui/settings.glade:2425
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "Iniciar ampliação após uma distância "
 
 #: ../ui/settings.glade:5019 ../ui/settings.glade:5077
 msgid "Storage Folder"
@@ -2992,7 +2994,7 @@ msgstr "B_arras de Ferramentas"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "Configurações do arquivo modelo"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -3004,11 +3006,11 @@ msgstr "Teste"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "Testar configuração"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "Teste se a configuração atual é válida executando o comando de geração LaTeX no arquivo de modelo global com uma fórmula de teste."
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
@@ -3016,19 +3018,19 @@ msgstr "Fonte do Texto..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "O arquivo LaTeX para usar como modelo para a ferramenta LaTeX."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "A cor atual da Ferramenta de Texto no formato hexadecimal RGB."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "Os seguintes textos serão substituídas no arquivo modelo global quando estiver executando a ferramenta LaTeX:"
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "A fórmula do modo de matemática digitada na ferramenta LaTeX."
 
 #: ../ui/settings.glade:3802
 msgid "The unit of the ruler is cm"
@@ -3061,15 +3063,15 @@ msgstr "Tente selecionar o objeto primeiro; se nada for selecionado, então most
 
 #: ../ui/settings.glade:4442
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Usar alinhamento para formas reconhecidas"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "Use o tamanho da página atual ao invés do tamanho da página acima."
 
 #: ../ui/settings.glade:2524
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Use dois dedos para mover ou dar zoom e um dedo para usar a ferramenta selecionada."
 
 #: ../ui/settings.glade:4087
 msgid "Usually 0 or 1"
@@ -3094,12 +3096,14 @@ msgstr "Visualizar"
 #: ../ui/settings.glade:2419
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Ao desenhar com toque, gestos com dois dedos, destinados a mover a visualização, podem gerar um zoom, causando problemas de desempenho. \n"
+"Esta configuração pode tornar mais fácil desenhar com toque. "
 
 #: ../ui/settings.glade:4715
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "Quando aumentada o zoom em um PDF de alta resolução, cada nova renderização pode levar muito tempo. Configurando um valor alto faz com que essas novas renderizações ocorram com menos frequência.\n\n"
+"Configure em 0% para sempre renderizar quando aplicado zoom."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
