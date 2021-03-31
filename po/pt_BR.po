@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-28 17:44+0000\n"
-"PO-Revision-Date: 2021-03-30 22:24\n"
+"PO-Revision-Date: 2021-03-31 19:06\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -874,7 +874,8 @@ msgstr "OK"
 #: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exporte apenas as páginas especificadas no DOMÍNIO (ex: \"2-3,5,7-\")\n"
+"                                 Sem efeito sem -p/--create-pdf ou -i/--create-img"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -1999,11 +2000,11 @@ msgstr "Adicione um espaço vertical adicional de"
 
 #: ../ui/settings.glade:4263
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "Após redimensionar uma seleção, a largura da linha de todos os traços será a mesma de antes da operação de redimensionamento. "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Todos"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -2182,11 +2183,11 @@ msgstr "Tema Escuro (requer reinicialização)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr ""
+msgstr "Zona morta"
 
 #: ../ui/settings.glade:1034
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Raio da zona morta"
 
 #: ../ui/settings.glade:620
 msgid "Default Save Name"
@@ -2253,7 +2254,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Arrastar para a ESQUERDA do ponto inicial funciona como se a tecla shift estivesse sendo pressionada.\n"
+"\t    Arrastar para CIMA funciona como se a tecla Control estivesse sendo pressionada.\n\n"
+"            Raio de Determinação: Raio no qual modificadores serão travados até o desenho acabar.\n\n"
+"\t    <i>Útil para operar sem teclado.</i>"
 
 #: ../ui/settings.glade:4163
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2271,11 +2275,11 @@ msgstr "Arraste e solte componentes daqui para as barras de ferramentas e vice-v
 
 #: ../ui/settings.glade:1064
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr ""
+msgstr "Arraste: Se o valor for muito pequeno, as oscilações indesejadas podem aparecer. Se o valor for muito alto, não haverá estabilização."
 
 #: ../ui/settings.glade:1076
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr ""
+msgstr "Arraste: Se o valor for muito pequeno, oscilações indesejadas podem aparecer. Se o valor for muito alto, não haverá estabilização."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
@@ -2323,7 +2327,7 @@ msgstr "Habilitar salvamento automático"
 
 #: ../ui/settings.glade:900
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Ativar Inferência de Pressão <i>(Adivinhe a pressão pela velocidade de desenho quando a pressão, fornecida pelo dispositivo, não estiver disponível)</i>"
 
 #: ../ui/settings.glade:1507
 msgid "Enable Pressure Sensitivity"
@@ -2343,7 +2347,7 @@ msgstr "Habilitar reconhecimento interno da mão"
 
 #: ../ui/settings.glade:2519
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Ativar desenho pelo toque"
 
 #: ../ui/settings.glade:2400
 msgid "Enable zoom gestures (requires restart)"
@@ -2371,12 +2375,12 @@ msgstr "Exportar como..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Exportar camadas progressivamente"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Exportar o documento sem qualquer plano de fundo (Nenhum) ou apenas com fundos PDF e imagem (Sem linhas) ou com todos os tipos de planos de fundo (Todos)."
 
 #: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
@@ -2384,7 +2388,7 @@ msgstr "Fi_ll"
 
 #: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
-msgstr ""
+msgstr "Opacidade do preenchimento"
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
@@ -2500,7 +2504,7 @@ msgstr "Quão curto (tempo) E...\n\n"
 
 #: ../ui/settings.glade:4446
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "Se ativado, as formas que foram reconhecidas pelo reconhecedor de formas serão encaixados na grade automaticamente. Isto pode levar a resultados inesperados, se você tiver ativado o reconhecedor de formas ao escrever."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
