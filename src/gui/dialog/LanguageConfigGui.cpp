@@ -20,7 +20,8 @@
 #ifdef __APPLE__
 #include "Stacktrace.h"
 #undef PACKAGE_LOCALE_DIR
-const char* PACKAGE_LOCALE_DIR = (Stacktrace::getExePath() / "../Resources/share/locale").c_str();
+fs::path p = Stacktrace::getExePath() / "../Resources/share/locale/";
+const char* PACKAGE_LOCALE_DIR = p.c_str();
 #endif
 
 LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings):
@@ -38,9 +39,7 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
                 availableLocales.push_back(d.path().filename().u8string());
             }
         }
-    } catch (fs::filesystem_error const& e) {
-        g_warning("%s", e.what());
-    }
+    } catch (fs::filesystem_error const& e) { g_warning("%s", e.what()); }
     std::sort(availableLocales.begin(), availableLocales.end());
 
     // No pot file for English
