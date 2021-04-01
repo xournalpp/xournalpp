@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-28 17:44+0000\n"
+"POT-Creation-Date: 2021-04-01 09:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -871,7 +871,7 @@ msgstr ""
 msgid "Normal drawing"
 msgstr ""
 
-#: ../src/plugin/Plugin.cpp:232 ../src/plugin/Plugin.cpp:248
+#: ../src/plugin/Plugin.cpp:233 ../src/plugin/Plugin.cpp:249
 msgid "OK"
 msgstr ""
 
