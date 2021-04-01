@@ -53,6 +53,10 @@
     ${prefix}/share/locale
   </translations>
 
+  <translations  name="xournalpp">
+    ${prefix}/share/locale
+  </translations>
+
 
   <!-- Data to copy in, usually Glade/UI files, images, sounds files
        etc. The destination inside the bundle can be specified if the

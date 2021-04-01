@@ -172,18 +172,18 @@ set(XGETTEXT_OPTIONS_DEFAULT
   "--from-code=UTF-8"
 )
 set(XGETTEXT_VALA_OPTIONS_DEFAULT
-  "--language" "C"
+  "--language=C"
   "--keyword=_"
   "--keyword=N_"
   "--keyword=C_:1c,2"
   "--keyword=NC_:1c,2"
 )
 set(XGETTEXT_GLADE_OPTIONS_DEFAULT
-  "--language" "Glade"
+  "--language=Glade"
   "--omit-header"
 )
 set(XGETTEXT_INTLTOOL_OPTIONS
-  "--language" "C"
+  "--language=C"
   "--keyword=N_:1"
 )
 set(_INTLTOOL_DESKTOPFILES)

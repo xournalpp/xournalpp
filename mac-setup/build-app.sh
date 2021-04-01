@@ -58,16 +58,6 @@ echo "Copy UI"
 cp -rp ../ui ./Xournal++.app/Contents/Resources/
 sed -i -e 's/GDK_CONTROL_MASK/GDK_META_MASK/g' ./Xournal++.app/Contents/Resources/ui/main.glade
 
-for locale in */; do
-  if [ -f "$1/inst/share/locale/$locale/LC_MESSAGES/xournalpp.mo" ]; then
-    echo "Copy locale $locale"
-    mkdir -p setup/share/locale/"$locale"/LC_MESSAGES
-
-    # Xournal Translation
-    cp ../build/po/"$locale".gmo ./Xournal++.app/Contents/Resources/share/locale/"$locale"/LC_MESSAGES/xournalpp.mo
-  fi
-done
-
 echo "Create zip"
 zip -r Xournal++.zip Xournal++.app
 
