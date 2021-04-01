@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-28 17:44+0000\n"
-"PO-Revision-Date: 2021-03-31 20:13\n"
+"POT-Creation-Date: 2021-04-01 09:47+0000\n"
+"PO-Revision-Date: 2021-04-01 10:34\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -868,7 +868,7 @@ msgstr "Nenhuma página de PDF disponível para ser adicionada. Primeiro você p
 msgid "Normal drawing"
 msgstr "Desenho normal"
 
-#: ../src/plugin/Plugin.cpp:232 ../src/plugin/Plugin.cpp:248
+#: ../src/plugin/Plugin.cpp:233 ../src/plugin/Plugin.cpp:249
 msgid "OK"
 msgstr "OK"
 
