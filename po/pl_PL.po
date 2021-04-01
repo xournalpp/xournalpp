@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-01 09:47+0000\n"
-"PO-Revision-Date: 2021-04-01 18:14\n"
+"PO-Revision-Date: 2021-04-01 19:13\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -2254,7 +2254,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Przeciągnięcie w LEWO od punktu startowego zachowuje się jak przytrzymanie klawisza Shift.\n"
+"\tPrzeciągnięcie w górę działa tak, jakby był trzymany klawisz Control.\n\n"
+"\tPromień detekcji: Promień, w którym modyfikatory zostaną zachowane do momentu zakończenia rysowania.\n\n"
+"\t<i>Przydatne do pracy bez klawiatury.</i>"
 
 #: ../ui/settings.glade:4163
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2272,11 +2275,11 @@ msgstr "Przeciągnij i upuść Komponenty na paski narzędzi i z powrotem."
 
 #: ../ui/settings.glade:1064
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr ""
+msgstr "Przeciągnięcie: Jeśli wartość jest zbyt mała, mogą pojawić się oscylacje. Jeśli wartość jest zbyt wysoka, nie będzie stabilizacji."
 
 #: ../ui/settings.glade:1076
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr ""
+msgstr "Przeciągnięcie: Jeśli wartość jest zbyt mała, mogą pojawić się oscylacje. Jeśli wartość jest zbyt niska, nie będzie stabilizacji."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
@@ -2389,7 +2392,7 @@ msgstr "Krycie wypełnienia"
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Dokończ pociągnięcie"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
@@ -2417,7 +2420,7 @@ msgstr "Przyrost"
 
 #: ../ui/settings.glade:1128 ../ui/settings.glade:1148
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Parametr Gaussa: im wyższy, tym większa stabilizacja i tym większe opóźnienie między kursorem a końcówką do malowania."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
@@ -2525,7 +2528,7 @@ msgstr "Jakość obrazu"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
-msgstr ""
+msgstr "Bezwładność"
 
 #: ../ui/settings.glade:5132
 msgid "Input Device"
@@ -2545,7 +2548,7 @@ msgstr "Stabilizacja kursora"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "Stabilizacja wejściowa może stworzyć przerwę na końcu pociągnięcia. Jeśli włączone, ta przerwa jest wypełniana."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2609,7 +2612,7 @@ msgstr "Masa"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Masa: im większa masa, tym większa bezwładność i stabilizacja"
 
 #: ../ui/settings.glade:4564
 msgid "Max Length (mm)"
@@ -2762,7 +2765,7 @@ msgstr "Menedżer _wtyczek"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Zmiany wtyczek są stosowane tylko po ponownym uruchomieniu Xournal++"
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
@@ -3074,7 +3077,7 @@ msgstr "Zazwyczaj 0 lub 1"
 
 #: ../ui/settings.glade:213
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Obciążniki Gaussa oparte na prędkości"
 
 #: ../ui/about.glade:101
 msgid "Version"
