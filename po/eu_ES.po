@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-01 09:47+0000\n"
-"PO-Revision-Date: 2021-04-01 10:34\n"
+"PO-Revision-Date: 2021-04-02 21:29\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2767,7 +2767,7 @@ msgstr "Plugin _kudeatzailea"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Plugin aldaketak Xournal++ berrabiarazi ondoren aplikatzen dira"
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
