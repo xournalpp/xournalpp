@@ -219,8 +219,8 @@
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_SAVE_AS" swapped="no"/>
-                            <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                             <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -968,8 +968,8 @@
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_IN" swapped="no"/>
-                            <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -981,8 +981,8 @@
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_OUT" swapped="no"/>
-                            <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -2127,6 +2127,9 @@
                                     <property name="name">tbSelectSidebarPage</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
+                                    <style>
+                                      <class name="inline-toolbar"/>
+                                    </style>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -2161,7 +2164,6 @@
                                 </child>
                                 <style>
                                   <class name="linked"/>
-                                  <class name="inline-toolbar"/>
                                 </style>
                               </object>
                               <packing>
