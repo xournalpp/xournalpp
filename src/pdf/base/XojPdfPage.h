@@ -17,10 +17,12 @@
 
 #include <cairo.h>
 
+#include "Rectangle.h"
 
 class XojPdfRectangle {
 public:
     XojPdfRectangle();
+    XojPdfRectangle(const Rectangle<double>& rect);
     XojPdfRectangle(double x1, double y1, double x2, double y2);
 
 public:
@@ -39,11 +41,19 @@ public:
     virtual double getWidth() = 0;
     virtual double getHeight() = 0;
 
-    virtual void render(cairo_t* cr, bool forPrinting = false) = 0;
+    virtual void render(cairo_t* cr, bool forPrinting = false) = 0; // NOLINT(google-default-arguments)
+
+    /**
+     * @param cr is the target context.
+     * @param region is the region of this page to be rendered.
+     *
+     * Assumes forPrinting = false.
+     */
+    virtual void render(cairo_t* cr, XojPdfRectangle region);
 
     virtual std::vector<XojPdfRectangle> findText(std::string& text) = 0;
 
-    virtual int getPageId() = 0;
+    virtual int getPageId() const = 0;
 
 private:
 };

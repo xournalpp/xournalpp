@@ -329,15 +329,12 @@ public:
     Color getBackgroundColor() const;
     void setBackgroundColor(Color color);
 
-    // Re-render pages if document zoom differs from the last render zoom by the given threshold.
-    double getPDFPageRerenderThreshold() const;
-    void setPDFPageRerenderThreshold(double threshold);
-
     double getTouchZoomStartThreshold() const;
     void setTouchZoomStartThreshold(double threshold);
 
-    int getPdfPageCacheSize() const;
-    [[maybe_unused]] void setPdfPageCacheSize(int size);
+    // Gets maximum size of PDF cache in pixels.
+    size_t getPdfCacheSize() const;
+    [[maybe_unused]] void setPdfCacheSize(size_t size);
 
     unsigned int getPreloadPagesBefore() const;
     void setPreloadPagesBefore(unsigned int n);
@@ -834,15 +831,10 @@ private:
     std::string presentationHideElements;
 
     /**
-     *  The count of pages which will be cached
+     *  The number of pixels that will be stored in the PDF cache.
+     *  (number of bytes stored in the cache / 4).
      */
-    int pdfPageCacheSize{};
-
-    /**
-     *  Percentage by which the page's zoom must change
-     * for PDF pages to re-render while zooming.
-     */
-    double pageRerenderThreshold{};
+    size_t pdfCacheSize_px{};
 
     /**
      * Don't start zooming with touch until the difference in distances between the

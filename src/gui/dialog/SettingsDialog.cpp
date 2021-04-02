@@ -434,9 +434,6 @@ void SettingsDialog::load() {
     GtkWidget* spDrawDirModsRadius = get("spDrawDirModsRadius");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spDrawDirModsRadius), settings->getDrawDirModsRadius());
 
-    GtkWidget* spReRenderThreshold = get("spReRenderThreshold");
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spReRenderThreshold), settings->getPDFPageRerenderThreshold());
-
     GtkWidget* spTouchZoomStartThreshold = get("spTouchZoomStartThreshold");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spTouchZoomStartThreshold), settings->getTouchZoomStartThreshold());
 
@@ -814,20 +811,16 @@ void SettingsDialog::save() {
     settings->setDrawDirModsRadius(drawDirModsRadius);
 
     GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
-    int strokeIgnoreTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime));
+    int strokeIgnoreTime = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime)));
     GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
     double strokeIgnoreLength = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength));
     GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
-    int strokeSuccessiveTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
+    int strokeSuccessiveTime = static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime)));
     settings->setStrokeFilter(strokeIgnoreTime, strokeIgnoreLength, strokeSuccessiveTime);
 
     GtkWidget* spTouchZoomStartThreshold = get("spTouchZoomStartThreshold");
     double zoomStartThreshold = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spTouchZoomStartThreshold));
     settings->setTouchZoomStartThreshold(zoomStartThreshold);
-
-    GtkWidget* spReRenderThreshold = get("spReRenderThreshold");
-    double rerenderThreshold = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spReRenderThreshold));
-    settings->setPDFPageRerenderThreshold(rerenderThreshold);
 
 
     settings->setDisplayDpi(dpi);
@@ -896,7 +889,7 @@ void SettingsDialog::save() {
 
     settings->setAudioGain(static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain")))));
     settings->setDefaultSeekTime(
-            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
+            static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
     for (DeviceClassConfigGui* deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui->saveSettings();

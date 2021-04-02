@@ -57,8 +57,10 @@ void PreviewJob::drawBackgroundPdf(Document* doc) {
     int pgNo = this->sidebarPreview->page->getPdfPageNr();
     XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
-    PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom,
-                      this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
+    Rectangle<double> fullPage{0.0, 0.0, this->sidebarPreview->page->getWidth(),
+                               this->sidebarPreview->page->getHeight()};
+    PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom, fullPage.width,
+                      fullPage.height, fullPage);
 }
 
 void PreviewJob::drawPage() {

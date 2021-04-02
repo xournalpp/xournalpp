@@ -24,14 +24,14 @@ public:
     PopplerGlibPage& operator=(const PopplerGlibPage& other);
 
 public:
-    virtual double getWidth();
-    virtual double getHeight();
+    virtual double getWidth() override;
+    virtual double getHeight() override;
 
-    virtual void render(cairo_t* cr, bool forPrinting = false);  // NOLINT(google-default-arguments)
+    virtual void render(cairo_t* cr, bool forPrinting) override;
 
-    virtual std::vector<XojPdfRectangle> findText(std::string& text);
+    virtual std::vector<XojPdfRectangle> findText(std::string& text) override;
 
-    virtual int getPageId();
+    virtual int getPageId() const override;
 
 private:
     PopplerPage* page;
