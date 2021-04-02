@@ -13,6 +13,7 @@
 
 #include <functional>
 #include <memory>
+#include <mutex>
 
 #include <cairo.h>
 
@@ -36,7 +37,7 @@ public:
     struct CacheParams {
         /**
          * The size (in rendered pixels) of each node in the tree.
-         * This should be a square number.
+         * Nodes may have a size somewhat lesser than this.
          */
         size_t entrySize{512 * 512};
 
@@ -54,6 +55,12 @@ public:
         size_t maxSize{static_cast<size_t>(-1)};
 
         /**
+         * This should be true iff fewer calls to the given render function
+         * are more important than a smaller total area rendered.
+         */
+        bool minimizeCallsToRender{true};
+
+        /**
          * See {@link QuadTreeCache::DecachePolicy}
          */
         DecachePolicy uncachePolicy{DecachePolicy::VIEWPORT_THEN_LRU};
@@ -68,7 +75,8 @@ public:
      *  This function is used to populate the cache with data. Call damage(Rect)
      *  to force a region's re-render.
      * @param pageRect Gives the region of pixels managed by this in cache/renderFn-coordinates.
-     * @param cacheSettings Specifies cache behavior.
+     * @param cacheSettings Specifies cache behavior. Use {@link #setSettings} to change settings
+     *  after construction.
      */
     QuadTreeCache(RenderFn renderFn, const Rect& pageRect, const CacheParams& cacheSettings);
     ~QuadTreeCache();
@@ -102,9 +110,41 @@ public:
      */
     void clear();
 
+    /**
+     * @param other contributes to the total number of pixels
+     *   stored in this.
+     */
+    void constrainSizeWith(QuadTreeCache& other);
+
+public:
+    /**
+     * @param cacheSettings new settings for the cache. Copied before storing in this.
+     *
+     * If this shares settings with another cache, the other cache's settings are also
+     * updated.
+     */
+    void updateSettings(const CacheParams& cacheSettings);
+
+    /**
+     * @return The number of pixels stored in this cache, including linked caches.
+     */
+    size_t getCacheSize() const;
+
 private:
     CacheParams cacheSettings_;
 
+    struct CacheState;
+    std::shared_ptr<CacheState> state_;
+
     class Node;
     std::unique_ptr<Node> root_;
+
+    // Operations on nodes may not be thread safe.
+    // Locked before such operations.
+    std::mutex mutex_;
+
+    // Amount the cache's source was scaled by for the
+    // last call to render, or 1.0 if no renders have
+    // occurred.
+    double lastRenderZoom_;
 };

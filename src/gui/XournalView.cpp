@@ -35,7 +35,7 @@ std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t max
 
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
-    this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
+    this->cache = new PdfCache(control->getSettings()->getPdfCacheSize());
 
     registerListener(control);
 
@@ -472,8 +472,6 @@ void XournalView::zoomChanged() {
     XojPageView* view = getViewFor(currentPage);
 
     ZoomControl* zoom = control->getZoomControl();
-    this->cache->setAnyZoomChangeCausesRecache(false);  // We're zooming -- no need for repeated re-renders.
-    this->cache->setRefreshThreshold(control->getSettings()->getPDFPageRerenderThreshold());
 
     if (!view) {
         return;
@@ -695,7 +693,7 @@ void XournalView::documentChanged(DocumentChangeType type) {
     }
     viewPages.clear();
 
-    this->cache->clearCache();
+    this->cache->clear();
 
     Document* doc = control->getDocument();
     doc->lock();

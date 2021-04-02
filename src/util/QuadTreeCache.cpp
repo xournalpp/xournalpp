@@ -5,13 +5,15 @@
 #include <cassert>
 #include <chrono>
 #include <cmath>
+#include <functional>
+#include <iostream>
 #include <memory>
 
 #include <cairo.h>
 
 using Timestamp = std::chrono::time_point<std::chrono::steady_clock>;
 
-struct CacheState {
+struct QuadTreeCache::CacheState {
     size_t cacheSize = 0;
 };
 
@@ -59,6 +61,12 @@ public:
      */
     size_t clear();
 
+    /**
+     * @return The number of pixels stored in this (including
+     *   this' children).
+     */
+    size_t getSize() const;
+
 protected:
     enum QuadIdentifier { TOP_LEFT = 0, TOP_RIGHT = 1, BOT_LEFT = 2, BOT_RIGHT = 3 };
 
@@ -72,7 +80,7 @@ protected:
     /** @return true iff this has associated pixels. */
     bool isEmpty() const;
 
-private:
+protected:
     /**
      * Splits this into four nodes. Does nothing if already split.
      */
@@ -111,6 +119,12 @@ private:
     size_t cleanupByTimestamp(size_t quota);
 
     /**
+     * @return The number of pixels that would need to be cached for a full
+     * re-render of this.
+     */
+    size_t getUncachedPx() const;
+
+    /**
      * @brief Clears the rendered image associated directly with this node (and not
      * its children). Does nothing if rendered_ == nullptr.
      * @returns The number of pixels freed by freeing the rendering associated with
@@ -125,9 +139,12 @@ private:
     bool hasChildren() const;
 
     /**
-     * @return the number of pixels that would have to be cached for a full render of this.
+     * @brief Populates this' and this' childrens' cache from a render.
+     * @param render The render's result.
+     * @param subregion is the region of render we can use to populate this' cache.
+     *        This must have size and position a multiple of (internalWidth_, internalHeight_).
      */
-    size_t getUncachedPx() const;
+    void cacheFrom(cairo_surface_t* render, Rectangle<size_t> subregion);
 
     /**
      * @param childIdx the index of the child \in [0, 4).
@@ -151,6 +168,27 @@ private:
      * Get children of this in increasing order by timestamp.
      */
     std::array<QuadIdentifier, 4> getChildrenByTimestamp() const;
+
+    /**
+     * @param internalToDst_ratio is how much this' internal surface
+     *        must be scaled to fit the destination for the render.
+     * @return Maximum recursive depth from this for which a call
+     *  to renderFn_ will occur if re-rendered.
+     *
+     * For example, if this node were to force a call to renderFn_,
+     * and none of its children were to do the same, the depth would be zero.
+     *
+     * If this node only had one child force a call to renderFn_, the depth
+     * would be 1.
+     */
+    size_t getRenderCallDepth(double internalToDst_ratio) const;
+
+    /**
+     * @param renderForDepth How far down the quad tree we should include in the render.
+     * @return Full surface containing a render of this.
+     * The caller is responsible for freeing the resultant cairo_surface_t*.
+     */
+    cairo_surface_t* getRenderFromSourceFn(size_t renderForDepth);
 
 private:
     // Renders pixels from the cache's source.
@@ -187,27 +225,61 @@ private:
 
 QuadTreeCache::QuadTreeCache(RenderFn renderFn, const Rect& pageRect, const CacheParams& cacheSettings):
         cacheSettings_{cacheSettings},
-        root_{std::make_unique<Node>(std::move(renderFn), pageRect, &cacheSettings_, std::make_shared<CacheState>())} {}
+        state_{std::make_shared<CacheState>()},
+        root_{std::make_unique<Node>(std::move(renderFn), pageRect, &cacheSettings_, state_)},
+        lastRenderZoom_{1.0} {}
 
 // We need to define a destructor so root_ can delete itself
 // (QuadTreeCache::Node is forward-declared in QuadTreeCache.h).
 QuadTreeCache::~QuadTreeCache() {}
 
-void QuadTreeCache::damage(const Rect& region) { root_->damage(region); }
+void QuadTreeCache::updateSettings(const CacheParams& cacheSettings) {
+    std::lock_guard lk{mutex_};
+
+    cacheSettings_ = cacheSettings;
+    root_->cleanup(lastRenderZoom_);
+}
+
+size_t QuadTreeCache::getCacheSize() const {
+    size_t size = state_->cacheSize;
+    return size;
+}
+
+void QuadTreeCache::constrainSizeWith(QuadTreeCache& other) {
+    if (&other == this) {
+        return;
+    }
+
+    std::scoped_lock lk{other.mutex_, mutex_};
+
+    other.state_->cacheSize += state_->cacheSize;
+    state_ = other.state_;
+}
+
+void QuadTreeCache::damage(const Rect& region) {
+    std::lock_guard lk{mutex_};
+    root_->damage(region);
+}
 
 void QuadTreeCache::render(cairo_t* cr, const Rect& srcRegion, const Rect& dstRegion) {
     if (srcRegion.area() == 0.0 || dstRegion.area() == 0.0) {
         return;
     }
 
+    std::lock_guard lk{mutex_};
+
     root_->render(cr, srcRegion, dstRegion);
 
     double currentZoom = dstRegion.width / srcRegion.width;
     root_->cleanup(currentZoom);
+    lastRenderZoom_ = currentZoom;
 }
 
-void QuadTreeCache::clear() { root_->clear(); }
+void QuadTreeCache::clear() {
+    std::lock_guard lk{mutex_};
 
+    root_->clear();
+}
 
 QuadTreeCache::Node::Node(RenderFn fn, const Rect& region, const CacheParams* cacheSettings,
                           std::shared_ptr<CacheState> cacheState):
@@ -216,13 +288,16 @@ QuadTreeCache::Node::Node(RenderFn fn, const Rect& region, const CacheParams* ca
         cacheSettings_{cacheSettings},
         cacheState_{cacheState},
         children_{nullptr, nullptr, nullptr, nullptr} {
-    double ratioSquared = static_cast<double>(cacheSettings_->entrySize) / region_.width / region_.height;
+    double ratioSquared = region_.width * region_.height / static_cast<double>(cacheSettings_->entrySize);
     internalToSrc_ratio_ = std::sqrt(ratioSquared);
+
+    std::cout << "region: " << region_.width << "," << region_.height << std::endl;
 
     internalWidth_ = static_cast<size_t>(region_.width / internalToSrc_ratio_);
     internalHeight_ = static_cast<size_t>(region_.height / internalToSrc_ratio_);
 
-    assert(internalWidth_ * internalHeight_ == cacheSettings_->entrySize);
+    std::cout << "(" << internalWidth_ << ", " << internalHeight_ << ") to " << cacheSettings_->entrySize << std::endl;
+    assert(internalWidth_ * internalHeight_ <= cacheSettings_->entrySize);
 
     updateTimestamp();
 }
@@ -239,7 +314,7 @@ bool QuadTreeCache::Node::render(cairo_t* cr, const Rect& srcRegion, const Rect&
     assert(std::abs(srcRegion.height * srcToDst_ratio - dstRegion.height) < 0.1);
 
     // Does srcRegion overlap with this?
-    if (!srcInThis.has_value()) {
+    if (!srcInThis) {
         return false;
     }
 
@@ -264,7 +339,7 @@ bool QuadTreeCache::Node::render(cairo_t* cr, const Rect& srcRegion, const Rect&
         trimmedDstRegion.height += dheight_src * srcToDst_ratio;
     }
 
-    if (!renderFromSelf(cr, trimmedSrcRegion, trimmedDstRegion)) {
+    if (renderFromSelf(cr, trimmedSrcRegion, trimmedDstRegion)) {
         return true;
     }
 
@@ -273,9 +348,77 @@ bool QuadTreeCache::Node::render(cairo_t* cr, const Rect& srcRegion, const Rect&
     // Ensure we have children.
     divide();
 
-    for (const auto& child: children_) { child->render(cr, trimmedSrcRegion, trimmedDstRegion); }
+    for (const auto& child: children_) { child->render(cr, srcRegion, dstRegion); }
 
     return true;
+}
+
+cairo_surface_t* QuadTreeCache::Node::getRenderFromSourceFn(size_t renderForDepth) {
+    size_t renderMultiplier = static_cast<size_t>(std::pow(2, renderForDepth) / 2);
+    size_t surfWidth = internalWidth_ * renderMultiplier;
+    size_t surfHeight = internalHeight_ * renderMultiplier;
+
+    //     surfWidth * surfToSrc_ratio  := source rectangle width (which is rect_.width)
+    // and surfHeight * surfToSrc_ratio := rect_.height
+    //
+    // By definition, internalWidth_ * internalToSrc_ratio_ = rect_.width, so,
+    double surfToSrc_ratio = internalToSrc_ratio_ / static_cast<double>(renderMultiplier);
+
+    cairo_surface_t* rendered =
+            cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(surfWidth), static_cast<int>(surfHeight));
+    cairo_t* cr = cairo_create(rendered);
+
+    cairo_scale(cr, 1.0 / surfToSrc_ratio, 1.0 / surfToSrc_ratio);
+    cairo_translate(cr, -region_.x, -region_.y);
+    renderFn_(cr, region_);
+    cairo_destroy(cr);
+
+    cacheFrom(rendered, {0, 0, surfWidth, surfHeight});
+    return rendered;
+}
+
+void QuadTreeCache::Node::cacheFrom(cairo_surface_t* src, Rectangle<size_t> renderRect) {
+    // Recurse.
+    if (renderRect.width > internalWidth_ && renderRect.height > internalHeight_) {
+        // We need children to recurse!
+        divide();
+
+        size_t childRectWidth = renderRect.width / 2;
+        size_t childRectHeight = renderRect.height / 2;
+
+        for (size_t i = 0; i < children_.size(); i++) {
+            Rectangle<size_t> childRenderRect{0, 0, childRectWidth, childRectHeight};
+
+            if (i == TOP_RIGHT || i == BOT_RIGHT)
+                childRenderRect.x += childRectWidth;
+            if (i == BOT_LEFT || i == BOT_RIGHT)
+                childRenderRect.y += childRectHeight;
+
+            children_[i]->cacheFrom(src, childRenderRect);
+        }
+
+        return;
+    }
+
+    // If we've already rendered, no need to re-render.
+    if (this->rendered_)
+        return;
+
+    // Ensure we aren't adding additional children.
+    clearChildren();
+
+    assert(internalWidth_ == renderRect.width);
+    assert(internalHeight_ == renderRect.height);
+
+    this->rendered_ = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(internalWidth_),
+                                                 static_cast<int>(internalHeight_));
+
+    cairo_t* cr = cairo_create(this->rendered_);
+    cairo_set_source_surface(cr, src, -static_cast<double>(renderRect.x), -static_cast<double>(renderRect.y));
+    cairo_paint(cr);
+    cairo_destroy(cr);
+
+    cacheState_->cacheSize += renderRect.area();
 }
 
 bool QuadTreeCache::Node::renderFromSelf(cairo_t* cr, const Rect& src, const Rect& dst) {
@@ -292,26 +435,20 @@ bool QuadTreeCache::Node::renderFromSelf(cairo_t* cr, const Rect& src, const Rec
     // As such,
     double internalToDst_ratio = internalToSrc_ratio_ * srcToDst_ratio;
 
-    // Don't overscale when rendering.
-    if (internalToDst_ratio > cacheSettings_->maxZoom) {
-        return false;
+    // Get how many children deep we need to render.
+    size_t renderDepth = getRenderCallDepth(internalToDst_ratio);
+
+    if (renderDepth > 0) {
+        clearRendered();
     }
 
     cairo_surface_t* rendered = this->rendered_;
 
     if (!rendered) {
-        rendered = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(internalWidth_),
-                                              static_cast<int>(internalHeight_));
-        cairo_t* cr2 = cairo_create(rendered);
+        rendered = getRenderFromSourceFn(renderDepth);
 
-        cairo_scale(cr2, 1.0 / internalToSrc_ratio_, 1.0 / internalToSrc_ratio_);
-        renderFn_(cr2, region_);
-        cairo_destroy(cr2);
-
-        size_t internalSize = internalWidth_ * internalHeight_;
-        cacheState_->cacheSize += internalSize;
-
-        this->rendered_ = rendered;
+        // Larger renderDepths -> smaller scaling for the (larger) rendered surface.
+        for (size_t i = 1; i < renderDepth; i++) internalToDst_ratio /= 2.0;
     }
 
     // Render!
@@ -339,6 +476,66 @@ bool QuadTreeCache::Node::renderFromSelf(cairo_t* cr, const Rect& src, const Rec
     }
 
     return true;
+}
+
+size_t QuadTreeCache::Node::getRenderCallDepth(double internalToDst_ratio) const {
+    // If we don't need to call render at all,
+    if (rendered_ && internalToDst_ratio < cacheSettings_->maxZoom) {
+        return 0;
+    }
+
+    // Recursive case.
+    if (hasChildren()) {
+        size_t maxDepth = 0;
+
+        for (size_t i = 0; i < children_.size(); i++) {
+            size_t currentDepth = children_[i]->getRenderCallDepth(internalToDst_ratio / 2.0);
+
+            if (currentDepth != 0) {
+                // If non-zero, then we'll need to call render; this branch
+                // causes a render-call, so we need to increment depth.
+                maxDepth = std::max(maxDepth, currentDepth + 1);
+            }
+            // Conversely, if a branch doesn't lead to a render call (currentDepth == 0),
+            // then we shouldn't consider the render call depth to be 1 (we're not adding
+            // 1 to currentDepth).
+        }
+
+        return maxDepth;
+    }
+
+    //  Let m = cacheSettings_->maxZoom, d = internalToDst_ratio,
+    //  s = internalToSrc_ratio, and w_int be internalWidth_ and
+    // h_int be internalHeight_.
+    //  We then have,
+    // w_src/2  w_src/2
+    //  +-------+
+    //  |   |   |
+    //  |   |   | h_src / 2
+    //  |   |   |
+    //  +-------+
+    //  |   |   |
+    //  |   |   | h_src /2
+    //  |   |   |
+    //  +-------+
+    //
+    // Above, we're dividing by 2, but we could subdivide the full box some other number of times.
+    // Let the maximum number of times be k.
+    //
+    // From this, the smallest box has dimensions (w_src / 2**k, h_src / 2**k) and is being mapped onto
+    // (w_dst / 2**k, h_dst / 2**k), so is scaled by s * 1.
+    //
+    // As such, internal space is scaled by d / 2**k (because w_int and h_int are the same for the child
+    // as the parent).
+    //
+    // As such, at maximum, we're scaling by
+    //   m  = d / 2**k
+    // and so,
+    //   m2**k = d
+    //   2**k  = d / m
+    double minRenderCallDepth =
+            std::ceil(std::log2(internalToDst_ratio / cacheSettings_->maxZoom)) + 0.1;  // Force round up.
+    return static_cast<size_t>(minRenderCallDepth);
 }
 
 size_t QuadTreeCache::Node::getUncachedPx() const {
@@ -401,6 +598,7 @@ size_t QuadTreeCache::Node::join() {
     }
 
     cairo_destroy(cr);
+    cacheState_->cacheSize += internalWidth_ * internalHeight_;
 
     assert(bytesFreed > internalWidth_ * internalHeight_);
     bytesFreed -= internalWidth_ * internalHeight_;
@@ -426,8 +624,9 @@ size_t QuadTreeCache::Node::clearChildren() {
 bool QuadTreeCache::Node::hasChildren() const {
     // If one child is null, they all should be.
     // Otherwise, none should be null.
-    assert(children_[TOP_LEFT] == children_[TOP_RIGHT] && children_[BOT_LEFT] == children_[BOT_RIGHT] &&
-           children_[TOP_RIGHT] == children_[BOT_RIGHT]);
+    assert(children_[TOP_LEFT] != nullptr || children_[TOP_LEFT] == children_[TOP_RIGHT] &&
+                                                     children_[BOT_LEFT] == children_[BOT_RIGHT] &&
+                                                     children_[TOP_RIGHT] == children_[BOT_RIGHT]);
 
     return children_[TOP_LEFT] != nullptr;
 }
@@ -589,7 +788,6 @@ size_t QuadTreeCache::Node::cleanupByZoom(size_t quota, double targetZoom) {
 }
 
 void QuadTreeCache::Node::cleanup(double currentZoom) {
-    // TODO: Add a mutex here for thread safety.
     if (cacheState_->cacheSize > cacheSettings_->maxSize) {
         size_t quota = cacheState_->cacheSize - cacheSettings_->maxSize;
 
@@ -637,3 +835,17 @@ size_t QuadTreeCache::Node::cleanupByTimestamp(size_t quota) {
 }
 
 size_t QuadTreeCache::Node::clear() { return clearRendered() + clearChildren(); }
+
+size_t QuadTreeCache::Node::getSize() const {
+    if (!hasChildren()) {
+        if (rendered_ != nullptr) {
+            return internalWidth_ * internalHeight_;
+        }
+
+        return 0;
+    }
+
+    size_t result = 0;
+    for (size_t i = 0; i < children_.size(); i++) { result += children_[i]->getSize(); }
+    return result;
+}
