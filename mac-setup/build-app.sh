@@ -68,6 +68,9 @@ for locale in */; do
   fi
 done
 
+## Fix the calling script in the bundle
+sed -i '' '/export DYLD_LIB.*/d' ./Xournal++.app/Contents/MacOS/xournalpp
+
 echo "Create zip"
 zip -r Xournal++.zip Xournal++.app
 
