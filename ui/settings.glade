@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.38.2 -->
 <interface>
-  <requires lib="gtk+" version="3.18" />
+  <requires lib="gtk+" version="3.18"/>
   <object class="GtkAdjustment" id="adjustmentAudioGain">
     <property name="upper">10</property>
     <property name="value">1</property>
@@ -240,7 +240,7 @@
     <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <property name="type-hint">normal</property>
     <property name="gravity">center</property>
-    <signal name="close" handler="gtk_widget_hide" swapped="no" />
+    <signal name="close" handler="gtk_widget_hide" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox3">
         <property name="visible">True</property>
@@ -781,7 +781,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="can-focus">False</property>
                                             <property name="orientation">vertical</property>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                           </object>
                                           <packing>
@@ -1342,7 +1342,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
                                                     <child>
-                                                      <placeholder />
+                                                      <placeholder/>
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1380,7 +1380,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
                                                     <child>
-                                                      <placeholder />
+                                                      <placeholder/>
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1811,7 +1811,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
                                                     <child>
-                                                      <placeholder />
+                                                      <placeholder/>
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1849,7 +1849,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
                                                     <child>
-                                                      <placeholder />
+                                                      <placeholder/>
                                                     </child>
                                                   </object>
                                                 </child>
@@ -1887,7 +1887,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
                                                     <child>
-                                                      <placeholder />
+                                                      <placeholder/>
                                                     </child>
                                                   </object>
                                                 </child>
@@ -2015,7 +2015,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                           </object>
                                           <packing>
@@ -2173,16 +2173,16 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <placeholder />
+                                                  <placeholder/>
                                                 </child>
                                                 <child>
-                                                  <placeholder />
+                                                  <placeholder/>
                                                 </child>
                                                 <child>
-                                                  <placeholder />
+                                                  <placeholder/>
                                                 </child>
                                                 <child>
-                                                  <placeholder />
+                                                  <placeholder/>
                                                 </child>
                                               </object>
                                               <packing>
@@ -2233,86 +2233,86 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                                             <property name="row-spacing">5</property>
                                                             <property name="column-spacing">5</property>
                                                             <child>
-                                                              <object class="GtkLabel" id="label52">
-                                                                <property name="visible">True</property>
-                                                                <property name="can-focus">False</property>
-                                                                <property name="label" translatable="yes">Enable</property>
-                                                                <property name="xalign">0</property>
-                                                              </object>
-                                                              <packing>
-                                                                <property name="left-attach">0</property>
-                                                                <property name="top-attach">0</property>
-                                                              </packing>
+                                                            <object class="GtkLabel" id="label52">
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">False</property>
+                                                            <property name="label" translatable="yes">Enable</property>
+                                                            <property name="xalign">0</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left-attach">0</property>
+                                                            <property name="top-attach">0</property>
+                                                            </packing>
                                                             </child>
                                                             <child>
-                                                              <object class="GtkLabel" id="label53">
-                                                                <property name="visible">True</property>
-                                                                <property name="can-focus">False</property>
-                                                                <property name="label" translatable="yes">Disable</property>
-                                                              </object>
-                                                              <packing>
-                                                                <property name="left-attach">0</property>
-                                                                <property name="top-attach">1</property>
-                                                              </packing>
+                                                            <object class="GtkLabel" id="label53">
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">False</property>
+                                                            <property name="label" translatable="yes">Disable</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left-attach">0</property>
+                                                            <property name="top-attach">1</property>
+                                                            </packing>
                                                             </child>
                                                             <child>
-                                                              <object class="GtkEntry" id="txtEnableTouchCommand">
-                                                                <property name="name">txtEnableTouchCommand</property>
-                                                                <property name="visible">True</property>
-                                                                <property name="can-focus">True</property>
-                                                                <property name="hexpand">True</property>
-                                                              </object>
-                                                              <packing>
-                                                                <property name="left-attach">1</property>
-                                                                <property name="top-attach">0</property>
-                                                              </packing>
+                                                            <object class="GtkEntry" id="txtEnableTouchCommand">
+                                                            <property name="name">txtEnableTouchCommand</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">True</property>
+                                                            <property name="hexpand">True</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left-attach">1</property>
+                                                            <property name="top-attach">0</property>
+                                                            </packing>
                                                             </child>
                                                             <child>
-                                                              <object class="GtkEntry" id="txtDisableTouchCommand">
-                                                                <property name="name">txtDisableTouchCommand</property>
-                                                                <property name="visible">True</property>
-                                                                <property name="can-focus">True</property>
-                                                                <property name="hexpand">True</property>
-                                                              </object>
-                                                              <packing>
-                                                                <property name="left-attach">1</property>
-                                                                <property name="top-attach">1</property>
-                                                              </packing>
+                                                            <object class="GtkEntry" id="txtDisableTouchCommand">
+                                                            <property name="name">txtDisableTouchCommand</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">True</property>
+                                                            <property name="hexpand">True</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left-attach">1</property>
+                                                            <property name="top-attach">1</property>
+                                                            </packing>
                                                             </child>
                                                             <child>
-                                                              <object class="GtkButton" id="btTestEnable">
-                                                                <property name="label" translatable="yes">Test</property>
-                                                                <property name="name">btTestEnable</property>
-                                                                <property name="visible">True</property>
-                                                                <property name="can-focus">True</property>
-                                                                <property name="receives-default">True</property>
-                                                              </object>
-                                                              <packing>
-                                                                <property name="left-attach">2</property>
-                                                                <property name="top-attach">0</property>
-                                                              </packing>
+                                                            <object class="GtkButton" id="btTestEnable">
+                                                            <property name="label" translatable="yes">Test</property>
+                                                            <property name="name">btTestEnable</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">True</property>
+                                                            <property name="receives-default">True</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left-attach">2</property>
+                                                            <property name="top-attach">0</property>
+                                                            </packing>
                                                             </child>
                                                             <child>
-                                                              <object class="GtkButton" id="btTestDisable">
-                                                                <property name="label" translatable="yes">Test</property>
-                                                                <property name="name">btTestDisable</property>
-                                                                <property name="visible">True</property>
-                                                                <property name="can-focus">True</property>
-                                                                <property name="receives-default">True</property>
-                                                              </object>
-                                                              <packing>
-                                                                <property name="left-attach">2</property>
-                                                                <property name="top-attach">1</property>
-                                                              </packing>
+                                                            <object class="GtkButton" id="btTestDisable">
+                                                            <property name="label" translatable="yes">Test</property>
+                                                            <property name="name">btTestDisable</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can-focus">True</property>
+                                                            <property name="receives-default">True</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left-attach">2</property>
+                                                            <property name="top-attach">1</property>
+                                                            </packing>
                                                             </child>
                                                             <child>
-                                                              <placeholder />
+                                                            <placeholder/>
                                                             </child>
                                                             <child>
-                                                              <placeholder />
+                                                            <placeholder/>
                                                             </child>
                                                             <child>
-                                                              <placeholder />
+                                                            <placeholder/>
                                                             </child>
                                                           </object>
                                                           <packing>
@@ -2502,7 +2502,7 @@ This setting can make it easier to draw with touch. </property>
                                           <object class="GtkLabel" id="lblTouchDrawingDescription">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">&lt;i&gt;Use the touchscreen like a multi-touch-aware pen (requires new input system).&lt;/i&gt;</property>
+                                            <property name="label" translatable="yes">&lt;i&gt;Use the touchscreen like a multi-touch-aware pen.&lt;/i&gt;</property>
                                             <property name="use-markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="max-width-chars">85</property>
@@ -2771,16 +2771,16 @@ This setting can make it easier to draw with touch. </property>
                                                       </packing>
                                                     </child>
                                                     <child>
-                                                      <placeholder />
+                                                      <placeholder/>
                                                     </child>
                                                     <child>
-                                                      <placeholder />
+                                                      <placeholder/>
                                                     </child>
                                                     <child>
-                                                      <placeholder />
+                                                      <placeholder/>
                                                     </child>
                                                     <child>
-                                                      <placeholder />
+                                                      <placeholder/>
                                                     </child>
                                                   </object>
                                                 </child>
@@ -3084,16 +3084,16 @@ This setting can make it easier to draw with touch. </property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                           </object>
                                           <packing>
@@ -3683,13 +3683,13 @@ This setting can make it easier to draw with touch. </property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                       </object>
                                     </child>
@@ -3786,7 +3786,7 @@ This setting can make it easier to draw with touch. </property>
                                                 <property name="can-focus">False</property>
                                                 <property name="orientation">vertical</property>
                                                 <child>
-                                                  <placeholder />
+                                                  <placeholder/>
                                                 </child>
                                               </object>
                                               <packing>
@@ -4015,13 +4015,13 @@ This setting can make it easier to draw with touch. </property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                           </object>
                                           <packing>
@@ -4097,25 +4097,25 @@ This setting can make it easier to draw with touch. </property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                       </object>
                                     </child>
@@ -4203,22 +4203,22 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                       </object>
                                     </child>
@@ -4271,28 +4271,28 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                       </object>
                                     </child>
@@ -4422,13 +4422,13 @@ Determination Radius: Radius at which modifiers will lock in until finished draw
                                               </packing>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                           </object>
                                           <packing>
@@ -4867,7 +4867,7 @@ Set this to 0% to always re-render on zoom.</property>
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                           </object>
                                           <packing>
@@ -4877,7 +4877,7 @@ Set this to 0% to always re-render on zoom.</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                       </object>
                                     </child>
@@ -5039,25 +5039,25 @@ Set this to 0% to always re-render on zoom.</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                           </object>
                                           <packing>
@@ -5172,19 +5172,19 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                               </packing>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                             <child>
-                                              <placeholder />
+                                              <placeholder/>
                                             </child>
                                           </object>
                                           <packing>
@@ -5289,19 +5289,19 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                       </object>
                                     </child>
@@ -5370,25 +5370,25 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                         <child>
-                                          <placeholder />
+                                          <placeholder/>
                                         </child>
                                       </object>
                                     </child>
@@ -5458,7 +5458,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                 <property name="margin-left">5</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <placeholder />
+                  <placeholder/>
                 </child>
               </object>
               <packing>
@@ -5548,7 +5548,7 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                                                     <property name="can-focus">False</property>
                                                     <property name="orientation">vertical</property>
                                                     <child>
-                                                      <placeholder />
+                                                      <placeholder/>
                                                     </child>
                                                   </object>
                                                 </child>
