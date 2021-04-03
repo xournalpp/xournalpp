@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-01 09:47+0000\n"
-"PO-Revision-Date: 2021-04-01 10:34\n"
+"POT-Creation-Date: 2021-04-03 11:30+0000\n"
+"PO-Revision-Date: 2021-04-03 12:27\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1966,8 +1966,8 @@ msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr "<i>Utilisez le geste pincer pour zoomer les pages de journal.</i>"
 
 #: ../ui/settings.glade:2505
-msgid "<i>Use the touchscreen like a multi-touch-aware pen (requires new input system).</i>"
-msgstr "<i>Utiliser l'écran tactile comme un stylo compatible multi-touch (nécessite l'utilisation du nouveau système de saisie).</i>"
+msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
+msgstr ""
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
