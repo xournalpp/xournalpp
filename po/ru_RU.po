@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-03 11:30+0000\n"
-"PO-Revision-Date: 2021-04-03 14:49\n"
+"PO-Revision-Date: 2021-04-03 15:46\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1147,11 +1147,11 @@ msgstr "Отправить отчёт об ошибке"
 
 #: ../src/control/tools/EditSelection.cpp:371
 msgid "Send backward"
-msgstr ""
+msgstr "Переместить назад"
 
 #: ../src/control/tools/EditSelection.cpp:379
 msgid "Send to back"
-msgstr ""
+msgstr "На задний план"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
 msgid "Separator"
@@ -1499,7 +1499,7 @@ msgstr "У вас нет PDF страниц для выбора. Отмена о
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Вы используете ветку \"{1}/{2}\". «Отправить отчёт об ошибке» перенаправит вас на баг трекер этого репозитория."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1693,19 +1693,19 @@ msgstr "%"
 
 #: ../ui/settings.glade:2452
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% большее, чем начальное расстояние между двумя касаниями."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4747
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:547
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1741,43 +1741,43 @@ msgstr "... И сколько времени должно пройти с мом
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1714
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5360
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:1017
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3015
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1110
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1806,7 +1806,8 @@ msgstr "<b>По умолчанию</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Настройки экспорта документа</b>\n"
+"Параметры экспорта"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1817,7 +1818,8 @@ msgstr "<b>Пустая панель инструментов</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Настройки непрозрачности заливки</b>\n"
+"Выберите непрозрачность для цвета заливки"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -1871,7 +1873,7 @@ msgstr "<i>Если ваше оборудование не поддержива�
 
 #: ../ui/settings.glade:988
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Выберите алгоритм стабилизации ввода и его параметры</i>"
 
 #: ../ui/settings.glade:1493
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -1888,7 +1890,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5524
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>Выбор языка (требуется перезапуск)</i>"
 
 #: ../ui/settings.glade:4852
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -1896,7 +1898,7 @@ msgstr "<i>Выберите инструмент и настройки, кото
 
 #: ../ui/settings.glade:1542
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>Некоторые устройства сообщают о неожиданно малой или большой силе нажатия. Это может быть исправлено путем установки минимальной силы нажатия или масштабирования силы нажатия, сообщаемого устройством</i>"
 
 #: ../ui/settings.glade:2216
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -2038,7 +2040,7 @@ msgstr "Цвет фона между страницами"
 #: ../ui/settings.glade:2866
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Значок большой ручки"
 
 #: ../ui/settings.glade:3070
 msgid "Border Color"
@@ -2058,11 +2060,11 @@ msgstr "Цвет рамки для текущей страницы и други
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Переместить вперед"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "На передний план"
 
 #: ../ui/settings.glade:1005
 msgid "Buffersize"
@@ -2348,11 +2350,11 @@ msgstr "_Заливка"
 
 #: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
-msgstr ""
+msgstr "Непрозрачность заливки"
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Завершить черту"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
@@ -2524,15 +2526,15 @@ msgstr "Вставить страницу перед"
 
 #: ../ui/settings.glade:5472
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Настройки исполняемого файла LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Команда генерации LaTeX"
 
 #: ../ui/settings.glade:5561 ../ui/settings.glade:5609
 msgid "Language"
@@ -2540,7 +2542,7 @@ msgstr "Язык"
 
 #: ../ui/settings.glade:5579
 msgid "Language Settings"
-msgstr ""
+msgstr "Настройка языка"
 
 #: ../ui/main.glade:575
 msgid "Layout"
@@ -2568,11 +2570,11 @@ msgstr "Управление панелями инструментов"
 
 #: ../ui/settings.glade:1097
 msgid "Mass"
-msgstr ""
+msgstr "Масса"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Масса: чем выше масса, тем больше инерция и стабилизация"
 
 #: ../ui/settings.glade:4564
 msgid "Max Length (mm)"
@@ -2589,7 +2591,7 @@ msgstr "Средняя кнопка мыши"
 
 #: ../ui/settings.glade:1565
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Минимальнае сила нажатия:"
 
 #: ../ui/settings.glade:1442 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2634,16 +2636,16 @@ msgstr "Новый _слой"
 #: ../ui/settings.glade:2864
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Без значка"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "Без линования"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:207
 #: ../ui/settings.glade:224
 msgid "None"
-msgstr ""
+msgstr "Нет"
 
 #: ../ui/settings.glade:4074
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2725,15 +2727,15 @@ msgstr "Менеджер _плагинов"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Изменения плагинов будут применены только после перезапуска Xournal++"
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Предварительно загружать страницы после"
 
 #: ../ui/settings.glade:3458
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Предварительно загружать страницы до"
 
 #: ../ui/main.glade:487
 msgid "Preferences"
@@ -2749,11 +2751,11 @@ msgstr "Режим презентации"
 
 #: ../ui/settings.glade:4258
 msgid "Preserve line width"
-msgstr ""
+msgstr "Сохранить ширину линии"
 
 #: ../ui/settings.glade:1576
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Мультипликатор силы нажатия: "
 
 #: ../ui/settings.glade:1646
 msgid "Pressure Sensitivity"
@@ -2789,15 +2791,15 @@ msgstr "Качество записи"
 
 #: ../ui/main.glade:1256
 msgid "Rename Layer"
-msgstr ""
+msgstr "Переименовать слой"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Переименовать выбранный слой"
 
 #: ../ui/settings.glade:4305
 msgid "Resizing"
-msgstr ""
+msgstr "Изменение размера"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -2817,7 +2819,7 @@ msgstr "Частота дискретизации"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "Имя образца слоя"
 
 #: ../ui/settings.glade:3259
 msgid "Scrollbars"
@@ -2853,15 +2855,15 @@ msgstr "Цвет выделения (текст, выделение линий �
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Переместить назад"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "На задний план"
 
 #: ../ui/settings.glade:1628
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Масштаб чувствительности"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
@@ -2893,7 +2895,7 @@ msgstr "Показывать боковую панель справа"
 
 #: ../ui/main.glade:559
 msgid "Show toolbars"
-msgstr ""
+msgstr "Показывать панели инструментов"
 
 #: ../ui/settings.glade:3158
 msgid "Show vertical scrollbar on the left side"
@@ -2907,7 +2909,7 @@ msgstr ""
 #: ../ui/settings.glade:2865
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Маленькая точка"
 
 #: ../ui/settings.glade:4464
 msgid "Snapping"
@@ -2927,7 +2929,7 @@ msgstr "Стандартный"
 
 #: ../ui/settings.glade:2425
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "Начать приближение после расстояния, на "
 
 #: ../ui/settings.glade:5019 ../ui/settings.glade:5077
 msgid "Storage Folder"
