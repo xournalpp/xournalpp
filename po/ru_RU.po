@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-03 11:30+0000\n"
-"PO-Revision-Date: 2021-04-03 13:36\n"
+"PO-Revision-Date: 2021-04-03 14:49\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -587,16 +587,17 @@ msgstr "Не удалось найти программу генератора L
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Не удалось интерпретировать команду генератора LaTeX: {1}"
 
 #: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Не удалось прочитать файл глобального шаблона. Пожалуйста, проверьте настройки."
 
 #: ../src/control/jobs/BaseExportJob.cpp:101
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Не удалось определить путь со следующей ошибкой:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -610,7 +611,7 @@ msgstr "Заливка"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Фильтровать силу нажатия. Умножить нажатие на мультипликатор силы нажатия. Если она меньше минимума, использовать минимальное значение."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fine"
@@ -634,11 +635,11 @@ msgstr "Узнать версию xournalpp"
 
 #: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Глобальный файл шаблона не существует. Пожалуйста, проверьте настройки."
 
 #: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Глобальный файл шаблона не является обычным файлом. Пожалуйста, проверьте настройки. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Go to first page"
@@ -711,7 +712,7 @@ msgstr "Изображения"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Вставить копию текущего слоя ниже"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Insert a copy of the current page below"
@@ -739,11 +740,11 @@ msgstr "Вставить страницу"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Изометрия (точки)"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Изометрия (сетка)"
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
@@ -751,7 +752,7 @@ msgstr "Перейти на страницу (первая страница: 1)"
 
 #: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "Ошибка генерации LaTeX: {1} (код выхода: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -771,7 +772,7 @@ msgstr "Слой {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Предпросмотр слоёв"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -855,7 +856,7 @@ msgstr "Нет страниц для экспорта!"
 
 #: ../src/control/Control.cpp:1266
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Нет доступных страниц pdf для добавления. Вам может потребоваться переоткрыть документ."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
