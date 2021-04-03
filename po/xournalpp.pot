@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-01 09:47+0000\n"
+"POT-Creation-Date: 2021-04-03 11:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2000,9 +2000,7 @@ msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:2505
-msgid ""
-"<i>Use the touchscreen like a multi-touch-aware pen (requires new input "
-"system).</i>"
+msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1677
