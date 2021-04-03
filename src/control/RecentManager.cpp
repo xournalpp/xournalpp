@@ -1,12 +1,14 @@
 #include "RecentManager.h"
 
-#include <config.h>
+#include <array>
+#include <limits>
+
 #include <filesystem.h>
 #include <gtk/gtk.h>
+#include <util/safe_casts.h>
 
 #include "PathUtil.h"
 #include "StringUtils.h"
-#include "Util.h"
 #include "i18n.h"
 
 #define MIME "application/x-xoj"
@@ -33,55 +35,43 @@ RecentManager::~RecentManager() {
     this->menu = nullptr;
 }
 
-void RecentManager::addListener(RecentManagerListener* listener) { this->listener.push_back(listener); }
+void RecentManager::addListener(RecentManagerListener* l) { this->listener.push_back(l); }
 
-void RecentManager::recentManagerChangedCallback(GtkRecentManager* manager, RecentManager* recentManager) {
+void RecentManager::recentManagerChangedCallback(GtkRecentManager* /*manager*/, RecentManager* recentManager) {
     // regenerate the menu when the model changes
     recentManager->updateMenu();
 }
 
 void RecentManager::addRecentFileFilename(const fs::path& filepath) {
-    GtkRecentManager* recentManager = nullptr;
-    GtkRecentData* recentData = nullptr;
+    GtkRecentManager* recentManager = gtk_recent_manager_get_default();
 
-    static gchar* groups[2] = {g_strdup(GROUP), nullptr};
+    std::string group_name = GROUP;
+    std::array<gchar*, 2> groups = {group_name.data(), nullptr};
+    std::string app_name = g_get_application_name();
+    std::string app_exec = std::string(g_get_prgname()) + " %u";
+    std::string mime_type = (filepath.extension() == ".pdf") ? std::string(MIME_PDF) : std::string(MIME);
 
-    recentManager = gtk_recent_manager_get_default();
-
-    recentData = g_slice_new(GtkRecentData);
-
-    recentData->display_name = nullptr;
-    recentData->description = nullptr;
-
-    if (filepath.extension() == ".pdf") {
-        recentData->mime_type = g_strdup(MIME_PDF);
-    } else {
-        recentData->mime_type = g_strdup(MIME);
-    }
-
-    recentData->app_name = const_cast<gchar*>(g_get_application_name());
-    recentData->app_exec = g_strjoin(" ", g_get_prgname(), "%u", nullptr);
-    recentData->groups = groups;
-    recentData->is_private = false;
+    GtkRecentData recentData{};
+    recentData.display_name = nullptr;
+    recentData.description = nullptr;
+    recentData.app_name = app_name.data();
+    recentData.app_exec = app_exec.data();
+    recentData.groups = groups.data();
+    recentData.mime_type = mime_type.data();
+    recentData.is_private = false;
 
     auto uri = Util::toUri(filepath);
     if (!uri) {
         return;
     }
-    gtk_recent_manager_add_full(recentManager, (*uri).c_str(), recentData);
-
-    g_free(recentData->app_exec);
-
-    g_slice_free(GtkRecentData, recentData);
+    gtk_recent_manager_add_full(recentManager, (*uri).c_str(), &recentData);
 }
 
 void RecentManager::removeRecentFileFilename(const fs::path& filename) {
     auto uri = Util::toUri(filename);
-
     if (!uri) {
         return;
     }
-
     GtkRecentManager* recentManager = gtk_recent_manager_get_default();
     gtk_recent_manager_remove_item(recentManager, uri->c_str(), nullptr);
 }
@@ -91,23 +81,24 @@ void RecentManager::openRecent(const fs::path& p) {
         return;
     }
 
-    for (RecentManagerListener* l: this->listener) {
-        l->fileOpened(p);
-    }
+    for (RecentManagerListener* l: this->listener) { l->fileOpened(p); }
 }
 
 auto RecentManager::getMenu() -> GtkWidget* { return menu; }
 
 void RecentManager::freeOldMenus() {
-    for (GtkWidget* w: menuItemList) {
-        gtk_widget_destroy(w);
-    }
+    for (GtkWidget* w: menuItemList) { gtk_widget_destroy(w); }
 
     this->menuItemList.clear();
 }
 
-auto RecentManager::sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b) -> int {
-    return (gtk_recent_info_get_modified(b) - gtk_recent_info_get_modified(a));
+using stime_t = std::make_signed<time_t>;
+
+// Todo: replace with <=> in c++ 20
+auto RecentManager::sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b) -> gint {
+    auto tp_a = gtk_recent_info_get_modified(a);
+    auto tp_b = gtk_recent_info_get_modified(b);
+    return tp_a != tp_b ? (tp_a < tp_b ? 1 : -1) : 0;
 }
 
 auto RecentManager::filterRecent(GList* items, bool xoj) -> GList* {

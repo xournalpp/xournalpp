@@ -77,7 +77,7 @@ public:
      * Adds a new RecentManagerListener to be notified
      * of opened files
      */
-    void addListener(RecentManagerListener* listener);
+    void addListener(RecentManagerListener* l);
 
 private:
     /**
@@ -109,11 +109,11 @@ private:
      * This function serves as a comparator to sort different
      * GtkRecentInfo%s according to their modification date
      */
-    static int sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b);
+    static auto sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b) -> gint;
 
 private:
     int maxRecent = 10;
-    int recentHandlerId;
+    gulong recentHandlerId{};
 
     std::vector<RecentManagerListener*> listener;
 
