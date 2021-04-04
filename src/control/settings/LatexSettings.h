@@ -41,4 +41,6 @@ public:
      */
     XojFont editorFont{"Monospace", 12};
     bool useCustomEditorFont{false};
+
+    bool editorWordWrap{true};
 };

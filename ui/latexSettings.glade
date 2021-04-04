@@ -453,7 +453,32 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkFrame" id="frameSourceViewFontSettings">
+                          <object class="GtkBox" id="bxEditorWordWrapSetting">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <child>
+                              <object class="GtkCheckButton" id="cbWordWrap">
+                                <property name="label" translatable="yes">Wrap text</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">False</property>
+                                <property name="draw-indicator">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFrame" id="frameEditorFontSettings">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="label-xalign">0.009999999776482582</property>
@@ -537,7 +562,7 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">1</property>
+                            <property name="position">2</property>
                           </packing>
                         </child>
                       </object>
