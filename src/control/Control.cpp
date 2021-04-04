@@ -2226,9 +2226,8 @@ auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDo
 }
 
 void Control::print() {
-    PrintHandler print;
     this->doc->lock();
-    print.print(this->doc, getCurrentPageNo());
+    PrintHandler::print(this->doc, getCurrentPageNo(), this->getGtkWindow());
     this->doc->unlock();
 }
 
