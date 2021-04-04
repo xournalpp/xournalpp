@@ -534,6 +534,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->latexSettings.editorFont = std::string{reinterpret_cast<char*>(value)};
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.useCustomEditorFont")) == 0) {
         this->latexSettings.useCustomEditorFont = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.editorWordWrap")) == 0) {
+        this->latexSettings.editorWordWrap = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewAutoIndent")) == 0) {
         this->latexSettings.sourceViewAutoIndent = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.sourceViewSyntaxHighlight")) == 0) {
@@ -1012,6 +1014,7 @@ void Settings::save() {
     SAVE_STRING_PROP(latexSettings.sourceViewThemeId);
     SAVE_FONT_PROP(latexSettings.editorFont);
     SAVE_BOOL_PROP(latexSettings.useCustomEditorFont);
+    SAVE_BOOL_PROP(latexSettings.editorWordWrap);
     SAVE_BOOL_PROP(latexSettings.sourceViewAutoIndent);
     SAVE_BOOL_PROP(latexSettings.sourceViewSyntaxHighlight);
     SAVE_BOOL_PROP(latexSettings.sourceViewShowLineNumbers);

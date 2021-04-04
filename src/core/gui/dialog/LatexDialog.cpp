@@ -87,8 +87,13 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
     widgetCss << "} ";
 
 
-    // increase the maximum length to something reasonable.
-    // gtk_entry_set_max_length(GTK_TEXT_BUFFER(this->texBox), 500);
+    // Enable/disable word-wrap.
+    GtkWrapMode texBoxWrapMode = GTK_WRAP_NONE;
+    if (settings.editorWordWrap) {
+        texBoxWrapMode = GTK_WRAP_WORD_CHAR;
+    }
+
+    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(this->texBox), texBoxWrapMode);
 
     // Background color for the temporary render, default is white because
     // on dark themed DE the LaTeX is hard to read
