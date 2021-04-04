@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-04 15:56+0000\n"
-"PO-Revision-Date: 2021-04-04 15:57\n"
+"PO-Revision-Date: 2021-04-04 16:56\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -84,7 +84,7 @@ msgstr "Applica alla pagina corrente"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "Disporre"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -617,7 +617,7 @@ msgstr "Riempi"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Pressione di ingresso filtro. Moltiplicare la pressione per il moltiplicatore di pressione. Se inferiore al minimo, utilizzare la pressione minima."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fine"
@@ -641,11 +641,11 @@ msgstr "Ottieni la versione di xournalpp"
 
 #: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Il modello globale non esiste. Controlla le tue impostazioni."
 
 #: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Il modello globale non è un file normale. Controlla le tue impostazioni. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Go to first page"
@@ -718,7 +718,7 @@ msgstr "Immagini"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Inserisci una copia del livello corrente qui sotto"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Insert a copy of the current page below"
@@ -746,11 +746,11 @@ msgstr "Inserisci pagina"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Puntinato isometrico"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Grafico Isometrico"
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
@@ -758,7 +758,7 @@ msgstr "Vai a Pagina (prima Pagina: 1)"
 
 #: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "La generazione Latex ha riscontrato un errore: {1} (codice di uscita: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -778,7 +778,7 @@ msgstr "Livello {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Anteprima Layerstack"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -862,7 +862,7 @@ msgstr "Nessuna pagina da esportare!"
 
 #: ../src/control/Control.cpp:1266
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Non sono disponibili pagine pdf da aggiungere. Potrebbe essere necessario riaprire il documento prima."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
@@ -875,7 +875,8 @@ msgstr "OK"
 #: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Esporta solo le pagine specificate da RANGE (ad esempio \"2-3,5,7-\")\n"
+"                                 Nessun effetto senza -p/--create-pdf o -i/--create-img"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -992,11 +993,11 @@ msgstr "Modalità presentazione"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:69
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Lingua precedentemente selezionata non più disponibile!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Print"
-msgstr ""
+msgstr "Stampa"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Record Audio / Stop Recording"
@@ -1034,7 +1035,7 @@ msgstr "Rimosso lo strumento {1} dalla Barra degli Strumenti {2} ID {3}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Rinomina livello"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
@@ -1070,7 +1071,7 @@ msgstr "Grafica PNG"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "File LaTeX di esempio generato con successo."
 
 #: ../src/control/Control.cpp:2463 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
@@ -1153,11 +1154,11 @@ msgstr "Invia Bugreport"
 
 #: ../src/control/tools/EditSelection.cpp:371
 msgid "Send backward"
-msgstr ""
+msgstr "Invia indietro"
 
 #: ../src/control/tools/EditSelection.cpp:379
 msgid "Send to back"
-msgstr ""
+msgstr "Invia in fondo"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
 msgid "Separator"
@@ -1166,19 +1167,24 @@ msgstr "Separatore"
 #: ../src/control/XournalMain.cpp:664
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Imposta DPI per le esportazioni PNG. Il valore predefinito è 300\n"
+"                                 Nessun effetto senza -i/--create-img=foo.png"
 
 #: ../src/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Imposta l'altezza della pagina per le esportazioni PNG\n"
+"                                 Nessun effetto senza -i/--create-img=foo.png\n"
+"                                 Ignorato se si usa --export-png-dpi o --export-png-width"
 
 #: ../src/control/XournalMain.cpp:668
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Imposta la larghezza della pagina per le esportazioni PNG\n"
+"                                 Nessun effetto senza -i/--create-img=foo.png\n"
+"                                 Ignorato se viene usato --export-png-dpi"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Shape Recognizer"
@@ -1232,11 +1238,11 @@ msgstr "Files supportati"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:53
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Scambia il livello corrente con quello precedente"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Scambia il livello corrente con quello sottostante"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:65
 msgid "Swap the current page with the one above"
@@ -1248,7 +1254,7 @@ msgstr "Scambia la pagina corrente con quella sotto"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
-msgstr ""
+msgstr "Predefinito Di Sistema"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
@@ -1298,11 +1304,11 @@ msgstr "Il PDF di sfondo non è stato trovato."
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "Il controllo per sovrascrivere lo sfondo non è riuscito con:\n"
 
 #: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Il file caricato ha una versione di file più recente di quella attualmente supportata da questa versione di Xournal++, quindi potrebbe non caricare correttamente. Aprire comunque?"
 
 #: ../src/control/xojfile/LoadHandler.cpp:117
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1375,7 +1381,7 @@ msgstr "Tentativo di salvataggio d'emergenza per il documento corrente…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Impossibile aprire il modello globale in {1}. Esiste un modello?"
 
 #: ../src/gui/PageView.cpp:348
 msgid "Unable to play audio recording {1}"
@@ -1383,7 +1389,7 @@ msgstr "Impossibile riprodurre la registrazione audio {1}"
 
 #: ../src/control/Control.cpp:1280
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Impossibile recuperare la pagina pdf."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 #: ../src/undo/UndoRedoHandler.cpp:203
@@ -1505,7 +1511,7 @@ msgstr "Non hai nessuna pagina PDF da cui selezionare. Operazione Cancellata.\n"
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Stai usando il ramo \"{1}/{2}\". Invia segnalazione di bug ti indirizzerà al tracker di problemi di questo repo."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1590,7 +1596,7 @@ msgstr "gomma"
 
 #: ../src/control/Control.cpp:1982
 msgid "file: {1}"
-msgstr ""
+msgstr "file: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -1699,15 +1705,15 @@ msgstr "%"
 
 #: ../ui/settings.glade:2452
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% superiore alla distanza iniziale tra i due contatti."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4747
 msgid "%."
@@ -1737,7 +1743,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\t<unk> <unk> Nome abbreviato giorno della settimana (es. Thu)\n"
+"%A\t\t<unk> <unk> Nome intero giorno della settimana (es. Giovedì)\n"
+"%b\t\t<unk> <unk> Nome mese abbreviato (es. Agosto)\n"
+"%B\t\t<unk> <unk> Nome mese completo (e. . Agosto)\n"
+"%c\t\t<unk> <unk> Rappresentazione data e ora (es. Gio Aug 23 14:55:02 2001)\n"
+"%d\t\t<unk> <unk> Giorno del mese (01-31)\n"
+"%F\t\t<unk> <unk> Rappresentazione data (e. . 2001-08-23)\n"
+"%H\t\t<unk> <unk> Ora in formato 24h (00-23)\n"
+"%I\t\t<unk> <unk> Ora in formato 12h (01-12)\n"
+"%j\t\t<unk> <unk> Giorno dell'anno (001-366)\n"
+"%m\t\t<unk> <unk> Mese come numero decimale (01-12)\n"
+"%M\t\t<unk> <unk> Minuto (00-59)\n"
+"%p\t\t<unk> AM o designazione PM (e. . PM)\n"
+"%S\t\t<unk> <unk> Seconda (00-61)\n"
+"%U\t\t<unk> <unk> <unk> Numero della settimana con la prima domenica come primo giorno della settimana 1 (00-53)\n"
+"%w\t\t<unk> Giorno della settimana come numero decimale con la domenica come 0 (0-6)\n"
+"%W\t\t<unk> <unk> Numero della settimana con il primo lunedì come primo giorno della settimana 1 (00-53)\n"
+"%x\t\t<unk> <unk> Rappresentazione della data (e. . 08/23/01)\n"
+"%X\t\t<unk> <unk> Rappresentazione del tempo (es. 14:55:02)\n"
+"%y\t\t<unk> <unk> Anno, ultime due cifre (00-99)\n"
+"%Y\t\t<unk> <unk> Anno (e. . 2001)\n"
+"%Z\t\t<unk> <unk> Nome del fuso orario o abbreviazione (ad esempio CDT)\n"
+"%%\t\t<unk> A % segno"
 
 #: ../ui/settings.glade:4587
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1747,19 +1775,19 @@ msgstr "... E quanto tempo deve essere passato dall'ultimo tratto.\n\n"
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1714
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5360
 msgid "1,00"
@@ -1767,7 +1795,7 @@ msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
@@ -1949,7 +1977,7 @@ msgstr "<i>Usa le gestures per zoommare le pagine</i>"
 
 #: ../ui/settings.glade:2505
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>Usa il touchscreen come una penna multi-touch.</i>"
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -2049,7 +2077,7 @@ msgstr "Segnaposto disponibili"
 
 #: ../ui/settings.glade:955
 msgid "Averaging method"
-msgstr ""
+msgstr "Metodo di media"
 
 #: ../ui/settings.glade:2711
 msgid "Background color between pages"
@@ -2154,7 +2182,7 @@ msgstr "Icona cursore per la penna"
 
 #: ../ui/settings.glade:1193
 msgid "Cusp detection"
-msgstr ""
+msgstr "Rilevamento Cusp"
 
 #: ../ui/settings.glade:2332
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2166,7 +2194,7 @@ msgstr "Tema Scuro (necessita riavvio) "
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr ""
+msgstr "Zona morta"
 
 #: ../ui/settings.glade:1034
 msgid "Deadzone radius"
@@ -2511,7 +2539,7 @@ msgstr "Qualità dell'immagine"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
-msgstr ""
+msgstr "Inerzia"
 
 #: ../ui/settings.glade:5132
 msgid "Input Device"
@@ -2527,11 +2555,11 @@ msgstr "Sistema di input"
 
 #: ../ui/settings.glade:1235
 msgid "Input stabilization"
-msgstr ""
+msgstr "Stabilizzazione input"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "La stabilizzazione dell'input può creare uno spazio alla fine del tratto. Se abilitato, questo spazio viene colmato."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2547,23 +2575,23 @@ msgstr "Inserisci pagina prima"
 
 #: ../ui/settings.glade:5472
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Impostazioni eseguibili LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Comando generazione LaTeX"
 
 #: ../ui/settings.glade:5561 ../ui/settings.glade:5609
 msgid "Language"
-msgstr ""
+msgstr "Lingua"
 
 #: ../ui/settings.glade:5579
 msgid "Language Settings"
-msgstr ""
+msgstr "Impostazioni Lingua"
 
 #: ../ui/main.glade:575
 msgid "Layout"
@@ -2591,7 +2619,7 @@ msgstr "Gestisci Barra degli Strumenti"
 
 #: ../ui/settings.glade:1097
 msgid "Mass"
-msgstr ""
+msgstr "Massa"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
