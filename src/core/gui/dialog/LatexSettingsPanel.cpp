@@ -69,6 +69,9 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     // Should we use the custom editor font?
     gtk_toggle_button_set_active(this->cbUseSystemFont, !settings.useCustomEditorFont);
 
+    // Editor word wrap.
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbWordWrap")), settings.editorWordWrap);
+
     this->updateWidgetSensitivity();
 }
 
@@ -90,8 +93,9 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
     GtkFontChooser* fontSelector = GTK_FONT_CHOOSER(this->get("selBtnEditorFont"));
     std::string fontDescription{gtk_font_chooser_get_font(fontSelector)};
     settings.editorFont = fontDescription;
-
     settings.useCustomEditorFont = !gtk_toggle_button_get_active(this->cbUseSystemFont);
+
+    settings.editorWordWrap = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbWordWrap")));
 }
 
 void LatexSettingsPanel::show(GtkWindow* parent) {}
