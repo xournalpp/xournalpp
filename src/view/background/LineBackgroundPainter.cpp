@@ -27,20 +27,20 @@ void LineBackgroundPainter::paint() {
 const double headerSize = 80;
 const double footerSize = 20;
 
-const double roulingSize = 24;
+const double rulingSize = 24;
 
 void LineBackgroundPainter::paintBackgroundRuled() {
     Util::cairo_set_source_rgbi(cr, this->foregroundColor1);
     cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
-    int numLines = static_cast<int>((height - headerSize - footerSize) / (roulingSize + lineWidth * lineWidthFactor));
+    int numLines = static_cast<int>((height - headerSize - footerSize) / (rulingSize + lineWidth * lineWidthFactor));
 
     double offset = headerSize;
 
     for (int i = 0; i < numLines; i++) {
         cairo_move_to(cr, 0, offset);
         cairo_line_to(cr, width, offset);
-        offset += roulingSize;
+        offset += rulingSize;
     }
 
     cairo_stroke(cr);
