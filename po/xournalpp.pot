@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-03 11:30+0000\n"
+"POT-Creation-Date: 2021-04-04 15:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -899,7 +899,7 @@ msgstr ""
 msgid "Open file"
 msgstr ""
 
-#: ../src/control/RecentManager.cpp:179
+#: ../src/control/RecentManager.cpp:170
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr ""
