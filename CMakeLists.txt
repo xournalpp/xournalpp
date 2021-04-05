@@ -149,14 +149,14 @@ if (ENABLE_CPPUNIT)
 endif (ENABLE_CPPUNIT)
 
 # Plugins / scripting
-pkg_check_modules (Lua "lua5.3")
+find_package (Lua 5.3 EXACT)
 if (NOT Lua_FOUND)
-	pkg_check_modules (Lua "lua >= 5.3")
+	find_package (Lua 5.3) # Lua 5.4 is only supported with cmake >=3.18
 endif()
 
 if (Lua_FOUND)
 	message("Enable Xournal++ Plugins")
-	add_includes_ldflags("${Lua_LDFLAGS}" "${Lua_INCLUDE_DIRS}")
+	add_includes_ldflags("${LUA_LIBRARIES}" "${LUA_INCLUDE_DIR}")
 	set(ENABLE_PLUGINS "true")
 endif ()
 
