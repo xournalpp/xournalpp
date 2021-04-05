@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-05 11:55+0000\n"
-"PO-Revision-Date: 2021-04-05 15:05\n"
+"PO-Revision-Date: 2021-04-05 17:55\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -58,9 +58,9 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 msgstr "<span foreground='red' size='x-large'>Falta un ficheiro imprescindíbel de IU:\n"
 "<b>{1}</b></span>\n"
 "Non se puido atopar en ningunha localización.\n"
-"  Non nunha relativa\n"
-"  Non no camiño de traballo\n"
-"  Non en {2}"
+"  Nen nunha relativa\n"
+"  Nen no directorio de traballo\n"
+"  Nen en {2}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Add/Edit Tex"
@@ -185,7 +185,7 @@ msgstr "Cambiar tipo de letra"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr "Cambiar o estil da liña"
+msgstr "Cambiar o estilo da liña"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
