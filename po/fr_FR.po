@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-04 15:56+0000\n"
-"PO-Revision-Date: 2021-04-04 15:57\n"
+"POT-Creation-Date: 2021-04-05 11:55+0000\n"
+"PO-Revision-Date: 2021-04-05 12:00\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -166,7 +166,7 @@ msgstr "Mettre au premier plan"
 msgid "Bring to front"
 msgstr "Mettre en avant"
 
-#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
+#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2470
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Annuler"
@@ -374,7 +374,7 @@ msgstr "Supprimer ce calque"
 msgid "Delete this page"
 msgstr "Supprimer cette page"
 
-#: ../src/control/Control.cpp:2468
+#: ../src/control/Control.cpp:2467
 msgid "Discard"
 msgstr "Annuler"
 
@@ -394,7 +394,7 @@ msgstr "Ne pas ouvrir les fichiers de sauvegarde automatique. Ils peuvent être 
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ne pas écraser le PDF d'arrière-plan ! Cela causera des erreurs !"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2461
 msgid "Document file was removed."
 msgstr "Le fichier du document a été supprimé."
 
@@ -1073,16 +1073,16 @@ msgstr "Graphiques SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Fichier LaTeX d'exemple généré avec succès."
 
-#: ../src/control/Control.cpp:2463 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2462 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: ../src/control/Control.cpp:2463
+#: ../src/control/Control.cpp:2462
 msgid "Save As..."
 msgstr "Enregistrer sous..."
 
-#: ../src/control/Control.cpp:2306 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2305 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Enregistrer le fichier"
 
@@ -1350,7 +1350,7 @@ msgstr "Une erreur s'est produite lors de l'affichage de l'aide : {1}"
 msgid "Thick"
 msgstr "Gras"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2461
 msgid "This document is not saved yet."
 msgstr "Ce document n'est pas encore enregistré."
 
@@ -1432,7 +1432,7 @@ msgstr "Type de domaine inconnu : {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Type de trait inconnu : \"{1}\", en supposant le stylo"
 
-#: ../src/control/Control.cpp:2363
+#: ../src/control/Control.cpp:2362
 msgid "Unsaved Document"
 msgstr "Document non enregistré"
 
@@ -1489,7 +1489,7 @@ msgstr "Fichiers Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ a échoué la dernière fois. Voulez-vous restaurer le dernier fichier modifié ?"
 
-#: ../src/control/Control.cpp:2312 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2311 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Fichiers Xournal++"
 
@@ -1541,7 +1541,7 @@ msgstr "Curseur de zoom"
 msgid "Zoom to 100%"
 msgstr "Zoom à 100%"
 
-#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2305 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1553,7 +1553,7 @@ msgstr "_Annuler"
 msgid "_Open"
 msgstr "_Ouvrir"
 
-#: ../src/control/Control.cpp:2307 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "_Sauvegarder"
