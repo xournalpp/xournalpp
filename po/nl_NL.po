@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-04 15:56+0000\n"
-"PO-Revision-Date: 2021-04-04 15:58\n"
+"POT-Creation-Date: 2021-04-05 11:55+0000\n"
+"PO-Revision-Date: 2021-04-05 12:00\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -165,7 +165,7 @@ msgstr ""
 msgid "Bring to front"
 msgstr ""
 
-#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
+#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2470
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Annuleren"
@@ -373,7 +373,7 @@ msgstr ""
 msgid "Delete this page"
 msgstr "Huidige pagina verwijderen"
 
-#: ../src/control/Control.cpp:2468
+#: ../src/control/Control.cpp:2467
 msgid "Discard"
 msgstr "Verwerpen"
 
@@ -393,7 +393,7 @@ msgstr "Open geen automatisch opgeslagen bestanden; deze worden overschreven!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Overschrijf de achtergrond-pdf niet: dit veroorzaakt fouten!"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2461
 msgid "Document file was removed."
 msgstr "Het documentbestand is verwijderd."
 
@@ -1071,16 +1071,16 @@ msgstr "SVG-afbeeldingen"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Voorbeeld LaTeX-bestand succesvol gegenereerd."
 
-#: ../src/control/Control.cpp:2463 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2462 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "Opslaan"
 
-#: ../src/control/Control.cpp:2463
+#: ../src/control/Control.cpp:2462
 msgid "Save As..."
 msgstr "Opslaan als..."
 
-#: ../src/control/Control.cpp:2306 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2305 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Bestand opslaan"
 
@@ -1344,7 +1344,7 @@ msgstr "Er is een fout opgetreden tijdens het openen van het hulpscherm: {1}"
 msgid "Thick"
 msgstr "Dik"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2461
 msgid "This document is not saved yet."
 msgstr "Dit document is nog niet opgeslagen."
 
@@ -1426,7 +1426,7 @@ msgstr "Onbekend pixmap::domein: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Onbekende penseelsoort: '{1}' - aangenomen wordt dat het een pen is"
 
-#: ../src/control/Control.cpp:2363
+#: ../src/control/Control.cpp:2362
 msgid "Unsaved Document"
 msgstr "Niet-opgeslagen document"
 
@@ -1483,7 +1483,7 @@ msgstr "Xournal-bestanden"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ is de vorige keer gecrasht. Wil je het laatstgebruikte bestand herstellen?"
 
-#: ../src/control/Control.cpp:2312 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2311 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Xournal++-bestanden"
 
@@ -1535,7 +1535,7 @@ msgstr "Zoomschuifbalk"
 msgid "Zoom to 100%"
 msgstr "100% zoomen"
 
-#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2305 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1547,7 +1547,7 @@ msgstr "_Annuleren"
 msgid "_Open"
 msgstr "_Openen"
 
-#: ../src/control/Control.cpp:2307 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "Op_slaan"
