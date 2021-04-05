@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-05 11:55+0000\n"
-"PO-Revision-Date: 2021-04-05 11:59\n"
+"PO-Revision-Date: 2021-04-05 15:05\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -772,7 +772,7 @@ msgstr "Слой {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layerstack Preview"
-msgstr "Предпросмотр слоёв"
+msgstr "Предпросмотр стопки слоёв"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -1242,7 +1242,7 @@ msgstr "Поменять текущую страницу с находящейс
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:53
 msgid "System Default"
-msgstr ""
+msgstr "Системный по-умолчанию"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
@@ -2004,15 +2004,15 @@ msgstr "Все три условия должны быть выполнены п
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Всегда проверять зависимости LaTeX перед запуском"
 
 #: ../ui/main.glade:1197
 msgid "Append New Pdf Pages"
-msgstr ""
+msgstr "Добавить новые Pdf страницы"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Среднее арифметическое"
 
 #: ../ui/settings.glade:1753
 msgid "Artifact workaround"
@@ -2052,7 +2052,7 @@ msgstr "Доступные подстановки"
 
 #: ../ui/settings.glade:955
 msgid "Averaging method"
-msgstr ""
+msgstr "Метод усреднения"
 
 #: ../ui/settings.glade:2711
 msgid "Background color between pages"
@@ -2089,7 +2089,7 @@ msgstr "На передний план"
 
 #: ../ui/settings.glade:1005
 msgid "Buffersize"
-msgstr ""
+msgstr "Размер буфера"
 
 #: ../ui/about.glade:127
 msgid "Built on"
@@ -2105,7 +2105,7 @@ msgstr "Кнопка 2"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Выберите глобальный шаблон LaTeX"
 
 #: ../ui/settings.glade:2913 ../ui/settings.glade:3056
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2169,11 +2169,11 @@ msgstr "Тёмная тема (требуется перезапуск)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr ""
+msgstr "Мертвая зона"
 
 #: ../ui/settings.glade:1034
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Радиус мертвой зоны"
 
 #: ../ui/settings.glade:620
 msgid "Default Save Name"
@@ -2266,7 +2266,7 @@ msgstr ""
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Нарисовать систему координат"
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
@@ -2407,7 +2407,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Общие настройки инструмента LaTeX"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
@@ -2495,7 +2495,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "Если включено, слои каждой страницы будут добавлены по одному. Результирующий PDF-файл может быть использован для презентации."
 
 #: ../ui/settings.glade:4512
 msgid "Ignore Time (ms)"
@@ -2511,7 +2511,7 @@ msgstr "Качество изображения"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
-msgstr ""
+msgstr "Инерция"
 
 #: ../ui/settings.glade:5132
 msgid "Input Device"
@@ -2527,11 +2527,11 @@ msgstr "Система ввода"
 
 #: ../ui/settings.glade:1235
 msgid "Input stabilization"
-msgstr ""
+msgstr "Стабилизация ввода"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "Стабилизация ввода может создать разрыв в конце черты. Если включено, этот разрыв будет заполнен."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2974,7 +2974,7 @@ msgstr "_Панели инструментов"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "Настройки файла шаблона"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -2986,11 +2986,11 @@ msgstr "Проверить"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "Проверить конфигурацию"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "Проверить, действительна ли текущая конфигурация, с помощью исполнения команды генерации LaTeX на глобальном файле шаблона с тестовой формулой."
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
@@ -2998,15 +2998,15 @@ msgstr "Шрифт текста..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "Файл LaTeX для использования в качестве шаблона для инструмента LaTeX."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "Текущий цвет инструмента \"Текст\" в формате hex RGB."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "Следующие строки будут заменены в глобальном файле шаблона при запуске инструмента LaTeX:"
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
@@ -3059,7 +3059,7 @@ msgstr "Обычно 0 или 1"
 
 #: ../ui/settings.glade:213
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Весы Гаусса, вычисленные по скорости"
 
 #: ../ui/about.glade:101
 msgid "Version"
@@ -3081,7 +3081,8 @@ msgstr ""
 #: ../ui/settings.glade:4715
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "При приближении в формате PDF с высоким разрешением, каждая перерисовка может занять много времени. Установка большого значения приведёт к тому, что эти перерисовки будут случаться реже.\n\n"
+"Установите значение 0%, чтобы всегда перерисовывать при приближении."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
@@ -3101,7 +3102,7 @@ msgstr "С помощью сообщества"
 
 #: ../ui/about.glade:192
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:238
 msgid "Xournal++ Preferences"
@@ -3411,5 +3412,5 @@ msgstr "очень _жирный"
 
 #: ../ui/about.glade:178
 msgid "with libgtk"
-msgstr ""
+msgstr "libgtk"
 
