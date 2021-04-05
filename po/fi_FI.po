@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-04 15:56+0000\n"
-"PO-Revision-Date: 2021-04-04 15:57\n"
+"POT-Creation-Date: 2021-04-05 11:55+0000\n"
+"PO-Revision-Date: 2021-04-05 12:00\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -159,7 +159,7 @@ msgstr ""
 msgid "Bring to front"
 msgstr ""
 
-#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2471
+#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2470
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Peruuta"
@@ -362,7 +362,7 @@ msgstr ""
 msgid "Delete this page"
 msgstr ""
 
-#: ../src/control/Control.cpp:2468
+#: ../src/control/Control.cpp:2467
 msgid "Discard"
 msgstr "Hylkää"
 
@@ -380,7 +380,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2461
 msgid "Document file was removed."
 msgstr ""
 
@@ -1042,16 +1042,16 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2463 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2462 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "Tallenna"
 
-#: ../src/control/Control.cpp:2463
+#: ../src/control/Control.cpp:2462
 msgid "Save As..."
 msgstr "Tallenna nimellä..."
 
-#: ../src/control/Control.cpp:2306 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2305 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Tallenna tiedosto"
 
@@ -1312,7 +1312,7 @@ msgstr ""
 msgid "Thick"
 msgstr "Paksu"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2461
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1394,7 +1394,7 @@ msgstr "Tuntematon pixmap::domain tyyppi: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2363
+#: ../src/control/Control.cpp:2362
 msgid "Unsaved Document"
 msgstr "Tallentamaton asiakirja"
 
@@ -1451,7 +1451,7 @@ msgstr "Xournal-tiedostot"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2312 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2311 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Xournal++-tiedostot"
 
@@ -1500,7 +1500,7 @@ msgstr ""
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2305 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1512,7 +1512,7 @@ msgstr ""
 msgid "_Open"
 msgstr "_Avaa"
 
-#: ../src/control/Control.cpp:2307 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "_Tallenna"
