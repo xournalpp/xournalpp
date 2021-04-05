@@ -35,6 +35,15 @@ steps:
       unzip ninja-mac.zip -d "${{parameters.generation_path}}"/gtk/inst/bin
     displayName: 'Get Ninja'
   - bash: |
+     # Lua 5.4 is only supported with cmake >= 3.18, so use Lua 5.3 instead
+     cd "${{parameters.generation_path}}"
+     curl -R -O http://www.lua.org/ftp/lua-5.3.6.tar.gz
+     tar zxf lua-5.3.6.tar.gz
+     cd lua-5.3.6
+     make macosx all
+     make install INSTALL_TOP="${{parameters.generation_path}}"/gtk/inst
+    displayName: 'Get Lua'
+  - bash: |
       export PKG_CONFIG_PATH="${{parameters.generation_path}}"/gtk/inst/lib/pkgconfig:"${{parameters.generation_path}}"/gtk/inst/share/pkgconfig:/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/pkgconfig
       export PREFIX="${{parameters.generation_path}}"/gtk/inst
       export PATH="$HOME/.local/bin:"${{parameters.generation_path}}"/gtk/inst/bin:$PATH"
