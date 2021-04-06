@@ -70,6 +70,7 @@ inline void handlePrintError(GError*& error, const char* message) {
 }
 }  // namespace
 
+// Todo: maybe loop over this twice,
 void PrintHandler::print(Document* doc, size_t currentPage, GtkWindow* parent) {
     GtkPrintSettings* settings{};
     auto filepath = Util::getConfigFile(PRINT_CONFIG_FILE);
@@ -77,6 +78,7 @@ void PrintHandler::print(Document* doc, size_t currentPage, GtkWindow* parent) {
         GError* error{};
         settings = gtk_print_settings_new_from_file(filepath.u8string().c_str(), &error);
         handlePrintError(error, "Loading print settings failed with: %s");
+        fs::remove(filepath);
     }
     if (settings == nullptr) {
         settings = gtk_print_settings_new();
