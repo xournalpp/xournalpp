@@ -350,7 +350,7 @@ msgstr "Supprimer le calque"
 
 #: ../src/control/Control.cpp:2438
 msgid "Discard"
-msgstr "Annuler"
+msgstr "Ignorer"
 
 #: ../src/control/XournalMain.cpp:680
 msgid "Display advanced export options"
