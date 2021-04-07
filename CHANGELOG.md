@@ -12,7 +12,7 @@ community.
       (#1101, #1384). The configuration files will now be stored in an
       appropriate platform-specific user data folder. Old configuration files
       will be copied automatically if the new user data folder does not exist.
-    * Windows: the installer has been updated, fixing many issues such as:
+    * Windows: The installer has been updated, fixing many issues such as:
       incorrectly set up registry keys, missing uninstaller entry, missing
       entries in Open With context menu in Explorer, missing icons, etc. (#2606,
       #2585, #2387, #2141, #2036, #1903, #2666). When upgrading from 1.0.18, you
@@ -29,6 +29,7 @@ community.
       end-users, only maintainers and packagers.
     * The code has been updated to use C++17 (#1485) and must now be compiled
       using a supported compiler version, such as GCC 7 or Clang 5 (or newer).
+    * MacOS: Dropped support for macOS High Sierra; minimal version is now Catalina (#2989)
 * Packaging changes
     * AppImage: Fixed AppImages not running on more recent Linux distros
       (#2600).
@@ -187,6 +188,7 @@ community.
     * Non-visible refactoring and code cleanup (#1279, #2150, #1944, #2199, #2213, etc.)
     * Switched from deprecated GTK 2 initialisation to GTK 3 initialisation (#2252)
     * Windows: Fixed crash that occurs when closing the application (#2218).
+    * Improved Print Dialog verbosity and error handling (#3002)
 
 ## 1.0.20
 
