@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-05 11:55+0000\n"
-"PO-Revision-Date: 2021-04-05 12:00\n"
+"POT-Creation-Date: 2021-04-09 20:05+0000\n"
+"PO-Revision-Date: 2021-04-09 21:05\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -991,7 +991,7 @@ msgstr "Predefinito"
 msgid "Presentation mode"
 msgstr "Modalità presentazione"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:69
+#: ../src/gui/dialog/LanguageConfigGui.cpp:68
 msgid "Previously selected language not available anymore!"
 msgstr "Lingua precedentemente selezionata non più disponibile!"
 
@@ -1252,7 +1252,7 @@ msgstr "Scambia la pagina corrente con quella sopra"
 msgid "Swap the current page with the one below"
 msgstr "Scambia la pagina corrente con quella sotto"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:53
+#: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
 msgstr "Predefinito Di Sistema"
 
