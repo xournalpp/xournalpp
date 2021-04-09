@@ -92,6 +92,10 @@ auto ActionGroup_fromString(const string& value) -> ActionGroup {
         return GROUP_GRID_SNAPPING;
     }
 
+    if (value == "GROUP_HIGHLIGHT_POSITION") {
+        return GROUP_HIGHLIGHT_POSITION;
+    }
+
     if (value == "GROUP_FILL") {
         return GROUP_FILL;
     }
@@ -196,6 +200,10 @@ auto ActionGroup_toString(ActionGroup value) -> string {
 
     if (value == GROUP_GRID_SNAPPING) {
         return "GROUP_GRID_SNAPPING";
+    }
+
+    if (value == GROUP_HIGHLIGHT_POSITION) {
+        return "GROUP_HIGHLIGHT_POSITION";
     }
 
     if (value == GROUP_FILL) {
