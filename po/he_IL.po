@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-05 11:55+0000\n"
-"PO-Revision-Date: 2021-04-05 12:00\n"
+"POT-Creation-Date: 2021-04-09 20:05+0000\n"
+"PO-Revision-Date: 2021-04-09 21:05\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -968,7 +968,7 @@ msgstr "מוגדר מראש"
 msgid "Presentation mode"
 msgstr "מצב תצוגה"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:69
+#: ../src/gui/dialog/LanguageConfigGui.cpp:68
 msgid "Previously selected language not available anymore!"
 msgstr ""
 
@@ -1222,7 +1222,7 @@ msgstr "החלף את הדף הנוכחי עם זה שמעליו"
 msgid "Swap the current page with the one below"
 msgstr "החלף את הדף הנוכחי עם זה שמתחתיו"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:53
+#: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
 msgstr ""
 
