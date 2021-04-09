@@ -299,6 +299,7 @@ protected:
 
     void rotationSnappingToggle();
     void gridSnappingToggle();
+    void highlightPositionToggle();
 
     bool showSaveDialog();
 

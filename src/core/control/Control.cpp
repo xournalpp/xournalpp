@@ -434,6 +434,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_SETTINGS:
             showSettings();
             break;
+        case ACTION_HIGHLIGHT_POSITION:
+            highlightPositionToggle();
+            break;
 
         case ACTION_ARRANGE_BRING_TO_FRONT:
         case ACTION_ARRANGE_BRING_FORWARD:
@@ -2865,6 +2868,12 @@ void Control::rotationSnappingToggle() {
 void Control::gridSnappingToggle() {
     settings->setSnapGrid(!settings->isSnapGrid());
     fireActionSelected(GROUP_GRID_SNAPPING, settings->isSnapGrid() ? ACTION_GRID_SNAPPING : ACTION_NONE);
+}
+
+void Control::highlightPositionToggle() {
+    settings->setHighlightPosition(!settings->isHighlightPosition());
+    fireActionSelected(GROUP_HIGHLIGHT_POSITION,
+                       settings->isHighlightPosition() ? ACTION_HIGHLIGHT_POSITION : ACTION_NONE);
 }
 
 auto Control::getTextEditor() -> TextEditor* {
