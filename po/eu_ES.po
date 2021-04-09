@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-05 11:55+0000\n"
-"PO-Revision-Date: 2021-04-05 12:00\n"
+"POT-Creation-Date: 2021-04-09 20:05+0000\n"
+"PO-Revision-Date: 2021-04-09 21:05\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -991,7 +991,7 @@ msgstr "Aurrez zehaztuta"
 msgid "Presentation mode"
 msgstr "Aurkezpen modua"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:69
+#: ../src/gui/dialog/LanguageConfigGui.cpp:68
 msgid "Previously selected language not available anymore!"
 msgstr "Aurretik aukeratutako hizkuntza ez dago eskuragarri!"
 
@@ -1252,7 +1252,7 @@ msgstr "Ordeztu uneko orria aurrekoarekin"
 msgid "Swap the current page with the one below"
 msgstr "Ordeztu uneko orria hurrengoarekin"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:53
+#: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
 msgstr "Sistemaren lehenetsia"
 
