@@ -24,6 +24,9 @@
 
 #endif
 
+// Default background color of the preview.
+constexpr Color DEFAULT_PREVIEW_BACKGROUND{0xFFFFFFFF};
+
 // Callbacks for gtk to render the dialog's preview.
 extern "C" {
 /**
@@ -35,9 +38,9 @@ static void resizePreviewCallback(GtkWidget* widget, GdkRectangle* allocation, g
 }
 
 LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& settings):
-        GladeGui(gladeSearchPath, "texdialog.glade", "texDialog") {
+        GladeGui(gladeSearchPath, "texdialog.glade", "texDialog"), previewBackgroundColor{DEFAULT_PREVIEW_BACKGROUND} {
     GtkContainer* texBoxContainer = GTK_CONTAINER(get("texBoxContainer"));
-    std::stringstream widgetCss;
+    this->cssProvider = gtk_css_provider_new();
 
 #ifdef HAVE_GTK_SOURCEVIEW_LIB
     this->texBox = gtk_source_view_new();
@@ -82,16 +85,6 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
     }
 #endif
 
-    widgetCss << "#texBox {";
-
-    if (settings.useCustomEditorFont) {
-        widgetCss << "  font-size: " << settings.editorFont.getSize() << "pt;";
-        widgetCss << "  font-family: " << settings.editorFont.getName() << ";";
-    }
-
-    widgetCss << "} ";
-
-
     // Enable/disable word-wrap.
     GtkWrapMode texBoxWrapMode = GTK_WRAP_NONE;
     if (settings.editorWordWrap) {
@@ -100,28 +93,19 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
 
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(this->texBox), texBoxWrapMode);
 
-    // Background color for the temporary render, default is white because
-    // on dark themed DE the LaTeX is hard to read
-    widgetCss << "#texImage {";
-    widgetCss << "    background-color: white;";
-    widgetCss << "    padding: 10px;";
-    widgetCss << "} ";
-
-    std::string widgetCssStr = widgetCss.str();
-
-    this->cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_data(this->cssProvider, widgetCssStr.c_str(), -1, nullptr);
-
-    // Apply the CSS to both the texBox and the drawing area.
-    gtk_style_context_add_provider(gtk_widget_get_style_context(GTK_WIDGET(this->texTempRender)),
-                                   GTK_STYLE_PROVIDER(this->cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    gtk_style_context_add_provider(gtk_widget_get_style_context(GTK_WIDGET(this->texBox)),
-                                   GTK_STYLE_PROVIDER(this->cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-
     // Connect to redraw events for the texImage.
     g_signal_connect(G_OBJECT(this->texTempRender), "draw", G_CALLBACK(drawPreviewCallback), this);
     g_signal_connect(G_OBJECT(this->texTempRender), "size-allocate", G_CALLBACK(resizePreviewCallback), nullptr);
+
+    std::stringstream texBoxCssBuilder;
+    if (settings.useCustomEditorFont) {
+        texBoxCssBuilder << "  font-size: " << settings.editorFont.getSize() << "pt;";
+        texBoxCssBuilder << "  font-family: " << settings.editorFont.getName() << ";";
+    }
+
+    this->texBoxCss = texBoxCssBuilder.str();
+
+    setupCSS();
 }
 
 LatexDialog::~LatexDialog() {
@@ -133,6 +117,31 @@ LatexDialog::~LatexDialog() {
         cairo_surface_destroy(this->scaledRender);
         this->scaledRender = nullptr;
     }
+}
+
+void LatexDialog::setupCSS() {
+    std::stringstream widgetCss;
+
+    widgetCss << "#texBox {";
+    widgetCss << this->texBoxCss;
+    widgetCss << "} ";
+
+    // Background color for the temporary render, default is white because
+    // on dark themed DE the LaTeX is hard to read
+    widgetCss << "#texImage {";
+    widgetCss << "    background-color: " << Util::rgb_to_hex_string(this->previewBackgroundColor) << ";";
+    widgetCss << "    padding: 10px;";
+    widgetCss << "} ";
+
+    std::string widgetCssStr = widgetCss.str();
+
+    gtk_css_provider_load_from_data(this->cssProvider, widgetCssStr.c_str(), -1, nullptr);
+
+    // Apply the CSS to both the texBox and the drawing area.
+    gtk_style_context_add_provider(gtk_widget_get_style_context(GTK_WIDGET(this->texTempRender)),
+                                   GTK_STYLE_PROVIDER(this->cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_style_context_add_provider(gtk_widget_get_style_context(GTK_WIDGET(this->texBox)),
+                                   GTK_STYLE_PROVIDER(this->cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 void LatexDialog::setFinalTex(std::string texString) { this->finalLatex = std::move(texString); }
@@ -161,6 +170,15 @@ void LatexDialog::setTempRender(PopplerDocument* pdf) {
 
     // Queue rendering the changed preview.
     gtk_widget_queue_draw(GTK_WIDGET(this->texTempRender));
+}
+
+void LatexDialog::setPreviewBackgroundColor(Color newColor) {
+    if (newColor == this->previewBackgroundColor) {
+        return;
+    }
+
+    this->previewBackgroundColor = newColor;
+    setupCSS();
 }
 
 auto LatexDialog::getPreviewScale(double srcWidth, double srcHeight) const -> double {

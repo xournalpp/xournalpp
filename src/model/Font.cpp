@@ -9,7 +9,7 @@
 
 XojFont::XojFont() = default;
 
-XojFont::XojFont(string name, double size) {
+XojFont::XojFont(std::string name, double size) {
     setName(name);
     setSize(size);
 }
