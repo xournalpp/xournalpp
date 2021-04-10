@@ -110,6 +110,28 @@ void cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha);
 
 constexpr auto floatToUIntColor(double color) -> uint8_t;
 
+/**
+ * @param color Color to convert to grayscale.
+ * @return Given color converted to grayscale 1.0 -> white, 0.0 -> black.
+ */
+float as_grayscale_color(Color color);
+
+/**
+ *  Get the fraction by which the grayscale value of color1 contrasts
+ * with color2 (0.0 = no contrast, 1.0 = maximum contrast).
+ * Does not take a color's alpha channel into account.
+ * @return Scale factor by which the two given colors differ. Must be in
+ *          [0.0, 1.0].
+ */
+float get_color_contrast(Color color1, Color color2);
+
+/**
+ * @param rgb Color to get a representation for.
+ * @return a CSS-style representation of the color, in hex. For example,
+ *          red might be #ff0000, green, #00ff00, and blue, #0000ff.
+ */
+std::string rgb_to_hex_string(Color rgb);
+
 }  // namespace Util
 
 constexpr auto Util::rgb_to_GdkRGBA(Color color) -> GdkRGBA {  //

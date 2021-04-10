@@ -22,6 +22,9 @@
 
 using std::string;
 
+constexpr Color LIGHT_PREVIEW_BACKGROUND{0xFFFFFF};
+constexpr Color DARK_PREVIEW_BACKGROUND{0x000000};
+
 LatexController::LatexController(Control* control):
         control(control),
         settings(control->getSettings()->latexSettings),
@@ -149,9 +152,17 @@ void LatexController::triggerImageUpdate(const string& texString) {
         return;
     }
 
+    Color textColor = this->control->getToolHandler()->getTool(TOOL_TEXT).getColor();
+
+    // Determine a background color that has enough contrast with the text color:
+    if (Util::get_color_contrast(textColor, LIGHT_PREVIEW_BACKGROUND) > 0.5) {
+        this->dlg.setPreviewBackgroundColor(LIGHT_PREVIEW_BACKGROUND);
+    } else {
+        this->dlg.setPreviewBackgroundColor(DARK_PREVIEW_BACKGROUND);
+    }
+
     this->lastPreviewedTex = texString;
-    const std::string texContents = LatexGenerator::templateSub(
-            texString, this->latexTemplate, this->control->getToolHandler()->getTool(TOOL_TEXT).getColor());
+    const std::string texContents = LatexGenerator::templateSub(texString, this->latexTemplate, textColor);
     auto result = generator.asyncRun(this->texTmpDir, texContents);
     if (auto* err = std::get_if<LatexGenerator::GenError>(&result)) {
         XojMsgBox::showErrorToUser(this->control->getGtkWindow(), err->message);
