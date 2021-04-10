@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-09 20:05+0000\n"
-"PO-Revision-Date: 2021-04-10 21:06\n"
+"PO-Revision-Date: 2021-04-10 22:05\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -124,15 +124,16 @@ msgstr "Attributfärg inte inställd!"
 #: ../src/control/AudioController.cpp:94
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Ingen ljudmapp angiven! Inspelning kommer ej fungera!\n"
+"Var god och ange inspelningsmappen under \"Preferences > Audio recording\""
 
 #: ../src/control/Control.cpp:211
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Automatisk sparning misslyckades med ett fel: {1}"
 
 #: ../src/control/Control.cpp:191
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "Automatisk sparning döptes om från {1} till {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
@@ -159,11 +160,11 @@ msgstr "Blå"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring forward"
-msgstr ""
+msgstr "Ta fram"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "&För till förgrunden"
 
 #: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2470
 #: ../src/control/XournalMain.cpp:168
@@ -219,7 +220,8 @@ msgstr "Kopiera sida"
 #: ../src/util/PathUtil.cpp:230
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Kunde inte skapa mapp: {1}\n"
+"Misslyckades med felet: {2}"
 
 #: ../src/control/LatexController.cpp:271
 msgid "Could not load LaTeX PDF file"
@@ -239,20 +241,20 @@ msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte läsa filen"
 
 #: ../src/control/xojfile/LoadHandler.cpp:786
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte skriva till filen"
 
 #: ../src/control/xojfile/LoadHandler.cpp:758
 #: ../src/control/xojfile/LoadHandler.cpp:1009
 #: ../src/control/xojfile/LoadHandler.cpp:1027
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Ingen giltig filstorlek angiven"
 
 #: ../src/control/xojfile/LoadHandler.cpp:749
 #: ../src/control/xojfile/LoadHandler.cpp:765
 #: ../src/control/xojfile/LoadHandler.cpp:1000
 #: ../src/control/xojfile/LoadHandler.cpp:1016
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:157
 msgid "Could not open file: \"{1}\""
