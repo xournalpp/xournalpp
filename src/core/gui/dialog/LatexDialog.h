@@ -15,6 +15,7 @@
 
 #include "gui/GladeGui.h"
 #include "model/TexImage.h"
+#include "util/Color.h"
 
 class LatexSettings;
 
@@ -46,6 +47,12 @@ public:
      * @param pdf PDF document with rendered TeX.
      */
     void setTempRender(PopplerDocument* pdf);
+
+    /**
+     * Set TeX preview background color to the given color.
+     * @param color New preview background color.
+     */
+    void setPreviewBackgroundColor(Color color);
 
     // Necessary for the controller in order to connect the 'text-changed'
     // signal handler
@@ -81,6 +88,12 @@ private:
      */
     void renderScaledPreview();
 
+    /**
+     * @brief Initialize or re-initialize CSS. Applies styling to the editor,
+     * preview, etc.
+     */
+    void setupCSS();
+
 private:
     /**
      * @brief Called on 'draw' signal.
@@ -109,4 +122,14 @@ private:
      * The final LaTeX string to save once the dialog is closed.
      */
     std::string finalLatex;
+
+    /**
+     * Background color for the LaTeX preview.
+     */
+    Color previewBackgroundColor;
+
+    /**
+     * Constant CSS for the tex box.
+     */
+    std::string texBoxCss;
 };
