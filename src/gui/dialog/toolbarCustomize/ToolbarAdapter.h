@@ -54,6 +54,17 @@ private:
     static void toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y,
                                           GtkSelectionData* data, guint info, guint time, ToolbarAdapter* adapter);
 
+    /**
+     * @brief Wrapper around gtk_toolbar_get_drop index with coorect coordinate handling
+     *
+     * @param toolbar the corresponding toolbar for the drop index
+     * @param x coordinate in toolbar coordinate system
+     * @param y coordinate in toolbar coordinate system
+     * @param horizontal denotes whether the toolbar is horizontal
+     * @return gint position at which drop item should be inserted
+     */
+    static gint toolbarGetDropIndex(GtkToolbar* toolbar, gint x, gint y, bool horizontal);
+
 private:
     GtkWidget* w;
     std::string toolbarName;
