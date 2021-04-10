@@ -136,8 +136,7 @@ void Settings::loadDefault() {
 
     this->touchZoomStartThreshold = 0.0;
 
-    this->pageRerenderThreshold = 5.0;
-    this->pdfPageCacheSize = 10;
+    this->pdfCacheSize_px = 1024 * 1024 * 32;
     this->preloadPagesBefore = 3U;
     this->preloadPagesAfter = 5U;
     this->eagerPageCleanup = true;
@@ -409,10 +408,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->presentationHideElements = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchZoomStartThreshold")) == 0) {
         this->touchZoomStartThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pageRerenderThreshold")) == 0) {
-        this->pageRerenderThreshold = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfPageCacheSize")) == 0) {
-        this->pdfPageCacheSize = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pdfCacheSize_px")) == 0) {
+        this->pdfCacheSize_px = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preloadPagesBefore")) == 0) {
         this->preloadPagesBefore = g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("preloadPagesAfter")) == 0) {
@@ -879,9 +876,10 @@ void Settings::save() {
     WRITE_UINT_PROP(selectionMarkerColor);
 
     WRITE_DOUBLE_PROP(touchZoomStartThreshold);
-    WRITE_DOUBLE_PROP(pageRerenderThreshold);
 
-    WRITE_INT_PROP(pdfPageCacheSize);
+    WRITE_COMMENT("The maximum number of pixels in the PDF page cache. Each pixel is 4 bytes.");
+    WRITE_UINT_PROP(pdfCacheSize_px);
+
     WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
     WRITE_UINT_PROP(preloadPagesBefore);
     WRITE_UINT_PROP(preloadPagesAfter);
@@ -1648,24 +1646,13 @@ void Settings::setTouchZoomStartThreshold(double threshold) {
     save();
 }
 
+auto Settings::getPdfCacheSize() const -> size_t { return this->pdfCacheSize_px; }
 
-auto Settings::getPDFPageRerenderThreshold() const -> double { return this->pageRerenderThreshold; }
-void Settings::setPDFPageRerenderThreshold(double threshold) {
-    if (this->pageRerenderThreshold == threshold) {
+void Settings::setPdfCacheSize(size_t size) {
+    if (this->pdfCacheSize_px == size) {
         return;
     }
-
-    this->pageRerenderThreshold = threshold;
-    save();
-}
-
-auto Settings::getPdfPageCacheSize() const -> int { return this->pdfPageCacheSize; }
-
-void Settings::setPdfPageCacheSize(int size) {
-    if (this->pdfPageCacheSize == size) {
-        return;
-    }
-    this->pdfPageCacheSize = size;
+    this->pdfCacheSize_px = size;
     save();
 }
 

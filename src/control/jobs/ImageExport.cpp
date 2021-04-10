@@ -148,7 +148,8 @@ void ImageExport::exportImagePage(int pageId, int id, double zoomRatio, ExportGr
         int pgNo = page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
-        PdfView::drawPage(nullptr, popplerPage, cr, zoomRatio, page->getWidth(), page->getHeight());
+        Rectangle<double> renderRect{0.0, 0.0, page->getWidth(), page->getHeight()};
+        PdfView::drawPage(nullptr, popplerPage, cr, zoomRatio, page->getWidth(), page->getHeight(), renderRect);
     }
 
     view.drawPage(page, this->cr, true, exportBackground == EXPORT_BACKGROUND_NONE,

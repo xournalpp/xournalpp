@@ -11,7 +11,7 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
         AbstractSidebarPage(control, toolbar) {
     this->layoutmanager = new SidebarLayout();
 
-    this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
+    this->cache = new PdfCache(control->getSettings()->getPdfCacheSize());
 
     this->iconViewPreview = gtk_layout_new(nullptr, nullptr);
     g_object_ref(this->iconViewPreview);
@@ -82,7 +82,7 @@ auto SidebarPreviewBase::getWidget() -> GtkWidget* { return this->scrollPreview;
 
 void SidebarPreviewBase::documentChanged(DocumentChangeType type) {
     if (type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_CLEARED) {
-        this->cache->clearCache();
+        this->cache->clear();
         updatePreviews();
     }
 }
