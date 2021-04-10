@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-09 20:05+0000\n"
-"PO-Revision-Date: 2021-04-10 13:37\n"
+"PO-Revision-Date: 2021-04-10 14:36\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -33,7 +33,7 @@ msgstr "\n"
 msgid "\n"
 "Will now attempt to run without this file."
 msgstr "\n"
-"Teď se pokusí spustit bez tohoto souboru."
+"Nyní se pokusí o spuštění bez tohoto souboru."
 
 #: ../src/gui/MainWindow.cpp:712
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -1304,7 +1304,7 @@ msgstr "PDF pozadí nebylo nalezeno."
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "Kontrola přepisu pozadí selhala:\n"
 
 #: ../src/control/Control.cpp:2045
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -1966,7 +1966,7 @@ msgstr "<i>Přiblížit stránky deníků pomocí gesta.</i>"
 
 #: ../ui/settings.glade:2505
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>Používejte dotykovou obrazovku jako mnohodotykové pero.</i>"
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -2420,7 +2420,7 @@ msgstr "Zisk"
 
 #: ../ui/settings.glade:1128 ../ui/settings.glade:1148
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Gaussovský parametr: čím vyšší, tím větší stabilizace a zpoždění mezi kurzorem a špičkou pera."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
@@ -2568,11 +2568,11 @@ msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Nastavení spouštění programu LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Příkaz pro vygenerovaní LaTeX dokumentu"
 
 #: ../ui/settings.glade:5561 ../ui/settings.glade:5609
 msgid "Language"
@@ -2612,7 +2612,7 @@ msgstr "Hmotnost"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Hmotnost: čím vyšší hmotnost, tím větší setrvačnost a stabilizace"
 
 #: ../ui/settings.glade:4564
 msgid "Max Length (mm)"
@@ -2621,7 +2621,8 @@ msgstr "Maximální délka (mm)"
 #: ../ui/settings.glade:871
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Sloučit události tlačítek s událostmi hrotu pera\n"
+"<i>(Zaškrtněte pokud</i><tt>xsetwacom ukáže *deviceId* TabletPCButton</tt>\" <i>vrátí</i> \"<tt>na</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:1355
 msgid "Middle Mouse Button"
@@ -2765,7 +2766,7 @@ msgstr "_Správce doplňků"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Nastavení doplňků je změněno až po restartování aplikace"
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
@@ -3061,7 +3062,7 @@ msgstr "Pokus se nejdříve vybrat objekt; pokud není nic vybráno, zobrazí se
 
 #: ../ui/settings.glade:4442
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Použít \"snapping\" pro rozpoznané tvary"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
