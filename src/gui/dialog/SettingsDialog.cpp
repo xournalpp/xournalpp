@@ -294,8 +294,6 @@ void SettingsDialog::customHandRecognitionToggled() {
 void SettingsDialog::customStylusIconTypeChanged() {
     GtkWidget* cbStylusCursorType = get("cbStylusCursorType");
     int stylusCursorType = gtk_combo_box_get_active(GTK_COMBO_BOX(cbStylusCursorType));
-    bool showCursorHighlightOptions = stylusCursorType != STYLUS_CURSOR_NONE;
-    gtk_widget_set_sensitive(get("highlightCursorGrid"), showCursorHighlightOptions);
 }
 
 void SettingsDialog::showStabilizerAvMethodOptions(StrokeStabilizer::AveragingMethod method) {

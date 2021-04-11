@@ -395,11 +395,12 @@ auto XournalppCursor::getHighlighterCursor() -> GdkCursor* {
 
 
 auto XournalppCursor::getPenCursor() -> GdkCursor* {
-    if (control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_NONE) {
+    if ((control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_NONE) &&
+        !control->getSettings()->isHighlightPosition()) {
         setCursor(CRSR_BLANK_CURSOR);
         return nullptr;
     }
-    if (this->drawDirActive) {
+    if ((control->getSettings()->getStylusCursorType() != STYLUS_CURSOR_NONE) && this->drawDirActive) {
         return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
     }
 
@@ -410,22 +411,24 @@ auto XournalppCursor::getPenCursor() -> GdkCursor* {
 auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> GdkCursor* {
     auto irgb = control->getToolHandler()->getColor();
     auto drgb = Util::rgb_to_GdkRGBA(irgb);
-    bool big = control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_BIG;
+    auto cursorType = control->getSettings()->getStylusCursorType();
+    auto cursor = (cursorType == STYLUS_CURSOR_NONE) ? CRSR_BLANK_CURSOR : CRSR_PENORHIGHLIGHTER;
     bool bright = control->getSettings()->isHighlightPosition();
     int height = size;
     int width = size;
 
     // create a hash of variables so we notice if one changes despite being the same cursor type:
-    gulong flavour = (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(64 * alpha) << 2 |
-                     static_cast<gulong>(size) << 9 | static_cast<gulong>(irgb) << 14;
+    gulong flavour = (cursorType == STYLUS_CURSOR_DOT ? 1 : 0) | (cursorType == STYLUS_CURSOR_BIG ? 2 : 0) |
+                     (bright ? 4 : 0) | static_cast<gulong>(64 * alpha) << 3 | static_cast<gulong>(size) << 10 |
+                     static_cast<gulong>(irgb) << 15;
 
-    if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) {
+    if ((cursor == this->currentCursor) && (flavour == this->currentCursorFlavour)) {
         return nullptr;
     }
-    this->currentCursor = CRSR_PENORHIGHLIGHTER;
+    this->currentCursor = cursor;
     this->currentCursorFlavour = flavour;
 
-    if (big || bright) {
+    if ((cursorType == STYLUS_CURSOR_BIG) || bright) {
         height = width = 90;
     }
 
@@ -437,7 +440,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     cairo_surface_t* crCursor = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
     cairo_t* cr = cairo_create(crCursor);
 
-    if (big) {
+    if (cursorType == STYLUS_CURSOR_BIG) {
         // When using highlighter, paint the icon with the current color
         if (size == 5) {
             gdk_cairo_set_source_rgba(cr, &drgb);
@@ -474,19 +477,22 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
         cairo_stroke(cr);
     }
 
-    auto drgbCopy = drgb;
-    drgbCopy.alpha = alpha;
-    gdk_cairo_set_source_rgba(cr, &drgbCopy);
-    double cursorSize = control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom();
-    cairo_arc(cr, centerX, centerY, cursorSize / 2., 0, 2. * M_PI);
-    cairo_fill(cr);
+    if (cursorType != STYLUS_CURSOR_NONE) {
+        auto drgbCopy = drgb;
+        drgbCopy.alpha = alpha;
+        gdk_cairo_set_source_rgba(cr, &drgbCopy);
+        double cursorSize = control->getToolHandler()->getThickness() * control->getZoomControl()->getZoom();
+        cairo_arc(cr, centerX, centerY, cursorSize / 2., 0, 2. * M_PI);
+        cairo_fill(cr);
+    }
+
     cairo_destroy(cr);
     GdkPixbuf* pixbuf = xoj_pixbuf_get_from_surface(crCursor, 0, 0, width, height);
     cairo_surface_destroy(crCursor);
-    GdkCursor* cursor = gdk_cursor_new_from_pixbuf(
+    GdkCursor* gdkCursor = gdk_cursor_new_from_pixbuf(
             gtk_widget_get_display(control->getWindow()->getXournal()->getWidget()), pixbuf, centerX, centerY);
     g_object_unref(pixbuf);
-    return cursor;
+    return gdkCursor;
 }
 
 
