@@ -433,7 +433,7 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     this->currentCursorFlavour = flavour;
 
     if (big || bright) {
-        height = width = 60;
+        height = width = 90;
     }
 
     // We change the drawing method, now the center with the colored dot of the pen
