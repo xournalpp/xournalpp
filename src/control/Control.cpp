@@ -345,8 +345,8 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
 
     this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), page, getZoomControl()->getZoomReal());
 
-    int current = getCurrentPageNo();
-    int count = this->doc->getPageCount();
+    auto current = getCurrentPageNo();
+    auto count = this->doc->getPageCount();
 
     fireEnableAction(ACTION_GOTO_FIRST, current != 0);
     fireEnableAction(ACTION_GOTO_BACK, current != 0);
@@ -1373,7 +1373,7 @@ void Control::paperFormat() {
 }
 
 void Control::changePageBackgroundColor() {
-    int pNr = getCurrentPageNo();
+    auto pNr = getCurrentPageNo();
     this->doc->lock();
     auto const& p = this->doc->getPage(pNr);
     this->doc->unlock();
@@ -1402,9 +1402,8 @@ void Control::setViewPairedPages(bool enabled) {
     settings->setShowPairedPages(enabled);
     fireActionSelected(GROUP_PAIRED_PAGES, enabled ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewPresentationMode(bool enabled) {
@@ -1443,17 +1442,15 @@ void Control::setViewPresentationMode(bool enabled) {
     fireEnableAction(ACTION_TOOL_HAND, !enabled);
     fireActionSelected(GROUP_PRESENTATION_MODE, enabled ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setPairsOffset(int numOffset) {
     settings->setPairsOffset(numOffset);
     fireActionSelected(GROUP_PAIRED_PAGES, numOffset ? ACTION_SET_PAIRS_OFFSET : ACTION_NOT_SELECTED);
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewColumns(int numColumns) {
@@ -1493,9 +1490,8 @@ void Control::setViewColumns(int numColumns) {
 
     fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewRows(int numRows) {
@@ -1535,9 +1531,8 @@ void Control::setViewRows(int numRows) {
 
     fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutVert(bool vert) {
@@ -1553,9 +1548,8 @@ void Control::setViewLayoutVert(bool vert) {
 
     fireActionSelected(GROUP_LAYOUT_HORIZONTAL, action);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutR2L(bool r2l) {
@@ -1571,9 +1565,8 @@ void Control::setViewLayoutR2L(bool r2l) {
 
     fireActionSelected(GROUP_LAYOUT_LR, action);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutB2T(bool b2t) {
@@ -1589,9 +1582,8 @@ void Control::setViewLayoutB2T(bool b2t) {
 
     fireActionSelected(GROUP_LAYOUT_TB, action);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 /**
@@ -1910,9 +1902,8 @@ void Control::showSettings() {
     if (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace() ||
         verticalSpaceAmount != settings->getAddVerticalSpaceAmount() ||
         horizontalSpaceAmount != settings->getAddHorizontalSpaceAmount()) {
-        int currentPage = getCurrentPageNo();
         win->getXournal()->layoutPages();
-        scrollHandler->scrollToPage(currentPage);
+        scrollHandler->scrollToPage(getCurrentPageNo());
     }
 
     if (stylusCursorType != settings->getStylusCursorType() || highlightPosition != settings->isHighlightPosition()) {

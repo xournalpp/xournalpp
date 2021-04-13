@@ -69,7 +69,7 @@ auto InsertDeletePageUndoAction::deletePage(Control* control) -> bool {
     // unlocking the UndoRedoHandler's lock inside here.
     // It's not great practise but it works.
     // doc->lock();
-    int pNr = doc->indexOf(page);
+    auto pNr = doc->indexOf(page);
     if (pNr == -1) {
         //	doc->unlock();
         // this should not happen

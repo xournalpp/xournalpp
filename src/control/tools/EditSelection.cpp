@@ -561,7 +561,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
 
     if (v && v != this->view) {
         XournalView* xournal = this->view->getXournal();
-        int pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
+        auto pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
 
         xournal->pageSelected(pageNr);
 
