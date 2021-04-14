@@ -40,6 +40,7 @@ bool SpinPageAdapter::hasWidget() { return this->widget != nullptr; }
 void SpinPageAdapter::setWidget(GtkWidget* widget) {
     // only one widget is supported and the previous widget has to be removed via removeWidget
     assert(!this->hasWidget());
+    g_assert_nonnull(widget);
 
     this->widget = widget;
     this->pageNrSpinChangedHandlerId =
@@ -55,8 +56,7 @@ void SpinPageAdapter::removeWidget() {
 
     g_signal_handler_disconnect(this->widget, this->pageNrSpinChangedHandlerId);
 
-    g_object_unref(this->widget);
-    this->widget = nullptr;
+    g_clear_object(&this->widget);
 }
 
 auto SpinPageAdapter::getPage() const -> int { return this->page; }

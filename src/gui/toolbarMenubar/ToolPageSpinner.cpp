@@ -17,11 +17,9 @@ ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string i
 
 ToolPageSpinner::~ToolPageSpinner() {
     delete this->pageSpinner;
-    if (this->lbVerticalPdfPage) {
-        g_object_unref(this->lbVerticalPdfPage);
-    }
-    g_object_unref(this->lbPageNo);
-    g_object_unref(this->box);
+    g_clear_object(&this->lbVerticalPdfPage);
+    g_clear_object(&this->lbPageNo);
+    g_clear_object(&this->box);
 }
 
 auto ToolPageSpinner::getPageSpinner() -> SpinPageAdapter* { return pageSpinner; }
@@ -71,24 +69,28 @@ auto ToolPageSpinner::newItem() -> GtkToolItem* {
     }
     GtkWidget* spinner = gtk_spin_button_new_with_range(0, 1, 1);
     gtk_orientable_set_orientation(reinterpret_cast<GtkOrientable*>(spinner), orientation);
+    g_object_ref_sink(spinner);
 
-    GtkWidget* pageLabel = gtk_label_new(_("Page"));
 
     if (this->lbPageNo) {
         g_object_unref(this->lbPageNo);
     }
     this->lbPageNo = gtk_label_new("");
+    g_object_ref_sink(this->lbPageNo);
 
     if (this->lbVerticalPdfPage) {
-        g_object_unref(this->lbVerticalPdfPage);
+        g_clear_object(&this->lbVerticalPdfPage);
     }
+
+    GtkWidget* pageLabel = gtk_label_new(_("Page"));
     if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-        this->lbVerticalPdfPage = nullptr;
         gtk_widget_set_valign(pageLabel, GTK_ALIGN_BASELINE);
         gtk_widget_set_valign(spinner, GTK_ALIGN_BASELINE);
         gtk_widget_set_valign(this->lbPageNo, GTK_ALIGN_BASELINE);
     } else {
         this->lbVerticalPdfPage = gtk_label_new("");
+        g_object_ref_sink(this->lbVerticalPdfPage);
+
         gtk_widget_set_halign(pageLabel, GTK_ALIGN_BASELINE);
         gtk_widget_set_halign(spinner, GTK_ALIGN_CENTER);
         gtk_widget_set_halign(this->lbPageNo, GTK_ALIGN_BASELINE);
@@ -97,11 +99,11 @@ auto ToolPageSpinner::newItem() -> GtkToolItem* {
     this->pageSpinner->setWidget(spinner);  // takes ownership of spinner reference
 
     if (this->box) {
-        g_object_unref(box);
+        g_object_unref(this->box);
     }
-    box = gtk_box_new(orientation, 1);
+    this->box = gtk_box_new(orientation, 1);
+    g_object_ref_sink(this->box);
     gtk_box_pack_start(GTK_BOX(box), pageLabel, false, false, 7);
-    g_object_unref(pageLabel);
     gtk_box_pack_start(GTK_BOX(box), spinner, false, false, 0);
     gtk_box_pack_start(GTK_BOX(box), this->lbPageNo, false, false, 7);
 

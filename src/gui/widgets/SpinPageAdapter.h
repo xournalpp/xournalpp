@@ -29,6 +29,10 @@ public:
 
 public:
     bool hasWidget();
+
+    /**
+     * Assumes ownership of widget
+     */
     void setWidget(GtkWidget* widget);
     void removeWidget();
 
