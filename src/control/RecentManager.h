@@ -79,6 +79,11 @@ public:
      */
     void addListener(RecentManagerListener* l);
 
+    /**
+     * Returns the most recent xoj item from the underlying GtkRecentManager
+     */
+    GtkRecentInfo* getMostRecent();
+
 private:
     /**
      * Filters a list of GtkRecentInfo according to their file types

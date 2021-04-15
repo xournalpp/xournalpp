@@ -230,6 +230,7 @@ public:
     void setClipboardHandlerSelection(EditSelection* selection);
 
     MetadataManager* getMetadataManager();
+    RecentManager* getRecentManager();
     Settings* getSettings();
     ToolHandler* getToolHandler();
     ZoomControl* getZoomControl();
