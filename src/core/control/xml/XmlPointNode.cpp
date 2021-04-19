@@ -2,18 +2,9 @@
 
 #include "util/Util.h"
 
-XmlPointNode::XmlPointNode(const char* tag): XmlAudioNode(tag), points(nullptr) {}
+XmlPointNode::XmlPointNode(const char* tag): XmlAudioNode(tag) {}
 
-XmlPointNode::~XmlPointNode() {
-    for (GList* l = this->points; l != nullptr; l = l->next) {
-        auto* p = static_cast<Point*>(l->data);
-        delete p;
-    }
-    g_list_free(this->points);
-    this->points = nullptr;
-}
-
-void XmlPointNode::addPoint(const Point* point) { this->points = g_list_append(this->points, new Point(*point)); }
+void XmlPointNode::addPoint(Point point) { points.emplace_back(std::move(point)); }
 
 void XmlPointNode::writeOut(OutputStream* out) {
     /** Write stroke and its attributes */
@@ -23,13 +14,13 @@ void XmlPointNode::writeOut(OutputStream* out) {
 
     out->write(">");
 
-    for (GList* l = this->points; l != nullptr; l = l->next) {
-        auto* p = static_cast<Point*>(l->data);
-        if (l != this->points) {
-            out->write(" ");
-        }
+    auto pointIter = points.begin();
+    Util::writeCoordinateString(out, pointIter->x, pointIter->y);
+    ++pointIter;
+    for (; pointIter != points.end(); ++pointIter) {
+        out->write(" ");
 
-        Util::writeCoordinateString(out, p->x, p->y);
+        Util::writeCoordinateString(out, pointIter->x, pointIter->y);
     }
 
     out->write("</");

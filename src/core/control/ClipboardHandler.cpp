@@ -1,5 +1,6 @@
 #include "ClipboardHandler.h"
 
+#include <set>
 #include <utility>
 
 #include <cairo-svg.h>
@@ -61,11 +62,11 @@ auto ClipboardHandler::cut() -> bool {
     return result;
 }
 
-auto ElementCompareFunc(Element* a, Element* b) -> gint {
+auto ElementCompareFunc(Element* a, Element* b) -> bool {
     if (a->getY() == b->getY()) {
-        return a->getX() - b->getX();
+        return (a->getX() - b->getX()) > 0;
     }
-    return a->getY() - b->getY();
+    return (a->getY() - b->getY()) > 0;
 }
 
 static GdkAtom atomSvg1 = gdk_atom_intern_static_string("image/svg");
@@ -99,10 +100,10 @@ public:
             gtk_selection_data_set_pixbuf(selection, contents->image);
         } else if (atomSvg1 == target || atomSvg2 == target) {
             gtk_selection_data_set(selection, target, 8, reinterpret_cast<guchar const*>(contents->svg.c_str()),
-                                   contents->svg.length());
+                                   static_cast<gint>(contents->svg.length()));
         } else if (atomXournal == target) {
             gtk_selection_data_set(selection, target, 8, reinterpret_cast<guchar*>(contents->str->str),
-                                   contents->str->len);
+                                   static_cast<gint>(contents->str->len));
         }
     }
 
@@ -139,23 +140,21 @@ auto ClipboardHandler::copy() -> bool {
     // prepare text contents
     /////////////////////////////////////////////////////////////////
 
-    GList* textElements = nullptr;
+    std::multiset<Text*, decltype(&ElementCompareFunc)> textElements(ElementCompareFunc);
 
     for (Element* e: *this->selection->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
-            textElements = g_list_insert_sorted(textElements, e, reinterpret_cast<GCompareFunc>(ElementCompareFunc));
+            textElements.insert(dynamic_cast<Text*>(e));
         }
     }
 
     string text{};
-    for (GList* l = textElements; l != nullptr; l = l->next) {
-        Text* e = static_cast<Text*>(l->data);
+    for (Text* t: textElements) {
         if (!text.empty()) {
             text += "\n";
         }
-        text += e->getText();
+        text += t->getText();
     }
-    g_list_free(textElements);
 
     /////////////////////////////////////////////////////////////////
     // prepare image contents: PNG
@@ -165,8 +164,8 @@ auto ClipboardHandler::copy() -> bool {
 
     double dpiFactor = 1.0 / Util::DPI_NORMALIZATION_FACTOR * 300.0;
 
-    int width = selection->getWidth() * dpiFactor;
-    int height = selection->getHeight() * dpiFactor;
+    int width = static_cast<int>(selection->getWidth() * dpiFactor);
+    int height = static_cast<int>(selection->getHeight() * dpiFactor);
     cairo_surface_t* surfacePng = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
     cairo_t* crPng = cairo_create(surfacePng);
     cairo_scale(crPng, dpiFactor, dpiFactor);
@@ -218,7 +217,7 @@ auto ClipboardHandler::copy() -> bool {
 
     auto* contents = new ClipboardContents(text, image, svgString->str, out.getStr());
 
-    gtk_clipboard_set_with_data(this->clipboard, targets, n_targets,
+    gtk_clipboard_set_with_data(this->clipboard, targets, static_cast<guint>(n_targets),
                                 reinterpret_cast<GtkClipboardGetFunc>(ClipboardContents::getFunction),
                                 reinterpret_cast<GtkClipboardClearFunc>(ClipboardContents::clearFunction), contents);
     gtk_clipboard_set_can_store(this->clipboard, nullptr, 0);

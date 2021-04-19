@@ -11,24 +11,21 @@
 
 #pragma once
 
+#include <set>
 #include <string>
-#include <vector>
 
+#include "PageLayerPosEntry.h"
 #include "UndoAction.h"
 
-
-class Layer;
-class Redrawable;
 class Stroke;
 
 class EraseUndoAction: public UndoAction {
 public:
     EraseUndoAction(const PageRef& page);
-    virtual ~EraseUndoAction();
 
 public:
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
 
     void addOriginal(Layer* layer, Stroke* element, int pos);
     void addEdited(Layer* layer, Stroke* element, int pos);
@@ -36,9 +33,9 @@ public:
 
     void finalize();
 
-    virtual std::string getText();
+    std::string getText() override;
 
 private:
-    GList* edited = nullptr;
-    GList* original = nullptr;
+    std::multiset<PageLayerPosEntry<Stroke>> edited{};
+    std::multiset<PageLayerPosEntry<Stroke>> original{};
 };
