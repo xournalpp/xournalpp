@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-09 20:05+0000\n"
-"PO-Revision-Date: 2021-04-19 08:48\n"
+"PO-Revision-Date: 2021-04-19 10:21\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -256,7 +256,7 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:157
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "फ़ाइल को खोला नहीं जा सका: \"{1}\""
 
 #: ../src/gui/MainWindow.cpp:90
 msgid "Could not parse custom toolbar.ini file: {1}\n"
@@ -317,11 +317,11 @@ msgstr ""
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
-msgstr ""
+msgstr "निजीकृत"
 
 #: ../src/control/jobs/CustomExportJob.cpp:19
 msgid "Custom Export"
-msgstr ""
+msgstr "कस्टम निर्यात"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Customize Toolbars"
@@ -350,11 +350,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Delete current page"
-msgstr ""
+msgstr "वर्तमान पृष्ठ हटाएँ"
 
 #: ../src/control/XournalMain.cpp:209
 msgid "Delete file"
-msgstr ""
+msgstr "फ़ाइल हटाएँ"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:28
 msgid "Delete layer"
@@ -2767,7 +2767,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
-msgstr ""
+msgstr "रिज़ॉल्यूशन"
 
 #: ../ui/settings.glade:1393
 msgid "Right Mouse Button"
@@ -3324,7 +3324,7 @@ msgstr ""
 
 #: ../ui/settings.glade:389
 msgid "every"
-msgstr ""
+msgstr "प्रत्येक"
 
 #: ../ui/pageTemplate.glade:54
 msgid "load from file"
@@ -3332,7 +3332,7 @@ msgstr ""
 
 #: ../ui/settings.glade:416
 msgid "minutes"
-msgstr ""
+msgstr "मिनट"
 
 #: ../ui/settings.glade:2951 ../ui/settings.glade:3002
 #: ../ui/settings.glade:3999 ../ui/settings.glade:4010
