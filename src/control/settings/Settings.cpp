@@ -838,19 +838,18 @@ void Settings::save() {
     WRITE_BOOL_PROP(disableScrollbarFadeout);
 
     if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH) {
-        saveProperty("scrollbarHideType", "both", root);
+        xmlNode = saveProperty("scrollbarHideType", "both", root);
     } else if (this->scrollbarHideType == SCROLLBAR_HIDE_HORIZONTAL) {
-        saveProperty("scrollbarHideType", "horizontal", root);
+        xmlNode = saveProperty("scrollbarHideType", "horizontal", root);
     } else if (this->scrollbarHideType == SCROLLBAR_HIDE_VERTICAL) {
-        saveProperty("scrollbarHideType", "vertical", root);
+        xmlNode = saveProperty("scrollbarHideType", "vertical", root);
     } else {
-        saveProperty("scrollbarHideType", "none", root);
+        xmlNode = saveProperty("scrollbarHideType", "none", root);
     }
-
-    WRITE_BOOL_PROP(autoloadPdfXoj);
     WRITE_COMMENT(
             "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"");
 
+    WRITE_BOOL_PROP(autoloadPdfXoj);
     WRITE_STRING_PROP(defaultSaveName);
 
     WRITE_BOOL_PROP(autosaveEnabled);
@@ -887,8 +886,8 @@ void Settings::save() {
     WRITE_UINT_PROP(preloadPagesAfter);
     WRITE_BOOL_PROP(eagerPageCleanup);
 
-    WRITE_COMMENT("Config for new pages");
     WRITE_STRING_PROP(pageTemplate);
+    WRITE_COMMENT("Config for new pages");
 
     WRITE_STRING_PROP(sizeUnit);
 
