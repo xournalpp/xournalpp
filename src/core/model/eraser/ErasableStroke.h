@@ -11,24 +11,22 @@
 
 #pragma once
 
+#include <memory>
 #include <mutex>
-#include <string>
 #include <vector>
 
 #include <gtk/gtk.h>
 
-#include "model/Point.h"
+#include "ErasableStrokePart.h"
 
+using PartList = std::vector<ErasableStrokePart>;
 
-class ErasableStrokePart;
-class PartList;
 class Range;
 class Stroke;
 
 class ErasableStroke {
 public:
     ErasableStroke(Stroke* stroke);
-    virtual ~ErasableStroke();
 
 public:
     /**
@@ -36,20 +34,20 @@ public:
      */
     Range* erase(double x, double y, double halfEraserSize, Range* range = nullptr);
 
-    GList* getStroke(Stroke* original);
+    std::vector<std::unique_ptr<Stroke>> getStroke(Stroke* original);
 
     void draw(cairo_t* cr);
 
 private:
-    void erase(double x, double y, double halfEraserSize, ErasableStrokePart* part, PartList* list);
-    static bool erasePart(double x, double y, double halfEraserSize, ErasableStrokePart* part, PartList* list,
+    bool erase(double x, double y, double halfEraserSize, PartList::iterator& part, PartList& list);
+    static bool erasePart(double x, double y, double halfEraserSize, PartList::iterator& part, PartList& list,
                           bool* deleteStrokeAfter);
 
     void addRepaintRect(double x, double y, double width, double height);
 
 private:
     std::mutex partLock;
-    PartList* parts = nullptr;
+    PartList parts{};
 
     Range* repaintRect = nullptr;
 

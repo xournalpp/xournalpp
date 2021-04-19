@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include "model/Point.h"
 
 #include "XmlAudioNode.h"
@@ -18,16 +20,11 @@
 class XmlPointNode: public XmlAudioNode {
 public:
     XmlPointNode(const char* tag);
-    virtual ~XmlPointNode();
-
-private:
-    XmlPointNode(const XmlPointNode& node);
-    void operator=(const XmlPointNode& node);
 
 public:
-    void addPoint(const Point* point);
-    virtual void writeOut(OutputStream* out);
+    void addPoint(Point point);
+    void writeOut(OutputStream* out) override;
 
 private:
-    GList* points;
+    std::vector<Point> points{};
 };

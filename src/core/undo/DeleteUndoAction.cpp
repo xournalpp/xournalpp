@@ -1,46 +1,29 @@
 #include "DeleteUndoAction.h"
 
-#include "gui/Redrawable.h"
 #include "model/Element.h"
 #include "model/Layer.h"
 #include "model/PageRef.h"
 #include "util/i18n.h"
 
-#include "PageLayerPosEntry.h"
 
 DeleteUndoAction::DeleteUndoAction(const PageRef& page, bool eraser): UndoAction("DeleteUndoAction") {
     this->page = page;
     this->eraser = eraser;
 }
 
-DeleteUndoAction::~DeleteUndoAction() {
-    for (GList* l = this->elements; l != nullptr; l = l->next) {
-        auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
-        if (!undone) {
-            delete e->element;
-        }
-        delete e;
-    }
-    g_list_free(this->elements);
-}
-
-void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos) {
-    this->elements = g_list_insert_sorted(this->elements, new PageLayerPosEntry<Element>(layer, e, pos),
-                                          reinterpret_cast<GCompareFunc>(PageLayerPosEntry<Element>::cmp));
-}
+void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos) { elements.emplace(layer, e, pos); }
 
 auto DeleteUndoAction::undo(Control*) -> bool {
-    if (this->elements == nullptr) {
+    if (elements.empty()) {
         g_warning("Could not undo DeleteUndoAction, there is nothing to undo");
 
         this->undone = true;
         return false;
     }
 
-    for (GList* l = this->elements; l != nullptr; l = l->next) {
-        auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
-        e->layer->insertElement(e->element, e->pos);
-        this->page->fireElementChanged(e->element);
+    for (const auto& elem: elements) {
+        elem.layer->insertElement(elem.element, elem.pos);
+        this->page->fireElementChanged(elem.element);
     }
 
     this->undone = true;
@@ -48,17 +31,16 @@ auto DeleteUndoAction::undo(Control*) -> bool {
 }
 
 auto DeleteUndoAction::redo(Control*) -> bool {
-    if (this->elements == nullptr) {
+    if (elements.empty()) {
         g_warning("Could not redo DeleteUndoAction, there is nothing to redo");
 
         this->undone = false;
         return false;
     }
 
-    for (GList* l = this->elements; l != nullptr; l = l->next) {
-        auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
-        e->layer->removeElement(e->element, false);
-        this->page->fireElementChanged(e->element);
+    for (const auto& elem: elements) {
+        elem.layer->removeElement(elem.element, false);
+        this->page->fireElementChanged(elem.element);
     }
 
     this->undone = false;
@@ -73,12 +55,11 @@ auto DeleteUndoAction::getText() -> std::string {
 
     std::string text = _("Delete");
 
-    if (this->elements != nullptr) {
-        ElementType type = (static_cast<PageLayerPosEntry<Element>*>(this->elements->data))->element->getType();
+    if (!elements.empty()) {
+        ElementType type = elements.begin()->element->getType();
 
-        for (GList* l = this->elements->next; l != nullptr; l = l->next) {
-            auto e = static_cast<PageLayerPosEntry<Element>*>(l->data);
-            if (type != e->element->getType()) {
+        for (auto elemIter = ++elements.begin(); elemIter != elements.end(); ++elemIter) {
+            if (type != elemIter->element->getType()) {
                 text += " ";
                 text += _("elements");
                 return text;

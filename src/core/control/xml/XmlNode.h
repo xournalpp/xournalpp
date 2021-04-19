@@ -11,6 +11,10 @@
 
 #pragma once
 
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "util/OutputStream.h"
 #include "util/Util.h"
 
@@ -21,11 +25,6 @@ class ProgressListener;
 class XmlNode {
 public:
     XmlNode(const char* tag);
-    virtual ~XmlNode();
-
-private:
-    XmlNode(const XmlNode& node);
-    void operator=(const XmlNode& node);
 
 public:
     void setAttrib(const char* attrib, std::string value);
@@ -49,10 +48,9 @@ protected:
     void putAttrib(XMLAttribute* a);
     void writeAttributes(OutputStream* out);
 
-public:
 protected:
-    GList* children;
-    GList* attributes;
+    std::vector<std::unique_ptr<XmlNode>> children{};
+    std::vector<std::unique_ptr<XMLAttribute>> attributes{};
 
-    char* tag;
+    std::string tag;
 };

@@ -11,33 +11,24 @@
 
 #pragma once
 
-#include <string>
 #include <vector>
 
-#include <glib.h>
-
 #include "model/Point.h"
-
 
 class ErasableStrokePart {
 public:
     ErasableStrokePart(Point a, Point b);
     ErasableStrokePart(double width);
-    virtual ~ErasableStrokePart();
-
-private:
-    ErasableStrokePart(const ErasableStrokePart& part);
 
 public:
     void addPoint(Point p);
     double getWidth() const;
 
-    GList* getPoints();
+    std::vector<Point>& getPoints();
+    std::vector<Point> const& getPoints() const;
 
     void clearSplitData();
     void splitFor(double halfEraserSize);
-
-    ErasableStrokePart* clone();
 
     void calcSize();
 
@@ -53,12 +44,10 @@ private:
     double width = 0;
     double splitSize = 0;
 
-    GList* points = nullptr;
+    std::vector<Point> points{};
 
     double x = 0;
     double y = 0;
     double elementWidth = 0;
     double elementHeight = 0;
-
-    friend class ErasableStroke;
 };

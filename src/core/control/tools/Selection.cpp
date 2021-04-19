@@ -127,34 +127,25 @@ public:
     double y;
 };
 
-RegionSelect::RegionSelect(double x, double y, Redrawable* view): Selection(view) {
-    this->points = nullptr;
-    currentPos(x, y);
-}
-
-RegionSelect::~RegionSelect() {
-    for (GList* l = this->points; l != nullptr; l = l->next) { delete static_cast<RegionPoint*>(l->data); }
-    g_list_free(this->points);
-}
+RegionSelect::RegionSelect(double x, double y, Redrawable* view): Selection(view) { currentPos(x, y); }
 
 void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
     // at least three points needed
-    if (this->points && this->points->next && this->points->next->next) {
+    if (points.size() >= 3) {
         GdkRGBA selectionColor = view->getSelectionColor();
 
         // set the line always the same size on display
         cairo_set_line_width(cr, 1 / zoom);
         gdk_cairo_set_source_rgba(cr, &selectionColor);
 
-        auto* r0 = static_cast<RegionPoint*>(this->points->data);
-        cairo_move_to(cr, r0->x, r0->y);
+        const RegionPoint& r0 = points.front();
+        cairo_move_to(cr, r0.x, r0.y);
 
-        for (GList* l = this->points->next; l != nullptr; l = l->next) {
-            auto* r = static_cast<RegionPoint*>(l->data);
-            cairo_line_to(cr, r->x, r->y);
+        for (auto pointIterator = points.begin() + 1; pointIterator != points.end(); ++pointIterator) {
+            cairo_line_to(cr, pointIterator->x, pointIterator->y);
         }
 
-        cairo_line_to(cr, r0->x, r0->y);
+        cairo_line_to(cr, r0.x, r0.y);
 
         cairo_stroke_preserve(cr);
         auto applied = GdkRGBA{selectionColor.red, selectionColor.green, selectionColor.blue, 0.3};
@@ -164,31 +155,21 @@ void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
 }
 
 void RegionSelect::currentPos(double x, double y) {
-    this->points = g_list_append(this->points, new RegionPoint(x, y));
+    points.emplace_back(x, y);
 
     // at least three points needed
-    if (this->points && this->points->next && this->points->next->next) {
+    if (points.size() >= 3) {
+        const RegionPoint& r0 = points.front();
+        double ax = r0.x;
+        double bx = r0.x;
+        double ay = r0.y;
+        double by = r0.y;
 
-        auto* r0 = static_cast<RegionPoint*>(this->points->data);
-        double ax = r0->x;
-        double bx = r0->x;
-        double ay = r0->y;
-        double by = r0->y;
-
-        for (GList* l = this->points; l != nullptr; l = l->next) {
-            auto* r = static_cast<RegionPoint*>(l->data);
-            if (ax > r->x) {
-                ax = r->x;
-            }
-            if (bx < r->x) {
-                bx = r->x;
-            }
-            if (ay > r->y) {
-                ay = r->y;
-            }
-            if (by < r->y) {
-                by = r->y;
-            }
+        for (const RegionPoint& p: points) {
+            ax = std::min(ax, p.x);
+            bx = std::max(bx, p.x);
+            ay = std::min(ay, p.y);
+            by = std::max(by, p.y);
         }
 
         view->repaintArea(ax, ay, bx, by);
@@ -202,23 +183,23 @@ auto RegionSelect::contains(double x, double y) -> bool {
     if (y < this->y1Box || y > this->y2Box) {
         return false;
     }
-    if (this->points == nullptr || this->points->next == nullptr) {
+    if (points.size() <= 2) {
         return false;
     }
 
     int hits = 0;
 
-    auto* last = static_cast<RegionPoint*>(g_list_last(this->points)->data);
+    const RegionPoint& last = points.back();
 
-    double lastx = last->x;
-    double lasty = last->y;
+    double lastx = last.x;
+    double lasty = last.y;
     double curx = NAN, cury = NAN;
 
     // Walk the edges of the polygon
-    for (GList* l = this->points; l != nullptr; lastx = curx, lasty = cury, l = l->next) {
-        auto* last = static_cast<RegionPoint*>(l->data);
-        curx = last->x;
-        cury = last->y;
+    for (auto pointIterator = points.begin(); pointIterator != points.end();
+         lastx = curx, lasty = cury, ++pointIterator) {
+        curx = pointIterator->x;
+        cury = pointIterator->y;
 
         if (cury == lasty) {
             continue;
@@ -229,12 +210,12 @@ auto RegionSelect::contains(double x, double y) -> bool {
             if (x >= lastx) {
                 continue;
             }
-            leftx = curx;
+            leftx = static_cast<int>(curx);
         } else {
             if (x >= curx) {
                 continue;
             }
-            leftx = lastx;
+            leftx = static_cast<int>(lastx);
         }
 
         double test1 = NAN, test2 = NAN;
@@ -271,25 +252,16 @@ auto RegionSelect::contains(double x, double y) -> bool {
 auto RegionSelect::finalize(PageRef page) -> bool {
     this->page = page;
 
-    this->x1Box = 0;
+    this->x1Box = DBL_MAX;
     this->x2Box = 0;
-    this->y1Box = 0;
+    this->y1Box = DBL_MAX;
     this->y2Box = 0;
 
-    for (GList* l = this->points; l != nullptr; l = l->next) {
-        auto* p = static_cast<RegionPoint*>(l->data);
-
-        if (p->x < this->x1Box) {
-            this->x1Box = p->x;
-        } else if (p->x > this->x2Box) {
-            this->x2Box = p->x;
-        }
-
-        if (p->y < this->y1Box) {
-            this->y1Box = p->y;
-        } else if (p->y > this->y2Box) {
-            this->y2Box = p->y;
-        }
+    for (const RegionPoint& p: points) {
+        this->x1Box = std::min(this->x1Box, p.x);
+        this->x2Box = std::max(this->x2Box, p.x);
+        this->y1Box = std::min(this->y1Box, p.y);
+        this->y2Box = std::max(this->y2Box, p.y);
     }
 
     Layer* l = page->getSelectedLayer();
@@ -306,10 +278,9 @@ auto RegionSelect::finalize(PageRef page) -> bool {
 
 auto RegionSelect::userTapped(double zoom) -> bool {
     double maxDist = 10 / zoom;
-    auto* r0 = static_cast<RegionPoint*>(this->points->data);
-    for (GList* l = this->points; l != nullptr; l = l->next) {
-        auto* p = static_cast<RegionPoint*>(l->data);
-        if (r0->x - p->x > maxDist || p->x - r0->x > maxDist || r0->y - p->y > maxDist || p->y - r0->y > maxDist) {
+    const RegionPoint& r0 = points.front();
+    for (const RegionPoint& p: points) {
+        if (std::abs(r0.x - p.x) > maxDist || std::abs(r0.y - p.y) > maxDist) {
             return false;
         }
     }

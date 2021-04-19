@@ -1,86 +1,48 @@
 #include "EraseUndoAction.h"
 
-#include "gui/Redrawable.h"
 #include "model/Layer.h"
 #include "model/Stroke.h"
 #include "model/eraser/ErasableStroke.h"
 #include "util/i18n.h"
 
-#include "PageLayerPosEntry.h"
 
 EraseUndoAction::EraseUndoAction(const PageRef& page): UndoAction("EraseUndoAction") { this->page = page; }
 
-EraseUndoAction::~EraseUndoAction() {
-    for (GList* l = this->original; l != nullptr; l = l->next) {
-        auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
-        if (!undone) {
-            delete e->element;
-        }
-        delete e;
-    }
-    g_list_free(this->original);
-    this->original = nullptr;
+void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, int pos) { original.emplace(layer, element, pos); }
 
-    for (GList* l = this->edited; l != nullptr; l = l->next) {
-        auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
-        if (undone) {
-            delete e->element;
-        }
-        delete e;
-    }
-    g_list_free(this->edited);
-    this->edited = nullptr;
-}
-
-void EraseUndoAction::addOriginal(Layer* layer, Stroke* element, int pos) {
-    this->original = g_list_insert_sorted(this->original, new PageLayerPosEntry<Stroke>(layer, element, pos),
-                                          reinterpret_cast<GCompareFunc>(PageLayerPosEntry<Stroke>::cmp));
-}
-
-void EraseUndoAction::addEdited(Layer* layer, Stroke* element, int pos) {
-    this->edited = g_list_insert_sorted(this->edited, new PageLayerPosEntry<Stroke>(layer, element, pos),
-                                        reinterpret_cast<GCompareFunc>(PageLayerPosEntry<Stroke>::cmp));
-}
+void EraseUndoAction::addEdited(Layer* layer, Stroke* element, int pos) { edited.emplace(layer, element, pos); }
 
 void EraseUndoAction::removeEdited(Stroke* element) {
-    for (GList* l = this->edited; l != nullptr; l = l->next) {
-        auto* p = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
-        if (p->element == element) {
-            this->edited = g_list_delete_link(this->edited, l);
-            delete p;
-            p = nullptr;
+    for (auto entryIter = edited.begin(); entryIter != edited.end(); ++entryIter) {
+        if (entryIter->element == element) {
+            edited.erase(entryIter);
             return;
         }
     }
 }
 
 void EraseUndoAction::finalize() {
-    for (GList* l = this->original; l != nullptr;) {
-        auto* p = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
-        GList* del = l;
-        l = l->next;
-
-        if (p->element->getPointCount() == 0) {
-            this->edited = g_list_delete_link(this->edited, del);
-            delete p;
-            p = nullptr;
+    for (auto const& entry: original) {
+        if (entry.element->getPointCount() == 0) {
+            // TODO (Marmare314): is this really expected behaviour?
+            continue;
         } else {
-
             // Remove the original and add the copy
-            int pos = p->layer->removeElement(p->element, false);
+            int pos = static_cast<int>(entry.layer->removeElement(entry.element, false));
 
-            ErasableStroke* e = p->element->getErasable();
-            GList* stroke = e->getStroke(p->element);
-            for (GList* ls = stroke; ls != nullptr; ls = ls->next) {
-                auto* copy = static_cast<Stroke*>(ls->data);
-                p->layer->insertElement(copy, pos);
-                this->addEdited(p->layer, copy, pos);
+            ErasableStroke* e = entry.element->getErasable();
+            std::vector<std::unique_ptr<Stroke>> strokeList = e->getStroke(entry.element);
+            for (auto& stroke: strokeList) {
+                // TODO (Marmare314): should use unique_ptr in layer
+                Stroke* copy = stroke.release();
+                entry.layer->insertElement(copy, pos);
+                this->addEdited(entry.layer, copy, pos);
                 pos++;
             }
 
             delete e;
             e = nullptr;
-            p->element->setErasable(nullptr);
+            entry.element->setErasable(nullptr);
         }
     }
 
@@ -90,18 +52,14 @@ void EraseUndoAction::finalize() {
 auto EraseUndoAction::getText() -> std::string { return _("Erase stroke"); }
 
 auto EraseUndoAction::undo(Control* control) -> bool {
-    for (GList* l = this->edited; l != nullptr; l = l->next) {
-        auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
-
-        e->layer->removeElement(e->element, false);
-        this->page->fireElementChanged(e->element);
+    for (auto const& entry: edited) {
+        entry.layer->removeElement(entry.element, false);
+        this->page->fireElementChanged(entry.element);
     }
 
-    for (GList* l = this->original; l != nullptr; l = l->next) {
-        auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
-
-        e->layer->insertElement(e->element, e->pos);
-        this->page->fireElementChanged(e->element);
+    for (auto const& entry: original) {
+        entry.layer->insertElement(entry.element, entry.pos);
+        this->page->fireElementChanged(entry.element);
     }
 
     this->undone = true;
@@ -109,18 +67,14 @@ auto EraseUndoAction::undo(Control* control) -> bool {
 }
 
 auto EraseUndoAction::redo(Control* control) -> bool {
-    for (GList* l = this->original; l != nullptr; l = l->next) {
-        auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
-
-        e->layer->removeElement(e->element, false);
-        this->page->fireElementChanged(e->element);
+    for (auto const& entry: original) {
+        entry.layer->removeElement(entry.element, false);
+        page->fireElementChanged(entry.element);
     }
 
-    for (GList* l = this->edited; l != nullptr; l = l->next) {
-        auto* e = static_cast<PageLayerPosEntry<Stroke>*>(l->data);
-
-        e->layer->insertElement(e->element, e->pos);
-        this->page->fireElementChanged(e->element);
+    for (auto const& entry: edited) {
+        entry.layer->insertElement(entry.element, entry.pos);
+        page->fireElementChanged(entry.element);
     }
 
     this->undone = false;

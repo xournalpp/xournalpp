@@ -11,20 +11,17 @@
 
 #pragma once
 
+#include <set>
 #include <string>
-#include <vector>
 
+#include "PageLayerPosEntry.h"
 #include "UndoAction.h"
 
-
 class Element;
-class Layer;
-class Redrawable;
 
 class AddUndoAction: public UndoAction {
 public:
     AddUndoAction(const PageRef& page, bool eraser);
-    ~AddUndoAction() override;
 
 public:
     bool undo(Control*) override;
@@ -35,6 +32,6 @@ public:
     std::string getText() override;
 
 private:
-    GList* elements = nullptr;
+    std::multiset<PageLayerPosEntry<Element>> elements{};
     bool eraser = false;
 };
