@@ -331,7 +331,7 @@ page](https://github.com/xournalpp/xournalpp/releases).
 
 The file format _.xopp is an XML which is .gz compressed. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. _.xopp is basically the same file format as _.xoj, which is used by Xournal. Therefore Xournal++ is able to read _.xoj files, and can also export to _.xoj. As soon as notes are exported to a _.xoj-file, all Xournal++ specific extensions, like additional background types, are lost.
 
-\*.xopp can theoretically be read by Xournal, as long as you do not use any new feature. Xournal does not open files that contain new attributes or unknown values, because of this Xournal++ will add the extension .xopp to all saved files.
+\*.xopp can theoretically be read by Xournal, as long as you do not use any new feature. Xournal does not open files that contain new attributes or unknown values, so Xournal++ will add the extension .xopp to all saved files to indicate the potential presence of Xournal++-only features.
 
 All new files will be saved as _.xopp. If an _.xoj file that was created by Xournal is opened, the Save-As dialog will be displayed on save. If the \*.xoj file was created by Xournal++, the file will be overwritten on save and the file extension will not change.
 
