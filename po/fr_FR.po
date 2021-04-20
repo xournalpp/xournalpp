@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-09 20:05+0000\n"
-"PO-Revision-Date: 2021-04-09 21:04\n"
+"PO-Revision-Date: 2021-04-20 15:17\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1967,7 +1967,7 @@ msgstr "<i>Utilisez le geste pincer pour zoomer les pages de journal.</i>"
 
 #: ../ui/settings.glade:2505
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>Utiliser l'écran tactile comme un stylet multi-touche.</i>"
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -2767,7 +2767,7 @@ msgstr "Plugin _Manager"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Les modifications de plugins ne sont appliquées qu'après le redémarrage de Xournal++"
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
