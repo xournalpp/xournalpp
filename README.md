@@ -45,7 +45,7 @@ Xournal++ features:
 - Fill shape functionality
 - PDF Export (with and without paper style)
 - PNG Export (with and without transparent background)
-- Allowance to map different tools / colors etc. to stylus buttons / mouse buttons
+- Allows mapping different tools / colors etc. to stylus buttons / mouse buttons
 - Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden, editing layer can be selected)
 - Enhanced support for image insertion
 - Eraser with multiple configurations
