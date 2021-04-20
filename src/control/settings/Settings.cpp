@@ -13,12 +13,12 @@
 constexpr auto const* DEFAULT_FONT = "Sans";
 constexpr auto DEFAULT_FONT_SIZE = 12;
 
-#define WRITE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
-#define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
-#define WRITE_INT_PROP(var) xmlNode = saveProperty((const char*)#var, var, root)
-#define WRITE_UINT_PROP(var) xmlNode = savePropertyUnsigned((const char*)#var, var, root)
-#define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char*)#var, var, root)
-#define WRITE_COMMENT(var)                      \
+#define SAVE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
+#define SAVE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
+#define SAVE_INT_PROP(var) xmlNode = saveProperty((const char*)#var, var, root)
+#define SAVE_UINT_PROP(var) xmlNode = savePropertyUnsigned((const char*)#var, var, root)
+#define SAVE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char*)#var, var, root)
+#define ATTACH_COMMENT(var)                     \
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
@@ -779,63 +779,63 @@ void Settings::save() {
                                              "the others are commented in this file, but handle with care!"));
     xmlAddPrevSibling(root, com);
 
-    WRITE_BOOL_PROP(pressureSensitivity);
-    WRITE_DOUBLE_PROP(minimumPressure);
-    WRITE_DOUBLE_PROP(pressureMultiplier);
+    SAVE_BOOL_PROP(pressureSensitivity);
+    SAVE_DOUBLE_PROP(minimumPressure);
+    SAVE_DOUBLE_PROP(pressureMultiplier);
 
-    WRITE_BOOL_PROP(zoomGesturesEnabled);
+    SAVE_BOOL_PROP(zoomGesturesEnabled);
 
-    WRITE_STRING_PROP(selectedToolbar);
+    SAVE_STRING_PROP(selectedToolbar);
 
     auto lastSavePath = this->lastSavePath.u8string();
     auto lastOpenPath = this->lastOpenPath.u8string();
     auto lastImagePath = this->lastImagePath.u8string();
-    WRITE_STRING_PROP(lastSavePath);
-    WRITE_STRING_PROP(lastOpenPath);
-    WRITE_STRING_PROP(lastImagePath);
+    SAVE_STRING_PROP(lastSavePath);
+    SAVE_STRING_PROP(lastOpenPath);
+    SAVE_STRING_PROP(lastImagePath);
 
-    WRITE_DOUBLE_PROP(zoomStep);
-    WRITE_DOUBLE_PROP(zoomStepScroll);
-    WRITE_INT_PROP(displayDpi);
-    WRITE_INT_PROP(mainWndWidth);
-    WRITE_INT_PROP(mainWndHeight);
-    WRITE_BOOL_PROP(maximized);
+    SAVE_DOUBLE_PROP(zoomStep);
+    SAVE_DOUBLE_PROP(zoomStepScroll);
+    SAVE_INT_PROP(displayDpi);
+    SAVE_INT_PROP(mainWndWidth);
+    SAVE_INT_PROP(mainWndHeight);
+    SAVE_BOOL_PROP(maximized);
 
-    WRITE_BOOL_PROP(showToolbar);
+    SAVE_BOOL_PROP(showToolbar);
 
-    WRITE_BOOL_PROP(showSidebar);
-    WRITE_INT_PROP(sidebarWidth);
+    SAVE_BOOL_PROP(showSidebar);
+    SAVE_INT_PROP(sidebarWidth);
 
-    WRITE_BOOL_PROP(sidebarOnRight);
-    WRITE_BOOL_PROP(scrollbarOnLeft);
-    WRITE_BOOL_PROP(menubarVisible);
-    WRITE_INT_PROP(numColumns);
-    WRITE_INT_PROP(numRows);
-    WRITE_BOOL_PROP(viewFixedRows);
-    WRITE_BOOL_PROP(showPairedPages);
-    WRITE_BOOL_PROP(layoutVertical);
-    WRITE_BOOL_PROP(layoutRightToLeft);
-    WRITE_BOOL_PROP(layoutBottomToTop);
-    WRITE_INT_PROP(numPairsOffset);
-    WRITE_BOOL_PROP(presentationMode);
+    SAVE_BOOL_PROP(sidebarOnRight);
+    SAVE_BOOL_PROP(scrollbarOnLeft);
+    SAVE_BOOL_PROP(menubarVisible);
+    SAVE_INT_PROP(numColumns);
+    SAVE_INT_PROP(numRows);
+    SAVE_BOOL_PROP(viewFixedRows);
+    SAVE_BOOL_PROP(showPairedPages);
+    SAVE_BOOL_PROP(layoutVertical);
+    SAVE_BOOL_PROP(layoutRightToLeft);
+    SAVE_BOOL_PROP(layoutBottomToTop);
+    SAVE_INT_PROP(numPairsOffset);
+    SAVE_BOOL_PROP(presentationMode);
 
-    WRITE_STRING_PROP(fullscreenHideElements);
-    WRITE_COMMENT("Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)");
+    SAVE_STRING_PROP(fullscreenHideElements);
+    ATTACH_COMMENT("Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)");
 
-    WRITE_STRING_PROP(presentationHideElements);
-    WRITE_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
+    SAVE_STRING_PROP(presentationHideElements);
+    ATTACH_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
 
     xmlNode = saveProperty("stylusCursorType", stylusCursorTypeToString(this->stylusCursorType), root);
-    WRITE_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\"");
+    ATTACH_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\"");
 
-    WRITE_BOOL_PROP(highlightPosition);
-    WRITE_UINT_PROP(cursorHighlightColor);
-    WRITE_UINT_PROP(cursorHighlightBorderColor);
-    WRITE_DOUBLE_PROP(cursorHighlightRadius);
-    WRITE_DOUBLE_PROP(cursorHighlightBorderWidth);
-    WRITE_BOOL_PROP(darkTheme);
+    SAVE_BOOL_PROP(highlightPosition);
+    SAVE_UINT_PROP(cursorHighlightColor);
+    SAVE_UINT_PROP(cursorHighlightBorderColor);
+    SAVE_DOUBLE_PROP(cursorHighlightRadius);
+    SAVE_DOUBLE_PROP(cursorHighlightBorderWidth);
+    SAVE_BOOL_PROP(darkTheme);
 
-    WRITE_BOOL_PROP(disableScrollbarFadeout);
+    SAVE_BOOL_PROP(disableScrollbarFadeout);
 
     if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH) {
         xmlNode = saveProperty("scrollbarHideType", "both", root);
@@ -846,99 +846,99 @@ void Settings::save() {
     } else {
         xmlNode = saveProperty("scrollbarHideType", "none", root);
     }
-    WRITE_COMMENT(
+    ATTACH_COMMENT(
             "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"");
 
-    WRITE_BOOL_PROP(autoloadPdfXoj);
-    WRITE_STRING_PROP(defaultSaveName);
+    SAVE_BOOL_PROP(autoloadPdfXoj);
+    SAVE_STRING_PROP(defaultSaveName);
 
-    WRITE_BOOL_PROP(autosaveEnabled);
-    WRITE_INT_PROP(autosaveTimeout);
+    SAVE_BOOL_PROP(autosaveEnabled);
+    SAVE_INT_PROP(autosaveTimeout);
 
-    WRITE_BOOL_PROP(addHorizontalSpace);
-    WRITE_INT_PROP(addHorizontalSpaceAmount);
-    WRITE_BOOL_PROP(addVerticalSpace);
-    WRITE_INT_PROP(addVerticalSpaceAmount);
+    SAVE_BOOL_PROP(addHorizontalSpace);
+    SAVE_INT_PROP(addHorizontalSpaceAmount);
+    SAVE_BOOL_PROP(addVerticalSpace);
+    SAVE_INT_PROP(addVerticalSpaceAmount);
 
-    WRITE_BOOL_PROP(drawDirModsEnabled);
-    WRITE_INT_PROP(drawDirModsRadius);
+    SAVE_BOOL_PROP(drawDirModsEnabled);
+    SAVE_INT_PROP(drawDirModsRadius);
 
 
-    WRITE_BOOL_PROP(snapRotation);
-    WRITE_DOUBLE_PROP(snapRotationTolerance);
-    WRITE_BOOL_PROP(snapGrid);
-    WRITE_DOUBLE_PROP(snapGridTolerance);
-    WRITE_DOUBLE_PROP(snapGridSize);
+    SAVE_BOOL_PROP(snapRotation);
+    SAVE_DOUBLE_PROP(snapRotationTolerance);
+    SAVE_BOOL_PROP(snapGrid);
+    SAVE_DOUBLE_PROP(snapGridTolerance);
+    SAVE_DOUBLE_PROP(snapGridSize);
 
-    WRITE_BOOL_PROP(touchDrawing);
-    WRITE_BOOL_PROP(pressureGuessing);
+    SAVE_BOOL_PROP(touchDrawing);
+    SAVE_BOOL_PROP(pressureGuessing);
 
-    WRITE_UINT_PROP(selectionBorderColor);
-    WRITE_UINT_PROP(backgroundColor);
-    WRITE_UINT_PROP(selectionMarkerColor);
+    SAVE_UINT_PROP(selectionBorderColor);
+    SAVE_UINT_PROP(backgroundColor);
+    SAVE_UINT_PROP(selectionMarkerColor);
 
-    WRITE_DOUBLE_PROP(touchZoomStartThreshold);
-    WRITE_DOUBLE_PROP(pageRerenderThreshold);
+    SAVE_DOUBLE_PROP(touchZoomStartThreshold);
+    SAVE_DOUBLE_PROP(pageRerenderThreshold);
 
-    WRITE_INT_PROP(pdfPageCacheSize);
-    WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
-    WRITE_UINT_PROP(preloadPagesBefore);
-    WRITE_UINT_PROP(preloadPagesAfter);
-    WRITE_BOOL_PROP(eagerPageCleanup);
+    SAVE_INT_PROP(pdfPageCacheSize);
+    ATTACH_COMMENT("The count of rendered PDF pages which will be cached.");
+    SAVE_UINT_PROP(preloadPagesBefore);
+    SAVE_UINT_PROP(preloadPagesAfter);
+    SAVE_BOOL_PROP(eagerPageCleanup);
 
-    WRITE_STRING_PROP(pageTemplate);
-    WRITE_COMMENT("Config for new pages");
+    SAVE_STRING_PROP(pageTemplate);
+    ATTACH_COMMENT("Config for new pages");
 
-    WRITE_STRING_PROP(sizeUnit);
+    SAVE_STRING_PROP(sizeUnit);
 
-    WRITE_STRING_PROP(audioFolder);
-    WRITE_INT_PROP(audioInputDevice);
-    WRITE_INT_PROP(audioOutputDevice);
-    WRITE_DOUBLE_PROP(audioSampleRate);
-    WRITE_DOUBLE_PROP(audioGain);
-    WRITE_INT_PROP(defaultSeekTime);
+    SAVE_STRING_PROP(audioFolder);
+    SAVE_INT_PROP(audioInputDevice);
+    SAVE_INT_PROP(audioOutputDevice);
+    SAVE_DOUBLE_PROP(audioSampleRate);
+    SAVE_DOUBLE_PROP(audioGain);
+    SAVE_INT_PROP(defaultSeekTime);
 
-    WRITE_STRING_PROP(pluginEnabled);
-    WRITE_STRING_PROP(pluginDisabled);
+    SAVE_STRING_PROP(pluginEnabled);
+    SAVE_STRING_PROP(pluginDisabled);
 
-    WRITE_INT_PROP(strokeFilterIgnoreTime);
-    WRITE_DOUBLE_PROP(strokeFilterIgnoreLength);
-    WRITE_INT_PROP(strokeFilterSuccessiveTime);
-    WRITE_BOOL_PROP(strokeFilterEnabled);
-    WRITE_BOOL_PROP(doActionOnStrokeFiltered);
-    WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
+    SAVE_INT_PROP(strokeFilterIgnoreTime);
+    SAVE_DOUBLE_PROP(strokeFilterIgnoreLength);
+    SAVE_INT_PROP(strokeFilterSuccessiveTime);
+    SAVE_BOOL_PROP(strokeFilterEnabled);
+    SAVE_BOOL_PROP(doActionOnStrokeFiltered);
+    SAVE_BOOL_PROP(trySelectOnStrokeFiltered);
 
-    WRITE_BOOL_PROP(snapRecognizedShapesEnabled);
-    WRITE_BOOL_PROP(restoreLineWidthEnabled);
+    SAVE_BOOL_PROP(snapRecognizedShapesEnabled);
+    SAVE_BOOL_PROP(restoreLineWidthEnabled);
 
-    WRITE_INT_PROP(numIgnoredStylusEvents);
+    SAVE_INT_PROP(numIgnoredStylusEvents);
 
-    WRITE_BOOL_PROP(inputSystemTPCButton);
-    WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
+    SAVE_BOOL_PROP(inputSystemTPCButton);
+    SAVE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
-    WRITE_STRING_PROP(preferredLocale);
+    SAVE_STRING_PROP(preferredLocale);
 
     /**
      * Stabilizer related settings
      */
     saveProperty("stabilizerAveragingMethod", static_cast<int>(stabilizerAveragingMethod), root);
     saveProperty("stabilizerPreprocessor", static_cast<int>(stabilizerPreprocessor), root);
-    WRITE_UINT_PROP(stabilizerBuffersize);
-    WRITE_DOUBLE_PROP(stabilizerSigma);
-    WRITE_DOUBLE_PROP(stabilizerDeadzoneRadius);
-    WRITE_DOUBLE_PROP(stabilizerDrag);
-    WRITE_DOUBLE_PROP(stabilizerMass);
-    WRITE_BOOL_PROP(stabilizerCuspDetection);
-    WRITE_BOOL_PROP(stabilizerFinalizeStroke);
+    SAVE_UINT_PROP(stabilizerBuffersize);
+    SAVE_DOUBLE_PROP(stabilizerSigma);
+    SAVE_DOUBLE_PROP(stabilizerDeadzoneRadius);
+    SAVE_DOUBLE_PROP(stabilizerDrag);
+    SAVE_DOUBLE_PROP(stabilizerMass);
+    SAVE_BOOL_PROP(stabilizerCuspDetection);
+    SAVE_BOOL_PROP(stabilizerFinalizeStroke);
     /**/
 
-    WRITE_BOOL_PROP(latexSettings.autoCheckDependencies);
-    // Inline WRITE_STRING_PROP(latexSettings.globalTemplatePath) since it
+    SAVE_BOOL_PROP(latexSettings.autoCheckDependencies);
+    // Inline SAVE_STRING_PROP(latexSettings.globalTemplatePath) since it
     // breaks on Windows due to the native character representation being
     // wchar_t instead of char
     fs::path& p = latexSettings.globalTemplatePath;
     xmlNode = saveProperty("latexSettings.globalTemplatePath", p.empty() ? "" : p.u8string().c_str(), root);
-    WRITE_STRING_PROP(latexSettings.genCmd);
+    SAVE_STRING_PROP(latexSettings.genCmd);
 
     xmlNodePtr xmlFont = nullptr;
     xmlFont = xmlNewChild(root, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
