@@ -27,7 +27,7 @@ Full translations for all languages not mentioned previously **except**:
 - German
 - Italian
 
-If you would like to help us to improve the localization of Xournal++, take a look at [our Crowdin project](https://crowdin.com/project/xournalpp). If you are interested in translating a new language, contact us on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a new issue and we will unlock the language on Crowdin.
+If you would like to help us improve the localization of Xournal++, take a look at [our Crowdin project](https://crowdin.com/project/xournalpp). If you are interested in translating a new language, contact us on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a new issue and we will unlock the language on Crowdin.
 
 **Thanks in advance!**
 
