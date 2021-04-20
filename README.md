@@ -64,7 +64,7 @@ Xournal++ features:
 
 ## Mobile & web app
 
-Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (coming soon) as well as a **web app** available. Even though it is not perfectly stable nor each of Xournal++'s features is supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in it's [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
+Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (coming soon) as well as a **web app** available. Even though it is not perfectly stable nor are all of Xournal++'s features fully supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in it's [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
 
 [Get it on Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile)
 
