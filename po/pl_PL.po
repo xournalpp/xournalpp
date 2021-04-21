@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-09 20:05+0000\n"
-"PO-Revision-Date: 2021-04-09 21:05\n"
+"PO-Revision-Date: 2021-04-21 21:05\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -589,7 +589,7 @@ msgstr "Eksport bez linii\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr "Nie znaleziono programu generatora LaTeX w ŚCIEŻCE: {1}"
+msgstr "Nie znaleziono programu generatora LaTeX w zmiennej środowiskowej PATH: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
