@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "model/PageRef.h"
+
 #include "XournalType.h"
 
 class Control;
@@ -48,7 +49,7 @@ private:
     /**
      * Page of the selection before change
      */
-    PageRef sourcePage{}; 
+    PageRef sourcePage{};
 
     /**
      * Selected elements
