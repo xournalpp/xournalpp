@@ -116,7 +116,7 @@ auto ActionGroup_fromString(const string& value) -> ActionGroup {
         return GROUP_ZOOM_FIT;
     }
 
-    g_error("Invalid enum value for ActionGroup: \"%s\"", value.c_str());
+    g_warning("Invalid enum value for ActionGroup: \"%s\"", value.c_str());
     return GROUP_NOGROUP;
 }
 

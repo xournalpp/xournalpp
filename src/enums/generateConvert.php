@@ -96,7 +96,7 @@ function writeCppFile($output, $name, $values) {
 		fwrite($fp, "\n");
 	}
 
-	fwrite($fp, $tab . "g_error(\"Invalid enum value for $name: «%s»\", value.c_str());\n");
+	fwrite($fp, $tab . "g_warning(\"Invalid enum value for $name: «%s»\", value.c_str());\n");
 	fwrite($fp, $tab . "return {$values[0]};\n");
 
 	
