@@ -933,6 +933,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             showAbout();
             break;
 
+        case ACTION_NONE:
+            // do nothing
+            break;
+
         default:
             g_warning("Unhandled action event: %s / %s (%i / %i)", ActionType_toString(type).c_str(),
                       ActionGroup_toString(group).c_str(), type, group);
@@ -2721,9 +2725,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         g_warning("could not paste, Exception occurred: %s", e.what());
         Stacktrace::printStracktrace();
         if (selection) {
-            for (Element* e: *selection->getElements()) {
-                delete e;
-            }
+            for (Element* e: *selection->getElements()) { delete e; }
             delete selection;
         }
     }
