@@ -18,9 +18,7 @@ void UndoRedoController::before() {
     if (selection != nullptr) {
         layer = selection->getSourceLayer();
         sourcePage = selection->getSourcePage();
-        for (Element* e: *selection->getElements()) {
-            elements.push_back(e);
-        }
+        for (Element* e: *selection->getElements()) { elements.push_back(e); }
     }
 
     control->clearSelection();
