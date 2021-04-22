@@ -14,8 +14,10 @@ UndoRedoController::~UndoRedoController() {
 
 void UndoRedoController::before() {
     EditSelection* selection = control->getWindow()->getXournal()->getSelection();
+
     if (selection != nullptr) {
         layer = selection->getSourceLayer();
+        sourcePage = selection->getSourcePage();
         for (Element* e: *selection->getElements()) {
             elements.push_back(e);
         }
@@ -36,11 +38,10 @@ void UndoRedoController::after() {
 
     Document* doc = control->getDocument();
 
-    PageRef page = control->getCurrentPage();
-    size_t pageNo = doc->indexOf(page);
+    size_t pageNo = doc->indexOf(sourcePage);
     XojPageView* view = control->getWindow()->getXournal()->getViewFor(pageNo);
 
-    if (!view || !page) {
+    if (!view || !sourcePage) {
         return;
     }
 
@@ -54,7 +55,7 @@ void UndoRedoController::after() {
         visibleElements.push_back(e);
     }
     if (!visibleElements.empty()) {
-        auto* selection = new EditSelection(control->getUndoRedoHandler(), visibleElements, view, page);
+        auto* selection = new EditSelection(control->getUndoRedoHandler(), visibleElements, view, sourcePage);
         control->getWindow()->getXournal()->setSelection(selection);
     }
 }

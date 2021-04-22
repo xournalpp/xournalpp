@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 
+#include "model/PageRef.h"
 #include "XournalType.h"
 
 class Control;
@@ -43,6 +44,11 @@ private:
      * Layer of the selection before change
      */
     Layer* layer = nullptr;
+
+    /**
+     * Page of the selection before change
+     */
+    PageRef sourcePage{}; 
 
     /**
      * Selected elements
