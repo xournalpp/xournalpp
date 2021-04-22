@@ -10,12 +10,29 @@
 
 #include "Plugin.h"
 #include "StringUtils.h"
+#include "filesystem.h"
 
 
 PluginController::PluginController(Control* control): control(control) {
 #ifdef ENABLE_PLUGINS
-    auto searchPath = control->getGladeSearchPath()->getFirstSearchPath();
-    loadPluginsFrom((searchPath /= "../plugins").lexically_normal());
+    fs::path searchPath;
+    Settings* settings = control->getSettings();
+    // check if we have to use a customize plugin folder
+    if(settings->isPluginCustomFolderEnabled() == true)
+    {
+      // get customized plugin folder name
+      searchPath = settings->getPluginCustomFolder();
+    }
+    else
+    {
+      // use standard plugin folder
+      // get first subdirectory of the applicaiton main directory    
+      searchPath = control->getGladeSearchPath()->getFirstSearchPath();
+      // select plugin subdirectory
+      searchPath = searchPath /= "../plugins";
+    }
+    // load plugins
+    loadPluginsFrom((searchPath).lexically_normal());
 #endif
 }
 

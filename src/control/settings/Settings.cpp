@@ -157,6 +157,7 @@ void Settings::loadDefault() {
     this->audioGain = 1.0;
     this->defaultSeekTime = 5;
 
+    this->pluginCustomFolderEnabled = false;
     this->pluginEnabled = "";
     this->pluginDisabled = "";
 
@@ -389,6 +390,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->darkTheme = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
         this->defaultSaveName = reinterpret_cast<const char*>(value);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginCustomFolderEnabled")) == 0) {
+        this->pluginCustomFolderEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginCustomFolder")) == 0) {
+        this->pluginCustomFolder = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
         this->pluginEnabled = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginDisabled")) == 0) {
@@ -899,6 +904,8 @@ void Settings::save() {
     WRITE_DOUBLE_PROP(audioGain);
     WRITE_INT_PROP(defaultSeekTime);
 
+    WRITE_BOOL_PROP(pluginCustomFolderEnabled);
+    WRITE_STRING_PROP(pluginCustomFolder);
     WRITE_STRING_PROP(pluginEnabled);
     WRITE_STRING_PROP(pluginDisabled);
 
@@ -1784,6 +1791,30 @@ void Settings::setDefaultSeekTime(unsigned int t) {
         return;
     }
     this->defaultSeekTime = t;
+    save();
+}
+
+auto Settings::isPluginCustomFolderEnabled() const -> bool { return this->pluginCustomFolderEnabled; }
+
+void Settings::setPluginCustomFolderEnabled(bool pluginCustomFolderEnabled) {
+    if (this->pluginCustomFolderEnabled == pluginCustomFolderEnabled) {
+        return;
+    }
+
+    this->pluginCustomFolderEnabled = pluginCustomFolderEnabled;
+
+    save();
+}
+
+auto Settings::getPluginCustomFolder() const -> string const& { return this->pluginCustomFolder; }
+
+void Settings::setPluginCustomFolder(const string& pluginCustomFolder) {
+    if (this->pluginCustomFolder == pluginCustomFolder) {
+        return;
+    }
+
+    this->pluginCustomFolder = pluginCustomFolder;
+
     save();
 }
 

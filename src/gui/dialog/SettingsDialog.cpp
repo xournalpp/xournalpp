@@ -126,6 +126,12 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(get("cbPluginCustomFolderEnabled"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, SettingsDialog* self) {
+                         self->enableWithCheckbox("cbPluginCustomFolderEnabled", "boxPluginCustomFolder");
+                     }),
+                     this);
+
+
 
     gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
     gtk_widget_show(callib);
@@ -389,6 +395,9 @@ void SettingsDialog::load() {
 
     gtk_file_chooser_set_uri(GTK_FILE_CHOOSER(get("fcAudioPath")), settings->getAudioFolder().c_str());
 
+    loadCheckbox("cbPluginCustomFolderEnabled", settings->isPluginCustomFolderEnabled());
+    gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(get("fcPluginCustomFolder")), settings->getPluginCustomFolder().c_str());
+
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
 
@@ -528,6 +537,7 @@ void SettingsDialog::load() {
     enableWithCheckbox("cbStrokeFilterEnabled", "cbTrySelectOnStrokeFiltered");
     enableWithCheckbox("cbEnableZoomGestures", "gdStartZoomAtSetting");
     enableWithCheckbox("cbDisableTouchOnPenNear", "boxInternalHandRecognition");
+    enableWithCheckbox("cbPluginCustomFolderEnabled", "boxPluginCustomFolder");
     customHandRecognitionToggled();
     customStylusIconTypeChanged();
     updatePressureSensitivityOptions();
@@ -689,6 +699,8 @@ void SettingsDialog::save() {
     settings->setStabilizerCuspDetection(getCheckbox("cbStabilizerEnableCuspDetection"));
     settings->setStabilizerFinalizeStroke(getCheckbox("cbStabilizerEnableFinalizeStroke"));
 
+    settings->setPluginCustomFolderEnabled(getCheckbox("cbPluginCustomFolderEnabled"));
+
     auto scrollbarHideType =
             static_cast<std::make_unsigned<std::underlying_type<ScrollbarHideType>::type>::type>(SCROLLBAR_HIDE_NONE);
     if (getCheckbox("cbHideHorizontalScrollbar")) {
@@ -761,6 +773,12 @@ void SettingsDialog::save() {
     if (uri != nullptr) {
         settings->setAudioFolder(uri);
         g_free(uri);
+    }
+
+    char* pFolderName = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(get("fcPluginCustomFolder")));
+    if (pFolderName != nullptr) {
+        settings->setPluginCustomFolder(pFolderName);
+        g_free(pFolderName);
     }
 
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
