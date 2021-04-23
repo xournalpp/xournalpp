@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-09 20:05+0000\n"
-"PO-Revision-Date: 2021-04-09 21:05\n"
+"POT-Creation-Date: 2021-04-23 20:29+0000\n"
+"PO-Revision-Date: 2021-04-23 20:39\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -165,7 +165,7 @@ msgstr "Előrébb hozás"
 msgid "Bring to front"
 msgstr "Előtérbe hozás"
 
-#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2470
+#: ../src/control/Control.cpp:2019 ../src/control/Control.cpp:2474
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Mégse"
@@ -373,7 +373,7 @@ msgstr "Réteg törlése"
 msgid "Delete this page"
 msgstr "Oldal törlése"
 
-#: ../src/control/Control.cpp:2467
+#: ../src/control/Control.cpp:2471
 msgid "Discard"
 msgstr "Elvetés"
 
@@ -381,7 +381,7 @@ msgstr "Elvetés"
 msgid "Display advanced export options"
 msgstr "A haladó exportálási lehetőségek megjelenítése"
 
-#: ../src/control/Control.cpp:1968
+#: ../src/control/Control.cpp:1972
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -393,7 +393,7 @@ msgstr "Ne nyissa meg az automatikusan mentett fájlokat. Felülíródhatnak!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ne írja felül a háttér PDF-et! Ez hibákat okozhat!"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2465
 msgid "Document file was removed."
 msgstr "A dokumentum fájl el lett távolítva."
 
@@ -483,7 +483,7 @@ msgstr "Vonás kiradírozása"
 msgid "Eraser"
 msgstr "Radír"
 
-#: ../src/control/Control.cpp:2216
+#: ../src/control/Control.cpp:2220
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Hiba a PDF jegyzetek készítése közben: \"{1}\"\n"
@@ -493,7 +493,7 @@ msgstr "Hiba a PDF jegyzetek készítése közben: \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/control/Control.cpp:2037
+#: ../src/control/Control.cpp:2041
 msgid "Error opening file \"{1}\""
 msgstr "Hiba a fájl megnyitása során: \"{1}\""
 
@@ -849,7 +849,7 @@ msgstr "Nincs eszköz"
 msgid "No pages to export!"
 msgstr "Nincs exportálandó oldal!"
 
-#: ../src/control/Control.cpp:1266
+#: ../src/control/Control.cpp:1270
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
@@ -1009,7 +1009,7 @@ msgstr "Ismétlés"
 msgid "Redo: "
 msgstr "Ismétlés: "
 
-#: ../src/control/Control.cpp:2014
+#: ../src/control/Control.cpp:2018
 msgid "Remove PDF Background"
 msgstr "PDF háttér eltávolítása"
 
@@ -1061,16 +1061,16 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2462 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "Mentés"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2466
 msgid "Save As..."
 msgstr "Mentés másként..."
 
-#: ../src/control/Control.cpp:2305 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2309 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Fájl mentése"
 
@@ -1111,7 +1111,7 @@ msgstr ""
 msgid "Select Region"
 msgstr ""
 
-#: ../src/control/Control.cpp:2013
+#: ../src/control/Control.cpp:2017
 msgid "Select another PDF"
 msgstr ""
 
@@ -1271,15 +1271,15 @@ msgstr ""
 msgid "Text not found, searched on all pages"
 msgstr ""
 
-#: ../src/control/Control.cpp:1066
+#: ../src/control/Control.cpp:1070
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2010
+#: ../src/control/Control.cpp:2014
 msgid "The attached background PDF could not be found."
 msgstr ""
 
-#: ../src/control/Control.cpp:2011
+#: ../src/control/Control.cpp:2015
 msgid "The background PDF could not be found."
 msgstr ""
 
@@ -1287,7 +1287,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/control/Control.cpp:2045
+#: ../src/control/Control.cpp:2049
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1331,7 +1331,7 @@ msgstr "Hiba a súgó megjelenítésekor: {1}"
 msgid "Thick"
 msgstr "Vastag"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2465
 msgid "This document is not saved yet."
 msgstr "Ez a dokumentum még nincs elmentve."
 
@@ -1368,7 +1368,7 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
-#: ../src/control/Control.cpp:1280
+#: ../src/control/Control.cpp:1284
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
@@ -1413,7 +1413,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2362
+#: ../src/control/Control.cpp:2366
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1470,7 +1470,7 @@ msgstr ""
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2311 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2315 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr ""
 
@@ -1519,7 +1519,7 @@ msgstr ""
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/control/Control.cpp:2305 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2309 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1531,7 +1531,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr ""
@@ -1572,7 +1572,7 @@ msgstr ""
 msgid "eraser"
 msgstr ""
 
-#: ../src/control/Control.cpp:1982
+#: ../src/control/Control.cpp:1986
 msgid "file: {1}"
 msgstr ""
 
