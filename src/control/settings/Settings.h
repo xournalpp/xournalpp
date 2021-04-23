@@ -358,6 +358,12 @@ public:
     unsigned int getDefaultSeekTime() const;
     void setDefaultSeekTime(unsigned int t);
 
+    bool isPluginCustomFolderEnabled() const;
+    void setPluginCustomFolderEnabled(bool pluginCustomFolderEnabled);
+
+    string const& getPluginCustomFolder() const;
+    void setPluginCustomFolder(const string& pluginCustomFolder);
+
     string const& getPluginEnabled() const;
     void setPluginEnabled(const string& pluginEnabled);
 
@@ -845,6 +851,7 @@ private:
     string sizeUnit;
 
     /**
+
      * Audio folder for audio recording
      */
     string audioFolder;
@@ -897,6 +904,15 @@ private:
      * The default time by which the playback will seek backwards and forwards
      */
     unsigned int defaultSeekTime{};
+
+    /**
+     *  Enable customized plugin folder
+     */
+    bool pluginCustomFolderEnabled{};
+
+     /* Plugin folder for plugin storage
+     */
+    string pluginCustomFolder;
 
     /**
      * List of enabled plugins (only the one which are not enabled by default)
