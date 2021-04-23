@@ -351,9 +351,7 @@ auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoAction
             std::stable_sort(newOrd.begin(), newOrd.end(), EditSelectionContents::insertOrderCmp);
             if (!newOrd.empty()) {
                 Layer::ElementIndex i = newOrd.back().second + 1;
-                for (auto& it: newOrd) {
-                    it.second = i++;
-                }
+                for (auto& it: newOrd) { it.second = i++; }
             }
             desc = _("Bring forward");
             break;
@@ -364,9 +362,7 @@ auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoAction
             if (!newOrd.empty()) {
                 Layer::ElementIndex i = newOrd.front().second;
                 i = i > 0 ? i - 1 : 0;
-                for (auto& it: newOrd) {
-                    it.second = i++;
-                }
+                for (auto& it: newOrd) { it.second = i++; }
             }
             desc = _("Send backward");
             break;
@@ -401,6 +397,9 @@ void EditSelection::mouseUp() {
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
     this->rotation = snappingHandler.snapAngle(this->rotation, false);
+
+    this->sourcePage = page;
+    this->sourceLayer = layer;
 
     this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->aspectRatio, layer, page,
                                   this->view, this->undo, this->mouseDownType);
@@ -649,9 +648,7 @@ void EditSelection::translateToView(XojPageView* v) {
 void EditSelection::copySelection() {
     // clone elements in the insert order
     std::deque<std::pair<Element*, Layer::ElementIndex>> clonedInsertOrder;
-    for (auto [e, index]: getInsertOrder()) {
-        clonedInsertOrder.emplace_back(e->clone(), index);
-    }
+    for (auto [e, index]: getInsertOrder()) { clonedInsertOrder.emplace_back(e->clone(), index); }
 
     // apply transformations and add to layer
     finalizeSelection();
@@ -944,9 +941,7 @@ void EditSelection::serialize(ObjectOutputStream& out) {
     out.endObject();
 
     out.writeInt(this->getElements()->size());
-    for (Element* e: *this->getElements()) {
-        e->serialize(out);
-    }
+    for (Element* e: *this->getElements()) { e->serialize(out); }
 }
 
 void EditSelection::readSerialized(ObjectInputStream& in) {
