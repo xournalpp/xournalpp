@@ -19,6 +19,25 @@ using namespace std::string_view_literals;
 constexpr auto CONFIG_FOLDER_NAME = "xournalpp"sv;
 #endif
 
+#ifdef _WIN32
+#include <windows.h>
+
+auto Util::getLongPath(const fs::path& path) -> fs::path {
+    DWORD wLongPathSz = GetLongPathNameW(path.c_str(), nullptr, 0);
+
+    if (wLongPathSz == 0) {
+        return path;
+    }
+
+    std::wstring wLongPath(wLongPathSz, L'\0');
+    GetLongPathNameW(path.c_str(), wLongPath.data(), static_cast<DWORD>(wLongPath.size()));
+    wLongPath.pop_back();
+    return fs::path(std::move(wLongPath));
+}
+#else
+auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
+#endif
+
 /**
  * Read a file to a string
  *

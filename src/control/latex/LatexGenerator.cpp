@@ -6,6 +6,7 @@
 #include <sstream>
 
 #include <glib.h>
+#include <util/PathUtil.h>
 
 #include "i18n.h"
 
@@ -46,7 +47,7 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
         return res;
     };
 
-    auto texFilePath = (texDir / "tex.tex").string();
+    auto texFilePath = (Util::getLongPath(texDir) / "tex.tex").string();
     for (auto i = cmd.find(u8"{}"); i != std::string::npos; i = cmd.find(u8"{}", i + texFilePath.length())) {
         cmd.replace(i, 2, texFilePath);
     }
