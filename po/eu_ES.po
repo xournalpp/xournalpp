@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-09 20:05+0000\n"
-"PO-Revision-Date: 2021-04-09 21:05\n"
+"POT-Creation-Date: 2021-04-23 20:29+0000\n"
+"PO-Revision-Date: 2021-04-23 20:39\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -166,7 +166,7 @@ msgstr "Ekarri aurrerago"
 msgid "Bring to front"
 msgstr "Ekarri aurrera"
 
-#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2470
+#: ../src/control/Control.cpp:2019 ../src/control/Control.cpp:2474
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Utzi"
@@ -374,7 +374,7 @@ msgstr "Ezabatu geruza hau"
 msgid "Delete this page"
 msgstr "Ezabatu orri hau"
 
-#: ../src/control/Control.cpp:2467
+#: ../src/control/Control.cpp:2471
 msgid "Discard"
 msgstr "Baztertu"
 
@@ -382,7 +382,7 @@ msgstr "Baztertu"
 msgid "Display advanced export options"
 msgstr "Erakutsi esportatzeko aukera aurreratuak"
 
-#: ../src/control/Control.cpp:1968
+#: ../src/control/Control.cpp:1972
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -394,7 +394,7 @@ msgstr "Ez ireki automatikoki gordetako fitxategiak. Agian gainidatziko dira!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ez gainidatzi atzeko planoko PDFa! Horrek akatsak eragingo ditu!"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2465
 msgid "Document file was removed."
 msgstr "Dokumentu fitxategia kendu da."
 
@@ -484,7 +484,7 @@ msgstr "Ezabatu trazua"
 msgid "Eraser"
 msgstr "Ezabagailua"
 
-#: ../src/control/Control.cpp:2216
+#: ../src/control/Control.cpp:2220
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Errorea PDF oharrak fitxategian \"{1}\"\n"
@@ -494,7 +494,7 @@ msgstr "Errorea PDF oharrak fitxategian \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Errorea \"{1}\" Glade fitxategia kargatzean (saiatu \"{2}\" kargatzen)"
 
-#: ../src/control/Control.cpp:2037
+#: ../src/control/Control.cpp:2041
 msgid "Error opening file \"{1}\""
 msgstr "Errorea \"{1}\" fitxategia irekitzean"
 
@@ -860,7 +860,7 @@ msgstr "Ez dago gailurik"
 msgid "No pages to export!"
 msgstr "Ez dago orririk esportatzeko!"
 
-#: ../src/control/Control.cpp:1266
+#: ../src/control/Control.cpp:1270
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Ez dago pdf orririk eransteko. Komeni da aurretik dokumentua berriro irekitzea."
 
@@ -1021,7 +1021,7 @@ msgstr "Berregin"
 msgid "Redo: "
 msgstr "Berregin: "
 
-#: ../src/control/Control.cpp:2014
+#: ../src/control/Control.cpp:2018
 msgid "Remove PDF Background"
 msgstr "Kendu atzeko planoko PDFa"
 
@@ -1073,16 +1073,16 @@ msgstr "SVG irudiak"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Frogako LaTex fitxategia behar bezala sortu da."
 
-#: ../src/control/Control.cpp:2462 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "Gorde"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2466
 msgid "Save As..."
 msgstr "Gorde honela..."
 
-#: ../src/control/Control.cpp:2305 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2309 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Gorde fitxategia"
 
@@ -1123,7 +1123,7 @@ msgstr "Hautatu laukizuzena"
 msgid "Select Region"
 msgstr "Hautatu area"
 
-#: ../src/control/Control.cpp:2013
+#: ../src/control/Control.cpp:2017
 msgid "Select another PDF"
 msgstr "Hautatu beste PDF"
 
@@ -1290,15 +1290,15 @@ msgstr "Testua ez da aurkitu"
 msgid "Text not found, searched on all pages"
 msgstr "Testua ez da aurkitu, orri guztietan bilatu ondoren"
 
-#: ../src/control/Control.cpp:1066
+#: ../src/control/Control.cpp:1070
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Toolbarconfiguration \"{1}\" lehenetsia dago, nahi duzu kopia bat sortu bera editatzeko?"
 
-#: ../src/control/Control.cpp:2010
+#: ../src/control/Control.cpp:2014
 msgid "The attached background PDF could not be found."
 msgstr "Eranskineko atzeko planoko PDFa ez da aurkitu."
 
-#: ../src/control/Control.cpp:2011
+#: ../src/control/Control.cpp:2015
 msgid "The background PDF could not be found."
 msgstr "Atzeko planoko PDFa ez da aurkitu."
 
@@ -1306,7 +1306,7 @@ msgstr "Atzeko planoko PDFa ez da aurkitu."
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Atzeko planoa gainidazteko azterketak huts egin du:\n"
 
-#: ../src/control/Control.cpp:2045
+#: ../src/control/Control.cpp:2049
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Kargatuko den fitxategia Xournal++en uneko bertsiok onartzen duena baino bertsio berriago batez sortu da, beraz baliteke behar bezala ez kargatzea. Ireki edonola?"
 
@@ -1350,7 +1350,7 @@ msgstr "Laguntza erakusteak huts egin du: {1}"
 msgid "Thick"
 msgstr "Lodia"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2465
 msgid "This document is not saved yet."
 msgstr "Dokumentu hau oraindik ez da gorde."
 
@@ -1387,7 +1387,7 @@ msgstr "Ezin izan da {1}-eko txantiloi fitxategi globala ireki. Ba al dago?"
 msgid "Unable to play audio recording {1}"
 msgstr "Ezin da erreproduzitu audio grabazioa {1}"
 
-#: ../src/control/Control.cpp:1280
+#: ../src/control/Control.cpp:1284
 msgid "Unable to retrieve pdf page."
 msgstr "Ezin izan da pdf orria berreskuratu."
 
@@ -1432,7 +1432,7 @@ msgstr "Pixmap::domain mota ezezaguna: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Trazu mota ezezaguna: {1}, arkatza erabiliko da"
 
-#: ../src/control/Control.cpp:2362
+#: ../src/control/Control.cpp:2366
 msgid "Unsaved Document"
 msgstr "Gorde gabeko dokumentua"
 
@@ -1489,7 +1489,7 @@ msgstr "Xournal fitxategiak"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++-ek huts egin du azkenekoan. Nahi al duzu editatutako azken fitxategia leheneratzea?"
 
-#: ../src/control/Control.cpp:2311 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2315 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Xournal++ fitxategiak"
 
@@ -1541,7 +1541,7 @@ msgstr "Zoom eskala"
 msgid "Zoom to 100%"
 msgstr "%100 eskala"
 
-#: ../src/control/Control.cpp:2305 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2309 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1553,7 +1553,7 @@ msgstr "_Utzi"
 msgid "_Open"
 msgstr "_Ireki"
 
-#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "_Gorde"
@@ -1594,7 +1594,7 @@ msgstr "elementuak"
 msgid "eraser"
 msgstr "ezabagailua"
 
-#: ../src/control/Control.cpp:1982
+#: ../src/control/Control.cpp:1986
 msgid "file: {1}"
 msgstr "fitxategia: {1}"
 
