@@ -15,22 +15,11 @@
 
 PluginController::PluginController(Control* control): control(control) {
 #ifdef ENABLE_PLUGINS
-    fs::path searchPath;
     Settings* settings = control->getSettings();
     // check if we have to use a customize plugin folder
-    if(settings->isPluginCustomFolderEnabled() == true)
-    {
-      // get customized plugin folder name
-      searchPath = settings->getPluginCustomFolder();
-    }
-    else
-    {
-      // use standard plugin folder
-      // get first subdirectory of the applicaiton main directory    
-      searchPath = control->getGladeSearchPath()->getFirstSearchPath();
-      // select plugin subdirectory
-      searchPath = searchPath /= "../plugins";
-    }
+    auto searchPath = (settings->isPluginCustomFolderEnabled()) ?
+                              fs::path{settings->getPluginCustomFolder()} :
+                              control->getGladeSearchPath()->getFirstSearchPath() /= "../plugins";
     // load plugins
     loadPluginsFrom((searchPath).lexically_normal());
 #endif
