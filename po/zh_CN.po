@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-09 20:05+0000\n"
-"PO-Revision-Date: 2021-04-09 21:04\n"
+"POT-Creation-Date: 2021-04-23 20:29+0000\n"
+"PO-Revision-Date: 2021-04-23 20:39\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -166,7 +166,7 @@ msgstr "上移一层"
 msgid "Bring to front"
 msgstr "置于顶层"
 
-#: ../src/control/Control.cpp:2015 ../src/control/Control.cpp:2470
+#: ../src/control/Control.cpp:2019 ../src/control/Control.cpp:2474
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "取消"
@@ -374,7 +374,7 @@ msgstr "删除此图层"
 msgid "Delete this page"
 msgstr "删除此页面"
 
-#: ../src/control/Control.cpp:2467
+#: ../src/control/Control.cpp:2471
 msgid "Discard"
 msgstr "丢弃"
 
@@ -382,7 +382,7 @@ msgstr "丢弃"
 msgid "Display advanced export options"
 msgstr "显示高级导出选项"
 
-#: ../src/control/Control.cpp:1968
+#: ../src/control/Control.cpp:1972
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -394,7 +394,7 @@ msgstr "请勿打开自动保存文件。它们可能会被覆盖！\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "请勿覆盖背景 PDF！这将造成故障！"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2465
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
@@ -484,7 +484,7 @@ msgstr "擦除笔划"
 msgid "Eraser"
 msgstr "橡皮"
 
-#: ../src/control/Control.cpp:2216
+#: ../src/control/Control.cpp:2220
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "PDF文件\"{1}\"标注出错\n"
@@ -494,7 +494,7 @@ msgstr "PDF文件\"{1}\"标注出错\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "加载glade文件\"{1}\"出错(尝试加载\"{2}\")"
 
-#: ../src/control/Control.cpp:2037
+#: ../src/control/Control.cpp:2041
 msgid "Error opening file \"{1}\""
 msgstr "打开文件\"{1}\"出错"
 
@@ -859,7 +859,7 @@ msgstr "没有设备"
 msgid "No pages to export!"
 msgstr "没有要导出的页面！"
 
-#: ../src/control/Control.cpp:1266
+#: ../src/control/Control.cpp:1270
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "没有可添加的pdf页面，你可能需要重新打开文档。"
 
@@ -1020,7 +1020,7 @@ msgstr "重复"
 msgid "Redo: "
 msgstr "重复："
 
-#: ../src/control/Control.cpp:2014
+#: ../src/control/Control.cpp:2018
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
@@ -1072,16 +1072,16 @@ msgstr "SVG图形"
 msgid "Sample LaTeX file generated successfully."
 msgstr "已成功生成示例 LaTeX 文件。"
 
-#: ../src/control/Control.cpp:2462 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "保存"
 
-#: ../src/control/Control.cpp:2462
+#: ../src/control/Control.cpp:2466
 msgid "Save As..."
 msgstr "另存为..."
 
-#: ../src/control/Control.cpp:2305 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2309 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "保存文件"
 
@@ -1122,7 +1122,7 @@ msgstr "选择矩形"
 msgid "Select Region"
 msgstr "选择区域"
 
-#: ../src/control/Control.cpp:2013
+#: ../src/control/Control.cpp:2017
 msgid "Select another PDF"
 msgstr "选择其他PDF"
 
@@ -1289,15 +1289,15 @@ msgstr "文本未找到"
 msgid "Text not found, searched on all pages"
 msgstr "找遍所有页面未找到文本"
 
-#: ../src/control/Control.cpp:1066
+#: ../src/control/Control.cpp:1070
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "工具条配置\"{1}\"是预置的，要产生一个拷贝到编辑?"
 
-#: ../src/control/Control.cpp:2010
+#: ../src/control/Control.cpp:2014
 msgid "The attached background PDF could not be found."
 msgstr "附加的背景PDF未找到。"
 
-#: ../src/control/Control.cpp:2011
+#: ../src/control/Control.cpp:2015
 msgid "The background PDF could not be found."
 msgstr "背景PDF未找到。"
 
@@ -1305,7 +1305,7 @@ msgstr "背景PDF未找到。"
 msgid "The check for overwriting the background failed with:\n"
 msgstr "覆盖背景失败：\n"
 
-#: ../src/control/Control.cpp:2045
+#: ../src/control/Control.cpp:2049
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "正在加载的文件格式版本比当前版本Xournal++支持的文件格式版本更新， 可能无法正确加载，仍要打开？"
 
@@ -1349,7 +1349,7 @@ msgstr "显示帮助时出错: {1}"
 msgid "Thick"
 msgstr "粗"
 
-#: ../src/control/Control.cpp:2461
+#: ../src/control/Control.cpp:2465
 msgid "This document is not saved yet."
 msgstr "此文档尚未保存。"
 
@@ -1386,7 +1386,7 @@ msgstr "无法在 {1} 打开全局模板文件，它是否存在？"
 msgid "Unable to play audio recording {1}"
 msgstr "无法播放音频录音 {1}"
 
-#: ../src/control/Control.cpp:1280
+#: ../src/control/Control.cpp:1284
 msgid "Unable to retrieve pdf page."
 msgstr "无法获取 pdf 页面。"
 
@@ -1431,7 +1431,7 @@ msgstr "未知的 pixmap::domain 类型: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "未知笔划类型: \"{1}\"，将假设为笔"
 
-#: ../src/control/Control.cpp:2362
+#: ../src/control/Control.cpp:2366
 msgid "Unsaved Document"
 msgstr "未保存文档"
 
@@ -1488,7 +1488,7 @@ msgstr "Xournal文件"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ 上次崩溃了。您想恢复最后一个编辑的文件？"
 
-#: ../src/control/Control.cpp:2311 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2315 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Xournal++ 文件"
 
@@ -1540,7 +1540,7 @@ msgstr "缩放游标"
 msgid "Zoom to 100%"
 msgstr "原始尺寸"
 
-#: ../src/control/Control.cpp:2305 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2309 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1552,7 +1552,7 @@ msgstr "取消 (_C)"
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: ../src/control/Control.cpp:2306 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "保存(_S)"
@@ -1593,7 +1593,7 @@ msgstr "元素"
 msgid "eraser"
 msgstr "橡皮"
 
-#: ../src/control/Control.cpp:1982
+#: ../src/control/Control.cpp:1986
 msgid "file: {1}"
 msgstr "文件： {1}"
 
