@@ -27,7 +27,7 @@ Full translations for all languages not mentioned previously **except**:
 - German
 - Italian
 
-If you would like to help us improve the localization of Xournal++ take a look at [our Crowdin project](https://crowdin.com/project/xournalpp). If you are interested in translating a new language, contact us on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a new issue and we will unlock the language on Crowdin.
+If you would like to help us improve the localization of Xournal++, take a look at [our Crowdin project](https://crowdin.com/project/xournalpp). If you are interested in translating a new language, contact us on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a new issue and we will unlock the language on Crowdin.
 
 **Thanks in advance!**
 
@@ -45,26 +45,26 @@ Xournal++ features:
 - Fill shape functionality
 - PDF Export (with and without paper style)
 - PNG Export (with and without transparent background)
-- Allow to map different tools / colors etc. to stylus buttons / mouse buttons
+- Allows mapping different tools / colors etc. to stylus buttons / mouse buttons
 - Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden, editing layer can be selected)
-- enhanced support for image insertion
+- Enhanced support for image insertion
 - Eraser with multiple configurations
 - Significantly reduced memory usage and code to detect memory leaks compared to Xournal
-- LaTeX support (requires a working LaTeX install)
+- LaTeX support (requires a working LaTeX installation)
 - bug reporting, auto-save, and auto backup tools
-- Customizable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
+- Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait / landscape
 - Page Template definitions
 - Shape drawing (line, arrow, circle, rect, splines)
 - Shape resizing and rotation
 - Rotation snapping every 15 degrees
 - Rect snapping to grid
 - Audio recording and playback alongside with handwritten notes
-- Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
+- Multi Language Support like English, German (Deutsch), Italian (Italiano)...
 - Plugins using Lua scripting
 
 ## Mobile & web app
 
-Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (in coming) as well as a **web app** available. Even though it is not perfectly stable nor every of Xournal++'s features is supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in it's [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
+Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (coming soon) as well as a **web app** available. Even though it is not perfectly stable nor are all of Xournal++'s features fully supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in it's [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
 
 [Get it on Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile)
 
@@ -329,17 +329,17 @@ page](https://github.com/xournalpp/xournalpp/releases).
 
 ## File format
 
-The file format _.xopp is an XML which is .gz compressed. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. _.xopp is basically the same file format as _.xoj, which is used by Xournal. Therefor Xournal++ reads _.xoj files, and can also export _.xoj. On exporting to _.xoj all Xournal++ specific Extension are lost, like additional Background types.
+The file format _.xopp is an XML which is .gz compressed. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. _.xopp is basically the same file format as _.xoj, which is used by Xournal. Therefore Xournal++ is able to read _.xoj files, and can also export to _.xoj. As soon as notes are exported to a _.xoj-file, all Xournal++ specific extensions, like additional background types, are lost.
 
-\*.xopp can theoretically be read by Xournal, as long as you do not use any new feature, Xournal does not open files at all if there are new attributes or unknown values, because of this Xournal++ will add the extension .xopp to all saved files.
+\*.xopp can theoretically be read by Xournal, as long as you do not use any new feature. Xournal does not open files that contain new attributes or unknown values, so Xournal++ will add the extension .xopp to all saved files to indicate the potential presence of Xournal++-only features.
 
-All new files will be saved as _.xopp, if an _.xoj file is opened which was created by Xournal, the Save-As dialog will be displayed on save. If the \*.xoj file was by Xournal++ created, Xournal++ overwrite the file on save, and does not change the extension.
+All new files will be saved as _.xopp. If an _.xoj file that was created by Xournal is opened, the Save-As dialog will be displayed on save. If the \*.xoj file was created by Xournal++, the file will be overwritten on save and the file extension will not change.
 
 **We are currently introducing a new file format that can efficiently store attached PDF files and other attachments internally. We will still allow for attachments that are linked to external files. Please refer to [#937](https://github.com/xournalpp/xournalpp/issues/937) for further details.**
 
 ## Development
 
-For developing new features, write a Ticket, so others know what you are doing.
+For developing new features, create an issue or comment on an existing issue to let others know what you are doing.
 For development create a fork, and use the master as base. Create a Pull request for each fix.
 Do not create big pull requests, as long as you don't break anything features also can be
 merged, even if they are not 100% finished.
