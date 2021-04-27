@@ -9,8 +9,8 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="draw-circle.svg"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="xopp-draw-ellipse.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    id="svg8"
    version="1.1"
    viewBox="0 0 5.8208332 5.8208332"
@@ -2316,15 +2316,6 @@
          x="1.6939358"
          y="1033.4717" />
     </clipPath>
-    <linearGradient
-       gradientUnits="userSpaceOnUse"
-       y2="1051.3622"
-       x2="11"
-       y1="1031.3622"
-       x1="11"
-       id="linearGradient4449"
-       xlink:href="#linearGradient4459"
-       inkscape:collect="always" />
     <clipPath
        id="clipPath4463"
        clipPathUnits="userSpaceOnUse">
@@ -7348,19 +7339,24 @@
      fit-margin-right="0"
      fit-margin-left="0"
      fit-margin-top="0"
-     showgrid="false"
+     showgrid="true"
      inkscape:document-rotation="0"
-     inkscape:current-layer="layer2"
-     inkscape:document-units="mm"
-     inkscape:cy="14.08922"
-     inkscape:cx="8.3982173"
-     inkscape:zoom="15.839192"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="px"
+     inkscape:cy="12.478275"
+     inkscape:cx="7.4006036"
+     inkscape:zoom="44.8"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
      bordercolor="#666666"
      pagecolor="#ffffff"
-     id="base" />
+     id="base"
+     inkscape:snap-grids="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2324" />
+  </sodipodi:namedview>
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -7369,7 +7365,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -7392,31 +7388,6 @@
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="Layer 1">
-    <circle
-       style="fill:#68b723;fill-opacity:1;stroke:none;stroke-width:0.465931;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path2985"
-       cx="151.81703"
-       cy="520.46686"
-       r="2.232403" />
-    <path
-       inkscape:connector-curvature="0"
-       style="fill:#3a9104;fill-opacity:1;stroke:none;stroke-width:0.465931;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 149.59728,520.04873 a 2.232403,2.232403 0 0 0 -0.0175,0.26622 2.232403,2.232403 0 0 0 2.23225,2.23276 2.232403,2.232403 0 0 0 2.23224,-2.23276 2.232403,2.232403 0 0 0 -0.0175,-0.25592 2.232403,2.232403 0 0 1 -2.21474,1.96654 2.232403,2.232403 0 0 1 -2.21474,-1.97684 z"
-       id="circle4436" />
-    <circle
-       r="2.232403"
-       cy="520.46686"
-       cx="151.81703"
-       id="circle2904"
-       style="fill:none;fill-opacity:1;stroke:#206b00;stroke-width:0.264583;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <circle
-       style="fill:none;fill-opacity:1;stroke:url(#linearGradient4449);stroke-width:2.0071;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="circle4441"
-       cx="11.119363"
-       cy="1041.484"
-       r="8.4673948"
-       clip-path="url(#clipPath4463)"
-       transform="matrix(0.26364697,0,0,0.26364697,148.88545,245.88277)" />
     <flowRoot
        transform="matrix(0.26458333,0,0,0.26458333,340.80776,365.61982)"
        xml:space="preserve"
@@ -7441,5 +7412,15 @@
            width="281.61438"
            id="rect85-6" /></flowRegion><flowPara
          id="flowPara87-2" /></flowRoot>
+    <circle
+       style="fill:none;stroke:#fafafa;stroke-width:0.79375;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill;stop-color:#000000"
+       id="path2326"
+       cx="151.88354"
+       cy="520.18756"
+       r="2.1165543" />
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#666666;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+       d="m 151.8168,517.80682 c -1.34702,0 -2.44741,1.10039 -2.44741,2.44738 0,1.34702 1.10039,2.44741 2.44741,2.44741 1.347,0 2.44738,-1.10039 2.44738,-2.44741 0,-1.34699 -1.10038,-2.44738 -2.44738,-2.44738 z m 0,0.77205 c 0.92934,0 1.67533,0.74599 1.67533,1.67533 0,0.92936 -0.74599,1.67345 -1.67533,1.67345 -0.92936,0 -1.67344,-0.74409 -1.67344,-1.67345 0,-0.92934 0.74408,-1.67533 1.67344,-1.67533 z"
+       id="circle2321" />
   </g>
 </svg>
