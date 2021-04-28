@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-23 20:29+0000\n"
-"PO-Revision-Date: 2021-04-23 20:39\n"
+"POT-Creation-Date: 2021-04-28 20:28+0000\n"
+"PO-Revision-Date: 2021-04-28 20:34\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -157,7 +157,7 @@ msgstr "काला"
 msgid "Blue"
 msgstr "नीला"
 
-#: ../src/control/tools/EditSelection.cpp:358
+#: ../src/control/tools/EditSelection.cpp:356
 msgid "Bring forward"
 msgstr "सामने लाएं"
 
@@ -1127,11 +1127,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr ""
 
-#: ../src/control/tools/EditSelection.cpp:371
+#: ../src/control/tools/EditSelection.cpp:367
 msgid "Send backward"
 msgstr ""
 
-#: ../src/control/tools/EditSelection.cpp:379
+#: ../src/control/tools/EditSelection.cpp:375
 msgid "Send to back"
 msgstr ""
 
