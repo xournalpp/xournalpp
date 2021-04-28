@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-23 20:29+0000\n"
-"PO-Revision-Date: 2021-04-23 20:39\n"
+"POT-Creation-Date: 2021-04-28 20:28+0000\n"
+"PO-Revision-Date: 2021-04-28 20:34\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -157,7 +157,7 @@ msgstr "Μαύρο"
 msgid "Blue"
 msgstr "Μπλε"
 
-#: ../src/control/tools/EditSelection.cpp:358
+#: ../src/control/tools/EditSelection.cpp:356
 msgid "Bring forward"
 msgstr ""
 
@@ -1139,11 +1139,11 @@ msgstr "Επιλογή περιοχής"
 msgid "Send Bugreport"
 msgstr "Στείλε Αναφορά Σφάλματος"
 
-#: ../src/control/tools/EditSelection.cpp:371
+#: ../src/control/tools/EditSelection.cpp:367
 msgid "Send backward"
 msgstr ""
 
-#: ../src/control/tools/EditSelection.cpp:379
+#: ../src/control/tools/EditSelection.cpp:375
 msgid "Send to back"
 msgstr ""
 
