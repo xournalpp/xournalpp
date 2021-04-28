@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-23 20:29+0000\n"
-"PO-Revision-Date: 2021-04-23 20:39\n"
+"POT-Creation-Date: 2021-04-28 20:28+0000\n"
+"PO-Revision-Date: 2021-04-28 20:34\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -158,7 +158,7 @@ msgstr "黑色"
 msgid "Blue"
 msgstr "蓝色"
 
-#: ../src/control/tools/EditSelection.cpp:358
+#: ../src/control/tools/EditSelection.cpp:356
 msgid "Bring forward"
 msgstr "上移一层"
 
@@ -1151,11 +1151,11 @@ msgstr "选择区域"
 msgid "Send Bugreport"
 msgstr "选择错误报告"
 
-#: ../src/control/tools/EditSelection.cpp:371
+#: ../src/control/tools/EditSelection.cpp:367
 msgid "Send backward"
 msgstr "下移一层"
 
-#: ../src/control/tools/EditSelection.cpp:379
+#: ../src/control/tools/EditSelection.cpp:375
 msgid "Send to back"
 msgstr "置于底层"
 
