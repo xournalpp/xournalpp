@@ -137,10 +137,20 @@
        x2="4.4955244"
        y2="299.55844"
        gradientTransform="translate(0,-1.1458727e-5)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1581"
+       id="linearGradient1583-3"
+       x1="12.863297"
+       y1="23.10371"
+       x2="13.107655"
+       y2="2.7898996"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.25831613,0,0,0.2617889,-5.363103,290.76419)" />
   </defs>
   <sodipodi:namedview
      inkscape:guide-bbox="true"
-     showguides="true"
+     showguides="false"
      fit-margin-bottom="0"
      fit-margin-right="0"
      fit-margin-left="0"
@@ -150,9 +160,9 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="8.271801"
-     inkscape:cx="8.1390028"
-     inkscape:zoom="31.678384"
+     inkscape:cy="5.6227004"
+     inkscape:cx="-6.067789"
+     inkscape:zoom="15.839192"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -220,6 +230,24 @@
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="Layer 1">
+    <g
+       id="g2099"
+       transform="translate(5.0151641,-0.05082416)">
+      <rect
+         style="fill:url(#linearGradient1583-3);fill-opacity:1;stroke:none;stroke-width:0.567145;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect1575-2"
+         width="3.7041667"
+         height="4.7624998"
+         x="-3.956831"
+         y="291.49457" />
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#555761;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect948"
+         width="3.7041667"
+         height="4.7624998"
+         x="-3.956831"
+         y="291.49457" />
+    </g>
     <rect
        style="fill:#ffc27d;stroke:none;stroke-width:0.396875;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill;stop-color:#000000"
        id="rect887"
@@ -237,7 +265,7 @@
        transform="rotate(90)" />
     <g
        id="g1013"
-       transform="translate(-0.27176099,-0.47834527)">
+       transform="translate(-0.27176099,-5.8571445)">
       <rect
          y="291.92209"
          x="1.2851596"

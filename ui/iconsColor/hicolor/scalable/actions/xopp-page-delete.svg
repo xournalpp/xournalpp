@@ -44,16 +44,6 @@
     </clipPath>
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient1581"
-       id="linearGradient1583"
-       x1="12.863297"
-       y1="23.10371"
-       x2="13.107655"
-       y2="2.7898996"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.26458333,0,0,0.26458333,-0.155231,291.18393)" />
-    <linearGradient
-       inkscape:collect="always"
        id="linearGradient1581">
       <stop
          style="stop-color:#d4d4d4;stop-opacity:1"
@@ -84,6 +74,16 @@
        y1="10.876392"
        x2="32.182049"
        y2="29.161646" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1581"
+       id="linearGradient1583-3"
+       x1="12.863297"
+       y1="23.10371"
+       x2="13.107655"
+       y2="2.7898996"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.25831613,0,0,0.2617889,-7.0263055,290.76418)" />
   </defs>
   <sodipodi:namedview
      inkscape:guide-bbox="true"
@@ -97,8 +97,8 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="5.0211835"
-     inkscape:cx="15.748607"
+     inkscape:cy="13.628082"
+     inkscape:cx="8.6515916"
      inkscape:zoom="22.4"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -106,9 +106,10 @@
      bordercolor="#666666"
      pagecolor="#ffffff"
      id="base"
-     inkscape:snap-grids="false"
+     inkscape:snap-grids="true"
      inkscape:snap-intersection-paths="true"
-     inkscape:object-paths="true">
+     inkscape:object-paths="true"
+     inkscape:snap-to-guides="false">
     <inkscape:grid
        id="grid833"
        type="xygrid" />
@@ -141,7 +142,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -163,6 +164,24 @@
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="Layer 1">
+    <g
+       id="g2078"
+       transform="translate(6.6783666,-0.05082452)">
+      <rect
+         style="fill:url(#linearGradient1583-3);fill-opacity:1;stroke:none;stroke-width:0.567145;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect1575-5"
+         width="3.7041667"
+         height="4.7624998"
+         x="-5.6200333"
+         y="291.49457" />
+      <rect
+         style="fill:none;fill-opacity:1;stroke:#555761;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect948"
+         width="3.7041667"
+         height="4.7624998"
+         x="-5.6200333"
+         y="291.49457" />
+    </g>
     <rect
        style="fill:#ffc27d;stroke:none;stroke-width:0.396875;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill;stop-color:#000000"
        id="rect887"
@@ -178,31 +197,6 @@
        x="288.58295"
        y="-9.6785555"
        transform="rotate(90)" />
-    <g
-       id="g1013"
-       transform="translate(-0.27176099,-0.47834527)">
-      <rect
-         y="291.92209"
-         x="1.2851596"
-         height="4.8133368"
-         width="3.7940361"
-         id="rect884-7"
-         style="fill:#ed5353;fill-opacity:1;stroke:none;stroke-width:0.567145;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <rect
-         style="fill:url(#linearGradient1583);fill-opacity:1;stroke:none;stroke-width:0.567145;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="rect1575"
-         width="3.7940361"
-         height="4.8133368"
-         x="1.2851596"
-         y="291.92209" />
-      <rect
-         style="fill:none;fill-opacity:1;stroke:#555761;stroke-width:0.274132;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="rect896-3"
-         width="3.7940361"
-         height="4.8133368"
-         x="1.2851596"
-         y="291.92209" />
-    </g>
     <path
        id="path1226"
        style="opacity:0.2;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.396875;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill;stop-color:#000000"

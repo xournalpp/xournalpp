@@ -321,17 +321,7 @@
        x2="13.107655"
        y2="2.7898996"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1,0,0,0.98845103,0.21633911,0.24232087)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient923"
-       id="linearGradient925"
-       x1="2"
-       y1="10"
-       x2="16.339664"
-       y2="10.090925"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1,0,0,0.98972112,0,0.010226)" />
+       gradientTransform="matrix(0.97631293,0,0,0.98943839,0.72104672,0.22160484)" />
     <linearGradient
        id="SVGID_1_"
        gradientUnits="userSpaceOnUse"
@@ -364,6 +354,16 @@
          stop-color="#fff2f4"
          id="stop9" />
     </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient923"
+       id="linearGradient958"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.97631293,0,0,0.98943839,-3.3150442,-1.7604337)"
+       x1="5.4439964"
+       y1="12.896643"
+       x2="19.783661"
+       y2="12.896643" />
   </defs>
   <sodipodi:namedview
      inkscape:snap-page="true"
@@ -383,9 +383,9 @@
      showgrid="true"
      inkscape:current-layer="layer2"
      inkscape:document-units="px"
-     inkscape:cy="10.928818"
-     inkscape:cx="5.4456464"
-     inkscape:zoom="32.000001"
+     inkscape:cy="13.797771"
+     inkscape:cx="-3.233326"
+     inkscape:zoom="22.627418"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -448,39 +448,32 @@
      id="layer2"
      inkscape:groupmode="layer">
     <rect
-       style="fill:url(#linearGradient925);fill-opacity:1;stroke:none;stroke-width:2.14353;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect902"
-       width="14.339664"
-       height="18.005144"
+       style="fill:url(#linearGradient958);fill-opacity:1;stroke:none;stroke-width:2.144;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect950"
+       width="14"
+       height="18"
        x="2"
-       y="0.99485564" />
+       y="1.0000002" />
     <rect
-       y="0.99485564"
+       style="fill:none;fill-opacity:1;stroke:#555761;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect952"
+       width="14"
+       height="18"
        x="2"
-       height="18.005144"
-       width="14.339664"
-       id="rect904"
-       style="fill:none;fill-opacity:1;stroke:#555761;stroke-width:1.03609;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="2.7898996"
-       x="5.6603355"
-       height="18.192139"
-       width="14.339664"
-       id="rect884-7"
-       style="fill:#ed5353;fill-opacity:1;stroke:none;stroke-width:2.14354;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       y="1.0000002" />
     <rect
        style="fill:url(#linearGradient1583);fill-opacity:1;stroke:none;stroke-width:2.14354;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1575"
-       width="14.339664"
-       height="17.982038"
-       x="5.6603355"
-       y="3" />
+       width="14"
+       height="18"
+       x="6.0360909"
+       y="2.9820387" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#555761;stroke-width:1.03609;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect896-3"
-       width="14.339664"
-       height="17.982038"
-       x="5.6603355"
-       y="3" />
+       style="fill:none;fill-opacity:1;stroke:#555761;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect948"
+       width="14"
+       height="18"
+       x="6.0360909"
+       y="2.9820387" />
   </g>
 </svg>

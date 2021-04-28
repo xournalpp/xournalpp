@@ -29,18 +29,6 @@
          offset="1"
          style="stop-color:#0d52bf;stop-opacity:0.97428107" />
     </linearGradient>
-    <linearGradient
-       id="linearGradient888"
-       inkscape:collect="always">
-      <stop
-         id="stop884"
-         offset="0"
-         style="stop-color:#8cd5ff;stop-opacity:1;" />
-      <stop
-         id="stop886"
-         offset="1"
-         style="stop-color:#64baff;stop-opacity:1" />
-    </linearGradient>
     <clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath5175">
@@ -62,16 +50,6 @@
          y="1.5076531"
          clip-path="none" />
     </clipPath>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient888"
-       id="linearGradient923"
-       x1="19.891943"
-       y1="0.85751539"
-       x2="23.24608"
-       y2="4.5683088"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0278479,0,0,1.0277565,-19.242719,0.02864969)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient896"
@@ -141,7 +119,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -164,7 +142,7 @@
      id="layer2"
      inkscape:groupmode="layer">
     <path
-       style="fill:#8cd5ff;fill-opacity:1;stroke:url(#linearGradient923);stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#b9cfe7;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 0.79158138,4.903256 C 0.97552091,5.1320669 1.3210443,5.1709857 1.6076792,5.2345185 2.2458607,5.3759623 2.9400538,5.5215737 3.5661807,5.3338265 4.1393015,5.1619688 4.716507,4.7912024 5.0130514,4.2715598 5.2436614,3.8674552 5.2562155,3.3361149 5.1519023,2.8827095 4.9913216,2.1847262 4.5743165,1.5130628 4.0253358,1.0530049 3.6628293,0.74923193 3.1772348,0.56726065 2.7055811,0.53185095 2.2219242,0.49553928 1.7044419,0.61024924 1.2876002,0.85819056 0.99388141,1.0328996 0.65215587,1.2874448 0.60866248,1.6263835 0.56639738,1.955794 0.93742786,2.2061477 1.0586368,2.515355 1.1759266,2.8145707 1.3824459,3.1263371 1.3237784,3.4423195 1.2593529,3.7893245 0.76994004,3.9450007 0.68660316,4.2879363 0.63747203,4.4901348 0.66121532,4.7410731 0.79158138,4.903256 Z"
        id="path1430"
        inkscape:connector-curvature="0"

@@ -13,8 +13,8 @@
    viewBox="0 0 5.8208332 5.8208335"
    version="1.1"
    id="svg3342"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
-   sodipodi:docname="stretch.svg">
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   sodipodi:docname="xopp-spacer.svg">
   <defs
      id="defs3336">
     <linearGradient
@@ -1415,16 +1415,6 @@
          style="stop-color:#fafafa;stop-opacity:1"
          offset="1" />
     </linearGradient>
-    <linearGradient
-       y2="4.5999818"
-       x2="9.4926243"
-       y1="1.3433824"
-       x1="9.4926462"
-       gradientTransform="matrix(0.99225376,0,0,1.4510849,-6.491947,-1.3840757)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient1567"
-       xlink:href="#linearGradient888"
-       inkscape:collect="always" />
     <clipPath
        id="clipPath1251"
        clipPathUnits="userSpaceOnUse">
@@ -1503,9 +1493,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="22.4"
-     inkscape:cx="12.429441"
-     inkscape:cy="14.266471"
-     inkscape:document-units="mm"
+     inkscape:cx="9.7508696"
+     inkscape:cy="15.471828"
+     inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="true"
      units="px"
@@ -1538,7 +1528,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1585,7 +1575,7 @@
        inkscape:connector-curvature="0"
        id="path1561"
        d="m 0.39473593,0.52994368 5.03136157,-1.894e-5 -6.8e-6,4.76096536 -5.03134882,-5.4e-6 z"
-       style="fill:url(#linearGradient1567);fill-opacity:1;stroke:none;stroke-width:0.330729;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#b9cfe7;fill-opacity:1;stroke:none;stroke-width:0.330729;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        style="fill:none;fill-opacity:1;stroke:#0d52bf;stroke-width:0.264583;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98431373"
        d="m 0.39473593,0.52994368 5.03136157,-1.894e-5 -6.8e-6,4.76096536 -5.03134882,-5.4e-6 z"

@@ -83,8 +83,8 @@
      showgrid="true"
      inkscape:current-layer="layer2"
      inkscape:document-units="px"
-     inkscape:cy="14.890821"
-     inkscape:cx="11.109909"
+     inkscape:cy="10.755509"
+     inkscape:cx="3.533765"
      inkscape:zoom="31.678384"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -100,11 +100,6 @@
        id="guide3889"
        orientation="0,1"
        position="4.2333332,5.2916668" />
-    <sodipodi:guide
-       inkscape:locked="false"
-       id="guide3891"
-       orientation="0,1"
-       position="5.2916665,0.26458334" />
     <sodipodi:guide
        inkscape:locked="false"
        id="guide3893"
@@ -148,7 +143,7 @@
        height="4.8947921"
        width="4.8947921"
        id="rect2985-5"
-       style="opacity:1;fill:#8cd5ff;fill-opacity:1;stroke:none;stroke-width:0.264584;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:2.11667, 1.05833000000000022;stroke-dashoffset:0;stroke-opacity:1" />
+       style="opacity:1;fill:#b9cfe7;fill-opacity:1;stroke:none;stroke-width:0.264584;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:2.11667, 1.05833000000000022;stroke-dashoffset:0;stroke-opacity:1" />
     <rect
        style="fill:none;fill-opacity:1;stroke:url(#linearGradient906);stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect2377"
