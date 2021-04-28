@@ -388,8 +388,6 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->cursorHighlightBorderWidth = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("darkTheme")) == 0) {
         this->darkTheme = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
-    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("iconStyle")) == 0) {
-        this->iconStyle = static_cast<IconStyle>(g_ascii_strtoull(reinterpret_cast<const char*>(value), nullptr, 10));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useStockIcons")) == 0) {
         this->useStockIcons = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
@@ -839,7 +837,6 @@ void Settings::save() {
     WRITE_DOUBLE_PROP(cursorHighlightRadius);
     WRITE_DOUBLE_PROP(cursorHighlightBorderWidth);
     WRITE_BOOL_PROP(darkTheme);
-    savePropertyUnsigned("iconStyle", static_cast<unsigned int>(iconStyle), root);
     WRITE_BOOL_PROP(useStockIcons);
 
     WRITE_BOOL_PROP(disableScrollbarFadeout);
@@ -1561,16 +1558,6 @@ void Settings::setDarkTheme(bool dark) {
 }
 
 auto Settings::isDarkTheme() const -> bool { return this->darkTheme; }
-
-void Settings::setIconStyle(IconStyle sty) {
-    if (this->iconStyle == sty) {
-        return;
-    }
-    this->iconStyle = sty;
-    save();
-}
-
-auto Settings::getIconStyle() const -> IconStyle { return this->iconStyle; }
 
 void Settings::setAreStockIconsUsed(bool use) {
     if (this->useStockIcons == use) {

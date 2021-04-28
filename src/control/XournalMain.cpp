@@ -509,15 +509,15 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
     // Set up icons
     {
-        const auto monoIcons = app_data->gladePath->getFirstSearchPath() / "iconsMono";
-        const auto colorIcons = app_data->gladePath->getFirstSearchPath() / "iconsColor";
+        const auto lightIcons = app_data->gladePath->getFirstSearchPath() / "iconsColor-light";
+        const auto darkIcons = app_data->gladePath->getFirstSearchPath() / "iconsColor-dark";
 
         // icon load order from lowest priority to highest priority
-        std::vector<std::string> iconLoadOrder = {monoIcons.u8string()};
-        if (app_data->control->getSettings()->getIconStyle() == IconStyle::Color) {
-            iconLoadOrder.emplace_back(colorIcons.u8string());
+        std::vector<std::string> iconLoadOrder = {lightIcons.u8string()};
+        if (app_data->control->getSettings()->isDarkTheme()) {
+            iconLoadOrder.emplace_back(darkIcons.u8string());
         } else {
-            iconLoadOrder.insert(iconLoadOrder.begin(), colorIcons.u8string());
+            iconLoadOrder.insert(iconLoadOrder.begin(), darkIcons.u8string());
         }
 
         for (auto& p: iconLoadOrder) {

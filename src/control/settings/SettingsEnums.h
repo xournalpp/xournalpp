@@ -103,11 +103,3 @@ constexpr auto stylusCursorTypeToString(StylusCursorType stylusCursorType) -> co
 }
 
 StylusCursorType stylusCursorTypeFromString(const string& stylusCursorTypeStr);
-
-enum class IconStyle {
-    Color = 0,
-    Mono = 1,
-};
-
-std::optional<IconStyle> iconStyleFromString(const std::string& s);
-std::string iconStyleToString(IconStyle sty);

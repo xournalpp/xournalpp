@@ -459,9 +459,6 @@ void SettingsDialog::load() {
     color = Util::rgb_to_GdkRGBA(settings->getSelectionColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorSelection")), &color);
 
-    auto iconStyleId = iconStyleToString(settings->getIconStyle());
-    gtk_combo_box_set_active_id(GTK_COMBO_BOX(get("cbIconStyle")), iconStyleId.c_str());
-
     loadCheckbox("cbHighlightPosition", settings->isHighlightPosition());
     color = Util::argb_to_GdkRGBA(settings->getCursorHighlightColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("cursorHighlightColor")), &color);
@@ -703,11 +700,6 @@ void SettingsDialog::save() {
         scrollbarHideType |= SCROLLBAR_HIDE_VERTICAL;
     }
     settings->setScrollbarHideType(static_cast<ScrollbarHideType>(scrollbarHideType));
-
-    auto* style = gtk_combo_box_get_active_id(GTK_COMBO_BOX(get("cbIconStyle")));
-    if (auto styleOpt = iconStyleFromString(style); styleOpt.has_value()) {
-        settings->setIconStyle(styleOpt.value());
-    }
 
     GdkRGBA color;
     gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);

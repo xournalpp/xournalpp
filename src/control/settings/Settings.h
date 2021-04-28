@@ -166,9 +166,6 @@ public:
     void setDarkTheme(bool dark);
     bool isDarkTheme() const;
 
-    void setIconStyle(IconStyle sty);
-    IconStyle getIconStyle() const;
-
     void setAreStockIconsUsed(bool use);
     bool areStockIconsUsed() const;
 
@@ -613,12 +610,6 @@ private:
      * (white icons)
      */
     bool darkTheme{};
-
-    /**
-     * Sets the icon load order, e.g. to prefer colored icons over monochrome
-     * icons.
-     */
-    IconStyle iconStyle{};
 
     /**
      * If stock icons are used instead of Xournal++ icons when available

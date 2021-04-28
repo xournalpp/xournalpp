@@ -2750,48 +2750,6 @@ This setting can make it easier to draw with touch. </property>
                                                       </packing>
                                                     </child>
                                                     <child>
-                                                      <object class="GtkBox">
-                                                        <property name="visible">True</property>
-                                                        <property name="can_focus">False</property>
-                                                        <property name="tooltip_text" translatable="yes">Set which icon style should be preferred</property>
-                                                        <property name="spacing">5</property>
-                                                        <child>
-                                                          <object class="GtkLabel">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Icon Style (requires restart)</property>
-                                                          </object>
-                                                          <packing>
-                                                            <property name="expand">False</property>
-                                                            <property name="fill">True</property>
-                                                            <property name="position">0</property>
-                                                          </packing>
-                                                        </child>
-                                                        <child>
-                                                          <object class="GtkComboBoxText" id="cbIconStyle">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="active">0</property>
-                                                            <property name="active_id">1</property>
-                                                            <items>
-                                                              <item id="Color" translatable="yes">Colored</item>
-                                                              <item id="Mono" translatable="yes">Monochrome</item>
-                                                            </items>
-                                                          </object>
-                                                          <packing>
-                                                            <property name="expand">False</property>
-                                                            <property name="fill">True</property>
-                                                            <property name="position">1</property>
-                                                          </packing>
-                                                        </child>
-                                                      </object>
-                                                      <packing>
-                                                        <property name="left_attach">0</property>
-                                                        <property name="top_attach">4</property>
-                                                        <property name="width">2</property>
-                                                      </packing>
-                                                    </child>
-                                                    <child>
                                                       <object class="GtkCheckButton" id="cbStockIcons">
                                                         <property name="label" translatable="yes">Use  available Stock Icons (requires restart)</property>
                                                         <property name="name">cbStockIcons</property>
@@ -4807,7 +4765,7 @@ Set this to 0% to always re-render on zoom.</property>
                                       <object class="GtkImage" id="image2">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="pixbuf">iconsColor/hicolor/scalable/actions/xopp-default.svg</property>
+                                        <property name="pixbuf">iconsColor-dark/hicolor/scalable/actions/xopp-default.svg</property>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
