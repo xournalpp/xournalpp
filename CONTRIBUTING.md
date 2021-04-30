@@ -6,15 +6,15 @@ small--is greatly appreciated. In this file, we'll outline how you can
 contribute to the project.
 
 Xournal++ development primarily occurs on [GitHub at the xournalpp/xournalpp
-repository](https://github.com/xournalpp/xournalpp/issues/3065). As a
-contributor, you probably have a particular bug or feature that are you
-interested in working on. Before you do anything, you should first look in the
-[issue tracker](https://github.com/xournalpp/xournalpp/issues) to see if anyone
-has reported your bug or has a similar idea for a feature. If not, you should
-first submit a new issue detailing what you are about to do. This will allow you
-to get feedback and ensure that you do not end up duplicating work. You can
-obtain additional help by contacting community members through one of our
-[official communication channels](https://xournalpp.github.io/community/help/).
+repository](https://github.com/xournalpp/xournalpp). As a contributor, you
+probably have a particular bug or feature that are you interested in working on.
+Before you do anything, you should first look in the [issue
+tracker](https://github.com/xournalpp/xournalpp/issues) to see if anyone has
+reported your bug or has a similar idea for a feature. If not, you should first
+submit a new issue detailing what you are about to do. This will allow you to
+get feedback and ensure that you do not end up duplicating work. You can obtain
+additional help by contacting community members through one of our [official
+communication channels](https://xournalpp.github.io/community/help/).
 
 ## Contributing translations
 
@@ -37,6 +37,27 @@ instructions for compiling Xournal++ on your operating system can be found at
 [`LinuxBuild.md`](readme/LinuxBuild.md), [`MacBuild.md`](readme/MacBuild.md),
 and [`WindowsBuild.md`](readme/WindowsBuild.md). Once you are set up, you will
 be ready to make code changes.
+
+### Code conventions and guidelines
+
+Here is a quick list of guidelines that we follow when working on the Xournal++
+codebase.
+
+* Xournal++ is a mixture C++ and C code. This is unavoidable because we rely on
+  many C libraries (e.g. GTK). Prefer C++ when possible, however.
+* Although we do not have a strong opinion on code style, we use `clang-format`
+  to enforce a _consistent_ code style. Feel free to write your code in whatever
+  style you prefer, as long as you run `clang-format` to format your code
+  afterwards.
+* Please accompany your code changes with documentation.
+* Follow modern C++ best practices as listed in the [C++ Core
+  Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines). In
+  particular, make variables `const` by default, always use smart pointers
+  instead of new/delete, and prefer `std::optional` over null pointers.
+* When working with code that interfaces with C libraries (GLib and GTK in
+  particular), you should be extra careful with reference counting and memory
+  management.
+* TODO, etc.
 
 ### Sending your contributions for review
 
@@ -72,4 +93,4 @@ period.
 
 Once a PR is ready to merge, we typically ask submitters to rebase or squash
 their commits in order to keep the change history cleaner. If you do not know
-how to do this, feel free to either ask for help.
+how to do this, feel free to ask for help.
