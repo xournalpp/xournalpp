@@ -35,6 +35,9 @@ community.
       (#2600).
     * Linux: Fixed an issue with dock icons not appearing correctly in some
       desktop environments (#2881, #1791).
+    * Debian packages: added man pages (#2701)
+    * The `lua-lgi` package has been added to `Recommended` in the list of dpendencies.
+      It is used for creating GUI in Lua plugins.
 * Document viewing
     * Changed page selection system to now select the current page during
       scrolling (#1613, #1184).
@@ -46,6 +49,8 @@ community.
       32-bit devices (#2576).
     * Fixed vim-style `hjlk` keybindings being inconsistent with the arrow keys
       (#2712).
+    * Added a shortcut for the default tool (#2872) and changed shortcuts for
+      page deletion and layer navigation (#2766)
     * Fixed various issues related to zooming and scrolling (#2435, #2743,
       #2023, #1830, #2821)
     * Fixed zoom slider tick marks being set to the wrong values when DPI
@@ -56,6 +61,11 @@ community.
       is rendered (#2589, #2609).
     * Simplified background rendering to improve compatibility of exported SVGs
       (#2598).
+    * Fixed a bug, in which fonts were exported with a wrong size and were saved
+      with a wrong size in the xopp-file, if the display DPI had non-default value.
+      A plugin for migrating documents with wrong font sizes has been added (#2724).
+    * Updated the Cairo version on Windows to fix a bug that created corrupt PDF
+      files on export (#2871)
 * Sidebar preview panel
     * Added new "Layerstack Preview" tab that shows all layers up to the current
       layer (#2795).
@@ -160,11 +170,14 @@ community.
       customization dialog open  (#1189).
     * Fixed multiple other bugs involving the toolbar customizer (#2860 PENDING).
 * Plugins
+    * Added a vertical mode for the pagespinner tool (@2624 PENDING).
     * Extended plugin API with many new features and functions, including page
       and layer operations (#2406, #2950).
     * Added a Lua plugin for taking a screenshot and saving it to a file
       (#2086, #2787).
     * Added a Lua plugin for cycling though a color list (#1835, #2251).
+    * Added Lua plugin support for MacOS (#2986)
+    * Allow using the system Lua package path (#2968)
 * Paper backgrounds
     * Added an isometric paper background type (#1994).
     * Changed background types to use lighter line colors when a dark background
@@ -172,12 +185,11 @@ community.
     * Fixed the confusing behavior of the `Apply to current/all pages` buttons
       used to change the page backgrounds (#2730).
 * Misc
-    * New application icon (#2557) and new action icons (#1735 PENDING)
+    * New application icon (#2557) and new action icons (#2886 PENDING)
     * Added a language setting in the Preferences window (#2188)
     * Added menu entry to append new pdf pages (#2146)
     * Added support for more export options in command line and GUI (#2449)
-    * Added a command line option to create an xopp file (#1919).
-    * Added a new Ctrl+Shift+D shortcut for the Default Tool (#2872).
+    * Added a command line option to create a xopp file (#1919).
     * Fixed bugs in element cloning, which previously could have caused elements
       to become invalid (#2733, #2720, #2464).
     * Fixed a bug where the thumbnailer would not correctly render previews in
@@ -185,10 +197,15 @@ community.
     * Improved look of the Preferences window (#2592).
     * Updated translations
     * Fixed keyboard shortcuts not working when the menubar is hidden (#2324)
+    * Fixed the undo operation for moving objects across page borders (#3068)
     * Non-visible refactoring and code cleanup (#1279, #2150, #1944, #2199, #2213, etc.)
     * Switched from deprecated GTK 2 initialisation to GTK 3 initialisation (#2252)
     * Windows: Fixed crash that occurs when closing the application (#2218).
     * Improved Print Dialog verbosity and error handling (#3002)
+    * Allow the user to modify the locale directory via the  TEXTDOMAINDIR environment
+      variable (#2600, #2845)
+    * Made layer names editable #2321
+    * Created the website [www.xournalpp.github.io](www.xournalpp.github.io) replacing the User manual.
 
 ## 1.0.20
 
