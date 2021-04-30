@@ -10,17 +10,13 @@ void ToolbarEntry::operator=(const ToolbarEntry& e) {
     this->name = e.name;
     clearList();
 
-    for (ToolbarItem* item: e.entries) {
-        entries.push_back(new ToolbarItem(*item));
-    }
+    for (ToolbarItem* item: e.entries) { entries.push_back(new ToolbarItem(*item)); }
 }
 
 ToolbarEntry::~ToolbarEntry() { clearList(); }
 
 void ToolbarEntry::clearList() {
-    for (ToolbarItem* item: entries) {
-        delete item;
-    }
+    for (ToolbarItem* item: entries) { delete item; }
     entries.clear();
 }
 
