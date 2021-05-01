@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-28 20:28+0000\n"
-"PO-Revision-Date: 2021-04-28 20:34\n"
+"POT-Creation-Date: 2021-05-01 23:37+0000\n"
+"PO-Revision-Date: 2021-05-01 23:42\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -283,11 +283,11 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "Ezin izan da \"{1}\" berregin\n"
 "Zerbait gaizki joan da… Mesedez, idatzi akatsen berri…"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:180
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "Ezin izan da {1} tresna-barratik {2} kokalekuko tresna"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "Ezin izan da {2} tresna-barratik {3} kokalekuko {1} tresna"
 
@@ -1025,11 +1025,11 @@ msgstr "Berregin: "
 msgid "Remove PDF Background"
 msgstr "Kendu atzeko planoko PDFa"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:171
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "Tresna elementua kendu da tresna barratik {1} ID {2}"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "{1} tresna elementua kendu da tresna barratik {2} ID {3}"
 
@@ -1160,7 +1160,7 @@ msgstr "Eraman atzerago"
 msgid "Send to back"
 msgstr "Eraman atzera"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
+#: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
 msgid "Separator"
 msgstr "Bereizlea"
 
