@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-28 20:28+0000\n"
-"PO-Revision-Date: 2021-04-28 20:34\n"
+"POT-Creation-Date: 2021-05-01 23:37+0000\n"
+"PO-Revision-Date: 2021-05-01 23:42\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -283,11 +283,11 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "Nelze znovuprovést „{1}“\n"
 "Něco je špatně… Napište prosím hlášení o chybě…"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:180
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "Nástroj z panelu nástrojů {1} nelze odstranit z pozice {2}"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "Nástroj {1} z panelu nástrojů {2} nelze odstranit z pozice {3}"
 
@@ -1025,11 +1025,11 @@ msgstr "Znovu: "
 msgid "Remove PDF Background"
 msgstr "Odstranit PDF pozadí"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:171
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "Nástroj byl odstraněn z panelu nástrojů {1} ID {2}"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "Nástroj {1} byl odstraněn z panelu nástrojů {2} ID {3}"
 
@@ -1160,7 +1160,7 @@ msgstr "Odsunout dozadu"
 msgid "Send to back"
 msgstr "Odsunout do pozadí"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
+#: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
 msgid "Separator"
 msgstr "Oddělovač"
 
