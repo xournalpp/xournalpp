@@ -23,9 +23,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="31.678384"
-     inkscape:cx="16.329392"
-     inkscape:cy="10.600234"
+     inkscape:zoom="44.8"
+     inkscape:cx="11.290396"
+     inkscape:cy="12.294538"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -53,7 +53,7 @@
      transform="translate(0,-1030.3622)">
     <path
        sodipodi:type="arc"
-       style="fill:#1a1a1a;fill-opacity:1;stroke:none"
+       style="fill:#666666;fill-opacity:1;stroke:none"
        id="path2985"
        sodipodi:cx="14.285714"
        sodipodi:cy="14.857142"
@@ -63,12 +63,12 @@
        transform="matrix(0.59148937,0,0,0.59148937,2.5322947,1032.5922)" />
     <path
        id="path849"
-       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.591489"
+       style="fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:0.591489"
        d="M 4.8554688 10.517578 A 6.2053576 6.2053576 0 0 0 4.7773438 11.017578 A 6.2053576 6.2053576 0 0 0 10.982422 17.222656 A 6.2053576 6.2053576 0 0 0 17.1875 11.017578 A 6.2053576 6.2053576 0 0 0 17.144531 10.740234 A 6.2053576 6.2053576 0 0 1 10.982422 16.222656 A 6.2053576 6.2053576 0 0 1 4.8554688 10.517578 z "
        transform="translate(0,1030.3622)" />
     <path
        id="path856"
-       style="fill:#333333;fill-opacity:1;stroke:none;stroke-width:0.591489"
+       style="fill:#7e8087;fill-opacity:1;stroke:none;stroke-width:0.591489"
        d="M 10.982422 4.8125 A 6.2053576 6.2053576 0 0 0 4.7773438 11.017578 A 6.2053576 6.2053576 0 0 0 4.8554688 11.517578 A 6.2053576 6.2053576 0 0 1 10.982422 5.8125 A 6.2053576 6.2053576 0 0 1 17.107422 11.517578 A 6.2053576 6.2053576 0 0 0 17.1875 11.017578 A 6.2053576 6.2053576 0 0 0 10.982422 4.8125 z "
        transform="translate(0,1030.3622)" />
     <path
@@ -79,7 +79,7 @@
        sodipodi:cy="14.857142"
        sodipodi:cx="14.285714"
        id="path863"
-       style="fill:none;fill-opacity:1;stroke:#241f31;stroke-opacity:1;stroke-width:1.69064746;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:none;fill-opacity:1;stroke:#1a1a1a;stroke-opacity:1;stroke-width:1.69064746;stroke-miterlimit:4;stroke-dasharray:none"
        sodipodi:type="arc" />
   </g>
 </svg>
