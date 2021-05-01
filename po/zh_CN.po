@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-28 20:28+0000\n"
-"PO-Revision-Date: 2021-04-28 20:34\n"
+"POT-Creation-Date: 2021-05-01 23:37+0000\n"
+"PO-Revision-Date: 2021-05-01 23:42\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -283,11 +283,11 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "未能重复操作\"{1}\"\n"
 "有错误发生***请提交一个错误报告***"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:180
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "无法从工具栏 {1} 位置 {2} 移除工具项"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:170
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "无法移除工具栏 {2} 位置 {3} 上的工具项 {1}"
 
@@ -1024,11 +1024,11 @@ msgstr "重复："
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:171
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "已从工具栏 {1} 移除工具项 ID {2}"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "已从ID为 {3} 的工具栏 {2} 中移除工具 {1}"
 
@@ -1159,7 +1159,7 @@ msgstr "下移一层"
 msgid "Send to back"
 msgstr "置于底层"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:50
+#: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
 msgid "Separator"
 msgstr "分割线"
 
