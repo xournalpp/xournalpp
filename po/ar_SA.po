@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-01 23:42\n"
+"PO-Revision-Date: 2021-05-02 15:51\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"هل تريد المتابعة؟"
 
 #: ../src/control/XournalMain.cpp:454
 msgid "\n"
@@ -45,7 +46,7 @@ msgstr "%F-ملاحظة-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:146
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
+msgstr "<b>لم يتم العثور على أجهزة. لا يبدو هذا صائبًا- ربما تودُّ إرسال بلاغٍ عن العطل؟</b>"
 
 #: ../src/control/XournalMain.cpp:468
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -54,7 +55,12 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>لم يتم العثور على ملف واجهة المستخدم المطلوب:\n"
+"<b>{1}</b></span>\n"
+"لم نتمكن من العثور عليها في أي موقع.\n"
+"  ليس في مسارٍ نسبيّ\n"
+"  ليس في مسار العمل\n"
+"  ليس في {2}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Add/Edit Tex"
@@ -62,7 +68,7 @@ msgstr "أضف\\حرر تخ"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "خيارات التصدير المتقدمة"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -78,7 +84,7 @@ msgstr "طبق على الصفحة الحالية"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "ترتيب"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
