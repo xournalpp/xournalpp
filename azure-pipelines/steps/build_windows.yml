@@ -8,7 +8,6 @@ steps:
   # Copy of msys2-blob as a temporary fix for Windows CI
   - script: |
       set PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem
-      pacman --noconfirm -Sy
       pacman --noconfirm -S mingw-w64-x86_64-imagemagick mingw-w64-x86_64-ninja mingw-w64-x86_64-cppunit mingw-w64-x86_64-poppler mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsndfile mingw-w64-x86_64-libzip mingw-w64-x86_64-lua
     env:
       MSYS2_ARCH: x86_64
