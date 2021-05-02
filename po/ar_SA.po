@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-02 15:51\n"
+"PO-Revision-Date: 2021-05-02 16:54\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -93,50 +93,51 @@ msgstr "أرفق ملف إلى الجريدة"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:102
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
+msgstr "السمة \"{1}\" لا يمكن تحليلها كمضاعفة double ، القيمة هي \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:95
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "السمة \"{1}\" لا يمكن تحليلها كمضاعفة double ، القيمة لا يمكن تحليلها"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:119
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:138
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr ""
+msgstr "السمة \"{1}\" لا يمكن تحليلها كعدد صحيح integer, القيمة هي \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:112
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "السمة \"{1}\" لا يمكن تحليلها كعدد صحيح, القيمة فارغة"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:157
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:177
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "السمة \"{1}\" لا يمكن تحليلها كحجم size_t، القيمة هي \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "السمة \"{1}\" لا يمكن تحليلها كحجم size_t، القيمة لا يمكن تحليلها"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:44
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "لم يتم تعيين لون السمة!"
 
 #: ../src/control/AudioController.cpp:94
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "لم يتم تحديد مجلد الصوت, لن تعمل خصيصة التسجيل!\n"
+"الرجاء تحديد مجلد التسجيل في \"تفضيلات > تسجيل الصوت\""
 
 #: ../src/control/Control.cpp:211
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "فشل الحفظ التلقائي بخطأ مفاده: {1}"
 
 #: ../src/control/Control.cpp:191
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "تم تغيير اسم الملف المحفوظ تلقائيًّا من {1} إلى {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "حفظ تلقائي إلى {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
@@ -159,11 +160,11 @@ msgstr "أزرق"
 
 #: ../src/control/tools/EditSelection.cpp:356
 msgid "Bring forward"
-msgstr ""
+msgstr "اجلب للأمام"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "اجلب للمقدمة"
 
 #: ../src/control/Control.cpp:2019 ../src/control/Control.cpp:2474
 #: ../src/control/XournalMain.cpp:168
@@ -176,7 +177,7 @@ msgstr "غيِّر اللون"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
-msgstr ""
+msgstr "تغيير اسم الطبقة الحالية"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
@@ -184,23 +185,23 @@ msgstr "غيِّر الخط"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "تغيير شكل الخط"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
-msgstr ""
+msgstr "تغيير ملء جرّة القلم"
 
 #: ../src/undo/SizeUndoAction.cpp:104
 msgid "Change stroke width"
-msgstr ""
+msgstr "تغيير سُمْكِ جرّة القلم"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:68
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr ""
+msgstr "اللون \"{1}\" غير معروف (غير معرّف في قائمة الألوان الافتراضية)!"
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:226
 msgid "Contents"
-msgstr ""
+msgstr "المحتويات"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:76
@@ -210,118 +211,123 @@ msgstr "انسخ"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:30
 msgid "Copy current"
-msgstr ""
+msgstr "نسخ الحالي"
 
 #: ../src/undo/CopyUndoAction.cpp:60
 msgid "Copy page"
-msgstr ""
+msgstr "نسخ الصفحة"
 
 #: ../src/util/PathUtil.cpp:230
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "تعذر إنشاء المجلد: {1}\n"
+"فشل برسالة خطأ مفادها: {2}"
 
 #: ../src/control/LatexController.cpp:271
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "تعذر تحميل ملف LaTeX PDF"
 
 #: ../src/control/LatexController.cpp:265
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "تعذر تحميل ملف LaTeX PDF: {1}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:15
 msgid "Could not load pagetemplates.ini file"
-msgstr ""
+msgstr "تعذر تحميل ملف pagetemplates.ini"
 
 #: ../src/control/xojfile/LoadHandler.cpp:777
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr ""
+msgstr "تعذر فتح المرفق: {1}. رسالة خطأ: تعذرت قراءة الملف"
 
 #: ../src/control/xojfile/LoadHandler.cpp:786
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "تعذر فتح المرفق: {1}. رسالة خطأ: تعذرت كتابة الملف"
 
 #: ../src/control/xojfile/LoadHandler.cpp:758
 #: ../src/control/xojfile/LoadHandler.cpp:1009
 #: ../src/control/xojfile/LoadHandler.cpp:1027
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "تعذر فتح المرفق: {1}. رسالة خطأ: لم يتم توفير حجم ملف صحيح"
 
 #: ../src/control/xojfile/LoadHandler.cpp:749
 #: ../src/control/xojfile/LoadHandler.cpp:765
 #: ../src/control/xojfile/LoadHandler.cpp:1000
 #: ../src/control/xojfile/LoadHandler.cpp:1016
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "تعذر فتح المرفق: {1}. رسالة خطأ: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:157
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "تعذر فتح الملف: \"{1}\""
 
 #: ../src/gui/MainWindow.cpp:90
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "لا يمكن تحليل ملف toolbar.ini المعدّل: {1}\n"
+"لن تكون أشرطة الأدوات متاحة"
 
 #: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "تعذر تحليل ملف toolbar.ini العام: {1}\n"
+"لن تتوفر أشرطة الأدوات"
 
 #: ../src/control/xojfile/LoadHandler.cpp:351
 #: ../src/control/xojfile/LoadHandler.cpp:375
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "تعذرت قراءة الصورة: {1}. رسالة خطأ: {2}"
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "تعذر تكرار \"{1}\"\n"
+"حدث خطأ… نرجو منك تزويدنا بتقرير عن الخطأ…"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:180
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "تعذرت إزالة عنصر الأداة من شريط الأدوات {1} في الموضع {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "تعذرت إزالة عنصر الأداة {1} من شريط الأدوات {2} في الموضع {3}"
 
 #: ../src/control/Control.cpp:202
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "تعذرت إعادة تسمية الملف المحفوظ تلقائيًّا من \"{1}\" إلى \"{2}\": {3}"
 
 #: ../src/control/latex/LatexGenerator.cpp:69
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "تعذر حفظ ملف .tex: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:85
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "تعذر بدء تشغيل {1}: {2} (رمز الخروج: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "تعذر التراجع عن \"{1}\"\n"
+"حدث خطأ… الرجاء تزويدنا بتقرير عن الخطأ…"
 
 #: ../src/control/xojfile/SaveHandler.cpp:243
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "تعذر كتابة الخلفية\"{1}\"، {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:345
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "لا يمكن كتابة الخلفية\"{1}\". سنتابع على أي حال."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:74
 msgid "Create new layer"
-msgstr ""
+msgstr "إنشاء طبقة جديدة"
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
-msgstr ""
+msgstr "مخصص"
 
 #: ../src/control/jobs/CustomExportJob.cpp:19
 msgid "Custom Export"
-msgstr ""
+msgstr "تصدير مخصص"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Customize Toolbars"
