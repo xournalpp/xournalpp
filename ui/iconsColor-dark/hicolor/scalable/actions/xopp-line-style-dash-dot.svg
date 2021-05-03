@@ -7,8 +7,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="line-style-dash-dot.svg"
-   inkscape:version="1.1-dev (7fa40cb683, 2020-03-24)"
+   sodipodi:docname="xopp-line-style-dash-dot.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    version="1.1"
    id="svg2"
    height="22"
@@ -32,7 +32,8 @@
      borderopacity="1.0"
      bordercolor="#666666"
      pagecolor="#ffffff"
-     id="base" />
+     id="base"
+     inkscape:document-rotation="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -51,32 +52,32 @@
      inkscape:groupmode="layer"
      inkscape:label="Ebene 1">
     <g
-       style="fill:#333333;fill-opacity:1"
+       style="fill:#fafafa;fill-opacity:1"
        transform="translate(-0.78199783,0)"
        id="g5360">
       <rect
-         style="fill:#333333;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#fafafa;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect4136"
          width="6.3845401"
          height="2.6416724"
          x="4.7020426"
          y="1040.0414" />
       <rect
-         style="fill:#333333;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#fafafa;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect4136-0"
          width="2.4836807"
          height="2.6416762"
          x="0.82861787"
          y="1040.0414" />
       <rect
-         style="fill:#333333;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#fafafa;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect4136-2"
          width="6.3845401"
          height="2.6416724"
          x="16.350838"
          y="1040.0414" />
       <rect
-         style="fill:#333333;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#fafafa;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect4136-0-0"
          width="2.4836807"
          height="2.6416762"
