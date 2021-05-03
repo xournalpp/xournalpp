@@ -21,7 +21,7 @@ public:
 
 ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id):
         ToolButton(handler, std::move(id), ACTION_TOOL_DRAW_RECT, GROUP_RULER, false,
-                   toolMenuHandler->iconName("draw-rect"), _("Draw Rectangle")),
+                   toolMenuHandler->iconName("combo-drawing-type"), _("Drawing Type Combo")),
         toolMenuHandler(toolMenuHandler) {
     setPopupMenu(gtk_menu_new());
 

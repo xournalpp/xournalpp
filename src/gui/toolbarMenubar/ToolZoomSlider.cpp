@@ -10,8 +10,9 @@
 #include "StringUtils.h"
 #include "i18n.h"
 
-ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom):
-        AbstractToolItem(std::move(id), handler, type, nullptr), zoom(zoom) {
+ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom,
+                               IconNameHelper iconNameHelper):
+        AbstractToolItem(std::move(id), handler, type, nullptr), zoom(zoom), iconNameHelper(iconNameHelper) {
     zoom->addZoomListener(this);
 }
 
@@ -69,10 +70,11 @@ void ToolZoomSlider::zoomChanged() {
 
 void ToolZoomSlider::zoomRangeValuesChanged() { updateScaleMarks(); }
 
-auto ToolZoomSlider::getToolDisplayName() -> string { return _("Zoom slider"); }
+auto ToolZoomSlider::getToolDisplayName() -> string { return _("Zoom Slider"); }
 
 auto ToolZoomSlider::getNewToolIcon() -> GtkWidget* {
-    return gtk_image_new_from_icon_name("zoom-in", GTK_ICON_SIZE_SMALL_TOOLBAR);
+    return gtk_image_new_from_icon_name(this->iconNameHelper.iconName("zoom-slider").c_str(),
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 // Should be called when the window size changes

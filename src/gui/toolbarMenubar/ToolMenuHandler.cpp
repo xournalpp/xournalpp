@@ -465,13 +465,14 @@ void ToolMenuHandler::initToolItems() {
 
     // Footer tools
     // ************************************************************************
-    toolPageSpinner = new ToolPageSpinner(gui, listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN);
+    toolPageSpinner = new ToolPageSpinner(gui, listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN, iconNameHelper);
     addToolItem(toolPageSpinner);
 
-    auto* toolZoomSlider = new ToolZoomSlider(listener, "ZOOM_SLIDER", ACTION_FOOTER_ZOOM_SLIDER, zoom);
+    auto* toolZoomSlider = new ToolZoomSlider(listener, "ZOOM_SLIDER", ACTION_FOOTER_ZOOM_SLIDER, zoom, iconNameHelper);
     addToolItem(toolZoomSlider);
 
-    toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
+    toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER,
+                                      iconNameHelper);
     addToolItem(toolPageLayer);
 
     ADD_CUSTOM_ITEM_TGL("TOOL_FILL", ACTION_TOOL_FILL, GROUP_FILL, false, "fill", _("Fill"));

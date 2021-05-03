@@ -11,7 +11,7 @@
 
 ToolSelectCombocontrol::ToolSelectCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, string id):
         ToolButton(handler, std::move(id), ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true,
-                   toolMenuHandler->iconName("select-rect"), _("Select Rectangle")),
+                   toolMenuHandler->iconName("combo-selection"), _("Selection Combo")),
         toolMenuHandler(toolMenuHandler),
         popup(gtk_menu_new()) {
     addMenuitem(_("Select Rectangle"), toolMenuHandler->iconName("select-rect"), ACTION_TOOL_SELECT_RECT, GROUP_TOOL);

@@ -10,8 +10,13 @@
 
 #include "i18n.h"
 
-ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type):
-        AbstractToolItem(std::move(id), handler, type, nullptr), lc(lc), gui(gui), menu(gtk_menu_new()) {
+ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type,
+                             IconNameHelper iconNameHelper):
+        AbstractToolItem(std::move(id), handler, type, nullptr),
+        lc(lc),
+        gui(gui),
+        menu(gtk_menu_new()),
+        iconNameHelper(iconNameHelper) {
     this->layerLabel = gtk_label_new(_("Loading..."));
     this->layerButton = gtk_button_new_with_label("⌄");
 
@@ -231,10 +236,11 @@ void ToolPageLayer::updateLayerData() {
     gtk_label_set_text(GTK_LABEL(layerLabel), lc->getCurrentLayerName().c_str());
 }
 
-auto ToolPageLayer::getToolDisplayName() -> string { return _("Layer selection"); }
+auto ToolPageLayer::getToolDisplayName() -> string { return _("Layer Combo"); }
 
 auto ToolPageLayer::getNewToolIcon() -> GtkWidget* {
-    return gtk_image_new_from_icon_name("layers", GTK_ICON_SIZE_SMALL_TOOLBAR);
+    return gtk_image_new_from_icon_name(this->iconNameHelper.iconName("combo-layer").c_str(),
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
 auto ToolPageLayer::newItem() -> GtkToolItem* {
