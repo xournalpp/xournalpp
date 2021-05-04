@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-01 23:42\n"
+"PO-Revision-Date: 2021-05-04 20:06\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1965,7 +1965,7 @@ msgstr "<i>Usa gestos de pinza para efecto zoom de páginas de revistas.</i>"
 
 #: ../ui/settings.glade:2505
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>Usa la pantalla táctil como una pluma multi-táctil.</i>"
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -2274,7 +2274,7 @@ msgstr "Arrastra y suelta los componentes fomenta aquí a las barras de herramie
 
 #: ../ui/settings.glade:1064
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr ""
+msgstr "Arrastrado: Si el valor es pequeño, oscilaciones no deseadas pueden aparecer. Si el valor es alto, no habrá estabilización."
 
 #: ../ui/settings.glade:1076
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
