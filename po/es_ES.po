@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-04 20:06\n"
+"PO-Revision-Date: 2021-05-04 21:11\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2391,7 +2391,7 @@ msgstr "Opacidad de relleno"
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Finalizar el trazo"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
@@ -2419,7 +2419,7 @@ msgstr "Ganancia"
 
 #: ../ui/settings.glade:1128 ../ui/settings.glade:1148
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Parámetro Gaussiano: cuanto más alto, más estabilidad y más retraso hay entre el cursor y la punta de la pintura."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
@@ -2543,11 +2543,11 @@ msgstr "Sistema de entrada"
 
 #: ../ui/settings.glade:1235
 msgid "Input stabilization"
-msgstr ""
+msgstr "Estabilización de entrada"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "La estabilización de entrada puede crear un hueco al final de su trazo. Si está activado, este hueco se llena."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2611,7 +2611,7 @@ msgstr "Masa"
 
 #: ../ui/settings.glade:1096 ../ui/settings.glade:1108
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Masa: cuanto más alta sea la masa, más inertia y más estabilidad"
 
 #: ../ui/settings.glade:4564
 msgid "Max Length (mm)"
@@ -2765,7 +2765,7 @@ msgstr "_Gestor de complementos"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Los cambios en los complementos surtirán efecto tras reiniciar Xournal++"
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
