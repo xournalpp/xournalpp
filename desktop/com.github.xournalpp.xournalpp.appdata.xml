@@ -21,26 +21,27 @@
    </p>
     <p>Xournal++ features:</p>
     <ul>
-      <li>Support for Pen pressure, e.g. Wacom Tablet</li>
-      <li>Support for annotating PDFs</li>
+      <li>Supports pressure senstive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)</li>
+      <li>Paper backgrounds for notetaking, scratch paper, or whiteboarding</li>
+      <li>Annotate on top of PDFs</li>
+      <li>Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line</li>
+      <li>Different drawing tools (e.g.pen, highlighter) and stroke styles (e.g. solid, dotted)</li>
+      <li>Shape drawing (line, arrow, circle, rectangle, spline)</li>
       <li>Fill shape functionality</li>
-      <li>PDF Export (with and without paper style)</li>
-      <li>PNG Export (with and without transparent background)</li>
-      <li>Allow to map different tools / colors etc. to stylus buttons / mouse buttons</li>
-      <li>Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers</li>
+      <li>Shape resizing and rotation</li>
+      <li>Rotation and grid snapping for precise alignment of objects</li>
+      <li>Input stabilization for smoother writing/drawing</li>
+      <li>Text tool for adding text in different fonts, colors and sizes</li>
       <li>Enhanced support for image insertion</li>
       <li>Eraser with multiple configurations</li>
-      <li>Significantly reduced memory usage and code to detect memory leaks compared to Xournal</li>
-      <li>LaTeX support (requires a working LaTeX install)</li>
-      <li>Bug reporting, autosave, and auto backup tools</li>
-      <li>Customizeable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait/landscape</li>
+      <li>LaTeX support (requires a working LaTeX installation) with customizeable template</li>
+      <li>Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden/edited)</li>
+      <li>Allows mapping different tools/colors etc. to stylus/mouse buttons</li>
+      <li>Customizeable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape</li>
       <li>Page Template definitions</li>
-      <li>Shape drawing (line, arrow, circle, rect)</li>
-      <li>Shape resizing and rotation</li>
-      <li>Rotation snapping every 15 degrees</li>
-      <li>Rect snapping to grid</li>
+      <li>Bug reporting, autosave, and auto backup tools</li>
       <li>Audio recording and playback alongside with handwritten notes</li>
-      <li>Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...</li>
+      <li>Multi language support (over 20 languages supported)</li>
       <li>Plugins using Lua scripting</li>
     </ul>
   </description>

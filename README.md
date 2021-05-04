@@ -40,26 +40,27 @@ Stroke recognizer and other parts are based on Xournal Code, which you can find 
 
 Xournal++ features:
 
-- Support for pen pressure, e.g. Wacom Tablet
-- Support for annotating PDFs
+- Supports pressure senstive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
+- Paper backgrounds for notetaking, scratch paper, or whiteboarding
+- Annotate on top of PDFs
+- Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line
+- Different drawing tools (e.g.pen, highlighter) and stroke styles (e.g. solid, dotted)
+- Shape drawing (line, arrow, circle, rectangle, spline)
 - Fill shape functionality
-- PDF Export (with and without paper style)
-- PNG Export (with and without transparent background)
-- Allows mapping different tools / colors etc. to stylus buttons / mouse buttons
-- Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden, editing layer can be selected)
+- Shape resizing and rotation
+- Rotation and grid snapping for precise alignment of objects
+- Input stabilization for smoother writing/drawing
+- Text tool for adding text in different fonts, colors and sizes
 - Enhanced support for image insertion
 - Eraser with multiple configurations
-- Significantly reduced memory usage and code to detect memory leaks compared to Xournal
-- LaTeX support (requires a working LaTeX installation)
-- bug reporting, auto-save, and auto backup tools
-- Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait / landscape
+- LaTeX support (requires a working LaTeX installation) with customizeable template
+- Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden/edited)
+- Allows mapping different tools/colors etc. to stylus/mouse buttons
+- Customizeable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape
 - Page Template definitions
-- Shape drawing (line, arrow, circle, rect, splines)
-- Shape resizing and rotation
-- Rotation snapping every 15 degrees
-- Rect snapping to grid
+- Bug reporting, auto-save, and auto backup tools
 - Audio recording and playback alongside with handwritten notes
-- Multi Language Support like English, German (Deutsch), Italian (Italiano)...
+- Multi language support (over 20 languages supported)
 - Plugins using Lua scripting
 
 ## Mobile & web app
