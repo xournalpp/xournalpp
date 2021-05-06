@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-04 21:11\n"
+"PO-Revision-Date: 2021-05-06 19:39\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2278,7 +2278,7 @@ msgstr "Arrastrado: Si el valor es pequeño, oscilaciones no deseadas pueden apa
 
 #: ../ui/settings.glade:1076
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr ""
+msgstr "Arrastrar: Si el valor es demasiado pequeño, podrán aparecer oscilaciones indeseadas. Si el valor es demasiado pequeño, no se estabilizará."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
