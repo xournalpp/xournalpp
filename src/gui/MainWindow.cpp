@@ -705,11 +705,11 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
     spinPageNo->setMinMaxPage(min, max);
     spinPageNo->setPage(page);
 
-    string pdfText;
     if (pdfpage != npos) {
-        pdfText = string(", ") + FS(_F("PDF Page {1}") % (pdfpage + 1));
+        toolbar->setPageInfo(pagecount, pdfpage + 1);
+    } else {
+        toolbar->setPageInfo(pagecount);
     }
-    toolbar->setPageText(FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}{2}") % pagecount % pdfText));
 }
 
 void MainWindow::rebuildLayerMenu() { layerVisibilityChanged(); }

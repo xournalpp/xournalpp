@@ -2,17 +2,15 @@
 
 SpinPageAdapter::SpinPageAdapter() {
     this->lastTimeoutId = 0;
-    this->widget = gtk_spin_button_new_with_range(0, 0, 1);
-    g_object_ref(this->widget);
-
-    g_signal_connect(this->widget, "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
-
+    this->min = 0;
+    this->max = 1;
     this->page = -1;
 }
 
 SpinPageAdapter::~SpinPageAdapter() {
-    g_object_unref(this->widget);
-    this->widget = nullptr;
+    if (this->hasWidget()) {
+        this->removeWidget();
+    }
 }
 
 auto SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter) -> bool {
@@ -33,11 +31,33 @@ void SpinPageAdapter::pageNrSpinChangedCallback(GtkSpinButton* spinbutton, SpinP
         g_source_remove(adapter->lastTimeoutId);
     }
 
-    // Give the spin button some time to realease, if we don't do he will send new events...
+    // Give the spin button some time to release, if we don't do he will send new events...
     adapter->lastTimeoutId = g_timeout_add(100, reinterpret_cast<GSourceFunc>(pageNrSpinChangedTimerCallback), adapter);
 }
 
-auto SpinPageAdapter::getWidget() -> GtkWidget* { return this->widget; }
+bool SpinPageAdapter::hasWidget() { return this->widget != nullptr; }
+
+void SpinPageAdapter::setWidget(GtkWidget* widget) {
+    // only one widget is supported and the previous widget has to be removed via removeWidget
+    assert(!this->hasWidget());
+    g_assert_nonnull(widget);
+
+    this->widget = widget;
+    this->pageNrSpinChangedHandlerId =
+            g_signal_connect(this->widget, "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
+    this->lastTimeoutId = 0;
+
+    gtk_spin_button_set_range(GTK_SPIN_BUTTON(this->widget), min, max);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(this->widget), this->page);
+}
+
+void SpinPageAdapter::removeWidget() {
+    assert(this->hasWidget());
+
+    g_signal_handler_disconnect(this->widget, this->pageNrSpinChangedHandlerId);
+
+    g_clear_object(&this->widget);
+}
 
 auto SpinPageAdapter::getPage() const -> int { return this->page; }
 
@@ -47,6 +67,8 @@ void SpinPageAdapter::setPage(size_t page) {
 }
 
 void SpinPageAdapter::setMinMaxPage(size_t min, size_t max) {
+    this->min = min;
+    this->max = max;
     gtk_spin_button_set_range(GTK_SPIN_BUTTON(this->widget), min, max);
 }
 
