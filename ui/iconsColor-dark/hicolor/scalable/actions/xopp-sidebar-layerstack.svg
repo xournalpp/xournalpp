@@ -9,364 +9,327 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="22"
-   height="22"
-   id="svg2"
-   version="1.1"
-   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="xopp-sidebar-layerstack.svg"
+   inkscape:export-ydpi="90"
    inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-filename="/home/andreas/dev/xournalpp/ui/src/sidebar-page-preview.png"
+   sodipodi:docname="xopp-sidebar-layerstack.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   version="1.1"
+   id="svg2"
+   height="22"
+   width="22">
   <defs
      id="defs4">
     <linearGradient
        id="linearGradient6057">
       <stop
-         style="stop-color:#222222;stop-opacity:0.88973391;"
+         id="stop6059"
          offset="0"
-         id="stop6059" />
+         style="stop-color:#222222;stop-opacity:0.88973391;" />
       <stop
-         id="stop6065"
+         style="stop-color:#989898;stop-opacity:0.44313726;"
          offset="1"
-         style="stop-color:#989898;stop-opacity:0.44313726;" />
+         id="stop6065" />
     </linearGradient>
     <linearGradient
        id="linearGradient6041">
       <stop
-         style="stop-color:#000000;stop-opacity:1;"
+         id="stop6043"
          offset="0"
-         id="stop6043" />
+         style="stop-color:#000000;stop-opacity:1;" />
       <stop
-         style="stop-color:#000000;stop-opacity:0;"
+         id="stop6045"
          offset="1"
-         id="stop6045" />
+         style="stop-color:#000000;stop-opacity:0;" />
     </linearGradient>
     <linearGradient
-       id="linearGradient6035"
-       osb:paint="solid">
+       osb:paint="solid"
+       id="linearGradient6035">
       <stop
-         style="stop-color:#ff0000;stop-opacity:1;"
+         id="stop6037"
          offset="0"
-         id="stop6037" />
+         style="stop-color:#ff0000;stop-opacity:1;" />
+    </linearGradient>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path3787" />
+    </marker>
+    <linearGradient
+       id="linearGradient2999">
+      <stop
+         style="stop-color:#4c4c4c;stop-opacity:0.41176471;"
+         offset="0"
+         id="stop3775" />
+      <stop
+         id="stop3003"
+         offset="1"
+         style="stop-color:#999999;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0.83739436,0,0,0.92539931,0.02701454,1029.9763)"
+       gradientUnits="userSpaceOnUse"
+       y2="21.084822"
+       x2="15.6875"
+       y1="0.4598214"
+       x1="9.4017859"
+       id="linearGradient6063"
+       xlink:href="#linearGradient6057-4"
+       inkscape:collect="always" />
+    <linearGradient
+       gradientTransform="matrix(0.83739436,0,0,0.92539931,0.27955268,1030.3551)"
+       gradientUnits="userSpaceOnUse"
+       y2="21.084822"
+       x2="15.6875"
+       y1="0.4598214"
+       x1="9.4017859"
+       id="linearGradient6063-2"
+       xlink:href="#linearGradient6057-4"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient6057-4">
+      <stop
+         id="stop6059-3"
+         offset="0"
+         style="stop-color:#222222;stop-opacity:1;" />
+      <stop
+         style="stop-color:#989898;stop-opacity:1;"
+         offset="1"
+         id="stop6065-7" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6057-4"
+       id="linearGradient6101"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.83739436,0,0,0.92539931,2.8079284,1032.6099)"
+       x1="9.4017859"
+       y1="0.4598214"
+       x2="15.6875"
+       y2="21.084822" />
+    <linearGradient
+       y2="10.23719"
+       x2="18.929443"
+       y1="0.4598214"
+       x1="9.4017859"
+       gradientTransform="matrix(0.83739436,0,0,0.92539931,-1.1695472,1038.6099)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6148-9"
+       xlink:href="#linearGradient6057-4-4"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient6057-4-4">
+      <stop
+         id="stop6059-3-1"
+         offset="0"
+         style="stop-color:#222222;stop-opacity:1;" />
+      <stop
+         style="stop-color:#989898;stop-opacity:1;"
+         offset="1"
+         id="stop6065-7-1" />
+    </linearGradient>
+    <linearGradient
+       y2="10.23719"
+       x2="18.929443"
+       y1="0.4598214"
+       x1="9.4017859"
+       gradientTransform="matrix(0.83739436,0,0,0.92539931,-1.1695472,1038.6099)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6148-5"
+       xlink:href="#linearGradient6057-4-41"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient6057-4-41">
+      <stop
+         id="stop6059-3-7"
+         offset="0"
+         style="stop-color:#222222;stop-opacity:1;" />
+      <stop
+         style="stop-color:#989898;stop-opacity:1;"
+         offset="1"
+         id="stop6065-7-4" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6057-4-41"
+       id="linearGradient6165-5"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.83739436,0,0,0.92539931,-1.2011139,1033.6831)"
+       x1="9.4017859"
+       y1="0.4598214"
+       x2="18.929443"
+       y2="10.23719" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6057-4-4-9"
+       id="linearGradient6165-2"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.83739436,0,0,0.92539931,-1.2011139,1033.1149)"
+       x1="9.4017859"
+       y1="0.4598214"
+       x2="18.929443"
+       y2="10.23719" />
+    <linearGradient
+       id="linearGradient6057-4-4-9">
+      <stop
+         id="stop6059-3-1-7"
+         offset="0"
+         style="stop-color:#222222;stop-opacity:1;" />
+      <stop
+         style="stop-color:#989898;stop-opacity:1;"
+         offset="1"
+         id="stop6065-7-1-6" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6057-4-4-9"
+       id="linearGradient6250"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.83739436,0,0,0.92539931,-4.1053025,1032.5467)"
+       x1="9.4017859"
+       y1="0.4598214"
+       x2="18.929443"
+       y2="10.23719" />
+    <linearGradient
+       id="linearGradient6057-4-4-7">
+      <stop
+         id="stop6059-3-1-4"
+         offset="0"
+         style="stop-color:#222222;stop-opacity:1;" />
+      <stop
+         style="stop-color:#989898;stop-opacity:1;"
+         offset="1"
+         id="stop6065-7-1-9" />
+    </linearGradient>
+    <linearGradient
+       y2="10.23719"
+       x2="18.929443"
+       y1="0.4598214"
+       x1="9.4017859"
+       gradientTransform="matrix(0.83739436,0,0,0.92539931,-1.1695472,1042.4206)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient6148-3"
+       xlink:href="#linearGradient6057-4-9"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient6057-4-9">
+      <stop
+         id="stop6059-3-8"
+         offset="0"
+         style="stop-color:#222222;stop-opacity:1;" />
+      <stop
+         style="stop-color:#989898;stop-opacity:1;"
+         offset="1"
+         id="stop6065-7-9" />
     </linearGradient>
     <marker
        inkscape:stockid="Arrow1Lstart"
        orient="auto"
        refY="0.0"
        refX="0.0"
-       id="Arrow1Lstart"
+       id="Arrow1Lstart-29"
        style="overflow:visible">
       <path
-         id="path3787"
+         id="path3787-1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart-2"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path3787-9" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart-0"
+       style="overflow:visible">
+      <path
+         id="path3787-2"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
          transform="scale(0.8) translate(12.5,0)" />
     </marker>
     <linearGradient
-       id="linearGradient2999">
+       id="linearGradient3403">
       <stop
-         id="stop3775"
-         offset="0"
-         style="stop-color:#4c4c4c;stop-opacity:0.41176471;" />
+         id="stop3405"
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="0" />
       <stop
-         style="stop-color:#999999;stop-opacity:0;"
-         offset="1"
-         id="stop3003" />
+         id="stop3407"
+         style="stop-color:#ffffff;stop-opacity:0.23529412"
+         offset="0" />
+      <stop
+         id="stop3409"
+         style="stop-color:#ffffff;stop-opacity:0.15686275"
+         offset="1" />
+      <stop
+         id="stop3411"
+         style="stop-color:#ffffff;stop-opacity:0.39215687"
+         offset="1" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient6057-4"
-       id="linearGradient6063"
-       x1="9.4017859"
-       y1="0.4598214"
-       x2="15.6875"
-       y2="21.084822"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.83739436,0,0,0.92539931,0.02701454,1029.9763)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient6057-4"
-       id="linearGradient6063-2"
-       x1="9.4017859"
-       y1="0.4598214"
-       x2="15.6875"
-       y2="21.084822"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.83739436,0,0,0.92539931,0.27955268,1030.3551)" />
-    <linearGradient
-       id="linearGradient6057-4">
-      <stop
-         style="stop-color:#222222;stop-opacity:1;"
-         offset="0"
-         id="stop6059-3" />
-      <stop
-         id="stop6065-7"
-         offset="1"
-         style="stop-color:#989898;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       y2="21.084822"
-       x2="15.6875"
-       y1="0.4598214"
-       x1="9.4017859"
-       gradientTransform="matrix(0.83739436,0,0,0.92539931,2.8079284,1032.6099)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient6101"
-       xlink:href="#linearGradient6057-4"
-       inkscape:collect="always" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient6057-4-4"
-       id="linearGradient6148-9"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.83739436,0,0,0.92539931,-1.1695472,1038.6099)"
-       x1="9.4017859"
-       y1="0.4598214"
-       x2="18.929443"
-       y2="10.23719" />
-    <linearGradient
-       id="linearGradient6057-4-4">
-      <stop
-         style="stop-color:#222222;stop-opacity:1;"
-         offset="0"
-         id="stop6059-3-1" />
-      <stop
-         id="stop6065-7-1"
-         offset="1"
-         style="stop-color:#989898;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient6057-4-41"
-       id="linearGradient6148-5"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.83739436,0,0,0.92539931,-1.1695472,1038.6099)"
-       x1="9.4017859"
-       y1="0.4598214"
-       x2="18.929443"
-       y2="10.23719" />
-    <linearGradient
-       id="linearGradient6057-4-41">
-      <stop
-         style="stop-color:#222222;stop-opacity:1;"
-         offset="0"
-         id="stop6059-3-7" />
-      <stop
-         id="stop6065-7-4"
-         offset="1"
-         style="stop-color:#989898;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       y2="10.23719"
-       x2="18.929443"
-       y1="0.4598214"
-       x1="9.4017859"
-       gradientTransform="matrix(0.83739436,0,0,0.92539931,-1.2011139,1033.6831)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient6165-5"
-       xlink:href="#linearGradient6057-4-41"
-       inkscape:collect="always" />
-    <linearGradient
-       y2="10.23719"
-       x2="18.929443"
-       y1="0.4598214"
-       x1="9.4017859"
-       gradientTransform="matrix(0.83739436,0,0,0.92539931,-1.2011139,1033.1149)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient6165-2"
-       xlink:href="#linearGradient6057-4-4-9"
-       inkscape:collect="always" />
-    <linearGradient
-       id="linearGradient6057-4-4-9">
-      <stop
-         style="stop-color:#222222;stop-opacity:1;"
-         offset="0"
-         id="stop6059-3-1-7" />
-      <stop
-         id="stop6065-7-1-6"
-         offset="1"
-         style="stop-color:#989898;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       y2="10.23719"
-       x2="18.929443"
-       y1="0.4598214"
-       x1="9.4017859"
-       gradientTransform="matrix(0.83739436,0,0,0.92539931,-4.1053025,1032.5467)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient6250"
-       xlink:href="#linearGradient6057-4-4-9"
-       inkscape:collect="always" />
-    <linearGradient
-       id="linearGradient6057-4-4-7">
-      <stop
-         style="stop-color:#222222;stop-opacity:1;"
-         offset="0"
-         id="stop6059-3-1-4" />
-      <stop
-         id="stop6065-7-1-9"
-         offset="1"
-         style="stop-color:#989898;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient6057-4-9"
-       id="linearGradient6148-3"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.83739436,0,0,0.92539931,-1.1695472,1042.4206)"
-       x1="9.4017859"
-       y1="0.4598214"
-       x2="18.929443"
-       y2="10.23719" />
-    <linearGradient
-       id="linearGradient6057-4-9">
-      <stop
-         style="stop-color:#222222;stop-opacity:1;"
-         offset="0"
-         id="stop6059-3-8" />
-      <stop
-         id="stop6065-7-9"
-         offset="1"
-         style="stop-color:#989898;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       id="linearGradient1581">
-      <stop
-         style="stop-color:#000000;stop-opacity:0.19911772"
-         offset="0"
-         id="stop1577" />
-      <stop
-         style="stop-color:#000000;stop-opacity:0.01063134"
-         offset="1"
-         id="stop1579" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient1605"
-       inkscape:collect="always">
-      <stop
-         id="stop1601"
-         offset="0"
-         style="stop-color:#000000;stop-opacity:0.15000001" />
-      <stop
-         id="stop1603"
-         offset="1"
-         style="stop-color:#000000;stop-opacity:0.01063134" />
-    </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient1581"
-       id="linearGradient985"
-       x1="7.9813666"
-       y1="1037.5272"
-       x2="12.477651"
-       y2="1045.1971"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(-24.464286)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient1581"
-       id="linearGradient991"
-       gradientUnits="userSpaceOnUse"
-       x1="7.480444"
-       y1="1037.5272"
-       x2="13.393102"
-       y2="1045.1971"
-       gradientTransform="translate(-24.432719,6.165)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient1581"
-       id="linearGradient1599"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(19.895664,1028.5711)"
-       x1="13.444"
-       y1="20.791101"
-       x2="13.107655"
-       y2="2.7898996" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient1581"
-       id="linearGradient1595"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0000001,0,0,0.66487137,22.725835,1036.5073)"
-       x1="12.863297"
-       y1="23.10371"
-       x2="13.107655"
-       y2="2.7898996" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient1605"
-       id="linearGradient1591"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0000001,0,0,0.38478156,25.556001,1043.2887)"
-       x1="13.783662"
-       y1="20.98204"
-       x2="13.107655"
-       y2="2.7898996" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient1581"
-       id="linearGradient1180"
-       x1="11"
-       y1="1046.3622"
-       x2="11"
-       y2="1036.3622"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(0,24.9998)" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient1581"
-       id="linearGradient1194"
-       gradientUnits="userSpaceOnUse"
-       x1="11"
-       y1="1046.3622"
-       x2="11"
-       y2="1036.3622"
-       gradientTransform="translate(0,30)" />
   </defs>
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
-     inkscape:cx="5.888585"
-     inkscape:cy="4.091103"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="true"
-     inkscape:window-width="1916"
-     inkscape:window-height="1054"
-     inkscape:window-x="1920"
-     inkscape:window-y="24"
-     inkscape:window-maximized="1"
-     inkscape:document-rotation="0"
-     inkscape:snap-grids="false"
-     inkscape:object-paths="true"
+     inkscape:snap-page="true"
+     inkscape:object-nodes="true"
+     inkscape:snap-nodes="true"
      inkscape:snap-intersection-paths="true"
+     inkscape:object-paths="true"
+     inkscape:snap-grids="true"
+     inkscape:guide-bbox="true"
      showguides="true"
-     inkscape:guide-bbox="true">
+     inkscape:document-rotation="0"
+     inkscape:window-maximized="1"
+     inkscape:window-y="30"
+     inkscape:window-x="0"
+     inkscape:window-height="1377"
+     inkscape:window-width="2560"
+     showgrid="true"
+     inkscape:current-layer="layer2"
+     inkscape:document-units="px"
+     inkscape:cy="8.8970991"
+     inkscape:cx="2.7733338"
+     inkscape:zoom="22.627418"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:lockguides="true">
     <inkscape:grid
-       type="xygrid"
-       id="grid886" />
+       id="grid890"
+       type="xygrid" />
     <sodipodi:guide
-       position="7.1165697,1"
-       orientation="0,1"
-       id="guide944" />
+       id="guide1025"
+       orientation="0,-1"
+       position="21,1"
+       inkscape:locked="true" />
     <sodipodi:guide
-       position="6,21"
-       orientation="0,1"
-       id="guide946" />
-    <sodipodi:guide
-       position="27,8"
-       orientation="0,1"
-       id="guide962" />
-    <sodipodi:guide
-       position="27,14"
-       orientation="0,1"
-       id="guide1088" />
+       id="guide1034"
+       orientation="0,-1"
+       position="23.516484,21.001203"
+       inkscape:locked="true" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -381,181 +344,106 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Ebene 1"
-     inkscape:groupmode="layer"
+     style="display:none"
+     transform="translate(0,-1030.3622)"
      id="layer1"
-     transform="translate(0,-1030.3622)">
-    <path
-       id="path933"
-       style="fill:#64baff;stroke:none;stroke-width:1.99999;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill;stop-color:#000000;fill-opacity:1"
-       inkscape:transform-center-x="1.6668221"
-       inkscape:transform-center-y="4.1013643e-05"
-       d="M 4.4414062,1044.6415 1,1046.3622 l 4.9980469,2.5 5.0019531,2.5 5.001953,-2.5 4.998047,-2.5 -3.441406,-1.7207 -6.335938,3.168 c -0.140245,0.07 -0.305067,0.07 -0.445312,0 z"
-       sodipodi:nodetypes="cccccccccc" />
-    <path
-       id="path1192"
-       style="fill:url(#linearGradient1194);fill-opacity:1;stroke:none;stroke-width:1.99999;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill;stop-color:#000000"
-       inkscape:transform-center-x="1.6668221"
-       inkscape:transform-center-y="4.1013643e-05"
-       d="m 11,1066.3622 -5.0011139,2.5 -4.99888621,2.4998 4.99888621,2.5 5.0011139,2.5002 5.001114,-2.5002 4.998886,-2.5 -4.998886,-2.4998 z" />
-    <path
-       id="path1152"
-       style="fill:#9bdb4d;stroke:none;stroke-width:1.99999;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill;stop-color:#000000"
-       inkscape:transform-center-x="1.6668221"
-       inkscape:transform-center-y="4.1013643e-05"
-       d="M 4.4414062,9.2792969 1,11 5.9980469,13.5 11,16 16.001953,13.5 21,11 17.558594,9.2792969 11.222656,12.447266 c -0.140245,0.06974 -0.305067,0.06974 -0.445312,0 z"
-       transform="translate(0,1030.3622)"
-       sodipodi:nodetypes="cccccccccc" />
-    <path
-       style="fill:#9b0604;fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -23.156093,1043.6922 h 12.747818 l 6.7553964,7.6699 -13.6948374,10e-5 z"
-       id="rect3777-6"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:url(#linearGradient991);fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -23.156093,1043.6922 h 12.747818 l 6.7553964,7.6699 -13.6948374,10e-5 z"
-       id="path987"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:none;fill-opacity:1;stroke:#7a0000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -23.156093,1043.6922 h 12.747818 l 6.7553964,7.6699 -13.6948374,10e-5 z"
-       id="path993"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:#b92026;fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -23.18766,1037.5272 h 12.747818 l 6.7553964,7.6699 -13.6948374,10e-5 z"
-       id="path975"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:url(#linearGradient985);fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -23.18766,1037.5272 h 12.747818 l 6.7553964,7.6699 -13.6948374,10e-5 z"
-       id="path977"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:none;fill-opacity:1;stroke:#7a0000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -23.18766,1037.5272 h 12.747818 l 6.7553964,7.6699 -13.6948374,10e-5 z"
-       id="rect3777-6-9"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:#ed5353;fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -23.203441,1031.3622 h 12.747775 l 6.7553964,7.6699 -13.6948104,1e-4 z"
-       id="path942"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
-    <path
-       style="fill:none;fill-opacity:1;stroke:#7a0000;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -23.203441,1031.3622 h 12.747775 l 6.7553964,7.6699 -13.6948104,1e-4 z"
-       id="rect3777-6-9-4"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
+     inkscape:groupmode="layer"
+     inkscape:label="Ebene 1">
     <rect
-       y="1031.3611"
-       x="25.339664"
+       y="1030.3622"
+       x="0"
+       height="21.999996"
+       width="22"
+       id="rect4497"
+       style="opacity:1;fill:#f6f5f4;fill-opacity:1;stroke:none;stroke-width:0.999996;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+  <g
+     inkscape:label="Ebene 2"
+     id="layer2"
+     inkscape:groupmode="layer">
+    <rect
+       y="0.998797"
+       x="1"
        height="18.192139"
        width="14.339664"
        id="rect939"
-       style="fill:#a10705;fill-opacity:1;stroke:none;stroke-width:2.14353;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       style="fill:url(#linearGradient1599);fill-opacity:1;stroke:none;stroke-width:2.14354;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect1597"
-       width="14.339665"
-       height="18.192137"
-       x="25.339664"
-       y="1031.3611" />
+       style="fill:#ed5353;fill-opacity:1;stroke:none;stroke-width:2.14353;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <rect
        style="fill:none;fill-opacity:1;stroke:#7a0000;stroke-width:1.03609;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect941"
        width="14.339664"
        height="18.192139"
-       x="25.339664"
-       y="1031.3611" />
+       x="1"
+       y="0.998797" />
     <rect
-       y="1038.3622"
-       x="28.169834"
+       y="8"
+       x="3.8301697"
        height="12.095432"
-       width="14.339664"
-       id="rect953"
-       style="fill:#c6262e;fill-opacity:1;stroke:none;stroke-width:1.51571;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
-       y="1038.3622"
-       x="28.169834"
-       height="12.095432"
-       width="14.339665"
-       id="rect1593"
-       style="fill:url(#linearGradient1595);fill-opacity:1;stroke:none;stroke-width:2.14354;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    <rect
+       width="7.1700001"
+       id="rect932"
+       style="fill:#000000;fill-opacity:0;stroke:none;stroke-width:1.51571;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="path942"
+       style="fill:#9bdb4d;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 18.17017,8 h -3.585 -3.585 v 12.095432 h 3.585 3.585 z"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       id="path944"
+       style="fill:#ed5353;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 11.00017,8 h -3.5850003 -3.585 v 12.095432 h 3.585 3.5850003 z"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       id="path946"
+       style="fill:none;fill-opacity:1;stroke:#206b00;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 11.00017,20.095432 h 7.17 V 8 h -7.17"
+       sodipodi:nodetypes="cccc" />
+    <path
+       id="path948"
        style="fill:none;fill-opacity:1;stroke:#7a0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect1311"
-       width="14.339664"
-       height="12.095432"
-       x="28.169834"
-       y="1038.3622" />
+       d="M 11.00017,20.095432 H 3.8301697 V 8 H 11.00017"
+       sodipodi:nodetypes="cccc" />
     <rect
        style="fill:#ed5353;fill-opacity:1;stroke:none;stroke-width:1.51571;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect943"
        width="14.339664"
        height="7.125"
-       x="31"
-       y="1044.2372" />
+       x="6.6603351"
+       y="13.875" />
     <rect
-       style="fill:url(#linearGradient1591);fill-opacity:1;stroke:none;stroke-width:2.14354;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect1589"
-       width="14.339665"
-       height="7"
-       x="31"
-       y="1044.3622" />
+       style="fill:#ed5353;fill-opacity:1;stroke:none;stroke-width:1.51571;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect950"
+       width="4.7799997"
+       height="7.125"
+       x="6.6603351"
+       y="13.875" />
     <rect
-       y="1044.3622"
-       x="31"
-       height="7.0000019"
-       width="14.339664"
-       id="rect945"
-       style="fill:none;fill-opacity:1;stroke:#7a0000;stroke-width:1.03609;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#9bdb4d;fill-opacity:1;stroke:none;stroke-width:1.51571;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect952"
+       width="4.7799997"
+       height="7.125"
+       x="11.440001"
+       y="13.875" />
+    <rect
+       style="fill:#64baff;fill-opacity:1;stroke:none;stroke-width:1.51571;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect954"
+       width="4.7799997"
+       height="7.125"
+       x="16.219999"
+       y="13.875" />
     <path
-       id="path1172"
-       style="fill:url(#linearGradient1180);fill-opacity:1;stroke:none;stroke-width:1.99999;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill;stop-color:#000000"
-       inkscape:transform-center-x="1.6668221"
-       inkscape:transform-center-y="4.1013643e-05"
-       d="m 11,1061.362 -5.0011139,2.5 -4.99888621,2.4998 4.99888621,2.5 L 11,1071.362 l 5.001114,-2.5002 4.998886,-2.5 -4.998886,-2.4998 z" />
+       id="rect956"
+       style="fill:none;fill-opacity:1;stroke:#7a0000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 11.440335,21 H 6.6603351 v -7.125 h 4.7799999"
+       sodipodi:nodetypes="cccc" />
     <path
-       id="path1162"
-       style="fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill;stop-color:#000000"
-       inkscape:transform-center-x="1.5077189"
-       inkscape:transform-center-y="4.2811285e-05"
-       d="m 10.999999,1032.3622 -4.5237413,2.25 -4.5217277,2.2498 4.5217277,2.25 4.5237413,2.2502 4.523743,-2.2502 4.521728,-2.25 -4.521728,-2.2498 z" />
+       id="path961"
+       style="fill:none;fill-opacity:1;stroke:#002e99;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 16.22,21 H 21 v -7.125 h -4.78"
+       sodipodi:nodetypes="cccc" />
     <path
-       id="path1160"
-       style="fill:none;stroke:#7e8087;stroke-width:0.999996;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill;stop-color:#000000;stroke-opacity:1"
-       inkscape:transform-center-x="1.5077189"
-       inkscape:transform-center-y="4.2811285e-05"
-       d="m 10.999999,1032.3622 -4.5237413,2.25 -4.5217277,2.2498 4.5217277,2.25 4.5237413,2.2502 4.523743,-2.2502 4.521728,-2.25 -4.521728,-2.2498 z" />
-    <path
-       id="path923"
-       style="fill:none;fill-opacity:1;stroke:#3d211b;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill;stop-color:#000000"
-       inkscape:transform-center-x="1.6668221"
-       inkscape:transform-center-y="4.1013643e-05"
-       d="M 0.99999989,1020.362 11,1025.3622 21,1020.362"
-       sodipodi:nodetypes="ccc" />
-    <path
-       id="path920"
-       style="fill:none;stroke:#0d52bf;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill;stop-color:#000000;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       inkscape:transform-center-x="1.6668221"
-       inkscape:transform-center-y="4.1013643e-05"
-       d="M 4.4414062,1044.6415 1,1046.3622 l 4.9980469,2.5 5.0019531,2.5 5.001953,-2.5 4.998047,-2.5 -3.441406,-1.7207 -6.335938,3.168 c -0.140245,0.07 -0.305067,0.07 -0.445312,0 z"
-       sodipodi:nodetypes="cccccccccc" />
-    <path
-       id="path922"
-       style="fill:none;stroke:#3a9104;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill;stop-color:#000000;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       inkscape:transform-center-x="1.6668221"
-       inkscape:transform-center-y="4.1013643e-05"
-       d="M 4.4414062,9.2792969 1,11 5.9980469,13.5 11,16 16.001953,13.5 21,11 17.558594,9.2792969 11.222656,12.447266 c -0.140245,0.06974 -0.305067,0.06974 -0.445312,0 z"
-       transform="translate(0,1030.3622)"
-       sodipodi:nodetypes="cccccccccc" />
+       id="rect963"
+       style="fill:#9bdb4d;fill-opacity:1;stroke:#206b00;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 16.22,21 h -4.779999 m 0,-7.125 H 16.22"
+       sodipodi:nodetypes="cccc" />
   </g>
 </svg>
