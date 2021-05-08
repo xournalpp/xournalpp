@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-08 02:18\n"
+"PO-Revision-Date: 2021-05-08 03:19\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -119,24 +119,25 @@ msgstr "属性\"{1}\"は size_t に解析しない、値が nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:44
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "属性の色が設定しません!"
 
 #: ../src/control/AudioController.cpp:94
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "オーディオのフォルダが設定しません！録音が効きません！\n"
+"\"環境設定 > 録音\"でオーディオのフォルダを設定してください"
 
 #: ../src/control/Control.cpp:211
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "オートセーブがエラーで失敗します: {1}"
 
 #: ../src/control/Control.cpp:191
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "オートセーブが{1} から{2} まで名前変更します"
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "{1} にオートセーブ中"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
@@ -145,7 +146,7 @@ msgstr "戻る"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:192 ../src/model/XojPage.cpp:174
 msgid "Background"
-msgstr ""
+msgstr "背景"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:94
@@ -159,20 +160,20 @@ msgstr "青"
 
 #: ../src/control/tools/EditSelection.cpp:356
 msgid "Bring forward"
-msgstr ""
+msgstr "繰り上げる"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "前景に持って来る"
 
 #: ../src/control/Control.cpp:2019 ../src/control/Control.cpp:2474
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #: ../src/undo/ColorUndoAction.cpp:85
 msgid "Change color"
-msgstr ""
+msgstr "色を変更する"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
