@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-01 23:42\n"
+"PO-Revision-Date: 2021-05-08 01:20\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -38,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/MainWindow.cpp:712
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}{2}"
-msgstr ""
+msgstr " / {1}{2}"
 
 #: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
@@ -55,11 +55,16 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>必要なUIファイルがありません:\n"
+"<b>{1}</b></span>\n"
+"何もロケーションに見つかりません\n"
+" 相対パスではありません\n"
+" 作業ディレクトリの中にありません\n"
+" {2}の中にありません"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Add/Edit Tex"
-msgstr ""
+msgstr "参加／修正 TeX"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
