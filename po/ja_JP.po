@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-08 01:20\n"
+"PO-Revision-Date: 2021-05-08 02:18\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -42,7 +42,7 @@ msgstr " / {1}{2}"
 
 #: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-注-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:146
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -68,54 +68,54 @@ msgstr "参加／修正 TeX"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Advanced export options"
-msgstr ""
+msgstr "アドバンスドエクスポートのオプション"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
-msgstr ""
+msgstr "全てのファイル"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:191
 msgid "Apply to all pages"
-msgstr ""
+msgstr "全てのページに適用する"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:182
 msgid "Apply to current page"
-msgstr ""
+msgstr "現在のページに適用する"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "並べ替える"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
 msgid "Attach file to the journal"
-msgstr ""
+msgstr "日記にファイルを取り付ける"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:102
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
+msgstr "属性\"{1}\"は浮動小数点(double)に解析しない、値が\"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:95
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "属性\"{1}\"は浮動小数点(double) に解析しない、値が nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:119
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:138
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr ""
+msgstr "属性\"{1}\"は整数型 に解析しない、値が \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:112
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "属性\"{1}\"は整数型 に解析しない、値が nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:157
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:177
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "属性\"{1}\"は size_t に解析しない、値が \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "属性\"{1}\"は size_t に解析しない、値が nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:44
 msgid "Attribute color not set!"
