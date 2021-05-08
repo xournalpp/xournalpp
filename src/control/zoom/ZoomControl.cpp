@@ -303,11 +303,18 @@ void ZoomControl::zoom100() {
 }
 
 void ZoomControl::zoomFit() {
+    // TODO: properly fix the zoom fit infinite recursion
+    if (this->isZoomFittingNow) {
+        return;
+    }
+
+    this->isZoomFittingNow = true;
     if (this->isZoomFitMode() && !this->zoomPresentationMode && this->zoom != this->zoomFitValue) {
         startZoomSequence();
         this->zoomSequenceChange(this->zoomFitValue, false);
         endZoomSequence();
     }
+    this->isZoomFittingNow = false;
 }
 
 void ZoomControl::zoomPresentation() {
