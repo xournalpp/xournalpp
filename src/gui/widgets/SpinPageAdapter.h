@@ -50,14 +50,15 @@ private:
     void firePageChanged();
 
 private:
-    GtkWidget* widget;
-    gulong pageNrSpinChangedHandlerId;
-    size_t page;
+    GtkWidget* widget = nullptr;
+    gulong pageNrSpinChangedHandlerId = 0;
+    size_t page = 0;
 
-    int lastTimeoutId;
+    guint lastTimeoutId = 0;
     std::list<SpinPageListener*> listener;
 
-    size_t min, max;
+    size_t min = 0;
+    size_t max = 0;
 };
 
 class SpinPageListener {

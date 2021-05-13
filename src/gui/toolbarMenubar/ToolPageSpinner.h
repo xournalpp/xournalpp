@@ -48,5 +48,10 @@ private:
     GtkWidget* box = nullptr;
     GtkWidget* lbPageNo = nullptr;
     GtkWidget* lbVerticalPdfPage = nullptr;
-    size_t pagecount, pdfpage;
+
+    /** The current page of the document. */
+    size_t pageCount = 0;
+
+    /** The current page in the background PDF, or 0 if there is no PDF. */
+    size_t pdfPage = 0;
 };

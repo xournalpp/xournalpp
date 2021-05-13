@@ -24,26 +24,26 @@ ToolPageSpinner::~ToolPageSpinner() {
 
 auto ToolPageSpinner::getPageSpinner() -> SpinPageAdapter* { return pageSpinner; }
 
-void ToolPageSpinner::setPageInfo(const size_t pagecount, const size_t pdfpage) {
-    this->pagecount = pagecount;
-    this->pdfpage = pdfpage;
+void ToolPageSpinner::setPageInfo(const size_t pageCount, const size_t pdfPage) {
+    this->pageCount = pageCount;
+    this->pdfPage = pdfPage;
     if (this->lbPageNo) {
         updateLabels();
     }
 }
 
 void ToolPageSpinner::updateLabels() {
-    string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % this->pagecount);
+    string ofString = FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}") % this->pageCount);
     if (this->orientation == GTK_ORIENTATION_HORIZONTAL) {
         string pdfString;
-        if (this->pdfpage > 0) {  // zero means that theres no pdf currently
-            pdfString = string(", ") + FS(_F("PDF Page {1}") % this->pdfpage);
+        if (this->pdfPage > 0) {  // zero means that theres no pdf currently
+            pdfString = string(", ") + FS(_F("PDF Page {1}") % this->pdfPage);
         }
         gtk_label_set_text(GTK_LABEL(lbPageNo), (ofString + pdfString).c_str());
     } else {
         gtk_label_set_text(GTK_LABEL(lbPageNo), ofString.c_str());
-        if (this->pdfpage > 0) {  // zero means that theres no pdf currently
-            gtk_label_set_text(GTK_LABEL(lbVerticalPdfPage), FS(_F("PDF {1}") % this->pdfpage).c_str());
+        if (this->pdfPage > 0) {  // zero means that theres no pdf currently
+            gtk_label_set_text(GTK_LABEL(lbVerticalPdfPage), FS(_F("PDF {1}") % this->pdfPage).c_str());
             if (gtk_widget_get_parent(this->lbVerticalPdfPage) == nullptr) {
                 // re-add pdf label if it has been removed previously
                 gtk_box_pack_start(GTK_BOX(box), this->lbVerticalPdfPage, false, false, 0);
@@ -70,7 +70,7 @@ auto ToolPageSpinner::newItem() -> GtkToolItem* {
     GtkWidget* spinner = gtk_spin_button_new_with_range(0, 1, 1);
     gtk_orientable_set_orientation(reinterpret_cast<GtkOrientable*>(spinner), orientation);
     g_object_ref_sink(spinner);
-
+    this->pageSpinner->setWidget(spinner);  // takes ownership of spinner reference
 
     if (this->lbPageNo) {
         g_object_unref(this->lbPageNo);
@@ -96,7 +96,6 @@ auto ToolPageSpinner::newItem() -> GtkToolItem* {
         gtk_widget_set_halign(this->lbPageNo, GTK_ALIGN_BASELINE);
         gtk_widget_set_halign(lbVerticalPdfPage, GTK_ALIGN_BASELINE);
     }
-    this->pageSpinner->setWidget(spinner);  // takes ownership of spinner reference
 
     if (this->box) {
         g_object_unref(this->box);

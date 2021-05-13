@@ -1,11 +1,6 @@
 #include "SpinPageAdapter.h"
 
-SpinPageAdapter::SpinPageAdapter() {
-    this->lastTimeoutId = 0;
-    this->min = 0;
-    this->max = 1;
-    this->page = -1;
-}
+SpinPageAdapter::SpinPageAdapter() {}
 
 SpinPageAdapter::~SpinPageAdapter() {
     if (this->hasWidget()) {
@@ -15,7 +10,7 @@ SpinPageAdapter::~SpinPageAdapter() {
 
 auto SpinPageAdapter::pageNrSpinChangedTimerCallback(SpinPageAdapter* adapter) -> bool {
     adapter->lastTimeoutId = 0;
-    adapter->page = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(adapter->widget));
+    adapter->page = static_cast<size_t>(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(adapter->widget)));
 
     adapter->firePageChanged();
     return false;
@@ -47,8 +42,9 @@ void SpinPageAdapter::setWidget(GtkWidget* widget) {
             g_signal_connect(this->widget, "value-changed", G_CALLBACK(pageNrSpinChangedCallback), this);
     this->lastTimeoutId = 0;
 
-    gtk_spin_button_set_range(GTK_SPIN_BUTTON(this->widget), min, max);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(this->widget), this->page);
+    gtk_spin_button_set_range(GTK_SPIN_BUTTON(this->widget), static_cast<double>(this->min),
+                              static_cast<double>(this->max));
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(this->widget), static_cast<double>(this->page));
 }
 
 void SpinPageAdapter::removeWidget() {
