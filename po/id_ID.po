@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-01 23:42\n"
+"POT-Creation-Date: 2021-05-13 05:55+0000\n"
+"PO-Revision-Date: 2021-05-13 06:45\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -34,10 +34,10 @@ msgid "\n"
 msgstr "\n"
 "Akan mencoba berjalan tanpa berkas ini."
 
-#: ../src/gui/MainWindow.cpp:712
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
-msgid " of {1}{2}"
-msgstr " dari {1}{2}"
+msgid " of {1}"
+msgstr ""
 
 #: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
@@ -896,7 +896,7 @@ msgstr "Oranye"
 msgid "PDF Export"
 msgstr "Ekspor PDF"
 
-#: ../src/gui/MainWindow.cpp:710
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:40
 msgid "PDF Page {1}"
 msgstr "Halaman PDF {1}"
 
@@ -914,11 +914,15 @@ msgstr "Berkas PDF berhasil dibuat"
 msgid "PDF files"
 msgstr "Berkas PDF"
 
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
+msgid "PDF {1}"
+msgstr ""
+
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
 msgstr "Grafik PNG"
 
-#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:42
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "Page"
 msgstr "Halaman"
 
@@ -938,7 +942,7 @@ msgstr "Halaman dihapus"
 msgid "Page inserted"
 msgstr "Halaman disisipkan"
 
-#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:31
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:60
 msgid "Page number"
 msgstr "Nomor halaman"
 
@@ -2364,7 +2368,7 @@ msgstr "Offset Halaman Pertama "
 msgid "Fullscreen"
 msgstr "Layar penuh"
 
-#: ../ui/about.glade:306
+#: ../ui/about.glade:307
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 atau setelahnya"
 
@@ -2544,7 +2548,7 @@ msgstr "Tata Letak"
 msgid "Left / Right-Handed"
 msgstr "Kidal / Normal"
 
-#: ../ui/about.glade:290
+#: ../ui/about.glade:291
 msgid "License"
 msgstr "Lisensi"
 
@@ -2687,7 +2691,7 @@ msgstr "_Format Kertas"
 msgid "Paper b_ackground"
 msgstr "L_atar Belakang Kertas"
 
-#: ../ui/about.glade:272
+#: ../ui/about.glade:273
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "Berbasis sebagian pada Xournal\n"
@@ -3066,7 +3070,7 @@ msgstr ""
 msgid "Width:"
 msgstr "Lebar:"
 
-#: ../ui/about.glade:257
+#: ../ui/about.glade:258
 msgid "With help from the community"
 msgstr "Dengan bantuan dari komunitas"
 
