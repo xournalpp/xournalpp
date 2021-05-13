@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-01 23:42\n"
+"POT-Creation-Date: 2021-05-13 05:55+0000\n"
+"PO-Revision-Date: 2021-05-13 06:45\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -35,10 +35,10 @@ msgid "\n"
 msgstr "\n"
 "Kommer nu att försöka köra utan denna fil."
 
-#: ../src/gui/MainWindow.cpp:712
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
-msgid " of {1}{2}"
-msgstr " av {1}{2}"
+msgid " of {1}"
+msgstr ""
 
 #: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
@@ -886,7 +886,7 @@ msgstr "Orange"
 msgid "PDF Export"
 msgstr "PDF-export"
 
-#: ../src/gui/MainWindow.cpp:710
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:40
 msgid "PDF Page {1}"
 msgstr "PDF-sida {1}"
 
@@ -904,11 +904,15 @@ msgstr ""
 msgid "PDF files"
 msgstr "PDF-filer"
 
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
+msgid "PDF {1}"
+msgstr ""
+
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
 msgstr "PNG-grafik"
 
-#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:42
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "Page"
 msgstr "Sida"
 
@@ -928,7 +932,7 @@ msgstr "Sidan borttagen"
 msgid "Page inserted"
 msgstr "Sidan infogad"
 
-#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:31
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:60
 msgid "Page number"
 msgstr "Sidnummer"
 
@@ -2341,7 +2345,7 @@ msgstr ""
 msgid "Fullscreen"
 msgstr "Helskärm"
 
-#: ../ui/about.glade:306
+#: ../ui/about.glade:307
 msgid "GNU GPLv2 or later"
 msgstr ""
 
@@ -2519,7 +2523,7 @@ msgstr "Layout"
 msgid "Left / Right-Handed"
 msgstr "Vänster- / högerhänta"
 
-#: ../ui/about.glade:290
+#: ../ui/about.glade:291
 msgid "License"
 msgstr "Licens"
 
@@ -2662,7 +2666,7 @@ msgstr ""
 msgid "Paper b_ackground"
 msgstr ""
 
-#: ../ui/about.glade:272
+#: ../ui/about.glade:273
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
@@ -3040,7 +3044,7 @@ msgstr ""
 msgid "Width:"
 msgstr ""
 
-#: ../ui/about.glade:257
+#: ../ui/about.glade:258
 msgid "With help from the community"
 msgstr ""
 
