@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-02 16:54\n"
+"PO-Revision-Date: 2021-05-13 03:10\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -331,15 +331,15 @@ msgstr "تصدير مخصص"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "تخصيص أشرطة الأدوات"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:29
 msgid "Customized"
-msgstr ""
+msgstr "مخصص"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
 msgid "Cut"
-msgstr ""
+msgstr "قص"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Default Tool"
@@ -348,7 +348,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:347
 #: ../src/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: ../src/control/XournalMain.cpp:167
 msgid "Delete Logfile"
