@@ -39,7 +39,7 @@ bool SpinPageAdapter::hasWidget() { return this->widget != nullptr; }
 
 void SpinPageAdapter::setWidget(GtkWidget* widget) {
     // only one widget is supported and the previous widget has to be removed via removeWidget
-    assert(!this->hasWidget());
+    g_assert(!this->hasWidget());
     g_assert_nonnull(widget);
 
     this->widget = widget;
@@ -52,7 +52,7 @@ void SpinPageAdapter::setWidget(GtkWidget* widget) {
 }
 
 void SpinPageAdapter::removeWidget() {
-    assert(this->hasWidget());
+    g_assert(this->hasWidget());
 
     g_signal_handler_disconnect(this->widget, this->pageNrSpinChangedHandlerId);
 
@@ -63,13 +63,17 @@ auto SpinPageAdapter::getPage() const -> int { return this->page; }
 
 void SpinPageAdapter::setPage(size_t page) {
     this->page = page;
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(this->widget), page);
+    if (this->widget) {
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(this->widget), static_cast<double>(page));
+    }
 }
 
 void SpinPageAdapter::setMinMaxPage(size_t min, size_t max) {
     this->min = min;
     this->max = max;
-    gtk_spin_button_set_range(GTK_SPIN_BUTTON(this->widget), min, max);
+    if (this->widget) {
+        gtk_spin_button_set_range(GTK_SPIN_BUTTON(this->widget), static_cast<double>(min), static_cast<double>(max));
+    }
 }
 
 void SpinPageAdapter::addListener(SpinPageListener* listener) { this->listener.push_back(listener); }
