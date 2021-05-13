@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.36.0 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.18"/>
   <object class="GtkDialog" id="aboutDialog">
@@ -226,7 +226,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="margin_top">5</property>
-                <property name="label">Andreas Butti, 2010 - 2019
+                <property name="label">Andreas Butti, 2010 - 2021
 Wilson Brenna, 2012 - 2015
 Marek Pikuła, 2015 - 2018
 Moreno Razzoli, 2018 - 2019
