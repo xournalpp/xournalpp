@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-01 23:42\n"
+"POT-Creation-Date: 2021-05-13 05:55+0000\n"
+"PO-Revision-Date: 2021-05-13 06:46\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -35,10 +35,10 @@ msgid "\n"
 msgstr "\n"
 "Essai de démarrage sans ce fichier."
 
-#: ../src/gui/MainWindow.cpp:712
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
-msgid " of {1}{2}"
-msgstr " de {1}{2}"
+msgid " of {1}"
+msgstr ""
 
 #: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
@@ -909,7 +909,7 @@ msgstr "Orange"
 msgid "PDF Export"
 msgstr "Export PDF"
 
-#: ../src/gui/MainWindow.cpp:710
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:40
 msgid "PDF Page {1}"
 msgstr "Page PDF {1}"
 
@@ -927,11 +927,15 @@ msgstr "Fichier PDF créé avec succès"
 msgid "PDF files"
 msgstr "Fichiers PDF"
 
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
+msgid "PDF {1}"
+msgstr ""
+
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
 msgstr "Graphiques PNG"
 
-#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:42
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "Page"
 msgstr "Page"
 
@@ -951,7 +955,7 @@ msgstr "Page supprimée"
 msgid "Page inserted"
 msgstr "Page insérée"
 
-#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:31
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:60
 msgid "Page number"
 msgstr "Numéro de page"
 
@@ -2411,7 +2415,7 @@ msgstr "Décalage de la première page "
 msgid "Fullscreen"
 msgstr "Plein écran"
 
-#: ../ui/about.glade:306
+#: ../ui/about.glade:307
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 ou supérieur"
 
@@ -2591,7 +2595,7 @@ msgstr "Disposition"
 msgid "Left / Right-Handed"
 msgstr "Gaucher / Droitier"
 
-#: ../ui/about.glade:290
+#: ../ui/about.glade:291
 msgid "License"
 msgstr "Licence"
 
@@ -2735,7 +2739,7 @@ msgstr "_Format de papier"
 msgid "Paper b_ackground"
 msgstr "_Arrière-plan de papier"
 
-#: ../ui/about.glade:272
+#: ../ui/about.glade:273
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "Partiellement basé sur Xournal\n"
@@ -3117,7 +3121,7 @@ msgstr "Largeur"
 msgid "Width:"
 msgstr "Largeur :"
 
-#: ../ui/about.glade:257
+#: ../ui/about.glade:258
 msgid "With help from the community"
 msgstr "Avec l'aide de la communauté"
 
