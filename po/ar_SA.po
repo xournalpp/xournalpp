@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-01 23:37+0000\n"
-"PO-Revision-Date: 2021-05-13 04:12\n"
+"PO-Revision-Date: 2021-05-13 05:49\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -376,7 +376,7 @@ msgstr "حذف هذه الصفحة"
 
 #: ../src/control/Control.cpp:2471
 msgid "Discard"
-msgstr ""
+msgstr "إغلاق بدون حفظ"
 
 #: ../src/control/XournalMain.cpp:680
 msgid "Display advanced export options"
@@ -423,7 +423,7 @@ msgstr "رسم سهم"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "رسم شكل بيضاوي"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:118
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
