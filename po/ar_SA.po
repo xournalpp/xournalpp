@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-14 20:42\n"
+"PO-Revision-Date: 2021-05-14 21:53\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -38,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " من {1}"
 
 #: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
@@ -598,7 +598,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Fill"
-msgstr ""
+msgstr "تعبئة"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
@@ -634,27 +634,27 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Go to first page"
-msgstr ""
+msgstr "انتقال إلى الصفحة الأولى"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 msgid "Go to last page"
-msgstr ""
+msgstr "انتقال إلى الصفحة الأخيرة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Go to next layer"
-msgstr ""
+msgstr "انتقال إلى الطبقة التالية"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:377
 msgid "Go to page"
-msgstr ""
+msgstr "انتقال إلى صفحة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Go to previous layer"
-msgstr ""
+msgstr "انتقال إلى الطبقة السابقة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Go to top layer"
-msgstr ""
+msgstr "انتقال إلى الطبقة العليا"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Graph"
@@ -723,7 +723,7 @@ msgstr ""
 
 #: ../src/undo/InsertLayerUndoAction.cpp:26
 msgid "Insert layer"
-msgstr ""
+msgstr "إدراج طبقة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Insert page"
@@ -739,11 +739,11 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "انتقال إلى الصفحة (الصفحة الأولى: 1)"
 
 #: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "أثناء توليد LaTeX حدث خطأ: {1} (كود الخروج: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
@@ -784,15 +784,15 @@ msgstr "يجري التحميل..."
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:101
 msgid "Magenta"
-msgstr ""
+msgstr "أرجواني"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Manage Toolbars"
-msgstr ""
+msgstr "إدارة أشرطة الأدوات"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Medium"
-msgstr ""
+msgstr "متوسط"
 
 #: ../src/control/XournalMain.cpp:450
 msgid "Missing the needed UI file:\n"
@@ -835,12 +835,12 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 msgid "No device"
-msgstr ""
+msgstr "لا يوجد جهاز"
 
 #: ../src/pdf/base/XojCairoPdfExport.cpp:148
 #: ../src/pdf/base/XojCairoPdfExport.cpp:190
 msgid "No pages to export!"
-msgstr ""
+msgstr "لا توجد صفحات للتصدير!"
 
 #: ../src/control/Control.cpp:1270
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -848,11 +848,11 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:116
 msgid "Normal drawing"
-msgstr ""
+msgstr "رسم عادي"
 
 #: ../src/plugin/Plugin.cpp:233 ../src/plugin/Plugin.cpp:249
 msgid "OK"
-msgstr ""
+msgstr "موافق"
 
 #: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -874,21 +874,21 @@ msgstr ""
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:328
 msgid "Open file"
-msgstr ""
+msgstr "فتح ملف"
 
 #: ../src/control/RecentManager.cpp:170
 msgctxt "{1} is a URI"
 msgid "Open {1}"
-msgstr ""
+msgstr "فتح {1}"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:102
 msgid "Orange"
-msgstr ""
+msgstr "برتقالي"
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
-msgstr ""
+msgstr "تصدير PDF"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:40
 msgid "PDF Page {1}"
@@ -978,7 +978,7 @@ msgstr ""
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:68
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "اللغة المختارة سابقا لم تعد متاحة!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:330
 msgid "Print"
@@ -986,11 +986,11 @@ msgstr "طباعة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "تسجيل صوت / إيقاف التسجيل"
 
 #: ../src/control/Control.cpp:879
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "تعذر بدء التسجيل."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:100
@@ -1433,7 +1433,7 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:104
 msgid "White"
-msgstr ""
+msgstr "أبيض"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:31
 msgid "With PDF background"
@@ -1479,7 +1479,7 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
 msgid "Yellow"
-msgstr ""
+msgstr "أصفر"
 
 #: ../src/control/PageBackgroundChangeController.cpp:179
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
@@ -1991,7 +1991,7 @@ msgstr ""
 
 #: ../ui/about.glade:211
 msgid "Authors:"
-msgstr ""
+msgstr "المؤلفون:"
 
 #: ../ui/settings.glade:2137
 msgid "Autodetect"
@@ -2052,7 +2052,7 @@ msgstr ""
 
 #: ../ui/about.glade:127
 msgid "Built on"
-msgstr ""
+msgstr "بناء"
 
 #: ../ui/settings.glade:1824
 msgid "Button 1"
@@ -2152,7 +2152,7 @@ msgstr ""
 
 #: ../ui/main.glade:1245
 msgid "Delete Layer"
-msgstr ""
+msgstr "حذف الطبقة"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2222,7 +2222,7 @@ msgstr ""
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "رسم نظام إحداثيات"
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
@@ -2327,7 +2327,7 @@ msgstr ""
 
 #: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
-msgstr ""
+msgstr "عتامة التعبئة"
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
@@ -2347,7 +2347,7 @@ msgstr ""
 
 #: ../ui/main.glade:532 ../ui/settings.glade:3326
 msgid "Fullscreen"
-msgstr ""
+msgstr "ملء الشاشة"
 
 #: ../ui/about.glade:307
 msgid "GNU GPLv2 or later"
@@ -2379,7 +2379,7 @@ msgstr ""
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
-msgstr ""
+msgstr "انتقال إلى صفحة"
 
 #: ../ui/settings.glade:4401
 msgid "Grid size"
@@ -2407,7 +2407,7 @@ msgstr ""
 
 #: ../ui/main.glade:951 ../ui/settings.glade:3288 ../ui/settings.glade:3355
 msgid "Hide Menubar"
-msgstr ""
+msgstr "إخفاء شريط القوائم"
 
 #: ../ui/settings.glade:3304 ../ui/settings.glade:3371
 msgid "Hide Sidebar"
@@ -2493,11 +2493,11 @@ msgstr ""
 
 #: ../ui/main.glade:2629
 msgid "Insert Page After"
-msgstr ""
+msgstr "إدراج صفحة بعد"
 
 #: ../ui/main.glade:2621
 msgid "Insert Page Before"
-msgstr ""
+msgstr "إدراج صفحة قبل"
 
 #: ../ui/settings.glade:5472
 msgid "LaTeX"
@@ -2529,7 +2529,7 @@ msgstr ""
 
 #: ../ui/about.glade:291
 msgid "License"
-msgstr ""
+msgstr "الترخيص"
 
 #: ../ui/settings.glade:715
 msgid "Load / Save"
@@ -2582,11 +2582,11 @@ msgstr ""
 
 #: ../ui/main.glade:2659
 msgid "Move Down"
-msgstr ""
+msgstr "تحريك لأسفل"
 
 #: ../ui/main.glade:2651
 msgid "Move Up"
-msgstr ""
+msgstr "تحريك لأعلى"
 
 #: ../ui/main.glade:1129
 msgid "N_ext annotated page"
@@ -2673,7 +2673,8 @@ msgstr ""
 #: ../ui/about.glade:273
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "مبني جزئيا على Xournal\n"
+"من Denis Auroux"
 
 #: ../ui/main.glade:1928
 msgid "Pause"
@@ -2713,7 +2714,7 @@ msgstr ""
 
 #: ../ui/main.glade:487
 msgid "Preferences"
-msgstr ""
+msgstr "التفضيلات"
 
 #: ../ui/settings.glade:1162
 msgid "Preprocessor"
@@ -2765,7 +2766,7 @@ msgstr ""
 
 #: ../ui/main.glade:1256
 msgid "Rename Layer"
-msgstr ""
+msgstr "إعادة تسمية الطبقة"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
@@ -2841,11 +2842,11 @@ msgstr ""
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
-msgstr ""
+msgstr "تعيين الأعمدة"
 
 #: ../ui/main.glade:789
 msgid "Set Rows"
-msgstr ""
+msgstr "تعيين الصفوف"
 
 #: ../ui/settings.glade:4627
 msgid "Settings:"
@@ -2861,7 +2862,7 @@ msgstr ""
 
 #: ../ui/main.glade:543
 msgid "Show sidebar"
-msgstr ""
+msgstr "إظهار الشريط الجانبي"
 
 #: ../ui/settings.glade:3142
 msgid "Show sidebar on the right side"
@@ -3016,7 +3017,7 @@ msgstr ""
 
 #: ../ui/about.glade:101
 msgid "Version"
-msgstr ""
+msgstr "إصدار"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
@@ -3050,7 +3051,7 @@ msgstr ""
 
 #: ../ui/about.glade:258
 msgid "With help from the community"
-msgstr ""
+msgstr "مع مساعدة من المجتمع"
 
 #: ../ui/about.glade:192
 msgid "X.X.X"
@@ -3162,7 +3163,7 @@ msgstr ""
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr ""
+msgstr "ت_حرير"
 
 #: ../ui/main.glade:1329
 msgid "_Eraser"
@@ -3174,7 +3175,7 @@ msgstr ""
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr ""
+msgstr "_ملف"
 
 #: ../ui/main.glade:1030
 msgid "_First Page"
@@ -3186,7 +3187,7 @@ msgstr ""
 
 #: ../ui/main.glade:2007
 msgid "_Help"
-msgstr ""
+msgstr "م_ساعدة"
 
 #: ../ui/main.glade:1341
 msgid "_Highlighter"
@@ -3202,7 +3203,7 @@ msgstr ""
 
 #: ../ui/main.glade:1155
 msgid "_Journal"
-msgstr ""
+msgstr "_جورنال"
 
 #: ../ui/main.glade:1074
 msgid "_Last Page"
@@ -3218,7 +3219,7 @@ msgstr ""
 
 #: ../ui/main.glade:1019
 msgid "_Navigation"
-msgstr ""
+msgstr "ا_نتقال"
 
 #: ../ui/main.glade:1102
 msgid "_Next Layer"
@@ -3266,7 +3267,7 @@ msgstr ""
 
 #: ../ui/main.glade:1306
 msgid "_Tools"
-msgstr ""
+msgstr "أ_دوات"
 
 #: ../ui/main.glade:1113
 msgid "_Top Layer"
@@ -3286,7 +3287,7 @@ msgstr ""
 
 #: ../ui/main.glade:501
 msgid "_View"
-msgstr ""
+msgstr "_عرض"
 
 #: ../ui/main.glade:1795
 msgid "_delete strokes"
@@ -3326,7 +3327,7 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
-msgstr ""
+msgstr "مفعل،"
 
 #: ../ui/settings.glade:1730
 msgid "events"
@@ -3338,11 +3339,11 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:54
 msgid "load from file"
-msgstr ""
+msgstr "تحميل من ملف"
 
 #: ../ui/settings.glade:416
 msgid "minutes"
-msgstr ""
+msgstr "دقائق"
 
 #: ../ui/settings.glade:2951 ../ui/settings.glade:3002
 #: ../ui/settings.glade:3999 ../ui/settings.glade:4010
@@ -3364,5 +3365,5 @@ msgstr ""
 
 #: ../ui/about.glade:178
 msgid "with libgtk"
-msgstr ""
+msgstr "باستخدام libgtk نسخة"
 
