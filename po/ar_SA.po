@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-13 06:46\n"
+"PO-Revision-Date: 2021-05-14 20:42\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -493,16 +493,16 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2041
 msgid "Error opening file \"{1}\""
-msgstr ""
+msgstr "خطأ في فتح الملف \"{1}\""
 
 #: ../src/util/OutputStream.cpp:23
 msgid "Error opening file: \"{1}\""
-msgstr ""
+msgstr "خطأ في فتح الملف: \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:433
 #: ../src/control/xojfile/LoadHandler.cpp:453
 msgid "Error reading PDF: {1}"
-msgstr ""
+msgstr "خطأ في قراءة ملف الپي-دي-إف: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:510
 msgid "Error reading width of a stroke: {1}"
@@ -510,15 +510,15 @@ msgstr ""
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
-msgstr ""
+msgstr "خطأ في حفظ الصورة رقم ١"
 
 #: ../src/control/jobs/ImageExport.cpp:159
 msgid "Error save image #2"
-msgstr ""
+msgstr "خطأ في حفظ الصورة رقم ٢"
 
 #: ../src/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "خطأ أثناء الحفظ التلقائي: {1}"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
@@ -2003,7 +2003,7 @@ msgstr ""
 
 #: ../ui/settings.glade:446
 msgid "Autosaving"
-msgstr ""
+msgstr "حفظ تلقائي"
 
 #: ../ui/settings.glade:594
 msgid "Available Placeholders"
@@ -2250,7 +2250,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2239
 msgid "Enable"
-msgstr ""
+msgstr "تفعيل"
 
 #: ../ui/settings.glade:4158
 msgid "Enable  with determination radius of "
@@ -2262,7 +2262,7 @@ msgstr ""
 
 #: ../ui/settings.glade:365
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "تفعيل الحفظ التلقائي"
 
 #: ../ui/settings.glade:900
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
@@ -2270,7 +2270,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1507
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "تفعيل الإحساس بالضغط"
 
 #: ../ui/settings.glade:4494
 msgid "Enable Tap action"
@@ -2286,7 +2286,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2519
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "تفعيل الرسم باللمس"
 
 #: ../ui/settings.glade:2400
 msgid "Enable zoom gestures (requires restart)"
