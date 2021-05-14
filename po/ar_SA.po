@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-14 22:51\n"
+"PO-Revision-Date: 2021-05-14 23:57\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -677,7 +677,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Hand"
-msgstr ""
+msgstr "يد"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:68
 msgid "Hide all"
@@ -686,12 +686,12 @@ msgstr "إخفاء الكل"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Highlighter"
-msgstr ""
+msgstr "قلم تظليل"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Image"
-msgstr ""
+msgstr "صورة"
 
 #: ../src/control/XournalMain.cpp:296
 msgid "Image file successfully created"
@@ -727,7 +727,7 @@ msgstr "إدراج طبقة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Insert page"
-msgstr ""
+msgstr "إدراج صفحة"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
@@ -956,7 +956,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:238
 msgid "Pen"
-msgstr ""
+msgstr "قلم"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:19
 msgid "Plain"
@@ -1000,7 +1000,7 @@ msgstr "أحمر"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 #: ../src/undo/UndoRedoHandler.cpp:215
 msgid "Redo"
-msgstr ""
+msgstr "إعادة"
 
 #: ../src/undo/UndoRedoHandler.cpp:210
 msgid "Redo: "
@@ -1500,15 +1500,15 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Zoom fit to screen"
-msgstr ""
+msgstr "عرض بحجم الشاشة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Zoom in"
-msgstr ""
+msgstr "تكبير"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Zoom out"
-msgstr ""
+msgstr "تصغير"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:72
 msgid "Zoom slider"
@@ -1516,7 +1516,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Zoom to 100%"
-msgstr ""
+msgstr "عرض بالحجم الأصلي"
 
 #: ../src/control/Control.cpp:2309 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
@@ -1541,7 +1541,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:246
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "متقطع/منقط"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:243
 msgid "dashed"
@@ -1557,7 +1557,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:261
 msgid "delete stroke"
-msgstr ""
+msgstr "حذف خط"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:249
 msgid "dotted"
@@ -1602,7 +1602,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:240
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:259
 msgid "standard"
-msgstr ""
+msgstr "عادي"
 
 #: ../src/undo/AddUndoAction.cpp:94 ../src/undo/DeleteUndoAction.cpp:91
 msgid "stroke"
@@ -1630,7 +1630,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:260
 msgid "whiteout"
-msgstr ""
+msgstr "تبييض"
 
 #: ../src/control/xojfile/LoadHandler.cpp:909
 msgid "xoj-File: {1}"
