@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-14 23:57\n"
+"PO-Revision-Date: 2021-05-15 00:53\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -352,7 +352,7 @@ msgstr "حذف"
 
 #: ../src/control/XournalMain.cpp:167
 msgid "Delete Logfile"
-msgstr ""
+msgstr "حذف ملف السجل"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Delete current page"
@@ -394,20 +394,20 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2465
 msgid "Document file was removed."
-msgstr ""
+msgstr "تمت إزالة ملف المستند."
 
 #: ../src/control/xojfile/LoadHandler.cpp:239
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "المستند تالف (لم يتم العثور على صفحات في الملف)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:235
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "المستند غير مكتمل (ربما النهاية مقطوعة؟)"
 
 #: ../src/model/Document.cpp:285 ../src/model/Document.cpp:294
 #: ../src/model/Document.cpp:297
 msgid "Document not loaded! ({1}), {2}"
-msgstr ""
+msgstr "لم يتم تحميل المستند! ({1})، {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Dotted"
@@ -470,7 +470,7 @@ msgstr ""
 
 #: ../src/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "تفعيل حساسية الضغط أو استنتاج الضغط لتغيير هذا الإعداد!"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
@@ -530,7 +530,7 @@ msgstr "خطأ: {1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "خطأ: {1} ليس ملفا عاديا. الرجاء مراجعة إعدادات ملف قالب LaTeX. "
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
@@ -539,7 +539,8 @@ msgstr "خطأ: {1}. برجاء التحقق من محتويات {2}"
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr ""
+msgstr "تعذر حذف سجل الأخطاء. عليك فعل ذلك يدويا.\n"
+"ملف السجل: {1}"
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
@@ -567,12 +568,15 @@ msgstr ""
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "تصدير بدون خلفية\n"
+"                                 ستكون خلفية الملف المصدَّر شفافة أو بيضاء،\n"
+"                                 اعتمادا على ما تدعمه الصيغة\n"
 
 #: ../src/control/XournalMain.cpp:649
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "تصدير بدون تسطير\n"
+"                                 الملف المصدَّر لن يكون ورقه مسطَّرا\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
@@ -584,7 +588,7 @@ msgstr ""
 
 #: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "تعذر قراءة ملف القالب العام. الرجاء مراجعة الإعدادات."
 
 #: ../src/control/jobs/BaseExportJob.cpp:101
 msgid "Failed to resolve path with the following error:\n"
@@ -626,11 +630,11 @@ msgstr ""
 
 #: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "ملف القالب العام غير موجود. الرجاء مراجعة الإعدادات."
 
 #: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "ملف القالب العام ليس ملفا عاديا. الرجاء مراجعة الإعدادات. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Go to first page"
@@ -695,7 +699,7 @@ msgstr "صورة"
 
 #: ../src/control/XournalMain.cpp:296
 msgid "Image file successfully created"
-msgstr ""
+msgstr "تم إنشاء ملف الصورة بنجاح"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
@@ -865,11 +869,11 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:165
 msgid "Open Logfile"
-msgstr ""
+msgstr "فتح ملف السجل"
 
 #: ../src/control/XournalMain.cpp:166
 msgid "Open Logfile directory"
-msgstr ""
+msgstr "فتح مجلد ملف السجل"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:328
@@ -900,7 +904,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:352
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "تم إنشاء ملف الـPDF بنجاح"
 
 #: ../src/control/jobs/CustomExportJob.cpp:21
 #: ../src/control/jobs/PdfExportJob.cpp:13
@@ -1008,15 +1012,15 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2018
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "إزالة خلفية PDF"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:171
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "تمت إزالة عنصر الأداة من شريط الأدوات {1} في الموضع {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "تمت إزالة عنصر الأداة {1} من شريط الأدوات {2} في الموضع {3}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
@@ -1032,7 +1036,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:210
 msgid "Restore file"
-msgstr ""
+msgstr "استعادة ملف"
 
 #: ../src/undo/RotateUndoAction.cpp:51
 msgid "Rotation"
@@ -1135,7 +1139,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
-msgstr ""
+msgstr "إرسال تقرير خطأ"
 
 #: ../src/control/tools/EditSelection.cpp:367
 msgid "Send backward"
@@ -1312,15 +1316,15 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:159
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "اسم أحدث ملف سجل: {1}"
 
 #: ../src/control/XournalMain.cpp:154
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "هناك ملفات سجل أخطاء من Xournal++‎. الرجاء إرسال تقرير خطأ، حتى يتم إصلاحها."
 
 #: ../src/control/XournalMain.cpp:153
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "هناك ملف سجل أخطاء من Xournal++‎. الرجاء إرسال تقرير خطأ، حتى يتم إصلاحها."
 
 #: ../src/util/XojMsgBox.cpp:89
 msgid "There was an error displaying help: {1}"
@@ -1361,7 +1365,7 @@ msgstr ""
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "تعذر فتح ملف القالب العام في {1}. هل هو موجود؟"
 
 #: ../src/gui/PageView.cpp:348
 msgid "Unable to play audio recording {1}"
@@ -1490,7 +1494,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "أنت تستخدم فرع \"{1}/{2}\". إرسال تقرير خطأ سيوجهك إلى متتبع علل هذا المستودع."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -2067,7 +2071,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "اختر ملف قالب LaTeX العام"
 
 #: ../ui/settings.glade:2913 ../ui/settings.glade:3056
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2269,7 +2273,7 @@ msgstr "تفعيل الحفظ التلقائي"
 
 #: ../ui/settings.glade:900
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "تفعيل استنتاج الضغط <i>(تخمين الضغط من سرعة الرسم عندما يكون الضغط المقدم من الجهاز غير متوفر)</i>"
 
 #: ../ui/settings.glade:1507
 msgid "Enable Pressure Sensitivity"
@@ -2374,11 +2378,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2811
 msgid "Global"
-msgstr ""
+msgstr "عام"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "مسار ملف القالب العام"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
