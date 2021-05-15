@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-15 00:53\n"
+"PO-Revision-Date: 2021-05-15 01:56\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -554,7 +554,7 @@ msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
-msgstr ""
+msgstr "تصدير PDF"
 
 #: ../src/control/XournalMain.cpp:653
 msgid "Export layers progressively\n"
@@ -562,7 +562,11 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "تصدير الطبقات تدريجيا\n"
+"                                 عند تصدير PDF، يتم رسم الطبقات تدرجيا طبقة طبقة.\n"
+"                                 يؤدي هذا إلى تصدير عدد ن من الصفحات لكل صفحة ذات\n"
+"                                  عدد ن من الطبقات، فيبني كومة الطبقات تدريجيا.\n"
+"                                 يمكن استخدام ملف الـPDF الناتج كعرض تقديمي.\n"
 
 #: ../src/control/XournalMain.cpp:644
 msgid "Export without background\n"
@@ -703,7 +707,7 @@ msgstr "تم إنشاء ملف الصورة بنجاح"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
-msgstr ""
+msgstr "صور"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Insert a copy of the current layer below"
@@ -719,7 +723,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
-msgstr ""
+msgstr "إدراج صورة"
 
 #: ../src/undo/InsertUndoAction.cpp:36
 msgid "Insert latex"
@@ -865,7 +869,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
-msgstr ""
+msgstr "فتح صورة"
 
 #: ../src/control/XournalMain.cpp:165
 msgid "Open Logfile"
@@ -1341,7 +1345,7 @@ msgstr ""
 #: ../src/control/PageBackgroundChangeController.cpp:144
 #: ../src/control/tools/ImageHandler.cpp:44
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "تعذر تحميل هذه الصورة. رسالة الخطأ: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
 msgid "Toggle fullscreen"
@@ -1581,7 +1585,7 @@ msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
-msgstr ""
+msgstr "صورة"
 
 #: ../src/util/DeviceListHelper.cpp:114
 msgid "keyboard"
@@ -1773,7 +1777,7 @@ msgstr ""
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr ""
+msgstr "<b>... أو حدد صورة مستخدمة بالفعل:</b>"
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
@@ -1798,7 +1802,8 @@ msgstr "<b>المبدئي</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>إعدادات تصدير المستند</b>\n"
+"تعيين إعدادات التصدير"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1840,7 +1845,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr ""
+msgstr "<i>مثال:</i> 1-3 أو 1,3,5-7 إلخ."
 
 #: ../ui/settings.glade:346
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
@@ -1957,11 +1962,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "الكل"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
-msgstr ""
+msgstr "كل الصفحات"
 
 #: ../ui/settings.glade:4624
 msgid "All three conditions must be met before stroke is ignored.\n"
@@ -2111,7 +2116,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
-msgstr ""
+msgstr "الصفحة الحالية"
 
 #: ../ui/settings.glade:3113
 msgid "Cursor"
@@ -2313,7 +2318,7 @@ msgstr "نوع الممحاة - لا تغيير"
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
-msgstr ""
+msgstr "تصدير"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
@@ -2321,12 +2326,12 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "تصدير الطبقات تدريجيا"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "تصدير المستند بدون أي خلفية (لا شيء) أو مع خلفيات PDF والصور فقط (بدون تسطير) أو مع جميع أنواع الخلفيات (الكل)."
 
 #: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
@@ -2406,7 +2411,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "ارتفاع"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2456,7 +2461,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "لو مفعلة، طبقات كل صفحة ستُضاف طبقة طبقة. يمكن استخدام ملف الـPDF الناتج كعرض تقديمي."
 
 #: ../ui/settings.glade:4512
 msgid "Ignore Time (ms)"
@@ -2468,7 +2473,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "جودة الصورة"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
@@ -2622,12 +2627,12 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "بدون تسطير"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:207
 #: ../ui/settings.glade:224
 msgid "None"
-msgstr ""
+msgstr "لا شيء"
 
 #: ../ui/settings.glade:4074
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2655,7 +2660,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
-msgstr ""
+msgstr "صفحات:"
 
 #: ../ui/settings.glade:4128
 msgid "Paired Pages"
@@ -2753,7 +2758,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
-msgstr ""
+msgstr "النطاق"
 
 #: ../ui/settings.glade:4718
 msgid "Re-render when the page's zoom changes by more than "
@@ -2785,7 +2790,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
-msgstr ""
+msgstr "دقة"
 
 #: ../ui/settings.glade:1393
 msgid "Right Mouse Button"
@@ -3050,7 +3055,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "عرض"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3330,7 +3335,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
