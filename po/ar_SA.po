@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-15 01:56\n"
+"PO-Revision-Date: 2021-05-15 02:55\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -584,11 +584,11 @@ msgstr "تصدير بدون تسطير\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:60
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "تعذر العثور على برنامج توليد LaTeX في متغير مسارات النظام: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:56
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "تعذر تحليل أمر توليد LaTeX هذا: {1}"
 
 #: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
@@ -602,7 +602,8 @@ msgstr ""
 #: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "تعذر فتح الملف. عليك فعل ذلك يدويا:\n"
+"الرابط: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Fill"
@@ -622,7 +623,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:60
 msgid "Font"
-msgstr ""
+msgstr "خط"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Forward"
@@ -719,7 +720,7 @@ msgstr ""
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
-msgstr ""
+msgstr "إدراج عناصر"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
@@ -727,7 +728,7 @@ msgstr "إدراج صورة"
 
 #: ../src/undo/InsertUndoAction.cpp:36
 msgid "Insert latex"
-msgstr ""
+msgstr "إدراج LaTeX"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:26
 msgid "Insert layer"
@@ -1012,7 +1013,7 @@ msgstr "إعادة"
 
 #: ../src/undo/UndoRedoHandler.cpp:210
 msgid "Redo: "
-msgstr ""
+msgstr "إعادة: "
 
 #: ../src/control/Control.cpp:2018
 msgid "Remove PDF Background"
@@ -1028,7 +1029,7 @@ msgstr "تمت إزالة عنصر الأداة {1} من شريط الأدوات
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "إعادة تسمية طبقة"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
@@ -1340,7 +1341,7 @@ msgstr "ثخين"
 
 #: ../src/control/Control.cpp:2465
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "لم يتم حفظ هذا المستند بعد."
 
 #: ../src/control/PageBackgroundChangeController.cpp:144
 #: ../src/control/tools/ImageHandler.cpp:44
@@ -1386,7 +1387,7 @@ msgstr "تراجع"
 
 #: ../src/undo/UndoRedoHandler.cpp:198
 msgid "Undo: "
-msgstr ""
+msgstr "تراجع: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "Unexpected root tag: {1}"
@@ -1975,7 +1976,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "تحقق دائمًا من اعتماديات LaTeX قبل التشغيل"
 
 #: ../ui/main.glade:1197
 msgid "Append New Pdf Pages"
@@ -1983,7 +1984,7 @@ msgstr ""
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "المتوسط الحسابي"
 
 #: ../ui/settings.glade:1753
 msgid "Artifact workaround"
@@ -2023,7 +2024,7 @@ msgstr ""
 
 #: ../ui/settings.glade:955
 msgid "Averaging method"
-msgstr ""
+msgstr "طريقة حساب المتوسط"
 
 #: ../ui/settings.glade:2711
 msgid "Background color between pages"
@@ -2036,7 +2037,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3070
 msgid "Border Color"
-msgstr ""
+msgstr "لون الإطار"
 
 #: ../ui/settings.glade:3031
 msgid "Border Width"
@@ -2044,7 +2045,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2700
 msgid "Border color"
-msgstr ""
+msgstr "لون الإطار"
 
 #: ../ui/settings.glade:2685
 msgid "Border color for current page and other selections"
@@ -2136,7 +2137,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2759
 msgid "Dark Theme (requires restart)"
-msgstr ""
+msgstr "الوضع الليلي (يحتاج إعادة التشغيل)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
@@ -2254,7 +2255,7 @@ msgstr ""
 
 #: ../ui/main.glade:2637
 msgid "Duplicate"
-msgstr ""
+msgstr "تكرار"
 
 #: ../ui/main.glade:2674
 msgid "Edit (not implemented yet)"
@@ -2306,7 +2307,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "إدخال / تحرير نص LaTeX"
 
 #: ../ui/main.glade:1701
 msgid "Eraser Optio_ns"
@@ -2322,7 +2323,7 @@ msgstr "تصدير"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr ""
+msgstr "تصدير كـ..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -2375,7 +2376,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "إعدادات أداة LaTeX العامة"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
@@ -2395,7 +2396,7 @@ msgstr "انتقال إلى صفحة"
 
 #: ../ui/settings.glade:4401
 msgid "Grid size"
-msgstr ""
+msgstr "حجم الشبكة"
 
 #: ../ui/settings.glade:4358
 msgid "Grid snapping tolerance"
@@ -2407,7 +2408,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2357
 msgid "Hand Recognition"
-msgstr ""
+msgstr "التعرف على اليد"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
@@ -2423,15 +2424,15 @@ msgstr "إخفاء شريط القوائم"
 
 #: ../ui/settings.glade:3304 ../ui/settings.glade:3371
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "إخفاء الشريط الجانبي"
 
 #: ../ui/settings.glade:3209
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "إخفاء شريط التمرير الأفقي"
 
 #: ../ui/settings.glade:3224
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "إخفاء شريط التمرير الرأسي"
 
 #: ../ui/settings.glade:2890
 msgid "Highlight cursor position"
@@ -2501,7 +2502,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr ""
+msgstr "إدراج LaTeX"
 
 #: ../ui/main.glade:2629
 msgid "Insert Page After"
@@ -2513,23 +2514,23 @@ msgstr "إدراج صفحة قبل"
 
 #: ../ui/settings.glade:5472
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "إعدادات تطبيق LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "أمر توليد LaTeX"
 
 #: ../ui/settings.glade:5561 ../ui/settings.glade:5609
 msgid "Language"
-msgstr ""
+msgstr "اللغة"
 
 #: ../ui/settings.glade:5579
 msgid "Language Settings"
-msgstr ""
+msgstr "إعدادات اللغة"
 
 #: ../ui/main.glade:575
 msgid "Layout"
@@ -2578,15 +2579,15 @@ msgstr ""
 
 #: ../ui/settings.glade:1565
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "الضغط الأدنى:"
 
 #: ../ui/settings.glade:1442 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "الفأرة"
 
 #: ../ui/settings.glade:1411
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "أزرار الفأرة"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
@@ -2738,7 +2739,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4258
 msgid "Preserve line width"
-msgstr ""
+msgstr "الحفاظ على ثخانة الخط"
 
 #: ../ui/settings.glade:1576
 msgid "Pressure Multiplier: "
@@ -2746,11 +2747,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1646
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "الإحساس بالضغط"
 
 #: ../ui/about.glade:167
 msgid "RELEASE_IDENTIFIER"
-msgstr ""
+msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/settings.glade:2979
 msgid "Radius"
@@ -2774,7 +2775,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5314
 msgid "Recording Quality"
-msgstr ""
+msgstr "جودة التسجيل"
 
 #: ../ui/main.glade:1256
 msgid "Rename Layer"
@@ -2782,11 +2783,11 @@ msgstr "إعادة تسمية الطبقة"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "إعادة تسمية الطبقة المحددة"
 
 #: ../ui/settings.glade:4305
 msgid "Resizing"
-msgstr ""
+msgstr "تغيير الحجم"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -2810,11 +2811,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3259
 msgid "Scrollbars"
-msgstr ""
+msgstr "أشرطة التمرير"
 
 #: ../ui/settings.glade:4041
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "التمرير خارج الصفحة"
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
@@ -2878,15 +2879,15 @@ msgstr "إظهار الشريط الجانبي"
 
 #: ../ui/settings.glade:3142
 msgid "Show sidebar on the right side"
-msgstr ""
+msgstr "إظهار الشريط الجانبي على الجانب الأيمن"
 
 #: ../ui/main.glade:559
 msgid "Show toolbars"
-msgstr ""
+msgstr "إظهار شريط الأدوات"
 
 #: ../ui/settings.glade:3158
 msgid "Show vertical scrollbar on the left side"
-msgstr ""
+msgstr "إظهار شريط التمرير الرأسي على الجانب الأيسر"
 
 #: ../ui/settings.glade:891
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
@@ -2940,11 +2941,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "إعدادات ملف القالب"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr ""
+msgstr "القالب:"
 
 #: ../ui/settings.glade:2284 ../ui/settings.glade:2297
 msgid "Test"
@@ -2964,11 +2965,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "ملف الـLaTeX لاستخدامه كقالب لأداة LaTeX."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "اللون الحالي لأداة النص, بصيغة RGB الستعشرية."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
@@ -2980,11 +2981,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3802
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "وحدة المسطرة هي السنتيمتر"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "سيتم استخدام هذه الإعدادات للصفحات الجديدة"
 
 #: ../ui/settings.glade:2122
 msgid "Timeout"
@@ -2997,7 +2998,7 @@ msgstr ""
 #: ../ui/settings.glade:2035 ../ui/settings.glade:2573
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
-msgstr ""
+msgstr "شاشة اللمس"
 
 #: ../ui/settings.glade:4604
 msgid "Try to select object first."
@@ -3021,7 +3022,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4087
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "عادةً صفر أو واحد"
 
 #: ../ui/settings.glade:213
 msgid "Velocity based Gaussian weights"
