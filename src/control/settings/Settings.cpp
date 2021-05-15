@@ -114,7 +114,7 @@ void Settings::loadDefault() {
             new ButtonConfig(TOOL_ERASER, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
     this->buttonConfig[BUTTON_MOUSE_MIDDLE] =
-            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_HAND, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Right button
     this->buttonConfig[BUTTON_MOUSE_RIGHT] =
             new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
