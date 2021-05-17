@@ -1,3 +1,13 @@
+/*
+ * Xournal++
+ *
+ * helper methods to load a .xoj / .xopp document
+ *
+ * @author Xournal Team
+ * http://xournal.sf.net
+ *
+ * @license GPL
+ */
 #include "LoadHandlerHelper.h"
 
 #include "LoadHandler.h"

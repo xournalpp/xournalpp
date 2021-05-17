@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Loads an .xoj / .xopp document
+ * Loads a .xoj / .xopp document
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

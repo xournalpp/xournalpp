@@ -1,3 +1,16 @@
+/*
+ * Xournal++
+ *
+ * Latex implementation
+ *
+ * @author W Brenna
+ * http://wbrenna.ca
+ *
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
 #include "LatexDialog.h"
 
 #include <utility>

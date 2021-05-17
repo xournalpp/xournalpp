@@ -1,3 +1,14 @@
+/*
+ * Xournal++
+ *
+ * Search directory for icons and Glade files
+ *
+ * @author andreas
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
 #include "GladeSearchpath.h"
 
 GladeSearchpath::GladeSearchpath() = default;

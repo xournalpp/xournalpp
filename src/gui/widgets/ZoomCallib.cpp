@@ -1,3 +1,13 @@
+/*
+ * Xournal++
+ *
+ * Control to callibrate the zoom to fit the display DPI
+ *
+ * @author Xournal Team
+ * http://xournal.sf.net
+ *
+ * @license GPL
+ */
 #include "ZoomCallib.h"
 
 G_DEFINE_TYPE(ZoomCallib, zoomcallib, GTK_TYPE_WIDGET);  // NOLINT // @suppress("Unused static function")
