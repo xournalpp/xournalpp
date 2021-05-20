@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-13 06:45\n"
+"PO-Revision-Date: 2021-05-20 01:21\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -3022,7 +3022,7 @@ msgstr "Следующие строки будут заменены в глоб�
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "Математическая формула, набранная в LaTeX."
 
 #: ../ui/settings.glade:3802
 msgid "The unit of the ruler is cm"
