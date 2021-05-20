@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-20 01:21\n"
+"PO-Revision-Date: 2021-05-20 02:29\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -38,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " из {1}"
 
 #: ../src/control/settings/Settings.cpp:110
 msgid "%F-Note-%H-%M"
@@ -547,7 +547,7 @@ msgstr "Лог-файл ошибок не может быть удалён. Вы
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Экспорт файла в PDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
@@ -923,7 +923,7 @@ msgstr "PDF файлы"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
@@ -2808,7 +2808,7 @@ msgstr "Диапазон"
 
 #: ../ui/settings.glade:4718
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "Рендерить страницу заново когда масштаб меняется более чем на "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2937,7 +2937,8 @@ msgstr "Показывать вертикальную прокрутку сле�
 #: ../ui/settings.glade:891
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "Чем медленнее штрих, тем больше \"нажим\" пера.\n\n"
+"<i> Эта функция может быть полезной для устройств без датчика давления, например, для мыши или сенсорного экрана.</i>"
 
 #: ../ui/settings.glade:2865
 msgctxt "stylus cursor uses a small dot"
