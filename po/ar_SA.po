@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-21 17:18\n"
+"PO-Revision-Date: 2021-05-21 18:22\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -1095,7 +1095,7 @@ msgstr "بحث"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Select Font"
-msgstr ""
+msgstr "تحديد الخط"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1109,38 +1109,38 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:56
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:86
 msgid "Select Rectangle"
-msgstr ""
+msgstr "تحديد مستطيل"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:61
 msgid "Select Region"
-msgstr ""
+msgstr "تحديد منطقة"
 
 #: ../src/control/Control.cpp:2017
 msgid "Select another PDF"
-msgstr ""
+msgstr "اختيار ملف PDF آخر"
 
 #: ../src/util/XojMsgBox.cpp:70
 msgid "Select another name"
-msgstr ""
+msgstr "اختيار اسم آخر"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:104
 msgid "Select background color"
-msgstr ""
+msgstr "تحديد لون الخلفية"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:42
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:94
 msgid "Select color"
-msgstr ""
+msgstr "تحديد لون"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Select rectangle"
-msgstr ""
+msgstr "تحديد مستطيل"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
 msgid "Select region"
-msgstr ""
+msgstr "تحديد منطقة"
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
@@ -1156,7 +1156,7 @@ msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
 msgid "Separator"
-msgstr ""
+msgstr "فاصل"
 
 #: ../src/control/XournalMain.cpp:664
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -1181,7 +1181,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:63
 msgid "Show all"
-msgstr ""
+msgstr "إظهار الكل"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
@@ -1223,23 +1223,23 @@ msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
-msgstr ""
+msgstr "الملفات المدعومة"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:53
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "تبديل الطبقة الحالية مع الطبقة أعلاه"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "تبديل الطبقة الحالية مع الطبقة أدناه"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:65
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "تبديل الصفحة الحالية مع الصفحة أعلاه"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:66
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "تبديل الصفحة الحالية مع الصفحة أدناه"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
@@ -1362,7 +1362,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:45
 msgid "Toolbars"
-msgstr ""
+msgstr "أشرطة الأدوات"
 
 #: ../src/util/CrashHandler.cpp:30
 msgid "Trying to emergency save the current open document…"
@@ -1423,15 +1423,15 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2366
 msgid "Unsaved Document"
-msgstr ""
+msgstr "مستند غير محفوظ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Vertical Space"
-msgstr ""
+msgstr "مسافة رأسية"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
 msgid "Vertical space"
-msgstr ""
+msgstr "مسافة رأسية"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Very Fine"
@@ -1452,7 +1452,7 @@ msgstr "بخلفية PDF"
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
-msgstr ""
+msgstr "كتابة نص"
 
 #: ../src/control/xojfile/LoadHandler.cpp:900
 msgid "Wrong count of points ({1})"
@@ -1521,7 +1521,7 @@ msgstr "تصغير"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:72
 msgid "Zoom slider"
-msgstr ""
+msgstr "شريط التكبير"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Zoom to 100%"
@@ -1532,17 +1532,17 @@ msgstr "عرض بالحجم الأصلي"
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Cancel"
-msgstr ""
+msgstr "إل_غاء"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:13
 msgid "_Open"
-msgstr ""
+msgstr "_فتح"
 
 #: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
-msgstr ""
+msgstr "_حفظ"
 
 #: ../src/util/DeviceListHelper.cpp:111
 msgid "cursor"
@@ -1558,11 +1558,11 @@ msgstr "متقطع"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default disabled"
-msgstr ""
+msgstr "مبدئيا معطل"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default enabled"
-msgstr ""
+msgstr "مبدئيا مفعل"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:261
 msgid "delete stroke"
@@ -1606,7 +1606,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:153
 msgid "show"
-msgstr ""
+msgstr "إظهار"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:240
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:259
@@ -1782,15 +1782,15 @@ msgstr "<b>... أو حدد صورة مستخدمة بالفعل:</b>"
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>لون الخلفية</b>"
 
 #: ../ui/pageTemplate.glade:258
 msgid "<b>Background</b>"
-msgstr ""
+msgstr "<b>الخلفية</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>ألوان</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
@@ -1814,11 +1814,12 @@ msgstr ""
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>إعدادات عتامة التعبئة</b>\n"
+"تحديد عتامة لون التعبئة"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
-msgstr ""
+msgstr "<b>حجم الصفحة</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
@@ -1826,7 +1827,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
-msgstr ""
+msgstr "<b>فواصل</b>"
 
 #: ../ui/settings.glade:765
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -1884,7 +1885,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5524
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>تحديد اللغة (يحتاج إعادة التشغيل)</i>"
 
 #: ../ui/settings.glade:4852
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -1951,11 +1952,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3960
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "إضافة مسافة أفقية إضافية مقدارها"
 
 #: ../ui/settings.glade:3938
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "إضافة مسافة رأسية إضافية مقدارها"
 
 #: ../ui/settings.glade:4263
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2000,7 +2001,7 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "المؤلف: "
 
 #: ../ui/about.glade:211
 msgid "Authors:"
@@ -2097,23 +2098,23 @@ msgstr ""
 
 #: ../ui/main.glade:1207
 msgid "Configure Page Template"
-msgstr ""
+msgstr "إعداد قالب الصفحة"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr ""
+msgstr "إعداد قالب صفحة جديد"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "نسخ خلفية الصفحة الحالية بدلا من ذلك"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "نسخ حجم الصفحة الحالية بدلا من ذلك"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr ""
+msgstr "نسخ خلفية الصفحة الحالية بدلا من استخدام الخلفية المضبوطة أعلاه."
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
@@ -2169,7 +2170,7 @@ msgstr "حذف الطبقة"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr ""
+msgstr "حذف خط"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
@@ -2223,7 +2224,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "اسحب وأفلت المكونات من هذه النافذة إلى أشرطة الأدوات والعكس."
 
 #: ../ui/settings.glade:1064
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
@@ -2641,7 +2642,7 @@ msgstr ""
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "إعدادات العتامة"
 
 #: ../ui/settings.glade:921
 msgid "Options"
@@ -2707,15 +2708,15 @@ msgstr ""
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "مدير الإضافات"
 
 #: ../ui/main.glade:1993
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "_مدير الإضافات"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "يتم تطبيق التغييرات على الإضافات بعد إعادة تشغيل Xournal++‎"
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
@@ -2819,7 +2820,7 @@ msgstr "التمرير خارج الصفحة"
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr ""
+msgstr "تحديد لون الخلفية"
 
 #: ../ui/settings.glade:5034
 msgid "Select Folder"
@@ -3014,7 +3015,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "نسخ حجم الصفحة الحالية بدلا من استخدام الحجم المضبوط أعلاه."
 
 #: ../ui/settings.glade:2524
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
@@ -3034,7 +3035,7 @@ msgstr "إصدار"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr ""
+msgstr "الإصدار: "
 
 #: ../ui/settings.glade:3558
 msgid "View"
@@ -3156,23 +3157,23 @@ msgstr ""
 
 #: ../ui/main.glade:656
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "من الأسف_ل إلى الأعلى"
 
 #: ../ui/main.glade:671
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "أ_عمدة/صفوف"
 
 #: ../ui/main.glade:931
 msgid "_Customize"
-msgstr ""
+msgstr "تخصيص"
 
 #: ../ui/main.glade:1377
 msgid "_Default Tools"
-msgstr ""
+msgstr "الأ_دوات المبدئية"
 
 #: ../ui/main.glade:1217
 msgid "_Delete Page"
-msgstr ""
+msgstr "_حذف الصفحة"
 
 #: ../ui/main.glade:292
 msgid "_Edit"
@@ -3180,11 +3181,11 @@ msgstr "ت_حرير"
 
 #: ../ui/main.glade:1329
 msgid "_Eraser"
-msgstr ""
+msgstr "_ممحاة"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_تصدير كـPDF"
 
 #: ../ui/main.glade:152
 msgid "_File"
@@ -3208,7 +3209,7 @@ msgstr ""
 
 #: ../ui/main.glade:587
 msgid "_Horizontal"
-msgstr ""
+msgstr "أ_فقي"
 
 #: ../ui/main.glade:1365
 msgid "_Image"
@@ -3220,15 +3221,15 @@ msgstr "_جورنال"
 
 #: ../ui/main.glade:1074
 msgid "_Last Page"
-msgstr ""
+msgstr "الصفحة الأ_خيرة"
 
 #: ../ui/main.glade:616
 msgid "_Left To Right"
-msgstr ""
+msgstr "من الي_سار إلى اليمين"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
-msgstr ""
+msgstr "إ_دارة"
 
 #: ../ui/main.glade:1019
 msgid "_Navigation"
@@ -3236,11 +3237,11 @@ msgstr "ا_نتقال"
 
 #: ../ui/main.glade:1102
 msgid "_Next Layer"
-msgstr ""
+msgstr "الطبقة التا_لية"
 
 #: ../ui/main.glade:1063
 msgid "_Next Page"
-msgstr ""
+msgstr "الصفحة ال_تالية"
 
 #: ../ui/main.glade:512
 msgid "_Pair Pages"
@@ -3248,11 +3249,11 @@ msgstr ""
 
 #: ../ui/main.glade:1317
 msgid "_Pen"
-msgstr ""
+msgstr "_قلم"
 
 #: ../ui/main.glade:1982
 msgid "_Plugin"
-msgstr ""
+msgstr "إ_ضافة"
 
 #: ../ui/main.glade:522
 msgid "_Presentation Mode"
@@ -3260,15 +3261,15 @@ msgstr ""
 
 #: ../ui/main.glade:1091
 msgid "_Previous Layer"
-msgstr ""
+msgstr "الطبقة السا_بقة"
 
 #: ../ui/main.glade:1041
 msgid "_Previous Page"
-msgstr ""
+msgstr "الصفحة ال_سابقة"
 
 #: ../ui/main.glade:627
 msgid "_Right To Left"
-msgstr ""
+msgstr "من الي_مين إلى اليسار"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
@@ -3276,7 +3277,7 @@ msgstr ""
 
 #: ../ui/main.glade:1353
 msgid "_Text"
-msgstr ""
+msgstr "_نص"
 
 #: ../ui/main.glade:1306
 msgid "_Tools"
@@ -3284,19 +3285,19 @@ msgstr "أ_دوات"
 
 #: ../ui/main.glade:1113
 msgid "_Top Layer"
-msgstr ""
+msgstr "الطبقة ال_عليا"
 
 #: ../ui/main.glade:645
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "من الأ_على إلى الأسفل"
 
 #: ../ui/main.glade:598
 msgid "_Vertical"
-msgstr ""
+msgstr "_رأسي"
 
 #: ../ui/main.glade:1513
 msgid "_Vertical Space"
-msgstr ""
+msgstr "مسافة _رأسية"
 
 #: ../ui/main.glade:501
 msgid "_View"
@@ -3304,7 +3305,7 @@ msgstr "_عرض"
 
 #: ../ui/main.glade:1795
 msgid "_delete strokes"
-msgstr ""
+msgstr "_حذف خط"
 
 #: ../ui/main.glade:1577 ../ui/main.glade:1723 ../ui/main.glade:1832
 msgid "_fine"
@@ -3328,11 +3329,11 @@ msgstr "ر_فيع جدا"
 
 #: ../ui/main.glade:1784
 msgid "_whiteout"
-msgstr ""
+msgstr "_تبييض"
 
 #: ../ui/pageTemplate.glade:160
 msgid "change"
-msgstr ""
+msgstr "تغيير"
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
@@ -3362,7 +3363,7 @@ msgstr "دقائق"
 #: ../ui/settings.glade:3999 ../ui/settings.glade:4010
 #: ../ui/settings.glade:4198
 msgid "pixels"
-msgstr ""
+msgstr "بكسل"
 
 #: ../ui/settings.glade:2166
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
@@ -3370,7 +3371,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:40
 msgid "save to file"
-msgstr ""
+msgstr "حفظ إلى ملف"
 
 #: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
