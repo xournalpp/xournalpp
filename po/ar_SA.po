@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-21 18:22\n"
+"PO-Revision-Date: 2021-05-21 19:23\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -1374,7 +1374,7 @@ msgstr "تعذر فتح ملف القالب العام في {1}. هل هو مو�
 
 #: ../src/gui/PageView.cpp:348
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "تعذر تشغيل التسجيل الصوتي {1}"
 
 #: ../src/control/Control.cpp:1284
 msgid "Unable to retrieve pdf page."
@@ -1835,7 +1835,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4997
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr ""
+msgstr "<i>التسجيلات الصوتية تُخزّن حاليا في مجلد منفصل ويُشار إليها في الجورنال.</i>"
 
 #: ../ui/settings.glade:5415
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
@@ -1902,7 +1902,8 @@ msgstr ""
 #: ../ui/settings.glade:5108
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>حدد أجهزة الصوت لاستخدامها لتسجيل وتشغيل المرفقات الصوتية.\n"
+"اختر <small><tt>pulse</tt></small> كجهاز إدخال وإخراج إذا كان متاحا.</i>"
 
 #: ../ui/settings.glade:1784
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -1993,11 +1994,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5204
 msgid "Audio Devices"
-msgstr ""
+msgstr "أجهزة الصوت"
 
 #: ../ui/settings.glade:5447
 msgid "Audio Recording"
-msgstr ""
+msgstr "تسجيل الصوتيات"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
@@ -2009,7 +2010,7 @@ msgstr "المؤلفون:"
 
 #: ../ui/settings.glade:2137
 msgid "Autodetect"
-msgstr ""
+msgstr "اكتشاف آلي"
 
 #: ../ui/settings.glade:687
 msgid "Autoloading Journals"
@@ -2029,12 +2030,12 @@ msgstr "طريقة حساب المتوسط"
 
 #: ../ui/settings.glade:2711
 msgid "Background color between pages"
-msgstr ""
+msgstr "لون الخلفية بين الصفحات"
 
 #: ../ui/settings.glade:2866
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "قلم كبير"
 
 #: ../ui/settings.glade:3070
 msgid "Border Color"
@@ -2042,7 +2043,7 @@ msgstr "لون الإطار"
 
 #: ../ui/settings.glade:3031
 msgid "Border Width"
-msgstr ""
+msgstr "ثخانة الإطار"
 
 #: ../ui/settings.glade:2700
 msgid "Border color"
@@ -2070,11 +2071,11 @@ msgstr "بناء"
 
 #: ../ui/settings.glade:1824
 msgid "Button 1"
-msgstr ""
+msgstr "الزر الأول"
 
 #: ../ui/settings.glade:1862
 msgid "Button 2"
-msgstr ""
+msgstr "الزر الثاني"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2082,19 +2083,19 @@ msgstr "اختر ملف قالب LaTeX العام"
 
 #: ../ui/settings.glade:2913 ../ui/settings.glade:3056
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "اختر اللون لاستخدامه من أجل «تسليط الضوء على موضع المؤشر»"
 
 #: ../ui/settings.glade:2927
 msgid "Circle Color"
-msgstr ""
+msgstr "لون الدائرة"
 
 #: ../ui/settings.glade:3507
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "مسح الصفحات المخزنة في الذاكرة أثناء التمرير"
 
 #: ../ui/settings.glade:2793
 msgid "Colors"
-msgstr ""
+msgstr "الألوان"
 
 #: ../ui/main.glade:1207
 msgid "Configure Page Template"
@@ -2122,11 +2123,11 @@ msgstr "الصفحة الحالية"
 
 #: ../ui/settings.glade:3113
 msgid "Cursor"
-msgstr ""
+msgstr "المؤشر"
 
 #: ../ui/settings.glade:2848
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "شكل المؤشر عند استخدام أداة القلم"
 
 #: ../ui/settings.glade:1193
 msgid "Cusp detection"
@@ -2244,7 +2245,7 @@ msgstr "رسم _خط"
 
 #: ../ui/settings.glade:2895
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "رسم دائرة شفافة حول المؤشر"
 
 #: ../ui/settings.glade:4801
 msgid "Drawing Area"
@@ -2292,7 +2293,7 @@ msgstr ""
 
 #: ../ui/settings.glade:840
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "السماح بالرسم خارج النافذة <i>(لن يتوقف الرسم عند حدود النافذة)</i>"
 
 #: ../ui/settings.glade:2080
 msgid "Enable internal Hand Recognition"
@@ -2304,7 +2305,7 @@ msgstr "تفعيل الرسم باللمس"
 
 #: ../ui/settings.glade:2400
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "تفعيل إيماءات التكبير (يحتاج إعادة التشغيل)"
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
@@ -2417,7 +2418,7 @@ msgstr "ارتفاع"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
-msgstr ""
+msgstr "الطول:"
 
 #: ../ui/main.glade:951 ../ui/settings.glade:3288 ../ui/settings.glade:3355
 msgid "Hide Menubar"
@@ -2437,11 +2438,11 @@ msgstr "إخفاء شريط التمرير الرأسي"
 
 #: ../ui/settings.glade:2890
 msgid "Highlight cursor position"
-msgstr ""
+msgstr "تسليط الضوء على موضع المؤشر"
 
 #: ../ui/main.glade:1810
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "خيارات قلم التظليل"
 
 #: ../ui/settings.glade:4544
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2471,7 +2472,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1695
 msgid "Ignore the first"
-msgstr ""
+msgstr "إهمال أول"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
@@ -2483,23 +2484,23 @@ msgstr ""
 
 #: ../ui/settings.glade:5132
 msgid "Input Device"
-msgstr ""
+msgstr "جهاز الإدخال"
 
 #: ../ui/settings.glade:801
 msgid "Input Devices"
-msgstr ""
+msgstr "أجهزة الإدخال"
 
 #: ../ui/settings.glade:1266
 msgid "Input System"
-msgstr ""
+msgstr "أنظمة الإدخال"
 
 #: ../ui/settings.glade:1235
 msgid "Input stabilization"
-msgstr ""
+msgstr "تثبيت الإدخال"
 
 #: ../ui/settings.glade:1215
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "قد يتسبب تثبيت الإدخال في صنع فجوة في نهاية رسمك. عند تفعيل هذا الخيار، سيتم ملء هذه الفجوات."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2539,7 +2540,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3180
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "استخدام اليد اليمنى أو اليسرى"
 
 #: ../ui/about.glade:291
 msgid "License"
@@ -2547,11 +2548,11 @@ msgstr "الترخيص"
 
 #: ../ui/settings.glade:715
 msgid "Load / Save"
-msgstr ""
+msgstr "التحميل والحفظ"
 
 #: ../ui/images.glade:73
 msgid "Load file"
-msgstr ""
+msgstr "تحميل ملف"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2625,7 +2626,7 @@ msgstr ""
 #: ../ui/settings.glade:2864
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "بلا شكل"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2646,7 +2647,7 @@ msgstr "إعدادات العتامة"
 
 #: ../ui/settings.glade:921
 msgid "Options"
-msgstr ""
+msgstr "الخيارات"
 
 #: ../ui/settings.glade:5155
 msgid "Output Device"
@@ -2670,19 +2671,19 @@ msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr ""
+msgstr "نوع الورق"
 
 #: ../ui/main.glade:1283
 msgid "Paper _Color"
-msgstr ""
+msgstr "_لون الورق"
 
 #: ../ui/main.glade:1273
 msgid "Paper _Format"
-msgstr ""
+msgstr "_نوع الورق"
 
 #: ../ui/main.glade:1293
 msgid "Paper b_ackground"
-msgstr ""
+msgstr "_خلفية الورق"
 
 #: ../ui/about.glade:273
 msgid "Partially based on Xournal\n"
@@ -2696,11 +2697,11 @@ msgstr ""
 
 #: ../ui/main.glade:1555
 msgid "Pen _Options"
-msgstr ""
+msgstr "_خيارات القلم"
 
 #: ../ui/settings.glade:3527
 msgid "Performance"
-msgstr ""
+msgstr "الأداء"
 
 #: ../ui/settings.glade:5401
 msgid "Playback Settings"
@@ -2756,7 +2757,7 @@ msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/settings.glade:2979
 msgid "Radius"
-msgstr ""
+msgstr "نصف القطر"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
@@ -2824,7 +2825,7 @@ msgstr "تحديد لون الخلفية"
 
 #: ../ui/settings.glade:5034
 msgid "Select Folder"
-msgstr ""
+msgstr "تحديد المجلد"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
@@ -2864,7 +2865,7 @@ msgstr "تعيين الصفوف"
 
 #: ../ui/settings.glade:4627
 msgid "Settings:"
-msgstr ""
+msgstr "الإعدادات:"
 
 #: ../ui/settings.glade:4636
 msgid "Show Floating Toolbox"
@@ -2898,7 +2899,7 @@ msgstr ""
 #: ../ui/settings.glade:2865
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "نقطة صغيرة"
 
 #: ../ui/settings.glade:4464
 msgid "Snapping"
@@ -2914,7 +2915,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr ""
+msgstr "عادي"
 
 #: ../ui/settings.glade:2425
 msgid "Start zooming after a distance "
@@ -2990,11 +2991,11 @@ msgstr "سيتم استخدام هذه الإعدادات للصفحات الج�
 
 #: ../ui/settings.glade:2122
 msgid "Timeout"
-msgstr ""
+msgstr "المهلة"
 
 #: ../ui/settings.glade:2542
 msgid "Touch Drawing"
-msgstr ""
+msgstr "الرسم باللمس"
 
 #: ../ui/settings.glade:2035 ../ui/settings.glade:2573
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -3039,7 +3040,7 @@ msgstr "الإصدار: "
 
 #: ../ui/settings.glade:3558
 msgid "View"
-msgstr ""
+msgstr "العرض"
 
 #: ../ui/settings.glade:2419
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
@@ -3061,7 +3062,7 @@ msgstr "عرض"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
-msgstr ""
+msgstr "العرض:"
 
 #: ../ui/about.glade:258
 msgid "With help from the community"
@@ -3069,7 +3070,7 @@ msgstr "مع مساعدة من المجتمع"
 
 #: ../ui/about.glade:192
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:238
 msgid "Xournal++ Preferences"
@@ -3077,15 +3078,15 @@ msgstr "تفضيلات Xournal++‎"
 
 #: ../ui/settings.glade:3856
 msgid "Zoom"
-msgstr ""
+msgstr "تكبير"
 
 #: ../ui/settings.glade:2474
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "إيماءات التكبير"
 
 #: ../ui/settings.glade:3702
 msgid "Zoom Speed"
-msgstr ""
+msgstr "سرعة التكبير"
 
 #: ../ui/main.glade:696
 msgid "_1 Column"
@@ -3193,7 +3194,7 @@ msgstr "_ملف"
 
 #: ../ui/main.glade:1030
 msgid "_First Page"
-msgstr ""
+msgstr "الصفحة الأ_ولى"
 
 #: ../ui/main.glade:1052
 msgid "_Goto Page"
@@ -3205,7 +3206,7 @@ msgstr "م_ساعدة"
 
 #: ../ui/main.glade:1341
 msgid "_Highlighter"
-msgstr ""
+msgstr "قلم _تظليل"
 
 #: ../ui/main.glade:587
 msgid "_Horizontal"
@@ -3213,7 +3214,7 @@ msgstr "أ_فقي"
 
 #: ../ui/main.glade:1365
 msgid "_Image"
-msgstr ""
+msgstr "_صورة"
 
 #: ../ui/main.glade:1155
 msgid "_Journal"
@@ -3345,11 +3346,11 @@ msgstr "مفعل،"
 
 #: ../ui/settings.glade:1730
 msgid "events"
-msgstr ""
+msgstr "أحداث"
 
 #: ../ui/settings.glade:389
 msgid "every"
-msgstr ""
+msgstr "كل"
 
 #: ../ui/pageTemplate.glade:54
 msgid "load from file"
@@ -3367,7 +3368,7 @@ msgstr "بكسل"
 
 #: ../ui/settings.glade:2166
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr ""
+msgstr "ثوانٍ <i>(والتي بعدها سيتم تفعيل شاشة اللمس مرة أخرى)</i>"
 
 #: ../ui/pageTemplate.glade:40
 msgid "save to file"
