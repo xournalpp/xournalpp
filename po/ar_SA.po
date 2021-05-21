@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-21 19:23\n"
+"PO-Revision-Date: 2021-05-21 20:19\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -983,7 +983,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
 msgid "Presentation mode"
-msgstr ""
+msgstr "وضع العرض التقديمي"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:68
 msgid "Previously selected language not available anymore!"
@@ -1065,7 +1065,7 @@ msgstr ""
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "تم توليد ملف عينة LaTeX بنجاح."
 
 #: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
@@ -1598,7 +1598,7 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:105
 msgid "mouse"
-msgstr ""
+msgstr "الفأرة"
 
 #: ../src/util/DeviceListHelper.cpp:107
 msgid "pen"
@@ -1927,7 +1927,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2505
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>استخدم شاشة اللمس كأنها قلم يدعم تعدد اللمس.</i>"
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -1935,7 +1935,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2000
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
+msgstr "<i>تستطيع ضبط أجهزة، لا ترى GTK أنها شاشة لمس، لتعمل كأنها شاشة لمس.</i>"
 
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2175,7 +2175,7 @@ msgstr "حذف خط"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
-msgstr ""
+msgstr "الجهاز"
 
 #: ../ui/settings.glade:2251
 msgid "Disable"
@@ -2346,7 +2346,7 @@ msgstr "عتامة التعبئة"
 
 #: ../ui/settings.glade:1210
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "إنهاء الخطوط"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
@@ -2366,11 +2366,11 @@ msgstr "ملء الشاشة"
 
 #: ../ui/about.glade:307
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "رخصة جنو العمومية، الإصدارة الثانية أو أحدث"
 
 #: ../ui/settings.glade:5249
 msgid "Gain"
-msgstr ""
+msgstr "التضخيم"
 
 #: ../ui/settings.glade:1128 ../ui/settings.glade:1148
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
@@ -2406,7 +2406,7 @@ msgstr ""
 
 #: ../ui/main.glade:1537
 msgid "H_and Tool"
-msgstr ""
+msgstr "أداة ال_يد"
 
 #: ../ui/settings.glade:2357
 msgid "Hand Recognition"
@@ -2577,7 +2577,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1355
 msgid "Middle Mouse Button"
-msgstr ""
+msgstr "زر الفأرة الأوسط"
 
 #: ../ui/settings.glade:1565
 msgid "Minimum Pressure:"
@@ -2609,19 +2609,19 @@ msgstr ""
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
-msgstr ""
+msgstr "صفحة جديدة _بعد"
 
 #: ../ui/main.glade:1166
 msgid "New Page _Before"
-msgstr ""
+msgstr "صفحة جديدة _قبل"
 
 #: ../ui/main.glade:1187
 msgid "New Page at _End"
-msgstr ""
+msgstr "صفحة جديدة في الآ_خر"
 
 #: ../ui/main.glade:1234
 msgid "New _Layer"
-msgstr ""
+msgstr "طبقة _جديدة"
 
 #: ../ui/settings.glade:2864
 msgctxt "stylus cursor uses no icon"
@@ -2705,7 +2705,7 @@ msgstr "الأداء"
 
 #: ../ui/settings.glade:5401
 msgid "Playback Settings"
-msgstr ""
+msgstr "إعدادات التشغيل"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -2737,7 +2737,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3427
 msgid "Presentation Mode"
-msgstr ""
+msgstr "وضع العرض التقديمي"
 
 #: ../ui/settings.glade:4258
 msgid "Preserve line width"
@@ -2745,7 +2745,7 @@ msgstr "الحفاظ على ثخانة الخط"
 
 #: ../ui/settings.glade:1576
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "مضاعف الضغط: "
 
 #: ../ui/settings.glade:1646
 msgid "Pressure Sensitivity"
@@ -2769,7 +2769,7 @@ msgstr ""
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr ""
+msgstr "ال_مستندات الحديثة"
 
 #: ../ui/main.glade:1918
 msgid "Record / Stop"
@@ -2797,7 +2797,7 @@ msgstr "دقة"
 
 #: ../ui/settings.glade:1393
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "زر الفأرة الأيمن"
 
 #: ../ui/settings.glade:4345
 msgid "Rotation snapping tolerance"
@@ -2805,7 +2805,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5237
 msgid "Sample Rate"
-msgstr ""
+msgstr "معدل العينات"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
@@ -2923,15 +2923,15 @@ msgstr ""
 
 #: ../ui/settings.glade:5019 ../ui/settings.glade:5077
 msgid "Storage Folder"
-msgstr ""
+msgstr "مجلد التخزين"
 
 #: ../ui/settings.glade:1949
 msgid "Stylus"
-msgstr ""
+msgstr "قلم رقمي"
 
 #: ../ui/settings.glade:1918
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "أزرار القلم الرقمي"
 
 #: ../ui/settings.glade:4575
 msgid "Successive (ms)"
@@ -3258,7 +3258,7 @@ msgstr "إ_ضافة"
 
 #: ../ui/main.glade:522
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "وضع ال_عرض التقديمي"
 
 #: ../ui/main.glade:1091
 msgid "_Previous Layer"
