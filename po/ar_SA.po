@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-21 20:19\n"
+"PO-Revision-Date: 2021-05-21 21:16\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -124,8 +124,8 @@ msgstr "لم يتم تعيين لون السمة!"
 #: ../src/control/AudioController.cpp:94
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "لم يتم تحديد مجلد الصوت, لن تعمل خصيصة التسجيل!\n"
-"الرجاء تحديد مجلد التسجيل في \"تفضيلات > تسجيل الصوت\""
+msgstr "لم يتم تحديد مجلد الصوتيات؛ لا يمكن التسجيل!\n"
+"الرجاء تحديد مجلد التسجيل في «التفضيلات > تسجيل الصوتيات»"
 
 #: ../src/control/Control.cpp:211
 msgid "Autosave failed with an error: {1}"
@@ -485,7 +485,8 @@ msgstr "ممحاة"
 #: ../src/control/Control.cpp:2220
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "خطأ في التعليق على ملف الـPDF المسمى «{1}»\n"
+"{2}"
 
 #: ../src/gui/GladeGui.cpp:21
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
@@ -502,7 +503,7 @@ msgstr "خطأ في فتح الملف: \"{1}\""
 #: ../src/control/xojfile/LoadHandler.cpp:433
 #: ../src/control/xojfile/LoadHandler.cpp:453
 msgid "Error reading PDF: {1}"
-msgstr "خطأ في قراءة ملف الپي-دي-إف: {1}"
+msgstr "خطأ في قراءة ملف PDF؛ التفاصيل: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:510
 msgid "Error reading width of a stroke: {1}"
@@ -544,7 +545,7 @@ msgstr "تعذر حذف سجل الأخطاء. عليك فعل ذلك يدويا
 
 #: ../src/control/XournalMain.cpp:637
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "تصدير «ملف» كـPDF"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Export FILE as image files (one per page)\n"
@@ -840,7 +841,7 @@ msgstr "التالي"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "Next annotated page"
-msgstr ""
+msgstr "الصفحة المعلّق عليها التالية"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:64
 msgid "No device"
@@ -866,7 +867,8 @@ msgstr "موافق"
 #: ../src/control/XournalMain.cpp:660
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "تصدير الصفحات التي يحددها «المدى» فقط (مثال: «‪2-3,5,7-‬»)\n"
+"                                 لا تأثير بدون ‪-p/--create-pdf‬ أو ‪-i/--create-img‬"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -901,11 +903,11 @@ msgstr "تصدير PDF"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:40
 msgid "PDF Page {1}"
-msgstr ""
+msgstr "صفحة PDF رقم {1}"
 
 #: ../src/view/PdfView.cpp:31
 msgid "PDF background missing"
-msgstr ""
+msgstr "خلفية PDF مفقودة"
 
 #: ../src/control/XournalMain.cpp:352
 msgid "PDF file successfully created"
@@ -915,11 +917,11 @@ msgstr "تم إنشاء ملف الـPDF بنجاح"
 #: ../src/control/jobs/PdfExportJob.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
-msgstr ""
+msgstr "ملفات PDF"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
@@ -1495,7 +1497,8 @@ msgstr "أصفر"
 #: ../src/control/PageBackgroundChangeController.cpp:179
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "ليس لديك أي صفحات PDF للاختيار منها. تم إلغاء العملية.\n"
+"الرجاء اختيار نوع خلفية آخر: قائمة جورنال ← إعداد قالب الصفحة."
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
@@ -1505,7 +1508,9 @@ msgstr "أنت تستخدم فرع \"{1}/{2}\". إرسال تقرير خطأ س�
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "المستند الحالي لا يحتوي على صفحة PDF رقم {1}\n"
+"هل تحب إدراج هذه الصفحة؟\n\n"
+"نصيحة: يمكنك اختيار «جورنال ← خلفية الورق ← بخلفية PDF» لإضافة صفحة PDF."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Zoom fit to screen"
@@ -2313,7 +2318,7 @@ msgstr "إدخال / تحرير نص LaTeX"
 
 #: ../ui/main.glade:1701
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "خ_يارات الممحاة"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2338,7 +2343,7 @@ msgstr "تصدير المستند بدون أي خلفية (لا شيء) أو م
 
 #: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
-msgstr ""
+msgstr "م_لء"
 
 #: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
@@ -2605,7 +2610,7 @@ msgstr "تحريك لأعلى"
 
 #: ../ui/main.glade:1129
 msgid "N_ext annotated page"
-msgstr ""
+msgstr "الصفحة ال_معلّق عليها التالية"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2655,11 +2660,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4770
 msgid "PDF Cache"
-msgstr ""
+msgstr "ذاكرة PDF"
 
 #: ../ui/main.glade:1140
 msgid "P_revious annotated Page"
-msgstr ""
+msgstr "الصفحة الم_علّق عليها السابقة"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2773,7 +2778,7 @@ msgstr "ال_مستندات الحديثة"
 
 #: ../ui/main.glade:1918
 msgid "Record / Stop"
-msgstr ""
+msgstr "تسجيل / إنهاء"
 
 #: ../ui/settings.glade:5314
 msgid "Recording Quality"
@@ -2833,7 +2838,7 @@ msgstr ""
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "اختيار صفحة PDF"
 
 #: ../ui/settings.glade:3392
 msgid "Select toolbar:"
@@ -3154,7 +3159,7 @@ msgstr ""
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "ال_تعليق على PDF"
 
 #: ../ui/main.glade:656
 msgid "_Bottom to Top"
