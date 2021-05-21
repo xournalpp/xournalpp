@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-15 02:55\n"
+"PO-Revision-Date: 2021-05-21 17:18\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -667,7 +667,7 @@ msgstr "انتقال إلى الطبقة العليا"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Graph"
-msgstr ""
+msgstr "رسم بياني"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:99
@@ -740,11 +740,11 @@ msgstr "إدراج صفحة"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "أيزومتري منقط"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "رسم بياني أيزومتري"
 
 #: ../src/control/XournalMain.cpp:624
 msgid "Jump to Page (first Page: 1)"
@@ -969,7 +969,7 @@ msgstr "قلم"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:19
 msgid "Plain"
-msgstr ""
+msgstr "فارغ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
@@ -1053,11 +1053,11 @@ msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:20
 msgid "Ruled"
-msgstr ""
+msgstr "مسطر"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "مسطر وبخط هامش"
 
 #: ../src/control/jobs/CustomExportJob.cpp:23
 msgid "SVG graphics"
@@ -1205,7 +1205,7 @@ msgstr "عذرا، لا يستطيع Xournal++‎ فتح الملفات البع
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Staves"
-msgstr ""
+msgstr "مخطط موسيقى"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Stop"
@@ -1448,7 +1448,7 @@ msgstr "أبيض"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:31
 msgid "With PDF background"
-msgstr ""
+msgstr "بخلفية PDF"
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
@@ -2239,7 +2239,7 @@ msgstr "رسم نظام إحداثيات"
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
-msgstr ""
+msgstr "رسم _خط"
 
 #: ../ui/settings.glade:2895
 msgid "Draw a transparent circle around the cursor"
@@ -3052,7 +3052,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr ""
+msgstr "تبييض"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
@@ -3308,23 +3308,23 @@ msgstr ""
 
 #: ../ui/main.glade:1577 ../ui/main.glade:1723 ../ui/main.glade:1832
 msgid "_fine"
-msgstr ""
+msgstr "_رفيع"
 
 #: ../ui/main.glade:1588 ../ui/main.glade:1734 ../ui/main.glade:1843
 msgid "_medium"
-msgstr ""
+msgstr "_متوسط"
 
 #: ../ui/main.glade:1773
 msgid "_standard"
-msgstr ""
+msgstr "_عادي"
 
 #: ../ui/main.glade:1599 ../ui/main.glade:1745 ../ui/main.glade:1854
 msgid "_thick"
-msgstr ""
+msgstr "_ثخين"
 
 #: ../ui/main.glade:1566 ../ui/main.glade:1712 ../ui/main.glade:1821
 msgid "_very fine"
-msgstr ""
+msgstr "ر_فيع جدا"
 
 #: ../ui/main.glade:1784
 msgid "_whiteout"
@@ -3374,7 +3374,7 @@ msgstr ""
 
 #: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
-msgstr ""
+msgstr "ث_خين جدا"
 
 #: ../ui/about.glade:178
 msgid "with libgtk"
