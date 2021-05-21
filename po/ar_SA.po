@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-21 21:16\n"
+"PO-Revision-Date: 2021-05-21 22:14\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -813,19 +813,19 @@ msgstr ""
 
 #: ../src/undo/MoveUndoAction.cpp:16
 msgid "Move"
-msgstr ""
+msgstr "تحريك"
 
 #: ../src/undo/MoveLayerUndoAction.cpp:27
 msgid "Move layer"
-msgstr ""
+msgstr "تحريك طبقة"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page downwards"
-msgstr ""
+msgstr "تحريك صفحة لأسفل"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page upwards"
-msgstr ""
+msgstr "تحريك صفحة لأعلى"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:70
 msgid "New"
@@ -925,19 +925,19 @@ msgstr "PDF {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
-msgstr ""
+msgstr "رسومات PNG"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "Page"
-msgstr ""
+msgstr "صفحة"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:71
 msgid "Page Preview"
-msgstr ""
+msgstr "معاينة الصفحة"
 
 #: ../src/undo/PageBackgroundChangedUndoAction.cpp:81
 msgid "Page background changed"
-msgstr ""
+msgstr "تم تغيير خلفية الصفحة"
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:98
 msgid "Page deleted"
@@ -981,7 +981,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:17
 msgid "Predefined"
-msgstr ""
+msgstr "مسبق التعريف"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:361
 msgid "Presentation mode"
@@ -1035,7 +1035,7 @@ msgstr "إعادة تسمية طبقة"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
-msgstr ""
+msgstr "استبدال"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1046
 msgid "Requested temporary file was not found for attachment {1}"
@@ -1047,7 +1047,7 @@ msgstr "استعادة ملف"
 
 #: ../src/undo/RotateUndoAction.cpp:51
 msgid "Rotation"
-msgstr ""
+msgstr "تدوير"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 msgid "Rotation Snapping"
@@ -1063,7 +1063,7 @@ msgstr "مسطر وبخط هامش"
 
 #: ../src/control/jobs/CustomExportJob.cpp:23
 msgid "SVG graphics"
-msgstr ""
+msgstr "رسومات SVG"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
@@ -1089,7 +1089,7 @@ msgstr "خطأ في حفظ الملف: {1}"
 
 #: ../src/undo/ScaleUndoAction.cpp:56
 msgid "Scale"
-msgstr ""
+msgstr "تحجيم"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:345
 msgid "Search"
@@ -1221,7 +1221,7 @@ msgstr ""
 
 #: ../src/util/CrashHandler.cpp:41
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "تم حفظ المستند بنجاح إلى «{1}»"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
@@ -1319,7 +1319,7 @@ msgstr ""
 
 #: ../src/control/LatexController.cpp:238
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "الصيغة فارغة عند رسمها أو تالفة."
 
 #: ../src/control/XournalMain.cpp:159
 msgid "The most recent log file name: {1}"
@@ -1551,7 +1551,7 @@ msgstr "_حفظ"
 
 #: ../src/util/DeviceListHelper.cpp:111
 msgid "cursor"
-msgstr ""
+msgstr "مؤشر"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:246
 msgid "dash-/ dotted"
@@ -1579,15 +1579,15 @@ msgstr "منقط"
 
 #: ../src/undo/AddUndoAction.cpp:86 ../src/undo/DeleteUndoAction.cpp:83
 msgid "elements"
-msgstr ""
+msgstr "عناصر"
 
 #: ../src/util/DeviceListHelper.cpp:109
 msgid "eraser"
-msgstr ""
+msgstr "ممحاة"
 
 #: ../src/control/Control.cpp:1986
 msgid "file: {1}"
-msgstr ""
+msgstr "ملف: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -1595,7 +1595,7 @@ msgstr "صورة"
 
 #: ../src/util/DeviceListHelper.cpp:114
 msgid "keyboard"
-msgstr ""
+msgstr "لوحة مفاتيح"
 
 #: ../src/undo/AddUndoAction.cpp:100 ../src/undo/DeleteUndoAction.cpp:97
 msgid "latex"
@@ -1607,7 +1607,7 @@ msgstr "الفأرة"
 
 #: ../src/util/DeviceListHelper.cpp:107
 msgid "pen"
-msgstr ""
+msgstr "قلم"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:153
 msgid "show"
@@ -1632,11 +1632,11 @@ msgstr ""
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "touchpad"
-msgstr ""
+msgstr "لوحة لمس"
 
 #: ../src/util/DeviceListHelper.cpp:116
 msgid "touchscreen"
-msgstr ""
+msgstr "شاشة لمس"
 
 #: ../src/util/DeviceListHelper.cpp:121
 msgid "trackpoint"
@@ -1886,7 +1886,8 @@ msgstr ""
 #: ../ui/settings.glade:4690
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>إعادة رسم خلفيات الـPDF كثيرا أثناء التكبير للحصول على جودة رسم أفضل. \n"
+"<b>ملاحظة:</b> المفترض أن هذا لا يؤثر على جودة الطباعة.</i>"
 
 #: ../ui/settings.glade:5524
 msgid "<i>Select language (requires restart)</i>"
@@ -1916,7 +1917,7 @@ msgstr ""
 
 #: ../ui/settings.glade:476
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr ""
+msgstr "<i>سيتم اقتراح هذا الاسم إذا قمت بحفظ مستند جديد.</i>"
 
 #: ../ui/settings.glade:3733
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
@@ -1924,7 +1925,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2646
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
+msgstr "<i>يمكنك تبديل ظهور شريط القوائم بزر F10</i>"
 
 #: ../ui/settings.glade:2388
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
@@ -2015,7 +2016,7 @@ msgstr "المؤلفون:"
 
 #: ../ui/settings.glade:2137
 msgid "Autodetect"
-msgstr "اكتشاف آلي"
+msgstr "اكتشاف تلقائي"
 
 #: ../ui/settings.glade:687
 msgid "Autoloading Journals"
@@ -2770,7 +2771,7 @@ msgstr "النطاق"
 
 #: ../ui/settings.glade:4718
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "إعادة الرسم عندما يتغيّر تكبير الصفحة بأكثر من "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -3055,7 +3056,8 @@ msgstr ""
 #: ../ui/settings.glade:4715
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "عند تكبير ملف PDF ذي دقة عالية، فإن كل إعادة رسم ستأخذ وقتا قد يكون طويلا. ضبط هذا الخيار على قيمة كبيرة سيجعل إعادة الرسم تتم بعدد مرات أقل.\n\n"
+"اضبط هذا الخيار على 0% لإعادة الرسم دائما عند التكبير."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
