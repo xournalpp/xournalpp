@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-22 17:27\n"
+"PO-Revision-Date: 2021-05-22 18:26\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -470,7 +470,7 @@ msgstr ""
 
 #: ../src/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr "تفعيل حساسية الضغط أو استنتاج الضغط لتغيير هذا الإعداد!"
+msgstr "قم بتفعيل الإحساس بالضغط أو استنتاج الضغط لتغيير هذا الإعداد!"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
@@ -612,7 +612,7 @@ msgstr "تعبئة"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "ترشيح ضغط الإدخال. اضرب الضغط في قيمة «مضاعف الضغط». وإذا كان أقل من الحد الأدنى، استخدم «الحد الأدنى للضغط»."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Fine"
@@ -953,7 +953,7 @@ msgstr "رقم الصفحة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
 msgid "Paired pages"
-msgstr ""
+msgstr "صفحات مزدوجة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 #: ../src/undo/AddUndoAction.cpp:77
@@ -1877,7 +1877,7 @@ msgstr "<i>اختر خوارزمية تثبيت الإدخال ومعاملات�
 
 #: ../ui/settings.glade:1493
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr ""
+msgstr "<i>الإحساس بالضغط يتيح لك رسم خطوط ذات ثخانات مختلفة، اعتمادا على مقدار الضغط الذي تؤثر به على القلم. إذا لم تكن لوحتك تدعم الإحساس بالضغط، فإن هذا الإعداد لا تأثير له.</i>"
 
 #: ../ui/settings.glade:3754
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -1899,7 +1899,7 @@ msgstr "<i>تحديد الأداة والإعدادات إذا ضعطت على �
 
 #: ../ui/settings.glade:1542
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>بعض الأجهزة تخبر بقيم الضغط صغيرة جدا أو كبيرة جدا لدرجة غير متوقعة. يمكن إصلاح هذا بتعيين حد أدنى للضغط أو مضاعفة الضغط الذي يخبر به الجهاز.</i>"
 
 #: ../ui/settings.glade:2216
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -2255,7 +2255,7 @@ msgstr "رسم دائرة شفافة حول المؤشر"
 
 #: ../ui/settings.glade:4801
 msgid "Drawing Area"
-msgstr ""
+msgstr "منطقة الرسم"
 
 #: ../ui/settings.glade:4231
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
@@ -2364,7 +2364,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4075
 msgid "First Page Offset "
-msgstr ""
+msgstr "ترحيل الصفحة الأولى "
 
 #: ../ui/main.glade:532 ../ui/settings.glade:3326
 msgid "Fullscreen"
@@ -2474,7 +2474,7 @@ msgstr "لو مفعلة، طبقات كل صفحة ستُضاف طبقة طبق�
 
 #: ../ui/settings.glade:4512
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "مدة التجاهل (مللي ثانية)"
 
 #: ../ui/settings.glade:1695
 msgid "Ignore the first"
@@ -2574,7 +2574,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4564
 msgid "Max Length (mm)"
-msgstr ""
+msgstr "أقصى مسافة (مللي متر)"
 
 #: ../ui/settings.glade:871
 msgid "Merge button events with stylus tip events\n"
@@ -2587,7 +2587,7 @@ msgstr "زر الفأرة الأوسط"
 
 #: ../ui/settings.glade:1565
 msgid "Minimum Pressure:"
-msgstr "الضغط الأدنى:"
+msgstr "الحد الأدنى للضغط:"
 
 #: ../ui/settings.glade:1442 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2645,7 +2645,7 @@ msgstr "لا شيء"
 
 #: ../ui/settings.glade:4074
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
+msgstr "ترحيل الصفحة الأولى هذا العدد من الصفحات عند تفعيل <b>الصفحات المزدوجة</b>"
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
@@ -2657,7 +2657,7 @@ msgstr "الخيارات"
 
 #: ../ui/settings.glade:5155
 msgid "Output Device"
-msgstr ""
+msgstr "جهاز الإخراج"
 
 #: ../ui/settings.glade:4770
 msgid "PDF Cache"
@@ -2673,7 +2673,7 @@ msgstr "صفحات:"
 
 #: ../ui/settings.glade:4128
 msgid "Paired Pages"
-msgstr ""
+msgstr "الصفحات المزدوجة"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2699,7 +2699,7 @@ msgstr "مبني جزئيا على Xournal\n"
 
 #: ../ui/main.glade:1928
 msgid "Pause"
-msgstr ""
+msgstr "إيقاف مؤقت"
 
 #: ../ui/main.glade:1555
 msgid "Pen _Options"
@@ -2859,7 +2859,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1628
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "تحجيم الإحساس"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
@@ -2879,7 +2879,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2627
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "إظهار شريط القوائم عند بدء التشغيل"
 
 #: ../ui/main.glade:543
 msgid "Show sidebar"
@@ -2945,7 +2945,7 @@ msgstr ""
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
-msgstr ""
+msgstr "أ_شرطة الأدوات"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
@@ -2957,15 +2957,15 @@ msgstr "القالب:"
 
 #: ../ui/settings.glade:2284 ../ui/settings.glade:2297
 msgid "Test"
-msgstr ""
+msgstr "اختبار"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "اختبار الإعدادات"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "اختبار إذا كانت الإعدادات الحالية صالحة، بتشغيل أمر توليد LaTeX على ملف القالب العام مع صيغة اختبارية."
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
@@ -2981,11 +2981,11 @@ msgstr "اللون الحالي لأداة النص, بصيغة RGB الستعش
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "سيتم استبدال النصوص التالية في ملف القالب العام عند تشغيل أداة LaTeX:"
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "الصيغة الرياضية المدخلة في أداة LaTeX."
 
 #: ../ui/settings.glade:3802
 msgid "The unit of the ruler is cm"
@@ -3253,7 +3253,7 @@ msgstr "الصفحة ال_تالية"
 
 #: ../ui/main.glade:512
 msgid "_Pair Pages"
-msgstr ""
+msgstr "اجعل الصفحات م_زدوجة"
 
 #: ../ui/main.glade:1317
 msgid "_Pen"
