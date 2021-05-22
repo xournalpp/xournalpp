@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-13 06:46\n"
+"POT-Creation-Date: 2021-05-22 04:31+0000\n"
+"PO-Revision-Date: 2021-05-22 05:26\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -217,7 +217,7 @@ msgstr "Copier l'élément courant"
 msgid "Copy page"
 msgstr "Copier la page"
 
-#: ../src/util/PathUtil.cpp:230
+#: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Impossible de créer le dossier : {1}\n"
@@ -295,11 +295,11 @@ msgstr "Impossible de supprimer l'élément d'outil {1} de la barre d'outils {2}
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Impossible de renommer le fichier de sauvegarde automatique de \"{1}\" à \"{2}\" : {3}"
 
-#: ../src/control/latex/LatexGenerator.cpp:69
+#: ../src/control/latex/LatexGenerator.cpp:70
 msgid "Could not save .tex file: {1}"
 msgstr "Impossible d'enregistrer le fichier .tex : {1}"
 
-#: ../src/control/latex/LatexGenerator.cpp:85
+#: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Impossible de démarrer {1} : {2} (code de sortie : {3})"
 
@@ -587,11 +587,11 @@ msgid "Export without ruling\n"
 msgstr "Exporter sans les règles\n"
 "                                 Le fichier exporté n'a aucune règle sur le papier\n"
 
-#: ../src/control/latex/LatexGenerator.cpp:60
+#: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Impossible de trouver le programme de génération LaTeX dans le CHEMIN : {1}"
 
-#: ../src/control/latex/LatexGenerator.cpp:56
+#: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Impossible d'analyser la commande du générateur LaTeX : {1}"
 
@@ -605,7 +605,7 @@ msgid "Failed to resolve path with the following error:\n"
 msgstr "Impossible de résoudre le chemin avec l'erreur suivante :\n"
 "{1}"
 
-#: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
+#: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Le fichier n'a pas pu être ouvert. Vous devez le faire manuellement :\n"
@@ -1695,7 +1695,7 @@ msgstr "xoj-preview-extractor : l'ouverture du fichier de sortie \"{1}\" a écho
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "extracteur-xoj-preview : extrait avec succès"
 
-#: ../src/util/PathUtil.cpp:220
+#: ../src/util/PathUtil.cpp:239
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
