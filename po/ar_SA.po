@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-22 05:26\n"
+"PO-Revision-Date: 2021-05-22 16:25\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -1881,7 +1881,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3754
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr ""
+msgstr "<i>ضع مسطرة على شاشتك، وحرك الشريط المنزلق حتى تتطابق المسطرتين.</i>"
 
 #: ../ui/settings.glade:4690
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
