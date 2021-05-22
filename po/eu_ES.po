@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-13 06:46\n"
+"POT-Creation-Date: 2021-05-22 04:31+0000\n"
+"PO-Revision-Date: 2021-05-22 05:26\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -217,7 +217,7 @@ msgstr "Kopiatu unekoa"
 msgid "Copy page"
 msgstr "Kopiatu orria"
 
-#: ../src/util/PathUtil.cpp:230
+#: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Ezin izan da karpeta sortu: {1}\n"
@@ -295,11 +295,11 @@ msgstr "Ezin izan da {2} tresna-barratik {3} kokalekuko {1} tresna"
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Ezin izan da berrizendatu fitxategia '{1}'-etik '{2}'-era: {3}"
 
-#: ../src/control/latex/LatexGenerator.cpp:69
+#: ../src/control/latex/LatexGenerator.cpp:70
 msgid "Could not save .tex file: {1}"
 msgstr "Ezin izan da .tex fitxategia gorde: {1}"
 
-#: ../src/control/latex/LatexGenerator.cpp:85
+#: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Ezin izan da hasi {1}: {2} (irteera-kodea: {3})"
 
@@ -587,11 +587,11 @@ msgid "Export without ruling\n"
 msgstr "Esportatu saretarik gabe\n"
 "                                 Esportatutako fitxategiaren paperak ez du saretarik\n"
 
-#: ../src/control/latex/LatexGenerator.cpp:60
+#: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Huts egin du LaTex programa sortzailea aurkitzen bidean: {1}"
 
-#: ../src/control/latex/LatexGenerator.cpp:56
+#: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Huts egin du aztertzen LaTex-en komando sortzailea: {1}"
 
@@ -605,7 +605,7 @@ msgid "Failed to resolve path with the following error:\n"
 msgstr "Ezin izan da aurkitu bidea, honako errorea eman du:\n"
 "{1}"
 
-#: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
+#: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Ezin da fitxategia ireki. Eskuz egin behar duzu:\n"
@@ -1695,7 +1695,7 @@ msgstr "xoj-preview-extractor: \"{1}\" irteera fitxategia irekitzeak huts egin d
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: behar bezala erauzi da"
 
-#: ../src/util/PathUtil.cpp:220
+#: ../src/util/PathUtil.cpp:239
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
