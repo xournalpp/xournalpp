@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-22 18:26\n"
+"PO-Revision-Date: 2021-05-22 19:37\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -386,11 +386,13 @@ msgstr "إظهار خيارات التصدير المتقدمة"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "لا تفتح الملفات المحفوظة تلقائيا؛ قد يتم استبدالها!\n"
+"انسخ الملفات إلى مجلد آخر.\n"
+"لا يمكن فتح ملفات من المجلد «{1}»."
 
 #: ../src/control/jobs/BaseExportJob.cpp:39
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "لا تستبدل خلفية الـPDF؛ سيتسبب هذا في أخطاء!"
 
 #: ../src/control/Control.cpp:2465
 msgid "Document file was removed."
@@ -466,7 +468,7 @@ msgstr "تحرير النص"
 
 #: ../src/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
-msgstr ""
+msgstr "المستند المحفوظ اضطراريا"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
@@ -1368,7 +1370,7 @@ msgstr "أشرطة الأدوات"
 
 #: ../src/util/CrashHandler.cpp:30
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "جارِ محاولة الحفظ الاضطراري للمستند المفتوح حاليا…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
@@ -1393,19 +1395,19 @@ msgstr "تراجع: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "وسم جذري غير متوقع: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:305
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "وسم غير متوقع في المستند: «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:486
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "نوع خلفية مجهول: {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:52
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "قيمة لون مجهولة «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:440
 msgid "Unknown domain type: {1}"
@@ -1865,11 +1867,11 @@ msgstr ""
 
 #: ../ui/settings.glade:651
 msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
-msgstr ""
+msgstr "<i>عند فتح ملف PDF ووُجد ملف جورنال بنفس الاسم (بالامتداد xoj)، سيتم فتح ملف جورنال.</i>"
 
 #: ../ui/settings.glade:2066
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
-msgstr ""
+msgstr "<i>إذا كان جهازك لا يدعم التعرف على اليد، يمكن لـXournal++‎ تعطيل شاشة اللمس عندما يكون القلم بالقرب من الشاشة.</i>"
 
 #: ../ui/settings.glade:988
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
@@ -1903,7 +1905,7 @@ msgstr "<i>بعض الأجهزة تخبر بقيم الضغط صغيرة جدا 
 
 #: ../ui/settings.glade:2216
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr ""
+msgstr "<i>حدد الأوامر التي سيتم تنفيذها عند التعرف على اليد. سيتم تنفيذها في خيط تنفيذ واجهة المستخدم؛ تأكد من أنها لن تجمّدها!</i>"
 
 #: ../ui/settings.glade:5108
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
@@ -2061,11 +2063,11 @@ msgstr ""
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "خطوة إلى الأمام"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "إحضار إلى الأمام"
 
 #: ../ui/settings.glade:1005
 msgid "Buffersize"
@@ -2141,7 +2143,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2332
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "أوامر مخصصة (للأسلوب «مخصص»)"
 
 #: ../ui/settings.glade:2759
 msgid "Dark Theme (requires restart)"
@@ -2189,7 +2191,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr ""
+msgstr "تعطيل الرسم لهذا الجهاز"
 
 #: ../ui/settings.glade:3239
 msgid "Disable scrollbar fade out"
@@ -2201,11 +2203,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2111
 msgid "Disabling Method"
-msgstr ""
+msgstr "أسلوب التعطيل"
 
 #: ../ui/settings.glade:3825
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "معايرة DPI الشاشة"
 
 #: ../ui/settings.glade:4499
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
@@ -2303,7 +2305,7 @@ msgstr "السماح بالرسم خارج النافذة <i>(لن يتوقف ا
 
 #: ../ui/settings.glade:2080
 msgid "Enable internal Hand Recognition"
-msgstr ""
+msgstr "تفعيل التعرف على اليد الداخلي"
 
 #: ../ui/settings.glade:2519
 msgid "Enable touch drawing"
@@ -2851,11 +2853,11 @@ msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "خطوة إلى الخلف"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "إرسال إلى الخلف"
 
 #: ../ui/settings.glade:1628
 msgid "Sensitivity Scale"
@@ -3205,7 +3207,7 @@ msgstr "الصفحة الأ_ولى"
 
 #: ../ui/main.glade:1052
 msgid "_Goto Page"
-msgstr ""
+msgstr "ا_نتقال إلى صفحة"
 
 #: ../ui/main.glade:2007
 msgid "_Help"
