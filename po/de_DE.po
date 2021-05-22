@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-13 06:46\n"
+"POT-Creation-Date: 2021-05-22 04:31+0000\n"
+"PO-Revision-Date: 2021-05-22 05:26\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -217,7 +217,7 @@ msgstr "Aktuellen Hintergrund kopieren"
 msgid "Copy page"
 msgstr "Kopiere Seite"
 
-#: ../src/util/PathUtil.cpp:230
+#: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Ordner konnte nicht erstellt werden: {1}\n"
@@ -295,11 +295,11 @@ msgstr "Konnte Werkzeug {1} von der Werkzeugleiste {2} Position {3} nicht entfer
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Konnte Autospeicherung \"{1}\" nicht umbenennen zu \"{2}\": {3}"
 
-#: ../src/control/latex/LatexGenerator.cpp:69
+#: ../src/control/latex/LatexGenerator.cpp:70
 msgid "Could not save .tex file: {1}"
 msgstr "Konnte .tex Datei \"{1}\" nicht speichern"
 
-#: ../src/control/latex/LatexGenerator.cpp:85
+#: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Konnte {1} nicht starten: {2} (Rückgabestatus: {3})"
 
@@ -587,11 +587,11 @@ msgid "Export without ruling\n"
 msgstr "Exportiere ohne Lineatur\n"
 "                                 Die exportierte Datei hat keine Lineatur\n"
 
-#: ../src/control/latex/LatexGenerator.cpp:60
+#: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Konnte LaTeX-Programm nicht in \"PATH\" finden: {1}"
 
-#: ../src/control/latex/LatexGenerator.cpp:56
+#: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Fehler bei der Erkennung eines LaTeX-Befehls: {1}"
 
@@ -605,7 +605,7 @@ msgid "Failed to resolve path with the following error:\n"
 msgstr "Fehler beim Auflösen von PATH mit folgendem Fehler:\n"
 "{1}"
 
-#: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
+#: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Datei konnte nicht geöffnet werden, Sie müssen sie manuell öffnen:\n"
@@ -1695,7 +1695,7 @@ msgstr "xoj-preview-extractor: Öffnen der Ausgabedatei \"{1}\" fehlgeschlagen"
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: erfolgreich extrahiert"
 
-#: ../src/util/PathUtil.cpp:220
+#: ../src/util/PathUtil.cpp:239
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
