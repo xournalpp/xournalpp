@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-13 06:46\n"
+"POT-Creation-Date: 2021-05-22 04:31+0000\n"
+"PO-Revision-Date: 2021-05-22 05:26\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -216,7 +216,7 @@ msgstr "Jelenlegi kijelölés másolása"
 msgid "Copy page"
 msgstr "Oldal másolása"
 
-#: ../src/util/PathUtil.cpp:230
+#: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nem sikerült létrehozni a(z) {1} mappát\n"
@@ -294,11 +294,11 @@ msgstr "Nem sikerült eltávolítani a(z) {1} eszközt az {2} eszköztár {3} po
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nem sikerült átnevezni az automatikusan mentett fájlt erről: \"{1}\" erre: \"{2}\": {3}"
 
-#: ../src/control/latex/LatexGenerator.cpp:69
+#: ../src/control/latex/LatexGenerator.cpp:70
 msgid "Could not save .tex file: {1}"
 msgstr "Nem sikerült elmenteni a .tex fájlt: {1}"
 
-#: ../src/control/latex/LatexGenerator.cpp:85
+#: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "A(z) {1} elindítása sikertelen: {2} (kilépési kód: {3})"
 
@@ -577,11 +577,11 @@ msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
 
-#: ../src/control/latex/LatexGenerator.cpp:60
+#: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr ""
 
-#: ../src/control/latex/LatexGenerator.cpp:56
+#: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr ""
 
@@ -594,7 +594,7 @@ msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
+#: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "A fájl megnyitása nem sikerült. Manuálisan kell megnyitnia:\n"
@@ -1673,7 +1673,7 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:220
+#: ../src/util/PathUtil.cpp:239
 msgid "xournalpp-{1}"
 msgstr ""
 
