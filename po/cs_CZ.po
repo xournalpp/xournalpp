@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 05:55+0000\n"
-"PO-Revision-Date: 2021-05-19 16:14\n"
+"POT-Creation-Date: 2021-05-22 04:31+0000\n"
+"PO-Revision-Date: 2021-05-22 05:26\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -217,7 +217,7 @@ msgstr "Kopírovat aktuální"
 msgid "Copy page"
 msgstr "Kopírovat stránku"
 
-#: ../src/util/PathUtil.cpp:230
+#: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nelze vytvořit složku: {1}\n"
@@ -295,11 +295,11 @@ msgstr "Nástroj {1} z panelu nástrojů {2} nelze odstranit z pozice {3}"
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nelze přejmenovat soubor automatického ukládání z \"{1}\" na \"{2}\": {3}"
 
-#: ../src/control/latex/LatexGenerator.cpp:69
+#: ../src/control/latex/LatexGenerator.cpp:70
 msgid "Could not save .tex file: {1}"
 msgstr "Soubor .tex nebylo možno uložit: {1}"
 
-#: ../src/control/latex/LatexGenerator.cpp:85
+#: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Nelze spustit {1}: {2} (návratový kód: {3})"
 
@@ -587,11 +587,11 @@ msgid "Export without ruling\n"
 msgstr "Exportovat bez pravítka\n"
 "                                 Exportovaný soubor nemá pravítko\n"
 
-#: ../src/control/latex/LatexGenerator.cpp:60
+#: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Nepodařilo se najít program na generování LaTeX v PATH: {1}"
 
-#: ../src/control/latex/LatexGenerator.cpp:56
+#: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Nepodařilo se zpracovat příkaz generátoru LaTeX: {1}"
 
@@ -605,7 +605,7 @@ msgid "Failed to resolve path with the following error:\n"
 msgstr "Nepodařilo se najít cestu k souboru kvůli následující chybě:\n"
 "{1}"
 
-#: ../src/util/PathUtil.cpp:132 ../src/util/PathUtil.cpp:149
+#: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Soubor se nepodařilo otevřít. Udělejte to prosím ručně:\n"
@@ -1695,7 +1695,7 @@ msgstr "xoj-preview-extractor: otevírání výstupního souboru „{1}“ selha
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: úspěšně extrahováno"
 
-#: ../src/util/PathUtil.cpp:220
+#: ../src/util/PathUtil.cpp:239
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
