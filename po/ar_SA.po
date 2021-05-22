@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-22 16:25\n"
+"PO-Revision-Date: 2021-05-22 17:27\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -490,7 +490,7 @@ msgstr "خطأ في التعليق على ملف الـPDF المسمى «{1}»\
 
 #: ../src/gui/GladeGui.cpp:21
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
+msgstr "تعذر تحميل ملف glade المسمى «{1}» (حاول تحميل «{2}»)"
 
 #: ../src/control/Control.cpp:2041
 msgid "Error opening file \"{1}\""
@@ -620,7 +620,7 @@ msgstr "رفيع"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "صندوق أدوات عائم (تجريبي)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:60
 msgid "Font"
@@ -713,11 +713,11 @@ msgstr "صور"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "إدراج نسخة من الطبقة الحالية أدناه"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "إدراج نسخة من الصفحة الحالية أدناه"
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
@@ -773,7 +773,7 @@ msgstr "الطبقة {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:59
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "معاينة كومة الطبقات"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -1187,11 +1187,11 @@ msgstr "إظهار الكل"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
-msgstr ""
+msgstr "إظهار الصفحات غير المستخدمة فقط (صفحة واحدة غير مستخدمة)"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:89
 msgid "Show only not used pages ({1} unused pages)"
-msgstr ""
+msgstr "إظهار الصفحات غير المستخدمة فقط ({1} صفحات غير مستخدمة)"
 
 #: ../src/control/XournalMain.cpp:539
 msgid "Sorry, Xournal++ can only open one file at once.\n"
@@ -1409,15 +1409,15 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:440
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "نوع نطاق مجهول: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:224
 msgid "Unknown parser error"
-msgstr ""
+msgstr "خطأ إعراب مجهول"
 
 #: ../src/control/xojfile/LoadHandler.cpp:387
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "نوع pixmap::domain مجهول: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:583
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1458,15 +1458,15 @@ msgstr "كتابة نص"
 
 #: ../src/control/xojfile/LoadHandler.cpp:900
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "عدد نقاط خاطئ ({1})"
 
 #: ../src/control/xojfile/LoadHandler.cpp:910
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr ""
+msgstr "عدد نقاط خاطئ؛ المعطى {1}، المتوقع {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:221
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "خطأ في إعراب XML مفاده: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "Xournal (Compatibility)"
@@ -1599,7 +1599,7 @@ msgstr "لوحة مفاتيح"
 
 #: ../src/undo/AddUndoAction.cpp:100 ../src/undo/DeleteUndoAction.cpp:97
 msgid "latex"
-msgstr ""
+msgstr "لاتك"
 
 #: ../src/util/DeviceListHelper.cpp:105
 msgid "mouse"
@@ -1628,7 +1628,7 @@ msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:103 ../src/undo/DeleteUndoAction.cpp:100
 msgid "text"
-msgstr ""
+msgstr "نص"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "touchpad"
@@ -1656,31 +1656,31 @@ msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:176
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "‏xoj-preview-extractor: تعذر إيجاد الأيقونة «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:131
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "‏xoj-preview-extractor: الملف «{1}» لا يحتوي على معاينة"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:123
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "‏xoj-preview-extractor: الملف «{1}» ليس بالامتداد xoj"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:136
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "‏xoj-preview-extractor: تعذر إيجاد معاينة أو صفحات، قد يكون ملفا تالفا؟"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:127
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "‏xoj-preview-extractor: تعذر فتح ملف الإدخال «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "‏xoj-preview-extractor: تعذر فتح ملف الإخراج «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:200
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "‏xoj-preview-extractor: تم الاستخراج بنجاح"
 
 #: ../src/util/PathUtil.cpp:239
 msgid "xournalpp-{1}"
@@ -1688,11 +1688,11 @@ msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = صندوق أدوات عائم (تجريبي) ="
 
 #: ../ui/settings.glade:3667 ../ui/settings.glade:3678
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:2452
 msgid "% greater than the initial distance between the two touches."
@@ -1700,15 +1700,15 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4747
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:547
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1743,43 +1743,43 @@ msgstr ""
 
 #: ../ui/settings.glade:1078
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1130
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4731
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1714
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5360
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1046
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2437
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:1017
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3015
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1110
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1828,7 +1828,7 @@ msgstr "<b>حجم الصفحة</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
-msgstr ""
+msgstr "<b>حجم الصفحة</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
@@ -1873,7 +1873,7 @@ msgstr ""
 
 #: ../ui/settings.glade:988
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>اختر خوارزمية تثبيت الإدخال ومعاملاتها</i>"
 
 #: ../ui/settings.glade:1493
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -1921,7 +1921,7 @@ msgstr "<i>سيتم اقتراح هذا الاسم إذا قمت بحفظ مست
 
 #: ../ui/settings.glade:3733
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr ""
+msgstr "<i>للتأكد من أن العرض بالحجم الأصلي يعرض العناصر بحجمها الطبيعي. (يحتاج إعادة التشغيل)</i>"
 
 #: ../ui/settings.glade:2646
 msgid "<i>Toggle visibility of menubar with F10</i>"
@@ -2969,7 +2969,7 @@ msgstr ""
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
-msgstr ""
+msgstr "خط النص..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3097,67 +3097,67 @@ msgstr "سرعة التكبير"
 
 #: ../ui/main.glade:696
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 عمود"
 
 #: ../ui/main.glade:801
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 صف"
 
 #: ../ui/main.glade:707
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 عمودان"
 
 #: ../ui/main.glade:812
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 صفّان"
 
 #: ../ui/main.glade:718
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 أعمدة"
 
 #: ../ui/main.glade:823
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 صفوف"
 
 #: ../ui/main.glade:729
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 أعمدة"
 
 #: ../ui/main.glade:834
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 صفوف"
 
 #: ../ui/main.glade:740
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 أعمدة"
 
 #: ../ui/main.glade:845
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 صفوف"
 
 #: ../ui/main.glade:751
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 أعمدة"
 
 #: ../ui/main.glade:856
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 صفوف"
 
 #: ../ui/main.glade:762
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 أعمدة"
 
 #: ../ui/main.glade:867
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 صفوف"
 
 #: ../ui/main.glade:773
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 أعمدة"
 
 #: ../ui/main.glade:878
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 صفوف"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
