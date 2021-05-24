@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-22 19:37\n"
+"PO-Revision-Date: 2021-05-24 14:04\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -446,7 +446,7 @@ msgstr "رسم مستطيل"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Spline"
-msgstr ""
+msgstr "رسم منحنى"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:126
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:32
@@ -1219,7 +1219,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
 #: ../src/undo/RecognizerUndoAction.cpp:72
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "متعرف الأشكال"
 
 #: ../src/util/CrashHandler.cpp:41
 msgid "Successfully saved document to \"{1}\""
@@ -1573,7 +1573,7 @@ msgstr "مبدئيا مفعل"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:261
 msgid "delete stroke"
-msgstr "حذف خط"
+msgstr "حذف خط أو شكل"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:249
 msgid "dotted"
@@ -1622,7 +1622,7 @@ msgstr "عادي"
 
 #: ../src/undo/AddUndoAction.cpp:94 ../src/undo/DeleteUndoAction.cpp:91
 msgid "stroke"
-msgstr ""
+msgstr "خط أو شكل"
 
 #: ../src/util/DeviceListHelper.cpp:123
 msgid "tablet pad"
@@ -2179,7 +2179,7 @@ msgstr "حذف الطبقة"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr "حذف خط"
+msgstr "حذف خط أو شكل"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
@@ -3315,7 +3315,7 @@ msgstr "_عرض"
 
 #: ../ui/main.glade:1795
 msgid "_delete strokes"
-msgstr "_حذف خط"
+msgstr "_حذف خط أو شكل"
 
 #: ../ui/main.glade:1577 ../ui/main.glade:1723 ../ui/main.glade:1832
 msgid "_fine"
