@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-26 21:24\n"
+"PO-Revision-Date: 2021-05-26 22:24\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -173,7 +173,7 @@ msgstr "ألغ"
 
 #: ../src/undo/ColorUndoAction.cpp:85
 msgid "Change color"
-msgstr "غيِّر اللون"
+msgstr "تغيير اللون"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Change current layer name"
@@ -181,7 +181,7 @@ msgstr "تغيير اسم الطبقة الحالية"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
-msgstr "غيِّر الخط"
+msgstr "تغيير خط النص"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
@@ -315,7 +315,7 @@ msgstr "تعذر كتابة الخلفية\"{1}\"، {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:345
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr "لا يمكن كتابة الخلفية\"{1}\". سنتابع على أي حال."
+msgstr "تعذر كتابة الخلفية «{1}». سنتابع على أيّة حال."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:74
 msgid "Create new layer"
@@ -1953,7 +1953,7 @@ msgstr "<i>استخدم شاشة اللمس كأنها قلم يدعم تعدد 
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
+msgstr "<i>في بعض الحالات، الخطوط المرسومة بالقلم يكون بها زيادات خاطئة في بدايتها. يمكن تجنبها بإهمال أول أحداث أو نقاط مرسومة عند لمس القلم للشاشة.</i>"
 
 #: ../ui/settings.glade:2000
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -1971,7 +1971,7 @@ msgstr "عن Xournal++‎"
 
 #: ../ui/settings.glade:4659
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "الفعل عند النقر"
 
 #: ../ui/settings.glade:3960
 msgid "Add additional horizontal space of"
@@ -2013,7 +2013,7 @@ msgstr "المتوسط الحسابي"
 
 #: ../ui/settings.glade:1753
 msgid "Artifact workaround"
-msgstr ""
+msgstr "الحل البديل للزيادات الخاطئة"
 
 #: ../ui/settings.glade:5204
 msgid "Audio Devices"
@@ -2074,7 +2074,7 @@ msgstr "لون الإطار"
 
 #: ../ui/settings.glade:2685
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "لون إطار الصفحة الحالية وتحديدات أخرى"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
@@ -2282,7 +2282,7 @@ msgstr "منطقة الرسم"
 
 #: ../ui/settings.glade:4231
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
+msgstr "أدوات الرسم - تفعيل زر Shift أو Ctrl حسب اتجاه الرسم (تجريبي)"
 
 #: ../ui/main.glade:2637
 msgid "Duplicate"
@@ -2873,7 +2873,7 @@ msgstr "تحديد شريط الأدوات:"
 
 #: ../ui/settings.glade:2736
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "لون التحديد (النصوص، الخطوط والأشكال، إلخ)"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -2927,7 +2927,7 @@ msgstr "إظهار شريط التمرير الرأسي على الجانب ال
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr "الرسم السريع يجعل الخط أرفع من الرسم البطيء، في حالة غياب معلومات الضغط.\n\n"
-"<i>قد تكون هذه الميزة مفيدة للأخهزة فاقدة الإحساس بالضغط، مثل الفأرة وشاشة اللمس.</i>"
+"<i>قد تكون هذه الميزة مفيدة للأجهزة فاقدة الإحساس بالضغط، مثل الفأرة وشاشة اللمس.</i>"
 
 #: ../ui/settings.glade:2865
 msgctxt "stylus cursor uses a small dot"
