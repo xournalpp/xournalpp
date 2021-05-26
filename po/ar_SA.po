@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-26 17:03\n"
+"PO-Revision-Date: 2021-05-26 17:59\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -160,11 +160,11 @@ msgstr "أزرق"
 
 #: ../src/control/tools/EditSelection.cpp:356
 msgid "Bring forward"
-msgstr "اجلب للأمام"
+msgstr "خطوة إلى الأمام"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr "اجلب للمقدمة"
+msgstr "إحضار إلى المقدمة"
 
 #: ../src/control/Control.cpp:2019 ../src/control/Control.cpp:2474
 #: ../src/control/XournalMain.cpp:168
@@ -1152,11 +1152,11 @@ msgstr "إرسال تقرير خطأ"
 
 #: ../src/control/tools/EditSelection.cpp:367
 msgid "Send backward"
-msgstr ""
+msgstr "خطوة إلى الخلف"
 
 #: ../src/control/tools/EditSelection.cpp:375
 msgid "Send to back"
-msgstr ""
+msgstr "إرسال إلى المؤخرة"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
 msgid "Separator"
@@ -1186,7 +1186,7 @@ msgstr "تعيين عرض الصفحة عند التصدير إلى PNG\n"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "متعرف الأشكال"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:63
 msgid "Show all"
@@ -1224,7 +1224,7 @@ msgstr "إيقاف"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
 #: ../src/undo/RecognizerUndoAction.cpp:72
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "متعرف الأشكال"
 
 #: ../src/util/CrashHandler.cpp:41
 msgid "Successfully saved document to \"{1}\""
@@ -1266,19 +1266,19 @@ msgstr "تم العثور على النص %i مرات في هذه الصفحة"
 
 #: ../src/undo/TextUndoAction.cpp:29
 msgid "Text changes"
-msgstr ""
+msgstr "تغييرات نص"
 
 #: ../src/gui/SearchBar.cpp:65
 msgid "Text found on this page"
-msgstr ""
+msgstr "تم العثور على النص في هذه الصفحة"
 
 #: ../src/gui/SearchBar.cpp:123 ../src/gui/SearchBar.cpp:167
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "تم العثور على النص مرة واحدة في الصفحة {1}"
 
 #: ../src/gui/SearchBar.cpp:124 ../src/gui/SearchBar.cpp:168
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "تم العثور على النص {1} مرات في الصفحة {2}"
 
 #: ../src/gui/SearchBar.cpp:72
 msgid "Text not found"
@@ -1294,7 +1294,7 @@ msgstr "مجموعة أشرطة الأدوات «{1}» هي مسبقة التع�
 
 #: ../src/control/Control.cpp:2014
 msgid "The attached background PDF could not be found."
-msgstr ""
+msgstr "تعذر إيجاد خلفية الـPDF المرفقة."
 
 #: ../src/control/Control.cpp:2015
 msgid "The background PDF could not be found."
@@ -1367,7 +1367,7 @@ msgstr "الأداة - لا تغيير"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:106
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "تم العثور على شريط الأدوات: {1}"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:45
 msgid "Toolbars"
@@ -1869,7 +1869,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3907
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
-msgstr ""
+msgstr "<i>إذا أضفت مسافة إضافية إلى جانب الصفحات، تستطيع اختيار المنطقة التي تريدها من الشاشة لتعمل عليها.</i>"
 
 #: ../ui/settings.glade:651
 msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
@@ -2073,7 +2073,7 @@ msgstr "خطوة إلى الأمام"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr "إحضار إلى الأمام"
+msgstr "إحضار إلى المقدمة"
 
 #: ../ui/settings.glade:1005
 msgid "Buffersize"
@@ -2169,7 +2169,7 @@ msgstr "اسم الحفظ المبدئي"
 
 #: ../ui/settings.glade:5347
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "الزمن المبدئي للتحريك (بالثواني)"
 
 #: ../ui/settings.glade:508
 msgid "Default name: "
@@ -2193,7 +2193,7 @@ msgstr "الجهاز"
 
 #: ../ui/settings.glade:2251
 msgid "Disable"
-msgstr ""
+msgstr "تعطيل"
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -2201,11 +2201,11 @@ msgstr "تعطيل الرسم لهذا الجهاز"
 
 #: ../ui/settings.glade:3239
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "تعطيل الاختفاء التلقائي لشريط التمرير"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr ""
+msgstr "معطّل"
 
 #: ../ui/settings.glade:2111
 msgid "Disabling Method"
@@ -2217,7 +2217,7 @@ msgstr "معايرة دقة (DPI) الشاشة"
 
 #: ../ui/settings.glade:4499
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr ""
+msgstr "لا ترسم المدخلات ذات وقت وطول قصيرين، إلا إذا أتت في تتابع سريع. بدلا من ذلك، أظهر شريط الأدوات العائم."
 
 #: ../ui/settings.glade:1065
 msgid "Drag"
@@ -2303,7 +2303,7 @@ msgstr "تفعيل الإحساس بالضغط"
 
 #: ../ui/settings.glade:4494
 msgid "Enable Tap action"
-msgstr ""
+msgstr "تفعيل الفعل عند النقر"
 
 #: ../ui/settings.glade:840
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2470,11 +2470,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4446
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "في حالة التفعيل، فإن الأشكال التي يتعرف عليها مكتشف الأشكال ستجتذبها الشبكة تلقائيا. سيؤدي هذا إلى نتائج غير متوقعة إذا كان متعرف الأشكال مفعلا أثناء الكتابة."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "في حالة التفعيل، تأكد من أن حزم LaTeX المطلوبة مثبتة وأن أوامر LaTeX متاحة قبل تشغيل أداة LaTeX."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
@@ -2823,7 +2823,7 @@ msgstr "معدل العينات"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "اسم عينة للطبقة"
 
 #: ../ui/settings.glade:3259
 msgid "Scrollbars"
@@ -2843,7 +2843,7 @@ msgstr "تحديد المجلد"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "تحديد صورة"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2863,7 +2863,7 @@ msgstr "خطوة إلى الخلف"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr "إرسال إلى الخلف"
+msgstr "إرسال إلى المؤخرة"
 
 #: ../ui/settings.glade:1628
 msgid "Sensitivity Scale"
@@ -2950,7 +2950,7 @@ msgstr "أزرار القلم الرقمي"
 
 #: ../ui/settings.glade:4575
 msgid "Successive (ms)"
-msgstr ""
+msgstr "التتابع (مللي ثانية)"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
@@ -3291,7 +3291,7 @@ msgstr "من الي_مين إلى اليسار"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "متعرف الأ_شكال"
 
 #: ../ui/main.glade:1353
 msgid "_Text"
