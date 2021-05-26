@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-26 19:21\n"
+"PO-Revision-Date: 2021-05-26 20:22\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -142,7 +142,7 @@ msgstr "حفظ تلقائي إلى {1}"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Back"
-msgstr "إرجع"
+msgstr "تأخير"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:192 ../src/model/XojPage.cpp:174
 msgid "Background"
@@ -509,7 +509,7 @@ msgstr "خطأ في قراءة ملف PDF؛ التفاصيل: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:510
 msgid "Error reading width of a stroke: {1}"
-msgstr ""
+msgstr "خطأ قراءة عرض الخط: {1}"
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
@@ -602,7 +602,8 @@ msgstr "تعذر قراءة ملف القالب العام. الرجاء مرا�
 #: ../src/control/jobs/BaseExportJob.cpp:101
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "تعذر إيجاد المسار بالخطأ التالي:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -632,7 +633,7 @@ msgstr "خط"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Forward"
-msgstr ""
+msgstr "تقديم"
 
 #: ../src/control/XournalMain.cpp:628
 msgid "Get version of xournalpp"
@@ -1433,7 +1434,7 @@ msgstr "نوع pixmap::domain مجهول: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:583
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "نوع خط رسم مجهول: «{1}»، سأفترض أنه قلم"
 
 #: ../src/control/Control.cpp:2366
 msgid "Unsaved Document"
@@ -1708,7 +1709,7 @@ msgstr "%"
 
 #: ../ui/settings.glade:2452
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% أكبر من المسافة الأولى بين اللمستين."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
@@ -1858,11 +1859,11 @@ msgstr "<i>التسجيلات الصوتية تُخزّن حاليا في مجل
 
 #: ../ui/settings.glade:5415
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr ""
+msgstr "<i>التغييرات ستؤثر فقط على التسجيلات والتشغيلات الجديدة.</i>"
 
 #: ../ui/settings.glade:1315
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr ""
+msgstr "<i>قم بتعيين الأدوات التي سيتم تحديدها عند الضغط على زر فأرة. بمجرد ترك الزر، سيتم تحديد الأداة السابقة مرة أخرى.</i>"
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -1928,7 +1929,7 @@ msgstr "<i>حدد أجهزة الصوت لاستخدامها لتسجيل وتش
 
 #: ../ui/settings.glade:1784
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr ""
+msgstr "<i>قم بتعيين الأدوات التي سيتم تحديدها عند الضغط على زر في القلم الرقمي أو عند استخدام الممحاة. بمجرد ترك الزر، سيتم تحديد الأداة السابقة مرة أخرى.</i>"
 
 #: ../ui/settings.glade:476
 msgid "<i>This name will be proposed if you save a new document.</i>"
@@ -1995,7 +1996,8 @@ msgstr "كل الصفحات"
 #: ../ui/settings.glade:4624
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "يجب استيفاء الشروط الثلاثة لتجاهل الرسمة.\n"
+"يجب أن تكون قصيرة في الزمن والطول، ولا نستطيع أن نكون قد تجاهلنا رسمة أخرى في وقت قريب."
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
@@ -2401,7 +2403,7 @@ msgstr "التضخيم"
 
 #: ../ui/settings.glade:1128 ../ui/settings.glade:1148
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "معامل غاوس: كلما ازداد، ازداد التثبيت وازداد التباطؤ بين مؤشرك ونقطة الرسم."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
@@ -2602,7 +2604,8 @@ msgstr "أقصى طول (مللي متر)"
 #: ../ui/settings.glade:871
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "دمج أحداث الأزرار مع أحداث سن القلم الرقمي\n"
+"\t    <i>(تأكد من أن </i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>تعيد</i> \"<tt>on</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:1355
 msgid "Middle Mouse Button"
@@ -2949,7 +2952,7 @@ msgstr "عادي"
 
 #: ../ui/settings.glade:2425
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "بدء التكبير بعد مسافة "
 
 #: ../ui/settings.glade:5019 ../ui/settings.glade:5077
 msgid "Storage Folder"
