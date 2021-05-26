@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-26 16:06\n"
+"PO-Revision-Date: 2021-05-26 17:03\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -207,7 +207,7 @@ msgstr "المحتويات"
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
-msgstr "انسخ"
+msgstr "نسخة"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:30
 msgid "Copy current"
@@ -964,7 +964,7 @@ msgstr "لصق"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Pause / Play"
-msgstr ""
+msgstr "إيقاف مؤقت / تشغيل"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:80
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:238
@@ -1041,7 +1041,7 @@ msgstr "استبدال"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1046
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "تعذر إيجاد الملف المؤقت المطلوب للمرفق {1}"
 
 #: ../src/control/XournalMain.cpp:210
 msgid "Restore file"
@@ -1165,19 +1165,24 @@ msgstr "فاصل"
 #: ../src/control/XournalMain.cpp:664
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "تعيين دقة (DPI) التصدير إلى PNG. الدقة المبدئية هي 300\n"
+"                                 لا تأثير بدون ‪-i/--create-img=foo.png‬"
 
 #: ../src/control/XournalMain.cpp:674
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "تعيين ارتفاع الصفحة عند التصدير إلى PNG\n"
+"                                 لا تأثير بدون ‪-i/--create-img=foo.png‬\n"
+"                                 يتم إهماله عند استخدام ‪--export-png-dpi‬ أو ‪--export-png-width‬"
 
 #: ../src/control/XournalMain.cpp:668
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "تعيين عرض الصفحة عند التصدير إلى PNG\n"
+"                                 لا تأثير بدون ‪-i/--create-img=foo.png‬\n"
+"                                 يتم إهماله عند استخدام ‪--export-png-dpi‬"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Shape Recognizer"
@@ -1213,7 +1218,7 @@ msgstr "مخطط موسيقى"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Stop"
-msgstr ""
+msgstr "إيقاف"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:128
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -1285,7 +1290,7 @@ msgstr "لم يتم العثور على النص، تم البحث عنه في �
 
 #: ../src/control/Control.cpp:1070
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "مجموعة أشرطة الأدوات «{1}» هي مسبقة التعريف، هل تحب إنشاء نسخة للتعديل؟"
 
 #: ../src/control/Control.cpp:2014
 msgid "The attached background PDF could not be found."
@@ -1301,7 +1306,7 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2049
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "الملف الذي يتم تحميله يستخدم نسخة صيغة ملفات أحدث من التي يدعمها هذا الإصدار من Xournal++‎، لذلك قد لا يتم تحميله بشكل صحيح. فتح على أيّة حال؟"
 
 #: ../src/control/xojfile/LoadHandler.cpp:117
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -2076,7 +2081,7 @@ msgstr ""
 
 #: ../ui/about.glade:127
 msgid "Built on"
-msgstr "بناء"
+msgstr "وقت البناء"
 
 #: ../ui/settings.glade:1824
 msgid "Button 1"
@@ -2208,7 +2213,7 @@ msgstr "أسلوب التعطيل"
 
 #: ../ui/settings.glade:3825
 msgid "Display DPI Calibration"
-msgstr "معايرة DPI الشاشة"
+msgstr "معايرة دقة (DPI) الشاشة"
 
 #: ../ui/settings.glade:4499
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
@@ -2391,7 +2396,7 @@ msgstr "إعدادات أداة LaTeX العامة"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
-msgstr ""
+msgstr "Git commit"
 
 #: ../ui/settings.glade:2811
 msgid "Global"
@@ -2545,7 +2550,7 @@ msgstr "إعدادات اللغة"
 
 #: ../ui/main.glade:575
 msgid "Layout"
-msgstr ""
+msgstr "تنسيق الصفحات"
 
 #: ../ui/settings.glade:3180
 msgid "Left / Right-Handed"
@@ -2565,7 +2570,7 @@ msgstr "تحميل ملف"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
-msgstr ""
+msgstr "إدارة أشرطة الأدوات"
 
 #: ../ui/settings.glade:1097
 msgid "Mass"
@@ -2730,11 +2735,11 @@ msgstr "يتم تطبيق التغييرات على الإضافات بعد إع
 
 #: ../ui/settings.glade:3470
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "عدد صفحات التحميل المسبق بعد الصفحة الحالية"
 
 #: ../ui/settings.glade:3458
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "عدد صفحات التحميل المسبق قبل الصفحة الحالية"
 
 #: ../ui/main.glade:487
 msgid "Preferences"
@@ -2903,7 +2908,8 @@ msgstr "إظهار شريط التمرير الرأسي على الجانب ال
 #: ../ui/settings.glade:891
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "الرسم السريع يجعل الخط أرفع من الرسم البطيء، في حالة غياب معلومات الضغط.\n\n"
+"<i>قد تكون هذه الميزة مفيدة للأخهزة فاقدة الإحساس بالضغط، مثل الفأرة وشاشة اللمس.</i>"
 
 #: ../ui/settings.glade:2865
 msgctxt "stylus cursor uses a small dot"
@@ -3391,5 +3397,5 @@ msgstr "ث_خين جدا"
 
 #: ../ui/about.glade:178
 msgid "with libgtk"
-msgstr "باستخدام libgtk نسخة"
+msgstr "نسخة libgtk"
 
