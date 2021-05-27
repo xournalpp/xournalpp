@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-26 23:22\n"
+"PO-Revision-Date: 2021-05-27 00:21\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -509,7 +509,7 @@ msgstr "خطأ في قراءة ملف PDF؛ التفاصيل: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:510
 msgid "Error reading width of a stroke: {1}"
-msgstr "خطأ قراءة عرض الخط: {1}"
+msgstr "خطأ في قراءة عرض الخط: {1}"
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
@@ -1997,7 +1997,7 @@ msgstr "كل الصفحات"
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "يجب استيفاء الشروط الثلاثة لتجاهل الرسمة.\n"
-"يجب أن تكون قصيرة في الزمن والطول، ولا نستطيع أن نكون قد تجاهلنا رسمة أخرى في وقت قريب."
+"يجب أن تكون قصيرة في الزمن والطول، ولا يمكن أن نكون قد تجاهلنا رسمة أخرى في وقت قريب."
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
@@ -2290,7 +2290,7 @@ msgstr "تكرار"
 
 #: ../ui/main.glade:2674
 msgid "Edit (not implemented yet)"
-msgstr "تحرير (لم يتم برمجته بعد)"
+msgstr "تحرير (لم تتم برمجته بعد)"
 
 #: ../ui/settings.glade:2239
 msgid "Enable"
@@ -2487,7 +2487,7 @@ msgstr "ما مقدار القِصَر (الزمني) و...\n\n"
 
 #: ../ui/settings.glade:4446
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr "في حالة التفعيل، فإن الأشكال التي يتعرف عليها مكتشف الأشكال ستجتذبها الشبكة تلقائيا. سيؤدي هذا إلى نتائج غير متوقعة إذا كان متعرف الأشكال مفعلا أثناء الكتابة."
+msgstr "في حالة التفعيل، فإن الأشكال التي يتعرف عليها متعرف الأشكال ستجتذبها الشبكة تلقائيا. سيؤدي هذا إلى نتائج غير متوقعة إذا كان متعرف الأشكال مفعلا أثناء الكتابة."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
