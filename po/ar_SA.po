@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-27 18:24\n"
+"PO-Revision-Date: 2021-05-27 19:45\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -1911,7 +1911,7 @@ msgstr "<i>تحديد اللغة (يحتاج إعادة التشغيل)</i>"
 
 #: ../ui/settings.glade:4852
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr "<i>تحديد الأداة والإعدادات إذا ضعطت على زر الأداة المبدئية.</i>"
+msgstr "<i>تحديد الأداة والإعدادات إذا ضغطت على زر الأداة المبدئية.</i>"
 
 #: ../ui/settings.glade:1542
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
@@ -3205,7 +3205,7 @@ msgstr "تخصيص"
 
 #: ../ui/main.glade:1377
 msgid "_Default Tools"
-msgstr "الأ_دوات المبدئية"
+msgstr "الأ_داة المبدئية"
 
 #: ../ui/main.glade:1217
 msgid "_Delete Page"
