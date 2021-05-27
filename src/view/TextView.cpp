@@ -34,6 +34,10 @@ void TextView::updatePangoFont(PangoLayout* layout, const Text* t) {
     PangoFontDescription* desc = pango_font_description_from_string(t->getFontName().c_str());
     pango_font_description_set_absolute_size(desc, t->getFontSize() * PANGO_SCALE);
 
+#if PANGO_VERSION_CHECK(1, 48, 5)  // see https://gitlab.gnome.org/GNOME/pango/-/issues/499
+    pango_layout_set_line_spacing(layout, 1.0);
+#endif
+
     pango_layout_set_font_description(layout, desc);
     pango_font_description_free(desc);
 }
