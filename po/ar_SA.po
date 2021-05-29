@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-27 19:45\n"
+"PO-Revision-Date: 2021-05-29 18:38\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -193,7 +193,7 @@ msgstr "تغيير ملء جرّة القلم"
 
 #: ../src/undo/SizeUndoAction.cpp:104
 msgid "Change stroke width"
-msgstr "تغيير سُمْكِ جرّة القلم"
+msgstr "تغيير عرض الخط"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:68
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
@@ -1352,7 +1352,7 @@ msgstr "خطأ في عرض المساعدة: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Thick"
-msgstr "ثخين"
+msgstr "عريض"
 
 #: ../src/control/Control.cpp:2465
 msgid "This document is not saved yet."
@@ -1454,7 +1454,7 @@ msgstr "رفيع جدا"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Very Thick"
-msgstr "ثخين جدا"
+msgstr "عريض جدا"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:104
@@ -1893,7 +1893,7 @@ msgstr "<i>اختر خوارزمية تثبيت الإدخال ومعاملات�
 
 #: ../ui/settings.glade:1493
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr "<i>الإحساس بالضغط يتيح لك رسم خطوط ذات ثخانات مختلفة، اعتمادا على مقدار الضغط الذي تؤثر به على القلم. إذا لم تكن لوحتك تدعم الإحساس بالضغط، فإن هذا الإعداد لا تأثير له.</i>"
+msgstr "<i>الإحساس بالضغط يتيح لك رسم خطوط يختلف عرضها باختلاف مقدار الضغط الذي تؤثر به على القلم. إذا لم تكن لوحتك تدعم الإحساس بالضغط، فإن هذا الإعداد لا تأثير له.</i>"
 
 #: ../ui/settings.glade:3754
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -1983,7 +1983,7 @@ msgstr "إضافة مسافة رأسية إضافية مقدارها"
 
 #: ../ui/settings.glade:4263
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr "بعد التحجيم، ثخانة الخطوط ستبقى كما هي قبل التحجيم. "
+msgstr "بعد التحجيم، سيبقى عرض كل خط كما كان قبل التحجيم. "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
@@ -2066,7 +2066,7 @@ msgstr "لون الإطار"
 
 #: ../ui/settings.glade:3031
 msgid "Border Width"
-msgstr "ثخانة الإطار"
+msgstr "عرض الإطار"
 
 #: ../ui/settings.glade:2700
 msgid "Border color"
@@ -2773,7 +2773,7 @@ msgstr "وضع العرض التقديمي"
 
 #: ../ui/settings.glade:4258
 msgid "Preserve line width"
-msgstr "الحفاظ على ثخانة الخط"
+msgstr "تثبيت عرض الخطوط"
 
 #: ../ui/settings.glade:1576
 msgid "Pressure Multiplier: "
@@ -3357,7 +3357,7 @@ msgstr "_عادي"
 
 #: ../ui/main.glade:1599 ../ui/main.glade:1745 ../ui/main.glade:1854
 msgid "_thick"
-msgstr "_ثخين"
+msgstr "_عريض"
 
 #: ../ui/main.glade:1566 ../ui/main.glade:1712 ../ui/main.glade:1821
 msgid "_very fine"
@@ -3411,7 +3411,7 @@ msgstr "حفظ إلى ملف"
 
 #: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
-msgstr "ث_خين جدا"
+msgstr "عري_ض جدا"
 
 #: ../ui/about.glade:178
 msgid "with libgtk"
