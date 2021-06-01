@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-29 19:36\n"
+"PO-Revision-Date: 2021-06-01 23:40\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -1817,7 +1817,7 @@ msgstr "<b>الأدوات المبدئية</b>"
 
 #: ../ui/settings.glade:4906
 msgid "<b>Default</b>"
-msgstr "<b>المبدئي</b>"
+msgstr "<b>الأداة المبدئية</b>"
 
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
@@ -2186,7 +2186,7 @@ msgstr "الاسم المبدئي: "
 
 #: ../ui/settings.glade:4946
 msgid "Defaults"
-msgstr "الأداة المبدئية"
+msgstr "القيم المبدئية"
 
 #: ../ui/main.glade:1245
 msgid "Delete Layer"
