@@ -61,13 +61,9 @@ TextEditor::~TextEditor() {
 
     if (this->ownText) {
         UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
-        for (TextUndoAction& undo: this->undoActions) {
-            handler->removeUndoAction(&undo);
-        }
+        for (TextUndoAction& undo: this->undoActions) { handler->removeUndoAction(&undo); }
     } else {
-        for (TextUndoAction& undo: this->undoActions) {
-            undo.textEditFinished();
-        }
+        for (TextUndoAction& undo: this->undoActions) { undo.textEditFinished(); }
     }
     this->undoActions.clear();
 
@@ -1004,9 +1000,9 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
             attrib->start_index = getByteOffset(gtk_text_iter_get_offset(&start));
             attrib->end_index = getByteOffset(gtk_text_iter_get_offset(&end));
 
-	    PangoAttrList* attrlist = pango_attr_list_new();
+            PangoAttrList* attrlist = pango_attr_list_new();
             pango_attr_list_insert(attrlist, attrib);
-	    pango_layout_set_attributes(this->layout, attrlist);
+            pango_layout_set_attributes(this->layout, attrlist);
             pango_attr_list_unref(attrlist);
             attrlist = nullptr;
         } else {
