@@ -2009,10 +2009,18 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         !loadHandler.getMissingPdfFilename().empty()) {
         // give the user a second chance to select a new PDF filepath, or to discard the PDF
 
-        GtkWidget* dialog = gtk_message_dialog_new(
-                getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-                loadHandler.isAttachedPdfMissing() ? _("The attached background PDF could not be found.") :
-                                                     _("The background PDF could not be found."));
+        const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
+        const std::string msg1 =
+                FS(_F("The attached background file {1} could not be found. It might have been moved, renamed or "
+                      "deleted.\nIt was last seen at: {2}") %
+                   missingFilePath.filename().string() % missingFilePath.parent_path().string());
+        const std::string msg2 =
+                FS(_F("The background file {1} could not be found. It might have been moved, renamed or deleted.\nIt "
+                      "was last seen at: {2}") %
+                   missingFilePath.filename().string() % missingFilePath.parent_path().string());
+        GtkWidget* dialog =
+                gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
+                                       loadHandler.isAttachedPdfMissing() ? msg1.c_str() : msg2.c_str());
 
         gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
         gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
