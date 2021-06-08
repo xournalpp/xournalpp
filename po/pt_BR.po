@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-22 05:26\n"
+"POT-Creation-Date: 2021-06-08 07:19+0000\n"
+"PO-Revision-Date: 2021-06-08 07:30\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -166,7 +166,7 @@ msgstr "Trazer para a frente"
 msgid "Bring to front"
 msgstr "Trazer para o primeiro plano"
 
-#: ../src/control/Control.cpp:2019 ../src/control/Control.cpp:2474
+#: ../src/control/Control.cpp:2027 ../src/control/Control.cpp:2482
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Cancelar"
@@ -374,7 +374,7 @@ msgstr "Excluir esta camada"
 msgid "Delete this page"
 msgstr "Excluir esta página"
 
-#: ../src/control/Control.cpp:2471
+#: ../src/control/Control.cpp:2479
 msgid "Discard"
 msgstr "Descartar"
 
@@ -394,7 +394,7 @@ msgstr "Não abra os arquivos de salvamento automático. Eles podem ser sobrescr
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Não substitua o PDF! Isso causará erros!"
 
-#: ../src/control/Control.cpp:2465
+#: ../src/control/Control.cpp:2473
 msgid "Document file was removed."
 msgstr "Documento foi removido."
 
@@ -484,7 +484,7 @@ msgstr "Apagar traço"
 msgid "Eraser"
 msgstr "Apagar"
 
-#: ../src/control/Control.cpp:2220
+#: ../src/control/Control.cpp:2228
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Erro ao anotar arquivo PDF \"{1}\"\n"
@@ -494,7 +494,7 @@ msgstr "Erro ao anotar arquivo PDF \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Erro ao carregar o arquivo glade \"{1}\" (tente carregar \"{2}\")"
 
-#: ../src/control/Control.cpp:2041
+#: ../src/control/Control.cpp:2049
 msgid "Error opening file \"{1}\""
 msgstr "Erro ao abrir o arquivo {1}"
 
@@ -1025,7 +1025,7 @@ msgstr "Refazer"
 msgid "Redo: "
 msgstr "Refazer: "
 
-#: ../src/control/Control.cpp:2018
+#: ../src/control/Control.cpp:2026
 msgid "Remove PDF Background"
 msgstr "Remover fundo do PDF"
 
@@ -1077,16 +1077,16 @@ msgstr "Gráficos SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Arquivo de exemplo LaTeX gerado com sucesso."
 
-#: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2474 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "Salvar"
 
-#: ../src/control/Control.cpp:2466
+#: ../src/control/Control.cpp:2474
 msgid "Save As..."
 msgstr "Salvar como..."
 
-#: ../src/control/Control.cpp:2309 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2317 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Salvar Arquivo"
 
@@ -1127,7 +1127,7 @@ msgstr "Selecionar Retângulo"
 msgid "Select Region"
 msgstr "Selecionar região"
 
-#: ../src/control/Control.cpp:2017
+#: ../src/control/Control.cpp:2025
 msgid "Select another PDF"
 msgstr "Selecione outro PDF"
 
@@ -1299,18 +1299,20 @@ msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy t
 msgstr "A configuração da barra de ferramentas \"{1}\" está predefinida, você gostaria de criar uma cópia para editar?"
 
 #: ../src/control/Control.cpp:2014
-msgid "The attached background PDF could not be found."
-msgstr "Não foi possível encontrar o plano de fundo anexado ao PDF."
+msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
+"It was last seen at: {2}"
+msgstr ""
 
-#: ../src/control/Control.cpp:2015
-msgid "The background PDF could not be found."
-msgstr "O plano de fundo do PDF não foi encontrado."
+#: ../src/control/Control.cpp:2018
+msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
+"It was last seen at: {2}"
+msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
 msgstr "A verificação de substituição do plano de fundo falhou com:\n"
 
-#: ../src/control/Control.cpp:2049
+#: ../src/control/Control.cpp:2057
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "O arquivo que está sendo carregado tem uma versão de formato mais recente que a atualmente suportada por esta versão Xournal++, assim pode não carregar corretamente. Abrir mesmo assim?"
 
@@ -1354,7 +1356,7 @@ msgstr "Ocorreu um erro ao exibir a ajuda: {1}"
 msgid "Thick"
 msgstr "Espesso"
 
-#: ../src/control/Control.cpp:2465
+#: ../src/control/Control.cpp:2473
 msgid "This document is not saved yet."
 msgstr "Este documento ainda não foi salvo."
 
@@ -1436,7 +1438,7 @@ msgstr "Pixmap::tipo de domínio desconhecido: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tipo de traçado desconhecido: \"{1}\", assumindo a caneta"
 
-#: ../src/control/Control.cpp:2366
+#: ../src/control/Control.cpp:2374
 msgid "Unsaved Document"
 msgstr "Documento não salvo"
 
@@ -1493,7 +1495,7 @@ msgstr "Arquivos Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ travou da última vez. Gostaria de restaurar o último arquivo editado?"
 
-#: ../src/control/Control.cpp:2315 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2323 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Arquivos Xournal++"
 
@@ -1545,7 +1547,7 @@ msgstr "Controle deslizante de zoom"
 msgid "Zoom to 100%"
 msgstr "Zoom em 100%"
 
-#: ../src/control/Control.cpp:2309 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2317 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1557,7 +1559,7 @@ msgstr "_Cancelar"
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2318 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "_Salvar"
