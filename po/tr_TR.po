@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-22 04:31+0000\n"
-"PO-Revision-Date: 2021-05-30 15:17\n"
+"POT-Creation-Date: 2021-06-08 07:19+0000\n"
+"PO-Revision-Date: 2021-06-08 07:31\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -166,7 +166,7 @@ msgstr "Öne getir"
 msgid "Bring to front"
 msgstr "En öne getir"
 
-#: ../src/control/Control.cpp:2019 ../src/control/Control.cpp:2474
+#: ../src/control/Control.cpp:2027 ../src/control/Control.cpp:2482
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "İptal"
@@ -374,7 +374,7 @@ msgstr "Bu katmanı sil"
 msgid "Delete this page"
 msgstr "Bu sayfayı sil"
 
-#: ../src/control/Control.cpp:2471
+#: ../src/control/Control.cpp:2479
 msgid "Discard"
 msgstr "Kaydetme"
 
@@ -394,7 +394,7 @@ msgstr "Otomatik Kaydetme dosyalarını açmayın. Bunların üzerine yazılabil
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Arka plan PDF'sinin üzerine yazmayın! Bu hatalara neden olur!"
 
-#: ../src/control/Control.cpp:2465
+#: ../src/control/Control.cpp:2473
 msgid "Document file was removed."
 msgstr "Belge dosyası kaldırıldı."
 
@@ -484,7 +484,7 @@ msgstr "Kontur sil"
 msgid "Eraser"
 msgstr "Silgi"
 
-#: ../src/control/Control.cpp:2220
+#: ../src/control/Control.cpp:2228
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "\"{1}\" PDF dosyasına açıklama eklenirken hata oluştu\n"
@@ -494,7 +494,7 @@ msgstr "\"{1}\" PDF dosyasına açıklama eklenirken hata oluştu\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "\"{1}\" glade dosyası yüklenirken hata oluştu (\"{2}\" yüklemeyi deneyin)"
 
-#: ../src/control/Control.cpp:2041
+#: ../src/control/Control.cpp:2049
 msgid "Error opening file \"{1}\""
 msgstr "\"{1}\" dosyası açılırken hata oluştu"
 
@@ -1016,7 +1016,7 @@ msgstr "Yinele"
 msgid "Redo: "
 msgstr "Yinele: "
 
-#: ../src/control/Control.cpp:2018
+#: ../src/control/Control.cpp:2026
 msgid "Remove PDF Background"
 msgstr "PDF Arka Planını Kaldır"
 
@@ -1068,16 +1068,16 @@ msgstr "SVG grafikleri"
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2474 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../src/control/Control.cpp:2466
+#: ../src/control/Control.cpp:2474
 msgid "Save As..."
 msgstr "Farklı kaydet..."
 
-#: ../src/control/Control.cpp:2309 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2317 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Dosyayı Kaydet"
 
@@ -1118,7 +1118,7 @@ msgstr "Dikdörtgen Seç"
 msgid "Select Region"
 msgstr "Bölge Seç"
 
-#: ../src/control/Control.cpp:2017
+#: ../src/control/Control.cpp:2025
 msgid "Select another PDF"
 msgstr "Başka bir PDF seç"
 
@@ -1285,18 +1285,20 @@ msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy t
 msgstr "\"{1}\" Araç Çubuğu yapılandırması önceden tanımlandı, düzenlemek için bir kopya oluşturur musunuz?"
 
 #: ../src/control/Control.cpp:2014
-msgid "The attached background PDF could not be found."
-msgstr "Ekli arka plan PDF'si bulunamadı."
+msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
+"It was last seen at: {2}"
+msgstr ""
 
-#: ../src/control/Control.cpp:2015
-msgid "The background PDF could not be found."
-msgstr "Arka plan PDF'si bulunamadı."
+#: ../src/control/Control.cpp:2018
+msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
+"It was last seen at: {2}"
+msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/control/Control.cpp:2049
+#: ../src/control/Control.cpp:2057
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1340,7 +1342,7 @@ msgstr "Yardım görüntülenirken bir hata oluştu: {1}"
 msgid "Thick"
 msgstr "Kalın"
 
-#: ../src/control/Control.cpp:2465
+#: ../src/control/Control.cpp:2473
 msgid "This document is not saved yet."
 msgstr "Bu belge henüz kaydedilmemiş."
 
@@ -1422,7 +1424,7 @@ msgstr "Bilinmeyen pixmap::alan adı türü: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Bilinmeyen kontur türü: \"{1}\", kalem varsayarak"
 
-#: ../src/control/Control.cpp:2366
+#: ../src/control/Control.cpp:2374
 msgid "Unsaved Document"
 msgstr "Kaydedilmemiş Belge"
 
@@ -1479,7 +1481,7 @@ msgstr "Xournal dosyaları"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ son kez çöktü. Son düzenlenen dosyayı geri yüklemek ister misiniz?"
 
-#: ../src/control/Control.cpp:2315 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2323 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Xournal++ dosyaları"
 
@@ -1531,7 +1533,7 @@ msgstr "Yakınlaştırma kaydırıcısı"
 msgid "Zoom to 100%"
 msgstr "100% Yakınlaştır"
 
-#: ../src/control/Control.cpp:2309 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2317 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1543,7 +1545,7 @@ msgstr "İ_ptal et"
 msgid "_Open"
 msgstr "_Aç"
 
-#: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2318 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "_Kaydet"
