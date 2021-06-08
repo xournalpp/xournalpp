@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-22 04:31+0000\n"
+"POT-Creation-Date: 2021-06-08 07:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,7 +164,7 @@ msgstr ""
 msgid "Bring to front"
 msgstr ""
 
-#: ../src/control/Control.cpp:2019 ../src/control/Control.cpp:2474
+#: ../src/control/Control.cpp:2027 ../src/control/Control.cpp:2482
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr ""
@@ -373,7 +373,7 @@ msgstr ""
 msgid "Delete this page"
 msgstr ""
 
-#: ../src/control/Control.cpp:2471
+#: ../src/control/Control.cpp:2479
 msgid "Discard"
 msgstr ""
 
@@ -392,7 +392,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2465
+#: ../src/control/Control.cpp:2473
 msgid "Document file was removed."
 msgstr ""
 
@@ -483,7 +483,7 @@ msgstr ""
 msgid "Eraser"
 msgstr ""
 
-#: ../src/control/Control.cpp:2220
+#: ../src/control/Control.cpp:2228
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -493,7 +493,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/control/Control.cpp:2041
+#: ../src/control/Control.cpp:2049
 msgid "Error opening file \"{1}\""
 msgstr ""
 
@@ -1029,7 +1029,7 @@ msgstr ""
 msgid "Redo: "
 msgstr ""
 
-#: ../src/control/Control.cpp:2018
+#: ../src/control/Control.cpp:2026
 msgid "Remove PDF Background"
 msgstr ""
 
@@ -1081,16 +1081,16 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2474 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:329
 msgid "Save"
 msgstr ""
 
-#: ../src/control/Control.cpp:2466
+#: ../src/control/Control.cpp:2474
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2309 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2317 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr ""
 
@@ -1131,7 +1131,7 @@ msgstr ""
 msgid "Select Region"
 msgstr ""
 
-#: ../src/control/Control.cpp:2017
+#: ../src/control/Control.cpp:2025
 msgid "Select another PDF"
 msgstr ""
 
@@ -1304,18 +1304,24 @@ msgid ""
 msgstr ""
 
 #: ../src/control/Control.cpp:2014
-msgid "The attached background PDF could not be found."
+msgid ""
+"The attached background file {1} could not be found. It might have been "
+"moved, renamed or deleted.\n"
+"It was last seen at: {2}"
 msgstr ""
 
-#: ../src/control/Control.cpp:2015
-msgid "The background PDF could not be found."
+#: ../src/control/Control.cpp:2018
+msgid ""
+"The background file {1} could not be found. It might have been moved, "
+"renamed or deleted.\n"
+"It was last seen at: {2}"
 msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/control/Control.cpp:2049
+#: ../src/control/Control.cpp:2057
 msgid ""
 "The file being loaded has a file format version newer than the one currently "
 "supported by this version of Xournal++, so it may not load properly. Open "
@@ -1366,7 +1372,7 @@ msgstr ""
 msgid "Thick"
 msgstr ""
 
-#: ../src/control/Control.cpp:2465
+#: ../src/control/Control.cpp:2473
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1448,7 +1454,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2366
+#: ../src/control/Control.cpp:2374
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1506,7 +1512,7 @@ msgid ""
 "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2315 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2323 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr ""
 
@@ -1562,7 +1568,7 @@ msgstr ""
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/control/Control.cpp:2309 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2317 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1574,7 +1580,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2318 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr ""
