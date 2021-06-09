@@ -1464,6 +1464,61 @@
                           </object>
                         </child>
                         <child>
+                            <object class="GtkCheckMenuItem" id="menuToolsDrawExp">
+                                <property name="name">menuToolsDrawExp</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Draw Exp</property>
+                                <property name="use-underline">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_DRAW_EXP" swapped="no"/>
+                                <accelerator key="3" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkCheckMenuItem" id="menuToolsDrawGauss">
+                                <property name="name">menuToolsDrawGauss</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Draw Gauss</property>
+                                <property name="use-underline">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_DRAW_GAUSS" swapped="no"/>
+                                <accelerator key="3" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkCheckMenuItem" id="menuToolsDrawPoly">
+                                <property name="name">menuToolsDrawPoly</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Draw Poly</property>
+                                <property name="use-underline">True</property>
+                                <signal name="toggled" handler="ACTION_TOOL_DRAW_POLY" swapped="no"/>
+                                <accelerator key="3" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                                </object>
+                        </child>
+                        <child>
+                            <object class="GtkCheckMenuItem" id="menuToolsDrawPolyNeg">
+                                 <property name="name">menuToolsDrawPolyNeg</property>
+                                 <property name="visible">True</property>
+                                 <property name="can-focus">False</property>
+                                 <property name="label" translatable="yes">Draw PolyNeg</property>
+                                 <property name="use-underline">True</property>
+                                 <signal name="toggled" handler="ACTION_TOOL_DRAW_POLYNEG" swapped="no"/>
+                                 <accelerator key="3" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkCheckMenuItem" id="menuToolsDrawSinus">
+                                  <property name="name">menuToolsDrawSinus</property>
+                                  <property name="visible">True</property>
+                                  <property name="can-focus">False</property>
+                                  <property name="label" translatable="yes">Draw Sinus</property>
+                                  <property name="use-underline">True</property>
+                                  <signal name="toggled" handler="ACTION_TOOL_DRAW_SINUS" swapped="no"/>
+                                  <accelerator key="3" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            </object>
+                        </child>
+                        <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem13">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>

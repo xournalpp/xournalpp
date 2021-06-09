@@ -33,7 +33,7 @@ void ToolHandler::initTools() {
     tools[TOOL_PEN - TOOL_PEN] = std::make_unique<Tool>(
             "pen", TOOL_PEN, Color{0x3333CCU},
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
-                    TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE,
+                    TOOL_CAP_SPLINE | TOOL_CAP_EXP | TOOL_CAP_GAUSS | TOOL_CAP_POLY |TOOL_CAP_POLYNEG | TOOL_CAP_SINUS | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE,
             thickness);
 
     thickness = new double[Tool::toolSizes];
@@ -55,7 +55,7 @@ void ToolHandler::initTools() {
     tools[TOOL_HIGHLIGHTER - TOOL_PEN] = std::make_unique<Tool>(
             "highlighter", TOOL_HIGHLIGHTER, Color{0xFFFF00U},
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
-                    TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
+                    TOOL_CAP_SPLINE | TOOL_CAP_EXP | TOOL_CAP_GAUSS | TOOL_CAP_POLY | TOOL_CAP_POLYNEG | TOOL_CAP_SINUS | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
             thickness);
 
     tools[TOOL_TEXT - TOOL_PEN] = std::make_unique<Tool>("text", TOOL_TEXT, Color{0x000000U}, TOOL_CAP_COLOR, nullptr);
@@ -94,6 +94,21 @@ void ToolHandler::initTools() {
 
     tools[TOOL_DRAW_SPLINE - TOOL_PEN] =
             std::make_unique<Tool>("drawSpline", TOOL_DRAW_SPLINE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+
+    tools[TOOL_DRAW_EXP - TOOL_PEN] =
+            std::make_unique<Tool>("drawExp", TOOL_DRAW_EXP, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+
+    tools[TOOL_DRAW_GAUSS - TOOL_PEN] =
+            std::make_unique<Tool>("drawGauss", TOOL_DRAW_GAUSS, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+
+    tools[TOOL_DRAW_POLY - TOOL_PEN] =
+            std::make_unique<Tool>("drawPoly", TOOL_DRAW_POLY, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+
+    tools[TOOL_DRAW_POLYNEG - TOOL_PEN] =
+            std::make_unique<Tool>("drawPolyNeg", TOOL_DRAW_POLYNEG, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+
+    tools[TOOL_DRAW_SINUS - TOOL_PEN] =
+            std::make_unique<Tool>("drawSinus", TOOL_DRAW_SINUS, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX,
                                                                      Color{0x000000U}, TOOL_CAP_NONE, nullptr);
@@ -532,11 +547,15 @@ auto ToolHandler::isSinglePageTool() -> bool {
 
     return toolType == (TOOL_PEN && (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_ELLIPSE ||
                                      drawingType == DRAWING_TYPE_COORDINATE_SYSTEM ||
-                                     drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE)) ||
+                                     drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE ||
+                                     drawingType == DRAWING_TYPE_EXP || drawingType == DRAWING_TYPE_GAUSS ||
+                                     drawingType == DRAWING_TYPE_POLY || drawingType == DRAWING_TYPE_POLYNEG ||
+                                     drawingType == DRAWING_TYPE_SINUS)) ||
            drawingType == DRAWING_TYPE_SPLINE || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT ||
            toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE ||
            toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
-           toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE;
+           toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE || toolType == TOOL_DRAW_EXP || toolType == TOOL_DRAW_GAUSS ||
+           toolType == TOOL_DRAW_POLY || toolType == TOOL_DRAW_POLYNEG || toolType == TOOL_DRAW_SINUS;
 }
 
 

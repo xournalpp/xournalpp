@@ -421,7 +421,16 @@ void ToolMenuHandler::initToolItems() {
                         "coordinate-system-draw", _("Draw coordinate system"));
     ADD_CUSTOM_ITEM_TGL("RULER", ACTION_RULER, GROUP_RULER, false, "ruler", _("Draw Line"));
     ADD_CUSTOM_ITEM_TGL("DRAW_SPLINE", ACTION_TOOL_DRAW_SPLINE, GROUP_RULER, false, "spline-draw", _("Draw Spline"));
-
+    ADD_CUSTOM_ITEM_TGL("DRAW_EXP", ACTION_TOOL_DRAW_EXP, GROUP_RULER, false, "draw-exp",
+                        _("Draw Exp"));
+    ADD_CUSTOM_ITEM_TGL("DRAW_GAUSS", ACTION_TOOL_DRAW_GAUSS, GROUP_RULER, false, "draw-gauss",
+                        _("Draw Gauss"));
+    ADD_CUSTOM_ITEM_TGL("DRAW_POLY", ACTION_TOOL_DRAW_POLY, GROUP_RULER, false, "draw-poly",
+                        _("Draw Poly"));
+    ADD_CUSTOM_ITEM_TGL("DRAW_POLYNEG", ACTION_TOOL_DRAW_POLYNEG, GROUP_RULER, false, "draw-polyneg",
+                        _("Draw PolyNeg"));
+    ADD_CUSTOM_ITEM_TGL("DRAW_SINUS", ACTION_TOOL_DRAW_SINUS, GROUP_RULER, false, "draw-sinus",
+                        _("Draw Sinus"));
     ADD_CUSTOM_ITEM_TGL("SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, true, "lasso", _("Select Region"));
     ADD_CUSTOM_ITEM_TGL("SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select",
                         _("Select Rectangle"));

@@ -572,6 +572,11 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_TOOL_DRAW_COORDINATE_SYSTEM:
         case ACTION_RULER:
         case ACTION_TOOL_DRAW_SPLINE:
+        case ACTION_TOOL_DRAW_EXP:
+        case ACTION_TOOL_DRAW_GAUSS:
+        case ACTION_TOOL_DRAW_POLY:
+        case ACTION_TOOL_DRAW_POLYNEG:
+        case ACTION_TOOL_DRAW_SINUS:
         case ACTION_SHAPE_RECOGNIZER:
             setShapeTool(type, enabled);
             break;
@@ -1137,7 +1142,12 @@ void Control::setShapeTool(ActionType type, bool enabled) {
          type == ACTION_TOOL_DRAW_COORDINATE_SYSTEM) ||
         (this->toolHandler->getDrawingType() == DRAWING_TYPE_ELLIPSE && type == ACTION_TOOL_DRAW_ELLIPSE) ||
         (this->toolHandler->getDrawingType() == DRAWING_TYPE_SPLINE && type == ACTION_TOOL_DRAW_SPLINE) ||
-        (this->toolHandler->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER && type == ACTION_SHAPE_RECOGNIZER)) {
+        (this->toolHandler->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER && type == ACTION_SHAPE_RECOGNIZER) ||
+        (this->toolHandler->getDrawingType() == DRAWING_TYPE_EXP && type == ACTION_TOOL_DRAW_EXP) ||
+        (this->toolHandler->getDrawingType() == DRAWING_TYPE_GAUSS && type == ACTION_TOOL_DRAW_GAUSS) ||
+        (this->toolHandler->getDrawingType() == DRAWING_TYPE_POLY && type == ACTION_TOOL_DRAW_POLY) ||
+        (this->toolHandler->getDrawingType() == DRAWING_TYPE_POLYNEG && type == ACTION_TOOL_DRAW_POLYNEG) ||
+        (this->toolHandler->getDrawingType() == DRAWING_TYPE_SINUS && type == ACTION_TOOL_DRAW_SINUS)) {
         return;
     }
 
@@ -1164,6 +1174,26 @@ void Control::setShapeTool(ActionType type, bool enabled) {
 
         case ACTION_TOOL_DRAW_SPLINE:
             this->toolHandler->setDrawingType(DRAWING_TYPE_SPLINE);
+            break;
+
+        case ACTION_TOOL_DRAW_EXP:
+            this->toolHandler->setDrawingType(DRAWING_TYPE_EXP);
+            break;
+
+        case ACTION_TOOL_DRAW_GAUSS:
+            this->toolHandler->setDrawingType(DRAWING_TYPE_GAUSS);
+            break;
+
+        case ACTION_TOOL_DRAW_POLY:
+            this->toolHandler->setDrawingType(DRAWING_TYPE_POLY);
+            break;
+
+        case ACTION_TOOL_DRAW_POLYNEG:
+            this->toolHandler->setDrawingType(DRAWING_TYPE_POLYNEG);
+            break;
+
+        case ACTION_TOOL_DRAW_SINUS:
+            this->toolHandler->setDrawingType(DRAWING_TYPE_SINUS);
             break;
 
         case ACTION_SHAPE_RECOGNIZER:
@@ -1694,6 +1724,11 @@ void Control::toolChanged() {
     fireEnableAction(ACTION_TOOL_DRAW_ARROW, toolHandler->hasCapability(TOOL_CAP_ARROW));
     fireEnableAction(ACTION_TOOL_DRAW_COORDINATE_SYSTEM, toolHandler->hasCapability(TOOL_CAP_ARROW));
     fireEnableAction(ACTION_TOOL_DRAW_SPLINE, toolHandler->hasCapability(TOOL_CAP_SPLINE));
+    fireEnableAction(ACTION_TOOL_DRAW_EXP, toolHandler->hasCapability(TOOL_CAP_EXP));
+    fireEnableAction(ACTION_TOOL_DRAW_GAUSS, toolHandler->hasCapability(TOOL_CAP_GAUSS));
+    fireEnableAction(ACTION_TOOL_DRAW_POLY, toolHandler->hasCapability(TOOL_CAP_POLY));
+    fireEnableAction(ACTION_TOOL_DRAW_POLYNEG, toolHandler->hasCapability(TOOL_CAP_POLYNEG));
+    fireEnableAction(ACTION_TOOL_DRAW_SINUS, toolHandler->hasCapability(TOOL_CAP_SINUS));
     fireEnableAction(ACTION_SHAPE_RECOGNIZER, toolHandler->hasCapability(TOOL_CAP_RECOGNIZER));
 
     bool enableSize = toolHandler->hasCapability(TOOL_CAP_SIZE);
@@ -1732,6 +1767,16 @@ void Control::toolChanged() {
         rulerAction = ACTION_TOOL_DRAW_COORDINATE_SYSTEM;
     } else if (toolHandler->getDrawingType() == DRAWING_TYPE_SPLINE) {
         rulerAction = ACTION_TOOL_DRAW_SPLINE;
+    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_EXP) {
+        rulerAction = ACTION_TOOL_DRAW_EXP;
+    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_GAUSS) {
+        rulerAction = ACTION_TOOL_DRAW_GAUSS;
+    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_POLY) {
+        rulerAction = ACTION_TOOL_DRAW_POLY;
+    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_POLYNEG) {
+        rulerAction = ACTION_TOOL_DRAW_POLYNEG;
+    } else if (toolHandler->getDrawingType() == DRAWING_TYPE_SINUS) {
+        rulerAction = ACTION_TOOL_DRAW_SINUS;
     }
 
     fireActionSelected(GROUP_RULER, rulerAction);

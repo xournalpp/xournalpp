@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24.0px"
+   height="24.0px"
+   viewBox="0 0 24.0 24.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="draw-gauss.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15, custom)">
+  <defs
+     id="defs1464" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="30.073405"
+     inkscape:cx="11.144001"
+     inkscape:cy="13.071127"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1026"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2034" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata1467">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;fill-opacity:0.3;stroke:#000000;stroke-width:2.07874;paint-order:fill markers stroke"
+       d="m 2,17.980704 c 0.60606,-0.0175 1.21212,-0.0464 1.81818,-0.1597 0.60606,-0.1132 1.21212,-0.3119 1.81818,-0.7721 0.60606,-0.4601 1.21212,-1.2083 1.81819,-2.3439 0.60606,-1.1356 1.21212,-2.68207 1.81818,-4.23966 0.60606,-1.5575802 1.21207,-3.0718002 1.81817,-3.8573402 0.6061,-0.78555 1.2121,-0.78414 1.8182,0 0.6061,0.78414 1.2121,2.29983 1.8182,3.8573402 0.606,1.55752 1.2121,3.10334 1.8182,4.23966 0.606,1.1364 1.2121,1.8833 1.8181,2.3439 0.6061,0.4607 1.2122,0.6587 1.8182,0.7721 0.6061,0.1135 1.2121,0.1422 1.8182,0.1597"
+       title="4*exp(-x*x)"
+       id="path2089" />
+  </g>
+</svg>

@@ -128,7 +128,16 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Stroke recognizer"));
     // DRAWING_TYPE_SPLINE
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Spline"));
-
+    // DRAWING_TYPE_EXP
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Exp"));
+    // DRAWING_TYPE_GAUSS
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Gauss"));
+    // DRAWING_TYPE_POLY
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Poly"));
+    // DRAWING_TYPE_POLYNEG
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw PolyNeg"));
+    // DRAWING_TYPE_SINUS
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDrawingType), _("Draw Sinus"));
 
     // Values in glade GUI!
     this->cbEraserType = get("cbEraserType");

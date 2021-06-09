@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24.0px"
+   height="24.0px"
+   viewBox="0 0 24.0 24.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="draw-exp.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15, custom)">
+  <defs
+     id="defs833" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="28.25296"
+     inkscape:cx="11.067471"
+     inkscape:cy="12.12547"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="true"
+     inkscape:window-width="1343"
+     inkscape:window-height="908"
+     inkscape:window-x="547"
+     inkscape:window-y="140"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1403" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata836">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;fill-opacity:0.3;stroke:#ffffff;stroke-width:2.07874;paint-order:fill markers stroke"
+       d="m 1.5333671,20.527645 c 0.35088,-0.0233 0.70175,-0.0491 1.05263,-0.0779 0.35088,-0.0288 0.70176,-0.0606 1.05263,-0.0961 0.35088,-0.0356 0.70176,-0.0749 1.05263,-0.1187 0.35088,-0.0439 0.70176,-0.0924 1.05264,-0.1465 0.35087,-0.0541 0.70175,-0.114 1.05263,-0.1808 0.35088,-0.0668 0.70175,-0.1407 1.05263,-0.2232 0.35088,-0.0825 0.70175,-0.1736 1.05263,-0.2755 0.35088,-0.1018 0.70178,-0.2143 1.05268,-0.34 0.3507999,-0.1257 0.7016999,-0.2646 1.0525999,-0.4197 0.3509,-0.1551 0.7017,-0.3266 1.0526,-0.518 0.3509,-0.1915 0.7018,-0.4031 1.0526,-0.6395 0.3509,-0.2363 0.7018,-0.4975 1.0527,-0.78926 0.3509,-0.29173 0.7017,-0.61414 1.0526,-0.97423 0.3509,-0.36009 0.7018,-0.75805 1.0526,-1.20252 0.3509,-0.44446 0.7018,-0.93568 1.0527,-1.4843 0.3509,-0.54862 0.7017,-1.15494 1.0526,-1.83212 0.3509,-0.67717 0.7018,-1.4255804 1.0526,-2.2614304 0.3509,-0.83585 0.7018,-1.759629 1.0527,-2.791345 0.3508,-1.031715 0.7017,-2.171965 1.0526,-3.445435"
+       title="exp(x)"
+       id="path2111" />
+  </g>
+</svg>
