@@ -3,6 +3,9 @@
 #include <cmath>
 #include <numeric>
 
+// #include <execinfo.h>
+
+#include "model/Path.h"
 #include "serializing/ObjectInputStream.h"
 #include "serializing/ObjectOutputStream.h"
 
@@ -28,7 +31,6 @@ void Stroke::applyStyleFrom(const Stroke* other) {
 auto Stroke::cloneStroke() const -> Stroke* {
     auto* s = new Stroke();
     s->applyStyleFrom(this);
-    s->points = this->points;
     s->x = this->x;
     s->y = this->y;
     s->width = this->width;  // stroke width, not bounding box width
@@ -36,6 +38,8 @@ auto Stroke::cloneStroke() const -> Stroke* {
     s->Element::height = this->Element::height;
     s->snappedBounds = this->snappedBounds;
     s->sizeCalculated = this->sizeCalculated;
+    s->path = this->path->clone();
+    s->pressureSensitive = this->pressureSensitive;
     return s;
 }
 
@@ -52,7 +56,7 @@ void Stroke::serialize(ObjectOutputStream& out) {
 
     out.writeInt(fill);
 
-    out.writeData(this->points.data(), this->points.size(), sizeof(Point));
+    this->path->serialize(out);
 
     this->lineStyle.serialize(out);
 
@@ -70,14 +74,21 @@ void Stroke::readSerialized(ObjectInputStream& in) {
 
     this->fill = in.readInt();
 
-    Point* p{};
-    int count{};
-    in.readData(reinterpret_cast<void**>(&p), &count);
-    this->points = std::vector<Point>{p, p + count};
-    g_free(p);
+    string name = in.getNextObjectName();
+    if (name == "Spline") {
+        path = std::make_shared<Spline>(in);
+    } else if (name == "PiecewiseLinearPath") {
+        path = std::make_shared<PiecewiseLinearPath>(in);
+    } else {
+        path = nullptr;
+    }
+
     this->lineStyle.readSerialized(in);
 
     in.endObject();
+
+    this->pressureSensitive = this->toolType == STROKE_TOOL_PEN && this->path && !this->path->empty() &&
+                              this->path->getFirstKnot().z != Point::NO_PRESSURE;
 }
 
 /**
@@ -105,60 +116,100 @@ auto Stroke::getWidth() const -> double { return this->width; }
 auto Stroke::rescaleWithMirror() -> bool { return true; }
 
 auto Stroke::isInSelection(ShapeContainer* container) -> bool {
-    for (auto&& p: this->points) {
-        double px = p.x;
-        double py = p.y;
+    return this->path && (this->Element::isInSelection(container) || this->path->isInSelection(container));
+}
 
-        if (!container->contains(px, py)) {
-            return false;
-        }
+// void Stroke::setFirstPoint(double x, double y) {
+//     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+//         g_warning("Use of deprecated Stroke::setFirstPoint on stroke without piecewise linear path");
+//         return;
+//     }
+//     if (!this->path->empty()) {
+//         std::shared_ptr<PiecewiseLinearPath> PLPath = std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path);
+//         Point p(x, y, PLPath->getFirstKnot().z);
+//         PLPath->setFirstPoint(p);
+//         this->sizeCalculated = false;
+//     }
+// }
+
+// void Stroke::setLastPoint(double x, double y) { setLastPoint({x, y}); }
+//
+// void Stroke::setLastPoint(const Point& p) {
+//     if (!this->points.empty()) {
+//         this->points.back() = p;
+//         this->sizeCalculated = false;
+//     }
+// }
+
+// void Stroke::addPoint(const Point& p) {
+//     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+//         g_warning("Use of deprecated Stroke::addPoint on stroke without piecewise linear path");
+//         //         void* array[10];
+//         //         int size = backtrace(array, 10);
+//         //         backtrace_symbols_fd(array, size, STDERR_FILENO);
+//         return;
+//     }
+//     std::shared_ptr<PiecewiseLinearPath> PLPath = std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path);
+//     PLPath->addLineSegmentTo(p);
+//     this->sizeCalculated = false;
+// }
+
+auto Stroke::getPointCount() const -> int {
+    if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+        g_warning("Use of deprecated Stroke::getPointCount on stroke without piecewise linear path");
+        //         void* array[10];
+        //         int size = backtrace(array, 10);
+        //         backtrace_symbols_fd(array, size, STDERR_FILENO);
+        return 0;
     }
-
-    return true;
+    return this->path->getData().size();
 }
 
-void Stroke::setFirstPoint(double x, double y) {
-    if (!this->points.empty()) {
-        Point& p = this->points.front();
-        p.x = x;
-        p.y = y;
-        this->sizeCalculated = false;
-    }
-}
+// auto Stroke::getPointVector() const -> std::vector<Point> const& {
+//     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+//         g_warning("Use of deprecated Stroke::getPointVector on stroke without piecewise linear path");
+//         //         void* array[10];
+//         //         int size = backtrace(array, 10);
+//         //         backtrace_symbols_fd(array, size, STDERR_FILENO);
+//     }
+//     return this->path->getData();
+// }
 
-void Stroke::setLastPoint(double x, double y) { setLastPoint({x, y}); }
+// void Stroke::deletePointsFrom(int index) { points.resize(std::min(size_t(index), points.size())); }
 
-void Stroke::setLastPoint(const Point& p) {
-    if (!this->points.empty()) {
-        this->points.back() = p;
-        this->sizeCalculated = false;
-    }
-}
-
-void Stroke::addPoint(const Point& p) {
-    this->points.emplace_back(p);
-    this->sizeCalculated = false;
-}
-
-auto Stroke::getPointCount() const -> int { return this->points.size(); }
-
-auto Stroke::getPointVector() const -> std::vector<Point> const& { return points; }
-
-void Stroke::deletePointsFrom(int index) { points.resize(std::min(size_t(index), points.size())); }
-
-void Stroke::deletePoint(int index) { this->points.erase(std::next(begin(this->points), index)); }
+// void Stroke::deletePoint(int index) { this->points.erase(std::next(begin(this->points), index)); }
 
 auto Stroke::getPoint(int index) const -> Point {
-    if (index < 0 || index >= this->points.size()) {
+    if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+        g_warning("Use of deprecated Stroke::getPoint on stroke without piecewise linear path");
+        //         void* array[10];
+        //         int size = backtrace(array, 10);
+        //         backtrace_symbols_fd(array, size, STDERR_FILENO);
+        return Point(0, 0);
+    }
+    const std::vector<Point>& data = this->path->getData();
+    if (index < 0 || index >= data.size()) {
         g_warning("Stroke::getPoint(%i) out of bounds!", index);
         return Point(0, 0, Point::NO_PRESSURE);
     }
-    return points.at(index);
+    return data.at(index);
 }
 
-auto Stroke::getPoints() const -> const Point* { return this->points.data(); }
+// auto Stroke::getPoints() const -> const Point* {
+//     if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+//         g_warning("Use of deprecated Stroke::getPoint on stroke without piecewise linear path");
+//         //         void* array[10];
+//         //         int size = backtrace(array, 10);
+//         //         backtrace_symbols_fd(array, size, STDERR_FILENO);
+//     }
+//     return this->path->getData().data();
+// }
 
-void Stroke::freeUnusedPointItems() { this->points = {begin(this->points), end(this->points)}; }
+void Stroke::freeUnusedPointItems() {
+    if (path) {
+        this->path->freeUnusedPointItems();
+    }
+}
 
 void Stroke::setToolType(StrokeTool type) { this->toolType = type; }
 
@@ -169,174 +220,109 @@ void Stroke::setLineStyle(const LineStyle& style) { this->lineStyle = style; }
 auto Stroke::getLineStyle() const -> const LineStyle& { return this->lineStyle; }
 
 void Stroke::move(double dx, double dy) {
-    for (auto&& point: points) {
-        point.x += dx;
-        point.y += dy;
+    path->move(dx, dy);
+
+    for (auto&& p: pointCache) {
+        p.x += dx;
+        p.y += dy;
     }
 
-    this->sizeCalculated = false;
+    if (this->sizeCalculated) {
+        Element::x += dx;
+        Element::y += dy;
+        Element::snappedBounds.x += dx;
+        Element::snappedBounds.y += dy;
+    }
 }
 
 void Stroke::rotate(double x0, double y0, double th) {
-    cairo_matrix_t rotMatrix;
-    cairo_matrix_init_identity(&rotMatrix);
-    cairo_matrix_translate(&rotMatrix, x0, y0);
-    cairo_matrix_rotate(&rotMatrix, th);
-    cairo_matrix_translate(&rotMatrix, -x0, -y0);
+    cairo_matrix_t mat = this->path->rotate(x0, y0, th);
 
-    for (auto&& p: points) {
-        cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y);
-    }
-    // Width and Height will likely be changed after this operation
-    calcSize();
-}
-
-void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
-    double fz = (restoreLineWidth) ? 1 : sqrt(std::abs(fx * fy));
-    cairo_matrix_t scaleMatrix;
-    cairo_matrix_init_identity(&scaleMatrix);
-    cairo_matrix_translate(&scaleMatrix, x0, y0);
-    cairo_matrix_rotate(&scaleMatrix, rotation);
-    cairo_matrix_scale(&scaleMatrix, fx, fy);
-    cairo_matrix_rotate(&scaleMatrix, -rotation);
-    cairo_matrix_translate(&scaleMatrix, -x0, -y0);
-
-    for (auto&& p: points) {
-        cairo_matrix_transform_point(&scaleMatrix, &p.x, &p.y);
-
-        if (p.z != Point::NO_PRESSURE) {
-            p.z *= fz;
-        }
-    }
-    this->width *= fz;
+    for (auto&& p: pointCache) { cairo_matrix_transform_point(&mat, &p.x, &p.y); }
 
     this->sizeCalculated = false;
 }
 
-auto Stroke::hasPressure() const -> bool {
-    if (!this->points.empty()) {
-        return this->points[0].z != Point::NO_PRESSURE;
+void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
+    std::pair<cairo_matrix_t, double> res = this->path->scale(x0, y0, fx, fy, rotation, restoreLineWidth);
+
+    if (restoreLineWidth) {
+        for (auto&& p: pointCache) { cairo_matrix_transform_point(&(res.first), &p.x, &p.y); }
+    } else {
+        for (auto&& p: pointCache) {
+            cairo_matrix_transform_point(&(res.first), &p.x, &p.y);
+            p.z *= res.second;
+        }
+        this->width *= res.second;
     }
-    return false;
+
+    this->sizeCalculated = false;
 }
 
-auto Stroke::getAvgPressure() const -> double {
-    return std::accumulate(begin(this->points), end(this->points), 0.0,
-                           [](double l, Point const& p) { return l + p.z; }) /
-           this->points.size();
-}
+auto Stroke::hasPressure() const -> bool { return pressureSensitive; }
+void Stroke::setPressureSensitive(bool b) { pressureSensitive = b; }
 
-void Stroke::scalePressure(double factor) {
-    if (!hasPressure()) {
-        return;
-    }
-    for (auto&& p: this->points) {
-        p.z *= factor;
-    }
-}
+void Stroke::scalePressure(double factor){};  // this->path->scalePressure(factor); }
 
-void Stroke::clearPressure() {
-    for (auto&& p: points) {
-        p.z = Point::NO_PRESSURE;
-    }
-}
-
-void Stroke::setLastPressure(double pressure) {
-    if (!this->points.empty()) {
-        this->points.back().z = pressure;
-    }
-}
+// void Stroke::clearPressure() {
+//     for (auto&& p: points) {
+//         p.z = Point::NO_PRESSURE;
+//     }
+// }
 
 void Stroke::setSecondToLastPressure(double pressure) {
-    auto const pointCount = this->getPointCount();
-    if (pointCount >= 2) {
-        this->points[pointCount - 2].z = pressure;
+    if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+        g_warning("Use of deprecated Stroke::getPressure on stroke without piecewise linear path");
+        return;
     }
+    std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path)->setSecondToLastPressure(pressure);
 }
 
-void Stroke::setPressure(const vector<double>& pressure) {
-    // The last pressure is not used - as there is no line drawn from this point
-    if (this->points.size() - 1 != pressure.size()) {
-        g_warning("invalid pressure point count: %s, expected %s", std::to_string(pressure.size()).data(),
-                  std::to_string(this->points.size() - 1).data());
-    }
+// void Stroke::setLastPressure(double pressure) {
+//     if (!this->points.empty()) {
+//         this->points.back().z = pressure;
+//     }
+// }
 
-    auto max_size = std::min(pressure.size(), this->points.size() - 1);
-    for (size_t i = 0U; i != max_size; ++i) {
-        this->points[i].z = pressure[i];
+void Stroke::setPressure(const vector<double>& pressure) {
+    if (!this->path || this->path->getType() != Path::PIECEWISE_LINEAR) {
+        g_warning("Use of deprecated Stroke::getPressure on stroke without piecewise linear path");
+        return;
     }
+    std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path)->setPressure(pressure);
+}
+
+double Stroke::getAvgPressure() {
+    if (!this->hasPressure()) {
+        return Point::NO_PRESSURE;
+    }
+    const std::vector<Point>& data = this->path->getData();
+    return std::accumulate(data.begin(), data.end(), 0.0, [](double l, Point const& p) { return l + p.z; }) /
+           (double)data.size();
 }
 
 /**
  * checks if the stroke is intersected by the eraser rectangle
  */
 auto Stroke::intersects(double x, double y, double halfEraserSize) -> bool {
-    return intersects(x, y, halfEraserSize, nullptr);
+    Rectangle<double> eraserBox(x - halfEraserSize, y - halfEraserSize, 2 * halfEraserSize, 2 * halfEraserSize);
+    intersectionParameters = path->intersectWithRectangle(eraserBox);
+    return !intersectionParameters.empty();
 }
 
 /**
  * checks if the stroke is intersected by the eraser rectangle
  */
 auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) -> bool {
-    if (this->points.empty()) {
-        return false;
-    }
-
-    double x1 = x - halfEraserSize;
-    double x2 = x + halfEraserSize;
-    double y1 = y - halfEraserSize;
-    double y2 = y + halfEraserSize;
-
-    double lastX = points[0].x;
-    double lastY = points[0].y;
-    for (auto&& point: points) {
-        double px = point.x;
-        double py = point.y;
-
-        if (px >= x1 && py >= y1 && px <= x2 && py <= y2) {
-            if (gap) {
-                *gap = 0;
-            }
-            return true;
+    double dMin = halfEraserSize * halfEraserSize;
+    double dMax = 4.0 * dMin;
+    double dSquared = this->path->squaredDistanceToPoint(Point(x, y), dMin, dMax);
+    if (dSquared < dMax) {
+        if (gap) {
+            *gap = std::max(0.0, std::sqrt(dSquared) - halfEraserSize);
         }
-
-        double len = hypot(px - lastX, py - lastY);
-        if (len >= halfEraserSize) {
-            /**
-             * The distance of the center of the eraser box to the line passing through (lastx, lasty) and (px, py)
-             */
-            double p = std::abs((x - lastX) * (lastY - py) + (y - lastY) * (px - lastX)) / len;
-
-            // If the distance p of the center of the eraser box to the (full) line is in the range,
-            // we check whether the eraser box is not too far from the line segment through the two points.
-
-            if (p <= halfEraserSize) {
-                double centerX = (lastX + px) / 2;
-                double centerY = (lastY + py) / 2;
-                double distance = hypot(x - centerX, y - centerY);
-
-                // For the above check we imagine a circle whose center is the mid point of the two points of the stroke
-                // and whose radius is half the length of the line segment plus half the diameter of the eraser box
-                // plus some small padding
-                // If the center of the eraser box lies within that circle then we consider it to be close enough
-
-                distance -= halfEraserSize * std::sqrt(2);
-
-                constexpr double PADDING = 0.1;
-
-                if (distance <= len / 2 + PADDING) {
-                    if (gap) {
-                        *gap = distance;
-                    }
-                    return true;
-                }
-            }
-        }
-
-        lastX = px;
-        lastY = py;
+        return true;
     }
-
     return false;
 }
 
@@ -347,55 +333,24 @@ auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) 
  * Also used for Selected Bounding box.
  */
 void Stroke::calcSize() const {
-    if (this->points.empty()) {
-        Element::x = 0;
-        Element::y = 0;
+    if (this->path->getType() == Path::PIECEWISE_LINEAR && hasPressure()) {
+        std::shared_ptr<PiecewiseLinearPath> ptr = std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path);
+        std::pair<Rectangle<double>, Rectangle<double>> boxes = ptr->getBoundingBoxes();
 
-        // The size of the rectangle, not the size of the pen!
-        Element::width = 0;
-        Element::height = 0;
+        Element::x = boxes.second.x;
+        Element::y = boxes.second.y;
+        Element::width = boxes.second.width;
+        Element::height = boxes.second.height;
 
-        // used for snapping
-        Element::snappedBounds = Rectangle<double>{};
+        Element::snappedBounds = boxes.first;
+    } else {
+        Element::snappedBounds = this->path->getThinBoundingBox();
+        double halfWidth = 0.5 * this->width;
+        Element::x = Element::snappedBounds.x - halfWidth;
+        Element::y = Element::snappedBounds.y - halfWidth;
+        Element::width = Element::snappedBounds.width + width;
+        Element::height = Element::snappedBounds.height + width;
     }
-
-    double minX = DBL_MAX;
-    double maxX = DBL_MIN;
-    double minY = DBL_MAX;
-    double maxY = DBL_MIN;
-
-    double minSnapX = DBL_MAX;
-    double maxSnapX = DBL_MIN;
-    double minSnapY = DBL_MAX;
-    double maxSnapY = DBL_MIN;
-
-    bool hasPressure = points[0].z != Point::NO_PRESSURE;
-    double halfThick = this->width / 2.0;  //  accommodate for pen width
-
-    for (auto&& p: points) {
-        if (hasPressure) {
-            halfThick = p.z / 2.0;
-        }
-
-        minX = std::min(minX, p.x - halfThick);
-        minY = std::min(minY, p.y - halfThick);
-
-        maxX = std::max(maxX, p.x + halfThick);
-        maxY = std::max(maxY, p.y + halfThick);
-
-        minSnapX = std::min(minSnapX, p.x);
-        minSnapY = std::min(minSnapY, p.y);
-
-        maxSnapX = std::max(maxSnapX, p.x);
-        maxSnapY = std::max(maxSnapY, p.y);
-    }
-
-    Element::x = minX;
-    Element::y = minY;
-    Element::width = maxX - minX;
-    Element::height = maxY - minY;
-
-    Element::snappedBounds = Rectangle<double>(minSnapX, minSnapY, maxSnapX - minSnapX, maxSnapY - minSnapY);
 }
 
 auto Stroke::getEraseable() -> EraseableStroke* { return this->eraseable; }
@@ -405,9 +360,72 @@ void Stroke::setEraseable(EraseableStroke* eraseable) { this->eraseable = erasea
 void Stroke::debugPrint() {
     g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t)this % this->hasPressure()));
 
-    for (auto&& p: points) {
-        g_message("%lf / %lf", p.x, p.y);
-    }
+    const std::vector<Point>& data = this->path->getData();
+    for (auto&& p: data) { g_message("%lf / %lf", p.x, p.y); }
 
     g_message("\n");
 }
+
+void Stroke::splineFromPLPath() {
+    if (!this->path || this->path->empty() || this->path->getType() != Path::PIECEWISE_LINEAR) {
+        g_warning("Stroke::splineFromPLPath called on stroke without a piecewise linear path");
+        return;
+    }
+
+    if (this->path->nbSegments() == 1) {
+        // Only 1 segment. No spline required
+        return;
+    }
+
+    if (this->hasPressure() && this->path->getLastKnot().z == Point::NO_PRESSURE) {
+        /**
+         * Backward compatiblity
+         * Set an extrapolated pressure value for the last point
+         */
+        std::shared_ptr<PiecewiseLinearPath> PLPath = std::dynamic_pointer_cast<PiecewiseLinearPath>(this->path);
+        PLPath->extrapolateLastPressureValue();
+    }
+
+    this->path = std::make_shared<Spline>(Spline::getSchneiderApproximation(this->path->getData()));
+}
+
+const std::vector<Point>& Stroke::getPointsToDraw() {
+    if (!this->path) {
+        g_warning("Stroke::getPointsToDraw call on empty stroke. This should never happen.");
+        return pointCache;
+    }
+    if (this->path->getType() == Path::SPLINE) {
+        if (!this->hasPressure()) {
+            g_warning("Stroke::getPointsToDraw call on pressureless spline. This should never happen.");
+        } else if (this->pointCache.empty()) {
+            // Fill the cache now
+            dynamic_cast<Spline*>(path.get())->toPoints(pointCache);
+        }
+        return pointCache;
+    }
+    if (this->path->getType() == Path::PIECEWISE_LINEAR) {
+        return this->path->getData();
+    }
+    g_warning("Stroke::getPointsToDraw call on unknown path type. This should never happen.");
+    return pointCache;
+}
+
+void Stroke::setPath(std::shared_ptr<Path> p) { path = p; }
+
+void Stroke::unsetSizeCalculated() { this->sizeCalculated = false; }
+
+void Stroke::Attorney::setBoundingBoxes(Stroke& stroke, const Rectangle<double>& thinBB,
+                                        const Rectangle<double>& thickBB) {
+    stroke.snappedBounds = thinBB;
+    stroke.Element::x = thickBB.x;
+    stroke.Element::y = thickBB.y;
+    stroke.Element::width = thickBB.width;
+    stroke.Element::height = thickBB.height;
+    stroke.sizeCalculated = true;
+}
+
+// TODO: Change the StrokeHandler's behaviour on pressure
+// TODO: Adapt SplineHandler
+// TODO: Stroke::rotate Stroke::scale Stroke::calcSize Stroke::isInSelection
+// TODO: Stroke::scalePressure, hasPressure
+// TODO: Stroke::intersects

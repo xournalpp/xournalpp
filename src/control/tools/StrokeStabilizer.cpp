@@ -100,8 +100,8 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     Point A = stroke->getPoint(pointCount - 2);
     Point C(ev.x / zoom, ev.y / zoom);
 
-    MathVect vAB = {B.x - A.x, B.y - A.y};
-    MathVect vBC = {C.x - B.x, C.y - B.y};
+    MathVect2 vAB(A, B);
+    MathVect2 vBC(B, C);
     const double squaredNormBC = vBC.dx * vBC.dx + vBC.dy * vBC.dy;
     const double normBC = std::sqrt(squaredNormBC);
     const double normAB = vAB.norm();
@@ -110,18 +110,7 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
      * The first argument of std::min would give a symmetric quadratic spline segment.
      * The std::min and its second argument ensure the spline segment stays reasonably close to its nodes
      */
-    double distance = std::min(std::abs(squaredNormBC * normAB / (2 * MathVect::scalarProduct(vAB, vBC))), normBC);
-
-    // Quadratic control point
-    Point Q = B.lineTo(A, -distance);
-
-    /**
-     * The quadratic control point is converted into two cubic control points
-     */
-    // Equivalent to fp = B.lineTo(Q, 2/3*distance), but avoids recomputing the norms
-    Point fp((Q.x - B.x) * 2 / 3 + B.x, (Q.y - B.y) * 2 / 3 + B.y);
-    // Equivalent to sp = C.lineTo(Q, 2/3*distance), but avoids recomputing the norms
-    Point sp((Q.x - C.x) * 2 / 3 + C.x, (Q.y - C.y) * 2 / 3 + C.y);
+    double distance = std::min(std::abs(squaredNormBC * normAB / (2 * MathVect2::scalarProduct(vAB, vBC))), normBC);
 
     /**
      * Set the pressure values. We assume the tool is pressure sensitive:
@@ -130,22 +119,26 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     bool usePressure = ev.pressure != Point::NO_PRESSURE;
     if (usePressure) {
         C.z = ev.pressure * stroke->getWidth();
-        double coeff = normBC / 2 + distance;  // Very rough estimation of the spline's length
-        B.z = (coeff * A.z + normAB * C.z) / (normAB + coeff);
-        stroke->setLastPressure(B.z);
     }
+
+    // Quadratic control point
+    Point Q = B.lineTo(A, -distance);
+
+    /**
+     * The quadratic control point is converted into two cubic control points
+     */
+    Point fp = B.relativeLineTo(Q, 2.0 / 3.0);
+    Point sp = C.relativeLineTo(Q, 2.0 / 3.0);
 
     SplineSegment spline(B, fp, sp, C);
     /**
      * TODO Add support for spline segments in Stroke and replace this point sequence by a single spline segment
      */
-    std::list<Point> pointsToPaint = spline.toPointSequence(usePressure);
+    std::vector<Point> pointsToPaint;
+    spline.toPoints(pointsToPaint);
 
-    pointsToPaint.pop_front();  // Point B has already been painted
-
-    for (auto&& point: pointsToPaint) {
-        strokeHandler->drawSegmentTo(point);
-    }
+    // Do not add the first point (B): it is already painted
+    for (auto it = pointsToPaint.cbegin() + 1; it != pointsToPaint.cend(); ++it) { strokeHandler->drawSegmentTo(*it); }
     C.z = ev.pressure;  // Normal state after having added a segment. Useful?
     strokeHandler->drawSegmentTo(C);
 }
@@ -166,7 +159,7 @@ void StrokeStabilizer::Deadzone::processEvent(const PositionInputData& pos) {
      */
     lastEvent = Event(pos);
 
-    MathVect movement = {lastEvent.x - lastPaintedEvent.x, lastEvent.y - lastPaintedEvent.y};
+    MathVect2 movement = {lastEvent.x - lastPaintedEvent.x, lastEvent.y - lastPaintedEvent.y};
     double ratio = deadzoneRadius / movement.norm();
 
     if (ratio >= 1) {
@@ -178,7 +171,7 @@ void StrokeStabilizer::Deadzone::processEvent(const PositionInputData& pos) {
         return;
     }
 
-    if (cuspDetection && (MathVect::scalarProduct(movement, lastLiveDirection) < 0)) {
+    if (cuspDetection && (MathVect2::scalarProduct(movement, lastLiveDirection) < 0)) {
         /**
          * lastLiveDirection != 0 and the angle between movement and lastLiveDirection is greater than 90°
          * We have a clear change of direction. This is a cusp. Draw the entire cusp
@@ -194,7 +187,7 @@ void StrokeStabilizer::Deadzone::processEvent(const PositionInputData& pos) {
          * Paint the way back from the tip of the cusp
          * To do so, we create an artificial point between lastEvent and lastLiveEvent
          */
-        MathVect diff = {lastEvent.x - lastLiveEvent.x, lastEvent.y - lastLiveEvent.y};
+        MathVect2 diff = {lastEvent.x - lastLiveEvent.x, lastEvent.y - lastLiveEvent.y};
         double diffNorm = diff.norm();
         double coeff = deadzoneRadius / diffNorm;
 
@@ -254,8 +247,8 @@ void StrokeStabilizer::Inertia::processEvent(const PositionInputData& pos) {
     /**
      * Compute the acceleration due to the spring action
      */
-    MathVect springAcceleration = {(lastEvent.x - lastPaintedEvent.x) / mass,
-                                   (lastEvent.y - lastPaintedEvent.y) / mass};
+    MathVect2 springAcceleration = {(lastEvent.x - lastPaintedEvent.x) / mass,
+                                    (lastEvent.y - lastPaintedEvent.y) / mass};
 
     speed.dx = speed.dx * oneMinusDrag + springAcceleration.dx;
     speed.dy = speed.dy * oneMinusDrag + springAcceleration.dy;

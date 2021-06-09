@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <cmath>
+
 #include "BaseStrokeHandler.h"
 
 class EllipseHandler: public BaseStrokeHandler {
@@ -20,9 +22,10 @@ public:
     virtual ~EllipseHandler();
 
 private:
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    void createPath(const Point& p, bool snapToGrid) override;
+    const Path& getPath() const override;
+    virtual void drawShape(Point& currentPoint, const PositionInputData& pos) override;
 
-private:
-    Point startPoint;
-    bool started = false;
+protected:
+    std::shared_ptr<Spline> path;
 };

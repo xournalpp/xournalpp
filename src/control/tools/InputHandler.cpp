@@ -3,7 +3,6 @@
 #include <cmath>
 
 #include "control/Control.h"
-#include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/MainWindow.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
@@ -32,7 +31,7 @@ void InputHandler::resetShapeRecognizer() {
     // Does nothing here. Implemented in the extending classes
 }
 
-void InputHandler::createStroke(Point p) {
+void InputHandler::createStroke() {
     ToolHandler* h = xournal->getControl()->getToolHandler();
 
     stroke = new Stroke();
@@ -57,8 +56,6 @@ void InputHandler::createStroke(Point p) {
         stroke->setToolType(STROKE_TOOL_ERASER);
         stroke->setColor(0xffffffU);
     }
-
-    stroke->addPoint(p);
 }
 
 auto InputHandler::validMotion(Point p, Point q) -> bool {

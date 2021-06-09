@@ -7,8 +7,8 @@
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
+#include "model/Path.h"
 #include "undo/InsertUndoAction.h"
-
 
 guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
 
@@ -16,9 +16,9 @@ guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
                                      bool flipControl):
         InputHandler(xournal, redrawable, page),
-        snappingHandler(xournal->getControl()->getSettings()),
         flipShift(flipShift),
-        flipControl(flipControl) {}
+        flipControl(flipControl),
+        snappingHandler(xournal->getControl()->getSettings()) {}
 
 BaseStrokeHandler::~BaseStrokeHandler() = default;
 
@@ -57,8 +57,8 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
 
 
         Point malleablePoint = this->currPoint;  // make a copy as it might get snapped to grid.
+        this->stroke->unsetSizeCalculated();
         this->drawShape(malleablePoint, pos);
-
 
         rect.unite(stroke->boundingRect());
 
@@ -78,26 +78,24 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
     double zoom = xournal->getZoom();
     double x = pos.x / zoom;
     double y = pos.y / zoom;
-    int pointCount = stroke->getPointCount();
 
     Point currentPoint(x, y);
-    Rectangle<double> rect = stroke->boundingRect();
 
-    if (pointCount > 0) {
-        if (!validMotion(currentPoint, stroke->getPoint(pointCount - 1))) {
+    const Path& path = getPath();
+    if (!path.empty()) {
+        if (!validMotion(currentPoint, path.getLastKnot())) {
             return true;
         }
     }
 
-    this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
-                                  stroke->getElementHeight());
+    Rectangle rect = this->stroke->boundingRect();
 
+    this->stroke->unsetSizeCalculated();
     drawShape(currentPoint, pos);
 
-    rect.unite(stroke->boundingRect());
-    double w = stroke->getWidth();
+    rect.unite(this->stroke->boundingRect());
 
-    redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
+    redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
 
     return true;
 }
@@ -151,8 +149,8 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     }
 
 
-    // This is not a valid stroke
-    if (stroke->getPointCount() < 2) {
+    const Path& path = getPath();
+    if (!path.nbSegments()) {  // Path has less than one segment
         g_warning("Stroke incomplete!");
         delete stroke;
         stroke = nullptr;
@@ -184,7 +182,8 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
     this->buttonDownPoint.y = pos.y / zoom;
 
     if (!stroke) {
-        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
+        createStroke();
+        createPath(Point(this->buttonDownPoint.x, this->buttonDownPoint.y), pos.isAltDown());
     }
 
     this->startStrokeTime = pos.timestamp;

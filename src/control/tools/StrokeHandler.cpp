@@ -8,9 +8,9 @@
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "control/settings/Settings.h"
-#include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
+#include "model/PiecewiseLinearPath.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/RecognizerUndoAction.h"
 
@@ -68,49 +68,36 @@ auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     return true;
 }
 
-void StrokeHandler::paintTo(const Point& point) {
+void StrokeHandler::paintTo(Point point) {
 
-    int pointCount = stroke->getPointCount();
-
-    if (pointCount > 0) {
-        Point endPoint = stroke->getPoint(pointCount - 1);
-        double distance = point.lineLengthTo(endPoint);
-        if (distance < PIXEL_MOTION_THRESHOLD) {  //(!validMotion(point, endPoint)) {
-            return;
-        }
-        if (this->hasPressure) {
+    Point endPoint = this->path->getLastKnot();
+    double distance = point.lineLengthTo(endPoint);
+    if (distance < PIXEL_MOTION_THRESHOLD) {  //(!validMotion(point, endPoint)) {
+        return;
+    }
+    if (this->hasPressure) {
+        /**
+         * Both device and tool are pressure sensitive
+         */
+        point.z *= stroke->getWidth();
+        if (const double widthDelta = point.z - endPoint.z, absWidthDelta = std::abs(widthDelta);
+            absWidthDelta > MAX_WIDTH_VARIATION) {
             /**
-             * Both device and tool are pressure sensitive
+             * If the width variation is to big, decompose into shorter segments.
+             * Those segments can not be shorter than PIXEL_MOTION_THRESHOLD
              */
-            if (endPoint.z != Point::NO_PRESSURE) {
-                /**
-                 * Avoid issues at the beginning of the stroke
-                 */
+            double nbSteps = std::min(std::ceil(absWidthDelta / MAX_WIDTH_VARIATION),
+                                      std::floor(distance / PIXEL_MOTION_THRESHOLD));
+            double stepLength = 1.0 / nbSteps;
+            Point increment((point.x - endPoint.x) * stepLength, (point.y - endPoint.y) * stepLength,
+                            widthDelta * stepLength);
 
-                if (const double widthDelta = (point.z - endPoint.z) * stroke->getWidth();
-                    - widthDelta > MAX_WIDTH_VARIATION || widthDelta > MAX_WIDTH_VARIATION) {
-                    /**
-                     * If the width variation is to big, decompose into shorter segments.
-                     * Those segments can not be shorter than PIXEL_MOTION_THRESHOLD
-                     */
-                    double nbSteps = std::min(std::ceil(std::abs(widthDelta) / MAX_WIDTH_VARIATION),
-                                              std::floor(distance / PIXEL_MOTION_THRESHOLD));
-                    double stepLength = 1.0 / nbSteps;
-                    Point increment((point.x - endPoint.x) * stepLength, (point.y - endPoint.y) * stepLength,
-                                    widthDelta * stepLength);
-                    endPoint.z *= stroke->getWidth();
-                    endPoint.z += increment.z;
-                    stroke->setLastPressure(endPoint.z);
-
-                    for (int i = 1; i < static_cast<int>(nbSteps); i++) {  // The last step is done below
-                        endPoint.x += increment.x;
-                        endPoint.y += increment.y;
-                        endPoint.z += increment.z;
-                        drawSegmentTo(endPoint);
-                    }
-                }
+            for (int i = 1; i < static_cast<int>(nbSteps); i++) {  // The last step is done below
+                endPoint.x += increment.x;
+                endPoint.y += increment.y;
+                endPoint.z += increment.z;
+                drawSegmentTo(endPoint);
             }
-            stroke->setLastPressure(point.z * stroke->getWidth());
         }
     }
     drawSegmentTo(point);
@@ -118,7 +105,12 @@ void StrokeHandler::paintTo(const Point& point) {
 
 void StrokeHandler::drawSegmentTo(const Point& point) {
 
-    stroke->addPoint(this->hasPressure ? point : Point(point.x, point.y));
+    Point previousPoint(this->path->getLastKnot());
+
+    this->path->addLineSegmentTo(this->hasPressure ? point : Point(point.x, point.y));
+    this->stroke->unsetSizeCalculated();
+
+    const double width = stroke->getWidth();
 
     if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes()) &&
         !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)) {
@@ -132,27 +124,21 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
         cairo_fill(crMask);
 
         view.drawStroke(crMask, stroke, 0, 1, true, true);
+        this->redrawable->repaintRect(stroke->getX() - width, stroke->getY() - width,
+                                      stroke->getElementWidth() + 2 * width, stroke->getElementHeight() + 2 * width);
     } else {
-        if (auto const pointCount = stroke->getPointCount(); pointCount > 1) {
-            Point prevPoint(stroke->getPoint(pointCount - 2));
+        Stroke lastSegment;
+        lastSegment.setPath(std::make_shared<PiecewiseLinearPath>(previousPoint, point));
+        lastSegment.setWidth(width);
+        lastSegment.setPressureSensitive(this->stroke->hasPressure());
 
-            Stroke lastSegment;
+        cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
+        cairo_set_source_rgba(crMask, 1, 1, 1, 1);
 
-            lastSegment.addPoint(prevPoint);
-            lastSegment.addPoint(point);
-            lastSegment.setWidth(stroke->getWidth());
-
-            cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
-            cairo_set_source_rgba(crMask, 1, 1, 1, 1);
-
-            view.drawStroke(crMask, &lastSegment, 0, 1, false);
-        }
+        view.drawStroke(crMask, &lastSegment, 0, 1, false);
+        this->redrawable->repaintRect(lastSegment.getX(), lastSegment.getY(), lastSegment.getElementWidth(),
+                                      lastSegment.getElementHeight());
     }
-
-    const double w = stroke->getWidth();
-
-    this->redrawable->repaintRect(stroke->getX() - w, stroke->getY() - w, stroke->getElementWidth() + 2 * w,
-                                  stroke->getElementHeight() + 2 * w);
 }
 
 void StrokeHandler::onMotionCancelEvent() {
@@ -161,7 +147,7 @@ void StrokeHandler::onMotionCancelEvent() {
 }
 
 void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
-    if (!stroke) {
+    if (!this->stroke || !this->path || this->path->empty()) {
         return;
     }
 
@@ -213,11 +199,12 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     // Backward compatibility and also easier to handle for me;-)
     // I cannot draw a line with one point, to draw a visible line I need two points,
     // twice the same Point is also OK
-    if (auto const& pv = stroke->getPointVector(); pv.size() == 1) {
-        stroke->addPoint(pv.front());
+    if (this->path->nbSegments() == 0) {
+        this->path->addLineSegmentTo(this->path->getFirstKnot());
         // Todo: check if the following is the reason for a bug, that single points have no pressure:
         // No pressure sensitivity,
-        stroke->clearPressure();
+        this->path->clearPressure();
+        this->stroke->setPressureSensitive(false);
     }
 
     stroke->freeUnusedPointItems();
@@ -234,10 +221,10 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
 
     if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
         if (reco == nullptr) {
-            reco = new ShapeRecognizer();
+            reco = new ShapeRecognizer(*this->path);
         }
 
-        ShapeRecognizerResult* result = reco->recognizePatterns(stroke);
+        std::shared_ptr<Path> result = reco->recognizePatterns();
 
         if (result) {
             strokeRecognizerDetected(result, layer);
@@ -250,77 +237,64 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         }
     }
 
-    if (stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
-        // The stroke is not filled on drawing time
-        // If the stroke has fill values, it needs to be re-rendered
-        // else the fill will not be visible.
+    /**
+     * Approximate the stroke by a spline using Schneider's algorithm
+     */
+    stroke->splineFromPLPath();
+    this->path.reset();
 
-        view.drawStroke(crMask, stroke, 0, 1, true, true);
-    }
-
+    // Add the element
     layer->addElement(stroke);
-    page->fireElementChanged(stroke);
 
-    // Manually force the rendering of the stroke, if no motion event occurred between, that would rerender the page.
-    if (stroke->getPointCount() == 2) {
-        this->redrawable->rerenderElement(stroke);
-    }
+    // Redraw after the spline approximation
+    this->redrawable->rerenderElement(stroke);
 
     stroke = nullptr;
 }
 
-void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer) {
-    Stroke* recognized = result->getRecognized();
-    recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
+void StrokeHandler::strokeRecognizerDetected(std::shared_ptr<Path> result, Layer* layer) {
 
     // snapping
-    Stroke* snappedStroke = recognized->cloneStroke();
     if (xournal->getControl()->getSettings()->getSnapRecognizedShapesEnabled()) {
-        Rectangle<double> oldSnappedBounds = recognized->getSnappedBounds();
+        Rectangle<double> oldSnappedBounds = result->getThinBoundingBox();
+
         Point topLeft = Point(oldSnappedBounds.x, oldSnappedBounds.y);
         Point topLeftSnapped = snappingHandler.snapToGrid(topLeft, false);
 
-        snappedStroke->move(topLeftSnapped.x - topLeft.x, topLeftSnapped.y - topLeft.y);
-        Rectangle<double> snappedBounds = snappedStroke->getSnappedBounds();
-        Point belowRight = Point(snappedBounds.x + snappedBounds.width, snappedBounds.y + snappedBounds.height);
+        result->move(topLeftSnapped.x - topLeft.x, topLeftSnapped.y - topLeft.y);
+
+        Point belowRight = Point(topLeftSnapped.x + oldSnappedBounds.width, topLeftSnapped.y + oldSnappedBounds.height);
         Point belowRightSnapped = snappingHandler.snapToGrid(belowRight, false);
 
-        double fx = (std::abs(snappedBounds.width) > DBL_EPSILON) ?
-                            (belowRightSnapped.x - topLeftSnapped.x) / snappedBounds.width :
+        double fx = (std::abs(oldSnappedBounds.width) > DBL_EPSILON) ?
+                            (belowRightSnapped.x - topLeftSnapped.x) / oldSnappedBounds.width :
                             1;
-        double fy = (std::abs(snappedBounds.height) > DBL_EPSILON) ?
-                            (belowRightSnapped.y - topLeftSnapped.y) / snappedBounds.height :
+        double fy = (std::abs(oldSnappedBounds.height) > DBL_EPSILON) ?
+                            (belowRightSnapped.y - topLeftSnapped.y) / oldSnappedBounds.height :
                             1;
-        snappedStroke->scale(topLeftSnapped.x, topLeftSnapped.y, fx, fy, 0, false);
+        result->scale(topLeftSnapped.x, topLeftSnapped.y, fx, fy, 0, false);
     }
 
-    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, snappedStroke);
-    auto& locRecUndo = *recognizerUndo;
+    Stroke* recognized = new Stroke();
+    recognized->setPath(result);
+
+    recognized->applyStyleFrom(this->stroke);
+    recognized->setWidth(this->stroke->hasPressure() ? this->path->getAveragePressure() : this->stroke->getWidth());
+
+    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, recognized);
 
     UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
     undo->addUndoAction(std::move(recognizerUndo));
-    layer->addElement(snappedStroke);
+    layer->addElement(recognized);
 
-    Range range(snappedStroke->getX(), snappedStroke->getY());
-    range.addPoint(snappedStroke->getX() + snappedStroke->getElementWidth(),
-                   snappedStroke->getY() + snappedStroke->getElementHeight());
+    Range range(recognized->getX(), recognized->getY());
+    range.addPoint(recognized->getX() + recognized->getElementWidth(),
+                   recognized->getY() + recognized->getElementHeight());
 
     range.addPoint(stroke->getX(), stroke->getY());
     range.addPoint(stroke->getX() + stroke->getElementWidth(), stroke->getY() + stroke->getElementHeight());
 
-    for (Stroke* s: *result->getSources()) {
-        layer->removeElement(s, false);
-
-        locRecUndo.addSourceElement(s);
-
-        range.addPoint(s->getX(), s->getY());
-        range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
-    }
-
     page->fireRangeChanged(range);
-
-    // delete the result object, this is not needed anymore, the stroke are not deleted with this
-    delete result;
 }
 
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
@@ -334,7 +308,7 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
     double width = page->getWidth() * zoom * dpiScaleFactor;
     double height = page->getHeight() * zoom * dpiScaleFactor;
 
-    surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
+    surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, (int)std::ceil(width), (int)std::ceil(height));
 
     crMask = cairo_create(surfMask);
 
@@ -351,7 +325,16 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
         this->buttonDownPoint.x = pos.x / zoom;
         this->buttonDownPoint.y = pos.y / zoom;
 
-        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
+        createStroke();
+
+        this->stroke->setPressureSensitive(pos.pressure != Point::NO_PRESSURE &&
+                                           this->stroke->getToolType() == STROKE_TOOL_PEN);
+
+        double pressure = this->stroke->hasPressure() ? pos.pressure * stroke->getWidth() : Point::NO_PRESSURE;
+        this->path = std::make_shared<PiecewiseLinearPath>(
+                Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pressure));
+
+        this->stroke->setPath(this->path);
 
         this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
 

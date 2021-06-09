@@ -56,7 +56,7 @@ public:
      * The line may be subdivided into smaller segments if the pressure variation is too big.
      * @param point The endpoint of the added line
      */
-    void paintTo(const Point& point);
+    void paintTo(Point point);
 
 protected:
     /**
@@ -66,7 +66,7 @@ protected:
      */
     void drawSegmentTo(const Point& point);
 
-    void strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer);
+    void strokeRecognizerDetected(std::shared_ptr<Path> result, Layer* layer);
     void destroySurface();
 
 protected:
@@ -74,6 +74,8 @@ protected:
     SnapToGridInputHandler snappingHandler;
 
 private:
+    std::shared_ptr<PiecewiseLinearPath> path;
+
     /**
      * The masking surface
      */
