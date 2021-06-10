@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-08 07:19+0000\n"
-"PO-Revision-Date: 2021-06-08 07:31\n"
+"PO-Revision-Date: 2021-06-10 01:39\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1300,12 +1300,14 @@ msgstr "工具条配置\"{1}\"是预置的，要产生一个拷贝到编辑?"
 #: ../src/control/Control.cpp:2014
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "无法找到所附的背景文件{1}。它可能已被移动、重命名或删除。\n"
+"它最后一次出现是在：{2}"
 
 #: ../src/control/Control.cpp:2018
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "无法找到背景文件{1}。它可能已被移动、重命名或删除。\n"
+"它最后一次出现是在：{2}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
