@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="xopp-combo-selection.svg"
-   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    id="svg8"
    version="1.1"
    viewBox="0 0 5.8208332 5.8208335"
    height="22"
-   width="22">
+   width="22"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2">
     <marker
@@ -4557,16 +4557,6 @@
        x2="2.6896732"
        y2="291.93341" />
     <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient896"
-       id="linearGradient939"
-       x1="20.092352"
-       y1="0.74183154"
-       x2="23.317513"
-       y2="4.4981894"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0278479,0,0,1.0277565,-12.321653,287.52424)" />
-    <linearGradient
        id="linearGradient896"
        inkscape:collect="always">
       <stop
@@ -4599,13 +4589,13 @@
   </defs>
   <sodipodi:namedview
      units="px"
-     showgrid="true"
+     showgrid="false"
      inkscape:document-rotation="0"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="12.699993"
-     inkscape:cx="8.7790038"
-     inkscape:zoom="22.627417"
+     inkscape:cy="14.716659"
+     inkscape:cx="19.401241"
+     inkscape:zoom="11.313709"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -4621,7 +4611,9 @@
      inkscape:window-height="1403"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1">
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="0"
+     showguides="false">
     <inkscape:grid
        type="xygrid"
        id="grid2220" />
@@ -4667,22 +4659,6 @@
            x="-189.29451"
            y="-10.609092" /></flowRegion><flowPara
          id="flowPara87-6" /></flowRoot>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264582"
-       x="-10.717609"
-       y="292.85123"
-       id="text3381"><tspan
-         sodipodi:role="line"
-         x="-10.717609"
-         y="292.85123"
-         style="font-size:1.41111px;fill:#f82b08;fill-opacity:0.983092;stroke-width:0.264582"
-         id="tspan3389">TODO</tspan><tspan
-         sodipodi:role="line"
-         x="-10.717609"
-         y="294.61511"
-         style="font-size:1.41111px;fill:#f82b08;fill-opacity:0.983092;stroke-width:0.264582"
-         id="tspan2318">Selection</tspan></text>
     <path
        id="path2407"
        style="fill:#b9cfe7;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:8.00001, 3.99998999999999993;stroke-dashoffset:0;stroke-opacity:1"
@@ -4693,18 +4669,6 @@
        style="fill:#b9cfe7;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:8.00001, 3.99999;stroke-dashoffset:0;stroke-opacity:1"
        d="M 7.9609375 2 C 8.6394259 2.328868 9.280102 2.734972 9.8574219 3.21875 C 12.108295 5.1050383 13.786949 7.8036997 14.447266 10.673828 C 14.883791 12.571198 14.867271 14.803088 13.816406 16.644531 C 12.818146 18.393796 11.171677 19.676122 9.3867188 20.5 L 20.25 20.5 L 20.25 2 L 7.9609375 2 z "
        transform="matrix(0.26458333,0,0,0.26458333,0,291.17916)" />
-    <path
-       style="fill:#fe9ab8;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 7.6872572,296.08242 c 0.1839395,0.22881 0.5294629,0.26773 0.8160978,0.33126 0.6381815,0.14144 1.3323747,0.28705 1.958502,0.0993 0.573121,-0.17186 1.150326,-0.54263 1.446871,-1.06227 0.23061,-0.4041 0.243164,-0.93545 0.138851,-1.38885 -0.160581,-0.69798 -0.577586,-1.36965 -1.126567,-1.82971 -0.362506,-0.30377 -0.848101,-0.48574 -1.3197551,-0.52115 -0.4836569,-0.0363 -1.0011392,0.0784 -1.4179809,0.32634 -0.2937188,0.17471 -0.6354443,0.42925 -0.6789377,0.76819 -0.042265,0.32941 0.3287654,0.57977 0.4499743,0.88897 0.1172898,0.29922 0.3238091,0.61099 0.2651416,0.92697 -0.064426,0.347 -0.5538384,0.50268 -0.6371752,0.84562 -0.049131,0.20219 -0.025388,0.45313 0.1049782,0.61532 z"
-       id="path2359"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="aaaaaaaaaaaaa" />
-    <path
-       sodipodi:nodetypes="aaaaaaaaaaaaa"
-       inkscape:connector-curvature="0"
-       id="path49744"
-       d="m 7.7126474,292.39885 c 0.1839395,0.22881 0.5294629,0.26773 0.8160978,0.33126 0.6381815,0.14144 1.3323746,0.28705 1.9585018,0.0993 0.57312,-0.17186 1.150326,-0.54263 1.44687,-1.06227 0.23061,-0.4041 0.243164,-0.93545 0.138851,-1.38885 -0.16058,-0.69798 -0.577586,-1.36965 -1.126566,-1.82971 -0.362507,-0.30377 -0.848101,-0.48574 -1.3197549,-0.52115 -0.4836569,-0.0363 -1.0011392,0.0784 -1.4179809,0.32634 -0.2937188,0.17471 -0.6354443,0.42925 -0.6789377,0.76819 -0.042265,0.32941 0.3287654,0.57977 0.4499743,0.88897 0.1172898,0.29922 0.3238091,0.61099 0.2651416,0.92697 -0.064426,0.347 -0.5538384,0.50268 -0.6371752,0.84562 -0.049131,0.20219 -0.025388,0.45313 0.1049782,0.61532 z"
-       style="fill:none;fill-opacity:1;stroke:url(#linearGradient939);stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        id="path2531"
        style="fill:none;fill-opacity:1;stroke:url(#linearGradient2549);stroke-width:1.00000002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"

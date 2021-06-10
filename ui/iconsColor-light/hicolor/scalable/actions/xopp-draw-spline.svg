@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="xopp-draw-spline.svg"
-   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    id="svg2516"
    version="1.1"
    viewBox="0 0 5.8208332 5.8208332"
    height="5.8208332mm"
-   width="5.8208332mm">
+   width="5.8208332mm"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2510">
     <linearGradient
@@ -341,8 +340,8 @@
        id="linearGradient3170"
        xlink:href="#linearGradient3104-6" />
     <linearGradient
-       osb:paint="solid"
-       id="linearGradient4526">
+       id="linearGradient4526"
+       inkscape:swatch="solid">
       <stop
          id="stop4528"
          offset="0"
@@ -7369,12 +7368,12 @@
      fit-margin-right="0"
      fit-margin-left="0"
      fit-margin-top="0"
-     showgrid="true"
+     showgrid="false"
      inkscape:document-rotation="0"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="8.4610788"
-     inkscape:cx="9.5444095"
+     inkscape:cy="8.4521357"
+     inkscape:cx="9.5569901"
      inkscape:zoom="45.254834"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -7387,7 +7386,9 @@
      inkscape:object-nodes="true"
      inkscape:snap-center="true"
      inkscape:snap-to-guides="false"
-     inkscape:snap-grids="false">
+     inkscape:snap-grids="false"
+     inkscape:pagecheckerboard="0"
+     showguides="false">
     <inkscape:grid
        type="xygrid"
        id="grid2334" />
@@ -7404,20 +7405,6 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     transform="translate(-124.08958,-217.4583)"
-     style="display:none"
-     inkscape:label="Layer 2"
-     id="layer2"
-     inkscape:groupmode="layer">
-    <rect
-       y="217.4583"
-       x="124.08958"
-       height="5.8208332"
-       width="5.8208332"
-       id="rect818"
-       style="fill:#000000;fill-opacity:0.0828402;stroke:none;stroke-width:0.595312;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  </g>
   <g
      transform="translate(-124.08958,-217.4583)"
      id="layer1"

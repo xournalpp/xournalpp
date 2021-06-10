@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="xopp-zoom-slider.svg"
-   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    id="svg8"
    version="1.1"
    viewBox="0 0 5.8208332 5.8208335"
    height="22"
-   width="22">
+   width="22"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs2">
     <marker
@@ -4559,12 +4559,12 @@
   </defs>
   <sodipodi:namedview
      units="px"
-     showgrid="true"
+     showgrid="false"
      inkscape:document-rotation="0"
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
-     inkscape:cy="17.670289"
-     inkscape:cx="-0.56224909"
+     inkscape:cy="17.655572"
+     inkscape:cx="-0.55242717"
      inkscape:zoom="22.627417"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -4581,7 +4581,9 @@
      inkscape:window-height="1403"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1">
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="0"
+     showguides="false">
     <inkscape:grid
        type="xygrid"
        id="grid2220" />
@@ -4639,27 +4641,6 @@
          d="m 3.9348841,292.32052 -1.5508951,2.02921 -0.1562209,1.01222 0.9334164,-0.41348 1.5508954,-2.02922"
          id="path2381" />
     </g>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264582"
-       x="-5.1359224"
-       y="292.85123"
-       id="text3381"><tspan
-         sodipodi:role="line"
-         x="-5.1359224"
-         y="292.85123"
-         style="font-size:1.41111px;fill:#f82b08;fill-opacity:0.983092;stroke-width:0.264582"
-         id="tspan3389">TODO</tspan><tspan
-         sodipodi:role="line"
-         x="-5.1359224"
-         y="294.61511"
-         style="font-size:1.41111px;fill:#f82b08;fill-opacity:0.983092;stroke-width:0.264582"
-         id="tspan3397">Zoom</tspan><tspan
-         sodipodi:role="line"
-         x="-5.1359224"
-         y="296.379"
-         style="font-size:1.41111px;fill:#f82b08;fill-opacity:0.983092;stroke-width:0.264582"
-         id="tspan2318">Slider</tspan></text>
     <path
        style="fill:none;stroke:#d4d4d4;stroke-width:0.79375;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 3.3869402,294.08996 H 0.64492187"
