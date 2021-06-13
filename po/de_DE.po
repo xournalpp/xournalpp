@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-08 07:19+0000\n"
-"PO-Revision-Date: 2021-06-13 20:17\n"
+"PO-Revision-Date: 2021-06-13 21:17\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -758,7 +758,7 @@ msgstr "Springe zur Seite (erste Seite: 1)"
 
 #: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "Fehler bei der LaTeX-Erzeugung: {1} (Rückgabestatus: {2})"
+msgstr "Fehler bei der LaTeX-Erzeugung: {1} (Status-Code: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:244
 msgid "Layer"
