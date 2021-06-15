@@ -14,6 +14,7 @@
 #include <gtk/gtk.h>
 
 #include "control/Actions.h"
+#include "util/IconNameHelper.h"
 
 #include "ColorToolItem.h"
 #include "MenuItem.h"
@@ -76,6 +77,7 @@ public:
     void enableAudioPlaybackButtons();
 
     void setAudioPlaybackPaused(bool paused);
+    std::string iconName(const char* icon);
 
 private:
     void addToolItem(AbstractToolItem* it);
@@ -115,4 +117,5 @@ private:
 
     PageTypeMenu* newPageType = nullptr;
     PageBackgroundChangeController* pageBackgroundChangeController = nullptr;
+    IconNameHelper iconNameHelper;
 };

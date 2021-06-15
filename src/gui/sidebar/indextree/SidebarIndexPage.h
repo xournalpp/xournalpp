@@ -17,6 +17,7 @@
 #include <gtk/gtk.h>
 
 #include "gui/sidebar/AbstractSidebarPage.h"
+#include "util/IconNameHelper.h"
 
 #include "XournalType.h"
 
@@ -122,4 +123,6 @@ private:
      * If there is something to display in the tree
      */
     bool hasContents = false;
+
+    IconNameHelper iconNameHelper;
 };

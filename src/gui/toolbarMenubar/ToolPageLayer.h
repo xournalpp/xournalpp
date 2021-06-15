@@ -14,8 +14,10 @@
 #include <map>
 
 #include "control/layer/LayerCtrlListener.h"
+#include "util/IconNameHelper.h"
 
 #include "AbstractToolItem.h"
+
 using std::map;
 
 class GladeGui;
@@ -24,7 +26,8 @@ class LayerController;
 
 class ToolPageLayer: public AbstractToolItem, public LayerCtrlListener {
 public:
-    ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type);
+    ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type,
+                  IconNameHelper iconNameHelper);
     virtual ~ToolPageLayer();
 
 public:
@@ -83,4 +86,5 @@ private:
      * Menu is currently updating - ignore events
      */
     bool inMenuUpdate = false;
+    IconNameHelper iconNameHelper;
 };

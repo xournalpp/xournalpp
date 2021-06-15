@@ -16,6 +16,7 @@
 #include "control/Actions.h"
 #include "gui/GladeGui.h"
 #include "util/DeviceListHelper.h"
+#include "util/IconNameHelper.h"
 
 class Settings;
 class SettingsDialog;
@@ -56,4 +57,5 @@ private:
 
     typedef std::map<int, ToolSize> ToolSizeIndexMap;
     static ToolSizeIndexMap toolSizeIndexMap;
+    IconNameHelper iconNameHelper;
 };

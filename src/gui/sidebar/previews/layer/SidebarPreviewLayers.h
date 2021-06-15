@@ -16,6 +16,7 @@
 
 #include "control/layer/LayerCtrlListener.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
+#include "util/IconNameHelper.h"
 
 #include "XournalType.h"
 
@@ -80,4 +81,6 @@ private:
      * render as stacked
      */
     bool stacked;
+
+    IconNameHelper iconNameHelper;
 };

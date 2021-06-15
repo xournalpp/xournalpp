@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
+#include "util/IconNameHelper.h"
 
 #include "XournalType.h"
 
@@ -93,4 +94,5 @@ private:
     std::vector<std::tuple<GtkWidget*, gulong, std::unique_ptr<ContextMenuData>>> contextMenuSignals;
 
 private:
+    IconNameHelper iconNameHelper;
 };
