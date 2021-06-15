@@ -255,11 +255,11 @@ auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTre
         return false;
     }
 
-    int page = doc->findPdfPage(link->dest->getPdfPage());
+    auto page = doc->findPdfPage(link->dest->getPdfPage());
 
     gchar* pageLabel = nullptr;
     if (page != -1) {
-        pageLabel = g_strdup_printf("%i", page + 1);
+        pageLabel = g_strdup_printf("%lu", page + 1);
     }
     gtk_tree_store_set(GTK_TREE_STORE(treeModel), iter, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, pageLabel, -1);
     g_free(pageLabel);
