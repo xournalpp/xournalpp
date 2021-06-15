@@ -10,8 +10,6 @@
 #include "Util.h"
 #include "i18n.h"
 
-#define ADD_TYPE_CB(icon, name, action) addToolToList(typeModel, iconNameHelper.iconName(icon).c_str(), name, action)
-
 ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_SIZE_NONE},  {1, TOOL_SIZE_VERY_FINE},
                                                                        {2, TOOL_SIZE_FINE},  {3, TOOL_SIZE_MEDIUM},
                                                                        {4, TOOL_SIZE_THICK}, {5, TOOL_SIZE_VERY_THICK}};
@@ -77,17 +75,21 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 
     GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);  // NOLINT
 
-    ADD_TYPE_CB("transparent", _("Tool - don't change"), TOOL_NONE);
-    ADD_TYPE_CB("tool-pencil", _("Pen"), TOOL_PEN);
-    ADD_TYPE_CB("tool-eraser", _("Eraser"), TOOL_ERASER);
-    ADD_TYPE_CB("tool-highlighter", _("Highlighter"), TOOL_HIGHLIGHTER);
-    ADD_TYPE_CB("tool-text", _("Text"), TOOL_TEXT);
-    ADD_TYPE_CB("tool-image", _("Insert image"), TOOL_IMAGE);
-    ADD_TYPE_CB("spacer", _("Vertical space"), TOOL_VERTICAL_SPACE);
-    ADD_TYPE_CB("select-lasso", _("Select region"), TOOL_SELECT_REGION);
-    ADD_TYPE_CB("select-rect", _("Select rectangle"), TOOL_SELECT_RECT);
-    ADD_TYPE_CB("hand", _("Hand"), TOOL_HAND);
-    ADD_TYPE_CB("floating-toolbox", _("Floating Toolbox (experimental)"), TOOL_FLOATING_TOOLBOX);
+    auto addTypeCB = [=](const char* icon, const char* name, ToolType action) {
+        addToolToList(typeModel, iconNameHelper.iconName(icon).c_str(), name, action);
+    };
+
+    addTypeCB("transparent", _("Tool - don't change"), TOOL_NONE);
+    addTypeCB("tool-pencil", _("Pen"), TOOL_PEN);
+    addTypeCB("tool-eraser", _("Eraser"), TOOL_ERASER);
+    addTypeCB("tool-highlighter", _("Highlighter"), TOOL_HIGHLIGHTER);
+    addTypeCB("tool-text", _("Text"), TOOL_TEXT);
+    addTypeCB("tool-image", _("Insert image"), TOOL_IMAGE);
+    addTypeCB("spacer", _("Vertical space"), TOOL_VERTICAL_SPACE);
+    addTypeCB("select-lasso", _("Select region"), TOOL_SELECT_REGION);
+    addTypeCB("select-rect", _("Select rectangle"), TOOL_SELECT_RECT);
+    addTypeCB("hand", _("Hand"), TOOL_HAND);
+    addTypeCB("floating-toolbox", _("Floating Toolbox (experimental)"), TOOL_FLOATING_TOOLBOX);
 
     this->cbTool = get("cbTool");
     gtk_combo_box_set_model(GTK_COMBO_BOX(this->cbTool), GTK_TREE_MODEL(typeModel));
