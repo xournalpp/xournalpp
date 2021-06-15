@@ -166,6 +166,9 @@ public:
     void setDarkTheme(bool dark);
     bool isDarkTheme() const;
 
+    void setAreStockIconsUsed(bool use);
+    bool areStockIconsUsed() const;
+
     /**
      * The last saved path
      */
@@ -607,6 +610,11 @@ private:
      * (white icons)
      */
     bool darkTheme{};
+
+    /**
+     * If stock icons are used instead of Xournal++ icons when available
+     */
+    bool useStockIcons{};
 
     /**
      * If the menu bar is visible on startup

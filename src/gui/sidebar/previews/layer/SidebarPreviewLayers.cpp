@@ -8,7 +8,10 @@
 #include "i18n.h"
 
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar, bool stacked):
-        SidebarPreviewBase(control, gui, toolbar), lc(control->getLayerController()), stacked(stacked) {
+        SidebarPreviewBase(control, gui, toolbar),
+        lc(control->getLayerController()),
+        stacked(stacked),
+        iconNameHelper(control->getSettings()) {
     LayerCtrlListener::registerListener(lc);
 
     this->toolbar->setButtonEnabled(SIDEBAR_ACTION_NONE);
@@ -58,7 +61,10 @@ void SidebarPreviewLayers::enableSidebar() {
 
 auto SidebarPreviewLayers::getName() -> string { return stacked ? _("Layerstack Preview") : _("Layer Preview"); }
 
-auto SidebarPreviewLayers::getIconName() -> string { return stacked ? "sidebar-layerstack" : "layer"; }
+auto SidebarPreviewLayers::getIconName() -> string {
+    const char* icon = stacked ? "sidebar-layerstack" : "sidebar-layer";
+    return this->iconNameHelper.iconName(icon);
+}
 
 void SidebarPreviewLayers::pageSizeChanged(size_t page) {
     if (page != this->lc->getCurrentPageId() || !enabled) {

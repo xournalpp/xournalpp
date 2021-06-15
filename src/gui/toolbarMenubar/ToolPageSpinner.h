@@ -14,6 +14,8 @@
 #include <string>
 #include <vector>
 
+#include "util/IconNameHelper.h"
+
 #include "AbstractToolItem.h"
 #include "XournalType.h"
 
@@ -22,7 +24,7 @@ class SpinPageAdapter;
 
 class ToolPageSpinner: public AbstractToolItem {
 public:
-    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
+    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type, IconNameHelper iconNameHelper);
     ~ToolPageSpinner() override;
 
 public:
@@ -54,4 +56,6 @@ private:
 
     /** The current page in the background PDF, or 0 if there is no PDF. */
     size_t pdfPage = 0;
+
+    IconNameHelper iconNameHelper;
 };

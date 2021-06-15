@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "control/zoom/ZoomListener.h"
+#include "util/IconNameHelper.h"
 
 #include "AbstractToolItem.h"
 #include "XournalType.h"
@@ -25,7 +26,8 @@ class ZoomControl;
 
 class ToolZoomSlider: public AbstractToolItem, public ZoomListener {
 public:
-    ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom);
+    ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom,
+                   IconNameHelper iconNameHelper);
     virtual ~ToolZoomSlider();
 
 public:
@@ -65,4 +67,5 @@ private:
     GtkWidget* slider = nullptr;
     ZoomControl* zoom = nullptr;
     bool horizontal = true;
+    IconNameHelper iconNameHelper;
 };
