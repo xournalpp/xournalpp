@@ -369,7 +369,7 @@ private:
     /**
      * Timeout id: the timeout watches the changes and actualizes the previews from time to time
      */
-    int changeTimout;
+    guint changeTimout;
 
     /**
      * The pages wihch has changed since the last update (for preview update)
@@ -384,7 +384,7 @@ private:
     /**
      * The autosave handler ID
      */
-    int autosaveTimeout = 0;
+    guint autosaveTimeout = 0;
     fs::path lastAutosaveFilename;
 
     XournalScheduler* scheduler;

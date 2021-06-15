@@ -4,9 +4,6 @@
 #include <memory>
 #include <numeric>
 
-#include <glib/gstdio.h>
-
-#include "enums/ActionType.enum.h"
 #include "gui/TextEditor.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
@@ -30,9 +27,6 @@
 #include "model/StrokeStyle.h"
 #include "pagetype/PageTypeHandler.h"
 #include "plugin/PluginController.h"
-#include "serializing/ObjectInputStream.h"
-#include "settings/ButtonConfig.h"
-#include "settings/SettingsEnums.h"
 #include "stockdlg/XojOpenDlg.h"
 #include "undo/AddUndoAction.h"
 #include "undo/DeleteUndoAction.h"
@@ -227,8 +221,8 @@ auto Control::checkChangedDocument(Control* control) -> bool {
         return true;
     }
     for (auto const& page: control->changedPages) {
-        int p = control->doc->indexOf(page);
-        if (p != -1) {
+        auto p = control->doc->indexOf(page);
+        if (p != npos) {
             control->firePageChanged(p);
         }
     }
@@ -330,7 +324,7 @@ void Control::enableAutosave(bool enable) {
     }
 
     if (enable) {
-        int timeout = settings->getAutosaveTimeout() * 60;
+        auto timeout = guint(settings->getAutosaveTimeout()) * 60U;
         this->autosaveTimeout = g_timeout_add_seconds(timeout, reinterpret_cast<GSourceFunc>(autosaveCallback), this);
     }
 }
@@ -343,10 +337,10 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
     this->sidebar->selectPageNr(page, pdfPage);
 
-    this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), page, getZoomControl()->getZoomReal());
+    this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), int(page), getZoomControl()->getZoomReal());
 
-    int current = getCurrentPageNo();
-    int count = this->doc->getPageCount();
+    auto current = getCurrentPageNo();
+    auto count = this->doc->getPageCount();
 
     fireEnableAction(ACTION_GOTO_FIRST, current != 0);
     fireEnableAction(ACTION_GOTO_BACK, current != 0);
@@ -1308,13 +1302,13 @@ void Control::insertPage(const PageRef& page, size_t position) {
 }
 
 void Control::gotoPage() {
-    auto* dlg = new GotoDialog(this->gladeSearchPath, this->doc->getPageCount());
+    auto* dlg = new GotoDialog(this->gladeSearchPath, int(this->doc->getPageCount()));
 
     dlg->show(GTK_WINDOW(this->win->getWindow()));
-    int page = dlg->getSelectedPage();
+    auto page = dlg->getSelectedPage();
 
-    if (page != -1) {
-        this->scrollHandler->scrollToPage(page - 1, 0);
+    if (page > 0) {
+        this->scrollHandler->scrollToPage(size_t(page - 1), 0);
     }
 
     delete dlg;
@@ -1377,7 +1371,7 @@ void Control::paperFormat() {
 }
 
 void Control::changePageBackgroundColor() {
-    int pNr = getCurrentPageNo();
+    auto pNr = getCurrentPageNo();
     this->doc->lock();
     auto const& p = this->doc->getPage(pNr);
     this->doc->unlock();
@@ -1406,7 +1400,7 @@ void Control::setViewPairedPages(bool enabled) {
     settings->setShowPairedPages(enabled);
     fireActionSelected(GROUP_PAIRED_PAGES, enabled ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
 
-    int currentPage = getCurrentPageNo();
+    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(currentPage);
 }
@@ -1447,7 +1441,7 @@ void Control::setViewPresentationMode(bool enabled) {
     fireEnableAction(ACTION_TOOL_HAND, !enabled);
     fireActionSelected(GROUP_PRESENTATION_MODE, enabled ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
 
-    int currentPage = getCurrentPageNo();
+    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(currentPage);
 }
@@ -1455,7 +1449,7 @@ void Control::setViewPresentationMode(bool enabled) {
 void Control::setPairsOffset(int numOffset) {
     settings->setPairsOffset(numOffset);
     fireActionSelected(GROUP_PAIRED_PAGES, numOffset ? ACTION_SET_PAIRS_OFFSET : ACTION_NOT_SELECTED);
-    int currentPage = getCurrentPageNo();
+    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(currentPage);
 }
@@ -1497,7 +1491,7 @@ void Control::setViewColumns(int numColumns) {
 
     fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
-    int currentPage = getCurrentPageNo();
+    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(currentPage);
 }
@@ -1539,7 +1533,7 @@ void Control::setViewRows(int numRows) {
 
     fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
-    int currentPage = getCurrentPageNo();
+    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(currentPage);
 }
@@ -1557,7 +1551,7 @@ void Control::setViewLayoutVert(bool vert) {
 
     fireActionSelected(GROUP_LAYOUT_HORIZONTAL, action);
 
-    int currentPage = getCurrentPageNo();
+    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(currentPage);
 }
@@ -1575,7 +1569,7 @@ void Control::setViewLayoutR2L(bool r2l) {
 
     fireActionSelected(GROUP_LAYOUT_LR, action);
 
-    int currentPage = getCurrentPageNo();
+    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(currentPage);
 }
@@ -1593,7 +1587,7 @@ void Control::setViewLayoutB2T(bool b2t) {
 
     fireActionSelected(GROUP_LAYOUT_TB, action);
 
-    int currentPage = getCurrentPageNo();
+    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
     scrollHandler->scrollToPage(currentPage);
 }
@@ -1914,7 +1908,7 @@ void Control::showSettings() {
     if (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace() ||
         verticalSpaceAmount != settings->getAddVerticalSpaceAmount() ||
         horizontalSpaceAmount != settings->getAddHorizontalSpaceAmount()) {
-        int currentPage = getCurrentPageNo();
+        auto currentPage = getCurrentPageNo();
         win->getXournal()->layoutPages();
         scrollHandler->scrollToPage(currentPage);
     }
@@ -2581,8 +2575,8 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
     auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / settings->getDisplayDpi() *
                   Util::DPI_NORMALIZATION_FACTOR;
 
-    int pageNr = getCurrentPageNo();
-    if (pageNr == -1) {
+    auto pageNr = getCurrentPageNo();
+    if (pageNr == npos) {
         return;
     }
 
@@ -2618,8 +2612,8 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
 void Control::clipboardPaste(Element* e) {
     double x = 0;
     double y = 0;
-    int pageNr = getCurrentPageNo();
-    if (pageNr == -1) {
+    auto pageNr = getCurrentPageNo();
+    if (pageNr == npos) {
         return;
     }
 
@@ -2652,8 +2646,8 @@ void Control::clipboardPaste(Element* e) {
 }
 
 void Control::clipboardPasteXournal(ObjectInputStream& in) {
-    int pNr = getCurrentPageNo();
-    if (pNr == -1 && win != nullptr) {
+    auto pNr = getCurrentPageNo();
+    if (pNr == npos && win != nullptr) {
         return;
     }
 
@@ -2731,7 +2725,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         g_warning("could not paste, Exception occurred: %s", e.what());
         Stacktrace::printStracktrace();
         if (selection) {
-            for (Element* e: *selection->getElements()) { delete e; }
+            for (Element* el: *selection->getElements()) { delete el; }
             delete selection;
         }
     }

@@ -83,7 +83,7 @@ auto PopplerGlibDocument::getPage(size_t page) -> XojPdfPageSPtr {
         return nullptr;
     }
 
-    PopplerPage* pg = poppler_document_get_page(document, page);
+    PopplerPage* pg = poppler_document_get_page(document, int(page));
     XojPdfPageSPtr pageptr = std::make_shared<PopplerGlibPage>(pg);
     g_object_unref(pg);
 
@@ -95,7 +95,7 @@ auto PopplerGlibDocument::getPageCount() -> size_t {
         return 0;
     }
 
-    return poppler_document_get_n_pages(document);
+    return size_t(poppler_document_get_n_pages(document));
 }
 
 auto PopplerGlibDocument::getContentsIter() -> XojPdfBookmarkIterator* {
