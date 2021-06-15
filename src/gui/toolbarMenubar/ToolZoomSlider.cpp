@@ -69,7 +69,7 @@ void ToolZoomSlider::zoomChanged() {
 
 void ToolZoomSlider::zoomRangeValuesChanged() { updateScaleMarks(); }
 
-auto ToolZoomSlider::getToolDisplayName() -> string { return _("Zoom slider"); }
+auto ToolZoomSlider::getToolDisplayName() -> string { return _("Zoom Slider"); }
 
 auto ToolZoomSlider::getNewToolIcon() -> GtkWidget* {
     return gtk_image_new_from_icon_name("zoom-in", GTK_ICON_SIZE_SMALL_TOOLBAR);
