@@ -90,7 +90,7 @@ According to the Apple App Store guidelines, it is prohibited to publish unstabl
 
 </td></tr><tr><td>
 
-## macOS High Sierra
+## macOS Catalina
 
 <img src="readme/main-mac.png" width=100% title="Xournal++ Screenshot on macOS"/>
 
@@ -153,7 +153,7 @@ Here are a few under development that you can play with now.
 
 The official releases of Xournal++ can be found on the
 [Releases](https://github.com/xournalpp/xournalpp/releases) page. We provide
-binaries for Debian (Buster), Ubuntu (16.04), MacOS (10.13 and newer), and
+binaries for Debian (Buster), Ubuntu (16.04), MacOS (10.15 and newer), and
 Windows. For other Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
 after Ubuntu 16.04. For installing Xournal++ Mobile on handheld devices, please check out [Xournal++ Mobile's instructions](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#try-it-out)
