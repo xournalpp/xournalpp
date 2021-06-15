@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-08 07:19+0000\n"
-"PO-Revision-Date: 2021-06-15 05:20\n"
+"PO-Revision-Date: 2021-06-15 06:25\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -142,7 +142,7 @@ msgstr "Automatikoki gorde da hemen: {1}"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Back"
-msgstr "Atzera"
+msgstr "Aurrekoa"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:192 ../src/model/XojPage.cpp:174
 msgid "Background"
@@ -339,7 +339,7 @@ msgstr "Pertsonalizatua"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
 msgid "Cut"
-msgstr "Moztu"
+msgstr "Ebaki"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Default Tool"
@@ -482,7 +482,7 @@ msgstr "Ezabatu trazua"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:81
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:257
 msgid "Eraser"
-msgstr "Ezabagailua"
+msgstr "Borragoma"
 
 #: ../src/control/Control.cpp:2228
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -701,7 +701,7 @@ msgstr "Ezkutatu denak"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Highlighter"
-msgstr "Nabarmengailua"
+msgstr "Nabarmentzailea"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
@@ -1572,11 +1572,11 @@ msgstr "kurtsorea"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:246
 msgid "dash-/ dotted"
-msgstr "marraduna/puntuduna"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:243
 msgid "dashed"
-msgstr "marraduna"
+msgstr ""
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default disabled"
@@ -1592,7 +1592,7 @@ msgstr "ezabatu trazua"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:249
 msgid "dotted"
-msgstr "puntuduna"
+msgstr ""
 
 #: ../src/undo/AddUndoAction.cpp:86 ../src/undo/DeleteUndoAction.cpp:83
 msgid "elements"
@@ -1600,7 +1600,7 @@ msgstr "elementuak"
 
 #: ../src/util/DeviceListHelper.cpp:109
 msgid "eraser"
-msgstr "ezabagailua"
+msgstr "borragoma"
 
 #: ../src/control/Control.cpp:1986
 msgid "file: {1}"
@@ -1955,11 +1955,11 @@ msgstr "<i>Zehaztu audio eranskinak grabatzeko eta erreproduzitzeko erabiltzen d
 
 #: ../ui/settings.glade:1784
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr "<i>Zehaztu hautatuko diren tresnak arkatzaren botoi bat sakatzen bada edo ezabagailua erabiltzen bada. Botoia askatu ondoren, aurreko tresna hautatuko da.</i>"
+msgstr "<i>Zehaztu hautatuko diren tresnak arkatzaren botoi bat sakatzen bada edo borragoma erabiltzen bada. Botoia askatu ondoren, aurreko tresna hautatuko da.</i>"
 
 #: ../ui/settings.glade:476
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr "<i>Izen hauproposatuko da dokumentu berri bat gordetzen baduzu.</i>"
+msgstr "<i>Izen hau proposatuko da dokumentu berri bat gordetzen baduzu.</i>"
 
 #: ../ui/settings.glade:3733
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
@@ -1975,11 +1975,11 @@ msgstr "<i>Erabili pintza keinuak zoom egiteko koadernoaren orrietan.</i>"
 
 #: ../ui/settings.glade:2505
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>Erabili ukipen-pantaila ukipen anitzeko arkatza baten moduan.</i>"
 
 #: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr "<i>Konfigurazio batzuekin, lumaren lehenengo trazuak ez dira garbiak. Hori saihestu daiteke boligrafoak pantailan ukitzen dituen lehenengo puntuak baztertuta.</i>"
+msgstr "<i>Konfigurazio batzuekin, arkatzaren lehenengo trazuak ez dira garbiak. Hori saihestu daiteke arkatzak pantailan ukitzen dituen lehenengo puntuak baztertuta.</i>"
 
 #: ../ui/settings.glade:2000
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -2084,7 +2084,7 @@ msgstr "Orrien arteko atzeko planoa"
 #: ../ui/settings.glade:2866
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr "Luma handia ikonoa"
+msgstr "Arkatza handia ikonoa"
 
 #: ../ui/settings.glade:3070
 msgid "Border Color"
@@ -2368,11 +2368,11 @@ msgstr "Sartu / editatu Latex testua"
 
 #: ../ui/main.glade:1701
 msgid "Eraser Optio_ns"
-msgstr "Ezabagailuaren aukerak"
+msgstr "Borragomaren aukerak"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr "Ezabagailu mota - ez aldatu"
+msgstr "Borragoma mota - ez aldatu"
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
@@ -3382,7 +3382,7 @@ msgstr "_estandarra"
 
 #: ../ui/main.glade:1599 ../ui/main.glade:1745 ../ui/main.glade:1854
 msgid "_thick"
-msgstr "_zabala"
+msgstr "_lodia"
 
 #: ../ui/main.glade:1566 ../ui/main.glade:1712 ../ui/main.glade:1821
 msgid "_very fine"
