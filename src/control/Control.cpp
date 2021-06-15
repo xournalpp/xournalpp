@@ -2451,15 +2451,13 @@ void Control::quit(bool allowCancel) {
         return;
     }
 
-    this->closeDocument();
-
-    this->scheduler->lock();
-
     audioController->stopRecording();
-    settings->save();
-
+    this->scheduler->lock();
     this->scheduler->removeAllJobs();
     this->scheduler->unlock();
+    this->scheduler->stop();  // Finish current task. Must be called to finish pending saves.
+    this->closeDocument();    // Must be done after all jobs has finished (Segfault on save/export)
+    settings->save();
     g_application_quit(G_APPLICATION(gtkApp));
 }
 
