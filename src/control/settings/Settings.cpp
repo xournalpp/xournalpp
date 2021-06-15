@@ -956,9 +956,7 @@ void Settings::save() {
     xmlSetProp(xmlFont, reinterpret_cast<const xmlChar*>("size"), reinterpret_cast<const xmlChar*>(sSize));
 
 
-    for (std::map<string, SElement>::value_type p: data) {
-        saveData(root, p.first, p.second);
-    }
+    for (std::map<string, SElement>::value_type p: data) { saveData(root, p.first, p.second); }
 
     xmlSaveFormatFileEnc(filepath.u8string().c_str(), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
@@ -1020,9 +1018,7 @@ void Settings::saveData(xmlNodePtr root, const string& name, SElement& elem) {
         }
     }
 
-    for (std::map<string, SElement>::value_type p: elem.children()) {
-        saveData(xmlNode, p.first, p.second);
-    }
+    for (std::map<string, SElement>::value_type p: elem.children()) { saveData(xmlNode, p.first, p.second); }
 }
 
 // Getter- / Setter

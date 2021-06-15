@@ -283,9 +283,7 @@ auto exportImg(const char* input, const char* output, const char* range, int png
 
     imgExport.exportGraphics(&progress);
 
-    for (PageRangeEntry* e: exportRange) {
-        delete e;
-    }
+    for (PageRangeEntry* e: exportRange) { delete e; }
     exportRange.clear();
 
     string errorMsg = imgExport.getLastErrorMsg();
@@ -335,9 +333,7 @@ auto exportPdf(const char* input, const char* output, const char* range, ExportB
         // Do the export
         exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
         // Clean up
-        for (PageRangeEntry* e: exportRange) {
-            delete e;
-        }
+        for (PageRangeEntry* e: exportRange) { delete e; }
         exportRange.clear();
     } else {
         exportSuccess = pdfe->createPdf(path, progressiveMode);
