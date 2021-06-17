@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-17 07:59+0000\n"
-"PO-Revision-Date: 2021-06-17 19:58\n"
+"PO-Revision-Date: 2021-06-17 21:03\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -42,7 +42,7 @@ msgstr " de {1}"
 
 #: ../src/control/settings/Settings.cpp:111
 msgid "%F-Note-%H-%M"
-msgstr "%F-Note-%H-%M"
+msgstr "%F-Nota-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:146
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -55,11 +55,11 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr "<span foreground='red' size='x-large'>Faltando o arquivo de UI necessário:\n"
+msgstr "<span foreground='red' size='x-large'>Faltando o arquivo necessário da interface:\n"
 "<b>{1}</b></span>\n"
-"Não foi possível encontrá-lo em qualquer localização.\n"
+"Não foi possível encontrá-lo em nenhuma localização.\n"
 "  Nem relativa\n"
-"  Nem no diretório de trabalho\n"
+"  Nem no Diretório de Trabalho\n"
 "  Nem em {2}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
@@ -217,7 +217,7 @@ msgstr "Copiar página"
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Não foi possível criar a pasta: {1}\n"
-"Falha com o erro: {2}"
+"Falhou com o erro: {2}"
 
 #: ../src/control/LatexController.cpp:271
 msgid "Could not load LaTeX PDF file"
@@ -327,7 +327,7 @@ msgstr "Exportação Personalizada"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Customize Toolbars"
-msgstr "Personalizar barra de ferramentas"
+msgstr "Personalizar Barras de Ferramentas"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:29
 msgid "Customized"
@@ -339,7 +339,7 @@ msgstr "Recortar"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Default Tool"
-msgstr "Ferramenta padrão"
+msgstr "Ferramenta Padrão"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 #: ../src/undo/DeleteUndoAction.cpp:74
@@ -382,9 +382,9 @@ msgstr "Exibir opções avançadas de exportação"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr "Não abra os arquivos de salvamento automático. Eles podem ser sobrescritos!\n"
+msgstr "Não abra os arquivos de Salvamento Automático. Eles podem ser substituídos!\n"
 "Copie os arquivos para outra pasta.\n"
-"Os arquivos da pasta {1} não podem ser abertos."
+"Os arquivos da Pasta {1} não podem ser abertos."
 
 #: ../src/control/jobs/BaseExportJob.cpp:39
 msgid "Do not overwrite the background PDF! This will cause errors!"
@@ -400,7 +400,7 @@ msgstr "O documento está corrompido (nenhuma página encontrada no arquivo)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:235
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr "Documento não está completo (talvez o final seja cortado?)"
+msgstr "Documento não está completo (talvez o final esteja cortado?)"
 
 #: ../src/model/Document.cpp:285 ../src/model/Document.cpp:294
 #: ../src/model/Document.cpp:297
@@ -415,7 +415,7 @@ msgstr "Pontilhado"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Arrow"
-msgstr "Desenhar seta"
+msgstr "Desenhar Seta"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -459,7 +459,7 @@ msgstr "Tipo de Desenho - não mude"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Combo de Tipo de Desenho"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -471,7 +471,7 @@ msgstr "Documento salvo de emergência"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr "Ative a pressão da caneta ou a inferência de pressão para alterar esta configuração!"
+msgstr "Ative sensibilidade à pressão ou inferência de pressão para alterar esta configuração!"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
@@ -481,7 +481,7 @@ msgstr "Apagar traço"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:248
 msgid "Eraser"
-msgstr "Apagar"
+msgstr "Borracha"
 
 #: ../src/control/Control.cpp:2222
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -491,7 +491,7 @@ msgstr "Erro ao anotar arquivo PDF \"{1}\"\n"
 
 #: ../src/gui/GladeGui.cpp:21
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr "Erro ao carregar o arquivo glade \"{1}\" (tente carregar \"{2}\")"
+msgstr "Erro ao carregar o arquivo \"{1}\" (tente carregar \"{2}\")"
 
 #: ../src/control/Control.cpp:2043
 msgid "Error opening file \"{1}\""
@@ -765,7 +765,7 @@ msgstr "Camada"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "Combo Camada"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layer Preview"
@@ -1152,7 +1152,7 @@ msgstr "Selecionar região"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Selection Combo"
-msgstr ""
+msgstr "Combo de seleção"
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
@@ -1533,7 +1533,7 @@ msgstr "Seu documento atual não contém página PDF {1}\n"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "Controle deslizante de zoom"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
