@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-17 07:59+0000\n"
-"PO-Revision-Date: 2021-06-17 08:11\n"
+"PO-Revision-Date: 2021-06-17 19:58\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -3073,7 +3073,7 @@ msgstr "Tente selecionar o objeto primeiro; se nada for selecionado, então most
 
 #: ../ui/settings.glade:2751
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Usar Ícones Padrões disponíveis (requer reinicialização)"
 
 #: ../ui/settings.glade:4315
 msgid "Use snapping for recognized shapes"
