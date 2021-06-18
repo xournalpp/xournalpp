@@ -52,16 +52,13 @@
   <url type="homepage">https://xournalpp.github.io/</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://i.imgur.com/Muc4nmw.png</image>
+      <image>https://user-images.githubusercontent.com/40485433/122611342-70fe3a80-d081-11eb-916a-92e570a1a416.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/xournalpp/xournalpp/master/readme/background.png</image>
+      <image>https://user-images.githubusercontent.com/40485433/122599842-42776400-d06f-11eb-82a2-c006dcd0c36a.png</image>
     </screenshot>
     <screenshot>
-      <image>https://i.imgur.com/awHSGG9.png</image>
-    </screenshot>
-    <screenshot>
-      <image>https://i.imgur.com/3uxu40d.png</image>
+      <image>https://user-images.githubusercontent.com/40485433/122599858-47d4ae80-d06f-11eb-9dc4-1e546c78b632.png</image>
     </screenshot>
   </screenshots>
   <launchable type="desktop-id">com.github.xournalpp.xournalpp.desktop</launchable>
