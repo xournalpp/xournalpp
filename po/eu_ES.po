@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-17 07:59+0000\n"
-"PO-Revision-Date: 2021-06-17 08:11\n"
+"PO-Revision-Date: 2021-06-18 23:01\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -459,7 +459,7 @@ msgstr "Marrazki mota - ez aldatu"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Konbinatua marrazketa modua"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -765,7 +765,7 @@ msgstr "Geruza"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "Konbinatua geruza"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layer Preview"
@@ -1152,7 +1152,7 @@ msgstr "Hautatu area"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Selection Combo"
-msgstr ""
+msgstr "Konbinatua hautapena"
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
@@ -1533,7 +1533,7 @@ msgstr "Zure uneko dokumentuak ez du PDF {1} zenbakia duen orririk.\n"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "Zoom graduatzailea"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
@@ -1574,11 +1574,11 @@ msgstr "kurtsorea"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:237
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "marrak/puntuak"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:234
 msgid "dashed"
-msgstr ""
+msgstr "marrak"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default disabled"
@@ -1594,7 +1594,7 @@ msgstr "ezabatu trazua"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:240
 msgid "dotted"
-msgstr ""
+msgstr "puntuak"
 
 #: ../src/undo/AddUndoAction.cpp:86 ../src/undo/DeleteUndoAction.cpp:83
 msgid "elements"
@@ -3073,7 +3073,7 @@ msgstr "Saiatu lehenengo objektua hautatzen; ezer hautatuta ez badago, erakutsi 
 
 #: ../ui/settings.glade:2751
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Erabili ikono eskuragarrien biltegia (berrabiarazi behar da)"
 
 #: ../ui/settings.glade:4315
 msgid "Use snapping for recognized shapes"
