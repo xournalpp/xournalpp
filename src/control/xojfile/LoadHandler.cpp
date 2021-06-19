@@ -332,6 +332,8 @@ void LoadHandler::parseBgSolid() {
 void LoadHandler::parseBgPixmap() {
     const char* domain = LoadHandlerHelper::getAttrib("domain", false, this);
     const fs::path filepath(LoadHandlerHelper::getAttrib("filename", false, this));
+    // in case of a cloned background image, filename is a string representation of the page number from which the image
+    // is cloned
 
     if (!strcmp(domain, "absolute") || (!strcmp(domain, "attach") && this->isGzFile)) {
         fs::path fileToLoad;
@@ -378,7 +380,13 @@ void LoadHandler::parseBgPixmap() {
 
         this->page->setBackgroundImage(img);
     } else if (!strcmp(domain, "clone")) {
-        PageRef p = doc.getPage(stoull(filepath.string()));
+        gchar* endptr = nullptr;
+        auto const& filename = filepath.string();
+        size_t nr = static_cast<size_t>(g_ascii_strtoull(filename.c_str(), &endptr, 10));
+        if (endptr == filename.c_str()) {
+            error("%s", FC(_F("Could not read page number for cloned background image: {1}.") % filepath.string()));
+        }
+        PageRef p = pages[nr];
 
         if (p) {
             this->page->setBackgroundImage(p->getBackgroundImage());
