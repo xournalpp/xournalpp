@@ -14,17 +14,17 @@
 /**
  * Padding outside the pages, including shadow
  */
-constexpr auto const XOURNAL_PADDING = 10;
+constexpr auto const XOURNAL_PADDING = 0;
 
 /**
  * Allowance for shadow between page pairs in paired page mode
  */
-constexpr auto const XOURNAL_ROOM_FOR_SHADOW = 3;
+constexpr auto const XOURNAL_ROOM_FOR_SHADOW = 0;
 
 /**
  * Padding between the pages
  */
-constexpr auto const XOURNAL_PADDING_BETWEEN = 15;
+constexpr auto const XOURNAL_PADDING_BETWEEN = 0;
 
 
 Layout::Layout(XournalView* view, ScrollHandling* scrollHandling): view(view), scrollHandling(scrollHandling) {
