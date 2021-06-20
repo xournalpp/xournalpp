@@ -31,9 +31,11 @@
 
 using std::vector;
 
-constexpr size_t MINPIXSIZE = 5;  // smallest can scale down to, in pixels.
+/// Smallest can scale down to, in pixels.
+constexpr size_t MINPIXSIZE = 5;
 
-constexpr int DELETE_PADDING = 20;  // ui button padding
+/// Padding for ui buttons
+constexpr int DELETE_PADDING = 20;
 constexpr int ROTATE_PADDING = 8;
 
 EditSelection::EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view):
@@ -412,6 +414,7 @@ void EditSelection::mouseUp() {
                                   this->view, this->undo, this->mouseDownType);
 
     this->mouseDownType = CURSOR_SELECTION_NONE;
+    this->setEdgePan(false);
     updateMatrix();
 }
 
@@ -474,6 +477,8 @@ void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
 
         // move
         moveSelection(p.x - cx, p.y - cy);
+
+        this->setEdgePan(true);
     } else if (this->mouseDownType == CURSOR_SELECTION_ROTATE && supportRotation) {  // catch rotation here
         double rdx = mouseX / zoom - this->snappedBounds.x - this->snappedBounds.width / 2;
         double rdy = mouseY / zoom - this->snappedBounds.y - this->snappedBounds.height / 2;
@@ -696,45 +701,115 @@ void EditSelection::moveSelection(double dx, double dy) {
     this->snappedBounds.x += dx;
     this->snappedBounds.y += dy;
 
-    if (this->edgePanHandler == nullptr) {
-        this->edgePanHandler = g_timeout_source_new(1000 / 30);
-        g_source_set_callback(this->edgePanHandler, reinterpret_cast<int (*)(void*)>(EditSelection::handleEdgePan),
-                              this, nullptr);
-        g_source_attach(this->edgePanHandler, nullptr);
-    }
-
     updateMatrix();
 
     this->view->getXournal()->repaintSelection();
 }
 
+void EditSelection::setEdgePan(bool pan) {
+    if (pan && this->edgePanHandler == nullptr) {
+        this->edgePanHandler = g_timeout_source_new(1000 / 30);
+        g_source_set_callback(this->edgePanHandler, reinterpret_cast<int (*)(void*)>(EditSelection::handleEdgePan),
+                              this, nullptr);
+        g_source_attach(this->edgePanHandler, nullptr);
+    } else if (!pan && this->edgePanHandler) {
+        g_source_unref(this->edgePanHandler);
+        this->edgePanHandler = nullptr;
+    }
+}
+
 bool EditSelection::handleEdgePan(EditSelection* self) {
     Layout* layout = gtk_xournal_get_layout(self->view->getXournal()->getWidget());
-    const auto visRect = layout->getVisibleRect();
     const double zoom = self->view->getXournal()->getZoom();
-    const double boundTop = static_cast<double>(self->view->getY()) + self->y * zoom;
-    const double boundBot = static_cast<double>(self->view->getY()) + (self->y + self->height) * zoom;
-    const double scrollYDir = boundBot > visRect.y + visRect.height ? 1.0 : boundTop < visRect.y ? -1.0 : 0.0;
-    bool edgePanned = false;
-    if (scrollYDir != 0) {
-        Layout* layout = gtk_xournal_get_layout(self->view->getXournal()->getWidget());
-        const double SCROLL_SPEED = 5.0;
-        self->moveSelection(0, SCROLL_SPEED / zoom * scrollYDir);
-        layout->scrollRelative(0, SCROLL_SPEED * scrollYDir);
-        edgePanned = true;
+
+    // Layout visible rect and dimensions
+    const int layoutWidth = layout->getMinimalWidth();
+    const int layoutHeight = layout->getMinimalHeight();
+    const auto visRect = layout->getVisibleRect();
+    const double visRectTop = visRect.y + visRect.height;
+    const double visRectRight = visRect.x + visRect.width;
+
+    const auto bbox = self->getBoundingBoxInView();
+    const double bboxTop = bbox.y + bbox.height;
+    const double bboxRight = bbox.x + bbox.width;
+
+    const bool aboveTop = bboxTop > visRectTop;
+    const bool belowBottom = bbox.y < visRect.y;
+    const bool beforeLeft = bbox.x < visRect.x;
+    const bool afterRight = bbox.x + bbox.width > visRect.x + visRect.width;
+
+    // Find scroll direction
+    int scrollYDir = 0;
+    int scrollXDir = 0;
+
+    if (aboveTop) {
+        scrollYDir = 1;
+    } else if (belowBottom) {
+        scrollYDir = -1;
     }
 
-    if (!edgePanned) {
-        g_source_unref(self->edgePanHandler);
-        self->edgePanHandler = nullptr;
+    if (beforeLeft) {
+        scrollXDir = -1;
+    } else if (afterRight) {
+        scrollXDir = 1;
     }
+
+    // Compute relative proportion of selection out of view
+    double yScrollMult = 1.0;
+    double xScrollMult = 1.0;
+    const double MAX_MULT = 5.0;
+
+    if (aboveTop) {
+        yScrollMult += (bboxTop - visRectTop) / bbox.height * MAX_MULT;
+    } else if (belowBottom) {
+        yScrollMult += (visRect.y - bbox.y) / bbox.height * MAX_MULT;
+    }
+
+    if (beforeLeft) {
+        xScrollMult += (visRect.x - bbox.x) / bbox.width * MAX_MULT;
+    } else if (afterRight) {
+        xScrollMult += (bboxRight - visRectRight) / bbox.width * MAX_MULT;
+    }
+
+    // How much we'll move the layout.
+    const double SCROLL_SPEED = 5.0;
+    double layoutScrollX = zoom * scrollXDir * (SCROLL_SPEED * xScrollMult);
+    double layoutScrollY = zoom * scrollYDir * (SCROLL_SPEED * yScrollMult);
+
+    // Bounds checking -- don't scroll if we would pass the edge of the view.
+    const bool wouldPassRightEdge = bbox.x + bbox.width + layoutScrollX > layoutWidth && scrollXDir > 0;
+    const bool wouldPassLeftEdge = bbox.x < layoutScrollX && scrollXDir < 0;
+    const bool wouldPassViewTop = bbox.y + bbox.height + layoutScrollY > layoutHeight && scrollYDir > 0;
+    const bool wouldPassViewBottom = bbox.y < layoutScrollY && scrollYDir < 0;
+
+    if (wouldPassLeftEdge || wouldPassRightEdge) {
+        scrollXDir = 0;
+        layoutScrollX = 0;
+    }
+
+    if (wouldPassViewBottom || wouldPassViewTop) {
+        scrollYDir = 0;
+        layoutScrollY = 0;
+    }
+
+    // Perform the scrolling
+    bool edgePanned = false;
+    if (self->isMoving() && (scrollXDir != 0 || scrollYDir != 0)) {
+        layout->scrollRelative(layoutScrollX, layoutScrollY);
+        self->moveSelection(0, layoutScrollY / zoom);
+        edgePanned = true;
+    } else {
+        // No panning, so disable the timer.
+        self->setEdgePan(false);
+    }
+
     return edgePanned;
 }
 
 /**
  * If the selection is outside the visible area correct the coordinates
  */
-void EditSelection::ensureWithinVisibleArea() {
+auto EditSelection::getBoundingBoxInView() const -> Rectangle<double> {
     int viewx = this->view->getX();
     int viewy = this->view->getY();
     double zoom = this->view->getXournal()->getZoom();
@@ -748,11 +823,15 @@ void EditSelection::ensureWithinVisibleArea() {
     double minx = cx - w / 2.0;
     double miny = cy - h / 2.0;
 
+    return {viewx + minx * zoom, viewy + miny * zoom, w * zoom, h * zoom};
+}
+
+void EditSelection::ensureWithinVisibleArea() {
+    const Rectangle<double> viewRect = this->getBoundingBoxInView();
     // need to modify this to take into account the position
     // of the object, plus typecast because XojPageView takes ints
-    this->view->getXournal()->ensureRectIsVisible(static_cast<int>(viewx + minx * zoom),
-                                                  static_cast<int>(viewy + miny * zoom), static_cast<int>(w * zoom),
-                                                  static_cast<int>(h * zoom));
+    this->view->getXournal()->ensureRectIsVisible(static_cast<int>(viewRect.x), static_cast<int>(viewRect.y),
+                                                  static_cast<int>(viewRect.width), static_cast<int>(viewRect.height));
 }
 
 /**

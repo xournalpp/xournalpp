@@ -206,6 +206,12 @@ public:
     void paint(cairo_t* cr, double zoom);
 
     /**
+     * Gets the selection's bounding box in view coordinates. This takes document zoom
+     * and selection rotation into account.
+     */
+    auto getBoundingBoxInView() const -> Rectangle<double>;
+
+    /**
      * If the selection is outside the visible area correct the coordinates
      */
     void ensureWithinVisibleArea();
@@ -222,7 +228,7 @@ public:
     void mouseMove(double x, double y, bool alt);
 
     /**
-     * If the selection should moved (or rescaled)
+     * If the user is currently moving the selection.
      */
     bool isMoving();
 

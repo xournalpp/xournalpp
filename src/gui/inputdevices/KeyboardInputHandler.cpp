@@ -39,6 +39,7 @@ auto KeyboardInputHandler::handleImpl(InputEvent const& event) -> bool {
                 ydir = 1;
             }
             selection->moveSelection(d * xdir, d * ydir);
+            selection->ensureWithinVisibleArea();
             return true;
         }
         return xournal->view->onKeyPressEvent(keyEvent);
