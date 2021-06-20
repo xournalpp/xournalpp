@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-17 07:59+0000\n"
-"PO-Revision-Date: 2021-06-17 08:12\n"
+"PO-Revision-Date: 2021-06-20 18:05\n"
 "Last-Translator: \n"
 "Language-Team: Santali\n"
 "Language: sat_IN\n"
@@ -64,7 +64,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
-msgstr ""
+msgstr "ᱡᱷᱚᱛᱚ ᱨᱮᱫ ᱠᱚ"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:191
 msgid "Apply to all pages"
