@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-17 07:59+0000\n"
-"PO-Revision-Date: 2021-06-18 23:01\n"
+"POT-Creation-Date: 2021-06-24 04:07+0000\n"
+"PO-Revision-Date: 2021-06-24 04:49\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -231,24 +231,24 @@ msgstr "Ezin izan da LaTeX PDF fitxategia kargatu: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Ezin izan da pagetemplates.ini fitxategia kargatu"
 
-#: ../src/control/xojfile/LoadHandler.cpp:777
+#: ../src/control/xojfile/LoadHandler.cpp:785
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ezin da fitxategia irakurri"
 
-#: ../src/control/xojfile/LoadHandler.cpp:786
+#: ../src/control/xojfile/LoadHandler.cpp:794
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ezin da fitxategia idatzi"
 
-#: ../src/control/xojfile/LoadHandler.cpp:758
-#: ../src/control/xojfile/LoadHandler.cpp:1009
-#: ../src/control/xojfile/LoadHandler.cpp:1027
+#: ../src/control/xojfile/LoadHandler.cpp:766
+#: ../src/control/xojfile/LoadHandler.cpp:1017
+#: ../src/control/xojfile/LoadHandler.cpp:1035
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ez da fitxategi-tamaina baliozkoa"
 
-#: ../src/control/xojfile/LoadHandler.cpp:749
-#: ../src/control/xojfile/LoadHandler.cpp:765
-#: ../src/control/xojfile/LoadHandler.cpp:1000
-#: ../src/control/xojfile/LoadHandler.cpp:1016
+#: ../src/control/xojfile/LoadHandler.cpp:757
+#: ../src/control/xojfile/LoadHandler.cpp:773
+#: ../src/control/xojfile/LoadHandler.cpp:1008
+#: ../src/control/xojfile/LoadHandler.cpp:1024
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: {2}"
 
@@ -268,10 +268,14 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Ezin izan da toolbar.ini fitxategi orokorra analizatu: {1}\n"
 "Tresna-barrak ez dira erabilgarri egongo"
 
-#: ../src/control/xojfile/LoadHandler.cpp:351
-#: ../src/control/xojfile/LoadHandler.cpp:375
+#: ../src/control/xojfile/LoadHandler.cpp:353
+#: ../src/control/xojfile/LoadHandler.cpp:377
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Ezin izan da irudia irakurri: {1}. Errore mezua: {2}"
+
+#: ../src/control/xojfile/LoadHandler.cpp:387
+msgid "Could not read page number for cloned background image: {1}."
+msgstr ""
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -501,12 +505,12 @@ msgstr "Errorea \"{1}\" fitxategia irekitzean"
 msgid "Error opening file: \"{1}\""
 msgstr "Errorea \"{1}\" fitxategia irekitzean"
 
-#: ../src/control/xojfile/LoadHandler.cpp:433
-#: ../src/control/xojfile/LoadHandler.cpp:453
+#: ../src/control/xojfile/LoadHandler.cpp:441
+#: ../src/control/xojfile/LoadHandler.cpp:461
 msgid "Error reading PDF: {1}"
 msgstr "Errorea {1} PDF irakurtzean"
 
-#: ../src/control/xojfile/LoadHandler.cpp:510
+#: ../src/control/xojfile/LoadHandler.cpp:518
 msgid "Error reading width of a stroke: {1}"
 msgstr "Errorea trazuaren zabalera irakurtzean: {1}"
 
@@ -1044,7 +1048,7 @@ msgstr "Berrizendatu geruza"
 msgid "Replace"
 msgstr "Ordeztu"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1046
+#: ../src/control/xojfile/LoadHandler.cpp:1054
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Eskatutako behin-behineko fitxategia ez da aurkitu eranskinean {1}"
 
@@ -1418,7 +1422,7 @@ msgstr "Ustekabeko root etiketa: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Ustekabeko etiketa dokumentuan: \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:486
+#: ../src/control/xojfile/LoadHandler.cpp:494
 msgid "Unknown background type: {1}"
 msgstr "Atzeko plano mota ezezaguna: {1}"
 
@@ -1426,7 +1430,7 @@ msgstr "Atzeko plano mota ezezaguna: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Kolore balio ezezaguna: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:440
+#: ../src/control/xojfile/LoadHandler.cpp:448
 msgid "Unknown domain type: {1}"
 msgstr "Domeinu mota ezezaguna: {1}"
 
@@ -1434,11 +1438,11 @@ msgstr "Domeinu mota ezezaguna: {1}"
 msgid "Unknown parser error"
 msgstr "Analisi errore ezezaguna"
 
-#: ../src/control/xojfile/LoadHandler.cpp:387
+#: ../src/control/xojfile/LoadHandler.cpp:395
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Pixmap::domain mota ezezaguna: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:583
+#: ../src/control/xojfile/LoadHandler.cpp:591
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Trazu mota ezezaguna: {1}, arkatza erabiliko da"
 
@@ -1475,11 +1479,11 @@ msgstr "Atzeko planoko PDFrekin"
 msgid "Write text"
 msgstr "Idatzi testua"
 
-#: ../src/control/xojfile/LoadHandler.cpp:900
+#: ../src/control/xojfile/LoadHandler.cpp:908
 msgid "Wrong count of points ({1})"
 msgstr "Puntuen zenbaketa okerra ({1})"
 
-#: ../src/control/xojfile/LoadHandler.cpp:910
+#: ../src/control/xojfile/LoadHandler.cpp:918
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Puntuen zenbaketa okerra, eskuratua {1}, espero zen {2}"
 
@@ -1665,7 +1669,7 @@ msgstr "trackpoint"
 msgid "whiteout"
 msgstr "tinta zuzentzailea"
 
-#: ../src/control/xojfile/LoadHandler.cpp:909
+#: ../src/control/xojfile/LoadHandler.cpp:917
 msgid "xoj-File: {1}"
 msgstr "xoj-fitxategia: {1}"
 
