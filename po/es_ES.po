@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-17 07:59+0000\n"
-"PO-Revision-Date: 2021-06-17 08:11\n"
+"PO-Revision-Date: 2021-06-24 03:49\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1531,7 +1531,7 @@ msgstr "El documento actual no contiene la página n.º {1} del PDF.\n"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "Barra de zoom"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
@@ -3071,7 +3071,7 @@ msgstr "Intentar seleccionar un archivo primero; si no se selecciona nada, mostr
 
 #: ../ui/settings.glade:2751
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Usar iconos disponibles de stock (requiere reinicio)"
 
 #: ../ui/settings.glade:4315
 msgid "Use snapping for recognized shapes"
