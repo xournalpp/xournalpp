@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-17 07:59+0000\n"
-"PO-Revision-Date: 2021-06-17 08:11\n"
+"POT-Creation-Date: 2021-06-24 04:07+0000\n"
+"PO-Revision-Date: 2021-06-24 04:48\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -230,24 +230,24 @@ msgstr "No s'ha pogut carregar l'arxiu PDF de LaTeX: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "No s'ha pogut carregar l'arxiu pagetemplates.ini"
 
-#: ../src/control/xojfile/LoadHandler.cpp:777
+#: ../src/control/xojfile/LoadHandler.cpp:785
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "No s'ha pogut obrir l'arxiu adjunt: {1}. Missatge d'error: No s'ha pogut llegir el fitxer"
 
-#: ../src/control/xojfile/LoadHandler.cpp:786
+#: ../src/control/xojfile/LoadHandler.cpp:794
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "No s'ha pogut obrir l'arxiu adjunt: {1}. Missatge d'error: No s'ha pogut escriure a l'arxiu"
 
-#: ../src/control/xojfile/LoadHandler.cpp:758
-#: ../src/control/xojfile/LoadHandler.cpp:1009
-#: ../src/control/xojfile/LoadHandler.cpp:1027
+#: ../src/control/xojfile/LoadHandler.cpp:766
+#: ../src/control/xojfile/LoadHandler.cpp:1017
+#: ../src/control/xojfile/LoadHandler.cpp:1035
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "No s'ha pogut obrir l'arxiu adjunt: {1}. No s'ha proporcionat una mida de fitxer vàlida"
 
-#: ../src/control/xojfile/LoadHandler.cpp:749
-#: ../src/control/xojfile/LoadHandler.cpp:765
-#: ../src/control/xojfile/LoadHandler.cpp:1000
-#: ../src/control/xojfile/LoadHandler.cpp:1016
+#: ../src/control/xojfile/LoadHandler.cpp:757
+#: ../src/control/xojfile/LoadHandler.cpp:773
+#: ../src/control/xojfile/LoadHandler.cpp:1008
+#: ../src/control/xojfile/LoadHandler.cpp:1024
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "No s'ha pogut obrir l'arxiu adjunt: {1}. Missatge d'error: {2}"
 
@@ -267,10 +267,14 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "No s'ha pogut processar l'arxiu general toolbar.ini: {1}\n"
 "No estarà disponible cap barra d'eines"
 
-#: ../src/control/xojfile/LoadHandler.cpp:351
-#: ../src/control/xojfile/LoadHandler.cpp:375
+#: ../src/control/xojfile/LoadHandler.cpp:353
+#: ../src/control/xojfile/LoadHandler.cpp:377
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "No s'ha pogut llegir la imatge: {1}. Missatge d'error: {2}"
+
+#: ../src/control/xojfile/LoadHandler.cpp:387
+msgid "Could not read page number for cloned background image: {1}."
+msgstr ""
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -500,12 +504,12 @@ msgstr "Error a l'obrir l'arxiu \"{1}\""
 msgid "Error opening file: \"{1}\""
 msgstr "Error a l'obrir l'arxiu: \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:433
-#: ../src/control/xojfile/LoadHandler.cpp:453
+#: ../src/control/xojfile/LoadHandler.cpp:441
+#: ../src/control/xojfile/LoadHandler.cpp:461
 msgid "Error reading PDF: {1}"
 msgstr "Error al llegir el PDF: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:510
+#: ../src/control/xojfile/LoadHandler.cpp:518
 msgid "Error reading width of a stroke: {1}"
 msgstr "Error al llegir l'amplada d'un traç: {1}"
 
@@ -1041,7 +1045,7 @@ msgstr "Canviar el nom de la capa"
 msgid "Replace"
 msgstr "Eeemplaçar"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1046
+#: ../src/control/xojfile/LoadHandler.cpp:1054
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "No s'ha trobat el fitxer temporal sol·licitat per a l'adjunt {1}"
 
@@ -1406,7 +1410,7 @@ msgstr ""
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:486
+#: ../src/control/xojfile/LoadHandler.cpp:494
 msgid "Unknown background type: {1}"
 msgstr ""
 
@@ -1414,7 +1418,7 @@ msgstr ""
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:440
+#: ../src/control/xojfile/LoadHandler.cpp:448
 msgid "Unknown domain type: {1}"
 msgstr ""
 
@@ -1422,11 +1426,11 @@ msgstr ""
 msgid "Unknown parser error"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:387
+#: ../src/control/xojfile/LoadHandler.cpp:395
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:583
+#: ../src/control/xojfile/LoadHandler.cpp:591
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
@@ -1463,11 +1467,11 @@ msgstr ""
 msgid "Write text"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:900
+#: ../src/control/xojfile/LoadHandler.cpp:908
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:910
+#: ../src/control/xojfile/LoadHandler.cpp:918
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr ""
 
@@ -1650,7 +1654,7 @@ msgstr ""
 msgid "whiteout"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:909
+#: ../src/control/xojfile/LoadHandler.cpp:917
 msgid "xoj-File: {1}"
 msgstr ""
 
