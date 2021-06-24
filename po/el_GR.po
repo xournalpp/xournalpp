@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-17 07:59+0000\n"
-"PO-Revision-Date: 2021-06-17 08:11\n"
+"POT-Creation-Date: 2021-06-24 04:07+0000\n"
+"PO-Revision-Date: 2021-06-24 04:48\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -229,24 +229,24 @@ msgstr "Δεν ήταν δυνατό να φορτωθεί το αρχείο LaT
 msgid "Could not load pagetemplates.ini file"
 msgstr "Απέτυχε η φόρτωση του αρχείου pagetemplates.ini"
 
-#: ../src/control/xojfile/LoadHandler.cpp:777
+#: ../src/control/xojfile/LoadHandler.cpp:785
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: Δεν ήταν δυνατή η ανάγνωση του αρχείου"
 
-#: ../src/control/xojfile/LoadHandler.cpp:786
+#: ../src/control/xojfile/LoadHandler.cpp:794
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: Δεν ήταν δυνατή η εγγραφή του αρχείου"
 
-#: ../src/control/xojfile/LoadHandler.cpp:758
-#: ../src/control/xojfile/LoadHandler.cpp:1009
-#: ../src/control/xojfile/LoadHandler.cpp:1027
+#: ../src/control/xojfile/LoadHandler.cpp:766
+#: ../src/control/xojfile/LoadHandler.cpp:1017
+#: ../src/control/xojfile/LoadHandler.cpp:1035
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: Δεν δόθηκε αποδεκτό μέγεθος αρχείου"
 
-#: ../src/control/xojfile/LoadHandler.cpp:749
-#: ../src/control/xojfile/LoadHandler.cpp:765
-#: ../src/control/xojfile/LoadHandler.cpp:1000
-#: ../src/control/xojfile/LoadHandler.cpp:1016
+#: ../src/control/xojfile/LoadHandler.cpp:757
+#: ../src/control/xojfile/LoadHandler.cpp:773
+#: ../src/control/xojfile/LoadHandler.cpp:1008
+#: ../src/control/xojfile/LoadHandler.cpp:1024
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μήνυμα σφάλματος: {2}"
 
@@ -266,10 +266,14 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Αδύνατη προσπέλαση γενικού αρχείου toolbar.ini: {1}\n"
 "Οι γραμμές εργαλείων δεν θα είναι διαθέσιμες"
 
-#: ../src/control/xojfile/LoadHandler.cpp:351
-#: ../src/control/xojfile/LoadHandler.cpp:375
+#: ../src/control/xojfile/LoadHandler.cpp:353
+#: ../src/control/xojfile/LoadHandler.cpp:377
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Απέτυχε η ανάγνωση της εικόνας: {1}. Μήνυμα σφάλματος: {2}"
+
+#: ../src/control/xojfile/LoadHandler.cpp:387
+msgid "Could not read page number for cloned background image: {1}."
+msgstr ""
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -499,12 +503,12 @@ msgstr "Σφάλμα κατά το άνοιγμα αρχείου \"{1}\""
 msgid "Error opening file: \"{1}\""
 msgstr "Σφάλμα κατά το άνοιγμα αρχείου: \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:433
-#: ../src/control/xojfile/LoadHandler.cpp:453
+#: ../src/control/xojfile/LoadHandler.cpp:441
+#: ../src/control/xojfile/LoadHandler.cpp:461
 msgid "Error reading PDF: {1}"
 msgstr "Σφάλμα ανάγνωσης PDF: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:510
+#: ../src/control/xojfile/LoadHandler.cpp:518
 msgid "Error reading width of a stroke: {1}"
 msgstr "Σφάλμα ανάγνωσης πλάτους μιας μολυβιάς: {1}"
 
@@ -1031,7 +1035,7 @@ msgstr ""
 msgid "Replace"
 msgstr "Αντικατάσταση"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1046
+#: ../src/control/xojfile/LoadHandler.cpp:1054
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Το προσωρινό αρχείο που ζητήθηκε δεν βρέθηκε για επισύναψη {1}"
 
@@ -1398,7 +1402,7 @@ msgstr "Μη αναμενόμενη ετικέτα ρίζας: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Μη αναμενόμενη ετικέτα στο έγγραφο: \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:486
+#: ../src/control/xojfile/LoadHandler.cpp:494
 msgid "Unknown background type: {1}"
 msgstr "Άγνωστος τύπος φόντου: {1}"
 
@@ -1406,7 +1410,7 @@ msgstr "Άγνωστος τύπος φόντου: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Άγνωστη τιμή χρώματος \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:440
+#: ../src/control/xojfile/LoadHandler.cpp:448
 msgid "Unknown domain type: {1}"
 msgstr "Άγνωστος τύπος τομέα: {1}"
 
@@ -1414,11 +1418,11 @@ msgstr "Άγνωστος τύπος τομέα: {1}"
 msgid "Unknown parser error"
 msgstr "Άγνωστο σφάλμα αναλυτή"
 
-#: ../src/control/xojfile/LoadHandler.cpp:387
+#: ../src/control/xojfile/LoadHandler.cpp:395
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Άγνωστος pixmap::τύπος τομέα: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:583
+#: ../src/control/xojfile/LoadHandler.cpp:591
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Άγνωστος τύπος μολυβιάς: \"{1}\", υποθέτω στυλό"
 
@@ -1455,11 +1459,11 @@ msgstr "Με φόντο PDF"
 msgid "Write text"
 msgstr "Σύνταξη κειμένου"
 
-#: ../src/control/xojfile/LoadHandler.cpp:900
+#: ../src/control/xojfile/LoadHandler.cpp:908
 msgid "Wrong count of points ({1})"
 msgstr "Λάθος μέτρημα σημείων ({1})"
 
-#: ../src/control/xojfile/LoadHandler.cpp:910
+#: ../src/control/xojfile/LoadHandler.cpp:918
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Λάθος αριθμός σημείων, βρέθηκαν {1}, περιμέναμε {2}"
 
@@ -1645,7 +1649,7 @@ msgstr "trackpoint"
 msgid "whiteout"
 msgstr "διορθωτικό υγρό"
 
-#: ../src/control/xojfile/LoadHandler.cpp:909
+#: ../src/control/xojfile/LoadHandler.cpp:917
 msgid "xoj-File: {1}"
 msgstr "xoj-Αρχείο: {1}"
 
