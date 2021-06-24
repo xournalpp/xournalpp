@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-17 07:59+0000\n"
-"PO-Revision-Date: 2021-06-17 08:11\n"
+"POT-Creation-Date: 2021-06-24 04:07+0000\n"
+"PO-Revision-Date: 2021-06-24 04:48\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -38,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " av {1}"
 
 #: ../src/control/settings/Settings.cpp:111
 msgid "%F-Note-%H-%M"
@@ -231,24 +231,24 @@ msgstr "Kunde inte ladda LaTeX PDF-fil: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Kunde inte läsa in pagetemplates.ini-fil"
 
-#: ../src/control/xojfile/LoadHandler.cpp:777
+#: ../src/control/xojfile/LoadHandler.cpp:785
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte läsa filen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:786
+#: ../src/control/xojfile/LoadHandler.cpp:794
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Kunde inte skriva till filen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:758
-#: ../src/control/xojfile/LoadHandler.cpp:1009
-#: ../src/control/xojfile/LoadHandler.cpp:1027
+#: ../src/control/xojfile/LoadHandler.cpp:766
+#: ../src/control/xojfile/LoadHandler.cpp:1017
+#: ../src/control/xojfile/LoadHandler.cpp:1035
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: Ingen giltig filstorlek angiven"
 
-#: ../src/control/xojfile/LoadHandler.cpp:749
-#: ../src/control/xojfile/LoadHandler.cpp:765
-#: ../src/control/xojfile/LoadHandler.cpp:1000
-#: ../src/control/xojfile/LoadHandler.cpp:1016
+#: ../src/control/xojfile/LoadHandler.cpp:757
+#: ../src/control/xojfile/LoadHandler.cpp:773
+#: ../src/control/xojfile/LoadHandler.cpp:1008
+#: ../src/control/xojfile/LoadHandler.cpp:1024
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Kunde inte öppna bilaga: {1}. Felmeddelande: {2}"
 
@@ -266,9 +266,13 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:351
-#: ../src/control/xojfile/LoadHandler.cpp:375
+#: ../src/control/xojfile/LoadHandler.cpp:353
+#: ../src/control/xojfile/LoadHandler.cpp:377
 msgid "Could not read image: {1}. Error message: {2}"
+msgstr ""
+
+#: ../src/control/xojfile/LoadHandler.cpp:387
+msgid "Could not read page number for cloned background image: {1}."
 msgstr ""
 
 #: ../src/undo/UndoRedoHandler.cpp:137
@@ -494,12 +498,12 @@ msgstr ""
 msgid "Error opening file: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:433
-#: ../src/control/xojfile/LoadHandler.cpp:453
+#: ../src/control/xojfile/LoadHandler.cpp:441
+#: ../src/control/xojfile/LoadHandler.cpp:461
 msgid "Error reading PDF: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:510
+#: ../src/control/xojfile/LoadHandler.cpp:518
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
@@ -779,7 +783,7 @@ msgstr "Läser in..."
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:101
 msgid "Magenta"
-msgstr ""
+msgstr "Lila"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Manage Toolbars"
@@ -1021,7 +1025,7 @@ msgstr ""
 msgid "Replace"
 msgstr "Ersätt"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1046
+#: ../src/control/xojfile/LoadHandler.cpp:1054
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -1386,7 +1390,7 @@ msgstr ""
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:486
+#: ../src/control/xojfile/LoadHandler.cpp:494
 msgid "Unknown background type: {1}"
 msgstr ""
 
@@ -1394,7 +1398,7 @@ msgstr ""
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:440
+#: ../src/control/xojfile/LoadHandler.cpp:448
 msgid "Unknown domain type: {1}"
 msgstr ""
 
@@ -1402,11 +1406,11 @@ msgstr ""
 msgid "Unknown parser error"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:387
+#: ../src/control/xojfile/LoadHandler.cpp:395
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:583
+#: ../src/control/xojfile/LoadHandler.cpp:591
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
@@ -1443,11 +1447,11 @@ msgstr "Med PDF-bakgrund"
 msgid "Write text"
 msgstr "Skriv text"
 
-#: ../src/control/xojfile/LoadHandler.cpp:900
+#: ../src/control/xojfile/LoadHandler.cpp:908
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:910
+#: ../src/control/xojfile/LoadHandler.cpp:918
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr ""
 
@@ -1630,7 +1634,7 @@ msgstr ""
 msgid "whiteout"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:909
+#: ../src/control/xojfile/LoadHandler.cpp:917
 msgid "xoj-File: {1}"
 msgstr ""
 
@@ -1727,43 +1731,43 @@ msgstr ""
 
 #: ../ui/settings.glade:1077
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1129
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4602
 msgid "0.00"
-msgstr ""
+msgstr "0,00"
 
 #: ../ui/settings.glade:1712
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5176
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1045
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2414
 msgid "1.0"
-msgstr ""
+msgstr "1,0"
 
 #: ../ui/settings.glade:1016
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:2994
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1109
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -2513,7 +2517,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5356 ../ui/settings.glade:5404
 msgid "Language"
-msgstr ""
+msgstr "Språk"
 
 #: ../ui/settings.glade:5374
 msgid "Language Settings"
@@ -2570,7 +2574,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1441 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "Mus"
 
 #: ../ui/settings.glade:1410
 msgid "Mouse Buttons"
@@ -2611,7 +2615,7 @@ msgstr ""
 #: ../ui/settings.glade:2844
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Ingen ikon"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
