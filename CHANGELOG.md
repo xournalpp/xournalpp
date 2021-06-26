@@ -64,6 +64,8 @@ community.
     * Fixed a bug, in which fonts were exported with a wrong size and were saved
       with a wrong size in the xopp-file, if the display DPI had non-default value.
       A plugin for migrating documents with wrong font sizes has been added (#2724).
+    * Made line spacing equal in export and on view when pango version >= 1.48.5 is
+      available (#2182)
     * Updated the Cairo version on Windows to fix a bug that created corrupt PDF
       files on export (#2871)
 * Sidebar preview panel
@@ -110,6 +112,7 @@ community.
     * Fixed a bug where closing the dialog before the initial render would crash
       the application (#2728, #2798).
     * Fixed a bug where line breaks would not be saved correctly (#2849).
+    * Fixed a problem with long user names on Windows that broke the LaTeX tool (#3046)
 * Spline tool
     * Added cubic splines as a drawing tool (#1688, #1798, #1861).
     * Click to add anchor points (knots) and drag to create non-trivial
@@ -168,7 +171,8 @@ community.
     * Improved appearance of floating toolbar (#2726);
     * Fixed a crash that occurs when the application is closed with the toolbar
       customization dialog open  (#1189).
-    * Fixed multiple other bugs involving the toolbar customizer (#2860 PENDING).
+    * Fixed multiple other bugs involving the toolbar customizer (#2860).
+    * Added a vertical mode for the pagespinner tool (@2624).
 * Plugins
     * Added a vertical mode for the pagespinner tool (@2624 PENDING).
     * Extended plugin API with many new features and functions, including page
@@ -185,7 +189,14 @@ community.
     * Fixed the confusing behavior of the `Apply to current/all pages` buttons
       used to change the page backgrounds (#2730).
 * Misc
-    * New application icon (#2557) and new action icons (#2886 PENDING)
+    * New application icon (#2557) and new action icons (#3154)
+    * Streamlined and updated package descriptions (#3094)
+    * Fixed a text selection bug (#3171)
+    * Fixed a bug with cloned background images not loading (#3170)
+    * Prevented crash on closing while export has not finished (#3159)
+    * Made the error dialogs for missing pdf backgrounds diplay the full path name (#3140)
+    * Fixed a freeze resulting from documents with pages of different format (#3099)
+    * Set default binding of middle mouse button to hand tool (#3121)
     * Added a language setting in the Preferences window (#2188)
     * Added menu entry to append new pdf pages (#2146)
     * Added support for more export options in command line and GUI (#2449)
