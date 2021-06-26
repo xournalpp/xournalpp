@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-24 04:07+0000\n"
-"PO-Revision-Date: 2021-06-24 04:49\n"
+"POT-Creation-Date: 2021-06-26 10:29+0000\n"
+"PO-Revision-Date: 2021-06-26 10:42\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -1948,6 +1948,10 @@ msgstr "הוסף רווח אופקי נוסף של"
 msgid "Add additional vertical space of"
 msgstr "הוסף רווח אנכי נוסף של"
 
+#: ../ui/main.glade:1967
+msgid "Add/Edit TeX"
+msgstr ""
+
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr ""
@@ -1970,7 +1974,7 @@ msgid "Always check LaTeX dependencies before running"
 msgstr ""
 
 #: ../ui/main.glade:1197
-msgid "Append New Pdf Pages"
+msgid "Append New PDF Pages"
 msgstr ""
 
 #: ../ui/settings.glade:210
@@ -2593,7 +2597,7 @@ msgid "Move Up"
 msgstr "לעלות"
 
 #: ../ui/main.glade:1129
-msgid "N_ext annotated page"
+msgid "N_ext Annotated Page"
 msgstr ""
 
 #: ../ui/main.glade:1176
@@ -2647,7 +2651,7 @@ msgid "PDF Cache"
 msgstr ""
 
 #: ../ui/main.glade:1140
-msgid "P_revious annotated Page"
+msgid "P_revious Annotated Page"
 msgstr ""
 
 #: ../ui/exportSettings.glade:206
@@ -2657,6 +2661,10 @@ msgstr "דפים:"
 #: ../ui/settings.glade:4055
 msgid "Paired Pages"
 msgstr "דפים צמודים"
+
+#: ../ui/main.glade:1293
+msgid "Paper B_ackground"
+msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2668,10 +2676,6 @@ msgstr "_צבע הדף"
 
 #: ../ui/main.glade:1273
 msgid "Paper _Format"
-msgstr ""
-
-#: ../ui/main.glade:1293
-msgid "Paper b_ackground"
 msgstr ""
 
 #: ../ui/about.glade:273
@@ -2864,16 +2868,16 @@ msgid "Show Menubar on Startup"
 msgstr ""
 
 #: ../ui/main.glade:543
-msgid "Show sidebar"
-msgstr "הצג סרגל צידי"
+msgid "Show Sidebar"
+msgstr ""
+
+#: ../ui/main.glade:559
+msgid "Show Toolbars"
+msgstr ""
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
 msgstr "הצג סרגל צד בצד הימני"
-
-#: ../ui/main.glade:559
-msgid "Show toolbars"
-msgstr ""
 
 #: ../ui/settings.glade:3128
 msgid "Show vertical scrollbar on the left side"
@@ -3217,7 +3221,7 @@ msgid "_Last Page"
 msgstr ""
 
 #: ../ui/main.glade:616
-msgid "_Left To Right"
+msgid "_Left to Right"
 msgstr ""
 
 #: ../ui/main.glade:921
@@ -3261,7 +3265,7 @@ msgid "_Previous Page"
 msgstr ""
 
 #: ../ui/main.glade:627
-msgid "_Right To Left"
+msgid "_Right to Left"
 msgstr ""
 
 #: ../ui/main.glade:1394
