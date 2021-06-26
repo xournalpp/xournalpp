@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-26 11:38\n"
+"PO-Revision-Date: 2021-06-26 12:37\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -620,7 +620,7 @@ msgstr "Füllung"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr "Druck vom Eingabegerät filtern. Passt den Druck mit dem Druckmultiplikator an. Falls dieser kleiner als das Minimum ist, benutze den minimalen Druck."
+msgstr "Druck vom Eingabegerät filtern. Passe den Druck mit dem Druckmultiplikator an. Falls dieser kleiner als das Minimum ist, benutze den minimalen Druck."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Fine"
@@ -636,7 +636,7 @@ msgstr "Schriftart"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Forward"
-msgstr "Weiter"
+msgstr "Vorwärts"
 
 #: ../src/control/XournalMain.cpp:631
 msgid "Get version of xournalpp"
@@ -2147,7 +2147,7 @@ msgstr "Wählen Sie die zu verwendende Farbe für \"Position des Mauszeigers her
 
 #: ../ui/settings.glade:2906
 msgid "Circle Color"
-msgstr "Kreisfarbe"
+msgstr "Farbe des Kreises"
 
 #: ../ui/settings.glade:3476
 msgid "Clear cached paged while scrolling"
@@ -2163,7 +2163,7 @@ msgstr "Seitenvorlage konfigurieren"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr "Vorlage für neue Seiten konfigurieren"
+msgstr "Neue Seitenvorlage konfigurieren"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
@@ -2203,11 +2203,11 @@ msgstr "Dunkles Thema (benötigt Neustart)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr "Verbotener Bereich"
+msgstr "Totzone"
 
 #: ../ui/settings.glade:1033
 msgid "Deadzone radius"
-msgstr "Verbotener Bereich im Radius"
+msgstr "Totzonen-Radius"
 
 #: ../ui/settings.glade:620
 msgid "Default Save Name"
@@ -2215,7 +2215,7 @@ msgstr "Standard Dateiname"
 
 #: ../ui/settings.glade:5163
 msgid "Default Seek Time (in seconds)"
-msgstr "Standard Startzeit (in Sekunden)"
+msgstr "Standard Suchzeit (in Sekunden)"
 
 #: ../ui/settings.glade:508
 msgid "Default name: "
@@ -2274,10 +2274,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr "Vom Startpunkt LINKS ziehen verhält sich als wäre die Umschalttaste gedrückt.\n"
-"            HINAUF ziehen verhält sich als wäre die Steuerungstaste gedrückt.\n\n"
-"            Erkennungsradius: Radius in dem Modifikatoren bis zum beenden der Zeichnung gesperrt sind.\n\n"
-"\t    <i>Praktisch für die Verwendung ohne Tastatur.</i>"
+msgstr "Vom Startpunkt nach LINKS ziehen bewirkt ein Verhalten gemäß einer gedrückten Umschalttaste.\n"
+"Nach OBEN ziehen bewirkt ein Verhalten gemäß der Steuerungstaste.\n\n"
+"Erkennungsradius: Radius, bei dessen Überschreiten die Modifikatoren während des Zeichnens gesperrt werden.\n\n"
+"<i>Nützlich für die Verwendung ohne Tastatur.</i>"
 
 #: ../ui/settings.glade:4089
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2295,7 +2295,7 @@ msgstr "Ziehen Sie Objekte von hier in die Werkzeugleiste und zurück."
 
 #: ../ui/settings.glade:1063
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr "Ziehen: Wenn der Wert klein ist, kann es zu unerwünschten Schwingungen kommen. Wenn der Wert hoch ist, wird keine Stabilisierung angezeigt."
+msgstr "Ziehen: Wenn der Wert zu klein ist, kann es zu unerwünschten Schwingungen kommen. Wenn der Wert zu hoch ist, wird keine Stabilisierung angewendet."
 
 #: ../ui/settings.glade:1075
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
@@ -2400,7 +2400,7 @@ msgstr "Ebenen schrittweise exportieren"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr "Exportiere das Dokument ohne jeglichen Hintergrund (Keine). Alternativ nur mit PDF und Bildhintergrunden (Keine Lineatur) oder mit allen HIntergrundtypen (Alle)."
+msgstr "Exportiere das Dokument ohne jeglichen Hintergrund (Keine). Alternativ nur mit PDF und Bildhintergründen (Keine Lineatur) oder mit allen HIntergrundtypen (Alle)."
 
 #: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
@@ -2524,7 +2524,7 @@ msgstr "Wie kurz (zeitlich)  UND...\n\n"
 
 #: ../ui/settings.glade:4319
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr "Falls aktiviert, werden erkannte Formeln automatisch eingerastet. Während des Schreibens kann dies mit aktiviertem Formenerkenner zu unerwarteten Ergebnissen führen."
+msgstr "Falls aktiviert, werden vom Formerkenner erkannte Formen automatisch eingerastet. Während des Schreibens kann dies mit aktiviertem Formenerkenner zu unerwarteten Ergebnissen führen."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2674,7 +2674,7 @@ msgstr "Nach vorne verschieben"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr "Nächste beschriftete Seite"
+msgstr "Nächste b_eschriftete Seite"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -3126,7 +3126,7 @@ msgstr "Beim Zeichnen mit Berührungen sind Zweifinger-Gesten zum Verschieben ge
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "Wenn bei einer hochaufgelösten PDF hineingezoomt wird, kann jeder Renderschritt eine lange Zeit dauern. Um die Häufgkeit des Renderns zu verringern, kann dieser Wert höher gesetzt werden.\n\n"
-"Um die Seite so oft wie möglich neu zu rendern, kann der Wert auf 0% gesetzt werden."
+"Um die Seite immer neu zu rendern, kann der Wert auf 0% gesetzt werden."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
