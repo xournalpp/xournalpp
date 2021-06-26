@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-24 04:07+0000\n"
-"PO-Revision-Date: 2021-06-24 04:48\n"
+"POT-Creation-Date: 2021-06-26 10:29+0000\n"
+"PO-Revision-Date: 2021-06-26 10:42\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -2009,6 +2009,10 @@ msgstr "Engadir espazo horizontal adicional de"
 msgid "Add additional vertical space of"
 msgstr "Engadir espazo horizontal adicional de"
 
+#: ../ui/main.glade:1967
+msgid "Add/Edit TeX"
+msgstr ""
+
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "Despois de redimensionar a selección, o groso da liña de todos os trazos será o mesmo como antes da operación de redimensionamento. "
@@ -2032,8 +2036,8 @@ msgid "Always check LaTeX dependencies before running"
 msgstr "Comprobar sempre as dependencias LaTeX antes de poñerse en marcha"
 
 #: ../ui/main.glade:1197
-msgid "Append New Pdf Pages"
-msgstr "Engadir novas páxinas Pdf"
+msgid "Append New PDF Pages"
+msgstr ""
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
@@ -2664,8 +2668,8 @@ msgid "Move Up"
 msgstr "Mover cara arriba"
 
 #: ../ui/main.glade:1129
-msgid "N_ext annotated page"
-msgstr "S_eguinte páxina anotada"
+msgid "N_ext Annotated Page"
+msgstr ""
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2718,8 +2722,8 @@ msgid "PDF Cache"
 msgstr "Caché de PDF"
 
 #: ../ui/main.glade:1140
-msgid "P_revious annotated Page"
-msgstr "Ante_rior páxina anotada"
+msgid "P_revious Annotated Page"
+msgstr ""
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2728,6 +2732,10 @@ msgstr "Páxinas:"
 #: ../ui/settings.glade:4055
 msgid "Paired Pages"
 msgstr "Páxinas emparelladas"
+
+#: ../ui/main.glade:1293
+msgid "Paper B_ackground"
+msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2740,10 +2748,6 @@ msgstr "_Cor do papel"
 #: ../ui/main.glade:1273
 msgid "Paper _Format"
 msgstr "_Formato do papel"
-
-#: ../ui/main.glade:1293
-msgid "Paper b_ackground"
-msgstr "Fondo do p_apel"
 
 #: ../ui/about.glade:273
 msgid "Partially based on Xournal\n"
@@ -2936,16 +2940,16 @@ msgid "Show Menubar on Startup"
 msgstr "Amosar a barra de menús no inicio"
 
 #: ../ui/main.glade:543
-msgid "Show sidebar"
-msgstr "Amosar a barra lateral"
+msgid "Show Sidebar"
+msgstr ""
+
+#: ../ui/main.glade:559
+msgid "Show Toolbars"
+msgstr ""
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
 msgstr "Amosar a barra lateral á dereita"
-
-#: ../ui/main.glade:559
-msgid "Show toolbars"
-msgstr "Amosar as barras de ferramentas"
 
 #: ../ui/settings.glade:3128
 msgid "Show vertical scrollbar on the left side"
@@ -3292,8 +3296,8 @@ msgid "_Last Page"
 msgstr "_Derradeira páxina"
 
 #: ../ui/main.glade:616
-msgid "_Left To Right"
-msgstr "De _esquerda a dereita"
+msgid "_Left to Right"
+msgstr ""
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3336,8 +3340,8 @@ msgid "_Previous Page"
 msgstr "Páxina _anterior"
 
 #: ../ui/main.glade:627
-msgid "_Right To Left"
-msgstr "De _dereita a esquerda"
+msgid "_Right to Left"
+msgstr ""
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
