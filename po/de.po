@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-26 10:42\n"
+"PO-Revision-Date: 2021-06-26 11:38\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -275,7 +275,7 @@ msgstr "Das Bild {1} konnte nicht geladen werden. Fehlermeldung: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:387
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Seitenzahl für geklontes Hintergrundbild konnte nicht gelesen werden: {1}."
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -301,7 +301,7 @@ msgstr "Konnte .tex Datei \"{1}\" nicht speichern"
 
 #: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr "Konnte {1} nicht starten: {2} (Rückgabestatus: {3})"
+msgstr "Konnte {1} nicht starten: {2} (Ausstiegscode: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
@@ -463,7 +463,7 @@ msgstr "Zeichnungstyp - nicht ändern"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Zeichnungstyp Combo"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -596,7 +596,7 @@ msgstr "Konnte LaTeX-Programm nicht in \"PATH\" finden: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr "Fehler bei der Erkennung eines LaTeX-Befehls: {1}"
+msgstr "Fehler beim Parsen des LaTeX-Erzeuger-Befehls: {1}"
 
 #: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
@@ -605,7 +605,7 @@ msgstr "Fehler beim Lesen der globalen Vorlagen-Datei. Bitte überprüfen Sie Ih
 #: ../src/control/jobs/BaseExportJob.cpp:101
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr "Fehler beim Auflösen von PATH mit folgendem Fehler:\n"
+msgstr "Fehler beim Auflösen des Pfades mit folgendem Fehler:\n"
 "{1}"
 
 #: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
@@ -769,7 +769,7 @@ msgstr "Ebene"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "Ebenen-Combo"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layer Preview"
@@ -1156,7 +1156,7 @@ msgstr "Bereich auswählen"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Selection Combo"
-msgstr ""
+msgstr "Auswahl-Combo"
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
@@ -2016,7 +2016,7 @@ msgstr "Füge vertikalen Platz von"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "LaTeX editieren/hinzufügen"
 
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2042,7 +2042,7 @@ msgstr "Überprüfen Sie vor dem Ausführen immer die LaTeX-Abhängigkeiten"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Neue PDF-Seiten anhängen"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
@@ -2674,7 +2674,7 @@ msgstr "Nach vorne verschieben"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Nächste beschriftete Seite"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2728,7 +2728,7 @@ msgstr "PDF-Zwischenspeicher"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Vorherige beschriftete Seite"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2740,7 +2740,7 @@ msgstr "Mehrseitiges Layout"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "Seitenhintergrund"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2946,11 +2946,11 @@ msgstr "Menüleiste beim Start zeigen"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Seitenleiste anzeigen"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Werkzeugleisten anzeigen"
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
@@ -3082,7 +3082,7 @@ msgstr "Versuche Objekt als erstes auszuwählen; Wenn nichts ausgewählt wurde, 
 
 #: ../ui/settings.glade:2751
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Vorhandene Stock Icons verwenden (erfordert Neustart)"
 
 #: ../ui/settings.glade:4315
 msgid "Use snapping for recognized shapes"
@@ -3302,7 +3302,7 @@ msgstr "_Letzte Seite"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "_Links nach Rechts"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3346,7 +3346,7 @@ msgstr "_Vorherige Seite"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "_Rechts nach Links"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
