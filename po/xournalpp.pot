@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-24 04:07+0000\n"
+"POT-Creation-Date: 2021-06-26 10:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2054,6 +2054,10 @@ msgstr ""
 msgid "Add additional vertical space of"
 msgstr ""
 
+#: ../ui/main.glade:1967
+msgid "Add/Edit TeX"
+msgstr ""
+
 #: ../ui/settings.glade:4170
 msgid ""
 "After resizing a selection, the line width of all strokes will be the same "
@@ -2080,7 +2084,7 @@ msgid "Always check LaTeX dependencies before running"
 msgstr ""
 
 #: ../ui/main.glade:1197
-msgid "Append New Pdf Pages"
+msgid "Append New PDF Pages"
 msgstr ""
 
 #: ../ui/settings.glade:210
@@ -2742,7 +2746,7 @@ msgid "Move Up"
 msgstr ""
 
 #: ../ui/main.glade:1129
-msgid "N_ext annotated page"
+msgid "N_ext Annotated Page"
 msgstr ""
 
 #: ../ui/main.glade:1176
@@ -2796,7 +2800,7 @@ msgid "PDF Cache"
 msgstr ""
 
 #: ../ui/main.glade:1140
-msgid "P_revious annotated Page"
+msgid "P_revious Annotated Page"
 msgstr ""
 
 #: ../ui/exportSettings.glade:206
@@ -2805,6 +2809,10 @@ msgstr ""
 
 #: ../ui/settings.glade:4055
 msgid "Paired Pages"
+msgstr ""
+
+#: ../ui/main.glade:1293
+msgid "Paper B_ackground"
 msgstr ""
 
 #: ../ui/pagesize.glade:18
@@ -2817,10 +2825,6 @@ msgstr ""
 
 #: ../ui/main.glade:1273
 msgid "Paper _Format"
-msgstr ""
-
-#: ../ui/main.glade:1293
-msgid "Paper b_ackground"
 msgstr ""
 
 #: ../ui/about.glade:273
@@ -3014,15 +3018,15 @@ msgid "Show Menubar on Startup"
 msgstr ""
 
 #: ../ui/main.glade:543
-msgid "Show sidebar"
+msgid "Show Sidebar"
+msgstr ""
+
+#: ../ui/main.glade:559
+msgid "Show Toolbars"
 msgstr ""
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
-msgstr ""
-
-#: ../ui/main.glade:559
-msgid "Show toolbars"
 msgstr ""
 
 #: ../ui/settings.glade:3128
@@ -3383,7 +3387,7 @@ msgid "_Last Page"
 msgstr ""
 
 #: ../ui/main.glade:616
-msgid "_Left To Right"
+msgid "_Left to Right"
 msgstr ""
 
 #: ../ui/main.glade:921
@@ -3427,7 +3431,7 @@ msgid "_Previous Page"
 msgstr ""
 
 #: ../ui/main.glade:627
-msgid "_Right To Left"
+msgid "_Right to Left"
 msgstr ""
 
 #: ../ui/main.glade:1394
