@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-27 04:06\n"
+"PO-Revision-Date: 2021-06-27 04:05\n"
 "Last-Translator: \n"
-"Language-Team: Chinese Traditional, Hong Kong\n"
-"Language: zh_HK\n"
+"Language-Team: Arabic\n"
+"Language: ar_SA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
-"X-Crowdin-Language: zh-HK\n"
+"X-Crowdin-Language: ar\n"
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
@@ -21,31 +21,32 @@ msgstr ""
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
-"現在將嘗試在沒有此檔案的情況下執行。"
+"سأحاول العمل دون هذا الملف."
 
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"هل تريد المتابعة؟"
 
 #: ../src/control/XournalMain.cpp:450
 msgid "\n"
 "Will now attempt to run without this file."
 msgstr "\n"
-"現在將嘗試在沒有此檔案的情況下執行。"
+"سأحاول العمل دون هذا الملف."
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " من {1}"
 
 #: ../src/control/settings/Settings.cpp:111
 msgid "%F-Note-%H-%M"
-msgstr "%F-筆記-%H-%M"
+msgstr "%F-ملاحظة-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:146
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr "<b>沒有找到任何裝置。可能出錯了 - 要回報錯誤嗎？</b>"
+msgstr "<b>لم يتم العثور على أجهزة. لا يبدو هذا صائبًا- ربما تودُّ إرسال بلاغٍ عن العطل؟</b>"
 
 #: ../src/control/XournalMain.cpp:464
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -54,382 +55,383 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr "<span foreground='red' size='x-large'>遺失必須的使用者界面檔案：\n"
+msgstr "<span foreground='red' size='x-large'>لم يتم العثور على ملف واجهة المستخدم المطلوب:\n"
 "<b>{1}</b></span>\n"
-"無法在任何位置找到它們。\n"
-"  不在相對位置\n"
-"  不在工作目錄\n"
-"  不在 {2}"
+"لم نتمكن من العثور عليها في أي موقع.\n"
+"  ليس في مسارٍ نسبيّ\n"
+"  ليس في مسار العمل\n"
+"  ليس في {2}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Add/Edit Tex"
-msgstr "插入/編輯TeX"
+msgstr "إدخال / تحرير LaTeX"
 
 #: ../src/control/XournalMain.cpp:682
 msgid "Advanced export options"
-msgstr ""
+msgstr "خيارات التصدير المتقدمة"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
-msgstr "所有檔案"
+msgstr "كل الملفات"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:191
 msgid "Apply to all pages"
-msgstr "套用到所有頁面"
+msgstr "طبق على كافة الصفحات"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:182
 msgid "Apply to current page"
-msgstr "套用到目前的頁面"
+msgstr "طبق على الصفحة الحالية"
 
 #: ../src/control/tools/EditSelection.cpp:339
 msgid "Arrange"
-msgstr ""
+msgstr "ترتيب"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
 msgid "Attach file to the journal"
-msgstr "將檔案附加到日記"
+msgstr "أرفق ملف إلى الجريدة"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:102
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "變數\"{1\"}不能為浮點數，其值為\"{2}\""
+msgstr "السمة \"{1}\" لا يمكن تحليلها كمضاعفة double ، القيمة هي \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:95
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr "變數\"{1}\"不能為浮點數，其值為 nullptr"
+msgstr "السمة \"{1}\" لا يمكن تحليلها كمضاعفة double ، القيمة لا يمكن تحليلها"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:119
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:138
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "變數\"{1\"}不能為整數，其值為\"{2}\""
+msgstr "السمة \"{1}\" لا يمكن تحليلها كعدد صحيح integer, القيمة هي \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:112
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr "變數\"{1}\"不能為整數，其值為 nullptr"
+msgstr "السمة \"{1}\" لا يمكن تحليلها كعدد صحيح, القيمة فارغة"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:157
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:177
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "變數\"{1}\"不能為 size_t，其值為\"{2}\""
+msgstr "السمة \"{1}\" لا يمكن تحليلها كحجم size_t، القيمة هي \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr "變數\"{1}\"不能為 size_t，其值為 nullptr"
+msgstr "السمة \"{1}\" لا يمكن تحليلها كحجم size_t، القيمة لا يمكن تحليلها"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:44
 msgid "Attribute color not set!"
-msgstr "顏色未設置"
+msgstr "لم يتم تعيين لون السمة!"
 
 #: ../src/control/AudioController.cpp:94
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "音效資料夾未設置！錄音無法使用！\n"
-"請於 \"偏好設定 > 錄製音效\" 下設定錄音資料夾"
+msgstr "لم يتم تحديد مجلد الصوتيات؛ لا يمكن التسجيل!\n"
+"الرجاء تحديد مجلد التسجيل في «التفضيلات > تسجيل الصوتيات»"
 
 #: ../src/control/Control.cpp:205
 msgid "Autosave failed with an error: {1}"
-msgstr "自動儲存發生錯誤並失敗：{1}"
+msgstr "فشل الحفظ التلقائي بخطأ مفاده: {1}"
 
 #: ../src/control/Control.cpp:185
 msgid "Autosave renamed from {1} to {2}"
-msgstr "自動儲存由 {1} 被重新命名至 {2}"
+msgstr "تم تغيير اسم الملف المحفوظ تلقائيًّا من {1} إلى {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr "自動儲存到 {1}"
+msgstr "حفظ تلقائي إلى {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Back"
-msgstr "後退"
+msgstr "تأخير"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:197 ../src/model/XojPage.cpp:174
 msgid "Background"
-msgstr "背景"
+msgstr "الخلفية"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:94
 msgid "Black"
-msgstr "黑色"
+msgstr "أسود"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:98
 msgid "Blue"
-msgstr "藍色"
+msgstr "أزرق"
 
 #: ../src/control/tools/EditSelection.cpp:356
 msgid "Bring forward"
-msgstr ""
+msgstr "خطوة إلى الأمام"
 
 #: ../src/control/tools/EditSelection.cpp:346
 msgid "Bring to front"
-msgstr ""
+msgstr "إحضار إلى المقدمة"
 
 #: ../src/control/Control.cpp:2021 ../src/control/Control.cpp:2474
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
-msgstr "取消"
+msgstr "ألغ"
 
 #: ../src/undo/ColorUndoAction.cpp:85
 msgid "Change color"
-msgstr "改變顏色"
+msgstr "تغيير اللون"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
-msgstr "改變字型"
+msgstr "تغيير خط النص"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "تغيير شكل الخط"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
-msgstr "改變筆劃色彩"
+msgstr "تغيير ملء جرّة القلم"
 
 #: ../src/undo/SizeUndoAction.cpp:104
 msgid "Change stroke width"
-msgstr "改變筆劃粗細"
+msgstr "تغيير عرض الخط"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:68
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "色彩\"{1}\"未定義！"
+msgstr "اللون \"{1}\" غير معروف (غير معرّف في قائمة الألوان الافتراضية)!"
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:227
 msgid "Contents"
-msgstr "內容"
+msgstr "المحتويات"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:346
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:76
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:82
 msgid "Copy"
-msgstr "拷貝"
+msgstr "نسخة"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:30
 msgid "Copy current"
-msgstr "拷貝選中內容"
+msgstr "نسخ الحالي"
 
 #: ../src/undo/CopyUndoAction.cpp:60
 msgid "Copy page"
-msgstr "拷貝一頁"
+msgstr "نسخ الصفحة"
 
 #: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "تعذر إنشاء المجلد: {1}\n"
+"فشل برسالة خطأ مفادها: {2}"
 
 #: ../src/control/LatexController.cpp:271
 msgid "Could not load LaTeX PDF file"
-msgstr "無法載入 LaTeX PDF 檔案"
+msgstr "تعذر تحميل ملف LaTeX PDF"
 
 #: ../src/control/LatexController.cpp:265
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr "無法載入 LaTeX PDF 檔案：{1}"
+msgstr "تعذر تحميل ملف LaTeX PDF: {1}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:15
 msgid "Could not load pagetemplates.ini file"
-msgstr "無法載入 pagetemplates.ini 文件"
+msgstr "تعذر تحميل ملف pagetemplates.ini"
 
 #: ../src/control/xojfile/LoadHandler.cpp:785
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr "無法打開附件：{1} 。錯誤信息：無法讀取文件"
+msgstr "تعذر فتح المرفق: {1}. رسالة خطأ: تعذرت قراءة الملف"
 
 #: ../src/control/xojfile/LoadHandler.cpp:794
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr "無法打開附件：{1} 。錯誤信息：無法寫入文件"
+msgstr "تعذر فتح المرفق: {1}. رسالة خطأ: تعذرت كتابة الملف"
 
 #: ../src/control/xojfile/LoadHandler.cpp:766
 #: ../src/control/xojfile/LoadHandler.cpp:1017
 #: ../src/control/xojfile/LoadHandler.cpp:1035
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr "無法打開附件：{1} 。錯誤信息：未有提供有效文件大小"
+msgstr "تعذر فتح المرفق: {1}. رسالة خطأ: لم يتم توفير حجم ملف صحيح"
 
 #: ../src/control/xojfile/LoadHandler.cpp:757
 #: ../src/control/xojfile/LoadHandler.cpp:773
 #: ../src/control/xojfile/LoadHandler.cpp:1008
 #: ../src/control/xojfile/LoadHandler.cpp:1024
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr "未能打開圖像：{1}。錯誤訊息：{2}"
+msgstr "تعذر فتح المرفق: {1}. رسالة خطأ: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:157
 msgid "Could not open file: \"{1}\""
-msgstr "不能打開檔案\"{1}\""
+msgstr "تعذر فتح الملف: \"{1}\""
 
 #: ../src/gui/MainWindow.cpp:90
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr "未能解析配置檔案toolbar.ini: {1}\n"
-"工具條將不可用"
+msgstr "لا يمكن تحليل ملف toolbar.ini المعدّل: {1}\n"
+"لن تكون أشرطة الأدوات متاحة"
 
 #: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr "未能解析一般檔案toolbar.ini: {1}\n"
-"工具條將不可用"
+msgstr "تعذر تحليل ملف toolbar.ini العام: {1}\n"
+"لن تتوفر أشرطة الأدوات"
 
 #: ../src/control/xojfile/LoadHandler.cpp:353
 #: ../src/control/xojfile/LoadHandler.cpp:377
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr "未能讀入圖像：{1}。錯誤提示為：{2}"
+msgstr "تعذرت قراءة الصورة: {1}. رسالة خطأ: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:387
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "تعذر قراءة رقم الصفحة لصورة الخلفية المستنسخة: {1}."
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "未能重複操作\"{1}\"\n"
-"有錯誤發生***請提交一個錯誤報告***"
+msgstr "تعذر تكرار \"{1}\"\n"
+"حدث خطأ… نرجو منك تزويدنا بتقرير عن الخطأ…"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:180
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr "無法從 {1} 工具列移除位置爲 {2} 的工具項目"
+msgstr "تعذرت إزالة عنصر الأداة من شريط الأدوات {1} في الموضع {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr "無法從 {2} 工具列移除位置爲 {3} 的 {1} 工具項目"
+msgstr "تعذرت إزالة عنصر الأداة {1} من شريط الأدوات {2} في الموضع {3}"
 
 #: ../src/control/Control.cpp:196
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr "無法將自動儲存檔案 \"{1}\" 重新命名至 \"{2}\"： {3}"
+msgstr "تعذرت إعادة تسمية الملف المحفوظ تلقائيًّا من \"{1}\" إلى \"{2}\": {3}"
 
 #: ../src/control/latex/LatexGenerator.cpp:70
 msgid "Could not save .tex file: {1}"
-msgstr "無法儲存 .tex 檔案： {1}"
+msgstr "تعذر حفظ ملف .tex: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "تعذر بدء تشغيل {1}: {2} (رمز الخروج: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "未能撤銷操作\"{1}\"\n"
-"有錯誤發生***請提交一個錯誤報告***"
+msgstr "تعذر التراجع عن \"{1}\"\n"
+"حدث خطأ… الرجاء تزويدنا بتقرير عن الخطأ…"
 
 #: ../src/control/xojfile/SaveHandler.cpp:243
 msgid "Could not write background \"{1}\", {2}"
-msgstr "未能寫上背景\"{1}\", {2}"
+msgstr "تعذر كتابة الخلفية\"{1}\"، {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:345
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr "未能寫上背景\"{1}\"，不管啦繼續哦..."
+msgstr "تعذر كتابة الخلفية «{1}». سنتابع على أيّة حال."
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:79
 msgid "Create new layer"
-msgstr "建立新圖層"
+msgstr "إنشاء طبقة جديدة"
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
-msgstr "設置"
+msgstr "مخصص"
 
 #: ../src/control/jobs/CustomExportJob.cpp:19
 msgid "Custom Export"
-msgstr "自訂匯出"
+msgstr "تصدير مخصص"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Customize Toolbars"
-msgstr "自訂工具列"
+msgstr "تخصيص أشرطة الأدوات"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:29
 msgid "Customized"
-msgstr "設置過"
+msgstr "مخصص"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:345
 msgid "Cut"
-msgstr "剪切"
+msgstr "قص"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Default Tool"
-msgstr "預設工具"
+msgstr "الأداة المبدئية"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 #: ../src/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
-msgstr "刪除"
+msgstr "حذف"
 
 #: ../src/control/XournalMain.cpp:167
 msgid "Delete Logfile"
-msgstr "刪除日誌檔案"
+msgstr "حذف ملف السجل"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 msgid "Delete current page"
-msgstr "刪除當前頁"
+msgstr "حذف الصفحة الحالية"
 
 #: ../src/control/XournalMain.cpp:209
 msgid "Delete file"
-msgstr "刪除檔案"
+msgstr "حذف الملف"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:28
 msgid "Delete layer"
-msgstr "刪除層"
+msgstr "حذف الطبقة"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:58
 msgid "Delete this layer"
-msgstr ""
+msgstr "حذف هذه الطبقة"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
-msgstr ""
+msgstr "حذف هذه الصفحة"
 
 #: ../src/control/Control.cpp:2471
 msgid "Discard"
-msgstr "丟棄"
+msgstr "إغلاق بدون حفظ"
 
 #: ../src/control/XournalMain.cpp:683
 msgid "Display advanced export options"
-msgstr ""
+msgstr "إظهار خيارات التصدير المتقدمة"
 
 #: ../src/control/Control.cpp:1966
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr "不要打開自動儲存檔案。它們有機會被覆寫！\n"
-"複製檔案至另一個資料夾。\n"
-"資料夾 {1} 中的檔案無法被打開。"
+msgstr "لا تفتح الملفات المحفوظة تلقائيا؛ قد يتم استبدالها!\n"
+"انسخ الملفات إلى مجلد آخر.\n"
+"لا يمكن فتح ملفات من المجلد «{1}»."
 
 #: ../src/control/jobs/BaseExportJob.cpp:39
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "不要覆寫背景 PDF！這樣會導致錯誤！"
+msgstr "لا تستبدل خلفية الـPDF؛ سيتسبب هذا في أخطاء!"
 
 #: ../src/control/Control.cpp:2465
 msgid "Document file was removed."
-msgstr "文檔已刪除。"
+msgstr "تمت إزالة ملف المستند."
 
 #: ../src/control/xojfile/LoadHandler.cpp:239
 msgid "Document is corrupted (no pages found in file)"
-msgstr "文件損毀 (檔案中找不到頁面)"
+msgstr "المستند تالف (لم يتم العثور على صفحات في الملف)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:235
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr "文檔檔案不完整"
+msgstr "المستند غير مكتمل (ربما النهاية مقطوعة؟)"
 
 #: ../src/model/Document.cpp:285 ../src/model/Document.cpp:294
 #: ../src/model/Document.cpp:297
 msgid "Document not loaded! ({1}), {2}"
-msgstr "文檔未加載！({1}), {2}"
+msgstr "لم يتم تحميل المستند! ({1})، {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Dotted"
-msgstr "虛線"
+msgstr "منقط"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Arrow"
-msgstr "繪製箭頭"
+msgstr "رسم سهم"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "رسم شكل بيضاوي"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Line"
-msgstr "繪製直線"
+msgstr "رسم خط"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
@@ -437,27 +439,27 @@ msgstr "繪製直線"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:100
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Draw Rectangle"
-msgstr "繪製矩形"
+msgstr "رسم مستطيل"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw Spline"
-msgstr "繪製曲線"
+msgstr "رسم منحنى"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw coordinate system"
-msgstr "繪製座標系統"
+msgstr "رسم نظام إحداثيات"
 
 #: ../src/undo/InsertUndoAction.cpp:30
 msgid "Draw stroke"
-msgstr "繪製筆劃"
+msgstr "رسم خط أو شكل"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:117
 msgid "Drawing Type - don't change"
-msgstr "繪製類別 - 不要改變"
+msgstr "نوع الرسم - لا تغيير"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
 msgid "Drawing Type Combo"
@@ -465,100 +467,102 @@ msgstr ""
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
-msgstr "編輯文本"
+msgstr "تحرير النص"
 
 #: ../src/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
-msgstr "緊急儲存文件"
+msgstr "المستند المحفوظ اضطراريا"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:278
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "قم بتفعيل الإحساس بالضغط أو استنتاج الضغط لتغيير هذا الإعداد!"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
 msgid "Erase stroke"
-msgstr "擦除筆劃"
+msgstr "محو خط أو شكل"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:248
 msgid "Eraser"
-msgstr "橡皮"
+msgstr "ممحاة"
 
 #: ../src/control/Control.cpp:2222
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr "PDF檔案\"{1}\"標註出錯\n"
+msgstr "خطأ في التعليق على ملف الـPDF المسمى «{1}»\n"
 "{2}"
 
 #: ../src/gui/GladeGui.cpp:21
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr "加載glade檔案\"{1}\"出錯(嘗試加載\"{2}\")"
+msgstr "تعذر تحميل ملف glade المسمى «{1}» (حاول تحميل «{2}»)"
 
 #: ../src/control/Control.cpp:2043
 msgid "Error opening file \"{1}\""
-msgstr "打開檔案\"{1}\"出錯"
+msgstr "خطأ في فتح الملف \"{1}\""
 
 #: ../src/util/OutputStream.cpp:23
 msgid "Error opening file: \"{1}\""
-msgstr "打開檔案\"{1}\"出錯"
+msgstr "خطأ في فتح الملف: \"{1}\""
 
 #: ../src/control/xojfile/LoadHandler.cpp:441
 #: ../src/control/xojfile/LoadHandler.cpp:461
 msgid "Error reading PDF: {1}"
-msgstr "讀入PDF出錯：{1}"
+msgstr "خطأ في قراءة ملف PDF؛ التفاصيل: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:518
 msgid "Error reading width of a stroke: {1}"
-msgstr "讀入筆劃粗細出錯：{1}"
+msgstr "خطأ في قراءة عرض الخط: {1}"
 
 #: ../src/control/jobs/ImageExport.cpp:143
 msgid "Error save image #1"
-msgstr "錯誤儲存圖片 #1"
+msgstr "خطأ في حفظ الصورة رقم ١"
 
 #: ../src/control/jobs/ImageExport.cpp:159
 msgid "Error save image #2"
-msgstr "錯誤儲存圖片 #2"
+msgstr "خطأ في حفظ الصورة رقم ٢"
 
 #: ../src/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr "自動儲存時發生錯誤：{1}"
+msgstr "خطأ أثناء الحفظ التلقائي: {1}"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "خطأ {1} في تنفيذ أمر النظام: {2}"
 
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
-msgstr "錯誤：{1}"
+msgstr "خطأ: {1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "خطأ: {1} ليس ملفا عاديا. الرجاء مراجعة إعدادات ملف قالب LaTeX. "
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "خطأ: {1}. برجاء التحقق من محتويات {2}"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr "錯誤日誌未能刪除，請手工處理。\n"
-"日誌檔案: {1}"
+msgstr "تعذر حذف سجل الأخطاء. عليك فعل ذلك يدويا.\n"
+"ملف السجل: {1}"
 
 #: ../src/control/XournalMain.cpp:640
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "تصدير «ملف» كـPDF"
 
 #: ../src/control/XournalMain.cpp:642
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "تصدير الملف كملفات صور (صورة واحدة لكل صفحة)\n"
+"                                 تخمين صيغة التصدير من امتداد الملف\n"
+"                                 الصيغ المدعومة: png و svg"
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
-msgstr "輸出為PDF"
+msgstr "تصدير PDF"
 
 #: ../src/control/XournalMain.cpp:656
 msgid "Export layers progressively\n"
@@ -566,194 +570,202 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "تصدير الطبقات تدريجيا\n"
+"                                 عند تصدير PDF، يتم رسم الطبقات تدرجيا طبقة طبقة.\n"
+"                                 يؤدي هذا إلى تصدير عدد ن من الصفحات لكل صفحة ذات\n"
+"                                  عدد ن من الطبقات، فيبني كومة الطبقات تدريجيا.\n"
+"                                 يمكن استخدام ملف الـPDF الناتج كعرض تقديمي.\n"
 
 #: ../src/control/XournalMain.cpp:647
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "تصدير بدون خلفية\n"
+"                                 ستكون خلفية الملف المصدَّر شفافة أو بيضاء،\n"
+"                                 اعتمادا على ما تدعمه الصيغة\n"
 
 #: ../src/control/XournalMain.cpp:652
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "تصدير بدون تسطير\n"
+"                                 الملف المصدَّر لن يكون ورقه مسطَّرا\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "تعذر العثور على برنامج توليد LaTeX في متغير مسارات النظام: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "تعذر تحليل أمر توليد LaTeX هذا: {1}"
 
 #: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "تعذر قراءة ملف القالب العام. الرجاء مراجعة الإعدادات."
 
 #: ../src/control/jobs/BaseExportJob.cpp:101
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "تعذر إيجاد المسار بالخطأ التالي:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr "未能打開檔案，請手動操作：\n"
-"URL: {1}"
+msgstr "تعذر فتح الملف. عليك فعل ذلك يدويا:\n"
+"الرابط: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:472
 msgid "Fill"
-msgstr "填滿"
+msgstr "تعبئة"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "ترشيح ضغط الإدخال. اضرب الضغط في قيمة «مضاعف الضغط». وإذا كان أقل من الحد الأدنى، استخدم «الحد الأدنى للضغط»."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Fine"
-msgstr "細"
+msgstr "رفيع"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
-msgstr "浮動工具箱 (實驗功能)"
+msgstr "صندوق أدوات عائم (تجريبي)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:60
 msgid "Font"
-msgstr "字型"
+msgstr "خط"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Forward"
-msgstr "下一頁"
+msgstr "تقديم"
 
 #: ../src/control/XournalMain.cpp:631
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "الحصول على نسخة xournalpp"
 
 #: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "ملف القالب العام غير موجود. الرجاء مراجعة الإعدادات."
 
 #: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "ملف القالب العام ليس ملفا عاديا. الرجاء مراجعة الإعدادات. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 msgid "Go to first page"
-msgstr "首頁"
+msgstr "انتقال إلى الصفحة الأولى"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Go to last page"
-msgstr "末頁"
+msgstr "انتقال إلى الصفحة الأخيرة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "Go to next layer"
-msgstr "前往下一圖層"
+msgstr "انتقال إلى الطبقة التالية"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Go to page"
-msgstr "跳轉到頁面"
+msgstr "انتقال إلى صفحة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Go to previous layer"
-msgstr "前往上一圖層"
+msgstr "انتقال إلى الطبقة السابقة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "Go to top layer"
-msgstr "前往最頂圖層"
+msgstr "انتقال إلى الطبقة العليا"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Graph"
-msgstr "圖形"
+msgstr "رسم بياني"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:99
 msgid "Gray"
-msgstr "灰色"
+msgstr "رمادي"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:95
 msgid "Green"
-msgstr "綠色"
+msgstr "أخضر"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Grid Snapping"
-msgstr ""
+msgstr "اجتذاب الشبكة"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Hand"
-msgstr "手形工具"
+msgstr "يد"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:73
 msgid "Hide all"
-msgstr "全部隱藏"
+msgstr "إخفاء الكل"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Highlighter"
-msgstr "熒光筆"
+msgstr "قلم تظليل"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Image"
-msgstr "圖片"
+msgstr "صورة"
 
 #: ../src/control/XournalMain.cpp:294
 msgid "Image file successfully created"
-msgstr "圖片檔案成功建立"
+msgstr "تم إنشاء ملف الصورة بنجاح"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
-msgstr "圖片"
+msgstr "صور"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:58
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "إدراج نسخة من الطبقة الحالية أدناه"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "إدراج نسخة من الصفحة الحالية أدناه"
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
-msgstr "插入元素"
+msgstr "إدراج عناصر"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
-msgstr "插入圖片"
+msgstr "إدراج صورة"
 
 #: ../src/undo/InsertUndoAction.cpp:36
 msgid "Insert latex"
-msgstr "插入LaTeX"
+msgstr "إدراج LaTeX"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:26
 msgid "Insert layer"
-msgstr "插入層"
+msgstr "إدراج طبقة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Insert page"
-msgstr "插入頁面"
+msgstr "إدراج صفحة"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "أيزومتري منقط"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "رسم بياني أيزومتري"
 
 #: ../src/control/XournalMain.cpp:627
 msgid "Jump to Page (first Page: 1)"
-msgstr "跳到頁面(第一頁:1)"
+msgstr "انتقال إلى الصفحة (الصفحة الأولى: 1)"
 
 #: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "أثناء توليد LaTeX حدث خطأ: {1} (كود الخروج: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:250
 msgid "Layer"
-msgstr "圖層"
+msgstr "طبقة"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
@@ -761,385 +773,386 @@ msgstr ""
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layer Preview"
-msgstr "圖層預覽"
+msgstr "معاينة الطبقة"
 
 #: ../src/control/layer/LayerController.cpp:329
 msgid "Layer {1}"
-msgstr "{1}圖層"
+msgstr "الطبقة {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "معاينة كومة الطبقات"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
 msgid "Light Blue"
-msgstr "淺藍"
+msgstr "أزرق فاتح"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:97
 msgid "Light Green"
-msgstr "淺綠"
+msgstr "أخضر فاتح"
 
 #: ../src/gui/PageView.cpp:701
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
-msgstr "加載中..."
+msgstr "يجري التحميل..."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:101
 msgid "Magenta"
-msgstr "品紅"
+msgstr "أرجواني"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Manage Toolbars"
-msgstr "管理工具列"
+msgstr "إدارة أشرطة الأدوات"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Medium"
-msgstr "中"
+msgstr "متوسط"
 
 #: ../src/control/XournalMain.cpp:446
 msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
 "Path: {2}"
-msgstr "遺失必須的使用者界面檔案：\n"
+msgstr "ملف الواجهة الرسومية المطلوب مفقود:\n"
 "{1}\n"
-" 。應用程序損毀？\n"
-"路徑： {2}"
+" هل .app تالف؟\n"
+"المسار: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:16
 msgid "Move"
-msgstr "移動"
+msgstr "تحريك"
 
 #: ../src/undo/MoveLayerUndoAction.cpp:27
 msgid "Move layer"
-msgstr "移動圖層"
+msgstr "تحريك طبقة"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page downwards"
-msgstr "向後移動頁面"
+msgstr "تحريك صفحة لأسفل"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page upwards"
-msgstr "向前移動頁面"
+msgstr "تحريك صفحة لأعلى"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:70
 msgid "New"
-msgstr "新建"
+msgstr "جديد"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:331
 msgid "New Xournal"
-msgstr "新建日記"
+msgstr "جورنال جديد"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Next"
-msgstr "下一個"
+msgstr "التالي"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:389
 msgid "Next annotated page"
-msgstr "下一個標註頁面"
+msgstr "الصفحة المعلّق عليها التالية"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
-msgstr "沒有設備"
+msgstr "لا يوجد جهاز"
 
 #: ../src/pdf/base/XojCairoPdfExport.cpp:148
 #: ../src/pdf/base/XojCairoPdfExport.cpp:190
 msgid "No pages to export!"
-msgstr "沒有可匯出的頁面！"
+msgstr "لا توجد صفحات للتصدير!"
 
 #: ../src/control/Control.cpp:1264
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "لا توجد صفحات PDF متاحة لإضافتها. قد تحتاج إلى إعادة فتح المسند أولا."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
-msgstr "正常繪畫"
+msgstr "رسم عادي"
 
 #: ../src/plugin/Plugin.cpp:233 ../src/plugin/Plugin.cpp:249
 msgid "OK"
-msgstr ""
+msgstr "موافق"
 
 #: ../src/control/XournalMain.cpp:663
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "تصدير الصفحات التي يحددها «المدى» فقط (مثال: «‪2-3,5,7-‬»)\n"
+"                                 لا تأثير بدون ‪-p/--create-pdf‬ أو ‪-i/--create-img‬"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
-msgstr "打開圖片"
+msgstr "فتح صورة"
 
 #: ../src/control/XournalMain.cpp:165
 msgid "Open Logfile"
-msgstr "打開日誌檔案"
+msgstr "فتح ملف السجل"
 
 #: ../src/control/XournalMain.cpp:166
 msgid "Open Logfile directory"
-msgstr "打開日誌檔案目錄"
+msgstr "فتح مجلد ملف السجل"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:332
 msgid "Open file"
-msgstr "打開檔案"
+msgstr "فتح ملف"
 
 #: ../src/control/RecentManager.cpp:170
 msgctxt "{1} is a URI"
 msgid "Open {1}"
-msgstr "打開{1}"
+msgstr "فتح {1}"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:102
 msgid "Orange"
-msgstr "橙色"
+msgstr "برتقالي"
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
-msgstr "輸出為PDF"
+msgstr "تصدير PDF"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:40
 msgid "PDF Page {1}"
-msgstr "PDF頁碼{1}"
+msgstr "صفحة PDF رقم {1}"
 
 #: ../src/view/PdfView.cpp:31
 msgid "PDF background missing"
-msgstr "PDF背景丟失"
+msgstr "خلفية PDF مفقودة"
 
 #: ../src/control/XournalMain.cpp:348
 msgid "PDF file successfully created"
-msgstr "PDF檔案成功建立"
+msgstr "تم إنشاء ملف الـPDF بنجاح"
 
 #: ../src/control/jobs/CustomExportJob.cpp:21
 #: ../src/control/jobs/PdfExportJob.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
-msgstr "PDF檔案"
+msgstr "ملفات PDF"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
-msgstr ""
+msgstr "رسومات PNG"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "Page"
-msgstr "頁面"
+msgstr "صفحة"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:73
 msgid "Page Preview"
-msgstr "頁面預覽"
+msgstr "معاينة الصفحة"
 
 #: ../src/undo/PageBackgroundChangedUndoAction.cpp:81
 msgid "Page background changed"
-msgstr "頁面背景改變"
+msgstr "تم تغيير خلفية الصفحة"
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:98
 msgid "Page deleted"
-msgstr "頁面刪除"
+msgstr "تم حذف الصفحة"
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:94
 msgid "Page inserted"
-msgstr "頁面插入"
+msgstr "تم إدراج الصفحة"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:60
 msgid "Page number"
-msgstr "頁碼"
+msgstr "رقم الصفحة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
 msgid "Paired pages"
-msgstr ""
+msgstr "صفحات مزدوجة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:347
 #: ../src/undo/AddUndoAction.cpp:77
 msgid "Paste"
-msgstr "粘貼"
+msgstr "لصق"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Pause / Play"
-msgstr ""
+msgstr "إيقاف مؤقت / تشغيل"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:229
 msgid "Pen"
-msgstr "畫筆"
+msgstr "قلم"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:19
 msgid "Plain"
-msgstr "空白"
+msgstr "فارغ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:75
 msgid "Play Object"
-msgstr ""
+msgstr "تشغيل كائن"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:17
 msgid "Predefined"
-msgstr "預定"
+msgstr "مسبق التعريف"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Presentation mode"
-msgstr "演講模式"
+msgstr "وضع العرض التقديمي"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:68
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "اللغة المختارة سابقا لم تعد متاحة!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Print"
-msgstr ""
+msgstr "طباعة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "تسجيل صوت / إيقاف التسجيل"
 
 #: ../src/control/Control.cpp:873
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "تعذر بدء التسجيل."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:100
 msgid "Red"
-msgstr "紅色"
+msgstr "أحمر"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
 #: ../src/undo/UndoRedoHandler.cpp:215
 msgid "Redo"
-msgstr "重複"
+msgstr "إعادة"
 
 #: ../src/undo/UndoRedoHandler.cpp:210
 msgid "Redo: "
-msgstr "重複："
+msgstr "إعادة: "
 
 #: ../src/control/Control.cpp:2020
 msgid "Remove PDF Background"
-msgstr "去掉PDF背景"
+msgstr "إزالة خلفية PDF"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:171
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "تمت إزالة عنصر الأداة من شريط الأدوات {1} في الموضع {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "تمت إزالة عنصر الأداة {1} من شريط الأدوات {2} في الموضع {3}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "إعادة تسمية طبقة"
 
 #: ../src/util/XojMsgBox.cpp:71
 msgid "Replace"
-msgstr ""
+msgstr "استبدال"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1054
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "تعذر إيجاد الملف المؤقت المطلوب للمرفق {1}"
 
 #: ../src/control/XournalMain.cpp:210
 msgid "Restore file"
-msgstr ""
+msgstr "استعادة ملف"
 
 #: ../src/undo/RotateUndoAction.cpp:51
 msgid "Rotation"
-msgstr ""
+msgstr "تدوير"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:354
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "اجتذاب التدوير"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:20
 msgid "Ruled"
-msgstr "定標"
+msgstr "مسطر"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "مسطر وبخط هامش"
 
 #: ../src/control/jobs/CustomExportJob.cpp:23
 msgid "SVG graphics"
-msgstr ""
+msgstr "رسومات SVG"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "تم توليد ملف عينة LaTeX بنجاح."
 
 #: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "Save"
-msgstr "保存"
+msgstr "حفظ"
 
 #: ../src/control/Control.cpp:2466
 msgid "Save As..."
-msgstr ""
+msgstr "حفظ كـ..."
 
 #: ../src/control/Control.cpp:2311 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
-msgstr "保存檔案"
+msgstr "حفظ الملف"
 
 #: ../src/control/jobs/CustomExportJob.cpp:130
 #: ../src/control/jobs/SaveJob.cpp:113
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "خطأ في حفظ الملف: {1}"
 
 #: ../src/undo/ScaleUndoAction.cpp:56
 msgid "Scale"
-msgstr "縮放"
+msgstr "تحجيم"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Search"
-msgstr "搜索"
+msgstr "بحث"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Select Font"
-msgstr "選擇字型"
+msgstr "تحديد الخط"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:69
 msgid "Select Object"
-msgstr "選擇對象"
+msgstr "تحديد كائن"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:57
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:90
 msgid "Select Rectangle"
-msgstr "選擇矩形"
+msgstr "تحديد مستطيل"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:63
 msgid "Select Region"
-msgstr "選擇區域"
+msgstr "تحديد منطقة"
 
 #: ../src/control/Control.cpp:2019
 msgid "Select another PDF"
-msgstr "選擇其他PDF"
+msgstr "اختيار ملف PDF آخر"
 
 #: ../src/util/XojMsgBox.cpp:70
 msgid "Select another name"
-msgstr ""
+msgstr "اختيار اسم آخر"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:104
 msgid "Select background color"
-msgstr ""
+msgstr "تحديد لون الخلفية"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:42
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:94
 msgid "Select color"
-msgstr "選色"
+msgstr "تحديد لون"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Select rectangle"
-msgstr "選擇矩形"
+msgstr "تحديد مستطيل"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select region"
-msgstr "選擇區域"
+msgstr "تحديد منطقة"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Selection Combo"
@@ -1147,142 +1160,149 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
-msgstr "選擇錯誤報告"
+msgstr "إرسال تقرير خطأ"
 
 #: ../src/control/tools/EditSelection.cpp:367
 msgid "Send backward"
-msgstr ""
+msgstr "خطوة إلى الخلف"
 
 #: ../src/control/tools/EditSelection.cpp:375
 msgid "Send to back"
-msgstr ""
+msgstr "إرسال إلى المؤخرة"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
 msgid "Separator"
-msgstr "分割線"
+msgstr "فاصل"
 
 #: ../src/control/XournalMain.cpp:667
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "تعيين دقة (DPI) التصدير إلى PNG. الدقة المبدئية هي 300\n"
+"                                 لا تأثير بدون ‪-i/--create-img=foo.png‬"
 
 #: ../src/control/XournalMain.cpp:677
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "تعيين ارتفاع الصفحة عند التصدير إلى PNG\n"
+"                                 لا تأثير بدون ‪-i/--create-img=foo.png‬\n"
+"                                 يتم إهماله عند استخدام ‪--export-png-dpi‬ أو ‪--export-png-width‬"
 
 #: ../src/control/XournalMain.cpp:671
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "تعيين عرض الصفحة عند التصدير إلى PNG\n"
+"                                 لا تأثير بدون ‪-i/--create-img=foo.png‬\n"
+"                                 يتم إهماله عند استخدام ‪--export-png-dpi‬"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Shape Recognizer"
-msgstr "識別形狀"
+msgstr "متعرف الأشكال"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:68
 msgid "Show all"
-msgstr ""
+msgstr "إظهار الكل"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
-msgstr "只顯示未使用頁面(一個未使用頁面)"
+msgstr "إظهار الصفحات غير المستخدمة فقط (صفحة واحدة غير مستخدمة)"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:89
 msgid "Show only not used pages ({1} unused pages)"
-msgstr "只顯示未使用頁面({1}個未使用頁面)"
+msgstr "إظهار الصفحات غير المستخدمة فقط ({1} صفحات غير مستخدمة)"
 
 #: ../src/control/XournalMain.cpp:542
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "عذرا، يستطيع Xournal++‎ فتح ملف واحد فقط في المرة الواحدة.\n"
+"تم تجاهل الملفات الأخرى."
 
 #: ../src/control/XournalMain.cpp:557
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "عذرا، لا يستطيع Xournal++‎ فتح الملفات البعيدة حاليا.\n"
+"عليك نسخ الملف إلى مجلد محلي."
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Staves"
-msgstr ""
+msgstr "مخطط موسيقى"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Stop"
-msgstr ""
+msgstr "إيقاف"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:40
 #: ../src/undo/RecognizerUndoAction.cpp:72
 msgid "Stroke recognizer"
-msgstr "筆劃識別"
+msgstr "متعرف الأشكال"
 
 #: ../src/util/CrashHandler.cpp:41
 msgid "Successfully saved document to \"{1}\""
-msgstr "文檔已經保存為\"{1}\""
+msgstr "تم حفظ المستند بنجاح إلى «{1}»"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
-msgstr "支撐檔案"
+msgstr "الملفات المدعومة"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "تبديل الطبقة الحالية مع الطبقة أعلاه"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:57
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "تبديل الطبقة الحالية مع الطبقة أدناه"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "تبديل الصفحة الحالية مع الصفحة أعلاه"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:68
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "تبديل الصفحة الحالية مع الصفحة أدناه"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
-msgstr ""
+msgstr "لغة النظام"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Text"
-msgstr "文本"
+msgstr "نص"
 
 #: ../src/gui/SearchBar.cpp:67
 #, c-format
 msgid "Text %i times found on this page"
-msgstr "文本在本頁面出現%i次"
+msgstr "تم العثور على النص %i مرات في هذه الصفحة"
 
 #: ../src/undo/TextUndoAction.cpp:29
 msgid "Text changes"
-msgstr "文本改變"
+msgstr "تغييرات نص"
 
 #: ../src/gui/SearchBar.cpp:65
 msgid "Text found on this page"
-msgstr "本頁面上找到文本"
+msgstr "تم العثور على النص في هذه الصفحة"
 
 #: ../src/gui/SearchBar.cpp:123 ../src/gui/SearchBar.cpp:167
 msgid "Text found once on page {1}"
-msgstr "文本在第{1}頁上找到"
+msgstr "تم العثور على النص مرة واحدة في الصفحة {1}"
 
 #: ../src/gui/SearchBar.cpp:124 ../src/gui/SearchBar.cpp:168
 msgid "Text found {1} times on page {2}"
-msgstr "文本在第{2}頁上找到{1}次"
+msgstr "تم العثور على النص {1} مرات في الصفحة {2}"
 
 #: ../src/gui/SearchBar.cpp:72
 msgid "Text not found"
-msgstr "文本未找到"
+msgstr "لم يتم العثور على النص"
 
 #: ../src/gui/SearchBar.cpp:134 ../src/gui/SearchBar.cpp:178
 msgid "Text not found, searched on all pages"
-msgstr "找遍所有頁面未找到文本"
+msgstr "لم يتم العثور على النص، تم البحث عنه في جميع الصفحات"
 
 #: ../src/control/Control.cpp:1064
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr "工具條配置\"{1}\"是預置的，要產生一個拷貝到編輯?"
+msgstr "مجموعة أشرطة الأدوات «{1}» هي مسبقة التعريف، هل تحب إنشاء نسخة للتعديل؟"
 
 #: ../src/control/Control.cpp:2008
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
@@ -1296,219 +1316,222 @@ msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "فشل فحص استبدال الخلفية بالخطأ:\n"
 
 #: ../src/control/Control.cpp:2051
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "الملف الذي يتم تحميله يستخدم نسخة صيغة ملفات أحدث من التي يدعمها هذا الإصدار من Xournal++‎، لذلك قد لا يتم تحميله بشكل صحيح. فتح على أيّة حال؟"
 
 #: ../src/control/xojfile/LoadHandler.cpp:117
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "الملف ليس ملف xopp صالحا (نوع MIME مفقود): «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:124
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "الملف ليس ملف xopp صالحا (نوع MIME خاطئ): «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:133
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "الملف ليس ملف xopp صالحا (النسخة مفقودة): «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:145
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "الملف ليس ملف xopp صالحا (نَص النسخة تالف): «{1}»"
 
 #: ../src/control/LatexController.cpp:238
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "الصيغة فارغة عند رسمها أو تالفة."
 
 #: ../src/control/XournalMain.cpp:159
 msgid "The most recent log file name: {1}"
-msgstr "最近的日誌檔案名：{1}"
+msgstr "اسم أحدث ملف سجل: {1}"
 
 #: ../src/control/XournalMain.cpp:154
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr "發現Xournal++的錯誤日誌檔案，請發送一個錯誤報告，將會被修正。"
+msgstr "هناك ملفات سجل أخطاء من Xournal++‎. الرجاء إرسال تقرير خطأ، حتى يتم إصلاحها."
 
 #: ../src/control/XournalMain.cpp:153
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr "發現Xournal++的錯誤日誌檔案，請發送一個錯誤報告，將會被修正。"
+msgstr "هناك ملف سجل أخطاء من Xournal++‎. الرجاء إرسال تقرير خطأ، حتى يتم إصلاحها."
 
 #: ../src/util/XojMsgBox.cpp:89
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "خطأ في عرض المساعدة: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Thick"
-msgstr "粗"
+msgstr "عريض"
 
 #: ../src/control/Control.cpp:2465
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "لم يتم حفظ هذا المستند بعد."
 
 #: ../src/control/PageBackgroundChangeController.cpp:144
 #: ../src/control/tools/ImageHandler.cpp:44
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "تعذر تحميل هذه الصورة. رسالة الخطأ: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Toggle fullscreen"
-msgstr "全屏"
+msgstr "تبديل ملء الشاشة"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
 msgid "Tool - don't change"
-msgstr ""
+msgstr "الأداة - لا تغيير"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:106
 msgid "Toolbar found: {1}"
-msgstr "發現工具條：{1}"
+msgstr "تم العثور على شريط الأدوات: {1}"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:45
 msgid "Toolbars"
-msgstr "工具條"
+msgstr "أشرطة الأدوات"
 
 #: ../src/util/CrashHandler.cpp:30
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "جارِ محاولة الحفظ الاضطراري للمستند المفتوح حاليا…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "تعذر فتح ملف القالب العام في {1}. هل هو موجود؟"
 
 #: ../src/gui/PageView.cpp:348
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "تعذر تشغيل التسجيل الصوتي {1}"
 
 #: ../src/control/Control.cpp:1278
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "تعذر الحصول على صفحة الـPDF."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:340
 #: ../src/undo/UndoRedoHandler.cpp:203
 msgid "Undo"
-msgstr "撤銷"
+msgstr "تراجع"
 
 #: ../src/undo/UndoRedoHandler.cpp:198
 msgid "Undo: "
-msgstr "撤銷："
+msgstr "تراجع: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:284
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "وسم جذري غير متوقع: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:305
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "وسم غير متوقع في المستند: «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:494
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "نوع خلفية مجهول: {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:52
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "قيمة لون مجهولة «{1}»"
 
 #: ../src/control/xojfile/LoadHandler.cpp:448
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "نوع نطاق مجهول: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:224
 msgid "Unknown parser error"
-msgstr ""
+msgstr "خطأ إعراب مجهول"
 
 #: ../src/control/xojfile/LoadHandler.cpp:395
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "نوع pixmap::domain مجهول: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:591
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr "未知的筆畫類別： \"{1}\"，假設爲畫筆"
+msgstr "نوع خط رسم مجهول: «{1}»، سأفترض أنه قلم"
 
 #: ../src/control/Control.cpp:2368
 msgid "Unsaved Document"
-msgstr "未保存文檔"
+msgstr "مستند غير محفوظ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Vertical Space"
-msgstr "垂直間距"
+msgstr "مسافة رأسية"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
 msgid "Vertical space"
-msgstr "垂直間距"
+msgstr "مسافة رأسية"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Very Fine"
-msgstr "極細"
+msgstr "رفيع جدا"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Very Thick"
-msgstr "極粗"
+msgstr "عريض جدا"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:104
 msgid "White"
-msgstr "白色"
+msgstr "أبيض"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:31
 msgid "With PDF background"
-msgstr "使用PDF背景"
+msgstr "بخلفية PDF"
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
-msgstr "寫文本"
+msgstr "كتابة نص"
 
 #: ../src/control/xojfile/LoadHandler.cpp:908
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "عدد نقاط خاطئ ({1})"
 
 #: ../src/control/xojfile/LoadHandler.cpp:918
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr ""
+msgstr "عدد نقاط خاطئ؛ المعطى {1}، المتوقع {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:221
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "خطأ في إعراب XML مفاده: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (للتوافق)"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:51
 msgid "Xournal files"
-msgstr "Xournal檔案"
+msgstr "ملفات Xournal"
 
 #: ../src/control/XournalMain.cpp:204
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "لقد انهار Xournal++‎ المرة السابقة. هل تريد استعادة الملف المحرر أخيرا؟"
 
 #: ../src/control/Control.cpp:2317 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
-msgstr ""
+msgstr "ملفات Xournal++‎"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:65
 #: ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "Xournal++ template"
-msgstr ""
+msgstr "قالب Xournal++‎"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
 msgid "Yellow"
-msgstr "黃色"
+msgstr "أصفر"
 
 #: ../src/control/PageBackgroundChangeController.cpp:179
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "ليس لديك أي صفحات PDF للاختيار منها. تم إلغاء العملية.\n"
+"الرجاء اختيار نوع خلفية آخر: قائمة جورنال ← إعداد قالب الصفحة."
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "أنت تستخدم فرع \"{1}/{2}\". إرسال تقرير خطأ سيوجهك إلى متتبع علل هذا المستودع."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:78
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "المستند الحالي لا يحتوي على صفحة PDF رقم {1}\n"
+"هل تحب إدراج هذه الصفحة؟\n\n"
+"نصيحة: يمكنك اختيار «جورنال ← خلفية الورق ← بخلفية PDF» لإضافة صفحة PDF."
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
@@ -1516,137 +1539,137 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
-msgstr "適合屏幕"
+msgstr "عرض بحجم الشاشة"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Zoom in"
-msgstr "放大"
+msgstr "تكبير"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Zoom out"
-msgstr "縮小"
+msgstr "تصغير"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Zoom to 100%"
-msgstr "原始尺寸"
+msgstr "عرض بالحجم الأصلي"
 
 #: ../src/control/Control.cpp:2311 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Cancel"
-msgstr ""
+msgstr "إل_غاء"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:13
 msgid "_Open"
-msgstr ""
+msgstr "_فتح"
 
 #: ../src/control/Control.cpp:2312 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
-msgstr ""
+msgstr "_حفظ"
 
 #: ../src/util/DeviceListHelper.cpp:111
 msgid "cursor"
-msgstr "光標"
+msgstr "مؤشر"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:237
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "متقطع/منقط"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:234
 msgid "dashed"
-msgstr ""
+msgstr "متقطع"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default disabled"
-msgstr ""
+msgstr "مبدئيا معطل"
 
 #: ../src/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default enabled"
-msgstr ""
+msgstr "مبدئيا مفعل"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:252
 msgid "delete stroke"
-msgstr "刪除筆劃"
+msgstr "حذف خط أو شكل"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:240
 msgid "dotted"
-msgstr ""
+msgstr "منقط"
 
 #: ../src/undo/AddUndoAction.cpp:86 ../src/undo/DeleteUndoAction.cpp:83
 msgid "elements"
-msgstr ""
+msgstr "عناصر"
 
 #: ../src/util/DeviceListHelper.cpp:109
 msgid "eraser"
-msgstr "橡皮"
+msgstr "ممحاة"
 
 #: ../src/control/Control.cpp:1980
 msgid "file: {1}"
-msgstr ""
+msgstr "ملف: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
-msgstr ""
+msgstr "صورة"
 
 #: ../src/util/DeviceListHelper.cpp:114
 msgid "keyboard"
-msgstr ""
+msgstr "لوحة مفاتيح"
 
 #: ../src/undo/AddUndoAction.cpp:100 ../src/undo/DeleteUndoAction.cpp:97
 msgid "latex"
-msgstr ""
+msgstr "لاتك"
 
 #: ../src/util/DeviceListHelper.cpp:105
 msgid "mouse"
-msgstr "滑鼠"
+msgstr "الفأرة"
 
 #: ../src/util/DeviceListHelper.cpp:107
 msgid "pen"
-msgstr "畫筆"
+msgstr "قلم"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:158
 msgid "show"
-msgstr ""
+msgstr "إظهار"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:231
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
 msgid "standard"
-msgstr "標準"
+msgstr "عادي"
 
 #: ../src/undo/AddUndoAction.cpp:94 ../src/undo/DeleteUndoAction.cpp:91
 msgid "stroke"
-msgstr ""
+msgstr "خط أو شكل"
 
 #: ../src/util/DeviceListHelper.cpp:123
 msgid "tablet pad"
-msgstr ""
+msgstr "حاسوب لوحي"
 
 #: ../src/undo/AddUndoAction.cpp:103 ../src/undo/DeleteUndoAction.cpp:100
 msgid "text"
-msgstr ""
+msgstr "نص"
 
 #: ../src/util/DeviceListHelper.cpp:118
 msgid "touchpad"
-msgstr ""
+msgstr "لوحة لمس"
 
 #: ../src/util/DeviceListHelper.cpp:116
 msgid "touchscreen"
-msgstr ""
+msgstr "شاشة لمس"
 
 #: ../src/util/DeviceListHelper.cpp:121
 msgid "trackpoint"
-msgstr ""
+msgstr "تراك بوينت"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:251
 msgid "whiteout"
-msgstr "涂白"
+msgstr "تبييض"
 
 #: ../src/control/xojfile/LoadHandler.cpp:917
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "ملف xoj مساره: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:110
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -1654,59 +1677,59 @@ msgstr ""
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:176
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "‏xoj-preview-extractor: تعذر إيجاد الأيقونة «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:131
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "‏xoj-preview-extractor: الملف «{1}» لا يحتوي على معاينة"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:123
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "‏xoj-preview-extractor: الملف «{1}» ليس بالامتداد xoj"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:136
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "‏xoj-preview-extractor: تعذر إيجاد معاينة أو صفحات، قد يكون ملفا تالفا؟"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:127
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "‏xoj-preview-extractor: تعذر فتح ملف الإدخال «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "‏xoj-preview-extractor: تعذر فتح ملف الإخراج «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:200
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "‏xoj-preview-extractor: تم الاستخراج بنجاح"
 
 #: ../src/util/PathUtil.cpp:239
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = صندوق أدوات عائم (تجريبي) ="
 
 #: ../ui/settings.glade:3635 ../ui/settings.glade:3646
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:2429
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% أكبر من المسافة الأولى بين اللمستين."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4618
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:547
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1737,227 +1760,234 @@ msgstr ""
 #: ../ui/settings.glade:4459
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "... وكم من الوقت يجب أن يكون قد مضى منذ آخر رسمة.\n\n"
+"<i>المستحسن: 500 مللي ثانية</i>"
 
 #: ../ui/settings.glade:1077
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1129
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4602
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1712
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5176
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1045
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2414
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:1016
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:2994
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1109
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr "<b>...或者選擇已用圖片：</b>"
+msgstr "<b>... أو حدد صورة مستخدمة بالفعل:</b>"
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>لون الخلفية</b>"
 
 #: ../ui/pageTemplate.glade:258
 msgid "<b>Background</b>"
-msgstr ""
+msgstr "<b>الخلفية</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
-msgstr "<b>顏色</b>"
+msgstr "<b>ألوان</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr "<b>預設工具</b>"
+msgstr "<b>الأدوات المبدئية</b>"
 
 #: ../ui/settings.glade:4777
 msgid "<b>Default</b>"
-msgstr "<b>預設</b>"
+msgstr "<b>الأداة المبدئية</b>"
 
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>إعدادات تصدير المستند</b>\n"
+"تعيين إعدادات التصدير"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "<i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>صندوق أدوات فارغ</b>\n"
+"<i>القائمة: عرض/أشرطة الأدوات</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>إعدادات عتامة التعبئة</b>\n"
+"تحديد عتامة لون التعبئة"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
-msgstr ""
+msgstr "<b>حجم الصفحة</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
-msgstr "<b>頁面尺寸</b>"
+msgstr "<b>حجم الصفحة</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
-msgstr "<b>分割線</b>"
+msgstr "<b>فواصل</b>"
 
 #: ../ui/settings.glade:765
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>قم بتعيين أنواع الأجهزة لكل جهاز إدخال في نظامك. لا تقم بتغيير هذه القيم إلا إذا كانت أجهزتك معينة بشكل خاطئ (مثلا يظهر قلمك على أنه شاشة لمس).</i>"
 
 #: ../ui/settings.glade:4868
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr ""
+msgstr "<i>التسجيلات الصوتية تُخزّن حاليا في مجلد منفصل ويُشار إليها في الجورنال.</i>"
 
 #: ../ui/settings.glade:5210
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr ""
+msgstr "<i>التغييرات ستؤثر فقط على التسجيلات والتشغيلات الجديدة.</i>"
 
 #: ../ui/settings.glade:1314
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr ""
+msgstr "<i>قم بتعيين الأدوات التي سيتم تحديدها عند الضغط على زر فأرة. بمجرد ترك الزر، سيتم تحديد الأداة السابقة مرة أخرى.</i>"
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
-msgstr "<i>比如：</i> 1-3 或者 1,3,5-7 等。"
+msgstr "<i>مثال:</i> 1-3 أو 1,3,5-7 إلخ."
 
 #: ../ui/settings.glade:346
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in your home directory, in ~/.xournalpp/autosave</i>"
-msgstr ""
+msgstr "<i>إذا كان المستند قد تم حفظه بالفعل، ستجده في نفس مجلده بالامتداد ‪.autosave.xoj‬\n"
+"وإذا لم يكن قد تم حفظه، ستجده في مجلد المنزل، في ‪~/.xournalpp/autosave‬</i>"
 
 #: ../ui/settings.glade:3866
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
-msgstr ""
+msgstr "<i>إذا أضفت مسافة إضافية إلى جانب الصفحات، تستطيع اختيار المنطقة التي تريدها من الشاشة لتعمل عليها.</i>"
 
 #: ../ui/settings.glade:651
 msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
-msgstr ""
+msgstr "<i>عند فتح ملف PDF ووُجد ملف جورنال بنفس الاسم (بالامتداد xoj)، سيتم فتح ملف الجورنال.</i>"
 
 #: ../ui/settings.glade:2064
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
-msgstr ""
+msgstr "<i>إذا كان جهازك لا يدعم التعرف على اليد، يمكن لـXournal++‎ تعطيل شاشة اللمس عندما يكون القلم بالقرب من الشاشة.</i>"
 
 #: ../ui/settings.glade:987
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>اختر خوارزمية تثبيت الإدخال ومعاملاتها</i>"
 
 #: ../ui/settings.glade:1492
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr ""
+msgstr "<i>الإحساس بالضغط يتيح لك رسم خطوط يختلف عرضها باختلاف مقدار الضغط الذي تؤثر به على القلم. إذا لم تكن لوحتك تدعم الإحساس بالضغط، فإن هذا الإعداد لا تأثير له.</i>"
 
 #: ../ui/settings.glade:3713
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr ""
+msgstr "<i>ضع مسطرة على شاشتك، وحرك الشريط المنزلق حتى تتطابق المسطرتين.</i>"
 
 #: ../ui/settings.glade:4562
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>أعد رسم خلفيات الـPDF أكثر أثناء التكبير للحصول على جودة رسم أفضل. \n"
+"<b>ملاحظة:</b> المفترض أن هذا لا يؤثر على جودة الطباعة.</i>"
 
 #: ../ui/settings.glade:5319
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>تحديد اللغة (يحتاج إعادة التشغيل)</i>"
 
 #: ../ui/settings.glade:4723
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr ""
+msgstr "<i>تحديد الأداة والإعدادات إذا ضغطت على زر الأداة المبدئية.</i>"
 
 #: ../ui/settings.glade:1541
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>بعض الأجهزة تخبر بقيم ضغط صغيرة جدا أو كبيرة جدا لدرجة غير متوقعة. يمكن إصلاح هذا بتعيين حد أدنى للضغط أو مضاعفة الضغط الذي يخبر به الجهاز.</i>"
 
 #: ../ui/settings.glade:2204
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr ""
+msgstr "<i>حدد الأوامر التي سيتم تنفيذها عند التعرف على اليد. سيتم تنفيذها في خيط تنفيذ واجهة المستخدم؛ تأكد من أنها لن تجمّدها!</i>"
 
 #: ../ui/settings.glade:4957
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>حدد أجهزة الصوت لاستخدامها لتسجيل وتشغيل المرفقات الصوتية.\n"
+"اختر <small><tt>pulse</tt></small> كجهاز إدخال وإخراج إذا كان متاحا.</i>"
 
 #: ../ui/settings.glade:1782
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr ""
+msgstr "<i>قم بتعيين الأدوات التي سيتم تحديدها عند الضغط على زر في القلم الرقمي أو عند استخدام الممحاة. بمجرد ترك الزر، سيتم تحديد الأداة السابقة مرة أخرى.</i>"
 
 #: ../ui/settings.glade:476
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr ""
+msgstr "<i>سيتم اقتراح هذا الاسم إذا قمت بحفظ مستند جديد.</i>"
 
 #: ../ui/settings.glade:3692
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr ""
+msgstr "<i>للتأكد من أن العرض بالحجم الأصلي يعرض العناصر بحجمها الطبيعي. (يحتاج إعادة التشغيل)</i>"
 
 #: ../ui/settings.glade:2623
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
+msgstr "<i>يمكنك تبديل ظهور شريط القوائم بزر F10</i>"
 
 #: ../ui/settings.glade:2366
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
+msgstr "<i>استخدم إيماءة القَرص لتكبير صفحات الجورنال.</i>"
 
 #: ../ui/settings.glade:2482
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>استخدم شاشة اللمس كأنها قلم يدعم تعدد اللمس.</i>"
 
 #: ../ui/settings.glade:1675
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
+msgstr "<i>في بعض الحالات، الخطوط المرسومة بالقلم يكون بها زيادات خاطئة في بدايتها. يمكن تجنبها بإهمال أول أحداث أو نقاط مرسومة عند لمس القلم للشاشة.</i>"
 
 #: ../ui/settings.glade:1998
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
+msgstr "<i>تستطيع ضبط أجهزة، لا ترى GTK أنها شاشة لمس، لتعمل كأنها شاشة لمس.</i>"
 
 #: ../ui/about.glade:73
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
-"<i>浴火重生</i>"
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++‎</span>\n"
+"<i>الجيل التالي</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr "關於Xournal++"
+msgstr "عن Xournal++‎"
 
 #: ../ui/settings.glade:4531
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "الفعل عند النقر"
 
 #: ../ui/settings.glade:3918
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "إضافة مسافة أفقية إضافية مقدارها"
 
 #: ../ui/settings.glade:3896
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "إضافة مسافة رأسية إضافية مقدارها"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
@@ -1965,24 +1995,25 @@ msgstr ""
 
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "بعد التحجيم، سيبقى عرض كل خط كما كان قبل التحجيم. "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "الكل"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
-msgstr "所有頁面"
+msgstr "كل الصفحات"
 
 #: ../ui/settings.glade:4496
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "يجب استيفاء الشروط الثلاثة لتجاهل الرسمة.\n"
+"يجب أن تكون قصيرة في الزمن والطول، ولا يمكن أن نكون قد تجاهلنا رسمة أخرى في وقت قريب."
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "تحقق دائمًا من اعتماديات LaTeX قبل التشغيل"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
@@ -1990,622 +2021,631 @@ msgstr ""
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "المتوسط الحسابي"
 
 #: ../ui/settings.glade:1751
 msgid "Artifact workaround"
-msgstr ""
+msgstr "الحل البديل للزيادات الخاطئة"
 
 #: ../ui/settings.glade:5037
 msgid "Audio Devices"
-msgstr ""
+msgstr "أجهزة الصوت"
 
 #: ../ui/settings.glade:5242
 msgid "Audio Recording"
-msgstr ""
+msgstr "تسجيل الصوتيات"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "المؤلف: "
 
 #: ../ui/about.glade:211
 msgid "Authors:"
-msgstr ""
+msgstr "المؤلفون:"
 
 #: ../ui/settings.glade:2134
 msgid "Autodetect"
-msgstr ""
+msgstr "اكتشاف تلقائي"
 
 #: ../ui/settings.glade:687
 msgid "Autoloading Journals"
-msgstr ""
+msgstr "تحميل تلقائي للجورنالات"
 
 #: ../ui/settings.glade:446
 msgid "Autosaving"
-msgstr ""
+msgstr "حفظ تلقائي"
 
 #: ../ui/settings.glade:594
 msgid "Available Placeholders"
-msgstr ""
+msgstr "المتغيرات المتاحة"
 
 #: ../ui/settings.glade:954
 msgid "Averaging method"
-msgstr ""
+msgstr "طريقة حساب المتوسط"
 
 #: ../ui/settings.glade:2687
 msgid "Background color between pages"
-msgstr ""
+msgstr "لون الخلفية بين الصفحات"
 
 #: ../ui/settings.glade:2846
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "قلم كبير"
 
 #: ../ui/settings.glade:3049
 msgid "Border Color"
-msgstr ""
+msgstr "لون الإطار"
 
 #: ../ui/settings.glade:3010
 msgid "Border Width"
-msgstr ""
+msgstr "عرض الإطار"
 
 #: ../ui/settings.glade:2676
 msgid "Border color"
-msgstr "邊界顏色"
+msgstr "لون الإطار"
 
 #: ../ui/settings.glade:2661
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "لون إطار الصفحة الحالية وتحديدات أخرى"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "خطوة إلى الأمام"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "إحضار إلى المقدمة"
 
 #: ../ui/settings.glade:1004
 msgid "Buffersize"
-msgstr ""
+msgstr "حجم الذاكرة المؤقتة"
 
 #: ../ui/about.glade:127
 msgid "Built on"
-msgstr ""
+msgstr "وقت البناء"
 
 #: ../ui/settings.glade:1822
 msgid "Button 1"
-msgstr ""
+msgstr "الزر الأول"
 
 #: ../ui/settings.glade:1860
 msgid "Button 2"
-msgstr ""
+msgstr "الزر الثاني"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "اختر ملف قالب LaTeX العام"
 
 #: ../ui/settings.glade:2892 ../ui/settings.glade:3035
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "اختر اللون لاستخدامه من أجل «تسليط الضوء على موضع المؤشر»"
 
 #: ../ui/settings.glade:2906
 msgid "Circle Color"
-msgstr ""
+msgstr "لون الدائرة"
 
 #: ../ui/settings.glade:3476
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "مسح الصفحات المخزنة في الذاكرة أثناء التمرير"
 
 #: ../ui/settings.glade:2773
 msgid "Colors"
-msgstr ""
+msgstr "الألوان"
 
 #: ../ui/main.glade:1207
 msgid "Configure Page Template"
-msgstr ""
+msgstr "إعداد قالب الصفحة"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr ""
+msgstr "إعداد قالب صفحة جديد"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "نسخ خلفية الصفحة الحالية بدلا من ذلك"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "نسخ حجم الصفحة الحالية بدلا من ذلك"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr ""
+msgstr "نسخ خلفية الصفحة الحالية بدلا من استخدام الخلفية المضبوطة أعلاه."
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
-msgstr "當前頁"
+msgstr "الصفحة الحالية"
 
 #: ../ui/settings.glade:3083
 msgid "Cursor"
-msgstr ""
+msgstr "المؤشر"
 
 #: ../ui/settings.glade:2828
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "شكل المؤشر عند استخدام أداة القلم"
 
 #: ../ui/settings.glade:1192
 msgid "Cusp detection"
-msgstr ""
+msgstr "اكتشاف النتوءات"
 
 #: ../ui/settings.glade:2310
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "أوامر مخصصة (للأسلوب «مخصص»)"
 
 #: ../ui/settings.glade:2735
 msgid "Dark Theme (requires restart)"
-msgstr ""
+msgstr "الوضع الليلي (يحتاج إعادة التشغيل)"
 
 #: ../ui/settings.glade:227
 msgid "Deadzone"
-msgstr ""
+msgstr "المنطقة الميتة"
 
 #: ../ui/settings.glade:1033
 msgid "Deadzone radius"
-msgstr ""
+msgstr "نصف قطر المنطقة الميتة"
 
 #: ../ui/settings.glade:620
 msgid "Default Save Name"
-msgstr ""
+msgstr "اسم الحفظ المبدئي"
 
 #: ../ui/settings.glade:5163
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "الزمن المبدئي للتحريك (بالثواني)"
 
 #: ../ui/settings.glade:508
 msgid "Default name: "
-msgstr ""
+msgstr "الاسم المبدئي: "
 
 #: ../ui/settings.glade:4817
 msgid "Defaults"
-msgstr "預設"
+msgstr "القيم المبدئية"
 
 #: ../ui/main.glade:1245
 msgid "Delete Layer"
-msgstr "刪除層"
+msgstr "حذف الطبقة"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr "刪除筆劃"
+msgstr "حذف خط أو شكل"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
-msgstr "設備"
+msgstr "الجهاز"
 
 #: ../ui/settings.glade:2238
 msgid "Disable"
-msgstr ""
+msgstr "تعطيل"
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr "取消此設備繪製"
+msgstr "تعطيل الرسم لهذا الجهاز"
 
 #: ../ui/settings.glade:3209
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "تعطيل الاختفاء التلقائي لشريط التمرير"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr ""
+msgstr "معطّل"
 
 #: ../ui/settings.glade:2108
 msgid "Disabling Method"
-msgstr ""
+msgstr "أسلوب التعطيل"
 
 #: ../ui/settings.glade:3784
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "معايرة دقة (DPI) الشاشة"
 
 #: ../ui/settings.glade:4371
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr ""
+msgstr "لا ترسم المدخلات ذات وقت وطول قصيرين، إلا إذا أتت في تتابع سريع. بدلا من ذلك، أظهر شريط الأدوات العائم."
 
 #: ../ui/settings.glade:1064
 msgid "Drag"
-msgstr ""
+msgstr "السحب"
 
 #: ../ui/settings.glade:859
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "السحب <b>لليسار</b> من نقطة البداية يمثل الضغط على زر Shift مع الإبقاء عليه مضغوطا.\n"
+"السحب <b>للأعلى</b> من نقطة البداية يمثل الضغط على زر Ctrl مع الإبقاء عليه مضغوطا.\n\n"
+"نصف قطر التحديد: نصف القطر الذي عنده هذان الزران سيظلان «مضغوطين» حتى إنهاء الرسم.\n\n"
+"<i>مفيد للتعامل بدون لوحة مفاتيح.</i>"
 
 #: ../ui/settings.glade:4089
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "السحب <b>لليسار</b> من نقطة البداية يمثل الضغط على زر Shift مع الإبقاء عليه مضغوطا.\n"
+"السحب <b>للأعلى</b> من نقطة البداية يمثل الضغط على زر Ctrl مع الإبقاء عليه مضغوطا.\n\n"
+"نصف قطر التحديد: نصف القطر الذي عنده هذان الزران سيظلان «مضغوطين» حتى إنهاء الرسم.\n\n"
+"<i>مفيد للتعامل بدون لوحة مفاتيح.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr "在這裡和工具條之間可以來回拖動條目。"
+msgstr "اسحب وأفلت المكونات من هذه النافذة إلى أشرطة الأدوات والعكس."
 
 #: ../ui/settings.glade:1063
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr ""
+msgstr "السحب: إذا كانت القيمة صغيرة جدا، فقد تظهر اهتزازات غير مرغوبة. وإذا كانت كبيرة جدا، فقد لا يحدث أي تثبيت."
 
 #: ../ui/settings.glade:1075
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr ""
+msgstr "السحب: إذا كانت القيمة صغيرة جدا، فقد تظهر اهتزازات غير مرغوبة. وإذا كانت كبيرة جدا، فقد لا يحدث أي تثبيت."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "رسم نظام إحداثيات"
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
-msgstr ""
+msgstr "رسم _خط"
 
 #: ../ui/settings.glade:2874
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "رسم دائرة شفافة حول المؤشر"
 
 #: ../ui/settings.glade:4672
 msgid "Drawing Area"
-msgstr ""
+msgstr "منطقة الرسم"
 
 #: ../ui/settings.glade:4139
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
+msgstr "أدوات الرسم - تفعيل زر Shift أو Ctrl حسب اتجاه الرسم (تجريبي)"
 
 #: ../ui/main.glade:2637
 msgid "Duplicate"
-msgstr ""
+msgstr "تكرار"
 
 #: ../ui/main.glade:2674
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "تحرير (لم تتم برمجته بعد)"
 
 #: ../ui/settings.glade:2226
 msgid "Enable"
-msgstr ""
+msgstr "تفعيل"
 
 #: ../ui/settings.glade:4084
 msgid "Enable  with determination radius of "
-msgstr ""
+msgstr "تفعيل بنصف قطر تحديد مقداره "
 
 #: ../ui/settings.glade:665
 msgid "Enable Autoloading of Journals"
-msgstr ""
+msgstr "تفعيل التحميل التلقائي للجورنالات"
 
 #: ../ui/settings.glade:365
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "تفعيل الحفظ التلقائي"
 
 #: ../ui/settings.glade:900
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "تفعيل استنتاج الضغط <i>(تخمين الضغط من سرعة الرسم عندما يكون الضغط المقدم من الجهاز غير متوفر)</i>"
 
 #: ../ui/settings.glade:1506
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "تفعيل الإحساس بالضغط"
 
 #: ../ui/settings.glade:4366
 msgid "Enable Tap action"
-msgstr ""
+msgstr "تفعيل الفعل عند النقر"
 
 #: ../ui/settings.glade:840
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "السماح بالرسم خارج النافذة <i>(لن يتوقف الرسم عند حدود النافذة)</i>"
 
 #: ../ui/settings.glade:2078
 msgid "Enable internal Hand Recognition"
-msgstr ""
+msgstr "تفعيل التعرف على اليد الداخلي"
 
 #: ../ui/settings.glade:2496
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "تفعيل الرسم باللمس"
 
 #: ../ui/settings.glade:2378
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "تفعيل إيماءات التكبير (يحتاج إعادة التشغيل)"
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "إدخال / تحرير نص LaTeX"
 
 #: ../ui/main.glade:1701
 msgid "Eraser Optio_ns"
-msgstr "橡皮選項(_n)"
+msgstr "خ_يارات الممحاة"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "نوع الممحاة - لا تغيير"
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
-msgstr "輸出"
+msgstr "تصدير"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr "輸出為..."
+msgstr "تصدير كـ..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "تصدير الطبقات تدريجيا"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "تصدير المستند بدون أي خلفية (لا شيء) أو مع خلفيات PDF والصور فقط (بدون تسطير) أو مع جميع أنواع الخلفيات (الكل)."
 
 #: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
-msgstr ""
+msgstr "م_لء"
 
 #: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
-msgstr ""
+msgstr "عتامة التعبئة"
 
 #: ../ui/settings.glade:1209
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "إنهاء الخطوط"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
-msgstr ""
+msgstr "العثور على التواجد التالي لنَص البحث"
 
 #: ../ui/main.glade:2409
 msgid "Find previous occurrence of the search string"
-msgstr ""
+msgstr "العثور على التواجد السابق لنَص البحث"
 
 #: ../ui/settings.glade:4023
 msgid "First Page Offset "
-msgstr ""
+msgstr "ترحيل الصفحة الأولى "
 
 #: ../ui/main.glade:532 ../ui/settings.glade:3296
 msgid "Fullscreen"
-msgstr "全屏"
+msgstr "ملء الشاشة"
 
 #: ../ui/about.glade:307
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "رخصة جنو العمومية، الإصدارة الثانية أو أحدث"
 
 #: ../ui/settings.glade:5081
 msgid "Gain"
-msgstr ""
+msgstr "التضخيم"
 
 #: ../ui/settings.glade:1127 ../ui/settings.glade:1147
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "معامل غاوس: كلما ازداد، ازداد التثبيت وازداد التباطؤ بين مؤشرك ونقطة الرسم."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "إعدادات أداة LaTeX العامة"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
-msgstr ""
+msgstr "Git commit"
 
 #: ../ui/settings.glade:2791
 msgid "Global"
-msgstr ""
+msgstr "عام"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "مسار ملف القالب العام"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
-msgstr ""
+msgstr "انتقال إلى صفحة"
 
 #: ../ui/settings.glade:4283
 msgid "Grid size"
-msgstr ""
+msgstr "حجم الشبكة"
 
 #: ../ui/settings.glade:4240
 msgid "Grid snapping tolerance"
-msgstr ""
+msgstr "تسامح اجتذاب الشبكة"
 
 #: ../ui/main.glade:1537
 msgid "H_and Tool"
-msgstr "手形工具(_a)"
+msgstr "أداة ال_يد"
 
 #: ../ui/settings.glade:2335
 msgid "Hand Recognition"
-msgstr ""
+msgstr "التعرف على اليد"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "ارتفاع"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
-msgstr "高度："
+msgstr "الطول:"
 
 #: ../ui/main.glade:951 ../ui/settings.glade:3258 ../ui/settings.glade:3325
 msgid "Hide Menubar"
-msgstr "隱藏菜單條"
+msgstr "إخفاء شريط القوائم"
 
 #: ../ui/settings.glade:3274 ../ui/settings.glade:3341
 msgid "Hide Sidebar"
-msgstr "隱藏側邊欄"
+msgstr "إخفاء الشريط الجانبي"
 
 #: ../ui/settings.glade:3179
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "إخفاء شريط التمرير الأفقي"
 
 #: ../ui/settings.glade:3194
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "إخفاء شريط التمرير الرأسي"
 
 #: ../ui/settings.glade:2869
 msgid "Highlight cursor position"
-msgstr ""
+msgstr "تسليط الضوء على موضع المؤشر"
 
 #: ../ui/main.glade:1810
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "خيارات قلم التظليل"
 
 #: ../ui/settings.glade:4416
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "ما مقدار القِصَر (بالمللي متر على الشاشة) للخط المرسوم و...\n\n"
+"<i>المستحسن: 1 مللي متر</i>"
 
 #: ../ui/settings.glade:4396
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "ما مقدار القِصَر (الزمني) و...\n\n"
+"<i>المستحسن: 150 مللي ثانية</i>"
 
 #: ../ui/settings.glade:4319
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "في حالة التفعيل، فإن الأشكال التي يتعرف عليها متعرف الأشكال ستجتذبها الشبكة تلقائيا. سيؤدي هذا إلى نتائج غير متوقعة إذا كان متعرف الأشكال مفعلا أثناء الكتابة."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "في حالة التفعيل، تأكد من أن حزم LaTeX المطلوبة مثبتة وأن أوامر LaTeX متاحة قبل تشغيل أداة LaTeX."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "لو مفعلة، طبقات كل صفحة ستُضاف طبقة طبقة. يمكن استخدام ملف الـPDF الناتج كعرض تقديمي."
 
 #: ../ui/settings.glade:4384
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "مدة التجاهل (مللي ثانية)"
 
 #: ../ui/settings.glade:1693
 msgid "Ignore the first"
-msgstr ""
+msgstr "إهمال أول"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "جودة الصورة"
 
 #: ../ui/settings.glade:230
 msgid "Inertia"
-msgstr ""
+msgstr "القصور الذاتي"
 
 #: ../ui/settings.glade:4980
 msgid "Input Device"
-msgstr "輸入設備"
+msgstr "جهاز الإدخال"
 
 #: ../ui/settings.glade:801
 msgid "Input Devices"
-msgstr ""
+msgstr "أجهزة الإدخال"
 
 #: ../ui/settings.glade:1265
 msgid "Input System"
-msgstr ""
+msgstr "أنظمة الإدخال"
 
 #: ../ui/settings.glade:1234
 msgid "Input stabilization"
-msgstr ""
+msgstr "تثبيت الإدخال"
 
 #: ../ui/settings.glade:1214
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "قد يتسبب تثبيت الإدخال في صنع فجوة في نهاية رسمك. عند تفعيل هذا الخيار، سيتم ملء هذه الفجوات."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr "插入LaTeX"
+msgstr "إدراج LaTeX"
 
 #: ../ui/main.glade:2629
 msgid "Insert Page After"
-msgstr ""
+msgstr "إدراج صفحة بعد"
 
 #: ../ui/main.glade:2621
 msgid "Insert Page Before"
-msgstr ""
+msgstr "إدراج صفحة قبل"
 
 #: ../ui/settings.glade:5267
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "إعدادات تطبيق LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "أمر توليد LaTeX"
 
 #: ../ui/settings.glade:5356 ../ui/settings.glade:5404
 msgid "Language"
-msgstr ""
+msgstr "اللغة"
 
 #: ../ui/settings.glade:5374
 msgid "Language Settings"
-msgstr ""
+msgstr "إعدادات اللغة"
 
 #: ../ui/main.glade:575
 msgid "Layout"
-msgstr ""
+msgstr "تنسيق الصفحات"
 
 #: ../ui/settings.glade:3150
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "استخدام اليد اليمنى أو اليسرى"
 
 #: ../ui/about.glade:291
 msgid "License"
-msgstr ""
+msgstr "الترخيص"
 
 #: ../ui/settings.glade:715
 msgid "Load / Save"
-msgstr "加載/保存"
+msgstr "التحميل والحفظ"
 
 #: ../ui/images.glade:73
 msgid "Load file"
-msgstr "加載檔案"
+msgstr "تحميل ملف"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
-msgstr "定製工具條"
+msgstr "إدارة أشرطة الأدوات"
 
 #: ../ui/settings.glade:1096
 msgid "Mass"
-msgstr ""
+msgstr "الكتلة"
 
 #: ../ui/settings.glade:1095 ../ui/settings.glade:1107
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "الكتلة: كلما ازدادت الكتلة، ازداد القصور الذاتي وازداد التثبيت"
 
 #: ../ui/settings.glade:4436
 msgid "Max Length (mm)"
-msgstr ""
+msgstr "أقصى طول (مللي متر)"
 
 #: ../ui/settings.glade:871
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "دمج أحداث الأزرار مع أحداث سن القلم الرقمي\n"
+"\t    <i>(قم بتعليم هذا الخيار إذا كان الأمر</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>يعيد</i> \"<tt>on</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:1354
 msgid "Middle Mouse Button"
-msgstr ""
+msgstr "زر الفأرة الأوسط"
 
 #: ../ui/settings.glade:1563
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "الحد الأدنى للضغط:"
 
 #: ../ui/settings.glade:1441 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "الفأرة"
 
 #: ../ui/settings.glade:1410
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "أزرار الفأرة"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "فأرة ولوحة مفاتيح مندمجين"
 
 #: ../ui/main.glade:2659
 msgid "Move Down"
-msgstr ""
+msgstr "تحريك لأسفل"
 
 #: ../ui/main.glade:2651
 msgid "Move Up"
-msgstr ""
+msgstr "تحريك لأعلى"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
@@ -2613,53 +2653,53 @@ msgstr ""
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
-msgstr "新建後頁(_A)"
+msgstr "صفحة جديدة _بعد"
 
 #: ../ui/main.glade:1166
 msgid "New Page _Before"
-msgstr "新建前頁(_B)"
+msgstr "صفحة جديدة _قبل"
 
 #: ../ui/main.glade:1187
 msgid "New Page at _End"
-msgstr "新建尾頁(_E)"
+msgstr "صفحة جديدة في الآ_خر"
 
 #: ../ui/main.glade:1234
 msgid "New _Layer"
-msgstr "新建圖層(_L)"
+msgstr "طبقة _جديدة"
 
 #: ../ui/settings.glade:2844
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "بلا شكل"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "بدون تسطير"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:207
 #: ../ui/settings.glade:224
 msgid "None"
-msgstr ""
+msgstr "لا شيء"
 
 #: ../ui/settings.glade:4022
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
+msgstr "ترحيل الصفحة الأولى هذا العدد من الصفحات عند تفعيل <b>الصفحات المزدوجة</b>"
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "إعدادات العتامة"
 
 #: ../ui/settings.glade:921
 msgid "Options"
-msgstr "選項"
+msgstr "الخيارات"
 
 #: ../ui/settings.glade:5003
 msgid "Output Device"
-msgstr ""
+msgstr "جهاز الإخراج"
 
 #: ../ui/settings.glade:4641
 msgid "PDF Cache"
-msgstr ""
+msgstr "ذاكرة PDF"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
@@ -2667,11 +2707,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
-msgstr "頁碼："
+msgstr "صفحات:"
 
 #: ../ui/settings.glade:4055
 msgid "Paired Pages"
-msgstr ""
+msgstr "الصفحات المزدوجة"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
@@ -2679,204 +2719,205 @@ msgstr ""
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr "紙張樣式"
+msgstr "نوع الورق"
 
 #: ../ui/main.glade:1283
 msgid "Paper _Color"
-msgstr "紙張顏色(_C)"
+msgstr "_لون الورق"
 
 #: ../ui/main.glade:1273
 msgid "Paper _Format"
-msgstr "紙張樣式(_F)"
+msgstr "_نوع الورق"
 
 #: ../ui/about.glade:273
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "مبني جزئيا على Xournal\n"
+"من Denis Auroux"
 
 #: ../ui/main.glade:1928
 msgid "Pause"
-msgstr ""
+msgstr "إيقاف مؤقت"
 
 #: ../ui/main.glade:1555
 msgid "Pen _Options"
-msgstr "畫筆選項(_O)"
+msgstr "_خيارات القلم"
 
 #: ../ui/settings.glade:3496
 msgid "Performance"
-msgstr ""
+msgstr "الأداء"
 
 #: ../ui/settings.glade:5196
 msgid "Playback Settings"
-msgstr ""
+msgstr "إعدادات التشغيل"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "مدير الإضافات"
 
 #: ../ui/main.glade:1993
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "_مدير الإضافات"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "يتم تطبيق التغييرات على الإضافات بعد إعادة تشغيل Xournal++‎"
 
 #: ../ui/settings.glade:3439
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "عدد صفحات التحميل المسبق بعد الصفحة الحالية"
 
 #: ../ui/settings.glade:3427
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "عدد صفحات التحميل المسبق قبل الصفحة الحالية"
 
 #: ../ui/main.glade:487
 msgid "Preferences"
-msgstr "偏好設置"
+msgstr "التفضيلات"
 
 #: ../ui/settings.glade:1161
 msgid "Preprocessor"
-msgstr ""
+msgstr "المعالج القبلي"
 
 #: ../ui/settings.glade:3397
 msgid "Presentation Mode"
-msgstr ""
+msgstr "وضع العرض التقديمي"
 
 #: ../ui/settings.glade:4165
 msgid "Preserve line width"
-msgstr ""
+msgstr "تثبيت عرض الخطوط"
 
 #: ../ui/settings.glade:1574
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "مضاعف الضغط: "
 
 #: ../ui/settings.glade:1644
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "الإحساس بالضغط"
 
 #: ../ui/about.glade:167
 msgid "RELEASE_IDENTIFIER"
-msgstr ""
+msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/settings.glade:2958
 msgid "Radius"
-msgstr ""
+msgstr "نصف القطر"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
-msgstr "範圍"
+msgstr "النطاق"
 
 #: ../ui/settings.glade:4589
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "إعادة الرسم عندما يتغيّر تكبير الصفحة بأكثر من "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "最近文檔(_D)"
+msgstr "ال_مستندات الحديثة"
 
 #: ../ui/main.glade:1918
 msgid "Record / Stop"
-msgstr ""
+msgstr "تسجيل / إنهاء"
 
 #: ../ui/settings.glade:5131
 msgid "Recording Quality"
-msgstr ""
+msgstr "جودة التسجيل"
 
 #: ../ui/main.glade:1256
 msgid "Rename Layer"
-msgstr ""
+msgstr "إعادة تسمية الطبقة"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "إعادة تسمية الطبقة المحددة"
 
 #: ../ui/settings.glade:4188
 msgid "Resizing"
-msgstr ""
+msgstr "تغيير الحجم"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
-msgstr ""
+msgstr "دقة"
 
 #: ../ui/settings.glade:1392
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "زر الفأرة الأيمن"
 
 #: ../ui/settings.glade:4227
 msgid "Rotation snapping tolerance"
-msgstr ""
+msgstr "تسامح اجتذاب التدوير"
 
 #: ../ui/settings.glade:5069
 msgid "Sample Rate"
-msgstr ""
+msgstr "معدل العينات"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "اسم عينة للطبقة"
 
 #: ../ui/settings.glade:3229
 msgid "Scrollbars"
-msgstr ""
+msgstr "أشرطة التمرير"
 
 #: ../ui/settings.glade:3990
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "التمرير خارج الصفحة"
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr ""
+msgstr "تحديد لون الخلفية"
 
 #: ../ui/settings.glade:4904
 msgid "Select Folder"
-msgstr ""
+msgstr "تحديد المجلد"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr "選擇圖片"
+msgstr "تحديد صورة"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr "選擇PDF頁面"
+msgstr "اختيار صفحة PDF"
 
 #: ../ui/settings.glade:3362
 msgid "Select toolbar:"
-msgstr "選擇工具條："
+msgstr "تحديد شريط الأدوات:"
 
 #: ../ui/settings.glade:2712
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "لون التحديد (النصوص، الخطوط والأشكال، إلخ)"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "خطوة إلى الخلف"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "إرسال إلى المؤخرة"
 
 #: ../ui/settings.glade:1626
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "تحجيم الإحساس"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
-msgstr ""
+msgstr "تعيين الأعمدة"
 
 #: ../ui/main.glade:789
 msgid "Set Rows"
-msgstr ""
+msgstr "تعيين الصفوف"
 
 #: ../ui/settings.glade:4499
 msgid "Settings:"
-msgstr ""
+msgstr "الإعدادات:"
 
 #: ../ui/settings.glade:4508
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "إظهار صندوق الأدوات العائم"
 
 #: ../ui/settings.glade:2604
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "إظهار شريط القوائم عند بدء التشغيل"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
@@ -2888,130 +2929,131 @@ msgstr ""
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
-msgstr "側邊欄右置"
+msgstr "إظهار الشريط الجانبي على الجانب الأيمن"
 
 #: ../ui/settings.glade:3128
 msgid "Show vertical scrollbar on the left side"
-msgstr "垂直捲動條左置"
+msgstr "إظهار شريط التمرير الرأسي على الجانب الأيسر"
 
 #: ../ui/settings.glade:891
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "الرسم السريع يجعل الخط أرفع من الرسم البطيء، في حالة غياب معلومات الضغط.\n\n"
+"<i>قد تكون هذه الميزة مفيدة للأجهزة فاقدة الإحساس بالضغط، مثل الفأرة وشاشة اللمس.</i>"
 
 #: ../ui/settings.glade:2845
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "نقطة صغيرة"
 
 #: ../ui/settings.glade:4337
 msgid "Snapping"
-msgstr ""
+msgstr "الاجتذاب"
 
 #: ../ui/settings.glade:3579
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "خطوة Ctrl + التمرير"
 
 #: ../ui/settings.glade:3607
 msgid "Speed for a Zoomstep"
-msgstr ""
+msgstr "خطوة التكبير والتصغير"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr "標準"
+msgstr "عادي"
 
 #: ../ui/settings.glade:2402
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "بدء التكبير بعد مسافة "
 
 #: ../ui/settings.glade:4889 ../ui/settings.glade:4926
 msgid "Storage Folder"
-msgstr ""
+msgstr "مجلد التخزين"
 
 #: ../ui/settings.glade:1947
 msgid "Stylus"
-msgstr ""
+msgstr "قلم رقمي"
 
 #: ../ui/settings.glade:1916
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "أزرار القلم الرقمي"
 
 #: ../ui/settings.glade:4447
 msgid "Successive (ms)"
-msgstr ""
+msgstr "التتابع (مللي ثانية)"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
-msgstr "工具條(_o)"
+msgstr "أ_شرطة الأدوات"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "إعدادات ملف القالب"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr "模板："
+msgstr "القالب:"
 
 #: ../ui/settings.glade:2271 ../ui/settings.glade:2284
 msgid "Test"
-msgstr ""
+msgstr "اختبار"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "اختبار الإعدادات"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "اختبار إذا كانت الإعدادات الحالية صالحة، بتشغيل أمر توليد LaTeX على ملف القالب العام مع صيغة اختبارية."
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
-msgstr "文本字型..."
+msgstr "خط النص..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "ملف الـLaTeX لاستخدامه كقالب لأداة LaTeX."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "اللون الحالي لأداة النص, بصيغة RGB الستعشرية."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "سيتم استبدال النصوص التالية في ملف القالب العام عند تشغيل أداة LaTeX:"
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "الصيغة الرياضية المدخلة في أداة LaTeX."
 
 #: ../ui/settings.glade:3761
 msgid "The unit of the ruler is cm"
-msgstr "標尺的單位是釐米"
+msgstr "وحدة المسطرة هي السنتيمتر"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "سيتم استخدام هذه الإعدادات للصفحات الجديدة"
 
 #: ../ui/settings.glade:2119
 msgid "Timeout"
-msgstr ""
+msgstr "المهلة"
 
 #: ../ui/settings.glade:2519
 msgid "Touch Drawing"
-msgstr ""
+msgstr "الرسم باللمس"
 
 #: ../ui/settings.glade:2033 ../ui/settings.glade:2550
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
-msgstr ""
+msgstr "شاشة اللمس"
 
 #: ../ui/settings.glade:4476
 msgid "Try to select object first."
-msgstr ""
+msgstr "حاول تحديد كائن أولا."
 
 #: ../ui/settings.glade:4481 ../ui/settings.glade:4513
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
+msgstr "حاول تحديد كائن أولا؛ إذا لم يكن شيء محددا فأظهر صندوق الأدوات العائم إن كان مفعلا."
 
 #: ../ui/settings.glade:2751
 msgid "Use  available Stock Icons (requires restart)"
@@ -3019,217 +3061,219 @@ msgstr ""
 
 #: ../ui/settings.glade:4315
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "اجتذب الأشكال المتعرف عليها"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "نسخ حجم الصفحة الحالية بدلا من استخدام الحجم المضبوط أعلاه."
 
 #: ../ui/settings.glade:2501
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "استخدم إصبعين لتحريك منقطة الرسم أو تكبيرها، وإصبع واحد لاستخدام الأداة المحددة."
 
 #: ../ui/settings.glade:4035
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "عادةً صفر أو واحد"
 
 #: ../ui/settings.glade:213
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "الأوزان الغاوسية المبنية على السرعة"
 
 #: ../ui/about.glade:101
 msgid "Version"
-msgstr ""
+msgstr "إصدار"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr ""
+msgstr "الإصدار: "
 
 #: ../ui/settings.glade:3527
 msgid "View"
-msgstr "視圖"
+msgstr "العرض"
 
 #: ../ui/settings.glade:2396
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "عند الرسم باللمس، فإن إيماءات الإصبعين المقصود بها تحريك منطقة الرسم يمكن أن تقوم بتكبير أو تصغير الشاشة، مما يسبب مشاكل في الأداء. \n"
+"هذا الإعداد يمكن أن يجعل الرسم باللمس أسهل. "
 
 #: ../ui/settings.glade:4586
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "عند تكبير ملف PDF ذي دقة عالية، فإن كل إعادة رسم ستأخذ وقتا قد يكون طويلا. ضبط هذا الخيار على قيمة كبيرة سيجعل إعادة الرسم تتم بعدد مرات أقل.\n\n"
+"اضبط هذا الخيار على 0% لإعادة الرسم دائما عند التكبير."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr "涂白"
+msgstr "تبييض"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "عرض"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
-msgstr "寬度："
+msgstr "العرض:"
 
 #: ../ui/about.glade:258
 msgid "With help from the community"
-msgstr ""
+msgstr "مع مساعدة من المجتمع"
 
 #: ../ui/about.glade:192
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:238
 msgid "Xournal++ Preferences"
-msgstr "Xournal++偏好設置"
+msgstr "تفضيلات Xournal++‎"
 
 #: ../ui/settings.glade:3815
 msgid "Zoom"
-msgstr "縮放"
+msgstr "تكبير"
 
 #: ../ui/settings.glade:2451
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "إيماءات التكبير"
 
 #: ../ui/settings.glade:3661
 msgid "Zoom Speed"
-msgstr ""
+msgstr "سرعة التكبير"
 
 #: ../ui/main.glade:696
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 عمود"
 
 #: ../ui/main.glade:801
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 صف"
 
 #: ../ui/main.glade:707
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 عمودان"
 
 #: ../ui/main.glade:812
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 صفّان"
 
 #: ../ui/main.glade:718
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 أعمدة"
 
 #: ../ui/main.glade:823
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 صفوف"
 
 #: ../ui/main.glade:729
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 أعمدة"
 
 #: ../ui/main.glade:834
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 صفوف"
 
 #: ../ui/main.glade:740
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 أعمدة"
 
 #: ../ui/main.glade:845
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 صفوف"
 
 #: ../ui/main.glade:751
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 أعمدة"
 
 #: ../ui/main.glade:856
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 صفوف"
 
 #: ../ui/main.glade:762
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 أعمدة"
 
 #: ../ui/main.glade:867
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 صفوف"
 
 #: ../ui/main.glade:773
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 أعمدة"
 
 #: ../ui/main.glade:878
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 صفوف"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr "標註PDF(_A)"
+msgstr "ال_تعليق على PDF"
 
 #: ../ui/main.glade:656
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "من الأسف_ل إلى الأعلى"
 
 #: ../ui/main.glade:671
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "أ_عمدة/صفوف"
 
 #: ../ui/main.glade:931
 msgid "_Customize"
-msgstr "設置(_C)"
+msgstr "تخصيص"
 
 #: ../ui/main.glade:1377
 msgid "_Default Tools"
-msgstr ""
+msgstr "الأ_داة المبدئية"
 
 #: ../ui/main.glade:1217
 msgid "_Delete Page"
-msgstr "刪除頁面(_D)"
+msgstr "_حذف الصفحة"
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "編輯(_E)"
+msgstr "ت_حرير"
 
 #: ../ui/main.glade:1329
 msgid "_Eraser"
-msgstr "橡皮(_E)"
+msgstr "_ممحاة"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "輸出為PDF(_E)"
+msgstr "_تصدير كـPDF"
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr "檔案(_F)"
+msgstr "_ملف"
 
 #: ../ui/main.glade:1030
 msgid "_First Page"
-msgstr "首頁(_F)"
+msgstr "الصفحة الأ_ولى"
 
 #: ../ui/main.glade:1052
 msgid "_Goto Page"
-msgstr ""
+msgstr "ا_نتقال إلى صفحة"
 
 #: ../ui/main.glade:2007
 msgid "_Help"
-msgstr "幫助(_H)"
+msgstr "م_ساعدة"
 
 #: ../ui/main.glade:1341
 msgid "_Highlighter"
-msgstr "高亮(_H)"
+msgstr "قلم _تظليل"
 
 #: ../ui/main.glade:587
 msgid "_Horizontal"
-msgstr ""
+msgstr "أ_فقي"
 
 #: ../ui/main.glade:1365
 msgid "_Image"
-msgstr "圖片(_I)"
+msgstr "_صورة"
 
 #: ../ui/main.glade:1155
 msgid "_Journal"
-msgstr "日誌(_J)"
+msgstr "_جورنال"
 
 #: ../ui/main.glade:1074
 msgid "_Last Page"
-msgstr "末頁(_L)"
+msgstr "الصفحة الأ_خيرة"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
@@ -3237,43 +3281,43 @@ msgstr ""
 
 #: ../ui/main.glade:921
 msgid "_Manage"
-msgstr "管理(_M)"
+msgstr "إ_دارة"
 
 #: ../ui/main.glade:1019
 msgid "_Navigation"
-msgstr "導航(_N)"
+msgstr "ا_نتقال"
 
 #: ../ui/main.glade:1102
 msgid "_Next Layer"
-msgstr ""
+msgstr "الطبقة التا_لية"
 
 #: ../ui/main.glade:1063
 msgid "_Next Page"
-msgstr "下一頁(_N)"
+msgstr "الصفحة ال_تالية"
 
 #: ../ui/main.glade:512
 msgid "_Pair Pages"
-msgstr ""
+msgstr "اجعل الصفحات م_زدوجة"
 
 #: ../ui/main.glade:1317
 msgid "_Pen"
-msgstr "畫筆(_P)"
+msgstr "_قلم"
 
 #: ../ui/main.glade:1982
 msgid "_Plugin"
-msgstr ""
+msgstr "إ_ضافة"
 
 #: ../ui/main.glade:522
 msgid "_Presentation Mode"
-msgstr "演講模式(_P)"
+msgstr "وضع ال_عرض التقديمي"
 
 #: ../ui/main.glade:1091
 msgid "_Previous Layer"
-msgstr ""
+msgstr "الطبقة السا_بقة"
 
 #: ../ui/main.glade:1041
 msgid "_Previous Page"
-msgstr "前一頁(_P)"
+msgstr "الصفحة ال_سابقة"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
@@ -3281,111 +3325,111 @@ msgstr ""
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
-msgstr "形狀識別(_S)"
+msgstr "متعرف الأ_شكال"
 
 #: ../ui/main.glade:1353
 msgid "_Text"
-msgstr "文本(_T)"
+msgstr "_نص"
 
 #: ../ui/main.glade:1306
 msgid "_Tools"
-msgstr "工具(_T)"
+msgstr "أ_دوات"
 
 #: ../ui/main.glade:1113
 msgid "_Top Layer"
-msgstr ""
+msgstr "الطبقة ال_عليا"
 
 #: ../ui/main.glade:645
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "من الأ_على إلى الأسفل"
 
 #: ../ui/main.glade:598
 msgid "_Vertical"
-msgstr ""
+msgstr "_رأسي"
 
 #: ../ui/main.glade:1513
 msgid "_Vertical Space"
-msgstr "垂直間距(_V)"
+msgstr "مسافة _رأسية"
 
 #: ../ui/main.glade:501
 msgid "_View"
-msgstr "視圖(_V)"
+msgstr "_عرض"
 
 #: ../ui/main.glade:1795
 msgid "_delete strokes"
-msgstr "刪除筆劃(_d)"
+msgstr "_حذف خط أو شكل"
 
 #: ../ui/main.glade:1577 ../ui/main.glade:1723 ../ui/main.glade:1832
 msgid "_fine"
-msgstr "細(_f)"
+msgstr "_رفيع"
 
 #: ../ui/main.glade:1588 ../ui/main.glade:1734 ../ui/main.glade:1843
 msgid "_medium"
-msgstr "中(_m)"
+msgstr "_متوسط"
 
 #: ../ui/main.glade:1773
 msgid "_standard"
-msgstr "標準(_s)"
+msgstr "_عادي"
 
 #: ../ui/main.glade:1599 ../ui/main.glade:1745 ../ui/main.glade:1854
 msgid "_thick"
-msgstr "粗(_t)"
+msgstr "_عريض"
 
 #: ../ui/main.glade:1566 ../ui/main.glade:1712 ../ui/main.glade:1821
 msgid "_very fine"
-msgstr "極細(_v)"
+msgstr "ر_فيع جدا"
 
 #: ../ui/main.glade:1784
 msgid "_whiteout"
-msgstr "涂白(_w)"
+msgstr "_تبييض"
 
 #: ../ui/pageTemplate.glade:160
 msgid "change"
-msgstr ""
+msgstr "تغيير"
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
-msgstr ""
+msgstr "مفعل،"
 
 #: ../ui/settings.glade:1728
 msgid "events"
-msgstr ""
+msgstr "أحداث"
 
 #: ../ui/settings.glade:389
 msgid "every"
-msgstr ""
+msgstr "كل"
 
 #: ../ui/pageTemplate.glade:54
 msgid "load from file"
-msgstr ""
+msgstr "تحميل من ملف"
 
 #: ../ui/settings.glade:416
 msgid "minutes"
-msgstr ""
+msgstr "دقائق"
 
 #: ../ui/settings.glade:2930 ../ui/settings.glade:2981
 #: ../ui/settings.glade:3957 ../ui/settings.glade:3968
 #: ../ui/settings.glade:4124
 msgid "pixels"
-msgstr ""
+msgstr "بكسل"
 
 #: ../ui/settings.glade:2163
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr ""
+msgstr "ثوانٍ <i>(والتي بعدها سيتم تفعيل شاشة اللمس مرة أخرى)</i>"
 
 #: ../ui/pageTemplate.glade:40
 msgid "save to file"
-msgstr ""
+msgstr "حفظ إلى ملف"
 
 #: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
-msgstr "極粗(_y)"
+msgstr "عري_ض جدا"
 
 #: ../ui/about.glade:178
 msgid "with libgtk"
-msgstr ""
+msgstr "نسخة libgtk"
 
