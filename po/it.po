@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-26 10:42\n"
+"PO-Revision-Date: 2021-06-27 05:30\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -275,7 +275,7 @@ msgstr "Impossibile leggere l'immagine: {1}. Messaggio d'errore: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:387
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Impossibile leggere il numero di pagina per l'immagine di sfondo clonata: {1}."
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -1535,7 +1535,7 @@ msgstr "Il documento corrente non contiene la Pagina PDF n. {1}\n"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "Cursore zoom"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
@@ -2023,7 +2023,7 @@ msgstr "<b>Aggiungi spazio verticale</b>"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Aggiungi/Modifica TeX"
 
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2049,7 +2049,7 @@ msgstr "Controlla sempre le dipendenze LaTeX prima di eseguire"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Aggiungi nuove pagine di un PDF"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
@@ -2681,7 +2681,7 @@ msgstr "Sposta su"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "P_rossima pagina annotata"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2735,7 +2735,7 @@ msgstr "Cache PDF"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "P_recedente pagina annotata"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2747,7 +2747,7 @@ msgstr "Pagine Accoppiate"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "_Sfondo Carta"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2953,11 +2953,11 @@ msgstr "Mostra barra laterale a destra"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Mostra barra laterale"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Mostra barre degli strumenti"
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
@@ -3089,7 +3089,7 @@ msgstr "Tentare di selezionare prima l'oggetto; se non viene selezionato nulla, 
 
 #: ../ui/settings.glade:2751
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Usa le icone stock disponibili (richiede riavvio)"
 
 #: ../ui/settings.glade:4315
 msgid "Use snapping for recognized shapes"
@@ -3309,7 +3309,7 @@ msgstr "_Ultima Pagina"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "_Da sinistra a destra"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3353,7 +3353,7 @@ msgstr "_Pagina Precedente"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "Da destra a sinistra"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
