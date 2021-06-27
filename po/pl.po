@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-27 04:56\n"
+"PO-Revision-Date: 2021-06-27 05:30\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -2943,11 +2943,11 @@ msgstr "Pokaż Pasek Menu przy Uruchomieniu"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Pokaż pasek boczny"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Pokaż paski narzędzi"
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
@@ -3299,7 +3299,7 @@ msgstr "_Ostatnia strona"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "_Od lewej do prawej"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3343,7 +3343,7 @@ msgstr "_Poprzednia strona"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "_Od prawej do lewej"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
