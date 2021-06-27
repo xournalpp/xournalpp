@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-26 10:42\n"
+"PO-Revision-Date: 2021-06-27 05:30\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -1535,7 +1535,7 @@ msgstr "Aktuální dokument neobsahuje žádnou stránku {1}\n"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "Nastavení přiblížení"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
@@ -2012,7 +2012,7 @@ msgstr "Přidat další svislý prostor"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Přidat/Upravit TeX"
 
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2038,7 +2038,7 @@ msgstr "Vždy zkontrolujte závislosti pro LaTeX před spuštěním"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Přidat nové PDF stránky"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
@@ -2670,7 +2670,7 @@ msgstr "Posunout nahoru"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "_Další anotovaná stránka"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2724,7 +2724,7 @@ msgstr "PDF Cache"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "P_ředchozí poznamenaná stránka"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2736,7 +2736,7 @@ msgstr "Spárované stránky"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "Pozadí _papíru"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2942,11 +2942,11 @@ msgstr "Zobraz menu lištu při spuštění"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Zobrazit postranní panel"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Zobrazit panely nástrojů"
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
@@ -3298,7 +3298,7 @@ msgstr "Po_slední stránka"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "_Zleva doprava"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3342,7 +3342,7 @@ msgstr "_Předchozí stránka"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "_Zprava do leva"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
