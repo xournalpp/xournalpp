@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-26 10:42\n"
+"PO-Revision-Date: 2021-06-27 04:56\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -275,7 +275,7 @@ msgstr "Não foi possível ler a imagem: {1}. Mensagem de erro: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:387
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Não foi possível ler o número da página para imagem de fundo clonada: {1}."
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -2015,7 +2015,7 @@ msgstr "Adicione um espaço vertical adicional de"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Adicionar/Editar TeX"
 
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2041,7 +2041,7 @@ msgstr "Sempre verificar as dependências do LaTeX antes de executar"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Anexar novas páginas Pdf"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
@@ -2673,7 +2673,7 @@ msgstr "Mover para Cima"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Próxima página anotada"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2727,7 +2727,7 @@ msgstr "Cache PDF"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Página anotada anterior"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2739,7 +2739,7 @@ msgstr "Páginas pareadas"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "Fundo do papel"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2945,11 +2945,11 @@ msgstr "Mostrar a barra de menu ao iniciar"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Mostrar a barra lateral"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Mostrar barra de ferramentas"
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
@@ -3301,7 +3301,7 @@ msgstr "_Última Página"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "_Esquerda para Direita"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3345,7 +3345,7 @@ msgstr "_Página Anterior"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "_Direita para Esquerda"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
