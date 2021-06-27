@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-26 10:42\n"
+"PO-Revision-Date: 2021-06-27 04:56\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1536,7 +1536,7 @@ msgstr "您当前的文档不包含 PDF 页面号码 {1}\n"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "缩放游标"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
@@ -2014,7 +2014,7 @@ msgstr "增加额外的垂直间距"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "插入/编辑TeX"
 
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2040,7 +2040,7 @@ msgstr "运行前总是检查 LaTeX 依赖关系"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "添加新的 PDF 页面"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
@@ -2672,7 +2672,7 @@ msgstr "向上移动"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "下一个标注页(_e)"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2726,7 +2726,7 @@ msgstr "PDF 缓存"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "上一注释页(_r)"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2738,7 +2738,7 @@ msgstr "双页模式"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "纸张背景(_a)"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2943,11 +2943,11 @@ msgstr "启动时显示菜单栏"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "显示侧边栏"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "显示工具栏"
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
@@ -3298,7 +3298,7 @@ msgstr "末页(_L)"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "从左到右(_L)"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3342,7 +3342,7 @@ msgstr "前一页(_P)"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "从右向左(_R)"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
