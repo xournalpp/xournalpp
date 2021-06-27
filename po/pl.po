@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-26 10:42\n"
+"PO-Revision-Date: 2021-06-27 04:56\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1536,7 +1536,7 @@ msgstr "Aktualny dokument nie ma strony nr {1} z pliku PDF\n"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "Suwak przybliżenia"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
@@ -2014,7 +2014,7 @@ msgstr "Dodaj opcjonalny odstęp pionowy"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Dodaj/Edytuj Tex"
 
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2040,7 +2040,7 @@ msgstr "Zawsze sprawdzaj zależności LaTeX przed uruchomieniem"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Dołącz nowe strony PDF"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
@@ -2672,7 +2672,7 @@ msgstr "Przesuń do Góry"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "N_astępna adnotowana strona"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2726,7 +2726,7 @@ msgstr "Pamięć podręczna PDF"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "P_oprzednia adnotowana strona"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2738,7 +2738,7 @@ msgstr "Tryb dwóch stron"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "_Tło papieru"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
