@@ -130,8 +130,8 @@ community.
       direction (#2723).
     * Added `Edit > Arrange` menu items and the corresponding actions for
       rearranging selected elements (#2794).
-    * Changed element selection to not automatically rearrange items. Instead,
-      rearranging must be performed with the newly added menu entries.
+    * Changed element selection to not automatically rearrange items (#1680).
+      Instead, rearranging must be performed with the newly added menu entries.
     * Fixed some bugs where selections would not be copied correctly (#2277,
       #2090, #2733) and would cause strokes to become invalid/missing when
       saving (#2857, #2464).
