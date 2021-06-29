@@ -12,6 +12,10 @@ community.
       (#1101, #1384). The configuration files will now be stored in an
       appropriate platform-specific user data folder. Old configuration files
       will be copied automatically if the new user data folder does not exist.
+    * For users that have non-default DPI settings, text elements in old
+      documents may be displayed with incorrect sizes/positions. A new plugin is
+      included to fix the positioning of these text elements. See the relevant
+      bug in the "Text tool" section below.
     * Windows: The installer has been updated, fixing many issues such as:
       incorrectly set up registry keys, missing uninstaller entry, missing
       entries in Open With context menu in Explorer, missing icons, etc. (#2606,
@@ -30,14 +34,6 @@ community.
     * The code has been updated to use C++17 (#1485) and must now be compiled
       using a supported compiler version, such as GCC 7 or Clang 5 (or newer).
     * MacOS: Dropped support for macOS High Sierra; minimal version is now Catalina (#2989)
-* Packaging changes
-    * AppImage: Fixed AppImages not running on more recent Linux distros
-      (#2600).
-    * Linux: Fixed an issue with dock icons not appearing correctly in some
-      desktop environments (#2881, #1791).
-    * Debian packages: added man pages (#2701)
-    * The `lua-lgi` package has been added to `Recommended` in the list of dpendencies.
-      It is used for creating GUI in Lua plugins.
 * Document viewing
     * Changed page selection system to now select the current page during
       scrolling (#1613, #1184).
@@ -55,19 +51,20 @@ community.
       #2023, #1830, #2821)
     * Fixed zoom slider tick marks being set to the wrong values when DPI
       calibration setting is different from the default (#2923)
+    * Fixed a freeze caused by scrolling between pages of different size (#2770,
+      #3099).
 * Document export
     * Added a "progressive mode" option to PDF file export dialog. This will
       render layers from bottom to top, exporting a new page every time a layer
       is rendered (#2589, #2609).
     * Simplified background rendering to improve compatibility of exported SVGs
       (#2598).
-    * Fixed a bug, in which fonts were exported with a wrong size and were saved
-      with a wrong size in the xopp-file, if the display DPI had non-default value.
-      A plugin for migrating documents with wrong font sizes has been added (#2724).
     * Made line spacing equal in export and on view when pango version >= 1.48.5 is
       available (#2182)
     * Updated the Cairo version on Windows to fix a bug that created corrupt PDF
       files on export (#2871)
+    * Fixed a crash that occurs when closing the application before export
+      finishes (#3159).
 * Sidebar preview panel
     * Added new "Layerstack Preview" tab that shows all layers up to the current
       layer (#2795).
@@ -112,7 +109,8 @@ community.
     * Fixed a bug where closing the dialog before the initial render would crash
       the application (#2728, #2798).
     * Fixed a bug where line breaks would not be saved correctly (#2849).
-    * Fixed a problem with long user names on Windows that broke the LaTeX tool (#3046)
+    * Windows: Fixed a bug where long user names would break the LaTeX tool
+      (#3046).
 * Spline tool
     * Added cubic splines as a drawing tool (#1688, #1798, #1861).
     * Click to add anchor points (knots) and drag to create non-trivial
@@ -163,18 +161,21 @@ community.
       field (#2620).
     * Fixed a bug where text elements would not be displayed at the correct
       positions when an image is used as the page background (#2725).
+    * Fixed a bug where text would be displayed with an incorrect size when DPI
+      is set to a non-default value. A plugin for migrating documents with wrong
+      font sizes has been added (#2724).
+    * Fixed a bug where selected text would be highlighted incorrectly (#3131).
 * Toolbars
     * Added a print button to the default toolbar (#1921).
     * Added a menu toggle item for showing/hiding the toolbar, bound to F9
       (#2112).
-    * Added color indicators to toolbars when customizing (#2726).
-    * Improved appearance of floating toolbar (#2726);
+    * Added a vertical mode for the pagespinner tool (#2624).
+    * Added color indicators to toolbars when customizing the toolbars (#2726).
+    * Improved appearance of the floating toolbar (#2726).
     * Fixed a crash that occurs when the application is closed with the toolbar
-      customization dialog open  (#1189).
-    * Fixed multiple other bugs involving the toolbar customizer (#2860).
-    * Added a vertical mode for the pagespinner tool (@2624).
+      customization dialog open (#1189).
+    * Fixed multiple bugs involving the toolbar customizer (#2860).
 * Plugins
-    * Added a vertical mode for the pagespinner tool (@2624 PENDING).
     * Extended plugin API with many new features and functions, including page
       and layer operations (#2406, #2950).
     * Added a Lua plugin for taking a screenshot and saving it to a file
@@ -188,35 +189,44 @@ community.
       is set. The colors can be set in `pagetemplates.ini` (#2055, #2352).
     * Fixed the confusing behavior of the `Apply to current/all pages` buttons
       used to change the page backgrounds (#2730).
+    * Fixed cloned background images not loading correctly (#3170).
+* Packaging changes
+    * AppImage: Fixed AppImages not running on more recent Linux distros
+      (#2600).
+    * Linux: Fixed an issue with dock icons not appearing correctly in some
+      desktop environments (#2881, #1791).
+    * Debian packages: added man pages (#2701)
+    * The `lua-lgi` package has been added to the list of `Recommended`
+      dependencies. It is useful for creating GUI in Lua plugins.
+    * Streamlined and updated package metadata (#3094).
 * Misc
-    * New application icon (#2557) and new action icons (#3154)
-    * Streamlined and updated package descriptions (#3094)
-    * Fixed a text selection bug (#3171)
-    * Fixed a bug with cloned background images not loading (#3170)
-    * Prevented crash on closing while export has not finished (#3159)
-    * Made the error dialogs for missing pdf backgrounds diplay the full path name (#3140)
-    * Fixed a freeze resulting from documents with pages of different format (#3099)
-    * Set default binding of middle mouse button to hand tool (#3121)
+    * New action icons (#3154) and new application icon (#2557).
+    * Changed the error dialog for missing PDF backgrounds display the full path
+      of the missing PDF (#3140).
+    * Changed default key binding of middle mouse button from nothing to hand
+      tool (#3121).
     * Added a language setting in the Preferences window (#2188)
-    * Added menu entry to append new pdf pages (#2146)
     * Added support for more export options in command line and GUI (#2449)
     * Added a command line option to create a xopp file (#1919).
+    * Added the `Journal > Rename Layer` menu entry to rename layers (#2321).
+    * Added the `Journal > Append New PDF Pages` menu entry to append PDF pages
+      that are not in the current annotation file (#2146)
     * Fixed bugs in element cloning, which previously could have caused elements
       to become invalid (#2733, #2720, #2464).
     * Fixed a bug where the thumbnailer would not correctly render previews in
       file managers that sandbox their thumbnailers (#2738).
     * Improved look of the Preferences window (#2592).
-    * Updated translations
+    * Updated the translation files.
     * Fixed keyboard shortcuts not working when the menubar is hidden (#2324)
     * Fixed the undo operation for moving objects across page borders (#3068)
     * Non-visible refactoring and code cleanup (#1279, #2150, #1944, #2199, #2213, etc.)
     * Switched from deprecated GTK 2 initialisation to GTK 3 initialisation (#2252)
-    * Windows: Fixed crash that occurs when closing the application (#2218).
+    * Windows: Fixed a crash that occurs when closing the application (#2218).
     * Improved Print Dialog verbosity and error handling (#3002)
     * Allow the user to modify the locale directory via the  TEXTDOMAINDIR environment
       variable (#2600, #2845)
-    * Made layer names editable #2321
-    * Created the website [www.xournalpp.github.io](www.xournalpp.github.io) replacing the User manual.
+    * Created the website [www.xournalpp.github.io](www.xournalpp.github.io) to
+      replace the User Manual.
 
 ## 1.0.20
 
