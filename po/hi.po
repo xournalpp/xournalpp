@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-27 04:06\n"
+"PO-Revision-Date: 2021-06-29 11:23\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -38,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " {1} का"
 
 #: ../src/control/settings/Settings.cpp:111
 msgid "%F-Note-%H-%M"
@@ -93,50 +93,51 @@ msgstr "फाइल कौ जरनल में जौडें"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:102
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को double के रूप में पार नहीं किया जा सकता, इसका मूल्य \"{2}\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:95
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को double के रूप में पार नहीं किया जा सकता, इसका मूल्य \"nullptr\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:119
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:138
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को double के रूप में पार नहीं किया जा सकता, इसका मूल्य \"{2}\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:112
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को int के रूप में पार नहीं किया जा सकता, इसका मूल्य \"nullptr\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:157
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:177
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को size_t के रूप में पार नहीं किया जा सकता, इसका मूल्य \"{2}\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को size_t के रूप में पार नहीं किया जा सकता, इसका मूल्य \"nullptr\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:44
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "अग्रदूत color सेट नहीं है"
 
 #: ../src/control/AudioController.cpp:94
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "ऑडियो फ़ोल्डर सेट नहीं! रिकॉर्डिंग काम नहीं करेगा!\n"
+"कृपया \"Preferences > Audio recording\" के तहत रिकॉर्डिंग फ़ोल्डर सेट करें ऑडियो रिकॉर्डिंग"
 
 #: ../src/control/Control.cpp:205
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Autosave विफल: {1}"
 
 #: ../src/control/Control.cpp:185
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "ऑटोसेव का नाम {1} से {2} तक रखा गया था"
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "{1} को autosave हो रहा है"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
@@ -180,15 +181,15 @@ msgstr "फ़ॉन्ट बदलें"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "लाइन शैली बदलें"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
-msgstr ""
+msgstr "\"स्ट्रोक भरना\" बदलें"
 
 #: ../src/undo/SizeUndoAction.cpp:104
 msgid "Change stroke width"
-msgstr ""
+msgstr "स्ट्रोक चौड़ाई बदलें"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:68
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
