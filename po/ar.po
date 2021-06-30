@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-27 04:05\n"
+"PO-Revision-Date: 2021-06-30 10:26\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -1312,7 +1312,8 @@ msgstr ""
 #: ../src/control/Control.cpp:2012
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "ملف الخلفية {1} تعذر العثور عليه. ربما تم نقله أو إعادة تسميته أو حذفه.\n"
+"آخر مرة شوهد في: {2}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
@@ -1535,7 +1536,7 @@ msgstr "المستند الحالي لا يحتوي على صفحة PDF رقم {
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "شريط التكبير"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
@@ -1991,7 +1992,7 @@ msgstr "إضافة مسافة رأسية إضافية مقدارها"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "إدخال / تحرير LaTeX"
 
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2017,7 +2018,7 @@ msgstr "تحقق دائمًا من اعتماديات LaTeX قبل التشغي�
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "إضافة صفحات PDF جديدة في الآخر"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
@@ -2649,7 +2650,7 @@ msgstr "تحريك لأعلى"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "الصفحة المعلّق عليها ال_تالية"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2703,7 +2704,7 @@ msgstr "ذاكرة PDF"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "الصفحة المعلّق عليها ال_سابقة"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2715,7 +2716,7 @@ msgstr "الصفحات المزدوجة"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "_خلفية الورق"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2921,11 +2922,11 @@ msgstr "إظهار شريط القوائم عند بدء التشغيل"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "إظهار الشريط الجانبي"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "إظهار أشرطة الأدوات"
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
@@ -3277,7 +3278,7 @@ msgstr "الصفحة الأ_خيرة"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "من الي_سار إلى اليمين"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3321,7 +3322,7 @@ msgstr "الصفحة ال_سابقة"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "من الي_مين إلى اليسار"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
