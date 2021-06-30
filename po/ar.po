@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-30 10:26\n"
+"PO-Revision-Date: 2021-06-30 11:26\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -463,7 +463,7 @@ msgstr "نوع الرسم - لا تغيير"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "مجموعة أدوات الرسم"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -769,7 +769,7 @@ msgstr "طبقة"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "قائمة الطبقات"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layer Preview"
@@ -1156,7 +1156,7 @@ msgstr "تحديد منطقة"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Selection Combo"
-msgstr ""
+msgstr "مجموعة أدوات التحديد"
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
@@ -1307,7 +1307,8 @@ msgstr "مجموعة أشرطة الأدوات «{1}» هي مسبقة التع�
 #: ../src/control/Control.cpp:2008
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "ملف الخلفية المرفق {1} تعذر العثور عليه. ربما تم نقله أو إعادة تسميته أو حذفه.\n"
+"آخر مرة شوهد في: {2}"
 
 #: ../src/control/Control.cpp:2012
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
@@ -1374,7 +1375,7 @@ msgstr "تعذر تحميل هذه الصورة. رسالة الخطأ: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Toggle fullscreen"
-msgstr "تبديل ملء الشاشة"
+msgstr "تبديل وضع ملء الشاشة"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
 msgid "Tool - don't change"
@@ -1674,7 +1675,7 @@ msgstr "ملف xoj مساره: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:110
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: نادِه بالمعطيين INPUT.xoj و OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:176
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
@@ -3058,7 +3059,7 @@ msgstr "حاول تحديد كائن أولا؛ إذا لم يكن شيء محد
 
 #: ../ui/settings.glade:2751
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "استخدام أيقونات النظام المتاحة (يحتاج إعادة التشغيل)"
 
 #: ../ui/settings.glade:4315
 msgid "Use snapping for recognized shapes"
