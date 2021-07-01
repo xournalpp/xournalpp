@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-27 04:05\n"
+"PO-Revision-Date: 2021-07-01 18:37\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -463,7 +463,7 @@ msgstr "نوع الرسم - لا تغيير"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "مجموعة أدوات الرسم"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -769,7 +769,7 @@ msgstr "طبقة"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "قائمة الطبقات"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layer Preview"
@@ -1156,7 +1156,7 @@ msgstr "تحديد منطقة"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Selection Combo"
-msgstr ""
+msgstr "مجموعة أدوات التحديد"
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
@@ -1264,7 +1264,7 @@ msgstr "تبديل الصفحة الحالية مع الصفحة أدناه"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
-msgstr "لغة النظام"
+msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
@@ -1307,12 +1307,14 @@ msgstr "مجموعة أشرطة الأدوات «{1}» هي مسبقة التع�
 #: ../src/control/Control.cpp:2008
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "ملف الخلفية المرفق {1} تعذر العثور عليه. ربما تم نقله أو إعادة تسميته أو حذفه.\n"
+"آخر مرة شوهد في: {2}"
 
 #: ../src/control/Control.cpp:2012
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "ملف الخلفية {1} تعذر العثور عليه. ربما تم نقله أو إعادة تسميته أو حذفه.\n"
+"آخر مرة شوهد في: {2}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:45
 msgid "The check for overwriting the background failed with:\n"
@@ -1373,7 +1375,7 @@ msgstr "تعذر تحميل هذه الصورة. رسالة الخطأ: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Toggle fullscreen"
-msgstr "تبديل ملء الشاشة"
+msgstr "تبديل وضع ملء الشاشة"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
 msgid "Tool - don't change"
@@ -1535,7 +1537,7 @@ msgstr "المستند الحالي لا يحتوي على صفحة PDF رقم {
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "شريط التكبير"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
@@ -1673,7 +1675,7 @@ msgstr "ملف xoj مساره: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:110
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: نادِه بالمعطيين INPUT.xoj و OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:176
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
@@ -1755,7 +1757,31 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "(ملاحظة: جميع المتغيرات تتكون من حرفين: الأول علامة النسبة المئوية «%»،\n"
+"\tوالثاني حرف لاتيني. وعلامة النسبة المئوية قبل الحرف اللاتيني.)\n"
+"‏%a\t\tاسم يوم الأسبوع المختصر (مثلا Thu)\n"
+"‏%A\t\tاسم يوم الأسبوع بالكامل (مثلا Thursday)\n"
+"‏%b\t\tاسم الشهر المختصر (مثلا Aug)\n"
+"‏%B\t\tاسم الشهر بالكامل (مثلا August)\n"
+"‏%c\t\tالتاريخ والوقت (مثلا Thu Aug 23 14:55:02 2001)\n"
+"‏%d\t\tرقم اليوم في الشهر (من 01 إلى 31)\n"
+"‏%F\t\tالتاريخ بالكامل بالنظام الأوروبي (مثلا ‪2001-08-23‬)\n"
+"‏%H\t\tالساعات بنظام الـ٢٤ ساعة (من 00 إلى 24)\n"
+"‏%I\t\tالساعات بنظام الـ١٢ ساعة (من 00 إلى 12)\n"
+"‏%j\t\tرقم اليوم في العام (من 001 إلى 366)\n"
+"‏%m\t\tرقم الشهر (من 01 إلى 12)\n"
+"‏%M\t\tالدقائق (من 00 إلى 59)\n"
+"‏%p\t\t‏AM أو PM (مثلا PM)\n"
+"‏%S\t\tالثواني (من 00 إلى 60)\n"
+"‏%U\t\tرقم الأسبوع في العام، حيث أول يوم أحد هو اليوم الأول من الأسبوع الأول (من 00 إلى 53)\n"
+"‏%w\t\tيوم الأسبوع كرقم، باعتبار يوم الأحد هو الصفر (من 0 إلى 6)\n"
+"‏%W\t\tرقم الأسبوع في العام، حيث أول يوم الاثنين هو اليوم الأول من الأسبوع الأول (من 00 إلى 53)\n"
+"‏%x\t\tالتاريخ بالكامل بالنظام الأمريكي (مثلا 08/23/01)\n"
+"‏%X\t\tالوقت بالكامل (مثلا 14:55:02)\n"
+"‏%y\t\tالعام، آخر رقمين منه (من 00 إلى 99)\n"
+"‏%Y\t\tالعام (مثلا 2001)\n"
+"‏%Z\t\tاسم المنطقة الزمنية أو اختصارها (مثلا EET)\n"
+"‏%%\t\tعلامة %"
 
 #: ../ui/settings.glade:4459
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1991,7 +2017,7 @@ msgstr "إضافة مسافة رأسية إضافية مقدارها"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "إدخال / تحرير LaTeX"
 
 #: ../ui/settings.glade:4170
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2017,7 +2043,7 @@ msgstr "تحقق دائمًا من اعتماديات LaTeX قبل التشغي�
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "إضافة صفحات PDF جديدة في الآخر"
 
 #: ../ui/settings.glade:210
 msgid "Arithmetic mean"
@@ -2649,7 +2675,7 @@ msgstr "تحريك لأعلى"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "الصفحة المعلّق عليها ال_تالية"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2703,7 +2729,7 @@ msgstr "ذاكرة PDF"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "الصفحة المعلّق عليها ال_سابقة"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2715,7 +2741,7 @@ msgstr "الصفحات المزدوجة"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "_خلفية الورق"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2921,11 +2947,11 @@ msgstr "إظهار شريط القوائم عند بدء التشغيل"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "إظهار الشريط الجانبي"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "إظهار أشرطة الأدوات"
 
 #: ../ui/settings.glade:3112
 msgid "Show sidebar on the right side"
@@ -3057,7 +3083,7 @@ msgstr "حاول تحديد كائن أولا؛ إذا لم يكن شيء محد
 
 #: ../ui/settings.glade:2751
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "استخدام أيقونات النظام المتاحة (يحتاج إعادة التشغيل)"
 
 #: ../ui/settings.glade:4315
 msgid "Use snapping for recognized shapes"
@@ -3277,7 +3303,7 @@ msgstr "الصفحة الأ_خيرة"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "من الي_سار إلى اليمين"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3321,7 +3347,7 @@ msgstr "الصفحة ال_سابقة"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "من الي_مين إلى اليسار"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-27 04:06\n"
+"PO-Revision-Date: 2021-06-29 12:40\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -38,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " {1} का"
 
 #: ../src/control/settings/Settings.cpp:111
 msgid "%F-Note-%H-%M"
@@ -68,7 +68,7 @@ msgstr "TeX बनाऐं/बदले"
 
 #: ../src/control/XournalMain.cpp:682
 msgid "Advanced export options"
-msgstr ""
+msgstr "उन्नत निर्यात विकल्प"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -93,50 +93,51 @@ msgstr "फाइल कौ जरनल में जौडें"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:102
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को double के रूप में पार नहीं किया जा सकता, इसका मूल्य \"{2}\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:95
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को double के रूप में पार नहीं किया जा सकता, इसका मूल्य \"nullptr\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:119
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:138
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को double के रूप में पार नहीं किया जा सकता, इसका मूल्य \"{2}\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:112
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को int के रूप में पार नहीं किया जा सकता, इसका मूल्य \"nullptr\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:157
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:177
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को size_t के रूप में पार नहीं किया जा सकता, इसका मूल्य \"{2}\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "अग्रदूत \"{1}\" को size_t के रूप में पार नहीं किया जा सकता, इसका मूल्य \"nullptr\" है"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:44
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "अग्रदूत color सेट नहीं है"
 
 #: ../src/control/AudioController.cpp:94
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "ऑडियो फ़ोल्डर सेट नहीं! रिकॉर्डिंग काम नहीं करेगा!\n"
+"कृपया \"Preferences > Audio recording\" के तहत रिकॉर्डिंग फ़ोल्डर सेट करें ऑडियो रिकॉर्डिंग"
 
 #: ../src/control/Control.cpp:205
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Autosave विफल: {1}"
 
 #: ../src/control/Control.cpp:185
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "ऑटोसेव का नाम {1} से {2} तक रखा गया था"
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "{1} को autosave हो रहा है"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
@@ -180,19 +181,19 @@ msgstr "फ़ॉन्ट बदलें"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "लाइन शैली बदलें"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
-msgstr ""
+msgstr "\"स्ट्रोक भरना\" बदलें"
 
 #: ../src/undo/SizeUndoAction.cpp:104
 msgid "Change stroke width"
-msgstr ""
+msgstr "स्ट्रोक चौड़ाई बदलें"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:68
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr ""
+msgstr "रंग {1} अज्ञात (रंग सूची में परिभाषित नहीं है!)"
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:227
 msgid "Contents"
@@ -215,40 +216,41 @@ msgstr "पृष्ठ प्रतिलिपि"
 #: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "{1} फ़ोल्डर नहीं बना सकता\n"
+"त्रुटि के साथ विफल: {2}"
 
 #: ../src/control/LatexController.cpp:271
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "LaTeX PDF फाइल को लोड नहीं कर सका"
 
 #: ../src/control/LatexController.cpp:265
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "LaTeX PDF फ़ाइल को लोड नहीं कर सका: {1}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:15
 msgid "Could not load pagetemplates.ini file"
-msgstr ""
+msgstr "pagetemplates.ini फ़ाइल लोड नहीं कर सकता"
 
 #: ../src/control/xojfile/LoadHandler.cpp:785
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr ""
+msgstr "{1} नहीं खुल सकता। त्रुटि संदेश: फ़ाइल को नहीं पढ़ सकता"
 
 #: ../src/control/xojfile/LoadHandler.cpp:794
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "नहीं खुल सकता: {1}। त्रुटि संदेश: फ़ाइल नहीं लिख सकता"
 
 #: ../src/control/xojfile/LoadHandler.cpp:766
 #: ../src/control/xojfile/LoadHandler.cpp:1017
 #: ../src/control/xojfile/LoadHandler.cpp:1035
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "नहीं खुल सकता: {1}। त्रुटि संदेश: उपलब्ध नहीं है"
 
 #: ../src/control/xojfile/LoadHandler.cpp:757
 #: ../src/control/xojfile/LoadHandler.cpp:773
 #: ../src/control/xojfile/LoadHandler.cpp:1008
 #: ../src/control/xojfile/LoadHandler.cpp:1024
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "Could not open attachment: {1}. Error message: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:157
 msgid "Could not open file: \"{1}\""
@@ -257,63 +259,66 @@ msgstr "फ़ाइल को खोला नहीं जा सका: \"{1}
 #: ../src/gui/MainWindow.cpp:90
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "कस्टम toolbar.ini फ़ाइल को पार्स नहीं कर सका: {1}\n"
+"टूलबार उपलब्ध नहीं होगा"
 
 #: ../src/gui/MainWindow.cpp:81
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "सामान्य toolbar.ini फ़ाइल को पार्स नहीं कर सका: {1}\n"
+"टूलबार उपलब्ध नहीं होगा"
 
 #: ../src/control/xojfile/LoadHandler.cpp:353
 #: ../src/control/xojfile/LoadHandler.cpp:377
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "छवि नहीं पढ़ सकता: {1}। त्रुटि संदेश: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:387
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "क्लोन पृष्ठभूमि छवि के लिए पृष्ठ संख्या नहीं पढ़ सकता: {1}।"
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "नहीं रह सकता {1}\n"
+"कुछ गलत हो गया... कृपया एक बग रिपोर्ट लिखें..."
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:180
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "टूलबार {1} से टूल आइटम को पोजीशन {2} पर नहीं हटा सकता"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "टूलबार {2} से टूल आइटम {1} को पोजीशन {3} पर नहीं हटा सका"
 
 #: ../src/control/Control.cpp:196
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "{1} से {2} तक ऑटोसेव फ़ाइल का नाम बदल नहीं सकता: {3}"
 
 #: ../src/control/latex/LatexGenerator.cpp:70
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr ".tex फ़ाइल को नहीं सहेज सकता: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "{1} नहीं शुरू हो सकता है: {2} (exit code: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Could not undo \"{1}\". कुछ गलत हो गया... कृपया एक bug report लिखें..."
 
 #: ../src/control/xojfile/SaveHandler.cpp:243
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "पृष्ठभूमि नहीं लिख सकता है {1}: {2}"
 
 #: ../src/control/xojfile/SaveHandler.cpp:345
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "पृष्ठभूमि {1} नहीं लिखा जा सकता। वैसे भी जारी रहना।"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:79
 msgid "Create new layer"
-msgstr ""
+msgstr "नई परत बनाएँ"
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
@@ -325,28 +330,28 @@ msgstr "कस्टम निर्यात"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "टूलबार को अनुकूलित करें"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:29
 msgid "Customized"
-msgstr ""
+msgstr "अनुकूलित"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:345
 msgid "Cut"
-msgstr ""
+msgstr "कट"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Default Tool"
-msgstr ""
+msgstr "साधारण उपकरण:"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 #: ../src/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
-msgstr ""
+msgstr "मिटाए"
 
 #: ../src/control/XournalMain.cpp:167
 msgid "Delete Logfile"
-msgstr ""
+msgstr "Log फ़ाइल हटाएँ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
 msgid "Delete current page"
@@ -358,37 +363,39 @@ msgstr "फ़ाइल हटाएँ"
 
 #: ../src/undo/RemoveLayerUndoAction.cpp:28
 msgid "Delete layer"
-msgstr ""
+msgstr "परत मिटाएँ"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:58
 msgid "Delete this layer"
-msgstr ""
+msgstr "यह परत मिटाएँ"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
-msgstr ""
+msgstr "यह पृष्ठ मिटाएँ"
 
 #: ../src/control/Control.cpp:2471
 msgid "Discard"
-msgstr ""
+msgstr "रद्द करें"
 
 #: ../src/control/XournalMain.cpp:683
 msgid "Display advanced export options"
-msgstr ""
+msgstr "उन्नत निर्यात विकल्प प्रदर्शित करें"
 
 #: ../src/control/Control.cpp:1966
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "Autosave files खुला नहीं. वे अतिव्यापी हो सकते हैं!\n"
+"फ़ाइलों को किसी अन्य फ़ोल्डर में कॉपी करें।\n"
+"फ़ोल्डर {1} से फ़ाइलें खोल नहीं जा सकती हैं।"
 
 #: ../src/control/jobs/BaseExportJob.cpp:39
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "पृष्ठभूमि पीडीएफ को ओवरराइट नहीं करें! इससे त्रुटियां होंगी!"
 
 #: ../src/control/Control.cpp:2465
 msgid "Document file was removed."
-msgstr ""
+msgstr "दस्तावेज़ फ़ाइल को हटा दिया गया था।."
 
 #: ../src/control/xojfile/LoadHandler.cpp:239
 msgid "Document is corrupted (no pages found in file)"
@@ -599,216 +606,219 @@ msgstr ""
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "फ़िल्टर इनपुट दबाव। दबाव गुणक द्वारा दबाव को गुणा करना। यदि न्यूनतम से कम हो, तो न्यूनतम दबाव का उपयोग करें।"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Fine"
-msgstr ""
+msgstr "पतली"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "फ्लोटिंग टूलबॉक्स (विशेषज्ञ)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:60
 msgid "Font"
-msgstr ""
+msgstr "फ़ॉन्ट"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Forward"
-msgstr ""
+msgstr "आगे बढें।"
 
 #: ../src/control/XournalMain.cpp:631
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "xournalpp का संस्करण प्राप्त करें"
 
 #: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "ग्लोबल टेम्पलेट फ़ाइल मौजूद नहीं है। कृपया अपनी सेटिंग्स को चेक करें।"
 
 #: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "ग्लोबल टेम्पलेट फ़ाइल एक नियमित फ़ाइल नहीं है। कृपया अपनी सेटिंग्स को चेक करें। "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 msgid "Go to first page"
-msgstr ""
+msgstr "प्रथम पृष्ठ पर जाएँ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Go to last page"
-msgstr ""
+msgstr "अंतिम पृष्ठ पर जाएँ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "Go to next layer"
-msgstr ""
+msgstr "अगले परत पर जाएँ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Go to page"
-msgstr ""
+msgstr "पेज में जाओ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Go to previous layer"
-msgstr ""
+msgstr "पिछले परत पर जाएँ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "Go to top layer"
-msgstr ""
+msgstr "ऊपरी परत पर जाएँ"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Graph"
-msgstr ""
+msgstr "लेखाचित्र"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:99
 msgid "Gray"
-msgstr ""
+msgstr "स्लेटी"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:95
 msgid "Green"
-msgstr ""
+msgstr "हरा"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Grid Snapping"
-msgstr ""
+msgstr "ग्रिड स्नैपिंग"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Hand"
-msgstr ""
+msgstr "हाथ"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:73
 msgid "Hide all"
-msgstr ""
+msgstr "सभी छुपाएँ"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Highlighter"
-msgstr ""
+msgstr "हाइलाइट"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Image"
-msgstr ""
+msgstr "चित्र"
 
 #: ../src/control/XournalMain.cpp:294
 msgid "Image file successfully created"
-msgstr ""
+msgstr "छवि फ़ाइल सफलतापूर्वक बनाई गई।"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
-msgstr ""
+msgstr "छवियाँ"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:58
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "नीचे वर्तमान परत की एक प्रति डालें"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "नीचे वर्तमान परत की एक पृष्ठ डालें"
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
-msgstr ""
+msgstr "तत्वों को सम्मिलित करें"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
-msgstr ""
+msgstr "तस्वीर डालें"
 
 #: ../src/undo/InsertUndoAction.cpp:36
 msgid "Insert latex"
-msgstr ""
+msgstr "Latex डालें"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:26
 msgid "Insert layer"
-msgstr ""
+msgstr "परत जोड़ें"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Insert page"
-msgstr ""
+msgstr "पृष्ठ जोड़ें"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Isometric Dotted"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "सममितीय ग्राफ़"
 
 #: ../src/control/XournalMain.cpp:627
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "पृष्ठ पर कूदो (पहली पृष्ठ: 1)"
 
 #: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "लेटेक्स पीढ़ी ने एक त्रुटि का सामना किया: {1} (exit code: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:250
 msgid "Layer"
-msgstr ""
+msgstr "परत"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "परत कॉम्बो"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layer Preview"
-msgstr ""
+msgstr "परत पूर्वावलोकन"
 
 #: ../src/control/layer/LayerController.cpp:329
 msgid "Layer {1}"
-msgstr ""
+msgstr "परत {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "परतदार पूर्वावलोकन"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
 msgid "Light Blue"
-msgstr ""
+msgstr "हल्का नीला"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:97
 msgid "Light Green"
-msgstr ""
+msgstr "हल्का हरा"
 
 #: ../src/gui/PageView.cpp:701
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
-msgstr ""
+msgstr "लोड हो रहा है..."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:101
 msgid "Magenta"
-msgstr ""
+msgstr "मैजेंटा"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Manage Toolbars"
-msgstr ""
+msgstr "टूलबार प्रबंधित करें"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Medium"
-msgstr ""
+msgstr "मध्यम"
 
 #: ../src/control/XournalMain.cpp:446
 msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
 "Path: {2}"
-msgstr ""
+msgstr "आवश्यक UI फ़ाइल नहीं मिल रहा:\n"
+"{1}\n"
+".app भ्रष्ट?\n"
+"पथ: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:16
 msgid "Move"
-msgstr ""
+msgstr "स्थानांतरित करें"
 
 #: ../src/undo/MoveLayerUndoAction.cpp:27
 msgid "Move layer"
-msgstr ""
+msgstr "पर्त को स्थानांतरित करे"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page downwards"
-msgstr ""
+msgstr "पेज विज़ार्ड खिसकाए"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page upwards"
@@ -1025,224 +1035,231 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:1054
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "अनुरोधित अस्थायी फ़ाइल संलग्नक के लिए नहीं मिली थी {1}"
 
 #: ../src/control/XournalMain.cpp:210
 msgid "Restore file"
-msgstr ""
+msgstr "फाइल से रीस्टोर"
 
 #: ../src/undo/RotateUndoAction.cpp:51
 msgid "Rotation"
-msgstr ""
+msgstr "घुमाव"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:354
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "रोटेशन स्नैपिंग"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:20
 msgid "Ruled"
-msgstr ""
+msgstr "रेखा"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "ऊर्ध्वाधर लाइन के साथ लाइन"
 
 #: ../src/control/jobs/CustomExportJob.cpp:23
 msgid "SVG graphics"
-msgstr ""
+msgstr "SVG ग्राफिक्स"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "नमूना LaTeX फ़ाइल सफलतापूर्वक उत्पन्न हुई।"
 
 #: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "Save"
-msgstr ""
+msgstr "सहेजें"
 
 #: ../src/control/Control.cpp:2466
 msgid "Save As..."
-msgstr ""
+msgstr "के रूप में सहेजें..."
 
 #: ../src/control/Control.cpp:2311 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
-msgstr ""
+msgstr "फ़ाइल सेव करें"
 
 #: ../src/control/jobs/CustomExportJob.cpp:130
 #: ../src/control/jobs/SaveJob.cpp:113
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "फ़ाइल त्रुटि सहेजें: {1}"
 
 #: ../src/undo/ScaleUndoAction.cpp:56
 msgid "Scale"
-msgstr ""
+msgstr "पैमाना"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Search"
-msgstr ""
+msgstr "खोजें"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Select Font"
-msgstr ""
+msgstr "फॉन्ट चुनें"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:69
 msgid "Select Object"
-msgstr ""
+msgstr "वस्तुओं का चयन करना"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:57
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:90
 msgid "Select Rectangle"
-msgstr ""
+msgstr "आयत चुनें"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:63
 msgid "Select Region"
-msgstr ""
+msgstr "क्षेत्र का चयन करें"
 
 #: ../src/control/Control.cpp:2019
 msgid "Select another PDF"
-msgstr ""
+msgstr "एक और PDF का चयन करें"
 
 #: ../src/util/XojMsgBox.cpp:70
 msgid "Select another name"
-msgstr ""
+msgstr "एक और नाम चयन करें"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:104
 msgid "Select background color"
-msgstr ""
+msgstr "पृष्ठभूमि रंग चुनें"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:42
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:94
 msgid "Select color"
-msgstr ""
+msgstr "रंग चुनें"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Select rectangle"
-msgstr ""
+msgstr "आयत चुनें"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select region"
-msgstr ""
+msgstr "क्षेत्र चुनें"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
 msgid "Selection Combo"
-msgstr ""
+msgstr "चयन कॉम्बो"
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
-msgstr ""
+msgstr "Bugreport भेजें"
 
 #: ../src/control/tools/EditSelection.cpp:367
 msgid "Send backward"
-msgstr ""
+msgstr "पीचे भीजे"
 
 #: ../src/control/tools/EditSelection.cpp:375
 msgid "Send to back"
-msgstr ""
+msgstr "पीछे भेजें"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
 msgid "Separator"
-msgstr ""
+msgstr "विभाजक"
 
 #: ../src/control/XournalMain.cpp:667
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "PNG निर्यात के लिए DPI सेट करें। डिफ़ॉल्ट है 300\n"
+"                                 -i/--create-img=foo.png के बिना कोई प्रभाव नहीं"
 
 #: ../src/control/XournalMain.cpp:677
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "PNG निर्यात के लिए पृष्ठ ऊंचाई सेट करें\n"
+"                                 --i/--create-img=foo.png के बिना कोई प्रभाव नहीं\n"
+"                                 यदि --export-png-dpi या --export-png-width का उपयोग किया जाता है, तो ज्ञात है"
 
 #: ../src/control/XournalMain.cpp:671
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "PNG निर्यात के लिए पृष्ठ चौड़ाई सेट करें\n"
+"                                 --i/--create-img=foo.png के बिना कोई प्रभाव नहीं\n"
+"                                 यदि --export-png-dpi या --export-png-width का उपयोग किया जाता है, तो ज्ञात है"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "आकार Recognizer"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:68
 msgid "Show all"
-msgstr ""
+msgstr "सभी दिखाएँ"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
-msgstr ""
+msgstr "केवल इस्तेमाल किए जाने वाले पृष्ठों (एक अप्रयुक्त पृष्ठ) को दिखाएं"
 
 #: ../src/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:89
 msgid "Show only not used pages ({1} unused pages)"
-msgstr ""
+msgstr "केवल इस्तेमाल किए जाने वाले पृष्ठों ({1} अप्रयुक्त पृष्ठ) को दिखाएं"
 
 #: ../src/control/XournalMain.cpp:542
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "Sorry, Xournal++ केवल एक ही बार में एक फ़ाइल खोल सकते हैं।\n"
+"अन्य लोगों को नजरअंदाज कर दिया जाता है।"
 
 #: ../src/control/XournalMain.cpp:557
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "Sorry, Xournal++ क्षण में दूरस्थ फ़ाइलों को खोल नहीं सकता है।\n"
+"आपको फ़ाइल को स्थानीय निर्देशिका में कॉपी करना होगा।"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Staves"
-msgstr ""
+msgstr "स्टुफ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Stop"
-msgstr ""
+msgstr "रुकें"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:40
 #: ../src/undo/RecognizerUndoAction.cpp:72
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "स्ट्रोक Recognizer"
 
 #: ../src/util/CrashHandler.cpp:41
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "दस्तावेज़ को सफलतापूर्वक सहेजने के लिए {1}"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
-msgstr ""
+msgstr "सभी समर्थित फाइलें"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "ऊपर एक के साथ वर्तमान परत को स्वैप करें"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:57
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "नीचे एक के साथ वर्तमान परत को स्वैप करें"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "ऊपर एक के साथ वर्तमान पृष्ठ को स्वैप करें"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:68
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "नीचे एक के साथ वर्तमान पृष्ठ को स्वैप करें"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
-msgstr ""
+msgstr "सिस्टम निर्धारित"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Text"
-msgstr ""
+msgstr "शब्द"
 
 #: ../src/gui/SearchBar.cpp:67
 #, c-format
 msgid "Text %i times found on this page"
-msgstr ""
+msgstr "इस पृष्ठ पर पाये गए पाठ %i बार"
 
 #: ../src/undo/TextUndoAction.cpp:29
 msgid "Text changes"
@@ -1451,93 +1468,96 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:918
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr ""
+msgstr "गलत बिंदु की संख्या, मिला {1} उम्मीद {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:221
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "XML पार्सिंग त्रुटि: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (संगतता)"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:51
 msgid "Xournal files"
-msgstr ""
+msgstr "Xournal फ़ाइलें"
 
 #: ../src/control/XournalMain.cpp:204
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "पिछले समय Xournal++ दुर्घटनाग्रस्त हो गया। क्या आप पिछले संपादित फ़ाइल को पुनर्स्थापित करना चाहते हैं?"
 
 #: ../src/control/Control.cpp:2317 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++ फ़ाइलें"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:65
 #: ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Xournal++ टेम्पलेट"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
 msgid "Yellow"
-msgstr ""
+msgstr "पीला"
 
 #: ../src/control/PageBackgroundChangeController.cpp:179
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "आपके पास चुनने के लिए कोई PDF पेज नहीं है। रद्द करना\n"
+"कृपया एक अन्य पृष्ठभूमि प्रकार का चयन करें: मेनू \"Journal\" → \"पृष्ठ टेम्पलेट को कॉन्फ़िगर करें\"।"
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "आप {1}/{2} शाखा का उपयोग कर रहे हैं। Bugreport आपको इस रेपो के मुद्दे ट्रैकर को निर्देशित करेगा।"
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:78
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "आपके वर्तमान दस्तावेज़ में पीडीएफ पेज नहीं है {1}\n"
+"क्या आप इस पृष्ठ को सम्मिलित करना चाहते हैं?\n\n"
+"टिप: आप जर्नल → पेपर पृष्ठभूमि → पीडीएफ चुन सकते हैं एक PDF पेज डालने के लिए पृष्ठभूमि।"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "ज़ूम स्लाइडर"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom fit to screen"
-msgstr ""
+msgstr "स्क्रीन पर ज़ूम करें"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Zoom in"
-msgstr ""
+msgstr "बड़ा करें"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Zoom out"
-msgstr ""
+msgstr "छोटा करें"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Zoom to 100%"
-msgstr ""
+msgstr "जूम 100%"
 
 #: ../src/control/Control.cpp:2311 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Cancel"
-msgstr ""
+msgstr "_कैंसेल"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:13
 msgid "_Open"
-msgstr ""
+msgstr "_खुला"
 
 #: ../src/control/Control.cpp:2312 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
-msgstr ""
+msgstr "_सहेजें"
 
 #: ../src/util/DeviceListHelper.cpp:111
 msgid "cursor"
-msgstr ""
+msgstr "कर्सर"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:237
 msgid "dash-/ dotted"
