@@ -43,9 +43,9 @@ public:
 public:
     void addListener(LayerCtrlListener* listener);
     void removeListener(LayerCtrlListener* listener);
+    void fireRebuildLayerMenu();
 
 protected:
-    void fireRebuildLayerMenu();
     void fireLayerVisibilityChanged();
 
 public:
@@ -70,6 +70,7 @@ public:
     void deleteCurrentLayer();
     void copyCurrentLayer();
     void moveCurrentLayer(bool up);
+    void mergeCurrentLayerDown();
     void switchToLay(int layer, bool hideShow = false);
     void setLayerVisible(int layerId, bool visible);
 
