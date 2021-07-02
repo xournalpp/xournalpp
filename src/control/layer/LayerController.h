@@ -71,6 +71,7 @@ public:
     void deleteCurrentLayer();
     void copyCurrentLayer();
     void moveCurrentLayer(bool up);
+    void mergeCurrentLayerDown(void);
     void switchToLay(int layer, bool hideShow = false);
     void setLayerVisible(int layerId, bool visible);
 
