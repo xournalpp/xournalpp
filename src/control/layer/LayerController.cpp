@@ -5,8 +5,8 @@
 #include "control/Control.h"
 #include "gui/XournalView.h"
 #include "undo/InsertLayerUndoAction.h"
-#include "undo/MoveLayerUndoAction.h"
 #include "undo/MergeLayerDownUndoAction.h"
+#include "undo/MoveLayerUndoAction.h"
 #include "undo/RemoveLayerUndoAction.h"
 
 #include "LayerCtrlListener.h"
@@ -256,9 +256,7 @@ void LayerController::mergeCurrentLayerDown(void) {
     size_t layerBelowIndex = ((size_t)layerBelowID) - 1;
     Layer* layerBelow = page->getLayers()->at(layerBelowIndex);
 
-    for (Element* elem : *currentLayer->getElements()) {
-        layerBelow->addElement(elem);
-    }
+    for (Element* elem: *currentLayer->getElements()) { layerBelow->addElement(elem); }
 
     // TODO: do we need to destroy the layer somehow to avoid mem leaks etc.?
     // I would think we don't have to delete it here because when a layer is
