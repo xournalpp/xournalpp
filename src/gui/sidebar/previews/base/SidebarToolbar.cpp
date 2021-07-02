@@ -3,11 +3,13 @@
 SidebarToolbar::SidebarToolbar(SidebarToolbarActionListener* listener, GladeGui* gui): listener(listener) {
     this->btUp = GTK_BUTTON(gui->get("btUp"));
     this->btDown = GTK_BUTTON(gui->get("btDown"));
+    this->btMerge = GTK_BUTTON(gui->get("btMerge"));
     this->btCopy = GTK_BUTTON(gui->get("btCopy"));
     this->btDelete = GTK_BUTTON(gui->get("btDelete"));
 
     g_signal_connect(this->btUp, "clicked", G_CALLBACK(&btUpClicked), this);
     g_signal_connect(this->btDown, "clicked", G_CALLBACK(&btDownClicked), this);
+    g_signal_connect(this->btMerge, "clicked", G_CALLBACK(&btMergeClicked), this);
     g_signal_connect(this->btCopy, "clicked", G_CALLBACK(&btCopyClicked), this);
     g_signal_connect(this->btDelete, "clicked", G_CALLBACK(&btDeleteClicked), this);
 }
@@ -24,6 +26,10 @@ void SidebarToolbar::btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* to
     toolbar->runAction(SIDEBAR_ACTION_MOVE_DOWN);
 }
 
+void SidebarToolbar::btMergeClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar) {
+    toolbar->runAction(SIDEBAR_ACTION_MERGE_DOWN);
+}
+
 void SidebarToolbar::btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar) {
     toolbar->runAction(SIDEBAR_ACTION_COPY);
 }
@@ -35,6 +41,7 @@ void SidebarToolbar::btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* 
 void SidebarToolbar::setHidden(bool hidden) {
     gtk_widget_set_visible(GTK_WIDGET(this->btUp), !hidden);
     gtk_widget_set_visible(GTK_WIDGET(this->btDown), !hidden);
+    gtk_widget_set_visible(GTK_WIDGET(this->btMerge), !hidden);
     gtk_widget_set_visible(GTK_WIDGET(this->btCopy), !hidden);
     gtk_widget_set_visible(GTK_WIDGET(this->btDelete), !hidden);
 }
@@ -42,14 +49,16 @@ void SidebarToolbar::setHidden(bool hidden) {
 void SidebarToolbar::setButtonEnabled(SidebarActions enabledActions) {
     gtk_widget_set_sensitive(GTK_WIDGET(this->btUp), enabledActions & SIDEBAR_ACTION_MOVE_UP);
     gtk_widget_set_sensitive(GTK_WIDGET(this->btDown), enabledActions & SIDEBAR_ACTION_MOVE_DOWN);
+    gtk_widget_set_sensitive(GTK_WIDGET(this->btMerge), enabledActions & SIDEBAR_ACTION_MERGE_DOWN);
     gtk_widget_set_sensitive(GTK_WIDGET(this->btCopy), enabledActions & SIDEBAR_ACTION_COPY);
     gtk_widget_set_sensitive(GTK_WIDGET(this->btDelete), enabledActions & SIDEBAR_ACTION_DELETE);
 }
 
-void SidebarToolbar::setButtonTooltips(const string& tipUp, const string& tipDown, const string& tipCopy,
+void SidebarToolbar::setButtonTooltips(const string& tipUp, const string& tipDown, const string& tipMerge, const string& tipCopy,
                                        const string& tipDelete) {
     gtk_widget_set_tooltip_text(GTK_WIDGET(this->btUp), tipUp.c_str());
     gtk_widget_set_tooltip_text(GTK_WIDGET(this->btDown), tipDown.c_str());
+    gtk_widget_set_tooltip_text(GTK_WIDGET(this->btMerge), tipMerge.c_str());
     gtk_widget_set_tooltip_text(GTK_WIDGET(this->btCopy), tipCopy.c_str());
     gtk_widget_set_tooltip_text(GTK_WIDGET(this->btDelete), tipDelete.c_str());
 }

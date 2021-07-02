@@ -27,7 +27,8 @@ enum SidebarActions {
     SIDEBAR_ACTION_COPY = 1 << 2,
     SIDEBAR_ACTION_DELETE = 1 << 3,
     SIDEBAR_ACTION_NEW_BEFORE = 1 << 4,
-    SIDEBAR_ACTION_NEW_AFTER = 1 << 5
+    SIDEBAR_ACTION_NEW_AFTER = 1 << 5,
+    SIDEBAR_ACTION_MERGE_DOWN = 1 << 6,
 };
 
 class SidebarToolbarActionListener {
@@ -50,7 +51,8 @@ public:
      * Sets the button enabled / disabled
      */
     void setButtonEnabled(SidebarActions enabledActions);
-    void setButtonTooltips(const string& tipUp, const string& tipDown, const string& tipCopy, const string& tipDelete);
+    void setButtonTooltips(const string& tipUp, const string& tipDown, const string& tipMerge, const string& tipCopy,
+                           const string& tipDelete);
 
     void setHidden(bool hidden);
 
@@ -63,6 +65,7 @@ private:
 private:
     static void btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
     static void btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
+    static void btMergeClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
     static void btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
     static void btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
 
@@ -81,6 +84,11 @@ private:
      * Button move Page down
      */
     GtkButton* btDown;
+
+    /**
+     * Button merge the layer down (page behaviour not defined)
+     */
+    GtkButton* btMerge;
 
     /**
      * Button copy current page

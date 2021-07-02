@@ -66,6 +66,11 @@ void SidebarPreviewPages::enableSidebar() {
 
     this->toolbar->setButtonTooltips(_("Swap the current page with the one above"),
                                      _("Swap the current page with the one below"),
+                                     /* TODO: merging pages makes no sense
+                                      *       why do the functionalities for
+                                      *       pages and layers have to be the
+                                      *       same? */
+                                     _("TODO: this makes no sense"),
                                      _("Insert a copy of the current page below"), _("Delete this page"));
     pageSelected(this->selectedEntry);
 }

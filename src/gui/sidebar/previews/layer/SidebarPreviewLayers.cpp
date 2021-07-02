@@ -38,6 +38,10 @@ void SidebarPreviewLayers::actionPerformed(SidebarActions action) {
             control->getLayerController()->moveCurrentLayer(false);
             break;
         }
+        case SIDEBAR_ACTION_MERGE_DOWN: {
+            control->getLayerController()->mergeCurrentLayerDown();
+            break;
+        }
         case SIDEBAR_ACTION_COPY: {
             control->getLayerController()->copyCurrentLayer();
             break;
@@ -46,6 +50,7 @@ void SidebarPreviewLayers::actionPerformed(SidebarActions action) {
             control->getLayerController()->deleteCurrentLayer();
             break;
         default:
+            // TODO: probably should warn in this case?
             break;
     }
 }
@@ -55,6 +60,7 @@ void SidebarPreviewLayers::enableSidebar() {
 
     this->toolbar->setButtonTooltips(_("Swap the current layer with the one above"),
                                      _("Swap the current layer with the one below"),
+                                     _("Merge the current layer with the one below"),
                                      _("Insert a copy of the current layer below"), _("Delete this layer"));
     rebuildLayerMenu();
 }
@@ -165,6 +171,11 @@ void SidebarPreviewLayers::updateSelectedLayer() {
     // Background and first layer cannot be moved down
     if (this->selectedEntry < (this->previews.size() - 2)) {
         actions |= SIDEBAR_ACTION_MOVE_DOWN;
+    }
+
+    // Background and first layer cannot be merged down
+    if (this->selectedEntry < (this->previews.size() - 2)) {
+        actions |= SIDEBAR_ACTION_MERGE_DOWN;
     }
 
     // Background cannot be copied
