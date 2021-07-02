@@ -5,6 +5,7 @@
 #include "control/Control.h"
 #include "gui/XournalView.h"
 #include "undo/InsertLayerUndoAction.h"
+#include "undo/MergeLayerDownUndoAction.h"
 #include "undo/MoveLayerUndoAction.h"
 #include "undo/RemoveLayerUndoAction.h"
 #include "util/Util.h"
@@ -213,6 +214,51 @@ void LayerController::moveCurrentLayer(bool up) {
             std::make_unique<MoveLayerUndoAction>(this, p, currentLayer, lId - 1, newIndex));
 
     fireRebuildLayerMenu();
+}
+
+void LayerController::mergeCurrentLayerDown() {
+    control->clearSelectionEndText();
+
+    PageRef page = getCurrentPage();
+    auto pageID = selectedPage;
+    if (page == nullptr) {
+        return;
+    }
+
+    /*
+     * layerID value:
+     *    ...
+     *    2: layer 2
+     *    1: layer 1
+     *    0: background
+     */
+    const auto layerID = page->getSelectedLayerId();
+    Layer* currentLayer = page->getSelectedLayer();
+    if (layerID < 2) {
+        /*
+         * lowest (non-background) layer cannot be merged into background
+         * and the background itself obviously also cannot be merged down
+         */
+        return;
+    }
+
+    /*
+     * We know this cannot be the background (or even an underflow) because
+     * we checked for !(layerID < 2) before.
+     */
+    const auto layerBelowID = layerID - 1;
+    /*
+     * Layer indices in the vector are off by one from the layer IDs because
+     * the background is not in the vector, so layer 1 has index 0 and so on.
+     */
+    const size_t layerBelowIndex = ((size_t)layerBelowID) - 1;
+    Layer* layerBelow = page->getLayers()->at(layerBelowIndex);
+
+    UndoActionPtr undo_redo_action =
+            std::make_unique<MergeLayerDownUndoAction>(this, page, currentLayer, layerBelow, layerID - 1, pageID);
+    undo_redo_action->redo(this->control);
+
+    control->getUndoRedoHandler()->addUndoAction(std::move(undo_redo_action));
 }
 
 void LayerController::copyCurrentLayer() {
