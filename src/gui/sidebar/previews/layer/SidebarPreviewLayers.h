@@ -65,8 +65,8 @@ public:
     void layerVisibilityChanged(int layerIndex, bool enabled);
 
     /**
-     * Opens the page preview context menu, at the current cursor position, for
-     * the given page.
+     * Opens the layer preview context menu, at the current cursor position, for
+     * the given layer.
      */
     void openPreviewContextMenu();
 
@@ -93,7 +93,7 @@ private:
 
 
     /**
-     * The context menu to display when a page is right-clicked.
+     * The context menu to display when a layer is right-clicked.
      */
     GtkWidget* const contextMenu = nullptr;
 
