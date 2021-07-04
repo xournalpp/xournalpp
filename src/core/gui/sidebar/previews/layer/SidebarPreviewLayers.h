@@ -11,17 +11,21 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
 #include "control/layer/LayerCtrlListener.h"
 #include "gui/IconNameHelper.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
+#include "gui/sidebar/previews/layer/SidebarLayersContextMenu.h"
 
 
 class SidebarPreviewLayers: public SidebarPreviewBase, public LayerCtrlListener {
 public:
-    SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar, bool stacked);
+    SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar, bool stacked,
+                         std::shared_ptr<SidebarLayersContextMenu> contextMenu);
+
     ~SidebarPreviewLayers() override;
 
 public:
@@ -62,6 +66,12 @@ public:
      */
     void layerVisibilityChanged(int layerIndex, bool enabled);
 
+    /**
+     * Opens the layer preview context menu, at the current cursor position, for
+     * the given layer.
+     */
+    void openPreviewContextMenu() override;
+
 protected:
     void updateSelectedLayer();
 
@@ -71,6 +81,11 @@ public:
     void pageChanged(size_t page) override;
 
 private:
+    /**
+     * @return things that can reasonably be done to a given layer (e.g. merge down, copy, delete, etc.)
+     */
+    [[nodiscard]] static auto getViableActions(size_t layerIndex, size_t layerCount) -> SidebarActions;
+
     /**
      * Layer Controller
      */
@@ -82,4 +97,6 @@ private:
     bool stacked;
 
     IconNameHelper iconNameHelper;
+
+    std::shared_ptr<SidebarLayersContextMenu> contextMenu;
 };

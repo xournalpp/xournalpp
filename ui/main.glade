@@ -2755,6 +2755,51 @@
       </object>
     </child>
   </object>
+  <object class="GtkMenu" id="sidebarPreviewLayersContextMenu">
+    <property name="name">sidebarPreviewLayersContextMenu</property>
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewLayerMoveUp">
+        <property name="name">sidebarPreviewLayerMoveUp</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">Move Up</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewLayerMoveDown">
+        <property name="name">sidebarPreviewLayerMoveDown</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">Move Down</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewMergeDown">
+        <property name="name">sidebarPreviewMergeDown</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">Merge Down</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewLayerDuplicate">
+        <property name="name">sidebarPreviewLayerDuplicate</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">Duplicate</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewLayerDelete">
+        <property name="name">sidebarPreviewLayerDelete</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">Delete</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkMenu" id="sidebarPreviewContextMenu">
     <property name="name">sidebarPreviewContextMenu</property>
     <property name="visible">True</property>

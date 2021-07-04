@@ -53,7 +53,7 @@ public:
      * Opens the page preview context menu, at the current cursor position, for
      * the given page.
      */
-    void openPreviewContextMenu();
+    void openPreviewContextMenu() override;
 
 public:
     // DocumentListener interface (only the part which is not handled by SidebarPreviewBase)

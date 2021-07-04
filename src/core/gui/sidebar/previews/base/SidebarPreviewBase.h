@@ -81,6 +81,12 @@ protected:
      */
     static void sizeChanged(GtkWidget* widget, GtkAllocation* allocation, SidebarPreviewBase* sidebar);
 
+public:
+    /**
+     * Opens a context menu, at the current cursor position.
+     */
+    virtual void openPreviewContextMenu() = 0;
+
 private:
     /**
      * The scrollbar with the icons
