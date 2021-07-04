@@ -14,12 +14,14 @@
 #include "gui/sidebar/previews/base/SidebarPreviewBaseEntry.h"
 #include "model/PageRef.h"
 
+#include "SidebarPreviewLayers.h"
+
 class SidebarPreviewBase;
 
 class SidebarPreviewLayerEntry: public SidebarPreviewBaseEntry {
 public:
-    SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer, const std::string& layerName,
-                             size_t index, bool stacked);
+    SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar, const PageRef& page, int layer,
+                             const std::string& layerName, size_t index, bool stacked);
     ~SidebarPreviewLayerEntry() override;
 
 public:
@@ -46,6 +48,8 @@ public:
 protected:
     void mouseButtonPressCallback() override;
     void checkboxToggled();
+
+    SidebarPreviewLayers* sidebar;
 
 private:
     /**

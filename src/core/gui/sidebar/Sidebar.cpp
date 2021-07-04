@@ -10,6 +10,9 @@
 #include "gui/sidebar/previews/page/SidebarPreviewPages.h"
 #include "model/Document.h"
 #include "model/XojPage.h"
+#include "previews/layer/SidebarLayersContextMenu.h"
+#include "previews/layer/SidebarPreviewLayers.h"
+#include "previews/page/SidebarPreviewPages.h"
 
 Sidebar::Sidebar(GladeGui* gui, Control* control): toolbar(this, gui), control(control), gui(gui) {
     this->tbSelectPage = GTK_TOOLBAR(gui->get("tbSelectSidebarPage"));
@@ -25,8 +28,9 @@ Sidebar::Sidebar(GladeGui* gui, Control* control): toolbar(this, gui), control(c
 void Sidebar::initPages(GtkWidget* sidebarContents, GladeGui* gui) {
     addPage(new SidebarIndexPage(this->control, &this->toolbar));
     addPage(new SidebarPreviewPages(this->control, this->gui, &this->toolbar));
-    addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar, false));
-    addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar, true));
+    auto layersContextMenu = std::make_shared<SidebarLayersContextMenu>(this->gui, &this->toolbar);
+    addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar, false, layersContextMenu));
+    addPage(new SidebarPreviewLayers(this->control, this->gui, &this->toolbar, true, layersContextMenu));
 
     // Init toolbar with icons
 

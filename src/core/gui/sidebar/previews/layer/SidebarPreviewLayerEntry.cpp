@@ -6,13 +6,29 @@
 #include "SidebarPreviewLayers.h"
 
 
-SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer,
+SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar, const PageRef& page, int layer,
                                                    const std::string& layerName, size_t index, bool stacked):
         SidebarPreviewBaseEntry(sidebar, page),
         index(index),
         layer(layer),
+        sidebar(sidebar),
         stacked(stacked),
         box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2)) {
+
+    const auto clickCallback = G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, SidebarPreviewLayerEntry* self) {
+        // Open context menu on right mouse click
+        if (event->type == GDK_BUTTON_PRESS) {
+            auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
+            if (mouseEvent->button == 3) {
+                self->mouseButtonPressCallback();
+                self->sidebar->openPreviewContextMenu();
+                return true;
+            }
+        }
+        return false;
+    });
+    g_signal_connect_after(this->widget, "button-press-event", clickCallback, this);
+
     GtkWidget* toolbar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 
     cbVisible = gtk_check_button_new_with_label(layerName.c_str());
