@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -63,6 +64,12 @@ public:
      */
     void layerVisibilityChanged(int layerIndex, bool enabled);
 
+    /**
+     * Opens the page preview context menu, at the current cursor position, for
+     * the given page.
+     */
+    void openPreviewContextMenu();
+
 protected:
     void updateSelectedLayer();
 
@@ -83,4 +90,24 @@ private:
     bool stacked;
 
     IconNameHelper iconNameHelper;
+
+
+    /**
+     * The context menu to display when a page is right-clicked.
+     */
+    GtkWidget* const contextMenu = nullptr;
+
+    /**
+     * The data passed to the menu item callbacks.
+     */
+    struct ContextMenuData {
+        SidebarToolbar* toolbar;
+        SidebarActions actions;
+    };
+
+    /**
+     * The signals connected to the context menu items. This must be kept track
+     * of so the data can be deallocated safely.
+     */
+    std::vector<std::tuple<GtkWidget*, gulong, std::unique_ptr<ContextMenuData>>> contextMenuSignals;
 };
