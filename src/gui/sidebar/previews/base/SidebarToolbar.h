@@ -51,8 +51,7 @@ public:
      * Sets the button enabled / disabled
      */
     void setButtonEnabled(SidebarActions enabledActions);
-    void setButtonTooltips(const string& tipUp, const string& tipDown, const string& tipMerge, const string& tipCopy,
-                           const string& tipDelete);
+    void setButtonTooltips(const string& tipUp, const string& tipDown, const string& tipCopy, const string& tipDelete);
 
     void setHidden(bool hidden);
 
@@ -65,7 +64,6 @@ private:
 private:
     static void btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
     static void btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
-    static void btMergeClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
     static void btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
     static void btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
 
@@ -84,11 +82,6 @@ private:
      * Button move Page down
      */
     GtkButton* btDown;
-
-    /**
-     * Button merge the layer down (page behaviour not defined)
-     */
-    GtkButton* btMerge;
 
     /**
      * Button copy current page

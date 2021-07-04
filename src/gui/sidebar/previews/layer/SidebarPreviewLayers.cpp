@@ -118,7 +118,6 @@ void SidebarPreviewLayers::enableSidebar() {
 
     this->toolbar->setButtonTooltips(_("Swap the current layer with the one above"),
                                      _("Swap the current layer with the one below"),
-                                     _("Merge the current layer with the one below"),
                                      _("Insert a copy of the current layer below"), _("Delete this layer"));
     rebuildLayerMenu();
 }

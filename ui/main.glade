@@ -2231,27 +2231,6 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkButton" id="btMerge">
-                                    <property name="name">btMerge</property>
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="receives-default">True</property>
-                                    <child>
-                                      <!--- TODO: what image to use? -->
-                                      <object class="GtkImage" id="image9">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <property name="stock">gtk-go-down</property>
-                                      </object>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">2</property>
-                                  </packing>
-                                </child>
-                                <child>
                                   <object class="GtkButton" id="btCopy">
                                     <property name="name">btCopy</property>
                                     <property name="visible">True</property>
