@@ -4,10 +4,10 @@ Upstream-Contact: https://github.com/xournalpp/xournalpp/issues/
 Source: https://github.com/xournalpp/xournalpp/
 
 Files: *
-Copyright: 2012-2018, Wilson Brenna <wilson@wbrenna.homelinux.com>
-           2013-2021, Andreas Butti <andreas.butti@gmail.com>
+Copyright: 2010-2021, Andreas Butti <andreas.butti@gmail.com>
+           2012-2018, Wilson Brenna <wilson@wbrenna.homelinux.com>
            2015-2016, Marek Pikuła <marek@pikula.tk>
-           2017-2019, peetCreative <peetCreative@users.noreply.github.com>
+           2017-2019, Peter Klausing <peetCreative@users.noreply.github.com>
            2018-2019, Moreno Razzoli <morrolinux@users.noreply.github.com>
            2018-2019, Luca Errani <luca.errani1@gmail.com>
            2019-2021, Ulrich Huber <ulrich@huberulrich.de>

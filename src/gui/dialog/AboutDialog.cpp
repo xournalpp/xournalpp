@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 #include "StringUtils.h"
+#include "i18n.h"
 
 AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
     gtk_label_set_markup(GTK_LABEL(get("lbBuildDate")), __DATE__ ", " __TIME__);
@@ -15,11 +16,32 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearch
 
     gtk_label_set_markup(GTK_LABEL(get("lbGtkVersion")), gtkVersion);
 
-    GtkWidget* w = get("vbox1");
-    GtkWidget* linkButton = gtk_link_button_new("http://github.com/xournalpp/xournalpp");
-    gtk_widget_show(linkButton);
-    gtk_box_pack_start(GTK_BOX(w), linkButton, true, true, 0);
+    auto w1 = get("vboxRepo");
+    auto linkButton1 = gtk_link_button_new("https://github.com/xournalpp/xournalpp");
+    gtk_widget_show(linkButton1);
+    gtk_box_pack_start(GTK_BOX(w1), linkButton1, true, true, 0);
+
+    auto w2 = get("vboxWebsite");
+    auto linkButton2 = gtk_link_button_new("https://xournalpp.github.io");
+    gtk_widget_show(linkButton2);
+    gtk_box_pack_start(GTK_BOX(w2), linkButton2, true, true, 0);
+
+
+    auto w3 = get("vboxCommunity");
+    auto linkButton3 =
+            gtk_link_button_new_with_label("https://raw.githubusercontent.com/xournalpp/xournalpp/master/AUTHORS",
+                                           _("See the full list of contributors"));
+    gtk_widget_show(linkButton3);
+    gtk_box_pack_start(GTK_BOX(w3), linkButton3, true, true, 0);
+
+
+    auto w4 = get("vboxLicense");
+    auto linkButton4 = gtk_link_button_new_with_label(
+            "https://raw.githubusercontent.com/xournalpp/xournalpp/master/LICENSE", _("GNU GPLv2 or later"));
+    gtk_widget_show(linkButton4);
+    gtk_box_pack_start(GTK_BOX(w4), linkButton4, true, true, 0);
 }
+
 
 AboutDialog::~AboutDialog() = default;
 
