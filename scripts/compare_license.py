@@ -139,7 +139,7 @@ def get_whitelist_not_found():
 
 # III: Update git commit hash to current commit once you checked
 # that the changes do not affect the licensing information in copyright.txt
-last_checked_git_commit_hash = "b9239d17213a5f9644913203ffb38d69e435e749"
+last_checked_git_commit_hash = "89eee20c3dab1d1bfc18d125f32d510b6862168d"
 
 changed_files = get_changed_files_since(last_checked_git_commit_hash)
 
