@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * helper methods to load an .xoj / .xopp document
+ * helper methods to load a .xoj / .xopp document
  *
  * @author Xournal Team
  * http://xournal.sf.net
