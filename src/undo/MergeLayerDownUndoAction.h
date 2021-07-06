@@ -42,8 +42,10 @@ public:
     string getText() override;
 
 private:
-    int upperLayerPos;
+    const int upperLayerPos;
     LayerController* layerController;
     Layer* upperLayer;
     Layer* lowerLayer;
+    const int upperLayerID;
+    const int lowerLayerID;
 };

@@ -238,7 +238,7 @@ void LayerController::mergeCurrentLayerDown(void) {
     //    2: layer 2
     //    1: layer 1
     //    0: background
-    auto layerID = page->getSelectedLayerId();
+    const auto layerID = page->getSelectedLayerId();
     Layer* currentLayer = page->getSelectedLayer();
     if (layerID < 2) {
         // lowest (non-background) layer cannot be merged into background
@@ -250,13 +250,15 @@ void LayerController::mergeCurrentLayerDown(void) {
 
     // We know this cannot be the background (or even an underflow) because
     // we checked for !(layerID < 2) before.
-    auto layerBelowID = layerID - 1;
+    const auto layerBelowID = layerID - 1;
     // Layer indices in the vector are off by one from the layer IDs because
     // the background is not in the vector, so layer 1 has index 0 and so on.
-    size_t layerBelowIndex = ((size_t)layerBelowID) - 1;
+    const size_t layerBelowIndex = ((size_t)layerBelowID) - 1;
     Layer* layerBelow = page->getLayers()->at(layerBelowIndex);
 
     for (Element* elem: *currentLayer->getElements()) { layerBelow->addElement(elem); }
+
+    page->setSelectedLayerId(layerBelowID);
 
     // TODO: do we need to destroy the layer somehow to avoid mem leaks etc.?
     // I would think we don't have to delete it here because when a layer is

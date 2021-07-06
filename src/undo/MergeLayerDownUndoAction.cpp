@@ -11,10 +11,14 @@
 
 MergeLayerDownUndoAction::MergeLayerDownUndoAction(LayerController* layerController, const PageRef& page,
                                                    Layer* upperLayer, Layer* lowerLayer, int upperLayerPos):
-        UndoAction("MergeLayerDownUndoAction"), upperLayerPos(upperLayerPos), layerController(layerController) {
+        UndoAction("MergeLayerDownUndoAction"),
+        upperLayerPos(upperLayerPos),
+        layerController(layerController),
+        upperLayer(upperLayer),
+        lowerLayer(lowerLayer),
+        upperLayerID(upperLayerPos + 1),
+        lowerLayerID(upperLayerPos) {
     this->page = page;
-    this->upperLayer = upperLayer;
-    this->lowerLayer = lowerLayer;
 }
 
 auto MergeLayerDownUndoAction::getText() -> string {
@@ -29,6 +33,9 @@ auto MergeLayerDownUndoAction::undo(Control* control) -> bool {
     // add the upper layer back at its old pos
     layerController->insertLayer(this->page, this->upperLayer, upperLayerPos);
 
+    // set the selected layer back to the ID of the upper layer
+    this->page->setSelectedLayerId(this->upperLayerID);
+
     this->undone = true;
 
     return true;
@@ -40,6 +47,11 @@ auto MergeLayerDownUndoAction::redo(Control* control) -> bool {
 
     // add all elements back to the lower layer
     for (Element* elem: *(this->upperLayer->getElements())) { this->lowerLayer->addElement(elem); }
+
+    // set the selected layer back to the ID of the lower layer
+    this->page->setSelectedLayerId(this->lowerLayerID);
+    // TODO: this does not work (or rather it is not reflected in the red frame of the UI)
+    //       even though debugging shows that the value is set just fine
 
     this->undone = false;
 
