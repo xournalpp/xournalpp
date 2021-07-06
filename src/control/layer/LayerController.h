@@ -108,6 +108,8 @@ public:
      */
     void ensureLayerExists(PageRef page);
 
+    friend class MergeLayerDownUndoAction;
+
 private:
     Control* control;
 

@@ -55,5 +55,7 @@ auto MergeLayerDownUndoAction::redo(Control* control) -> bool {
 
     this->undone = false;
 
+    layerController->fireRebuildLayerMenu();
+
     return true;
 }
