@@ -120,8 +120,9 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
 
     stroke->addPoint(this->hasPressure ? point : Point(point.x, point.y));
 
-    if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes()) &&
-        !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)) {
+    if (true) {
+        //    if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes()) && !(stroke->getFill() != -1 &&
+        //    stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)) {
         // Clear surface
 
         // for debugging purposes
@@ -261,7 +262,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     layer->addElement(stroke);
     page->fireElementChanged(stroke);
 
-    // Manually force the rendering of the stroke, if no motion event occurred between, that would rerender the page.
+    // Manually force the rendering of the stroke, if no motion event occurred between, that would rerender the
+    // page.
     if (stroke->getPointCount() == 2) {
         this->redrawable->rerenderElement(stroke);
     }
