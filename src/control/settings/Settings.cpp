@@ -74,7 +74,7 @@ void Settings::loadDefault() {
 
     this->menubarVisible = true;
 
-    this->autoloadMostRecent = true;
+    this->autoloadMostRecent = false;
     this->autoloadPdfXoj = true;
 
     this->stylusCursorType = STYLUS_CURSOR_DOT;
