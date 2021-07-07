@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-05 15:05+0000\n"
+"POT-Creation-Date: 2021-07-07 14:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -641,6 +641,10 @@ msgstr ""
 msgid "Forward"
 msgstr ""
 
+#: ../src/gui/dialog/AboutDialog.cpp:40
+msgid "GNU GPLv2 or later"
+msgstr ""
+
 #: ../src/control/XournalMain.cpp:631
 msgid "Get version of xournalpp"
 msgstr ""
@@ -1108,6 +1112,10 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Search"
+msgstr ""
+
+#: ../src/gui/dialog/AboutDialog.cpp:33
+msgid "See the full list of contributors"
 msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
@@ -2032,7 +2040,7 @@ msgid ""
 "behave as if they were one.</i>"
 msgstr ""
 
-#: ../ui/about.glade:73
+#: ../ui/about.glade:203
 msgid ""
 "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
@@ -2107,8 +2115,8 @@ msgstr ""
 msgid "Author: "
 msgstr ""
 
-#: ../ui/about.glade:211
-msgid "Authors:"
+#: ../ui/about.glade:449
+msgid "Authors"
 msgstr ""
 
 #: ../ui/settings.glade:2134
@@ -2168,7 +2176,7 @@ msgstr ""
 msgid "Buffersize"
 msgstr ""
 
-#: ../ui/about.glade:127
+#: ../ui/about.glade:99
 msgid "Built on"
 msgstr ""
 
@@ -2489,10 +2497,6 @@ msgstr ""
 msgid "Fullscreen"
 msgstr ""
 
-#: ../ui/about.glade:307
-msgid "GNU GPLv2 or later"
-msgstr ""
-
 #: ../ui/settings.glade:5081
 msgid "Gain"
 msgstr ""
@@ -2507,7 +2511,7 @@ msgstr ""
 msgid "General LaTeX tool settings"
 msgstr ""
 
-#: ../ui/about.glade:153
+#: ../ui/about.glade:114
 msgid "Git commit"
 msgstr ""
 
@@ -2583,6 +2587,10 @@ msgid ""
 "How short (time)  AND...\n"
 "\n"
 "<i>Recommended: 150ms</i>"
+msgstr ""
+
+#: ../ui/about.glade:243
+msgid "Icon Designers"
 msgstr ""
 
 #: ../ui/settings.glade:4319
@@ -2682,7 +2690,7 @@ msgstr ""
 msgid "Left / Right-Handed"
 msgstr ""
 
-#: ../ui/about.glade:291
+#: ../ui/about.glade:421
 msgid "License"
 msgstr ""
 
@@ -2827,7 +2835,7 @@ msgstr ""
 msgid "Paper _Format"
 msgstr ""
 
-#: ../ui/about.glade:273
+#: ../ui/about.glade:296
 msgid ""
 "Partially based on Xournal\n"
 "by Denis Auroux"
@@ -2893,7 +2901,7 @@ msgstr ""
 msgid "Pressure Sensitivity"
 msgstr ""
 
-#: ../ui/about.glade:167
+#: ../ui/about.glade:129
 msgid "RELEASE_IDENTIFIER"
 msgstr ""
 
@@ -3051,6 +3059,10 @@ msgstr ""
 msgid "Snapping"
 msgstr ""
 
+#: ../ui/about.glade:356
+msgid "Source Code / Bug Tracker"
+msgstr ""
+
 #: ../ui/settings.glade:3579
 msgid "Speed for Ctrl + Scroll"
 msgstr ""
@@ -3186,7 +3198,7 @@ msgstr ""
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/about.glade:101
+#: ../ui/about.glade:181
 msgid "Version"
 msgstr ""
 
@@ -3196,6 +3208,10 @@ msgstr ""
 
 #: ../ui/settings.glade:3527
 msgid "View"
+msgstr ""
+
+#: ../ui/about.glade:328
+msgid "Website"
 msgstr ""
 
 #: ../ui/settings.glade:2396
@@ -3226,11 +3242,11 @@ msgstr ""
 msgid "Width:"
 msgstr ""
 
-#: ../ui/about.glade:258
+#: ../ui/about.glade:393
 msgid "With help from the community"
 msgstr ""
 
-#: ../ui/about.glade:192
+#: ../ui/about.glade:156
 msgid "X.X.X"
 msgstr ""
 
@@ -3540,6 +3556,6 @@ msgstr ""
 msgid "ver_y thick"
 msgstr ""
 
-#: ../ui/about.glade:178
+#: ../ui/about.glade:141
 msgid "with libgtk"
 msgstr ""
