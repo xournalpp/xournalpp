@@ -395,6 +395,7 @@ generate DEB and tar packages. See `readme/linux.md` for more details.
     * Added ability for installation to be relocatable
     * Updated translations
     * Updated dependency information for DEB packages
+    * Updated author information and About dialog appearance (#3209)
     * Improved file size by reducing stroke coordinate precision
     * Fixed an issue where last eraser thickness settings were not being remembered
     * Fixed pen strokes not appearing after searching
