@@ -22,7 +22,7 @@ void XojMsgBox::showErrorToUser(GtkWindow* win, const string& msg) {
 
     GtkWidget* dialog =
             gtk_message_dialog_new_with_markup(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, nullptr);
-    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), msg.c_str());
+    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), g_markup_escape_text(msg.c_str(), -1));
     if (win != nullptr) {
         gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
     }
@@ -40,7 +40,7 @@ auto XojMsgBox::showPluginMessage(const string& pluginName, const string& msg, c
 
     GtkWidget* dialog = gtk_message_dialog_new_with_markup(defaultWindow, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
                                                            GTK_BUTTONS_NONE, nullptr);
-    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), header.c_str());
+    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), g_markup_escape_text(header.c_str(), -1));
 
     if (defaultWindow != nullptr) {
         gtk_window_set_transient_for(GTK_WINDOW(dialog), defaultWindow);
@@ -52,9 +52,7 @@ auto XojMsgBox::showPluginMessage(const string& pluginName, const string& msg, c
     g_object_set_property(G_OBJECT(dialog), "secondary-text", &val);
     g_value_unset(&val);
 
-    for (auto& kv: button) {
-        gtk_dialog_add_button(GTK_DIALOG(dialog), kv.second.c_str(), kv.first);
-    }
+    for (auto& kv: button) { gtk_dialog_add_button(GTK_DIALOG(dialog), kv.second.c_str(), kv.first); }
 
     int res = gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
