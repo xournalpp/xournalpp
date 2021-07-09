@@ -22,12 +22,15 @@ void XojMsgBox::showErrorToUser(GtkWindow* win, const string& msg) {
 
     GtkWidget* dialog =
             gtk_message_dialog_new_with_markup(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, nullptr);
-    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), g_markup_escape_text(msg.c_str(), -1));
+
+    char* formattedMsg = g_markup_escape_text(msg.c_str(), -1);
+    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), formattedMsg);
     if (win != nullptr) {
         gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
     }
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
+    g_free(formattedMsg);
 }
 
 auto XojMsgBox::showPluginMessage(const string& pluginName, const string& msg, const map<int, string>& button,
@@ -40,7 +43,8 @@ auto XojMsgBox::showPluginMessage(const string& pluginName, const string& msg, c
 
     GtkWidget* dialog = gtk_message_dialog_new_with_markup(defaultWindow, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
                                                            GTK_BUTTONS_NONE, nullptr);
-    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), g_markup_escape_text(header.c_str(), -1));
+    char* formattedHeader = g_markup_escape_text(header.c_str(), -1);
+    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), formattedHeader);
 
     if (defaultWindow != nullptr) {
         gtk_window_set_transient_for(GTK_WINDOW(dialog), defaultWindow);
@@ -56,6 +60,7 @@ auto XojMsgBox::showPluginMessage(const string& pluginName, const string& msg, c
 
     int res = gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
+    g_free(formattedHeader);
     return res;
 }
 
