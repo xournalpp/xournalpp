@@ -2080,10 +2080,22 @@ auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
 
     if (settings->isAutloadPdfXoj()) {
         fs::path f = filepath;
-        Util::clearExtensions(f);
+        Util::clearExtensions(f, ".pdf");
         f += ".xopp";
         Document* tmp = loadHandler.loadDocument(f);
 
+        if (tmp == nullptr) {
+            f = filepath;
+            Util::clearExtensions(f, ".pdf");
+            f += ".xoj";
+            tmp = loadHandler.loadDocument(f);
+        }
+        if (tmp == nullptr) {
+            f = filepath;
+            Util::clearExtensions(f);
+            f += ".xopp";
+            tmp = loadHandler.loadDocument(f);
+        }
         if (tmp == nullptr) {
             f = filepath;
             Util::clearExtensions(f);
