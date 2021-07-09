@@ -3,27 +3,30 @@
 #include "Serializeable.h"
 #include "i18n.h"
 
-ObjectInputStream::ObjectInputStream() = default;
-
-ObjectInputStream::~ObjectInputStream() {
-    if (this->str) {
-        g_string_free(this->str, true);
-        this->str = nullptr;
+template <typename T>
+T readTypeFromSStream(std::istringstream& istream, std::string typeName) {
+    if (istream.str().size() < sizeof(T)) {
+        throw InputStreamException("End reached, but try to read a" + typeName, __FILE__, __LINE__);
     }
+    T output;
+
+    istream.read((char*)&output, sizeof(T));
+
+    return output;
 }
 
-auto ObjectInputStream::read(const char* data, int len) -> bool {
-    if (this->str) {
-        g_string_free(this->str, true);
-    }
-    this->str = g_string_new_len(data, len);
-    this->pos = 0;
 
+ObjectInputStream::ObjectInputStream() = default;
 
-    //	//clipboad debug
-    //	FILE * fp = fopen("/home/andreas/tmp/xoj/clipboard.bin", "w");
-    //	fwrite(str->str, len, 1, fp);
-    //	fclose(fp);
+ObjectInputStream::~ObjectInputStream() {}
+
+size_t ObjectInputStream::pos() { return len - istream.str().size(); }
+
+auto ObjectInputStream::read(const char* data, int data_len) -> bool {
+    istream.clear();
+    len = (size_t)data_len;
+    string dataStr = string(data, len);
+    istream.str(dataStr);
 
     try {
         string version = readString();
@@ -53,12 +56,8 @@ auto ObjectInputStream::readObject() -> string {
 }
 
 auto ObjectInputStream::getNextObjectName() -> string {
-    int pos = this->pos;
     checkType('{');
     string name = readString();
-
-    this->pos = pos;
-
     return name;
 }
 
@@ -66,73 +65,47 @@ void ObjectInputStream::endObject() { checkType('}'); }
 
 auto ObjectInputStream::readInt() -> int {
     checkType('i');
-
-    if (this->pos + sizeof(int) >= this->str->len) {
-        throw InputStreamException("End reached, but try to read an integer", __FILE__, __LINE__);
-    }
-
-    int i = *(reinterpret_cast<int*>(this->str->str + this->pos));
-    this->pos += sizeof(int);
-    return i;
+    return readTypeFromSStream<int>(istream, "int");
 }
 
 auto ObjectInputStream::readDouble() -> double {
     checkType('d');
-
-    if (this->pos + sizeof(double) >= this->str->len) {
-        throw InputStreamException("End reached, but try to read an double", __FILE__, __LINE__);
-    }
-
-    double d = *(reinterpret_cast<double*>(this->str->str + this->pos));
-    this->pos += sizeof(double);
-    return d;
+    return readTypeFromSStream<double>(istream, "double");
 }
 
 auto ObjectInputStream::readSizeT() -> size_t {
     checkType('l');
-
-    if (this->pos + sizeof(size_t) >= this->str->len) {
-        throw InputStreamException("End reached, but try to read an integer", __FILE__, __LINE__);
-    }
-
-    size_t st = *(reinterpret_cast<size_t*>(this->str->str + this->pos));
-    this->pos += sizeof(size_t);
-    return st;
+    return readTypeFromSStream<size_t>(istream, "size_t");
 }
 
 auto ObjectInputStream::readString() -> string {
     checkType('s');
 
-    if (this->pos + sizeof(int) >= this->str->len) {
+    size_t lenString = (size_t)readTypeFromSStream<int>(istream, "int");
+
+    if (istream.str().size() < len) {
         throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
     }
 
-    int len = *(reinterpret_cast<int*>(this->str->str + this->pos));
-    this->pos += sizeof(int);
+    string output;
+    output.resize(lenString);
 
-    if (this->pos + len >= this->str->len) {
-        throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
-    }
+    istream.read(&output[0], (long)lenString);
 
-    string s((this->str->str + this->pos), len);
-    this->pos += len;
-    return s;
+    return output;
 }
 
 void ObjectInputStream::readData(void** data, int* length) {
     checkType('b');
 
-    if (this->pos + 2 * sizeof(int) >= this->str->len) {
-        throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
+    if (istream.str().size() < 2 * sizeof(int)) {
+        throw InputStreamException("End reached, but try to read data len and width", __FILE__, __LINE__);
     }
 
-    int len = *(reinterpret_cast<int*>(this->str->str + this->pos));
-    this->pos += sizeof(int);
+    int len = readTypeFromSStream<int>(istream, "int");
+    int width = readTypeFromSStream<int>(istream, "int");
 
-    int width = *(reinterpret_cast<int*>(this->str->str + this->pos));
-    this->pos += sizeof(int);
-
-    if (this->pos + (len * width) >= this->str->len) {
+    if (istream.str().size() < (len * width)) {
         throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
     }
 
@@ -140,86 +113,56 @@ void ObjectInputStream::readData(void** data, int* length) {
         *length = 0;
         *data = nullptr;
     } else {
-        *data = g_malloc(len * width);
+        *data = (void*)new char[(size_t)(len * width)];
         *length = len;
 
-        memcpy(*data, this->str->str + this->pos, len * width);
-
-        this->pos += len * width;
+        istream.read((char*)*data, len * width);
     }
 }
 
-class PngDatasource {
-public:
-    PngDatasource(char* start, int len) {
-        this->data = start;
-        this->len = len;
-        this->pos = 0;
+cairo_status_t cairoReadFunction(std::istringstream* iss, unsigned char* data, unsigned int length) {
+    if (iss->str().size() < length) {
+        return CAIRO_STATUS_READ_ERROR;
     }
-
-    char* data;
-    int len;
-    int pos;
-};
-
-auto cairoReadFunction(PngDatasource* obj, unsigned char* data, unsigned int length) -> cairo_status_t {
-    for (unsigned int i = 0; i < length; i++, obj->pos++) {
-        if (obj->pos >= obj->len) {
-            return CAIRO_STATUS_READ_ERROR;
-        }
-        data[i] = obj->data[obj->pos];
-    }
-
+    iss->read((char*)data, length);
     return CAIRO_STATUS_SUCCESS;
 }
 
 auto ObjectInputStream::readImage() -> cairo_surface_t* {
     checkType('m');
 
-    if (this->pos + sizeof(int) >= this->str->len) {
+    if (istream.str().size() < sizeof(size_t)) {
+        throw InputStreamException("End reached, but try to read an image's data's length", __FILE__, __LINE__);
+    }
+
+    size_t len = readTypeFromSStream<size_t>(istream, "gsize");
+
+    if (istream.str().size() < len) {
         throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
     }
 
-    int len = *(reinterpret_cast<int*>(this->str->str + this->pos));
-    // this->pos += sizeof(int);
-    // totally not equivalent!
-    this->pos += sizeof(gsize);
-
-    if (this->pos + len >= this->str->len) {
-        throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
-    }
-
-    PngDatasource source(this->str->str + this->pos, len);
-    // cairo_surface_t * img = cairo_image_surface_create_from_png_stream((cairo_read_func_t) cairoReadFunction,
-    // &source);
-    cairo_surface_t* img = cairo_image_surface_create_from_png_stream(
-            reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), &source);
-
-    this->pos += len;
-
-    return img;
+    return cairo_image_surface_create_from_png_stream((cairo_read_func_t)(&cairoReadFunction), &istream);
 }
 
 void ObjectInputStream::checkType(char type) {
-    if (this->pos + 2 > this->str->len) {
+    if (istream.str().size() < 2) {
         throw InputStreamException(FS(FORMAT_STR("End reached, but try to read {1}, index {2} of {3}") % getType(type) %
-                                      this->pos % this->str->len),
+                                      (uint32_t)pos() % (uint32_t)len),
                                    __FILE__, __LINE__);
     }
-    if (this->str->str[this->pos] != '_') {
+    char t = 0, underscore = 0;
+    istream >> underscore >> t;
+
+    if (underscore != '_') {
         throw InputStreamException(FS(FORMAT_STR("Expected type signature of {1}, index {2} of {3}, but read '{4}'") %
-                                      getType(type) % this->pos % this->str->len % this->str->str[this->pos]),
+                                      getType(type) % ((uint32_t)pos() + 1) % (uint32_t)len % underscore),
                                    __FILE__, __LINE__);
     }
-    this->pos++;
 
-    if (this->str->str[this->pos] != type) {
-        throw InputStreamException(
-                FS(FORMAT_STR("Expected {1} but read {2}") % getType(type) % getType(this->str->str[this->pos])),
-                __FILE__, __LINE__);
+    if (t != type) {
+        throw InputStreamException(FS(FORMAT_STR("Expected {1} but read {2}") % getType(type) % getType(t)), __FILE__,
+                                   __LINE__);
     }
-
-    this->pos++;
 }
 
 auto ObjectInputStream::getType(char type) -> string {
