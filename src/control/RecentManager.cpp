@@ -101,6 +101,19 @@ auto RecentManager::sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b) -> gi
     return tp_a != tp_b ? (tp_a < tp_b ? 1 : -1) : 0;
 }
 
+auto RecentManager::getMostRecent() -> GtkRecentInfo* {
+    GList* filteredItemsXoj = filterRecent(gtk_recent_manager_get_items(gtk_recent_manager_get_default()), true);
+    auto mostRecent = static_cast<GtkRecentInfo*>(filteredItemsXoj->data);
+
+    gtk_recent_info_ref(mostRecent);
+    for (GList* l = filteredItemsXoj; l != nullptr; l = l->next) {
+        gtk_recent_info_unref(static_cast<GtkRecentInfo*>(l->data));
+    }
+    g_list_free(filteredItemsXoj);
+
+    return mostRecent;
+}
+
 auto RecentManager::filterRecent(GList* items, bool xoj) -> GList* {
     GList* filteredItems = nullptr;
 

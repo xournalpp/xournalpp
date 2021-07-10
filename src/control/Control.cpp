@@ -2077,7 +2077,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 
 auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
     LoadHandler loadHandler;
-
+  
     if (settings->isAutloadPdfXoj()) {
         fs::path f;
         Document* tmp;
@@ -2865,6 +2865,8 @@ auto Control::getTextEditor() -> TextEditor* {
 }
 
 auto Control::getGladeSearchPath() -> GladeSearchpath* { return this->gladeSearchPath; }
+
+auto Control::getRecentManager() -> RecentManager* { return recent; }
 
 auto Control::getSettings() -> Settings* { return settings; }
 

@@ -560,6 +560,10 @@ void on_startup(GApplication* application, XMPtr app_data) {
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
             opened = app_data->control->newFile("", p);
         }
+    } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
+        if (auto p = Util::fromUri(gtk_recent_info_get_uri(app_data->control->getRecentManager()->getMostRecent()))) {
+            opened = app_data->control->openFile(*p);
+        }
     }
 
     app_data->control->getScheduler()->start();

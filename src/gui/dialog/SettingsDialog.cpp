@@ -336,7 +336,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
     loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
     loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
-    loadCheckbox("cbAutoloadXoj", settings->isAutloadPdfXoj());
+    loadCheckbox("cbAutoloadMostRecent", settings->isAutoloadMostRecent());
+    loadCheckbox("cbAutoloadXoj", settings->isAutoloadPdfXoj());
     loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
     loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
     loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
@@ -660,6 +661,7 @@ void SettingsDialog::save() {
     settings->setZoomGesturesEnabled(getCheckbox("cbEnableZoomGestures"));
     settings->setSidebarOnRight(getCheckbox("cbShowSidebarRight"));
     settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));
+    settings->setAutoloadMostRecent(getCheckbox("cbAutoloadMostRecent"));
     settings->setAutoloadPdfXoj(getCheckbox("cbAutoloadXoj"));
     settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
     settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
