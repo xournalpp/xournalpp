@@ -235,8 +235,10 @@ public:
     void setViewLayoutB2T(bool b2t);
     bool getViewLayoutB2T() const;
 
+    bool isAutoloadMostRecent() const;
+    void setAutoloadMostRecent(bool load);
 
-    bool isAutloadPdfXoj() const;
+    bool isAutoloadPdfXoj() const;
     void setAutoloadPdfXoj(bool load);
 
     int getAutosaveTimeout() const;
@@ -741,6 +743,11 @@ private:
      * Automatically load filename.pdf.xoj / .pdf.xopp instead of filename.pdf (true/false)
      */
     bool autoloadPdfXoj{};
+
+    /**
+     * Automatically load most recent document on application startup (true/false)
+     */
+    bool autoloadMostRecent{};
 
     /**
      * Automatically save documents for crash recovery each x minutes

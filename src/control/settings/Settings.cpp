@@ -74,7 +74,9 @@ void Settings::loadDefault() {
 
     this->menubarVisible = true;
 
+    this->autoloadMostRecent = false;
     this->autoloadPdfXoj = true;
+
     this->stylusCursorType = STYLUS_CURSOR_DOT;
     this->highlightPosition = false;
     this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
@@ -372,6 +374,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->numPairsOffset = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationMode")) == 0) {
         this->presentationMode = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autoloadMostRecent")) == 0) {
+        this->autoloadMostRecent = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autoloadPdfXoj")) == 0) {
         this->autoloadPdfXoj = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stylusCursorType")) == 0) {
@@ -853,6 +857,7 @@ void Settings::save() {
     ATTACH_COMMENT(
             "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"");
 
+    SAVE_BOOL_PROP(autoloadMostRecent);
     SAVE_BOOL_PROP(autoloadPdfXoj);
     SAVE_STRING_PROP(defaultSaveName);
 
@@ -1297,7 +1302,17 @@ void Settings::setScrollbarHideType(ScrollbarHideType type) {
     save();
 }
 
-auto Settings::isAutloadPdfXoj() const -> bool { return this->autoloadPdfXoj; }
+auto Settings::isAutoloadMostRecent() const -> bool { return this->autoloadMostRecent; }
+
+void Settings::setAutoloadMostRecent(bool load) {
+    if (this->autoloadMostRecent == load) {
+        return;
+    }
+    this->autoloadMostRecent = load;
+    save();
+}
+
+auto Settings::isAutoloadPdfXoj() const -> bool { return this->autoloadPdfXoj; }
 
 void Settings::setAutoloadPdfXoj(bool load) {
     if (this->autoloadPdfXoj == load) {

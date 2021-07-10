@@ -645,14 +645,15 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                         <property name="can_focus">False</property>
                                         <property name="orientation">vertical</property>
                                         <child>
-                                          <object class="GtkLabel" id="sid15">
+                                          <object class="GtkCheckButton" id="cbAutoloadXoj">
+                                            <property name="label" translatable="yes">Enable Autoloading of Journals</property>
+                                            <property name="name">cbAutoloadXoj</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">&lt;i&gt;If you open a PDF and there is a Xournal file with the same name it will open the xoj file.&lt;/i&gt;</property>
-                                            <property name="use_markup">True</property>
-                                            <property name="wrap">True</property>
-                                            <property name="max_width_chars">85</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="tooltip-text" translatable="yes">If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</property>
                                             <property name="xalign">0</property>
+                                            <property name="draw-indicator">True</property>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -661,12 +662,13 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="cbAutoloadXoj">
-                                            <property name="label" translatable="yes">Enable Autoloading of Journals</property>
-                                            <property name="name">cbAutoloadXoj</property>
+                                          <object class="GtkCheckButton" id="cbAutoloadMostRecent">
+                                            <property name="label" translatable="yes">Enable autoloading of most recent file on application startup</property>
+                                            <property name="name">cbAutoloadMostRecent</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="receives_default">False</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="tooltip-text" translatable="yes">If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document.</property>
                                             <property name="xalign">0</property>
                                             <property name="draw_indicator">True</property>
                                           </object>
@@ -683,8 +685,8 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                 <child type="label">
                                   <object class="GtkLabel" id="sid16">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="label" translatable="yes">Autoloading Journals</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Autoloading</property>
                                   </object>
                                 </child>
                               </object>
