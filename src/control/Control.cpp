@@ -2078,7 +2078,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
     LoadHandler loadHandler;
   
-    if (settings->isAutloadPdfXoj()) {
+    if (settings->isAutoloadPdfXoj()) {
         fs::path f;
         Document* tmp;
         std::vector<std::string> exts = {".xopp", ".xoj", ".pdf.xopp", ".pdf.xoj"};
