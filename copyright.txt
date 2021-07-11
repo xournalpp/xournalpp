@@ -86,11 +86,6 @@ Files: desktop/com.github.xournalpp.xournalpp.appdata.xml
 Copyright: 2019, Tobias Mueller <tobiasmue@gnome.org>
 License: CC0-1.0
 
-Files: src/util/hashcombine.h
-Copyright: 1998-2021, David Eberly, Geometric Tools
-License: BSL-1
-Comment: https://www.geometrictools.com/GTE/Mathematics/HashCombine.h
-
 Files: debian/docs
        debian/package_description
        debian/control
