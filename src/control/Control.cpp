@@ -2079,18 +2079,16 @@ auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
     LoadHandler loadHandler;
 
     if (settings->isAutoloadPdfXoj()) {
-        fs::path f = filepath;
-        Util::clearExtensions(f);
-        f += ".xopp";
-        Document* tmp = loadHandler.loadDocument(f);
-
-        if (tmp == nullptr) {
-            f = filepath;
-            Util::clearExtensions(f);
-            f += ".xoj";
+        Document* tmp;
+        const std::vector<std::string> exts = {".xopp", ".xoj", ".pdf.xopp", ".pdf.xoj"};
+        for (const std::string& ext: exts) {
+            fs::path f = filepath;
+            Util::clearExtensions(f, ".pdf");
+            f += ext;
             tmp = loadHandler.loadDocument(f);
+            if (tmp)
+                break;
         }
-
         if (tmp) {
             this->doc->lock();
             this->doc->clearDocument();
