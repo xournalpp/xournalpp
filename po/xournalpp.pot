@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-10 00:03+0000\n"
+"POT-Creation-Date: 2021-07-14 21:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,7 +164,7 @@ msgstr ""
 msgid "Bring to front"
 msgstr ""
 
-#: ../src/control/Control.cpp:2021 ../src/control/Control.cpp:2474
+#: ../src/control/Control.cpp:2021 ../src/control/Control.cpp:2472
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr ""
@@ -373,7 +373,7 @@ msgstr ""
 msgid "Delete this page"
 msgstr ""
 
-#: ../src/control/Control.cpp:2471
+#: ../src/control/Control.cpp:2469
 msgid "Discard"
 msgstr ""
 
@@ -392,7 +392,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2465
+#: ../src/control/Control.cpp:2463
 msgid "Document file was removed."
 msgstr ""
 
@@ -486,7 +486,7 @@ msgstr ""
 msgid "Eraser"
 msgstr ""
 
-#: ../src/control/Control.cpp:2222
+#: ../src/control/Control.cpp:2220
 msgid ""
 "Error annotate PDF file \"{1}\"\n"
 "{2}"
@@ -1088,16 +1088,16 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2464 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "Save"
 msgstr ""
 
-#: ../src/control/Control.cpp:2466
+#: ../src/control/Control.cpp:2464
 msgid "Save As..."
 msgstr ""
 
-#: ../src/control/Control.cpp:2311 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2309 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr ""
 
@@ -1386,7 +1386,7 @@ msgstr ""
 msgid "Thick"
 msgstr ""
 
-#: ../src/control/Control.cpp:2465
+#: ../src/control/Control.cpp:2463
 msgid "This document is not saved yet."
 msgstr ""
 
@@ -1468,7 +1468,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2368
+#: ../src/control/Control.cpp:2366
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1526,7 +1526,7 @@ msgid ""
 "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2317 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2315 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr ""
 
@@ -1582,7 +1582,7 @@ msgstr ""
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/control/Control.cpp:2311 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2309 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1594,7 +1594,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/control/Control.cpp:2312 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr ""
