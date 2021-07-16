@@ -8,6 +8,34 @@
 
 #include "i18n.h"
 
+template <typename Float>
+constexpr void updateBounds(Float& x, Float& y, Float& width, Float& height, Rectangle<Float>& snap, Point const& p,
+                            double half_width) {
+    {
+        Float x2 = x + width;
+        Float y2 = y + height;
+
+        x = std::min(x, p.x - half_width);
+        y = std::min(y, p.y - half_width);
+        x2 = std::max(x2, p.x + half_width);
+        y2 = std::max(y2, p.y + half_width);
+        width = x2 - x;
+        height = y2 - y;
+    }
+    {
+        Float snapx2 = snap.x + snap.width;
+        Float snapy2 = snap.y + snap.height;
+
+        snap.x = std::min(snap.x, p.x);
+        snap.y = std::min(snap.y, p.y);
+        snapx2 = std::max(snapx2, p.x);
+        snapy2 = std::max(snapy2, p.y);
+        snap.width = snapx2 - snap.x;
+        snap.height = snapy2 - snap.y;
+    }
+}
+
+
 Stroke::Stroke(): AudioElement(ELEMENT_STROKE) {}
 
 Stroke::~Stroke() = default;
@@ -137,16 +165,23 @@ void Stroke::setLastPoint(const Point& p) {
 
 void Stroke::addPoint(const Point& p) {
     this->points.emplace_back(p);
-    this->sizeCalculated = false;
+    updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p,
+                 hasPressure() ? p.z / 2.0 : this->width / 2.0);
 }
 
 auto Stroke::getPointCount() const -> int { return this->points.size(); }
 
 auto Stroke::getPointVector() const -> std::vector<Point> const& { return points; }
 
-void Stroke::deletePointsFrom(int index) { points.resize(std::min(size_t(index), points.size())); }
+void Stroke::deletePointsFrom(int index) {
+    points.resize(std::min(size_t(index), points.size()));
+    this->sizeCalculated = false;
+}
 
-void Stroke::deletePoint(int index) { this->points.erase(std::next(begin(this->points), index)); }
+void Stroke::deletePoint(int index) {
+    this->points.erase(std::next(begin(this->points), index));
+    this->sizeCalculated = false;
+}
 
 auto Stroke::getPoint(int index) const -> Point {
     if (index < 0 || index >= this->points.size()) {
@@ -173,8 +208,9 @@ void Stroke::move(double dx, double dy) {
         point.x += dx;
         point.y += dy;
     }
-
-    this->sizeCalculated = false;
+    Element::x += dx;
+    Element::y += dy;
+    Element::snappedBounds = Element::snappedBounds.translated(dx, dy);
 }
 
 void Stroke::rotate(double x0, double y0, double th) {
@@ -187,8 +223,8 @@ void Stroke::rotate(double x0, double y0, double th) {
     for (auto&& p: points) {
         cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y);
     }
+    this->sizeCalculated = false;
     // Width and Height will likely be changed after this operation
-    calcSize();
 }
 
 void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
@@ -359,42 +395,33 @@ void Stroke::calcSize() const {
         Element::snappedBounds = Rectangle<double>{};
     }
 
-    double minX = DBL_MAX;
-    double maxX = DBL_MIN;
-    double minY = DBL_MAX;
-    double maxY = DBL_MIN;
-
     double minSnapX = DBL_MAX;
     double maxSnapX = DBL_MIN;
     double minSnapY = DBL_MAX;
     double maxSnapY = DBL_MIN;
 
-    bool hasPressure = points[0].z != Point::NO_PRESSURE;
-    double halfThick = this->width / 2.0;  //  accommodate for pen width
+    auto halfThick = 0.0;
 
+    //#pragma omp parralel
     for (auto&& p: points) {
-        if (hasPressure) {
-            halfThick = p.z / 2.0;
-        }
-
-        minX = std::min(minX, p.x - halfThick);
-        minY = std::min(minY, p.y - halfThick);
-
-        maxX = std::max(maxX, p.x + halfThick);
-        maxY = std::max(maxY, p.y + halfThick);
-
+        halfThick = std::max(halfThick, p.z);
         minSnapX = std::min(minSnapX, p.x);
         minSnapY = std::min(minSnapY, p.y);
-
         maxSnapX = std::max(maxSnapX, p.x);
         maxSnapY = std::max(maxSnapY, p.y);
     }
+
+    halfThick = points[0].z != Point::NO_PRESSURE ? halfThick / 2.0 : this->width / 2.0;
+
+    auto minX = minSnapX - halfThick;
+    auto minY = minSnapY - halfThick;
+    auto maxX = maxSnapX + halfThick;
+    auto maxY = maxSnapY + halfThick;
 
     Element::x = minX;
     Element::y = minY;
     Element::width = maxX - minX;
     Element::height = maxY - minY;
-
     Element::snappedBounds = Rectangle<double>(minSnapX, minSnapY, maxSnapX - minSnapX, maxSnapY - minSnapY);
 }
 
