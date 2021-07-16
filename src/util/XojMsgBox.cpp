@@ -77,7 +77,7 @@ auto XojMsgBox::replaceFileQuestion(GtkWindow* win, const string& msg) -> int {
     return res;
 }
 
-constexpr auto* XOJ_HELP = "https://github.com/xournalpp/xournalpp/wiki/User-Manual";
+constexpr auto* XOJ_HELP = "https://xournalpp.github.io/community/help/";
 
 void XojMsgBox::showHelp(GtkWindow* win) {
 #ifdef _WIN32
