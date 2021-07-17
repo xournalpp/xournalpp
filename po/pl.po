@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-26 10:29+0000\n"
-"PO-Revision-Date: 2021-06-27 05:30\n"
+"POT-Creation-Date: 2021-07-16 19:55+0000\n"
+"PO-Revision-Date: 2021-07-16 20:35\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -40,7 +40,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " z {1}"
 
-#: ../src/control/settings/Settings.cpp:111
+#: ../src/control/settings/Settings.cpp:113
 msgid "%F-Note-%H-%M"
 msgstr "%F-Notatka-%H-%M"
 
@@ -66,7 +66,7 @@ msgstr "<span foreground='red' size='x-large'>Brakuje wymaganego pliku UI:\n"
 msgid "Add/Edit Tex"
 msgstr "Dodaj/Edytuj Tex"
 
-#: ../src/control/XournalMain.cpp:682
+#: ../src/control/XournalMain.cpp:686
 msgid "Advanced export options"
 msgstr "Zaawansowane opcje eksportu"
 
@@ -91,33 +91,33 @@ msgstr "Ułóż"
 msgid "Attach file to the journal"
 msgstr "Dołącz plik do dziennika"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:102
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:112
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr "Atrybut \"{1}\" nie jest typu zmiennoprzecinkowego (wartość: \"{2}\")"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:95
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:105
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr "Atrybut \"{1}\" nie może zostać sparsowany do typu double, wartość nullptr"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:119
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:138
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:129
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:148
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr "Atrybut \"{1}\" nie jest typu całkowitego (wartość: \"{2}\")"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:112
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:122
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr "Atrybut \"{1}\" nie może zostać sparsowany do typu int, wartość nullptr"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:157
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:177
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:167
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:187
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Atrybut \"{1}\" nie może być przetworzony jako jako size_t, wartość to \"{2}\""
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:150
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr "Atrybut \"{1}\" nie może zostać sparsowany do typu size_t, wartość nullptr"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:44
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:54
 msgid "Attribute color not set!"
 msgstr "Atrybut koloru nie został ustawiony!"
 
@@ -166,7 +166,7 @@ msgstr "Przesuń warstwę wyżej"
 msgid "Bring to front"
 msgstr "Przenieś przed inne warstwy"
 
-#: ../src/control/Control.cpp:2021 ../src/control/Control.cpp:2474
+#: ../src/control/Control.cpp:2021 ../src/control/Control.cpp:2472
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Anuluj"
@@ -191,7 +191,7 @@ msgstr "Zmień wypełnienie kreski"
 msgid "Change stroke width"
 msgstr "Zmień grubość kreski"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:68
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:78
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "Nie rozpoznano koloru \"{1}\" (nie zdefiniowany w domyślnych)!"
 
@@ -275,7 +275,7 @@ msgstr "Nie można odczytać obrazu: {1}. Treść błędu: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:387
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Nie można odczytać numeru strony dla sklonowanego obrazu tła: {1}."
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -374,11 +374,11 @@ msgstr "Usuń tę warstwę"
 msgid "Delete this page"
 msgstr "Usuń stronę"
 
-#: ../src/control/Control.cpp:2471
+#: ../src/control/Control.cpp:2469
 msgid "Discard"
 msgstr "Odrzuć"
 
-#: ../src/control/XournalMain.cpp:683
+#: ../src/control/XournalMain.cpp:687
 msgid "Display advanced export options"
 msgstr "Wyświetl zaawansowane opcje eksportu"
 
@@ -394,7 +394,7 @@ msgstr "Nie otwieraj plików Auto-zapisu. Mogą zostać nadpisane!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Nie nadpisuj pliku kanwy PDF! To może spowodować błędy!"
 
-#: ../src/control/Control.cpp:2465
+#: ../src/control/Control.cpp:2463
 msgid "Document file was removed."
 msgstr "Dokument został usunięty."
 
@@ -463,7 +463,7 @@ msgstr "Typ rysowania - nie zmieniaj"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Rysowanie typu Combo"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -487,7 +487,7 @@ msgstr "Wymaż kreskę"
 msgid "Eraser"
 msgstr "Gumka"
 
-#: ../src/control/Control.cpp:2222
+#: ../src/control/Control.cpp:2220
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Błąd przy adnotowaniu pliku PDF \"{1}\"\n"
@@ -548,11 +548,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "Nie można usunąć pliku z raportem błędu. Trzeba to zrobić ręcznie.\n"
 "Plik loggera: {1}"
 
-#: ../src/control/XournalMain.cpp:640
+#: ../src/control/XournalMain.cpp:644
 msgid "Export FILE as PDF"
 msgstr "Eksportuj PLIK jako PDF"
 
-#: ../src/control/XournalMain.cpp:642
+#: ../src/control/XournalMain.cpp:646
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -564,7 +564,7 @@ msgstr "Eksportuj PLIK jako pliki obrazów (jeden na stronę)\n"
 msgid "Export PDF"
 msgstr "Eksportuj do PDF"
 
-#: ../src/control/XournalMain.cpp:656
+#: ../src/control/XournalMain.cpp:660
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -576,7 +576,7 @@ msgstr "Progresywny eksport warstw\n"
 "                                 buduje to progresywny stos warstw.\n"
 "                                 Wynikowy plik PDF może być użyty do prezentacji.\n"
 
-#: ../src/control/XournalMain.cpp:647
+#: ../src/control/XournalMain.cpp:651
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -584,7 +584,7 @@ msgstr "Eksport bez tła\n"
 "                                 Eksportowany plik ma przezroczyste lub białe tło,\n"
 "                                 zalerznie od tego, co obsługuje format pliku\n"
 
-#: ../src/control/XournalMain.cpp:652
+#: ../src/control/XournalMain.cpp:656
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Eksport bez linii\n"
@@ -637,7 +637,11 @@ msgstr "Czcionka"
 msgid "Forward"
 msgstr "Dalej"
 
-#: ../src/control/XournalMain.cpp:631
+#: ../src/gui/dialog/AboutDialog.cpp:40
+msgid "GNU GPLv2 or later"
+msgstr "GNU GPLv2 lub nowsza"
+
+#: ../src/control/XournalMain.cpp:635
 msgid "Get version of xournalpp"
 msgstr "Pokaż wersję xournalpp"
 
@@ -754,7 +758,7 @@ msgstr "Izometryczna kropkowana"
 msgid "Isometric Graph"
 msgstr "Wykres izometryczny"
 
-#: ../src/control/XournalMain.cpp:627
+#: ../src/control/XournalMain.cpp:631
 msgid "Jump to Page (first Page: 1)"
 msgstr "Skocz do strony (pierwsza strona: 1)"
 
@@ -874,7 +878,7 @@ msgstr "Normalne rysowanie"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/control/XournalMain.cpp:663
+#: ../src/control/XournalMain.cpp:667
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Eksportuj tylko strony określone przez ZAKRES (np. \"2-3,5,7-\")\n"
@@ -897,7 +901,7 @@ msgstr "Otwórz folder z plikami loggera"
 msgid "Open file"
 msgstr "Otwórz plik"
 
-#: ../src/control/RecentManager.cpp:170
+#: ../src/control/RecentManager.cpp:183
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Otwórz {1}"
@@ -1043,7 +1047,7 @@ msgstr "Usunięto element {1} z paska narzędzi {2} ID {3}"
 msgid "Rename layer"
 msgstr "Zmień nazwę warstwy"
 
-#: ../src/util/XojMsgBox.cpp:71
+#: ../src/util/XojMsgBox.cpp:74
 msgid "Replace"
 msgstr "Zamień"
 
@@ -1079,16 +1083,16 @@ msgstr "Obraz SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Przykładowy plik LaTeX został wygenerowany pomyślnie."
 
-#: ../src/control/Control.cpp:2466 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/control/Control.cpp:2464 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "Save"
 msgstr "Zapisz"
 
-#: ../src/control/Control.cpp:2466
+#: ../src/control/Control.cpp:2464
 msgid "Save As..."
 msgstr "Zapisz jako..."
 
-#: ../src/control/Control.cpp:2311 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2309 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Zapisz plik"
 
@@ -1104,6 +1108,10 @@ msgstr "Skaluj"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 msgid "Search"
 msgstr "Wyszukaj"
+
+#: ../src/gui/dialog/AboutDialog.cpp:33
+msgid "See the full list of contributors"
+msgstr "Zobacz pełną listę współtwórców"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Select Font"
@@ -1132,7 +1140,7 @@ msgstr "Wybierz obszar"
 msgid "Select another PDF"
 msgstr "Wybierz inny PDF"
 
-#: ../src/util/XojMsgBox.cpp:70
+#: ../src/util/XojMsgBox.cpp:73
 msgid "Select another name"
 msgstr "Wybierz inną nazwę"
 
@@ -1173,13 +1181,13 @@ msgstr "Przenieś na tył warstw"
 msgid "Separator"
 msgstr "Separator"
 
-#: ../src/control/XournalMain.cpp:667
+#: ../src/control/XournalMain.cpp:671
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Ustaw DPI dla eksportu PNG. Domyślnie jest to 300\n"
 "                                 Działa jedynie z -i/--create-img=foo.png"
 
-#: ../src/control/XournalMain.cpp:677
+#: ../src/control/XournalMain.cpp:681
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1187,7 +1195,7 @@ msgstr "Ustaw wysokość strony dla eksportu PNG\n"
 "                                 Działa jedynie z -i/--create-img=foo.png\n"
 "                                 Ignorowane dla --export-png-dpi lub --export-png-width"
 
-#: ../src/control/XournalMain.cpp:671
+#: ../src/control/XournalMain.cpp:675
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1355,7 +1363,7 @@ msgstr "Znaleziono raporty błędów programu Xournal++. Prosimy o ich wysłanie
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Znaleziono raport błędu programu Xournal++. Prosimy o jego wysłanie, w celu umożliwienia naprawy."
 
-#: ../src/util/XojMsgBox.cpp:89
+#: ../src/util/XojMsgBox.cpp:92
 msgid "There was an error displaying help: {1}"
 msgstr "Błąd podczas wyświetlania pomocy: {1}"
 
@@ -1363,7 +1371,7 @@ msgstr "Błąd podczas wyświetlania pomocy: {1}"
 msgid "Thick"
 msgstr "Gruby"
 
-#: ../src/control/Control.cpp:2465
+#: ../src/control/Control.cpp:2463
 msgid "This document is not saved yet."
 msgstr "Dokument nie został jeszcze zapisany."
 
@@ -1425,7 +1433,7 @@ msgstr "Niespodziewany tag w dokumencie: \"{1}\""
 msgid "Unknown background type: {1}"
 msgstr "Nieznany rodzaj tła: {1}"
 
-#: ../src/control/xojfile/LoadHandlerHelper.cpp:52
+#: ../src/control/xojfile/LoadHandlerHelper.cpp:62
 msgid "Unknown color value \"{1}\""
 msgstr "Nieznany kolor \"{1}\""
 
@@ -1445,7 +1453,7 @@ msgstr "Nieznany typ pixmap::domain: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Nieznany rodzaj kreski: \"{1}\", zakładam, że to pióro"
 
-#: ../src/control/Control.cpp:2368
+#: ../src/control/Control.cpp:2366
 msgid "Unsaved Document"
 msgstr "Niezapisany dokument"
 
@@ -1502,7 +1510,7 @@ msgstr "Pliki Xournala"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ przestał odpowiadać się ostatnim razem. Czy chcesz przywrócić ostatni edytowany plik?"
 
-#: ../src/control/Control.cpp:2317 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2315 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Pliki Xournal++"
 
@@ -1554,7 +1562,7 @@ msgstr "Oddal"
 msgid "Zoom to 100%"
 msgstr "Powiększ do 100%"
 
-#: ../src/control/Control.cpp:2311 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2309 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1566,7 +1574,7 @@ msgstr "_Anuluj"
 msgid "_Open"
 msgstr "_Otwórz"
 
-#: ../src/control/Control.cpp:2312 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:17
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr "_Zapisz"
@@ -1712,11 +1720,11 @@ msgstr "xournalpp-{1}"
 msgid " = Floating Toolbox (experimental) ="
 msgstr " = Pływające narzędzia (eksperymentalne) ="
 
-#: ../ui/settings.glade:3635 ../ui/settings.glade:3646
+#: ../ui/settings.glade:3637 ../ui/settings.glade:3648
 msgid "%"
 msgstr "%"
 
-#: ../ui/settings.glade:2429
+#: ../ui/settings.glade:2431
 msgid "% greater than the initial distance between the two touches."
 msgstr "% więcej niż początkowa odległość między dwoma dotknięciami."
 
@@ -1728,7 +1736,7 @@ msgstr "%%XPP_TEXT_COLOR%%"
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
-#: ../ui/settings.glade:4618
+#: ../ui/settings.glade:4620
 msgid "%."
 msgstr "%."
 
@@ -1780,49 +1788,49 @@ msgstr "%a\t\tSkrócona nazwa dnia tygodnia (np. Wt.)\n"
 "%Z\t\tNazwa lub skrót strefy czasowej (np. CDT)\n"
 "%%\t\tZnak %"
 
-#: ../ui/settings.glade:4459
+#: ../ui/settings.glade:4461
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr "... ORAZ ile czasu musi upłynąć od ostatniego uderzenia.\n\n"
 "<i>Zalecane: 500ms</i>"
 
-#: ../ui/settings.glade:1077
+#: ../ui/settings.glade:1079
 msgid "0,4"
 msgstr "0,4"
 
-#: ../ui/settings.glade:1129
+#: ../ui/settings.glade:1131
 msgid "0,50"
 msgstr "0,50"
 
-#: ../ui/settings.glade:4602
+#: ../ui/settings.glade:4604
 msgid "0.00"
 msgstr "0.00"
 
-#: ../ui/settings.glade:1712
+#: ../ui/settings.glade:1714
 msgid "1"
 msgstr "1"
 
-#: ../ui/settings.glade:5176
+#: ../ui/settings.glade:5178
 msgid "1,00"
 msgstr "1,00"
 
-#: ../ui/settings.glade:1045
+#: ../ui/settings.glade:1047
 msgid "1,30"
 msgstr "1,30"
 
-#: ../ui/settings.glade:2414
+#: ../ui/settings.glade:2416
 msgid "1.0"
 msgstr "1.0"
 
-#: ../ui/settings.glade:1016
+#: ../ui/settings.glade:1018
 msgid "20"
 msgstr "20"
 
-#: ../ui/settings.glade:2994
+#: ../ui/settings.glade:2996
 msgid "30"
 msgstr "30"
 
-#: ../ui/settings.glade:1109
+#: ../ui/settings.glade:1111
 msgid "5"
 msgstr "5"
 
@@ -1846,7 +1854,7 @@ msgstr "<b>Kolor</b>"
 msgid "<b>Default Tools</b>"
 msgstr "<b>Domyślne narzędzia</b>"
 
-#: ../ui/settings.glade:4777
+#: ../ui/settings.glade:4779
 msgid "<b>Default</b>"
 msgstr "<b>Domyślne</b>"
 
@@ -1880,19 +1888,19 @@ msgstr "<b>Rozmiar strony</b>"
 msgid "<b>Separator</b>"
 msgstr "<b>Separator</b>"
 
-#: ../ui/settings.glade:765
+#: ../ui/settings.glade:767
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr "<i>Przypisz klasy urządzeń do każdego urządzenia wejściowego w systemie. Zmień te ustawienie tylko wtedy, gdy twoje urządzenia nie są poprawnie dopasowane. (np. twój długopis pokazuje się jako ekran dotykowy)</i>"
 
-#: ../ui/settings.glade:4868
+#: ../ui/settings.glade:4870
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr "<i>Nagrania audio są obecnie przechowywane w oddzielnym folderze i wywoływane z dziennika.</i>"
 
-#: ../ui/settings.glade:5210
+#: ../ui/settings.glade:5212
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr "<i>Zmiany mają wpływ tylko na nowe nagrania i odtwarzanie.</i>"
 
-#: ../ui/settings.glade:1314
+#: ../ui/settings.glade:1316
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
 msgstr "<i>Określ, które narzędzie zostanie wybrane po naciśnięciu przycisku myszy. Po zwolnieniu przycisku poprzednie narzędzie zostanie przywrócone.</i>"
 
@@ -1906,59 +1914,55 @@ msgid "<i>If the document already was saved you can find it in the same folder w
 msgstr "<i>Jeśli dokument został już zapisany, możesz znaleźć go w tym samym folderze z rozszerzeniem .autosave.xoj\n"
 "Jeśli plik nie został jeszcze zapisany, możesz go znaleźć w katalogu domowym, w ~/.xournalpp/autosave</i>"
 
-#: ../ui/settings.glade:3866
+#: ../ui/settings.glade:3868
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr "<i>Jeśli dodasz miejsce obok stron, możesz wybrać obszar ekranu na którym chcesz pracować.</i>"
 
-#: ../ui/settings.glade:651
-msgid "<i>If you open a PDF and there is a Xournal file with the same name it will open the xoj file.</i>"
-msgstr "<i>Jeśli otworzysz plik PDF, ale istnieć będzie plik Xournal o tej samej nazwie, zostanie otwarty plik xoj</i>"
-
-#: ../ui/settings.glade:2064
+#: ../ui/settings.glade:2066
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
 msgstr "<i>Jeśli twój sprzęt nie obsługuje rozpoznawania dłoni, Xournal++ może wyłączyć ekran dotykowy, gdy twój rysik znajdzie się blisko ekranu.</i>"
 
-#: ../ui/settings.glade:987
+#: ../ui/settings.glade:989
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
 msgstr "<i>Wybierz algorytm stabilizacji kursora i jego parametry</i>"
 
-#: ../ui/settings.glade:1492
+#: ../ui/settings.glade:1494
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr "<i>Czułość nacisku pozwala na rysowanie linii o różnej szerokości, w zależności od tego, jak mocno naciskasz rysikiem na ekran. Jeśli Twój tablet nie obsługuje tej funkcji - nic nie zmieni.</i>"
 
-#: ../ui/settings.glade:3713
+#: ../ui/settings.glade:3715
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr "<i>Umieść linijkę na ekranie i przesuń suwak, aż obie linijki będą pasować.</i>"
 
-#: ../ui/settings.glade:4562
+#: ../ui/settings.glade:4564
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr "<i>Re-renderowanie tła PDF częściej podczas powiększania dla lepszej jakości renderowania. \n"
 "<b>Uwaga:</b> Nie powinno to mieć wpływu na jakość druku.</i>"
 
-#: ../ui/settings.glade:5319
+#: ../ui/settings.glade:5321
 msgid "<i>Select language (requires restart)</i>"
 msgstr "<i>Wybierz język (wymaga ponownego uruchomienia)</i>"
 
-#: ../ui/settings.glade:4723
+#: ../ui/settings.glade:4725
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr "<i>Wybierz narzędzie i ustawienia naciśnięcia przycisku domyślnego.</i>"
 
-#: ../ui/settings.glade:1541
+#: ../ui/settings.glade:1543
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
 msgstr "<i>Niektóre urządzenia zgłaszają niespodziewanie mały lub duży nacisk. Można to naprawić poprzez ustawienie minimalnego nacisku lub skalowanie nacisku zgłoszonego przez urządzenie.</i>"
 
-#: ../ui/settings.glade:2204
+#: ../ui/settings.glade:2206
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr "<i>Sprecyzuj komendy które są wywoływane gdy Rozpoznawanie Dłoni zostanie aktywowane. Komendy będą wykonane w interfejsie graficznym, upewnij się że nie są blokowane!</i>"
 
-#: ../ui/settings.glade:4957
+#: ../ui/settings.glade:4959
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Określ urządzenia audio używane do nagrywania i odtwarzania załączników audio. \n"
 "Jeśli jest dostępne wybierz <small><tt>pulse</tt></small> jako urządzenie wejścia / wyjścia.</i>"
 
-#: ../ui/settings.glade:1782
+#: ../ui/settings.glade:1784
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
 msgstr "<i>Określ narzędzia, które zostaną wybrane, po naciśnięciu przycisku rysika lub podczas używania gumki do mazania. Po zwolnieniu przycisku wybrane zostanie poprzednie narzędzie.</i>"
 
@@ -1966,31 +1970,31 @@ msgstr "<i>Określ narzędzia, które zostaną wybrane, po naciśnięciu przycis
 msgid "<i>This name will be proposed if you save a new document.</i>"
 msgstr "<i>Ta nazwa zostanie zaproponowana, gdy będziesz zapisywać nowy dokument</i>"
 
-#: ../ui/settings.glade:3692
+#: ../ui/settings.glade:3694
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
 msgstr "<i>Aby upewnić się, że przy 100% powiększeniu rozmiar elementów jest naturalny. (wymaga ponownego uruchomienia)</i>"
 
-#: ../ui/settings.glade:2623
+#: ../ui/settings.glade:2625
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr "<i>Przełącz widoczność paska menu przy użyciu klawisza F10</i>"
 
-#: ../ui/settings.glade:2366
+#: ../ui/settings.glade:2368
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
 msgstr "<i>Użyj gestów uszczypnięcia aby przybliżyć strony dziennika.</i>"
 
-#: ../ui/settings.glade:2482
+#: ../ui/settings.glade:2484
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
 msgstr "<i>Używaj ekran dotykowy tak jakbyś używał wielodotykowy rysik.</i>"
 
-#: ../ui/settings.glade:1675
+#: ../ui/settings.glade:1677
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
 msgstr "<i>W pewnych zestawianiach sprzętowych, dane z tabletu mają artefakty na początku. Można tego uniknąć poprzez zignorowanie kilku pierwszych śladów kiedy długopis zaczyna pisać.</i>"
 
-#: ../ui/settings.glade:1998
+#: ../ui/settings.glade:2000
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>Możesz skonfigurować urządzenia które nie zostały zidentyfikowane przez GTK jako ekran dotykowy, aby zachowywały się tak, jakby nim były.</i>"
 
-#: ../ui/about.glade:73
+#: ../ui/about.glade:203
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2000,15 +2004,15 @@ msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 msgid "About Xournal++"
 msgstr "O Xournal++"
 
-#: ../ui/settings.glade:4531
+#: ../ui/settings.glade:4533
 msgid "Action on Tool Tap"
 msgstr "Akcja dotknięcia narzędziem"
 
-#: ../ui/settings.glade:3918
+#: ../ui/settings.glade:3920
 msgid "Add additional horizontal space of"
 msgstr "Dodaj opcjonalny odstęp poziomy"
 
-#: ../ui/settings.glade:3896
+#: ../ui/settings.glade:3898
 msgid "Add additional vertical space of"
 msgstr "Dodaj opcjonalny odstęp pionowy"
 
@@ -2016,7 +2020,7 @@ msgstr "Dodaj opcjonalny odstęp pionowy"
 msgid "Add/Edit TeX"
 msgstr "Dodaj/Edytuj Tex"
 
-#: ../ui/settings.glade:4170
+#: ../ui/settings.glade:4172
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr "Po zmianie rozmiaru zaznaczenia, szerokość linii wszystkich uderzeń będzie taka sama jak przed operacją zmiany rozmiaru. "
 
@@ -2028,7 +2032,7 @@ msgstr "Wszystkie"
 msgid "All pages"
 msgstr "Wszystkie strony"
 
-#: ../ui/settings.glade:4496
+#: ../ui/settings.glade:4498
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr "Wszystkie trzy warunki muszą być spełnione przed zignorowaniem śladu.\n"
@@ -2046,15 +2050,15 @@ msgstr "Dołącz nowe strony PDF"
 msgid "Arithmetic mean"
 msgstr "Średnia arytmetyczna"
 
-#: ../ui/settings.glade:1751
+#: ../ui/settings.glade:1753
 msgid "Artifact workaround"
 msgstr "Obejście artefaktu"
 
-#: ../ui/settings.glade:5037
+#: ../ui/settings.glade:5039
 msgid "Audio Devices"
 msgstr "Urządzenia dźwiękowe"
 
-#: ../ui/settings.glade:5242
+#: ../ui/settings.glade:5244
 msgid "Audio Recording"
 msgstr "Nagrywanie dźwięku"
 
@@ -2062,17 +2066,17 @@ msgstr "Nagrywanie dźwięku"
 msgid "Author: "
 msgstr "Autor: "
 
-#: ../ui/about.glade:211
-msgid "Authors:"
-msgstr "Autorzy:"
+#: ../ui/about.glade:449
+msgid "Authors"
+msgstr "Autorzy"
 
-#: ../ui/settings.glade:2134
+#: ../ui/settings.glade:2136
 msgid "Autodetect"
 msgstr "Automatyczne wykrywanie"
 
-#: ../ui/settings.glade:687
-msgid "Autoloading Journals"
-msgstr "Automatyczne ładowanie dzienników"
+#: ../ui/settings.glade:689
+msgid "Autoloading"
+msgstr "Ładowanie automatyczne"
 
 #: ../ui/settings.glade:446
 msgid "Autosaving"
@@ -2082,32 +2086,32 @@ msgstr "Automatyczne zapisywanie"
 msgid "Available Placeholders"
 msgstr "Dostępne zmienne tymczasowe"
 
-#: ../ui/settings.glade:954
+#: ../ui/settings.glade:956
 msgid "Averaging method"
 msgstr "Metoda uśredniania"
 
-#: ../ui/settings.glade:2687
+#: ../ui/settings.glade:2689
 msgid "Background color between pages"
 msgstr "Kolor tła pomiędzy stronami"
 
-#: ../ui/settings.glade:2846
+#: ../ui/settings.glade:2848
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr "Duża ikona pióra"
 
-#: ../ui/settings.glade:3049
+#: ../ui/settings.glade:3051
 msgid "Border Color"
 msgstr "Kolor obramowania"
 
-#: ../ui/settings.glade:3010
+#: ../ui/settings.glade:3012
 msgid "Border Width"
 msgstr "Szerokość obramowania"
 
-#: ../ui/settings.glade:2676
+#: ../ui/settings.glade:2678
 msgid "Border color"
 msgstr "Kolor obramowania"
 
-#: ../ui/settings.glade:2661
+#: ../ui/settings.glade:2663
 msgid "Border color for current page and other selections"
 msgstr "Kolor ramki dla bieżącej strony oraz innych wybranych elementów"
 
@@ -2119,19 +2123,19 @@ msgstr "Przesuń warstwę wyżej"
 msgid "Bring to Front"
 msgstr "Przenieś przed inne warstwy"
 
-#: ../ui/settings.glade:1004
+#: ../ui/settings.glade:1006
 msgid "Buffersize"
 msgstr "Rozmiar bufora"
 
-#: ../ui/about.glade:127
+#: ../ui/about.glade:99
 msgid "Built on"
 msgstr "Zbudowane"
 
-#: ../ui/settings.glade:1822
+#: ../ui/settings.glade:1824
 msgid "Button 1"
 msgstr "Przycisk 1"
 
-#: ../ui/settings.glade:1860
+#: ../ui/settings.glade:1862
 msgid "Button 2"
 msgstr "Przycisk 2"
 
@@ -2139,19 +2143,19 @@ msgstr "Przycisk 2"
 msgid "Choose a global LaTeX template file"
 msgstr "Wybierz globalny plik szablonu LaTeX"
 
-#: ../ui/settings.glade:2892 ../ui/settings.glade:3035
+#: ../ui/settings.glade:2894 ../ui/settings.glade:3037
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr "Wybierz kolor dla \"Podświetl pozycję kursora\""
 
-#: ../ui/settings.glade:2906
+#: ../ui/settings.glade:2908
 msgid "Circle Color"
 msgstr "Kolor okręgu"
 
-#: ../ui/settings.glade:3476
+#: ../ui/settings.glade:3478
 msgid "Clear cached paged while scrolling"
 msgstr "Wyczyść buforowane strony podczas przewijania"
 
-#: ../ui/settings.glade:2773
+#: ../ui/settings.glade:2775
 msgid "Colors"
 msgstr "Kolory"
 
@@ -2179,23 +2183,23 @@ msgstr "Skopiuj tło bieżącej strony zamiast używać tła ustawionego powyże
 msgid "Current page"
 msgstr "Aktywna strona"
 
-#: ../ui/settings.glade:3083
+#: ../ui/settings.glade:3085
 msgid "Cursor"
 msgstr "Kursor"
 
-#: ../ui/settings.glade:2828
+#: ../ui/settings.glade:2830
 msgid "Cursor icon for pen"
 msgstr "Ikona kursora dla pióra"
 
-#: ../ui/settings.glade:1192
+#: ../ui/settings.glade:1194
 msgid "Cusp detection"
 msgstr "Wykrywanie wierzchołku"
 
-#: ../ui/settings.glade:2310
+#: ../ui/settings.glade:2312
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr "Niestandardowe polecenia (dla metod \"Własnych\")"
 
-#: ../ui/settings.glade:2735
+#: ../ui/settings.glade:2737
 msgid "Dark Theme (requires restart)"
 msgstr "Ciemny motyw (wymaga restartu)"
 
@@ -2203,7 +2207,7 @@ msgstr "Ciemny motyw (wymaga restartu)"
 msgid "Deadzone"
 msgstr "Martwa strefa"
 
-#: ../ui/settings.glade:1033
+#: ../ui/settings.glade:1035
 msgid "Deadzone radius"
 msgstr "Promień martwej strefy"
 
@@ -2211,7 +2215,7 @@ msgstr "Promień martwej strefy"
 msgid "Default Save Name"
 msgstr "Domyślna nazwa zapisu"
 
-#: ../ui/settings.glade:5163
+#: ../ui/settings.glade:5165
 msgid "Default Seek Time (in seconds)"
 msgstr "Domyślny czas przewijania (w sekundach)"
 
@@ -2219,7 +2223,7 @@ msgstr "Domyślny czas przewijania (w sekundach)"
 msgid "Default name: "
 msgstr "Domyślna nazwa: "
 
-#: ../ui/settings.glade:4817
+#: ../ui/settings.glade:4819
 msgid "Defaults"
 msgstr "Domyślne"
 
@@ -2235,7 +2239,7 @@ msgstr "Usuń kreskę"
 msgid "Device"
 msgstr "Urządzenie"
 
-#: ../ui/settings.glade:2238
+#: ../ui/settings.glade:2240
 msgid "Disable"
 msgstr "Wyłącz"
 
@@ -2243,7 +2247,7 @@ msgstr "Wyłącz"
 msgid "Disable drawing for this device"
 msgstr "Wyłącz rysowanie przy użyciu tego urządzenia"
 
-#: ../ui/settings.glade:3209
+#: ../ui/settings.glade:3211
 msgid "Disable scrollbar fade out"
 msgstr "Wyłącz zanikanie paska przewijania"
 
@@ -2251,23 +2255,23 @@ msgstr "Wyłącz zanikanie paska przewijania"
 msgid "Disabled"
 msgstr "Wyłączony"
 
-#: ../ui/settings.glade:2108
+#: ../ui/settings.glade:2110
 msgid "Disabling Method"
 msgstr "Wyłączanie metod"
 
-#: ../ui/settings.glade:3784
+#: ../ui/settings.glade:3786
 msgid "Display DPI Calibration"
 msgstr "Wyświetl kalibrację DPI"
 
-#: ../ui/settings.glade:4371
+#: ../ui/settings.glade:4373
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr "Nie rysuj dla danych wejściowych o krótkim czasie i długości, chyba że nastąpi to w krótkim czasie. Zamiast tego pokazuj pływający zestaw narzędzi."
 
-#: ../ui/settings.glade:1064
+#: ../ui/settings.glade:1066
 msgid "Drag"
 msgstr "Przeciągnij"
 
-#: ../ui/settings.glade:859
+#: ../ui/settings.glade:861
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -2277,7 +2281,7 @@ msgstr "Przeciągnięcie w LEWO od punktu startowego zachowuje się jak przytrzy
 "\tPromień detekcji: Promień, w którym modyfikatory zostaną zachowane do momentu zakończenia rysowania.\n\n"
 "\t<i>Przydatne do pracy bez klawiatury.</i>"
 
-#: ../ui/settings.glade:4089
+#: ../ui/settings.glade:4091
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -2291,11 +2295,11 @@ msgstr "Przeciągnięcie w LEWO od punktu startowego zachowuje się jak przytrzy
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr "Przeciągnij i upuść Komponenty na paski narzędzi i z powrotem."
 
-#: ../ui/settings.glade:1063
+#: ../ui/settings.glade:1065
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
 msgstr "Przeciągnięcie: Jeśli wartość jest zbyt mała, mogą pojawić się oscylacje. Jeśli wartość jest zbyt wysoka, nie będzie stabilizacji."
 
-#: ../ui/settings.glade:1075
+#: ../ui/settings.glade:1077
 msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
 msgstr "Przeciągnięcie: Jeśli wartość jest zbyt mała, mogą pojawić się oscylacje. Jeśli wartość jest zbyt niska, nie będzie stabilizacji."
 
@@ -2307,15 +2311,15 @@ msgstr "Rysuj układ współrzędnych"
 msgid "Draw _Line"
 msgstr "Rysuj _Linię"
 
-#: ../ui/settings.glade:2874
+#: ../ui/settings.glade:2876
 msgid "Draw a transparent circle around the cursor"
 msgstr "Rysuj przeźroczysty okrąg wokół kursora"
 
-#: ../ui/settings.glade:4672
+#: ../ui/settings.glade:4674
 msgid "Drawing Area"
 msgstr "Obszar rysowania"
 
-#: ../ui/settings.glade:4139
+#: ../ui/settings.glade:4141
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Narzędzia do rysowania - Ustaw modyfikatory według Kierunku Rysowania (Eksperymentalne)"
 
@@ -2327,15 +2331,15 @@ msgstr "Duplikuj"
 msgid "Edit (not implemented yet)"
 msgstr "Edycja (nie zaimplementowana)"
 
-#: ../ui/settings.glade:2226
+#: ../ui/settings.glade:2228
 msgid "Enable"
 msgstr "Aktywuj"
 
-#: ../ui/settings.glade:4084
+#: ../ui/settings.glade:4086
 msgid "Enable  with determination radius of "
 msgstr "Włącz z promieniem określenia "
 
-#: ../ui/settings.glade:665
+#: ../ui/settings.glade:649
 msgid "Enable Autoloading of Journals"
 msgstr "Włącz automatyczne wczytywanie dzienników"
 
@@ -2343,31 +2347,35 @@ msgstr "Włącz automatyczne wczytywanie dzienników"
 msgid "Enable Autosaving"
 msgstr "Aktywuj Automatyczny Zapis"
 
-#: ../ui/settings.glade:900
+#: ../ui/settings.glade:902
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
 msgstr "Włącz wnioskowanie nacisku <i>(Zgaduj siłę nacisku na podstawie prędkości rysowania, gdy nacisk dostarczany przez urządzenie jest niedostępny)</i>"
 
-#: ../ui/settings.glade:1506
+#: ../ui/settings.glade:1508
 msgid "Enable Pressure Sensitivity"
 msgstr "Włącz czułość nacisku"
 
-#: ../ui/settings.glade:4366
+#: ../ui/settings.glade:4368
 msgid "Enable Tap action"
 msgstr "Włącz akcję dotknięcia"
 
-#: ../ui/settings.glade:840
+#: ../ui/settings.glade:666
+msgid "Enable autoloading of most recent file on application startup"
+msgstr "Włącz automatyczne ładowanie dla najnowszych plików, przy starcie aplikacji"
+
+#: ../ui/settings.glade:842
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
 msgstr "Włącz rysowanie poza oknem programu <i>(Rysunek nie zatrzyma się na obramowaniu okna)</i>"
 
-#: ../ui/settings.glade:2078
+#: ../ui/settings.glade:2080
 msgid "Enable internal Hand Recognition"
 msgstr "Włącz wewnętrzne rozpoznawanie dłoni"
 
-#: ../ui/settings.glade:2496
+#: ../ui/settings.glade:2498
 msgid "Enable touch drawing"
 msgstr "Włącz rysowanie dotykiem"
 
-#: ../ui/settings.glade:2378
+#: ../ui/settings.glade:2380
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Włącz gesty powiększenia (wymaga ponownego uruchomienia)"
 
@@ -2408,7 +2416,7 @@ msgstr "Wy_pełnij"
 msgid "Fill opacity"
 msgstr "Krycie wypełnienia"
 
-#: ../ui/settings.glade:1209
+#: ../ui/settings.glade:1211
 msgid "Finalize the stroke"
 msgstr "Dokończ pociągnięcie"
 
@@ -2420,23 +2428,19 @@ msgstr "Znajdź następne występowanie wyszukiwanego tekstu"
 msgid "Find previous occurrence of the search string"
 msgstr "Znajdź poprzednie występowanie wyszukiwanego tekstu"
 
-#: ../ui/settings.glade:4023
+#: ../ui/settings.glade:4025
 msgid "First Page Offset "
 msgstr "Przesunięcie pierwszej strony "
 
-#: ../ui/main.glade:532 ../ui/settings.glade:3296
+#: ../ui/main.glade:532 ../ui/settings.glade:3298
 msgid "Fullscreen"
 msgstr "Pełny ekran"
 
-#: ../ui/about.glade:307
-msgid "GNU GPLv2 or later"
-msgstr "GNU GPLv2 lub nowsza"
-
-#: ../ui/settings.glade:5081
+#: ../ui/settings.glade:5083
 msgid "Gain"
 msgstr "Przyrost"
 
-#: ../ui/settings.glade:1127 ../ui/settings.glade:1147
+#: ../ui/settings.glade:1129 ../ui/settings.glade:1149
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr "Parametr Gaussa: im wyższy, tym większa stabilizacja i tym większe opóźnienie między kursorem a końcówką do malowania."
 
@@ -2444,11 +2448,11 @@ msgstr "Parametr Gaussa: im wyższy, tym większa stabilizacja i tym większe op
 msgid "General LaTeX tool settings"
 msgstr "Ustawienia ogólne LaTeX"
 
-#: ../ui/about.glade:153
+#: ../ui/about.glade:114
 msgid "Git commit"
 msgstr "Git commit"
 
-#: ../ui/settings.glade:2791
+#: ../ui/settings.glade:2793
 msgid "Global"
 msgstr "Ogólne"
 
@@ -2460,11 +2464,11 @@ msgstr "Globalna ścieżka pliku szablonu"
 msgid "Go to Page"
 msgstr "Przejdź do strony"
 
-#: ../ui/settings.glade:4283
+#: ../ui/settings.glade:4285
 msgid "Grid size"
 msgstr "Rozmiar siatki"
 
-#: ../ui/settings.glade:4240
+#: ../ui/settings.glade:4242
 msgid "Grid snapping tolerance"
 msgstr "Tolerancja przyciągania siatki"
 
@@ -2472,7 +2476,7 @@ msgstr "Tolerancja przyciągania siatki"
 msgid "H_and Tool"
 msgstr "N_arzędzie ręki"
 
-#: ../ui/settings.glade:2335
+#: ../ui/settings.glade:2337
 msgid "Hand Recognition"
 msgstr "Rozpoznawanie Tekstu"
 
@@ -2484,23 +2488,23 @@ msgstr "Wysokość"
 msgid "Height:"
 msgstr "Wysokość:"
 
-#: ../ui/main.glade:951 ../ui/settings.glade:3258 ../ui/settings.glade:3325
+#: ../ui/main.glade:951 ../ui/settings.glade:3260 ../ui/settings.glade:3327
 msgid "Hide Menubar"
 msgstr "Ukryj pasek menu"
 
-#: ../ui/settings.glade:3274 ../ui/settings.glade:3341
+#: ../ui/settings.glade:3276 ../ui/settings.glade:3343
 msgid "Hide Sidebar"
 msgstr "Ukryj pasek boczny"
 
-#: ../ui/settings.glade:3179
+#: ../ui/settings.glade:3181
 msgid "Hide the horizontal scrollbar"
 msgstr "Ukryj poziomy suwak"
 
-#: ../ui/settings.glade:3194
+#: ../ui/settings.glade:3196
 msgid "Hide the vertical scrollbar"
 msgstr "Ukryj pionowy suwak"
 
-#: ../ui/settings.glade:2869
+#: ../ui/settings.glade:2871
 msgid "Highlight cursor position"
 msgstr "Podświetl pozycję kursora"
 
@@ -2508,21 +2512,29 @@ msgstr "Podświetl pozycję kursora"
 msgid "Highlighter Opti_ons"
 msgstr "Usta_wienia zakreślacza"
 
-#: ../ui/settings.glade:4416
+#: ../ui/settings.glade:4418
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr "Jak krótki (ekran mm) pociągnięcia I...\n\n"
 "<i>Zalecane: 1 mm</i>"
 
-#: ../ui/settings.glade:4396
+#: ../ui/settings.glade:4398
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr "Jak krótki (czas) I...\n\n"
 "<i>Zalecane: 150 ms</i>"
 
-#: ../ui/settings.glade:4319
+#: ../ui/about.glade:243
+msgid "Icon Designers"
+msgstr "Projektanci ikon"
+
+#: ../ui/settings.glade:4321
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr "Jeśli aktywowane, kształty, które zostały rozpoznane przez rozpoznawanie kształtu zostaną automatycznie dopasowane do siatki. Może to prowadzić do niespodziewanych wyników, jeśli podczas pisania włączysz rozpoznawanie kształtu."
+
+#: ../ui/settings.glade:671
+msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
+msgstr "Jeśli włączono, Xournal++ otworzy najnowszy dokument automaczynie umożliwiając edycję ostatniego zapisanego dokumentu."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2532,11 +2544,15 @@ msgstr "Jeśli włączone, sprawdzaj, czy wymagane pakiety LaTeX są zainstalowa
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
 msgstr "Jeśli włączone, warstwy każdej strony zostaną dodane jedna po drugiej. Wynikający plik PDF może być użyty do prezentacji."
 
-#: ../ui/settings.glade:4384
+#: ../ui/settings.glade:654
+msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
+msgstr "Jeśli otworzysz plik PDF, ale będzie istnieć plik Xournal o tej samej nazwie, zostanie otwarty plik xoj."
+
+#: ../ui/settings.glade:4386
 msgid "Ignore Time (ms)"
 msgstr "Czas ignorowania (ms)"
 
-#: ../ui/settings.glade:1693
+#: ../ui/settings.glade:1695
 msgid "Ignore the first"
 msgstr "Ignoruj pierwszy"
 
@@ -2548,23 +2564,23 @@ msgstr "Jakość obrazu"
 msgid "Inertia"
 msgstr "Bezwładność"
 
-#: ../ui/settings.glade:4980
+#: ../ui/settings.glade:4982
 msgid "Input Device"
 msgstr "Urządzenie wejściowe"
 
-#: ../ui/settings.glade:801
+#: ../ui/settings.glade:803
 msgid "Input Devices"
 msgstr "Urządzenia Wejścia"
 
-#: ../ui/settings.glade:1265
+#: ../ui/settings.glade:1267
 msgid "Input System"
 msgstr "System wprowadzania"
 
-#: ../ui/settings.glade:1234
+#: ../ui/settings.glade:1236
 msgid "Input stabilization"
 msgstr "Stabilizacja kursora"
 
-#: ../ui/settings.glade:1214
+#: ../ui/settings.glade:1216
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
 msgstr "Stabilizacja wejściowa może stworzyć przerwę na końcu pociągnięcia. Jeśli włączone, ta przerwa jest wypełniana."
 
@@ -2580,7 +2596,7 @@ msgstr "Wstaw Stronę Po"
 msgid "Insert Page Before"
 msgstr "Wstaw Stronę Przed"
 
-#: ../ui/settings.glade:5267
+#: ../ui/settings.glade:5269
 msgid "LaTeX"
 msgstr "LaTeX"
 
@@ -2592,11 +2608,11 @@ msgstr "Ustawienia pliku wykonywalnego LaTeX"
 msgid "LaTeX generation command"
 msgstr "Polecenie generowania LaTeX"
 
-#: ../ui/settings.glade:5356 ../ui/settings.glade:5404
+#: ../ui/settings.glade:5358 ../ui/settings.glade:5406
 msgid "Language"
 msgstr "Język"
 
-#: ../ui/settings.glade:5374
+#: ../ui/settings.glade:5376
 msgid "Language Settings"
 msgstr "Ustawienia językowe"
 
@@ -2604,15 +2620,15 @@ msgstr "Ustawienia językowe"
 msgid "Layout"
 msgstr "Układ"
 
-#: ../ui/settings.glade:3150
+#: ../ui/settings.glade:3152
 msgid "Left / Right-Handed"
 msgstr "Lewo / Prawo-Ręczny"
 
-#: ../ui/about.glade:291
+#: ../ui/about.glade:421
 msgid "License"
 msgstr "Licencja"
 
-#: ../ui/settings.glade:715
+#: ../ui/settings.glade:717
 msgid "Load / Save"
 msgstr "Ładuj / Zapisz"
 
@@ -2624,37 +2640,37 @@ msgstr "Wczytaj plik"
 msgid "Manage Toolbar"
 msgstr "Zarządzaj paskiem narzędzi"
 
-#: ../ui/settings.glade:1096
+#: ../ui/settings.glade:1098
 msgid "Mass"
 msgstr "Masa"
 
-#: ../ui/settings.glade:1095 ../ui/settings.glade:1107
+#: ../ui/settings.glade:1097 ../ui/settings.glade:1109
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
 msgstr "Masa: im większa masa, tym większa bezwładność i stabilizacja"
 
-#: ../ui/settings.glade:4436
+#: ../ui/settings.glade:4438
 msgid "Max Length (mm)"
 msgstr "Maksymalna długość (mm)"
 
-#: ../ui/settings.glade:871
+#: ../ui/settings.glade:873
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 msgstr "Połącz zdarzenia przycisków z wskazaniami rysika\n"
 "\t    <i>(Zaznacz to, jeśli</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>zwraca</i> \"<tt>w</tt>\"<i>)</i>"
 
-#: ../ui/settings.glade:1354
+#: ../ui/settings.glade:1356
 msgid "Middle Mouse Button"
 msgstr "Środkowy Przycisk Myszki"
 
-#: ../ui/settings.glade:1563
+#: ../ui/settings.glade:1565
 msgid "Minimum Pressure:"
 msgstr "Minimalny nacisk:"
 
-#: ../ui/settings.glade:1441 ../ui/settingsDeviceClassConfig.glade:42
+#: ../ui/settings.glade:1443 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
 msgstr "Mysz"
 
-#: ../ui/settings.glade:1410
+#: ../ui/settings.glade:1412
 msgid "Mouse Buttons"
 msgstr "Przyciski Myszki"
 
@@ -2690,7 +2706,7 @@ msgstr "Nowa strona na _końcu"
 msgid "New _Layer"
 msgstr "Nowa _warstwa"
 
-#: ../ui/settings.glade:2844
+#: ../ui/settings.glade:2846
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
 msgstr "Bez ikony"
@@ -2704,7 +2720,7 @@ msgstr "Bez linii"
 msgid "None"
 msgstr "Żaden"
 
-#: ../ui/settings.glade:4022
+#: ../ui/settings.glade:4024
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr "Przesuń pierwszą stronę o tyle stron, gdy włączono <b>Strony w parach</b>"
 
@@ -2712,15 +2728,15 @@ msgstr "Przesuń pierwszą stronę o tyle stron, gdy włączono <b>Strony w para
 msgid "Opacity settings"
 msgstr "Ustawienia przezroczystości"
 
-#: ../ui/settings.glade:921
+#: ../ui/settings.glade:923
 msgid "Options"
 msgstr "Opcje"
 
-#: ../ui/settings.glade:5003
+#: ../ui/settings.glade:5005
 msgid "Output Device"
 msgstr "Urządzenie wyjściowe"
 
-#: ../ui/settings.glade:4641
+#: ../ui/settings.glade:4643
 msgid "PDF Cache"
 msgstr "Pamięć podręczna PDF"
 
@@ -2732,7 +2748,7 @@ msgstr "P_oprzednia adnotowana strona"
 msgid "Pages:"
 msgstr "Stron:"
 
-#: ../ui/settings.glade:4055
+#: ../ui/settings.glade:4057
 msgid "Paired Pages"
 msgstr "Tryb dwóch stron"
 
@@ -2752,7 +2768,7 @@ msgstr "_Kolor papieru"
 msgid "Paper _Format"
 msgstr "_Format papieru"
 
-#: ../ui/about.glade:273
+#: ../ui/about.glade:296
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "Częściowo oparte o program Xournal stworzony przez Denisa Auroux'a"
@@ -2765,11 +2781,11 @@ msgstr "Wstrzymaj"
 msgid "Pen _Options"
 msgstr "_Opcje pióra"
 
-#: ../ui/settings.glade:3496
+#: ../ui/settings.glade:3498
 msgid "Performance"
 msgstr "Wydajność"
 
-#: ../ui/settings.glade:5196
+#: ../ui/settings.glade:5198
 msgid "Playback Settings"
 msgstr "Ustawienia Odtwarzania"
 
@@ -2785,11 +2801,11 @@ msgstr "Menedżer _wtyczek"
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr "Zmiany wtyczek są stosowane tylko po ponownym uruchomieniu Xournal++"
 
-#: ../ui/settings.glade:3439
+#: ../ui/settings.glade:3441
 msgid "Pre-load pages after"
 msgstr "Wstępnie załaduj strony po"
 
-#: ../ui/settings.glade:3427
+#: ../ui/settings.glade:3429
 msgid "Pre-load pages before"
 msgstr "Wstępnie załaduj strony przed"
 
@@ -2797,31 +2813,31 @@ msgstr "Wstępnie załaduj strony przed"
 msgid "Preferences"
 msgstr "Preferencje"
 
-#: ../ui/settings.glade:1161
+#: ../ui/settings.glade:1163
 msgid "Preprocessor"
 msgstr "Preprocesor"
 
-#: ../ui/settings.glade:3397
+#: ../ui/settings.glade:3399
 msgid "Presentation Mode"
 msgstr "Tryb prezentacji"
 
-#: ../ui/settings.glade:4165
+#: ../ui/settings.glade:4167
 msgid "Preserve line width"
 msgstr "Zachowaj szerokość linii"
 
-#: ../ui/settings.glade:1574
+#: ../ui/settings.glade:1576
 msgid "Pressure Multiplier: "
 msgstr "Mnożnik nacisku: "
 
-#: ../ui/settings.glade:1644
+#: ../ui/settings.glade:1646
 msgid "Pressure Sensitivity"
 msgstr "Czułość nacisku"
 
-#: ../ui/about.glade:167
+#: ../ui/about.glade:129
 msgid "RELEASE_IDENTIFIER"
 msgstr "RELEASE_IDENTIFIER"
 
-#: ../ui/settings.glade:2958
+#: ../ui/settings.glade:2960
 msgid "Radius"
 msgstr "Promień"
 
@@ -2829,7 +2845,7 @@ msgstr "Promień"
 msgid "Range"
 msgstr "Zakres"
 
-#: ../ui/settings.glade:4589
+#: ../ui/settings.glade:4591
 msgid "Re-render when the page's zoom changes by more than "
 msgstr "Ponowne renderowanie po zmianie powiększenia strony o więcej niż "
 
@@ -2841,7 +2857,7 @@ msgstr "Ostatnie _dokumenty"
 msgid "Record / Stop"
 msgstr "Nagrywaj | Zakończ"
 
-#: ../ui/settings.glade:5131
+#: ../ui/settings.glade:5133
 msgid "Recording Quality"
 msgstr "Jakość nagrywania"
 
@@ -2853,7 +2869,7 @@ msgstr "Zmień nazwę warstwy"
 msgid "Rename selected layer"
 msgstr "Zmień nazwę wybranej warstwy"
 
-#: ../ui/settings.glade:4188
+#: ../ui/settings.glade:4190
 msgid "Resizing"
 msgstr "Zmiana rozmiaru"
 
@@ -2861,15 +2877,15 @@ msgstr "Zmiana rozmiaru"
 msgid "Resolution"
 msgstr "Rozdzielczość"
 
-#: ../ui/settings.glade:1392
+#: ../ui/settings.glade:1394
 msgid "Right Mouse Button"
 msgstr "Prawy przycisk myszki"
 
-#: ../ui/settings.glade:4227
+#: ../ui/settings.glade:4229
 msgid "Rotation snapping tolerance"
 msgstr "Tolerancja przyciągania rotacji"
 
-#: ../ui/settings.glade:5069
+#: ../ui/settings.glade:5071
 msgid "Sample Rate"
 msgstr "Częstotliwość próbkowania"
 
@@ -2877,11 +2893,11 @@ msgstr "Częstotliwość próbkowania"
 msgid "Sample layer name"
 msgstr "Przykładowa nazwa warstwy"
 
-#: ../ui/settings.glade:3229
+#: ../ui/settings.glade:3231
 msgid "Scrollbars"
 msgstr "Paski przewijania"
 
-#: ../ui/settings.glade:3990
+#: ../ui/settings.glade:3992
 msgid "Scrolling outside the page"
 msgstr "Przewijanie na zewnątrz strony"
 
@@ -2889,7 +2905,7 @@ msgstr "Przewijanie na zewnątrz strony"
 msgid "Select Background Color"
 msgstr "Wybierz kolor tła"
 
-#: ../ui/settings.glade:4904
+#: ../ui/settings.glade:4906
 msgid "Select Folder"
 msgstr "Wybierz folder"
 
@@ -2901,11 +2917,11 @@ msgstr "Wybierz obrazek"
 msgid "Select PDF Page"
 msgstr "Wybierz stronę PDF"
 
-#: ../ui/settings.glade:3362
+#: ../ui/settings.glade:3364
 msgid "Select toolbar:"
 msgstr "Wybierz pasek narzędzi:"
 
-#: ../ui/settings.glade:2712
+#: ../ui/settings.glade:2714
 msgid "Selection Color (Text, Stroke Selection etc.)"
 msgstr "Kolor zaznaczenia (Tekst, Wybór śladów itp.)"
 
@@ -2917,7 +2933,7 @@ msgstr "Przenieś warstwę niżej"
 msgid "Send to Back"
 msgstr "Przenieś na tył warstw"
 
-#: ../ui/settings.glade:1626
+#: ../ui/settings.glade:1628
 msgid "Sensitivity Scale"
 msgstr "Skala czułości"
 
@@ -2929,15 +2945,15 @@ msgstr "Ustaw kolumny"
 msgid "Set Rows"
 msgstr "Ustaw wiersze"
 
-#: ../ui/settings.glade:4499
+#: ../ui/settings.glade:4501
 msgid "Settings:"
 msgstr "Ustawienia:"
 
-#: ../ui/settings.glade:4508
+#: ../ui/settings.glade:4510
 msgid "Show Floating Toolbox"
 msgstr "Pokaż Pływający Zestaw Narzędzi"
 
-#: ../ui/settings.glade:2604
+#: ../ui/settings.glade:2606
 msgid "Show Menubar on Startup"
 msgstr "Pokaż Pasek Menu przy Uruchomieniu"
 
@@ -2949,34 +2965,38 @@ msgstr "Pokaż pasek boczny"
 msgid "Show Toolbars"
 msgstr "Pokaż paski narzędzi"
 
-#: ../ui/settings.glade:3112
+#: ../ui/settings.glade:3114
 msgid "Show sidebar on the right side"
 msgstr "Pasek narzędzi po prawej stronie"
 
-#: ../ui/settings.glade:3128
+#: ../ui/settings.glade:3130
 msgid "Show vertical scrollbar on the left side"
 msgstr "Pokaż pionowy pasek przewijania po lewej stronie"
 
-#: ../ui/settings.glade:891
+#: ../ui/settings.glade:893
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr "Wolniejszym pociągnięciom przypisywane jest większy nacisk niż szybkim, w przypadku braku informacji o ciśnieniu.\n\n"
 "<i>Ta funkcja może być przydatna dla urządzeń, które nie mają czułości nacisku. Na przykład mysz lub ekran dotykowy.</i>"
 
-#: ../ui/settings.glade:2845
+#: ../ui/settings.glade:2847
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr "Mała ikona kropki"
 
-#: ../ui/settings.glade:4337
+#: ../ui/settings.glade:4339
 msgid "Snapping"
 msgstr "Przyciąganie"
 
-#: ../ui/settings.glade:3579
+#: ../ui/about.glade:356
+msgid "Source Code / Bug Tracker"
+msgstr "Kod źródłowy / Śledzenie błędów"
+
+#: ../ui/settings.glade:3581
 msgid "Speed for Ctrl + Scroll"
 msgstr "Czułość dla Ctrl + Scroll"
 
-#: ../ui/settings.glade:3607
+#: ../ui/settings.glade:3609
 msgid "Speed for a Zoomstep"
 msgstr "Krok powiększania/pomniejszania"
 
@@ -2984,23 +3004,23 @@ msgstr "Krok powiększania/pomniejszania"
 msgid "Standard"
 msgstr "Standardowe"
 
-#: ../ui/settings.glade:2402
+#: ../ui/settings.glade:2404
 msgid "Start zooming after a distance "
 msgstr "Rozpocznij powiększanie po odległości "
 
-#: ../ui/settings.glade:4889 ../ui/settings.glade:4926
+#: ../ui/settings.glade:4891 ../ui/settings.glade:4928
 msgid "Storage Folder"
 msgstr "Folder Przechowywania"
 
-#: ../ui/settings.glade:1947
+#: ../ui/settings.glade:1949
 msgid "Stylus"
 msgstr "Piórko"
 
-#: ../ui/settings.glade:1916
+#: ../ui/settings.glade:1918
 msgid "Stylus Buttons"
 msgstr "Przyciski piórka"
 
-#: ../ui/settings.glade:4447
+#: ../ui/settings.glade:4449
 msgid "Successive (ms)"
 msgstr "Kolejne (ms)"
 
@@ -3016,7 +3036,7 @@ msgstr "Ustawienia pliku szablonu"
 msgid "Template:"
 msgstr "Szablon:"
 
-#: ../ui/settings.glade:2271 ../ui/settings.glade:2284
+#: ../ui/settings.glade:2273 ../ui/settings.glade:2286
 msgid "Test"
 msgstr "Test"
 
@@ -3048,7 +3068,7 @@ msgstr "Następujące ciągi zostaną zastąpione w globalnym pliku szablonu pod
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr "Wzór trybu matematycznego wpisany w narzędziu LaTeX."
 
-#: ../ui/settings.glade:3761
+#: ../ui/settings.glade:3763
 msgid "The unit of the ruler is cm"
 msgstr "Linijka jest skalowana w cm"
 
@@ -3056,32 +3076,32 @@ msgstr "Linijka jest skalowana w cm"
 msgid "These settings will be used for new pages"
 msgstr "Te ustawienia będą używane dla nowych stron"
 
-#: ../ui/settings.glade:2119
+#: ../ui/settings.glade:2121
 msgid "Timeout"
 msgstr "Limit czasu"
 
-#: ../ui/settings.glade:2519
+#: ../ui/settings.glade:2521
 msgid "Touch Drawing"
 msgstr "Rysowanie dotykiem"
 
-#: ../ui/settings.glade:2033 ../ui/settings.glade:2550
+#: ../ui/settings.glade:2035 ../ui/settings.glade:2552
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
 msgstr "Ekran dotykowy"
 
-#: ../ui/settings.glade:4476
+#: ../ui/settings.glade:4478
 msgid "Try to select object first."
 msgstr "Spróbuj najpierw wybrać obiekt."
 
-#: ../ui/settings.glade:4481 ../ui/settings.glade:4513
+#: ../ui/settings.glade:4483 ../ui/settings.glade:4515
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Najpierw wybierz obiekt; jeśli nic nie wybrano, pokaż pływający przybornik jeśli jest włączony."
 
-#: ../ui/settings.glade:2751
+#: ../ui/settings.glade:2753
 msgid "Use  available Stock Icons (requires restart)"
 msgstr ""
 
-#: ../ui/settings.glade:4315
+#: ../ui/settings.glade:4317
 msgid "Use snapping for recognized shapes"
 msgstr "Użyj przyciągania dla rozpoznanych kształtów"
 
@@ -3089,11 +3109,11 @@ msgstr "Użyj przyciągania dla rozpoznanych kształtów"
 msgid "Use the current page size instead of the page size above."
 msgstr "Użyj bieżącego rozmiaru strony zamiast rozmiaru strony powyżej."
 
-#: ../ui/settings.glade:2501
+#: ../ui/settings.glade:2503
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr "Użyj dwóch palców do przesuwania/powiększenia i jednego palca, aby użyć wybranego narzędzia."
 
-#: ../ui/settings.glade:4035
+#: ../ui/settings.glade:4037
 msgid "Usually 0 or 1"
 msgstr "Zazwyczaj 0 lub 1"
 
@@ -3101,7 +3121,7 @@ msgstr "Zazwyczaj 0 lub 1"
 msgid "Velocity based Gaussian weights"
 msgstr "Obciążniki Gaussa oparte na prędkości"
 
-#: ../ui/about.glade:101
+#: ../ui/about.glade:181
 msgid "Version"
 msgstr "Wersja"
 
@@ -3109,17 +3129,21 @@ msgstr "Wersja"
 msgid "Version: "
 msgstr "Wersja: "
 
-#: ../ui/settings.glade:3527
+#: ../ui/settings.glade:3529
 msgid "View"
 msgstr "Widok"
 
-#: ../ui/settings.glade:2396
+#: ../ui/about.glade:328
+msgid "Website"
+msgstr "Strona internetowa"
+
+#: ../ui/settings.glade:2398
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
 msgstr "Gdy rysuje się dotykiem, gesty dwupalcowe mające na celu przesunięcie widoku mogą spowodować powiększenie go, powodując problemy z wydajnością. \n"
 "To ustawienie może ułatwić rysowanie z dotykiem. "
 
-#: ../ui/settings.glade:4586
+#: ../ui/settings.glade:4588
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr "Po powiększeniu wysokiej rozdzielczości pliku PDF, każde ponowne renderowanie może zająć dużo czasu. Ustawienie tej wartości na dużą wartość powoduje, że te ponowne rendery zdarzają się rzadziej.\n\n"
@@ -3137,11 +3161,11 @@ msgstr "Szerokość"
 msgid "Width:"
 msgstr "Szerokość:"
 
-#: ../ui/about.glade:258
+#: ../ui/about.glade:393
 msgid "With help from the community"
 msgstr "Z pomocą społeczności"
 
-#: ../ui/about.glade:192
+#: ../ui/about.glade:156
 msgid "X.X.X"
 msgstr "X.X.X"
 
@@ -3149,15 +3173,15 @@ msgstr "X.X.X"
 msgid "Xournal++ Preferences"
 msgstr "Ustawienia Xournal++"
 
-#: ../ui/settings.glade:3815
+#: ../ui/settings.glade:3817
 msgid "Zoom"
 msgstr "Przybliżenie"
 
-#: ../ui/settings.glade:2451
+#: ../ui/settings.glade:2453
 msgid "Zoom Gestures"
 msgstr "Gesty Przybliżania"
 
-#: ../ui/settings.glade:3661
+#: ../ui/settings.glade:3663
 msgid "Zoom Speed"
 msgstr "Czułość Przybliżania"
 
@@ -3417,7 +3441,7 @@ msgstr "dpi"
 msgid "enabled,"
 msgstr "włączona,"
 
-#: ../ui/settings.glade:1728
+#: ../ui/settings.glade:1730
 msgid "events"
 msgstr "zdarzenia"
 
@@ -3433,13 +3457,13 @@ msgstr "wczytaj z pliku"
 msgid "minutes"
 msgstr "minuty"
 
-#: ../ui/settings.glade:2930 ../ui/settings.glade:2981
-#: ../ui/settings.glade:3957 ../ui/settings.glade:3968
-#: ../ui/settings.glade:4124
+#: ../ui/settings.glade:2932 ../ui/settings.glade:2983
+#: ../ui/settings.glade:3959 ../ui/settings.glade:3970
+#: ../ui/settings.glade:4126
 msgid "pixels"
 msgstr "piksele"
 
-#: ../ui/settings.glade:2163
+#: ../ui/settings.glade:2165
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(po którym ekran dotykowy zostanie ponownie aktywowany)</i>"
 
@@ -3451,7 +3475,7 @@ msgstr "zapisz do pliku"
 msgid "ver_y thick"
 msgstr "bar_dzo grube"
 
-#: ../ui/about.glade:178
+#: ../ui/about.glade:141
 msgid "with libgtk"
 msgstr "z libgtk"
 
