@@ -41,7 +41,7 @@ community.
       preload mechanism (#2603).
     * Fixed a bug where scrolling would not work with zoom fit enabled until the
     zoom level changes (#2541).
-    * Fixed some bugs that preventing documents from being displayed on ARM and
+    * Fixed some bugs that prevented documents from being displayed on ARM and
       32-bit devices (#2576).
     * Fixed vim-style `hjlk` keybindings being inconsistent with the arrow keys
       (#2712).
