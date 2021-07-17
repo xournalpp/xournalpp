@@ -19,11 +19,11 @@ community.
     * Windows: The installer has been updated, fixing many issues such as:
       incorrectly set up registry keys, missing uninstaller entry, missing
       entries in Open With context menu in Explorer, missing icons, etc. (#2606,
-      #2585, #2387, #2141, #2036, #1903, #2666). When upgrading from 1.0.18, you
-      **must not run the uninstaller**; instead, run the updated installer,
-      which will clean up files from the old install and fix the registry key
-      entries. **If you are downgrading from 1.1.0 to 1.0.18 or older, you must
-      run the uninstaller first.**
+      #2585, #2387, #2141, #2036, #1903, #2666, #3215). When upgrading from
+      1.0.18, you **must not run the uninstaller**; instead, run the updated
+      installer, which will clean up files from the old install and fix the
+      registry key entries. **If you are downgrading from 1.1.0 to 1.0.18 or
+      older, you must run the uninstaller first.**
     * Linux: Support for Ubuntu 16.04 (and older distros) has been dropped.
       Please use a distro from 2018 or later, such as Ubuntu 18.04 or Debian
       Buster. The dependency versions have been updated accordingly.
@@ -203,32 +203,39 @@ community.
     * Streamlined and updated package metadata (#3094).
 * Misc
     * New action icons (#3154) and new application icon (#2557).
-    * Changed the error dialog for missing PDF backgrounds display the full path
-      of the missing PDF (#3140).
+    * Changed the error dialog for missing PDF backgrounds to display the full
+      path of the missing PDF (#3140).
     * Changed default key binding of middle mouse button from nothing to hand
       tool (#3121).
-    * Added a language setting in the Preferences window (#2188)
+    * Changed the `Help > Help` menu item to point to the new website
+      [www.xournalpp.github.io](www.xournalpp.github.io), which replaces the
+      User Manual wiki.
+    * Added a setting in the Preferences window for selecting the language
+      (#2188). Simplified language translation file names (#3166, #3201).
+    * Added a feature to allow the user to modify the locale directory via the
+      TEXTDOMAINDIR environment variable (#2600, #2845).
     * Added support for more export options in command line and GUI (#2449)
     * Added a command line option to create a xopp file (#1919).
     * Added the `Journal > Rename Layer` menu entry to rename layers (#2321).
     * Added the `Journal > Append New PDF Pages` menu entry to append PDF pages
       that are not in the current annotation file (#2146)
+    * Improved look of the Preferences window (#2592).
+    * Improved Print Dialog verbosity and error handling (#3002)
+    * Fixed a bug where the `Autoloading Journals` option would only autoload
+      annotation files with `.pdf.xopp` or `.pdf.xoj` extensions. (#2911,
+      #3217).
     * Fixed bugs in element cloning, which previously could have caused elements
       to become invalid (#2733, #2720, #2464).
     * Fixed a bug where the thumbnailer would not correctly render previews in
       file managers that sandbox their thumbnailers (#2738).
-    * Improved look of the Preferences window (#2592).
-    * Updated the translation files.
+    * Fixed a bug where some error message dialogs would not display the message
+      correctly (#3214).
     * Fixed keyboard shortcuts not working when the menubar is hidden (#2324)
     * Fixed the undo operation for moving objects across page borders (#3068)
-    * Non-visible refactoring and code cleanup (#1279, #2150, #1944, #2199, #2213, etc.)
-    * Switched from deprecated GTK 2 initialisation to GTK 3 initialisation (#2252)
+    * Updated the translation files.
+    * Non-visible refactoring and code cleanup (#1279, #2150, #1944, #2199,
+      #2213, #2252, etc.)
     * Windows: Fixed a crash that occurs when closing the application (#2218).
-    * Improved Print Dialog verbosity and error handling (#3002)
-    * Allow the user to modify the locale directory via the  TEXTDOMAINDIR environment
-      variable (#2600, #2845)
-    * Created the website [www.xournalpp.github.io](www.xournalpp.github.io) to
-      replace the User Manual.
 
 ## 1.0.20
 
