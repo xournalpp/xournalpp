@@ -202,6 +202,7 @@ community.
       dependencies. It is useful for creating GUI in Lua plugins.
     * Streamlined and updated package metadata (#3094).
 * Misc
+    * Updated author information and About dialog appearance (#3209)
     * New action icons (#3154) and new application icon (#2557).
     * Changed the error dialog for missing PDF backgrounds to display the full
       path of the missing PDF (#3140).
@@ -402,7 +403,6 @@ generate DEB and tar packages. See `readme/linux.md` for more details.
     * Added ability for installation to be relocatable
     * Updated translations
     * Updated dependency information for DEB packages
-    * Updated author information and About dialog appearance (#3209)
     * Improved file size by reducing stroke coordinate precision
     * Fixed an issue where last eraser thickness settings were not being remembered
     * Fixed pen strokes not appearing after searching
