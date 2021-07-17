@@ -1,6 +1,8 @@
 # Changelog
 
-## 1.1.0 / Nightly (Unreleased)
+## Nightly (Unreleased)
+
+## 1.1.0
 
 This is a new major version of Xournal++ with many new features, improvements,
 and bug fixes thanks to over one year's worth of contributions from the
