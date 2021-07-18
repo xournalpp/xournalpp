@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-16 19:55+0000\n"
-"PO-Revision-Date: 2021-07-18 20:14\n"
+"PO-Revision-Date: 2021-07-18 21:15\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -619,7 +619,7 @@ msgstr "Kitöltés"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:282
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Nyomásszűrés. A nyomást a nyomási szorzóval szorozza. Ha az eredmény kevesebb a minimális értéknél, akkor a minimális nyomást alkalmazza."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 msgid "Fine"
@@ -635,7 +635,7 @@ msgstr "Betűtípus"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Forward"
-msgstr ""
+msgstr "Következő"
 
 #: ../src/gui/dialog/AboutDialog.cpp:40
 msgid "GNU GPLv2 or later"
@@ -643,15 +643,15 @@ msgstr "GNU GPLv2 vagy újabb"
 
 #: ../src/control/XournalMain.cpp:635
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "A xournalpp verzió lehívása"
 
 #: ../src/control/LatexController.cpp:51
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "A globális sablonfájl nem létezik. Kérem ellenőrizze a beállításait."
 
 #: ../src/control/LatexController.cpp:62
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "A globális sablonfájl nem szabályos. Kérem ellenőrizze a beállításait. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 msgid "Go to first page"
@@ -724,15 +724,15 @@ msgstr "Képek"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:58
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Jelenlegi réteg másolatának beillesztése alulra"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "Jelenlegi oldal másolatának beillesztése alulra"
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
-msgstr ""
+msgstr "Elemek beillesztése"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
@@ -752,11 +752,11 @@ msgstr "Oldal beszúrása"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Izometrikus pontozott"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Izometrikus rácsos"
 
 #: ../src/control/XournalMain.cpp:631
 msgid "Jump to Page (first Page: 1)"
@@ -764,7 +764,7 @@ msgstr "Ugrás adott oldalra (első oldal: 1)"
 
 #: ../src/control/LatexController.cpp:190
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "A LaTeX generálása közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:250
 msgid "Layer"
@@ -772,7 +772,7 @@ msgstr "Réteg"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "Rétegkombináció"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layer Preview"
@@ -784,7 +784,7 @@ msgstr "Réteg {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Egymásra helyezett rétegek előnézete"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
