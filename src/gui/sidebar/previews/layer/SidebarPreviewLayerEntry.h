@@ -14,11 +14,13 @@
 #include "../base/SidebarPreviewBaseEntry.h"
 #include "model/PageRef.h"
 
+#include "SidebarPreviewLayers.h"
+
 class SidebarPreviewBase;
 
 class SidebarPreviewLayerEntry: public SidebarPreviewBaseEntry {
 public:
-    SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer, const string& layerName,
+    SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar, const PageRef& page, int layer, const string& layerName,
                              size_t index, bool stacked);
     virtual ~SidebarPreviewLayerEntry();
 
@@ -46,6 +48,8 @@ public:
 protected:
     virtual void mouseButtonPressCallback();
     void checkboxToggled();
+
+    SidebarPreviewLayers* sidebar;
 
 private:
     /**

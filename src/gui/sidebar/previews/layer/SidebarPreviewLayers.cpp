@@ -7,14 +7,60 @@
 #include "SidebarPreviewLayerEntry.h"
 #include "i18n.h"
 
+// Since we have two layer sidebars, we need to make sure we don't
+// double-register callbacks. Since we also need to make sure we only do the
+// proper deallocation stuff on destuction of the last SidebarPreviewLayers
+// object, we use a static counter which we count up in construction and down
+// in destruction.
+static int layerSidebarsActive = 0;
+
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar, bool stacked):
         SidebarPreviewBase(control, gui, toolbar),
+        contextMenu(gui->get("sidebarPreviewLayersContextMenu")),
         lc(control->getLayerController()),
         stacked(stacked),
         iconNameHelper(control->getSettings()) {
     LayerCtrlListener::registerListener(lc);
 
     this->toolbar->setButtonEnabled(SIDEBAR_ACTION_NONE);
+
+    // Connect the context menu actions
+    const std::map<std::string, SidebarActions> ctxMenuActions = {
+            {"sidebarPreviewMergeDown", SIDEBAR_ACTION_MERGE_DOWN},
+            {"sidebarPreviewLayerDuplicate", SIDEBAR_ACTION_COPY},
+    };
+
+    if (layerSidebarsActive == 0) {
+
+        for (const auto& pair: ctxMenuActions) {
+            GtkWidget* const entry = gui->get(pair.first);
+            g_assert(entry != nullptr);
+
+            // Unfortunately, we need a fairly complicated mechanism to keep track
+            // of which action we want to execute.
+            using Data = SidebarPreviewLayers::ContextMenuData;
+            auto userdata = std::make_unique<Data>(Data{this->toolbar, pair.second});
+
+            const auto callback =
+                    G_CALLBACK(+[](GtkMenuItem* item, Data* data) { data->toolbar->runAction(data->actions); });
+            const gulong signalId = g_signal_connect(entry, "activate", callback, userdata.get());
+            g_object_ref(entry);
+            this->contextMenuSignals.emplace_back(entry, signalId, std::move(userdata));
+
+            if (pair.first == "sidebarPreviewMoveDown") {
+                // TODO: correct these assert(0)s when we introduce moving to menu
+                // I'm only creating a menu with the merging item right now,
+                // because there are a lot of complications to the joint
+                // functionalities of the multiple sidebars. Thus I'm ignoring the
+                // move up and down actions which have some special treatment in
+                // the class SidebarPreviewPages from which this is copied.
+                g_assert(false);
+            } else if (pair.first == "sidebarPreviewMoveUp") {
+                g_assert(false);
+            }
+        }
+    }
+    layerSidebarsActive++;
 }
 
 SidebarPreviewLayers::~SidebarPreviewLayers() {
@@ -23,6 +69,18 @@ SidebarPreviewLayers::~SidebarPreviewLayers() {
         delete p;
     }
     this->previews.clear();
+
+    if (layerSidebarsActive == 1) {
+        for (const auto& signalTuple: this->contextMenuSignals) {
+            GtkWidget* const widget = std::get<0>(signalTuple);
+            const guint handlerId = std::get<1>(signalTuple);
+            if (g_signal_handler_is_connected(widget, handlerId)) {
+                g_signal_handler_disconnect(widget, handlerId);
+            }
+            g_object_unref(widget);
+        }
+    }
+    layerSidebarsActive--;
 }
 
 /**
@@ -38,6 +96,10 @@ void SidebarPreviewLayers::actionPerformed(SidebarActions action) {
             control->getLayerController()->moveCurrentLayer(false);
             break;
         }
+        case SIDEBAR_ACTION_MERGE_DOWN: {
+            control->getLayerController()->mergeCurrentLayerDown();
+            break;
+        }
         case SIDEBAR_ACTION_COPY: {
             control->getLayerController()->copyCurrentLayer();
             break;
@@ -46,6 +108,7 @@ void SidebarPreviewLayers::actionPerformed(SidebarActions action) {
             control->getLayerController()->deleteCurrentLayer();
             break;
         default:
+            // TODO: probably should warn in this case?
             break;
     }
 }
@@ -167,6 +230,11 @@ void SidebarPreviewLayers::updateSelectedLayer() {
         actions |= SIDEBAR_ACTION_MOVE_DOWN;
     }
 
+    // Background and first layer cannot be merged down
+    if (this->selectedEntry < (this->previews.size() - 2)) {
+        actions |= SIDEBAR_ACTION_MERGE_DOWN;
+    }
+
     // Background cannot be copied
     if (this->selectedEntry < (this->previews.size() - 1)) {
         actions |= SIDEBAR_ACTION_COPY;
@@ -192,4 +260,8 @@ void SidebarPreviewLayers::layerSelected(size_t layerIndex) {
  */
 void SidebarPreviewLayers::layerVisibilityChanged(int layerIndex, bool enabled) {
     lc->setLayerVisible(layerIndex, enabled);
+}
+
+void SidebarPreviewLayers::openPreviewContextMenu() {
+    gtk_menu_popup(GTK_MENU(this->contextMenu), nullptr, nullptr, nullptr, nullptr, 3, gtk_get_current_event_time());
 }

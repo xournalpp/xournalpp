@@ -71,6 +71,7 @@ public:
     void deleteCurrentLayer();
     void copyCurrentLayer();
     void moveCurrentLayer(bool up);
+    void mergeCurrentLayerDown(void);
     void switchToLay(int layer, bool hideShow = false);
     void setLayerVisible(int layerId, bool visible);
 
@@ -106,6 +107,8 @@ public:
      * Make sure there is at least one layer on the page
      */
     void ensureLayerExists(PageRef page);
+
+    friend class MergeLayerDownUndoAction;
 
 private:
     Control* control;
