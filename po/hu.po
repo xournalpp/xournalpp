@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-16 19:55+0000\n"
-"PO-Revision-Date: 2021-07-18 19:14\n"
+"PO-Revision-Date: 2021-07-18 20:14\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -463,7 +463,7 @@ msgstr "Rajzolási típus - ne változzon"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Kombinált rajzolástípus"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -536,11 +536,11 @@ msgstr "Hiba: {1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "Hiba: A(z) {1} fájl nem szabályos. Ellenőrizze a LaTeX sablonfájl beállításait. "
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Hiba: {1}. Ellenőrizze a(z) {2} tartalmát"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -550,13 +550,15 @@ msgstr "A hibanapló nem törölhető. Manuálisan kell törölnie.\n"
 
 #: ../src/control/XournalMain.cpp:644
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "FILE exportálása PDF-ként"
 
 #: ../src/control/XournalMain.cpp:646
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "FILE exportálása képfájlként (egy kép oldalanként)\n"
+"                                 Formátum meghatározása a(z) IMGFILE kiterjesztéséből\n"
+"                                 Támogatott formátumok: .png, .svg"
 
 #: ../src/control/jobs/BaseExportJob.cpp:16
 msgid "Export PDF"
@@ -568,35 +570,42 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Rétegek exportálása sorredben\n"
+"                                 A PDF exportálásakor a rétegeket egyesével exportálja.\n"
+"                                 Az eredmény így oldalanként N réteg esetén N oldal,\n"
+"                                 végighaladva az egymásra helyezett rétegeken.\n"
+"                                 Az végleges PDF így használható prezentációként.\n"
 
 #: ../src/control/XournalMain.cpp:651
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Háttér nélküli exportálás\n"
+"                                 Az exportált fájl háttere a támogatott formátumtól\n"
+"                                 függően átlátszó vagy fehér lesz\n"
 
 #: ../src/control/XournalMain.cpp:656
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Margó nélküli exportálás\n"
+"                                 Az exportált fájl papírmargó nélküli\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "A LaTeX generáló program nem található a PATH helyen: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Hiba a LaTeX parancs értelmezése közben: {1}"
 
 #: ../src/control/LatexController.cpp:56
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Hiba a globális sablonfájl olvasása közben. Kérem ellenőrizze a beállításait."
 
 #: ../src/control/jobs/BaseExportJob.cpp:101
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Az adott hely értelmezése közben az alábbi hiba lépett fel: {1}"
 
 #: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
