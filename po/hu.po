@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-16 19:55+0000\n"
-"PO-Revision-Date: 2021-07-16 20:35\n"
+"PO-Revision-Date: 2021-07-18 19:14\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:46
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"Kívánja folytatni?"
 
 #: ../src/control/XournalMain.cpp:450
 msgid "\n"
@@ -37,11 +38,11 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " / {1}"
 
 #: ../src/control/settings/Settings.cpp:113
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Jegyzet-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:146
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -274,7 +275,7 @@ msgstr "A kép nem olvasható: {1}. Hibaüzenet: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:387
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "A klónozott háttérkép {1} oldalszámának olvasása sikertelen."
 
 #: ../src/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
