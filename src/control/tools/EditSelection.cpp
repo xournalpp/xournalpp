@@ -726,15 +726,15 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     const int layoutWidth = layout->getMinimalWidth();
     const int layoutHeight = layout->getMinimalHeight();
     const auto visRect = layout->getVisibleRect();
-    const double visRectTop = visRect.y + visRect.height;
+    const double visRectBot = visRect.y + visRect.height;
     const double visRectRight = visRect.x + visRect.width;
 
     const auto bbox = self->getBoundingBoxInView();
-    const double bboxTop = bbox.y + bbox.height;
+    const double bboxBot = bbox.y + bbox.height;
     const double bboxRight = bbox.x + bbox.width;
 
-    const bool aboveTop = bboxTop > visRectTop;
-    const bool belowBottom = bbox.y < visRect.y;
+    const bool aboveTop = bbox.y < visRect.y;
+    const bool belowBottom = bbox.y + bbox.height > visRectBot;
     const bool beforeLeft = bbox.x < visRect.x;
     const bool afterRight = bbox.x + bbox.width > visRect.x + visRect.width;
 
@@ -743,9 +743,9 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     int scrollXDir = 0;
 
     if (aboveTop) {
-        scrollYDir = 1;
-    } else if (belowBottom) {
         scrollYDir = -1;
+    } else if (belowBottom) {
+        scrollYDir = 1;
     }
 
     if (beforeLeft) {
@@ -760,9 +760,9 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
     const double MAX_MULT = 5.0;
 
     if (aboveTop) {
-        yScrollMult += (bboxTop - visRectTop) / bbox.height * MAX_MULT;
-    } else if (belowBottom) {
         yScrollMult += (visRect.y - bbox.y) / bbox.height * MAX_MULT;
+    } else if (belowBottom) {
+        yScrollMult += (bboxBot - visRectBot) / bbox.height * MAX_MULT;
     }
 
     if (beforeLeft) {
@@ -771,32 +771,42 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
         xScrollMult += (bboxRight - visRectRight) / bbox.width * MAX_MULT;
     }
 
-    // How much we'll move the layout.
+    // How much we'll move the selection and layout.
     const double SCROLL_SPEED = 5.0;
-    double layoutScrollX = zoom * scrollXDir * (SCROLL_SPEED * xScrollMult);
-    double layoutScrollY = zoom * scrollYDir * (SCROLL_SPEED * yScrollMult);
+    double scrollX = scrollXDir * (SCROLL_SPEED * xScrollMult);
+    double scrollY = scrollYDir * (SCROLL_SPEED * yScrollMult);
+    double layoutScrollX = zoom * scrollX;
+    double layoutScrollY = zoom * scrollY;
 
-    // Bounds checking -- don't scroll if we would pass the edge of the view.
+    // If scrolling past layout boundaries, clamp edge panning and view scrolling
     const bool wouldPassRightEdge = bbox.x + bbox.width + layoutScrollX > layoutWidth && scrollXDir > 0;
-    const bool wouldPassLeftEdge = bbox.x < layoutScrollX && scrollXDir < 0;
-    const bool wouldPassViewTop = bbox.y + bbox.height + layoutScrollY > layoutHeight && scrollYDir > 0;
-    const bool wouldPassViewBottom = bbox.y < layoutScrollY && scrollYDir < 0;
+    const bool wouldPassLeftEdge = bbox.x + layoutScrollX < 0 && scrollXDir < 0;
+    const bool wouldPassViewTop = bbox.y + layoutScrollY < 0 && scrollYDir < 0;
+    const bool wouldPassViewBottom = bboxBot + layoutScrollY > layoutHeight && scrollYDir > 0;
 
-    if (wouldPassLeftEdge || wouldPassRightEdge) {
-        scrollXDir = 0;
-        layoutScrollX = 0;
+    if (wouldPassViewBottom) {
+        layoutScrollY = std::max(0.0, static_cast<double>(layoutHeight) - visRectBot);
+        scrollY = layoutScrollY / zoom;
+    } else if (wouldPassViewTop) {
+        layoutScrollY = -visRect.y;
+        scrollY = layoutScrollY / zoom;
     }
+    scrollYDir = layoutScrollY == 0.0 ? 0 : scrollYDir;
 
-    if (wouldPassViewBottom || wouldPassViewTop) {
-        scrollYDir = 0;
-        layoutScrollY = 0;
+    if (wouldPassLeftEdge) {
+        layoutScrollX = -visRect.x;
+        scrollX = layoutScrollX / zoom;
+    } else if (wouldPassRightEdge) {
+        layoutScrollX = std::max(0.0, layoutWidth - visRectRight);
+        scrollX = layoutScrollX / zoom;
     }
+    scrollXDir = layoutScrollX == 0.0 ? 0 : scrollXDir;
 
     // Perform the scrolling
     bool edgePanned = false;
     if (self->isMoving() && (scrollXDir != 0 || scrollYDir != 0)) {
         layout->scrollRelative(layoutScrollX, layoutScrollY);
-        self->moveSelection(0, layoutScrollY / zoom);
+        self->moveSelection(scrollX, scrollY);
         edgePanned = true;
     } else {
         // No panning, so disable the timer.
