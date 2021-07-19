@@ -327,7 +327,7 @@ private:  // DATA
     /**
      * Mouse coordinates for moving / resizing
      */
-    CursorSelectionType mouseDownType;
+    CursorSelectionType mouseDownType = CURSOR_SELECTION_NONE;
     double relMousePosX{};
     double relMousePosY{};
     double relMousePosRotX{};

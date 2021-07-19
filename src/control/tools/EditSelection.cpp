@@ -256,7 +256,7 @@ auto EditSelection::getSourceLayer() -> Layer* { return this->sourceLayer; }
  */
 auto EditSelection::getXOnViewAbsolute() -> int {
     double zoom = view->getXournal()->getZoom();
-    return this->view->getX() + this->getXOnView() * zoom;
+    return this->view->getX() + static_cast<int>(this->getXOnView() * zoom);
 }
 
 /**
@@ -264,7 +264,7 @@ auto EditSelection::getXOnViewAbsolute() -> int {
  */
 auto EditSelection::getYOnViewAbsolute() -> int {
     double zoom = view->getXournal()->getZoom();
-    return this->view->getY() + this->getYOnView() * zoom;
+    return this->view->getY() + static_cast<int>(this->getYOnView() * zoom);
 }
 
 /**
@@ -572,7 +572,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
 
     if (v && v != this->view) {
         XournalView* xournal = this->view->getXournal();
-        int pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
+        const size_t pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
 
         xournal->pageSelected(pageNr);
 
@@ -620,7 +620,7 @@ auto EditSelection::getPageViewUnderCursor() -> XojPageView* {
 
 
     Layout* layout = gtk_xournal_get_layout(this->view->getXournal()->getWidget());
-    XojPageView* v = layout->getPageViewAt(hx, hy);
+    XojPageView* v = layout->getPageViewAt(static_cast<int>(hx), static_cast<int>(hy));
 
     return v;
 }
@@ -1054,7 +1054,7 @@ void EditSelection::serialize(ObjectOutputStream& out) {
     this->contents->serialize(out);
     out.endObject();
 
-    out.writeInt(this->getElements()->size());
+    out.writeInt(static_cast<int>(this->getElements()->size()));
     for (Element* e: *this->getElements()) { e->serialize(out); }
 }
 
