@@ -65,12 +65,10 @@
   <provides>
     <id>xournalpp.desktop</id>
     <binary>xournalpp</binary>
+    <mediatype>application/x-xojpp</mediatype>
+    <mediatype>application/x-xopp</mediatype>
+    <mediatype>application/x-xopt</mediatype>
   </provides>
-  <mimetypes>
-    <mimetype>application/x-xojpp</mimetype>
-    <mimetype>application/x-xopp</mimetype>
-    <mimetype>application/x-xopt</mimetype>
-  </mimetypes>
   <update_contact>webmaster_AT_huberulrich.de</update_contact>
   <content_rating type="oars-1.0" />
   <releases>
