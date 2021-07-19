@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-18 21:18+0000\n"
-"PO-Revision-Date: 2021-07-18 22:18\n"
+"PO-Revision-Date: 2021-07-19 10:01\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2527,7 +2527,7 @@ msgstr "Très courte durée (temps)  ET...\n\n"
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr ""
+msgstr "Concepteurs de l’icône "
 
 #: ../ui/settings.glade:4321
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2992,7 +2992,7 @@ msgstr "Snapping"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Code source / Suivi de bogues"
 
 #: ../ui/settings.glade:3581
 msgid "Speed for Ctrl + Scroll"
