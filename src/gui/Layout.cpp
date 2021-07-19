@@ -142,8 +142,8 @@ void Layout::recalculate_int() const {
 
     for (size_t pageIdx{}; pageIdx < len; ++pageIdx) {
         auto const& raster_p = mapper.at(pageIdx);  // auto [c, r] raster = mapper.at();
-        auto const& c = raster_p.first;
-        auto const& r = raster_p.second;
+        auto const& c = raster_p.col;
+        auto const& r = raster_p.row;
         XojPageView* v = view->viewPages[pageIdx];
         pc.widthCols[c] = std::max(pc.widthCols[c], v->getDisplayWidthDouble());
         pc.heightRows[r] = std::max(pc.heightRows[r], v->getDisplayHeightDouble());
@@ -282,7 +282,7 @@ auto Layout::getPaddingAbovePage(size_t pageIndex) const -> int {
 
     // (x, y) coordinate pair gives grid indicies. This handles paired pages
     // and different page layouts for us.
-    auto pageYLocation = this->mapper.at(pageIndex).second;
+    auto pageYLocation = this->mapper.at(pageIndex).row;
     return strict_cast<int>(as_signed(pageYLocation) * XOURNAL_PADDING_BETWEEN + as_signed(paddingAbove));
 }
 
@@ -294,7 +294,7 @@ auto Layout::getPaddingLeftOfPage(size_t pageIndex) const -> int {
     auto paddingBefore =
             sumIf(XOURNAL_PADDING, settings->getAddHorizontalSpaceAmount(), settings->getAddHorizontalSpace());
 
-    auto const pageXLocation = as_signed(this->mapper.at(pageIndex).first);
+    auto const pageXLocation = as_signed(this->mapper.at(pageIndex).col);
 
     // No page pairing or we haven't rendered enough pages in the row for
     // page pairing to have an effect,
@@ -344,9 +344,9 @@ void Layout::ensureRectIsVisible(int x, int y, int width, int height) {
 auto Layout::getPageViewAt(int x, int y) -> XojPageView* {
     // Binary Search:
     auto rit = std::lower_bound(this->rowYStart.begin(), this->rowYStart.end(), y);
-    auto const foundRow = std::distance(this->rowYStart.begin(), rit);
+    auto const foundRow = size_t(std::distance(this->rowYStart.begin(), rit));
     auto cit = std::lower_bound(this->colXStart.begin(), this->colXStart.end(), x);
-    auto const foundCol = std::distance(this->colXStart.begin(), cit);
+    auto const foundCol = size_t(std::distance(this->colXStart.begin(), cit));
 
     auto optionalPage = this->mapper.at({foundCol, foundRow});
 
