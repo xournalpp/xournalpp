@@ -35,7 +35,7 @@ If you would like to help us improve the localization of Xournal++, take a look 
 
 ## Features
 
-Xournal++ is a hand note taking software written in C++ with the target of flexibility, functionality and speed.
+Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is a hand note taking software written in C++ with the target of flexibility, functionality and speed.
 Stroke recognizer and other parts are based on Xournal Code, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
 
 Xournal++ features:
