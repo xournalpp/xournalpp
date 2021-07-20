@@ -306,8 +306,9 @@ void XournalppCursor::updateCursor() {
         }
         gtk_widget_set_sensitive(xournal->getWidget(), !this->busy);
     }
-
-    gdk_display_sync(gdk_display_get_default());
+    // Performance removal!
+    // If this line is ever required, make sure this function is never called, when the cursor is not set.
+    // gdk_display_sync(gdk_display_get_default());
 
     if (cursor != nullptr) {
         g_object_unref(cursor);

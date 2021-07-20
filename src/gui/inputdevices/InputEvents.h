@@ -11,11 +11,14 @@
 
 #pragma once
 
+#include <memory>
+
 #include <gdk/gdk.h>
 #include <glib.h>
 
-#include "control/settings/Settings.h"
 #include "model/Point.h"
+
+class Settings;
 
 enum InputEventType {
     UNKNOWN,
@@ -46,48 +49,25 @@ enum InputDeviceClass {
 
 struct GdkEventGuard {
     static inline GdkEvent* safeRef(GdkEvent* source) { return gdk_event_copy(source); }
-    static inline GdkEvent* safeMove(GdkEvent*& source) {
-        auto ret = source;
-        source = nullptr;
-        return ret;
-    }
-    static inline void safeDelete(GdkEvent* source) {
-        if (source != nullptr) {
-            gdk_event_free(source);
-        }
-    }
 
     GdkEventGuard() = default;
-    [[maybe_unused]] explicit GdkEventGuard(GdkEvent* source): event(safeRef(source)) {}
-    GdkEventGuard(GdkEventGuard const& other): event(safeRef(other.event)) {}
-    GdkEventGuard(GdkEventGuard&& other): event(safeMove(other.event)) {}
+
+    [[maybe_unused]] explicit GdkEventGuard(GdkEvent* source): event(safeRef(source), &gdk_event_free) {}
 
     GdkEventGuard& operator=(GdkEvent* source) {
-        safeDelete(event);
-        event = safeRef(source);
-        return *this;
-    }
-    GdkEventGuard& operator=(GdkEventGuard const& other) {
-        safeDelete(event);
-        event = safeRef(other.event);
-        return *this;
-    }
-    GdkEventGuard& operator=(GdkEventGuard&& other) {
-        safeDelete(event);
-        event = safeMove(other.event);
+        event = {safeRef(source), &gdk_event_free};
         return *this;
     }
 
-    operator GdkEvent*() const { return event; }
+    operator GdkEvent*() const { return event.get(); }
 
-    ~GdkEventGuard() { safeDelete(event); }
-
-    GdkEvent* event{};
+    // it's more performant to manage the GdkEvent over C++ than over gdk
+    // Since the gdk_copy is extreme expansive
+    std::shared_ptr<GdkEvent> event{};
 };
 
-
 struct InputEvent final {
-    /*explicit(false)*/ explicit operator bool() const { return sourceEvent.event; }
+    /*explicit(false)*/ explicit operator bool() const { return !!sourceEvent.event; }
 
     GdkEventGuard sourceEvent;
 
