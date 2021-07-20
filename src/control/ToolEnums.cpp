@@ -119,6 +119,8 @@ auto toolTypeToString(ToolType type) -> string {
             return "verticalSpace";
         case TOOL_HAND:
             return "hand";
+        case TOOL_SETSQUARE:
+            return "setsquare";
         case TOOL_DRAW_RECT:
             return "drawRect";
         case TOOL_DRAW_ELLIPSE:
@@ -170,6 +172,9 @@ auto toolTypeFromString(const string& type) -> ToolType {
     }
     if (type == "hand") {
         return TOOL_HAND;
+    }
+    if (type == "setsquare") {
+        return TOOL_SETSQUARE;
     }
     if (type == "drawRect") {
         return TOOL_DRAW_RECT;

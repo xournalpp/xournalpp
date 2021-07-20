@@ -35,10 +35,14 @@ private:
     utl::Point<double> priLastRel{-1.0, -1.0};
     utl::Point<double> secLastRel{-1.0, -1.0};
 
+    double lastAngle = 0.0;
+    double lastDist = 1.0;
+
     bool canBlockZoom{false};
+    bool isSetsquareGesture{false};
 
 private:
-    void sequenceStart(InputEvent const& event);
+    void sequenceStart(InputEvent const& event, bool setsquareGesture);
     void scrollMotion(InputEvent const& event);
     void zoomStart();
     void zoomMotion(InputEvent const& event);

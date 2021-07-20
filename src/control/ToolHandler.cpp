@@ -77,6 +77,9 @@ void ToolHandler::initTools() {
 
     tools[TOOL_HAND - TOOL_PEN] = std::make_unique<Tool>("hand", TOOL_HAND, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
+    tools[TOOL_SETSQUARE - TOOL_PEN] =
+            std::make_unique<Tool>("setsquare", TOOL_SETSQUARE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+
     tools[TOOL_PLAY_OBJECT - TOOL_PEN] =
             std::make_unique<Tool>("playObject", TOOL_PLAY_OBJECT, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
@@ -168,9 +171,7 @@ void ToolHandler::selectTool(ToolType type) {
 }
 
 void ToolHandler::fireToolChanged() {
-    for (auto&& listener: this->toolChangeListeners) {
-        listener(this->activeTool->type);
-    }
+    for (auto&& listener: this->toolChangeListeners) { listener(this->activeTool->type); }
 
     stateChangeListener->toolChanged();
 }

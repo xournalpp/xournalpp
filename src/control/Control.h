@@ -24,6 +24,7 @@
 #include "settings/MetadataManager.h"
 #include "settings/Settings.h"
 #include "undo/UndoRedoHandler.h"
+#include "view/SetsquareView.h"
 #include "zoom/ZoomControl.h"
 
 #include "Actions.h"

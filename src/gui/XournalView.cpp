@@ -65,9 +65,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 XournalView::~XournalView() {
     g_source_remove(this->cleanupTimeout);
 
-    for (auto&& page: viewPages) {
-        delete page;
-    }
+    for (auto&& page: viewPages) { delete page; }
     viewPages.clear();
 
     delete this->cache;
@@ -538,9 +536,7 @@ auto XournalView::getTextEditor() -> TextEditor* {
 }
 
 void XournalView::resetShapeRecognizer() {
-    for (auto&& page: viewPages) {
-        page->resetShapeRecognizer();
-    }
+    for (auto&& page: viewPages) { page->resetShapeRecognizer(); }
 }
 
 auto XournalView::getCache() -> PdfCache* { return this->cache; }
@@ -639,6 +635,32 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
+void XournalView::setSetsquareView(SetsquareView* setsquareView) {
+    GTK_XOURNAL(this->widget)->setsquareView = setsquareView;
+}
+
+auto XournalView::getSetsquareView() -> SetsquareView* {
+    g_return_val_if_fail(this->widget != nullptr, nullptr);
+    g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), nullptr);
+
+    return GTK_XOURNAL(this->widget)->setsquareView;
+}
+
+void XournalView::repaintSetsquare(bool evenWithoutSetsquare) {
+    if (evenWithoutSetsquare) {
+        gtk_widget_queue_draw(this->widget);
+        return;
+    }
+
+    SetsquareView* setsquareView = getSetsquareView();
+    if (setsquareView == nullptr) {
+        return;
+    }
+
+    // repaint always the whole widget
+    gtk_widget_queue_draw(this->widget);
+}
+
 void XournalView::layoutPages() {
     Layout* layout = gtk_xournal_get_layout(this->widget);
     layout->recalculate();
@@ -690,9 +712,7 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     clearSelection();
 
-    for (auto&& page: viewPages) {
-        delete page;
-    }
+    for (auto&& page: viewPages) { delete page; }
     viewPages.clear();
 
     this->cache->clearCache();
@@ -702,9 +722,7 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     size_t pagecount = doc->getPageCount();
     viewPages.reserve(pagecount);
-    for (size_t i = 0; i < pagecount; i++) {
-        viewPages.push_back(new XojPageView(this, doc->getPage(i)));
-    }
+    for (size_t i = 0; i < pagecount; i++) { viewPages.push_back(new XojPageView(this, doc->getPage(i))); }
 
     doc->unlock();
 

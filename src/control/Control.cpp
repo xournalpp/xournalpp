@@ -556,6 +556,17 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
                 selectTool(TOOL_HAND);
             }
             break;
+        case ACTION_TOOL_SETSQUARE:
+            if (!this->win->getXournal()->getSetsquareView()) {
+                // bring up setsquare in page center
+                auto* setsquare = new Setsquare();
+                auto* setsquareView = new SetsquareView(win->getXournal()->getViewFor(getCurrentPageNo()), setsquare);
+                this->win->getXournal()->setSetsquareView(setsquareView);
+            } else {
+                // hide setsquare
+                delete this->win->getXournal()->getSetsquareView();
+                this->win->getXournal()->setSetsquareView(nullptr);
+            }
         case ACTION_TOOL_FLOATING_TOOLBOX:
             if (enabled) {
                 selectTool(TOOL_FLOATING_TOOLBOX);
