@@ -11,22 +11,19 @@
 
 #pragma once
 
+class Layer;
+
 template <class T>
-class PageLayerPosEntry {
-public:
-    PageLayerPosEntry(Layer* layer, T* element, int pos) {
-        this->element = element;
-        this->pos = pos;
-        this->layer = layer;
-    }
+struct PageLayerPosEntry {
+    // TODO: constructor could be removed with C++20
+    PageLayerPosEntry<T>(Layer* layer, T* element, int pos): layer(layer), element(element), pos(pos) {}
 
-    ~PageLayerPosEntry() {}
-
-private:
-public:
     Layer* layer;
     T* element;
     int pos;
-
-    static int cmp(PageLayerPosEntry<T>* a, PageLayerPosEntry<T>* b) { return a->pos - b->pos; }
 };
+
+template <typename T>
+constexpr auto operator<(const PageLayerPosEntry<T>& lhs, const PageLayerPosEntry<T>& rhs) -> bool {
+    return lhs.pos < rhs.pos;
+}

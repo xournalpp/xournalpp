@@ -47,10 +47,8 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
     loadPageFormats();
 
     int i = 0;
-    for (GList* l = list; l != nullptr; l = l->next) {
-        auto* s = static_cast<GtkPaperSize*>(l->data);
-
-        string displayName = gtk_paper_size_get_display_name(s);
+    for (auto& size: paperSizes) {
+        string displayName = gtk_paper_size_get_display_name(size.get());
         if (StringUtils::startsWith(displayName, "custom_")) {
             displayName = displayName.substr(7);
         }
@@ -58,7 +56,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
         GtkTreeIter iter;
         gtk_list_store_append(store, &iter);
         gtk_list_store_set(store, &iter, 0, displayName.c_str(), -1);
-        gtk_list_store_set(store, &iter, 1, s, -1);
+        gtk_list_store_set(store, &iter, 1, size.get(), -1);
         i++;
     }
 
@@ -85,40 +83,30 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
     g_signal_connect(get("spinHeight"), "value-changed", G_CALLBACK(spinValueChangedCb), this);
 }
 
-FormatDialog::~FormatDialog() {
-    for (GList* l = this->list; l != nullptr; l = l->next) {
-        auto* s = static_cast<GtkPaperSize*>(l->data);
-        gtk_paper_size_free(s);
-    }
-
-    g_list_free(this->list);
-    this->list = nullptr;
-}
-
-#define ADD_FORMAT(format) this->list = g_list_append(this->list, gtk_paper_size_new(format))
-
 void FormatDialog::loadPageFormats() {
-    this->list = gtk_paper_size_get_paper_sizes(false);
+    GList* default_sizes = gtk_paper_size_get_paper_sizes(false);
 
     GList* next = nullptr;
-    for (GList* l = list; l != nullptr; l = next) {
+    for (GList* l = default_sizes; l != nullptr; l = next) {
         // Copy next here, because the entry may be deleted
         next = l->next;
         auto* s = static_cast<GtkPaperSize*>(l->data);
 
-        string name = gtk_paper_size_get_name(s);
+        std::string name = gtk_paper_size_get_name(s);
         if (name == GTK_PAPER_NAME_A3 || name == GTK_PAPER_NAME_A4 || name == GTK_PAPER_NAME_A5 ||
             name == GTK_PAPER_NAME_LETTER || name == GTK_PAPER_NAME_LEGAL) {
+            paperSizes.emplace_back(s, gtk_paper_size_free);
+            default_sizes = g_list_delete_link(default_sizes, l);
             continue;
         }
 
         gtk_paper_size_free(s);
-        this->list = g_list_delete_link(this->list, l);
+        default_sizes = g_list_delete_link(default_sizes, l);
     }
 
     // Name format: ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf
-    ADD_FORMAT("custom_16x9_320x180mm");
-    ADD_FORMAT("custom_4x3_320x240mm");
+    paperSizes.emplace_back(gtk_paper_size_new("custom_16x9_320x180mm"), gtk_paper_size_free);
+    paperSizes.emplace_back(gtk_paper_size_new("custom_4x3_320x240mm"), gtk_paper_size_free);
 }
 
 auto FormatDialog::getWidth() const -> double { return this->width; }
@@ -155,10 +143,9 @@ void FormatDialog::spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* d
     }
 
     int i = 0;
-    for (GList* l = dlg->list; l != nullptr; l = l->next) {
-        auto* s = static_cast<GtkPaperSize*>(l->data);
-        double w = gtk_paper_size_get_width(s, GTK_UNIT_POINTS);
-        double h = gtk_paper_size_get_height(s, GTK_UNIT_POINTS);
+    for (auto& size: dlg->paperSizes) {
+        double w = gtk_paper_size_get_width(size.get(), GTK_UNIT_POINTS);
+        double h = gtk_paper_size_get_height(size.get(), GTK_UNIT_POINTS);
 
         if ((static_cast<int>(w - width) == 0 && static_cast<int>(h - height) == 0) ||
             (static_cast<int>(h - width) == 0 && static_cast<int>(w - height) == 0)) {

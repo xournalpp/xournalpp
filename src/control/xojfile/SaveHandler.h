@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -29,7 +30,6 @@ class ProgressListener;
 class SaveHandler {
 public:
     SaveHandler();
-    virtual ~SaveHandler();
 
 public:
     void prepareSave(Document* doc);
@@ -55,11 +55,11 @@ protected:
     virtual void writeBackgroundName(XmlNode* background, PageRef p);
 
 protected:
-    XmlNode* root;
+    std::unique_ptr<XmlNode> root{};
     bool firstPdfPageVisited;
     int attachBgId;
 
     string errorMessage;
 
-    GList* backgroundImages;
+    std::vector<BackgroundImage> backgroundImages{};
 };

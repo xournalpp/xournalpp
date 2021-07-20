@@ -74,18 +74,19 @@ private:
     double y2;
 };
 
+class RegionPoint;
+
 class RegionSelect: public Selection {
 public:
     RegionSelect(double x, double y, Redrawable* view);
-    virtual ~RegionSelect();
 
 public:
-    virtual bool finalize(PageRef page);
-    virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
-    virtual void currentPos(double x, double y);
-    virtual bool contains(double x, double y);
-    virtual bool userTapped(double zoom);
+    bool finalize(PageRef page) override;
+    void paint(cairo_t* cr, GdkRectangle* rect, double zoom) override;
+    void currentPos(double x, double y) override;
+    bool contains(double x, double y) override;
+    bool userTapped(double zoom) override;
 
 private:
-    GList* points;
+    std::vector<RegionPoint> points;
 };

@@ -26,7 +26,7 @@ struct BackgroundImage::Content {
     Content(const Content&) = delete;
     Content(Content&&) = default;
     auto operator=(const Content&) -> Content& = delete;
-    auto operator=(Content &&) -> Content& = default;
+    auto operator=(Content&&) -> Content& = default;
 
     fs::path path;
     GdkPixbuf* pixbuf = nullptr;
@@ -64,7 +64,7 @@ void BackgroundImage::setCloneId(int id) {
 
 void BackgroundImage::clearSaveState() { this->setCloneId(-1); }
 
-auto BackgroundImage::getFilepath() -> fs::path { return this->img ? this->img->path : fs::path{}; }
+auto BackgroundImage::getFilepath() const -> fs::path { return this->img ? this->img->path : fs::path{}; }
 
 void BackgroundImage::setFilepath(fs::path path) {
     if (this->img) {
@@ -72,7 +72,7 @@ void BackgroundImage::setFilepath(fs::path path) {
     }
 }
 
-auto BackgroundImage::isAttached() -> bool { return this->img ? this->img->attach : false; }
+auto BackgroundImage::isAttached() const -> bool { return this->img ? this->img->attach : false; }
 
 void BackgroundImage::setAttach(bool attach) {
     if (!this->img) {
@@ -83,6 +83,6 @@ void BackgroundImage::setAttach(bool attach) {
     this->img->attach = attach;
 }
 
-auto BackgroundImage::getPixbuf() -> GdkPixbuf* { return this->img ? this->img->pixbuf : nullptr; }
+auto BackgroundImage::getPixbuf() const -> GdkPixbuf* { return this->img ? this->img->pixbuf : nullptr; }
 
-auto BackgroundImage::isEmpty() -> bool { return !this->img; }
+auto BackgroundImage::isEmpty() const -> bool { return !this->img; }

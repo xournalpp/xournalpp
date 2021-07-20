@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
 
@@ -19,10 +21,9 @@ enum Orientation { ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_P
 class FormatDialog: public GladeGui {
 public:
     FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height);
-    virtual ~FormatDialog();
 
 public:
-    virtual void show(GtkWindow* parent);
+    void show(GtkWindow* parent) override;
 
     double getWidth() const;
     double getHeight() const;
@@ -41,7 +42,7 @@ private:
 private:
     Settings* settings = nullptr;
 
-    GList* list = nullptr;
+    std::vector<std::unique_ptr<GtkPaperSize, decltype(&gtk_paper_size_free)>> paperSizes;
 
     Orientation orientation = ORIENTATION_NOT_DEFINED;
     double scale = 0;

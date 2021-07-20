@@ -41,15 +41,15 @@ struct BackgroundImage {
     void setCloneId(int id);
     void clearSaveState();
 
-    fs::path getFilepath();
+    fs::path getFilepath() const;
     void setFilepath(fs::path filepath);
 
-    bool isAttached();
+    bool isAttached() const;
     void setAttach(bool attach);
 
-    GdkPixbuf* getPixbuf();
+    GdkPixbuf* getPixbuf() const;
 
-    bool isEmpty();
+    bool isEmpty() const;
 
 private:
     struct Content;

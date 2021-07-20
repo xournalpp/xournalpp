@@ -11,32 +11,24 @@
 
 #pragma once
 
-#include <string>
 #include <vector>
 
 #include "model/Point.h"
-
-#include "XournalType.h"
 
 class EraseableStrokePart {
 public:
     EraseableStrokePart(Point a, Point b);
     EraseableStrokePart(double width);
-    virtual ~EraseableStrokePart();
-
-private:
-    EraseableStrokePart(const EraseableStrokePart& part);
 
 public:
     void addPoint(Point p);
     double getWidth() const;
 
-    GList* getPoints();
+    std::vector<Point>& getPoints();
+    std::vector<Point> const& getPoints() const;
 
     void clearSplitData();
     void splitFor(double halfEraserSize);
-
-    EraseableStrokePart* clone();
 
     void calcSize();
 
@@ -52,12 +44,10 @@ private:
     double width = 0;
     double splitSize = 0;
 
-    GList* points = nullptr;
+    std::vector<Point> points{};
 
     double x = 0;
     double y = 0;
     double elementWidth = 0;
     double elementHeight = 0;
-
-    friend class EraseableStroke;
 };
