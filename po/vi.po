@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-18 21:18+0000\n"
-"PO-Revision-Date: 2021-07-18 22:18\n"
+"POT-Creation-Date: 2021-07-20 13:25+0000\n"
+"PO-Revision-Date: 2021-07-20 13:27\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -17,12 +17,12 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/control/XournalMain.cpp:469
+#: ../src/control/XournalMain.cpp:470
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:46
+#: ../src/control/jobs/BaseExportJob.cpp:48
 msgid "\n"
 " Do you want to continue?"
 msgstr "\n"
@@ -38,15 +38,15 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr ""
 
-#: ../src/control/settings/Settings.cpp:113
+#: ../src/control/settings/Settings.cpp:115
 msgid "%F-Note-%H-%M"
 msgstr ""
 
-#: ../src/gui/dialog/SettingsDialog.cpp:146
+#: ../src/gui/dialog/SettingsDialog.cpp:149
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:464
+#: ../src/control/XournalMain.cpp:465
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -55,11 +55,11 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not in {2}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Add/Edit Tex"
 msgstr "Thêm/Chỉnh sửa Tex"
 
-#: ../src/control/XournalMain.cpp:686
+#: ../src/control/XournalMain.cpp:687
 msgid "Advanced export options"
 msgstr ""
 
@@ -75,7 +75,7 @@ msgstr "Áp dụng cho mọi trang"
 msgid "Apply to current page"
 msgstr "Áp dụng cho trang hiện tại"
 
-#: ../src/control/tools/EditSelection.cpp:339
+#: ../src/control/tools/EditSelection.cpp:340
 msgid "Arrange"
 msgstr ""
 
@@ -114,16 +114,16 @@ msgstr ""
 msgid "Attribute color not set!"
 msgstr ""
 
-#: ../src/control/AudioController.cpp:94
+#: ../src/control/AudioController.cpp:97
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr ""
 
-#: ../src/control/Control.cpp:205
+#: ../src/control/Control.cpp:206
 msgid "Autosave failed with an error: {1}"
 msgstr ""
 
-#: ../src/control/Control.cpp:185
+#: ../src/control/Control.cpp:186
 msgid "Autosave renamed from {1} to {2}"
 msgstr ""
 
@@ -131,8 +131,8 @@ msgstr ""
 msgid "Autosaving to {1}"
 msgstr "Lưu tự động vào {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Back"
 msgstr "Quay lại"
 
@@ -150,15 +150,15 @@ msgstr "Đen"
 msgid "Blue"
 msgstr "Xanh dương"
 
-#: ../src/control/tools/EditSelection.cpp:356
+#: ../src/control/tools/EditSelection.cpp:357
 msgid "Bring forward"
 msgstr ""
 
-#: ../src/control/tools/EditSelection.cpp:346
+#: ../src/control/tools/EditSelection.cpp:347
 msgid "Bring to front"
 msgstr ""
 
-#: ../src/control/Control.cpp:2021 ../src/control/Control.cpp:2472
+#: ../src/control/Control.cpp:2022 ../src/control/Control.cpp:2473
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
 msgstr "Huỷ"
@@ -179,7 +179,7 @@ msgstr ""
 msgid "Change stroke fill"
 msgstr ""
 
-#: ../src/undo/SizeUndoAction.cpp:104
+#: ../src/undo/SizeUndoAction.cpp:106
 msgid "Change stroke width"
 msgstr ""
 
@@ -191,13 +191,13 @@ msgstr "Không xác định được màu \"{1}\" (không có trong danh sách m
 msgid "Contents"
 msgstr "Nội dung"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:346
-#: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:76
-#: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:82
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:348
+#: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:78
+#: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:84
 msgid "Copy"
 msgstr "Sao chép"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:30
+#: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
 msgstr ""
 
@@ -210,76 +210,76 @@ msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:271
+#: ../src/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:265
+#: ../src/control/LatexController.cpp:267
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr ""
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:15
+#: ../src/control/pagetype/PageTypeHandler.cpp:17
 msgid "Could not load pagetemplates.ini file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:785
+#: ../src/control/xojfile/LoadHandler.cpp:787
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:794
+#: ../src/control/xojfile/LoadHandler.cpp:796
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:766
-#: ../src/control/xojfile/LoadHandler.cpp:1017
-#: ../src/control/xojfile/LoadHandler.cpp:1035
+#: ../src/control/xojfile/LoadHandler.cpp:768
+#: ../src/control/xojfile/LoadHandler.cpp:1019
+#: ../src/control/xojfile/LoadHandler.cpp:1037
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:757
-#: ../src/control/xojfile/LoadHandler.cpp:773
-#: ../src/control/xojfile/LoadHandler.cpp:1008
-#: ../src/control/xojfile/LoadHandler.cpp:1024
+#: ../src/control/xojfile/LoadHandler.cpp:759
+#: ../src/control/xojfile/LoadHandler.cpp:775
+#: ../src/control/xojfile/LoadHandler.cpp:1010
+#: ../src/control/xojfile/LoadHandler.cpp:1026
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:157
+#: ../src/control/xojfile/LoadHandler.cpp:159
 msgid "Could not open file: \"{1}\""
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:90
+#: ../src/gui/MainWindow.cpp:92
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr ""
 
-#: ../src/gui/MainWindow.cpp:81
+#: ../src/gui/MainWindow.cpp:83
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:353
-#: ../src/control/xojfile/LoadHandler.cpp:377
+#: ../src/control/xojfile/LoadHandler.cpp:355
+#: ../src/control/xojfile/LoadHandler.cpp:379
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:387
+#: ../src/control/xojfile/LoadHandler.cpp:389
 msgid "Could not read page number for cloned background image: {1}."
 msgstr ""
 
-#: ../src/undo/UndoRedoHandler.cpp:137
+#: ../src/undo/UndoRedoHandler.cpp:139
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:180
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:182
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:175
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:177
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr ""
 
-#: ../src/control/Control.cpp:196
+#: ../src/control/Control.cpp:197
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr ""
 
@@ -291,7 +291,7 @@ msgstr ""
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr ""
 
-#: ../src/undo/UndoRedoHandler.cpp:108
+#: ../src/undo/UndoRedoHandler.cpp:110
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
 msgstr ""
@@ -316,7 +316,7 @@ msgstr ""
 msgid "Custom Export"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Customize Toolbars"
 msgstr "Thanh công cụ tùy chỉnh"
 
@@ -324,15 +324,15 @@ msgstr "Thanh công cụ tùy chỉnh"
 msgid "Customized"
 msgstr "Tùy chỉnh"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:345
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:347
 msgid "Cut"
 msgstr "Cắt"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Default Tool"
 msgstr "Công cụ mặc định"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:353
 #: ../src/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "Xóa"
@@ -341,7 +341,7 @@ msgstr "Xóa"
 msgid "Delete Logfile"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:399
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Delete current page"
 msgstr "Xóa trang hiện tại"
 
@@ -353,7 +353,7 @@ msgstr "Xóa tập tin"
 msgid "Delete layer"
 msgstr "Xóa lớp"
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:58
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Delete this layer"
 msgstr ""
 
@@ -361,33 +361,33 @@ msgstr ""
 msgid "Delete this page"
 msgstr "Xóa trang này"
 
-#: ../src/control/Control.cpp:2469
+#: ../src/control/Control.cpp:2470
 msgid "Discard"
 msgstr "Bỏ"
 
-#: ../src/control/XournalMain.cpp:687
+#: ../src/control/XournalMain.cpp:688
 msgid "Display advanced export options"
 msgstr ""
 
-#: ../src/control/Control.cpp:1966
+#: ../src/control/Control.cpp:1967
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:39
+#: ../src/control/jobs/BaseExportJob.cpp:41
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/control/Control.cpp:2463
+#: ../src/control/Control.cpp:2464
 msgid "Document file was removed."
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:239
+#: ../src/control/xojfile/LoadHandler.cpp:241
 msgid "Document is corrupted (no pages found in file)"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:235
+#: ../src/control/xojfile/LoadHandler.cpp:237
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr ""
 
@@ -396,45 +396,45 @@ msgstr ""
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:24
+#: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Dotted"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:127
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Arrow"
 msgstr "Vẽ mũi tên"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:125
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Ellipse"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:121
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:34
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Line"
 msgstr "Vẽ đường thẳng"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:123
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:97
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:100
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:99
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:102
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Rectangle"
 msgstr "Vẽ tam giác"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Draw Spline"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:129
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw coordinate system"
 msgstr "Vẽ trục tọa độ"
 
@@ -446,7 +446,7 @@ msgstr ""
 msgid "Drawing Type - don't change"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:24
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
 msgstr ""
 
@@ -458,7 +458,7 @@ msgstr "Chỉnh sửa văn bản"
 msgid "Emergency saved document"
 msgstr "Tập tin được lưu khẩn cấp"
 
-#: ../src/gui/dialog/SettingsDialog.cpp:278
+#: ../src/gui/dialog/SettingsDialog.cpp:281
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr ""
 
@@ -468,41 +468,41 @@ msgid "Erase stroke"
 msgstr "Xóa nét"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:248
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
 msgid "Eraser"
 msgstr "Tẩy"
 
-#: ../src/control/Control.cpp:2220
+#: ../src/control/Control.cpp:2221
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
 
-#: ../src/gui/GladeGui.cpp:21
+#: ../src/gui/GladeGui.cpp:22
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/control/Control.cpp:2043
+#: ../src/control/Control.cpp:2044
 msgid "Error opening file \"{1}\""
 msgstr "Lỗi khi mở tập tin \"{1}\""
 
-#: ../src/util/OutputStream.cpp:23
+#: ../src/util/OutputStream.cpp:25
 msgid "Error opening file: \"{1}\""
 msgstr "Lỗi khi mở tập tin: \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:441
-#: ../src/control/xojfile/LoadHandler.cpp:461
+#: ../src/control/xojfile/LoadHandler.cpp:443
+#: ../src/control/xojfile/LoadHandler.cpp:463
 msgid "Error reading PDF: {1}"
 msgstr "Lỗi khi đọc PDF: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:518
+#: ../src/control/xojfile/LoadHandler.cpp:520
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
-#: ../src/control/jobs/ImageExport.cpp:143
+#: ../src/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
 msgstr "Lỗi khi lưu ảnh #1"
 
-#: ../src/control/jobs/ImageExport.cpp:159
+#: ../src/control/jobs/ImageExport.cpp:161
 msgid "Error save image #2"
 msgstr "Lỗi khi lưu ảnh #2"
 
@@ -531,21 +531,21 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:644
+#: ../src/control/XournalMain.cpp:645
 msgid "Export FILE as PDF"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:646
+#: ../src/control/XournalMain.cpp:647
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:16
+#: ../src/control/jobs/BaseExportJob.cpp:18
 msgid "Export PDF"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:660
+#: ../src/control/XournalMain.cpp:661
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -553,13 +553,13 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:651
+#: ../src/control/XournalMain.cpp:652
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:656
+#: ../src/control/XournalMain.cpp:657
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
@@ -572,11 +572,11 @@ msgstr ""
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:56
+#: ../src/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:101
+#: ../src/control/jobs/BaseExportJob.cpp:103
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
@@ -586,15 +586,15 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:472
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Fill"
 msgstr "Lấp đầy"
 
-#: ../src/gui/dialog/SettingsDialog.cpp:282
+#: ../src/gui/dialog/SettingsDialog.cpp:285
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:486
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Fine"
 msgstr "Mịn"
 
@@ -602,11 +602,11 @@ msgstr "Mịn"
 msgid "Floating Toolbox (experimental)"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/FontButton.cpp:60
+#: ../src/gui/toolbarMenubar/FontButton.cpp:62
 msgid "Font"
 msgstr "Kiểu chữ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Forward"
 msgstr "Tới trước"
 
@@ -614,43 +614,43 @@ msgstr "Tới trước"
 msgid "GNU GPLv2 or later"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:635
+#: ../src/control/XournalMain.cpp:636
 msgid "Get version of xournalpp"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:51
+#: ../src/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
 msgstr ""
 
-#: ../src/control/LatexController.cpp:62
+#: ../src/control/LatexController.cpp:64
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Go to first page"
 msgstr "Đến trang đầu tiên"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Go to last page"
 msgstr "Đến trang cuối"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "Go to next layer"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Go to page"
 msgstr "Đi đến trang"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "Go to previous layer"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:388
 msgid "Go to top layer"
 msgstr ""
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:23
+#: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Graph"
 msgstr "Đồ thị"
 
@@ -664,12 +664,12 @@ msgstr "Xám"
 msgid "Green"
 msgstr "Xanh lục"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:356
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Grid Snapping"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Hand"
 msgstr ""
 
@@ -678,12 +678,12 @@ msgid "Hide all"
 msgstr "Ẩn tất cả"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Highlighter"
 msgstr ""
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:32
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/control/pagetype/PageTypeHandler.cpp:34
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Image"
 msgstr "Ảnh"
 
@@ -695,7 +695,7 @@ msgstr "Ảnh được tạo thành công"
 msgid "Images"
 msgstr "Ảnh"
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:58
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Insert a copy of the current layer below"
 msgstr ""
 
@@ -719,23 +719,23 @@ msgstr "Chèn latex"
 msgid "Insert layer"
 msgstr "Chèn lớp"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:395
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "Insert page"
 msgstr "Chèn trang"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:25
+#: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Dotted"
 msgstr ""
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:26
+#: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Isometric Graph"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:631
+#: ../src/control/XournalMain.cpp:632
 msgid "Jump to Page (first Page: 1)"
 msgstr ""
 
-#: ../src/control/LatexController.cpp:190
+#: ../src/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr ""
 
@@ -747,7 +747,7 @@ msgstr ""
 msgid "Layer Combo"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layer Preview"
 msgstr ""
 
@@ -755,7 +755,7 @@ msgstr ""
 msgid "Layer {1}"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:62
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layerstack Preview"
 msgstr ""
 
@@ -769,7 +769,7 @@ msgstr "Xanh dương nhạt"
 msgid "Light Green"
 msgstr "Xanh lục nhạt"
 
-#: ../src/gui/PageView.cpp:701
+#: ../src/gui/PageView.cpp:703
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
@@ -780,11 +780,11 @@ msgstr "Đang tải..."
 msgid "Magenta"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Manage Toolbars"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Medium"
 msgstr ""
 
@@ -815,15 +815,15 @@ msgstr "Chuyển trang lên trên"
 msgid "New"
 msgstr "Mới"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:331
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "New Xournal"
 msgstr "Tạo Xournal mới"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Next"
 msgstr "Tiếp"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:389
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "Next annotated page"
 msgstr ""
 
@@ -836,7 +836,7 @@ msgstr ""
 msgid "No pages to export!"
 msgstr ""
 
-#: ../src/control/Control.cpp:1264
+#: ../src/control/Control.cpp:1265
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
@@ -848,7 +848,7 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: ../src/control/XournalMain.cpp:667
+#: ../src/control/XournalMain.cpp:668
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
@@ -866,11 +866,11 @@ msgid "Open Logfile directory"
 msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:332
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Open file"
 msgstr "Mở tập tin"
 
-#: ../src/control/RecentManager.cpp:183
+#: ../src/control/RecentManager.cpp:185
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Mở {1}"
@@ -934,31 +934,31 @@ msgstr ""
 msgid "Page number"
 msgstr "Số trang"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:362
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Paired pages"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:347
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 #: ../src/undo/AddUndoAction.cpp:77
 msgid "Paste"
 msgstr "Dán"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Pause / Play"
 msgstr "Tạm dừng / Chạy"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:229
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:231
 msgid "Pen"
 msgstr "Bút"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:19
+#: ../src/control/pagetype/PageTypeHandler.cpp:21
 msgid "Plain"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:75
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
 msgid "Play Object"
 msgstr ""
 
@@ -966,7 +966,7 @@ msgstr ""
 msgid "Predefined"
 msgstr "Xác định trước"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "Presentation mode"
 msgstr "Chế độ trình chiếu"
 
@@ -974,15 +974,15 @@ msgstr "Chế độ trình chiếu"
 msgid "Previously selected language not available anymore!"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Print"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Record Audio / Stop Recording"
 msgstr "Thu âm / Ngừng"
 
-#: ../src/control/Control.cpp:873
+#: ../src/control/Control.cpp:874
 msgid "Recorder could not be started."
 msgstr "Không thể mở được máy ghi âm."
 
@@ -991,24 +991,24 @@ msgstr "Không thể mở được máy ghi âm."
 msgid "Red"
 msgstr "Đỏ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:341
-#: ../src/undo/UndoRedoHandler.cpp:215
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
+#: ../src/undo/UndoRedoHandler.cpp:217
 msgid "Redo"
 msgstr "Làm lại"
 
-#: ../src/undo/UndoRedoHandler.cpp:210
+#: ../src/undo/UndoRedoHandler.cpp:212
 msgid "Redo: "
 msgstr "Làm lại: "
 
-#: ../src/control/Control.cpp:2020
+#: ../src/control/Control.cpp:2021
 msgid "Remove PDF Background"
 msgstr "Xóa nền PDF"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:171
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:173
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:169
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:171
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr ""
 
@@ -1016,11 +1016,11 @@ msgstr ""
 msgid "Rename layer"
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:74
+#: ../src/util/XojMsgBox.cpp:77
 msgid "Replace"
 msgstr "Thay thế"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1054
+#: ../src/control/xojfile/LoadHandler.cpp:1056
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr ""
 
@@ -1032,15 +1032,15 @@ msgstr "Khôi phục tập tin"
 msgid "Rotation"
 msgstr "Xoay"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:354
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Rotation Snapping"
 msgstr ""
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:20
+#: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled"
 msgstr ""
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:21
+#: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Ruled with vertical line"
 msgstr ""
 
@@ -1052,16 +1052,16 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/control/Control.cpp:2464 ../src/control/jobs/SaveJob.cpp:15
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
+#: ../src/control/Control.cpp:2465 ../src/control/jobs/SaveJob.cpp:15
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
 msgid "Save"
 msgstr "Lưu"
 
-#: ../src/control/Control.cpp:2464
+#: ../src/control/Control.cpp:2465
 msgid "Save As..."
 msgstr "Lưu dưới dạng..."
 
-#: ../src/control/Control.cpp:2309 ../src/gui/dialog/PageTemplateDialog.cpp:77
+#: ../src/control/Control.cpp:2310 ../src/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Lưu tập tin"
 
@@ -1074,7 +1074,7 @@ msgstr "Lỗi khi lưu tập tin: {1}"
 msgid "Scale"
 msgstr "Tỷ lệ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -1082,34 +1082,34 @@ msgstr "Tìm kiếm"
 msgid "See the full list of contributors"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Select Font"
 msgstr "Chọn kiểu chữ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:69
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Select Object"
 msgstr "Chọn đối tượng"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:17
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:57
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:90
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
 msgstr "Chọn tam giác"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:18
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:63
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:65
 msgid "Select Region"
 msgstr "Chọn vùng"
 
-#: ../src/control/Control.cpp:2019
+#: ../src/control/Control.cpp:2020
 msgid "Select another PDF"
 msgstr "Chọn tập tin PDF khác"
 
-#: ../src/util/XojMsgBox.cpp:73
+#: ../src/util/XojMsgBox.cpp:76
 msgid "Select another name"
 msgstr "Chọn tên khác"
 
@@ -1130,7 +1130,7 @@ msgstr "Chọn tam giác"
 msgid "Select region"
 msgstr "Chọn vùng"
 
-#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:14
+#: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
 msgstr ""
 
@@ -1138,11 +1138,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr "Gửi báo cáo lỗi"
 
-#: ../src/control/tools/EditSelection.cpp:367
+#: ../src/control/tools/EditSelection.cpp:368
 msgid "Send backward"
 msgstr ""
 
-#: ../src/control/tools/EditSelection.cpp:375
+#: ../src/control/tools/EditSelection.cpp:376
 msgid "Send to back"
 msgstr ""
 
@@ -1150,24 +1150,24 @@ msgstr ""
 msgid "Separator"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:671
+#: ../src/control/XournalMain.cpp:672
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:681
+#: ../src/control/XournalMain.cpp:682
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:675
+#: ../src/control/XournalMain.cpp:676
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
 msgid "Shape Recognizer"
 msgstr ""
 
@@ -1183,27 +1183,27 @@ msgstr ""
 msgid "Show only not used pages ({1} unused pages)"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:542
+#: ../src/control/XournalMain.cpp:543
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Xin lỗi, Xournal++ chỉ có thể mở một tập tin một lúc.\n"
 "Các tập tin khác sẽ bị loại bỏ."
 
-#: ../src/control/XournalMain.cpp:557
+#: ../src/control/XournalMain.cpp:558
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr ""
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:22
+#: ../src/control/pagetype/PageTypeHandler.cpp:24
 msgid "Staves"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Stop"
 msgstr "Dừng"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:131
-#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:40
+#: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
 #: ../src/undo/RecognizerUndoAction.cpp:72
 msgid "Stroke recognizer"
 msgstr ""
@@ -1216,11 +1216,11 @@ msgstr ""
 msgid "Supported files"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one above"
 msgstr ""
 
-#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:57
+#: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Swap the current layer with the one below"
 msgstr ""
 
@@ -1237,7 +1237,7 @@ msgid "System Default"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Text"
 msgstr "Văn bản"
 
@@ -1246,7 +1246,7 @@ msgstr "Văn bản"
 msgid "Text %i times found on this page"
 msgstr ""
 
-#: ../src/undo/TextUndoAction.cpp:29
+#: ../src/undo/TextUndoAction.cpp:30
 msgid "Text changes"
 msgstr ""
 
@@ -1270,45 +1270,45 @@ msgstr ""
 msgid "Text not found, searched on all pages"
 msgstr ""
 
-#: ../src/control/Control.cpp:1064
+#: ../src/control/Control.cpp:1065
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2008
+#: ../src/control/Control.cpp:2009
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr ""
 
-#: ../src/control/Control.cpp:2012
+#: ../src/control/Control.cpp:2013
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr ""
 
-#: ../src/control/jobs/BaseExportJob.cpp:45
+#: ../src/control/jobs/BaseExportJob.cpp:47
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/control/Control.cpp:2051
+#: ../src/control/Control.cpp:2052
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:117
+#: ../src/control/xojfile/LoadHandler.cpp:119
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:124
+#: ../src/control/xojfile/LoadHandler.cpp:126
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:133
+#: ../src/control/xojfile/LoadHandler.cpp:135
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:145
+#: ../src/control/xojfile/LoadHandler.cpp:147
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr ""
 
-#: ../src/control/LatexController.cpp:238
+#: ../src/control/LatexController.cpp:240
 msgid "The formula is empty when rendered or invalid."
 msgstr ""
 
@@ -1324,15 +1324,15 @@ msgstr ""
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr ""
 
-#: ../src/util/XojMsgBox.cpp:92
+#: ../src/util/XojMsgBox.cpp:95
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:490
 msgid "Thick"
 msgstr "Dày"
 
-#: ../src/control/Control.cpp:2463
+#: ../src/control/Control.cpp:2464
 msgid "This document is not saved yet."
 msgstr "Tài liệu này chưa được lưu."
 
@@ -1341,7 +1341,7 @@ msgstr "Tài liệu này chưa được lưu."
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Toggle fullscreen"
 msgstr ""
 
@@ -1349,7 +1349,7 @@ msgstr ""
 msgid "Tool - don't change"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:106
+#: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:108
 msgid "Toolbar found: {1}"
 msgstr ""
 
@@ -1365,32 +1365,32 @@ msgstr "Thử lưu khẩn cấp tập tin đang mở…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/gui/PageView.cpp:348
+#: ../src/gui/PageView.cpp:350
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
-#: ../src/control/Control.cpp:1278
+#: ../src/control/Control.cpp:1279
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:340
-#: ../src/undo/UndoRedoHandler.cpp:203
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
+#: ../src/undo/UndoRedoHandler.cpp:205
 msgid "Undo"
 msgstr "Hoàn tác"
 
-#: ../src/undo/UndoRedoHandler.cpp:198
+#: ../src/undo/UndoRedoHandler.cpp:200
 msgid "Undo: "
 msgstr "Hoàn tác: "
 
-#: ../src/control/xojfile/LoadHandler.cpp:284
+#: ../src/control/xojfile/LoadHandler.cpp:286
 msgid "Unexpected root tag: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:305
+#: ../src/control/xojfile/LoadHandler.cpp:307
 msgid "Unexpected tag in document: \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:494
+#: ../src/control/xojfile/LoadHandler.cpp:496
 msgid "Unknown background type: {1}"
 msgstr ""
 
@@ -1398,27 +1398,27 @@ msgstr ""
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:448
+#: ../src/control/xojfile/LoadHandler.cpp:450
 msgid "Unknown domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:224
+#: ../src/control/xojfile/LoadHandler.cpp:226
 msgid "Unknown parser error"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:395
+#: ../src/control/xojfile/LoadHandler.cpp:397
 msgid "Unknown pixmap::domain type: {1}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:591
+#: ../src/control/xojfile/LoadHandler.cpp:593
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/control/Control.cpp:2366
+#: ../src/control/Control.cpp:2367
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Vertical Space"
 msgstr ""
 
@@ -1426,11 +1426,11 @@ msgstr ""
 msgid "Vertical space"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Very Fine"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Very Thick"
 msgstr "Rất dày"
 
@@ -1439,7 +1439,7 @@ msgstr "Rất dày"
 msgid "White"
 msgstr "Trắng"
 
-#: ../src/control/pagetype/PageTypeHandler.cpp:31
+#: ../src/control/pagetype/PageTypeHandler.cpp:33
 msgid "With PDF background"
 msgstr ""
 
@@ -1447,15 +1447,15 @@ msgstr ""
 msgid "Write text"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:908
+#: ../src/control/xojfile/LoadHandler.cpp:910
 msgid "Wrong count of points ({1})"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:918
+#: ../src/control/xojfile/LoadHandler.cpp:920
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:221
+#: ../src/control/xojfile/LoadHandler.cpp:223
 msgid "XML Parser error: {1}"
 msgstr ""
 
@@ -1471,7 +1471,7 @@ msgstr ""
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/control/Control.cpp:2315 ../src/control/stockdlg/XojOpenDlg.cpp:58
+#: ../src/control/Control.cpp:2316 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr ""
 
@@ -1504,23 +1504,23 @@ msgstr ""
 msgid "Zoom Slider"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Zoom fit to screen"
 msgstr "Phóng vừa màn hình"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Zoom in"
 msgstr "Phóng to"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
 msgid "Zoom out"
 msgstr "Thu nhỏ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Zoom to 100%"
 msgstr "Hiện 100%"
 
-#: ../src/control/Control.cpp:2309 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:19
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
@@ -1532,7 +1532,7 @@ msgstr ""
 msgid "_Open"
 msgstr ""
 
-#: ../src/control/Control.cpp:2310 ../src/control/jobs/BaseExportJob.cpp:17
+#: ../src/control/Control.cpp:2311 ../src/control/jobs/BaseExportJob.cpp:19
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
 msgstr ""
@@ -1541,11 +1541,11 @@ msgstr ""
 msgid "cursor"
 msgstr "con trỏ"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:237
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:239
 msgid "dash-/ dotted"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:234
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:236
 msgid "dashed"
 msgstr ""
 
@@ -1557,11 +1557,11 @@ msgstr ""
 msgid "default enabled"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:252
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:254
 msgid "delete stroke"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:240
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:242
 msgid "dotted"
 msgstr ""
 
@@ -1573,7 +1573,7 @@ msgstr ""
 msgid "eraser"
 msgstr "tẩy"
 
-#: ../src/control/Control.cpp:1980
+#: ../src/control/Control.cpp:1981
 msgid "file: {1}"
 msgstr ""
 
@@ -1601,8 +1601,8 @@ msgstr "bút"
 msgid "show"
 msgstr "hiện"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:231
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:233
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:252
 msgid "standard"
 msgstr ""
 
@@ -1630,43 +1630,43 @@ msgstr "màn hình cảm ứng"
 msgid "trackpoint"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:251
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:253
 msgid "whiteout"
 msgstr ""
 
-#: ../src/control/xojfile/LoadHandler.cpp:917
+#: ../src/control/xojfile/LoadHandler.cpp:919
 msgid "xoj-File: {1}"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:110
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:111
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:176
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:177
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:131
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:132
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:123
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:124
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:136
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:137
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:127
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:128
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:194
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr ""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:200
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:201
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
