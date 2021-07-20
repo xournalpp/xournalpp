@@ -232,6 +232,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_HAND;
     }
 
+    if (value == "ACTION_TOOL_SETSQUARE") {
+        return ACTION_TOOL_SETSQUARE;
+    }
+
     if (value == "ACTION_TOOL_DEFAULT") {
         return ACTION_TOOL_DEFAULT;
     }
@@ -828,6 +832,10 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_TOOL_HAND) {
         return "ACTION_TOOL_HAND";
+    }
+
+    if (value == ACTION_TOOL_SETSQUARE) {
+        return "ACTION_TOOL_SETSQUARE";
     }
 
     if (value == ACTION_TOOL_DEFAULT) {

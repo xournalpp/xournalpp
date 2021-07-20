@@ -6,13 +6,16 @@
 
 #include <cmath>
 
+#include "view/SetsquareView.h"
+
 #include "InputContext.h"
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputHandler(inputContext) {}
 
 auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     bool zoomGesturesEnabled = inputContext->getSettings()->isZoomGesturesEnabled();
-
+    auto setsquareView = inputContext->getXournal()->setsquareView;
+    bool setsquareGesture = setsquareView != nullptr;
     // Don't handle more then 2 inputs
     if (this->primarySequence && this->primarySequence != event.sequence && this->secondarySequence &&
         this->secondarySequence != event.sequence) {
@@ -25,7 +28,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             this->primarySequence = event.sequence;
 
             // Set sequence data
-            sequenceStart(event);
+            sequenceStart(event, setsquareGesture);
         }
         // Start zooming as soon as we have two sequences.
         else if (this->primarySequence && this->primarySequence != event.sequence &&
@@ -33,7 +36,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
             this->secondarySequence = event.sequence;
 
             // Set sequence data
-            sequenceStart(event);
+            sequenceStart(event, setsquareGesture);
 
             // Even if zoom gestures are disabled,
             // this is still the start of a sequence. Just
@@ -50,12 +53,12 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
         } else if (event.sequence == this->primarySequence) {
             scrollMotion(event);
         } else if (this->primarySequence && this->secondarySequence) {
-            sequenceStart(event);
+            sequenceStart(event, setsquareGesture);
         }
     }
 
     if (event.type == BUTTON_RELEASE_EVENT) {
-        // Only stop zooing if both sequences were active (we were scrolling)
+        // Only stop zooming if both sequences were active (we were scrolling)
         if (this->primarySequence != nullptr && this->secondarySequence != nullptr && zoomGesturesEnabled) {
             zoomEnd();
         }
@@ -76,7 +79,7 @@ auto TouchInputHandler::handleImpl(InputEvent const& event) -> bool {
     return false;
 }
 
-void TouchInputHandler::sequenceStart(InputEvent const& event) {
+void TouchInputHandler::sequenceStart(InputEvent const& event, bool setsquareGesture) {
     if (event.sequence == this->primarySequence) {
         this->priLastAbs = {event.absoluteX, event.absoluteY};
         this->priLastRel = {event.relativeX, event.relativeY};
@@ -84,6 +87,7 @@ void TouchInputHandler::sequenceStart(InputEvent const& event) {
         this->secLastAbs = {event.absoluteX, event.absoluteY};
         this->secLastRel = {event.relativeX, event.relativeY};
     }
+    this->isSetsquareGesture = setsquareGesture;
 }
 
 void TouchInputHandler::scrollMotion(InputEvent const& event) {
@@ -100,10 +104,15 @@ void TouchInputHandler::scrollMotion(InputEvent const& event) {
             return offset;
         }
     }();
-
-    auto* layout = inputContext->getView()->getControl()->getWindow()->getLayout();
-
-    layout->scrollRelative(-offset.x, -offset.y);
+    if (isSetsquareGesture) {
+        SetsquareView* setsquareView = inputContext->getXournal()->setsquareView;
+        setsquareView->move(offset.x, offset.y);
+        auto view = setsquareView->getView();
+        view->getXournal()->repaintSetsquare();
+    } else {
+        auto* layout = inputContext->getView()->getControl()->getWindow()->getLayout();
+        layout->scrollRelative(-offset.x, -offset.y);
+    }
 }
 
 void TouchInputHandler::zoomStart() {
@@ -128,25 +137,32 @@ void TouchInputHandler::zoomStart() {
     this->canBlockZoom = true;
 
     lastZoomScrollCenter = (this->priLastAbs + this->secLastAbs) / 2.0;
+    auto v = this->secLastAbs - this->priLastAbs;
+    lastAngle = atan2(v.y, v.x);
+    lastDist = this->secLastAbs.distance(this->priLastAbs);
 
-    ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
+    if (isSetsquareGesture) {
+    } else {
 
-    // Disable zoom fit as we are zooming currently
-    // TODO(fabian): this should happen internally!!!
-    if (zoomControl->isZoomFitMode()) {
-        zoomControl->setZoomFitMode(false);
+        ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
+
+        // Disable zoom fit as we are zooming currently
+        // TODO(fabian): this should happen internally!!!
+        if (zoomControl->isZoomFitMode()) {
+            zoomControl->setZoomFitMode(false);
+        }
+
+        auto* mainWindow = inputContext->getView()->getControl()->getWindow();
+
+        // When not using touch drawing, we're using a different scrolling method.
+        // This requires different centering.
+        if (!mainWindow->getGtkTouchscreenScrollingEnabled()) {
+            Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
+            center += utl::Point<double>{zoomSequenceRectangle.x, zoomSequenceRectangle.y};
+        }
+
+        zoomControl->startZoomSequence(center);
     }
-
-    auto* mainWindow = inputContext->getView()->getControl()->getWindow();
-
-    // When not using touch drawing, we're using a different scrolling method.
-    // This requires different centering.
-    if (!mainWindow->getGtkTouchscreenScrollingEnabled()) {
-        Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
-        center += utl::Point<double>{zoomSequenceRectangle.x, zoomSequenceRectangle.y};
-    }
-
-    zoomControl->startZoomSequence(center);
 }
 
 void TouchInputHandler::zoomMotion(InputEvent const& event) {
@@ -171,15 +187,35 @@ void TouchInputHandler::zoomMotion(InputEvent const& event) {
         this->canBlockZoom = false;
     }
 
-    ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
-    zoomControl->zoomSequenceChange(zoom, true);
-
     auto center = (this->priLastAbs + this->secLastAbs) / 2;
-    auto lastScrollPosition = zoomControl->getScrollPositionAfterZoom();
-    auto offset = lastScrollPosition - (center - lastZoomScrollCenter);
+    auto v = this->secLastAbs - priLastAbs;
+    auto angle = atan2(v.y, v.x);
+    auto dist = this->secLastAbs.distance(priLastAbs);
 
-    zoomControl->setScrollPositionAfterZoom(offset);
+    if (isSetsquareGesture) {
+        SetsquareView* setsquareView = inputContext->getXournal()->setsquareView;
+        auto offset = center - lastZoomScrollCenter;
+        setsquareView->move(offset.x, offset.y);
+        auto da = angle - lastAngle;
+        setsquareView->rotate(da, center.x, center.y);
+        auto f = dist / lastDist;
+        setsquareView->scale(f);
+        auto view = setsquareView->getView();
+        view->getXournal()->repaintSetsquare();
+
+    } else {
+        ZoomControl* zoomControl = this->inputContext->getView()->getControl()->getZoomControl();
+        zoomControl->zoomSequenceChange(zoom, true);
+
+        auto lastScrollPosition = zoomControl->getScrollPositionAfterZoom();
+        auto offset = lastScrollPosition - (center - lastZoomScrollCenter);
+
+        zoomControl->setScrollPositionAfterZoom(offset);
+    }
+
     lastZoomScrollCenter = center;
+    lastAngle = angle;
+    lastDist = dist;
 }
 
 void TouchInputHandler::zoomEnd() {
@@ -193,6 +229,7 @@ void TouchInputHandler::onUnblock() {
 
     this->startZoomDistance = 0.0;
     this->lastZoomScrollCenter = {};
+    this->lastAngle = 0;
 
     priLastAbs = {-1.0, -1.0};
     secLastAbs = {-1.0, -1.0};

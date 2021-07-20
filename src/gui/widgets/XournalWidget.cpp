@@ -14,6 +14,7 @@
 #include "gui/XournalView.h"
 #include "gui/inputdevices/InputContext.h"
 #include "gui/scroll/ScrollHandling.h"
+#include "view/SetsquareView.h"
 
 #include "Rectangle.h"
 #include "Util.h"
@@ -66,6 +67,7 @@ auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget
     xoj->y = 0;
     xoj->layout = new Layout(view, inputContext->getScrollHandling());
     xoj->selection = nullptr;
+    xoj->setsquareView = nullptr;
 
     xoj->input = inputContext;
 
@@ -311,6 +313,9 @@ static void gtk_xournal_destroy(GtkWidget* object) {
 
     delete xournal->selection;
     xournal->selection = nullptr;
+
+    delete xournal->setsquareView;
+    xournal->setsquareView = nullptr;
 
     delete xournal->layout;
     xournal->layout = nullptr;

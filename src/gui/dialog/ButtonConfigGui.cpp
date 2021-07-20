@@ -89,6 +89,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     addTypeCB("select-lasso", _("Select region"), TOOL_SELECT_REGION);
     addTypeCB("select-rect", _("Select rectangle"), TOOL_SELECT_RECT);
     addTypeCB("hand", _("Hand"), TOOL_HAND);
+    addTypeCB("setsquare", _("Setsquare"), TOOL_HAND);
     addTypeCB("floating-toolbox", _("Floating Toolbox (experimental)"), TOOL_FLOATING_TOOLBOX);
 
     this->cbTool = get("cbTool");
