@@ -3,10 +3,10 @@
 #include <algorithm>  // for max, max_element
 #include <cmath>      // for pow, M_PI, cos, sin
 #include <cstddef>    // for size_t
-#include <list>       // for list, operator!=
 #include <memory>     // for allocator_traits<>...
 #include <optional>   // for optional
 #include <utility>    // for move
+#include <vector>     // for vector
 
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Escape
 
@@ -396,8 +396,7 @@ auto SplineHandler::linearizeSpline(const SplineHandler::Data& data) -> std::vec
     for (; itKnot2 != end; ++itKnot1, ++itKnot2, ++itTgt1, ++itTgt2) {
         SplineSegment seg(*itKnot1, Point(itKnot1->x + itTgt1->x, itKnot1->y + itTgt1->y),
                           Point(itKnot2->x - itTgt2->x, itKnot2->y - itTgt2->y), *itKnot2);
-        auto pts = seg.toPointSequence();
-        std::move(pts.begin(), pts.end(), std::back_inserter(result));
+        seg.toPoints(result);
     }
     result.emplace_back(data.knots.back());
 

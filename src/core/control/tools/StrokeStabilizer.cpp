@@ -4,7 +4,6 @@
 #include <cmath>      // for hypot, sqrt, abs, exp
 #include <iterator>   // for begin, end
 #include <limits>     // for numeric_limits
-#include <list>       // for list, operator!=
 #include <numeric>    // for accumulate
 #include <vector>     // for vector
 
@@ -153,12 +152,12 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     /**
      * TODO Add support for spline segments in Stroke and replace this point sequence by a single spline segment
      */
-    std::list<Point> pointsToPaint = spline.toPointSequence(usePressure);
+    std::vector<Point> pointsToPaint;
+    spline.toPoints(pointsToPaint);
 
-    pointsToPaint.pop_front();  // Point B has already been painted
-
-    for (auto&& point: pointsToPaint) {
-        strokeHandler->drawSegmentTo(point);
+    // Do not add the first point (B): it is already painted
+    for (auto it = pointsToPaint.cbegin() + 1; it != pointsToPaint.cend(); ++it) {
+        strokeHandler->drawSegmentTo(*it);
     }
     strokeHandler->drawSegmentTo(C);
 }
