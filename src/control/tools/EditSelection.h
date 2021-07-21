@@ -206,6 +206,12 @@ public:
     void paint(cairo_t* cr, double zoom);
 
     /**
+     * Gets the selection's bounding box in view coordinates. This takes document zoom
+     * and selection rotation into account.
+     */
+    auto getBoundingBoxInView() const -> Rectangle<double>;
+
+    /**
      * If the selection is outside the visible area correct the coordinates
      */
     void ensureWithinVisibleArea();
@@ -222,7 +228,7 @@ public:
     void mouseMove(double x, double y, bool alt);
 
     /**
-     * If the selection should moved (or rescaled)
+     * If the user is currently moving the selection.
      */
     bool isMoving();
 
@@ -281,6 +287,18 @@ private:
      */
     void scaleShift(double fx, double fy, bool changeLeft, bool changeTop);
 
+    /**
+     * Set edge panning signal.
+     */
+    void setEdgePan(bool edgePan);
+
+    /**
+     * Whether the edge pan signal is set.
+     */
+    bool isEdgePanning() const;
+
+    static bool handleEdgePan(EditSelection* self);
+
 private:  // DATA
     /**
      * Support rotation
@@ -314,7 +332,7 @@ private:  // DATA
     /**
      * Mouse coordinates for moving / resizing
      */
-    CursorSelectionType mouseDownType;
+    CursorSelectionType mouseDownType = CURSOR_SELECTION_NONE;
     double relMousePosX{};
     double relMousePosY{};
     double relMousePosRotX{};
@@ -367,4 +385,17 @@ private:  // HANDLER
      * The handler for snapping points
      */
     SnapToGridInputHandler snappingHandler;
+
+    /**
+     * Edge pan timer
+     */
+    GSource* edgePanHandler = nullptr;
+
+    /**
+     * Inhibit the next move event after edge panning finishes. This prevents
+     * the selection from teleporting if the page has changed during panning.
+     * Additionally, this reduces the amount of "jitter" resulting from moving
+     * the selection in mouseDown while edge panning.
+     */
+    bool edgePanInhibitNext = false;
 };
