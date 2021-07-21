@@ -28,6 +28,7 @@ public:
     Point(const Point& p) = default;
 
     Point& operator=(Point const&) = default;
+    inline bool operator==(const Point& p) const { return x == p.x && y == p.y && z == p.z; }
 
     /**
      * @brief Point from two values.

@@ -915,20 +915,22 @@ static int applib_addSplines(lua_State* L) {
 
         // Now take that gigantic list of splines and create SplineSegments out of them.
         long unsigned int i = 0;
+
+        std::vector<Point> points;
+        Point end;
         while (i < coordStream.size()) {
             // start, ctrl1, ctrl2, end
             Point start = Point(coordStream.at(i), coordStream.at(i + 1), Point::NO_PRESSURE);
             Point ctrl1 = Point(coordStream.at(i + 2), coordStream.at(i + 3), Point::NO_PRESSURE);
             Point ctrl2 = Point(coordStream.at(i + 4), coordStream.at(i + 5), Point::NO_PRESSURE);
-            Point end = Point(coordStream.at(i + 6), coordStream.at(i + 7), Point::NO_PRESSURE);
+            end = Point(coordStream.at(i + 6), coordStream.at(i + 7), Point::NO_PRESSURE);
             i += 8;
             SplineSegment segment = SplineSegment(start, ctrl1, ctrl2, end);
-            std::list<Point> raster = segment.toPointSequence();
-            for (Point point: raster) {
-                stroke->addPoint(point);
-            }
             // TODO: (willnilges) Is there a way we can get Pressure with Splines?
+            segment.toPoints(points);
         }
+        points.emplace_back(end);
+        stroke->setPointVector(std::move(points));
 
         if (stroke->getPointCount() >= 2) {
             // Finish building the Stroke and apply it to the layer.

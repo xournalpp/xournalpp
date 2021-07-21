@@ -69,7 +69,7 @@ void SplineToolView::draw(cairo_t* cr) const {
     const Point& cp2 =
             data->closedSpline ? Point(firstKnot.x - firstTangent.x, firstKnot.y - firstTangent.y) : data->currPoint;
     const Point& otherKnot = data->closedSpline ? firstKnot : data->currPoint;
-    SplineSegment(lastKnot, cp1, cp2, otherKnot).draw(cr);
+    SplineSegment(lastKnot, cp1, cp2, otherKnot).toCairo(cr);
     cairo_stroke(cr);
 
 
