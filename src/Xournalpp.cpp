@@ -17,14 +17,13 @@
 #include "Stacktrace.h"
 
 #ifdef _WIN32
-#include <windows.h>
+#include "win32/console.h"
 #endif
 
 auto main(int argc, char* argv[]) -> int {
 #ifdef _WIN32
-    // Show and hide the console here. Otherwise, gspawn-win32-helper will create annoying console popups.
-    AllocConsole();
-    ShowWindow(GetConsoleWindow(), SW_HIDE);
+    // Attach to the console here. Otherwise, gspawn-win32-helper will create annoying console popups.
+    attachConsole();
 #endif
 
     // init crash handler

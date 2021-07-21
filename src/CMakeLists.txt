@@ -89,6 +89,14 @@ if (WIN32)
   unset (ICON_SIZES)
   unset (ICON_DEPS)
   add_custom_target (xournalpp_icon DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico)
+
+  # Concatenate SOURCES lists
+  set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
+  unset (xournalpp_SOURCES_RECURSE)
+
+  file (GLOB xournalpp_SOURCES_RECURSE
+    win32/*.cpp
+  )
 endif()
 
 # Concatenate SOURCES lists
