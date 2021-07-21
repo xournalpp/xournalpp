@@ -476,9 +476,12 @@ void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
         p = snappingHandler.snapToGrid(p, alt);
 
         // move
-        moveSelection(p.x - cx, p.y - cy);
-
-        this->setEdgePan(true);
+        if (!this->edgePanInhibitNext) {
+            moveSelection(p.x - cx, p.y - cy);
+            this->setEdgePan(true);
+        } else {
+            this->edgePanInhibitNext = false;
+        }
     } else if (this->mouseDownType == CURSOR_SELECTION_ROTATE && supportRotation) {  // catch rotation here
         double rdx = mouseX / zoom - this->snappedBounds.x - this->snappedBounds.width / 2;
         double rdy = mouseY / zoom - this->snappedBounds.y - this->snappedBounds.height / 2;
@@ -715,7 +718,12 @@ void EditSelection::setEdgePan(bool pan) {
     } else if (!pan && this->edgePanHandler) {
         g_source_unref(this->edgePanHandler);
         this->edgePanHandler = nullptr;
+        this->edgePanInhibitNext = false;
     }
+}
+
+bool EditSelection::isEdgePanning() const {
+    return this->edgePanHandler;
 }
 
 bool EditSelection::handleEdgePan(EditSelection* self) {
@@ -808,6 +816,10 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
         layout->scrollRelative(layoutScrollX, layoutScrollY);
         self->moveSelection(scrollX, scrollY);
         edgePanned = true;
+
+        // To prevent the selection from jumping and to reduce jitter, block the
+        // next move event
+        self->edgePanInhibitNext = true;
     } else {
         // No panning, so disable the timer.
         self->setEdgePan(false);
