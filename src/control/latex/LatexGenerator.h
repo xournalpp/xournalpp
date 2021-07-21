@@ -40,6 +40,8 @@ public:
      * Run the LaTeX command asynchronously to generate a preview for the given
      * LaTeX file. The contents of the LaTeX file will be written to "tex.tex"
      * in the given directory.
+     * The resultant process will have its standard error and (original) standard output
+     * combined into a single standard out stream.
      */
     Result asyncRun(const fs::path& texDir, const std::string& texFileContents);
 

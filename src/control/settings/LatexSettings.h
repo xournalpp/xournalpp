@@ -13,6 +13,8 @@
 
 #include <string>
 
+#include "model/Font.h"
+
 #include "filesystem.h"
 
 class LatexSettings {
@@ -24,4 +26,21 @@ public:
 #else
     std::string genCmd{"pdflatex -halt-on-error -interaction=nonstopmode '{}'"};
 #endif
+
+    /**
+     * LaTeX editor theme. Only used if linked with the GtkSourceView
+     * libaray.
+     */
+    std::string sourceViewThemeId{};
+    bool sourceViewAutoIndent{true};
+    bool sourceViewSyntaxHighlight{true};
+    bool sourceViewShowLineNumbers{false};
+
+    /**
+     * Font to be used by the editor.
+     */
+    XojFont editorFont{"Monospace", 12};
+    bool useCustomEditorFont{false};
+
+    bool editorWordWrap{true};
 };

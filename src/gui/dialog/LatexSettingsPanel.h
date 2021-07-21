@@ -16,6 +16,8 @@
 #include "control/settings/LatexSettings.h"
 #include "gui/GladeGui.h"
 
+class Settings;
+
 class LatexSettingsPanel: public GladeGui {
 public:
     LatexSettingsPanel(GladeSearchpath*);
@@ -33,6 +35,14 @@ public:
 private:
     void checkDeps();
 
+    /**
+     * @brief Update whether options accept input ("grayed-out" or not)
+     *    based on the current panel state.
+     */
+    void updateWidgetSensitivity();
+
     GtkToggleButton* cbAutoDepCheck;
     GtkFileChooser* globalTemplateChooser;
+    GtkWidget* sourceViewThemeSelector;
+    GtkToggleButton* cbUseSystemFont;
 };
