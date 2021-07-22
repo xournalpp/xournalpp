@@ -211,7 +211,7 @@ void ToolPageLayer::updateMenu() {
  * Update selected layer, update visible layer
  */
 void ToolPageLayer::updateLayerData() {
-    int layerId = lc->getCurrentLayerId();
+    auto layerId = lc->getCurrentLayerId();
 
     inMenuUpdate = true;
 

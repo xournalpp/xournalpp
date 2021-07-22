@@ -92,7 +92,7 @@ void SidebarIndexPage::askInsertPdfPage(size_t pdfPage) {
         return;
     }
 
-    int position = 0;
+    size_t position = 0;
 
     Document* doc = control->getDocument();
 

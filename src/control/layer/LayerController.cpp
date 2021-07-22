@@ -153,7 +153,7 @@ void LayerController::deleteCurrentLayer() {
     control->clearSelectionEndText();
 
     PageRef p = getCurrentPage();
-    int pId = selectedPage;
+    auto pId = selectedPage;
     if (!p) {
         return;
     }
@@ -181,7 +181,7 @@ void LayerController::moveCurrentLayer(bool up) {
     control->clearSelectionEndText();
 
     PageRef p = getCurrentPage();
-    int pId = selectedPage;
+    auto pId = selectedPage;
     if (!p) {
         return;
     }
@@ -226,7 +226,7 @@ void LayerController::copyCurrentLayer() {
     control->clearSelectionEndText();
 
     PageRef p = getCurrentPage();
-    int pId = selectedPage;
+    auto pId = selectedPage;
     if (!p) {
         return;
     }

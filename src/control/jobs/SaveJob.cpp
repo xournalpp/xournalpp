@@ -61,7 +61,7 @@ void SaveJob::updatePreview(Control* control) {
         cairo_scale(cr, zoom, zoom);
 
         if (page->getBackgroundType().isPdfPage()) {
-            int pgNo = page->getPdfPageNr();
+            auto pgNo = page->getPdfPageNr();
             XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
             if (popplerPage) {
                 popplerPage->render(cr, false);

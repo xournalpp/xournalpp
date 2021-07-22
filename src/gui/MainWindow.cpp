@@ -719,8 +719,8 @@ void MainWindow::rebuildLayerMenu() { layerVisibilityChanged(); }
 void MainWindow::layerVisibilityChanged() {
     LayerController* lc = control->getLayerController();
 
-    int layer = lc->getCurrentLayerId();
-    int maxLayer = lc->getLayerCount();
+    auto layer = lc->getCurrentLayerId();
+    auto maxLayer = lc->getLayerCount();
 
     control->fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
     control->fireEnableAction(ACTION_GOTO_NEXT_LAYER, layer < maxLayer);
