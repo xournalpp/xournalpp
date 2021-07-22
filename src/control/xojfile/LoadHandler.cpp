@@ -666,9 +666,9 @@ void LoadHandler::parseTexImage() {
 
     const char* imText = LoadHandlerHelper::getAttrib("text", false, this);
     const char* compatibilityTest = LoadHandlerHelper::getAttrib("texlength", true, this);
-    int imTextLen = strlen(imText);
+    auto imTextLen = strlen(imText);
     if (compatibilityTest != nullptr) {
-        imTextLen = LoadHandlerHelper::getAttribInt("texlength", this);
+        imTextLen = LoadHandlerHelper::getAttribSizeT("texlength", this);
     }
 
     this->teximage = new TexImage();

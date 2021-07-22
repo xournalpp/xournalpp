@@ -24,7 +24,7 @@ void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton
 
     string name = gtk_font_button_get_font_name(button);
 
-    int pos = name.find_last_of(' ');
+    auto pos = name.find_last_of(' ');
     this->font.setName(name.substr(0, pos));
     this->font.setSize(std::stod(name.substr(pos + 1)));
 

@@ -40,7 +40,7 @@ auto InsertLayerUndoAction::undo(Control* control) -> bool {
 auto InsertLayerUndoAction::redo(Control* control) -> bool {
     layerController->insertLayer(this->page, this->layer, layerPosition);
     Document* doc = control->getDocument();
-    int id = doc->indexOf(this->page);
+    auto id = doc->indexOf(this->page);
     control->getWindow()->getXournal()->layerChanged(id);
 
     this->undone = false;

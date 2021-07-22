@@ -1400,10 +1400,8 @@ void Control::changePageBackgroundColor() {
 void Control::setViewPairedPages(bool enabled) {
     settings->setShowPairedPages(enabled);
     fireActionSelected(GROUP_PAIRED_PAGES, enabled ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
-
-    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewPresentationMode(bool enabled) {
@@ -1441,18 +1439,15 @@ void Control::setViewPresentationMode(bool enabled) {
     // disable selection of scroll hand tool
     fireEnableAction(ACTION_TOOL_HAND, !enabled);
     fireActionSelected(GROUP_PRESENTATION_MODE, enabled ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
-
-    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setPairsOffset(int numOffset) {
     settings->setPairsOffset(numOffset);
     fireActionSelected(GROUP_PAIRED_PAGES, numOffset ? ACTION_SET_PAIRS_OFFSET : ACTION_NOT_SELECTED);
-    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewColumns(int numColumns) {
@@ -1492,9 +1487,8 @@ void Control::setViewColumns(int numColumns) {
 
     fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
-    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewRows(int numRows) {
@@ -1534,9 +1528,8 @@ void Control::setViewRows(int numRows) {
 
     fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
-    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutVert(bool vert) {
@@ -1552,9 +1545,8 @@ void Control::setViewLayoutVert(bool vert) {
 
     fireActionSelected(GROUP_LAYOUT_HORIZONTAL, action);
 
-    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutR2L(bool r2l) {
@@ -1570,9 +1562,8 @@ void Control::setViewLayoutR2L(bool r2l) {
 
     fireActionSelected(GROUP_LAYOUT_LR, action);
 
-    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutB2T(bool b2t) {
@@ -1588,9 +1579,8 @@ void Control::setViewLayoutB2T(bool b2t) {
 
     fireActionSelected(GROUP_LAYOUT_TB, action);
 
-    auto currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 /**
@@ -1909,9 +1899,8 @@ void Control::showSettings() {
     if (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace() ||
         verticalSpaceAmount != settings->getAddVerticalSpaceAmount() ||
         horizontalSpaceAmount != settings->getAddHorizontalSpaceAmount()) {
-        auto currentPage = getCurrentPageNo();
         win->getXournal()->layoutPages();
-        scrollHandler->scrollToPage(currentPage);
+        scrollHandler->scrollToPage(getCurrentPageNo());
     }
 
     if (stylusCursorType != settings->getStylusCursorType() || highlightPosition != settings->isHighlightPosition()) {
