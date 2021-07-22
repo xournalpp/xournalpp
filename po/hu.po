@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-20 13:25+0000\n"
-"PO-Revision-Date: 2021-07-20 13:27\n"
+"PO-Revision-Date: 2021-07-22 16:04\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -495,7 +495,7 @@ msgstr "Hiba a PDF jegyzetek készítése közben: \"{1}\"\n"
 
 #: ../src/gui/GladeGui.cpp:22
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
+msgstr "Hiba a glade fájl \"{1}\" betöltése közben (próbálja meg betölteni a \"{2}\" fájlt)"
 
 #: ../src/control/Control.cpp:2044
 msgid "Error opening file \"{1}\""
@@ -868,7 +868,7 @@ msgstr "Nincs exportálandó oldal!"
 
 #: ../src/control/Control.cpp:1265
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Nem érhető el több hozzáfűzhető pdf oldal. Szükséges lehet a dokumentum újbóli megnyitása."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
@@ -881,7 +881,8 @@ msgstr "OK"
 #: ../src/control/XournalMain.cpp:668
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Csak az alábbi oldalakat exportálja (pl. \"2-3,5,7-\")\n"
+"                                 Nincs hatása -p/--create-pdf vagy -i/--create-img használata nélkül"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -934,7 +935,7 @@ msgstr "PDF-fájlok"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
@@ -1002,11 +1003,11 @@ msgstr "Bemutató mód"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:68
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Az előzőleg választott nyelv már nem elérhető el!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Print"
-msgstr ""
+msgstr "Nyomtatás"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Record Audio / Stop Recording"
@@ -1044,7 +1045,7 @@ msgstr "Eszköz {1} eltávolítva a(z) {2} ID {3} eszköztárról"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:10
 msgid "Rename layer"
-msgstr ""
+msgstr "Réteg átnevezése"
 
 #: ../src/util/XojMsgBox.cpp:77
 msgid "Replace"
@@ -1064,19 +1065,19 @@ msgstr "Forgatás"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "Forgatási igazítás"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled"
-msgstr ""
+msgstr "Vonalas"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:23
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "Vonalas vertikális vonallal"
 
 #: ../src/control/jobs/CustomExportJob.cpp:23
 msgid "SVG graphics"
-msgstr ""
+msgstr "SVG ábra"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
