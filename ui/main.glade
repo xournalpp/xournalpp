@@ -1249,6 +1249,17 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkMenuItem" id="menuJournalMergeLayerDown">
+                            <property name="name">menuJournalMergeLayerDown</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Merge Layer Down</property>
+                            <property name="use-underline">True</property>
+                            <signal name="activate" handler="ACTION_MERGE_LAYER_DOWN" swapped="no"/>
+                            <accelerator key="m" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkMenuItem" id="menuJournalRenameLayer">
                             <property name="name">menuJournalRenameLayer</property>
                             <property name="visible">True</property>

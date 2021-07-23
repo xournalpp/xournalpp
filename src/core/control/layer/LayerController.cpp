@@ -67,6 +67,10 @@ auto LayerController::actionPerformed(ActionType type) -> bool {
             deleteCurrentLayer();
             return true;
 
+        case ACTION_MERGE_LAYER_DOWN:
+            mergeCurrentLayerDown();
+            return true;
+
         case ACTION_FOOTER_LAYER:
             // This event is not fired anymore
             // This controller is called directly
