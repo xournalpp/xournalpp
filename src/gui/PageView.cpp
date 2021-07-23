@@ -128,9 +128,9 @@ auto XojPageView::searchTextOnPage(string& text, int* occures, double* top) -> b
             return true;
         }
 
-        int pNr = this->page->getPdfPageNr();
+        auto pNr = this->page->getPdfPageNr();
         XojPdfPageSPtr pdf = nullptr;
-        if (pNr != -1) {
+        if (pNr != npos) {
             Document* doc = xournal->getControl()->getDocument();
 
             doc->lock();

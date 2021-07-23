@@ -258,7 +258,7 @@ auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTre
     auto page = doc->findPdfPage(link->dest->getPdfPage());
 
     gchar* pageLabel = nullptr;
-    if (page != -1) {
+    if (page != npos) {
         pageLabel = g_strdup_printf("%lu", page + 1);
     }
     gtk_tree_store_set(GTK_TREE_STORE(treeModel), iter, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, pageLabel, -1);

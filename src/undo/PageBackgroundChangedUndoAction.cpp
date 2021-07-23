@@ -31,7 +31,7 @@ auto PageBackgroundChangedUndoAction::undo(Control* control) -> bool {
 
     Document* doc = control->getDocument();
     auto pageNr = doc->indexOf(this->page);
-    if (pageNr == -1) {
+    if (pageNr == npos) {
         return false;
     }
 
@@ -57,7 +57,7 @@ auto PageBackgroundChangedUndoAction::redo(Control* control) -> bool {
 
     auto pageNr = doc->indexOf(this->page);
 
-    if (pageNr == -1) {
+    if (pageNr == npos) {
         return false;
     }
 
