@@ -70,7 +70,7 @@ auto InsertDeletePageUndoAction::deletePage(Control* control) -> bool {
     // It's not great practise but it works.
     // doc->lock();
     auto pNr = doc->indexOf(page);
-    if (pNr == -1) {
+    if (pNr == npos) {
         //	doc->unlock();
         // this should not happen
         return false;

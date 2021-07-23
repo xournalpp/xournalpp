@@ -41,7 +41,7 @@ void ScrollHandler::scrollToPage(const PageRef& page, double top) {
     auto p = doc->indexOf(page);
     doc->unlock();
 
-    if (p != -1) {
+    if (p != npos) {
         scrollToPage(p, top);
     }
 }

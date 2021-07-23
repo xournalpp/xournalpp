@@ -24,7 +24,7 @@ PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, 
 
         if (p->getBackgroundType().isPdfPage()) {
             auto pdfPage = p->getPdfPageNr();
-            if (pdfPage >= 0 && pdfPage < static_cast<int>(elements.size())) {
+            if (pdfPage >= 0 && pdfPage < elements.size()) {
                 (dynamic_cast<PdfElementView*>(elements[p->getPdfPageNr()]))->setUsed(true);
             }
         }
