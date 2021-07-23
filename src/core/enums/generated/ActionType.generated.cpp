@@ -175,6 +175,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_DELETE_LAYER;
     }
 
+    if (value == "ACTION_MERGE_LAYER_DOWN") {
+        return ACTION_MERGE_LAYER_DOWN;
+    }
+
     if (value == "ACTION_RENAME_LAYER") {
         return ACTION_RENAME_LAYER;
     }
@@ -783,6 +787,10 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_DELETE_LAYER) {
         return "ACTION_DELETE_LAYER";
+    }
+
+    if (value == ACTION_MERGE_LAYER_DOWN) {
+        return "ACTION_MERGE_LAYER_DOWN";
     }
 
     if (value == ACTION_RENAME_LAYER) {
