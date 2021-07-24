@@ -269,7 +269,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     page->fireElementChanged(stroke);
 
     // Manually force the rendering of the stroke, if no motion event occurred between, that would rerender the page.
-    if (stroke->getPointCount() == 2) {
+    if (stroke->getPointCount() == 2 || (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER && stroke->getFill() != -1)) {
         this->redrawable->rerenderElement(stroke);
     }
 
