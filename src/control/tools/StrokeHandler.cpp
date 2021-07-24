@@ -120,6 +120,14 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
 
     stroke->addPoint(this->hasPressure ? point : Point(point.x, point.y));
 
+    double width = stroke->getWidth();
+
+    assert(stroke->getPointCount() >= 2);
+    const Point& prevPoint(stroke->getPoint(stroke->getPointCount() - 2));
+
+    Range rg(prevPoint.x, prevPoint.y);
+    rg.addPoint(point.x, point.y);
+
     if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes()) &&
         !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)) {
         // Clear surface
@@ -132,27 +140,26 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
         cairo_fill(crMask);
 
         view.drawStroke(crMask, stroke, 0, 1, true, true);
+
+        const Point& firstPoint = stroke->getPointVector().front();
+        rg.addPoint(firstPoint.x, firstPoint.y);
     } else {
-        if (auto const pointCount = stroke->getPointCount(); pointCount > 1) {
-            Point prevPoint(stroke->getPoint(pointCount - 2));
+        Stroke lastSegment;
 
-            Stroke lastSegment;
+        lastSegment.addPoint(prevPoint);
+        lastSegment.addPoint(point);
+        lastSegment.setWidth(width);
 
-            lastSegment.addPoint(prevPoint);
-            lastSegment.addPoint(point);
-            lastSegment.setWidth(stroke->getWidth());
+        cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
+        cairo_set_source_rgba(crMask, 1, 1, 1, 1);
 
-            cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
-            cairo_set_source_rgba(crMask, 1, 1, 1, 1);
-
-            view.drawStroke(crMask, &lastSegment, 0, 1, false);
-        }
+        view.drawStroke(crMask, &lastSegment, 0, 1, false);
     }
 
-    const double w = stroke->getWidth();
+    width = prevPoint.z != Point::NO_PRESSURE ? prevPoint.z : width;
 
-    this->redrawable->repaintRect(stroke->getX() - w, stroke->getY() - w, stroke->getElementWidth() + 2 * w,
-                                  stroke->getElementHeight() + 2 * w);
+    this->redrawable->repaintRect(rg.getX() - 0.5 * width, rg.getY() - 0.5 * width, rg.getWidth() + width,
+                                  rg.getHeight() + width);
 }
 
 void StrokeHandler::onMotionCancelEvent() {
