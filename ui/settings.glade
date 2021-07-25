@@ -1062,7 +1062,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                           <object class="GtkLabel" id="lbStabilizerDrag">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="tooltip_text" translatable="yes">Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization.</property>
+                                            <property name="tooltip_text" translatable="yes">Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization.</property>
                                             <property name="label" translatable="yes">Drag</property>
                                           </object>
                                           <packing>
@@ -1074,7 +1074,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                           <object class="GtkSpinButton" id="sbStabilizerDrag">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="tooltip_text" translatable="yes">Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization.</property>
+                                            <property name="tooltip_text" translatable="yes">Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization.</property>
                                             <property name="hexpand">True</property>
                                             <property name="text" translatable="yes">0,4</property>
                                             <property name="input_purpose">number</property>
