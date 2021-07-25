@@ -153,6 +153,11 @@ public:  // event handler
     void onMotionCancelEvent();
 
     /**
+     * for popup windows like the floating toolbox
+     */
+    bool onButtonClickEvent(const PositionInputData& pos);
+
+    /**
      * This method actually repaints the XojPageView, triggering
      * a rerender call if necessary
      */
