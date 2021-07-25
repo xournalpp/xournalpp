@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-24 22:20+0000\n"
+"POT-Creation-Date: 2021-07-25 12:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2344,16 +2344,10 @@ msgstr ""
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr ""
 
-#: ../ui/settings.glade:1065
+#: ../ui/settings.glade:1065 ../ui/settings.glade:1077
 msgid ""
-"Drag: If the value is to small, unwanted oscillations may appear. If the "
-"value is to high, there will be no stabilization."
-msgstr ""
-
-#: ../ui/settings.glade:1077
-msgid ""
-"Drag: If the value is to small, unwanted oscillations may appear. If the "
-"value is too small, there will be no stabilization."
+"Drag: If the value is too small, unwanted oscillations may appear. If the "
+"value is too high, there will be no stabilization."
 msgstr ""
 
 #: ../ui/main.glade:1438
