@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-24 22:20+0000\n"
-"PO-Revision-Date: 2021-07-24 22:29\n"
+"POT-Creation-Date: 2021-07-25 12:15+0000\n"
+"PO-Revision-Date: 2021-07-25 12:18\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -2293,13 +2293,9 @@ msgstr "Tažení VLEVO od počátečního bodu se chová, jako když je klávesa
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr "Přetáhněte komponenty odsud do nástrojové lišty a zpět."
 
-#: ../ui/settings.glade:1065
-msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr "Drag: Pokud je hodnota malá, mohou se objevit nechtěné oscilace. Pokud je hodnota vysoká, nedojde ke stabilizaci."
-
-#: ../ui/settings.glade:1077
-msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr "Drag: Pokud je hodnota malá, mohou se objevit nechtěné oscilace. Pokud je hodnota příliš nízká, nedojde ke stabilizaci."
+#: ../ui/settings.glade:1065 ../ui/settings.glade:1077
+msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
+msgstr ""
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
