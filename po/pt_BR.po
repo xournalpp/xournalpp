@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-25 17:09\n"
+"PO-Revision-Date: 2021-07-25 18:07\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2298,7 +2298,7 @@ msgstr "Arraste e solte componentes daqui para as barras de ferramentas e vice-v
 
 #: ../ui/settings.glade:1065 ../ui/settings.glade:1077
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Arraste: Se o valor for muito pequeno, oscilações indesejadas podem ocorrer. Se o valor for muito alto, não haverá estabilização."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
@@ -2358,7 +2358,7 @@ msgstr "Habilitar Duplo Clique"
 
 #: ../ui/settings.glade:666
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "Carregar automaticamente o arquivo mais recente ao iniciar"
 
 #: ../ui/settings.glade:842
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2523,7 +2523,7 @@ msgstr "Quão curto (tempo) E...\n\n"
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr ""
+msgstr "Designers do Ícone"
 
 #: ../ui/settings.glade:4321
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2531,7 +2531,7 @@ msgstr "Se ativado, as formas que foram reconhecidas pelo reconhecedor de formas
 
 #: ../ui/settings.glade:671
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "Se habilitado, o Xournal++ abrirá automaticamente o documento mais recente para continuar editando."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2543,7 +2543,7 @@ msgstr "Se ativado, as camadas de cada página serão adicionadas uma por uma. O
 
 #: ../ui/settings.glade:654
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "Se você abrir um PDF e houver um arquivo Xournal com o mesmo nome, ele abrirá o arquivo xoj."
 
 #: ../ui/settings.glade:4386
 msgid "Ignore Time (ms)"
@@ -2988,7 +2988,7 @@ msgstr "Snap"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Código Fonte / Rastreador de Bug"
 
 #: ../ui/settings.glade:3581
 msgid "Speed for Ctrl + Scroll"
@@ -3133,7 +3133,7 @@ msgstr "Visualizar"
 
 #: ../ui/about.glade:328
 msgid "Website"
-msgstr ""
+msgstr "Site na Web"
 
 #: ../ui/settings.glade:2398
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
