@@ -371,6 +371,33 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     return true;
 }
 
+auto XojPageView::onButtonClickEvent(const PositionInputData& pos) -> bool {
+    Control* control = xournal->getControl();
+    double x = pos.x;
+    double y = pos.y;
+
+    if (x < 0 || y < 0) {
+        return false;
+    }
+
+    double zoom = xournal->getZoom();
+    x /= zoom;
+    y /= zoom;
+
+    ToolHandler* h = control->getToolHandler();
+
+    if (h->getToolType() == TOOL_FLOATING_TOOLBOX) {
+        gint wx = 0, wy = 0;
+        GtkWidget* widget = xournal->getWidget();
+        gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
+
+        wx += std::lround(pos.x) + this->getX();
+        wy += std::lround(pos.y) + this->getY();
+
+        control->getWindow()->floatingToolbox->show(wx, wy);
+    }
+}
+
 auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool {
     // This method assumes that it is called after onButtonPressEvent but before
     // onButtonReleaseEvent
