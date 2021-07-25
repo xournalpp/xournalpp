@@ -208,6 +208,7 @@ enum ActionType {
     // Footer, not really an action, but need an identifier too
     ACTION_FOOTER_PAGESPIN = 900,
     ACTION_FOOTER_ZOOM_SLIDER,
+    ACTION_FOOTER_WINDOW_OPACITY_SLIDER,
     ACTION_FOOTER_LAYER,
 
     // Used to select no item in a group...

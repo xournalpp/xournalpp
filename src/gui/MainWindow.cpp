@@ -176,6 +176,21 @@ void MainWindow::rebindAcceleratorsSubMenu(GtkWidget* widget, gpointer user_data
     }
 }
 
+void MainWindow::setOpacity(double opacity) {
+    this->opacity = opacity;
+    Util::execInUiThread([=]() { gtk_widget_set_opacity(GTK_WIDGET(this->getWindow()), opacity); });
+}
+
+double MainWindow::getOpacity() const { return this->opacity; }
+
+bool MainWindow::supportsOpacity() const {
+    GtkWidget* window = const_cast<MainWindow*>(this)->getWindow();
+    GdkScreen* screen = gtk_widget_get_screen(window);
+
+    // If the screen is composited, we should support opacity.
+    return gdk_screen_is_composited(screen);
+}
+
 // When the Menubar is hidden, accelerators no longer work so rebind them to the MainWindow
 // It should be called after all plugins have been initialised so that their injected menu items are captured
 void MainWindow::rebindMenubarAccelerators() {

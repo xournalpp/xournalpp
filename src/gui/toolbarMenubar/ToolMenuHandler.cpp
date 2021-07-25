@@ -20,6 +20,7 @@
 #include "ToolPageLayer.h"
 #include "ToolPageSpinner.h"
 #include "ToolSelectCombocontrol.h"
+#include "ToolWindowOpacitySlider.h"
 #include "ToolZoomSlider.h"
 #include "i18n.h"
 
@@ -467,6 +468,10 @@ void ToolMenuHandler::initToolItems() {
 
     auto* toolZoomSlider = new ToolZoomSlider("ZOOM_SLIDER", listener, ACTION_FOOTER_ZOOM_SLIDER, zoom, iconNameHelper);
     addToolItem(toolZoomSlider);
+
+    auto* toolWindowOpacitySlider = new ToolWindowOpacitySlider(
+            "WINDOW_OPACITY_SLIDER", listener, ACTION_FOOTER_WINDOW_OPACITY_SLIDER, control, iconNameHelper);
+    addToolItem(toolWindowOpacitySlider);
 
     toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER,
                                       iconNameHelper);

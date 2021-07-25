@@ -600,6 +600,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_FOOTER_ZOOM_SLIDER;
     }
 
+    if (value == "ACTION_FOOTER_WINDOW_OPACITY_SLIDER") {
+        return ACTION_FOOTER_WINDOW_OPACITY_SLIDER;
+    }
+
     if (value == "ACTION_FOOTER_LAYER") {
         return ACTION_FOOTER_LAYER;
     }
@@ -1196,6 +1200,10 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_FOOTER_ZOOM_SLIDER) {
         return "ACTION_FOOTER_ZOOM_SLIDER";
+    }
+
+    if (value == ACTION_FOOTER_WINDOW_OPACITY_SLIDER) {
+        return "ACTION_FOOTER_WINDOW_OPACITY_SLIDER";
     }
 
     if (value == ACTION_FOOTER_LAYER) {

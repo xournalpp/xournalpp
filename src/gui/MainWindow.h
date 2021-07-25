@@ -64,6 +64,16 @@ public:
 
     void saveSidebarSize();
 
+    void setOpacity(double opacity);
+    double getOpacity() const;
+
+    /**
+     * Get whether we can change this window's opacity.
+     *
+     * Must be run on the UI thread.
+     */
+    bool supportsOpacity() const;
+
     void setMaximized(bool maximized);
     bool isMaximized() const;
 
@@ -177,6 +187,7 @@ private:
     bool toolbarIntialized = false;
 
     bool maximized = false;
+    double opacity = 1.0;
 
     GtkWidget** toolbarWidgets;
 
