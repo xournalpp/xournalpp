@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-24 22:20+0000\n"
-"PO-Revision-Date: 2021-07-24 22:29\n"
+"POT-Creation-Date: 2021-07-25 12:15+0000\n"
+"PO-Revision-Date: 2021-07-25 12:18\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2305,13 +2305,9 @@ msgstr "Trascinare a SINISTRA dal punto iniziale è equivalente a tenere premuto
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr "Trascina e rilascia i Componenti da qui alla Barra degli Strumenti e viceversa."
 
-#: ../ui/settings.glade:1065
-msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr "Trascina: se il valore è a piccole oscillazioni indesiderate possono apparire. Se il valore è troppo alto, non ci sarà stabilizzazione."
-
-#: ../ui/settings.glade:1077
-msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr "Trascina: se il valore è a piccole oscillazioni indesiderate possono apparire. Se il valore è troppo piccolo, non ci sarà stabilizzazione."
+#: ../ui/settings.glade:1065 ../ui/settings.glade:1077
+msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
+msgstr ""
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
