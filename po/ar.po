@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-24 22:20+0000\n"
-"PO-Revision-Date: 2021-07-24 22:29\n"
+"POT-Creation-Date: 2021-07-25 12:15+0000\n"
+"PO-Revision-Date: 2021-07-25 12:17\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -2298,13 +2298,9 @@ msgstr "السحب <b>لليسار</b> من نقطة البداية يمثل ا�
 msgid "Drag and drop Components fom here to the toolbars and back."
 msgstr "اسحب وأفلت المكونات من هذه النافذة إلى أشرطة الأدوات والعكس."
 
-#: ../ui/settings.glade:1065
-msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is to high, there will be no stabilization."
-msgstr "السحب: إذا كانت القيمة صغيرة جدا، فقد تظهر اهتزازات غير مرغوبة. وإذا كانت كبيرة جدا، فقد لا يحدث أي تثبيت."
-
-#: ../ui/settings.glade:1077
-msgid "Drag: If the value is to small, unwanted oscillations may appear. If the value is too small, there will be no stabilization."
-msgstr "السحب: إذا كانت القيمة صغيرة جدا، فقد تظهر اهتزازات غير مرغوبة. وإذا كانت كبيرة جدا، فقد لا يحدث أي تثبيت."
+#: ../ui/settings.glade:1065 ../ui/settings.glade:1077
+msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
+msgstr ""
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
