@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-25 12:17\n"
+"PO-Revision-Date: 2021-07-25 17:09\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1112,7 +1112,7 @@ msgstr "Pesquisar"
 
 #: ../src/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Veja a lista completa de recursos dos colaboradores"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Select Font"
@@ -2069,7 +2069,7 @@ msgstr "Autor: "
 
 #: ../ui/about.glade:449
 msgid "Authors"
-msgstr ""
+msgstr "Autores"
 
 #: ../ui/settings.glade:2136
 msgid "Autodetect"
@@ -2077,7 +2077,7 @@ msgstr "Deteção Automática"
 
 #: ../ui/settings.glade:689
 msgid "Autoloading"
-msgstr ""
+msgstr "Carregamento automático"
 
 #: ../ui/settings.glade:446
 msgid "Autosaving"
