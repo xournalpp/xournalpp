@@ -10,8 +10,8 @@
  */
 
 #pragma once
-
 #include <config-debug.h>
+#include <glib.h>
 
 #define MAX_POLYGON_SIDES 4
 
