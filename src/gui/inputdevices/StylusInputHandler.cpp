@@ -43,20 +43,12 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
         } else {
             // No input running but modifier key was pressed
             // Change the tool depending on the key
-            bool toolChanged = changeTool(event);
+            changeTool(event);
 
-            // if this action changed the tool to "floating toolbox", make it pop up
-            if (toolChanged) {
-                ToolHandler* toolHandler = this->inputContext->getToolHandler();
-                if (toolHandler->getToolType() == TOOL_FLOATING_TOOLBOX) {
-                    XojPageView* currentPage = getPageAtCurrentPosition(event);
-                    if (currentPage) {
-                        PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
-                        pos.pressure = this->filterPressure(pos, currentPage);
-
-                        currentPage->onButtonClickEvent(pos);
-                    }
-                }
+            XojPageView* currentPage = getPageAtCurrentPosition(event);
+            if (currentPage) {
+                PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
+                currentPage->onButtonClickEvent(pos);
             }
         }
     }
