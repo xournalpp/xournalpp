@@ -188,6 +188,11 @@ private:
 
     void setMappedRowCol(int row, int col);  // row, column assigned by mapper during layout.
 
+    /**
+     * Shows the floating toolbox at the location of an input event
+     */
+    void showFloatingToolbox(const PositionInputData& pos);
+
 
 private:
     PageRef page;
