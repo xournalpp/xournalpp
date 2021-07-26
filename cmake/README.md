@@ -31,8 +31,6 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 | `DEV_CALL_LOG`                 | OFF              | Call log (can take loooot of disk space and IO!)
 | `DEV_CHECK_GTK3_COMPAT` *[A]*  | OFF              | Adds a few compiler flags to check basic GTK3 upgradeability support (still compiles for GTK2!)
 | `DEV_ENABLE_GCOV` *[A]*        | OFF              | Build with gcov support
-| `DEV_MEMORY_CHECKING`          | ON               | Memory checking
-| `DEV_MEMORY_LEAK_CHECKING`     | ON               | Memory leak checking
 | `DEV_METADATA_FILE` *[A]*      | metadata.ini     | Metadata file name
 | `DEV_METADATA_MAX_ITEMS` *[A]* | 50               | Maximal amount of metadata elements
 | `DEV_PRINT_CONFIG_FILE` *[A]*  | print-config.ini | Print config file name
