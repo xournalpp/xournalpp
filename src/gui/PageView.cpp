@@ -396,6 +396,8 @@ auto XojPageView::onButtonClickEvent(const PositionInputData& pos) -> bool {
 
         control->getWindow()->floatingToolbox->show(wx, wy);
     }
+
+    return true;
 }
 
 auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool {
