@@ -358,14 +358,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         ImageHandler imgHandler(control, this);
         imgHandler.insertImage(x, y);
     } else if (h->getToolType() == TOOL_FLOATING_TOOLBOX) {
-        gint wx = 0, wy = 0;
-        GtkWidget* widget = xournal->getWidget();
-        gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
-
-        wx += std::lround(pos.x) + this->getX();
-        wy += std::lround(pos.y) + this->getY();
-
-        control->getWindow()->floatingToolbox->show(wx, wy);
+        this->showFloatingToolbox(pos);
     }
 
     return true;
@@ -387,14 +380,7 @@ auto XojPageView::onButtonClickEvent(const PositionInputData& pos) -> bool {
     ToolHandler* h = control->getToolHandler();
 
     if (h->getToolType() == TOOL_FLOATING_TOOLBOX) {
-        gint wx = 0, wy = 0;
-        GtkWidget* widget = xournal->getWidget();
-        gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
-
-        wx += std::lround(pos.x) + this->getX();
-        wy += std::lround(pos.y) + this->getY();
-
-        control->getWindow()->floatingToolbox->show(wx, wy);
+        this->showFloatingToolbox(pos);
     }
 
     return true;
@@ -537,12 +523,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
 
             if (doAction)  // pop up a menu
             {
-                gint wx = 0, wy = 0;
-                GtkWidget* widget = xournal->getWidget();
-                gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
-                wx += std::lround(pos.x + this->getX());
-                wy += std::lround(pos.y + this->getY());
-                control->getWindow()->floatingToolbox->show(wx, wy);
+                this->showFloatingToolbox(pos);
             }
         }
 
@@ -956,4 +937,17 @@ void XojPageView::elementChanged(Element* elem) {
     } else {
         rerenderElement(elem);
     }
+}
+
+void XojPageView::showFloatingToolbox(const PositionInputData& pos) {
+    Control* control = xournal->getControl();
+
+    gint wx = 0, wy = 0;
+    GtkWidget* widget = xournal->getWidget();
+    gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
+
+    wx += std::lround(pos.x) + this->getX();
+    wy += std::lround(pos.y) + this->getY();
+
+    control->getWindow()->floatingToolbox->show(wx, wy);
 }
