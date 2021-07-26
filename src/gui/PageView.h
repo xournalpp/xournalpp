@@ -153,7 +153,7 @@ public:  // event handler
     void onMotionCancelEvent();
 
     /**
-     * for popup windows like the floating toolbox
+     * This event only fires if no input sequence is actively running
      */
     bool onButtonClickEvent(const PositionInputData& pos);
 
