@@ -143,7 +143,6 @@ void StylusInputHandler::setPressedState(InputEvent const& event) {
                 break;
             case 3:
                 this->modifier3 = true;
-                break;
             default:
                 break;
         }
