@@ -153,7 +153,8 @@ public:  // event handler
     void onMotionCancelEvent();
 
     /**
-     * This event only fires if no input sequence is actively running
+     * This event fires after onButtonPressEvent and also
+     * if no input sequence is actively running and a stylus button was pressed
      */
     bool onButtonClickEvent(const PositionInputData& pos);
 

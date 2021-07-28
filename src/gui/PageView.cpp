@@ -357,9 +357,9 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_IMAGE) {
         ImageHandler imgHandler(control, this);
         imgHandler.insertImage(x, y);
-    } else if (h->getToolType() == TOOL_FLOATING_TOOLBOX) {
-        this->showFloatingToolbox(pos);
     }
+
+    this->onButtonClickEvent(pos);
 
     return true;
 }
