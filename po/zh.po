@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-25 12:18\n"
+"PO-Revision-Date: 2021-07-28 05:09\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -275,7 +275,7 @@ msgstr "未能读入图像：{1}。错误提示为：{2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:389
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "无法读取克隆背景图像的页码： {1}"
 
 #: ../src/undo/UndoRedoHandler.cpp:139
 msgid "Could not redo \"{1}\"\n"
@@ -1111,7 +1111,7 @@ msgstr "搜索"
 
 #: ../src/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "查看贡献者的完整列表"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Select Font"
@@ -2068,7 +2068,7 @@ msgstr "作者: "
 
 #: ../ui/about.glade:449
 msgid "Authors"
-msgstr ""
+msgstr "作者"
 
 #: ../ui/settings.glade:2136
 msgid "Autodetect"
@@ -2076,7 +2076,7 @@ msgstr "自动检测"
 
 #: ../ui/settings.glade:689
 msgid "Autoloading"
-msgstr ""
+msgstr "自动加载"
 
 #: ../ui/settings.glade:446
 msgid "Autosaving"
@@ -3131,7 +3131,7 @@ msgstr "视图"
 
 #: ../ui/about.glade:328
 msgid "Website"
-msgstr ""
+msgstr "网站"
 
 #: ../ui/settings.glade:2398
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
