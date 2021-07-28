@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-28 05:09\n"
+"PO-Revision-Date: 2021-07-28 06:24\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -38,11 +38,11 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr " {1} 的"
+msgstr " 页，共{1} 页"
 
 #: ../src/control/settings/Settings.cpp:115
 msgid "%F-Note-%H-%M"
-msgstr "%F-Note-%H-%M"
+msgstr "%F-笔记-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:149
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -137,7 +137,7 @@ msgstr "自动保存时已由 {1} 重命名为 {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr "正在自动保存为 {1}"
+msgstr "自动保存到 {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
@@ -185,7 +185,7 @@ msgstr "更改线条样式"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
-msgstr "更改笔划填充"
+msgstr "更改笔划填充样式"
 
 #: ../src/undo/SizeUndoAction.cpp:106
 msgid "Change stroke width"
@@ -413,7 +413,7 @@ msgstr "文档未加载！({1}), {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Dotted"
-msgstr "虚线（点）"
+msgstr "虚线（点状）"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -451,7 +451,7 @@ msgstr "绘制样条曲线"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw coordinate system"
-msgstr "绘制坐标系统"
+msgstr "绘制坐标系"
 
 #: ../src/undo/InsertUndoAction.cpp:30
 msgid "Draw stroke"
@@ -463,7 +463,7 @@ msgstr "绘制类型 - 不更改"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "绘制类型组合"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -592,7 +592,7 @@ msgstr "无规则导出\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr "路径中无法找到 LaTeX 生成器: {1}"
+msgstr "PATH中无法找到 LaTeX 生成器: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -772,7 +772,7 @@ msgstr "图层"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "图层组合"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layer Preview"
@@ -1163,7 +1163,7 @@ msgstr "选择区域"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
-msgstr ""
+msgstr "选区组合"
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
@@ -2297,7 +2297,7 @@ msgstr "在这里和工具条之间可以来回拖动条目。"
 
 #: ../ui/settings.glade:1065 ../ui/settings.glade:1077
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "拖动调节：如果值太小，可能会带来新的抖动。如果值太大，则不会进行防抖。"
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
@@ -2357,7 +2357,7 @@ msgstr "启用点击操作"
 
 #: ../ui/settings.glade:666
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "启动时自动加载上次打开的文件"
 
 #: ../ui/settings.glade:842
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2522,7 +2522,7 @@ msgstr "(时间) 多短，且...\n\n"
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr ""
+msgstr "图标设计者"
 
 #: ../ui/settings.glade:4321
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2530,7 +2530,7 @@ msgstr "激活时，由形状识别器识别的形状将自动被网格捕捉，
 
 #: ../ui/settings.glade:671
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "启用后，Xournal++将自动打开上次打开的文档供您继续编辑。"
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2542,7 +2542,7 @@ msgstr "启用时，每个页面的图层将被逐一添加，由此产生的 PD
 
 #: ../ui/settings.glade:654
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "如果有Xournal文件与您打开的PDF文件同名，将自动打开Xournal文件。"
 
 #: ../ui/settings.glade:4386
 msgid "Ignore Time (ms)"
@@ -2986,7 +2986,7 @@ msgstr "吸附"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "源代码/Bug 跟踪"
 
 #: ../ui/settings.glade:3581
 msgid "Speed for Ctrl + Scroll"
@@ -3095,7 +3095,7 @@ msgstr "请先选择对象；如果没有选中，则显示浮动工具箱（需
 
 #: ../ui/settings.glade:2753
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "使用可用的原生图标 (需要重启)"
 
 #: ../ui/settings.glade:4317
 msgid "Use snapping for recognized shapes"
