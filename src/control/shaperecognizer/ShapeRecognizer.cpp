@@ -311,8 +311,9 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
             auto* s = new Stroke();
             s->applyStyleFrom(this->stroke);
 
-            s->addPoint(Point(rs->x1, rs->y1));
-            s->addPoint(Point(rs->x2, rs->y2));
+            s->addPoint(Point(stroke->getPoints()[0].x, stroke->getPoints()[0].y));
+            s->addPoint(Point(stroke->getPoints()[stroke->getPointCount() - 1].x,
+                              stroke->getPoints()[stroke->getPointCount() - 1].y));
             rs->stroke = s;
             auto* result = new ShapeRecognizerResult(s);
             RDEBUG("return line");
