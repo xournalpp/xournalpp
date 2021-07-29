@@ -64,7 +64,7 @@ auto StringUtils::ltrim(std::string str) -> std::string {
 }
 
 auto StringUtils::rtrim(std::string str) -> std::string {
-    str.erase(str.find_last_not_of(TRIM_CHARS) + 1);
+    str.erase(str.find_last_not_of(TRIM_CHARS) + 1, str.size());
     return str;
 }
 
