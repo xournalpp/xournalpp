@@ -303,9 +303,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
                 rs->angle = 0.0;
                 rs->y1 = rs->y2 = rs->ycenter;
                 aligned = true;
-            }
-            if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE)  // nearly vertical
-            {
+            } else if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE) /* nearly vertical */ {
                 rs->angle = (rs->angle > 0) ? (M_PI / 2) : (-M_PI / 2);
                 rs->x1 = rs->x2 = rs->xcenter;
                 aligned = true;
@@ -318,9 +316,10 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
                 s->addPoint(Point(rs->x1, rs->y1));
                 s->addPoint(Point(rs->x2, rs->y2));
             } else {
-                s->addPoint(Point(stroke->getPoints()[0].x, stroke->getPoints()[0].y));
-                s->addPoint(Point(stroke->getPoints()[stroke->getPointCount() - 1].x,
-                                  stroke->getPoints()[stroke->getPointCount() - 1].y));
+                auto points = stroke->getPoints();
+                s->addPoint(Point(points[0].x, points[0].y));
+                s->addPoint(Point(points[stroke->getPointCount() - 1].x,
+                                  points[stroke->getPointCount() - 1].y));
             }
 
             rs->stroke = s;
