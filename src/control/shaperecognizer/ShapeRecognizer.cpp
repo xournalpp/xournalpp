@@ -314,8 +314,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
             auto* s = new Stroke();
             s->applyStyleFrom(this->stroke);
 
-            if (aligned)
-            {
+            if (aligned) {
                 s->addPoint(Point(rs->x1, rs->y1));
                 s->addPoint(Point(rs->x2, rs->y2));
             } else {
