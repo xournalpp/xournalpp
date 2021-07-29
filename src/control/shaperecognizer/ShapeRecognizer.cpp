@@ -297,16 +297,16 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
 
         if (n == 1)  // current stroke is a line
         {
-            bool aligned = false;
+            bool aligned = true;
             if (fabs(rs->angle) < SLANT_TOLERANCE)  // nearly horizontal
             {
                 rs->angle = 0.0;
                 rs->y1 = rs->y2 = rs->ycenter;
-                aligned = true;
-            } else if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE) /* nearly vertical */ {
+            } else if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE) { // nearly vertical
                 rs->angle = (rs->angle > 0) ? (M_PI / 2) : (-M_PI / 2);
                 rs->x1 = rs->x2 = rs->xcenter;
-                aligned = true;
+            } else {
+                aligned = false;
             }
 
             auto* s = new Stroke();
@@ -318,8 +318,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
             } else {
                 auto points = stroke->getPoints();
                 s->addPoint(Point(points[0].x, points[0].y));
-                s->addPoint(Point(points[stroke->getPointCount() - 1].x,
-                                  points[stroke->getPointCount() - 1].y));
+                s->addPoint(Point(points[stroke->getPointCount() - 1].x, points[stroke->getPointCount() - 1].y));
             }
 
             rs->stroke = s;
