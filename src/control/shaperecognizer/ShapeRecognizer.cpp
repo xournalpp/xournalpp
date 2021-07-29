@@ -302,7 +302,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
             {
                 rs->angle = 0.0;
                 rs->y1 = rs->y2 = rs->ycenter;
-            } else if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE) { // nearly vertical
+            } else if (fabs(rs->angle) > M_PI / 2 - SLANT_TOLERANCE) {  // nearly vertical
                 rs->angle = (rs->angle > 0) ? (M_PI / 2) : (-M_PI / 2);
                 rs->x1 = rs->x2 = rs->xcenter;
             } else {
