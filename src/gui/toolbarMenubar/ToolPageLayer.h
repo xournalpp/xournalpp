@@ -18,8 +18,6 @@
 
 #include "AbstractToolItem.h"
 
-using std::map;
-
 class GladeGui;
 class PopupMenuButton;
 class LayerController;
