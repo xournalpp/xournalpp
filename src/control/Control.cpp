@@ -1,7 +1,7 @@
 #include "Control.h"
 
-#include <ctime>
 #include <cmath>
+#include <ctime>
 #include <memory>
 #include <numeric>
 
