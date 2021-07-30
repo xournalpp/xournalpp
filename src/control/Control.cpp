@@ -1,6 +1,7 @@
 #include "Control.h"
 
 #include <ctime>
+#include <cmath>
 #include <memory>
 #include <numeric>
 
@@ -1020,17 +1021,14 @@ void Control::selectFillAlpha(bool pen) {
 }
 
 void Control::selectCustomThickness() {
-    int thickness = 0;
-
     CustomThicknessDialog dlg(gladeSearchPath, 0);
     dlg.show(getGtkWindow());
 
-    if (dlg.getResultThickness() == -1) {
+    if (dlg.getResultThickness() == NAN) {
         return;
     }
 
-    thickness = dlg.getResultThickness();
-    toolHandler->setCustomThickness(thickness);
+    toolHandler->setCustomThickness(dlg.getResultThickness());
 }
 
 void Control::clearSelectionEndText() {

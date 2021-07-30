@@ -3,8 +3,8 @@
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkAdjustment" id="adjustment1">
-    <property name="lower">1</property>
-    <property name="upper">100</property>
+    <property name="lower">0.10</property>
+    <property name="upper">300</property>
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
@@ -19,7 +19,6 @@
       <object class="GtkBox" id="dialog-vbox2">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="margin">12</property>
         <property name="orientation">vertical</property>
         <property name="spacing">4</property>
         <child internal-child="action_area">
@@ -96,27 +95,15 @@ Select custom thickness</property>
                 <property name="margin-bottom">12</property>
                 <property name="spacing">10</property>
                 <child>
-                  <object class="GtkImage" id="imgPreview">
-                    <property name="name">imgPreview</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="stock">gtk-missing-image</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkScale" id="scaleThickness">
                     <property name="name">scaleThickness</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="adjustment">adjustment1</property>
                     <property name="show-fill-level">True</property>
-                    <property name="fill-level">100</property>
-                    <property name="round-digits">0</property>
+                    <property name="fill-level">300</property>
+                    <property name="round-digits">2</property>
+                    <property name="digits">2</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>

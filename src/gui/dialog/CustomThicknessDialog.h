@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <cmath>
+
 #include "gui/GladeGui.h"
 
 class CustomThicknessDialog: public GladeGui {
@@ -24,8 +26,5 @@ public:
     double getResultThickness() const;
 
 private:
-    void setPreviewImage(int thickness);
-
-private:
-    int resultThickness = -1;
+    double resultThickness = NAN;
 };
