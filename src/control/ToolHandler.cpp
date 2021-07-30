@@ -394,6 +394,7 @@ void ToolHandler::saveSettings() {
                     break;
                 case TOOL_SIZE_CUSTOM:
                     value = "CUSTOM";
+                    break;
                 default:
                     value = "";
             }
