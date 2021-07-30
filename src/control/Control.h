@@ -258,6 +258,7 @@ public:
     void help();
 
     void selectFillAlpha(bool pen);
+    void selectCustomThickness();
 
     /**
      * @brief Initialize the all button tools based on the respective ButtonConfigs

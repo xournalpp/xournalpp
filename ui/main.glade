@@ -1614,6 +1614,17 @@
                                   </object>
                                 </child>
                                 <child>
+                                  <object class="GtkCheckMenuItem" id="penthicknessCustom">
+                                    <property name="name">penthicknessCustom</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">custom</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
+                                    <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_CUSTOM:GROUP_PEN_SIZE" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
                                   <object class="GtkSeparatorMenuItem" id="menuitem6">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
@@ -1689,6 +1700,15 @@
                                     <signal name="activate" handler="ACTION_TOOL_PEN_FILL_OPACITY" swapped="no"/>
                                   </object>
                                 </child>
+                                <child>
+                                  <object class="GtkMenuItem" id="setCustomThickness">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Set Custom Thickness</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_TOOL_PEN_SET_CUSTOM_THICKNESS" swapped="no"/>
+                                  </object>
+                                </child>
                               </object>
                             </child>
                           </object>
@@ -1757,6 +1777,17 @@
                                     <property name="use-underline">True</property>
                                     <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_VERY_THICK:GROUP_ERASER_SIZE" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckMenuItem" id="eraserCustom">
+                                    <property name="name">eraserCustom</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">custom</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
+                                    <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_CUSTOM:GROUP_ERASER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>
@@ -1866,6 +1897,17 @@
                                     <property name="use-underline">True</property>
                                     <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckMenuItem" id="highlighterCustom">
+                                    <property name="name">highlighterCustom</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">custom</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
+                                    <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_CUSTOM:GROUP_HIGHLIGHTER_SIZE" swapped="no"/>
                                   </object>
                                 </child>
                                 <child>

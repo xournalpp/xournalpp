@@ -34,7 +34,7 @@ public:
      * @brief number of different sizes defined for tools with Size capability
      *
      */
-    static const int toolSizes = 5;
+    static const int toolSizes = 6;
 
 public:
     std::string getName();
@@ -55,6 +55,8 @@ public:
      * @return false if tool is no drawing tool
      */
     bool isDrawingTool();
+
+    void setCustomThickness(double thickness);
 
 protected:
     void setCapability(int capability, bool enabled);

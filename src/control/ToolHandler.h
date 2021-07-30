@@ -90,6 +90,13 @@ public:
     void setColor(Color color, bool userSelection);
 
     /**
+     * @brief Set the thickness of the custom thickness option.
+     *
+     * @param thickness Thickness to be used
+     */
+    void setCustomThickness(double thickness);
+
+    /**
      * @brief Set the color for a Button
      * This is a separate function from `setColor` to prevent mixup of different usecases.
      *
