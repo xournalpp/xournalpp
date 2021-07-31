@@ -22,7 +22,8 @@ RenameLayerDialog::RenameLayerDialog(GladeSearchpath* gladeSearchPath, UndoRedoH
 void RenameLayerDialog::renameSuccessful(GtkButton* bttn, RenameLayerDialog* rld) {
     std::string newName = gtk_entry_get_text(GTK_ENTRY(rld->get("layerNameEntry")));
 
-    rld->undo->addUndoAction(std::make_unique<LayerRenameUndoAction>(rld->l, newName, rld->lc->getCurrentLayerName()));
+    rld->undo->addUndoAction(
+            std::make_unique<LayerRenameUndoAction>(rld->lc, rld->l, newName, rld->lc->getCurrentLayerName()));
 
     rld->lc->setCurrentLayerName(newName);
     gtk_window_close(GTK_WINDOW(rld->window));
