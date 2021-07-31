@@ -112,4 +112,6 @@ private:
     std::list<LayerCtrlListener*> listener;
 
     size_t selectedPage;
+
+    friend class LayerRenameUndoAction;
 };
