@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-25 12:17\n"
+"PO-Revision-Date: 2021-07-31 11:11\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -399,7 +399,7 @@ msgstr "दस्तावेज़ फ़ाइल को हटा दिय�
 
 #: ../src/control/xojfile/LoadHandler.cpp:241
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "दस्तावेज अपमिश्रित (दस्तावेज़ में कोई पृष्ठ नहीं मिला)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:237
 msgid "Document is not complete (maybe the end is cut off?)"
