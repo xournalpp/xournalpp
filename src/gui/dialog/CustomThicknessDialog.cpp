@@ -36,7 +36,7 @@ CustomThicknessDialog::CustomThicknessDialog(GladeSearchpath* gladeSearchPath, d
 
 CustomThicknessDialog::~CustomThicknessDialog() = default;
 
-double CustomThicknessDialog::getResultThickness() const { return translateFromScale(static_cast<double>(resultThickness)); }
+double CustomThicknessDialog::getResultThickness() const { return translateFromScale(resultThickness); }
 
 void CustomThicknessDialog::show(GtkWindow* parent) {
     gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);

@@ -1028,7 +1028,7 @@ void Control::selectFillAlpha(bool pen) {
 }
 
 void Control::selectCustomThickness(ToolType toolType) {
-    CustomThicknessDialog dlg(gladeSearchPath, 0);
+    CustomThicknessDialog dlg(gladeSearchPath, toolHandler->getTool(toolType).getThickness(TOOL_SIZE_CUSTOM));
     dlg.show(getGtkWindow());
 
     if (dlg.getResultThickness() == NAN) {
