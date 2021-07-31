@@ -27,8 +27,7 @@ CustomThicknessDialog::CustomThicknessDialog(GladeSearchpath* gladeSearchPath, d
                      }),
                      this);
 
-    g_signal_connect(scaleThickness, "format-value",
-                     G_CALLBACK(+[](GtkScale* scale, gdouble value) {
+    g_signal_connect(scaleThickness, "format-value", G_CALLBACK(+[](GtkScale* scale, gdouble value) {
                          return g_strdup_printf ("%.2f", gtk_scale_get_digits(scale), translateFromScale(value));
                      }),
                      this);
