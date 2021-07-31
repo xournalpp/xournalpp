@@ -11,12 +11,10 @@ auto LayerRenameUndoAction::getText() -> std::string { return _("Rename layer");
 
 auto LayerRenameUndoAction::undo(Control* control) -> bool {
     layer->setName(oldName);
-    control->getLayerController()->setCurrentLayerName(layer->getName());
     return true;
 }
 
 auto LayerRenameUndoAction::redo(Control* control) -> bool {
     layer->setName(newName);
-    control->getLayerController()->setCurrentLayerName(layer->getName());
     return true;
 }
