@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-25 12:18\n"
+"PO-Revision-Date: 2021-07-31 15:53\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:48
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"האם להמשיך?"
 
 #: ../src/control/XournalMain.cpp:450
 msgid "\n"
@@ -37,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " מתוך {1}"
 
 #: ../src/control/settings/Settings.cpp:115
 msgid "%F-Note-%H-%M"
