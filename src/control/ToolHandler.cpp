@@ -297,10 +297,8 @@ void ToolHandler::setLineStyle(const LineStyle& style) {
     this->stateChangeListener->toolLineStyleChanged();
 }
 
-void ToolHandler::setCustomThickness(double thickness) {
-    Tool* tool = this->activeTool;
-    tool->setCustomThickness(thickness);
-    setSize(TOOL_SIZE_CUSTOM);
+void ToolHandler::setCustomThickness(double thickness, ToolType toolType) {
+    this->tools[toolType - TOOL_PEN]->setCustomThickness(thickness);
 }
 
 void ToolHandler::setColor(Color color, bool userSelection) {

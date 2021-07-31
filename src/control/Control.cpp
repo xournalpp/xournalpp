@@ -664,6 +664,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
                 eraserSizeChanged();
             }
             break;
+        case ACTION_TOOL_ERASER_SET_CUSTOM_THICKNESS:
+            selectCustomThickness(TOOL_ERASER);
+            break;
+
         case ACTION_TOOL_PEN_SIZE_VERY_FINE:
             if (enabled) {
                 this->toolHandler->setPenSize(TOOL_SIZE_VERY_FINE);
@@ -707,7 +711,8 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             selectFillAlpha(true);
             break;
         case ACTION_TOOL_PEN_SET_CUSTOM_THICKNESS:
-            selectCustomThickness();
+            selectCustomThickness(TOOL_PEN);
+            break;
 
         case ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE:
             if (enabled) {
@@ -750,6 +755,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY:
             selectFillAlpha(false);
+            break;
+        case ACTION_TOOL_HIGHLIGHTER_SET_CUSTOM_THICKNESS:
+            selectCustomThickness(TOOL_HIGHLIGHTER);
             break;
 
         case ACTION_FONT_BUTTON_CHANGED:
@@ -1020,7 +1028,7 @@ void Control::selectFillAlpha(bool pen) {
     }
 }
 
-void Control::selectCustomThickness() {
+void Control::selectCustomThickness(ToolType toolType) {
     CustomThicknessDialog dlg(gladeSearchPath, 0);
     dlg.show(getGtkWindow());
 
@@ -1028,7 +1036,7 @@ void Control::selectCustomThickness() {
         return;
     }
 
-    toolHandler->setCustomThickness(dlg.getResultThickness());
+    toolHandler->setCustomThickness(dlg.getResultThickness(), toolType);
 }
 
 void Control::clearSelectionEndText() {

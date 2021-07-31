@@ -4,14 +4,14 @@
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="lower">0.10</property>
-    <property name="upper">300</property>
-    <property name="step-increment">1</property>
+    <property name="upper">150</property>
+    <property name="step-increment">0.01</property>
     <property name="page-increment">10</property>
   </object>
   <object class="GtkDialog" id="customThicknessDialog">
     <property name="name">customThicknessDialog</property>
     <property name="can-focus">False</property>
-    <property name="title" translatable="yes">Custom thickness settings</property>
+    <property name="title" translatable="yes">Custom Thickness Settings</property>
     <property name="window-position">center</property>
     <property name="icon">pixmaps/com.github.xournalpp.xournalpp.svg</property>
     <property name="type-hint">dialog</property>
@@ -101,7 +101,7 @@ Select custom thickness</property>
                     <property name="can-focus">True</property>
                     <property name="adjustment">adjustment1</property>
                     <property name="show-fill-level">True</property>
-                    <property name="fill-level">300</property>
+                    <property name="fill-level">150</property>
                     <property name="round-digits">2</property>
                     <property name="digits">2</property>
                   </object>

@@ -94,7 +94,7 @@ public:
      *
      * @param thickness Thickness to be used
      */
-    void setCustomThickness(double thickness);
+    void setCustomThickness(double thickness, ToolType toolType);
 
     /**
      * @brief Set the color for a Button
