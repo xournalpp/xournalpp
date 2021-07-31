@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-31 11:11\n"
+"PO-Revision-Date: 2021-07-31 12:09\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -412,7 +412,7 @@ msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Dotted"
-msgstr ""
+msgstr "बिंदुकित"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
