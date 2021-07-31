@@ -17,7 +17,7 @@
 
 class CustomThicknessDialog: public GladeGui {
 public:
-    CustomThicknessDialog(GladeSearchpath* gladeSearchPath, int thickness);
+    CustomThicknessDialog(GladeSearchpath* gladeSearchPath, double thickness);
     virtual ~CustomThicknessDialog();
 
 public:
