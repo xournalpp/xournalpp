@@ -609,7 +609,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_SIZE_CUSTOM:
             if (enabled) {
-                // Actually change the custom value here.
                 setToolSize(TOOL_SIZE_CUSTOM);
             }
             break;
