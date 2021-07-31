@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * The about dialog
+ * The fill opacity dialog
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

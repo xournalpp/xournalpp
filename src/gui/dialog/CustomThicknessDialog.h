@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * The about dialog
+ * The thickness selection dialog
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
