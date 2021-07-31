@@ -1,14 +1,10 @@
-#include <cmath>
-
 #include "CustomThicknessDialog.h"
 
-static inline double translateFromScale(double value) {
-    return pow(2, value);
-}
+#include <cmath>
 
-static inline double translateToScale(double value) {
-    return log2(value);
-}
+static inline double translateFromScale(double value) { return pow(2, value); }
+
+static inline double translateToScale(double value) { return log2(value); }
 
 CustomThicknessDialog::CustomThicknessDialog(GladeSearchpath* gladeSearchPath, double thickness):
         GladeGui(gladeSearchPath, "customThickness.glade", "customThicknessDialog") {
@@ -28,7 +24,7 @@ CustomThicknessDialog::CustomThicknessDialog(GladeSearchpath* gladeSearchPath, d
                      this);
 
     g_signal_connect(scaleThickness, "format-value", G_CALLBACK(+[](GtkScale* scale, gdouble value) {
-                         return g_strdup_printf ("%.2f", gtk_scale_get_digits(scale), translateFromScale(value));
+                         return g_strdup_printf("%.2f", gtk_scale_get_digits(scale), translateFromScale(value));
                      }),
                      this);
 }
