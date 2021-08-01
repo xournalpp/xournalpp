@@ -30,9 +30,11 @@
 
 using std::vector;
 
-constexpr size_t MINPIXSIZE = 5;  // smallest can scale down to, in pixels.
+/// Smallest can scale down to, in pixels.
+constexpr size_t MINPIXSIZE = 5;
 
-constexpr int DELETE_PADDING = 20;  // ui button padding
+/// Padding for ui buttons
+constexpr int DELETE_PADDING = 20;
 constexpr int ROTATE_PADDING = 8;
 
 EditSelection::EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view):
@@ -697,10 +699,7 @@ void EditSelection::moveSelection(double dx, double dy) {
     this->view->getXournal()->repaintSelection();
 }
 
-/**
- * If the selection is outside the visible area correct the coordinates
- */
-void EditSelection::ensureWithinVisibleArea() {
+auto EditSelection::getBoundingBoxInView() const -> Rectangle<double> {
     int viewx = this->view->getX();
     int viewy = this->view->getY();
     double zoom = this->view->getXournal()->getZoom();
@@ -714,11 +713,15 @@ void EditSelection::ensureWithinVisibleArea() {
     double minx = cx - w / 2.0;
     double miny = cy - h / 2.0;
 
+    return {viewx + minx * zoom, viewy + miny * zoom, w * zoom, h * zoom};
+}
+
+void EditSelection::ensureWithinVisibleArea() {
+    const Rectangle<double> viewRect = this->getBoundingBoxInView();
     // need to modify this to take into account the position
     // of the object, plus typecast because XojPageView takes ints
-    this->view->getXournal()->ensureRectIsVisible(static_cast<int>(viewx + minx * zoom),
-                                                  static_cast<int>(viewy + miny * zoom), static_cast<int>(w * zoom),
-                                                  static_cast<int>(h * zoom));
+    this->view->getXournal()->ensureRectIsVisible(static_cast<int>(viewRect.x), static_cast<int>(viewRect.y),
+                                                  static_cast<int>(viewRect.width), static_cast<int>(viewRect.height));
 }
 
 /**
