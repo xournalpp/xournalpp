@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-25 12:17\n"
+"PO-Revision-Date: 2021-08-01 15:41\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -1259,7 +1259,7 @@ msgstr "Tukar halaman saat ini dengan halaman di bawah"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
-msgstr ""
+msgstr "Sistem Bawaan"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
