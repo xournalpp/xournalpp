@@ -740,6 +740,7 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
 
 
     Layout* layout = gtk_xournal_get_layout(self->view->getXournal()->getWidget());
+    const Settings* const settings = self->getView()->getXournal()->getControl()->getSettings();
     const double zoom = self->view->getXournal()->getZoom();
 
     // Helper function to compute scroll amount for a single dimension, based on visible region and selection bbox
@@ -754,7 +755,7 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
         double mult = 0.0;
 
         // Calculate bonus scroll amount due to proportion of selection out of view.
-        const double maxMult = 5.0;
+        const double maxMult = settings->getEdgePanMaxMult();
         int panDir = 0;
         if (aboveMax) {
             panDir = 1;
@@ -765,7 +766,7 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
         }
 
         // Base amount to translate selection (in document coordinates) per timer tick
-        const double panSpeed = 20.0;
+        const double panSpeed = settings->getEdgePanSpeed();
         const double translateAmt = visLen * panSpeed / (100.0 * PAN_TIMER_RATE);
 
         // Amount to scroll the visible area by (in layout coordinates), accounting for multiplier

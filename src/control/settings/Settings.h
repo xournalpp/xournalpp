@@ -142,6 +142,12 @@ public:
     void setSelectedToolbar(const std::string& name);
     std::string const& getSelectedToolbar() const;
 
+    void setEdgePanSpeed(double speed);
+    double getEdgePanSpeed() const;
+
+    void setEdgePanMaxMult(double mult);
+    double getEdgePanMaxMult() const;
+
     /**
      * Set the Zoomstep for one step in percent
      */
@@ -657,6 +663,18 @@ private:
      * The last used font
      */
     XojFont font;
+
+    /**
+     * Base speed (as a percentage of visible canvas) of edge pan per
+     * second
+     */
+    double edgePanSpeed{};
+
+    /**
+     * Maximum multiplier of edge pan speed due to proportion of selection out
+     * of view
+     */
+    double edgePanMaxMult{};
 
     /**
      * Zoomstep for one step
