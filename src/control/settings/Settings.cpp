@@ -54,6 +54,9 @@ void Settings::loadDefault() {
 
     this->numPairsOffset = 1;
 
+    this->edgePanSpeed = 20.0;
+    this->edgePanMaxMult = 5.0;
+
     this->zoomStep = 10.0;
     this->zoomStepScroll = 2.0;
 
@@ -334,6 +337,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->lastOpenPath = fs::u8path(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastImagePath")) == 0) {
         this->lastImagePath = fs::u8path(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanSpeed")) == 0) {
+        this->edgePanSpeed = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanMaxMult")) == 0) {
+        this->edgePanMaxMult = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStep")) == 0) {
         this->zoomStep = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStepScroll")) == 0) {
@@ -803,6 +810,8 @@ void Settings::save() {
     SAVE_STRING_PROP(lastOpenPath);
     SAVE_STRING_PROP(lastImagePath);
 
+    SAVE_DOUBLE_PROP(edgePanSpeed);
+    SAVE_DOUBLE_PROP(edgePanMaxMult);
     SAVE_DOUBLE_PROP(zoomStep);
     SAVE_DOUBLE_PROP(zoomStepScroll);
     SAVE_INT_PROP(displayDpi);
@@ -1550,6 +1559,26 @@ void Settings::setZoomStepScroll(double zoomStepScroll) {
 }
 
 auto Settings::getZoomStepScroll() const -> double { return this->zoomStepScroll; }
+
+void Settings::setEdgePanSpeed(double speed) {
+    if (this->edgePanSpeed == speed) {
+        return;
+    }
+    this->edgePanSpeed = speed;
+    save();
+}
+
+auto Settings::getEdgePanSpeed() const -> double { return this->edgePanSpeed; }
+
+void Settings::setEdgePanMaxMult(double maxMult) {
+    if (this->edgePanMaxMult == maxMult) {
+        return;
+    }
+    this->edgePanMaxMult = maxMult;
+    save();
+}
+
+auto Settings::getEdgePanMaxMult() const -> double { return this->edgePanMaxMult; }
 
 void Settings::setDisplayDpi(int dpi) {
     if (this->displayDpi == dpi) {
