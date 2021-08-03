@@ -7,8 +7,8 @@ contribute to the project.
 
 Xournal++ development primarily occurs on [GitHub at the xournalpp/xournalpp
 repository](https://github.com/xournalpp/xournalpp). As a contributor, you
-probably have a particular bug or feature that are you interested in working on.
-Before you do anything, you should first look in the [issue
+probably have a particular bug or feature that you are interested in working on.
+Before you start, you should first look in the [issue
 tracker](https://github.com/xournalpp/xournalpp/issues) to see if anyone has
 reported your bug or has a similar idea for a feature. If not, you should first
 submit a new issue detailing what you are about to do. This will allow you to
@@ -43,7 +43,7 @@ be ready to make code changes.
 Here is a quick list of guidelines that we follow when working on the Xournal++
 codebase.
 
-* Xournal++ is a mixture C++ and C code. This is unavoidable because we rely on
+* Xournal++ is a mixture of C++ and C code. This is unavoidable because we rely on
   many C libraries (e.g. GTK). Prefer C++ when possible, however.
 * Although we do not have a strong opinion on code style, we use `clang-format`
   to enforce a _consistent_ code style. Feel free to write your code in whatever
@@ -62,7 +62,7 @@ codebase.
 ### Sending your contributions for review
 
 When you feel like your are ready to submit your code changes to be integrated
-into the main Xournal++ repository, you will want to submit a pull request (PR).
+into the main Xournal++ repository or require some feedback on your work, you will want to submit a pull request (PR).
 To do so, push your changes on to a branch of your fork in GitHub, and then hit
 the "New pull request" button on the [main repository's PR
 tracker](https://github.com/xournalpp/xournalpp/pulls). Select the branch you
@@ -70,7 +70,7 @@ want to contribute, and then press "Create pull request." If you feel like your
 work isn't quite ready, feel free to submit your PR as a draft.
 
 In your description, please include any relevant issue numbers that your PR will
-fix, as well as a short description of what your changes are and why are you
+fix, as well as a short description of what your changes are and why you are
 making them. Feel free to also include questions or comments about code snippets
 you may be unsure about.
 
@@ -86,7 +86,7 @@ following requirements before it is merged.
 * The code **passes the automated formatting check**. If the code does not pass,
   you can copy and paste the required changes from the Azure Pipelines page that
   has details on how the check failed.
-* Before the PR is merged, a grace period of at least 24 hours have passed since
+* Before the PR is merged, a grace period of at least 24 hours has passed since
 the last maintainer has approved the PR. This allows time for objections or
 last-minute feedback. Larger or more complicated PRs may take a longer grace
 period.
