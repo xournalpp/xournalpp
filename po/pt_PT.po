@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-08-03 20:44\n"
+"PO-Revision-Date: 2021-08-03 21:43\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -380,7 +380,7 @@ msgstr "Descartar"
 
 #: ../src/control/XournalMain.cpp:688
 msgid "Display advanced export options"
-msgstr ""
+msgstr "Exibir opções avançadas de exportação"
 
 #: ../src/control/Control.cpp:1956
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -425,7 +425,7 @@ msgstr "Desenhar Seta"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Desenhar Elipse"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -445,7 +445,7 @@ msgstr "Desenhar Retângulo"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Draw Spline"
-msgstr ""
+msgstr "Desenhar Spline"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
@@ -528,7 +528,7 @@ msgstr "Erro a gravar automaticamente: {1}"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "Erro {1} executando comando do sistema: {2}"
 
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
@@ -536,11 +536,11 @@ msgstr "Erro: {1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "Erro: {1} não é um arquivo regular. Por favor, verifique as configurações do arquivo de modelo (template) LaTeX. "
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Erro: {1}. Por favor, verifique o conteúdo de {2}"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
