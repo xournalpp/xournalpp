@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-25 12:18\n"
+"PO-Revision-Date: 2021-08-03 20:44\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:48
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"Deseja continuar?"
 
 #: ../src/control/XournalMain.cpp:450
 msgid "\n"
@@ -37,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " de {1}"
 
 #: ../src/control/settings/Settings.cpp:115
 msgid "%F-Note-%H-%M"
@@ -67,7 +68,7 @@ msgstr "Adicionar/Editar Tex"
 
 #: ../src/control/XournalMain.cpp:687
 msgid "Advanced export options"
-msgstr ""
+msgstr "Opções de exportação avançadas"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -83,7 +84,7 @@ msgstr "Aplicar à página atual"
 
 #: ../src/control/tools/EditSelection.cpp:340
 msgid "Arrange"
-msgstr ""
+msgstr "Organizar"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -159,11 +160,11 @@ msgstr "Azul"
 
 #: ../src/control/tools/EditSelection.cpp:357
 msgid "Bring forward"
-msgstr ""
+msgstr "Trazer para frente"
 
 #: ../src/control/tools/EditSelection.cpp:347
 msgid "Bring to front"
-msgstr ""
+msgstr "Trazer para o primeiro plano"
 
 #: ../src/control/Control.cpp:2011 ../src/control/Control.cpp:2462
 #: ../src/control/XournalMain.cpp:168
@@ -180,7 +181,7 @@ msgstr "Alterar tipo de letra"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "Alterar estilo da linha"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -215,7 +216,8 @@ msgstr "Copiar página"
 #: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Não foi possível criar pasta: {1}\n"
+"Falhou com o erro: {2}"
 
 #: ../src/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
@@ -273,7 +275,7 @@ msgstr "Não foi possível ler a imagem: {1}. Mensagem de erro: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:389
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Não foi possível ler o número da página para imagem de fundo clonada: {1}."
 
 #: ../src/undo/UndoRedoHandler.cpp:139
 msgid "Could not redo \"{1}\"\n"
@@ -299,7 +301,7 @@ msgstr "Não foi possível guardar o ficheiro .tex: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "Não foi possível iniciar {1}: {2} (valor de saída: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:110
 msgid "Could not undo \"{1}\"\n"
@@ -366,7 +368,7 @@ msgstr "Eliminar a camada"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Delete this layer"
-msgstr ""
+msgstr "Apagar a camada"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
