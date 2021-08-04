@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-28 11:11\n"
+"POT-Creation-Date: 2021-08-04 13:35+0000\n"
+"PO-Revision-Date: 2021-08-04 14:37\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1043,7 +1043,7 @@ msgstr "已从工具栏 {1} 移除工具项 ID {2}"
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "已从ID为 {3} 的工具栏 {2} 中移除工具 {1}"
 
-#: ../src/undo/LayerRenameUndoAction.cpp:10
+#: ../src/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
 msgstr "重命名图层"
 

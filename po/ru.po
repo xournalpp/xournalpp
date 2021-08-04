@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-25 12:15+0000\n"
-"PO-Revision-Date: 2021-07-25 12:18\n"
+"POT-Creation-Date: 2021-08-04 13:35+0000\n"
+"PO-Revision-Date: 2021-08-04 14:37\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1038,7 +1038,7 @@ msgstr "Инструмент удален с панели инструменто
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "Инструмент {1} удалён с панели инструментов {2} ID {3}"
 
-#: ../src/undo/LayerRenameUndoAction.cpp:10
+#: ../src/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
 msgstr "Переименовать слой"
 
