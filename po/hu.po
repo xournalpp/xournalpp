@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-04 20:02+0000\n"
-"PO-Revision-Date: 2021-08-04 20:19\n"
+"PO-Revision-Date: 2021-08-04 21:18\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1285,41 +1285,43 @@ msgstr "A szöveg %i alkalommal fordul elő ezen az oldalon"
 
 #: ../src/undo/TextUndoAction.cpp:30
 msgid "Text changes"
-msgstr ""
+msgstr "Szövegváltozások"
 
 #: ../src/gui/SearchBar.cpp:65
 msgid "Text found on this page"
-msgstr ""
+msgstr "A keresett szöveg megtalálható ezen az oldalon"
 
 #: ../src/gui/SearchBar.cpp:123 ../src/gui/SearchBar.cpp:167
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "A keresett szöveg egyszer megtalálható a(z) {1} oldalon"
 
 #: ../src/gui/SearchBar.cpp:124 ../src/gui/SearchBar.cpp:168
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "A keresett szöveg {1} alkalommal található meg a(z) {2} oldalon"
 
 #: ../src/gui/SearchBar.cpp:72
 msgid "Text not found"
-msgstr ""
+msgstr "A keresett szöveg nem található"
 
 #: ../src/gui/SearchBar.cpp:134 ../src/gui/SearchBar.cpp:178
 msgid "Text not found, searched on all pages"
-msgstr ""
+msgstr "A keresett szöveg nem található egyik oldalon sem"
 
 #: ../src/control/Control.cpp:1065
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "Az eszköztárbeállítás \"{1}\" rögzítve van, szeretne belőle egy módosítható másolatot készíteni?"
 
 #: ../src/control/Control.cpp:1998
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "A mellékelt háttérfájl {1} nem található. Lehetséges, hogy áthelyezték, átnevezték vagy törölték.\n"
+"Legutóbb az alábbi helyen volt megtalálható: {2}"
 
 #: ../src/control/Control.cpp:2002
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "A háttérfájl {1} nem található. Lehetséges, hogy áthelyezték, átnevezték vagy törölték.\n"
+"Legutóbb az alábbi helyen volt megtalálható: {2}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:47
 msgid "The check for overwriting the background failed with:\n"
