@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-04 20:02+0000\n"
-"PO-Revision-Date: 2021-08-04 20:19\n"
+"PO-Revision-Date: 2021-08-04 22:16\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2098,7 +2098,7 @@ msgstr "Hintergrundfarbe zwischen den Seiten"
 
 #: ../ui/settings.glade:3385
 msgid "Base speed"
-msgstr ""
+msgstr "Basisgeschwindigkeit"
 
 #: ../ui/settings.glade:2933
 msgctxt "stylus cursor uses a big pen icon"
@@ -2656,7 +2656,7 @@ msgstr "Maximale Länge (mm)"
 
 #: ../ui/settings.glade:3398
 msgid "Max multiplier"
-msgstr ""
+msgstr "Max. Multiplikator"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2694,7 +2694,7 @@ msgstr "Nach vorne verschieben"
 
 #: ../ui/settings.glade:3396
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "Multiplizieren Sie die Schwenkgeschwindigkeit mit bis zu diesem Betrag, abhängig davon, wie viel des ausgewählten Elements nicht angezeigt wird."
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
