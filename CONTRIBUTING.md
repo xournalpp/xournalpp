@@ -24,7 +24,7 @@ If you would like to contribute translations, you can submit improvements to
 ## Contributing code changes with pull requests (PRs)
 
 To make a code change, you'll need to first fork the repository on GitHub, if
-you haven't already. To do so, click the "Fork" button at the top right corner
+you haven't already. To do so, click the "Fork" button in the top right corner
 of the repository's web page.
 
 We assume that you are already familiar with Git, which we use to track changes.
