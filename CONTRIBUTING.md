@@ -61,7 +61,7 @@ codebase.
 
 ### Sending your contributions for review
 
-When you feel like your are ready to submit your code changes to be integrated
+When you feel like you are ready to submit your code changes to be integrated
 into the main Xournal++ repository or require some feedback on your work, you will want to submit a pull request (PR).
 To do so, push your changes on to a branch of your fork in GitHub, and then hit
 the "New pull request" button on the [main repository's PR
