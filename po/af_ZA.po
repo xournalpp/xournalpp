@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-04 20:02+0000\n"
-"PO-Revision-Date: 2021-08-04 20:19\n"
+"PO-Revision-Date: 2021-08-05 11:34\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -391,46 +391,46 @@ msgstr "Moet nie Autosave lêers oop maak nie. Hulle sal oorskryf word!\n"
 
 #: ../src/control/jobs/BaseExportJob.cpp:41
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "Moet nie die agtergrond PDF oorskryf nie! Hierdie sal foute veroorsaak!"
 
 #: ../src/control/Control.cpp:2453
 msgid "Document file was removed."
-msgstr ""
+msgstr "Dokument leêr was verwyder."
 
 #: ../src/control/xojfile/LoadHandler.cpp:241
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "Dokument is beskadig (geen blaaie gevind in die leêr nie)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:237
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "Dokument is onvoltooi (dalk is die einde afgesny?)"
 
 #: ../src/model/Document.cpp:285 ../src/model/Document.cpp:294
 #: ../src/model/Document.cpp:297
 msgid "Document not loaded! ({1}), {2}"
-msgstr ""
+msgstr "Dokument is nie gelaai nie! ({1}), {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Dotted"
-msgstr ""
+msgstr "Gestippel"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Arrow"
-msgstr ""
+msgstr "Teken Pyl"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Teken Ellips"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw Line"
-msgstr ""
+msgstr "Teken Lyn"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -438,35 +438,35 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:102
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Draw Rectangle"
-msgstr ""
+msgstr "Teken Reghoek"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Draw Spline"
-msgstr ""
+msgstr "Teken Spline"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw coordinate system"
-msgstr ""
+msgstr "Teken koördinaatstelsel"
 
 #: ../src/undo/InsertUndoAction.cpp:30
 msgid "Draw stroke"
-msgstr ""
+msgstr "Teken penslag"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:117
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "Tekening Tiepe - moet nie verander nie"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Tekening Tiepe Kombinasie"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
-msgstr ""
+msgstr "Redigeer teks"
 
 #: ../src/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
