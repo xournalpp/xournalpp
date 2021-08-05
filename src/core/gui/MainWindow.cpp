@@ -18,6 +18,7 @@
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
 #include "gui/widgets/SpinPageAdapter.h"
 #include "gui/widgets/XournalWidget.h"
+#include "util/GListView.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
 
@@ -150,18 +151,13 @@ void MainWindow::rebindAcceleratorsMenuItem(GtkWidget* widget, gpointer user_dat
     if (GTK_IS_MENU_ITEM(widget)) {
         GtkAccelGroup* newAccelGroup = reinterpret_cast<GtkAccelGroup*>(user_data);
         GList* menuAccelClosures = gtk_widget_list_accel_closures(widget);
-        for (GList* l = menuAccelClosures; l != nullptr; l = l->next) {
-            GClosure* closure = reinterpret_cast<GClosure*>(l->data);
-            GtkAccelGroup* accelGroup = gtk_accel_group_from_accel_closure(closure);
-            GtkAccelKey* key = gtk_accel_group_find(accelGroup, isKeyForClosure, closure);
-
-            // g_warning("Rebind %s : %s", gtk_accelerator_get_label(key->accel_key, key->accel_mods),
-            // gtk_widget_get_name(widget));
-
+        for (GClosure& closure: GListView<GClosure>(menuAccelClosures)) {
+            GtkAccelGroup* accelGroup = gtk_accel_group_from_accel_closure(&closure);
+            GtkAccelKey* key = gtk_accel_group_find(accelGroup, isKeyForClosure, &closure);
             gtk_accel_group_connect(newAccelGroup, key->accel_key, key->accel_mods, GtkAccelFlags(0),
                                     g_cclosure_new_swap(G_CALLBACK(MainWindow::invokeMenu), widget, nullptr));
         }
-
+        g_list_free_full(menuAccelClosures, GDestroyNotify(g_closure_unref));
         MainWindow::rebindAcceleratorsSubMenu(widget, newAccelGroup);
     }
 }

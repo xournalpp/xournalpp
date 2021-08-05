@@ -11,6 +11,7 @@
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
 #include "util/Color.h"
+#include "util/GListView.h"
 #include "util/Util.h"
 #include "util/i18n.h"
 
@@ -242,11 +243,7 @@ void ToolbarCustomizeDialog::freeIconview() {
     GtkGrid* table = GTK_GRID(get("tbDefaultTools"));
 
     GList* children = gtk_container_get_children(GTK_CONTAINER(table));
-    for (GList* l = children; l != nullptr; l = l->next) {
-        auto* w = static_cast<GtkWidget*>(l->data);
-        gtk_container_remove(GTK_CONTAINER(table), w);
-    }
-
+    for (auto& w: GListView<GtkWidget>(children)) { gtk_container_remove(GTK_CONTAINER(table), &w); }
     g_list_free(children);
 }
 
@@ -317,10 +314,7 @@ void ToolbarCustomizeDialog::freeColorIconview() {
     GtkGrid* table = GTK_GRID(get("tbColor"));
 
     GList* children = gtk_container_get_children(GTK_CONTAINER(table));
-    for (GList* l = children; l != nullptr; l = l->next) {
-        auto* w = static_cast<GtkWidget*>(l->data);
-        gtk_container_remove(GTK_CONTAINER(table), w);
-    }
+    for (auto& w: GListView<GtkWidget>(children)) { gtk_container_remove(GTK_CONTAINER(table), &w); }
 
     g_list_free(children);
 }

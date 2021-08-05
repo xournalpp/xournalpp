@@ -116,8 +116,8 @@ void RenderJob::run() {
         Control* control = view->getXournal()->getControl();
         DocumentView localView;
         localView.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
-        int width = this->view->page->getWidth();
-        int height = this->view->page->getHeight();
+        auto width = this->view->page->getWidth();
+        auto height = this->view->page->getHeight();
 
         bool backgroundVisible = this->view->page->isLayerVisible(0);
         if (backgroundVisible && this->view->page->getBackgroundType().isPdfPage()) {
