@@ -16,6 +16,8 @@
 
 #include <gtk/gtk.h>
 
+#include "util/GListView.h"
+
 #include "filesystem.h"
 
 class RecentManagerListener {
@@ -85,36 +87,7 @@ public:
     GtkRecentInfo* getMostRecent();
 
 private:
-    /**
-     * Filters a list of GtkRecentInfo according to their file types
-     *
-     * @param items A pointer to a GList containing GtkRecentInfo%s
-     * @param xoj   Returns xoj files if xoj is set, pdf files otherwise
-     *
-     * @return      A pointer to a GList containing the relevant GtkRecentInfo%s sorted according to their
-     *              modification dates or nullptr if no recent files match Xournal File Extension
-     */
-    static GList* filterRecent(GList* items, bool xoj);
     void addRecentMenu(GtkRecentInfo* info, int i);
-
-    /**
-     * This callback function is triggered whenever a new
-     * file is added to the recent manager to recreate
-     * all of the menu items
-     */
-    static void recentManagerChangedCallback(GtkRecentManager* manager, RecentManager* recentManager);
-
-    /**
-     * This callback function is triggered whenever one of
-     * the items corresponding to recent files is activated
-     */
-    static void recentsMenuActivateCallback(GtkAction* action, RecentManager* recentManager);
-
-    /**
-     * This function serves as a comparator to sort different
-     * GtkRecentInfo%s according to their modification date
-     */
-    static auto sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b) -> gint;
 
 private:
     int maxRecent = 10;

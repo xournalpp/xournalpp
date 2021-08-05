@@ -6,10 +6,10 @@
 #include <poppler.h>
 
 #include "pdf/base/XojPdfPage.h"
+#include "util/GListView.h"
 #include "util/Rectangle.h"
 
 #include "cairo.h"
-
 
 PopplerGlibPage::PopplerGlibPage(PopplerPage* page): page(page) {
     if (page != nullptr) {
@@ -76,13 +76,9 @@ auto PopplerGlibPage::findText(std::string& text) -> std::vector<XojPdfRectangle
 
     double height = getHeight();
     GList* matches = poppler_page_find_text(page, text.c_str());
-
-    for (GList* l = matches; l && l->data; l = g_list_next(l)) {
-        auto* rect = static_cast<PopplerRectangle*>(l->data);
-
-        findings.emplace_back(rect->x1, height - rect->y1, rect->x2, height - rect->y2);
-
-        poppler_rectangle_free(rect);
+    for (auto& rect: GListView<PopplerRectangle>(matches)) {
+        findings.emplace_back(rect.x1, height - rect.y1, rect.x2, height - rect.y2);
+        poppler_rectangle_free(&rect);
     }
     g_list_free(matches);
 
