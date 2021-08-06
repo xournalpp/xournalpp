@@ -99,8 +99,8 @@ void ToolbarAdapter::prepareToolItem(GtkToolItem* it) {
      */
     {
         gtk_widget_realize(GTK_WIDGET(it));
-        GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(it));
-        GdkCursor* cursor = gdk_cursor_new_for_display(gdk_screen_get_display(screen), GDK_HAND2);
+        GdkDisplay* display = gtk_widget_get_display(GTK_WIDGET(it));
+        GdkCursor* cursor = gdk_cursor_new_for_display(display, GDK_HAND2);
         g_assert_nonnull(cursor);
         GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(it));
         g_assert_nonnull(window);

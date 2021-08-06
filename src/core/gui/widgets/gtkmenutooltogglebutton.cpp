@@ -198,15 +198,10 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
     GtkOrientation orientation = gtk_tool_item_get_orientation(GTK_TOOL_ITEM(button));
     GtkTextDirection direction = gtk_widget_get_direction(widget);
 
-    GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(menu));
-
-    gint monitor_num = gdk_screen_get_monitor_at_window(screen, gtk_widget_get_window(widget));
-
-    if (monitor_num < 0) {
-        monitor_num = 0;
-    }
-    GdkRectangle monitor;
-    gdk_screen_get_monitor_geometry(screen, monitor_num, &monitor);
+    auto* display = gtk_widget_get_display(GTK_WIDGET(menu));
+    GdkMonitor* monitor = gdk_display_get_monitor_at_window(display, gtk_widget_get_window(widget));
+    GdkRectangle monitor_rect;
+    gdk_monitor_get_geometry(monitor, &monitor_rect);
 
     GtkAllocation arrow_allocation;
     gtk_widget_get_allocation(priv->arrow_button, &arrow_allocation);
@@ -225,11 +220,11 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
             *x -= menu_req.width - allocation.width;
         }
 
-        if ((*y + arrow_allocation.height + menu_req.height) <= monitor.y + monitor.height) {
+        if ((*y + arrow_allocation.height + menu_req.height) <= monitor_rect.y + monitor_rect.height) {
             *y += arrow_allocation.height;
-        } else if ((*y - menu_req.height) >= monitor.y) {
+        } else if ((*y - menu_req.height) >= monitor_rect.y) {
             *y -= menu_req.height;
-        } else if (monitor.y + monitor.height - (*y + arrow_allocation.height) > *y) {
+        } else if (monitor_rect.y + monitor_rect.height - (*y + arrow_allocation.height) > *y) {
             *y += arrow_allocation.height;
         } else {
             *y -= menu_req.height;
@@ -246,8 +241,8 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
             *x -= menu_req.width;
         }
 
-        if (*y + menu_req.height > monitor.y + monitor.height &&
-            *y + arrow_allocation.height - monitor.y > monitor.y + monitor.height - *y) {
+        if (*y + menu_req.height > monitor_rect.y + monitor_rect.height &&
+            *y + arrow_allocation.height - monitor_rect.y > monitor_rect.y + monitor_rect.height - *y) {
             *y += arrow_allocation.height - menu_req.height;
         }
     }
