@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-04 20:02+0000\n"
-"PO-Revision-Date: 2021-08-06 00:12\n"
+"POT-Creation-Date: 2021-08-06 07:13+0000\n"
+"PO-Revision-Date: 2021-08-06 07:25\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -256,13 +256,13 @@ msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: {2}"
 msgid "Could not open file: \"{1}\""
 msgstr "Ezin da {1} fitxategia ireki"
 
-#: ../src/gui/MainWindow.cpp:92
+#: ../src/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Ezin izan da toolbar.ini fitxategi pertsonalizatua analizatu: {1}\n"
 "Tresna-barrak ez dira erabilgarri egongo"
 
-#: ../src/gui/MainWindow.cpp:83
+#: ../src/gui/MainWindow.cpp:85
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Ezin izan da toolbar.ini fitxategi orokorra analizatu: {1}\n"
