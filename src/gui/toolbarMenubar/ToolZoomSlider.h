@@ -11,61 +11,42 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
-#include <vector>
 
 #include "control/zoom/ZoomListener.h"
 #include "util/IconNameHelper.h"
 
-#include "AbstractToolItem.h"
-
-
-#define SCALE_LOG_OFFSET 0.20753
+#include "AbstractSliderItem.h"
 
 class ZoomControl;
 
-class ToolZoomSlider: public AbstractToolItem, public ZoomListener {
+class ToolZoomSlider: public AbstractSliderItem, public ZoomListener {
 public:
-    ToolZoomSlider(ActionHandler* handler, std::string id, ActionType type, ZoomControl* zoom,
+    ToolZoomSlider(std::string id, ActionHandler* handler, ActionType type, ZoomControl* zoom,
                    IconNameHelper iconNameHelper);
     virtual ~ToolZoomSlider();
 
-public:
-    static void sliderChanged(GtkRange* range, ToolZoomSlider* self);
-    static bool sliderButtonPress(GtkRange* range, GdkEvent* event, ToolZoomSlider* self);
-    static bool sliderButtonRelease(GtkRange* range, GdkEvent* event, ToolZoomSlider* self);
-    static bool sliderHoverScroll(GtkWidget* range, GdkEventScroll* event, ToolZoomSlider* self);
-    static gchar* sliderFormatValue(GtkRange* range, gdouble value, ToolZoomSlider* self);
+protected:
+    void onSliderChanged(double value) override;
+    void onSliderButtonPress() override;
+    void onSliderButtonRelease() override;
+    void onSliderHoverScroll() override;
+    std::string formatSliderValue(double value) const override;
+    virtual void configure(GtkRange* slider, bool isHorizontal) const;
 
-    virtual void zoomChanged();
-    virtual void zoomRangeValuesChanged();
-    virtual std::string getToolDisplayName();
+    void zoomChanged() override;
+    void zoomRangeValuesChanged() override;
 
-    // Should be called when the window size changes
-    void updateScaleMarks();
-    virtual GtkToolItem* createItem(bool horizontal);
-    virtual GtkToolItem* createTmpItem(bool horizontal);
+    std::string getToolDisplayName() override;
 
 protected:
-    virtual void enable(bool enabled);
-    virtual GtkToolItem* newItem();
-    virtual GtkWidget* getNewToolIcon();
+    virtual GtkWidget* getNewToolIcon() override;
+
+    double scaleFunc(double x) const override;
+    double scaleFuncInv(double x) const override;
 
 private:
-    static double scaleFunc(double x);
-    static double scaleFuncInv(double x);
-
-private:
-    /**
-     * The slider is currently changing by user, do not update value
-     */
-    bool sliderChangingByZoomControlOrInit = false;
-    bool sliderChangingBySliderDrag = false;
-    bool sliderChangingBySliderHoverScroll = false;
-    gint64 sliderHoverScrollLastTime = 0;
-
-    GtkWidget* slider = nullptr;
-    ZoomControl* zoom = nullptr;
-    bool horizontal = true;
-    IconNameHelper iconNameHelper;
+    class Impl;
+    std::unique_ptr<Impl> pImpl;
 };
