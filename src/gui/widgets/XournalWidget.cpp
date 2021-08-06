@@ -264,6 +264,11 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
 
     cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
 
+    // Improve performance of cairo_scale (see
+    // https://stackoverflow.com/questions/59549863/poor-performance-when-downscaling-surfaces)
+    cairo_pattern_set_filter(cairo_get_source(cr), CAIRO_FILTER_FAST);
+    cairo_set_antialias(cr, CAIRO_ANTIALIAS_FAST);
+
     // Draw background
     Settings* settings = xournal->view->getControl()->getSettings();
     Util::cairo_set_source_rgbi(cr, settings->getBackgroundColor());
