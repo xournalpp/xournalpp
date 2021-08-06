@@ -51,19 +51,12 @@ auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices
                 deviceList.end());
     }
 
-    GList* pointerSlaves = nullptr;
-    // TODO(fabian): remove after completely switching to gtk 3.20 or use c++17 if constexpr (predicate){...} else{...}
-    // ...
-#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
     GdkDisplay* display = gdk_display_get_default();
     GdkSeat* defaultSeat = gdk_display_get_default_seat(display);
     GdkDevice* pointer = gdk_seat_get_pointer(defaultSeat);
     GdkSeat* pointerSeat = gdk_device_get_seat(pointer);
-    pointerSlaves = gdk_seat_get_slaves(pointerSeat, GDK_SEAT_CAPABILITY_ALL_POINTING);
-#else
-    GdkDeviceManager* deviceManager = gdk_display_get_device_manager(gdk_display_get_default());
-    pointerSlaves = gdk_device_manager_list_devices(deviceManager, GDK_DEVICE_TYPE_SLAVE);
-#endif
+    GList* pointerSlaves = gdk_seat_get_slaves(pointerSeat, GDK_SEAT_CAPABILITY_ALL_POINTING);
+
     addDevicesToList(deviceList, pointerSlaves, ignoreTouchDevices);
     g_list_free(pointerSlaves);
 
