@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-04 20:02+0000\n"
-"PO-Revision-Date: 2021-08-05 23:10\n"
+"PO-Revision-Date: 2021-08-06 00:12\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2693,7 +2693,7 @@ msgstr "Mugitu gora"
 
 #: ../ui/settings.glade:3396
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "Biderkatu panoramika abiadura kopuru honetara arte, hautatutako elementutik bistatik kanpo dagoenaren arabera."
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
@@ -2937,7 +2937,7 @@ msgstr "Hautapenaren kolorea (testua, trazuaren hautapena etab.)"
 
 #: ../ui/settings.glade:3413
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Hautapenaren ertzen panoramika"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3153,7 +3153,7 @@ msgstr "Webgunea"
 
 #: ../ui/settings.glade:3383
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Elementu bat oihalaren zati ikusgarrian hautatzen eta mugitzen denean, ezarri oihalaren panoramika zati ikusgaiaren ehunekoaren kopuru berdinarekin. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
