@@ -7,7 +7,7 @@ SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, c
         SidebarPreviewBaseEntry(sidebar, page), sidebar(sidebar) {
     const auto clickCallback = G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, SidebarPreviewPageEntry* self) {
         // Open context menu on right mouse click
-        if (event->type == GDK_BUTTON_PRESS) {
+        if (gdk_event_get_event_type(event) == GDK_BUTTON_PRESS) {
             auto mouseEvent = reinterpret_cast<GdkEventButton*>(event);
             if (mouseEvent->button == 3) {
                 self->mouseButtonPressCallback();

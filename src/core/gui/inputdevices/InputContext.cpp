@@ -261,7 +261,7 @@ void InputContext::printDebug(GdkEvent* event) {
                                    "GDK_PAD_STRIP",
                                    "GDK_PAD_GROUP_MODE",
                                    "GDK_EVENT_LAST"};
-    message += "Event type:\t" + gdkEventTypes[event->type + 1] + "\n";
+    message += "Event type:\t" + gdkEventTypes[gdk_event_get_event_type(event) + 1] + "\n";
 
     std::string gdkInputSources[] = {"GDK_SOURCE_MOUSE",    "GDK_SOURCE_PEN",        "GDK_SOURCE_ERASER",
                                      "GDK_SOURCE_CURSOR",   "GDK_SOURCE_KEYBOARD",   "GDK_SOURCE_TOUCHSCREEN",
@@ -275,8 +275,10 @@ void InputContext::printDebug(GdkEvent* event) {
     InputDeviceClass deviceClass = InputEvents::translateDeviceType(device, this->getSettings());
     message += "Device Class:\t" + gdkInputClasses[deviceClass] + "\n";
 
-    if (event->type == GDK_BUTTON_PRESS || event->type == GDK_DOUBLE_BUTTON_PRESS ||
-        event->type == GDK_TRIPLE_BUTTON_PRESS || event->type == GDK_BUTTON_RELEASE) {
+    if (gdk_event_get_event_type(event) == GDK_BUTTON_PRESS ||
+        gdk_event_get_event_type(event) == GDK_DOUBLE_BUTTON_PRESS ||
+        gdk_event_get_event_type(event) == GDK_TRIPLE_BUTTON_PRESS ||
+        gdk_event_get_event_type(event) == GDK_BUTTON_RELEASE) {
         guint button;
         if (gdk_event_get_button(event, &button)) {
             message += "Button:\t" + std::to_string(button) + "\n";
@@ -285,7 +287,7 @@ void InputContext::printDebug(GdkEvent* event) {
 
 #ifndef DEBUG_INPUT_PRINT_ALL_MOTION_EVENTS
     static bool motionEventBlock = false;
-    if (event->type == GDK_MOTION_NOTIFY) {
+    if (gdk_event_get_event_type(event) == GDK_MOTION_NOTIFY) {
         if (!motionEventBlock) {
             motionEventBlock = true;
             g_message("%s", message.c_str());

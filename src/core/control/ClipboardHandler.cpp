@@ -245,7 +245,7 @@ void ClipboardHandler::setCopyPasteEnabled(bool enabled) {
 }
 
 void ClipboardHandler::ownerChangedCallback(GtkClipboard* clip, GdkEvent* event, ClipboardHandler* handler) {
-    if (event->type == GDK_OWNER_CHANGE) {
+    if (gdk_event_get_event_type(event) == GDK_OWNER_CHANGE) {
         handler->clipboardUpdated(event->owner_change.selection);
     }
 }
