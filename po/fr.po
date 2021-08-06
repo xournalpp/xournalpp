@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-04 20:02+0000\n"
-"PO-Revision-Date: 2021-08-04 20:19\n"
+"POT-Creation-Date: 2021-08-06 07:13+0000\n"
+"PO-Revision-Date: 2021-08-06 07:25\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -256,13 +256,13 @@ msgstr "Impossible d'ouvrir la pièce jointe : {1}. Message d'erreur : {2}"
 msgid "Could not open file: \"{1}\""
 msgstr "Impossible d'ouvrir le fichier: \"{1}\""
 
-#: ../src/gui/MainWindow.cpp:92
+#: ../src/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Impossible d'analyser le fichier toolbar.ini personnalisé : {1}\n"
 "Les barres d'outils ne seront pas disponibles"
 
-#: ../src/gui/MainWindow.cpp:83
+#: ../src/gui/MainWindow.cpp:85
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Impossible d'analyser le fichier général toolbar.ini : {1}\n"
