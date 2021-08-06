@@ -148,8 +148,8 @@ auto RecentManager::filterRecent(GList* items, bool xoj) -> GList* {
     return filteredItems;
 }
 
-void RecentManager::recentsMenuActivateCallback(GtkAction* action, RecentManager* recentManager) {
-    auto* info = static_cast<GtkRecentInfo*>(g_object_get_data(G_OBJECT(action), "gtk-recent-info"));
+void RecentManager::recentsMenuActivateCallback(GtkMenuItem* menuItem, RecentManager* recentManager) {
+    auto* info = static_cast<GtkRecentInfo*>(g_object_get_data(G_OBJECT(menuItem), "gtk-recent-info"));
     g_return_if_fail(info != nullptr);
 
     auto p = Util::fromUri(gtk_recent_info_get_uri(info));
