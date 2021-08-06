@@ -1,3 +1,8 @@
+xournalpp (1.2.0-0) UNRELEASED; urgency=low
+
+  * Updated changelog file for 1.2.0+dev to show the correct version in the PPA.
+  * See the full changelog located on GitHub
+
 xournalpp (1.1.0-0) RELEASED; urgency=medium
 
   * This is a new major version of Xournal++ with many new features, improvements,
