@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-06 07:13+0000\n"
-"PO-Revision-Date: 2021-08-06 07:25\n"
+"POT-Creation-Date: 2021-08-09 20:20+0000\n"
+"PO-Revision-Date: 2021-08-09 20:34\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -283,11 +283,11 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "Az előrelépés nem sikerült \"{1}\"\n"
 "Valami nem sikerült… Kérem írjon hibajelentést…"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:182
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "Nem sikerült eltávolítani az eszközt az {1} eszköztár {2} pozíciójáról"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:177
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:161
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "Nem sikerült eltávolítani a(z) {1} eszközt az {2} eszköztár {3} pozíciójáról"
 
@@ -1035,11 +1035,11 @@ msgstr "Ismétlés: "
 msgid "Remove PDF Background"
 msgstr "PDF háttér eltávolítása"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:173
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "Eszköz eltávolítva a(z) {1} ID {2} eszköztárról"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:171
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:155
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "Eszköz {1} eltávolítva a(z) {2} ID {3} eszköztárról"
 
