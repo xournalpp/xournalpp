@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-09 20:35\n"
+"PO-Revision-Date: 2021-08-10 05:46\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -646,41 +646,41 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Go to first page"
-msgstr ""
+msgstr "Gaan na eerste bladsy"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Go to last page"
-msgstr ""
+msgstr "Gaan na laaste bladsy"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "Go to next layer"
-msgstr ""
+msgstr "Gaan na volgende laag"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Go to page"
-msgstr ""
+msgstr "Gaan na bladsy"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "Go to previous layer"
-msgstr ""
+msgstr "Gaan na vorige laag"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:388
 msgid "Go to top layer"
-msgstr ""
+msgstr "Gaan na boonste laag"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:25
 msgid "Graph"
-msgstr ""
+msgstr "Grafiek"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:99
 msgid "Gray"
-msgstr ""
+msgstr "Grys"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:95
 msgid "Green"
-msgstr ""
+msgstr "Groen"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Grid Snapping"
@@ -689,11 +689,11 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Hand"
-msgstr ""
+msgstr "Hand"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:73
 msgid "Hide all"
-msgstr ""
+msgstr "Versteek alles"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
