@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-10 05:46\n"
+"PO-Revision-Date: 2021-08-10 06:45\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -698,36 +698,36 @@ msgstr "Versteek alles"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Highlighter"
-msgstr ""
+msgstr "Ligstreper"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Image"
-msgstr ""
+msgstr "Foto"
 
 #: ../src/control/XournalMain.cpp:294
 msgid "Image file successfully created"
-msgstr ""
+msgstr "Foto lêer suksesvol geskep"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:18
 msgid "Images"
-msgstr ""
+msgstr "Foto's"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Voeg 'n afskrif van die huidige laag onder in"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "Voeg 'n afskrif van die huidige bladsy onder in"
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
-msgstr ""
+msgstr "Voeg elemente in"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
-msgstr ""
+msgstr "Voeg foto in"
 
 #: ../src/undo/InsertUndoAction.cpp:36
 msgid "Insert latex"
