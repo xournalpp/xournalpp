@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-09 20:35\n"
+"PO-Revision-Date: 2021-08-11 09:29\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2097,7 +2097,7 @@ msgstr "Couleur d'arrière-plan entre les pages"
 
 #: ../ui/settings.glade:3385
 msgid "Base speed"
-msgstr ""
+msgstr "Vitesse de base"
 
 #: ../ui/settings.glade:2933
 msgctxt "stylus cursor uses a big pen icon"
@@ -2302,7 +2302,7 @@ msgstr "Glissez et déposez des composants d'ici vers les barres barres d'outils
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Glisser: Si la valeur est trop petite, des oscillations indésirables peuvent apparaître. Si la valeur est trop élevée, il n'y aura pas de stabilisation."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
@@ -2655,7 +2655,7 @@ msgstr "Longueur maximale (mm)"
 
 #: ../ui/settings.glade:3398
 msgid "Max multiplier"
-msgstr ""
+msgstr "Multiplicateur maximal"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2693,7 +2693,7 @@ msgstr "Monter"
 
 #: ../ui/settings.glade:3396
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "Multiplier la vitesse de déplacement, en fonction de combien l'élément est hors vue."
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
@@ -2937,7 +2937,7 @@ msgstr "Couleur de sélection (Texte, Sélection de traits etc.)"
 
 #: ../ui/settings.glade:3413
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Séléction du bord de déplacement"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3153,7 +3153,7 @@ msgstr "Site web"
 
 #: ../ui/settings.glade:3383
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Lorsqu'un élément est sélectionné et déplacé au-delà de la partie visible de la toile, balayer l'écran d'une quantité égale à ce pourcentage de la partie visible de la toile. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
