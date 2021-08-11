@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-09 20:34\n"
+"PO-Revision-Date: 2021-08-11 14:22\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -42,7 +42,7 @@ msgstr " {1} का"
 
 #: ../src/control/settings/Settings.cpp:118
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "लेख"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:149
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -470,7 +470,7 @@ msgstr "लिखित में बदलाव"
 
 #: ../src/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
-msgstr ""
+msgstr "आपातकालीन दस्तावेज़ बचा ले"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:281
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
@@ -479,7 +479,7 @@ msgstr ""
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
 msgid "Erase stroke"
-msgstr ""
+msgstr "लिखाई मिटाएँ"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
@@ -514,19 +514,19 @@ msgstr ""
 
 #: ../src/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
-msgstr ""
+msgstr "छवि सहेजने में त्रुटि # \t१"
 
 #: ../src/control/jobs/ImageExport.cpp:161
 msgid "Error save image #2"
-msgstr ""
+msgstr "छवि सहेजने में त्रुटि # २"
 
 #: ../src/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "स्वत: सहेजते समय त्रुटि"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "सिस्टम कमांड निष्पादित करने में त्रुटि:"
 
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
@@ -547,7 +547,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:645
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "वहनीय दस्तावेज़ फ़ाइल के रूप में फ़ाइल निर्यात करें"
 
 #: ../src/control/XournalMain.cpp:647
 msgid "Export FILE as image files (one per page)\n"
@@ -557,7 +557,7 @@ msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:18
 msgid "Export PDF"
-msgstr ""
+msgstr "वहनीय दस्तावेज़ फ़ाइल निर्यात करें"
 
 #: ../src/control/XournalMain.cpp:661
 msgid "Export layers progressively\n"
@@ -602,7 +602,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Fill"
-msgstr ""
+msgstr "भरें"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:285
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
@@ -826,44 +826,44 @@ msgstr "पेज विज़ार्ड खिसकाए"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page upwards"
-msgstr ""
+msgstr "पृष्ठ को ऊपर की ओर ले जाएँ"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:70
 msgid "New"
-msgstr ""
+msgstr "नया"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "New Xournal"
-msgstr ""
+msgstr "न्यू ज़ौरनल"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Next"
-msgstr ""
+msgstr "अगला"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "Next annotated page"
-msgstr ""
+msgstr "अगला टिप्पणी पृष्ठ"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
-msgstr ""
+msgstr "उपकरण नहीं"
 
 #: ../src/pdf/base/XojCairoPdfExport.cpp:148
 #: ../src/pdf/base/XojCairoPdfExport.cpp:190
 msgid "No pages to export!"
-msgstr ""
+msgstr "निर्यात करने के लिए कोई पृष्ठ नहीं"
 
 #: ../src/control/Control.cpp:1265
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "संलग्न करने के लिए कोई पीडीएफ पृष्ठ उपलब्ध नहीं है। आपको पहले दस्तावेज़ को फिर से खोलना पड़ सकता है।"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
-msgstr ""
+msgstr "सामान्य चित्रकारी"
 
 #: ../src/plugin/Plugin.cpp:233 ../src/plugin/Plugin.cpp:249
 msgid "OK"
-msgstr ""
+msgstr "ठीक है"
 
 #: ../src/control/XournalMain.cpp:668
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -872,7 +872,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
-msgstr ""
+msgstr "छवि खोले"
 
 #: ../src/control/XournalMain.cpp:165
 msgid "Open Logfile"
