@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-10 06:45\n"
+"PO-Revision-Date: 2021-08-11 12:17\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -606,7 +606,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Fill"
-msgstr ""
+msgstr "Vul"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:285
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
@@ -622,19 +622,19 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:62
 msgid "Font"
-msgstr ""
+msgstr "Lettertipe"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Forward"
-msgstr ""
+msgstr "Vorentoe"
 
 #: ../src/gui/dialog/AboutDialog.cpp:40
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 of later"
 
 #: ../src/control/XournalMain.cpp:636
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "Kry die weergawe van xournalpp"
 
 #: ../src/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
@@ -715,43 +715,43 @@ msgstr "Foto's"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Insert a copy of the current layer below"
-msgstr "Voeg 'n afskrif van die huidige laag onder in"
+msgstr "Voeg 'n afskrif van die huidige laag onder by"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
-msgstr "Voeg 'n afskrif van die huidige bladsy onder in"
+msgstr "Voeg 'n afskrif van die huidige bladsy onder by"
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
-msgstr "Voeg elemente in"
+msgstr "Voeg elemente by"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
-msgstr "Voeg foto in"
+msgstr "Voeg foto by"
 
 #: ../src/undo/InsertUndoAction.cpp:36
 msgid "Insert latex"
-msgstr ""
+msgstr "Voeg latex by"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:26
 msgid "Insert layer"
-msgstr ""
+msgstr "Voeg laag by"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "Insert page"
-msgstr ""
+msgstr "Voeg bladsy by"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Isometries Gestippel"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Isometries Grafiek"
 
 #: ../src/control/XournalMain.cpp:632
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "Spring na bladsy (eerste Bladsy: 1)"
 
 #: ../src/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -759,19 +759,19 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:250
 msgid "Layer"
-msgstr ""
+msgstr "Laag"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "Laag Kombinasie"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layer Preview"
-msgstr ""
+msgstr "Laag Voorskou"
 
 #: ../src/control/layer/LayerController.cpp:329
 msgid "Layer {1}"
-msgstr ""
+msgstr "Laag {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layerstack Preview"
@@ -780,7 +780,7 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
 msgid "Light Blue"
-msgstr ""
+msgstr "Ligblou"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:97
