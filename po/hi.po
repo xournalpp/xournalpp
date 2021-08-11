@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-11 14:22\n"
+"PO-Revision-Date: 2021-08-11 15:18\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -876,11 +876,11 @@ msgstr "छवि खोले"
 
 #: ../src/control/XournalMain.cpp:165
 msgid "Open Logfile"
-msgstr ""
+msgstr "घटनाओं की सूची खोलें"
 
 #: ../src/control/XournalMain.cpp:166
 msgid "Open Logfile directory"
-msgstr ""
+msgstr "घटनाओं की नस्ती"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
@@ -958,7 +958,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 #: ../src/undo/AddUndoAction.cpp:77
 msgid "Paste"
-msgstr ""
+msgstr "लगाएँ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Pause / Play"
@@ -967,11 +967,11 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:231
 msgid "Pen"
-msgstr ""
+msgstr "कलम"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:21
 msgid "Plain"
-msgstr ""
+msgstr "सादा"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
@@ -981,7 +981,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:17
 msgid "Predefined"
-msgstr ""
+msgstr "पूर्व-निर्धारित"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "Presentation mode"
