@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-13 08:50\n"
+"PO-Revision-Date: 2021-08-13 09:57\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -463,7 +463,7 @@ msgstr "Tipo de dibujo – no cambiar"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Combo de tipo de dibujo"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -773,7 +773,7 @@ msgstr "Capa"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "Combo de capa"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layer Preview"
@@ -1112,7 +1112,7 @@ msgstr "Buscar"
 
 #: ../src/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Ver la lista completa de colaboradores"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Select Font"
@@ -1164,7 +1164,7 @@ msgstr "Seleccionar región"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
-msgstr ""
+msgstr "Combo de selección"
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
@@ -2068,7 +2068,7 @@ msgstr "Autor: "
 
 #: ../ui/about.glade:449
 msgid "Authors"
-msgstr ""
+msgstr "Autores"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2076,7 +2076,7 @@ msgstr "Detectar automáticamente"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
-msgstr ""
+msgstr "Carga automática"
 
 #: ../ui/settings.glade:456
 msgid "Autosaving"
@@ -2096,7 +2096,7 @@ msgstr "Color de fondo entre páginas"
 
 #: ../ui/settings.glade:3385
 msgid "Base speed"
-msgstr ""
+msgstr "Velocidad base"
 
 #: ../ui/settings.glade:2933
 msgctxt "stylus cursor uses a big pen icon"
@@ -2301,7 +2301,7 @@ msgstr "Arrastra y suelta los componentes fomenta aquí a las barras de herramie
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Arrastrar: Si el valor es demasiado pequeño, pueden aparecer oscilaciones no deseadas. Si el valor es demasiado alto, no habrá estabilización."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
@@ -2361,7 +2361,7 @@ msgstr "Activar acción de toque"
 
 #: ../ui/settings.glade:676
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "Habilitar la carga automática del archivo más reciente al iniciar la aplicación"
 
 #: ../ui/settings.glade:852
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2526,7 +2526,7 @@ msgstr "Cuán corto (tiempo)  Y...\n\n"
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr ""
+msgstr "Diseñadores de iconos"
 
 #: ../ui/settings.glade:4609
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2534,7 +2534,7 @@ msgstr "Si se activa, las formas que hayan sido reconocidas por el reconocimient
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "Si está activado, Xournal++ abrirá el documento más reciente automáticamente para que continúe editando el último documento guardado."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2546,7 +2546,7 @@ msgstr "Si está habilitado, las capas de cada página serán añadidas una por 
 
 #: ../ui/settings.glade:664
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "Si abre un PDF y hay un archivo Xournal con el mismo nombre, abrirá el archivo xoj."
 
 #: ../ui/settings.glade:4675
 msgid "Ignore Time (ms)"
@@ -2654,7 +2654,7 @@ msgstr "Longitud máxima (mm)"
 
 #: ../ui/settings.glade:3398
 msgid "Max multiplier"
-msgstr ""
+msgstr "Multiplicador máximo"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2692,7 +2692,7 @@ msgstr "Subir"
 
 #: ../ui/settings.glade:3396
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "Multiplica la velocidad de desplazamiento por esta cantidad, en función de la parte del elemento seleccionado que esté fuera de la vista."
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
@@ -2936,7 +2936,7 @@ msgstr "Color de selección (texto, selección de trazo, etc.)"
 
 #: ../ui/settings.glade:3413
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Selección de bordes de desplazamiento"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
