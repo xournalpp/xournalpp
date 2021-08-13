@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-11 13:15\n"
+"PO-Revision-Date: 2021-08-13 07:01\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -614,7 +614,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Fine"
-msgstr ""
+msgstr "Fyn"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
@@ -823,11 +823,11 @@ msgstr "Skuif laag"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page downwards"
-msgstr ""
+msgstr "Beweeg bladsy af"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page upwards"
-msgstr ""
+msgstr "Beweeg bladsy op"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:70
 msgid "New"
@@ -835,7 +835,7 @@ msgstr "Nuwe"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "New Xournal"
-msgstr ""
+msgstr "Nuwe Xournal"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Next"
@@ -843,16 +843,16 @@ msgstr "Volgende"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "Next annotated page"
-msgstr ""
+msgstr "Nuwe geannoteerde bladsy"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
-msgstr ""
+msgstr "Geen toestel nie"
 
 #: ../src/pdf/base/XojCairoPdfExport.cpp:148
 #: ../src/pdf/base/XojCairoPdfExport.cpp:190
 msgid "No pages to export!"
-msgstr ""
+msgstr "Geen bladsye om uit te voer nie!"
 
 #: ../src/control/Control.cpp:1265
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -860,7 +860,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
-msgstr ""
+msgstr "Gewone tekening"
 
 #: ../src/plugin/Plugin.cpp:233 ../src/plugin/Plugin.cpp:249
 msgid "OK"
@@ -873,97 +873,97 @@ msgstr ""
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
-msgstr ""
+msgstr "Maak foto oop"
 
 #: ../src/control/XournalMain.cpp:165
 msgid "Open Logfile"
-msgstr ""
+msgstr "Maak log-lêer oop"
 
 #: ../src/control/XournalMain.cpp:166
 msgid "Open Logfile directory"
-msgstr ""
+msgstr "Maak Log-lêer gids oop"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Open file"
-msgstr ""
+msgstr "Maak lêer oop"
 
 #: ../src/control/RecentManager.cpp:185
 msgctxt "{1} is a URI"
 msgid "Open {1}"
-msgstr ""
+msgstr "Maak {1} oop"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:102
 msgid "Orange"
-msgstr ""
+msgstr "Oranje"
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
-msgstr ""
+msgstr "Voer PDF uit"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:40
 msgid "PDF Page {1}"
-msgstr ""
+msgstr "PDF Bladsy {1}"
 
 #: ../src/view/PdfView.cpp:31
 msgid "PDF background missing"
-msgstr ""
+msgstr "PDF agtergrond nie beskikbaar nie"
 
 #: ../src/control/XournalMain.cpp:348
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "PDF lêer suksesvol geskep"
 
 #: ../src/control/jobs/CustomExportJob.cpp:21
 #: ../src/control/jobs/PdfExportJob.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
-msgstr ""
+msgstr "PDF lêers"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
-msgstr ""
+msgstr "PNG grafieke"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "Page"
-msgstr ""
+msgstr "Bladsy"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:73
 msgid "Page Preview"
-msgstr ""
+msgstr "Bladsy Voorskou"
 
 #: ../src/undo/PageBackgroundChangedUndoAction.cpp:81
 msgid "Page background changed"
-msgstr ""
+msgstr "Bladsy agtergrond verander"
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:98
 msgid "Page deleted"
-msgstr ""
+msgstr "Bladsy verwyder"
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:94
 msgid "Page inserted"
-msgstr ""
+msgstr "Bladsy bygevoeg"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:60
 msgid "Page number"
-msgstr ""
+msgstr "Bladsy nommer"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Paired pages"
-msgstr ""
+msgstr "Gepaarde bladsye"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 #: ../src/undo/AddUndoAction.cpp:77
 msgid "Paste"
-msgstr ""
+msgstr "Plak"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Pause / Play"
-msgstr ""
+msgstr "Pause / Speel"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:231
@@ -1094,7 +1094,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
 msgid "Search"
-msgstr ""
+msgstr "Soek"
 
 #: ../src/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
@@ -1108,45 +1108,45 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Select Object"
-msgstr ""
+msgstr "Kies Objek"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
-msgstr ""
+msgstr "Kies Reghoek"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:65
 msgid "Select Region"
-msgstr ""
+msgstr "Kies Gebied"
 
 #: ../src/control/Control.cpp:2009
 msgid "Select another PDF"
-msgstr ""
+msgstr "Kies 'n ander PDF"
 
 #: ../src/util/XojMsgBox.cpp:76
 msgid "Select another name"
-msgstr ""
+msgstr "Kies 'n ander naam"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:104
 msgid "Select background color"
-msgstr ""
+msgstr "Kies agtergrond kleur"
 
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:42
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:94
 msgid "Select color"
-msgstr ""
+msgstr "Kies kleur"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Select rectangle"
-msgstr ""
+msgstr "Kies reghoek"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select region"
-msgstr ""
+msgstr "Kies gebied"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
@@ -1158,15 +1158,15 @@ msgstr ""
 
 #: ../src/control/tools/EditSelection.cpp:379
 msgid "Send backward"
-msgstr ""
+msgstr "Stuur agtertoe"
 
 #: ../src/control/tools/EditSelection.cpp:387
 msgid "Send to back"
-msgstr ""
+msgstr "Stuur na agter"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
 msgid "Separator"
-msgstr ""
+msgstr "Verdeler"
 
 #: ../src/control/XournalMain.cpp:672
 msgid "Set DPI for PNG exports. Default is 300\n"
@@ -1256,7 +1256,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Text"
-msgstr ""
+msgstr "Teks"
 
 #: ../src/gui/SearchBar.cpp:67
 #, c-format
