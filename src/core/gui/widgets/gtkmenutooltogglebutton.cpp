@@ -37,7 +37,7 @@ struct _GtkMenuToolToggleButtonPrivate {
     GtkMenu* menu;
 };
 
-static void gtk_menu_tool_toggle_button_destroy(GtkWidget* object);
+static void gtk_menu_tool_toggle_button_dispose(GObject* object);
 
 static auto menu_deactivate_cb(GtkMenuShell* menu_shell, GtkMenuToolToggleButton* button) -> int;
 
@@ -157,10 +157,9 @@ static void gtk_menu_tool_toggle_button_class_init(GtkMenuToolToggleButtonClass*
 
     object_class->set_property = gtk_menu_tool_toggle_button_set_property;
     object_class->get_property = gtk_menu_tool_toggle_button_get_property;
+    object_class->dispose = gtk_menu_tool_toggle_button_dispose;
     widget_class->state_changed = gtk_menu_tool_toggle_button_state_changed;
     toolitem_class->toolbar_reconfigured = gtk_menu_tool_toggle_button_toolbar_reconfigured;
-
-    widget_class->destroy = gtk_menu_tool_toggle_button_destroy;
 
     /**
      * GtkMenuToolButton::show-menu:
@@ -325,7 +324,7 @@ static void gtk_menu_tool_toggle_button_init(GtkMenuToolToggleButton* button) {
     g_signal_connect(arrow_button, "button-press-event", G_CALLBACK(arrow_button_button_press_event_cb), button);
 }
 
-static void gtk_menu_tool_toggle_button_destroy(GtkWidget* object) {
+static void gtk_menu_tool_toggle_button_dispose(GObject* object) {
     GtkMenuToolToggleButton* button = GTK_MENU_TOOL_TOGGLE_BUTTON(object);
 
     if (button->priv->menu) {
