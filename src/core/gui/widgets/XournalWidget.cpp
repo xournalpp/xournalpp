@@ -28,7 +28,7 @@ static void gtk_xournal_get_preferred_height(GtkWidget* widget, gint* minimal_he
 static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
 static void gtk_xournal_realize(GtkWidget* widget);
 static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean;
-static void gtk_xournal_destroy(GtkWidget* object);
+static void gtk_xournal_dispose(GObject* object);
 
 auto gtk_xournal_get_type(void) -> GType {
     static GType gtk_xournal_type = 0;
@@ -76,10 +76,8 @@ auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget
     return GTK_WIDGET(xoj);
 }
 
-static void gtk_xournal_class_init(GtkXournalClass* klass) {
-    GtkWidgetClass* widget_class = nullptr;
-
-    widget_class = reinterpret_cast<GtkWidgetClass*>(klass);
+static void gtk_xournal_class_init(GtkXournalClass* cptr) {
+    auto* widget_class = reinterpret_cast<GtkWidgetClass*>(cptr);
 
     widget_class->realize = gtk_xournal_realize;
     widget_class->get_preferred_width = gtk_xournal_get_preferred_width;
@@ -88,7 +86,7 @@ static void gtk_xournal_class_init(GtkXournalClass* klass) {
 
     widget_class->draw = gtk_xournal_draw;
 
-    widget_class->destroy = gtk_xournal_destroy;
+    reinterpret_cast<GObjectClass*>(widget_class)->dispose = gtk_xournal_dispose;
 }
 
 auto gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p) -> Rectangle<double>* {
@@ -307,10 +305,9 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     return true;
 }
 
-static void gtk_xournal_destroy(GtkWidget* object) {
+static void gtk_xournal_dispose(GObject* object) {
     g_return_if_fail(object != nullptr);
     g_return_if_fail(GTK_IS_XOURNAL(object));
-
     GtkXournal* xournal = GTK_XOURNAL(object);
 
     delete xournal->selection;
