@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-09 20:35\n"
+"PO-Revision-Date: 2021-08-17 01:21\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -38,11 +38,11 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " / {1}"
 
 #: ../src/control/settings/Settings.cpp:118
 msgid "%F-Note-%H-%M"
-msgstr "%F-Note-%H-%M"
+msgstr "%F-Not-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:149
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -84,7 +84,7 @@ msgstr "Geçerli sayfaya uygula"
 
 #: ../src/control/tools/EditSelection.cpp:351
 msgid "Arrange"
-msgstr ""
+msgstr "Sırala"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -137,7 +137,7 @@ msgstr "Otomatik kaydetme {1} yerine {2} olarak yeniden adlandırıldı"
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr "{1} için otomatik kaydediliyor"
+msgstr "{1} 'e otomatik kaydediliyor"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
@@ -275,7 +275,7 @@ msgstr "Resim okunamadı: {1}. Hata mesajı: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:389
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Kopyalanmış arka plan resmi için sayfa numarası okunamadı: {1}."
 
 #: ../src/undo/UndoRedoHandler.cpp:139
 msgid "Could not redo \"{1}\"\n"
@@ -463,7 +463,7 @@ msgstr "Çizim Türü - değiştirmeyin"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Şekil çizimi araç seti"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -550,13 +550,15 @@ msgstr "Hata günlüğü silinemez. Elle yapmalısınız.\n"
 
 #: ../src/control/XournalMain.cpp:645
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "PDF olarak dışa aktar"
 
 #: ../src/control/XournalMain.cpp:647
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "Resim/Fotoğraf olarak dışa aktar (sayfa başına)\n"
+"                                 Dosya uzantısından resim/fotoğraf türünü tahmin et.\n"
+"                                 Desteklenen uzantılar: .png, .svg"
 
 #: ../src/control/jobs/BaseExportJob.cpp:18
 msgid "Export PDF"
@@ -568,7 +570,11 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Katmanları kademeli olarak dışa aktar\n"
+"                                 PDF dışa aktarmada, katmanları kademeli olarak tek tek oluştur.\n"
+"                                 Bu, N sayıda katmana sahip sayfa başına N sayıda dışa aktarılmış\n"
+"                                 sayfayla sonuçlanır ve katman yığınlarınıı kademeli olarak oluşturur.\n"
+"                                 Ortaya çıkan PDF dosyası sunum yapmak için kullanılabilir.\n"
 
 #: ../src/control/XournalMain.cpp:652
 msgid "Export without background\n"
@@ -581,19 +587,20 @@ msgstr "Arka plan olmadan dışa aktar\n"
 #: ../src/control/XournalMain.cpp:657
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Çizgiler olmadan dışa aktar\n"
+"                                 Aktarılan dosyada kağıt çizgileri bulunmaz\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "KONUM içinde LaTeX oluşturucu programı bulunamadı: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "LaTeX oluşturucu komutu ayrıştırılamadı: {1}"
 
 #: ../src/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Genel şablon dosyası okunamadı. Lütfen ayarlarınızı kontrol ediniz."
 
 #: ../src/control/jobs/BaseExportJob.cpp:103
 msgid "Failed to resolve path with the following error:\n"
@@ -1242,11 +1249,11 @@ msgstr "Desteklenen dosyalar"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Mevcut katmanı bir yukarıdaki ile yer değiştir"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Mevcut katmanı aşağıdaki ile yer değiştir"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
@@ -1258,7 +1265,7 @@ msgstr "Mevcut sayfayı aşağıdaki ile takas et"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
-msgstr ""
+msgstr "Sistem Varsayılanı"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
@@ -1310,11 +1317,11 @@ msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:47
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "Arka plan üzerine yazma kontrolü şu şekilde başarısız oldu:\n"
 
 #: ../src/control/Control.cpp:2041
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Açılmakta olan dosya şu anki Xournal++ sürümünden daha yeni bir sürüme sahip, bu nedenle düzgün yüklenmeyebilir. Yine de aç?"
 
 #: ../src/control/xojfile/LoadHandler.cpp:119
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1387,7 +1394,7 @@ msgstr "Acil durum mevcut belgeyi kaydetmeye çalışıyor…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "{1} konumundaki genel şablon dosyası açılamıyor. Dosya mevcut mu?"
 
 #: ../src/gui/PageView.cpp:350
 msgid "Unable to play audio recording {1}"
@@ -1395,7 +1402,7 @@ msgstr "Ses kaydı oynatılamıyor {1}"
 
 #: ../src/control/Control.cpp:1279
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Pdf sayfası alınamadı."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
 #: ../src/undo/UndoRedoHandler.cpp:205
@@ -1517,7 +1524,7 @@ msgstr "Aralarından seçim yapabileceğiniz PDF sayfanız yok. İşlemi iptal e
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Programın {1}/{2} sürümünü kullanıyorsunuz. Hata raporu göndermek sizi bu yazılım deposunun sorun izleyicisine yönlendirecektir."
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:78
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1529,7 +1536,7 @@ msgstr "Mevcut belgenizde PDF Sayfa {1} yok\n"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "Yakınlaştırma kaydırıcısı"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Zoom fit to screen"
@@ -1602,7 +1609,7 @@ msgstr "silgi"
 
 #: ../src/control/Control.cpp:1970
 msgid "file: {1}"
-msgstr ""
+msgstr "dosya: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -1711,19 +1718,19 @@ msgstr "%"
 
 #: ../ui/settings.glade:2473
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% değeri iki dokunuş arasındaki ilk mesafeden daha büyük."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4910
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:557
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1749,7 +1756,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\tKısaltılmış gün adı (ör. Per)\n"
+"%A\t\tTam gün adı (ör. Perşembe)\n"
+"%b\t\tKısaltılmış ay adı (ör. Ağu)\n"
+"%B\t\tTam ay adı (ör. Ağustos)\n"
+"%c\t\tTarih ve saat gösterimi (ör. Perş 23 Ağu 14:55:02 2001)\n"
+"%d\t\tAya göre gün (01-31)\n"
+"%F\t\tTarih gösterimi (ör. 2001-08-23)\n"
+"%H\t\t24s biçiminde saat (00-23)\n"
+"%I\t\t12s biçiminde saat (01-12)\n"
+"%j\t\tYıla göre gün (001-366)\n"
+"%m\t        Ondalık sayı olarak ay (01-12)\n"
+"%M\t        Dakika (00-59)\n"
+"%p\t\tÖÖ veya ÖS gösterilme (ör. ÖS)\n"
+"%S\t\tSaniye (00-61)\n"
+"%U\t\tHafta başı olarak Pazar günü baz alınarak hafta sayısı (00-53)\n"
+"%w\t\tOndalık sayı olarak gün, Pazar günü 0 baz alınarak (0-6)\n"
+"%W\t        Hafta başı olarak Pazartesi baz alınarak hafta sayısı (00-53)\n"
+"%x\t\tTarih gösterimi (ör. 08/23/01)\n"
+"%X\t\tSaat gösterimi (ör. 14:55:02)\n"
+"%y\t\tYıl, son iki basamağa göre (00-99)\n"
+"%Y\t\tYıl (örn. 2001)\n"
+"%Z\t\tSaat dilimi adı veya kısaltması (örn. CDT)\n"
+"%%\t        % işareti"
 
 #: ../ui/settings.glade:4750
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2779,7 +2808,7 @@ msgstr "Tercihler"
 
 #: ../ui/settings.glade:1174
 msgid "Preprocessor"
-msgstr ""
+msgstr "Önişlemci"
 
 #: ../ui/settings.glade:3581
 msgid "Presentation Mode"
@@ -2787,7 +2816,7 @@ msgstr "Sunum Modu"
 
 #: ../ui/settings.glade:4421
 msgid "Preserve line width"
-msgstr ""
+msgstr "Çizgi genişliğini koru"
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
@@ -2827,15 +2856,15 @@ msgstr "Kayıt Kalitesi"
 
 #: ../ui/main.glade:1256
 msgid "Rename Layer"
-msgstr ""
+msgstr "Katmanı yeniden adlandır"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Seçili katmanı yeniden adlandır"
 
 #: ../ui/settings.glade:4468
 msgid "Resizing"
-msgstr ""
+msgstr "Yeniden boyutlandır"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -2855,7 +2884,7 @@ msgstr "Örnek Oranı"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "Örnek katman ismi"
 
 #: ../ui/settings.glade:3326
 msgid "Scrollbars"
@@ -2895,15 +2924,15 @@ msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Bir alta gönder"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "En alta gönder"
 
 #: ../ui/settings.glade:1649
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Hassaslık derecesi"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
@@ -2927,11 +2956,11 @@ msgstr "Menü Çubuğunu Başlangıçta Göster"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Kenar çubuğunu göster"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Araç Çubuğunu Göster"
 
 #: ../ui/settings.glade:3209
 msgid "Show sidebar on the right side"
@@ -2949,7 +2978,7 @@ msgstr ""
 #: ../ui/settings.glade:2932
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Küçük nokta imleci"
 
 #: ../ui/settings.glade:4627
 msgid "Snapping"
@@ -2957,7 +2986,7 @@ msgstr "Yakalama"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Kaynak Kodu / Hata Takibi"
 
 #: ../ui/settings.glade:3774
 msgid "Speed for Ctrl + Scroll"
@@ -2997,7 +3026,7 @@ msgstr "Araç Ç_ubukları"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "Şablon dosya ayarları"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -3009,7 +3038,7 @@ msgstr "Test"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "Yapılandırmayı test edin"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
@@ -3049,7 +3078,7 @@ msgstr "Zaman aşımı"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Dokunarak çizme"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2612
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -3102,7 +3131,7 @@ msgstr "Görüntüle"
 
 #: ../ui/about.glade:328
 msgid "Website"
-msgstr ""
+msgstr "İnternet sitesi"
 
 #: ../ui/settings.glade:3383
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
@@ -3124,7 +3153,7 @@ msgstr "Olmadan"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Genişlik"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3136,7 +3165,7 @@ msgstr "Topluluk yardımı ile"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
@@ -3292,7 +3321,7 @@ msgstr "_Son Sayfa"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "_Soldan Sağa"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3336,7 +3365,7 @@ msgstr "_Önceki Sayfa"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "_Sağdan Sola"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
@@ -3446,5 +3475,5 @@ msgstr "_çok kalın"
 
 #: ../ui/about.glade:141
 msgid "with libgtk"
-msgstr ""
+msgstr "libgtk ile birlikte"
 
