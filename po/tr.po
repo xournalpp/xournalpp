@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-17 01:21\n"
+"PO-Revision-Date: 2021-08-17 02:17\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -46,7 +46,7 @@ msgstr "%F-Not-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:149
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr "<b>Hiçbir aygıt bulunamadı. Bu yanlış görünüyor - bir hata raporu dosyalansın mı?</b>"
+msgstr "<b>Hiçbir aygıt bulunamadı. Bu bir sorun gibi görünüyor, bir hata raporu oluşturulsun mu?</b>"
 
 #: ../src/control/XournalMain.cpp:465
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -93,7 +93,7 @@ msgstr "Günlüğe dosya ekle"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:112
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "\"{1}\" özeniteliği çift olarak ayrıştırılamadı, değer \"{2}\""
+msgstr "\"{1}\" özelliği çift olarak ayrıştırılamadı, değer \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:105
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
@@ -181,7 +181,7 @@ msgstr "Yazı tipini değiştir"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr "Satır tarzını değiştir"
+msgstr "Çizgi biçimini değiştir"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -207,7 +207,7 @@ msgstr "Kopyala"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
-msgstr "Geçerliyi kopyala"
+msgstr "Mevcut olanı kopyala"
 
 #: ../src/undo/CopyUndoAction.cpp:60
 msgid "Copy page"
@@ -217,7 +217,7 @@ msgstr "Sayfayı kopyala"
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Klasör oluşturulamadı: {1}\n"
-"Hatayla başarısız oldu: {2}"
+"İşlem hatasıyla başarısız oldu: {2}"
 
 #: ../src/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
