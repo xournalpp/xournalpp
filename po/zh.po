@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-09 20:35\n"
+"PO-Revision-Date: 2021-08-17 00:23\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2096,7 +2096,7 @@ msgstr "页面背景颜色"
 
 #: ../ui/settings.glade:3385
 msgid "Base speed"
-msgstr ""
+msgstr "基本速度"
 
 #: ../ui/settings.glade:2933
 msgctxt "stylus cursor uses a big pen icon"
@@ -2654,7 +2654,7 @@ msgstr "最大长度 (毫米)"
 
 #: ../ui/settings.glade:3398
 msgid "Max multiplier"
-msgstr ""
+msgstr "最大倍数"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2935,7 +2935,7 @@ msgstr "选择颜色（文字，笔划等）"
 
 #: ../ui/settings.glade:3413
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "选区边缘平移"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
