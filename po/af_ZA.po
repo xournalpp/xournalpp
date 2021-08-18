@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-13 07:01\n"
+"PO-Revision-Date: 2021-08-18 09:07\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -775,7 +775,7 @@ msgstr "Laag {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Laag-stapel Voorskou"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -800,11 +800,11 @@ msgstr "Magenta"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Manage Toolbars"
-msgstr ""
+msgstr "Bestuur taakbalke"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Medium"
-msgstr ""
+msgstr "Middelmatig"
 
 #: ../src/control/XournalMain.cpp:446
 msgid "Missing the needed UI file:\n"
@@ -968,21 +968,21 @@ msgstr "Pause / Speel"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:231
 msgid "Pen"
-msgstr ""
+msgstr "Pen"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:21
 msgid "Plain"
-msgstr ""
+msgstr "Eenvoudig"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
 msgid "Play Object"
-msgstr ""
+msgstr "Speel objek"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:17
 msgid "Predefined"
-msgstr ""
+msgstr "Vooraf bepaal"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "Presentation mode"
