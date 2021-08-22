@@ -383,15 +383,12 @@ using XMPtr = XournalMainPrivate*;
 
 /// Checks for input method compatibility and ensures it
 void ensure_input_model_compatibility() {
-    char* unsupportedImModules[] = {"xim", "gcin"};
     const char* imModule = g_getenv("GTK_IM_MODULE");
     if (imModule != nullptr) {
-        for (int i = 0; i < 2; i++) {
-            if (strcmp(imModule, unsupportedImModules[i]) == 0) {
-                g_setenv("GTK_IM_MODULE", "ibus", true);
-                g_warning("Unsupported input method: %s, changed to: ibus", imModule);
-                break;
-            }
+        std::string imModuleString { imModule };
+        if (imModuleString == "xim" || imModuleString == "gcin") {
+            g_setenv("GTK_IM_MODULE", "ibus", true);
+            g_warning("Unsupported input method: %s, changed to: ibus", imModule);
         }
     }
 }
