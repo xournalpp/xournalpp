@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include <gdk/gdk.h>
 #include "PathUtil.h"
 #include "PopplerGlibPage.h"
 #include "PopplerGlibPageBookmarkIterator.h"
@@ -71,9 +72,9 @@ auto PopplerGlibDocument::load(gpointer data, gsize length, string password, GEr
     if (document) {
         g_object_unref(document);
     }
-
+    
     this->document =
-            poppler_document_new_from_data(static_cast<char*>(data), static_cast<int>(length), password.c_str(), error);
+            poppler_document_new_from_bytes(static_cast<GBytes*>(data), password.c_str(), error);
     return this->document != nullptr;
 }
 
