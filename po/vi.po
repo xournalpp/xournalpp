@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-09 20:34\n"
+"PO-Revision-Date: 2021-08-24 06:34\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -36,7 +36,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " trên {1}"
 
 #: ../src/control/settings/Settings.cpp:118
 msgid "%F-Note-%H-%M"
@@ -44,7 +44,7 @@ msgstr ""
 
 #: ../src/gui/dialog/SettingsDialog.cpp:149
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
+msgstr "<b>Không tìm thấy thiết bị nào. Nếu đây là lỗi, hãy báo với chúng tôi.</b>"
 
 #: ../src/control/XournalMain.cpp:465
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -77,7 +77,7 @@ msgstr "Áp dụng cho trang hiện tại"
 
 #: ../src/control/tools/EditSelection.cpp:351
 msgid "Arrange"
-msgstr ""
+msgstr "Sắp xếp"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
