@@ -83,189 +83,6 @@
        stop-color="#c0bfbc"
        id="stop4021" />
   </linearGradient>
-  <filter
-     id="b"
-     height="100%"
-     width="100%"
-     x="0%"
-     y="0%">
-    <feColorMatrix
-       in="SourceGraphic"
-       type="matrix"
-       values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
-       id="feColorMatrix4024" />
-  </filter>
-  <mask
-     id="c">
-    <g
-       filter="url(#b)"
-       id="g4029">
-      <rect
-         fill-opacity="0.3"
-         height="128"
-         width="128"
-         id="rect4027" />
-    </g>
-  </mask>
-  <clipPath
-     id="d">
-    <rect
-       height="152"
-       width="192"
-       id="rect4032" />
-  </clipPath>
-  <mask
-     id="e">
-    <g
-       filter="url(#b)"
-       id="g4037">
-      <rect
-         fill-opacity="0.3"
-         height="128"
-         width="128"
-         id="rect4035" />
-    </g>
-  </mask>
-  <clipPath
-     id="f">
-    <rect
-       height="152"
-       width="192"
-       id="rect4040" />
-  </clipPath>
-  <mask
-     id="g">
-    <g
-       filter="url(#b)"
-       id="g4045">
-      <rect
-         fill-opacity="0.3"
-         height="128"
-         width="128"
-         id="rect4043" />
-    </g>
-  </mask>
-  <clipPath
-     id="h">
-    <rect
-       height="152"
-       width="192"
-       id="rect4048" />
-  </clipPath>
-  <mask
-     id="i">
-    <g
-       filter="url(#b)"
-       id="g4053">
-      <rect
-         fill-opacity="0.3"
-         height="128"
-         width="128"
-         id="rect4051" />
-    </g>
-  </mask>
-  <clipPath
-     id="j">
-    <rect
-       height="152"
-       width="192"
-       id="rect4056" />
-  </clipPath>
-  <mask
-     id="k">
-    <g
-       filter="url(#b)"
-       id="g4061">
-      <rect
-         fill-opacity="0.3"
-         height="128"
-         width="128"
-         id="rect4059" />
-    </g>
-  </mask>
-  <clipPath
-     id="l">
-    <rect
-       height="152"
-       width="192"
-       id="rect4064" />
-  </clipPath>
-  <mask
-     id="m">
-    <g
-       filter="url(#b)"
-       id="g4069">
-      <rect
-         fill-opacity="0.3"
-         height="128"
-         width="128"
-         id="rect4067" />
-    </g>
-  </mask>
-  <clipPath
-     id="n">
-    <rect
-       height="152"
-       width="192"
-       id="rect4072" />
-  </clipPath>
-  <mask
-     id="o">
-    <g
-       filter="url(#b)"
-       id="g4077">
-      <rect
-         fill-opacity="0.3"
-         height="128"
-         width="128"
-         id="rect4075" />
-    </g>
-  </mask>
-  <clipPath
-     id="p">
-    <rect
-       height="152"
-       width="192"
-       id="rect4080" />
-  </clipPath>
-  <mask
-     id="q">
-    <g
-       filter="url(#b)"
-       id="g4085">
-      <rect
-         fill-opacity="0.3"
-         height="128"
-         width="128"
-         id="rect4083" />
-    </g>
-  </mask>
-  <clipPath
-     id="r">
-    <rect
-       height="152"
-       width="192"
-       id="rect4088" />
-  </clipPath>
-  <mask
-     id="s">
-    <g
-       filter="url(#b)"
-       id="g4093">
-      <rect
-         fill-opacity="0.3"
-         height="128"
-         width="128"
-         id="rect4091" />
-    </g>
-  </mask>
-  <clipPath
-     id="t">
-    <rect
-       height="152"
-       width="192"
-       id="rect4096" />
-  </clipPath>
   <linearGradient
      id="u"
      gradientTransform="matrix(1.7465 0.863866 -0.331992 0.698898 -100.536515 -239.128476)"
@@ -292,102 +109,93 @@
      fill="#f5f4f3"
      id="path4106" />
   <g
-     clip-path="url(#d)"
-     mask="url(#c)"
      transform="matrix(1 0 0 1 -8 -16)"
      id="g4110">
     <path
        d="m 28.921875 37.085938 v 1.828124 h 86.152344 v -1.828124 z m 0 0"
        fill="#c0bfbc"
        fill-rule="evenodd"
+       fill-opacity="0.3"
        id="path4108" />
   </g>
   <g
-     clip-path="url(#f)"
-     mask="url(#e)"
      transform="matrix(1 0 0 1 -8 -16)"
      id="g4114">
     <path
        d="m 28.921875 47.085938 v 1.828124 h 86.152344 v -1.828124 z m 0 0"
        fill="#c0bfbc"
        fill-rule="evenodd"
+       fill-opacity="0.3"
        id="path4112" />
   </g>
   <g
-     clip-path="url(#h)"
-     mask="url(#g)"
      transform="matrix(1 0 0 1 -8 -16)"
      id="g4118">
     <path
        d="m 28.921875 57.085938 v 1.828124 h 86.152344 v -1.828124 z m 0 0"
        fill="#c0bfbc"
        fill-rule="evenodd"
+       fill-opacity="0.3"
        id="path4116" />
   </g>
   <g
-     clip-path="url(#j)"
-     mask="url(#i)"
      transform="matrix(1 0 0 1 -8 -16)"
      id="g4122">
     <path
        d="m 28.921875 67.085938 v 1.828124 h 86.152344 v -1.828124 z m 0 0"
        fill="#c0bfbc"
        fill-rule="evenodd"
+       fill-opacity="0.3"
        id="path4120" />
   </g>
   <g
-     clip-path="url(#l)"
-     mask="url(#k)"
      transform="matrix(1 0 0 1 -8 -16)"
      id="g4126">
     <path
        d="m 28.921875 77.085938 v 1.828124 h 86.152344 v -1.828124 z m 0 0"
        fill="#c0bfbc"
        fill-rule="evenodd"
+       fill-opacity="0.3"
        id="path4124" />
   </g>
   <g
-     clip-path="url(#n)"
-     mask="url(#m)"
      transform="matrix(1 0 0 1 -8 -16)"
      id="g4130">
     <path
        d="m 28.921875 87.085938 v 1.828124 h 86.152344 v -1.828124 z m 0 0"
        fill="#c0bfbc"
        fill-rule="evenodd"
+       fill-opacity="0.3"
        id="path4128" />
   </g>
   <g
-     clip-path="url(#p)"
-     mask="url(#o)"
      transform="matrix(1 0 0 1 -8 -16)"
      id="g4134">
     <path
        d="m 28.921875 97.085938 v 1.828124 h 86.152344 v -1.828124 z m 0 0"
        fill="#c0bfbc"
        fill-rule="evenodd"
+       fill-opacity="0.3"
        id="path4132" />
   </g>
   <g
-     clip-path="url(#r)"
-     mask="url(#q)"
      transform="matrix(1 0 0 1 -8 -16)"
      id="g4138">
     <path
        d="m 28.921875 107.085938 v 1.828124 h 86.152344 v -1.828124 z m 0 0"
        fill="#c0bfbc"
        fill-rule="evenodd"
+       fill-opacity="0.3"
        id="path4136" />
   </g>
   <g
-     clip-path="url(#t)"
-     mask="url(#s)"
      transform="matrix(1 0 0 1 -8 -16)"
      id="g4142">
     <path
        d="m 28.921875 117.085938 v 1.828124 h 78.972656 v -1.828124 z m 0 0"
        fill="#c0bfbc"
        fill-rule="evenodd"
+       fill-opacity="0.3"
        id="path4140" />
   </g>
   <path
