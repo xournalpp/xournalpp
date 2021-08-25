@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-09 20:20+0000\n"
-"PO-Revision-Date: 2021-08-25 03:31\n"
+"PO-Revision-Date: 2021-08-25 04:30\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:48
 msgid "\n"
 " Do you want to continue?"
-msgstr "是否繼續進行 [Y/n]？"
+msgstr "\n"
+"是否繼續?"
 
 #: ../src/control/XournalMain.cpp:450
 msgid "\n"
@@ -37,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " 頁，共{1} 頁"
 
 #: ../src/control/settings/Settings.cpp:118
 msgid "%F-Note-%H-%M"
@@ -83,7 +84,7 @@ msgstr "套用到目前的頁面"
 
 #: ../src/control/tools/EditSelection.cpp:351
 msgid "Arrange"
-msgstr ""
+msgstr "排序"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -96,7 +97,7 @@ msgstr "變數\"{1\"}不能為浮點數，其值為\"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:105
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "屬性值\"{1}\" 不能轉為浮點數，其值為空值"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:129
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:148
@@ -105,16 +106,16 @@ msgstr "變數\"{1\"}不能為整數，其值為\"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:122
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "屬性值\"{1}\" 不能轉為整數，其值為空值"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:167
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:187
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "屬性值\"{1}\"不能轉為size_t，其值為\"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "屬性值\"{1}\"不能轉為size_t，其值為空值"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:54
 msgid "Attribute color not set!"
@@ -123,15 +124,15 @@ msgstr "顏色未設置"
 #: ../src/control/AudioController.cpp:97
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "未設置存放目錄, 無法錄製聲音, 請到\"Preferences > Audio recording\"設定"
 
 #: ../src/control/Control.cpp:206
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "自動存檔失敗: {1}"
 
 #: ../src/control/Control.cpp:186
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "自動存檔, 檔案名稱由{1} 改成{2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
@@ -158,11 +159,11 @@ msgstr "藍色"
 
 #: ../src/control/tools/EditSelection.cpp:368
 msgid "Bring forward"
-msgstr ""
+msgstr "往前移動"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring to front"
-msgstr ""
+msgstr "移到上層"
 
 #: ../src/control/Control.cpp:2011 ../src/control/Control.cpp:2462
 #: ../src/control/XournalMain.cpp:168
@@ -179,7 +180,7 @@ msgstr "改變字型"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "變更線條格式"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -214,7 +215,7 @@ msgstr "拷貝一頁"
 #: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "無法新增目錄:{1} 錯誤:{2}"
 
 #: ../src/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
@@ -523,7 +524,7 @@ msgstr "自動儲存時發生錯誤：{1}"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "指令 {1} 執行錯誤: {2}"
 
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
@@ -531,11 +532,11 @@ msgstr "錯誤：{1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "錯誤:{1} 並不是正規檔案. 請檢查LaTex範本檔案之設定 "
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "錯誤:{1}, 請檢查{2} 的內容"
 
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -545,7 +546,7 @@ msgstr "錯誤日誌未能刪除，請手工處理。\n"
 
 #: ../src/control/XournalMain.cpp:645
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "匯出為 PDF 檔"
 
 #: ../src/control/XournalMain.cpp:647
 msgid "Export FILE as image files (one per page)\n"
@@ -2657,7 +2658,7 @@ msgstr ""
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:217
 #: ../ui/settings.glade:234
 msgid "None"
-msgstr ""
+msgstr "無"
 
 #: ../ui/settings.glade:4237
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2928,7 +2929,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4627
 msgid "Snapping"
-msgstr ""
+msgstr "對齊"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
@@ -2956,7 +2957,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
-msgstr ""
+msgstr "手寫筆"
 
 #: ../ui/settings.glade:1939
 msgid "Stylus Buttons"
@@ -2980,7 +2981,7 @@ msgstr "模板："
 
 #: ../ui/settings.glade:2305 ../ui/settings.glade:2318
 msgid "Test"
-msgstr ""
+msgstr "測試"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
@@ -3020,7 +3021,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2143
 msgid "Timeout"
-msgstr ""
+msgstr "逾時"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
@@ -3029,7 +3030,7 @@ msgstr ""
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2612
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
-msgstr ""
+msgstr "觸控螢幕"
 
 #: ../ui/settings.glade:4767
 msgid "Try to select object first."
@@ -3065,11 +3066,11 @@ msgstr ""
 
 #: ../ui/about.glade:181
 msgid "Version"
-msgstr ""
+msgstr "版本"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr ""
+msgstr "版本： "
 
 #: ../ui/settings.glade:3721
 msgid "View"
@@ -3077,7 +3078,7 @@ msgstr "視圖"
 
 #: ../ui/about.glade:328
 msgid "Website"
-msgstr ""
+msgstr "網站"
 
 #: ../ui/settings.glade:3383
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
@@ -3375,37 +3376,37 @@ msgstr "涂白(_w)"
 
 #: ../ui/pageTemplate.glade:160
 msgid "change"
-msgstr ""
+msgstr "變更"
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
-msgstr ""
+msgstr "DPI"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
-msgstr ""
+msgstr "已啟用,"
 
 #: ../ui/settings.glade:1751
 msgid "events"
-msgstr ""
+msgstr "事件"
 
 #: ../ui/settings.glade:399
 msgid "every"
-msgstr ""
+msgstr "每"
 
 #: ../ui/pageTemplate.glade:54
 msgid "load from file"
-msgstr ""
+msgstr "從檔案載入"
 
 #: ../ui/settings.glade:426
 msgid "minutes"
-msgstr ""
+msgstr "分鐘"
 
 #: ../ui/settings.glade:3018 ../ui/settings.glade:3069
 #: ../ui/settings.glade:4162 ../ui/settings.glade:4173
 #: ../ui/settings.glade:4361
 msgid "pixels"
-msgstr ""
+msgstr "畫素"
 
 #: ../ui/settings.glade:2187
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
@@ -3413,7 +3414,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:40
 msgid "save to file"
-msgstr ""
+msgstr "儲存到檔案"
 
 #: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
