@@ -56,11 +56,11 @@ auto PdfCache::lookup(XojPdfPageSPtr page) -> std::shared_ptr<PdfCache::CacheEnt
     return newEntry;
 }
 
-void PdfCache::render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, Rectangle<double> srcRegion, double zoom) {
+void PdfCache::render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, Rectangle<double> dstRegion, double zoom) {
     std::lock_guard lock{renderMutex_};
 
-    Rectangle<double> dstRegion{srcRegion};
-    dstRegion *= zoom;
+    Rectangle<double> srcRegion{dstRegion};
+    srcRegion *= 1.0/zoom;
 
     std::shared_ptr<CacheEntry> entry = lookup(popplerPage);
     entry->render(cr, srcRegion, dstRegion);

@@ -11,6 +11,36 @@
 
 #include <cairo.h>
 
+#define DEBUG_QUAD_TREE true
+
+#ifdef DEBUG_QUAD_TREE
+
+#define assertEql(lhs, rhs) {\
+    if (lhs != rhs) {\
+        std::cout << "QuadTreeCache: Assertion failed: " << lhs << " != " << rhs << std::endl;\
+\
+        assert(lhs == rhs);\
+    }\
+}
+
+static void drawDebugRect(cairo_t* cr, unsigned char r, unsigned char g, unsigned char b,
+        Rectangle<double> rect, double lineWidth, double alpha = 0.1) {
+    cairo_set_source_rgba(cr, r, g, b, alpha);
+    cairo_set_line_width(cr, lineWidth);
+    cairo_rectangle(cr, rect.x, rect.y, rect.width, rect.height);
+    cairo_fill(cr);
+    cairo_rectangle(cr, rect.x, rect.y, rect.width, rect.height);
+    cairo_set_source_rgb(cr, r, g, b);
+    cairo_stroke(cr);
+}
+
+#else
+
+#define assertEql(a, b) ;
+#define drawDebugRect(cr, r, g, b, rect, lineWidth) ;
+
+#endif
+
 using Timestamp = std::chrono::time_point<std::chrono::steady_clock>;
 
 struct QuadTreeCache::CacheState {
@@ -268,7 +298,11 @@ void QuadTreeCache::render(cairo_t* cr, const Rect& srcRegion, const Rect& dstRe
 
     std::lock_guard lk{mutex_};
 
+    drawDebugRect(cr, 255, 255, 255, dstRegion, 12, 1.0);
+
     root_->render(cr, srcRegion, dstRegion);
+
+    drawDebugRect(cr, 100, 0, 255, dstRegion, 12);
 
     double currentZoom = dstRegion.width / srcRegion.width;
     root_->cleanup(currentZoom);
@@ -350,6 +384,9 @@ bool QuadTreeCache::Node::render(cairo_t* cr, const Rect& srcRegion, const Rect&
 
     for (const auto& child: children_) { child->render(cr, srcRegion, dstRegion); }
 
+    drawDebugRect(cr, 0, 0, 255, trimmedDstRegion, 4);
+    drawDebugRect(cr, 0, 100, 100, dstRegion, 4);
+
     return true;
 }
 
@@ -357,6 +394,13 @@ cairo_surface_t* QuadTreeCache::Node::getRenderFromSourceFn(size_t renderForDept
     size_t renderMultiplier = static_cast<size_t>(std::pow(2, renderForDepth) / 2);
     size_t surfWidth = internalWidth_ * renderMultiplier;
     size_t surfHeight = internalHeight_ * renderMultiplier;
+
+    if (surfWidth == 0) {
+        std::cout << "\x1b[31mSurfwidth is zero!\x1b[0m" << std::endl;
+        std::cout << "\tinternalWidth_ = " << internalWidth_ << std::endl
+                  << "\trenderMultiplier = " << renderMultiplier << std::endl
+                  << "\trenderForDepth = " << renderForDepth << std::endl;
+    }
 
     //     surfWidth * surfToSrc_ratio  := source rectangle width (which is rect_.width)
     // and surfHeight * surfToSrc_ratio := rect_.height
@@ -378,6 +422,9 @@ cairo_surface_t* QuadTreeCache::Node::getRenderFromSourceFn(size_t renderForDept
 }
 
 void QuadTreeCache::Node::cacheFrom(cairo_surface_t* src, Rectangle<size_t> renderRect) {
+    assert(renderRect.width > 0);
+    assert(renderRect.height > 0);
+
     // Recurse.
     if (renderRect.width > internalWidth_ && renderRect.height > internalHeight_) {
         // We need children to recurse!
@@ -385,6 +432,8 @@ void QuadTreeCache::Node::cacheFrom(cairo_surface_t* src, Rectangle<size_t> rend
 
         size_t childRectWidth = renderRect.width / 2;
         size_t childRectHeight = renderRect.height / 2;
+
+        std::cout << "\x1b[32m Recurse: " << childRectWidth << "\x1b[0m" << std::endl;
 
         for (size_t i = 0; i < children_.size(); i++) {
             Rectangle<size_t> childRenderRect{0, 0, childRectWidth, childRectHeight};
@@ -397,6 +446,8 @@ void QuadTreeCache::Node::cacheFrom(cairo_surface_t* src, Rectangle<size_t> rend
             children_[i]->cacheFrom(src, childRenderRect);
         }
 
+        std::cout << " \x1b[32m End.\x1b[0m" << std::endl;
+
         return;
     }
 
@@ -407,8 +458,8 @@ void QuadTreeCache::Node::cacheFrom(cairo_surface_t* src, Rectangle<size_t> rend
     // Ensure we aren't adding additional children.
     clearChildren();
 
-    assert(internalWidth_ == renderRect.width);
-    assert(internalHeight_ == renderRect.height);
+    assertEql(internalWidth_, renderRect.width);
+    assertEql(internalHeight_, renderRect.height);
 
     this->rendered_ = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(internalWidth_),
                                                  static_cast<int>(internalHeight_));
@@ -468,6 +519,16 @@ bool QuadTreeCache::Node::renderFromSelf(cairo_t* cr, const Rect& src, const Rec
 
     cairo_set_source_surface(cr, rendered, renderAtX, renderAtY);
     cairo_paint(cr);
+
+    drawDebugRect(cr, 255, 0, 0, 
+        Rectangle<double> {
+            renderAtX, renderAtY,
+            static_cast<double>(internalWidth_),
+            static_cast<double>(internalHeight_)
+        },
+        3
+    );
+
     cairo_set_matrix(cr, &mOriginal);
 
     if (rendered != this->rendered_) {
@@ -535,6 +596,14 @@ size_t QuadTreeCache::Node::getRenderCallDepth(double internalToDst_ratio) const
     //   2**k  = d / m
     double minRenderCallDepth =
             std::ceil(std::log2(internalToDst_ratio / cacheSettings_->maxZoom)) + 0.1;  // Force round up.
+    
+    // If this is the case, we can just render ourselves.
+    if (minRenderCallDepth < 0) {
+        std::cout << "Rendering self." << std::endl;
+
+        return 1;
+    }
+
     return static_cast<size_t>(minRenderCallDepth);
 }
 

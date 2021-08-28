@@ -19,8 +19,12 @@ void PdfView::drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo
         }
 
         if (cache && !forPrinting) {
-            std::cout << "DR: " << regionToUpdate.width << ", " << regionToUpdate.height << "." << std::endl;
             cache->render(cr, popplerPage, regionToUpdate, zoom);
+
+            cairo_set_line_width(cr, 4.0);
+            cairo_set_source_rgb(cr, 0, 255, 0);
+            cairo_rectangle(cr, regionToUpdate.x, regionToUpdate.y, regionToUpdate.width, regionToUpdate.height);
+            cairo_stroke(cr);
         } else {
             popplerPage->render(cr, forPrinting);
         }
