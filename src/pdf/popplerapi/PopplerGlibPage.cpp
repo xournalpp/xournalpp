@@ -50,8 +50,7 @@ auto PopplerGlibPage::getHeight() -> double {
     return height;
 }
 
-void PopplerGlibPage::render(cairo_t* cr, bool forPrinting)  // NOLINT(google-default-arguments)
-{
+void PopplerGlibPage::render(cairo_t* cr, bool forPrinting) {
     if (forPrinting) {
         poppler_page_render_for_printing(page, cr);
     } else {
@@ -59,7 +58,7 @@ void PopplerGlibPage::render(cairo_t* cr, bool forPrinting)  // NOLINT(google-de
     }
 }
 
-auto PopplerGlibPage::getPageId() -> int { return poppler_page_get_index(page); }
+auto PopplerGlibPage::getPageId() const -> int { return poppler_page_get_index(const_cast<PopplerPage*>(page)); }
 
 auto PopplerGlibPage::findText(std::string& text) -> std::vector<XojPdfRectangle> {
     std::vector<XojPdfRectangle> findings;

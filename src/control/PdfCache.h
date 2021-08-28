@@ -12,58 +12,30 @@
 #pragma once
 
 #include <list>
-#include <string>
-#include <vector>
-
-#include <cairo.h>
-#include <glib.h>
+#include <mutex>
 
 #include "pdf/base/XojPdfPage.h"
 
-
-class PdfCacheEntry;
+#include "QuadTreeCache.h"
 
 class PdfCache {
 public:
-    PdfCache(int size);
-    virtual ~PdfCache();
-
-private:
-    PdfCache(const PdfCache& cache);
-    void operator=(const PdfCache& cache);
-
-public:
-    void render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoom);
-    void clearCache();
-
-public:
-    /**
-     * @param b true iff any change in the view's zoom as compared to when a page
-     *  was cached forces a re-render.
-     */
-    void setAnyZoomChangeCausesRecache(bool b);
+    PdfCache(size_t maxSize_px);
+    ~PdfCache();
 
     /**
-     * @brief Set the maximum tolerable zoom difference, as a percentage.
-     *
-     * @param threshold is the minimum percent-difference between the zoom value at
-     *  which the cached version of the page was rendered and the current zoom,
-     *  for which the page will be re-cached while zooming.
+     * Renders and caches a region of a page.
      */
-    void setRefreshThreshold(double percentDifference);
+    void render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, Rectangle<double> srcRegion, double zoom);
+
+    void clear();
 
 private:
-    void setZoom(double zoom);
-    PdfCacheEntry* lookup(const XojPdfPageSPtr& popplerPage);
-    PdfCacheEntry* cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img, double zoom);
+    class CacheEntry;
+    std::shared_ptr<CacheEntry> lookup(XojPdfPageSPtr popplerPage);
 
 private:
-    GMutex renderMutex{};
-
-    std::list<PdfCacheEntry*> data;
-    std::list<PdfCacheEntry*>::size_type size = 0;
-
-    double zoom = -1;
-    double zoomRefreshThreshold;
-    bool zoomClearsCache = true;
+    std::mutex renderMutex_{};
+    QuadTreeCache::CacheParams cacheSettings_;
+    std::list<std::shared_ptr<CacheEntry> > data_;
 };

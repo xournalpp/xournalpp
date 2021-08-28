@@ -1,6 +1,7 @@
 #include "RenderJob.h"
 
 #include <cmath>
+#include <iostream>
 
 #include "control/Control.h"
 #include "control/ToolHandler.h"
@@ -45,7 +46,7 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
         auto pgNo = view->page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
         PdfCache* cache = view->xournal->getCache();
-        PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
+        PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight, rect);
     }
 
     doc->lock();
@@ -115,7 +116,9 @@ void RenderJob::run() {
 
         bool backgroundVisible = this->view->page->isLayerVisible(0);
         if (backgroundVisible) {
-            PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
+            std::cout << "P: " << width << ", " << height << std::endl;
+            Rectangle<double> fullPage{0, 0, width, height};
+            PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height, fullPage);
         }
         localView.drawPage(this->view->page, cr2, false);
 

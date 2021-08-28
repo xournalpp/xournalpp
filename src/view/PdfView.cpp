@@ -1,5 +1,7 @@
 #include "PdfView.h"
 
+#include <iostream>
+
 #include <config.h>
 
 #include "i18n.h"
@@ -8,8 +10,8 @@ PdfView::PdfView() = default;
 
 PdfView::~PdfView() = default;
 
-void PdfView::drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo_t* cr, double zoom, double width,
-                       double height, bool forPrinting) {
+void PdfView::drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo_t* cr, double zoom, double fullWidth,
+                       double fullHeight, Rectangle<double> regionToUpdate, bool forPrinting) {
     if (popplerPage) {
         if (!forPrinting) {
             cairo_set_source_rgb(cr, 1., 1., 1.);
@@ -17,7 +19,12 @@ void PdfView::drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo
         }
 
         if (cache && !forPrinting) {
-            cache->render(cr, popplerPage, zoom);
+            cache->render(cr, popplerPage, regionToUpdate, zoom);
+
+            cairo_set_line_width(cr, 4.0);
+            cairo_set_source_rgb(cr, 0, 255, 0);
+            cairo_rectangle(cr, regionToUpdate.x, regionToUpdate.y, regionToUpdate.width, regionToUpdate.height);
+            cairo_stroke(cr);
         } else {
             popplerPage->render(cr, forPrinting);
         }
@@ -31,7 +38,7 @@ void PdfView::drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo
         std::string strMissing = _("PDF background missing");
 
         cairo_text_extents(cr, strMissing.c_str(), &extents);
-        cairo_move_to(cr, width / 2 - extents.width / 2, height / 2 - extents.height / 2);
+        cairo_move_to(cr, fullWidth / 2 - extents.width / 2, fullHeight / 2 - extents.height / 2);
         cairo_show_text(cr, strMissing.c_str());
     }
 }
