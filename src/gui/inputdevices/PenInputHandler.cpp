@@ -149,9 +149,9 @@ double PenInputHandler::inferPressureIfEnabled(PositionInputData const& pos, Xoj
     if (pos.pressure == Point::NO_PRESSURE && this->inputContext->getSettings()->isPressureGuessingEnabled()) {
         PositionInputData lastPos = getInputDataRelativeToCurrentPage(page, this->lastEvent);
 
-        double dt = std::min((pos.timestamp - lastPos.timestamp) / 10.0, 2.0);
+        double dt = (pos.timestamp - lastPos.timestamp) / 10.0;
         double distance = utl::Point<double>(pos.x, pos.y).distance(utl::Point<double>(lastPos.x, lastPos.y));
-        double inverseSpeed = (dt) / (distance + 0.001);
+        double inverseSpeed = dt / (distance + 0.001);
 
         // This doesn't have to be exact. Arctan is used here for its sigmoid-like shape,
         // so that lim inverseSpeed->infinity (newPressure) is some finite value.
@@ -160,6 +160,12 @@ double PenInputHandler::inferPressureIfEnabled(PositionInputData const& pos, Xoj
         // This weighted average both smooths abrupt changes in newPressure caused
         // by changes to inverseSpeed and causes an initial increase in pressure.
         newPressure = std::min(newPressure, 2.0) / 5.0 + this->lastPressure * 4.0 / 5.0;
+
+        // Handle the single-point case.
+        if (distance == 0) {
+            newPressure = std::sqrt(dt / 10.0) - 0.1;
+        }
+
         this->lastPressure = newPressure;
 
         // Final pressure tweaks...
