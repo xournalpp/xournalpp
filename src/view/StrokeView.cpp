@@ -80,6 +80,8 @@ void StrokeView::drawNoPressure() {
         // Do not apply the alpha here, else the border and the fill
         // are visible instead of one homogeneous area
         DocumentView::applyColor(cr, s, 255);
+        // The operator will be reset (to CAIRO_OPERATOR_MULTIPLY) by cairo_pop_group_to_source below
+        cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
         drawFillStroke();
         group = true;
     }
@@ -95,7 +97,6 @@ void StrokeView::drawNoPressure() {
 
     if (group) {
         cairo_pop_group_to_source(cr);
-
         if (noAlpha) {
             // Currently drawing -> transparent applied on blitting
             cairo_paint(cr);
