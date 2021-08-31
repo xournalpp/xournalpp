@@ -114,7 +114,7 @@ void RenderJob::run() {
         int height = this->view->page->getHeight();
 
         bool backgroundVisible = this->view->page->isLayerVisible(0);
-        if (backgroundVisible) {
+        if (backgroundVisible && this->view->page->getBackgroundType().isPdfPage()) {
             PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
         }
         localView.drawPage(this->view->page, cr2, false);
