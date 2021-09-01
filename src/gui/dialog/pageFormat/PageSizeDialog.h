@@ -16,10 +16,10 @@
 
 enum Orientation { ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT };
 
-class FormatDialog: public GladeGui {
+class PageSizeDialog: public GladeGui {
 public:
-    FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height);
-    virtual ~FormatDialog();
+    PageSizeDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height);
+    virtual ~PageSizeDialog();
 
 public:
     virtual void show(GtkWindow* parent);
@@ -32,11 +32,11 @@ private:
     void setOrientation(Orientation orientation);
     void setSpinValues(double width, double heigth);
 
-    static void portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg);
-    static void landscapeSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg);
-    static void cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg);
-    static void cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg);
-    static void spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg);
+    static void portraitSelectedCb(GtkToggleToolButton* bt, PageSizeDialog* dlg);
+    static void landscapeSelectedCb(GtkToggleToolButton* bt, PageSizeDialog* dlg);
+    static void cbFormatChangedCb(GtkComboBox* widget, PageSizeDialog* dlg);
+    static void cbUnitChanged(GtkComboBox* widget, PageSizeDialog* dlg);
+    static void spinValueChangedCb(GtkSpinButton* spinbutton, PageSizeDialog* dlg);
 
 private:
     Settings* settings = nullptr;

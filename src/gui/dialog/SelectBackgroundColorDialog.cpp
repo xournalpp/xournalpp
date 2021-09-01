@@ -104,16 +104,16 @@ void SelectBackgroundColorDialog::show(GtkWindow* parent) {
     GtkWidget* dialog = gtk_color_chooser_dialog_new(_("Select background color"), parent);
     gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(dialog), false);
 
-    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9, background1.size(),
-                                  background1.data());
+    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9,
+                                  static_cast<int>(background1.size()), background1.data());
 
-    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9, backgroundXournal.size(),
-                                  backgroundXournal.data());
+    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9,
+                                  static_cast<int>(backgroundXournal.size()), backgroundXournal.data());
 
     // Last used colors (only by background, the general last used are shared with the
     // pen and highlighter etc.)
-    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9, lastBackgroundColors.size(),
-                                  lastBackgroundColors.data());
+    gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9,
+                                  static_cast<int>(lastBackgroundColors.size()), lastBackgroundColors.data());
 
 
     int response = gtk_dialog_run(GTK_DIALOG(dialog));

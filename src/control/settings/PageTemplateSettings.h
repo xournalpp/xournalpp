@@ -51,8 +51,8 @@ public:
     Color getBackgroundColor() const;
     void setBackgroundColor(Color backgroundColor);
 
-    PageType getBackgroundType();
-    PageType getPageInsertType();
+    PageType getBackgroundType() const;
+    PageType getPageInsertType() const;
     void setBackgroundType(const PageType& backgroundType);
 
 private:

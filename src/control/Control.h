@@ -164,8 +164,8 @@ public:
 
     void setShapeTool(ActionType type, bool enabled);
 
-    void paperTemplate();
-    void paperFormat();
+    void pageTemplate();
+    void pageFormat();
     void changePageBackgroundColor();
     void updateBackgroundSizeButton();
 
