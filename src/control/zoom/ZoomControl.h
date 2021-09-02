@@ -175,6 +175,15 @@ private:
     void zoomFit();
     void zoomPresentation();
 
+    /**
+     * Get this->zoom changed by a step in the given direction.
+     *
+     * @param direction Direction to change the zoom (step direction).
+     * @param stepSize Size of the step to take
+     * @return The new zoom if a step is taken in the given direction.
+     */
+    double withZoomStep(ZoomDirection direction, double stepSize) const;
+
     friend bool onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom);
     friend bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
     friend bool onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom);

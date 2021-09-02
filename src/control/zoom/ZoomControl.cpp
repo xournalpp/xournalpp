@@ -78,14 +78,28 @@ auto onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* z
     return false;
 }
 
+auto ZoomControl::withZoomStep(ZoomDirection direction, double zoomStep) const -> double {
+    double multiplier = 1.0 + zoomStep;
+    double newZoom;
+
+    if (direction == ZOOM_IN) {
+        newZoom = this->zoom * multiplier;
+    } else {
+        newZoom = this->zoom / multiplier;
+    }
+
+    return newZoom;
+}
+
 void ZoomControl::zoomOneStep(ZoomDirection direction, utl::Point<double> zoomCenter) {
     if (this->zoomPresentationMode) {
         return;
     }
     this->setZoomFitMode(false);
 
+    double newZoom = this->withZoomStep(direction, this->zoomStep);
+
     startZoomSequence(zoomCenter);
-    double newZoom = (direction == ZOOM_IN) ? this->zoom + this->zoomStep : this->zoom - this->zoomStep;
     this->zoomSequenceChange(newZoom, false);
     endZoomSequence();
 }
@@ -96,7 +110,7 @@ void ZoomControl::zoomOneStep(ZoomDirection direction) {
 }
 
 
-void ZoomControl::zoomScroll(ZoomDirection zoomIn, utl::Point<double> zoomCenter) {
+void ZoomControl::zoomScroll(ZoomDirection direction, utl::Point<double> zoomCenter) {
     if (this->zoomPresentationMode) {
         return;
     }
@@ -110,7 +124,7 @@ void ZoomControl::zoomScroll(ZoomDirection zoomIn, utl::Point<double> zoomCenter
         startZoomSequence(zoomCenter);
     }
 
-    double newZoom = this->zoom + (zoomIn ? this->zoomStepScroll : -this->zoomStepScroll);
+    double newZoom = this->withZoomStep(direction, this->zoomStepScroll);
     this->zoomSequenceChange(newZoom, false);
 }
 
