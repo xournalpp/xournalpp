@@ -51,7 +51,7 @@ void Sidebar::initPages(GtkWidget* sidebarContents, GladeGui* gui) {
 
     gtk_widget_show_all(GTK_WIDGET(this->tbSelectPage));
 
-    updateEnableDisableButtons();
+    updateVisibleTabs();
 }
 
 void Sidebar::buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData) {
@@ -117,12 +117,12 @@ void Sidebar::setSelectedPage(size_t page) {
     }
 }
 
-void Sidebar::updateEnableDisableButtons() {
+void Sidebar::updateVisibleTabs() {
     size_t i = 0;
     size_t selected = npos;
 
     for (AbstractSidebarPage* p: this->pages) {
-        gtk_widget_set_sensitive(GTK_WIDGET(p->tabButton), p->hasData());
+        gtk_widget_set_visible(GTK_WIDGET(p->tabButton), p->hasData());
 
         if (p->hasData() && selected == npos) {
             selected = i;
@@ -158,7 +158,7 @@ auto Sidebar::getControl() -> Control* { return this->control; }
 
 void Sidebar::documentChanged(DocumentChangeType type) {
     if (type == DOCUMENT_CHANGE_CLEARED || type == DOCUMENT_CHANGE_COMPLETE || type == DOCUMENT_CHANGE_PDF_BOOKMARKS) {
-        updateEnableDisableButtons();
+        updateVisibleTabs();
     }
 }
 
