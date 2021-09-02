@@ -16,5 +16,6 @@ end
 -- Callback if the menu item is executed
 function exampleCallback()
   result = app.msgbox("Test123", {[1] = "Yes", [2] = "No"});
-  print("result = " .. result)
+  print("result = " .. result);
+  print("current tool = " .. app.getActiveToolName());
 end

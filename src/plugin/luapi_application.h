@@ -425,6 +425,27 @@ static int applib_changeToolColor(lua_State* L) {
     return 1;
 }
 
+/**
+ * Get the name of the tool currently in use.
+ *
+ * Example 1: app.getActiveToolName() -> "none"
+ * When no tool is selected.
+ *
+ * Example 2: app.getActiveToolName() -> "pen"
+ *
+ * Example 3: app.getActiveToolName() -> "hand"
+ */
+static int applib_getActiveToolName(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* ctrl = plugin->getControl();
+    ToolHandler* toolHandler = ctrl->getToolHandler();
+
+    std::string toolName = toolTypeToString(toolHandler->getToolType());
+
+    lua_pushstring(L, toolName.c_str());
+    return 1;
+}
+
 /*
  * Select Background Pdf Page for Current Page
  * First argument is an integer (page number) and the second argument is a boolean (isRelative)
@@ -882,6 +903,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"sidebarAction", applib_sidebarAction},
                                   {"layerAction", applib_layerAction},
                                   {"changeToolColor", applib_changeToolColor},
+                                  {"getActiveToolName", applib_getActiveToolName},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
                                   {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
                                   {"getDocumentStructure", applib_getDocumentStructure},
