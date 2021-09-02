@@ -385,7 +385,7 @@ using XMPtr = XournalMainPrivate*;
 void ensure_input_model_compatibility() {
     const char* imModule = g_getenv("GTK_IM_MODULE");
     if (imModule != nullptr) {
-        std::string imModuleString { imModule };
+        std::string imModuleString{imModule};
         if (imModuleString == "xim" || imModuleString == "gcin") {
             g_setenv("GTK_IM_MODULE", "ibus", true);
             g_warning("Unsupported input method: %s, changed to: ibus", imModule);
