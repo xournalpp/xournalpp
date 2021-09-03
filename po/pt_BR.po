@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-03 01:27+0000\n"
-"PO-Revision-Date: 2021-09-03 01:36\n"
+"PO-Revision-Date: 2021-09-03 14:33\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2097,7 +2097,7 @@ msgstr "Cor de fundo entre as páginas"
 
 #: ../ui/settings.glade:3385
 msgid "Base speed"
-msgstr ""
+msgstr "Velocidade base"
 
 #: ../ui/settings.glade:2933
 msgctxt "stylus cursor uses a big pen icon"
@@ -2655,7 +2655,7 @@ msgstr "Comprimento máximo (mm)"
 
 #: ../ui/settings.glade:3398
 msgid "Max multiplier"
-msgstr ""
+msgstr "Multiplicador máximo"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
