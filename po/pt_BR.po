@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-03 01:27+0000\n"
-"PO-Revision-Date: 2021-09-03 14:33\n"
+"PO-Revision-Date: 2021-09-03 15:43\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -2693,7 +2693,7 @@ msgstr "Mover para Cima"
 
 #: ../ui/settings.glade:3396
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "Multiplicar a velocidade de movimentação até essa quantidade, de acordo com a distância do objeto selecionado."
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
@@ -2937,7 +2937,7 @@ msgstr "Cor de Seleção (Texto, Seleção de Traçado etc.)"
 
 #: ../ui/settings.glade:3413
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Deslocamento da borda de seleção"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3153,7 +3153,7 @@ msgstr "Site na Web"
 
 #: ../ui/settings.glade:3383
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Quando um elemento é selecionado e movido além da parte visível da tela, mover a visão uma quantidade equivalente a esta porcentagem da parte visível da tela. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
