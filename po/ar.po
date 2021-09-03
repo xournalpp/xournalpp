@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-03 01:27+0000\n"
-"PO-Revision-Date: 2021-09-03 01:36\n"
+"PO-Revision-Date: 2021-09-03 07:18\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -2304,7 +2304,7 @@ msgstr "اسحب وأفلت المكونات من هذه النافذة إلى �
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "السحب: إذا كانت القيمة صغيرة جدا، فقد تظهر اهتزازات غير مرغوبة. وإذا كانت كبيرة جدا، فقد لا يحدث أي تثبيت."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
