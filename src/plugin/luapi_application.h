@@ -21,6 +21,8 @@
 #include "control/pagetype/PageTypeHandler.h"
 #include "gui/XournalView.h"
 #include "gui/widgets/XournalWidget.h"
+#include "model/Font.h"
+#include "model/StrokeStyle.h"
 #include "model/Text.h"
 
 #include "StringUtils.h"
@@ -476,6 +478,283 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
 }
 
 /*
+ * Returns a table encoding all info on the chosen tool (active, pen, highlighter, eraser or text)
+ * in a Lua table of one of the following shapes
+ *
+ * for pen:
+ * {
+ *   "size" = string
+ *   "color" = integer
+ *   "filled" = bool
+ *   "fillOpacity" = integer (0 to 255)
+ *   "drawingType" = string
+ *   "lineStyle" = string
+ * }
+ *
+ * See /src/control/ToolEnums.cpp for possible values of "size".
+ *
+ * for text:
+ * {
+ *   "font" = {
+ *     name = string.
+ *     size = number
+ *   }
+ *   "color" = integer
+ * }
+ *
+ * for active tool:
+ * {
+ *   "type" = string
+ *   "size" = {
+ *     name = string.
+ *     value = number
+ *   }
+ *   "color" = integer
+ *   "fillOpacity" = integer (0 to 255)
+ *   "drawingType" = string
+ *   "lineStyle" = string
+ *   "thickness" = number
+ * }
+ *
+ * See /src/control/ToolEnums.cpp for possible values of "type", "size", "drawingType" and "lineStyle".
+ *
+ * for eraser:
+ * {
+ *   "type" = string
+ *   "size" = string
+ * }
+ *
+ * See /src/control/ToolEnums.cpp for possible values of "type" and "size".
+ *
+ * for highlighter:
+ * {
+ *   "size" = string
+ *   "color" = integer
+ *   "filled" = bool
+ *   "fillOpacity" = integer (0 to 255)
+ *   "drawingType" = string
+ * }
+ *
+ * See /src/control/ToolEnums.cpp for possible values of "size".
+ *
+ *
+ * Example 1: local penInfo = app.getToolInfo("pen")
+ *            local size = penInfo["size"]
+ *            local opacity = penInfo["fillOpacity"]
+ * *
+ * Example 2: local font = app.getToolInfo("text")["font"]
+ *            local fontname = font["name"]
+ *            local fontsize = font["size"]
+ *
+ * Example 3: local color = app.getToollInfo("text")["color"]
+ *            local red = color >> 16 & 0xff
+ *            local green = color >> 8 & 0xff
+ *            local blue = color & 0xff
+ *
+ * Example 4: local activeToolInfo = app.getToolInfo("active")
+ *            local thickness = activeToolInfo["thickness"]
+ *            local drawingType = activeToolInfo["drawingType"]
+ *
+ * Example 5: local eraserInfo = app.getToolInfo("eraser")
+ *            local type = eraserInfo["type"]
+ *            local size = eraserInfo["size"]
+ *            local sizeName = size["name"]
+ *            local thickness = size["value"]
+ *
+ * Example 6: local highlighterInfo = app.getToolInfo("highlighter")
+ *            local sizeName = highlighterInfo["size"]["name"]
+ *            local opacity = highlighterInfo["fillOpacity"]
+ */
+
+static int applib_getToolInfo(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    ToolHandler* toolHandler = control->getToolHandler();
+
+    const char* mode = luaL_checkstring(L, -1);
+    lua_newtable(L);
+
+    if (strcmp(mode, "active") == 0) {
+        std::string toolType = toolTypeToString(toolHandler->getToolType());
+
+        std::string toolSize = toolSizeToString(toolHandler->getSize());
+        double thickness = toolHandler->getThickness();
+
+        Color color = toolHandler->getColor();
+        int fillOpacity = toolHandler->getFill();
+        std::string drawingType = drawingTypeToString(toolHandler->getDrawingType());
+        std::string lineStyle = StrokeStyle::formatStyle(toolHandler->getLineStyle());
+
+
+        lua_pushliteral(L, "type");
+        lua_pushstring(L, toolType.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "size");
+        lua_newtable(L);  // beginning of "size" table
+
+        lua_pushliteral(L, "name");
+        lua_pushstring(L, toolSize.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "value");
+        lua_pushnumber(L, thickness);
+        lua_settable(L, -3);
+
+        lua_settable(L, -3);  // end of "size" table
+
+        lua_pushliteral(L, "color");
+        lua_pushinteger(L, color);
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "fillOpacity");
+        lua_pushinteger(L, fillOpacity);
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "drawingType");
+        lua_pushstring(L, drawingType.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "lineStyle");
+        lua_pushstring(L, lineStyle.c_str());
+        lua_settable(L, -3);
+    } else if (strcmp(mode, "pen") == 0) {
+        std::string size = toolSizeToString(toolHandler->getPenSize());
+        double thickness = toolHandler->getToolThickness(TOOL_PEN)[toolSizeFromString(size)];
+
+        int fillOpacity = toolHandler->getPenFill();
+        bool filled = toolHandler->getPenFillEnabled();
+
+        Tool& tool = toolHandler->getTool(TOOL_PEN);
+        Color color = tool.getColor();
+        std::string drawingType = drawingTypeToString(tool.getDrawingType());
+        std::string lineStyle = StrokeStyle::formatStyle(tool.getLineStyle());
+
+        lua_pushliteral(L, "size");
+        lua_newtable(L);  // beginning of "size" table
+
+        lua_pushliteral(L, "name");
+        lua_pushstring(L, size.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "value");
+        lua_pushnumber(L, thickness);
+        lua_settable(L, -3);
+
+        lua_settable(L, -3);  // end of "size" table
+
+        lua_pushliteral(L, "color");
+        lua_pushinteger(L, color);
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "drawingType");
+        lua_pushstring(L, drawingType.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "lineStyle");
+        lua_pushstring(L, lineStyle.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "filled");
+        lua_pushboolean(L, filled);
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "fillOpacity");
+        lua_pushinteger(L, fillOpacity);
+        lua_settable(L, -3);
+    } else if (strcmp(mode, "highlighter") == 0) {
+        std::string size = toolSizeToString(toolHandler->getHighlighterSize());
+        double thickness = toolHandler->getToolThickness(TOOL_HIGHLIGHTER)[toolSizeFromString(size)];
+
+        int fillOpacity = toolHandler->getHighlighterFill();
+        bool filled = toolHandler->getHighlighterFillEnabled();
+
+        Tool& tool = toolHandler->getTool(TOOL_HIGHLIGHTER);
+        Color color = tool.getColor();
+        std::string drawingType = drawingTypeToString(tool.getDrawingType());
+
+        lua_pushliteral(L, "size");
+        lua_newtable(L);  // beginning of "size" table
+
+        lua_pushliteral(L, "name");
+        lua_pushstring(L, size.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "value");
+        lua_pushnumber(L, thickness);
+        lua_settable(L, -3);
+
+        lua_settable(L, -3);  // end of "size" table
+
+        lua_pushliteral(L, "color");
+        lua_pushinteger(L, color);
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "drawingType");
+        lua_pushstring(L, drawingType.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "filled");
+        lua_pushboolean(L, filled);
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "fillOpacity");
+        lua_pushinteger(L, fillOpacity);
+        lua_settable(L, -3);
+    } else if (strcmp(mode, "eraser") == 0) {
+        std::string type = eraserTypeToString(toolHandler->getEraserType());
+
+        std::string size = toolSizeToString(toolHandler->getEraserSize());
+        double thickness = toolHandler->getToolThickness(ToolType::TOOL_ERASER)[toolSizeFromString(size)];
+
+        lua_pushliteral(L, "type");
+        lua_pushstring(L, type.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "size");
+        lua_newtable(L);  // beginning of "size" table
+
+        lua_pushliteral(L, "name");
+        lua_pushstring(L, size.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "value");
+        lua_pushnumber(L, thickness);
+        lua_settable(L, -3);
+
+        lua_settable(L, -3);  // end of "size" table
+    } else if (strcmp(mode, "text") == 0) {
+        Settings* settings = control->getSettings();
+        XojFont& font = settings->getFont();
+        std::string fontname = font.getName();
+        double size = font.getSize();
+
+        Tool& tool = toolHandler->getTool(TOOL_TEXT);
+        Color color = tool.getColor();
+
+        lua_newtable(L);
+
+        lua_pushliteral(L, "font");
+        lua_newtable(L);
+
+        lua_pushliteral(L, "name");
+        lua_pushstring(L, fontname.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "size");
+        lua_pushnumber(L, size);
+        lua_settable(L, -3);
+
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "color");
+        lua_pushinteger(L, color);
+        lua_settable(L, -3);
+    }
+    return 1;
+}
+
+/*
  * Returns a table encoding the document structure in a Lua table of the shape
  * {
  *   "pages" = {
@@ -882,6 +1161,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"changeToolColor", applib_changeToolColor},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
                                   {"changeBackgroundPdfPageNr", applib_changeBackgroundPdfPageNr},
+                                  {"getToolInfo", applib_getToolInfo},
                                   {"getDocumentStructure", applib_getDocumentStructure},
                                   {"scrollToPage", applib_scrollToPage},
                                   {"scrollToPos", applib_scrollToPos},
