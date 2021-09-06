@@ -107,15 +107,7 @@ void TouchInputHandler::scrollMotion(InputEvent const& event) {
 }
 
 void TouchInputHandler::zoomStart() {
-    // Take horizontal and vertical padding of view into account when calculating the center of the gesture
-    int vPadding = inputContext->getSettings()->getAddVerticalSpace() ?
-                           inputContext->getSettings()->getAddVerticalSpaceAmount() :
-                           0;
-    int hPadding = inputContext->getSettings()->getAddHorizontalSpace() ?
-                           inputContext->getSettings()->getAddHorizontalSpaceAmount() :
-                           0;
-
-    auto center = (this->priLastRel + this->secLastRel) / 2.0 - utl::Point<double>{double(hPadding), double(vPadding)};
+    auto center = (this->priLastRel + this->secLastRel) / 2.0;
 
     this->startZoomDistance = this->priLastAbs.distance(this->secLastAbs);
 
