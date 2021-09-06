@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-03 01:27+0000\n"
-"PO-Revision-Date: 2021-09-03 01:36\n"
+"POT-Creation-Date: 2021-09-06 22:52+0000\n"
+"PO-Revision-Date: 2021-09-06 22:57\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1097,7 +1097,7 @@ msgid "Save File"
 msgstr "保存文件"
 
 #: ../src/control/jobs/CustomExportJob.cpp:130
-#: ../src/control/jobs/SaveJob.cpp:113
+#: ../src/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
 msgstr "保存文件错误: {1}"
 
