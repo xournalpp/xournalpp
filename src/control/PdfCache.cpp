@@ -34,11 +34,7 @@ public:
     cairo_surface_t* rendered;
 };
 
-PdfCache::PdfCache(int size) {
-    this->size = size;
-
-    g_mutex_init(&this->renderMutex);
-}
+PdfCache::PdfCache(int size) { this->size = size; }
 
 PdfCache::~PdfCache() {
     clearCache();
@@ -81,7 +77,7 @@ PdfCacheEntry* PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img,
 }
 
 void PdfCache::render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoom) {
-    g_mutex_lock(&this->renderMutex);
+    this->renderMutex.lock();
 
     this->setZoom(zoom);
 
@@ -127,5 +123,5 @@ void PdfCache::render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoo
     cairo_paint(cr);
     cairo_set_matrix(cr, &mOriginal);
 
-    g_mutex_unlock(&this->renderMutex);
+    this->renderMutex.unlock();
 }

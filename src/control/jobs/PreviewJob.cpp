@@ -33,7 +33,7 @@ void PreviewJob::drawBorder() {
 }
 
 void PreviewJob::finishPaint() {
-    g_mutex_lock(&this->sidebarPreview->drawingMutex);
+    this->sidebarPreview->drawingMutex.lock();
 
     if (this->sidebarPreview->crBuffer) {
         cairo_surface_destroy(this->sidebarPreview->crBuffer);
@@ -50,7 +50,7 @@ void PreviewJob::finishPaint() {
         g_object_unref(previewWidget);
     });
 
-    g_mutex_unlock(&this->sidebarPreview->drawingMutex);
+    this->sidebarPreview->drawingMutex.unlock();
 }
 
 void PreviewJob::drawBackgroundPdf(Document* doc) {
