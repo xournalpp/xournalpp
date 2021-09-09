@@ -114,6 +114,7 @@ void Settings::loadDefault() {
     this->snapGridSize = DEFAULT_GRID_SIZE;
 
     this->touchDrawing = false;
+    this->gtkTouchInertialScrolling = true;
 
     this->defaultSaveName = _("%F-Note-%H-%M");
 
@@ -465,6 +466,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchDrawing")) == 0) {
         this->touchDrawing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("gtkTouchInertialScrolling")) == 0) {
+        this->gtkTouchInertialScrolling = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureGuessing")) == 0) {
         this->pressureGuessing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scrollbarHideType")) == 0) {
@@ -891,6 +894,7 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(snapGridSize);
 
     SAVE_BOOL_PROP(touchDrawing);
+    SAVE_BOOL_PROP(gtkTouchInertialScrolling);
     SAVE_BOOL_PROP(pressureGuessing);
 
     SAVE_UINT_PROP(selectionBorderColor);
@@ -1268,6 +1272,17 @@ void Settings::setTouchDrawingEnabled(bool b) {
     }
 
     this->touchDrawing = b;
+    save();
+}
+
+auto Settings::getGtkTouchInertialScrollingEnabled() const -> bool { return this->gtkTouchInertialScrolling; };
+
+void Settings::setGtkTouchInertialScrollingEnabled(bool b) {
+    if (this->gtkTouchInertialScrolling == b) {
+        return;
+    }
+
+    this->gtkTouchInertialScrolling = b;
     save();
 }
 

@@ -275,6 +275,12 @@ void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
 }
 
 void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
+    bool useGtkInertialScroll = control->getSettings()->getGtkTouchInertialScrollingEnabled();
+
+    if (!useGtkInertialScroll) {
+        enabled = false;
+    }
+
     if (enabled == gtkTouchscreenScrollingEnabled.load() || winXournal == nullptr) {
         return;
     }
@@ -283,8 +289,9 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 
     Util::execInUiThread(
             [=]() {
-                gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal),
-                                                          gtkTouchscreenScrollingEnabled.load());
+                bool touchScrollEnabled = gtkTouchscreenScrollingEnabled.load();
+
+                gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), touchScrollEnabled);
             },
             G_PRIORITY_HIGH);
 }
