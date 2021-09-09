@@ -270,6 +270,9 @@ public:
     bool getTouchDrawingEnabled() const;
     void setTouchDrawingEnabled(bool b);
 
+    bool getGtkTouchInertialScrollingEnabled() const;
+    void setGtkTouchInertialScrollingEnabled(bool b);
+
     bool isPressureGuessingEnabled() const;
     void setPressureGuessingEnabled(bool b);
 
@@ -892,13 +895,15 @@ private:
      */
     double snapRotationTolerance{};
 
-
     /// Grid size for Snapping
     double snapGridSize{};
 
-
-    // Touchscreens act like multi-touch-aware pens.
+    /// Touchscreens act like multi-touch-aware pens.
     bool touchDrawing{};
+
+    /// True iff we use GTK's built-in kinetic/inertial scrolling
+    /// for touchscreen devices. If false, we use our own.
+    bool gtkTouchInertialScrolling{};
 
     /**
      * Infer pressure from speed when device pressure

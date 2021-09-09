@@ -2585,6 +2585,74 @@ This setting can make it easier to draw with touch. </property>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="frameTouchScrolling">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label-xalign">0.01</property>
+                                <child>
+                                  <object class="GtkAlignment" id="touchScrollingFrameAlignment">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="bottom-padding">8</property>
+                                    <property name="left-padding">12</property>
+                                    <property name="right-padding">12</property>
+                                    <child>
+                                      <object class="GtkBox" id="boxTouchScrolling">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkLabel" id="lblTouchKineticScrollDisableDescription">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">&lt;i&gt;Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.&lt;/i&gt;</property>
+                                            <property name="use-markup">True</property>
+                                            <property name="wrap">True</property>
+                                            <property name="max-width-chars">85</property>
+                                            <property name="xalign">0</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="cbDisableGtkInertialScroll">
+                                            <property name="label" translatable="yes">Disable GTK's built-in inertial scroll functionality (requires restart).</property>
+                                            <property name="name">cbTouchDrawing</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="tooltip-text" translatable="yes">Use two fingers to pan/zoom and one finger to use the selected tool.</property>
+                                            <property name="xalign">0</property>
+                                            <property name="draw-indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child type="label">
+                                  <object class="GtkLabel" id="headerTouchScrollingFrame">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Touch Scrolling</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
                                 <property name="position">4</property>
                               </packing>
                             </child>
