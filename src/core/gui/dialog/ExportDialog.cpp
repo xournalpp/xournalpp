@@ -1,5 +1,8 @@
 #include "ExportDialog.h"
 
+#include <exception>
+#include <vector>
+
 #include <config.h>
 
 #include "util/PageRange.h"
@@ -7,16 +10,54 @@
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
         GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog") {
+    // rdRangePages toggled signal handler
+    //
+    // Sets and unsets the sensitivity of the text form, OK button and
+    // displays an error when the text form is selected and contains
+    // invalid user data. The error goes away when the text form is de-selected.
+    auto toggledHandler = G_CALLBACK(+[](GtkToggleButton* togglebutton, ExportDialog* self) {
+        auto active = gtk_toggle_button_get_active(togglebutton);
+        auto btOk = self->get("btOk");
+        auto txtPages = self->get("txtPages");
+        auto context = gtk_widget_get_style_context(txtPages);
+        gtk_widget_set_sensitive(txtPages, active);
+        if (active) {
+            const std::string text_form(gtk_editable_get_chars(GTK_EDITABLE(txtPages), 0, -1));
+            try {
+                PageRange::parse(text_form, self->pageCount);
+                gtk_style_context_remove_class(context, "error");
+                gtk_widget_set_sensitive(btOk, TRUE);
+            } catch (const std::invalid_argument& e) {
+                gtk_style_context_add_class(context, "error");
+                gtk_widget_set_sensitive(btOk, FALSE);
+            }
+        } else {
+            gtk_style_context_remove_class(context, "error");
+            gtk_widget_set_sensitive(btOk, TRUE);
+        }
+    });
+    // txtPages changed signal handler
+    //
+    // Displays an error when the user inputs invalid page ranges in the text form,
+    // and sets the sensitivity of the OK button to FALSE. These actions are
+    // reversed when the text form contains a valid page range.
+    auto changedHandler = G_CALLBACK(+[](GtkEditable* txtPages, ExportDialog* self) {
+        auto context = gtk_widget_get_style_context(GTK_WIDGET(txtPages));
+        const std::string text_form(gtk_editable_get_chars(txtPages, 0, -1));
+        auto btOk = self->get("btOk");
+        try {
+            PageRange::parse(text_form, self->pageCount);
+            gtk_style_context_remove_class(context, "error");
+            gtk_widget_set_sensitive(btOk, TRUE);
+        } catch (const std::invalid_argument& e) {
+            gtk_style_context_add_class(context, "error");
+            gtk_widget_set_sensitive(btOk, FALSE);
+        }
+    });
 
     gtk_widget_hide(get("cbProgressiveMode"));
-    g_signal_connect(get("rdRangePages"), "toggled", G_CALLBACK(+[](GtkToggleButton* togglebutton, ExportDialog* self) {
-                         gtk_widget_set_sensitive(self->get("txtPages"), gtk_toggle_button_get_active(togglebutton));
-                     }),
-                     this);
-
+    g_signal_connect(get("rdRangePages"), "toggled", toggledHandler, this);
     g_signal_connect(get("cbQuality"), "changed", G_CALLBACK(ExportDialog::selectQualityCriterion), this);
-
-
     GSList* radios = gtk_radio_button_get_group(GTK_RADIO_BUTTON(get("rdRangeAll")));
     for (GSList* head = radios; head != nullptr; head = head->next) {
         g_signal_connect(reinterpret_cast<GtkRadioButton*>(head->data), "activate",
@@ -25,6 +66,7 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
                          }),
                          this);
     }
+    g_signal_connect(get("txtPages"), "changed", changedHandler, this);
 }
 
 void ExportDialog::initPages(size_t current, size_t count) {
@@ -94,7 +136,6 @@ auto ExportDialog::getRange() -> PageRangeVector {
         range.emplace_back(this->currentPage - 1, this->currentPage - 1);
         return range;
     }
-
 
     PageRangeVector range;
     range.emplace_back(0, this->pageCount - 1);

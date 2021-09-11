@@ -3,6 +3,7 @@
 #include <map>
 #include <sstream>
 #include <stack>
+#include <vector>
 
 #include <cairo-pdf.h>
 #include <config.h>
@@ -146,7 +147,7 @@ void XojCairoPdfExport::exportPageLayers(size_t page) {
     for (const auto& layer: *p->getLayers()) layer->setVisible(initialVisibility[layer]);
 }
 
-auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range, bool progressiveMode) -> bool {
+auto XojCairoPdfExport::createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode) -> bool {
     if (range.empty()) {
         this->lastError = _("No pages to export!");
         return false;
@@ -159,22 +160,17 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range, 
         return false;
     }
 
-    int count = 0;
-    for (auto const& e: range) {
-        count += e.getLast() - e.getFirst() + 1;
-    }
+    size_t count = 0;
+    for (const auto& e: range) { count += e.last - e.first + 1; }
 
     if (this->progressListener) {
         this->progressListener->setMaximumState(count);
     }
 
-    int c = 0;
-    for (auto const& e: range) {
-        for (size_t i = e.getFirst(); i <= e.getLast(); i++) {
-            if (i >= doc->getPageCount()) {
-                continue;
-            }
-
+    size_t c = 0;
+    for (const auto& e: range) {
+        auto max = std::min(e.last, doc->getPageCount());
+        for (size_t i = e.first; i <= max; i++) {
             if (progressiveMode) {
                 exportPageLayers(i);
             } else {
@@ -210,7 +206,6 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) ->
     }
 
     for (decltype(count) i = 0; i < count; i++) {
-
         if (progressiveMode) {
             exportPageLayers(i);
         } else {

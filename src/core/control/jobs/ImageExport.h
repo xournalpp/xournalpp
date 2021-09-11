@@ -12,7 +12,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
 
 #include <gtk/gtk.h>
 
@@ -68,7 +67,7 @@ private:
 class ImageExport {
 public:
     ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, ExportBackgroundType exportBackground,
-                PageRangeVector& exportRange);
+                const PageRangeVector& exportRange);
     virtual ~ImageExport();
 
 public:
@@ -109,12 +108,12 @@ private:
      *          The return value may differ from that of the parameter zoomRatio
      *          if the export has fixed page width or height (in pixels)
      */
-    double createSurface(double width, double height, int id, double zoomRatio);
+    double createSurface(double width, double height, size_t id, double zoomRatio);
 
     /**
      * Free / store the surface
      */
-    bool freeSurface(int id);
+    bool freeSurface(size_t id);
 
     /**
      * @brief Get a filename with a (page) number appended
@@ -123,7 +122,7 @@ private:
      *
      * @return The filename
      */
-    fs::path getFilenameWithNumber(int no) const;
+    fs::path getFilenameWithNumber(size_t no) const;
 
     /**
      * @brief Export a single PNG/SVG page
@@ -133,7 +132,9 @@ private:
      * @param format The format of the exported image
      * @param view A DocumentView for drawing the page
      */
-    void exportImagePage(int pageId, int id, double zoomRatio, ExportGraphicsFormat format, DocumentView& view);
+    void exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportGraphicsFormat format, DocumentView& view);
+
+    static constexpr size_t SINGLE_PAGE = size_t(-1);
 
 public:
     /**
@@ -159,7 +160,7 @@ public:
     /**
      * The range to export
      */
-    PageRangeVector& exportRange;
+    const PageRangeVector& exportRange;
 
     /**
      * @brief The export quality parameters, used if format==EXPORT_GRAPHICS_PNG
