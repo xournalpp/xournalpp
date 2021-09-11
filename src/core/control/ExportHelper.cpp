@@ -53,8 +53,6 @@ auto exportImg(Document* doc, const char* output, const char* range, int pngDpi,
 
     imgExport.exportGraphics(&progress);
 
-    exportRange.clear();
-
     std::string errorMsg = imgExport.getLastErrorMsg();
     if (!errorMsg.empty()) {
         g_message("Error exporting image: %s\n", errorMsg.c_str());
@@ -93,8 +91,6 @@ auto exportPdf(Document* doc, const char* output, const char* range, ExportBackg
         PageRangeVector exportRange = PageRange::parse(range, doc->getPageCount());
         // Do the export
         exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
-        // Clean up
-        exportRange.clear();
     } else {
         exportSuccess = pdfe->createPdf(path, progressiveMode);
     }

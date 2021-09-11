@@ -1,6 +1,7 @@
 #include "XournalMain.h"
 
 #include <algorithm>
+#include <exception>
 #include <memory>
 
 #include <glib/gstdio.h>
@@ -488,27 +489,57 @@ void on_startup(GApplication* application, XMPtr app_data) {
 
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
     initCAndCoutLocales();
-    if (app_data->showVersion) {
+
+    auto print_version = [&] {
         std::cout << PROJECT_NAME << " " << PROJECT_VERSION << std::endl;
         std::cout << "└──libgtk: " << gtk_get_major_version() << "."  //
                   << gtk_get_minor_version() << "."                   //
                   << gtk_get_micro_version() << std::endl;            //
-        return 0;
+    };
+
+    auto exec_guarded = [&](auto&& fun, auto&& s) {
+        try {
+            printf("trying\n");
+            return fun();
+        } catch (std::exception const& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            std::cerr << "In: " << s << std::endl;
+            print_version();
+            return (1);
+        } catch (...) {
+            std::cerr << "Error: Unknown exception" << std::endl;
+            std::cerr << "In: " << s << std::endl;
+            print_version();
+            return (1);
+        }
+    };
+
+    if (app_data->showVersion) {
+        print_version();
+        return (0);
     }
 
     if (app_data->pdfFilename && app_data->optFilename && *app_data->optFilename) {
-        return exportPdf(*app_data->optFilename, app_data->pdfFilename, app_data->exportRange,
-                         app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :
-                         app_data->exportNoRuling     ? EXPORT_BACKGROUND_UNRULED :
-                                                        EXPORT_BACKGROUND_ALL,
-                         app_data->progressiveMode);
+        return exec_guarded(
+                [&] {
+                    return exportPdf(*app_data->optFilename, app_data->pdfFilename, app_data->exportRange,
+                                     app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :
+                                     app_data->exportNoRuling     ? EXPORT_BACKGROUND_UNRULED :
+                                                                    EXPORT_BACKGROUND_ALL,
+                                     app_data->progressiveMode);
+                },
+                "exportPdf");
     }
     if (app_data->imgFilename && app_data->optFilename && *app_data->optFilename) {
-        return exportImg(*app_data->optFilename, app_data->imgFilename, app_data->exportRange, app_data->exportPngDpi,
-                         app_data->exportPngWidth, app_data->exportPngHeight,
-                         app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :
-                         app_data->exportNoRuling     ? EXPORT_BACKGROUND_UNRULED :
-                                                        EXPORT_BACKGROUND_ALL);
+        return exec_guarded(
+                [&] {
+                    return exportImg(*app_data->optFilename, app_data->imgFilename, app_data->exportRange,
+                                     app_data->exportPngDpi, app_data->exportPngWidth, app_data->exportPngHeight,
+                                     app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :
+                                     app_data->exportNoRuling     ? EXPORT_BACKGROUND_UNRULED :
+                                                                    EXPORT_BACKGROUND_ALL);
+                },
+                "exportImg");
     }
     return -1;
 }

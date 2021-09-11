@@ -1,6 +1,7 @@
 #include "ImageExport.h"
 
 #include <cmath>
+#include <cstddef>
 #include <utility>
 
 #include <cairo-svg.h>
@@ -16,7 +17,7 @@ using std::string;
 
 
 ImageExport::ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format,
-                         ExportBackgroundType exportBackground, PageRangeVector& exportRange):
+                         ExportBackgroundType exportBackground, const PageRangeVector& exportRange):
         doc(doc), file(std::move(file)), format(format), exportBackground(exportBackground), exportRange(exportRange) {}
 
 ImageExport::~ImageExport() = default;
@@ -54,7 +55,7 @@ auto ImageExport::getLastErrorMsg() const -> string { return lastError; }
  * height (in pixels). In this case, the zoomRatio (and the DPI) is page-dependent as soon as the document has pages of
  * different sizes.
  */
-auto ImageExport::createSurface(double width, double height, int id, double zoomRatio) -> double {
+auto ImageExport::createSurface(double width, double height, size_t id, double zoomRatio) -> double {
     switch (this->format) {
         case EXPORT_GRAPHICS_PNG:
             switch (this->qualityParameter.getQualityCriterion()) {
@@ -90,7 +91,7 @@ auto ImageExport::createSurface(double width, double height, int id, double zoom
 /**
  * Free / store the surface
  */
-auto ImageExport::freeSurface(int id) -> bool {
+auto ImageExport::freeSurface(size_t id) -> bool {
     cairo_destroy(this->cr);
 
     cairo_status_t status = CAIRO_STATUS_SUCCESS;
@@ -111,8 +112,8 @@ auto ImageExport::freeSurface(int id) -> bool {
  *
  * @return The filename
  */
-auto ImageExport::getFilenameWithNumber(int no) const -> fs::path {
-    if (no == -1) {
+auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
+    if (no == SINGLE_PAGE) {
         // No number to add
         return file;
     }
@@ -132,7 +133,7 @@ auto ImageExport::getFilenameWithNumber(int no) const -> fs::path {
  * @param format The format of the exported image
  * @param view A DocumentView for drawing the page
  */
-void ImageExport::exportImagePage(int pageId, int id, double zoomRatio, ExportGraphicsFormat format,
+void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportGraphicsFormat format,
                                   DocumentView& view) {
     doc->lock();
     PageRef page = doc->getPage(pageId);
@@ -172,13 +173,12 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
     // the ui is blocked, so there should be no changes...
     auto count = doc->getPageCount();
 
-    bool onePage =
-            ((this->exportRange.size() == 1) && (this->exportRange[0].getFirst() == this->exportRange[0].getLast()));
+    bool onePage = ((this->exportRange.size() == 1) && (this->exportRange[0].first == this->exportRange[0].last));
 
-    std::vector<bool> selectedPages(count, false);
-    int selectedCount = 0;
-    for (auto const& e: this->exportRange) {
-        for (size_t x = e.getFirst(); x <= e.getLast(); x++) {
+    std::vector<char> selectedPages(count, 0);
+    size_t selectedCount = 0;
+    for (PageRangeEntry const& e: this->exportRange) {
+        for (size_t x = e.first; x <= e.last; x++) {
             selectedPages[x] = true;
             selectedCount++;
         }
@@ -198,15 +198,15 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
     int current = 0;
 
     for (size_t i = 0; i < count; i++) {
-        auto id = int(i + 1);  // Todo (narrowing): remove cast
+        auto id = i + 1;
         if (onePage) {
-            id = -1;
+            id = SINGLE_PAGE;
         }
 
         if (selectedPages[i]) {
             stateListener->setCurrentState(current++);
 
-            exportImagePage(int(i), id, zoomRatio, format, view);  // Todo(narrowing): remove cast
+            exportImagePage(i, id, zoomRatio, format, view);  // Todo(narrowing): remove cast
         }
     }
 }

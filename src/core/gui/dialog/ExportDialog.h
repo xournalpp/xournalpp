@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include <cstddef>
+#include <vector>
+
 #include "control/jobs/ImageExport.h"
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"

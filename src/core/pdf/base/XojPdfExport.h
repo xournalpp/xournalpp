@@ -12,7 +12,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
 
 #include "control/jobs/BaseExportJob.h"
 #include "util/PageRange.h"
@@ -26,7 +25,7 @@ public:
 
 public:
     virtual bool createPdf(fs::path const& file, bool progressiveMode) = 0;
-    virtual bool createPdf(fs::path const& file, PageRangeVector& range, bool progressiveMode) = 0;
+    virtual bool createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode) = 0;
     virtual std::string getLastError() = 0;
 
     /**

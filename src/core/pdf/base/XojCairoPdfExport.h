@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include "control/jobs/BaseExportJob.h"
 #include "control/jobs/ProgressListener.h"
 #include "model/Document.h"
@@ -25,7 +27,7 @@ public:
 
 public:
     bool createPdf(fs::path const& file, bool progressiveMode) override;
-    bool createPdf(fs::path const& file, PageRangeVector& range, bool progressiveMode) override;
+    bool createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode) override;
     std::string getLastError() override;
 
     /**
