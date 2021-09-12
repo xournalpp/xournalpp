@@ -123,6 +123,7 @@ auto LoadHandler::openFile(fs::path const& filepath) -> bool {
         // read the mimetype and a few more bytes to make sure we do not only read a subset
         zip_fread(mimetypeFp, mimetype, 25);
         if (!strcmp(mimetype, "application/xournal++")) {
+            zip_fclose(mimetypeFp);
             this->lastError = FS(_F("The file is no valid .xopp file (Mimetype wrong): \"{1}\"") % filepath.u8string());
             return false;
         }
@@ -144,6 +145,7 @@ auto LoadHandler::openFile(fs::path const& filepath) -> bool {
             this->fileVersion = std::stoi(match.str(1));
             this->minimalFileVersion = std::stoi(match.str(2));
         } else {
+            zip_fclose(versionFp);
             this->lastError = FS(_F("The file is not a valid .xopp file (Version string corrupted): \"{1}\"") %
                                  filepath.u8string());
             return false;
@@ -784,6 +786,7 @@ void LoadHandler::parseAudio() {
         if (read == -1) {
             g_object_unref(tmpFile);
             g_free(data);
+            zip_fclose(attachmentFile);
             error("%s", FC(_F("Could not open attachment: {1}. Error message: Could not read file") % filename));
             return;
         }
@@ -793,6 +796,7 @@ void LoadHandler::parseAudio() {
         if (!writeSuccessful) {
             g_object_unref(tmpFile);
             g_free(data);
+            zip_fclose(attachmentFile);
             error("%s", FC(_F("Could not open attachment: {1}. Error message: Could not write file") % filename));
             return;
         }
@@ -1034,6 +1038,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename, gpointer& data, gs
         zip_int64_t read = zip_fread(attachmentFile, data, attachmentFileStat.size);
         if (read == -1) {
             g_free(data);
+            zip_fclose(attachmentFile);
             error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") %
                            filename.string()));
             return false;
