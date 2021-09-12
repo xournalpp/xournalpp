@@ -12,7 +12,7 @@ AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearch
     gtk_label_set_markup(GTK_LABEL(get("lbRevId")), GIT_COMMIT_ID);
 
     char gtkVersion[10];
-    sprintf(gtkVersion, "%d.%d.%d", gtk_get_major_version(), gtk_get_minor_version(), gtk_get_micro_version());
+    sprintf(gtkVersion, "%u.%u.%u", gtk_get_major_version(), gtk_get_minor_version(), gtk_get_micro_version());
 
     gtk_label_set_markup(GTK_LABEL(get("lbGtkVersion")), gtkVersion);
 

@@ -7,7 +7,7 @@ SizeTAttribute::SizeTAttribute(const char* name, size_t value): XMLAttribute(nam
 SizeTAttribute::~SizeTAttribute() = default;
 
 void SizeTAttribute::writeOut(OutputStream* out) {
-    char* str = g_strdup_printf("%ull", value);
+    char* str = g_strdup_printf("%zu", value);
     out->write(str);
     g_free(str);
 }
