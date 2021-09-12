@@ -259,7 +259,7 @@ auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTre
 
     gchar* pageLabel = nullptr;
     if (page != npos) {
-        pageLabel = g_strdup_printf("%lu", page + 1);
+        pageLabel = g_strdup_printf("%zu", page + 1);
     }
     gtk_tree_store_set(GTK_TREE_STORE(treeModel), iter, DOCUMENT_LINKS_COLUMN_PAGE_NUMBER, pageLabel, -1);
     g_free(pageLabel);
