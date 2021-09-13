@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-06 22:52+0000\n"
-"PO-Revision-Date: 2021-09-06 22:57\n"
+"PO-Revision-Date: 2021-09-13 14:31\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -20,7 +20,8 @@ msgstr ""
 #: ../src/control/XournalMain.cpp:473
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n\n"
+"Sẽ thử chạy không sử dụng tệp tin này."
 
 #: ../src/control/jobs/BaseExportJob.cpp:48
 msgid "\n"
@@ -31,7 +32,8 @@ msgstr "\n"
 #: ../src/control/XournalMain.cpp:453
 msgid "\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n"
+"Sẽ thử chạy không sử dụng tệp tin này."
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -40,7 +42,7 @@ msgstr " trên {1}"
 
 #: ../src/control/settings/Settings.cpp:118
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Ghi chú-%H-%M"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:149
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -61,7 +63,7 @@ msgstr "Thêm/Chỉnh sửa Tex"
 
 #: ../src/control/XournalMain.cpp:690
 msgid "Advanced export options"
-msgstr ""
+msgstr "Các tùy chọn xuất nâng cao"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -82,50 +84,51 @@ msgstr "Sắp xếp"
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
 msgid "Attach file to the journal"
-msgstr ""
+msgstr "Gắn tệp tin vào sổ"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:112
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
+msgstr "Thuộc tính \"{1}\" không thể được phân tích thành dạng double, giá trị là \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:105
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "Thuộc tính \"{1}\" không thể được phân tích thành dạng double, giá trị là nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:129
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:148
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr ""
+msgstr "Thuộc tính \"{1}\" không thể được phân tích thành dạng int, giá trị là \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:122
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "Thuộc tính \"{1}\" không thể được phân tích thành dạng int, giá trị là nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:167
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:187
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "Thuộc tính \"{1}\" không thể được phân tích thành dạng size_t, giá trị là \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "Thuộc tính \"{1}\" không thể được phân tích thành dạng size_t, giá trị là nullptr"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:54
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "Thuộc tính màu chưa được đặt!"
 
 #: ../src/control/AudioController.cpp:97
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Thư mục tự động chưa được đặt! Chức năng ghi âm sẽ không hoạt động!\n"
+"Xin đặt thư mục ghi âm dưới \"Tùy chọn > Ghi âm\""
 
 #: ../src/control/Control.cpp:206
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Tự động lưu đã thất bại với lỗi: {1}"
 
 #: ../src/control/Control.cpp:186
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "Tập tin lưu tự động đã được đổi tên từ {1} thành {2}"
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
@@ -173,7 +176,7 @@ msgstr "Đổi kiểu chữ"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr ""
+msgstr "Đổi kiểu đường vẽ"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -199,7 +202,7 @@ msgstr "Sao chép"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
-msgstr ""
+msgstr "Sao chép từ trang hiện tại"
 
 #: ../src/undo/CopyUndoAction.cpp:60
 msgid "Copy page"
@@ -208,27 +211,28 @@ msgstr "Sao chép trang"
 #: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Không thể tạo thư mục: {1}\n"
+"Đã thất bại với lỗi: {2}"
 
 #: ../src/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "Không thể nạp tập tin PDF LaTeX"
 
 #: ../src/control/LatexController.cpp:267
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "Không thể nạp tập tin PDF LaTeX: {1}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:17
 msgid "Could not load pagetemplates.ini file"
-msgstr ""
+msgstr "Không thể nạp tập tin pagetemplates.ini"
 
 #: ../src/control/xojfile/LoadHandler.cpp:787
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr ""
+msgstr "Không thể mở tập tin được gắn: {1} Thông báo lỗi: không đọc được tập tin"
 
 #: ../src/control/xojfile/LoadHandler.cpp:796
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "Không thể mở tập tin được gắn: {1} Thông báo lỗi: không viết được tập tin"
 
 #: ../src/control/xojfile/LoadHandler.cpp:768
 #: ../src/control/xojfile/LoadHandler.cpp:1019
@@ -241,16 +245,17 @@ msgstr ""
 #: ../src/control/xojfile/LoadHandler.cpp:1010
 #: ../src/control/xojfile/LoadHandler.cpp:1026
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "Không thể mở tập tin được gắn: {1} Thông báo lỗi: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:159
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "Không thể mở tệp: \"{1}\""
 
 #: ../src/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "Không thể phân tích được tập tin toolbar.ini tùy chỉnh: {1}\n"
+"Các thanh công cụ sẽ không có sẵn"
 
 #: ../src/gui/MainWindow.cpp:85
 msgid "Could not parse general toolbar.ini file: {1}\n"
