@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-06 22:52+0000\n"
-"PO-Revision-Date: 2021-09-13 14:31\n"
+"PO-Revision-Date: 2021-09-13 15:40\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -260,12 +260,13 @@ msgstr "Không thể phân tích được tập tin toolbar.ini tùy chỉnh: {1
 #: ../src/gui/MainWindow.cpp:85
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "Không thể phân tích được tập tin toolbar.ini chung: {1}\n"
+"Các thanh công cụ sẽ không có sẵn"
 
 #: ../src/control/xojfile/LoadHandler.cpp:355
 #: ../src/control/xojfile/LoadHandler.cpp:379
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "Không thể đọc được hình ảnh: {1}. Thông báo lỗi: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:389
 msgid "Could not read page number for cloned background image: {1}."
@@ -274,32 +275,34 @@ msgstr ""
 #: ../src/undo/UndoRedoHandler.cpp:139
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Không thể làm lại \"{1}\"\n"
+"Đã có gì đó bị sai... Xin viết báo lỗi…"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "Không thể gỡ dụng cụ khỏi thanh công cụ {1} ở vị trí {2}"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:161
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "Không thể gỡ dụng cụ {1} khỏi thanh công cụ {2} ở vị trí {3}"
 
 #: ../src/control/Control.cpp:197
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "Không thể đổi tên tệp lưu tự động từ \"{1}\" sang \"{2}\": {3}"
 
 #: ../src/control/latex/LatexGenerator.cpp:70
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "Không thể lưu tập tin .tex: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "Không thể khởi động {1}: {2} (mã lỗi: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:110
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Không thể hoàn tắc \"{1}\"\n"
+"Đã có gì đó bị sai... Xin viết báo lỗi…"
 
 #: ../src/control/xojfile/SaveHandler.cpp:243
 msgid "Could not write background \"{1}\", {2}"
@@ -315,11 +318,11 @@ msgstr "Tạo lớp mới"
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
-msgstr ""
+msgstr "Tuỳ chỉnh"
 
 #: ../src/control/jobs/CustomExportJob.cpp:19
 msgid "Custom Export"
-msgstr ""
+msgstr "Xuất tùy chỉnh"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Customize Toolbars"
@@ -344,7 +347,7 @@ msgstr "Xóa"
 
 #: ../src/control/XournalMain.cpp:167
 msgid "Delete Logfile"
-msgstr ""
+msgstr "Xoá các tập tin nhật ký"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Delete current page"
@@ -360,7 +363,7 @@ msgstr "Xóa lớp"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Delete this layer"
-msgstr ""
+msgstr "Xóa lớp này"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
@@ -372,25 +375,27 @@ msgstr "Bỏ"
 
 #: ../src/control/XournalMain.cpp:691
 msgid "Display advanced export options"
-msgstr ""
+msgstr "Hiển thị các tùy chọn xuất nâng cao"
 
 #: ../src/control/Control.cpp:1956
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "Không mở các tập tin lưu tự động. Chúng sẽ có thể bị ghi đè!\n"
+"Xin chép các tập tin vào một thư mục khác.\n"
+"Các tập tin từ thư mục {1} không mở được."
 
 #: ../src/control/jobs/BaseExportJob.cpp:41
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "Không viết đè tập tin PDF nền! Việc này sẽ gây lỗi!"
 
 #: ../src/control/Control.cpp:2453
 msgid "Document file was removed."
-msgstr ""
+msgstr "Tập tin tài liệu đã bị gỡ."
 
 #: ../src/control/xojfile/LoadHandler.cpp:241
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "Tài liệu đã bị lỗi (không tìm được trang nào trong tập tin)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:237
 msgid "Document is not complete (maybe the end is cut off?)"
