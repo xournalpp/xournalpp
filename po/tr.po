@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-06 22:52+0000\n"
-"PO-Revision-Date: 2021-09-06 22:57\n"
+"PO-Revision-Date: 2021-09-15 14:44\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -605,7 +605,8 @@ msgstr "Genel şablon dosyası okunamadı. Lütfen ayarlarınızı kontrol edini
 #: ../src/control/jobs/BaseExportJob.cpp:103
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Dosya yolu açılırken aşağıdaki hatayla karşılaşıldı:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -619,7 +620,7 @@ msgstr "Doldur"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:285
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Basınç girişini filitrele. Basıncı, basınç çarpanıyla çarp. Eğer minimumdan azsa, minimum basıncı kullan."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Fine"
@@ -647,11 +648,11 @@ msgstr "Xournalpp sürümünü edinin"
 
 #: ../src/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Genel şablon dosyası yok. Lütfen ayarlarınızı kontrol ediniz."
 
 #: ../src/control/LatexController.cpp:64
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Genel şablon dosyası düzenli bir dosya degil. Lütfen ayarlarınızı kontrol ediniz. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Go to first page"
@@ -724,7 +725,7 @@ msgstr "Resimler"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Geçerli katmanın bir kopyasını aşağıya ekle"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
@@ -752,11 +753,11 @@ msgstr "Sayfa ekle"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "İzometrik Noktalı"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Isometric Graph"
-msgstr ""
+msgstr "İzometrik Grafik"
 
 #: ../src/control/XournalMain.cpp:635
 msgid "Jump to Page (first Page: 1)"
