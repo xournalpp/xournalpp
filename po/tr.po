@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-06 22:52+0000\n"
-"PO-Revision-Date: 2021-09-15 16:16\n"
+"PO-Revision-Date: 2021-09-15 17:32\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -935,7 +935,7 @@ msgstr "PDF dosyaları"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
@@ -1003,7 +1003,7 @@ msgstr "Sunum modu"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:68
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Önceden seçilmiş dil artık kullanılabilir değil!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Print"
@@ -1045,7 +1045,7 @@ msgstr "{1} araç öğesi {2} Araç Çubuğundan kaldırıldı ID {3}"
 
 #: ../src/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
-msgstr ""
+msgstr "Katmanı yeniden adlandır"
 
 #: ../src/util/XojMsgBox.cpp:77
 msgid "Replace"
@@ -1081,7 +1081,7 @@ msgstr "SVG grafikleri"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "Örnek LaTeX dosyası başarıyla oluşturuldu."
 
 #: ../src/control/Control.cpp:2454 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
@@ -1111,7 +1111,7 @@ msgstr "Ara"
 
 #: ../src/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Katkı sağlayanların tam listesine bakın"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Select Font"
@@ -1817,15 +1817,15 @@ msgstr "1.0"
 
 #: ../ui/settings.glade:1029
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3082
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1122
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -2037,7 +2037,7 @@ msgstr ""
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Aritmatik ortalama"
 
 #: ../ui/settings.glade:1774
 msgid "Artifact workaround"
@@ -2057,7 +2057,7 @@ msgstr "Yazar: "
 
 #: ../ui/about.glade:449
 msgid "Authors"
-msgstr ""
+msgstr "Yazarlar"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2085,12 +2085,12 @@ msgstr "Sayfalar arasındaki arka plan rengi"
 
 #: ../ui/settings.glade:3385
 msgid "Base speed"
-msgstr ""
+msgstr "Temel Hız"
 
 #: ../ui/settings.glade:2933
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Büyük kalem simgesi"
 
 #: ../ui/settings.glade:3137
 msgid "Border Color"
@@ -2110,11 +2110,11 @@ msgstr "Geçerli sayfa ve diğer seçimler için kenarlık rengi"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Bir öne getir"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "En öne getir"
 
 #: ../ui/settings.glade:1017
 msgid "Buffersize"
@@ -2198,11 +2198,11 @@ msgstr "Koyu Tema (yeniden başlatma gerekir)"
 
 #: ../ui/settings.glade:237
 msgid "Deadzone"
-msgstr ""
+msgstr "Ölü Bölge"
 
 #: ../ui/settings.glade:1046
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Ölü bölge yarıçapı"
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
@@ -2262,7 +2262,7 @@ msgstr "Kısa süre ve uzunluktaki girişler için art arda gelmedikçe çizim y
 
 #: ../ui/settings.glade:1077
 msgid "Drag"
-msgstr ""
+msgstr "Sürükle"
 
 #: ../ui/settings.glade:871
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2291,7 +2291,7 @@ msgstr ""
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Koordinat sistemi çiz"
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
@@ -2596,11 +2596,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5742 ../ui/settings.glade:5790
 msgid "Language"
-msgstr ""
+msgstr "Dil"
 
 #: ../ui/settings.glade:5760
 msgid "Language Settings"
-msgstr ""
+msgstr "Dil Ayarları"
 
 #: ../ui/main.glade:575
 msgid "Layout"
@@ -2628,7 +2628,7 @@ msgstr "Araç Çubuklarını Yönet"
 
 #: ../ui/settings.glade:1109
 msgid "Mass"
-msgstr ""
+msgstr "Kütle"
 
 #: ../ui/settings.glade:1108 ../ui/settings.glade:1120
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
@@ -2653,7 +2653,7 @@ msgstr "Orta Fare Düğmesi"
 
 #: ../ui/settings.glade:1577
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Minimum Basınç:"
 
 #: ../ui/settings.glade:1454 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2681,7 +2681,7 @@ msgstr ""
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "_Sonraki açıklamalı sayfa"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2702,7 +2702,7 @@ msgstr "Yeni _Katman"
 #: ../ui/settings.glade:2931
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Simge yok"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2735,7 +2735,7 @@ msgstr ""
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "_Önceki açıklamalı Sayfa"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2747,7 +2747,7 @@ msgstr "Eşlenmiş Sayfalar"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "Kağıt Ark_a planı"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2777,7 +2777,7 @@ msgstr "Kalem _Seçenekleri"
 
 #: ../ui/settings.glade:3690
 msgid "Performance"
-msgstr ""
+msgstr "Performans"
 
 #: ../ui/settings.glade:5582
 msgid "Playback Settings"
@@ -2793,7 +2793,7 @@ msgstr "Eklenti Yö_neticisi"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Eklenti değişiklikleri yalnızca Xournal++ yeniden başlatıldıktan sonra uygulanır"
 
 #: ../ui/settings.glade:3624
 msgid "Pre-load pages after"
