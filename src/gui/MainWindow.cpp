@@ -287,7 +287,7 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 
     Util::execInUiThread(
             [=]() {
-                bool touchScrollEnabled = gtkTouchscreenScrollingEnabled.load();
+                const bool touchScrollEnabled = gtkTouchscreenScrollingEnabled.load();
 
                 gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), touchScrollEnabled);
             },
