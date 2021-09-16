@@ -275,9 +275,7 @@ void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
 }
 
 void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
-    bool useGtkInertialScroll = control->getSettings()->getGtkTouchInertialScrollingEnabled();
-
-    if (!useGtkInertialScroll) {
+    if (!control->getSettings()->getGtkTouchInertialScrollingEnabled()) {
         enabled = false;
     }
 
