@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-06 22:52+0000\n"
-"PO-Revision-Date: 2021-09-17 13:32\n"
+"PO-Revision-Date: 2021-09-17 14:39\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -882,7 +882,8 @@ msgstr "Tamam"
 #: ../src/control/XournalMain.cpp:671
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Yalnızca ARALIK kısmında belirtilen sayfaları dışa aktarın (ör. \"2-3,5,7-\")\n"
+"                                  -p/--create-pdf veya -i/-create-img olmadan etkisi yoktur"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -1184,7 +1185,8 @@ msgstr "Ayırıcı"
 #: ../src/control/XournalMain.cpp:675
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "PNG çıktısı için DPI ayarlayın. Varsayılan olarak 300\n"
+"                                   -i/--create-img=foo.png olmadan etkisi yoktur"
 
 #: ../src/control/XournalMain.cpp:685
 msgid "Set page height for PNG exports\n"
@@ -1309,12 +1311,14 @@ msgstr "\"{1}\" Araç Çubuğu yapılandırması önceden tanımlandı, düzenle
 #: ../src/control/Control.cpp:1998
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "Eklenmiş arka plan dosyası {1} bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir.\n"
+"En son şu zamanda görüldü: {2}"
 
 #: ../src/control/Control.cpp:2002
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "Arka plan dosyası {1} bulunamadı. Taşınmış, yeniden adlandırılmış veya silinmiş olabilir.\n"
+"En son şu zamanda görüldü: {2}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:47
 msgid "The check for overwriting the background failed with:\n"
@@ -1854,7 +1858,8 @@ msgstr "<b>Varsayılan</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Belge dışa aktarma ayarları</b>\n"
+"Dışa aktarma parametrelerini ayarla"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1865,7 +1870,8 @@ msgstr "<b>Boş Araç Kutusu</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Dolgu opaklığı ayarları</b>\n"
+"Dolgu rengi için opaklık seç"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2400,11 +2406,11 @@ msgstr "Do_ldur"
 
 #: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
-msgstr ""
+msgstr "Dolgu Opaklığı"
 
 #: ../ui/settings.glade:1222
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Vuruşları tamamla"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
@@ -2428,11 +2434,11 @@ msgstr "Kazanç"
 
 #: ../ui/settings.glade:1140 ../ui/settings.glade:1160
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Gauss parametresi: ne kadar yüksekse, o kadar stabil ve imleciniz ile boyama ucu arasındaki gecikme o kadar fazladır."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Genel LaTeX ayarları"
 
 #: ../ui/about.glade:114
 msgid "Git commit"
@@ -2444,7 +2450,7 @@ msgstr "Küresel"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "Genel şablon dosyası yolu"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2468,7 +2474,7 @@ msgstr "El Tanıma"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Yükseklik"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2512,15 +2518,15 @@ msgstr "Ne kadar kısa (zaman) VE...\n\n"
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr ""
+msgstr "Simge Tararımcısı"
 
 #: ../ui/settings.glade:4609
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "Etkinleştirilirse, şekil tanıyıcı tarafından tanınan şekiller ızgaraya otomatik olarak tutturulacaktır. Yazarken şekil tanıyıcıyı açtıysanız, bu beklenmeyen sonuçlara yol açabilir."
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "Eğer etkinleştirilirse, Xournal++ düzenlemeye devam edebileceğiniz en son kaydedilen belgeyi otomatik olarak açacaktır."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2544,7 +2550,7 @@ msgstr "İlkini yoksay"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Resim kalitesi"
 
 #: ../ui/settings.glade:240
 msgid "Inertia"
@@ -2588,7 +2594,7 @@ msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "LaTeX oluşturma ayarları"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
@@ -2974,7 +2980,8 @@ msgstr "Sol tarafta dikey kaydırma çubuğunu göster"
 #: ../ui/settings.glade:903
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "Basınç bilgisi yoksa, daha yavaş vuruşlara daha hızlı vuruşlara göre daha büyük bir basınç atanır.\n\n"
+"<i>Bu özellik, basınç hassasiyeti olmayan cihazlar için faydalı olabilir. Örneğin, bir fare veya dokunmatik ekran.</i>"
 
 #: ../ui/settings.glade:2932
 msgctxt "stylus cursor uses a small dot"
@@ -3003,7 +3010,7 @@ msgstr "Standart"
 
 #: ../ui/settings.glade:2446
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "Bir mesafeden sonra yakınlaştırmaya başlayın "
 
 #: ../ui/settings.glade:5200 ../ui/settings.glade:5258
 msgid "Storage Folder"
@@ -3043,7 +3050,7 @@ msgstr "Yapılandırmayı test edin"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "Genel şablon dosyasında bir formül girerek LaTeX oluşturma komutunun düzgün çalıştığını test edin."
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
@@ -3096,11 +3103,11 @@ msgstr "Önce nesneyi seçmeyi deneyin; seçili bir şey yoksa, etkinse kayan ar
 
 #: ../ui/settings.glade:2814
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Mevcut Öntanımlı Simgeleri kullanın (yeniden başlatma gerektirir)"
 
 #: ../ui/settings.glade:4605
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Tanınan şekiller için yakalamayı kullan"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
@@ -3116,7 +3123,7 @@ msgstr "Genellikle 0 veya 1"
 
 #: ../ui/settings.glade:223
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Gauss ağırlıklandırma temelli hızlanma"
 
 #: ../ui/about.glade:181
 msgid "Version"
@@ -3136,7 +3143,7 @@ msgstr "İnternet sitesi"
 
 #: ../ui/settings.glade:3383
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Bir öğe seçilerek tuvalin görünen kısmının dışına taşındığında, ekranı tuvalin görünen kısmını tuvalden taşma oranına eşit bir miktarda kaydır. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
