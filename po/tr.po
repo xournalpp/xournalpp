@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-06 22:52+0000\n"
-"PO-Revision-Date: 2021-09-15 17:32\n"
+"PO-Revision-Date: 2021-09-17 13:32\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1932,7 +1932,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5705
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>Dili seçin (yeniden başlatma gerektirir) </i>"
 
 #: ../ui/settings.glade:5033
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -1940,7 +1940,7 @@ msgstr "<i>Varsayılan Düğmeye basarsanız aracı ve Ayarlar'ı seçin.</i>"
 
 #: ../ui/settings.glade:1554
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>Bazı cihazlar beklenmedik şekilde küçük veya büyük basınç bildirir. Bu, minimum basınç ayarlanarak veya cihaz tarafından bildirilen basıncı ölçeklendirerek düzeltilebilir.</i>"
 
 #: ../ui/settings.glade:2237
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -2007,7 +2007,7 @@ msgstr "Ek dikey alan ekle"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "TeX Ekle/Düzenle"
 
 #: ../ui/settings.glade:4426
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2065,7 +2065,7 @@ msgstr "Otomatik algılama"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
-msgstr ""
+msgstr "Otomatik Yükleniyor"
 
 #: ../ui/settings.glade:456
 msgid "Autosaving"
@@ -2077,7 +2077,7 @@ msgstr "Kullanılabilir Yer Tutucuları"
 
 #: ../ui/settings.glade:967
 msgid "Averaging method"
-msgstr ""
+msgstr "Ortalama alma yöntemi"
 
 #: ../ui/settings.glade:2750
 msgid "Background color between pages"
@@ -2118,7 +2118,7 @@ msgstr "En öne getir"
 
 #: ../ui/settings.glade:1017
 msgid "Buffersize"
-msgstr ""
+msgstr "Arabellek boyutu"
 
 #: ../ui/about.glade:99
 msgid "Built on"
@@ -2134,7 +2134,7 @@ msgstr "Düğme 2"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Genel bir LaTeX şablon dosyası seçin"
 
 #: ../ui/settings.glade:2980 ../ui/settings.glade:3123
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2146,7 +2146,7 @@ msgstr "Daire Rengi"
 
 #: ../ui/settings.glade:3661
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "Kaydırma sırasında önbelleğe alınmış belleği temizle"
 
 #: ../ui/settings.glade:2860
 msgid "Colors"
@@ -2182,11 +2182,11 @@ msgstr "İmleç"
 
 #: ../ui/settings.glade:2915
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Kalem için imleç simgesi"
 
 #: ../ui/settings.glade:1205
 msgid "Cusp detection"
-msgstr ""
+msgstr "Tepe noktası algılama"
 
 #: ../ui/settings.glade:2353
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2359,7 +2359,7 @@ msgstr "Dahili El Tanıma'yı etkinleştir"
 
 #: ../ui/settings.glade:2558
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Dokunarak çizimi aktif et"
 
 #: ../ui/settings.glade:2421
 msgid "Enable zoom gestures (requires restart)"
@@ -2387,7 +2387,7 @@ msgstr "Dışa farklı aktar..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Katmanları aşamalı olarak dışa aktar"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
@@ -2584,7 +2584,7 @@ msgstr "Önce Sayfa Ekle"
 
 #: ../ui/settings.glade:5653
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
