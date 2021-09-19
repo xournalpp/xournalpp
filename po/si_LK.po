@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-06 22:52+0000\n"
-"PO-Revision-Date: 2021-09-07 15:18\n"
+"PO-Revision-Date: 2021-09-19 10:55\n"
 "Last-Translator: \n"
 "Language-Team: Sinhala\n"
 "Language: si_LK\n"
@@ -64,15 +64,15 @@ msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
-msgstr ""
+msgstr "සියළුම ගොනු"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:191
 msgid "Apply to all pages"
-msgstr ""
+msgstr "සියලුම පිටු වලට යොදන්න"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:182
 msgid "Apply to current page"
-msgstr ""
+msgstr "වත්මන් පිටුවට යොදන්න"
 
 #: ../src/control/tools/EditSelection.cpp:351
 msgid "Arrange"
