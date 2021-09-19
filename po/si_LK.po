@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-06 22:52+0000\n"
-"PO-Revision-Date: 2021-09-19 10:55\n"
+"PO-Revision-Date: 2021-09-19 11:52\n"
 "Last-Translator: \n"
 "Language-Team: Sinhala\n"
 "Language: si_LK\n"
@@ -133,21 +133,21 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Back"
-msgstr ""
+msgstr "ආපසු"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:197 ../src/model/XojPage.cpp:174
 msgid "Background"
-msgstr ""
+msgstr "පසුබිම"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:94
 msgid "Black"
-msgstr ""
+msgstr "කළු"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:98
 msgid "Blue"
-msgstr ""
+msgstr "නිල්"
 
 #: ../src/control/tools/EditSelection.cpp:368
 msgid "Bring forward"
@@ -160,7 +160,7 @@ msgstr ""
 #: ../src/control/Control.cpp:2011 ../src/control/Control.cpp:2462
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
-msgstr ""
+msgstr "අවලංගු කරන්න"
 
 #: ../src/undo/ColorUndoAction.cpp:85
 msgid "Change color"
@@ -188,13 +188,13 @@ msgstr ""
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:227
 msgid "Contents"
-msgstr ""
+msgstr "අන්තර්ගතයන්"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:78
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:84
 msgid "Copy"
-msgstr ""
+msgstr "පිටපත්"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
@@ -309,7 +309,7 @@ msgstr ""
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
-msgstr ""
+msgstr "අභිරුචි"
 
 #: ../src/control/jobs/CustomExportJob.cpp:19
 msgid "Custom Export"
@@ -325,7 +325,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:347
 msgid "Cut"
-msgstr ""
+msgstr "කපන්න"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Default Tool"
@@ -469,7 +469,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
 msgid "Eraser"
-msgstr ""
+msgstr "මකනය"
 
 #: ../src/control/Control.cpp:2210
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -656,12 +656,12 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:99
 msgid "Gray"
-msgstr ""
+msgstr "අළු"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:95
 msgid "Green"
-msgstr ""
+msgstr "කොළ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Grid Snapping"
