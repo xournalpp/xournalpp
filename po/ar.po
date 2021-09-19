@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-06 22:52+0000\n"
-"PO-Revision-Date: 2021-09-13 18:35\n"
+"PO-Revision-Date: 2021-09-19 02:26\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -164,12 +164,12 @@ msgstr "خطوة إلى الأمام"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring to front"
-msgstr "إحضار إلى المقدمة"
+msgstr "اجلب للمقدمة"
 
 #: ../src/control/Control.cpp:2011 ../src/control/Control.cpp:2462
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
-msgstr "ألغ"
+msgstr "إلغاء"
 
 #: ../src/undo/ColorUndoAction.cpp:85
 msgid "Change color"
@@ -177,15 +177,15 @@ msgstr "تغيير اللون"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
-msgstr "تغيير خط النص"
+msgstr "تغيير الخط"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr "تغيير شكل الخط"
+msgstr "تغيير نمط الخط"
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
-msgstr "تغيير ملء جرّة القلم"
+msgstr "تغيير عرض الخط"
 
 #: ../src/undo/SizeUndoAction.cpp:106
 msgid "Change stroke width"
