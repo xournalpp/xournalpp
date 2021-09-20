@@ -2,32 +2,18 @@
 
 GroupUndoAction::GroupUndoAction(): UndoAction("GroupUndoAction") {}
 
-GroupUndoAction::~GroupUndoAction() {
-    for (auto i = actions.size() - 1; i >= 0; i--) { delete actions[i]; }
-
-    actions.clear();
-}
-
-void GroupUndoAction::addAction(UndoAction* action) { actions.push_back(action); }
+void GroupUndoAction::addAction(std::unique_ptr<UndoAction> action) { actions.push_back(std::move(action)); }
 
 auto GroupUndoAction::getPages() -> std::vector<PageRef> {
     std::vector<PageRef> pages;
 
-    for (UndoAction* a: actions) {
+    for (std::unique_ptr<UndoAction>& a: actions) {
         for (PageRef addPage: a->getPages()) {
             if (!addPage) {
                 continue;
             }
 
-            bool pageAlreadyInTheList = false;
-            for (const PageRef& p: pages) {
-                if (addPage == p) {
-                    pageAlreadyInTheList = true;
-                    break;
-                }
-            }
-
-            if (!pageAlreadyInTheList) {
+            if (std::none_of(pages.begin(), pages.end(), [&](const PageRef& p) { return addPage == p; })) {
                 pages.push_back(addPage);
             }
         }

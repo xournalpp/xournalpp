@@ -38,7 +38,7 @@ void PageBackgroundChangeController::changeAllPagesBackground(const PageType& pt
     for (size_t p = 0; p < doc->getPageCount(); p++) {
         auto undoAction = commitPageTypeChange(p, pt);
         if (undoAction) {
-            groupUndoAction->addAction(undoAction.release());
+            groupUndoAction->addAction(std::move(undoAction));
         }
     }
 
