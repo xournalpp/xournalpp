@@ -20,21 +20,20 @@
 class GroupUndoAction: public UndoAction {
 public:
     GroupUndoAction();
-    virtual ~GroupUndoAction();
 
 public:
-    void addAction(UndoAction* action);
+    void addAction(std::unique_ptr<UndoAction> action);
 
     /**
      * Get the affected pages
      */
-    virtual std::vector<PageRef> getPages();
+    std::vector<PageRef> getPages() override;
 
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
 
-    virtual std::string getText();
+    std::string getText() override;
 
 private:
-    std::vector<UndoAction*> actions;
+    std::vector<std::unique_ptr<UndoAction>> actions;
 };
