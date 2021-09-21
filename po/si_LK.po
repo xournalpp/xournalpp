@@ -3,25 +3,24 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-06 22:52+0000\n"
-"PO-Revision-Date: 2021-09-06 22:57\n"
+"PO-Revision-Date: 2021-09-19 11:52\n"
 "Last-Translator: \n"
-"Language-Team: Korean\n"
-"Language: ko_KR\n"
+"Language-Team: Sinhala\n"
+"Language: si_LK\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: xournalpp\n"
 "X-Crowdin-Project-ID: 363247\n"
-"X-Crowdin-Language: ko\n"
+"X-Crowdin-Language: si-LK\n"
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
 #: ../src/control/XournalMain.cpp:473
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr "\n\n"
-"이 파일 없이 실행해보겠습니다."
+msgstr ""
 
 #: ../src/control/jobs/BaseExportJob.cpp:48
 msgid "\n"
@@ -31,8 +30,7 @@ msgstr ""
 #: ../src/control/XournalMain.cpp:453
 msgid "\n"
 "Will now attempt to run without this file."
-msgstr "\n"
-"이 파일 없이 실행해보겠습니다."
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -41,11 +39,11 @@ msgstr ""
 
 #: ../src/control/settings/Settings.cpp:118
 msgid "%F-Note-%H-%M"
-msgstr "%F-노트-%H-%M"
+msgstr ""
 
 #: ../src/gui/dialog/SettingsDialog.cpp:149
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr "<b>기기를 찾을 수 없습니다. 문제가 있는 것 같습니다 - 시간 되신다면 버그 리포트를 작성해 주세요?</b>"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:468
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -54,41 +52,36 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr "<span foreground='red' size='x-large'>다음 필수 UI 파일이 존재하지 않습니다:\n"
-"<b>{1}</b></span>\n"
-"다음 어디에도 찾을 수 없습니다.\n"
-"  상대적 주소에 없음\n"
-"  현재 주소에 없음\n"
-"  {2} 에 없음"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Add/Edit Tex"
-msgstr "Tex 추가/편집"
+msgstr ""
 
 #: ../src/control/XournalMain.cpp:690
 msgid "Advanced export options"
-msgstr "고급 내보내기 옵션"
+msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
-msgstr "모든 파일"
+msgstr "සියළුම ගොනු"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:191
 msgid "Apply to all pages"
-msgstr "모든 페이지에 적용"
+msgstr "සියලුම පිටු වලට යොදන්න"
 
 #: ../src/control/pagetype/PageTypeMenu.cpp:182
 msgid "Apply to current page"
-msgstr "현재 페이지에 적용"
+msgstr "වත්මන් පිටුවට යොදන්න"
 
 #: ../src/control/tools/EditSelection.cpp:351
 msgid "Arrange"
-msgstr "정렬"
+msgstr ""
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
 msgid "Attach file to the journal"
-msgstr "저널에 파일 첨부"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:112
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
@@ -127,59 +120,59 @@ msgstr ""
 
 #: ../src/control/Control.cpp:206
 msgid "Autosave failed with an error: {1}"
-msgstr "자동저장이 다음 에러로 실패: {1}"
+msgstr ""
 
 #: ../src/control/Control.cpp:186
 msgid "Autosave renamed from {1} to {2}"
-msgstr "자동저장 이름이 {1} 에서 {2} 로 수정됨"
+msgstr ""
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr "{1} 로 자동저장 중"
+msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
 msgid "Back"
-msgstr "이전"
+msgstr "ආපසු"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:197 ../src/model/XojPage.cpp:174
 msgid "Background"
-msgstr "배경"
+msgstr "පසුබිම"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:94
 msgid "Black"
-msgstr "검은"
+msgstr "කළු"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:98
 msgid "Blue"
-msgstr "파랑"
+msgstr "නිල්"
 
 #: ../src/control/tools/EditSelection.cpp:368
 msgid "Bring forward"
-msgstr "앞으로 보내기"
+msgstr ""
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring to front"
-msgstr "맨 앞으로 보내기"
+msgstr ""
 
 #: ../src/control/Control.cpp:2011 ../src/control/Control.cpp:2462
 #: ../src/control/XournalMain.cpp:168
 msgid "Cancel"
-msgstr "취소"
+msgstr "අවලංගු කරන්න"
 
 #: ../src/undo/ColorUndoAction.cpp:85
 msgid "Change color"
-msgstr "색상 변경"
+msgstr ""
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
-msgstr "글꼴 변경"
+msgstr ""
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
-msgstr "줄 표시 변경"
+msgstr ""
 
 #: ../src/undo/FillUndoAction.cpp:79
 msgid "Change stroke fill"
@@ -195,39 +188,38 @@ msgstr ""
 
 #: ../src/gui/sidebar/indextree/SidebarIndexPage.cpp:227
 msgid "Contents"
-msgstr "내용"
+msgstr "අන්තර්ගතයන්"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:78
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:84
 msgid "Copy"
-msgstr "복사"
+msgstr "පිටපත්"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:32
 msgid "Copy current"
-msgstr "현재 복사"
+msgstr ""
 
 #: ../src/undo/CopyUndoAction.cpp:60
 msgid "Copy page"
-msgstr "페이지 복사"
+msgstr ""
 
 #: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr "다음 폴더를 생성할 수 없음: {1}\n"
-"다음 에러가 발생함: {2}"
+msgstr ""
 
 #: ../src/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
-msgstr "LaTeX PDF 파일을 불러올 수 없음"
+msgstr ""
 
 #: ../src/control/LatexController.cpp:267
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr "다음 LaTeX PDF 파일을 불러올 수 없음: {1}"
+msgstr ""
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:17
 msgid "Could not load pagetemplates.ini file"
-msgstr "pagetemplates.ini 파일을 불러올 수 없음"
+msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:787
 msgid "Could not open attachment: {1}. Error message: Could not read file"
@@ -276,8 +268,7 @@ msgstr ""
 #: ../src/undo/UndoRedoHandler.cpp:139
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "\"{1}\" 다시 실행 실패\n"
-"문제가 생겼습니다… 버그 리포트를 작성해주세요…"
+msgstr ""
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
@@ -314,11 +305,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:79
 msgid "Create new layer"
-msgstr "새 레이어 생성"
+msgstr ""
 
 #: ../src/gui/dialog/FormatDialog.cpp:67
 msgid "Custom"
-msgstr ""
+msgstr "අභිරුචි"
 
 #: ../src/control/jobs/CustomExportJob.cpp:19
 msgid "Custom Export"
@@ -334,7 +325,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:347
 msgid "Cut"
-msgstr ""
+msgstr "කපන්න"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Default Tool"
@@ -478,7 +469,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
 msgid "Eraser"
-msgstr ""
+msgstr "මකනය"
 
 #: ../src/control/Control.cpp:2210
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -665,12 +656,12 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:99
 msgid "Gray"
-msgstr ""
+msgstr "අළු"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:95
 msgid "Green"
-msgstr ""
+msgstr "කොළ"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Grid Snapping"
