@@ -129,7 +129,7 @@ auto LatexController::showTexEditDialog() -> string {
     // callback is triggered
     gulong signalHandler = g_signal_connect(dlg.getTextBuffer(), "changed", G_CALLBACK(handleTexChanged), this);
     bool isNewFormula = this->initialTex.empty();
-    this->dlg.setFinalTex(isNewFormula ? "x^2" : this->initialTex);
+    this->dlg.setFinalTex(isNewFormula ? "3x" : this->initialTex);
 
     if (this->temporaryRender != nullptr) {
         this->dlg.setTempRender(this->temporaryRender->getPdf());
