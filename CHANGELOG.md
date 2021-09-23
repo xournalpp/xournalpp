@@ -1,6 +1,6 @@
 # Changelog
 
-## Nightly (Unreleased)
+## 1.1.0+dev (Unreleased)
 
 ## 1.1.0
 
