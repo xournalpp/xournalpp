@@ -25,14 +25,10 @@ CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Cu
 }
 
 CustomExportJob::~CustomExportJob() {
-    for (PageRangeEntry* e: exportRange) {
-        delete e;
-    }
+    for (PageRangeEntry* e: exportRange) { delete e; }
     exportRange.clear();
 
-    for (auto& filter: filters) {
-        delete filter.second;
-    }
+    for (auto& filter: filters) { delete filter.second; }
 }
 
 void CustomExportJob::addFilterToDialog() {
