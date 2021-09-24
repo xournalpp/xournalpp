@@ -6,7 +6,7 @@
 % \usepackage{amssymb}
 \usepackage{xcolor}
 
-\usepackage[fencedCode,definitionLists,pipeTables,tableCaptions,hybrid]{markdown}
+\usepackage[fencedCode,definitionLists,pipeTables,tableCaptions]{markdown}
 % code syntax highlighting
 \usepackage{minted}
 
@@ -42,5 +42,5 @@
   \ifthenelse{\pheight=0}{\GenericError{}{xournalpp:blankformula}{}{}}
 
   % Render the user input
-  \markdownInput{%%XPP_MARKDOWN_FILE%%}
+  \markdownInput[hybrid=false]{%%XPP_MARKDOWN_FILE%%}
 \end{document}
