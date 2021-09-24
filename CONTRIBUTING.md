@@ -20,6 +20,8 @@ communication channels](https://xournalpp.github.io/community/help/).
 
 If you would like to contribute translations, you can submit improvements to
 [our project on Crowdin](https://crowdin.com/project/xournalpp).
+Those are then merged from time to time.
+So they wont appear directly after your contribution.
 
 ## Contributing code changes with pull requests (PRs)
 
