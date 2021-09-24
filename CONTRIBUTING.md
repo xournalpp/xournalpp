@@ -59,6 +59,7 @@ codebase.
 * When working with code that interfaces with C libraries (GLib and GTK in
   particular), you should be extra careful with reference counting and memory
   management.
+  It might be helpful, to create your own memory managing RAII structures. This will also reduce the time others must spend to verify your code because it is correct by design.
 * TODO, etc.
 
 ### Sending your contributions for review
