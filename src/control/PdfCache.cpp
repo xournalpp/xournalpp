@@ -52,9 +52,7 @@ void PdfCache::setRefreshThreshold(double threshold) { this->zoomRefreshThreshol
 void PdfCache::setAnyZoomChangeCausesRecache(bool b) { this->zoomClearsCache = b; }
 
 void PdfCache::clearCache() {
-    for (PdfCacheEntry* e: this->data) {
-        delete e;
-    }
+    for (PdfCacheEntry* e: this->data) { delete e; }
     this->data.clear();
 }
 
