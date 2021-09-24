@@ -56,6 +56,7 @@ codebase.
   Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines). In
   particular, make variables `const` by default, always use smart pointers
   instead of new/delete, and prefer `std::optional` over null pointers.
+  A useful tool to help you to fulfill those rules is clang-tidy. It can be included in nearly every modern IDE.
 * When working with code that interfaces with C libraries (GLib and GTK in
   particular), you should be extra careful with reference counting and memory
   management.
