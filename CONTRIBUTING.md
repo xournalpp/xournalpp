@@ -51,6 +51,9 @@ codebase.
   to enforce a _consistent_ code style. Feel free to write your code in whatever
   style you prefer, as long as you run `clang-format` to format your code
   afterwards.
+  This reduces the number of changed lines due to different code styles.
+  Therefore we have fewer merge conflicts and the code is also easier to read and
+  review.
 * Please accompany your code changes with documentation.
 * Follow modern C++ best practices as listed in the [C++ Core
   Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines). In
