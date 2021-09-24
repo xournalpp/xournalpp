@@ -131,9 +131,7 @@ void RenderJob::run() {
         g_mutex_unlock(&this->view->drawingMutex);
         doc->unlock();
     } else {
-        for (Rectangle<double> const& rect: rerenderRects) {
-            rerenderRectangle(rect);
-        }
+        for (Rectangle<double> const& rect: rerenderRects) { rerenderRectangle(rect); }
     }
 
     // Schedule a repaint of the widget
