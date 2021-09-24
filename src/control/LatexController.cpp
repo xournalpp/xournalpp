@@ -151,7 +151,7 @@ void LatexController::triggerImageUpdate(const string& texString) {
 
     this->lastPreviewedTex = texString;
     const std::string texContents = LatexGenerator::templateSub(
-            texString, this->latexTemplate, this->control->getToolHandler()->getTool(TOOL_TEXT).getColor());
+            texString, this->latexTemplate, this->texTmpDir, this->control->getToolHandler()->getTool(TOOL_TEXT).getColor());
     auto result = generator.asyncRun(this->texTmpDir, texContents);
     if (auto* err = std::get_if<LatexGenerator::GenError>(&result)) {
         XojMsgBox::showErrorToUser(this->control->getGtkWindow(), err->message);
