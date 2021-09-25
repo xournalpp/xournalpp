@@ -76,17 +76,26 @@ void StrokeHandler::paintTo(const Point& point) {
         Point endPoint = stroke->getPoint(pointCount - 1);
         double distance = point.lineLengthTo(endPoint);
         if (distance < PIXEL_MOTION_THRESHOLD) {  //(!validMotion(point, endPoint)) {
+            if (pointCount == 1 && this->hasPressure && endPoint.z < point.z) {
+                // Record the possible increase in pressure for the first point
+                // Nb: at this point, neither point.z nor endPoint.z has been multiplied by this->stroke->getWidth()
+                this->stroke->setLastPressure(point.z);
+                this->firstPointPressureChange = true;
+
+                // Paint the dot for the user to see
+                this->paintDot(endPoint.x, endPoint.y, this->stroke->getWidth() * point.z);
+            }
             return;
         }
         if (this->hasPressure) {
             /**
              * Both device and tool are pressure sensitive
              */
-            if (endPoint.z != Point::NO_PRESSURE) {
-                /**
-                 * Avoid issues at the beginning of the stroke
-                 */
-
+            if (this->firstPointPressureChange) {
+                // Avoid shrinking if we recorded a higher pressure event at the beginning of the stroke
+                this->firstPointPressureChange = false;
+                stroke->setLastPressure(std::max(endPoint.z, point.z) * stroke->getWidth());
+            } else {
                 if (const double widthDelta = (point.z - endPoint.z) * stroke->getWidth();
                     - widthDelta > MAX_WIDTH_VARIATION || widthDelta > MAX_WIDTH_VARIATION) {
                     /**
@@ -109,8 +118,8 @@ void StrokeHandler::paintTo(const Point& point) {
                         drawSegmentTo(endPoint);
                     }
                 }
+                stroke->setLastPressure(point.z * stroke->getWidth());
             }
-            stroke->setLastPressure(point.z * stroke->getWidth());
         }
     }
     drawSegmentTo(point);
@@ -221,10 +230,12 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     // I cannot draw a line with one point, to draw a visible line I need two points,
     // twice the same Point is also OK
     if (auto const& pv = stroke->getPointVector(); pv.size() == 1) {
-        stroke->addPoint(pv.front());
-        // Todo: check if the following is the reason for a bug, that single points have no pressure:
-        // No pressure sensitivity,
-        stroke->clearPressure();
+        const Point& pt = pv.front();
+        if (this->hasPressure) {
+            // Pressure inference provides a pressure value to the last event. Most devices set this value to 0.
+            this->stroke->setLastPressure(std::max(pt.z, pos.pressure) * this->stroke->getWidth());
+        }
+        stroke->addPoint(pt);
     }
 
     stroke->freeUnusedPointItems();
@@ -358,11 +369,15 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
         this->buttonDownPoint.x = pos.x / zoom;
         this->buttonDownPoint.y = pos.y / zoom;
 
-        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
+        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pos.pressure));
 
         this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
 
         stabilizer->initialize(this, zoom, pos);
+
+        // Paint the starting point
+        this->paintDot(this->buttonDownPoint.x, this->buttonDownPoint.y,
+                       this->hasPressure ? this->stroke->getWidth() * pos.pressure : this->stroke->getWidth());
     }
 
     this->startStrokeTime = pos.timestamp;
@@ -386,4 +401,15 @@ void StrokeHandler::resetShapeRecognizer() {
         delete reco;
         reco = nullptr;
     }
+}
+
+void StrokeHandler::paintDot(const double x, const double y, const double width) const {
+    cairo_set_line_cap(crMask, CAIRO_LINE_CAP_ROUND);
+    cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
+    cairo_set_source_rgba(crMask, 1, 1, 1, 1);
+    cairo_set_line_width(crMask, width);
+    cairo_move_to(crMask, x, y);
+    cairo_line_to(crMask, x, y);
+    cairo_stroke(crMask);
+    this->redrawable->repaintRect(x - 0.5 * width, y - 0.5 * width, width, width);
 }

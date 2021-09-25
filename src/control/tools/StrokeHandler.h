@@ -58,6 +58,11 @@ public:
      */
     void paintTo(const Point& point);
 
+    /**
+     * @brief paints a single dot
+     */
+    void paintDot(const double x, const double y, const double width) const;
+
 protected:
     /**
      * @brief Unconditionally add a segment to the stroke.
@@ -99,6 +104,7 @@ private:
     std::unique_ptr<StrokeStabilizer::Base> stabilizer;
 
     bool hasPressure;
+    bool firstPointPressureChange = false;
 
     friend class StrokeStabilizer::Active;
 
