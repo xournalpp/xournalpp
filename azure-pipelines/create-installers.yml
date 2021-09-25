@@ -1,9 +1,4 @@
-trigger:
-  tags:
-    include:
-      - v?*.?*.?*
-    exclude:
-      - nightly
+trigger: none
 pr:
   - master
   - release-*
