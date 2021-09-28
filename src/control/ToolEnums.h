@@ -21,6 +21,7 @@ enum ToolSize {
     TOOL_SIZE_MEDIUM,
     TOOL_SIZE_THICK,
     TOOL_SIZE_VERY_THICK,
+    TOOL_SIZE_CUSTOM,
     // None has to be at the end, because this enum is used as memory offset
     TOOL_SIZE_NONE
 };

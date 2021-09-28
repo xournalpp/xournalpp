@@ -10,9 +10,9 @@
 #include "Util.h"
 #include "i18n.h"
 
-ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_SIZE_NONE},  {1, TOOL_SIZE_VERY_FINE},
-                                                                       {2, TOOL_SIZE_FINE},  {3, TOOL_SIZE_MEDIUM},
-                                                                       {4, TOOL_SIZE_THICK}, {5, TOOL_SIZE_VERY_THICK}};
+ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {
+        {0, TOOL_SIZE_NONE},  {1, TOOL_SIZE_VERY_FINE},  {2, TOOL_SIZE_FINE},  {3, TOOL_SIZE_MEDIUM},
+        {4, TOOL_SIZE_THICK}, {5, TOOL_SIZE_VERY_THICK}, {6, TOOL_SIZE_CUSTOM}};
 
 std::string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
     switch (size) {
@@ -28,6 +28,8 @@ std::string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
             return "Thick";
         case TOOL_SIZE_VERY_THICK:
             return "Very thick";
+        case TOOL_SIZE_CUSTOM:
+            return "Custom";
         default:
             return "";
     }

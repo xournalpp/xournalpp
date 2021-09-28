@@ -489,7 +489,7 @@ void ToolMenuHandler::initToolItems() {
     addCustomItemTgl("MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness-medium", _("Medium"));
     addCustomItemTgl("THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness-thick", _("Thick"));
     addCustomItemTgl("VERY_THICK", ACTION_SIZE_VERY_THICK, GROUP_SIZE, true, "thickness-thicker", _("Very Thick"));
-
+    addCustomItemTgl("CUSTOM", ACTION_SIZE_CUSTOM, GROUP_SIZE, true, "thickness-custom", _("Custom"));
 
     // now connect all Glade Signals
     gtk_builder_connect_signals_full(gui->getBuilder(), reinterpret_cast<GtkBuilderConnectFunc>(signalConnectCallback),

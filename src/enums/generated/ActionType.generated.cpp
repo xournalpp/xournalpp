@@ -304,6 +304,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_SIZE_VERY_THICK;
     }
 
+    if (value == "ACTION_SIZE_CUSTOM") {
+        return ACTION_SIZE_CUSTOM;
+    }
+
     if (value == "ACTION_TOOL_ERASER_STANDARD") {
         return ACTION_TOOL_ERASER_STANDARD;
     }
@@ -336,6 +340,14 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_ERASER_SIZE_VERY_THICK;
     }
 
+    if (value == "ACTION_TOOL_ERASER_SIZE_CUSTOM") {
+        return ACTION_TOOL_ERASER_SIZE_CUSTOM;
+    }
+
+    if (value == "ACTION_TOOL_ERASER_SET_CUSTOM_THICKNESS") {
+        return ACTION_TOOL_ERASER_SET_CUSTOM_THICKNESS;
+    }
+
     if (value == "ACTION_TOOL_PEN_SIZE_VERY_FINE") {
         return ACTION_TOOL_PEN_SIZE_VERY_FINE;
     }
@@ -356,12 +368,20 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_PEN_SIZE_VERY_THICK;
     }
 
+    if (value == "ACTION_TOOL_PEN_SIZE_CUSTOM") {
+        return ACTION_TOOL_PEN_SIZE_CUSTOM;
+    }
+
     if (value == "ACTION_TOOL_PEN_FILL") {
         return ACTION_TOOL_PEN_FILL;
     }
 
     if (value == "ACTION_TOOL_PEN_FILL_OPACITY") {
         return ACTION_TOOL_PEN_FILL_OPACITY;
+    }
+
+    if (value == "ACTION_TOOL_PEN_SET_CUSTOM_THICKNESS") {
+        return ACTION_TOOL_PEN_SET_CUSTOM_THICKNESS;
     }
 
     if (value == "ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE") {
@@ -384,12 +404,24 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK;
     }
 
+    if (value == "ACTION_TOOL_HIGHLIGHTER_SIZE_CUSTOM") {
+        return ACTION_TOOL_HIGHLIGHTER_SIZE_CUSTOM;
+    }
+
     if (value == "ACTION_TOOL_HIGHLIGHTER_FILL") {
         return ACTION_TOOL_HIGHLIGHTER_FILL;
     }
 
     if (value == "ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY") {
         return ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY;
+    }
+
+    if (value == "ACTION_TOOL_HIGHLIGHTER_SET_CUSTOM_THICKNESS") {
+        return ACTION_TOOL_HIGHLIGHTER_SET_CUSTOM_THICKNESS;
+    }
+
+    if (value == "ACTION_TOOL_HIGHLIGHTER_SET_CUSTOM_THICKNESS") {
+        return ACTION_TOOL_HIGHLIGHTER_SET_CUSTOM_THICKNESS;
     }
 
     if (value == "ACTION_TOOL_FILL") {
@@ -902,6 +934,10 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_SIZE_VERY_THICK";
     }
 
+    if (value == ACTION_SIZE_CUSTOM) {
+        return "ACTION_SIZE_CUSTOM";
+    }
+
     if (value == ACTION_TOOL_ERASER_STANDARD) {
         return "ACTION_TOOL_ERASER_STANDARD";
     }
@@ -934,6 +970,14 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_TOOL_ERASER_SIZE_VERY_THICK";
     }
 
+    if (value == ACTION_TOOL_ERASER_SIZE_CUSTOM) {
+        return "ACTION_TOOL_ERASER_SIZE_CUSTOM";
+    }
+
+    if (value == ACTION_TOOL_ERASER_SET_CUSTOM_THICKNESS) {
+        return "ACTION_TOOL_ERASER_SET_CUSTOM_THICKNESS";
+    }
+
     if (value == ACTION_TOOL_PEN_SIZE_VERY_FINE) {
         return "ACTION_TOOL_PEN_SIZE_VERY_FINE";
     }
@@ -954,12 +998,20 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_TOOL_PEN_SIZE_VERY_THICK";
     }
 
+    if (value == ACTION_TOOL_PEN_SIZE_CUSTOM) {
+        return "ACTION_TOOL_PEN_SIZE_CUSTOM";
+    }
+
     if (value == ACTION_TOOL_PEN_FILL) {
         return "ACTION_TOOL_PEN_FILL";
     }
 
     if (value == ACTION_TOOL_PEN_FILL_OPACITY) {
         return "ACTION_TOOL_PEN_FILL_OPACITY";
+    }
+
+    if (value == ACTION_TOOL_PEN_SET_CUSTOM_THICKNESS) {
+        return "ACTION_TOOL_PEN_SET_CUSTOM_THICKNESS";
     }
 
     if (value == ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE) {
@@ -982,12 +1034,20 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK";
     }
 
+    if (value == ACTION_TOOL_HIGHLIGHTER_SIZE_CUSTOM) {
+        return "ACTION_TOOL_HIGHLIGHTER_SIZE_CUSTOM";
+    }
+
     if (value == ACTION_TOOL_HIGHLIGHTER_FILL) {
         return "ACTION_TOOL_HIGHLIGHTER_FILL";
     }
 
     if (value == ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY) {
         return "ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY";
+    }
+
+    if (value == ACTION_TOOL_PEN_SET_CUSTOM_THICKNESS) {
+        return "ACTION_TOOL_PEN_SET_CUSTOM_THICKNESS";
     }
 
     if (value == ACTION_TOOL_FILL) {

@@ -1,5 +1,6 @@
 #include "Control.h"
 
+#include <cmath>
 #include <ctime>
 #include <memory>
 #include <numeric>
@@ -8,6 +9,7 @@
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
 #include "gui/dialog/AboutDialog.h"
+#include "gui/dialog/CustomThicknessDialog.h"
 #include "gui/dialog/FillOpacityDialog.h"
 #include "gui/dialog/FormatDialog.h"
 #include "gui/dialog/GotoDialog.h"
@@ -605,6 +607,12 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
                 setToolSize(TOOL_SIZE_VERY_THICK);
             }
             break;
+        case ACTION_SIZE_CUSTOM:
+            if (enabled) {
+                setToolSize(TOOL_SIZE_CUSTOM);
+            }
+            break;
+
 
         case ACTION_TOOL_LINE_STYLE_PLAIN:
             setLineStyle("plain");
@@ -649,6 +657,16 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
                 eraserSizeChanged();
             }
             break;
+        case ACTION_TOOL_ERASER_SIZE_CUSTOM:
+            if (enabled) {
+                this->toolHandler->setEraserSize(TOOL_SIZE_CUSTOM);
+                eraserSizeChanged();
+            }
+            break;
+        case ACTION_TOOL_ERASER_SET_CUSTOM_THICKNESS:
+            selectCustomThickness(TOOL_ERASER);
+            break;
+
         case ACTION_TOOL_PEN_SIZE_VERY_FINE:
             if (enabled) {
                 this->toolHandler->setPenSize(TOOL_SIZE_VERY_FINE);
@@ -679,13 +697,21 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
                 penSizeChanged();
             }
             break;
+        case ACTION_TOOL_PEN_SIZE_CUSTOM:
+            if (enabled) {
+                this->toolHandler->setPenSize(TOOL_SIZE_CUSTOM);
+                penSizeChanged();
+            }
+            break;
         case ACTION_TOOL_PEN_FILL:
             this->toolHandler->setPenFillEnabled(enabled);
             break;
         case ACTION_TOOL_PEN_FILL_OPACITY:
             selectFillAlpha(true);
             break;
-
+        case ACTION_TOOL_PEN_SET_CUSTOM_THICKNESS:
+            selectCustomThickness(TOOL_PEN);
+            break;
 
         case ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE:
             if (enabled) {
@@ -717,11 +743,20 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
                 highlighterSizeChanged();
             }
             break;
+        case ACTION_TOOL_HIGHLIGHTER_SIZE_CUSTOM:
+            if (enabled) {
+                this->toolHandler->setHighlighterSize(TOOL_SIZE_CUSTOM);
+                highlighterSizeChanged();
+            }
+            break;
         case ACTION_TOOL_HIGHLIGHTER_FILL:
             this->toolHandler->setHighlighterFillEnabled(enabled);
             break;
         case ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY:
             selectFillAlpha(false);
+            break;
+        case ACTION_TOOL_HIGHLIGHTER_SET_CUSTOM_THICKNESS:
+            selectCustomThickness(TOOL_HIGHLIGHTER);
             break;
 
         case ACTION_FONT_BUTTON_CHANGED:
@@ -990,6 +1025,17 @@ void Control::selectFillAlpha(bool pen) {
     } else {
         toolHandler->setHighlighterFill(alpha);
     }
+}
+
+void Control::selectCustomThickness(ToolType toolType) {
+    CustomThicknessDialog dlg(gladeSearchPath, toolHandler->getTool(toolType).getThickness(TOOL_SIZE_CUSTOM));
+    dlg.show(getGtkWindow());
+
+    if (dlg.getResultThickness() == NAN) {
+        return;
+    }
+
+    toolHandler->setCustomThickness(dlg.getResultThickness(), toolType);
 }
 
 void Control::clearSelectionEndText() {
@@ -1687,6 +1733,7 @@ void Control::toolChanged() {
     fireEnableAction(ACTION_SIZE_FINE, enableSize);
     fireEnableAction(ACTION_SIZE_VERY_THICK, enableSize);
     fireEnableAction(ACTION_SIZE_VERY_FINE, enableSize);
+    fireEnableAction(ACTION_SIZE_CUSTOM, enableSize);
     if (enableSize) {
         toolSizeChanged();
     }
@@ -1747,6 +1794,9 @@ void Control::eraserSizeChanged() {
         case TOOL_SIZE_VERY_THICK:
             fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_VERY_THICK);
             break;
+        case TOOL_SIZE_CUSTOM:
+            fireActionSelected(GROUP_ERASER_SIZE, ACTION_TOOL_ERASER_SIZE_CUSTOM);
+            break;
         default:
             break;
     }
@@ -1769,6 +1819,9 @@ void Control::penSizeChanged() {
         case TOOL_SIZE_VERY_THICK:
             fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_VERY_THICK);
             break;
+        case TOOL_SIZE_CUSTOM:
+            fireActionSelected(GROUP_PEN_SIZE, ACTION_TOOL_PEN_SIZE_CUSTOM);
+            break;
         default:
             break;
     }
@@ -1790,6 +1843,9 @@ void Control::highlighterSizeChanged() {
             break;
         case TOOL_SIZE_VERY_THICK:
             fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK);
+            break;
+        case TOOL_SIZE_CUSTOM:
+            fireActionSelected(GROUP_HIGHLIGHTER_SIZE, ACTION_TOOL_HIGHLIGHTER_SIZE_CUSTOM);
             break;
         default:
             break;
@@ -1823,6 +1879,9 @@ void Control::toolSizeChanged() {
             break;
         case TOOL_SIZE_VERY_THICK:
             fireActionSelected(GROUP_SIZE, ACTION_SIZE_VERY_THICK);
+            break;
+        case TOOL_SIZE_CUSTOM:
+            fireActionSelected(GROUP_SIZE, ACTION_SIZE_CUSTOM);
             break;
     }
 
