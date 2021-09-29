@@ -1,5 +1,7 @@
 #include "CustomExportJob.h"
 
+#include <memory>
+
 #include <config-features.h>
 
 #include "control/Control.h"
@@ -70,35 +72,34 @@ auto CustomExportJob::showFilechooser() -> bool {
 
     Document* doc = control->getDocument();
     doc->lock();
-    auto* dlg = new ExportDialog(control->getGladeSearchPath());
+    ExportDialog dlg(control->getGladeSearchPath());
     if (filepath.extension() == ".pdf") {
-        dlg->showProgressiveMode();
+        dlg.showProgressiveMode();
         format = EXPORT_GRAPHICS_PDF;
     } else if (filepath.extension() == ".svg") {
-        dlg->removeQualitySetting();
+        dlg.removeQualitySetting();
         format = EXPORT_GRAPHICS_SVG;
     } else if (filepath.extension() == ".png") {
         format = EXPORT_GRAPHICS_PNG;
     }
 
-    dlg->initPages(control->getCurrentPageNo() + 1, doc->getPageCount());
+    dlg.initPages(control->getCurrentPageNo() + 1, doc->getPageCount());
 
-    dlg->show(GTK_WINDOW(control->getWindow()->getWindow()));
+    dlg.show(GTK_WINDOW(control->getWindow()->getWindow()));
 
-    if (!dlg->isConfirmed()) {
+    if (!dlg.isConfirmed()) {
         doc->unlock();
         return false;
     }
 
-    exportRange = dlg->getRange();
-    progressiveMode = dlg->progressiveMode();
-    exportBackground = dlg->getBackgroundType();
+    exportRange = dlg.getRange();
+    progressiveMode = dlg.progressiveMode();
+    exportBackground = dlg.getBackgroundType();
 
     if (format == EXPORT_GRAPHICS_PNG) {
-        pngQualityParameter = dlg->getPngQualityParameter();
+        pngQualityParameter = dlg.getPngQualityParameter();
     }
 
-    delete dlg;
     doc->unlock();
     return true;
 }
