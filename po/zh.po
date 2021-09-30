@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-30 06:23\n"
+"PO-Revision-Date: 2021-09-30 07:23\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -413,7 +413,7 @@ msgstr "文档未加载！({1}), {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Dotted"
-msgstr "虚线（点状）"
+msgstr "点阵"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -752,7 +752,7 @@ msgstr "插入页面"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Dotted"
-msgstr "等距网格点"
+msgstr "等轴点阵"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Isometric Graph"
