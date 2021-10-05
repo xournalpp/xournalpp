@@ -20,11 +20,11 @@ size_t ObjectInputStream::pos() { return len - istream.str().size(); }
 auto ObjectInputStream::read(const char* data, int data_len) -> bool {
     istream.clear();
     len = (size_t)data_len;
-    string dataStr = string(data, len);
+    std::string dataStr = std::string(data, len);
     istream.str(dataStr);
 
     try {
-        string version = readString();
+        std::string version = readString();
         if (version != XML_VERSION_STR) {
             g_warning("ObjectInputStream version mismatch... two different Xournal versions running? (%s / %s)",
                       version.c_str(), XML_VERSION_STR);
@@ -38,21 +38,21 @@ auto ObjectInputStream::read(const char* data, int data_len) -> bool {
 }
 
 void ObjectInputStream::readObject(const char* name) {
-    string type = readObject();
+    std::string type = readObject();
     if (type != name) {
         throw InputStreamException(FS(FORMAT_STR("Try to read object type {1} but read object type {2}") % name % type),
                                    __FILE__, __LINE__);
     }
 }
 
-auto ObjectInputStream::readObject() -> string {
+auto ObjectInputStream::readObject() -> std::string {
     checkType('{');
     return readString();
 }
 
-auto ObjectInputStream::getNextObjectName() -> string {
+auto ObjectInputStream::getNextObjectName() -> std::string {
     checkType('{');
-    string name = readString();
+    std::string name = readString();
     return name;
 }
 
@@ -73,7 +73,7 @@ auto ObjectInputStream::readSizeT() -> size_t {
     return readTypeFromSStream<size_t>(istream, "size_t");
 }
 
-auto ObjectInputStream::readString() -> string {
+auto ObjectInputStream::readString() -> std::string {
     checkType('s');
 
     size_t lenString = (size_t)readTypeFromSStream<int>(istream, "int");
@@ -82,7 +82,7 @@ auto ObjectInputStream::readString() -> string {
         throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
     }
 
-    string output;
+    std::string output;
     output.resize(lenString);
 
     istream.read(&output[0], (long)lenString);
@@ -160,8 +160,8 @@ void ObjectInputStream::checkType(char type) {
     }
 }
 
-auto ObjectInputStream::getType(char type) -> string {
-    string ret;
+auto ObjectInputStream::getType(char type) -> std::string {
+    std::string ret;
     if (type == '{') {
         ret = "Object begin";
     } else if (type == '}') {
