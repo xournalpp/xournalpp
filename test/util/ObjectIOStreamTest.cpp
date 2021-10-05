@@ -12,8 +12,6 @@
 #include <util/serializing/ObjectInputStream.h>
 #include <util/serializing/ObjectOutputStream.h>
 
-using namespace std;
-
 extern const char* XML_VERSION_STR;
 
 class ObjectIOStreamTest: public CppUnit::TestFixture {
@@ -33,53 +31,53 @@ public:
     void tearDown() override {}
 
     template <typename T, unsigned N>
-    string serializeData(const array<T, N>& data) {
+    std::string serializeData(const std::array<T, N>& data) {
         ObjectOutputStream outStream(new BinObjectEncoding);
         outStream.writeData(&data[0], N, sizeof(T));
         auto outStr = outStream.getStr();
-        return string(outStr->str, outStr->len);
+        return {outStr->str, outStr->len};
     }
 
-    string serializeImage(cairo_surface_t* surf) {
+    std::string serializeImage(cairo_surface_t* surf) {
         ObjectOutputStream outStream(new BinObjectEncoding);
         outStream.writeImage(surf);
         auto outStr = outStream.getStr();
-        return string(outStr->str, outStr->len);
+        return {outStr->str, outStr->len};
     }
 
-    string serializeString(string str) {
+    std::string serializeString(const std::string& str) {
         ObjectOutputStream outStream(new BinObjectEncoding);
         outStream.writeString(str);
         auto outStr = outStream.getStr();
-        return string(outStr->str, outStr->len);
+        return {outStr->str, outStr->len};
     }
 
-    string serializeSizeT(size_t x) {
+    std::string serializeSizeT(size_t x) {
         ObjectOutputStream outStream(new BinObjectEncoding);
         outStream.writeSizeT(x);
         auto outStr = outStream.getStr();
-        return string(outStr->str, outStr->len);
+        return {outStr->str, outStr->len};
     }
 
-    string serializeDouble(double x) {
+    std::string serializeDouble(double x) {
         ObjectOutputStream outStream(new BinObjectEncoding);
         outStream.writeDouble(x);
         auto outStr = outStream.getStr();
-        return string(outStr->str, outStr->len);
+        return {outStr->str, outStr->len};
     }
 
-    string serializeInt(int x) {
+    std::string serializeInt(int x) {
         ObjectOutputStream outStream(new BinObjectEncoding);
         outStream.writeInt(x);
         auto outStr = outStream.getStr();
-        return string(outStr->str, outStr->len);
+        return {outStr->str, outStr->len};
     }
 
     void testReadComplexObject() {
 
-        string objectName = "TestObject";
+        std::string objectName = "TestObject";
         double d = 42.;
-        string s = "Test";
+        std::string s = "Test";
         int i = -1337;
 
         ObjectOutputStream outStream(new BinObjectEncoding);
@@ -90,16 +88,16 @@ public:
         outStream.endObject();
 
         auto gstr = outStream.getStr();
-        string str(gstr->str, gstr->len);
+        std::string str(gstr->str, gstr->len);
 
         ObjectInputStream stream;
         CPPUNIT_ASSERT(stream.read(&str[0], (int)str.size() + 1));
 
-        string outputName = stream.readObject();
+        std::string outputName = stream.readObject();
         CPPUNIT_ASSERT_EQUAL(outputName, objectName);
         double outputD = stream.readDouble();
         CPPUNIT_ASSERT_EQUAL(outputD, d);
-        string outputS = stream.readString();
+        std::string outputS = stream.readString();
         CPPUNIT_ASSERT_EQUAL(outputS, s);
         int outputI = stream.readInt();
         CPPUNIT_ASSERT_EQUAL(outputI, i);
@@ -107,8 +105,8 @@ public:
     }
 
     template <typename T, unsigned int N>
-    void testReadDataType(const array<T, N>& data) {
-        string str = serializeData<T, N>(data);
+    void testReadDataType(const std::array<T, N>& data) {
+        std::string str = serializeData<T, N>(data);
 
         ObjectInputStream stream;
         CPPUNIT_ASSERT(stream.read(&str[0], (int)str.size() + 1));
@@ -122,11 +120,11 @@ public:
     }
 
     void testReadData() {
-        testReadDataType<char, 3>(array<char, 3>{0, 42, -42});
-        testReadDataType<long, 3>(array<long, 3>{0, 42, -42});
-        testReadDataType<long long, 3>(array<long long, 3>{0, 420000000000, -42000000000});
-        testReadDataType<double, 3>(array<double, 3>{0, 42., -42.});
-        testReadDataType<float, 3>(array<float, 3>{0, 42., -42.});
+        testReadDataType<char, 3>(std::array<char, 3>{0, 42, -42});
+        testReadDataType<long, 3>(std::array<long, 3>{0, 42, -42});
+        testReadDataType<long long, 3>(std::array<long long, 3>{0, 420000000000, -42000000000});
+        testReadDataType<double, 3>(std::array<double, 3>{0, 42., -42.});
+        testReadDataType<float, 3>(std::array<float, 3>{0, 42., -42.});
     }
 
     void testReadImage() {
@@ -143,7 +141,7 @@ public:
 
         for (unsigned i = 0; i < width * height * 4; ++i) { surfaceData[i] = distrib(gen); }
 
-        string strSurface = serializeImage(surface);
+        std::string strSurface = serializeImage(surface);
 
 
         ObjectInputStream stream;
@@ -165,34 +163,36 @@ public:
     }
 
     void testReadString() {
-        vector<string> stringToTest{
+        std::vector<std::string> stringToTest{
                 "", "Hello World", XML_VERSION_STR, "1337",
                 "Laborum beatae sit at. Tempore ex odio et non et iste et. Deleniti magni beatae quod praesentium dicta quas ducimus hic. Nemo vel est saepe voluptatibus. Sunt eveniet aut saepe consequatur fuga ad molestias.\n \
                 Culpa nulla saepe alias magni nemo magni. Sed sit sint repellat doloremque. Quo ipsum debitis quos impedit. Omnis expedita veritatis nihil sint et itaque possimus. Nobis est fugit vel omnis. Dolores architecto laudantium nihil rerum."};
 
-        vector<pair<string, string>> testData;
-        for (string str: stringToTest) { testData.push_back({serializeString(str), str}); }
+        std::vector<std::pair<std::string, std::string>> testData;
+        testData.reserve(stringToTest.size());
+        for (auto&& str: stringToTest) { testData.emplace_back(serializeString(str), str); }
 
-        for (auto data: testData) {
-            string str = data.first;
-            string x = data.second;
+        for (auto&& data: testData) {
+            std::string& str = data.first;
+            std::string& x = data.second;
 
             ObjectInputStream stream;
             // The +1 stands for the \0 character
             CPPUNIT_ASSERT(stream.read(&str[0], (int)str.size() + 1));
-            string output = stream.readString();
+            std::string output = stream.readString();
             CPPUNIT_ASSERT_EQUAL(x, output);
         }
     }
 
     void testReadSizeT() {
-        vector<size_t> sizeTToTest{0, 1, 42, 1337, 10000000, 10000000000};
+        std::vector<size_t> sizeTToTest{0, 1, 42, 1337, 10000000, 10000000000};
 
-        vector<pair<string, size_t>> testData;
-        for (size_t number: sizeTToTest) { testData.push_back({serializeSizeT(number), number}); }
+        std::vector<std::pair<std::string, size_t>> testData;
+        testData.reserve(sizeTToTest.size());
+        for (size_t number: sizeTToTest) { testData.emplace_back(serializeSizeT(number), number); }
 
-        for (auto data: testData) {
-            string str = data.first;
+        for (auto&& data: testData) {
+            std::string& str = data.first;
             size_t x = data.second;
 
             ObjectInputStream stream;
@@ -204,13 +204,14 @@ public:
     }
 
     void testReadInt() {
-        vector<int> intToTest{0, 1, -1, 42, -50000, -1337, 10000};
+        std::vector<int> intToTest{0, 1, -1, 42, -50000, -1337, 10000};
 
-        vector<pair<string, int>> testData;
-        for (int number: intToTest) { testData.push_back({serializeInt(number), number}); }
+        std::vector<std::pair<std::string, int>> testData;
+        testData.reserve(intToTest.size());
+        for (auto&& number: intToTest) { testData.emplace_back(serializeInt(number), number); }
 
-        for (auto data: testData) {
-            string str = data.first;
+        for (auto&& data: testData) {
+            std::string& str = data.first;
             int x = data.second;
 
             ObjectInputStream stream;
@@ -223,13 +224,14 @@ public:
 
 
     void testReadDouble() {
-        vector<double> doubleToTest{0., 0.5, 42., 46.5, -85.2, -1337, 1e50};
+        std::vector<double> doubleToTest{0., 0.5, 42., 46.5, -85.2, -1337, 1e50};
 
-        vector<pair<string, double>> testData;
-        for (double number: doubleToTest) { testData.push_back({serializeDouble(number), number}); }
+        std::vector<std::pair<std::string, double>> testData;
+        testData.reserve(doubleToTest.size());
+        for (auto&& number: doubleToTest) { testData.emplace_back(serializeDouble(number), number); }
 
-        for (auto data: testData) {
-            string str = data.first;
+        for (auto&& data: testData) {
+            std::string& str = data.first;
             double dbl = data.second;
 
             ObjectInputStream stream;
