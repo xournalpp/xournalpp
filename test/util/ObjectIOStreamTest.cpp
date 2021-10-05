@@ -118,9 +118,7 @@ public:
         stream.readData((void**)&outputData, &length);
         CPPUNIT_ASSERT_EQUAL(length, (int)N);
 
-        for (size_t i = 0; i < (size_t)length / sizeof(T); ++i) {
-            CPPUNIT_ASSERT_EQUAL(outputData[i], data.at(i));
-        }
+        for (size_t i = 0; i < (size_t)length / sizeof(T); ++i) { CPPUNIT_ASSERT_EQUAL(outputData[i], data.at(i)); }
     }
 
     void testReadData() {
@@ -143,9 +141,7 @@ public:
         int width = cairo_image_surface_get_width(surface);
         int height = cairo_image_surface_get_height(surface);
 
-        for (unsigned i = 0; i < width * height * 4; ++i) {
-            surfaceData[i] = distrib(gen);
-        }
+        for (unsigned i = 0; i < width * height * 4; ++i) { surfaceData[i] = distrib(gen); }
 
         string strSurface = serializeImage(surface);
 
@@ -162,9 +158,7 @@ public:
         CPPUNIT_ASSERT_EQUAL(width, widthOutput);
         CPPUNIT_ASSERT_EQUAL(height, heightOutput);
 
-        for (unsigned i = 0; i < width * height * 4; ++i) {
-            CPPUNIT_ASSERT_EQUAL(surfaceData[i], outputData[i]);
-        }
+        for (unsigned i = 0; i < width * height * 4; ++i) { CPPUNIT_ASSERT_EQUAL(surfaceData[i], outputData[i]); }
 
         cairo_surface_destroy(surface);
         cairo_surface_destroy(outputSurface);
@@ -177,9 +171,7 @@ public:
                 Culpa nulla saepe alias magni nemo magni. Sed sit sint repellat doloremque. Quo ipsum debitis quos impedit. Omnis expedita veritatis nihil sint et itaque possimus. Nobis est fugit vel omnis. Dolores architecto laudantium nihil rerum."};
 
         vector<pair<string, string>> testData;
-        for (string str: stringToTest) {
-            testData.push_back({serializeString(str), str});
-        }
+        for (string str: stringToTest) { testData.push_back({serializeString(str), str}); }
 
         for (auto data: testData) {
             string str = data.first;
@@ -197,9 +189,7 @@ public:
         vector<size_t> sizeTToTest{0, 1, 42, 1337, 10000000, 10000000000};
 
         vector<pair<string, size_t>> testData;
-        for (size_t number: sizeTToTest) {
-            testData.push_back({serializeSizeT(number), number});
-        }
+        for (size_t number: sizeTToTest) { testData.push_back({serializeSizeT(number), number}); }
 
         for (auto data: testData) {
             string str = data.first;
@@ -217,9 +207,7 @@ public:
         vector<int> intToTest{0, 1, -1, 42, -50000, -1337, 10000};
 
         vector<pair<string, int>> testData;
-        for (int number: intToTest) {
-            testData.push_back({serializeInt(number), number});
-        }
+        for (int number: intToTest) { testData.push_back({serializeInt(number), number}); }
 
         for (auto data: testData) {
             string str = data.first;
@@ -238,9 +226,7 @@ public:
         vector<double> doubleToTest{0., 0.5, 42., 46.5, -85.2, -1337, 1e50};
 
         vector<pair<string, double>> testData;
-        for (double number: doubleToTest) {
-            testData.push_back({serializeDouble(number), number});
-        }
+        for (double number: doubleToTest) { testData.push_back({serializeDouble(number), number}); }
 
         for (auto data: testData) {
             string str = data.first;
