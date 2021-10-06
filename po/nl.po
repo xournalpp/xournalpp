@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:50\n"
+"PO-Revision-Date: 2021-10-06 17:58\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -38,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " van {1}"
 
 #: ../src/control/settings/Settings.cpp:119
 msgid "%F-Note-%H-%M"
@@ -84,7 +84,7 @@ msgstr "Toepassen op huidige pagina"
 
 #: ../src/control/tools/EditSelection.cpp:351
 msgid "Arrange"
-msgstr ""
+msgstr "Ordenen"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:29
 #: ../src/control/stockdlg/XojOpenDlg.cpp:112
@@ -275,7 +275,7 @@ msgstr "Kan afbeelding niet uitlezen: {1}. Foutmelding: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:389
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Het paginanummer kan niet gelezen worden van de gekloonde achtergrond: {1}."
 
 #: ../src/undo/UndoRedoHandler.cpp:139
 msgid "Could not redo \"{1}\"\n"
@@ -725,7 +725,7 @@ msgstr "Afbeeldingen"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Voeg hieronder een kopie toe van de huidige pagina"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
@@ -935,7 +935,7 @@ msgstr "PDF-bestanden"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
@@ -1003,7 +1003,7 @@ msgstr "Presentatiemodus"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:68
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "De eerder geselecteerde taal is niet meer beschikbaar!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Print"
@@ -1111,7 +1111,7 @@ msgstr "Zoeken"
 
 #: ../src/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Zie de volledige lijst van bijdragers"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Select Font"
@@ -1171,11 +1171,11 @@ msgstr "Bugmelding versturen"
 
 #: ../src/control/tools/EditSelection.cpp:379
 msgid "Send backward"
-msgstr ""
+msgstr "Naar achter sturen"
 
 #: ../src/control/tools/EditSelection.cpp:387
 msgid "Send to back"
-msgstr ""
+msgstr "Naar achtergrond sturen"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
 msgid "Separator"
@@ -1191,7 +1191,9 @@ msgstr "Stel DPI in voor PNG exports. Standaard is 300\n"
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Stel paginahoogte in voor PNG-exportering\n"
+"                                 Geen effect zonder -i/--create-img=foo.png\n"
+"                                 Genegeerd als --export-png-dpi of --export-png-breedte wordt gebruikt"
 
 #: ../src/control/XournalMain.cpp:679
 msgid "Set page width for PNG exports\n"
@@ -1538,7 +1540,7 @@ msgstr "In je huidige document ontbreekt PDF-pagina #{1}.\n"
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "Zoom-schuifregelaar"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Zoom fit to screen"
@@ -1611,7 +1613,7 @@ msgstr "gum"
 
 #: ../src/control/Control.cpp:1970
 msgid "file: {1}"
-msgstr ""
+msgstr "bestand: {1}"
 
 #: ../src/undo/AddUndoAction.cpp:97 ../src/undo/DeleteUndoAction.cpp:94
 msgid "image"
@@ -1720,7 +1722,7 @@ msgstr "%"
 
 #: ../ui/settings.glade:2473
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "% is groter dan de originele afstand tussen de twee aanraakpunten."
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
