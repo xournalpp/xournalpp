@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-30 07:23\n"
+"PO-Revision-Date: 2021-10-06 14:36\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2700,7 +2700,7 @@ msgstr "向上移动"
 
 #: ../ui/settings.glade:3464
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "根据当前视图外被选中的元素数量将滚动速度翻倍，并以此数值为上限。"
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
@@ -3163,7 +3163,7 @@ msgstr "网站"
 
 #: ../ui/settings.glade:3451
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "当一个被选中元素被移出画布的可见部分时， 以这个百分比数值滚动画布。 "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
