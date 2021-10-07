@@ -12,6 +12,7 @@
 #pragma once
 
 #include <list>
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -58,7 +59,7 @@ private:
     PdfCacheEntry* cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img, double zoom);
 
 private:
-    GMutex renderMutex{};
+    std::mutex renderMutex;
 
     std::list<PdfCacheEntry*> data;
     std::list<PdfCacheEntry*>::size_type size = 0;

@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -93,7 +94,7 @@ protected:
     /**
      * Mutex
      */
-    GMutex drawingMutex{};
+    std::mutex drawingMutex{};
 
     /**
      * The Widget which is used for drawing

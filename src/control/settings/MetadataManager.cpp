@@ -18,7 +18,7 @@ using namespace std;
 MetadataEntry::MetadataEntry(): valid(false), zoom(1), page(0), time(0) {}
 
 
-MetadataManager::MetadataManager(): metadata(nullptr) { g_mutex_init(&this->mutex); }
+MetadataManager::MetadataManager(): metadata(nullptr) {}
 
 MetadataManager::~MetadataManager() { documentChanged(); }
 
@@ -43,10 +43,10 @@ void MetadataManager::deleteMetadataFile(fs::path const& path) {
  * Document was closed, a new document was opened etc.
  */
 void MetadataManager::documentChanged() {
-    g_mutex_lock(&this->mutex);
+    this->mutex.lock();
     MetadataEntry* m = metadata;
     metadata = nullptr;
-    g_mutex_unlock(&this->mutex);
+    this->mutex.unlock();
 
     if (m == nullptr) {
         return;
@@ -185,7 +185,7 @@ void MetadataManager::storeMetadata(fs::path const& file, int page, double zoom)
         return;
     }
 
-    g_mutex_lock(&this->mutex);
+    this->mutex.lock();
     if (metadata == nullptr) {
         metadata = new MetadataEntry();
     }
@@ -195,5 +195,5 @@ void MetadataManager::storeMetadata(fs::path const& file, int page, double zoom)
     metadata->zoom = zoom;
     metadata->page = page;
     metadata->time = g_get_real_time();
-    g_mutex_unlock(&this->mutex);
+    this->mutex.unlock();
 }

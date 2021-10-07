@@ -1,27 +1,30 @@
 #include "Job.h"
 
+#include <mutex>
+
+#include <glib.h>
 #include <gtk/gtk.h>
 
-Job::Job() { g_mutex_init(&this->refMutex); }
+Job::Job() {}
 
 Job::~Job() = default;
 
 void Job::unref() {
-    g_mutex_lock(&this->refMutex);
+    this->refMutex.lock();
     this->refCount--;
 
     if (this->refCount == 0) {
-        g_mutex_unlock(&this->refMutex);
+        this->refMutex.unlock();
         delete this;
     } else {
-        g_mutex_unlock(&this->refMutex);
+        this->refMutex.unlock();
     }
 }
 
 void Job::ref() {
-    g_mutex_lock(&this->refMutex);
+    this->refMutex.lock();
     this->refCount++;
-    g_mutex_unlock(&this->refMutex);
+    this->refMutex.unlock();
 }
 
 void Job::deleteJob() {
