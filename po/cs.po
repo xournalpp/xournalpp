@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-08 15:48\n"
+"PO-Revision-Date: 2021-10-08 16:48\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -773,7 +773,7 @@ msgstr "Vrstva"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "Kombinace vrstvy"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layer Preview"
@@ -1112,7 +1112,7 @@ msgstr "Hledat"
 
 #: ../src/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Zobrazit úplný seznam přispěvatelů"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
 msgid "Select Font"
@@ -1164,7 +1164,7 @@ msgstr "Výběr oblasti"
 
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
-msgstr ""
+msgstr "Kombinace výběru"
 
 #: ../src/control/XournalMain.cpp:164
 msgid "Send Bugreport"
@@ -1315,12 +1315,14 @@ msgstr "Konfigurace nástrojové lišty „{1}“ je předdefinována. Přejete 
 #: ../src/control/Control.cpp:1998
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "Přiložený soubor pozadí {1} nebyl nalezen. Možná byl přesunut, přejmenován nebo odstraněn.\n"
+"Byl naposledy spatřen na: {2}"
 
 #: ../src/control/Control.cpp:2002
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "Soubor pozadí {1} nebyl nalezen. Možná byl přesunut, přejmenován nebo odstraněn.\n"
+"Byl naposledy spatřen na: {2}"
 
 #: ../src/control/jobs/BaseExportJob.cpp:47
 msgid "The check for overwriting the background failed with:\n"
@@ -1904,7 +1906,7 @@ msgstr "<i>Definujte, které nástroje budou vybrány, pokud stisknete tlačítk
 
 #: ../ui/settings.glade:2612
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr ""
+msgstr "<i>Deaktivace integrovaného posouvání dotykové obrazovky GTK může obejít chyby posouvání na některých platformách. Zvažte změnu tohoto nastavení, pokud při pokusu o posouvání pomocí dotykové obrazovky dojde k skokům/náhlým změnám polohy posouvání.</i>"
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -2070,7 +2072,7 @@ msgstr "Autor: "
 
 #: ../ui/about.glade:449
 msgid "Authors"
-msgstr ""
+msgstr "Autoři"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2078,7 +2080,7 @@ msgstr "Autodetekce"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
-msgstr ""
+msgstr "Automatické načítání"
 
 #: ../ui/settings.glade:456
 msgid "Autosaving"
@@ -2098,7 +2100,7 @@ msgstr "Barva pozadí mezi stránkami"
 
 #: ../ui/settings.glade:3453
 msgid "Base speed"
-msgstr ""
+msgstr "Základní rychlost"
 
 #: ../ui/settings.glade:3001
 msgctxt "stylus cursor uses a big pen icon"
@@ -2251,7 +2253,7 @@ msgstr "Vypnout"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "Zakázat vestavěnou funkci setrvačného rolování GTK (vyžaduje restart)."
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -2307,7 +2309,7 @@ msgstr "Přetáhněte komponenty odsud do nástrojové lišty a zpět."
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Drag: Pokud je hodnota malá, mohou se objevit nechtěné oscilace. Pokud je hodnota vysoká, nedojde ke stabilizaci."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
@@ -2367,7 +2369,7 @@ msgstr "Zapnout akci klepnutím"
 
 #: ../ui/settings.glade:676
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "Povolit automatické načítání nejnovějších souborů při spuštění aplikace"
 
 #: ../ui/settings.glade:852
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2532,7 +2534,7 @@ msgstr "Jak krátké (čas) AND...\n\n"
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr ""
+msgstr "Návrhář ikon"
 
 #: ../ui/settings.glade:4677
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2540,7 +2542,7 @@ msgstr "Pokud je aktivovní, tvary, které byly rozpoznány rozpoznávačem tvar
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "Pokud je povoleno, Xournal++ automaticky otevře nejnovější dokument, takže můžete pokračovat v úpravách posledního uloženého dokumentu."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2552,7 +2554,7 @@ msgstr "Pokud je povoleno, vrstvy každé stránky budou přidávány jedna po d
 
 #: ../ui/settings.glade:664
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "Pokud otevřete PDF a existuje soubor Xournal se stejným názvem, otevře se soubor xoj."
 
 #: ../ui/settings.glade:4743
 msgid "Ignore Time (ms)"
@@ -2660,7 +2662,7 @@ msgstr "Maximální délka (mm)"
 
 #: ../ui/settings.glade:3466
 msgid "Max multiplier"
-msgstr ""
+msgstr "Maximální multiplikátor"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2698,7 +2700,7 @@ msgstr "Posunout nahoru"
 
 #: ../ui/settings.glade:3464
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "Vynásobit rychlost posouvání až do této výše, podle toho, kolik vybraného prvku je mimo zobrazení."
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
@@ -2942,7 +2944,7 @@ msgstr "Barva výběru (Text, výběr tahu atd.)"
 
 #: ../ui/settings.glade:3481
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Výběr okraje"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3009,7 +3011,7 @@ msgstr "Přichytávání"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Zdrojový kód / Sledování chyb"
 
 #: ../ui/settings.glade:3842
 msgid "Speed for Ctrl + Scroll"
@@ -3105,7 +3107,7 @@ msgstr "Kreslení dotykem"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Stiskněte rolování"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -3122,7 +3124,7 @@ msgstr "Pokus se nejdříve vybrat objekt; pokud není nic vybráno, zobrazí se
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Použít dostupné Stock ikony (vyžaduje restart)"
 
 #: ../ui/settings.glade:4673
 msgid "Use snapping for recognized shapes"
@@ -3158,11 +3160,11 @@ msgstr "Zobrazení"
 
 #: ../ui/about.glade:328
 msgid "Website"
-msgstr ""
+msgstr "Webová stránka"
 
 #: ../ui/settings.glade:3451
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Když je prvek vybrán a přesunut za viditelnou část plátna, posuňte obrazovku o částku rovnající se tomuto procentu viditelné části plátna. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
