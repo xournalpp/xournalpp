@@ -16,7 +16,6 @@
 
 #include <gtk/gtk.h>
 
-#include "XournalType.h"
 
 class Settings;
 class MainWindow;
@@ -32,7 +31,7 @@ public:
 
 private:
     void enableFullscreen(MainWindow* win);
-    void hideWidget(MainWindow* win, const string& widgetName);
+    void hideWidget(MainWindow* win, const std::string& widgetName);
     void disableFullscreen(MainWindow* win);
 
 private:
@@ -59,5 +58,5 @@ private:
     /**
      * Currently hidden widgets
      */
-    vector<GtkWidget*> hiddenFullscreenWidgets;
+    std::vector<GtkWidget*> hiddenFullscreenWidgets;
 };

@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "UndoAction.h"
-#include "XournalType.h"
+
 
 class Element;
 class Layer;
@@ -32,7 +32,7 @@ public:
 
     void addElement(Layer* layer, Element* e, int pos);
 
-    string getText() override;
+    std::string getText() override;
 
 private:
     GList* elements = nullptr;

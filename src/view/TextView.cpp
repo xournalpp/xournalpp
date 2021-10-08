@@ -7,6 +7,8 @@
 #include "StringUtils.h"
 #include "Util.h"
 
+using std::string;
+
 TextView::TextView() = default;
 
 TextView::~TextView() = default;
@@ -34,6 +36,10 @@ void TextView::updatePangoFont(PangoLayout* layout, const Text* t) {
     PangoFontDescription* desc = pango_font_description_from_string(t->getFontName().c_str());
     pango_font_description_set_absolute_size(desc, t->getFontSize() * PANGO_SCALE);
 
+#if PANGO_VERSION_CHECK(1, 48, 5)  // see https://gitlab.gnome.org/GNOME/pango/-/issues/499
+    pango_layout_set_line_spacing(layout, 1.0);
+#endif
+
     pango_layout_set_font_description(layout, desc);
     pango_font_description_free(desc);
 }
@@ -54,7 +60,7 @@ void TextView::drawText(cairo_t* cr, const Text* t) {
     cairo_restore(cr);
 }
 
-auto TextView::findText(const Text* t, string& search) -> vector<XojPdfRectangle> {
+auto TextView::findText(const Text* t, string& search) -> std::vector<XojPdfRectangle> {
     cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
     cairo_t* cr = cairo_create(surface);
 
@@ -67,7 +73,7 @@ auto TextView::findText(const Text* t, string& search) -> vector<XojPdfRectangle
 
     string srch = StringUtils::toLowerCase(search);
 
-    vector<XojPdfRectangle> list;
+    std::vector<XojPdfRectangle> list;
 
     int pos = -1;
     do {

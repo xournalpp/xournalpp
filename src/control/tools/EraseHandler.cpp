@@ -50,7 +50,7 @@ void EraseHandler::erase(double x, double y) {
 
     Layer* l = page->getSelectedLayer();
 
-    vector<Element*> tmp(*l->getElements());
+    std::vector<Element*> tmp(*l->getElements());
     for (Element* e: tmp) {
         if (e->getType() == ELEMENT_STROKE && e->intersectsArea(&eraserRect)) {
             eraseStroke(l, dynamic_cast<Stroke*>(e), x, y, range);

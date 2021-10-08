@@ -12,6 +12,8 @@
 #include "Util.h"
 #include "i18n.h"
 
+using std::string;
+
 
 ImageExport::ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format,
                          ExportBackgroundType exportBackground, PageRangeVector& exportRange):
@@ -145,7 +147,7 @@ void ImageExport::exportImagePage(int pageId, int id, double zoomRatio, ExportGr
     }
 
     if (page->getBackgroundType().isPdfPage() && (exportBackground >= EXPORT_BACKGROUND_UNRULED)) {
-        int pgNo = page->getPdfPageNr();
+        auto pgNo = page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
         PdfView::drawPage(nullptr, popplerPage, cr, zoomRatio, page->getWidth(), page->getHeight());
@@ -168,7 +170,7 @@ void ImageExport::exportImagePage(int pageId, int id, double zoomRatio, ExportGr
 void ImageExport::exportGraphics(ProgressListener* stateListener) {
     // don't lock the page here for the whole flow, else we get a dead lock...
     // the ui is blocked, so there should be no changes...
-    int count = doc->getPageCount();
+    auto count = doc->getPageCount();
 
     bool onePage =
             ((this->exportRange.size() == 1) && (this->exportRange[0]->getFirst() == this->exportRange[0]->getLast()));

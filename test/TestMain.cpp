@@ -12,12 +12,14 @@
 #include <iostream>
 
 #include <CrashHandler.h>
-#include <XournalType.h>
 #include <config-dev.h>
 #include <config-test.h>
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
+
+#include "util/logger/Logger.h"
+
 using std::cout;
 using std::endl;
 

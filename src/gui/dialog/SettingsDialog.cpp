@@ -13,6 +13,9 @@
 #include "Util.h"
 #include "i18n.h"
 
+using std::string;
+using std::vector;
+
 SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* settings, Control* control):
         GladeGui(gladeSearchPath, "settings.glade", "settingsDialog"),
         settings(settings),
@@ -336,7 +339,8 @@ void SettingsDialog::load() {
     loadCheckbox("cbEnableZoomGestures", settings->isZoomGesturesEnabled());
     loadCheckbox("cbShowSidebarRight", settings->isSidebarOnRight());
     loadCheckbox("cbShowScrollbarLeft", settings->isScrollbarOnLeft());
-    loadCheckbox("cbAutoloadXoj", settings->isAutloadPdfXoj());
+    loadCheckbox("cbAutoloadMostRecent", settings->isAutoloadMostRecent());
+    loadCheckbox("cbAutoloadXoj", settings->isAutoloadPdfXoj());
     loadCheckbox("cbAutosave", settings->isAutosaveEnabled());
     loadCheckbox("cbAddVerticalSpace", settings->getAddVerticalSpace());
     loadCheckbox("cbAddHorizontalSpace", settings->getAddHorizontalSpace());
@@ -347,11 +351,13 @@ void SettingsDialog::load() {
     loadCheckbox("cbSnapRecognizedShapesEnabled", settings->getSnapRecognizedShapesEnabled());
     loadCheckbox("cbRestoreLineWidthEnabled", settings->getRestoreLineWidthEnabled());
     loadCheckbox("cbDarkTheme", settings->isDarkTheme());
+    loadCheckbox("cbStockIcons", settings->areStockIconsUsed());
     loadCheckbox("cbHideHorizontalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_HORIZONTAL);
     loadCheckbox("cbHideVerticalScrollbar", settings->getScrollbarHideType() & SCROLLBAR_HIDE_VERTICAL);
     loadCheckbox("cbDisableScrollbarFadeout", settings->isScrollbarFadeoutDisabled());
     loadCheckbox("cbEnablePressureInference", settings->isPressureGuessingEnabled());
     loadCheckbox("cbTouchDrawing", settings->getTouchDrawingEnabled());
+    loadCheckbox("cbDisableGtkInertialScroll", !settings->getGtkTouchInertialScrollingEnabled());
     const bool ignoreStylusEventsEnabled = settings->getIgnoredStylusEvents() != 0;  // 0 means disabled, >0 enabled
     loadCheckbox("cbIgnoreFirstStylusEvents", ignoreStylusEventsEnabled);
     loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
@@ -410,6 +416,9 @@ void SettingsDialog::load() {
 
     GtkWidget* spSnapGridSize = get("spSnapGridSize");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spSnapGridSize), settings->getSnapGridSize() / DEFAULT_GRID_SIZE);
+
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("edgePanSpeed")), settings->getEdgePanSpeed());
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("edgePanMaxMult")), settings->getEdgePanMaxMult());
 
     GtkWidget* spZoomStep = get("spZoomStep");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spZoomStep), settings->getZoomStep());
@@ -659,6 +668,7 @@ void SettingsDialog::save() {
     settings->setZoomGesturesEnabled(getCheckbox("cbEnableZoomGestures"));
     settings->setSidebarOnRight(getCheckbox("cbShowSidebarRight"));
     settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));
+    settings->setAutoloadMostRecent(getCheckbox("cbAutoloadMostRecent"));
     settings->setAutoloadPdfXoj(getCheckbox("cbAutoloadXoj"));
     settings->setAutosaveEnabled(getCheckbox("cbAutosave"));
     settings->setAddVerticalSpace(getCheckbox("cbAddVerticalSpace"));
@@ -670,8 +680,10 @@ void SettingsDialog::save() {
     settings->setSnapRecognizedShapesEnabled(getCheckbox("cbSnapRecognizedShapesEnabled"));
     settings->setRestoreLineWidthEnabled(getCheckbox("cbRestoreLineWidthEnabled"));
     settings->setDarkTheme(getCheckbox("cbDarkTheme"));
+    settings->setAreStockIconsUsed(getCheckbox("cbStockIcons"));
     settings->setPressureGuessingEnabled(getCheckbox("cbEnablePressureInference"));
     settings->setTouchDrawingEnabled(getCheckbox("cbTouchDrawing"));
+    settings->setGtkTouchInertialScrollingEnabled(!getCheckbox("cbDisableGtkInertialScroll"));
     settings->setInputSystemTPCButtonEnabled(getCheckbox("cbInputSystemTPCButton"));
     settings->setInputSystemDrawOutsideWindowEnabled(getCheckbox("cbInputSystemDrawOutsideWindow"));
     settings->setScrollbarFadeoutDisabled(getCheckbox("cbDisableScrollbarFadeout"));
@@ -778,6 +790,9 @@ void SettingsDialog::save() {
     GtkWidget* spPairsOffset = get("spPairsOffset");
     int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));
     settings->setPairsOffset(numPairsOffset);
+
+    settings->setEdgePanSpeed(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanSpeed"))));
+    settings->setEdgePanMaxMult(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanMaxMult"))));
 
     GtkWidget* spZoomStep = get("spZoomStep");
     double zoomStep = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spZoomStep));

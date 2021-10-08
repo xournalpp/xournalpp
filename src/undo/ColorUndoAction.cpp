@@ -82,4 +82,4 @@ auto ColorUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-auto ColorUndoAction::getText() -> string { return _("Change color"); }
+auto ColorUndoAction::getText() -> std::string { return _("Change color"); }

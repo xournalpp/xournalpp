@@ -14,29 +14,49 @@
 #include <string>
 #include <vector>
 
+#include "util/IconNameHelper.h"
+
 #include "AbstractToolItem.h"
-#include "XournalType.h"
+
 
 class GladeGui;
 class SpinPageAdapter;
 
 class ToolPageSpinner: public AbstractToolItem {
 public:
-    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
-    virtual ~ToolPageSpinner();
+    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, std::string id, ActionType type,
+                    IconNameHelper iconNameHelper);
+    ~ToolPageSpinner() override;
 
 public:
     SpinPageAdapter* getPageSpinner();
-    void setText(const string& text);
-    virtual string getToolDisplayName();
+    void setPageInfo(size_t pagecount, size_t pdfpage);
+    std::string getToolDisplayName() override;
+    GtkToolItem* createItem(bool horizontal) override;
+    GtkToolItem* createTmpItem(bool horizontal) override;
 
 protected:
-    virtual GtkToolItem* newItem();
-    virtual GtkWidget* getNewToolIcon();
+    GtkToolItem* newItem() override;
+    GtkWidget* getNewToolIcon() override;
+
+private:
+    void updateLabels();
 
 private:
     GladeGui* gui = nullptr;
 
     SpinPageAdapter* pageSpinner = nullptr;
+    GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
+
+    GtkWidget* box = nullptr;
     GtkWidget* lbPageNo = nullptr;
+    GtkWidget* lbVerticalPdfPage = nullptr;
+
+    /** The current page of the document. */
+    size_t pageCount = 0;
+
+    /** The current page in the background PDF, or 0 if there is no PDF. */
+    size_t pdfPage = 0;
+
+    IconNameHelper iconNameHelper;
 };

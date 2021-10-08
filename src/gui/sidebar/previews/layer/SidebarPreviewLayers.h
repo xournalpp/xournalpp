@@ -16,8 +16,8 @@
 
 #include "control/layer/LayerCtrlListener.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
+#include "util/IconNameHelper.h"
 
-#include "XournalType.h"
 
 class SidebarPreviewLayers: public SidebarPreviewBase, public LayerCtrlListener {
 public:
@@ -39,12 +39,12 @@ public:
     /**
      * @overwrite
      */
-    virtual string getName();
+    virtual std::string getName();
 
     /**
      * @overwrite
      */
-    virtual string getIconName();
+    virtual std::string getIconName();
 
     /**
      * Update the preview images
@@ -80,4 +80,6 @@ private:
      * render as stacked
      */
     bool stacked;
+
+    IconNameHelper iconNameHelper;
 };

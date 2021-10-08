@@ -54,9 +54,9 @@ public:
     void setSelectedPage(size_t page);
 
     /**
-     * Enable active and siable inactive buttons, select first active page
+     * Show/hide tabs based on whether they have content. Select first active tab (page).
      */
-    void updateEnableDisableButtons();
+    void updateVisibleTabs();
 
     /**
      * Temporary disable Sidebar (e.g. while saving)

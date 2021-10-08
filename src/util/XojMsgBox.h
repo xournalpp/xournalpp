@@ -11,12 +11,10 @@
 
 #pragma once
 
+#include <map>
 #include <string>
 
 #include <gtk/gtk.h>
-using std::string;
-#include <map>
-using std::map;
 
 class XojMsgBox {
 private:
@@ -29,9 +27,9 @@ public:
      */
     static void setDefaultWindow(GtkWindow* win);
 
-    static void showErrorToUser(GtkWindow* win, const string& msg);
-    static int showPluginMessage(const string& pluginName, const string& msg, const map<int, string>& button,
-                                 bool error = false);
-    static int replaceFileQuestion(GtkWindow* win, const string& msg);
+    static void showErrorToUser(GtkWindow* win, const std::string& msg);
+    static int showPluginMessage(const std::string& pluginName, const std::string& msg,
+                                 const std::map<int, std::string>& button, bool error = false);
+    static int replaceFileQuestion(GtkWindow* win, const std::string& msg);
     static void showHelp(GtkWindow* win);
 };

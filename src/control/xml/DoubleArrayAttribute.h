@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "Attribute.h"
-#include "XournalType.h"
+
 
 class DoubleArrayAttribute: public XMLAttribute {
 public:

@@ -14,7 +14,6 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
 
 class PageRangeEntry {
 public:
@@ -30,7 +29,7 @@ private:
     int last;
 };
 
-typedef vector<PageRangeEntry*> PageRangeVector;
+typedef std::vector<PageRangeEntry*> PageRangeVector;
 
 class PageRange {
 private:

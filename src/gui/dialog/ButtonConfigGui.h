@@ -16,6 +16,7 @@
 #include "control/Actions.h"
 #include "gui/GladeGui.h"
 #include "util/DeviceListHelper.h"
+#include "util/IconNameHelper.h"
 
 class Settings;
 class SettingsDialog;
@@ -35,7 +36,7 @@ public:
 private:
     static void cbSelectCallback(GtkComboBox* widget, ButtonConfigGui* gui);
     void enableDisableTools();
-    string toolSizeToLabel(ToolSize size);
+    std::string toolSizeToLabel(ToolSize size);
 
 private:
     Settings* settings;
@@ -56,4 +57,5 @@ private:
 
     typedef std::map<int, ToolSize> ToolSizeIndexMap;
     static ToolSizeIndexMap toolSizeIndexMap;
+    IconNameHelper iconNameHelper;
 };

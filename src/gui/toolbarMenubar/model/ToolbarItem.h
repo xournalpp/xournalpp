@@ -14,27 +14,21 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
 
 class ToolbarItem {
 public:
-    ToolbarItem(string name);
-    ToolbarItem(const ToolbarItem& item);
+    ToolbarItem(std::string name);
     ToolbarItem();
-    virtual ~ToolbarItem();
-
-private:
-    void operator=(const ToolbarItem& other);
 
 public:
-    string getName();
+    const std::string& getName() const;
 
     bool operator==(ToolbarItem& other);
 
     int getId() const;
 
 private:
-    string name;
+    std::string name;
     int id;
 
     static int sid;

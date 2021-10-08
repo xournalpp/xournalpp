@@ -1,0 +1,30 @@
+% This template avoids the scontents package, which is only available on relatively recent TeX distributions
+\documentclass[varwidth=true, crop, border=5pt]{standalone}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Blank formula checking
+\usepackage{ifthen}
+\newlength{\pheight}
+
+% Color support
+\usepackage{xcolor}
+\definecolor{xpp_font_color}{HTML}{%%XPP_TEXT_COLOR%%}
+
+% User input
+\def\preview{\( 
+    \displaystyle
+    %%XPP_TOOL_INPUT%%
+    \)%
+}
+
+\begin{document}
+  % Check if the formula is empty
+  \settoheight{\pheight}{\preview}
+  \ifthenelse{\pheight=0}{\GenericError{}{xournalpp:blankformula}{}{}}
+
+  % Render the user input
+  \textcolor{xpp_font_color}{\preview}
+\end{document}

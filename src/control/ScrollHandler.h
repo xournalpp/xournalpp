@@ -19,7 +19,6 @@
 #include "gui/widgets/SpinPageAdapter.h"
 #include "model/PageRef.h"
 
-#include "XournalType.h"
 
 class XojPage;
 class Control;

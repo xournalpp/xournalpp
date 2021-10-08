@@ -14,7 +14,6 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
 
 class Stroke;
 
@@ -29,9 +28,9 @@ public:
 public:
     void addSourceStroke(Stroke* s);
     Stroke* getRecognized();
-    vector<Stroke*>* getSources();
+    std::vector<Stroke*>* getSources();
 
 private:
     Stroke* recognized;
-    vector<Stroke*> source;
+    std::vector<Stroke*> source;
 };

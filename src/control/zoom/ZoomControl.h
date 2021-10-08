@@ -19,7 +19,7 @@
 
 #include "Point.h"
 #include "Rectangle.h"
-#include "XournalType.h"
+
 
 constexpr auto DEFAULT_ZOOM_MAX{7};
 constexpr auto DEFAULT_ZOOM_MIN{0.3};
@@ -175,6 +175,15 @@ private:
     void zoomFit();
     void zoomPresentation();
 
+    /**
+     * Get this->zoom changed by a step in the given direction.
+     *
+     * @param direction Direction to change the zoom (step direction).
+     * @param stepSize Size of the step to take
+     * @return The new zoom if a step is taken in the given direction.
+     */
+    double withZoomStep(ZoomDirection direction, double stepSize) const;
+
     friend bool onWindowSizeChangedEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom);
     friend bool onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom);
     friend bool onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom);
@@ -239,4 +248,5 @@ private:
 
     size_t current_page = static_cast<size_t>(-1);
     size_t last_page = static_cast<size_t>(-1);
+    bool isZoomFittingNow = false;
 };

@@ -31,7 +31,7 @@ void PluginDialogEntry::show(GtkWindow* parent) {
     // Not implemented! This is not a dialog!
 }
 
-void PluginDialogEntry::saveSettings(string& pluginEnabled, string& pluginDisabled) {
+void PluginDialogEntry::saveSettings(std::string& pluginEnabled, std::string& pluginDisabled) {
 #ifdef ENABLE_PLUGINS
     bool state = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbEnabled")));
 

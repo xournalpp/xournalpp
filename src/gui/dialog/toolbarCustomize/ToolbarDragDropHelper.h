@@ -13,18 +13,12 @@
 
 #include <gtk/gtk.h>
 
-class ToolbarDragDropHelper {
-private:
-    ToolbarDragDropHelper();
-    virtual ~ToolbarDragDropHelper();
+namespace ToolbarDragDropHelper {
+void dragDestAddToolbar(GtkWidget* target);
+void dragSourceAddToolbar(GtkWidget* widget);
 
-public:
-    static void dragDestAddToolbar(GtkWidget* target);
-    static void dragSourceAddToolbar(GtkWidget* widget);
+auto gdk_context_set_icon_from_image(GdkDragContext* ctx, GtkWidget* image) -> bool;
 
-    static GdkPixbuf* getImagePixbuf(GtkImage* image);
-
-public:
-    static GdkAtom atomToolItem;
-    static GtkTargetEntry dropTargetEntry;
-};
+extern const GdkAtom atomToolItem;
+extern const GtkTargetEntry dropTargetEntry;
+};  // namespace ToolbarDragDropHelper

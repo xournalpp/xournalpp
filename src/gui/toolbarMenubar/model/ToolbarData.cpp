@@ -7,6 +7,8 @@
 #include "StringUtils.h"
 #include "i18n.h"
 
+using std::string;
+
 ToolbarData::ToolbarData(bool predefined): predefined(predefined) {}
 
 ToolbarData::ToolbarData(const ToolbarData& data) {

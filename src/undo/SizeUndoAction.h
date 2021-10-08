@@ -26,13 +26,13 @@ public:
 public:
     virtual bool undo(Control* control);
     virtual bool redo(Control* control);
-    virtual string getText();
+    virtual std::string getText();
 
-    void addStroke(Stroke* s, double originalWidth, double newWidth, vector<double> originalPressure,
-                   vector<double> newPressure, int pressureCount);
+    void addStroke(Stroke* s, double originalWidth, double newWidth, std::vector<double> originalPressure,
+                   std::vector<double> newPressure, int pressureCount);
 
 public:
-    static vector<double> getPressure(Stroke* s);
+    static std::vector<double> getPressure(Stroke* s);
 
 private:
     std::vector<SizeUndoActionEntry*> data;

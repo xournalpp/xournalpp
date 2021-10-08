@@ -38,7 +38,7 @@ public:
     /**
      * Searches text within a Text model, returns XojPopplerRectangle, have to been freed
      */
-    static vector<XojPdfRectangle> findText(const Text* t, string& search);
+    static std::vector<XojPdfRectangle> findText(const Text* t, std::string& search);
 
     /**
      * Initialize a Pango layout

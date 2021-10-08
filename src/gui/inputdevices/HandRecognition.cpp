@@ -8,6 +8,7 @@
 
 #include "InputContext.h"
 
+using std::string;
 
 HandRecognition::HandRecognition(GtkWidget* widget, InputContext* inputContext, Settings* settings):
         widget(widget), inputContext(inputContext), settings(settings) {

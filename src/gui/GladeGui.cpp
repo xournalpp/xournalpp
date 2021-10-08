@@ -9,7 +9,7 @@
 #include "XojMsgBox.h"
 #include "i18n.h"
 
-GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const string& mainWnd) {
+GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const std::string& glade, const std::string& mainWnd) {
     this->gladeSearchPath = gladeSearchPath;
 
     auto filepath = this->gladeSearchPath->findFile("", glade);
@@ -18,7 +18,8 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const 
     builder = gtk_builder_new();
 
     if (!gtk_builder_add_from_file(builder, filepath.u8string().c_str(), &error)) {
-        string msg = FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade % filepath.u8string());
+        std::string msg =
+                FS(_F("Error loading glade file \"{1}\" (try to load \"{2}\")") % glade % filepath.u8string());
 
         if (error != nullptr) {
             msg += "\n";
@@ -36,7 +37,7 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const string& glade, const 
 
 GladeGui::~GladeGui() { g_object_unref(builder); }
 
-auto GladeGui::get(const string& name) -> GtkWidget* {
+auto GladeGui::get(const std::string& name) -> GtkWidget* {
     GtkWidget* w = GTK_WIDGET(gtk_builder_get_object(builder, name.c_str()));
     if (w == nullptr) {
         g_warning("GladeGui::get: Could not find glade Widget: \"%s\"", name.c_str());

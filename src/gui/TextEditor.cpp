@@ -14,6 +14,8 @@
 #include "XournalView.h"
 #include "XournalppCursor.h"
 
+using std::string;
+
 TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool ownText):
         gui(gui), widget(widget), text(text), ownText(ownText) {
     this->text->setInEditing(true);
@@ -36,6 +38,7 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
     g_object_get(settings, "gtk-cursor-blink-timeout", &this->cursorBlinkTimeout, nullptr);
 
     this->imContext = gtk_im_multicontext_new();
+    gtk_im_context_set_client_window(this->imContext, gtk_widget_get_window(this->widget));
     gtk_im_context_focus_in(this->imContext);
 
     g_signal_connect(this->imContext, "commit", G_CALLBACK(iMCommitCallback), this);
@@ -61,13 +64,9 @@ TextEditor::~TextEditor() {
 
     if (this->ownText) {
         UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
-        for (TextUndoAction& undo: this->undoActions) {
-            handler->removeUndoAction(&undo);
-        }
+        for (TextUndoAction& undo: this->undoActions) { handler->removeUndoAction(&undo); }
     } else {
-        for (TextUndoAction& undo: this->undoActions) {
-            undo.textEditFinished();
-        }
+        for (TextUndoAction& undo: this->undoActions) { undo.textEditFinished(); }
     }
     this->undoActions.clear();
 
@@ -1001,21 +1000,14 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
             auto selectionColorU16 = Util::GdkRGBA_to_ColorU16(selectionColor);
             PangoAttribute* attrib =
                     pango_attr_background_new(selectionColorU16.red, selectionColorU16.green, selectionColorU16.blue);
-            PangoAttrList* attrlist = pango_layout_get_attributes(this->layout);
-
             attrib->start_index = getByteOffset(gtk_text_iter_get_offset(&start));
             attrib->end_index = getByteOffset(gtk_text_iter_get_offset(&end));
 
-            const bool isNewAttrlist = attrlist == nullptr;
-            if (isNewAttrlist) {
-                attrlist = pango_attr_list_new();
-                pango_layout_set_attributes(this->layout, attrlist);
-            }
+            PangoAttrList* attrlist = pango_attr_list_new();
             pango_attr_list_insert(attrlist, attrib);
-            if (isNewAttrlist) {
-                pango_attr_list_unref(attrlist);
-                attrlist = nullptr;
-            }
+            pango_layout_set_attributes(this->layout, attrlist);
+            pango_attr_list_unref(attrlist);
+            attrlist = nullptr;
         } else {
             // remove all attributes
             PangoAttrList* attrlist = pango_attr_list_new();
@@ -1057,7 +1049,6 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
     cairo_stroke(cr);
 
     // Notify the IM of the app's window and cursor position.
-    gtk_im_context_set_client_window(this->imContext, gtk_widget_get_window(this->widget));
     GdkRectangle cursorRect;
     cursorRect.x = static_cast<int>(zoom * x0 + x1 + zoom * cX);
     cursorRect.y = static_cast<int>(zoom * y0 + y1 + zoom * cY);

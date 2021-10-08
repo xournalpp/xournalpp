@@ -30,8 +30,8 @@ auto PageBackgroundChangedUndoAction::undo(Control* control) -> bool {
     this->newH = this->page->getHeight();
 
     Document* doc = control->getDocument();
-    int pageNr = doc->indexOf(this->page);
-    if (pageNr == -1) {
+    auto pageNr = doc->indexOf(this->page);
+    if (pageNr == npos) {
         return false;
     }
 
@@ -55,9 +55,9 @@ auto PageBackgroundChangedUndoAction::undo(Control* control) -> bool {
 auto PageBackgroundChangedUndoAction::redo(Control* control) -> bool {
     Document* doc = control->getDocument();
 
-    int pageNr = doc->indexOf(this->page);
+    auto pageNr = doc->indexOf(this->page);
 
-    if (pageNr == -1) {
+    if (pageNr == npos) {
         return false;
     }
 
@@ -78,4 +78,4 @@ auto PageBackgroundChangedUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-auto PageBackgroundChangedUndoAction::getText() -> string { return _("Page background changed"); }
+auto PageBackgroundChangedUndoAction::getText() -> std::string { return _("Page background changed"); }

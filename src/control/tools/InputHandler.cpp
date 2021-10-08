@@ -45,7 +45,7 @@ void InputHandler::createStroke(Point p) {
         stroke->setToolType(STROKE_TOOL_PEN);
 
         if (xournal->getControl()->getAudioController()->isRecording()) {
-            string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
+            std::string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
             size_t sttime = xournal->getControl()->getAudioController()->getStartTime();
             size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
             stroke->setTimestamp(milliseconds);

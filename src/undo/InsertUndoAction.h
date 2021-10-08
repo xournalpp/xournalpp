@@ -26,7 +26,7 @@ public:
     virtual bool undo(Control* control);
     virtual bool redo(Control* control);
 
-    virtual string getText();
+    virtual std::string getText();
 
 private:
     Layer* layer;
@@ -35,16 +35,16 @@ private:
 
 class InsertsUndoAction: public UndoAction {
 public:
-    InsertsUndoAction(const PageRef& page, Layer* layer, vector<Element*> elements);
+    InsertsUndoAction(const PageRef& page, Layer* layer, std::vector<Element*> elements);
     virtual ~InsertsUndoAction();
 
 public:
     virtual bool undo(Control* control);
     virtual bool redo(Control* control);
 
-    virtual string getText();
+    virtual std::string getText();
 
 private:
     Layer* layer;
-    vector<Element*> elements;
+    std::vector<Element*> elements;
 };

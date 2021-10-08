@@ -76,4 +76,4 @@ auto FillUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-auto FillUndoAction::getText() -> string { return _("Change stroke fill"); }
+auto FillUndoAction::getText() -> std::string { return _("Change stroke fill"); }

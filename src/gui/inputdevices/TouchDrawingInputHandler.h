@@ -17,7 +17,7 @@
 #include "control/Actions.h"
 
 #include "PenInputHandler.h"
-#include "XournalType.h"
+
 
 class InputContext;
 

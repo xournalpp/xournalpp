@@ -59,7 +59,7 @@ void XojPage::removeLayer(Layer* layer) {
 
 void XojPage::setSelectedLayerId(int id) { this->currentLayer = id; }
 
-auto XojPage::getLayers() -> vector<Layer*>* { return &this->layer; }
+auto XojPage::getLayers() -> std::vector<Layer*>* { return &this->layer; }
 
 auto XojPage::getLayerCount() -> size_t { return this->layer.size(); }
 
@@ -171,8 +171,8 @@ auto XojPage::getSelectedLayer() -> Layer* {
     return this->layer[layer];
 }
 
-auto XojPage::getBackgroundName() const -> string { return backgroundName.value_or(_("Background")); }
+auto XojPage::getBackgroundName() const -> std::string { return backgroundName.value_or(_("Background")); }
 
 auto XojPage::backgroundHasName() const -> bool { return backgroundName.has_value(); }
 
-void XojPage::setBackgroundName(const string& newName) { backgroundName = newName; }
+void XojPage::setBackgroundName(const std::string& newName) { backgroundName = newName; }

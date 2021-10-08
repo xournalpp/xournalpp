@@ -12,21 +12,19 @@
 #pragma once
 
 #include <string>
-using std::string;
 #include <vector>
-using std::vector;
 
-typedef std::pair<char, string> replace_pair;
+typedef std::pair<char, std::string> replace_pair;
 
 class StringUtils {
 public:
-    static string toLowerCase(const string& input);
-    static void replaceAllChars(string& input, const std::vector<replace_pair>& replaces);
-    static vector<string> split(const string& input, char delimiter);
-    static bool startsWith(const string& str, const string& start);
-    static bool endsWith(const string& str, const string& end);
-    static string ltrim(string str);
-    static string rtrim(string str);
-    static string trim(string str);
-    static bool iequals(const string& a, const string& b);
+    static std::string toLowerCase(const std::string& input);
+    static void replaceAllChars(std::string& input, const std::vector<replace_pair>& replaces);
+    static std::vector<std::string> split(const std::string& input, char delimiter);
+    static bool startsWith(const std::string& str, const std::string& start);
+    static bool endsWith(const std::string& str, const std::string& end);
+    static std::string ltrim(std::string str);
+    static std::string rtrim(std::string str);
+    static std::string trim(std::string str);
+    static bool iequals(const std::string& a, const std::string& b);
 };

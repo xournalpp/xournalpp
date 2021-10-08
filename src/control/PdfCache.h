@@ -16,11 +16,10 @@
 #include <vector>
 
 #include <cairo.h>
+#include <glib.h>
 
 #include "pdf/base/XojPdfPage.h"
 
-#include "XournalType.h"
-using std::list;
 
 class PdfCacheEntry;
 
@@ -61,8 +60,8 @@ private:
 private:
     GMutex renderMutex{};
 
-    list<PdfCacheEntry*> data;
-    list<PdfCacheEntry*>::size_type size = 0;
+    std::list<PdfCacheEntry*> data;
+    std::list<PdfCacheEntry*>::size_type size = 0;
 
     double zoom = -1;
     double zoomRefreshThreshold;

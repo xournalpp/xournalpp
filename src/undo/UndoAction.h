@@ -27,12 +27,12 @@ public:
     virtual bool undo(Control* control) = 0;
     virtual bool redo(Control* control) = 0;
 
-    virtual string getText() = 0;
+    virtual std::string getText() = 0;
 
     /**
      * Get the affected pages
      */
-    virtual vector<PageRef> getPages();
+    virtual std::vector<PageRef> getPages();
 
     auto getClassName() const -> std::string const&;
 

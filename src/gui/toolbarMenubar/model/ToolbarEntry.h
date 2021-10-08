@@ -13,36 +13,38 @@
 
 #include "ToolbarItem.h"
 
-typedef vector<ToolbarItem*> ToolbarItemVector;
+typedef std::vector<ToolbarItem*> ToolbarItemVector;
 
 class ToolbarEntry {
 public:
     ToolbarEntry();
     ToolbarEntry(const ToolbarEntry& e);
+    ToolbarEntry(ToolbarEntry&& e);
     ~ToolbarEntry();
 
-    void operator=(const ToolbarEntry& e);
+    ToolbarEntry& operator=(const ToolbarEntry& e);
+    ToolbarEntry& operator=(ToolbarEntry&& e);
 
 public:
     void clearList();
 
-    string getName();
-    void setName(string name);
+    std::string getName();
+    void setName(std::string name);
 
     /**
      * Adds a new item and return the ID of the item
      */
-    int addItem(string item);
+    int addItem(std::string item);
     bool removeItemById(int id);
 
     /**
      * Insert a new item and return the ID of the item
      */
-    int insertItem(string item, int position);
+    int insertItem(std::string item, int position);
 
     const ToolbarItemVector& getItems() const;
 
 private:
-    string name;
+    std::string name;
     ToolbarItemVector entries;
 };

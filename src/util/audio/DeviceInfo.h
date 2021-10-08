@@ -15,19 +15,18 @@
 
 #include <portaudiocpp/PortAudioCpp.hxx>
 
-#include "XournalType.h"
 
 class DeviceInfo {
 public:
     DeviceInfo(portaudio::Device* device, bool selected);
 
 public:
-    const string& getDeviceName() const;
+    const std::string& getDeviceName() const;
     PaDeviceIndex getIndex() const;
     bool getSelected() const;
 
 private:
-    const string deviceName;
+    const std::string deviceName;
     const PaDeviceIndex index{};
     const bool selected{};
     const int inputChannels{};

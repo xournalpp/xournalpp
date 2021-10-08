@@ -18,14 +18,13 @@
 #include "gui/GladeGui.h"
 
 #include "CustomizeableColorList.h"
-#include "XournalType.h"
+
 
 class AbstractToolItem;
 class MainWindow;
 class ToolbarDragDropHandler;
 
-typedef struct _ToolItemDragData ToolItemDragData;
-struct _ToolItemDragData;
+struct ToolItemDragData;
 
 class ToolbarCustomizeDialog: public GladeGui {
 public:
@@ -68,7 +67,7 @@ private:
     static void windowResponseCb(GtkDialog* dialog, int response, ToolbarCustomizeDialog* dlg);
 
 private:
-    CustomizeableColorList* colorList;
+    CustomizeableColorList colorList;
 
     std::list<ToolItemDragData*> itemDatalist;
 

@@ -61,8 +61,8 @@ void PopplerGlibPage::render(cairo_t* cr, bool forPrinting)  // NOLINT(google-de
 
 auto PopplerGlibPage::getPageId() -> int { return poppler_page_get_index(page); }
 
-auto PopplerGlibPage::findText(string& text) -> vector<XojPdfRectangle> {
-    vector<XojPdfRectangle> findings;
+auto PopplerGlibPage::findText(std::string& text) -> std::vector<XojPdfRectangle> {
+    std::vector<XojPdfRectangle> findings;
 
     double height = getHeight();
     GList* matches = poppler_page_find_text(page, text.c_str());

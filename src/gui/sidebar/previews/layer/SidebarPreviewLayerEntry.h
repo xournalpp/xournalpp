@@ -18,7 +18,7 @@ class SidebarPreviewBase;
 
 class SidebarPreviewLayerEntry: public SidebarPreviewBaseEntry {
 public:
-    SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer, const string& layerName,
+    SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer, const std::string& layerName,
                              size_t index, bool stacked);
     virtual ~SidebarPreviewLayerEntry();
 

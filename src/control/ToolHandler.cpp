@@ -366,7 +366,7 @@ void ToolHandler::saveSettings() {
         st.setString("drawingType", drawingTypeToString(tool->getDrawingType()));
 
         if (tool->hasCapability(TOOL_CAP_SIZE)) {
-            string value;
+            std::string value;
             switch (tool->getSize()) {
                 case TOOL_SIZE_VERY_FINE:
                     value = "VERY_FINE";
@@ -417,7 +417,7 @@ void ToolHandler::saveSettings() {
 void ToolHandler::loadSettings() {
     SElement& s = settings->getCustomElement("tools");
 
-    string selectedTool;
+    std::string selectedTool;
     if (s.getString("current", selectedTool)) {
         for (auto&& tool: tools) {
             SElement& st = s.child(tool->getName());
@@ -431,7 +431,7 @@ void ToolHandler::loadSettings() {
                 tool->setColor(Color(iColor));
             }
 
-            string drawingType;
+            std::string drawingType;
             if (st.getString("drawingType", drawingType)) {
                 tool->setDrawingType(drawingTypeFromString(drawingType));
             }
@@ -445,12 +445,12 @@ void ToolHandler::loadSettings() {
                 tool->setFillAlpha(fillAlpha);
             }
 
-            string style;
+            std::string style;
             if (st.getString("style", style)) {
                 tool->setLineStyle(StrokeStyle::parseStyle(style.c_str()));
             }
 
-            string value;
+            std::string value;
             if (tool->hasCapability(TOOL_CAP_SIZE) && st.getString("size", value)) {
                 if (value == "VERY_FINE") {
                     tool->setSize(TOOL_SIZE_VERY_FINE);
@@ -468,7 +468,7 @@ void ToolHandler::loadSettings() {
             }
 
             if (tool->type == TOOL_ERASER) {
-                string type;
+                std::string type;
 
                 if (st.getString("type", type)) {
                     if (type == "deleteStroke") {

@@ -27,7 +27,7 @@ Full translations for all languages not mentioned previously **except**:
 - German
 - Italian
 
-If you would like to help us improve the localization of Xournal++ take a look at [our Crowdin project](https://crowdin.com/project/xournalpp). If you are interested in translating a new language, contact us on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a new issue and we will unlock the language on Crowdin.
+If you would like to help us improve the localization of Xournal++, take a look at [our Crowdin project](https://crowdin.com/project/xournalpp). If you are interested in translating a new language, contact us on [Gitter](https://gitter.im/xournalpp/xournalpp) or create a new issue and we will unlock the language on Crowdin.
 
 **Thanks in advance!**
 
@@ -35,36 +35,37 @@ If you would like to help us improve the localization of Xournal++ take a look a
 
 ## Features
 
-Xournal++ is a hand note taking software written in C++ with the target of flexibility, functionality and speed.
+Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is a hand note taking software written in C++ with the target of flexibility, functionality and speed.
 Stroke recognizer and other parts are based on Xournal Code, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
 
 Xournal++ features:
 
-- Support for pen pressure, e.g. Wacom Tablet
-- Support for annotating PDFs
+- Supports pressure senstive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
+- Paper backgrounds for notetaking, scratch paper, or whiteboarding
+- Annotate on top of PDFs
+- Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line
+- Different drawing tools (e.g.pen, highlighter) and stroke styles (e.g. solid, dotted)
+- Shape drawing (line, arrow, circle, rectangle, spline)
 - Fill shape functionality
-- PDF Export (with and without paper style)
-- PNG Export (with and without transparent background)
-- Allow to map different tools / colors etc. to stylus buttons / mouse buttons
-- Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden, editing layer can be selected)
-- enhanced support for image insertion
-- Eraser with multiple configurations
-- Significantly reduced memory usage and code to detect memory leaks compared to Xournal
-- LaTeX support (requires a working LaTeX install)
-- bug reporting, auto-save, and auto backup tools
-- Customizable toolbar, with multiple configurations, e.g. to optimize toolbar for portrait / landscape
-- Page Template definitions
-- Shape drawing (line, arrow, circle, rect, splines)
 - Shape resizing and rotation
-- Rotation snapping every 15 degrees
-- Rect snapping to grid
+- Rotation and grid snapping for precise alignment of objects
+- Input stabilization for smoother writing/drawing
+- Text tool for adding text in different fonts, colors and sizes
+- Enhanced support for image insertion
+- Eraser with multiple configurations
+- LaTeX support (requires a working LaTeX installation) with customizeable template
+- Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden/edited)
+- Allows mapping different tools/colors etc. to stylus/mouse buttons
+- Customizeable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape
+- Page Template definitions
+- Bug reporting, auto-save, and auto backup tools
 - Audio recording and playback alongside with handwritten notes
-- Multi Language Support, Like English, German (Deutsch), Italian (Italiano)...
+- Multi language support (over 20 languages supported)
 - Plugins using Lua scripting
 
 ## Mobile & web app
 
-Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (in coming) as well as a **web app** available. Even though it is not perfectly stable nor every of Xournal++'s features is supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in it's [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
+Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (coming soon) as well as a **web app** available. Even though it is not perfectly stable nor are all of Xournal++'s features fully supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in it's [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
 
 [Get it on Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile)
 
@@ -90,7 +91,7 @@ According to the Apple App Store guidelines, it is prohibited to publish unstabl
 
 </td></tr><tr><td>
 
-## macOS High Sierra
+## macOS Catalina
 
 <img src="readme/main-mac.png" width=100% title="Xournal++ Screenshot on macOS"/>
 
@@ -153,7 +154,7 @@ Here are a few under development that you can play with now.
 
 The official releases of Xournal++ can be found on the
 [Releases](https://github.com/xournalpp/xournalpp/releases) page. We provide
-binaries for Debian (Buster), Ubuntu (16.04), MacOS (10.13 and newer), and
+binaries for Debian (Buster), Ubuntu (16.04), MacOS (10.15 and newer), and
 Windows. For other Linux distributions (or older/newer ones), we also provide an
 AppImage that is binary compatible with any distribution released around or
 after Ubuntu 16.04. For installing Xournal++ Mobile on handheld devices, please check out [Xournal++ Mobile's instructions](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile#try-it-out)
@@ -329,17 +330,17 @@ page](https://github.com/xournalpp/xournalpp/releases).
 
 ## File format
 
-The file format _.xopp is an XML which is .gz compressed. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. _.xopp is basically the same file format as _.xoj, which is used by Xournal. Therefor Xournal++ reads _.xoj files, and can also export _.xoj. On exporting to _.xoj all Xournal++ specific Extension are lost, like additional Background types.
+The file format _.xopp is an XML which is .gz compressed. PDFs are not embedded into the file, so if the PDF is deleted, the background is lost. _.xopp is basically the same file format as _.xoj, which is used by Xournal. Therefore Xournal++ is able to read _.xoj files, and can also export to _.xoj. As soon as notes are exported to a _.xoj-file, all Xournal++ specific extensions, like additional background types, are lost.
 
-\*.xopp can theoretically be read by Xournal, as long as you do not use any new feature, Xournal does not open files at all if there are new attributes or unknown values, because of this Xournal++ will add the extension .xopp to all saved files.
+\*.xopp can theoretically be read by Xournal, as long as you do not use any new feature. Xournal does not open files that contain new attributes or unknown values, so Xournal++ will add the extension .xopp to all saved files to indicate the potential presence of Xournal++-only features.
 
-All new files will be saved as _.xopp, if an _.xoj file is opened which was created by Xournal, the Save-As dialog will be displayed on save. If the \*.xoj file was by Xournal++ created, Xournal++ overwrite the file on save, and does not change the extension.
+All new files will be saved as _.xopp. If an _.xoj file that was created by Xournal is opened, the Save-As dialog will be displayed on save. If the \*.xoj file was created by Xournal++, the file will be overwritten on save and the file extension will not change.
 
 **We are currently introducing a new file format that can efficiently store attached PDF files and other attachments internally. We will still allow for attachments that are linked to external files. Please refer to [#937](https://github.com/xournalpp/xournalpp/issues/937) for further details.**
 
 ## Development
 
-For developing new features, write a Ticket, so others know what you are doing.
+For developing new features, create an issue or comment on an existing issue to let others know what you are doing.
 For development create a fork, and use the master as base. Create a Pull request for each fix.
 Do not create big pull requests, as long as you don't break anything features also can be
 merged, even if they are not 100% finished.

@@ -49,6 +49,8 @@
 #include "i18n.h"
 #include "pixbuf-utils.h"
 
+using std::string;
+
 XojPageView::XojPageView(XournalView* xournal, const PageRef& page) {
     this->page = page;
     this->registerListener(this->page);
@@ -126,9 +128,9 @@ auto XojPageView::searchTextOnPage(string& text, int* occures, double* top) -> b
             return true;
         }
 
-        int pNr = this->page->getPdfPageNr();
+        auto pNr = this->page->getPdfPageNr();
         XojPdfPageSPtr pdf = nullptr;
-        if (pNr != -1) {
+        if (pNr != npos) {
             Document* doc = xournal->getControl()->getDocument();
 
             doc->lock();
@@ -193,7 +195,7 @@ void XojPageView::startText(double x, double y) {
 
     if (this->textEditor != nullptr) {
         Text* text = this->textEditor->getText();
-        GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
+        GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
         if (!text->intersectsArea(&matchRect)) {
             endText();
         } else {
@@ -207,7 +209,7 @@ void XojPageView::startText(double x, double y) {
 
         for (Element* e: *this->page->getSelectedLayer()->getElements()) {
             if (e->getType() == ELEMENT_TEXT) {
-                GdkRectangle matchRect = {gint(x - 10), gint(y - 10), 20, 20};
+                GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
                 if (e->intersectsArea(&matchRect)) {
                     text = dynamic_cast<Text*>(e);
                     break;

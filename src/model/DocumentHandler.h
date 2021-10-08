@@ -17,7 +17,7 @@
 
 #include "DocumentChangeType.h"
 #include "PageRef.h"
-#include "XournalType.h"
+
 
 class DocumentListener;
 

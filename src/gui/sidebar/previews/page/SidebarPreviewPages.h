@@ -17,8 +17,8 @@
 #include <vector>
 
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
+#include "util/IconNameHelper.h"
 
-#include "XournalType.h"
 
 class SidebarPreviewPages: public SidebarPreviewBase {
 public:
@@ -36,12 +36,12 @@ public:
     /**
      * @overwrite
      */
-    virtual string getName();
+    virtual std::string getName();
 
     /**
      * @overwrite
      */
-    virtual string getIconName();
+    virtual std::string getIconName();
 
     /**
      * Update the preview images
@@ -93,4 +93,5 @@ private:
     std::vector<std::tuple<GtkWidget*, gulong, std::unique_ptr<ContextMenuData>>> contextMenuSignals;
 
 private:
+    IconNameHelper iconNameHelper;
 };

@@ -18,8 +18,6 @@
 
 #include "filesystem.h"
 
-using std::string;
-
 enum PreviewExtractResult {
 
     /**

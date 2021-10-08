@@ -14,6 +14,7 @@
 #include <gtk/gtk.h>
 
 #include "control/Actions.h"
+#include "util/IconNameHelper.h"
 
 #include "ColorToolItem.h"
 #include "MenuItem.h"
@@ -49,11 +50,11 @@ public:
 
     void initToolItems();
 
-    void setUndoDescription(const string& description);
-    void setRedoDescription(const string& description);
+    void setUndoDescription(const std::string& description);
+    void setRedoDescription(const std::string& description);
 
     SpinPageAdapter* getPageSpinner();
-    void setPageText(const string& text);
+    void setPageInfo(size_t pagecount, size_t pdfpage = 0);
 
     void setFontButtonFont(XojFont& font);
     XojFont getFontButtonFont();
@@ -67,7 +68,7 @@ public:
 
     ToolbarModel* getModel();
 
-    vector<AbstractToolItem*>* getToolItems();
+    std::vector<AbstractToolItem*>* getToolItems();
 
     bool isColorInUse(Color color);
 
@@ -76,6 +77,7 @@ public:
     void enableAudioPlaybackButtons();
 
     void setAudioPlaybackPaused(bool paused);
+    std::string iconName(const char* icon);
 
 private:
     void addToolItem(AbstractToolItem* it);
@@ -87,11 +89,11 @@ private:
     void initEraserToolItem();
 
 private:
-    vector<ColorToolItem*> toolbarColorItems;
+    std::vector<ColorToolItem*> toolbarColorItems;
     GtkWindow* parent = nullptr;
 
-    vector<AbstractToolItem*> toolItems;
-    vector<MenuItem*> menuItems;
+    std::vector<AbstractToolItem*> toolItems;
+    std::vector<MenuItem*> menuItems;
 
     ToolButton* undoButton = nullptr;
     ToolButton* redoButton = nullptr;
@@ -115,4 +117,5 @@ private:
 
     PageTypeMenu* newPageType = nullptr;
     PageBackgroundChangeController* pageBackgroundChangeController = nullptr;
+    IconNameHelper iconNameHelper;
 };

@@ -21,29 +21,26 @@ auto KeyboardInputHandler::handleImpl(InputEvent const& event) -> bool {
         EditSelection* selection = xournal->selection;
         if (selection) {
             int d = 3;
-
-            if ((keyEvent->state & GDK_MOD1_MASK) || (keyEvent->state & GDK_SHIFT_MASK)) {
-                if (keyEvent->state & GDK_MOD1_MASK) {
-                    d = 1;
-                } else {
-                    d = 20;
-                }
+            if (keyEvent->state & GDK_MOD1_MASK) {
+                d = 1;
+            } else if (keyEvent->state & GDK_SHIFT_MASK) {
+                d = 20;
             }
 
+            int xdir = 0;
+            int ydir = 0;
             if (keyEvent->keyval == GDK_KEY_Left) {
-                selection->moveSelection(-d, 0);
-                return true;
+                xdir = -1;
+            } else if (keyEvent->keyval == GDK_KEY_Up) {
+                ydir = -1;
+            } else if (keyEvent->keyval == GDK_KEY_Right) {
+                xdir = 1;
+            } else if (keyEvent->keyval == GDK_KEY_Down) {
+                ydir = 1;
             }
-            if (keyEvent->keyval == GDK_KEY_Up) {
-                selection->moveSelection(0, -d);
-                return true;
-            }
-            if (keyEvent->keyval == GDK_KEY_Right) {
-                selection->moveSelection(d, 0);
-                return true;
-            }
-            if (keyEvent->keyval == GDK_KEY_Down) {
-                selection->moveSelection(0, d);
+            if (xdir != 0 || ydir != 0) {
+                selection->moveSelection(d * xdir, d * ydir);
+                selection->ensureWithinVisibleArea();
                 return true;
             }
         }

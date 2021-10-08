@@ -29,6 +29,8 @@
 #include "gui/inputdevices/InputEvents.h"
 #include "util/DeviceListHelper.h"
 
+using std::string;
+
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
         GladeGui(gladeSearchPath, "main.glade", "mainWindow") {
     this->control = control;
@@ -44,11 +46,13 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
     g_object_ref(mainContentWidget);
     g_object_ref(sidebarWidget);
 
+    GtkSettings* appSettings = gtk_settings_get_default();
+    g_object_set(appSettings, "gtk-application-prefer-dark-theme", control->getSettings()->isDarkTheme(), NULL);
+
     loadMainCSS(gladeSearchPath, "xournalpp.css");
 
     GtkOverlay* overlay = GTK_OVERLAY(get("mainOverlay"));
     this->floatingToolbox = new FloatingToolbox(this, overlay);
-
 
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         GtkWidget* w = get(TOOLBAR_DEFINITIONS[i].guiName);
@@ -183,9 +187,7 @@ void MainWindow::rebindMenubarAccelerators() {
 }
 
 MainWindow::~MainWindow() {
-    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        g_object_unref(this->toolbarWidgets[i]);
-    }
+    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) { g_object_unref(this->toolbarWidgets[i]); }
 
     delete[] this->toolbarWidgets;
     this->toolbarWidgets = nullptr;
@@ -273,6 +275,10 @@ void MainWindow::setGtkTouchscreenScrollingForDeviceMapping() {
 }
 
 void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
+    if (!control->getSettings()->getGtkTouchInertialScrollingEnabled()) {
+        enabled = false;
+    }
+
     if (enabled == gtkTouchscreenScrollingEnabled.load() || winXournal == nullptr) {
         return;
     }
@@ -281,8 +287,9 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
 
     Util::execInUiThread(
             [=]() {
-                gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal),
-                                                          gtkTouchscreenScrollingEnabled.load());
+                const bool touchScrollEnabled = gtkTouchscreenScrollingEnabled.load();
+
+                gtk_scrolled_window_set_kinetic_scrolling(GTK_SCROLLED_WINDOW(winXournal), touchScrollEnabled);
             },
             G_PRIORITY_HIGH);
 }
@@ -613,9 +620,7 @@ void MainWindow::toolbarSelected(ToolbarData* d) {
 
 auto MainWindow::clearToolbar() -> ToolbarData* {
     if (this->selectedToolbar != nullptr) {
-        for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-            ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i]);
-        }
+        for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) { ToolMenuHandler::unloadToolbar(this->toolbarWidgets[i]); }
 
         this->toolbar->freeDynamicToolbarItems();
     }
@@ -705,11 +710,11 @@ void MainWindow::updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage
     spinPageNo->setMinMaxPage(min, max);
     spinPageNo->setPage(page);
 
-    string pdfText;
     if (pdfpage != npos) {
-        pdfText = string(", ") + FS(_F("PDF Page {1}") % (pdfpage + 1));
+        toolbar->setPageInfo(pagecount, pdfpage + 1);
+    } else {
+        toolbar->setPageInfo(pagecount);
     }
-    toolbar->setPageText(FS(C_F("Page {pagenumber} \"of {pagecount}\"", " of {1}{2}") % pagecount % pdfText));
 }
 
 void MainWindow::rebuildLayerMenu() { layerVisibilityChanged(); }
@@ -717,8 +722,8 @@ void MainWindow::rebuildLayerMenu() { layerVisibilityChanged(); }
 void MainWindow::layerVisibilityChanged() {
     LayerController* lc = control->getLayerController();
 
-    int layer = lc->getCurrentLayerId();
-    int maxLayer = lc->getLayerCount();
+    auto layer = lc->getCurrentLayerId();
+    auto maxLayer = lc->getLayerCount();
 
     control->fireEnableAction(ACTION_DELETE_LAYER, layer > 0);
     control->fireEnableAction(ACTION_GOTO_NEXT_LAYER, layer < maxLayer);

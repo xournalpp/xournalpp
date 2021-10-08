@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "Element.h"
-#include "XournalType.h"
+
 
 class Image: public Element {
 public:
@@ -26,7 +26,7 @@ public:
     void setWidth(double width);
     void setHeight(double height);
 
-    void setImage(string data);
+    void setImage(std::string data);
     void setImage(cairo_surface_t* image);
     void setImage(GdkPixbuf* img);
     cairo_surface_t* getImage();
@@ -52,7 +52,7 @@ private:
 private:
     cairo_surface_t* image = nullptr;
 
-    string data;
+    std::string data;
 
-    string::size_type read = false;
+    std::string::size_type read = false;
 };

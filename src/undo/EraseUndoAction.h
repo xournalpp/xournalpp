@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "UndoAction.h"
-#include "XournalType.h"
+
 
 class Layer;
 class Redrawable;
@@ -36,7 +36,7 @@ public:
 
     void finalize();
 
-    virtual string getText();
+    virtual std::string getText();
 
 private:
     GList* edited = nullptr;

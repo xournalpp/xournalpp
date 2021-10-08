@@ -8,6 +8,8 @@
 #include "XojMsgBox.h"
 #include "i18n.h"
 
+using std::string;
+
 BaseExportJob::BaseExportJob(Control* control, const string& name): BlockingJob(control, name) {}
 
 BaseExportJob::~BaseExportJob() = default;

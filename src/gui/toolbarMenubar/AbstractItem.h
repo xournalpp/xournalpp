@@ -18,11 +18,10 @@
 
 #include "control/Actions.h"
 
-#include "XournalType.h"
 
 class AbstractItem: public ActionEnabledListener, public ActionSelectionListener {
 public:
-    AbstractItem(string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem = nullptr);
+    AbstractItem(std::string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem = nullptr);
     virtual ~AbstractItem();
 
 public:
@@ -36,7 +35,7 @@ public:
     virtual void actionEnabledAction(ActionType action, bool enabled);
     virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
-    virtual string getId();
+    virtual std::string getId();
 
     void setTmpDisabled(bool disabled);
     bool isEnabled() const;
@@ -59,7 +58,7 @@ protected:
     ActionGroup group = GROUP_NOGROUP;
     ActionType action = ACTION_NONE;
 
-    string id;
+    std::string id;
 
     ActionHandler* handler = nullptr;
 

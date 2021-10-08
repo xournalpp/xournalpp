@@ -9,6 +9,7 @@
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
+#include "gui/widgets/XournalWidget.h"
 #include "model/Document.h"
 #include "model/Element.h"
 #include "model/Layer.h"
@@ -28,11 +29,17 @@
 #include "Selection.h"
 #include "i18n.h"
 
+using std::vector;
 
-constexpr size_t MINPIXSIZE = 5;  // smallest can scale down to, in pixels.
+/// Smallest can scale down to, in pixels.
+constexpr size_t MINPIXSIZE = 5;
 
-constexpr int DELETE_PADDING = 20;  // ui button padding
+/// Padding for ui buttons
+constexpr int DELETE_PADDING = 20;
 constexpr int ROTATE_PADDING = 8;
+
+/// Number of times to trigger edge pan timer per second
+constexpr unsigned int PAN_TIMER_RATE = 30;
 
 EditSelection::EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view):
         snappingHandler(view->getXournal()->getControl()->getSettings()),
@@ -159,6 +166,11 @@ EditSelection::~EditSelection() {
 
     this->view = nullptr;
     this->undo = nullptr;
+
+    if (this->edgePanHandler) {
+        g_source_destroy(this->edgePanHandler);
+        g_source_unref(this->edgePanHandler);
+    }
 }
 
 /**
@@ -247,7 +259,7 @@ auto EditSelection::getSourceLayer() -> Layer* { return this->sourceLayer; }
  */
 auto EditSelection::getXOnViewAbsolute() -> int {
     double zoom = view->getXournal()->getZoom();
-    return this->view->getX() + this->getXOnView() * zoom;
+    return this->view->getX() + static_cast<int>(this->getXOnView() * zoom);
 }
 
 /**
@@ -255,7 +267,7 @@ auto EditSelection::getXOnViewAbsolute() -> int {
  */
 auto EditSelection::getYOnViewAbsolute() -> int {
     double zoom = view->getXournal()->getZoom();
-    return this->view->getY() + this->getYOnView() * zoom;
+    return this->view->getY() + static_cast<int>(this->getYOnView() * zoom);
 }
 
 /**
@@ -351,9 +363,7 @@ auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoAction
             std::stable_sort(newOrd.begin(), newOrd.end(), EditSelectionContents::insertOrderCmp);
             if (!newOrd.empty()) {
                 Layer::ElementIndex i = newOrd.back().second + 1;
-                for (auto& it: newOrd) {
-                    it.second = i++;
-                }
+                for (auto& it: newOrd) { it.second = i++; }
             }
             desc = _("Bring forward");
             break;
@@ -364,9 +374,7 @@ auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoAction
             if (!newOrd.empty()) {
                 Layer::ElementIndex i = newOrd.front().second;
                 i = i > 0 ? i - 1 : 0;
-                for (auto& it: newOrd) {
-                    it.second = i++;
-                }
+                for (auto& it: newOrd) { it.second = i++; }
             }
             desc = _("Send backward");
             break;
@@ -402,11 +410,20 @@ void EditSelection::mouseUp() {
     Layer* layer = page->getSelectedLayer();
     this->rotation = snappingHandler.snapAngle(this->rotation, false);
 
+    this->sourcePage = page;
+    this->sourceLayer = layer;
+
     this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->aspectRatio, layer, page,
                                   this->view, this->undo, this->mouseDownType);
 
     this->mouseDownType = CURSOR_SELECTION_NONE;
+
+    const bool wasEdgePanning = this->isEdgePanning();
+    this->setEdgePan(false);
     updateMatrix();
+    if (wasEdgePanning) {
+        this->ensureWithinVisibleArea();
+    }
 }
 
 /**
@@ -467,7 +484,12 @@ void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
         p = snappingHandler.snapToGrid(p, alt);
 
         // move
-        moveSelection(p.x - cx, p.y - cy);
+        if (!this->edgePanInhibitNext) {
+            moveSelection(p.x - cx, p.y - cy);
+            this->setEdgePan(true);
+        } else {
+            this->edgePanInhibitNext = false;
+        }
     } else if (this->mouseDownType == CURSOR_SELECTION_ROTATE && supportRotation) {  // catch rotation here
         double rdx = mouseX / zoom - this->snappedBounds.x - this->snappedBounds.width / 2;
         double rdy = mouseY / zoom - this->snappedBounds.y - this->snappedBounds.height / 2;
@@ -561,7 +583,7 @@ void EditSelection::mouseMove(double mouseX, double mouseY, bool alt) {
 
     if (v && v != this->view) {
         XournalView* xournal = this->view->getXournal();
-        int pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
+        const auto pageNr = xournal->getControl()->getDocument()->indexOf(v->getPage());
 
         xournal->pageSelected(pageNr);
 
@@ -609,7 +631,7 @@ auto EditSelection::getPageViewUnderCursor() -> XojPageView* {
 
 
     Layout* layout = gtk_xournal_get_layout(this->view->getXournal()->getWidget());
-    XojPageView* v = layout->getPageViewAt(hx, hy);
+    XojPageView* v = layout->getPageViewAt(static_cast<int>(hx), static_cast<int>(hy));
 
     return v;
 }
@@ -649,9 +671,7 @@ void EditSelection::translateToView(XojPageView* v) {
 void EditSelection::copySelection() {
     // clone elements in the insert order
     std::deque<std::pair<Element*, Layer::ElementIndex>> clonedInsertOrder;
-    for (auto [e, index]: getInsertOrder()) {
-        clonedInsertOrder.emplace_back(e->clone(), index);
-    }
+    for (auto [e, index]: getInsertOrder()) { clonedInsertOrder.emplace_back(e->clone(), index); }
 
     // apply transformations and add to layer
     finalizeSelection();
@@ -692,17 +712,105 @@ void EditSelection::moveSelection(double dx, double dy) {
     this->snappedBounds.x += dx;
     this->snappedBounds.y += dy;
 
-    ensureWithinVisibleArea();
-
     updateMatrix();
 
     this->view->getXournal()->repaintSelection();
 }
 
-/**
- * If the selection is outside the visible area correct the coordinates
- */
-void EditSelection::ensureWithinVisibleArea() {
+void EditSelection::setEdgePan(bool pan) {
+    if (pan && !this->edgePanHandler) {
+        this->edgePanHandler = g_timeout_source_new(1000 / PAN_TIMER_RATE);
+        g_source_set_callback(this->edgePanHandler, reinterpret_cast<GSourceFunc>(EditSelection::handleEdgePan), this,
+                              nullptr);
+        g_source_attach(this->edgePanHandler, nullptr);
+    } else if (!pan && this->edgePanHandler) {
+        g_source_unref(this->edgePanHandler);
+        this->edgePanHandler = nullptr;
+        this->edgePanInhibitNext = false;
+    }
+}
+
+bool EditSelection::isEdgePanning() const { return this->edgePanHandler; }
+
+bool EditSelection::handleEdgePan(EditSelection* self) {
+    if (self->view->getXournal()->getControl()->getZoomControl()->isZoomPresentationMode()) {
+        self->setEdgePan(false);
+        return false;
+    }
+
+
+    Layout* layout = gtk_xournal_get_layout(self->view->getXournal()->getWidget());
+    const Settings* const settings = self->getView()->getXournal()->getControl()->getSettings();
+    const double zoom = self->view->getXournal()->getZoom();
+
+    // Helper function to compute scroll amount for a single dimension, based on visible region and selection bbox
+    const auto computeScrollAmt = [&](double visMin, double visLen, double bboxMin, double bboxLen,
+                                      double layoutSize) -> double {
+        const bool belowMin = bboxMin < visMin;
+        const bool aboveMax = bboxMin + bboxLen > visMin + visLen;
+        const double visMax = visMin + visLen;
+        const double bboxMax = bboxMin + bboxLen;
+
+        // Scroll amount multiplier
+        double mult = 0.0;
+
+        // Calculate bonus scroll amount due to proportion of selection out of view.
+        const double maxMult = settings->getEdgePanMaxMult();
+        int panDir = 0;
+        if (aboveMax) {
+            panDir = 1;
+            mult = maxMult * std::min(bboxLen, bboxMax - visMax) / bboxLen;
+        } else if (belowMin) {
+            panDir = -1;
+            mult = maxMult * std::min(bboxLen, visMin - bboxMin) / bboxLen;
+        }
+
+        // Base amount to translate selection (in document coordinates) per timer tick
+        const double panSpeed = settings->getEdgePanSpeed();
+        const double translateAmt = visLen * panSpeed / (100.0 * PAN_TIMER_RATE);
+
+        // Amount to scroll the visible area by (in layout coordinates), accounting for multiplier
+        double layoutScroll = zoom * panDir * (translateAmt * mult);
+
+        // If scrolling past layout boundaries, clamp scroll amount to boundary
+        if (visMin + layoutScroll < 0) {
+            layoutScroll = -visMin;
+        } else if (visMax + layoutScroll > layoutSize) {
+            layoutScroll = std::max(0.0, layoutSize - visMax);
+        }
+
+        return layoutScroll;
+    };
+
+    // Compute scroll (for layout) and translation (for selection) for x and y
+    const int layoutWidth = layout->getMinimalWidth();
+    const int layoutHeight = layout->getMinimalHeight();
+    const auto visRect = layout->getVisibleRect();
+    const auto bbox = self->getBoundingBoxInView();
+    const auto layoutScrollX = computeScrollAmt(visRect.x, visRect.width, bbox.x, bbox.width, layoutWidth);
+    const auto layoutScrollY = computeScrollAmt(visRect.y, visRect.height, bbox.y, bbox.height, layoutHeight);
+    const auto translateX = layoutScrollX / zoom;
+    const auto translateY = layoutScrollY / zoom;
+
+    // Perform the scrolling
+    bool edgePanned = false;
+    if (self->isMoving() && (layoutScrollX != 0.0 || layoutScrollY != 0.0)) {
+        layout->scrollRelative(layoutScrollX, layoutScrollY);
+        self->moveSelection(translateX, translateY);
+        edgePanned = true;
+
+        // To prevent the selection from jumping and to reduce jitter, block the selection movement triggered by user
+        // input
+        self->edgePanInhibitNext = true;
+    } else {
+        // No panning, so disable the timer.
+        self->setEdgePan(false);
+    }
+
+    return edgePanned;
+}
+
+auto EditSelection::getBoundingBoxInView() const -> Rectangle<double> {
     int viewx = this->view->getX();
     int viewy = this->view->getY();
     double zoom = this->view->getXournal()->getZoom();
@@ -716,11 +824,15 @@ void EditSelection::ensureWithinVisibleArea() {
     double minx = cx - w / 2.0;
     double miny = cy - h / 2.0;
 
+    return {viewx + minx * zoom, viewy + miny * zoom, w * zoom, h * zoom};
+}
+
+void EditSelection::ensureWithinVisibleArea() {
+    const Rectangle<double> viewRect = this->getBoundingBoxInView();
     // need to modify this to take into account the position
     // of the object, plus typecast because XojPageView takes ints
-    this->view->getXournal()->ensureRectIsVisible(static_cast<int>(viewx + minx * zoom),
-                                                  static_cast<int>(viewy + miny * zoom), static_cast<int>(w * zoom),
-                                                  static_cast<int>(h * zoom));
+    this->view->getXournal()->ensureRectIsVisible(static_cast<int>(viewRect.x), static_cast<int>(viewRect.y),
+                                                  static_cast<int>(viewRect.width), static_cast<int>(viewRect.height));
 }
 
 /**
@@ -943,10 +1055,8 @@ void EditSelection::serialize(ObjectOutputStream& out) {
     this->contents->serialize(out);
     out.endObject();
 
-    out.writeInt(this->getElements()->size());
-    for (Element* e: *this->getElements()) {
-        e->serialize(out);
-    }
+    out.writeInt(static_cast<int>(this->getElements()->size()));
+    for (Element* e: *this->getElements()) { e->serialize(out); }
 }
 
 void EditSelection::readSerialized(ObjectInputStream& in) {

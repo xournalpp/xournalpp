@@ -12,7 +12,6 @@
 #pragma once
 
 #include <string>
-using std::string;
 
 /******************************************************************************
 *******************************************************************************
@@ -215,5 +214,5 @@ enum ActionType {
     ACTION_NOT_SELECTED = 1
 };
 
-ActionType ActionType_fromString(const string& value);
-string ActionType_toString(ActionType value);
+ActionType ActionType_fromString(const std::string& value);
+std::string ActionType_toString(ActionType value);

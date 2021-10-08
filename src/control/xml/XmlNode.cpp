@@ -43,7 +43,9 @@ void XmlNode::setAttrib(const char* attrib, const char* value) {
     putAttrib(new TextAttribute(attrib, value));
 }
 
-void XmlNode::setAttrib(const char* attrib, string value) { putAttrib(new TextAttribute(attrib, std::move(value))); }
+void XmlNode::setAttrib(const char* attrib, std::string value) {
+    putAttrib(new TextAttribute(attrib, std::move(value)));
+}
 
 void XmlNode::setAttrib(const char* attrib, double value) { putAttrib(new DoubleAttribute(attrib, value)); }
 

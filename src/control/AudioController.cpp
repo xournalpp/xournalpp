@@ -6,6 +6,9 @@
 #include "XojMsgBox.h"
 #include "i18n.h"
 
+using std::string;
+using std::vector;
+
 auto AudioController::startRecording() -> bool {
     if (!this->isRecording()) {
         if (getAudioFolder().empty()) {

@@ -11,7 +11,8 @@
 #include "Rectangle.h"
 #include "i18n.h"
 
-TextUndoAction::TextUndoAction(const PageRef& page, Layer* layer, Text* text, string lastText, TextEditor* textEditor):
+TextUndoAction::TextUndoAction(const PageRef& page, Layer* layer, Text* text, std::string lastText,
+                               TextEditor* textEditor):
         UndoAction("TextUndoAction") {
     this->page = page;
     this->layer = layer;
@@ -22,11 +23,11 @@ TextUndoAction::TextUndoAction(const PageRef& page, Layer* layer, Text* text, st
 
 TextUndoAction::~TextUndoAction() = default;
 
-auto TextUndoAction::getUndoText() -> string { return this->lastText; }
+auto TextUndoAction::getUndoText() -> std::string { return this->lastText; }
 
 void TextUndoAction::textEditFinished() { this->textEditor = nullptr; }
 
-auto TextUndoAction::getText() -> string { return _("Text changes"); }
+auto TextUndoAction::getText() -> std::string { return _("Text changes"); }
 
 auto TextUndoAction::undo(Control* control) -> bool {
     double x1 = text->getX();

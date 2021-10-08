@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include <fcntl.h>
+#include <glib.h>
 #include <glib/gstdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>

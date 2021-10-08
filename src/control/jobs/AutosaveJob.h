@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "Job.h"
-#include "XournalType.h"
+
 
 class Control;
 
@@ -34,5 +34,5 @@ public:
 
 private:
     Control* control = nullptr;
-    string error;
+    std::string error;
 };

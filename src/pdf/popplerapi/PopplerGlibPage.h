@@ -29,7 +29,7 @@ public:
 
     virtual void render(cairo_t* cr, bool forPrinting = false);  // NOLINT(google-default-arguments)
 
-    virtual vector<XojPdfRectangle> findText(string& text);
+    virtual std::vector<XojPdfRectangle> findText(std::string& text);
 
     virtual int getPageId();
 

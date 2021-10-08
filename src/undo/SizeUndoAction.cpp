@@ -8,12 +8,14 @@
 #include "Range.h"
 #include "i18n.h"
 
+using std::vector;
+
 class SizeUndoActionEntry {
 public:
-    SizeUndoActionEntry(Stroke* s, double orignalWidth, double newWidth, vector<double> originalPressure,
+    SizeUndoActionEntry(Stroke* s, double originalWidth, double newWidth, vector<double> originalPressure,
                         vector<double> newPressure, int pressureCount) {
         this->s = s;
-        this->orignalWidth = orignalWidth;
+        this->originalWidth = originalWidth;
         this->newWidth = newWidth;
         this->originalPressure = std::move(originalPressure);
         this->newPressure = std::move(newPressure);
@@ -22,7 +24,7 @@ public:
 
     ~SizeUndoActionEntry() = default;
     Stroke* s;
-    double orignalWidth;
+    double originalWidth;
     double newWidth;
 
     vector<double> originalPressure;
@@ -68,7 +70,7 @@ auto SizeUndoAction::undo(Control* control) -> bool {
     Range range(e->s->getX(), e->s->getY());
 
     for (SizeUndoActionEntry* e: this->data) {
-        e->s->setWidth(e->orignalWidth);
+        e->s->setWidth(e->originalWidth);
         e->s->setPressure(e->originalPressure);
 
         range.addPoint(e->s->getX(), e->s->getY());
@@ -101,4 +103,4 @@ auto SizeUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-auto SizeUndoAction::getText() -> string { return _("Change stroke width"); }
+auto SizeUndoAction::getText() -> std::string { return _("Change stroke width"); }

@@ -19,7 +19,7 @@
 #include "model/PageRef.h"
 
 #include "Util.h"
-#include "XournalType.h"
+
 
 class SidebarPreviewBase;
 

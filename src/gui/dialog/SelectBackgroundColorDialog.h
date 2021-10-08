@@ -21,7 +21,6 @@
 
 #include "util/Color.h"
 
-#include "XournalType.h"
 
 class Control;
 

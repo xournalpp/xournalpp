@@ -10,13 +10,11 @@
 #include "Util.h"
 #include "i18n.h"
 
-#define ADD_TYPE_CB(icon, name, action) addToolToList(typeModel, icon, name, action)
-
 ButtonConfigGui::ToolSizeIndexMap ButtonConfigGui::toolSizeIndexMap = {{0, TOOL_SIZE_NONE},  {1, TOOL_SIZE_VERY_FINE},
                                                                        {2, TOOL_SIZE_FINE},  {3, TOOL_SIZE_MEDIUM},
                                                                        {4, TOOL_SIZE_THICK}, {5, TOOL_SIZE_VERY_THICK}};
 
-string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
+std::string ButtonConfigGui::toolSizeToLabel(ToolSize size) {
     switch (size) {
         case TOOL_SIZE_NONE:
             return "Thickness - don't change";
@@ -47,10 +45,11 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
 
 ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, int button,
                                  bool withDevice):
-        GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow") {
-    this->settings = settings;
-    this->button = button;
-    this->withDevice = withDevice;
+        GladeGui(gladeSearchPath, "settingsButtonConfig.glade", "offscreenwindow"),
+        settings(settings),
+        button(button),
+        withDevice(withDevice),
+        iconNameHelper(settings) {
 
     GtkWidget* mainGrid = get("mainGrid");
     gtk_container_remove(GTK_CONTAINER(getWindow()), mainGrid);
@@ -65,7 +64,7 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 
         this->deviceList = DeviceListHelper::getDeviceList(this->settings, true);
         for (InputDevice const& dev: this->deviceList) {
-            string txt = dev.getName() + " (" + dev.getType() + ")";
+            std::string txt = dev.getName() + " (" + dev.getType() + ")";
             gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(this->cbDevice), txt.c_str());
         }
     } else {
@@ -76,17 +75,21 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
 
     GtkListStore* typeModel = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);  // NOLINT
 
-    ADD_TYPE_CB("transparent", _("Tool - don't change"), TOOL_NONE);
-    ADD_TYPE_CB("tool_pencil", _("Pen"), TOOL_PEN);
-    ADD_TYPE_CB("tool_eraser", _("Eraser"), TOOL_ERASER);
-    ADD_TYPE_CB("tool_highlighter", _("Highlighter"), TOOL_HIGHLIGHTER);
-    ADD_TYPE_CB("tool_text", _("Text"), TOOL_TEXT);
-    ADD_TYPE_CB("tool_image", _("Insert image"), TOOL_IMAGE);
-    ADD_TYPE_CB("stretch", _("Vertical space"), TOOL_VERTICAL_SPACE);
-    ADD_TYPE_CB("lasso", _("Select region"), TOOL_SELECT_REGION);
-    ADD_TYPE_CB("rect-select", _("Select rectangle"), TOOL_SELECT_RECT);
-    ADD_TYPE_CB("hand", _("Hand"), TOOL_HAND);
-    ADD_TYPE_CB("floating_toolbox", _("Floating Toolbox (experimental)"), TOOL_FLOATING_TOOLBOX);
+    auto addTypeCB = [=](const char* icon, const char* name, ToolType action) {
+        addToolToList(typeModel, iconNameHelper.iconName(icon).c_str(), name, action);
+    };
+
+    addTypeCB("transparent", _("Tool - don't change"), TOOL_NONE);
+    addTypeCB("tool-pencil", _("Pen"), TOOL_PEN);
+    addTypeCB("tool-eraser", _("Eraser"), TOOL_ERASER);
+    addTypeCB("tool-highlighter", _("Highlighter"), TOOL_HIGHLIGHTER);
+    addTypeCB("tool-text", _("Text"), TOOL_TEXT);
+    addTypeCB("tool-image", _("Insert image"), TOOL_IMAGE);
+    addTypeCB("spacer", _("Vertical space"), TOOL_VERTICAL_SPACE);
+    addTypeCB("select-lasso", _("Select region"), TOOL_SELECT_REGION);
+    addTypeCB("select-rect", _("Select rectangle"), TOOL_SELECT_RECT);
+    addTypeCB("hand", _("Hand"), TOOL_HAND);
+    addTypeCB("floating-toolbox", _("Floating Toolbox (experimental)"), TOOL_FLOATING_TOOLBOX);
 
     this->cbTool = get("cbTool");
     gtk_combo_box_set_model(GTK_COMBO_BOX(this->cbTool), GTK_TREE_MODEL(typeModel));

@@ -75,14 +75,14 @@ void ColorToolItem::enableColor(Color color) {
 
 auto ColorToolItem::getColor() const -> Color { return this->color; }
 
-auto ColorToolItem::getId() -> string {
+auto ColorToolItem::getId() -> std::string {
     if (isSelector()) {
         return "COLOR_SELECT";
     }
 
     char buffer[64];
     snprintf(buffer, sizeof(buffer), "COLOR(0x%06" PRIx32 ")", uint32_t{this->color});
-    string id = buffer;
+    std::string id = buffer;
 
     return id;
 }
@@ -158,7 +158,7 @@ auto ColorToolItem::newItem() -> GtkToolItem* {
     return it;
 }
 
-auto ColorToolItem::getToolDisplayName() -> string { return this->name; }
+auto ColorToolItem::getToolDisplayName() -> std::string { return this->name; }
 
 auto ColorToolItem::getNewToolIcon() -> GtkWidget* {
     return ColorSelectImage::newColorIcon(this->color, 16, !isSelector());

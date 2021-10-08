@@ -42,7 +42,7 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
 
     bool backgroundVisible = view->page->isLayerVisible(0);
     if (backgroundVisible && view->page->getBackgroundType().isPdfPage()) {
-        int pgNo = view->page->getPdfPageNr();
+        auto pgNo = view->page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
         PdfCache* cache = view->xournal->getCache();
         PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
@@ -103,7 +103,7 @@ void RenderJob::run() {
         doc->lock();
 
         if (this->view->page->getBackgroundType().isPdfPage()) {
-            int pgNo = this->view->page->getPdfPageNr();
+            auto pgNo = this->view->page->getPdfPageNr();
             popplerPage = doc->getPdfPage(pgNo);
         }
 
@@ -114,7 +114,7 @@ void RenderJob::run() {
         int height = this->view->page->getHeight();
 
         bool backgroundVisible = this->view->page->isLayerVisible(0);
-        if (backgroundVisible) {
+        if (backgroundVisible && this->view->page->getBackgroundType().isPdfPage()) {
             PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
         }
         localView.drawPage(this->view->page, cr2, false);

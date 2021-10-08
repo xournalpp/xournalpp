@@ -16,7 +16,6 @@
 
 #include <gtk/gtk.h>
 
-#include "XournalType.h"
 #include "filesystem.h"
 
 class RecentManagerListener {
@@ -78,6 +77,11 @@ public:
      * of opened files
      */
     void addListener(RecentManagerListener* l);
+
+    /**
+     * Returns the most recent xoj item from the underlying GtkRecentManager
+     */
+    GtkRecentInfo* getMostRecent();
 
 private:
     /**

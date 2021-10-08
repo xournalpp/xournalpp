@@ -26,6 +26,8 @@
 
 #include "filesystem.h"
 
+using std::string;
+
 class LoadHandlerTest: public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE(LoadHandlerTest);
 

@@ -8,7 +8,10 @@
 #include "i18n.h"
 
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar, bool stacked):
-        SidebarPreviewBase(control, gui, toolbar), lc(control->getLayerController()), stacked(stacked) {
+        SidebarPreviewBase(control, gui, toolbar),
+        lc(control->getLayerController()),
+        stacked(stacked),
+        iconNameHelper(control->getSettings()) {
     LayerCtrlListener::registerListener(lc);
 
     this->toolbar->setButtonEnabled(SIDEBAR_ACTION_NONE);
@@ -16,9 +19,7 @@ SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, Side
 
 SidebarPreviewLayers::~SidebarPreviewLayers() {
     // clear old previews
-    for (SidebarPreviewBaseEntry* p: this->previews) {
-        delete p;
-    }
+    for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
     this->previews.clear();
 }
 
@@ -56,9 +57,12 @@ void SidebarPreviewLayers::enableSidebar() {
     rebuildLayerMenu();
 }
 
-auto SidebarPreviewLayers::getName() -> string { return stacked ? _("Layerstack Preview") : _("Layer Preview"); }
+auto SidebarPreviewLayers::getName() -> std::string { return stacked ? _("Layerstack Preview") : _("Layer Preview"); }
 
-auto SidebarPreviewLayers::getIconName() -> string { return stacked ? "sidebar-layerstack" : "layer"; }
+auto SidebarPreviewLayers::getIconName() -> std::string {
+    const char* icon = stacked ? "sidebar-layerstack" : "sidebar-layer";
+    return this->iconNameHelper.iconName(icon);
+}
 
 void SidebarPreviewLayers::pageSizeChanged(size_t page) {
     if (page != this->lc->getCurrentPageId() || !enabled) {
@@ -74,9 +78,7 @@ void SidebarPreviewLayers::pageChanged(size_t page) {
     }
 
     // Repaint all layer
-    for (SidebarPreviewBaseEntry* p: this->previews) {
-        p->repaint();
-    }
+    for (SidebarPreviewBaseEntry* p: this->previews) { p->repaint(); }
 }
 
 void SidebarPreviewLayers::updatePreviews() {
@@ -85,9 +87,7 @@ void SidebarPreviewLayers::updatePreviews() {
     }
 
     // clear old previews
-    for (SidebarPreviewBaseEntry* p: this->previews) {
-        delete p;
-    }
+    for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
     this->previews.clear();
     this->selectedEntry = npos;
 

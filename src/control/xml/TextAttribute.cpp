@@ -4,12 +4,13 @@
 
 #include "StringUtils.h"
 
-TextAttribute::TextAttribute(string name, string value): XMLAttribute(std::move(name)), value(std::move(value)) {}
+TextAttribute::TextAttribute(std::string name, std::string value):
+        XMLAttribute(std::move(name)), value(std::move(value)) {}
 
 TextAttribute::~TextAttribute() = default;
 
 void TextAttribute::writeOut(OutputStream* out) {
-    string v = this->value;
+    std::string v = this->value;
     StringUtils::replaceAllChars(v, {
                                             replace_pair('&', "&amp;"),
                                             replace_pair('\"', "&quot;"),

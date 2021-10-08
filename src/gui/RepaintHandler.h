@@ -14,7 +14,6 @@
 #include <string>
 #include <vector>
 
-#include "XournalType.h"
 
 class XojPageView;
 class XournalView;

@@ -8,7 +8,7 @@
 #include "Range.h"
 #include "i18n.h"
 
-ScaleUndoAction::ScaleUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0, double fx,
+ScaleUndoAction::ScaleUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0, double fx,
                                  double fy, double rotation, bool restoreLineWidth):
         UndoAction("ScaleUndoAction") {
     this->page = page;
@@ -53,4 +53,4 @@ void ScaleUndoAction::applyScale(double fx, double fy, bool restoreLineWidth) {
     this->page->fireRangeChanged(r);
 }
 
-auto ScaleUndoAction::getText() -> string { return _("Scale"); }
+auto ScaleUndoAction::getText() -> std::string { return _("Scale"); }

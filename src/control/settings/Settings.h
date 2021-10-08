@@ -38,21 +38,21 @@ public:
     virtual ~SAttribute();
 
 public:
-    string sValue;
+    std::string sValue;
     int iValue{};
     double dValue{};
 
     AttributeType type;
 
-    string comment;
+    std::string comment;
 };
 
 
 class SElement final {
     struct SElementData {
     private:
-        std::map<string, SAttribute> attributes;
-        std::map<string, SElement> children;
+        std::map<std::string, SAttribute> attributes;
+        std::map<std::string, SElement> children;
         friend class SElement;
     };
 
@@ -61,23 +61,23 @@ public:
 
     void clear();
 
-    SElement& child(const string& name);
+    SElement& child(const std::string& name);
 
-    void setIntHex(const string& name, const int value);
-    void setInt(const string& name, const int value);
-    void setDouble(const string& name, const double value);
-    void setBool(const string& name, const bool value);
-    void setString(const string& name, const string& value);
+    void setIntHex(const std::string& name, const int value);
+    void setInt(const std::string& name, const int value);
+    void setDouble(const std::string& name, const double value);
+    void setBool(const std::string& name, const bool value);
+    void setString(const std::string& name, const std::string& value);
 
-    [[maybe_unused]] void setComment(const string& name, const string& comment);
+    [[maybe_unused]] void setComment(const std::string& name, const std::string& comment);
 
-    bool getInt(const string& name, int& value);
-    [[maybe_unused]] bool getDouble(const string& name, double& value);
-    bool getBool(const string& name, bool& value);
-    bool getString(const string& name, string& value);
+    bool getInt(const std::string& name, int& value);
+    [[maybe_unused]] bool getDouble(const std::string& name, double& value);
+    bool getBool(const std::string& name, bool& value);
+    bool getString(const std::string& name, std::string& value);
 
-    std::map<string, SAttribute>& attributes();
-    std::map<string, SElement>& children();
+    std::map<std::string, SAttribute>& attributes();
+    std::map<std::string, SElement>& children();
 
 private:
     std::shared_ptr<SElementData> element = std::make_shared<SElementData>();
@@ -105,7 +105,7 @@ private:
     static xmlNodePtr savePropertyUnsigned(const gchar* key, unsigned int value, xmlNodePtr parent);
     static xmlNodePtr saveProperty(const gchar* key, const gchar* value, xmlNodePtr parent);
 
-    void saveData(xmlNodePtr root, const string& name, SElement& elem);
+    void saveData(xmlNodePtr root, const std::string& name, SElement& elem);
 
     void saveButtonConfig();
     void loadButtonConfig();
@@ -139,8 +139,14 @@ public:
     /**
      * The selected Toolbar
      */
-    void setSelectedToolbar(const string& name);
-    string const& getSelectedToolbar() const;
+    void setSelectedToolbar(const std::string& name);
+    std::string const& getSelectedToolbar() const;
+
+    void setEdgePanSpeed(double speed);
+    double getEdgePanSpeed() const;
+
+    void setEdgePanMaxMult(double mult);
+    double getEdgePanMaxMult() const;
 
     /**
      * Set the Zoomstep for one step in percent
@@ -165,6 +171,9 @@ public:
      */
     void setDarkTheme(bool dark);
     bool isDarkTheme() const;
+
+    void setAreStockIconsUsed(bool use);
+    bool areStockIconsUsed() const;
 
     /**
      * The last saved path
@@ -232,8 +241,10 @@ public:
     void setViewLayoutB2T(bool b2t);
     bool getViewLayoutB2T() const;
 
+    bool isAutoloadMostRecent() const;
+    void setAutoloadMostRecent(bool load);
 
-    bool isAutloadPdfXoj() const;
+    bool isAutoloadPdfXoj() const;
     void setAutoloadPdfXoj(bool load);
 
     int getAutosaveTimeout() const;
@@ -258,6 +269,9 @@ public:
 
     bool getTouchDrawingEnabled() const;
     void setTouchDrawingEnabled(bool b);
+
+    bool getGtkTouchInertialScrollingEnabled() const;
+    void setGtkTouchInertialScrollingEnabled(bool b);
 
     bool isPressureGuessingEnabled() const;
     void setPressureGuessingEnabled(bool b);
@@ -298,16 +312,16 @@ public:
     bool isScrollbarFadeoutDisabled() const;
     void setScrollbarFadeoutDisabled(bool disable);
 
-    string const& getDefaultSaveName() const;
-    void setDefaultSaveName(const string& name);
+    std::string const& getDefaultSaveName() const;
+    void setDefaultSaveName(const std::string& name);
 
     ButtonConfig* getButtonConfig(int id);
 
-    string const& getFullscreenHideElements() const;
-    void setFullscreenHideElements(string elements);
+    std::string const& getFullscreenHideElements() const;
+    void setFullscreenHideElements(std::string elements);
 
-    string const& getPresentationHideElements() const;
-    void setPresentationHideElements(string elements);
+    std::string const& getPresentationHideElements() const;
+    void setPresentationHideElements(std::string elements);
 
     Color getBorderColor() const;
     void setBorderColor(Color color);
@@ -337,11 +351,11 @@ public:
     bool isEagerPageCleanup() const;
     void setEagerPageCleanup(bool b);
 
-    string const& getPageTemplate() const;
-    void setPageTemplate(const string& pageTemplate);
+    std::string const& getPageTemplate() const;
+    void setPageTemplate(const std::string& pageTemplate);
 
-    string const& getAudioFolder() const;
-    void setAudioFolder(const string& audioFolder);
+    std::string const& getAudioFolder() const;
+    void setAudioFolder(const std::string& audioFolder);
 
     PaDeviceIndex getAudioInputDevice() const;
     void setAudioInputDevice(PaDeviceIndex deviceIndex);
@@ -358,11 +372,11 @@ public:
     unsigned int getDefaultSeekTime() const;
     void setDefaultSeekTime(unsigned int t);
 
-    string const& getPluginEnabled() const;
-    void setPluginEnabled(const string& pluginEnabled);
+    std::string const& getPluginEnabled() const;
+    void setPluginEnabled(const std::string& pluginEnabled);
 
-    string const& getPluginDisabled() const;
-    void setPluginDisabled(const string& pluginDisabled);
+    std::string const& getPluginDisabled() const;
+    void setPluginDisabled(const std::string& pluginDisabled);
 
     /**
      * Sets #numIgnoredStylusEvents. If given a negative value writes 0 instead.
@@ -382,16 +396,16 @@ public:
     void loadDeviceClasses();
     void saveDeviceClasses();
     void setDeviceClassForDevice(GdkDevice* device, InputDeviceTypeOption deviceClass);
-    void setDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource,
+    void setDeviceClassForDevice(const std::string& deviceName, GdkInputSource deviceSource,
                                  InputDeviceTypeOption deviceClass);
     InputDeviceTypeOption getDeviceClassForDevice(GdkDevice* device) const;
-    InputDeviceTypeOption getDeviceClassForDevice(const string& deviceName, GdkInputSource deviceSource) const;
+    InputDeviceTypeOption getDeviceClassForDevice(const std::string& deviceName, GdkInputSource deviceSource) const;
     std::vector<InputDevice> getKnownInputDevices() const;
 
     /**
      * Get name, e.g. "cm"
      */
-    string const& getSizeUnit() const;
+    std::string const& getSizeUnit() const;
 
     /**
      * Get size index in XOJ_UNITS
@@ -401,7 +415,7 @@ public:
     /**
      * Set Unit, e.g. "cm"
      */
-    void setSizeUnit(const string& sizeUnit);
+    void setSizeUnit(const std::string& sizeUnit);
 
     /**
      * Set size index in XOJ_UNITS
@@ -504,7 +518,7 @@ public:
 
 public:
     // Custom settings
-    SElement& getCustomElement(const string& name);
+    SElement& getCustomElement(const std::string& name);
 
     /**
      * Call this after you have done all custom settings changes
@@ -533,7 +547,7 @@ private:
     /**
      * The settings tree
      */
-    std::map<string, SElement> data;
+    std::map<std::string, SElement> data;
 
     /**
      *  Use pen pressure to control stroke width?
@@ -609,6 +623,11 @@ private:
     bool darkTheme{};
 
     /**
+     * If stock icons are used instead of Xournal++ icons when available
+     */
+    bool useStockIcons{};
+
+    /**
      * If the menu bar is visible on startup
      */
     bool menubarVisible{};
@@ -626,7 +645,7 @@ private:
     /**
      *  The selected Toolbar name
      */
-    string selectedToolbar;
+    std::string selectedToolbar;
 
     /**
      *  The last saved folder
@@ -647,6 +666,18 @@ private:
      * The last used font
      */
     XojFont font;
+
+    /**
+     * Base speed (as a percentage of visible canvas) of edge pan per
+     * second
+     */
+    double edgePanSpeed{};
+
+    /**
+     * Maximum multiplier of edge pan speed due to proportion of selection out
+     * of view
+     */
+    double edgePanMaxMult{};
 
     /**
      * Zoomstep for one step
@@ -735,6 +766,11 @@ private:
     bool autoloadPdfXoj{};
 
     /**
+     * Automatically load most recent document on application startup (true/false)
+     */
+    bool autoloadMostRecent{};
+
+    /**
      * Automatically save documents for crash recovery each x minutes
      */
     int autosaveTimeout{};
@@ -786,7 +822,7 @@ private:
     /**
      * Default name if you save a new document
      */
-    string defaultSaveName;  // should be string - don't change to path
+    std::string defaultSaveName;  // should be string - don't change to path
 
     /**
      * The button config
@@ -797,8 +833,8 @@ private:
      * Which gui elements are hidden if you are in Fullscreen mode,
      * separated by a colon (,)
      */
-    string fullscreenHideElements;
-    string presentationHideElements;
+    std::string fullscreenHideElements;
+    std::string presentationHideElements;
 
     /**
      *  The count of pages which will be cached
@@ -837,17 +873,17 @@ private:
     /**
      * Page template String
      */
-    string pageTemplate;
+    std::string pageTemplate;
 
     /**
      * Unit, see XOJ_UNITS
      */
-    string sizeUnit;
+    std::string sizeUnit;
 
     /**
      * Audio folder for audio recording
      */
-    string audioFolder;
+    std::string audioFolder;
 
     /**
      * Snap tolerance for the graph/dotted grid
@@ -859,13 +895,15 @@ private:
      */
     double snapRotationTolerance{};
 
-
     /// Grid size for Snapping
     double snapGridSize{};
 
-
-    // Touchscreens act like multi-touch-aware pens.
+    /// Touchscreens act like multi-touch-aware pens.
     bool touchDrawing{};
+
+    /// True iff we use GTK's built-in kinetic/inertial scrolling
+    /// for touchscreen devices. If false, we use our own.
+    bool gtkTouchInertialScrolling{};
 
     /**
      * Infer pressure from speed when device pressure
@@ -901,12 +939,12 @@ private:
     /**
      * List of enabled plugins (only the one which are not enabled by default)
      */
-    string pluginEnabled;
+    std::string pluginEnabled;
 
     /**
      * List of disabled plugins (only the one which are not disabled by default)
      */
-    string pluginDisabled;
+    std::string pluginDisabled;
 
 
     /**
@@ -944,7 +982,7 @@ private:
 
     bool inputSystemDrawOutsideWindow{};
 
-    std::map<string, std::pair<InputDeviceTypeOption, GdkInputSource>> inputDeviceClasses = {};
+    std::map<std::string, std::pair<InputDeviceTypeOption, GdkInputSource>> inputDeviceClasses = {};
 
     /**
      * "Transaction" running, do not save until the end is reached

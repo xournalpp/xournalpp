@@ -20,7 +20,6 @@
 #include "model/DocumentChangeType.h"
 #include "model/DocumentListener.h"
 
-#include "XournalType.h"
 
 class Control;
 class SidebarToolbar;
@@ -37,12 +36,12 @@ public:
     /**
      * The name of this sidebar page
      */
-    virtual string getName() = 0;
+    virtual std::string getName() = 0;
 
     /**
      * The name of this sidebar page
      */
-    virtual string getIconName() = 0;
+    virtual std::string getIconName() = 0;
 
     /**
      * If this sidebar page has data for the current document, e.g. if there are bookmarks or not

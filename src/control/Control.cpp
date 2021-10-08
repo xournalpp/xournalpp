@@ -4,9 +4,6 @@
 #include <memory>
 #include <numeric>
 
-#include <glib/gstdio.h>
-
-#include "enums/ActionType.enum.h"
 #include "gui/TextEditor.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
@@ -30,9 +27,6 @@
 #include "model/StrokeStyle.h"
 #include "pagetype/PageTypeHandler.h"
 #include "plugin/PluginController.h"
-#include "serializing/ObjectInputStream.h"
-#include "settings/ButtonConfig.h"
-#include "settings/SettingsEnums.h"
 #include "stockdlg/XojOpenDlg.h"
 #include "undo/AddUndoAction.h"
 #include "undo/DeleteUndoAction.h"
@@ -56,6 +50,7 @@
 #include "config.h"
 #include "i18n.h"
 
+using std::string;
 
 Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp(gtkApp) {
     this->recent = new RecentManager();
@@ -227,8 +222,8 @@ auto Control::checkChangedDocument(Control* control) -> bool {
         return true;
     }
     for (auto const& page: control->changedPages) {
-        int p = control->doc->indexOf(page);
-        if (p != -1) {
+        auto p = control->doc->indexOf(page);
+        if (p != npos) {
             control->firePageChanged(p);
         }
     }
@@ -330,7 +325,7 @@ void Control::enableAutosave(bool enable) {
     }
 
     if (enable) {
-        int timeout = settings->getAutosaveTimeout() * 60;
+        auto timeout = guint(settings->getAutosaveTimeout()) * 60U;
         this->autosaveTimeout = g_timeout_add_seconds(timeout, reinterpret_cast<GSourceFunc>(autosaveCallback), this);
     }
 }
@@ -343,10 +338,10 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     this->win->updatePageNumbers(page, this->doc->getPageCount(), pdfPage);
     this->sidebar->selectPageNr(page, pdfPage);
 
-    this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), page, getZoomControl()->getZoomReal());
+    this->metadata->storeMetadata(this->doc->getEvMetadataFilename(), int(page), getZoomControl()->getZoomReal());
 
-    int current = getCurrentPageNo();
-    int count = this->doc->getPageCount();
+    auto current = getCurrentPageNo();
+    auto count = this->doc->getPageCount();
 
     fireEnableAction(ACTION_GOTO_FIRST, current != 0);
     fireEnableAction(ACTION_GOTO_BACK, current != 0);
@@ -933,6 +928,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             showAbout();
             break;
 
+        case ACTION_NONE:
+            // do nothing
+            break;
+
         default:
             g_warning("Unhandled action event: %s / %s (%i / %i)", ActionType_toString(type).c_str(),
                       ActionGroup_toString(group).c_str(), type, group);
@@ -1304,13 +1303,13 @@ void Control::insertPage(const PageRef& page, size_t position) {
 }
 
 void Control::gotoPage() {
-    auto* dlg = new GotoDialog(this->gladeSearchPath, this->doc->getPageCount());
+    auto* dlg = new GotoDialog(this->gladeSearchPath, int(this->doc->getPageCount()));
 
     dlg->show(GTK_WINDOW(this->win->getWindow()));
-    int page = dlg->getSelectedPage();
+    auto page = dlg->getSelectedPage();
 
-    if (page != -1) {
-        this->scrollHandler->scrollToPage(page - 1, 0);
+    if (page > 0) {
+        this->scrollHandler->scrollToPage(size_t(page - 1), 0);
     }
 
     delete dlg;
@@ -1373,7 +1372,7 @@ void Control::paperFormat() {
 }
 
 void Control::changePageBackgroundColor() {
-    int pNr = getCurrentPageNo();
+    auto pNr = getCurrentPageNo();
     this->doc->lock();
     auto const& p = this->doc->getPage(pNr);
     this->doc->unlock();
@@ -1401,10 +1400,8 @@ void Control::changePageBackgroundColor() {
 void Control::setViewPairedPages(bool enabled) {
     settings->setShowPairedPages(enabled);
     fireActionSelected(GROUP_PAIRED_PAGES, enabled ? ACTION_VIEW_PAIRED_PAGES : ACTION_NOT_SELECTED);
-
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewPresentationMode(bool enabled) {
@@ -1442,18 +1439,15 @@ void Control::setViewPresentationMode(bool enabled) {
     // disable selection of scroll hand tool
     fireEnableAction(ACTION_TOOL_HAND, !enabled);
     fireActionSelected(GROUP_PRESENTATION_MODE, enabled ? ACTION_VIEW_PRESENTATION_MODE : ACTION_NOT_SELECTED);
-
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setPairsOffset(int numOffset) {
     settings->setPairsOffset(numOffset);
     fireActionSelected(GROUP_PAIRED_PAGES, numOffset ? ACTION_SET_PAIRS_OFFSET : ACTION_NOT_SELECTED);
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewColumns(int numColumns) {
@@ -1493,9 +1487,8 @@ void Control::setViewColumns(int numColumns) {
 
     fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewRows(int numRows) {
@@ -1535,9 +1528,8 @@ void Control::setViewRows(int numRows) {
 
     fireActionSelected(GROUP_FIXED_ROW_OR_COLS, action);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutVert(bool vert) {
@@ -1553,9 +1545,8 @@ void Control::setViewLayoutVert(bool vert) {
 
     fireActionSelected(GROUP_LAYOUT_HORIZONTAL, action);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutR2L(bool r2l) {
@@ -1571,9 +1562,8 @@ void Control::setViewLayoutR2L(bool r2l) {
 
     fireActionSelected(GROUP_LAYOUT_LR, action);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 void Control::setViewLayoutB2T(bool b2t) {
@@ -1589,9 +1579,8 @@ void Control::setViewLayoutB2T(bool b2t) {
 
     fireActionSelected(GROUP_LAYOUT_TB, action);
 
-    int currentPage = getCurrentPageNo();
     win->getXournal()->layoutPages();
-    scrollHandler->scrollToPage(currentPage);
+    scrollHandler->scrollToPage(getCurrentPageNo());
 }
 
 /**
@@ -1912,9 +1901,8 @@ void Control::showSettings() {
     if (verticalSpace != settings->getAddVerticalSpace() || horizontalSpace != settings->getAddHorizontalSpace() ||
         verticalSpaceAmount != settings->getAddVerticalSpaceAmount() ||
         horizontalSpaceAmount != settings->getAddHorizontalSpaceAmount()) {
-        int currentPage = getCurrentPageNo();
         win->getXournal()->layoutPages();
-        scrollHandler->scrollToPage(currentPage);
+        scrollHandler->scrollToPage(getCurrentPageNo());
     }
 
     if (stylusCursorType != settings->getStylusCursorType() || highlightPosition != settings->isHighlightPosition()) {
@@ -2007,10 +1995,18 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         !loadHandler.getMissingPdfFilename().empty()) {
         // give the user a second chance to select a new PDF filepath, or to discard the PDF
 
-        GtkWidget* dialog = gtk_message_dialog_new(
-                getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-                loadHandler.isAttachedPdfMissing() ? _("The attached background PDF could not be found.") :
-                                                     _("The background PDF could not be found."));
+        const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
+        const std::string msg1 =
+                FS(_F("The attached background file {1} could not be found. It might have been moved, renamed or "
+                      "deleted.\nIt was last seen at: {2}") %
+                   missingFilePath.filename().string() % missingFilePath.parent_path().string());
+        const std::string msg2 =
+                FS(_F("The background file {1} could not be found. It might have been moved, renamed or deleted.\nIt "
+                      "was last seen at: {2}") %
+                   missingFilePath.filename().string() % missingFilePath.parent_path().string());
+        GtkWidget* dialog =
+                gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
+                                       loadHandler.isAttachedPdfMissing() ? msg1.c_str() : msg2.c_str());
 
         gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
         gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
@@ -2074,19 +2070,17 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
     LoadHandler loadHandler;
 
-    if (settings->isAutloadPdfXoj()) {
-        fs::path f = filepath;
-        Util::clearExtensions(f);
-        f += ".xopp";
-        Document* tmp = loadHandler.loadDocument(f);
-
-        if (tmp == nullptr) {
-            f = filepath;
-            Util::clearExtensions(f);
-            f += ".xoj";
+    if (settings->isAutoloadPdfXoj()) {
+        Document* tmp;
+        const std::vector<std::string> exts = {".xopp", ".xoj", ".pdf.xopp", ".pdf.xoj"};
+        for (const std::string& ext: exts) {
+            fs::path f = filepath;
+            Util::clearExtensions(f, ".pdf");
+            f += ext;
             tmp = loadHandler.loadDocument(f);
+            if (tmp)
+                break;
         }
-
         if (tmp) {
             this->doc->lock();
             this->doc->clearDocument();
@@ -2441,15 +2435,13 @@ void Control::quit(bool allowCancel) {
         return;
     }
 
-    this->closeDocument();
-
-    this->scheduler->lock();
-
     audioController->stopRecording();
-    settings->save();
-
+    this->scheduler->lock();
     this->scheduler->removeAllJobs();
     this->scheduler->unlock();
+    this->scheduler->stop();  // Finish current task. Must be called to finish pending saves.
+    this->closeDocument();    // Must be done after all jobs has finished (Segfault on save/export)
+    settings->save();
     g_application_quit(G_APPLICATION(gtkApp));
 }
 
@@ -2518,8 +2510,8 @@ void Control::applyPreferredLanguage() {
 }
 
 void Control::initButtonTool() {
-    vector<Button> buttons{Button::BUTTON_ERASER,       Button::BUTTON_STYLUS_ONE,  Button::BUTTON_STYLUS_TWO,
-                           Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT, Button::BUTTON_TOUCH};
+    std::vector<Button> buttons{Button::BUTTON_ERASER,       Button::BUTTON_STYLUS_ONE,  Button::BUTTON_STYLUS_TWO,
+                                Button::BUTTON_MOUSE_MIDDLE, Button::BUTTON_MOUSE_RIGHT, Button::BUTTON_TOUCH};
     ButtonConfig* cfg;
     for (auto b: buttons) {
         cfg = settings->getButtonConfig(b);
@@ -2529,8 +2521,8 @@ void Control::initButtonTool() {
 
 auto Control::askToReplace(fs::path const& filepath) const -> bool {
     if (fs::exists(filepath)) {
-        string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") %
-                        filepath.filename().u8string());
+        std::string msg = FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") %
+                             filepath.filename().u8string());
         int res = XojMsgBox::replaceFileQuestion(getGtkWindow(), msg);
         return res == GTK_RESPONSE_OK;
     }
@@ -2573,8 +2565,8 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
     auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / settings->getDisplayDpi() *
                   Util::DPI_NORMALIZATION_FACTOR;
 
-    int pageNr = getCurrentPageNo();
-    if (pageNr == -1) {
+    auto pageNr = getCurrentPageNo();
+    if (pageNr == npos) {
         return;
     }
 
@@ -2610,8 +2602,8 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
 void Control::clipboardPaste(Element* e) {
     double x = 0;
     double y = 0;
-    int pageNr = getCurrentPageNo();
-    if (pageNr == -1) {
+    auto pageNr = getCurrentPageNo();
+    if (pageNr == npos) {
         return;
     }
 
@@ -2644,8 +2636,8 @@ void Control::clipboardPaste(Element* e) {
 }
 
 void Control::clipboardPasteXournal(ObjectInputStream& in) {
-    int pNr = getCurrentPageNo();
-    if (pNr == -1 && win != nullptr) {
+    auto pNr = getCurrentPageNo();
+    if (pNr == npos && win != nullptr) {
         return;
     }
 
@@ -2723,9 +2715,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         g_warning("could not paste, Exception occurred: %s", e.what());
         Stacktrace::printStracktrace();
         if (selection) {
-            for (Element* e: *selection->getElements()) {
-                delete e;
-            }
+            for (Element* el: *selection->getElements()) { delete el; }
             delete selection;
         }
     }
@@ -2866,6 +2856,8 @@ auto Control::getTextEditor() -> TextEditor* {
 }
 
 auto Control::getGladeSearchPath() -> GladeSearchpath* { return this->gladeSearchPath; }
+
+auto Control::getRecentManager() -> RecentManager* { return recent; }
 
 auto Control::getSettings() -> Settings* { return settings; }
 

@@ -21,7 +21,7 @@
 
 #include "AudioQueue.h"
 #include "DeviceInfo.h"
-#include "XournalType.h"
+
 
 class AudioPlayer;
 

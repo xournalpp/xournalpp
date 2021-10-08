@@ -6,7 +6,7 @@
 #include "Range.h"
 #include "i18n.h"
 
-RotateUndoAction::RotateUndoAction(const PageRef& page, vector<Element*>* elements, double x0, double y0,
+RotateUndoAction::RotateUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0,
                                    double rotation):
         UndoAction("RotateUndoAction") {
     this->page = page;
@@ -48,4 +48,4 @@ void RotateUndoAction::applyRotation(double rotation) {
     this->page->fireRangeChanged(r);
 }
 
-auto RotateUndoAction::getText() -> string { return _("Rotation"); }
+auto RotateUndoAction::getText() -> std::string { return _("Rotation"); }

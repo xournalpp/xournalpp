@@ -15,8 +15,8 @@
 #include <vector>
 
 #include <config.h>
+#include <glib.h>
 
-#include "XournalType.h"
 #include "filesystem.h"
 
 class GladeSearchpath;

@@ -33,7 +33,7 @@
 #include "RecentManager.h"
 #include "ScrollHandler.h"
 #include "ToolHandler.h"
-#include "XournalType.h"
+
 
 class AudioController;
 class FullscreenHandler;
@@ -69,7 +69,7 @@ public:
 
 public:
     // Menu File
-    bool newFile(string pageTemplate = "", fs::path filepath = {});
+    bool newFile(std::string pageTemplate = "", fs::path filepath = {});
     bool openFile(fs::path filepath = "", int scrollToPage = -1, bool forceOpen = false);
     bool annotatePdf(fs::path filepath, bool attachPdf, bool attachToDocument);
     void print();
@@ -175,7 +175,7 @@ public:
 
     bool isFullscreen();
 
-    bool searchTextOnPage(string text, int p, int* occures, double* top);
+    bool searchTextOnPage(std::string text, int p, int* occures, double* top);
 
     /**
      * Fire page selected, but first check if the page Number is valid
@@ -185,7 +185,7 @@ public:
     size_t firePageSelected(const PageRef& page);
     void firePageSelected(size_t page);
 
-    void addDefaultPage(string pageTemplate);
+    void addDefaultPage(std::string pageTemplate);
     void insertNewPage(size_t position);
     void appendNewPdfPages();
     void insertPage(const PageRef& page, size_t position);
@@ -209,7 +209,7 @@ public:
 
     void setToolSize(ToolSize size);
 
-    void setLineStyle(const string& style);
+    void setLineStyle(const std::string& style);
 
     void setFill(bool fill);
 
@@ -221,7 +221,7 @@ public:
 
     XournalScheduler* getScheduler();
 
-    void block(const string& name);
+    void block(const std::string& name);
     void unblock();
 
     void renameLastAutosaveFile();
@@ -230,6 +230,7 @@ public:
     void setClipboardHandlerSelection(EditSelection* selection);
 
     MetadataManager* getMetadataManager();
+    RecentManager* getRecentManager();
     Settings* getSettings();
     ToolHandler* getToolHandler();
     ZoomControl* getZoomControl();
@@ -279,7 +280,7 @@ public:
     // ClipboardListener interface
     virtual void clipboardCutCopyEnabled(bool enabled);
     virtual void clipboardPasteEnabled(bool enabled);
-    virtual void clipboardPasteText(string text);
+    virtual void clipboardPasteText(std::string text);
     virtual void clipboardPasteImage(GdkPixbuf* img);
     virtual void clipboardPasteXournal(ObjectInputStream& in);
     virtual void deleteSelection();
@@ -369,7 +370,7 @@ private:
     /**
      * Timeout id: the timeout watches the changes and actualizes the previews from time to time
      */
-    int changeTimout;
+    guint changeTimout;
 
     /**
      * The pages wihch has changed since the last update (for preview update)
@@ -384,7 +385,7 @@ private:
     /**
      * The autosave handler ID
      */
-    int autosaveTimeout = 0;
+    guint autosaveTimeout = 0;
     fs::path lastAutosaveFilename;
 
     XournalScheduler* scheduler;

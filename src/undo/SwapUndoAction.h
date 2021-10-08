@@ -26,8 +26,8 @@ public:
 public:
     virtual bool undo(Control* control);
     virtual bool redo(Control* control);
-    vector<PageRef> getPages();
-    virtual string getText();
+    std::vector<PageRef> getPages();
+    virtual std::string getText();
 
 private:
     void swap(Control* control);

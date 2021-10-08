@@ -6,9 +6,9 @@ AudioElement::AudioElement(ElementType type): Element(type) {}
 
 AudioElement::~AudioElement() { this->timestamp = 0; }
 
-void AudioElement::setAudioFilename(string fn) { this->audioFilename = std::move(fn); }
+void AudioElement::setAudioFilename(std::string fn) { this->audioFilename = std::move(fn); }
 
-auto AudioElement::getAudioFilename() const -> string { return this->audioFilename; }
+auto AudioElement::getAudioFilename() const -> std::string { return this->audioFilename; }
 
 void AudioElement::setTimestamp(size_t timestamp) { this->timestamp = timestamp; }
 

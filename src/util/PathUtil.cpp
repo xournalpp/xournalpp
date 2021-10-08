@@ -19,6 +19,25 @@ using namespace std::string_view_literals;
 constexpr auto CONFIG_FOLDER_NAME = "xournalpp"sv;
 #endif
 
+#ifdef _WIN32
+#include <windows.h>
+
+auto Util::getLongPath(const fs::path& path) -> fs::path {
+    DWORD wLongPathSz = GetLongPathNameW(path.c_str(), nullptr, 0);
+
+    if (wLongPathSz == 0) {
+        return path;
+    }
+
+    std::wstring wLongPath(wLongPathSz, L'\0');
+    GetLongPathNameW(path.c_str(), wLongPath.data(), static_cast<DWORD>(wLongPath.size()));
+    wLongPath.pop_back();
+    return fs::path(std::move(wLongPath));
+}
+#else
+auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
+#endif
+
 /**
  * Read a file to a string
  *
@@ -42,8 +61,8 @@ auto Util::readString(fs::path const& path, bool showErrorToUser) -> std::option
     return std::nullopt;
 }
 
-auto Util::getEscapedPath(const fs::path& path) -> string {
-    string escaped = path.string();
+auto Util::getEscapedPath(const fs::path& path) -> std::string {
+    std::string escaped = path.string();
     StringUtils::replaceAllChars(escaped, {replace_pair('\\', "\\\\"), replace_pair('\"', "\\\"")});
     return escaped;
 }
@@ -103,7 +122,7 @@ auto Util::toUri(const fs::path& path) -> std::optional<std::string> {
         return std::nullopt;
     }
 
-    string uriString(uri);
+    std::string uriString(uri);
     g_free(uri);
     return {std::move(uriString)};
 }
@@ -127,11 +146,11 @@ void Util::openFileWithDefaultApplication(const fs::path& filename) {
     constexpr auto const OPEN_PATTERN = "xdg-open \"{1}\"";
 #endif
 
-    string command = FS(FORMAT_STR(OPEN_PATTERN) % Util::getEscapedPath(filename));
+    std::string command = FS(FORMAT_STR(OPEN_PATTERN) % Util::getEscapedPath(filename));
     if (system(command.c_str()) != 0) {
-        string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
-                           "URL: {1}") %
-                        filename.u8string());
+        std::string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
+                                "URL: {1}") %
+                             filename.u8string());
         XojMsgBox::showErrorToUser(nullptr, msg);
     }
 }
@@ -144,11 +163,11 @@ void Util::openFileWithFilebrowser(const fs::path& filename) {
 #else  // linux, unix, ...
     constexpr auto const OPEN_PATTERN = R"(nautilus "file://{1}" || dolphin "file://{1}" || konqueror "file://{1}" &)";
 #endif
-    string command = FS(FORMAT_STR(OPEN_PATTERN) % Util::getEscapedPath(filename));
+    std::string command = FS(FORMAT_STR(OPEN_PATTERN) % Util::getEscapedPath(filename));
     if (system(command.c_str()) != 0) {
-        string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
-                           "URL: {1}") %
-                        filename.u8string());
+        std::string msg = FS(_F("File couldn't be opened. You have to do it manually:\n"
+                                "URL: {1}") %
+                             filename.u8string());
         XojMsgBox::showErrorToUser(nullptr, msg);
     }
 }
@@ -227,7 +246,7 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
         fs::create_directories(p);
     } catch (fs::filesystem_error const& fe) {
         Util::execInUiThread([=]() {
-            string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.u8string() % fe.what());
+            std::string msg = FS(_F("Could not create folder: {1}\nFailed with error: {2}") % p.u8string() % fe.what());
             g_warning("%s %s", msg.c_str(), fe.what());
             XojMsgBox::showErrorToUser(nullptr, msg);
         });

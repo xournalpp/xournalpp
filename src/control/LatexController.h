@@ -26,7 +26,6 @@
 #include "model/PageRef.h"
 #include "model/Text.h"
 
-#include "XournalType.h"
 #include "filesystem.h"
 
 class Control;
@@ -58,9 +57,9 @@ private:
      */
     class FindDependencyStatus {
     public:
-        FindDependencyStatus(bool success, string errorMsg): success(success), errorMsg(errorMsg){};
+        FindDependencyStatus(bool success, std::string errorMsg): success(success), errorMsg(errorMsg){};
         bool success;
-        string errorMsg;
+        std::string errorMsg;
     };
 
     /**
@@ -83,14 +82,14 @@ private:
      * the given LaTeX string. If the preview is already being updated, then
      * this method will be a no-op.
      */
-    void triggerImageUpdate(const string& texString);
+    void triggerImageUpdate(const std::string& texString);
 
     /**
      * Show the LaTex Editor dialog, returning the final formula input by the
      * user. If the input was cancelled, the resulting string will be the same
      * as the initial formula.
      */
-    string showTexEditDialog();
+    std::string showTexEditDialog();
 
     /**
      * Signal handler, updates the rendered image when the text in the editor
@@ -112,7 +111,7 @@ private:
     /**
      * Load the preview PDF from disk and create a TexImage object.
      */
-    std::unique_ptr<TexImage> loadRendered(string renderedTex);
+    std::unique_ptr<TexImage> loadRendered(std::string renderedTex);
 
     /**
      * Insert the generated preview TexImage into the current page.
@@ -142,12 +141,12 @@ private:
      * The original TeX string when the dialog was opened, or the empty string
      * if creating a new LaTeX element.
      */
-    string initialTex;
+    std::string initialTex;
 
     /**
      * The last TeX string shown in the preview.
      */
-    string lastPreviewedTex;
+    std::string lastPreviewedTex;
 
     /**
      * Whether a preview is currently being generated.

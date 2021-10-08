@@ -10,15 +10,17 @@
 #include "filesystem.h"
 #include "i18n.h"
 
+using std::string;
+
 constexpr auto const* DEFAULT_FONT = "Sans";
 constexpr auto DEFAULT_FONT_SIZE = 12;
 
-#define WRITE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
-#define WRITE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
-#define WRITE_INT_PROP(var) xmlNode = saveProperty((const char*)#var, var, root)
-#define WRITE_UINT_PROP(var) xmlNode = savePropertyUnsigned((const char*)#var, var, root)
-#define WRITE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char*)#var, var, root)
-#define WRITE_COMMENT(var)                      \
+#define SAVE_BOOL_PROP(var) xmlNode = saveProperty((const char*)#var, (var) ? "true" : "false", root)
+#define SAVE_STRING_PROP(var) xmlNode = saveProperty((const char*)#var, (var).empty() ? "" : (var).c_str(), root)
+#define SAVE_INT_PROP(var) xmlNode = saveProperty((const char*)#var, var, root)
+#define SAVE_UINT_PROP(var) xmlNode = savePropertyUnsigned((const char*)#var, var, root)
+#define SAVE_DOUBLE_PROP(var) xmlNode = savePropertyDouble((const char*)#var, var, root)
+#define ATTACH_COMMENT(var)                     \
     com = xmlNewComment((const xmlChar*)(var)); \
     xmlAddPrevSibling(xmlNode, com);
 
@@ -52,6 +54,9 @@ void Settings::loadDefault() {
 
     this->numPairsOffset = 1;
 
+    this->edgePanSpeed = 20.0;
+    this->edgePanMaxMult = 5.0;
+
     this->zoomStep = 10.0;
     this->zoomStepScroll = 2.0;
 
@@ -74,7 +79,9 @@ void Settings::loadDefault() {
 
     this->menubarVisible = true;
 
+    this->autoloadMostRecent = false;
     this->autoloadPdfXoj = true;
+
     this->stylusCursorType = STYLUS_CURSOR_DOT;
     this->highlightPosition = false;
     this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
@@ -82,6 +89,7 @@ void Settings::loadDefault() {
     this->cursorHighlightBorderColor = 0x800000FF;  // Blue with 50% opacity
     this->cursorHighlightBorderWidth = 0.0;
     this->darkTheme = false;
+    this->useStockIcons = false;
     this->scrollbarHideType = SCROLLBAR_HIDE_NONE;
     this->disableScrollbarFadeout = false;
 
@@ -106,6 +114,7 @@ void Settings::loadDefault() {
     this->snapGridSize = DEFAULT_GRID_SIZE;
 
     this->touchDrawing = false;
+    this->gtkTouchInertialScrolling = true;
 
     this->defaultSaveName = _("%F-Note-%H-%M");
 
@@ -114,7 +123,7 @@ void Settings::loadDefault() {
             new ButtonConfig(TOOL_ERASER, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Middle button
     this->buttonConfig[BUTTON_MOUSE_MIDDLE] =
-            new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
+            new ButtonConfig(TOOL_HAND, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
     // Right button
     this->buttonConfig[BUTTON_MOUSE_RIGHT] =
             new ButtonConfig(TOOL_NONE, Color{0x000000U}, TOOL_SIZE_NONE, DRAWING_TYPE_DEFAULT, ERASER_TYPE_NONE);
@@ -329,6 +338,10 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->lastOpenPath = fs::u8path(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("lastImagePath")) == 0) {
         this->lastImagePath = fs::u8path(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanSpeed")) == 0) {
+        this->edgePanSpeed = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("edgePanMaxMult")) == 0) {
+        this->edgePanMaxMult = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStep")) == 0) {
         this->zoomStep = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("zoomStepScroll")) == 0) {
@@ -371,6 +384,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->numPairsOffset = g_ascii_strtoll(reinterpret_cast<const char*>(value), nullptr, 10);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("presentationMode")) == 0) {
         this->presentationMode = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autoloadMostRecent")) == 0) {
+        this->autoloadMostRecent = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autoloadPdfXoj")) == 0) {
         this->autoloadPdfXoj = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stylusCursorType")) == 0) {
@@ -387,6 +402,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->cursorHighlightBorderWidth = g_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("darkTheme")) == 0) {
         this->darkTheme = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("useStockIcons")) == 0) {
+        this->useStockIcons = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("defaultSaveName")) == 0) {
         this->defaultSaveName = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pluginEnabled")) == 0) {
@@ -449,6 +466,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->snapGridTolerance = tempg_ascii_strtod(reinterpret_cast<const char*>(value), nullptr);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("touchDrawing")) == 0) {
         this->touchDrawing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("gtkTouchInertialScrolling")) == 0) {
+        this->gtkTouchInertialScrolling = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("pressureGuessing")) == 0) {
         this->pressureGuessing = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("scrollbarHideType")) == 0) {
@@ -779,167 +798,171 @@ void Settings::save() {
                                              "the others are commented in this file, but handle with care!"));
     xmlAddPrevSibling(root, com);
 
-    WRITE_BOOL_PROP(pressureSensitivity);
-    WRITE_DOUBLE_PROP(minimumPressure);
-    WRITE_DOUBLE_PROP(pressureMultiplier);
+    SAVE_BOOL_PROP(pressureSensitivity);
+    SAVE_DOUBLE_PROP(minimumPressure);
+    SAVE_DOUBLE_PROP(pressureMultiplier);
 
-    WRITE_BOOL_PROP(zoomGesturesEnabled);
+    SAVE_BOOL_PROP(zoomGesturesEnabled);
 
-    WRITE_STRING_PROP(selectedToolbar);
+    SAVE_STRING_PROP(selectedToolbar);
 
     auto lastSavePath = this->lastSavePath.u8string();
     auto lastOpenPath = this->lastOpenPath.u8string();
     auto lastImagePath = this->lastImagePath.u8string();
-    WRITE_STRING_PROP(lastSavePath);
-    WRITE_STRING_PROP(lastOpenPath);
-    WRITE_STRING_PROP(lastImagePath);
+    SAVE_STRING_PROP(lastSavePath);
+    SAVE_STRING_PROP(lastOpenPath);
+    SAVE_STRING_PROP(lastImagePath);
 
-    WRITE_DOUBLE_PROP(zoomStep);
-    WRITE_DOUBLE_PROP(zoomStepScroll);
-    WRITE_INT_PROP(displayDpi);
-    WRITE_INT_PROP(mainWndWidth);
-    WRITE_INT_PROP(mainWndHeight);
-    WRITE_BOOL_PROP(maximized);
+    SAVE_DOUBLE_PROP(edgePanSpeed);
+    SAVE_DOUBLE_PROP(edgePanMaxMult);
+    SAVE_DOUBLE_PROP(zoomStep);
+    SAVE_DOUBLE_PROP(zoomStepScroll);
+    SAVE_INT_PROP(displayDpi);
+    SAVE_INT_PROP(mainWndWidth);
+    SAVE_INT_PROP(mainWndHeight);
+    SAVE_BOOL_PROP(maximized);
 
-    WRITE_BOOL_PROP(showToolbar);
+    SAVE_BOOL_PROP(showToolbar);
 
-    WRITE_BOOL_PROP(showSidebar);
-    WRITE_INT_PROP(sidebarWidth);
+    SAVE_BOOL_PROP(showSidebar);
+    SAVE_INT_PROP(sidebarWidth);
 
-    WRITE_BOOL_PROP(sidebarOnRight);
-    WRITE_BOOL_PROP(scrollbarOnLeft);
-    WRITE_BOOL_PROP(menubarVisible);
-    WRITE_INT_PROP(numColumns);
-    WRITE_INT_PROP(numRows);
-    WRITE_BOOL_PROP(viewFixedRows);
-    WRITE_BOOL_PROP(showPairedPages);
-    WRITE_BOOL_PROP(layoutVertical);
-    WRITE_BOOL_PROP(layoutRightToLeft);
-    WRITE_BOOL_PROP(layoutBottomToTop);
-    WRITE_INT_PROP(numPairsOffset);
-    WRITE_BOOL_PROP(presentationMode);
+    SAVE_BOOL_PROP(sidebarOnRight);
+    SAVE_BOOL_PROP(scrollbarOnLeft);
+    SAVE_BOOL_PROP(menubarVisible);
+    SAVE_INT_PROP(numColumns);
+    SAVE_INT_PROP(numRows);
+    SAVE_BOOL_PROP(viewFixedRows);
+    SAVE_BOOL_PROP(showPairedPages);
+    SAVE_BOOL_PROP(layoutVertical);
+    SAVE_BOOL_PROP(layoutRightToLeft);
+    SAVE_BOOL_PROP(layoutBottomToTop);
+    SAVE_INT_PROP(numPairsOffset);
+    SAVE_BOOL_PROP(presentationMode);
 
-    WRITE_STRING_PROP(fullscreenHideElements);
-    WRITE_COMMENT("Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)");
+    SAVE_STRING_PROP(fullscreenHideElements);
+    ATTACH_COMMENT("Which gui elements are hidden if you are in Fullscreen mode, separated by a colon (,)");
 
-    WRITE_STRING_PROP(presentationHideElements);
-    WRITE_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
+    SAVE_STRING_PROP(presentationHideElements);
+    ATTACH_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
 
     xmlNode = saveProperty("stylusCursorType", stylusCursorTypeToString(this->stylusCursorType), root);
-    WRITE_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\"");
+    ATTACH_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\"");
 
-    WRITE_BOOL_PROP(highlightPosition);
-    WRITE_UINT_PROP(cursorHighlightColor);
-    WRITE_UINT_PROP(cursorHighlightBorderColor);
-    WRITE_DOUBLE_PROP(cursorHighlightRadius);
-    WRITE_DOUBLE_PROP(cursorHighlightBorderWidth);
-    WRITE_BOOL_PROP(darkTheme);
+    SAVE_BOOL_PROP(highlightPosition);
+    SAVE_UINT_PROP(cursorHighlightColor);
+    SAVE_UINT_PROP(cursorHighlightBorderColor);
+    SAVE_DOUBLE_PROP(cursorHighlightRadius);
+    SAVE_DOUBLE_PROP(cursorHighlightBorderWidth);
+    SAVE_BOOL_PROP(darkTheme);
+    SAVE_BOOL_PROP(useStockIcons);
 
-    WRITE_BOOL_PROP(disableScrollbarFadeout);
+    SAVE_BOOL_PROP(disableScrollbarFadeout);
 
     if (this->scrollbarHideType == SCROLLBAR_HIDE_BOTH) {
-        saveProperty("scrollbarHideType", "both", root);
+        xmlNode = saveProperty("scrollbarHideType", "both", root);
     } else if (this->scrollbarHideType == SCROLLBAR_HIDE_HORIZONTAL) {
-        saveProperty("scrollbarHideType", "horizontal", root);
+        xmlNode = saveProperty("scrollbarHideType", "horizontal", root);
     } else if (this->scrollbarHideType == SCROLLBAR_HIDE_VERTICAL) {
-        saveProperty("scrollbarHideType", "vertical", root);
+        xmlNode = saveProperty("scrollbarHideType", "vertical", root);
     } else {
-        saveProperty("scrollbarHideType", "none", root);
+        xmlNode = saveProperty("scrollbarHideType", "none", root);
     }
-
-    WRITE_BOOL_PROP(autoloadPdfXoj);
-    WRITE_COMMENT(
+    ATTACH_COMMENT(
             "Hides scroolbars in the main window, allowed values: \"none\", \"horizontal\", \"vertical\", \"both\"");
 
-    WRITE_STRING_PROP(defaultSaveName);
+    SAVE_BOOL_PROP(autoloadMostRecent);
+    SAVE_BOOL_PROP(autoloadPdfXoj);
+    SAVE_STRING_PROP(defaultSaveName);
 
-    WRITE_BOOL_PROP(autosaveEnabled);
-    WRITE_INT_PROP(autosaveTimeout);
+    SAVE_BOOL_PROP(autosaveEnabled);
+    SAVE_INT_PROP(autosaveTimeout);
 
-    WRITE_BOOL_PROP(addHorizontalSpace);
-    WRITE_INT_PROP(addHorizontalSpaceAmount);
-    WRITE_BOOL_PROP(addVerticalSpace);
-    WRITE_INT_PROP(addVerticalSpaceAmount);
+    SAVE_BOOL_PROP(addHorizontalSpace);
+    SAVE_INT_PROP(addHorizontalSpaceAmount);
+    SAVE_BOOL_PROP(addVerticalSpace);
+    SAVE_INT_PROP(addVerticalSpaceAmount);
 
-    WRITE_BOOL_PROP(drawDirModsEnabled);
-    WRITE_INT_PROP(drawDirModsRadius);
+    SAVE_BOOL_PROP(drawDirModsEnabled);
+    SAVE_INT_PROP(drawDirModsRadius);
 
 
-    WRITE_BOOL_PROP(snapRotation);
-    WRITE_DOUBLE_PROP(snapRotationTolerance);
-    WRITE_BOOL_PROP(snapGrid);
-    WRITE_DOUBLE_PROP(snapGridTolerance);
-    WRITE_DOUBLE_PROP(snapGridSize);
+    SAVE_BOOL_PROP(snapRotation);
+    SAVE_DOUBLE_PROP(snapRotationTolerance);
+    SAVE_BOOL_PROP(snapGrid);
+    SAVE_DOUBLE_PROP(snapGridTolerance);
+    SAVE_DOUBLE_PROP(snapGridSize);
 
-    WRITE_BOOL_PROP(touchDrawing);
-    WRITE_BOOL_PROP(pressureGuessing);
+    SAVE_BOOL_PROP(touchDrawing);
+    SAVE_BOOL_PROP(gtkTouchInertialScrolling);
+    SAVE_BOOL_PROP(pressureGuessing);
 
-    WRITE_UINT_PROP(selectionBorderColor);
-    WRITE_UINT_PROP(backgroundColor);
-    WRITE_UINT_PROP(selectionMarkerColor);
+    SAVE_UINT_PROP(selectionBorderColor);
+    SAVE_UINT_PROP(backgroundColor);
+    SAVE_UINT_PROP(selectionMarkerColor);
 
-    WRITE_DOUBLE_PROP(touchZoomStartThreshold);
-    WRITE_DOUBLE_PROP(pageRerenderThreshold);
+    SAVE_DOUBLE_PROP(touchZoomStartThreshold);
+    SAVE_DOUBLE_PROP(pageRerenderThreshold);
 
-    WRITE_INT_PROP(pdfPageCacheSize);
-    WRITE_COMMENT("The count of rendered PDF pages which will be cached.");
-    WRITE_UINT_PROP(preloadPagesBefore);
-    WRITE_UINT_PROP(preloadPagesAfter);
-    WRITE_BOOL_PROP(eagerPageCleanup);
+    SAVE_INT_PROP(pdfPageCacheSize);
+    ATTACH_COMMENT("The count of rendered PDF pages which will be cached.");
+    SAVE_UINT_PROP(preloadPagesBefore);
+    SAVE_UINT_PROP(preloadPagesAfter);
+    SAVE_BOOL_PROP(eagerPageCleanup);
 
-    WRITE_COMMENT("Config for new pages");
-    WRITE_STRING_PROP(pageTemplate);
+    SAVE_STRING_PROP(pageTemplate);
+    ATTACH_COMMENT("Config for new pages");
 
-    WRITE_STRING_PROP(sizeUnit);
+    SAVE_STRING_PROP(sizeUnit);
 
-    WRITE_STRING_PROP(audioFolder);
-    WRITE_INT_PROP(audioInputDevice);
-    WRITE_INT_PROP(audioOutputDevice);
-    WRITE_DOUBLE_PROP(audioSampleRate);
-    WRITE_DOUBLE_PROP(audioGain);
-    WRITE_INT_PROP(defaultSeekTime);
+    SAVE_STRING_PROP(audioFolder);
+    SAVE_INT_PROP(audioInputDevice);
+    SAVE_INT_PROP(audioOutputDevice);
+    SAVE_DOUBLE_PROP(audioSampleRate);
+    SAVE_DOUBLE_PROP(audioGain);
+    SAVE_INT_PROP(defaultSeekTime);
 
-    WRITE_STRING_PROP(pluginEnabled);
-    WRITE_STRING_PROP(pluginDisabled);
+    SAVE_STRING_PROP(pluginEnabled);
+    SAVE_STRING_PROP(pluginDisabled);
 
-    WRITE_INT_PROP(strokeFilterIgnoreTime);
-    WRITE_DOUBLE_PROP(strokeFilterIgnoreLength);
-    WRITE_INT_PROP(strokeFilterSuccessiveTime);
-    WRITE_BOOL_PROP(strokeFilterEnabled);
-    WRITE_BOOL_PROP(doActionOnStrokeFiltered);
-    WRITE_BOOL_PROP(trySelectOnStrokeFiltered);
+    SAVE_INT_PROP(strokeFilterIgnoreTime);
+    SAVE_DOUBLE_PROP(strokeFilterIgnoreLength);
+    SAVE_INT_PROP(strokeFilterSuccessiveTime);
+    SAVE_BOOL_PROP(strokeFilterEnabled);
+    SAVE_BOOL_PROP(doActionOnStrokeFiltered);
+    SAVE_BOOL_PROP(trySelectOnStrokeFiltered);
 
-    WRITE_BOOL_PROP(snapRecognizedShapesEnabled);
-    WRITE_BOOL_PROP(restoreLineWidthEnabled);
+    SAVE_BOOL_PROP(snapRecognizedShapesEnabled);
+    SAVE_BOOL_PROP(restoreLineWidthEnabled);
 
-    WRITE_INT_PROP(numIgnoredStylusEvents);
+    SAVE_INT_PROP(numIgnoredStylusEvents);
 
-    WRITE_BOOL_PROP(inputSystemTPCButton);
-    WRITE_BOOL_PROP(inputSystemDrawOutsideWindow);
+    SAVE_BOOL_PROP(inputSystemTPCButton);
+    SAVE_BOOL_PROP(inputSystemDrawOutsideWindow);
 
-    WRITE_STRING_PROP(preferredLocale);
+    SAVE_STRING_PROP(preferredLocale);
 
     /**
      * Stabilizer related settings
      */
     saveProperty("stabilizerAveragingMethod", static_cast<int>(stabilizerAveragingMethod), root);
     saveProperty("stabilizerPreprocessor", static_cast<int>(stabilizerPreprocessor), root);
-    WRITE_UINT_PROP(stabilizerBuffersize);
-    WRITE_DOUBLE_PROP(stabilizerSigma);
-    WRITE_DOUBLE_PROP(stabilizerDeadzoneRadius);
-    WRITE_DOUBLE_PROP(stabilizerDrag);
-    WRITE_DOUBLE_PROP(stabilizerMass);
-    WRITE_BOOL_PROP(stabilizerCuspDetection);
-    WRITE_BOOL_PROP(stabilizerFinalizeStroke);
+    SAVE_UINT_PROP(stabilizerBuffersize);
+    SAVE_DOUBLE_PROP(stabilizerSigma);
+    SAVE_DOUBLE_PROP(stabilizerDeadzoneRadius);
+    SAVE_DOUBLE_PROP(stabilizerDrag);
+    SAVE_DOUBLE_PROP(stabilizerMass);
+    SAVE_BOOL_PROP(stabilizerCuspDetection);
+    SAVE_BOOL_PROP(stabilizerFinalizeStroke);
     /**/
 
-    WRITE_BOOL_PROP(latexSettings.autoCheckDependencies);
-    // Inline WRITE_STRING_PROP(latexSettings.globalTemplatePath) since it
+    SAVE_BOOL_PROP(latexSettings.autoCheckDependencies);
+    // Inline SAVE_STRING_PROP(latexSettings.globalTemplatePath) since it
     // breaks on Windows due to the native character representation being
     // wchar_t instead of char
     fs::path& p = latexSettings.globalTemplatePath;
     xmlNode = saveProperty("latexSettings.globalTemplatePath", p.empty() ? "" : p.u8string().c_str(), root);
-    WRITE_STRING_PROP(latexSettings.genCmd);
+    SAVE_STRING_PROP(latexSettings.genCmd);
 
     xmlNodePtr xmlFont = nullptr;
     xmlFont = xmlNewChild(root, nullptr, reinterpret_cast<const xmlChar*>("property"), nullptr);
@@ -953,9 +976,7 @@ void Settings::save() {
     xmlSetProp(xmlFont, reinterpret_cast<const xmlChar*>("size"), reinterpret_cast<const xmlChar*>(sSize));
 
 
-    for (std::map<string, SElement>::value_type p: data) {
-        saveData(root, p.first, p.second);
-    }
+    for (std::map<string, SElement>::value_type p: data) { saveData(root, p.first, p.second); }
 
     xmlSaveFormatFileEnc(filepath.u8string().c_str(), doc, "UTF-8", 1);
     xmlFreeDoc(doc);
@@ -1017,9 +1038,7 @@ void Settings::saveData(xmlNodePtr root, const string& name, SElement& elem) {
         }
     }
 
-    for (std::map<string, SElement>::value_type p: elem.children()) {
-        saveData(xmlNode, p.first, p.second);
-    }
+    for (std::map<string, SElement>::value_type p: elem.children()) { saveData(xmlNode, p.first, p.second); }
 }
 
 // Getter- / Setter
@@ -1256,6 +1275,17 @@ void Settings::setTouchDrawingEnabled(bool b) {
     save();
 }
 
+auto Settings::getGtkTouchInertialScrollingEnabled() const -> bool { return this->gtkTouchInertialScrolling; };
+
+void Settings::setGtkTouchInertialScrollingEnabled(bool b) {
+    if (this->gtkTouchInertialScrolling == b) {
+        return;
+    }
+
+    this->gtkTouchInertialScrolling = b;
+    save();
+}
+
 auto Settings::isPressureGuessingEnabled() const -> bool { return this->pressureGuessing; }
 void Settings::setPressureGuessingEnabled(bool b) {
     if (this->pressureGuessing == b) {
@@ -1298,7 +1328,17 @@ void Settings::setScrollbarHideType(ScrollbarHideType type) {
     save();
 }
 
-auto Settings::isAutloadPdfXoj() const -> bool { return this->autoloadPdfXoj; }
+auto Settings::isAutoloadMostRecent() const -> bool { return this->autoloadMostRecent; }
+
+void Settings::setAutoloadMostRecent(bool load) {
+    if (this->autoloadMostRecent == load) {
+        return;
+    }
+    this->autoloadMostRecent = load;
+    save();
+}
+
+auto Settings::isAutoloadPdfXoj() const -> bool { return this->autoloadPdfXoj; }
 
 void Settings::setAutoloadPdfXoj(bool load) {
     if (this->autoloadPdfXoj == load) {
@@ -1535,6 +1575,26 @@ void Settings::setZoomStepScroll(double zoomStepScroll) {
 
 auto Settings::getZoomStepScroll() const -> double { return this->zoomStepScroll; }
 
+void Settings::setEdgePanSpeed(double speed) {
+    if (this->edgePanSpeed == speed) {
+        return;
+    }
+    this->edgePanSpeed = speed;
+    save();
+}
+
+auto Settings::getEdgePanSpeed() const -> double { return this->edgePanSpeed; }
+
+void Settings::setEdgePanMaxMult(double maxMult) {
+    if (this->edgePanMaxMult == maxMult) {
+        return;
+    }
+    this->edgePanMaxMult = maxMult;
+    save();
+}
+
+auto Settings::getEdgePanMaxMult() const -> double { return this->edgePanMaxMult; }
+
 void Settings::setDisplayDpi(int dpi) {
     if (this->displayDpi == dpi) {
         return;
@@ -1554,6 +1614,16 @@ void Settings::setDarkTheme(bool dark) {
 }
 
 auto Settings::isDarkTheme() const -> bool { return this->darkTheme; }
+
+void Settings::setAreStockIconsUsed(bool use) {
+    if (this->useStockIcons == use) {
+        return;
+    }
+    this->useStockIcons = use;
+    save();
+}
+
+auto Settings::areStockIconsUsed() const -> bool { return this->useStockIcons; }
 
 auto Settings::isSidebarVisible() const -> bool { return this->showSidebar; }
 

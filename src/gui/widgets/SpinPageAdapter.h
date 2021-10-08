@@ -11,13 +11,13 @@
 
 #pragma once
 
+#include <cassert>
 #include <list>
 #include <string>
 #include <vector>
 
 #include <gtk/gtk.h>
 
-#include "XournalType.h"
 
 class SpinPageListener;
 
@@ -27,7 +27,13 @@ public:
     virtual ~SpinPageAdapter();
 
 public:
-    GtkWidget* getWidget();
+    bool hasWidget();
+
+    /**
+     * Assumes ownership of widget
+     */
+    void setWidget(GtkWidget* widget);
+    void removeWidget();
 
     int getPage() const;
     void setPage(size_t page);
@@ -43,11 +49,15 @@ private:
     void firePageChanged();
 
 private:
-    GtkWidget* widget;
-    size_t page;
+    GtkWidget* widget = nullptr;
+    gulong pageNrSpinChangedHandlerId = 0;
+    size_t page = 0;
 
-    int lastTimeoutId;
+    guint lastTimeoutId = 0;
     std::list<SpinPageListener*> listener;
+
+    size_t min = 0;
+    size_t max = 0;
 };
 
 class SpinPageListener {

@@ -87,7 +87,7 @@ void EraseUndoAction::finalize() {
     this->page->firePageChanged();
 }
 
-auto EraseUndoAction::getText() -> string { return _("Erase stroke"); }
+auto EraseUndoAction::getText() -> std::string { return _("Erase stroke"); }
 
 auto EraseUndoAction::undo(Control* control) -> bool {
     for (GList* l = this->edited; l != nullptr; l = l->next) {

@@ -20,7 +20,6 @@
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 
-#include "XournalType.h"
 
 class LayerCtrlListener;
 class Control;
@@ -113,4 +112,6 @@ private:
     std::list<LayerCtrlListener*> listener;
 
     size_t selectedPage;
+
+    friend class LayerRenameUndoAction;
 };

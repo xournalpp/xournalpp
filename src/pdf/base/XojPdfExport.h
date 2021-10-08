@@ -17,7 +17,6 @@
 #include "control/jobs/BaseExportJob.h"
 
 #include "PageRange.h"
-#include "XournalType.h"
 #include "filesystem.h"
 
 class XojPdfExport {
@@ -28,7 +27,7 @@ public:
 public:
     virtual bool createPdf(fs::path const& file, bool progressiveMode) = 0;
     virtual bool createPdf(fs::path const& file, PageRangeVector& range, bool progressiveMode) = 0;
-    virtual string getLastError() = 0;
+    virtual std::string getLastError() = 0;
 
     /**
      * Export without background

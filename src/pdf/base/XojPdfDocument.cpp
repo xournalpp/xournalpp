@@ -28,11 +28,11 @@ auto XojPdfDocument::equals(XojPdfDocumentInterface* doc) -> bool { return this-
 
 auto XojPdfDocument::save(fs::path const& file, GError** error) -> bool { return doc->save(file, error); }
 
-auto XojPdfDocument::load(fs::path const& file, string password, GError** error) -> bool {
+auto XojPdfDocument::load(fs::path const& file, std::string password, GError** error) -> bool {
     return doc->load(file, password, error);
 }
 
-auto XojPdfDocument::load(gpointer data, gsize length, string password, GError** error) -> bool {
+auto XojPdfDocument::load(gpointer data, gsize length, std::string password, GError** error) -> bool {
     return doc->load(data, length, password, error);
 }
 

@@ -69,4 +69,4 @@ auto RecognizerUndoAction::redo(Control* control) -> bool {
     return true;
 }
 
-auto RecognizerUndoAction::getText() -> string { return _("Stroke recognizer"); }
+auto RecognizerUndoAction::getText() -> std::string { return _("Stroke recognizer"); }

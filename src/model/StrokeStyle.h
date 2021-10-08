@@ -16,7 +16,6 @@
 
 #include "model/LineStyle.h"
 
-#include "XournalType.h"
 
 class Stroke;
 
@@ -27,8 +26,8 @@ private:
 
 public:
     static LineStyle parseStyle(const char* style);
-    static string formatStyle(const double* dashes, int count);
-    static string formatStyle(const LineStyle& style);
+    static std::string formatStyle(const double* dashes, int count);
+    static std::string formatStyle(const LineStyle& style);
 
 public:
 };

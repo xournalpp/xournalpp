@@ -18,7 +18,7 @@
 
 #include "Job.h"
 #include "Rectangle.h"
-#include "XournalType.h"
+
 
 class XojPageView;
 

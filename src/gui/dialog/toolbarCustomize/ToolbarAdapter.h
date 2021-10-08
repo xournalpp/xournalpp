@@ -17,7 +17,7 @@
 
 class ToolbarAdapter {
 public:
-    ToolbarAdapter(GtkWidget* toolbar, string toolbarName, ToolMenuHandler* toolHandler, MainWindow* window);
+    ToolbarAdapter(GtkWidget* toolbar, std::string toolbarName, ToolMenuHandler* toolHandler, MainWindow* window);
     ~ToolbarAdapter();
 
 private:
@@ -41,7 +41,7 @@ private:
     /**
      * Remove a toolbar item from the tool where it was
      */
-    void removeFromToolbar(AbstractToolItem* item, const string& toolbarName, int id);
+    void removeFromToolbar(AbstractToolItem* item, const std::string& toolbarName, int id);
     static void toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
                                     guint info, guint time, ToolbarAdapter* adapter);
 
@@ -54,9 +54,20 @@ private:
     static void toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y,
                                           GtkSelectionData* data, guint info, guint time, ToolbarAdapter* adapter);
 
+    /**
+     * @brief Wrapper around gtk_toolbar_get_drop index with coorect coordinate handling
+     *
+     * @param toolbar the corresponding toolbar for the drop index
+     * @param x coordinate in toolbar coordinate system
+     * @param y coordinate in toolbar coordinate system
+     * @param horizontal denotes whether the toolbar is horizontal
+     * @return gint position at which drop item should be inserted
+     */
+    static gint toolbarGetDropIndex(GtkToolbar* toolbar, gint x, gint y, bool horizontal);
+
 private:
     GtkWidget* w;
-    string toolbarName;
+    std::string toolbarName;
     MainWindow* window;
 
     GtkToolItem* spacerItem{};

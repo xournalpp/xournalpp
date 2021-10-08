@@ -20,6 +20,8 @@
 #include "i18n.h"
 #include "pixbuf-utils.h"
 
+using std::string;
+
 LatexController::LatexController(Control* control):
         control(control),
         settings(control->getSettings()->latexSettings),
@@ -69,8 +71,8 @@ auto LatexController::findTexDependencies() -> LatexController::FindDependencySt
  */
 void LatexController::findSelectedTexElement() {
     this->doc->lock();
-    int pageNr = this->control->getCurrentPageNo();
-    if (pageNr == -1) {
+    auto pageNr = this->control->getCurrentPageNo();
+    if (pageNr == npos) {
         this->doc->unlock();
         return;
     }

@@ -26,6 +26,7 @@
 using std::cerr;
 using std::cout;
 using std::endl;
+using std::string;
 #include <cairo-svg.h>
 #include <cairo.h>
 #include <librsvg/rsvg.h>

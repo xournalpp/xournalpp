@@ -28,6 +28,8 @@
 
 #include "Selection.h"
 
+using std::vector;
+
 EditSelectionContents::EditSelectionContents(Rectangle<double> bounds, Rectangle<double> snappedBounds,
                                              const PageRef& sourcePage, Layer* sourceLayer, XojPageView* sourceView):
         lastBounds(bounds),
@@ -305,9 +307,7 @@ void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo) {
     // and owned by the selection, therefore the layer
     // doesn't know the index anymore
     int index = layer->getElements()->size();
-    for (Element* e: this->selected) {
-        undo->addElement(layer, e, index);
-    }
+    for (Element* e: this->selected) { undo->addElement(layer, e, index); }
 
     this->selected.clear();
     this->insertOrder.clear();
@@ -462,6 +462,9 @@ void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<do
 
     this->lastBounds = bounds;
     this->lastSnappedBounds = snappedBounds;
+
+    this->sourceLayer = layer;
+    this->sourcePage = targetPage;
 }
 
 /**

@@ -3,17 +3,15 @@
 GroupUndoAction::GroupUndoAction(): UndoAction("GroupUndoAction") {}
 
 GroupUndoAction::~GroupUndoAction() {
-    for (int i = actions.size() - 1; i >= 0; i--) {
-        delete actions[i];
-    }
+    for (auto i = actions.size() - 1; i >= 0; i--) { delete actions[i]; }
 
     actions.clear();
 }
 
 void GroupUndoAction::addAction(UndoAction* action) { actions.push_back(action); }
 
-auto GroupUndoAction::getPages() -> vector<PageRef> {
-    vector<PageRef> pages;
+auto GroupUndoAction::getPages() -> std::vector<PageRef> {
+    std::vector<PageRef> pages;
 
     for (UndoAction* a: actions) {
         for (PageRef addPage: a->getPages()) {
@@ -40,23 +38,19 @@ auto GroupUndoAction::getPages() -> vector<PageRef> {
 
 auto GroupUndoAction::redo(Control* control) -> bool {
     bool result = true;
-    for (auto& action: actions) {
-        result = result && action->redo(control);
-    }
+    for (auto& action: actions) { result = result && action->redo(control); }
 
     return result;
 }
 
 auto GroupUndoAction::undo(Control* control) -> bool {
     bool result = true;
-    for (int i = actions.size() - 1; i >= 0; i--) {
-        result = result && actions[i]->undo(control);
-    }
+    for (auto& action: actions) { result = result && action->undo(control); }
 
     return result;
 }
 
-auto GroupUndoAction::getText() -> string {
+auto GroupUndoAction::getText() -> std::string {
     if (actions.empty()) {
         return "!! NOTHING !!";
     }

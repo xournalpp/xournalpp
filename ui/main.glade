@@ -219,8 +219,8 @@
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_SAVE_AS" swapped="no"/>
-                            <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                             <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -540,7 +540,7 @@
                             <property name="name">menuViewSidebarVisible</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Show sidebar</property>
+                            <property name="label" translatable="yes">Show Sidebar</property>
                             <property name="use-underline">True</property>
                             <accelerator key="F12" signal="activate"/>
                           </object>
@@ -556,7 +556,7 @@
                             <property name="name">menuViewToolbarsVisible</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Show toolbars</property>
+                            <property name="label" translatable="yes">Show Toolbars</property>
                             <property name="use-underline">True</property>
                             <accelerator key="F9" signal="activate"/>
                           </object>
@@ -613,7 +613,7 @@
                                     <property name="name">menuLayoutLR</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">_Left To Right</property>
+                                    <property name="label" translatable="yes">_Left to Right</property>
                                     <property name="use-underline">True</property>
                                     <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_SET_LAYOUT_L2R:GROUP_LAYOUT_LR" swapped="no"/>
@@ -624,7 +624,7 @@
                                     <property name="name">menuLayoutRL</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">_Right To Left</property>
+                                    <property name="label" translatable="yes">_Right to Left</property>
                                     <property name="use-underline">True</property>
                                     <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_SET_LAYOUT_R2L:GROUP_LAYOUT_LR" swapped="no"/>
@@ -968,8 +968,8 @@
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_IN" swapped="no"/>
-                            <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -981,8 +981,8 @@
                             <property name="use-underline">True</property>
                             <property name="use-stock">True</property>
                             <signal name="activate" handler="ACTION_ZOOM_OUT" swapped="no"/>
-                            <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                             <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1126,7 +1126,7 @@
                             <property name="name">menuNavigationNextAnnotatedPage</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">N_ext annotated page</property>
+                            <property name="label" translatable="yes">N_ext Annotated Page</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_NEXT_ANNOTATED_PAGE" swapped="no"/>
                             <accelerator key="Page_Down" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
@@ -1137,7 +1137,7 @@
                             <property name="name">menuNavigationPreviousAnnotatedPage</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">P_revious annotated Page</property>
+                            <property name="label" translatable="yes">P_revious Annotated Page</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE" swapped="no"/>
                             <accelerator key="Page_Up" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
@@ -1194,7 +1194,7 @@
                             <property name="name">menuJournalNewPageAtEnd</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Append New Pdf Pages</property>
+                            <property name="label" translatable="yes">Append New PDF Pages</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_APPEND_NEW_PDF_PAGES" swapped="no"/>
                           </object>
@@ -1290,7 +1290,7 @@
                             <property name="name">menuJournalPaperBackground</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Paper b_ackground</property>
+                            <property name="label" translatable="yes">Paper B_ackground</property>
                             <property name="use-underline">True</property>
                           </object>
                         </child>
@@ -1964,7 +1964,7 @@
                             <property name="name">menuEditTex</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Add/Edit Tex</property>
+                            <property name="label" translatable="yes">Add/Edit TeX</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_TEX" swapped="no"/>
                             <accelerator key="x" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>

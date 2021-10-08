@@ -15,12 +15,11 @@
 #include <vector>
 
 #include "TouchDisableInterface.h"
-#include "XournalType.h"
 
 
 class TouchDisableCustom: public TouchDisableInterface {
 public:
-    TouchDisableCustom(string enableCommand, string disableCommand);
+    TouchDisableCustom(std::string enableCommand, std::string disableCommand);
     virtual ~TouchDisableCustom();
 
 public:
@@ -28,6 +27,6 @@ public:
     virtual void disableTouch();
 
 private:
-    string enableCommand;
-    string disableCommand;
+    std::string enableCommand;
+    std::string disableCommand;
 };

@@ -1,6 +1,6 @@
 #include "SettingsEnums.h"
 
-auto stylusCursorTypeFromString(const string& stylusCursorTypeStr) -> StylusCursorType {
+auto stylusCursorTypeFromString(const std::string& stylusCursorTypeStr) -> StylusCursorType {
     if (stylusCursorTypeStr == "none") {
         return STYLUS_CURSOR_NONE;
     }

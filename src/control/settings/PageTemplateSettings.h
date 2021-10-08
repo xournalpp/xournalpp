@@ -17,7 +17,6 @@
 #include "control/Tool.h"
 #include "model/PageType.h"
 
-#include "XournalType.h"
 
 class PageTemplateSettings {
 public:
@@ -30,12 +29,12 @@ public:
      *
      * @return true if valid
      */
-    bool parse(const string& tpl);
+    bool parse(const std::string& tpl);
 
     /**
      * Convert to a parsable string
      */
-    string toString() const;
+    std::string toString() const;
 
     bool isCopyLastPageSettings() const;
     void setCopyLastPageSettings(bool copyLastPageSettings);

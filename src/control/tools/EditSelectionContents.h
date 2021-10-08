@@ -23,7 +23,7 @@
 #include "view/ElementContainer.h"
 
 #include "CursorSelectionType.h"
-#include "XournalType.h"
+
 
 class UndoRedoHandler;
 class Layer;
@@ -88,7 +88,7 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    vector<Element*>* getElements();
+    std::vector<Element*>* getElements();
 
     /**
      * Returns the insert order of this selection

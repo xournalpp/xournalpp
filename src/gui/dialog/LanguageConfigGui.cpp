@@ -63,7 +63,7 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
     // Set the current locale if previously selected
     auto prefPos = availableLocales.begin();
     if (auto preferred = settings->getPreferredLocale(); !preferred.empty()) {
-        prefPos = std::lower_bound(availableLocales.begin(), availableLocales.end(), preferred);
+        prefPos = std::find(availableLocales.begin(), availableLocales.end(), preferred);
         if (*prefPos != preferred) {
             XojMsgBox::showErrorToUser(nullptr, _("Previously selected language not available anymore!"));
 

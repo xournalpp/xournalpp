@@ -4,6 +4,8 @@
 
 #include "gui/widgets/gtkmenutooltogglebutton.h"
 
+using std::string;
+
 ToolButton::ToolButton(ActionHandler* handler, string id, ActionType type, string iconName, string description,
                        GtkWidget* menuitem):
         AbstractToolItem(std::move(id), handler, type, menuitem) {

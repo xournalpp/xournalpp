@@ -61,7 +61,7 @@ void SaveJob::updatePreview(Control* control) {
         cairo_scale(cr, zoom, zoom);
 
         if (page->getBackgroundType().isPdfPage()) {
-            int pgNo = page->getPdfPageNr();
+            auto pgNo = page->getPdfPageNr();
             XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
             if (popplerPage) {
                 popplerPage->render(cr, false);
@@ -87,10 +87,11 @@ auto SaveJob::save() -> bool {
 
     doc->lock();
     h.prepareSave(doc);
-    fs::path const filepath = doc->getFilepath();
+    fs::path filepath = doc->getFilepath();
     doc->unlock();
 
-    auto const target = fs::path{filepath}.replace_extension(".xopp");
+    Util::clearExtensions(filepath, ".pdf");
+    auto const target = fs::path{filepath}.concat(".xopp");
 
     if (doc->shouldCreateBackupOnSave()) {
         try {

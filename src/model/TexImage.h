@@ -18,7 +18,6 @@
 #include <poppler.h>
 
 #include "Element.h"
-#include "XournalType.h"
 
 
 class TexImage: public Element {
@@ -55,8 +54,8 @@ public:
     virtual void rotate(double x0, double y0, double th);
 
     // text tag to alow latex
-    void setText(string text);
-    string getText();
+    void setText(std::string text);
+    std::string getText();
 
     virtual Element* clone();
 
@@ -104,5 +103,5 @@ private:
     /**
      * Tex String
      */
-    string text;
+    std::string text;
 };

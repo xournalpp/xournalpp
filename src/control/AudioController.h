@@ -20,7 +20,6 @@
 #include "util/audio/AudioRecorder.h"
 
 #include "Control.h"
-#include "XournalType.h"
 #include "filesystem.h"
 
 class AudioPlayer;
@@ -35,18 +34,18 @@ public:
     bool isRecording();
 
     bool isPlaying();
-    bool startPlayback(const string& filename, unsigned int timestamp);
+    bool startPlayback(const std::string& filename, unsigned int timestamp);
     void pausePlayback();
     void continuePlayback();
     void stopPlayback();
     void seekForwards();
     void seekBackwards();
 
-    string const& getAudioFilename() const;
+    std::string const& getAudioFilename() const;
     fs::path getAudioFolder() const;
     size_t getStartTime() const;
-    vector<DeviceInfo> getOutputDevices() const;
-    vector<DeviceInfo> getInputDevices() const;
+    std::vector<DeviceInfo> getOutputDevices() const;
+    std::vector<DeviceInfo> getInputDevices() const;
 
 private:
     Settings& settings;
@@ -60,6 +59,6 @@ private:
     std::unique_ptr<AudioRecorder> audioRecorder = std::make_unique<AudioRecorder>(settings);
     std::unique_ptr<AudioPlayer> audioPlayer = std::make_unique<AudioPlayer>(control, settings);
 
-    string audioFilename;
+    std::string audioFilename;
     size_t timestamp = 0;
 };

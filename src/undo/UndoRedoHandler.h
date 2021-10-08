@@ -18,7 +18,7 @@
 #include <vector>
 
 #include "UndoAction.h"
-#include "XournalType.h"
+
 
 class Control;
 
@@ -45,12 +45,12 @@ public:
     void addUndoActionBefore(UndoActionPtr action, UndoAction* before);
     bool removeUndoAction(UndoAction* action);
 
-    string undoDescription();
-    string redoDescription();
+    std::string undoDescription();
+    std::string redoDescription();
 
     void clearContents();
 
-    void fireUpdateUndoRedoButtons(const vector<PageRef>& pages);
+    void fireUpdateUndoRedoButtons(const std::vector<PageRef>& pages);
     void addUndoRedoListener(UndoRedoListener* listener);
 
     bool isChanged();

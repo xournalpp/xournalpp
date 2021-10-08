@@ -4,6 +4,8 @@
 
 #include "InputEvents.h"
 
+#include "control/settings/Settings.h"
+
 auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
     switch (type) {
         case GDK_MOTION_NOTIFY:
@@ -42,7 +44,7 @@ auto InputEvents::translateEventType(GdkEventType type) -> InputEventType {
     }
 }
 
-auto InputEvents::translateDeviceType(const string& name, GdkInputSource source, Settings* settings)
+auto InputEvents::translateDeviceType(const std::string& name, GdkInputSource source, Settings* settings)
         -> InputDeviceClass {
     InputDeviceTypeOption deviceType = settings->getDeviceClassForDevice(name, source);
     switch (deviceType) {

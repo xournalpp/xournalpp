@@ -16,7 +16,6 @@
 
 #include "XojPdfBookmarkIterator.h"
 #include "XojPdfPage.h"
-#include "XournalType.h"
 #include "filesystem.h"
 
 class XojPdfDocumentInterface {
@@ -30,8 +29,8 @@ public:
 
 public:
     virtual bool save(fs::path const& file, GError** error) = 0;
-    virtual bool load(fs::path const& file, string password, GError** error) = 0;
-    virtual bool load(gpointer data, gsize length, string password, GError** error) = 0;
+    virtual bool load(fs::path const& file, std::string password, GError** error) = 0;
+    virtual bool load(gpointer data, gsize length, std::string password, GError** error) = 0;
     virtual bool isLoaded() = 0;
 
     virtual XojPdfPageSPtr getPage(size_t page) = 0;

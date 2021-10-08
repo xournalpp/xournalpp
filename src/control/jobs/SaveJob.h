@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "BlockingJob.h"
-#include "XournalType.h"
+
 
 class SaveJob: public BlockingJob {
 public:
@@ -35,5 +35,5 @@ protected:
     virtual void afterRun();
 
 private:
-    string lastError;
+    std::string lastError;
 };

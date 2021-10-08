@@ -9,7 +9,8 @@
 #include "Util.h"
 #include "i18n.h"
 
-SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar): AbstractSidebarPage(control, toolbar) {
+SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
+        AbstractSidebarPage(control, toolbar), iconNameHelper(control->getSettings()) {
     this->treeViewBookmarks = gtk_tree_view_new();
     g_object_ref(this->treeViewBookmarks);
 
@@ -91,7 +92,7 @@ void SidebarIndexPage::askInsertPdfPage(size_t pdfPage) {
         return;
     }
 
-    int position = 0;
+    size_t position = 0;
 
     Document* doc = control->getDocument();
 
@@ -223,9 +224,9 @@ auto SidebarIndexPage::treeSearchFunction(GtkTreeModel* model, gint column, cons
     return result;
 }
 
-auto SidebarIndexPage::getName() -> string { return _("Contents"); }
+auto SidebarIndexPage::getName() -> std::string { return _("Contents"); }
 
-auto SidebarIndexPage::getIconName() -> string { return "sidebar_index"; }
+auto SidebarIndexPage::getIconName() -> std::string { return this->iconNameHelper.iconName("sidebar-index"); }
 
 auto SidebarIndexPage::hasData() -> bool { return this->hasContents; }
 

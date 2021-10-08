@@ -148,7 +148,7 @@ void checkForErrorlog() {
     }
 
     std::sort(errorList.begin(), errorList.end());
-    string msg =
+    std::string msg =
             errorList.size() == 1 ?
                     _("There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed.") :
                     _("There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed.");
@@ -201,7 +201,7 @@ void checkForEmergencySave(Control* control) {
         return;
     }
 
-    string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
+    std::string msg = _("Xournal++ crashed last time. Would you like to restore the last edited file?");
 
     GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
                                                msg.c_str());
@@ -283,12 +283,10 @@ auto exportImg(const char* input, const char* output, const char* range, int png
 
     imgExport.exportGraphics(&progress);
 
-    for (PageRangeEntry* e: exportRange) {
-        delete e;
-    }
+    for (PageRangeEntry* e: exportRange) { delete e; }
     exportRange.clear();
 
-    string errorMsg = imgExport.getLastErrorMsg();
+    std::string errorMsg = imgExport.getLastErrorMsg();
     if (!errorMsg.empty()) {
         g_message("Error exporting image: %s\n", errorMsg.c_str());
     }
@@ -323,7 +321,7 @@ auto exportPdf(const char* input, const char* output, const char* range, ExportB
     XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, nullptr);
     pdfe->setExportBackground(exportBackground);
     char* cpath = g_file_get_path(file);
-    string path = cpath;
+    std::string path = cpath;
     g_free(cpath);
     g_object_unref(file);
 
@@ -335,9 +333,7 @@ auto exportPdf(const char* input, const char* output, const char* range, ExportB
         // Do the export
         exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
         // Clean up
-        for (PageRangeEntry* e: exportRange) {
-            delete e;
-        }
+        for (PageRangeEntry* e: exportRange) { delete e; }
         exportRange.clear();
     } else {
         exportSuccess = pdfe->createPdf(path, progressiveMode);
@@ -388,9 +384,12 @@ using XMPtr = XournalMainPrivate*;
 /// Checks for input method compatibility and ensures it
 void ensure_input_model_compatibility() {
     const char* imModule = g_getenv("GTK_IM_MODULE");
-    if (imModule != nullptr && strcmp(imModule, "xim") == 0) {
-        g_setenv("GTK_IM_MODULE", "ibus", true);
-        g_warning("Unsupported input method: xim, changed to: ibus");
+    if (imModule != nullptr) {
+        std::string imModuleString{imModule};
+        if (imModuleString == "xim" || imModuleString == "gcin") {
+            g_setenv("GTK_IM_MODULE", "ibus", true);
+            g_warning("Unsupported input method: %s, changed to: ibus", imModule);
+        }
     }
 }
 
@@ -447,8 +446,8 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
         return;
     }
 
-    string msg = FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile %
-                    p.u8string());
+    std::string msg = FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile %
+                         p.u8string());
 
     if (!failIfNotFound) {
         msg += _("\nWill now attempt to run without this file.");
@@ -465,9 +464,10 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
         return;
     }
 
-    string msg = FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
-                       "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
-                    relativePathAndFile % PACKAGE_DATA_DIR);
+    std::string msg =
+            FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
+                  "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
+               relativePathAndFile % PACKAGE_DATA_DIR);
 
     if (!failIfNotFound) {
         msg += _("\n\nWill now attempt to run without this file.");
@@ -506,14 +506,21 @@ void on_startup(GApplication* application, XMPtr app_data) {
     // init singleton
     // ToolbarColorNames::getInstance();
     app_data->control = std::make_unique<Control>(application, app_data->gladePath.get());
-    {
-        auto icon = app_data->gladePath->getFirstSearchPath() / "icons";
-        gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.u8string().c_str());
-    }
 
-    if (app_data->control->getSettings()->isDarkTheme()) {
-        auto icon = app_data->gladePath->getFirstSearchPath() / "iconsDark";
-        gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), icon.u8string().c_str());
+    // Set up icons
+    {
+        const auto lightIcons = app_data->gladePath->getFirstSearchPath() / "iconsColor-light";
+        const auto darkIcons = app_data->gladePath->getFirstSearchPath() / "iconsColor-dark";
+
+        // icon load order from lowest priority to highest priority
+        std::vector<std::string> iconLoadOrder = {lightIcons.u8string()};
+        if (app_data->control->getSettings()->isDarkTheme()) {
+            iconLoadOrder.emplace_back(darkIcons.u8string());
+        } else {
+            iconLoadOrder.insert(iconLoadOrder.begin(), darkIcons.u8string());
+        }
+
+        for (auto& p: iconLoadOrder) { gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str()); }
     }
 
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
@@ -536,8 +543,8 @@ void on_startup(GApplication* application, XMPtr app_data) {
     bool opened = false;
     if (app_data->optFilename) {
         if (g_strv_length(app_data->optFilename) != 1) {
-            string msg = _("Sorry, Xournal++ can only open one file at once.\n"
-                           "Others are ignored.");
+            std::string msg = _("Sorry, Xournal++ can only open one file at once.\n"
+                                "Others are ignored.");
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
         }
 
@@ -551,11 +558,15 @@ void on_startup(GApplication* application, XMPtr app_data) {
                 opened = app_data->control->newFile("", p);
             }
         } catch (fs::filesystem_error const& e) {
-            string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
-                               "You have to copy the file to a local directory.") %
-                            p.u8string() % e.what());
+            std::string msg = FS(_F("Sorry, Xournal++ cannot open remote files at the moment.\n"
+                                    "You have to copy the file to a local directory.") %
+                                 p.u8string() % e.what());
             XojMsgBox::showErrorToUser(static_cast<GtkWindow*>(*app_data->win), msg);
             opened = app_data->control->newFile("", p);
+        }
+    } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
+        if (auto p = Util::fromUri(gtk_recent_info_get_uri(app_data->control->getRecentManager()->getMostRecent()))) {
+            opened = app_data->control->openFile(*p);
         }
     }
 

@@ -106,6 +106,11 @@ void openFileWithFilebrowser(const fs::path& filename);
 
 [[maybe_unused]] fs::path ensureFolderExists(const fs::path& p);
 
+/**
+ * Convert to platform compatible path. Call this before
+ * passing a path to another program.
+ */
+fs::path getLongPath(const fs::path& path);
 
 /**
  * Return the configuration folder path (may not be guaranteed to exist).

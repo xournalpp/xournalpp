@@ -71,10 +71,6 @@ The %{name}-ui package contains a graphical user interface for  %{name}.
 %prep
 %autosetup -n %{name}-%{build_branch}
 
-#Fix tlh aka klingon language
-mv po/tlh_AA.po po/tlh.po
-sed -i 's|tlh-AA|tlh|g' po/tlh.po
-
 %build
 %cmake \
         %if %{with cppunit}

@@ -17,7 +17,7 @@
 #include "gui/GladeGui.h"
 
 #include "BackgroundSelectDialogBase.h"
-#include "XournalType.h"
+
 
 class BackgroundImage;
 

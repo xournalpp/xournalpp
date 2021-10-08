@@ -19,7 +19,7 @@
 #include "util/Color.h"
 
 #include "ToolEnums.h"
-#include "XournalType.h"
+
 
 class ToolBase {
 public:
