@@ -18,6 +18,8 @@ Copyright: 2010-2021, Andreas Butti <andreas.butti@gmail.com>
            2019-2020, Julius Lehmann <internet@devpi.de>
            2020-2021, Tobias Hermann <idotobi@users.noreply.github.com>
            2020-2021, Roland Lötscher <roland_loetscher@hotmail.com>
+           2021-2021, Benjamin Hennion <benjamin.hennion@wanadoo.fr>
+           2021-2021, Henry Heino <personalizedrefrigerator@gmail.com>
 License: GPL-2+
 Comment: Source of truth https://github.com/xournalpp/xournalpp/graphs/contributors
          For a full and detailed list of contributors refer to the git log.
