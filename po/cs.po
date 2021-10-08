@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:51\n"
+"PO-Revision-Date: 2021-10-08 15:48\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -275,7 +275,7 @@ msgstr "Nelze načíst obrázek: {1}. Chybová zpráva: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:389
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Nelze přečíst číslo stránky pro obrázek na pozadí: {1}."
 
 #: ../src/undo/UndoRedoHandler.cpp:139
 msgid "Could not redo \"{1}\"\n"
@@ -463,7 +463,7 @@ msgstr "Typ kreslení - Neměň typ výkresu"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Kombinace typu kresby"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
