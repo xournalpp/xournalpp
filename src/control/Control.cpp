@@ -2407,8 +2407,11 @@ auto Control::saveAs() -> bool {
     }
 
     // no lock needed, this is an uncritically operation
+    auto const shouldCreateBackup = this->doc->shouldCreateBackupOnSave();
     this->doc->setCreateBackupOnSave(false);
-    return save();
+    bool s = save();
+    this->doc->setCreateBackupOnSave(shouldCreateBackup);
+    return s;
 }
 
 void Control::resetSavedStatus() {
