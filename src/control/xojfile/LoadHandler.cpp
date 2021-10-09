@@ -244,7 +244,7 @@ auto LoadHandler::parseXml() -> bool {
         return false;
     }
 
-    doc.setCreateBackupOnSave(this->fileVersion >= 3);
+    doc.setCreateBackupOnSave(true);
 
     return valid;
 }

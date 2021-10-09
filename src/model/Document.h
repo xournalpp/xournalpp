@@ -143,7 +143,7 @@ private:
     GtkTreeModel* contentsModel = nullptr;
 
     /**
-     *  create a backup before save, because the original file was an older fileversion
+     *  create a backup before save
      */
     bool createBackupOnSave = false;
 
