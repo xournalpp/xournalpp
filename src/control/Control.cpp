@@ -1692,8 +1692,6 @@ void Control::toolChanged() {
     fireEnableAction(ACTION_SIZE_VERY_FINE, enableSize);
     if (enableSize) {
         toolSizeChanged();
-    } else {
-      g_message("enableSize=FALSE");
     }
 
     bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);

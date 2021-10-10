@@ -72,16 +72,8 @@ void AbstractItem::actionEnabledAction(ActionType action, bool enabled) {
 
     this->enabled = enabled;
     enable(enabled);
-    g_message("menuitem %i %i, %i, %i", enabled,
-	      action, ACTION_SIZE_VERY_FINE, ACTION_SIZE_VERY_THICK);
     if (this->menuitem) {
-      gtk_widget_set_sensitive(GTK_WIDGET(this->menuitem), enabled);
-      // SAN
-      if (action >= ACTION_SIZE_VERY_FINE && action <= ACTION_SIZE_VERY_THICK) {
-	g_message("SIZE");
-	gtk_widget_set_visible(GTK_WIDGET(this->menuitem), enabled);
-      }
-      // END SAN
+        gtk_widget_set_sensitive(GTK_WIDGET(this->menuitem), enabled);
     }
 }
 
