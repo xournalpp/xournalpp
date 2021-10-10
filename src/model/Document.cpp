@@ -329,6 +329,25 @@ auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDo
     return true;
 }
 
+void Document::mergeLayer(const Document& sourceDoc, int srcLayerId, int dstLayerId){
+
+  if (!tryLock()) {
+    // call again later
+    g_message ("Cannot merge layers, we're busy right now.");
+    return;
+  }
+  size_t pageMax = std::min(this->pages.size(), sourceDoc.pages.size());
+  for (size_t i = 0; i < pageMax; ++i) {
+    PageRef p = this->pages[i];
+    PageRef ps = sourceDoc.pages[i];
+    auto layers = * ps->getLayers();
+    Layer* ls = layers[srcLayerId];
+    Layer* cloneL = ls->clone ();
+    p->changeLayer(cloneL, dstLayerId);
+  }
+  unlock();
+}
+
 void Document::setPageSize(PageRef p, double width, double height) { p->setSize(width, height); }
 
 auto Document::getPageWidth(PageRef p) -> double { return p->getWidth(); }

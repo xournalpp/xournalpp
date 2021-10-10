@@ -29,6 +29,7 @@ public:
     ~XojPage() override;
     XojPage(const XojPage& page);
     void operator=(const XojPage& p) = delete;
+    void changeLayer(Layer* layer, int index);
 
     // Do not modify layers directly, use LayerController
     // So notification can be sent on change

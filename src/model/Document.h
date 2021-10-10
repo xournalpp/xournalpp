@@ -38,6 +38,8 @@ public:
     bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
                  gsize length = 0);
 
+    void mergeLayer(const Document& sourceDoc, int srcLayerId, int dstLayerId);
+
     size_t getPageCount();
     size_t getPdfPageCount();
     XojPdfPageSPtr getPdfPage(size_t page);

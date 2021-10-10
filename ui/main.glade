@@ -179,6 +179,16 @@
                             <accelerator key="o" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
+			 <child>
+                          <object class="GtkImageMenuItem" id="menuFileOpenColl">
+                            <property name="name">menuFileOpenColl</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+			    <property name="label" translatable="yes">_Collaborate</property>
+                            <signal name="activate" handler="ACTION_OPEN_COLLABORATOR" swapped="no"/>
+                          </object>
+                        </child>
                         <child>
                           <object class="GtkMenuItem" id="menuFileRecent">
                             <property name="name">menuFileRecent</property>

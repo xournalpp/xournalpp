@@ -70,7 +70,7 @@ public:
 public:
     // Menu File
     bool newFile(std::string pageTemplate = "", fs::path filepath = {});
-    bool openFile(fs::path filepath = "", int scrollToPage = -1, bool forceOpen = false);
+    bool openFile(fs::path filepath = "", int scrollToPage = -1, bool forceOpen = false, int collabLayer = -1);
     bool annotatePdf(fs::path filepath, bool attachPdf, bool attachToDocument);
     void print();
     void exportAsPdf();
@@ -335,6 +335,12 @@ private:
      * Applies the preferred language to the UI
      */
     void applyPreferredLanguage();
+
+
+  static void collabFileChanged(GFileMonitor* collabMonitor, GFile *file,
+			 GFile* other_file,
+			 GFileMonitorEvent event_type,
+			 gpointer user_data);
 
     RecentManager* recent = nullptr;
     UndoRedoHandler* undoRedo = nullptr;

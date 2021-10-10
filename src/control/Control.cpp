@@ -369,6 +369,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_OPEN:
             openFile();
             break;
+	case ACTION_OPEN_COLLABORATOR:
+	  openFile("",-1,false,1);
+            break;
         case ACTION_ANNOTATE_PDF:
             clearSelectionEndText();
             annotatePdf("", false, false);
@@ -1964,7 +1967,7 @@ auto Control::shouldFileOpen(fs::path const& filepath) const -> bool {
     return !isChild;
 }
 
-auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> bool {
+auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen, int collabLayer) -> bool {
     if (filepath.empty()) {
         bool attachPdf = false;
         XojOpenDlg dlg(getGtkWindow(), this->settings);
@@ -1988,6 +1991,12 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
     if (filepath.extension() == ".pdf") {
         return loadPdf(filepath, scrollToPage);
     }
+
+    if (collabLayer >= 0 && !this->doc->tryLock())
+      { g_message ("Cannot load collaborator, we're busy right now.");
+	return false;
+      }
+    if (collabLayer >= 0 ) { this->doc->unlock(); }
 
     LoadHandler loadHandler;
     Document* loadedDocument = loadHandler.loadDocument(filepath);
@@ -2050,21 +2059,57 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         }
     }
 
-    this->closeDocument();
+    if (collabLayer < 0) { // Normal "open" operation
+      this->closeDocument();
 
-    this->doc->lock();
-    this->doc->clearDocument();
-    *this->doc = *loadedDocument;
-    this->doc->unlock();
+      this->doc->lock();
+      this->doc->clearDocument();
+      *this->doc = *loadedDocument;
+      this->doc->unlock();
 
     // Set folder as last save path, so the next save will be at the current document location
     // This is important because of the new .xopp format, where Xournal .xoj handled as import,
     // not as file to load
-    settings->setLastSavePath(filepath.parent_path());
+      settings->setLastSavePath(filepath.parent_path());
 
 
-    fileLoaded(scrollToPage);
-    return true;
+      fileLoaded(scrollToPage);
+      return true; }
+
+    else { // "Collaboration" file
+      // We import only the 0 (=first) layer of the collaborator file,
+      // and paste it into our "collabLayer" (by default 1, ie the
+      // Layer #2).
+      int importLayer = 0;
+      int pageNo = getCurrentPageNo();
+      g_message ("Importing layer %i from file %s into layer %i.", importLayer+1,
+		 filepath.string().c_str(), collabLayer+1);
+      doc->mergeLayer(*loadedDocument, importLayer, collabLayer);
+
+      GFile* gfile = Util::toGFile(filepath);
+      // TODO Save this, to remove in case we change collaborator file...
+      GFileMonitor* collabMonitor = g_file_monitor_file(gfile, G_FILE_MONITOR_NONE, NULL, NULL);
+      g_signal_connect(G_OBJECT(collabMonitor), "changed", G_CALLBACK(collabFileChanged), this);
+
+      fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
+      scrollHandler->scrollToPage(pageNo);
+      return true;
+    }
+}
+
+// This function is called when a change is detected in the Collaboration file
+void Control::collabFileChanged(GFileMonitor *collabMonitor, GFile *file,
+				GFile *other_file,
+				GFileMonitorEvent event_type,
+				gpointer user_data)  {
+  if (event_type == G_FILE_MONITOR_EVENT_CHANGED) {
+    g_message("File %s changed",  g_file_get_path(file));
+  }
+  if (event_type == G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT) {
+    g_message ("Hint %s", Util::fromGFile(file).string().c_str());
+    reinterpret_cast<Control*>(user_data)->openFile(Util::fromGFile(file), -1, false, 1);
+    // see https://stackoverflow.com/questions/21478803/member-function-as-callback-function-to-g-signal-connect
+  }
 }
 
 auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
