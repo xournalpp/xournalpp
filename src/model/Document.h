@@ -70,6 +70,11 @@ public:
     void setFilepath(fs::path filepath);
     fs::path getFilepath();
     fs::path getPdfFilepath();
+
+  void setCollab(fs::path collabPath, GFileMonitor* collabMonitor);
+  bool hasCollab();
+  void setSelectedLayerId(int id);
+
     fs::path createSaveFolder(fs::path lastSavePath);
     fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName);
 
@@ -108,6 +113,9 @@ private:
     fs::path filepath;
     fs::path pdfFilepath;
     bool attachPdf = false;
+
+  fs::path collabPath;
+  GFileMonitor* collabMonitor;
 
     /**
      *  Password: not handled yet

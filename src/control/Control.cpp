@@ -370,7 +370,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             openFile();
             break;
 	case ACTION_OPEN_COLLABORATOR:
-	  openFile("",-1,false,1);
+	  openFile("",-1,false,2);
             break;
         case ACTION_ANNOTATE_PDF:
             clearSelectionEndText();
@@ -1977,7 +1977,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen, int 
         return false;
     }
 
-    if (!this->close(false)) {
+    if (collabLayer < 0 && !this->close(false)) {
         return false;
     }
 
@@ -2070,25 +2070,31 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen, int 
     // not as file to load
       settings->setLastSavePath(filepath.parent_path());
 
-
       fileLoaded(scrollToPage);
       return true; }
 
     else { // "Collaboration" file
-      // We import only the 0 (=first) layer of the collaborator file,
-      // and paste it into our "collabLayer" (by default 1, ie the
-      // Layer #2).
-      int importLayer = 0;
+      // We import only the first layer of the collaborator file, and
+      // paste it into our "collabLayer" (by default the Layer #2). It
+      // should be the layer just above our working layer.
+      int importLayer = 1;
       int pageNo = getCurrentPageNo();
-      g_message ("Importing layer %i from file %s into layer %i.", importLayer+1,
-		 filepath.string().c_str(), collabLayer+1);
+      g_message ("Importing layer %i from file %s into layer %i.", importLayer,
+		 filepath.string().c_str(), collabLayer);
       doc->mergeLayer(*loadedDocument, importLayer, collabLayer);
-
-      GFile* gfile = Util::toGFile(filepath);
-      // TODO Save this, to remove in case we change collaborator file...
-      GFileMonitor* collabMonitor = g_file_monitor_file(gfile, G_FILE_MONITOR_NONE, NULL, NULL);
-      g_signal_connect(G_OBJECT(collabMonitor), "changed", G_CALLBACK(collabFileChanged), this);
-
+      
+      if (this->doc->hasCollab()) {
+	g_message ("Using existing collaborator");
+      } else {
+	if (collabLayer > 0) {
+	  this->doc->setSelectedLayerId(collabLayer-1);
+	}
+	GFile* gfile = Util::toGFile(filepath);
+	GFileMonitor* collabMonitor = g_file_monitor_file(gfile, G_FILE_MONITOR_NONE, NULL, NULL);
+	this->doc->setCollab(filepath, collabMonitor);
+	g_signal_connect(G_OBJECT(collabMonitor), "changed", G_CALLBACK(collabFileChanged), this);
+      }
+	
       fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
       scrollHandler->scrollToPage(pageNo);
       return true;
@@ -2105,7 +2111,7 @@ void Control::collabFileChanged(GFileMonitor *collabMonitor, GFile *file,
   }
   if (event_type == G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT) {
     g_message ("Hint %s", Util::fromGFile(file).string().c_str());
-    reinterpret_cast<Control*>(user_data)->openFile(Util::fromGFile(file), -1, false, 1);
+    reinterpret_cast<Control*>(user_data)->openFile(Util::fromGFile(file), -1, false, 2);
     // see https://stackoverflow.com/questions/21478803/member-function-as-callback-function-to-g-signal-connect
   }
 }

@@ -93,6 +93,8 @@ void Document::clearDocument(bool destroy) {
 
     this->filepath = fs::path{};
     this->pdfFilepath = fs::path{};
+    this->collabPath = fs::path{};
+    this->collabMonitor = nullptr;
 }
 
 /**
@@ -107,6 +109,14 @@ void Document::setFilepath(fs::path filepath) { this->filepath = std::move(filep
 auto Document::getFilepath() -> fs::path { return filepath; }
 
 auto Document::getPdfFilepath() -> fs::path { return pdfFilepath; }
+
+void Document::setCollab(fs::path collabPath, GFileMonitor* collabMonitor) {
+  this->collabPath = collabPath;
+  this->collabMonitor = collabMonitor;
+}
+bool Document::hasCollab() {
+  return (this->collabMonitor != nullptr);
+}
 
 auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     if (!filepath.empty()) {
@@ -229,6 +239,13 @@ void Document::indexPdfPages() {
     this->pageIndex.swap(index);
 }
 
+void Document::setSelectedLayerId(int id) {
+    for (size_t i = 0; i < this->pages.size(); ++i) {
+      const auto& p = this->pages[i];
+      p->setSelectedLayerId(id);
+    }
+}
+
 
 void Document::buildContentsModel() {
     freeTreeContentModel();
@@ -341,9 +358,11 @@ void Document::mergeLayer(const Document& sourceDoc, int srcLayerId, int dstLaye
     PageRef p = this->pages[i];
     PageRef ps = sourceDoc.pages[i];
     auto layers = * ps->getLayers();
-    Layer* ls = layers[srcLayerId];
-    Layer* cloneL = ls->clone ();
-    p->changeLayer(cloneL, dstLayerId);
+    if (srcLayerId > 0 && srcLayerId <= layers.size()) {
+      Layer* ls = layers[srcLayerId-1];
+      Layer* cloneL = ls->clone ();
+      p->changeLayer(cloneL, dstLayerId);
+    }
   }
   unlock();
 }

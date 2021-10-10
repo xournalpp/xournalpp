@@ -47,7 +47,9 @@ void XojPage::insertLayer(Layer* layer, int index) {
     this->currentLayer = index + 1;
 }
 
-void XojPage::changeLayer(Layer* layer, int index) {
+void XojPage::changeLayer(Layer* layer, int layerId) {
+  int index = layerId - 1;
+  if (index < 0) { return; }
   if (index > static_cast<int>(this->layer.size())) {
     g_message("Cannot change inexistent layer %i", index);
     return;
