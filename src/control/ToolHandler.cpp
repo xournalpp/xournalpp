@@ -98,12 +98,12 @@ void ToolHandler::initTools() {
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX,
                                                                      Color{0x000000U}, TOOL_CAP_NONE, nullptr);
 
-    this->eraserButtonTool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
-    this->stylusButton1Tool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
-    this->stylusButton2Tool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
-    this->mouseMiddleButtonTool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
-    this->mouseRightButtonTool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
-    this->touchDrawingButtonTool = std::make_unique<Tool>(tools[TOOL_HIGHLIGHTER - TOOL_PEN].get());
+    this->eraserButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
+    this->stylusButton1Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
+    this->stylusButton2Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
+    this->mouseMiddleButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
+    this->mouseRightButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
+    this->touchDrawingButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
 
     this->toolbarSelectedTool = &getTool(TOOL_PEN);
     this->activeTool = &getTool(TOOL_PEN);
@@ -571,7 +571,7 @@ auto ToolHandler::getButtonTool(Button button) -> Tool* {
 }
 
 void ToolHandler::resetButtonTool(ToolType type, Button button) {
-    Tool* tool = tools[type - TOOL_PEN].get();
+    auto& tool = *tools[type - TOOL_PEN];
     switch (button) {
         case Button::BUTTON_ERASER:
             this->eraserButtonTool.reset(new Tool(tool));

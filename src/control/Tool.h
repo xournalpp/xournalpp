@@ -21,13 +21,10 @@ class Tool: public ToolBase {
 public:
     Tool(std::string name, ToolType type, Color color, unsigned int capabilities, double* thickness);
     /**
-     * @brief Construct a new Tool object based on the pointer to another tool
-     * Ideally this should be refactored to a copy constructor like Tool(const Tool& tool).
-     * However, this would would require to much refactoring as of now.
-     *
-     * @param t tool to use as basis for new copy
+     * @brief Construct a new Tool object based on another tool.
+     * @param t tool to use as basis for new copy.
      */
-    Tool(Tool* t);
+    Tool(const Tool& t);
     virtual ~Tool();
 
     /**
