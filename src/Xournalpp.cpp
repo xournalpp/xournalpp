@@ -16,6 +16,7 @@
 
 #include "CrashHandler.h"
 #include "Stacktrace.h"
+#include "filesystem.h"
 
 #ifdef _WIN32
 #include "win32/console.h"
@@ -26,6 +27,15 @@ auto main(int argc, char* argv[]) -> int {
     // Attach to the console here. Otherwise, gspawn-win32-helper will create annoying console popups.
     attachConsole();
 #endif
+
+    /*
+     * Set the current working directory to the application directory.
+     * Otherwise, translations are handled inconsistently.
+     * GitHub #3433
+     */
+    std::string exePath = std::string(argv[0]);
+    std::string::size_type pos = exePath.find_last_of("\\/");
+    fs::current_path(exePath.substr(0, pos));
 
     // init crash handler
     installCrashHandlers();
