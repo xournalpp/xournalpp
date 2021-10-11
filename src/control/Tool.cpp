@@ -29,7 +29,7 @@ Tool::~Tool() {
     this->thickness = nullptr;
 }
 
-auto Tool::getName() -> std::string { return this->name; }
+auto Tool::getName() const -> std::string { return this->name; }
 
 void Tool::setCapability(int capability, bool enabled) {
     if (enabled) {
@@ -41,8 +41,8 @@ void Tool::setCapability(int capability, bool enabled) {
 
 auto Tool::hasCapability(ToolCapabilities cap) const -> bool { return (this->capabilities & cap) != 0; }
 
-auto Tool::getThickness(ToolSize size) -> double { return this->thickness[size - TOOL_SIZE_VERY_FINE]; }
+auto Tool::getThickness(ToolSize size) const -> double { return this->thickness[size - TOOL_SIZE_VERY_FINE]; }
 
-auto Tool::isDrawingTool() -> bool {
+auto Tool::isDrawingTool() const -> bool {
     return this->type == TOOL_PEN || this->type == TOOL_HIGHLIGHTER || this->type == TOOL_ERASER;
 }
