@@ -2406,7 +2406,7 @@ auto Control::saveAs() -> bool {
         return false;
     }
 
-    // no lock needed, this is an uncritically operation
+    // no lock needed, this is an uncritical operation
     auto const shouldCreateBackup = this->doc->shouldCreateBackupOnSave();
     this->doc->setCreateBackupOnSave(false);
     bool s = save();
