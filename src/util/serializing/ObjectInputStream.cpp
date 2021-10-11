@@ -241,7 +241,7 @@ auto ObjectInputStream::getType(char type) -> string {
     } else if (type == 'm') {
         ret = "Image";
     } else {
-        char* str = g_strdup_printf("Unknown type: %02x (%c)", type, type);
+        char* str = g_strdup_printf("Unknown type: %02hhx (%c)", type, type);
         ret = str;
         g_free(str);
     }
