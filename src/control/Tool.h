@@ -37,11 +37,11 @@ public:
     static const int toolSizes = 5;
 
 public:
-    std::string getName();
+    std::string getName() const;
 
     bool hasCapability(ToolCapabilities cap) const;
 
-    double getThickness(ToolSize size);
+    double getThickness(ToolSize size) const;
 
     /**
      * @brief Check whether the tool is a Drawing tool.
@@ -54,7 +54,7 @@ public:
      * @return true if tool is a drawing tool
      * @return false if tool is no drawing tool
      */
-    bool isDrawingTool();
+    bool isDrawingTool() const;
 
 protected:
     void setCapability(unsigned int capability, bool enabled);
