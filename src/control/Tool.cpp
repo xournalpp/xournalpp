@@ -2,7 +2,7 @@
 
 #include <utility>
 
-Tool::Tool(std::string name, ToolType type, Color color, int capabilities, double* thickness) {
+Tool::Tool(std::string name, ToolType type, Color color, unsigned int capabilities, double* thickness) {
     this->name = std::move(name);
     this->type = type;
     this->thickness = thickness;
@@ -31,7 +31,7 @@ Tool::~Tool() {
 
 auto Tool::getName() -> std::string { return this->name; }
 
-void Tool::setCapability(int capability, bool enabled) {
+void Tool::setCapability(unsigned int capability, bool enabled) {
     if (enabled) {
         this->capabilities |= capability;
     } else {
