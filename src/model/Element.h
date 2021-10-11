@@ -16,7 +16,7 @@
 
 #include <gtk/gtk.h>
 
-#include "serializing/Serializeable.h"
+#include "serializing/Serializable.h"
 
 #include "Color.h"
 #include "Rectangle.h"
@@ -31,7 +31,7 @@ public:
     virtual ~ShapeContainer() = default;
 };
 
-class Element: public Serializeable {
+class Element: public Serializable {
 protected:
     Element(ElementType type);
 

@@ -33,7 +33,7 @@ class Element;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelectionContents: public ElementContainer, public Serializeable {
+class EditSelectionContents: public ElementContainer, public Serializable {
 public:
     EditSelectionContents(Rectangle<double> bounds, Rectangle<double> snappedBounds, const PageRef& sourcePage,
                           Layer* sourceLayer, XojPageView* sourceView);

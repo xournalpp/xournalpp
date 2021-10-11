@@ -1,7 +1,7 @@
 #include "ObjectOutputStream.h"
 
 #include "ObjectEncoding.h"
-#include "Serializeable.h"
+#include "Serializable.h"
 
 ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder) {
     g_assert(encoder != nullptr);

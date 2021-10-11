@@ -16,10 +16,10 @@
 
 #include <gtk/gtk.h>
 
-#include "serializing/Serializeable.h"
+#include "serializing/Serializable.h"
 
 
-class XojFont: public Serializeable {
+class XojFont: public Serializable {
 public:
     XojFont();
     virtual ~XojFont();
