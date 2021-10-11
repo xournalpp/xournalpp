@@ -19,7 +19,7 @@
 
 class Tool: public ToolBase {
 public:
-    Tool(std::string name, ToolType type, Color color, int capabilities, double* thickness);
+    Tool(std::string name, ToolType type, Color color, unsigned int capabilities, double* thickness);
     /**
      * @brief Construct a new Tool object based on the pointer to another tool
      * Ideally this should be refactored to a copy constructor like Tool(const Tool& tool).
@@ -57,7 +57,7 @@ public:
     bool isDrawingTool();
 
 protected:
-    void setCapability(int capability, bool enabled);
+    void setCapability(unsigned int capability, bool enabled);
 
 private:
     void operator=(const Tool& t);
@@ -68,7 +68,7 @@ private:
 
     double* thickness;
 
-    int capabilities;
+    unsigned int capabilities;
 
     friend class ToolHandler;
 };
