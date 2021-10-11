@@ -114,7 +114,7 @@ auto toolTypeToString(ToolType type) -> string {
         case TOOL_SELECT_OBJECT:
             return "selectObject";
         case TOOL_PLAY_OBJECT:
-            return "PlayObject";
+            return "playObject";
         case TOOL_VERTICAL_SPACE:
             return "verticalSpace";
         case TOOL_HAND:
