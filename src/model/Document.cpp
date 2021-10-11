@@ -110,8 +110,13 @@ auto Document::getFilepath() -> fs::path { return filepath; }
 
 auto Document::getPdfFilepath() -> fs::path { return pdfFilepath; }
 
+fs::path Document::getCollabPath() { return this->collabPath; }
+
 void Document::setCollab(fs::path collabPath, GFileMonitor* collabMonitor) {
   this->collabPath = collabPath;
+  if (this->collabMonitor != nullptr) {
+    g_file_monitor_cancel(this->collabMonitor);
+  }
   this->collabMonitor = collabMonitor;
 }
 bool Document::hasCollab() {
@@ -362,6 +367,7 @@ void Document::mergeLayer(const Document& sourceDoc, int srcLayerId, int dstLaye
       Layer* ls = layers[srcLayerId-1];
       Layer* cloneL = ls->clone ();
       p->changeLayer(cloneL, dstLayerId);
+      cloneL->setName(g_strdup_printf("Collab %i", srcLayerId));
     }
   }
   unlock();

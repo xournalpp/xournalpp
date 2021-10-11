@@ -2078,15 +2078,27 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen, int 
       // paste it into our "collabLayer" (by default the Layer #2). It
       // should be the layer just above our working layer.
       int importLayer = 1;
-      int pageNo = getCurrentPageNo();
+      size_t pageNo = getCurrentPageNo();
+
       g_message ("Importing layer %i from file %s into layer %i.", importLayer,
 		 filepath.string().c_str(), collabLayer);
       doc->mergeLayer(*loadedDocument, importLayer, collabLayer);
+
+      // Now we repaint without moving scroll position:
+      for (size_t i = 0; i < doc->getPageCount(); ++i) {
+	//XojPageView* view = win->getXournal()->getViewFor(i);
+	//  view->repaintPage();
+      	this->getWindow()->getXournal()->layerChanged(i);
+      }
       
-      if (this->doc->hasCollab()) {
+      if (this->doc->hasCollab() && (filepath == this->doc->getCollabPath())) {
 	g_message ("Using existing collaborator");
       } else {
+	if (this->doc->hasCollab()) {
+	  g_message ("Switching to another collaborator");
+	}
 	if (collabLayer > 0) {
+	  //layerController->setCurrentLayerName("Collab");
 	  this->doc->setSelectedLayerId(collabLayer-1);
 	}
 	GFile* gfile = Util::toGFile(filepath);
@@ -2095,13 +2107,21 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen, int 
 	g_signal_connect(G_OBJECT(collabMonitor), "changed", G_CALLBACK(collabFileChanged), this);
       }
 	
-      fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-      scrollHandler->scrollToPage(pageNo);
+      //fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
+
+      // this will reset the page position to top, which is should not
+      // happen when collaborating... How to fix scroll position? For
+      // instance one could use
+      // this->win->getXournal()->scrollTo(pageNo, y);
+      // but I don't know how to get the y.
+      //scrollHandler->scrollToPage(pageNo);
+      
       return true;
     }
 }
 
 // This function is called when a change is detected in the Collaboration file
+// Warning, sometimes the changed file is the backup aaa.xopp~ . We ignore it.
 void Control::collabFileChanged(GFileMonitor *collabMonitor, GFile *file,
 				GFile *other_file,
 				GFileMonitorEvent event_type,
@@ -2110,8 +2130,14 @@ void Control::collabFileChanged(GFileMonitor *collabMonitor, GFile *file,
     g_message("File %s changed",  g_file_get_path(file));
   }
   if (event_type == G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT) {
-    g_message ("Hint %s", Util::fromGFile(file).string().c_str());
-    reinterpret_cast<Control*>(user_data)->openFile(Util::fromGFile(file), -1, false, 2);
+    auto modifiedPath = Util::fromGFile(file);
+    g_message ("Hint %s", modifiedPath.string().c_str());
+    Control* ctrl = reinterpret_cast<Control*>(user_data);
+    if (ctrl->doc->getCollabPath() == modifiedPath) {
+    ctrl->openFile(Util::fromGFile(file), -1, false, 2);
+    } else {
+      g_message ("File %s renamed to %s; we ignore it.", ctrl->doc->getCollabPath().string().c_str(), modifiedPath.string().c_str());
+    }
     // see https://stackoverflow.com/questions/21478803/member-function-as-callback-function-to-g-signal-connect
   }
 }

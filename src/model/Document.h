@@ -71,6 +71,7 @@ public:
     fs::path getFilepath();
     fs::path getPdfFilepath();
 
+  fs::path getCollabPath();
   void setCollab(fs::path collabPath, GFileMonitor* collabMonitor);
   bool hasCollab();
   void setSelectedLayerId(int id);
