@@ -29,7 +29,7 @@ add_library (xournalpp-test-base OBJECT
 
 ## ------------------------
 
-# These dirs are xournalpp only so it's safe to add then recursively
+# These dirs are xournalpp only so it's safe to add them recursively
 file (GLOB_RECURSE util_sources_SOURCES_RECURSE
   util/*.cpp
 )
