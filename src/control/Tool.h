@@ -34,7 +34,7 @@ public:
      * @brief number of different sizes defined for tools with Size capability
      *
      */
-    static const int toolSizes = 5;
+    static constexpr int toolSizes = 5;
 
 public:
     std::string getName() const;
