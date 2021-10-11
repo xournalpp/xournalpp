@@ -23,7 +23,7 @@ ToolHandler::ToolHandler(ToolListener* stateChangeListener, ActionHandler* actio
 }
 
 void ToolHandler::initTools() {
-    auto* thickness = new double[Tool::toolSizes];
+    std::array<double, Tool::toolSizes> thickness;
     // pen thicknesses = 0.15, 0.3, 0.5, 0.8, 2 mm
     thickness[TOOL_SIZE_VERY_FINE] = 0.42;
     thickness[TOOL_SIZE_FINE] = 0.85;
@@ -36,7 +36,6 @@ void ToolHandler::initTools() {
                     TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE,
             thickness);
 
-    thickness = new double[Tool::toolSizes];
     thickness[TOOL_SIZE_VERY_FINE] = 1;
     thickness[TOOL_SIZE_FINE] = 2.83;
     thickness[TOOL_SIZE_MEDIUM] = 8.50;
@@ -46,7 +45,6 @@ void ToolHandler::initTools() {
             std::make_unique<Tool>("eraser", TOOL_ERASER, Color{0x000000U}, TOOL_CAP_SIZE, thickness);
 
     // highlighter thicknesses = 1, 3, 7 mm
-    thickness = new double[Tool::toolSizes];
     thickness[TOOL_SIZE_VERY_FINE] = 1;
     thickness[TOOL_SIZE_FINE] = 2.83;
     thickness[TOOL_SIZE_MEDIUM] = 8.50;
@@ -58,45 +56,47 @@ void ToolHandler::initTools() {
                     TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
             thickness);
 
-    tools[TOOL_TEXT - TOOL_PEN] = std::make_unique<Tool>("text", TOOL_TEXT, Color{0x000000U}, TOOL_CAP_COLOR, nullptr);
+    tools[TOOL_TEXT - TOOL_PEN] =
+            std::make_unique<Tool>("text", TOOL_TEXT, Color{0x000000U}, TOOL_CAP_COLOR, std::nullopt);
 
     tools[TOOL_IMAGE - TOOL_PEN] =
-            std::make_unique<Tool>("image", TOOL_IMAGE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("image", TOOL_IMAGE, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_SELECT_RECT - TOOL_PEN] =
-            std::make_unique<Tool>("selectRect", TOOL_SELECT_RECT, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("selectRect", TOOL_SELECT_RECT, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_SELECT_REGION - TOOL_PEN] =
-            std::make_unique<Tool>("selectRegion", TOOL_SELECT_REGION, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("selectRegion", TOOL_SELECT_REGION, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_SELECT_OBJECT - TOOL_PEN] =
-            std::make_unique<Tool>("selectObject", TOOL_SELECT_OBJECT, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("selectObject", TOOL_SELECT_OBJECT, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_VERTICAL_SPACE - TOOL_PEN] =
-            std::make_unique<Tool>("verticalSpace", TOOL_VERTICAL_SPACE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("verticalSpace", TOOL_VERTICAL_SPACE, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
-    tools[TOOL_HAND - TOOL_PEN] = std::make_unique<Tool>("hand", TOOL_HAND, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+    tools[TOOL_HAND - TOOL_PEN] =
+            std::make_unique<Tool>("hand", TOOL_HAND, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_PLAY_OBJECT - TOOL_PEN] =
-            std::make_unique<Tool>("playObject", TOOL_PLAY_OBJECT, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("playObject", TOOL_PLAY_OBJECT, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_DRAW_RECT - TOOL_PEN] =
-            std::make_unique<Tool>("drawRect", TOOL_DRAW_RECT, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("drawRect", TOOL_DRAW_RECT, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_DRAW_ELLIPSE - TOOL_PEN] =
-            std::make_unique<Tool>("drawEllipse", TOOL_DRAW_ELLIPSE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("drawEllipse", TOOL_DRAW_ELLIPSE, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_DRAW_ARROW - TOOL_PEN] =
-            std::make_unique<Tool>("drawArrow", TOOL_DRAW_ARROW, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("drawArrow", TOOL_DRAW_ARROW, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = std::make_unique<Tool>(
-            "drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            "drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_DRAW_SPLINE - TOOL_PEN] =
-            std::make_unique<Tool>("drawSpline", TOOL_DRAW_SPLINE, Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+            std::make_unique<Tool>("drawSpline", TOOL_DRAW_SPLINE, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX,
-                                                                     Color{0x000000U}, TOOL_CAP_NONE, nullptr);
+                                                                     Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     this->eraserButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton1Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
@@ -262,7 +262,7 @@ auto ToolHandler::getHighlighterFill() -> int { return this->tools[TOOL_HIGHLIGH
 auto ToolHandler::getThickness() -> double {
     Tool* tool = this->activeTool;
     if (tool->thickness) {
-        return tool->thickness[tool->getSize()];
+        return tool->thickness.value()[tool->getSize()];
     }
 
     g_warning("Request size of \"%s\"", tool->getName().c_str());
@@ -500,7 +500,9 @@ bool ToolHandler::pointActiveToolToToolbarTool() {
     return true;
 }
 
-auto ToolHandler::getToolThickness(ToolType type) -> const double* { return this->tools[type - TOOL_PEN]->thickness; }
+auto ToolHandler::getToolThickness(ToolType type) -> const double* {
+    return this->tools[type - TOOL_PEN]->thickness.value().data();
+}
 
 /**
  * Change the selection tools capabilities, depending on the selected elements

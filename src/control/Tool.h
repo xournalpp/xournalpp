@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <array>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -19,19 +21,20 @@
 
 class Tool: public ToolBase {
 public:
-    Tool(std::string name, ToolType type, Color color, unsigned int capabilities, double* thickness);
+    /**
+     * @brief number of different sizes defined for tools with Size capability
+     *
+     */
+    static constexpr int toolSizes = 5;
+
+    Tool(std::string name, ToolType type, Color color, unsigned int capabilities,
+         std::optional<std::array<double, Tool::toolSizes>> thickness);
     /**
      * @brief Construct a new Tool object based on another tool.
      * @param t tool to use as basis for new copy.
      */
     Tool(const Tool& t);
     virtual ~Tool();
-
-    /**
-     * @brief number of different sizes defined for tools with Size capability
-     *
-     */
-    static constexpr int toolSizes = 5;
 
 public:
     std::string getName() const;
@@ -63,7 +66,7 @@ private:
     std::string name;
     ToolType type;
 
-    double* thickness;
+    std::optional<std::array<double, toolSizes>> thickness;
 
     unsigned int capabilities;
 
