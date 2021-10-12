@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:50\n"
+"PO-Revision-Date: 2021-10-12 16:47\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2082,7 +2082,7 @@ msgstr "Autore: "
 
 #: ../ui/about.glade:449
 msgid "Authors"
-msgstr ""
+msgstr "Autori"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2090,7 +2090,7 @@ msgstr "Rilevamento automatico"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
-msgstr ""
+msgstr "Caricamento Automatico"
 
 #: ../ui/settings.glade:456
 msgid "Autosaving"
@@ -2564,7 +2564,7 @@ msgstr "Se abilitata, i livelli di ogni pagina verranno aggiunti uno per uno. Il
 
 #: ../ui/settings.glade:664
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "Se apri un PDF e c'è un file Xournal con lo stesso nome, aprirà il file xoj."
 
 #: ../ui/settings.glade:4743
 msgid "Ignore Time (ms)"
@@ -3170,7 +3170,7 @@ msgstr "Vista"
 
 #: ../ui/about.glade:328
 msgid "Website"
-msgstr ""
+msgstr "Sito web"
 
 #: ../ui/settings.glade:3451
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
