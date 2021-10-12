@@ -10,7 +10,7 @@
 #include "model/Document.h"
 #include "model/Layer.h"
 #include "model/Stroke.h"
-#include "model/eraser/EraseableStroke.h"
+#include "model/eraser/ErasableStroke.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/EraseUndoAction.h"
 #include "undo/UndoRedoHandler.h"
@@ -102,15 +102,15 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
             this->undo->addUndoAction(std::move(eraseUndo));
         }
 
-        EraseableStroke* eraseable = nullptr;
-        if (s->getEraseable() == nullptr) {
+        ErasableStroke* eraseable = nullptr;
+        if (s->getErasable() == nullptr) {
             doc->lock();
-            eraseable = new EraseableStroke(s);
-            s->setEraseable(eraseable);
+            eraseable = new ErasableStroke(s);
+            s->setErasable(eraseable);
             doc->unlock();
             this->eraseUndoAction->addOriginal(l, s, pos);
         } else {
-            eraseable = s->getEraseable();
+            eraseable = s->getErasable();
         }
 
         eraseable->erase(x, y, halfEraserSize, range);

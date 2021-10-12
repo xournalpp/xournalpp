@@ -32,7 +32,7 @@ public:
 private:
     void drawFillStroke();
     void applyDashed(double offset);
-    static void drawEraseableStroke(cairo_t* cr, Stroke* s);
+    static void drawErasableStroke(cairo_t* cr, Stroke* s);
 
     /**
      * No pressure sensitivity, one line is drawn

@@ -1,23 +1,23 @@
-#include "EraseableStroke.h"
+#include "ErasableStroke.h"
 
 #include <cmath>
 
 #include "model/Stroke.h"
 
-#include "EraseableStrokePart.h"
+#include "ErasableStrokePart.h"
 #include "PartList.h"
 #include "Range.h"
 
-EraseableStroke::EraseableStroke(Stroke* stroke): stroke(stroke) {
+ErasableStroke::ErasableStroke(Stroke* stroke): stroke(stroke) {
     this->parts = new PartList();
     g_mutex_init(&this->partLock);
 
     for (int i = 1; i < stroke->getPointCount(); i++) {
-        this->parts->add(new EraseableStrokePart(stroke->getPoint(i - 1), stroke->getPoint(i)));
+        this->parts->add(new ErasableStrokePart(stroke->getPoint(i - 1), stroke->getPoint(i)));
     }
 }
 
-EraseableStroke::~EraseableStroke() {
+ErasableStroke::~ErasableStroke() {
     delete this->parts;
     this->parts = nullptr;
 }
@@ -26,7 +26,7 @@ EraseableStroke::~EraseableStroke() {
 // This is done in a Thread, every thing else in the main loop /////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-void EraseableStroke::draw(cairo_t* cr) {
+void ErasableStroke::draw(cairo_t* cr) {
     g_mutex_lock(&this->partLock);
     PartList* tmpCopy = this->parts->clone();
     g_mutex_unlock(&this->partLock);
@@ -34,7 +34,7 @@ void EraseableStroke::draw(cairo_t* cr) {
     double w = this->stroke->getWidth();
 
     for (GList* l = tmpCopy->data; l != nullptr; l = l->next) {
-        auto* part = static_cast<EraseableStrokePart*>(l->data);
+        auto* part = static_cast<ErasableStrokePart*>(l->data);
         if (part->getWidth() == Point::NO_PRESSURE) {
             cairo_set_line_width(cr, w);
         } else {
@@ -63,7 +63,7 @@ void EraseableStroke::draw(cairo_t* cr) {
 /**
  * The only public method
  */
-auto EraseableStroke::erase(double x, double y, double halfEraserSize, Range* range) -> Range* {
+auto ErasableStroke::erase(double x, double y, double halfEraserSize, Range* range) -> Range* {
     this->repaintRect = range;
 
     g_mutex_lock(&this->partLock);
@@ -71,7 +71,7 @@ auto EraseableStroke::erase(double x, double y, double halfEraserSize, Range* ra
     g_mutex_unlock(&this->partLock);
 
     for (GList* l = tmpCopy->data; l != nullptr;) {
-        auto* p = static_cast<EraseableStrokePart*>(l->data);
+        auto* p = static_cast<ErasableStrokePart*>(l->data);
         l = l->next;
         erase(x, y, halfEraserSize, p, tmpCopy);
     }
@@ -86,7 +86,7 @@ auto EraseableStroke::erase(double x, double y, double halfEraserSize, Range* ra
     return this->repaintRect;
 }
 
-void EraseableStroke::addRepaintRect(double x, double y, double width, double height) {
+void ErasableStroke::addRepaintRect(double x, double y, double width, double height) {
     if (this->repaintRect) {
         this->repaintRect->addPoint(x, y);
     } else {
@@ -96,7 +96,7 @@ void EraseableStroke::addRepaintRect(double x, double y, double width, double he
     this->repaintRect->addPoint(x + width, y + height);
 }
 
-void EraseableStroke::erase(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list) {
+void ErasableStroke::erase(double x, double y, double halfEraserSize, ErasableStrokePart* part, PartList* list) {
     if (part->points->next == nullptr) {
         return;
     }
@@ -196,8 +196,8 @@ void EraseableStroke::erase(double x, double y, double halfEraserSize, Eraseable
     }
 }
 
-auto EraseableStroke::erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list,
-                                bool* deleteStrokeAfter) -> bool {
+auto ErasableStroke::erasePart(double x, double y, double halfEraserSize, ErasableStrokePart* part, PartList* list,
+                               bool* deleteStrokeAfter) -> bool {
     bool changed = false;
 
     part->splitFor(halfEraserSize);
@@ -277,7 +277,7 @@ auto EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
 
         // create data structure for all new (splitted) parts
         for (GList* l = lists; l != nullptr; l = l->next) {
-            auto* newPart = new EraseableStrokePart(part->width);
+            auto* newPart = new ErasableStrokePart(part->width);
             newPart->points = static_cast<GList*>(l->data);
             list->data = g_list_insert(list->data, newPart, pos++);
         }
@@ -292,13 +292,13 @@ auto EraseableStroke::erasePart(double x, double y, double halfEraserSize, Erase
     return changed;
 }
 
-auto EraseableStroke::getStroke(Stroke* original) -> GList* {
+auto ErasableStroke::getStroke(Stroke* original) -> GList* {
     GList* list = nullptr;
 
     Stroke* s = nullptr;
     Point lastPoint(NAN, NAN);
     for (GList* l = this->parts->data; l != nullptr; l = l->next) {
-        auto* p = static_cast<EraseableStrokePart*>(l->data);
+        auto* p = static_cast<ErasableStrokePart*>(l->data);
         GList* points = p->getPoints();
         if (g_list_length(points) < 2) {
             continue;

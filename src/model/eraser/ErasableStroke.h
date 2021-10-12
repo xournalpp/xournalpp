@@ -19,15 +19,15 @@
 #include "model/Point.h"
 
 
-class EraseableStrokePart;
+class ErasableStrokePart;
 class PartList;
 class Range;
 class Stroke;
 
-class EraseableStroke {
+class ErasableStroke {
 public:
-    EraseableStroke(Stroke* stroke);
-    virtual ~EraseableStroke();
+    ErasableStroke(Stroke* stroke);
+    virtual ~ErasableStroke();
 
 public:
     /**
@@ -40,8 +40,8 @@ public:
     void draw(cairo_t* cr);
 
 private:
-    void erase(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list);
-    static bool erasePart(double x, double y, double halfEraserSize, EraseableStrokePart* part, PartList* list,
+    void erase(double x, double y, double halfEraserSize, ErasableStrokePart* part, PartList* list);
+    static bool erasePart(double x, double y, double halfEraserSize, ErasableStrokePart* part, PartList* list,
                           bool* deleteStrokeAfter);
 
     void addRepaintRect(double x, double y, double width, double height);

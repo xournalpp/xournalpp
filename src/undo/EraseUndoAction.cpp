@@ -3,7 +3,7 @@
 #include "gui/Redrawable.h"
 #include "model/Layer.h"
 #include "model/Stroke.h"
-#include "model/eraser/EraseableStroke.h"
+#include "model/eraser/ErasableStroke.h"
 
 #include "PageLayerPosEntry.h"
 #include "i18n.h"
@@ -69,7 +69,7 @@ void EraseUndoAction::finalize() {
             // Remove the original and add the copy
             int pos = p->layer->removeElement(p->element, false);
 
-            EraseableStroke* e = p->element->getEraseable();
+            ErasableStroke* e = p->element->getErasable();
             GList* stroke = e->getStroke(p->element);
             for (GList* ls = stroke; ls != nullptr; ls = ls->next) {
                 auto* copy = static_cast<Stroke*>(ls->data);
@@ -80,7 +80,7 @@ void EraseUndoAction::finalize() {
 
             delete e;
             e = nullptr;
-            p->element->setEraseable(nullptr);
+            p->element->setErasable(nullptr);
         }
     }
 

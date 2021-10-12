@@ -1,6 +1,6 @@
-#include "EraseableStrokePart.h"
+#include "ErasableStrokePart.h"
 
-EraseableStrokePart::EraseableStrokePart(Point a, Point b) {
+ErasableStrokePart::ErasableStrokePart(Point a, Point b) {
     addPoint(a);
     addPoint(b);
     this->width = a.z;
@@ -10,7 +10,7 @@ EraseableStrokePart::EraseableStrokePart(Point a, Point b) {
     calcSize();
 }
 
-EraseableStrokePart::EraseableStrokePart(double width) {
+ErasableStrokePart::ErasableStrokePart(double width) {
     this->points = nullptr;
     this->width = width;
     this->splitSize = 0;
@@ -18,7 +18,7 @@ EraseableStrokePart::EraseableStrokePart(double width) {
     calcSize();
 }
 
-EraseableStrokePart::~EraseableStrokePart() {
+ErasableStrokePart::~ErasableStrokePart() {
     for (GList* l = this->points; l != nullptr; l = l->next) {
         auto* p = static_cast<Point*>(l->data);
         delete p;
@@ -27,7 +27,7 @@ EraseableStrokePart::~EraseableStrokePart() {
     this->points = nullptr;
 }
 
-void EraseableStrokePart::calcSize() {
+void ErasableStrokePart::calcSize() {
     if (this->points == nullptr) {
         this->x = 0;
         this->y = 0;
@@ -55,8 +55,8 @@ void EraseableStrokePart::calcSize() {
     this->elementHeight = y2 - y1;
 }
 
-auto EraseableStrokePart::clone() -> EraseableStrokePart* {
-    auto* part = new EraseableStrokePart(this->width);
+auto ErasableStrokePart::clone() -> ErasableStrokePart* {
+    auto* part = new ErasableStrokePart(this->width);
 
     for (GList* l = this->points; l != nullptr; l = l->next) {
         auto* p = static_cast<Point*>(l->data);
@@ -68,25 +68,25 @@ auto EraseableStrokePart::clone() -> EraseableStrokePart* {
     return part;
 }
 
-auto EraseableStrokePart::getX() const -> double { return this->x; }
+auto ErasableStrokePart::getX() const -> double { return this->x; }
 
-auto EraseableStrokePart::getY() const -> double { return this->y; }
+auto ErasableStrokePart::getY() const -> double { return this->y; }
 
-auto EraseableStrokePart::getElementWidth() const -> double { return this->elementWidth; }
+auto ErasableStrokePart::getElementWidth() const -> double { return this->elementWidth; }
 
-auto EraseableStrokePart::getElementHeight() const -> double { return this->elementHeight; }
+auto ErasableStrokePart::getElementHeight() const -> double { return this->elementHeight; }
 
-void EraseableStrokePart::addPoint(Point p) {
+void ErasableStrokePart::addPoint(Point p) {
     calcSize();
 
     this->points = g_list_append(this->points, new Point(p));
 }
 
-auto EraseableStrokePart::getWidth() const -> double { return this->width; }
+auto ErasableStrokePart::getWidth() const -> double { return this->width; }
 
-auto EraseableStrokePart::getPoints() -> GList* { return this->points; }
+auto ErasableStrokePart::getPoints() -> GList* { return this->points; }
 
-void EraseableStrokePart::clearSplitData() {
+void ErasableStrokePart::clearSplitData() {
     for (GList* l = this->points->next; l->next != nullptr;) {
         auto* p = static_cast<Point*>(l->data);
         delete p;
@@ -97,7 +97,7 @@ void EraseableStrokePart::clearSplitData() {
     }
 }
 
-void EraseableStrokePart::splitFor(double halfEraserSize) {
+void ErasableStrokePart::splitFor(double halfEraserSize) {
     if (halfEraserSize == this->splitSize) {
         return;
     }

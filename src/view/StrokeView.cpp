@@ -1,7 +1,7 @@
 #include "StrokeView.h"
 
 #include "model/Stroke.h"
-#include "model/eraser/EraseableStroke.h"
+#include "model/eraser/ErasableStroke.h"
 #include "util/LoopUtil.h"
 
 #include "DocumentView.h"
@@ -29,8 +29,8 @@ void StrokeView::applyDashed(double offset) {
     }
 }
 
-void StrokeView::drawEraseableStroke(cairo_t* cr, Stroke* s) {
-    EraseableStroke* e = s->getEraseable();
+void StrokeView::drawErasableStroke(cairo_t* cr, Stroke* s) {
+    ErasableStroke* e = s->getErasable();
     e->draw(cr);
 }
 
@@ -130,8 +130,8 @@ void StrokeView::paint(bool dontRenderEditingStroke) {
     cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
 
     // don't render eraseable for previews
-    if (s->getEraseable() && !dontRenderEditingStroke) {
-        drawEraseableStroke(cr, s);
+    if (s->getErasable() && !dontRenderEditingStroke) {
+        drawErasableStroke(cr, s);
         return;
     }
 

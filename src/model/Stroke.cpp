@@ -425,9 +425,9 @@ void Stroke::calcSize() const {
     Element::snappedBounds = Rectangle<double>(minSnapX, minSnapY, maxSnapX - minSnapX, maxSnapY - minSnapY);
 }
 
-auto Stroke::getEraseable() -> EraseableStroke* { return this->eraseable; }
+auto Stroke::getErasable() -> ErasableStroke* { return this->eraseable; }
 
-void Stroke::setEraseable(EraseableStroke* eraseable) { this->eraseable = eraseable; }
+void Stroke::setErasable(ErasableStroke* eraseable) { this->eraseable = eraseable; }
 
 void Stroke::debugPrint() {
     g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t)this % this->hasPressure()));
