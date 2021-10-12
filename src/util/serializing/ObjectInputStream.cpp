@@ -3,10 +3,14 @@
 #include "Serializeable.h"
 #include "i18n.h"
 
+// This function requires that T is read from its binary representation to work (e.g. integer type)
 template <typename T>
-T readTypeFromSStream(std::istringstream& istream, std::string typeName) {
+T readTypeFromSStream(std::istringstream& istream) {
     if (istream.str().size() < sizeof(T)) {
-        throw InputStreamException("End reached, but try to read a" + typeName, __FILE__, __LINE__);
+        std::ostringstream oss;
+        oss << "End reached: trying to read " << sizeof(T) << " bytes while only " << istream.str().size()
+            << " bytes available";
+        throw InputStreamException(oss.str(), __FILE__, __LINE__);
     }
     T output;
 
@@ -60,23 +64,23 @@ void ObjectInputStream::endObject() { checkType('}'); }
 
 auto ObjectInputStream::readInt() -> int {
     checkType('i');
-    return readTypeFromSStream<int>(istream, "int");
+    return readTypeFromSStream<int>(istream);
 }
 
 auto ObjectInputStream::readDouble() -> double {
     checkType('d');
-    return readTypeFromSStream<double>(istream, "double");
+    return readTypeFromSStream<double>(istream);
 }
 
 auto ObjectInputStream::readSizeT() -> size_t {
     checkType('l');
-    return readTypeFromSStream<size_t>(istream, "size_t");
+    return readTypeFromSStream<size_t>(istream);
 }
 
 auto ObjectInputStream::readString() -> std::string {
     checkType('s');
 
-    size_t lenString = (size_t)readTypeFromSStream<int>(istream, "int");
+    size_t lenString = (size_t)readTypeFromSStream<int>(istream);
 
     if (istream.str().size() < len) {
         throw InputStreamException("End reached, but try to read an string", __FILE__, __LINE__);
@@ -97,8 +101,8 @@ void ObjectInputStream::readData(void** data, int* length) {
         throw InputStreamException("End reached, but try to read data len and width", __FILE__, __LINE__);
     }
 
-    int len = readTypeFromSStream<int>(istream, "int");
-    int width = readTypeFromSStream<int>(istream, "int");
+    int len = readTypeFromSStream<int>(istream);
+    int width = readTypeFromSStream<int>(istream);
 
     if (istream.str().size() < (len * width)) {
         throw InputStreamException("End reached, but try to read data", __FILE__, __LINE__);
@@ -130,7 +134,7 @@ auto ObjectInputStream::readImage() -> cairo_surface_t* {
         throw InputStreamException("End reached, but try to read an image's data's length", __FILE__, __LINE__);
     }
 
-    size_t len = readTypeFromSStream<size_t>(istream, "gsize");
+    size_t len = readTypeFromSStream<size_t>(istream);
 
     if (istream.str().size() < len) {
         throw InputStreamException("End reached, but try to read an image", __FILE__, __LINE__);
