@@ -358,7 +358,7 @@ public:
                     auto sA = dynamic_cast<Stroke*>(a);
                     auto sB = dynamic_cast<Stroke*>(b);
                     CPPUNIT_ASSERT_EQUAL(sA->getPointCount(), sB->getPointCount());
-                    CPPUNIT_ASSERT_EQUAL(sA->getToolType(), sB->getToolType());
+                    CPPUNIT_ASSERT_EQUAL(sA->getStrokeToolType(), sB->getStrokeToolType());
                     CPPUNIT_ASSERT_EQUAL(sA->getLineStyle().hasDashes(), sB->getLineStyle().hasDashes());
                     CPPUNIT_ASSERT(coordEq(sA->getAvgPressure(), sB->getAvgPressure()));
                     for (int j = 0; j < sA->getPointCount(); j++) {

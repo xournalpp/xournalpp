@@ -38,7 +38,7 @@ void StrokeHandler::draw(cairo_t* cr) {
 
     DocumentView::applyColor(cr, stroke);
 
-    if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+    if (stroke->getStrokeToolType() == STROKE_TOOL_HIGHLIGHTER) {
         cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
     } else {
         cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
@@ -138,7 +138,7 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
     rg.addPoint(point.x, point.y);
 
     if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes()) &&
-        !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)) {
+        !(stroke->getFill() != -1 && stroke->getStrokeToolType() == STROKE_TOOL_HIGHLIGHTER)) {
         // Clear surface
 
         // for debugging purposes
@@ -268,7 +268,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         }
     }
 
-    if (stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+    if (stroke->getFill() != -1 && stroke->getStrokeToolType() == STROKE_TOOL_HIGHLIGHTER) {
         // The stroke is not filled on drawing time
         // If the stroke has fill values, it needs to be re-rendered
         // else the fill will not be visible.
@@ -280,7 +280,8 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     page->fireElementChanged(stroke);
 
     // Manually force the rendering of the stroke, if no motion event occurred between, that would rerender the page.
-    if (stroke->getPointCount() == 2 || (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER && stroke->getFill() != -1)) {
+    if (stroke->getPointCount() == 2 ||
+        (stroke->getStrokeToolType() == STROKE_TOOL_HIGHLIGHTER && stroke->getFill() != -1)) {
         this->redrawable->rerenderElement(stroke);
     }
 
@@ -371,7 +372,7 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
 
         createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pos.pressure));
 
-        this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
+        this->hasPressure = this->stroke->getStrokeToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
 
         stabilizer->initialize(this, zoom, pos);
 

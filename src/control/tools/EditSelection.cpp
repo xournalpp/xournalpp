@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <functional>
 #include <limits>
 
 #include "control/Control.h"
@@ -270,13 +271,8 @@ auto EditSelection::getYOnViewAbsolute() -> int {
     return this->view->getY() + static_cast<int>(this->getYOnView() * zoom);
 }
 
-/**
- * Sets the tool size for pen or eraser, returs an undo action
- * (or nullptr if nothing is done)
- */
-auto EditSelection::setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                            const double* thicknessEraser) -> UndoAction* {
-    return this->contents->setSize(size, thicknessPen, thicknessHighlighter, thicknessEraser);
+auto EditSelection::setSize(std::function<double(ToolType)> toolToThickness) -> UndoAction* {
+    return this->contents->setSize(toolToThickness);
 }
 
 /**

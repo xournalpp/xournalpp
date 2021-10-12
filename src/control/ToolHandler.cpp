@@ -500,8 +500,8 @@ bool ToolHandler::pointActiveToolToToolbarTool() {
     return true;
 }
 
-auto ToolHandler::getToolThickness(ToolType type) -> const double* {
-    return this->tools[type - TOOL_PEN]->thickness.value().data();
+auto ToolHandler::getToolThickness(ToolType type, ToolSize size) -> double {
+    return this->tools[type - TOOL_PEN]->thickness.value()[size];
 }
 
 /**

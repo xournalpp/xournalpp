@@ -313,7 +313,7 @@ auto EraseableStroke::getStroke(Stroke* original) -> GList* {
             }
             s = new Stroke();
             s->setColor(original->getColor());
-            s->setToolType(original->getToolType());
+            s->setStrokeToolType(original->getStrokeToolType());
             s->setLineStyle(original->getLineStyle());
             s->setWidth(original->getWidth());
             list = g_list_append(list, s);

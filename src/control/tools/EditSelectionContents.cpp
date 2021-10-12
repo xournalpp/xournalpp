@@ -1,6 +1,7 @@
 #include "EditSelectionContents.h"
 
 #include <cmath>
+#include <functional>
 #include <memory>
 
 #include "control/Control.h"
@@ -83,12 +84,7 @@ auto EditSelectionContents::getInsertOrder() const -> std::deque<std::pair<Eleme
     return this->insertOrder;
 }
 
-/**
- * Sets the tool size for pen or eraser, returs an undo action
- * (or nullptr if nothing is done)
- */
-auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                                    const double* thicknessEraser) -> UndoAction* {
+auto EditSelectionContents::setSize(std::function<double(ToolType)> toolToThickness) -> UndoAction* {
     auto* undo = new SizeUndoAction(this->sourcePage, this->sourceLayer);
 
     bool found = false;
@@ -96,20 +92,14 @@ auto EditSelectionContents::setSize(ToolSize size, const double* thicknessPen, c
     for (Element* e: this->selected) {
         if (e->getType() == ELEMENT_STROKE) {
             auto* s = dynamic_cast<Stroke*>(e);
-            StrokeTool tool = s->getToolType();
 
             double originalWidth = s->getWidth();
 
             int pointCount = s->getPointCount();
             vector<double> originalPressure = SizeUndoAction::getPressure(s);
 
-            if (tool == STROKE_TOOL_PEN) {
-                s->setWidth(thicknessPen[size]);
-            } else if (tool == STROKE_TOOL_HIGHLIGHTER) {
-                s->setWidth(thicknessHighlighter[size]);
-            } else if (tool == STROKE_TOOL_ERASER) {
-                s->setWidth(thicknessEraser[size]);
-            }
+            ToolType toolType = s->getToolType();
+            s->setWidth(toolToThickness(toolType));
 
             // scale the stroke
             double factor = s->getWidth() / originalWidth;
@@ -147,7 +137,7 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
     for (Element* e: this->selected) {
         if (e->getType() == ELEMENT_STROKE) {
             auto* s = dynamic_cast<Stroke*>(e);
-            StrokeTool tool = s->getToolType();
+            StrokeToolType tool = s->getStrokeToolType();
             int newFill = 128;
 
             if (tool == STROKE_TOOL_PEN) {

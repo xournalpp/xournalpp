@@ -42,7 +42,7 @@ void InputHandler::createStroke(Point p) {
     stroke->setLineStyle(h->getLineStyle());
 
     if (h->getToolType() == TOOL_PEN) {
-        stroke->setToolType(STROKE_TOOL_PEN);
+        stroke->setStrokeToolType(STROKE_TOOL_PEN);
 
         if (xournal->getControl()->getAudioController()->isRecording()) {
             std::string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
@@ -52,9 +52,9 @@ void InputHandler::createStroke(Point p) {
             stroke->setAudioFilename(audioFilename);
         }
     } else if (h->getToolType() == TOOL_HIGHLIGHTER) {
-        stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
+        stroke->setStrokeToolType(STROKE_TOOL_HIGHLIGHTER);
     } else if (h->getToolType() == TOOL_ERASER) {
-        stroke->setToolType(STROKE_TOOL_ERASER);
+        stroke->setStrokeToolType(STROKE_TOOL_ERASER);
         stroke->setColor(0xffffffU);
     }
 

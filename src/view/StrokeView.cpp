@@ -42,7 +42,7 @@ void StrokeView::changeCairoSource(bool markAudioStroke) {
     ///////////////////////////////////////////////////////
     // Fill stroke
     ///////////////////////////////////////////////////////
-    if (s->getFill() != -1 && s->getToolType() != STROKE_TOOL_HIGHLIGHTER) {
+    if (s->getFill() != -1 && s->getStrokeToolType() != STROKE_TOOL_HIGHLIGHTER) {
         cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
         // Set the color and opacity
@@ -52,8 +52,8 @@ void StrokeView::changeCairoSource(bool markAudioStroke) {
     }
 
 
-    if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER || (s->getAudioFilename().length() == 0 && markAudioStroke)) {
-        if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+    if (s->getStrokeToolType() == STROKE_TOOL_HIGHLIGHTER || (s->getAudioFilename().length() == 0 && markAudioStroke)) {
+        if (s->getStrokeToolType() == STROKE_TOOL_HIGHLIGHTER) {
             cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
         } else {
             cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
@@ -75,7 +75,7 @@ void StrokeView::drawNoPressure() {
     double width = s->getWidth();
 
     bool group = false;
-    if (s->getFill() != -1 && s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+    if (s->getFill() != -1 && s->getStrokeToolType() == STROKE_TOOL_HIGHLIGHTER) {
         cairo_push_group(cr);
         // Do not apply the alpha here, else the border and the fill
         // are visible instead of one homogeneous area
@@ -136,7 +136,7 @@ void StrokeView::paint(bool dontRenderEditingStroke) {
     }
 
     // No pressure sensitivity, easy draw a line...
-    if (!s->hasPressure() || s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+    if (!s->hasPressure() || s->getStrokeToolType() == STROKE_TOOL_HIGHLIGHTER) {
         drawNoPressure();
     } else {
         drawWithPressure();
