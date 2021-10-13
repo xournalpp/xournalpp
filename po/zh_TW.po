@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:50\n"
+"PO-Revision-Date: 2021-10-13 06:42\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -626,15 +626,15 @@ msgstr ""
 
 #: ../src/gui/dialog/AboutDialog.cpp:40
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU 公用授權條款第 2 版或較後版本"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "獲取 xournalpp 版本資訊"
 
 #: ../src/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "全局模板文件不存在，請檢查設定。"
 
 #: ../src/control/LatexController.cpp:64
 msgid "Global template file is not a regular file. Please check your settings. "
