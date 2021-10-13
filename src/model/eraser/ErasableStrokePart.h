@@ -19,14 +19,14 @@
 #include "model/Point.h"
 
 
-class EraseableStrokePart {
+class ErasableStrokePart {
 public:
-    EraseableStrokePart(Point a, Point b);
-    EraseableStrokePart(double width);
-    virtual ~EraseableStrokePart();
+    ErasableStrokePart(Point a, Point b);
+    ErasableStrokePart(double width);
+    virtual ~ErasableStrokePart();
 
 private:
-    EraseableStrokePart(const EraseableStrokePart& part);
+    ErasableStrokePart(const ErasableStrokePart& part);
 
 public:
     void addPoint(Point p);
@@ -37,7 +37,7 @@ public:
     void clearSplitData();
     void splitFor(double halfEraserSize);
 
-    EraseableStrokePart* clone();
+    ErasableStrokePart* clone();
 
     void calcSize();
 
@@ -60,5 +60,5 @@ private:
     double elementWidth = 0;
     double elementHeight = 0;
 
-    friend class EraseableStroke;
+    friend class ErasableStroke;
 };

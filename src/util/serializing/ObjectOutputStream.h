@@ -18,7 +18,7 @@
 
 
 class ObjectEncoding;
-class Serializeable;
+class Serializable;
 
 class ObjectOutputStream {
 public:

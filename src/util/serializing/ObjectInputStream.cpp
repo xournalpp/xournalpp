@@ -1,6 +1,6 @@
 #include "ObjectInputStream.h"
 
-#include "Serializeable.h"
+#include "Serializable.h"
 #include "i18n.h"
 
 using std::string;

@@ -35,7 +35,7 @@ class Element;
 class EditSelectionContents;
 class DeleteUndoAction;
 
-class EditSelection: public ElementContainer, public Serializeable {
+class EditSelection: public ElementContainer, public Serializable {
 public:
     EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPageView* view);
     EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view);

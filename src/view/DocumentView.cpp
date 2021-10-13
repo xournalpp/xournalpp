@@ -4,7 +4,7 @@
 #include "control/tools/EditSelection.h"
 #include "control/tools/Selection.h"
 #include "model/Layer.h"
-#include "model/eraser/EraseableStroke.h"
+#include "model/eraser/ErasableStroke.h"
 
 #include "StrokeView.h"
 #include "TextView.h"

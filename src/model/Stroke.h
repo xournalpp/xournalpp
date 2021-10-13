@@ -18,7 +18,7 @@
 
 enum StrokeTool { STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER };
 
-class EraseableStroke;
+class ErasableStroke;
 
 class Stroke: public AudioElement {
 public:
@@ -97,8 +97,8 @@ public:
 
     bool isInSelection(ShapeContainer* container) override;
 
-    EraseableStroke* getEraseable();
-    void setEraseable(EraseableStroke* eraseable);
+    ErasableStroke* getErasable();
+    void setErasable(ErasableStroke* eraseable);
 
     [[maybe_unused]] void debugPrint();
 
@@ -126,7 +126,7 @@ private:
      */
     LineStyle lineStyle;
 
-    EraseableStroke* eraseable = nullptr;
+    ErasableStroke* eraseable = nullptr;
 
     /**
      * Option to fill the shape:

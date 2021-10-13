@@ -14,10 +14,10 @@
 #include <string>
 #include <vector>
 
-#include "serializing/Serializeable.h"
+#include "serializing/Serializable.h"
 
 
-class LineStyle: public Serializeable {
+class LineStyle: public Serializable {
 public:
     LineStyle();
     LineStyle(const LineStyle& other);

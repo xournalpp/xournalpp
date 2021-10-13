@@ -15,7 +15,7 @@
 
 #include "InputStreamException.h"
 
-class Serializeable;
+class Serializable;
 
 class ObjectInputStream {
 public:

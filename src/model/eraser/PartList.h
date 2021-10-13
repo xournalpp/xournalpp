@@ -17,7 +17,7 @@
 #include <gtk/gtk.h>
 
 
-class EraseableStrokePart;
+class ErasableStrokePart;
 
 class PartList {
 public:
@@ -29,11 +29,11 @@ private:
     void operator=(const PartList& list);
 
 public:
-    void add(EraseableStrokePart* part);
+    void add(ErasableStrokePart* part);
     PartList* clone();
 
 private:
     GList* data = nullptr;
 
-    friend class EraseableStroke;
+    friend class ErasableStroke;
 };
