@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-13 06:42\n"
+"PO-Revision-Date: 2021-10-13 07:55\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -38,7 +38,7 @@ msgstr "\n"
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr " 頁，共{1} 頁"
+msgstr " 頁，共 {1} 頁"
 
 #: ../src/control/settings/Settings.cpp:119
 msgid "%F-Note-%H-%M"
@@ -235,20 +235,20 @@ msgstr "無法打開附件: {1}。錯誤消息: 無法讀取文檔"
 
 #: ../src/control/xojfile/LoadHandler.cpp:796
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "無法開啟附件: {1}. 錯誤訊息：無法寫入文檔"
 
 #: ../src/control/xojfile/LoadHandler.cpp:768
 #: ../src/control/xojfile/LoadHandler.cpp:1019
 #: ../src/control/xojfile/LoadHandler.cpp:1037
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "無法開啟附件: {1}. 錯誤訊息：未提供有效檔案大小"
 
 #: ../src/control/xojfile/LoadHandler.cpp:759
 #: ../src/control/xojfile/LoadHandler.cpp:775
 #: ../src/control/xojfile/LoadHandler.cpp:1010
 #: ../src/control/xojfile/LoadHandler.cpp:1026
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "無法開啟附件: {1}. 錯誤訊息: {2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:159
 msgid "Could not open file: \"{1}\""
@@ -273,7 +273,7 @@ msgstr "未能讀入圖像：{1}。錯誤提示為：{2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:389
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "無法讀取複製背景圖像的頁數: {1}."
 
 #: ../src/undo/UndoRedoHandler.cpp:139
 msgid "Could not redo \"{1}\"\n"
@@ -283,11 +283,11 @@ msgstr "未能重複操作\"{1}\"\n"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "無法移除於 {1} 工具列，位置為 {2} 的工具項目"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:161
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "無法移除於工具列 {2}，位置為 {3} 的工具項目：{1}"
 
 #: ../src/control/Control.cpp:197
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
@@ -299,7 +299,7 @@ msgstr "無法儲存 .tex 檔案： {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "無法啟動 {1}: {2} (退出代碼: {3})"
 
 #: ../src/undo/UndoRedoHandler.cpp:110
 msgid "Could not undo \"{1}\"\n"
@@ -366,11 +366,11 @@ msgstr "刪除層"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Delete this layer"
-msgstr ""
+msgstr "刪除此圖層"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
-msgstr ""
+msgstr "刪除此頁"
 
 #: ../src/control/Control.cpp:2459
 msgid "Discard"
@@ -378,17 +378,19 @@ msgstr "丟棄"
 
 #: ../src/control/XournalMain.cpp:691
 msgid "Display advanced export options"
-msgstr ""
+msgstr "顯示進階輸出選項"
 
 #: ../src/control/Control.cpp:1956
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "請勿開啟自動保存檔案，否則它們可能會被覆寫！\n"
+"請將這些檔案複製到另一個檔案夾。\n"
+"檔案夾 {1} 內的檔案無法開啟。"
 
 #: ../src/control/jobs/BaseExportJob.cpp:41
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "請勿覆寫背景 PDF 檔！這樣可能導致錯誤！"
 
 #: ../src/control/Control.cpp:2453
 msgid "Document file was removed."
@@ -396,7 +398,7 @@ msgstr "文檔已刪除。"
 
 #: ../src/control/xojfile/LoadHandler.cpp:241
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "檔案損毀 (檔案中找不到頁面)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:237
 msgid "Document is not complete (maybe the end is cut off?)"
@@ -421,7 +423,7 @@ msgstr "繪製箭頭"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "繪製橢圓"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -441,13 +443,13 @@ msgstr "繪製矩形"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Draw Spline"
-msgstr ""
+msgstr "繪製樣條"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw coordinate system"
-msgstr ""
+msgstr "繪製坐標系統"
 
 #: ../src/undo/InsertUndoAction.cpp:30
 msgid "Draw stroke"
@@ -455,11 +457,11 @@ msgstr "繪製筆劃"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:117
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "繪製類別 - 不修改"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "繪製類型組合"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -467,11 +469,11 @@ msgstr "編輯文本"
 
 #: ../src/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
-msgstr ""
+msgstr "緊急保存檔案"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:281
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "請先啟用筆觸壓力感測或壓力提示以修改此設定！"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
@@ -512,11 +514,11 @@ msgstr "讀入筆劃粗細出錯：{1}"
 
 #: ../src/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
-msgstr ""
+msgstr "保存圖片錯誤 #1"
 
 #: ../src/control/jobs/ImageExport.cpp:161
 msgid "Error save image #2"
-msgstr ""
+msgstr "保存圖片錯誤 #2"
 
 #: ../src/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
@@ -552,7 +554,9 @@ msgstr "匯出為 PDF 檔"
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "將檔案輸出成圖片檔 (每頁一個)\n"
+"                                 從 IMGFILE 的擴展推測輸出檔格式\n"
+"                                 支援格式：.png, .svg"
 
 #: ../src/control/jobs/BaseExportJob.cpp:18
 msgid "Export PDF"
@@ -564,35 +568,42 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "漸進式輸出圖層\n"
+"                                 在 PDF 檔的輸出中，圖層會被一個個地漸進式處理\n"
+"                                 這將產生 N 張輸出頁面，每頁有 N 個圖層，\n"
+"                                 並且將圖層疊漸進式堆疊。\n"
+"                                 最後輸出的 PDF 檔成品可用於現場簡報。\n"
 
 #: ../src/control/XournalMain.cpp:655
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "無背景輸出\n"
+"                                 取決於所支援的檔案格式，\n"
+"                                 輸出的檔案將會有透明或全白背景。\n"
 
 #: ../src/control/XournalMain.cpp:660
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "無格線輸出\n"
+"                                 輸出的檔案不會有紙張格線\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "無法從 PATH: {1} 中找到 LaTeX 產生格式"
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "無法剖析 LaTeX 產生器指令: {1}"
 
 #: ../src/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "無法讀取全局模板檔案。請檢查設定。"
 
 #: ../src/control/jobs/BaseExportJob.cpp:103
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "解析路徑失敗，錯誤訊息: {1}"
 
 #: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -602,19 +613,19 @@ msgstr "未能打開檔案，請手動操作：\n"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Fill"
-msgstr ""
+msgstr "填色"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:285
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "過濾壓力值輸入。將壓力值乘以壓力乘數。若小於最低值，則採用最低壓力值。"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Fine"
-msgstr ""
+msgstr "細"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "浮動工具箱 (實驗功能)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:62
 msgid "Font"
@@ -622,7 +633,7 @@ msgstr "字型"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
 msgid "Forward"
-msgstr ""
+msgstr "下一頁"
 
 #: ../src/gui/dialog/AboutDialog.cpp:40
 msgid "GNU GPLv2 or later"
@@ -634,11 +645,11 @@ msgstr "獲取 xournalpp 版本資訊"
 
 #: ../src/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
-msgstr "全局模板文件不存在，請檢查設定。"
+msgstr "全局模板檔案不存在，請檢查設定。"
 
 #: ../src/control/LatexController.cpp:64
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "全局模板檔案格式不正確，請檢查設定。 "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Go to first page"
@@ -680,7 +691,7 @@ msgstr "綠色"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
 msgid "Grid Snapping"
-msgstr ""
+msgstr "網格固定"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
@@ -711,11 +722,11 @@ msgstr "圖片"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "於目前圖層下方加入複製圖層"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "於目前頁面下方加入複製頁面"
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
@@ -739,11 +750,11 @@ msgstr "插入頁面"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "等距點陣"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Isometric Graph"
-msgstr ""
+msgstr "等距圖表"
 
 #: ../src/control/XournalMain.cpp:635
 msgid "Jump to Page (first Page: 1)"
@@ -751,7 +762,7 @@ msgstr "跳到頁面(第一頁:1)"
 
 #: ../src/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "LaTeX 產生遇到錯誤: {1} (退出代碼: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:250
 msgid "Layer"
@@ -759,7 +770,7 @@ msgstr "圖層"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
-msgstr ""
+msgstr "圖層組合"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layer Preview"
@@ -771,7 +782,7 @@ msgstr "{1}圖層"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "圖層疊預覽"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
@@ -796,7 +807,7 @@ msgstr "品紅"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Manage Toolbars"
-msgstr ""
+msgstr "管理工具列"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Medium"
@@ -807,7 +818,10 @@ msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
 "Path: {2}"
-msgstr ""
+msgstr "所需使用者界面檔案遺失:\n"
+"{1}\n"
+".app 是否損毀?\n"
+"檔案路徑: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:16
 msgid "Move"
@@ -815,7 +829,7 @@ msgstr "移動"
 
 #: ../src/undo/MoveLayerUndoAction.cpp:27
 msgid "Move layer"
-msgstr ""
+msgstr "移動圖層"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page downwards"
