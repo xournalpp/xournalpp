@@ -24,8 +24,10 @@
 #include "gui/XournalView.h"
 #include "gui/widgets/XournalWidget.h"
 #include "model/Font.h"
+#include "model/SplineSegment.h"
 #include "model/StrokeStyle.h"
 #include "model/Text.h"
+#include "undo/InsertUndoAction.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
 #include "util/safe_casts.h"
@@ -101,6 +103,56 @@ static int applib_saveAs(lua_State* L) {
     // Destroy the dialog and free memory
     g_object_unref(native);
 
+    return args_returned;
+}
+
+/**
+ * Create a 'Open File' native dialog and return as a string
+ * the filepath the user chose to open.
+ *
+ * Examples:
+ *   path = app.getFilePath()
+ *   path = app.getFilePath({'*.bmp', '*.png'})
+ */
+static int applib_getFilePath(lua_State* L) {
+    GtkFileChooserNative* native =
+            gtk_file_chooser_native_new(_("Open file"), nullptr, GTK_FILE_CHOOSER_ACTION_OPEN, nullptr, nullptr);
+    gint res;
+    int args_returned = 0;  // change to 1 if user chooses file
+    char* filename;
+
+    // Get vector of supported formats from Lua stack
+    std::vector<std::string> formats;
+    // stack now contains: -1 => table
+    lua_pushnil(L);
+    // stack now contains: -1 => nil; -2 => table
+    while (lua_next(L, -2)) {
+        // stack now contains: -1 => value; -2 => key; -3 => table
+        const char* value = lua_tostring(L, -1);
+        formats.push_back(value);
+        lua_pop(L, 1);
+        // stack now contains: -1 => key; -2 => table
+    }
+    // stack now contains: -1 => table
+    lua_pop(L, 1);  // Stack is now the same as it was on entry to this function
+    if (formats.size() > 0) {
+        GtkFileFilter* filterSupported = gtk_file_filter_new();
+        gtk_file_filter_set_name(filterSupported, _("Supported files"));
+        for (std::string format: formats) gtk_file_filter_add_pattern(filterSupported, format.c_str());
+        gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(native), filterSupported);
+    }
+
+    // Wait until user responds to dialog
+    res = gtk_native_dialog_run(GTK_NATIVE_DIALOG(native));
+    // Return the filename chosen to lua
+    if (res == GTK_RESPONSE_ACCEPT) {
+        filename = static_cast<char*>(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(native)));
+        lua_pushlstring(L, filename, strlen(filename));
+        g_free(static_cast<gchar*>(filename));
+        args_returned = 1;
+    }
+    // Destroy the dialog and free memory
+    g_object_unref(native);
     return args_returned;
 }
 
@@ -202,7 +254,7 @@ static int applib_registerUi(lua_State* L) {
 /**
  * Execute an UI action (usually internally called from Toolbar / Menu)
  * The argument consists of a Lua table with 3 keys: "action", "group" and "enabled"
- * The key "group" is currently only used for debugging purpose and can savely be omitted.
+ * The key "group" is currently only used for debugging purpose and can safely be omitted.
  * The key "enabled" is true by default.
  *
  * Example 1: app.uiAction({["action"] = "ACTION_PASTE"})
@@ -326,6 +378,429 @@ static int applib_layerAction(lua_State* L) {
     ctrl->getLayerController()->actionPerformed(action);
 
     return 1;
+}
+
+/**
+ * Helper function for addStroke API. Parses pen settings from API call, taking
+ * in a Stroke and a chosen Layer, sets the pen settings, and applies the stroke.
+ */
+static void addStrokeHelper(lua_State* L, Stroke* stroke) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* ctrl = plugin->getControl();
+    PageRef const& page = ctrl->getCurrentPage();
+    Layer* layer = page->getSelectedLayer();
+
+    std::string size;
+    double thickness;
+    int fillOpacity;
+    bool filled;
+    Color color;
+    std::string lineStyle;
+    ToolHandler* toolHandler;
+    const char* tool;
+    std::string allowUndoRedoAction;
+
+    // Get attributes.
+    lua_getfield(L, -1, "tool");
+    lua_getfield(L, -2, "width");
+    lua_getfield(L, -3, "color");
+    lua_getfield(L, -4, "fill");
+    lua_getfield(L, -5, "lineStyle");
+
+    tool = luaL_optstring(L, -5, "");  // We're gonna need the tool type.
+
+    toolHandler = ctrl->getToolHandler();
+
+    // TODO: (willnilges) Handle DrawingType?
+    // TODO: (willnilges) Break out Eraser functionality into a new API call.
+
+    // Set tool type
+    if (strcmp("highlighter", tool) == 0) {
+        stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
+
+        size = toolSizeToString(toolHandler->getHighlighterSize());
+        thickness = toolHandler->getToolThickness(TOOL_HIGHLIGHTER)[toolSizeFromString(size)];
+
+        fillOpacity = toolHandler->getHighlighterFill();
+        filled = toolHandler->getHighlighterFillEnabled();
+
+        Tool& tool = toolHandler->getTool(TOOL_HIGHLIGHTER);
+        color = tool.getColor();
+    } else {
+        if (!(strcmp("pen", tool) == 0))
+            g_warning("%s", FC(_F("Unknown stroke type: \"{1}\", defaulting to pen") % tool));
+
+        stroke->setToolType(STROKE_TOOL_PEN);
+
+        size = toolSizeToString(toolHandler->getPenSize());
+        thickness = toolHandler->getToolThickness(TOOL_PEN)[toolSizeFromString(size)];
+
+        fillOpacity = toolHandler->getPenFill();
+        filled = toolHandler->getPenFillEnabled();
+
+        Tool& tool = toolHandler->getTool(TOOL_PEN);
+        color = tool.getColor();
+        lineStyle = StrokeStyle::formatStyle(tool.getLineStyle());
+    }
+
+    // Set width
+    if (lua_isnumber(L, -4))  // Check if the width was provided
+        stroke->setWidth(lua_tonumber(L, -4));
+    else
+        stroke->setWidth(thickness);
+
+    // Set color
+    if (lua_isinteger(L, -3))  // Check if the color was provided
+        stroke->setColor(Color(lua_tointeger(L, -3)));
+    else
+        stroke->setColor(color);
+
+    // Set fill
+    if (lua_isinteger(L, -2))  // Check if fill settings were provided
+        stroke->setFill(lua_tointeger(L, -2));
+    else if (filled)
+        stroke->setFill(fillOpacity);
+    else
+        stroke->setFill(-1);  // No fill
+
+    // Set line style
+    if (lua_isstring(L, -1))  // Check if line style settings were provided
+        stroke->setLineStyle(StrokeStyle::parseStyle(lua_tostring(L, -1)));
+    else
+        stroke->setLineStyle(StrokeStyle::parseStyle(lineStyle.data()));
+
+    lua_pop(L, 5);  // Finally done with all that Lua data.
+
+    // Add the stroke
+    layer->addElement(stroke);
+    return;
+}
+
+/**
+ * Given a table containing a series of splines, draws a batch of strokes on the canvas.
+ * Expects a table of tables containing eight coordinate pairs, along with attributes of the stroke.
+ *
+ * Required Arguments: splines
+ * Optional Arguments: pressure, tool, width, color, fill, lineStyle
+ *
+ * If optional arguments are not provided, the specified tool settings are used.
+ * If the tool is not provided, the current pen settings are used.
+ * The only tools supported are Pen and Highlighter.
+ *
+ * The function expects 8 points per spline segment. Due to the nature of cubic
+ * splines, you must pass your points in a repeating pattern:
+ * startX, startY, ctrl1X, ctrl1Y, ctrl2X, ctrl2Y, endX, endY, startX, startY, ...
+ *
+ * The function checks that the length of the coordinate table is divisible by eight, and will throw
+ * an error if it is not.
+ *
+ * Example: app.addSplines({
+ *            ["splines"] = { -- The outer table is a table of strokes
+ *                ["coordinates"] = { -- Each inner table is a coord stream that represents SplineSegments that can be
+ * assembled into a stroke
+ *                  [1] = 880.0, // Every eight coordinates (4 pairs) is a SplineSegment
+ *                  [2] = 874.0,
+ *                  [3] = 881.3295,
+ *                  [4] = 851.5736,
+ *                  [5] = 877.2915,
+ *                  [6] = 828.2946,
+ *                  [7] = 875.1697,
+ *                  [8] = 806.0,
+ *                  ... -- A spline can be made up of as many SplineSegments as is necessary.
+ *                },
+ *                -- Tool options are also specified per-stroke
+ *                ["width"] = 1.4,
+ *                ["color"] = 0xff0000,
+ *                ["fill"] = 0,
+ *                ["tool"] = "pen",
+ *                ["lineStyle"] = "plain"
+ *            },
+ *            ["allowUndoRedoAction"] = "grouped", -- Each batch of splines can be grouped into one undo/redo action (or
+ * "individual" or "none")
+ *        })
+ */
+
+static int applib_addSplines(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* ctrl = plugin->getControl();
+    std::vector<Element*> strokes;
+    const char* allowUndoRedoAction;
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TTABLE);
+
+    lua_getfield(L, 1, "splines");
+    if (!lua_istable(L, -1))
+        luaL_error(L, "Missing spline table!");
+
+    size_t numSplines = lua_rawlen(L, -1);
+    for (size_t a = 1; a <= numSplines; a++) {
+        std::vector<double> coordStream;
+        Stroke* stroke = new Stroke();
+        // Get coordinates
+        lua_pushnumber(L, a);
+        lua_gettable(L, -2);
+        lua_getfield(L, -1, "coordinates");
+        if (!lua_istable(L, -1))
+            luaL_error(L, "Missing coordinate table!");
+        size_t numCoords = lua_rawlen(L, -1);
+        for (size_t b = 1; b <= numCoords; b++) {
+            lua_pushnumber(L, b);
+            lua_gettable(L, -2);
+            double point = lua_tonumber(L, -1);
+            coordStream.push_back(point);  // Each segment is going to have multiples of 8 points.
+            lua_pop(L, 1);
+        }
+        // pop value + copy of key, leaving original key
+        lua_pop(L, 1);
+        // Handle those points
+        // Check if the list is divisible by 8.
+        if (coordStream.size() % 8 != 0)
+            luaL_error(L, "Point table incomplete!");
+
+        // Now take that gigantic list of splines and create SplineSegments out of them.
+        long unsigned int i = 0;
+        while (i < coordStream.size()) {
+            // start, ctrl1, ctrl2, end
+            Point start = Point(coordStream.at(i), coordStream.at(i + 1), Point::NO_PRESSURE);
+            Point ctrl1 = Point(coordStream.at(i + 2), coordStream.at(i + 3), Point::NO_PRESSURE);
+            Point ctrl2 = Point(coordStream.at(i + 4), coordStream.at(i + 5), Point::NO_PRESSURE);
+            Point end = Point(coordStream.at(i + 6), coordStream.at(i + 7), Point::NO_PRESSURE);
+            i += 8;
+            SplineSegment segment = SplineSegment(start, ctrl1, ctrl2, end);
+            std::list<Point> raster = segment.toPointSequence();
+            for (Point point: raster) stroke->addPoint(point);
+            // TODO: (willnilges) Is there a way we can get Pressure with Splines?
+        }
+
+        if (stroke->getPointCount() >= 2) {
+            // Finish building the Stroke and apply it to the layer.
+            addStrokeHelper(L, stroke);
+            strokes.push_back(stroke);
+        } else
+            g_warning("Stroke shorter than two points. Discarding. (Has %d)", stroke->getPointCount());
+        // Onto the next stroke
+        lua_pop(L, 1);
+    }
+
+    lua_pop(L, 1);  // Stack is now the same as it was on entry to this function
+
+    // Check how the user wants to handle undoing
+    lua_getfield(L, 1, "allowUndoRedoAction");
+    allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
+    if (strcmp("grouped", allowUndoRedoAction) == 0) {
+        PageRef const& page = ctrl->getCurrentPage();
+        Layer* layer = page->getSelectedLayer();
+        UndoRedoHandler* undo = ctrl->getUndoRedoHandler();
+        undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, strokes));
+    } else if (strcmp("individual", allowUndoRedoAction) == 0) {
+        PageRef const& page = ctrl->getCurrentPage();
+        Layer* layer = page->getSelectedLayer();
+        UndoRedoHandler* undo = ctrl->getUndoRedoHandler();
+        for (Element* element: strokes) undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
+    } else if (strcmp("none", allowUndoRedoAction) == 0)
+        g_warning("Not allowing undo/redo action.");
+    else
+        g_warning("Unrecognized undo/redo option: %s", allowUndoRedoAction);
+    lua_pop(L, 1);
+    return 0;
+}
+
+/**
+ * Given a table of sets of points, draws a batch of strokes on the canvas.
+ * Expects three tables of equal length: one for X, one for Y, and one for
+ * stroke pressure, along with attributes of the stroke. Each stroke has
+ * attributes handled individually.
+ *
+ * Required Arguments: X, Y
+ * Optional Arguments: pressure, tool, width, color, fill, lineStyle
+ *
+ * If optional arguments are not provided, the specified tool settings are used.
+ * If the tool is not provided, the current pen settings are used.
+ * The only tools supported are Pen and Highlighter.
+ *
+ * The function checks for consistency among table lengths, and throws an
+ * error if there is a discrepancy
+ *
+ * Example:
+ *
+ * app.addStrokes({
+ *     ["strokes"] = { -- The outer table is a table of strokes
+ *         {   -- Inside a stroke are three tables of equivalent length that represent a series of points
+ *             ["x"]        = { [1] = 110.0, [2] = 120.0, [3] = 130.0, ... },
+ *             ["y"]        = { [1] = 200.0, [2] = 205.0, [3] = 210.0, ... },
+ *             ["pressure"] = { [1] = 0.8,   [2] = 0.9,   [3] = 1.1, ... },
+ *             -- Each stroke has individually handled options
+ *             ["tool"] = "pen",
+ *             ["width"] = 3.8,
+ *             ["color"] = 0xa000f0,
+ *             ["fill"] = 0,
+ *             ["lineStyle"] = "solid",
+ *         },
+ *         {
+ *             ["x"]        = { [1] = 310.0, [2] = 320.0, [3] = 330.0, ... },
+ *             ["y"]        = { [1] = 300.0, [2] = 305.0, [3] = 310.0, ... },
+ *             ["pressure"] = { [1] = 3.0,   [2] = 3.0,   [3] = 3.0, ... },
+ *             ["tool"] = "pen",
+ *             ["width"] = 1.21,
+ *             ["color"] = 0x808000,
+ *             ["fill"] = 0,
+ *             ["lineStyle"] = "solid",
+ *         },
+ *         {
+ *             ["x"]        = { [1] = 27.0,  [2] = 28.0,  [3] = 30.0, ... },
+ *             ["y"]        = { [1] = 100.0, [2] = 102.3, [3] = 102.5, ... },
+ *             ["pressure"] = { [1] = 1.0,   [2] = 1.0,   [3] = 1.0, ... },
+ *             ["tool"] = "pen",
+ *             ["width"] = 1.0,
+ *             ["color"] = 0x00aaaa,
+ *             ["fill"] = 0,
+ *             ["lineStyle"] = "dashdot",
+ *         },
+ *     },
+ *     ["allowUndoRedoAction"] = "grouped", -- Each batch of strokes can be grouped into one undo/redo action (or
+ * "individual" or "none")
+ * })
+ */
+static int applib_addStrokes(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* ctrl = plugin->getControl();
+    std::vector<Element*> strokes;
+    const char* allowUndoRedoAction;
+
+    // Discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TTABLE);
+
+    lua_getfield(L, 1, "strokes");
+    if (!lua_istable(L, -1))
+        luaL_error(L, "Missing stroke table!");
+    size_t numStrokes = lua_rawlen(L, -1);
+    for (size_t a = 1; a <= numStrokes; a++) {
+        std::vector<double> xStream;
+        std::vector<double> yStream;
+        std::vector<double> pressureStream;
+        Stroke* stroke = new Stroke();
+
+        // Fetch table of X values from the Lua stack
+        lua_pushnumber(L, a);
+        lua_gettable(L, -2);
+
+        lua_getfield(L, -1, "x");
+        if (!lua_istable(L, -1))
+            luaL_error(L, "Missing X-Coordinate table!");
+        size_t xPoints = lua_rawlen(L, -1);
+        for (size_t b = 1; b <= xPoints; b++) {
+            lua_pushnumber(L, b);
+            lua_gettable(L, -2);
+            double value = lua_tonumber(L, -1);
+            xStream.push_back(value);
+            lua_pop(L, 1);
+        }
+        lua_pop(L, 1);
+
+        // Fetch table of Y values form the Lua stack
+        lua_getfield(L, -1, "y");
+        if (!lua_istable(L, -1))
+            luaL_error(L, "Missing Y-Coordinate table!");
+        size_t yPoints = lua_rawlen(L, -1);
+        for (size_t b = 1; b <= yPoints; b++) {
+            lua_pushnumber(L, b);
+            lua_gettable(L, -2);
+            double value = lua_tonumber(L, -1);
+            yStream.push_back(value);
+            lua_pop(L, 1);
+        }
+        lua_pop(L, 1);
+
+        // Fetch table of pressure values from the Lua stack
+        lua_getfield(L, -1, "pressure");
+        if (lua_istable(L, -1)) {
+            size_t pressurePoints = lua_rawlen(L, -1);
+            for (size_t b = 1; b <= pressurePoints; b++) {
+                lua_pushnumber(L, b);
+                lua_gettable(L, -2);
+                double value = lua_tonumber(L, -1);
+                pressureStream.push_back(value);
+                lua_pop(L, 1);
+            }
+        } else
+            g_warning("Missing pressure table. Assuming NO_PRESSURE.");
+
+        lua_pop(L, 1);
+
+        // Handle those points
+        // Make sure all vectors are the same length.
+        if (xStream.size() != yStream.size()) {
+            luaL_error(L, "X and Y vectors are not equal length!");
+        }
+        if (xStream.size() != pressureStream.size() && pressureStream.size() > 0)
+            luaL_error(L, "Pressure vector is not equal length!");
+
+        // Check and make sure there's enough points (need at least 2)
+        if (xStream.size() < 2) {
+            g_warning("Stroke shorter than two points. Discarding. (Has %ld/2)", xStream.size());
+            return 1;
+        }
+        // Add points to the stroke. Include pressure, if it exists.
+        if (pressureStream.size() > 0) {
+            for (long unsigned int i = 0; i < xStream.size(); i++) {
+                Point myPoint = Point(xStream.at(i), yStream.at(i), pressureStream.at(i));
+                stroke->addPoint(myPoint);
+            }
+        } else {
+            for (long unsigned int i = 0; i < xStream.size(); i++) {
+                Point myPoint = Point(xStream.at(i), yStream.at(i), Point::NO_PRESSURE);
+                stroke->addPoint(myPoint);
+            }
+        }
+
+        // Finish building the Stroke and apply it to the layer.
+        addStrokeHelper(L, stroke);
+        strokes.push_back(stroke);
+        // Onto the next stroke
+        lua_pop(L, 1);
+    }
+
+    // Check how the user wants to handle undoing
+    lua_getfield(L, 1, "allowUndoRedoAction");
+    allowUndoRedoAction = luaL_optstring(L, -1, "grouped");
+    if (strcmp("grouped", allowUndoRedoAction) == 0) {
+        PageRef const& page = ctrl->getCurrentPage();
+        Layer* layer = page->getSelectedLayer();
+        UndoRedoHandler* undo = ctrl->getUndoRedoHandler();
+        undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, strokes));
+    } else if (strcmp("individual", allowUndoRedoAction) == 0) {
+        PageRef const& page = ctrl->getCurrentPage();
+        Layer* layer = page->getSelectedLayer();
+        UndoRedoHandler* undo = ctrl->getUndoRedoHandler();
+        for (Element* element: strokes) undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, element));
+    } else if (strcmp("none", allowUndoRedoAction) == 0)
+        g_warning("Not allowing undo/redo action.");
+    else
+        g_warning("Unrecognized undo/redo option: %s", allowUndoRedoAction);
+
+    lua_pop(L, 1);  // Stack is now the same as it was on entry to this function
+
+    return 0;
+}
+
+/**
+ * Notifies program of any updates to the working document caused
+ * by the API.
+ *
+ * Example: app.refreshPage()
+ */
+static int applib_refreshPage(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* ctrl = plugin->getControl();
+    PageRef const& page = ctrl->getCurrentPage();
+    if (page)
+        page->firePageChanged();
+    else
+        g_warning("Called applib_refreshPage, but there is no current page.");
+    return 0;
 }
 
 /**
@@ -1257,6 +1732,10 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"scaleTextElements", applib_scaleTextElements},
                                   {"getDisplayDpi", applib_getDisplayDpi},
                                   {"export", applib_export},
+                                  {"addStrokes", applib_addStrokes},
+                                  {"addSplines", applib_addSplines},
+                                  {"getFilePath", applib_getFilePath},
+                                  {"refreshPage", applib_refreshPage},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
 
