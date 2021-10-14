@@ -336,6 +336,7 @@ void EditSelection::addElement(Element* e, Layer::ElementIndex order) {
  * Returns all containing elements of this selection
  */
 auto EditSelection::getElements() -> vector<Element*>* { return this->contents->getElements(); }
+auto EditSelection::getElements() const -> const vector<Element*>* { return this->contents->getElements(); }
 
 /**
  * Returns the insert order of this selection
