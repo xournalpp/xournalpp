@@ -75,6 +75,7 @@ void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, La
  * Returns all containing elements of this selection
  */
 auto EditSelectionContents::getElements() -> vector<Element*>* { return &this->selected; }
+auto EditSelectionContents::getElements() const -> const vector<Element*>* { return &this->selected; }
 
 /**
  * Returns the insert order of this selection
