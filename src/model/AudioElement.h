@@ -37,8 +37,8 @@ public:
     virtual bool intersects(double x, double y, double halfSize, double* gap) = 0;
 
 protected:
-    void serializeAudioElement(ObjectOutputStream& out);
-    void readSerializedAudioElement(ObjectInputStream& in);
+    void serialize(ObjectOutputStream& out) const override;
+    void readSerialized(ObjectInputStream& in) override;
 
     void cloneAudioData(const AudioElement* other);
 

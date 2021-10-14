@@ -549,7 +549,7 @@ auto EditSelectionContents::copySelection(PageRef page, XojPageView* view, doubl
     return new InsertsUndoAction(page, layer, new_elems);
 }
 
-void EditSelectionContents::serialize(ObjectOutputStream& out) {
+void EditSelectionContents::serialize(ObjectOutputStream& out) const {
     out.writeObject("EditSelectionContents");
 
     out.writeDouble(this->originalBounds.x);
