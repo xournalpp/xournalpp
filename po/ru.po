@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:50\n"
+"PO-Revision-Date: 2021-10-14 17:46\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2968,11 +2968,11 @@ msgstr "Показывать панель меню при старте"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Показать боковую панель"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Показать панель инструментов"
 
 #: ../ui/settings.glade:3277
 msgid "Show sidebar on the right side"
@@ -2999,7 +2999,7 @@ msgstr "Привязка"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Исходный код / Отслеживание ошибок"
 
 #: ../ui/settings.glade:3842
 msgid "Speed for Ctrl + Scroll"
@@ -3148,7 +3148,7 @@ msgstr "Вид"
 
 #: ../ui/about.glade:328
 msgid "Website"
-msgstr ""
+msgstr "Сайт"
 
 #: ../ui/settings.glade:3451
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
