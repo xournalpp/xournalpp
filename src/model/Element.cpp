@@ -122,9 +122,9 @@ auto Element::rescaleWithMirror() -> bool { return false; }
 void Element::serialize(ObjectOutputStream& out) const {
     out.writeObject("Element");
 
-    out.writeDouble(this->x);
-    out.writeDouble(this->y);
-    out.writeInt(int(this->color));
+    out.write(this->x);
+    out.write(this->y);
+    out.write(int(this->color));
 
     out.endObject();
 }

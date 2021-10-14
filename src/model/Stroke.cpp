@@ -74,13 +74,13 @@ void Stroke::serialize(ObjectOutputStream& out) const {
 
     this->AudioElement::serialize(out);
 
-    out.writeDouble(this->width);
+    out.write(this->width);
 
-    out.writeInt(this->toolType);
+    out.write(this->toolType);
 
-    out.writeInt(fill);
+    out.write(fill);
 
-    out.writeData(this->points.data(), this->points.size(), sizeof(Point));
+    out.write(this->points.data(), this->points.size(), sizeof(Point));
 
     this->lineStyle.serialize(out);
 

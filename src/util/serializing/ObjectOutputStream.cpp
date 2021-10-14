@@ -7,7 +7,7 @@ ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder) {
     g_assert(encoder != nullptr);
     this->encoder = encoder;
 
-    writeString(XML_VERSION_STR);
+    write(XML_VERSION_STR);
 }
 
 ObjectOutputStream::~ObjectOutputStream() {
@@ -18,36 +18,36 @@ ObjectOutputStream::~ObjectOutputStream() {
 void ObjectOutputStream::writeObject(const char* name) {
     this->encoder->addStr("_{");
 
-    writeString(name);
+    write(name);
 }
 
 void ObjectOutputStream::endObject() { this->encoder->addStr("_}"); }
 
-void ObjectOutputStream::writeInt(int i) {
+void ObjectOutputStream::write(int i) {
     this->encoder->addStr("_i");
     this->encoder->addData(&i, sizeof(int));
 }
 
-void ObjectOutputStream::writeDouble(double d) {
+void ObjectOutputStream::write(double d) {
     this->encoder->addStr("_d");
     this->encoder->addData(&d, sizeof(double));
 }
 
-void ObjectOutputStream::writeSizeT(size_t st) {
+void ObjectOutputStream::write(size_t st) {
     this->encoder->addStr("_l");
     this->encoder->addData(&st, sizeof(size_t));
 }
 
-void ObjectOutputStream::writeString(const char* str) { writeString(std::string(str)); }
+void ObjectOutputStream::write(const char* s) { this->write(std::string(s)); }
 
-void ObjectOutputStream::writeString(const std::string& s) {
+void ObjectOutputStream::write(const std::string& s) {
     this->encoder->addStr("_s");
     int len = s.length();
     this->encoder->addData(&len, sizeof(int));
     this->encoder->addData(s.c_str(), len);
 }
 
-void ObjectOutputStream::writeData(const void* data, int len, int width) {
+void ObjectOutputStream::write(const void* data, int len, int width) {
     this->encoder->addStr("_b");
     this->encoder->addData(&len, sizeof(int));
 
@@ -63,7 +63,7 @@ static auto cairoWriteFunction(GString* string, const unsigned char* data, unsig
     return CAIRO_STATUS_SUCCESS;
 }
 
-void ObjectOutputStream::writeImage(cairo_surface_t* img) {
+void ObjectOutputStream::write(cairo_surface_t* img) {
     GString* imgStr = g_string_sized_new(102400);
 
     cairo_surface_write_to_png_stream(img, reinterpret_cast<cairo_write_func_t>(&cairoWriteFunction), imgStr);

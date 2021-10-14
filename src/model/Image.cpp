@@ -106,10 +106,10 @@ void Image::serialize(ObjectOutputStream& out) const {
 
     this->Element::serialize(out);
 
-    out.writeDouble(this->width);
-    out.writeDouble(this->height);
+    out.write(this->width);
+    out.write(this->height);
 
-    out.writeImage(this->image);
+    out.write(this->image);
 
     out.endObject();
 }

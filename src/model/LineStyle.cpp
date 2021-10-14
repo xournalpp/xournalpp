@@ -29,7 +29,7 @@ void LineStyle::operator=(const LineStyle& other) {
 void LineStyle::serialize(ObjectOutputStream& out) const {
     out.writeObject("LineStyle");
 
-    out.writeData(this->dashes, this->dashCount, sizeof(double));
+    out.write(this->dashes, this->dashCount, sizeof(double));
 
     out.endObject();
 }

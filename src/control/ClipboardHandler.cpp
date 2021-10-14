@@ -131,7 +131,7 @@ auto ClipboardHandler::copy() -> bool {
 
     ObjectOutputStream out(new BinObjectEncoding());
 
-    out.writeString(PROJECT_STRING);
+    out.write(PROJECT_STRING);
 
     this->selection->serialize(out);
 

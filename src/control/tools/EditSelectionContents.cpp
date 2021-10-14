@@ -552,18 +552,18 @@ auto EditSelectionContents::copySelection(PageRef page, XojPageView* view, doubl
 void EditSelectionContents::serialize(ObjectOutputStream& out) const {
     out.writeObject("EditSelectionContents");
 
-    out.writeDouble(this->originalBounds.x);
-    out.writeDouble(this->originalBounds.y);
-    out.writeDouble(this->originalBounds.width);
-    out.writeDouble(this->originalBounds.height);
+    out.write(this->originalBounds.x);
+    out.write(this->originalBounds.y);
+    out.write(this->originalBounds.width);
+    out.write(this->originalBounds.height);
 
-    out.writeDouble(this->lastSnappedBounds.x);
-    out.writeDouble(this->lastSnappedBounds.y);
-    out.writeDouble(this->lastSnappedBounds.width);
-    out.writeDouble(this->lastSnappedBounds.height);
+    out.write(this->lastSnappedBounds.x);
+    out.write(this->lastSnappedBounds.y);
+    out.write(this->lastSnappedBounds.width);
+    out.write(this->lastSnappedBounds.height);
 
-    out.writeDouble(this->relativeX);
-    out.writeDouble(this->relativeY);
+    out.write(this->relativeX);
+    out.write(this->relativeY);
 
     out.endObject();
 }

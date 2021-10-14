@@ -110,7 +110,7 @@ void Text::serialize(ObjectOutputStream& out) const {
 
     this->AudioElement::serialize(out);
 
-    out.writeString(this->text);
+    out.write(this->text);
 
     font.serialize(out);
 

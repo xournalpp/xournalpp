@@ -29,14 +29,14 @@ public:
     void writeObject(const char* name);
     void endObject();
 
-    void writeInt(int i);
-    void writeDouble(double d);
-    void writeSizeT(size_t st);
-    void writeString(const char* str);
-    void writeString(const std::string& s);
+    void write(int i);
+    void write(double d);
+    void write(size_t st);
+    void write(const char* str);
+    void write(const std::string& s);
 
-    void writeData(const void* data, int len, int width);
-    void writeImage(cairo_surface_t* img);
+    void write(const void* data, int len, int width);
+    void write(cairo_surface_t* img);
 
     GString* getStr();
 

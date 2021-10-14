@@ -1043,20 +1043,20 @@ auto EditSelection::getView() -> XojPageView* { return this->view; }
 void EditSelection::serialize(ObjectOutputStream& out) const {
     out.writeObject("EditSelection");
 
-    out.writeDouble(this->x);
-    out.writeDouble(this->y);
-    out.writeDouble(this->width);
-    out.writeDouble(this->height);
+    out.write(this->x);
+    out.write(this->y);
+    out.write(this->width);
+    out.write(this->height);
 
-    out.writeDouble(this->snappedBounds.x);
-    out.writeDouble(this->snappedBounds.y);
-    out.writeDouble(this->snappedBounds.width);
-    out.writeDouble(this->snappedBounds.height);
+    out.write(this->snappedBounds.x);
+    out.write(this->snappedBounds.y);
+    out.write(this->snappedBounds.width);
+    out.write(this->snappedBounds.height);
 
     this->contents->serialize(out);
     out.endObject();
 
-    out.writeInt(static_cast<int>(this->getElements()->size()));
+    out.write(static_cast<int>(this->getElements()->size()));
     for (Element* e: *this->getElements()) { e->serialize(out); }
 }
 

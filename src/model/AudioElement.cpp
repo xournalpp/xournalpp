@@ -19,8 +19,8 @@ void AudioElement::serialize(ObjectOutputStream& out) const {
 
     this->Element::serialize(out);
 
-    out.writeString(this->audioFilename);
-    out.writeSizeT(this->timestamp);
+    out.write(this->audioFilename);
+    out.write(this->timestamp);
 
     out.endObject();
 }

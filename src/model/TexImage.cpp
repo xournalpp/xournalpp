@@ -126,11 +126,11 @@ void TexImage::serialize(ObjectOutputStream& out) const {
 
     this->Element::serialize(out);
 
-    out.writeDouble(this->width);
-    out.writeDouble(this->height);
-    out.writeString(this->text);
+    out.write(this->width);
+    out.write(this->height);
+    out.write(this->text);
 
-    out.writeData(this->binaryData.c_str(), this->binaryData.length(), 1);
+    out.write(this->binaryData.c_str(), this->binaryData.length(), 1);
 
     out.endObject();
 }
