@@ -139,7 +139,6 @@ install (TARGETS xournalpp
   COMPONENT xournalpp
 )
 
-if (ENABLE_CPPUNIT)
-  add_subdirectory (${CMAKE_SOURCE_DIR}/test ${CMAKE_BINARY_DIR}/test)
-endif (ENABLE_CPPUNIT)
-
+if (ENABLE_GTEST)
+  add_subdirectory (${CMAKE_SOURCE_DIR}/gtest ${CMAKE_BINARY_DIR}/gtest)
+endif (ENABLE_GTEST)

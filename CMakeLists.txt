@@ -83,6 +83,7 @@ if(X11_FOUND AND X11_Xi_FOUND)
 	add_includes_ldflags ("${X11_Xi_LIB}" "${X11_Xi_INCLUDE_PATH}")
 endif()
 
+
 # libexec
 if (WIN32)
 	set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "-mwindows")
@@ -140,13 +141,21 @@ pkg_check_modules(SNDFILE REQUIRED "sndfile >= 1.0.25")
 add_includes_ldflags ("${SNDFILE_LDFLAGS}" "${SNDFILE_INCLUDE_DIRS}")
 
 ## Additional features ##
-
-# CppUnit
-option (ENABLE_CPPUNIT "Build CppUnit test instead of xournalpp application" OFF)
-if (ENABLE_CPPUNIT)
-	pkg_check_modules(CppUnit REQUIRED "cppunit >= 1.12-0")
+# Testing Framework: gtest
+option (ENABLE_GTEST "Build gtest instead of xournalpp application" OFF)
+if (ENABLE_GTEST)
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+    )
+	# Prevent reloading if already downloaed
+	set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+    # For Windows: Prevent overriding the parent project's compiler/linker settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
 	enable_testing()
-endif (ENABLE_CPPUNIT)
+endif (ENABLE_GTEST)
 
 # Plugins / scripting
 find_package (Lua 5.3 EXACT)
@@ -327,7 +336,8 @@ add_custom_target(uninstall
 message("
 Configuration:
 	Compiler:                   ${CMAKE_CXX_COMPILER}
-	CppUnit enabled:            ${ENABLE_CPPUNIT}
+	GTEST: enabled:             ${ENABLE_GTEST}
+	GCOV enabled:               ${DEV_ENABLE_GCOV}
 	Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
 ")
 
