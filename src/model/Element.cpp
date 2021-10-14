@@ -119,7 +119,7 @@ auto Element::isInSelection(ShapeContainer* container) -> bool {
 auto Element::rescaleOnlyAspectRatio() -> bool { return false; }
 auto Element::rescaleWithMirror() -> bool { return false; }
 
-void Element::serializeElement(ObjectOutputStream& out) const {
+void Element::serialize(ObjectOutputStream& out) const {
     out.writeObject("Element");
 
     out.writeDouble(this->x);
@@ -129,7 +129,7 @@ void Element::serializeElement(ObjectOutputStream& out) const {
     out.endObject();
 }
 
-void Element::readSerializedElement(ObjectInputStream& in) {
+void Element::readSerialized(ObjectInputStream& in) {
     in.readObject("Element");
 
     this->x = in.readDouble();

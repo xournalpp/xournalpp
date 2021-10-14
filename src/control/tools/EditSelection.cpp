@@ -1040,7 +1040,7 @@ void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom)
 
 auto EditSelection::getView() -> XojPageView* { return this->view; }
 
-void EditSelection::serialize(ObjectOutputStream& out) {
+void EditSelection::serialize(ObjectOutputStream& out) const {
     out.writeObject("EditSelection");
 
     out.writeDouble(this->x);

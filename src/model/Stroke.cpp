@@ -69,10 +69,10 @@ auto Stroke::cloneStroke() const -> Stroke* {
 
 auto Stroke::clone() -> Element* { return this->cloneStroke(); }
 
-void Stroke::serialize(ObjectOutputStream& out) {
+void Stroke::serialize(ObjectOutputStream& out) const {
     out.writeObject("Stroke");
 
-    serializeAudioElement(out);
+    this->AudioElement::serialize(out);
 
     out.writeDouble(this->width);
 
@@ -90,7 +90,7 @@ void Stroke::serialize(ObjectOutputStream& out) {
 void Stroke::readSerialized(ObjectInputStream& in) {
     in.readObject("Stroke");
 
-    readSerializedAudioElement(in);
+    this->AudioElement::readSerialized(in);
 
     this->width = in.readDouble();
 
