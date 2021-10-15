@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:51\n"
+"PO-Revision-Date: 2021-10-15 21:35\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -1943,7 +1943,7 @@ msgstr ""
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr "אודות Xournal++"
+msgstr "על Xournal++‎"
 
 #: ../ui/settings.glade:4890
 msgid "Action on Tool Tap"
@@ -1996,7 +1996,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5453
 msgid "Audio Devices"
-msgstr "מכשירי שמע"
+msgstr "התקני שמע"
 
 #: ../ui/settings.glade:5696
 msgid "Audio Recording"
@@ -2400,7 +2400,7 @@ msgstr ""
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
-msgstr "עבור לדף"
+msgstr "מעבר לדף"
 
 #: ../ui/settings.glade:4632
 msgid "Grid size"
@@ -2996,7 +2996,7 @@ msgstr ""
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
-msgstr "גופן טקסט..."
+msgstr "גופן טקסט…"
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3123,7 +3123,7 @@ msgstr ""
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
-msgstr "העדפות Xournal++"
+msgstr "העדפות Xournal++‎"
 
 #: ../ui/settings.glade:4087
 msgid "Zoom"
@@ -3131,7 +3131,7 @@ msgstr "תקריב"
 
 #: ../ui/settings.glade:2513
 msgid "Zoom Gestures"
-msgstr "תנועות תקריב"
+msgstr "מחוות תקריב"
 
 #: ../ui/settings.glade:3933
 msgid "Zoom Speed"
@@ -3139,11 +3139,11 @@ msgstr "מהירות תקריב"
 
 #: ../ui/main.glade:696
 msgid "_1 Column"
-msgstr "_1 עמודה"
+msgstr "עמודה _1"
 
 #: ../ui/main.glade:801
 msgid "_1 Row"
-msgstr "_1 שורה"
+msgstr "שורה _1"
 
 #: ../ui/main.glade:707
 msgid "_2 Columns"
@@ -3399,11 +3399,11 @@ msgstr "אירועים"
 
 #: ../ui/settings.glade:399
 msgid "every"
-msgstr "כֹּל"
+msgstr "כל"
 
 #: ../ui/pageTemplate.glade:54
 msgid "load from file"
-msgstr "טען מקובץ"
+msgstr "טעינה מקובץ"
 
 #: ../ui/settings.glade:426
 msgid "minutes"
@@ -3421,7 +3421,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:40
 msgid "save to file"
-msgstr "שמור לקובץ"
+msgstr "שמירה לקובץ"
 
 #: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
