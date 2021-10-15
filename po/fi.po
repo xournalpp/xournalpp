@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:51\n"
+"PO-Revision-Date: 2021-10-15 07:59\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -1696,7 +1696,7 @@ msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4978
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:557
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1759,15 +1759,15 @@ msgstr "1.0"
 
 #: ../ui/settings.glade:1029
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3150
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1122
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -2255,7 +2255,7 @@ msgstr ""
 
 #: ../ui/main.glade:2637
 msgid "Duplicate"
-msgstr ""
+msgstr "Monista"
 
 #: ../ui/main.glade:2674
 msgid "Edit (not implemented yet)"
