@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-14 17:46\n"
+"PO-Revision-Date: 2021-10-15 07:59\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2064,7 +2064,7 @@ msgstr "Автор: "
 
 #: ../ui/about.glade:449
 msgid "Authors"
-msgstr ""
+msgstr "Авторы"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2072,7 +2072,7 @@ msgstr "Автоопределение"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
-msgstr ""
+msgstr "Автозагрузка"
 
 #: ../ui/settings.glade:456
 msgid "Autosaving"
@@ -2245,7 +2245,7 @@ msgstr "Выключить"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "Отключить встроенную инерционную прокрутку GTK (требуется перезапуск)."
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -2358,7 +2358,7 @@ msgstr "Включить действие по нажатию"
 
 #: ../ui/settings.glade:676
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "Включить автозагрузку последнего файла при запуске приложения"
 
 #: ../ui/settings.glade:852
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -3339,7 +3339,7 @@ msgstr "_Последняя страница"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "_Слева направо"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3383,7 +3383,7 @@ msgstr "_Предыдущая страница"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "_Справа налево"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
