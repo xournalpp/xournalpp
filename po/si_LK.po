@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-15 20:30\n"
+"PO-Revision-Date: 2021-10-15 21:35\n"
 "Last-Translator: \n"
 "Language-Team: Sinhala\n"
 "Language: si_LK\n"
@@ -129,7 +129,7 @@ msgstr ""
 
 #: ../src/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "{1} වෙත ස්වයංසුරැකුම"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
@@ -203,7 +203,7 @@ msgstr ""
 
 #: ../src/undo/CopyUndoAction.cpp:60
 msgid "Copy page"
-msgstr ""
+msgstr "පිටුව පිටපත්කරන්න"
 
 #: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
@@ -508,7 +508,7 @@ msgstr ""
 
 #: ../src/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "ස්වයංසුරැකුමේදී දෝෂය: {1}"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
@@ -516,7 +516,7 @@ msgstr ""
 
 #: ../src/util/CrashHandler.cpp:39
 msgid "Error: {1}"
-msgstr ""
+msgstr "දෝෂය: {1}"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
@@ -533,7 +533,7 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:648
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "ගොනුව පීඩීඑෆ් ලෙස නිර්යාතකරන්න"
 
 #: ../src/control/XournalMain.cpp:650
 msgid "Export FILE as image files (one per page)\n"
@@ -588,7 +588,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Fill"
-msgstr ""
+msgstr "පුරවන්න"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:285
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
@@ -628,11 +628,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 msgid "Go to first page"
-msgstr ""
+msgstr "පළමු පිටුවට යන්න"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Go to last page"
-msgstr ""
+msgstr "අන්තිම පිටුවට යන්න"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "Go to next layer"
@@ -640,7 +640,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
 msgid "Go to page"
-msgstr ""
+msgstr "පිටුවට යන්න"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 msgid "Go to previous layer"
@@ -675,7 +675,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:73
 msgid "Hide all"
-msgstr ""
+msgstr "සියල්ල සඟවන්න"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
@@ -717,11 +717,11 @@ msgstr ""
 
 #: ../src/undo/InsertLayerUndoAction.cpp:26
 msgid "Insert layer"
-msgstr ""
+msgstr "ස්තරය ඇතුළුකරන්න"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:397
 msgid "Insert page"
-msgstr ""
+msgstr "පිටුව ඇතුළුකරන්න"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Dotted"
@@ -741,7 +741,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:250
 msgid "Layer"
-msgstr ""
+msgstr "ස්තරය"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer Combo"
@@ -749,11 +749,11 @@ msgstr ""
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layer Preview"
-msgstr ""
+msgstr "ස්තරයේ පෙරදසුන"
 
 #: ../src/control/layer/LayerController.cpp:329
 msgid "Layer {1}"
-msgstr ""
+msgstr "ස්තරය {1}"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layerstack Preview"
@@ -773,7 +773,7 @@ msgstr ""
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
-msgstr ""
+msgstr "පූරණය වෙමින්..."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:101
@@ -829,7 +829,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
-msgstr ""
+msgstr "උපාංග නැත"
 
 #: ../src/pdf/base/XojCairoPdfExport.cpp:148
 #: ../src/pdf/base/XojCairoPdfExport.cpp:190
@@ -846,7 +846,7 @@ msgstr ""
 
 #: ../src/plugin/Plugin.cpp:233 ../src/plugin/Plugin.cpp:249
 msgid "OK"
-msgstr ""
+msgstr "හරි"
 
 #: ../src/control/XournalMain.cpp:671
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -868,25 +868,25 @@ msgstr ""
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
 msgid "Open file"
-msgstr ""
+msgstr "ගොනුව විවෘතකරන්න"
 
 #: ../src/control/RecentManager.cpp:185
 msgctxt "{1} is a URI"
 msgid "Open {1}"
-msgstr ""
+msgstr "{1} විවෘත"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:102
 msgid "Orange"
-msgstr ""
+msgstr "තැඹිලි"
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
-msgstr ""
+msgstr "පීඩීඑෆ් නිර්යාතකිරීම"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:40
 msgid "PDF Page {1}"
-msgstr ""
+msgstr "පිඩීඑෆ් පිටුව {1}"
 
 #: ../src/view/PdfView.cpp:31
 msgid "PDF background missing"
@@ -900,11 +900,11 @@ msgstr ""
 #: ../src/control/jobs/PdfExportJob.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
-msgstr ""
+msgstr "පීඩීඑෆ් ගොනු"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:46
 msgid "PDF {1}"
-msgstr ""
+msgstr "පීඩීඑෆ් {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
@@ -912,15 +912,15 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "Page"
-msgstr ""
+msgstr "පිටුව"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:73
 msgid "Page Preview"
-msgstr ""
+msgstr "පිටුවේ පෙරදසුන"
 
 #: ../src/undo/PageBackgroundChangedUndoAction.cpp:81
 msgid "Page background changed"
-msgstr ""
+msgstr "පිටුවේ පසුබිම වෙනස් වුණි"
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:98
 msgid "Page deleted"
@@ -928,11 +928,11 @@ msgstr ""
 
 #: ../src/undo/InsertDeletePageUndoAction.cpp:94
 msgid "Page inserted"
-msgstr ""
+msgstr "පිටුව ඇතුළු කෙරිණි"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:60
 msgid "Page number"
-msgstr ""
+msgstr "පිටුවේ අංකය"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
 msgid "Paired pages"
@@ -941,7 +941,7 @@ msgstr ""
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 #: ../src/undo/AddUndoAction.cpp:77
 msgid "Paste"
-msgstr ""
+msgstr "අලවන්න"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Pause / Play"
@@ -989,20 +989,20 @@ msgstr ""
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:100
 msgid "Red"
-msgstr ""
+msgstr "රතු"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 #: ../src/undo/UndoRedoHandler.cpp:217
 msgid "Redo"
-msgstr ""
+msgstr "පසුසේ"
 
 #: ../src/undo/UndoRedoHandler.cpp:212
 msgid "Redo: "
-msgstr ""
+msgstr "පසුසේ: "
 
 #: ../src/control/Control.cpp:2010
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "පීඩීඑෆ් පසුබිම ඉවත්කරන්න"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
 msgid "Removed tool item from Toolbar {1} ID {2}"
@@ -1014,7 +1014,7 @@ msgstr ""
 
 #: ../src/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
-msgstr ""
+msgstr "ස්තරය නැවත නම්කරන්න"
 
 #: ../src/util/XojMsgBox.cpp:77
 msgid "Replace"
@@ -1026,11 +1026,11 @@ msgstr ""
 
 #: ../src/control/XournalMain.cpp:210
 msgid "Restore file"
-msgstr ""
+msgstr "ගොනුව ප්‍රත්‍යර්පණය"
 
 #: ../src/undo/RotateUndoAction.cpp:51
 msgid "Rotation"
-msgstr ""
+msgstr "කරකවන්න"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:356
 msgid "Rotation Snapping"
@@ -1144,7 +1144,7 @@ msgstr ""
 
 #: ../src/control/tools/EditSelection.cpp:387
 msgid "Send to back"
-msgstr ""
+msgstr "ආපස්සට යවන්න"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
 msgid "Separator"
@@ -1199,7 +1199,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Stop"
-msgstr ""
+msgstr "නවත්වන්න"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
@@ -1213,7 +1213,7 @@ msgstr ""
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
-msgstr ""
+msgstr "සහාය දක්වන ගොනු"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one above"
