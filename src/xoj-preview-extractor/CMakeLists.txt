@@ -17,7 +17,7 @@ add_executable (xournalpp-thumbnailer
 
 # MacOS workaround: "-framework ____" flags need to be passed as one string.
 # See https://sourceforge.net/p/plplot/mailman/message/19574644/ for more details
-if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+if (MACOSX)
   string(REPLACE "-framework;" "-framework " thumbnailer_GTK_LDFLAGS "${GTK_LDFLAGS}")
 else()
   set(thumbnailer_GTK_LDFLAGS "${GTK_LDFLAGS}")

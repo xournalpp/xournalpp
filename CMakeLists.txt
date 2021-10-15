@@ -24,6 +24,12 @@ set_directory_properties(PROPERTIES EP_BASE "${PROJECT_BINARY_DIR}/external")
 
 add_definitions(-D_USE_MATH_DEFINES)
 
+# Check for OS
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(MACOSX TRUE)
+endif()
+
+
 # package version
 include (Version)
 core_find_git_rev(RELEASE_IDENTIFIER)
@@ -70,7 +76,7 @@ macro(add_includes_ldflags LDFLAGS INCLUDES)
 	set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "${LDFLAGS}")
     include_directories(SYSTEM ${INCLUDES})
     # Do not add system headers and external libraries to the additional include paths
-    # set(xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
+    set(xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
 find_package(CXX17 REQUIRED COMPONENTS optional)
@@ -115,7 +121,6 @@ add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 # Poppler
 pkg_check_modules (PopplerGlib REQUIRED "poppler-glib >= 0.41.0")
 add_includes_ldflags ("${PopplerGlib_LDFLAGS}" "${PopplerGlib_INCLUDE_DIRS}")
-set(POPPLER_INCLUDE_DIR, "${PopplerGlib_INCLUDE_DIRS}")
 
 # librsvg
 pkg_check_modules (librsvg REQUIRED "librsvg-2.0 >= 2.40")
@@ -174,7 +179,7 @@ unset(add_includes_ldflags)
 #
 # DO NOT INCLUDE LIBRARIES WITH pkg_check_modules AFTER THIS LINE!!!
 #
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+if(MACOSX)
 	# Fix linker flag handling for MacOS builds where frameworks are separated from their flag
 	string(REPLACE "-framework;" "-framework " xournalpp_LDFLAGS "${xournalpp_LDFLAGS}")
 endif()
