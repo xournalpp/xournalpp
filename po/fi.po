@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-15 08:56\n"
+"PO-Revision-Date: 2021-10-15 10:03\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/control/jobs/BaseExportJob.cpp:48
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"Haluatko jatkaa?"
 
 #: ../src/control/XournalMain.cpp:453
 msgid "\n"
