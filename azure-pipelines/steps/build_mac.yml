@@ -47,7 +47,6 @@ steps:
       export PKG_CONFIG_PATH="${{parameters.generation_path}}"/gtk/inst/lib/pkgconfig:"${{parameters.generation_path}}"/gtk/inst/share/pkgconfig:/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.8/lib/pkgconfig
       export PREFIX="${{parameters.generation_path}}"/gtk/inst
       export PATH="$HOME/.local/bin:"${{parameters.generation_path}}"/gtk/inst/bin:$PATH"
-      export DYLD_FALLBACK_LIBRARY_PATH="${{parameters.generation_path}}/gtk/inst"
       cmake -GNinja -DCMAKE_INSTALL_PREFIX="${{parameters.generation_path}}"/gtk/inst -DCMAKE_BUILD_TYPE=${{ parameters.build_type }} ..  ${{ parameters.cmake_flags }}
       # Make sure pot is up to date with sources (maybe translation pipeline is currently running)
       cmake --build . --target pot
