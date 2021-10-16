@@ -42,3 +42,8 @@
  * Draw a border around all painted rects
  */
 #cmakedefine DEBUG_SHOW_PAINT_BOUNDS
+
+/**
+ * Draw the mask in StrokeView
+ */
+#cmakedefine DEBUG_SHOW_MASK

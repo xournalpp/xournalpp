@@ -48,8 +48,7 @@ public:
                   bool hideImageBackground = false, bool hideRulingBackground = false);
 
 
-    void drawStroke(cairo_t* cr, Stroke* s, int startPoint = 0, double scaleFactor = 1, bool changeSource = true,
-                    bool noAlpha = false) const;
+    void drawStroke(cairo_t* cr, Stroke* s, bool noColor = false) const;
 
     static void applyColor(cairo_t* cr, Stroke* s);
     static void applyColor(cairo_t* cr, Color c, uint8_t alpha = 0xff);
