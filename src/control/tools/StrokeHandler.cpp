@@ -322,27 +322,7 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
     destroySurface();
 
-    double zoom = xournal->getZoom();
-
-    PageRef page = redrawable->getPage();
-
-    int dpiScaleFactor = xournal->getDpiScaleFactor();
-
-    double width = page->getWidth() * zoom * dpiScaleFactor;
-    double height = page->getHeight() * zoom * dpiScaleFactor;
-
-    surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
-
-    crMask = cairo_create(surfMask);
-
-    // for debugging purposes
-    // cairo_set_source_rgba(crMask, 0, 0, 0, 1);
-    cairo_set_source_rgba(crMask, 0, 0, 0, 0);
-    cairo_rectangle(crMask, 0, 0, width, height);
-
-    cairo_fill(crMask);
-
-    cairo_scale(crMask, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
+    const double zoom = xournal->getZoom();
 
     if (!stroke) {
         this->buttonDownPoint.x = pos.x / zoom;
@@ -354,6 +334,26 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
         this->fullRedraw = this->stroke->getFill() != -1 || stroke->getLineStyle().hasDashes();
 
         stabilizer->initialize(this, zoom, pos);
+    }
+
+    {  // Initialize the mask
+        const double ratio = zoom * static_cast<double>(xournal->getDpiScaleFactor());
+
+        std::unique_ptr<Rectangle<double>> visibleRect(xournal->getVisibleRect(redrawable));
+
+        // We add a padding to limit graphical bugs when scrolling right after completing a stroke
+        const double strokeWidth = this->stroke->getWidth();
+        const int width = static_cast<int>(std::ceil((visibleRect->width + strokeWidth) * ratio));
+        const int height = static_cast<int>(std::ceil((visibleRect->height + strokeWidth) * ratio));
+
+        surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
+
+        cairo_surface_set_device_offset(surfMask, (0.5 * strokeWidth - visibleRect->x) * ratio,
+                                        (0.5 * strokeWidth - visibleRect->y) * ratio);
+
+        crMask = cairo_create(surfMask);
+
+        cairo_scale(crMask, ratio, ratio);
     }
 
     this->startStrokeTime = pos.timestamp;
