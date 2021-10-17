@@ -65,6 +65,7 @@ void DocumentView::drawText(cairo_t* cr, Text* t) const {
     }
 
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+    // make elements without audio translucent when highlighting elements with audio
     if (this->markAudioStroke && t->getAudioFilename().empty()) {
         Util::cairo_set_source_rgbi(cr, t->getColor(), AudioElement::OPACITY_NO_AUDIO);
     } else {
@@ -91,6 +92,7 @@ void DocumentView::drawImage(cairo_t* cr, Image* i) const {
     cairo_scale(cr, xFactor, yFactor);
 
     cairo_set_source_surface(cr, img, i->getX() / xFactor, i->getY() / yFactor);
+    // make images translucent when highlighting elements with audio, as they can not have audio
     if (this->markAudioStroke) {
         cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
     } else {
@@ -125,7 +127,7 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) const {
         cairo_translate(cr, texImage->getX(), texImage->getY());
         cairo_scale(cr, xFactor, yFactor);
 
-        // make non-Audio strokes translucent when markAudioStroke
+        // Make TeX images translucent when highlighting audio strokes as they can not have audio
         if (this->markAudioStroke) {
             /**
              * Switch to a temporary surface, render the page, then switch back.
@@ -154,6 +156,7 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) const {
         cairo_scale(cr, xFactor, yFactor);
 
         cairo_set_source_surface(cr, img, texImage->getX() / xFactor, texImage->getY() / yFactor);
+        // Make TeX images translucent when highlighting audio strokes as they can not have audio
         if (this->markAudioStroke) {
             cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
         } else {
