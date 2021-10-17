@@ -65,8 +65,8 @@ void DocumentView::drawText(cairo_t* cr, Text* t) const {
     }
 
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-    if (this->markAudioStroke && t->getAudioFilename().length() == 0) {
-        applyColor(cr, t, AudioElement::opacityNoAudio);
+    if (this->markAudioStroke && t->getAudioFilename().empty()) {
+        Util::cairo_set_source_rgbi(cr, t->getColor(), AudioElement::OPACITY_NO_AUDIO);
     } else {
         applyColor(cr, t);
     }
@@ -92,7 +92,7 @@ void DocumentView::drawImage(cairo_t* cr, Image* i) const {
 
     cairo_set_source_surface(cr, img, i->getX() / xFactor, i->getY() / yFactor);
     if (this->markAudioStroke) {
-        cairo_paint_with_alpha(cr, AudioElement::opacityNoAudio / 255.0);
+        cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
     } else {
         cairo_paint(cr);
     }
@@ -125,12 +125,18 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) const {
         cairo_translate(cr, texImage->getX(), texImage->getY());
         cairo_scale(cr, xFactor, yFactor);
 
-        if (this->markAudioStroke) {        // make non-Audio strokes translucent when markAudioStroke
-            cairo_push_group(cr);           // switch to temporary surface
-            poppler_page_render(page, cr);  // render page
-            cairo_pop_group_to_source(cr);  // return to original surface and set temp surface as pattern
-            cairo_paint_with_alpha(
-                    cr, AudioElement::opacityNoAudio / 255.0);  // paint the temporary surface w/ opacity level
+        // make non-Audio strokes translucent when markAudioStroke
+        if (this->markAudioStroke) {
+            /**
+             * Switch to a temporary surface, render the page, then switch back.
+             * This sets the current pattern to the temporary surface.
+             */
+            cairo_push_group(cr);
+            poppler_page_render(page, cr);
+            cairo_pop_group_to_source(cr);
+
+            // paint the temporary surface with opacity level
+            cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
         } else {
             poppler_page_render(page, cr);
         }
@@ -149,7 +155,7 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) const {
 
         cairo_set_source_surface(cr, img, texImage->getX() / xFactor, texImage->getY() / yFactor);
         if (this->markAudioStroke) {
-            cairo_paint_with_alpha(cr, AudioElement::opacityNoAudio / 255.0);
+            cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
         } else {
             cairo_paint(cr);
         }

@@ -47,7 +47,7 @@ void StrokeView::changeCairoSource(bool markAudioStroke) {
         cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
 
         if (audioStrokebutNoAudio) {
-            DocumentView::applyColor(cr, s, AudioElement::opacityNoAudio);
+            DocumentView::applyColor(cr, s, (uint8_t)(255 * AudioElement::OPACITY_NO_AUDIO));
         } else {
             // Set the color and opacity
             DocumentView::applyColor(cr, s, (uint8_t)s->getFill());
@@ -63,7 +63,7 @@ void StrokeView::changeCairoSource(bool markAudioStroke) {
         DocumentView::applyColor(cr, s, 120);
     } else if (audioStrokebutNoAudio) {
         cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-        DocumentView::applyColor(cr, s, AudioElement::opacityNoAudio);
+        DocumentView::applyColor(cr, s, (uint8_t)(255 * AudioElement::OPACITY_NO_AUDIO));
     } else {
         cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
         // Set the color

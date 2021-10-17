@@ -35,7 +35,6 @@ public:
 
     virtual bool intersects(double x, double y, double halfSize) = 0;
     virtual bool intersects(double x, double y, double halfSize, double* gap) = 0;
-    static const uint8_t opacityNoAudio = 50;
 
 protected:
     void serializeAudioElement(ObjectOutputStream& out);
@@ -47,4 +46,7 @@ private:
     // Stroke timestamp, to match it to the audio stream
     size_t timestamp = 0;
     std::string audioFilename = "";
+
+public:
+    static constexpr double OPACITY_NO_AUDIO = 0.3;
 };
