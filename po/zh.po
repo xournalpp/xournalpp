@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-06 14:36\n"
+"PO-Revision-Date: 2021-10-17 04:42\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -275,7 +275,7 @@ msgstr "未能读入图像：{1}。错误提示为：{2}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:389
 msgid "Could not read page number for cloned background image: {1}."
-msgstr "无法读取克隆背景图像的页码： {1}"
+msgstr "无法为克隆背景图像读取页码： {1}"
 
 #: ../src/undo/UndoRedoHandler.cpp:139
 msgid "Could not redo \"{1}\"\n"
@@ -413,7 +413,7 @@ msgstr "文档未加载！({1}), {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Dotted"
-msgstr "点阵"
+msgstr "点虚线"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -451,7 +451,7 @@ msgstr "绘制样条曲线"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Draw coordinate system"
-msgstr "绘制坐标系"
+msgstr "绘制坐标系统"
 
 #: ../src/undo/InsertUndoAction.cpp:30
 msgid "Draw stroke"
@@ -463,7 +463,7 @@ msgstr "绘制类型 - 不更改"
 
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr "形状绘制工具组"
+msgstr "绘制类型组合"
 
 #: ../src/undo/TextBoxUndoAction.cpp:36
 msgid "Edit text"
@@ -589,10 +589,11 @@ msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "无规则导出\n"
 "                                 导出的文件没有文档结构\n"
+"导出不含标尺的文件\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr "PATH中无法找到 LaTeX 生成器: {1}"
+msgstr "路径中无法找到 LaTeX 生成器: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -619,7 +620,7 @@ msgstr "填充"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:285
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr "过滤输入压力，压力乘以压力乘数，如果小于最小压力，则使用最小压力。"
+msgstr "筛选输入压力。压力乘以压力乘数。如果低于最低值，请使用最低压力。"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Fine"
@@ -639,7 +640,7 @@ msgstr "下一步"
 
 #: ../src/gui/dialog/AboutDialog.cpp:40
 msgid "GNU GPLv2 or later"
-msgstr "GNU GPLv2 or later"
+msgstr "GNU GPLv2 或更新的GNU协议版本"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Get version of xournalpp"
