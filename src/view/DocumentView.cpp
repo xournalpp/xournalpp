@@ -57,7 +57,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
     sv.paint(this->dontRenderEditingStroke);
 }
 
-void DocumentView::drawText(cairo_t* cr, Text* t) const{
+void DocumentView::drawText(cairo_t* cr, Text* t) const {
     cairo_matrix_t defaultMatrix = {0};
     cairo_get_matrix(cr, &defaultMatrix);
     if (t->isInEditing()) {
@@ -65,10 +65,9 @@ void DocumentView::drawText(cairo_t* cr, Text* t) const{
     }
 
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-    if(this->markAudioStroke && t->getAudioFilename().length() == 0){
+    if (this->markAudioStroke && t->getAudioFilename().length() == 0) {
         applyColor(cr, t, AudioElement::opacityNoAudio);
-    }
-    else{
+    } else {
         applyColor(cr, t);
     }
 
@@ -92,9 +91,9 @@ void DocumentView::drawImage(cairo_t* cr, Image* i) const {
     cairo_scale(cr, xFactor, yFactor);
 
     cairo_set_source_surface(cr, img, i->getX() / xFactor, i->getY() / yFactor);
-    if(this->markAudioStroke){
+    if (this->markAudioStroke) {
         cairo_paint_with_alpha(cr, AudioElement::opacityNoAudio / 255.0);
-    } else{
+    } else {
         cairo_paint(cr);
     }
 
