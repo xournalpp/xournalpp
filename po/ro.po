@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-17 21:54\n"
+"PO-Revision-Date: 2021-10-18 12:11\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1936,7 +1936,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5773
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>Alegeți limba (necesită repornirea programului)</i>"
 
 #: ../ui/settings.glade:5101
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -2011,7 +2011,7 @@ msgstr ""
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Adăugare/Editare conținut TeX"
 
 #: ../ui/settings.glade:4494
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2019,11 +2019,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Toate"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
-msgstr ""
+msgstr "Toate paginile"
 
 #: ../ui/settings.glade:4855
 msgid "All three conditions must be met before stroke is ignored.\n"
@@ -2036,11 +2036,11 @@ msgstr ""
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Adaugă Pagini PDF noi"
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Media aritmetică"
 
 #: ../ui/settings.glade:1774
 msgid "Artifact workaround"
@@ -2048,11 +2048,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5453
 msgid "Audio Devices"
-msgstr ""
+msgstr "Dispozitive audio"
 
 #: ../ui/settings.glade:5696
 msgid "Audio Recording"
-msgstr ""
+msgstr "Înregistrare audio"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
@@ -2060,7 +2060,7 @@ msgstr "Autor: "
 
 #: ../ui/about.glade:449
 msgid "Authors"
-msgstr ""
+msgstr "Autori"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2068,7 +2068,7 @@ msgstr "Detectează automat"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
-msgstr ""
+msgstr "Autoîncărcare"
 
 #: ../ui/settings.glade:456
 msgid "Autosaving"
@@ -2088,20 +2088,20 @@ msgstr ""
 
 #: ../ui/settings.glade:3453
 msgid "Base speed"
-msgstr ""
+msgstr "Viteză de pornire"
 
 #: ../ui/settings.glade:3001
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Pictogramă stilou mare"
 
 #: ../ui/settings.glade:3205
 msgid "Border Color"
-msgstr ""
+msgstr "Culoare chenar"
 
 #: ../ui/settings.glade:3166
 msgid "Border Width"
-msgstr ""
+msgstr "Lățime chenar"
 
 #: ../ui/settings.glade:2807
 msgid "Border color"
@@ -2113,15 +2113,15 @@ msgstr "Culoare chenar pentru pagina curentă și alte selecții"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Adu mai aproape"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "Adu în prim plan"
 
 #: ../ui/settings.glade:1017
 msgid "Buffersize"
-msgstr ""
+msgstr "Dimensiune buffer"
 
 #: ../ui/about.glade:99
 msgid "Built on"
@@ -2137,7 +2137,7 @@ msgstr "Butonul 2"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Alegeți un fișier de șablon global LaTeX"
 
 #: ../ui/settings.glade:3048 ../ui/settings.glade:3191
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2145,7 +2145,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3062
 msgid "Circle Color"
-msgstr ""
+msgstr "Culoarea cercului"
 
 #: ../ui/settings.glade:3729
 msgid "Clear cached paged while scrolling"
