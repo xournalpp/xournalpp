@@ -54,6 +54,9 @@ cp -r /mingw64/share/icons "$setup_dir"/share/
 echo "copy glib shared"
 cp -r /mingw64/share/glib-2.0 "$setup_dir"/share/
 
+echo "copy poppler shared"
+cp -r /mingw64/share/poppler "$setup_dir"/share/
+
 echo "copy gspawn-win64-helper"
 cp /mingw64/bin/gspawn-win64-helper.exe "$setup_dir"/bin
 cp /mingw64/bin/gspawn-win64-helper-console.exe "$setup_dir"/bin
