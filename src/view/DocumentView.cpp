@@ -57,7 +57,7 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double sca
     sv.paint(this->dontRenderEditingStroke);
 }
 
-void DocumentView::drawText(cairo_t* cr, Text* t) {
+void DocumentView::drawText(cairo_t* cr, Text* t) const {
     cairo_matrix_t defaultMatrix = {0};
     cairo_get_matrix(cr, &defaultMatrix);
     if (t->isInEditing()) {
@@ -65,13 +65,18 @@ void DocumentView::drawText(cairo_t* cr, Text* t) {
     }
 
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-    applyColor(cr, t);
+    // make elements without audio translucent when highlighting elements with audio
+    if (this->markAudioStroke && t->getAudioFilename().empty()) {
+        Util::cairo_set_source_rgbi(cr, t->getColor(), AudioElement::OPACITY_NO_AUDIO);
+    } else {
+        applyColor(cr, t);
+    }
 
     TextView::drawText(cr, t);
     cairo_set_matrix(cr, &defaultMatrix);
 }
 
-void DocumentView::drawImage(cairo_t* cr, Image* i) {
+void DocumentView::drawImage(cairo_t* cr, Image* i) const {
     cairo_matrix_t defaultMatrix = {0};
     cairo_get_matrix(cr, &defaultMatrix);
 
@@ -87,12 +92,17 @@ void DocumentView::drawImage(cairo_t* cr, Image* i) {
     cairo_scale(cr, xFactor, yFactor);
 
     cairo_set_source_surface(cr, img, i->getX() / xFactor, i->getY() / yFactor);
-    cairo_paint(cr);
+    // make images translucent when highlighting elements with audio, as they can not have audio
+    if (this->markAudioStroke) {
+        cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
+    } else {
+        cairo_paint(cr);
+    }
 
     cairo_set_matrix(cr, &defaultMatrix);
 }
 
-void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) {
+void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) const {
     cairo_matrix_t defaultMatrix = {0};
     cairo_get_matrix(cr, &defaultMatrix);
 
@@ -116,7 +126,22 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) {
 
         cairo_translate(cr, texImage->getX(), texImage->getY());
         cairo_scale(cr, xFactor, yFactor);
-        poppler_page_render(page, cr);
+
+        // Make TeX images translucent when highlighting audio strokes as they can not have audio
+        if (this->markAudioStroke) {
+            /**
+             * Switch to a temporary surface, render the page, then switch back.
+             * This sets the current pattern to the temporary surface.
+             */
+            cairo_push_group(cr);
+            poppler_page_render(page, cr);
+            cairo_pop_group_to_source(cr);
+
+            // paint the temporary surface with opacity level
+            cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
+        } else {
+            poppler_page_render(page, cr);
+        }
 
         g_clear_object(&page);
     } else if (img != nullptr) {
@@ -131,7 +156,12 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) {
         cairo_scale(cr, xFactor, yFactor);
 
         cairo_set_source_surface(cr, img, texImage->getX() / xFactor, texImage->getY() / yFactor);
-        cairo_paint(cr);
+        // Make TeX images translucent when highlighting audio strokes as they can not have audio
+        if (this->markAudioStroke) {
+            cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
+        } else {
+            cairo_paint(cr);
+        }
     }
 
     cairo_set_matrix(cr, &defaultMatrix);

@@ -46,4 +46,7 @@ private:
     // Stroke timestamp, to match it to the audio stream
     size_t timestamp = 0;
     std::string audioFilename = "";
+
+public:
+    static constexpr double OPACITY_NO_AUDIO = 0.3;
 };

@@ -98,9 +98,9 @@ public:
     void finializeDrawing();
 
 private:
-    static void drawText(cairo_t* cr, Text* t);
-    static void drawImage(cairo_t* cr, Image* i);
-    static void drawTexImage(cairo_t* cr, TexImage* texImage);
+    void drawText(cairo_t* cr, Text* t) const;
+    void drawImage(cairo_t* cr, Image* i) const;
+    void drawTexImage(cairo_t* cr, TexImage* texImage) const;
 
     void drawElement(cairo_t* cr, Element* e) const;
 
