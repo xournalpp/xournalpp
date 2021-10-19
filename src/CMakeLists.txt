@@ -28,7 +28,8 @@ if (DEBUG_COMPILE)
 endif (DEBUG_COMPILE)
 
 if (DEV_ENABLE_GCOV)
-  add_definitions (--coverage)
+  add_compile_options("--coverage")
+  add_link_options("--coverage")
 endif (DEV_ENABLE_GCOV)
 
 # Used to compile xournalpp and xournalpp-test

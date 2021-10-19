@@ -4,6 +4,7 @@
 
 Add a new `.cpp` file somewhere within `gtest/unit_tests`.
 This test will be automatically discovered by gtest (see `gtest_discover_tests` in `CMakeLists.txt`).
+However, **you still need to call** `touch gtest/CMakeLists.txt` as otherwise the `GLOB` recursive lookup for test files will not be triggered!!!
 
 A basic example for a test file would be 
 

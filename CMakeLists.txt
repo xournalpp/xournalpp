@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 
 project ("Xournal++" CXX C)
 
@@ -75,8 +75,8 @@ endif ()
 macro(add_includes_ldflags LDFLAGS INCLUDES)
 	set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "${LDFLAGS}")
     include_directories(SYSTEM ${INCLUDES})
-    # Do not add system headers and external libraries to the additional include paths
-    set(xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
+    # Note: System headers and external libraries are  intentionally
+    #       NOT added to the additional include paths
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
 find_package(CXX17 REQUIRED COMPONENTS optional)
@@ -147,12 +147,12 @@ add_includes_ldflags ("${SNDFILE_LDFLAGS}" "${SNDFILE_INCLUDE_DIRS}")
 
 ## Additional features ##
 # Testing Framework: gtest
-option (ENABLE_GTEST "Build gtest instead of xournalpp application" OFF)
+option (ENABLE_GTEST "Enable gtest build for xournalpp application" OFF)
 if (ENABLE_GTEST)
     include(FetchContent)
     FetchContent_Declare(
         googletest
-        URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+        URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
     )
 	# Prevent reloading if already downloaed
 	set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
@@ -340,10 +340,10 @@ add_custom_target(uninstall
 
 message("
 Configuration:
-	Compiler:                   ${CMAKE_CXX_COMPILER}
-	GTEST: enabled:             ${ENABLE_GTEST}
-	GCOV enabled:               ${DEV_ENABLE_GCOV}
-	Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
+    Compiler:                   ${CMAKE_CXX_COMPILER}
+    GTEST enabled:              ${ENABLE_GTEST}
+    GCOV enabled:               ${DEV_ENABLE_GCOV}
+    Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
 ")
 
 option(CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)

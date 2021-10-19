@@ -16,6 +16,7 @@ if(MACOSX)
     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
     set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
 endif()
+
 # Load configure file including constants and helper Macros
 configure_file (
     config-test.h.in
@@ -23,10 +24,11 @@ configure_file (
     ESCAPE_QUOTES @ONLY
 )
 
-# build
+# Add gtest to include directories
+# This enables usage of 
+#     #include <config-test.h>
 include_directories (
     "${PROJECT_BINARY_DIR}/gtest"
-    "${PROJECT_SOURCE_DIR}/gtest"
 )
 include(GoogleTest)
 
