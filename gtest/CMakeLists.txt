@@ -23,13 +23,6 @@ configure_file (
     config-test.h
     ESCAPE_QUOTES @ONLY
 )
-
-# Add gtest to include directories
-# This enables usage of 
-#     #include <config-test.h>
-include_directories (
-    "${PROJECT_BINARY_DIR}/gtest"
-)
 include(GoogleTest)
 
 
@@ -43,11 +36,17 @@ file (GLOB_RECURSE unit_sources_SOURCES_RECURSE
 )
 
 # Define test-units target
-add_executable (test-units $<TARGET_OBJECTS:xournalpp-core>
+add_executable (test-units EXCLUDE_FROM_ALL 
+    $<TARGET_OBJECTS:xournalpp-core>
     ${unit_sources_SOURCES_RECURSE}
 )
 add_dependencies (test-units xournalpp-core)
 target_link_libraries (test-units ${xournalpp_LDFLAGS} std::filesystem gtest_main)
+
+# Add gtest to include directories
+# This enables usage of 
+#     #include <config-test.h>
+target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/gtest")
 
 ###############################################################################
 # Register Tests
