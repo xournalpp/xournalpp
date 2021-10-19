@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:51\n"
+"PO-Revision-Date: 2021-10-19 01:52\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -1906,7 +1906,7 @@ msgstr "<i>Define qué herramientas serán seleccionadas si pulsa un botón del 
 
 #: ../ui/settings.glade:2612
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr ""
+msgstr "<i>Desactivar el despliegue de pantalla táctil integrado de GTK puede provocar errores de desplazamiento en algunas plataformas. Considere cambiar este ajuste si experimenta saltos/cambios repentinos en la posición del desplazamiento cuando intente desplazarse con una pantalla táctil.</i>"
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -2253,7 +2253,7 @@ msgstr "Desactivar"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "Desactivar la funcionalidad de desplazamiento inercial integrada de GTK (requiere reinicio)."
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -3107,7 +3107,7 @@ msgstr "Dibujo táctil"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Desplazamiento táctil"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
