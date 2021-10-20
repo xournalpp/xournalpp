@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-18 13:19\n"
+"PO-Revision-Date: 2021-10-20 12:57\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -2546,15 +2546,15 @@ msgstr ""
 
 #: ../ui/settings.glade:5810 ../ui/settings.glade:5858
 msgid "Language"
-msgstr ""
+msgstr "שפה"
 
 #: ../ui/settings.glade:5828
 msgid "Language Settings"
-msgstr ""
+msgstr "הגדרות שפה"
 
 #: ../ui/main.glade:575
 msgid "Layout"
-msgstr ""
+msgstr "פריסה"
 
 #: ../ui/settings.glade:3315
 msgid "Left / Right-Handed"
@@ -2578,11 +2578,11 @@ msgstr "נהל סרגל כלים"
 
 #: ../ui/settings.glade:1109
 msgid "Mass"
-msgstr ""
+msgstr "נפח"
 
 #: ../ui/settings.glade:1108 ../ui/settings.glade:1120
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "נפח: ככל שהנפח גדול יותר, ככה יש יותר התמדה ויותר יציבות"
 
 #: ../ui/settings.glade:4795
 msgid "Max Length (mm)"
@@ -2590,7 +2590,7 @@ msgstr "אורך מקסימלי (מילימטרים)"
 
 #: ../ui/settings.glade:3466
 msgid "Max multiplier"
-msgstr ""
+msgstr "מכפיל מרבי"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2647,12 +2647,12 @@ msgstr ""
 
 #: ../ui/main.glade:1234
 msgid "New _Layer"
-msgstr ""
+msgstr "_שכבה חדשה"
 
 #: ../ui/settings.glade:2999
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "אין סמל"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2722,23 +2722,23 @@ msgstr ""
 
 #: ../ui/main.glade:1555
 msgid "Pen _Options"
-msgstr ""
+msgstr "_אפשרויות עט"
 
 #: ../ui/settings.glade:3758
 msgid "Performance"
-msgstr ""
+msgstr "ביצועים"
 
 #: ../ui/settings.glade:5650
 msgid "Playback Settings"
-msgstr ""
+msgstr "הגדרות ניגון"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "מנהל תוספים"
 
 #: ../ui/main.glade:1993
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "מ_נהל תוספים"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -2754,7 +2754,7 @@ msgstr ""
 
 #: ../ui/main.glade:487
 msgid "Preferences"
-msgstr ""
+msgstr "העדפות"
 
 #: ../ui/settings.glade:1174
 msgid "Preprocessor"
@@ -2818,11 +2818,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
-msgstr ""
+msgstr "רזולוציה"
 
 #: ../ui/settings.glade:1405
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "כפתור העכבר הימני"
 
 #: ../ui/settings.glade:4576
 msgid "Rotation snapping tolerance"
@@ -2830,43 +2830,43 @@ msgstr ""
 
 #: ../ui/settings.glade:5486
 msgid "Sample Rate"
-msgstr ""
+msgstr "קצב דגימה"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "שם שכבת דגימה"
 
 #: ../ui/settings.glade:3394
 msgid "Scrollbars"
-msgstr ""
+msgstr "סרגלי גלילה"
 
 #: ../ui/settings.glade:4272
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "גלילה אל מחוץ לעמוד"
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr ""
+msgstr "בחירת צבע הרקע"
 
 #: ../ui/settings.glade:5283
 msgid "Select Folder"
-msgstr ""
+msgstr "בחירת תיקייה"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "בחירת תמונה"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "בחירת דף PDF"
 
 #: ../ui/settings.glade:3614
 msgid "Select toolbar:"
-msgstr ""
+msgstr "בחירת סרגל כלים:"
 
 #: ../ui/settings.glade:2843
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "צבע בחירה (טקסט, בחירת מתאר וכו׳)"
 
 #: ../ui/settings.glade:3481
 msgid "Selection Edge Panning"
@@ -2874,43 +2874,43 @@ msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "הרחקה אחורה"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "קידום לחזית"
 
 #: ../ui/settings.glade:1649
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "דירוג רגישות"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
-msgstr ""
+msgstr "הגדרת עמודות"
 
 #: ../ui/main.glade:789
 msgid "Set Rows"
-msgstr ""
+msgstr "הגדרת שורות"
 
 #: ../ui/settings.glade:4858
 msgid "Settings:"
-msgstr ""
+msgstr "הגדרות:"
 
 #: ../ui/settings.glade:4867
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "הצגת סרגל כלים מרחף"
 
 #: ../ui/settings.glade:2734
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "הצגת שורת תפריטים עם ההפעלה"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "הצגת סרגל הצד"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "הצגת סרגלי הכלים"
 
 #: ../ui/settings.glade:3277
 msgid "Show sidebar on the right side"
@@ -2932,7 +2932,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4695
 msgid "Snapping"
-msgstr ""
+msgstr "הצמדה"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
@@ -3215,55 +3215,55 @@ msgstr "_עמודות/שורות"
 
 #: ../ui/main.glade:931
 msgid "_Customize"
-msgstr ""
+msgstr "ה_תאמה אישית"
 
 #: ../ui/main.glade:1377
 msgid "_Default Tools"
-msgstr ""
+msgstr "_כלי ברירת מחדל"
 
 #: ../ui/main.glade:1217
 msgid "_Delete Page"
-msgstr ""
+msgstr "מ_חיקת דף"
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr ""
+msgstr "_עריכה"
 
 #: ../ui/main.glade:1329
 msgid "_Eraser"
-msgstr ""
+msgstr "מ_חק"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr ""
+msgstr "יי_צוא כ־PDF"
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr ""
+msgstr "_קובץ"
 
 #: ../ui/main.glade:1030
 msgid "_First Page"
-msgstr ""
+msgstr "דף _ראשון"
 
 #: ../ui/main.glade:1052
 msgid "_Goto Page"
-msgstr ""
+msgstr "מ_עבר לדף"
 
 #: ../ui/main.glade:2007
 msgid "_Help"
-msgstr ""
+msgstr "ע_זרה"
 
 #: ../ui/main.glade:1341
 msgid "_Highlighter"
-msgstr ""
+msgstr "מ_דגיש"
 
 #: ../ui/main.glade:587
 msgid "_Horizontal"
-msgstr ""
+msgstr "_אופקי"
 
 #: ../ui/main.glade:1365
 msgid "_Image"
-msgstr ""
+msgstr "_תמונה"
 
 #: ../ui/main.glade:1155
 msgid "_Journal"
@@ -3271,27 +3271,27 @@ msgstr ""
 
 #: ../ui/main.glade:1074
 msgid "_Last Page"
-msgstr ""
+msgstr "דף _אחרון"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "מ_שמאל לימין"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
-msgstr ""
+msgstr "_ניהול"
 
 #: ../ui/main.glade:1019
 msgid "_Navigation"
-msgstr ""
+msgstr "ניוו_ט"
 
 #: ../ui/main.glade:1102
 msgid "_Next Layer"
-msgstr ""
+msgstr "השכבה ה_באה"
 
 #: ../ui/main.glade:1063
 msgid "_Next Page"
-msgstr ""
+msgstr "הדף ה_בא"
 
 #: ../ui/main.glade:512
 msgid "_Pair Pages"
@@ -3299,55 +3299,55 @@ msgstr ""
 
 #: ../ui/main.glade:1317
 msgid "_Pen"
-msgstr ""
+msgstr "_עט"
 
 #: ../ui/main.glade:1982
 msgid "_Plugin"
-msgstr ""
+msgstr "_תוסף"
 
 #: ../ui/main.glade:522
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_מצב מצגת"
 
 #: ../ui/main.glade:1091
 msgid "_Previous Layer"
-msgstr ""
+msgstr "השכבה ה_קודמת"
 
 #: ../ui/main.glade:1041
 msgid "_Previous Page"
-msgstr ""
+msgstr "הדף ה_קודם"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "מ_ימין לשמאל"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "מ_זהה צורות"
 
 #: ../ui/main.glade:1353
 msgid "_Text"
-msgstr ""
+msgstr "_טקסט"
 
 #: ../ui/main.glade:1306
 msgid "_Tools"
-msgstr ""
+msgstr "_כלים"
 
 #: ../ui/main.glade:1113
 msgid "_Top Layer"
-msgstr ""
+msgstr "שכבה _עליונה"
 
 #: ../ui/main.glade:645
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "מלמ_עלה למטה"
 
 #: ../ui/main.glade:598
 msgid "_Vertical"
-msgstr ""
+msgstr "א_נכי"
 
 #: ../ui/main.glade:1513
 msgid "_Vertical Space"
-msgstr ""
+msgstr "רווח _אנכי"
 
 #: ../ui/main.glade:501
 msgid "_View"
