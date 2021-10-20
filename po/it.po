@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-20 11:52\n"
+"PO-Revision-Date: 2021-10-20 12:57\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2552,7 +2552,7 @@ msgstr "Se attivata, le forme che sono state riconosciute dallo strumento \"Rico
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "Se abilitato, Xournal++ aprirà automaticamente il documento più recente che potrai continuare a modificare a tuo piacimento."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2672,7 +2672,7 @@ msgstr "Lunghezza massima (mm)"
 
 #: ../ui/settings.glade:3466
 msgid "Max multiplier"
-msgstr ""
+msgstr "Moltiplicatore massimo"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2710,7 +2710,7 @@ msgstr "Sposta su"
 
 #: ../ui/settings.glade:3464
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "Moltiplica la velocità di scorrimento fino a questo valore, in base a quanto l'elemento selezionato non è visibile nella vista."
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
@@ -3021,7 +3021,7 @@ msgstr "Forza alla Griglia"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Codice Sorgente / Bug Tracker"
 
 #: ../ui/settings.glade:3842
 msgid "Speed for Ctrl + Scroll"
@@ -3117,7 +3117,7 @@ msgstr "Disegno Con Tocco"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Scorrimento col Tocco"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -3174,7 +3174,7 @@ msgstr "Sito web"
 
 #: ../ui/settings.glade:3451
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Quando un elemento viene selezionato e spostato oltre la parte visibile del canvas, scorri lo schermo di una quantità pari a questa percentuale della parte visibile del canvas. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
