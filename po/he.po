@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-23 18:51+0000\n"
-"PO-Revision-Date: 2021-09-23 19:00\n"
+"POT-Creation-Date: 2021-09-27 10:25+0000\n"
+"PO-Revision-Date: 2021-10-20 12:57\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -40,7 +40,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " מתוך {1}"
 
-#: ../src/control/settings/Settings.cpp:118
+#: ../src/control/settings/Settings.cpp:119
 msgid "%F-Note-%H-%M"
 msgstr "%F-פתק-%H-%M"
 
@@ -622,7 +622,7 @@ msgstr "קדימה"
 
 #: ../src/gui/dialog/AboutDialog.cpp:40
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 ועדכני יותר"
 
 #: ../src/control/XournalMain.cpp:639
 msgid "Get version of xournalpp"
@@ -681,7 +681,7 @@ msgstr ""
 #: ../src/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Hand"
-msgstr ""
+msgstr "יד"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:73
 msgid "Hide all"
@@ -690,7 +690,7 @@ msgstr "הסתר הכל"
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Highlighter"
-msgstr ""
+msgstr "מדגיש"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:34
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
@@ -707,7 +707,7 @@ msgstr "תמונות"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "הוספת עותק של השכבה הנוכחית מתחת"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
@@ -723,7 +723,7 @@ msgstr "הכנס תמונה"
 
 #: ../src/undo/InsertUndoAction.cpp:36
 msgid "Insert latex"
-msgstr ""
+msgstr "הוספת latex"
 
 #: ../src/undo/InsertLayerUndoAction.cpp:26
 msgid "Insert layer"
@@ -735,19 +735,19 @@ msgstr "הכנס דף"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "איזומטרי מנוקד"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:28
 msgid "Isometric Graph"
-msgstr ""
+msgstr "תרשים איזומטרי"
 
 #: ../src/control/XournalMain.cpp:635
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "דילוג לדף (דף ראשון: 1)"
 
 #: ../src/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "יצירת Latex נתקלה בשגיאה: {1} (קוד יציאה: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:250
 msgid "Layer"
@@ -807,31 +807,31 @@ msgstr ""
 
 #: ../src/undo/MoveUndoAction.cpp:16
 msgid "Move"
-msgstr ""
+msgstr "העברה"
 
 #: ../src/undo/MoveLayerUndoAction.cpp:27
 msgid "Move layer"
-msgstr ""
+msgstr "העברת שכבה"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page downwards"
-msgstr ""
+msgstr "העברת הדף למטה"
 
 #: ../src/undo/SwapUndoAction.cpp:63
 msgid "Move page upwards"
-msgstr ""
+msgstr "העברת הדף למעלה"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:70
 msgid "New"
-msgstr ""
+msgstr "חדש"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
 msgid "New Xournal"
-msgstr ""
+msgstr "Xournal חדש"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Next"
-msgstr ""
+msgstr "הבא"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 msgid "Next annotated page"
@@ -839,12 +839,12 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
-msgstr ""
+msgstr "אין התקן"
 
 #: ../src/pdf/base/XojCairoPdfExport.cpp:148
 #: ../src/pdf/base/XojCairoPdfExport.cpp:190
 msgid "No pages to export!"
-msgstr ""
+msgstr "אין דפים לייצוא!"
 
 #: ../src/control/Control.cpp:1265
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -852,7 +852,7 @@ msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
-msgstr ""
+msgstr "ציור רגיל"
 
 #: ../src/plugin/Plugin.cpp:233 ../src/plugin/Plugin.cpp:249
 msgid "OK"
@@ -918,7 +918,7 @@ msgstr ""
 
 #: ../src/control/jobs/CustomExportJob.cpp:22
 msgid "PNG graphics"
-msgstr ""
+msgstr "גרפיקת PNG"
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:85
 msgid "Page"
@@ -926,7 +926,7 @@ msgstr "דף"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:73
 msgid "Page Preview"
-msgstr "תצוגת עמוד מקדימה"
+msgstr "תצוגת דף מקדימה"
 
 #: ../src/undo/PageBackgroundChangedUndoAction.cpp:81
 msgid "Page background changed"
@@ -964,7 +964,7 @@ msgstr "עט"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:21
 msgid "Plain"
-msgstr ""
+msgstr "פשוט"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
@@ -986,7 +986,7 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Print"
-msgstr ""
+msgstr "הדפסה"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Record Audio / Stop Recording"
@@ -1687,7 +1687,7 @@ msgstr ""
 msgid " = Floating Toolbox (experimental) ="
 msgstr ""
 
-#: ../ui/settings.glade:3830 ../ui/settings.glade:3841
+#: ../ui/settings.glade:3898 ../ui/settings.glade:3909
 msgid "%"
 msgstr ""
 
@@ -1703,7 +1703,7 @@ msgstr ""
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr ""
 
-#: ../ui/settings.glade:4910
+#: ../ui/settings.glade:4978
 msgid "%."
 msgstr ""
 
@@ -1733,7 +1733,7 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%%\t\tA % sign"
 msgstr ""
 
-#: ../ui/settings.glade:4750
+#: ../ui/settings.glade:4818
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
 msgstr ""
@@ -1746,7 +1746,7 @@ msgstr ""
 msgid "0,50"
 msgstr ""
 
-#: ../ui/settings.glade:4894
+#: ../ui/settings.glade:4962
 msgid "0.00"
 msgstr ""
 
@@ -1754,7 +1754,7 @@ msgstr ""
 msgid "1"
 msgstr ""
 
-#: ../ui/settings.glade:5541
+#: ../ui/settings.glade:5609
 msgid "1,00"
 msgstr ""
 
@@ -1770,7 +1770,7 @@ msgstr ""
 msgid "20"
 msgstr ""
 
-#: ../ui/settings.glade:3082
+#: ../ui/settings.glade:3150
 msgid "30"
 msgstr ""
 
@@ -1798,7 +1798,7 @@ msgstr "<b>צבע</b>"
 msgid "<b>Default Tools</b>"
 msgstr ""
 
-#: ../ui/settings.glade:5087
+#: ../ui/settings.glade:5155
 msgid "<b>Default</b>"
 msgstr ""
 
@@ -1833,16 +1833,20 @@ msgstr ""
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5178
+#: ../ui/settings.glade:5246
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5596
+#: ../ui/settings.glade:5664
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
 msgstr ""
 
 #: ../ui/settings.glade:1327
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
+msgstr ""
+
+#: ../ui/settings.glade:2612
+msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
 msgstr ""
 
 #: ../ui/exportSettings.glade:240
@@ -1854,7 +1858,7 @@ msgid "<i>If the document already was saved you can find it in the same folder w
 "If the file was not yet saved you can find it in your home directory, in ~/.xournalpp/autosave</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4070
+#: ../ui/settings.glade:4138
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
 msgstr ""
 
@@ -1870,20 +1874,20 @@ msgstr ""
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:3917
+#: ../ui/settings.glade:3985
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4853
+#: ../ui/settings.glade:4921
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5705
+#: ../ui/settings.glade:5773
 msgid "<i>Select language (requires restart)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5033
+#: ../ui/settings.glade:5101
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
 msgstr ""
 
@@ -1895,7 +1899,7 @@ msgstr ""
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
 msgstr ""
 
-#: ../ui/settings.glade:5289
+#: ../ui/settings.glade:5357
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr ""
@@ -1908,11 +1912,11 @@ msgstr ""
 msgid "<i>This name will be proposed if you save a new document.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:3896
+#: ../ui/settings.glade:3964
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2685
+#: ../ui/settings.glade:2753
 msgid "<i>Toggle visibility of menubar with F10</i>"
 msgstr ""
 
@@ -1939,17 +1943,17 @@ msgstr ""
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr "אודות Xournal++"
+msgstr "על Xournal++‎"
 
-#: ../ui/settings.glade:4822
+#: ../ui/settings.glade:4890
 msgid "Action on Tool Tap"
 msgstr ""
 
-#: ../ui/settings.glade:4123
+#: ../ui/settings.glade:4191
 msgid "Add additional horizontal space of"
 msgstr "הוסף רווח אופקי נוסף של"
 
-#: ../ui/settings.glade:4101
+#: ../ui/settings.glade:4169
 msgid "Add additional vertical space of"
 msgstr "הוסף רווח אנכי נוסף של"
 
@@ -1957,7 +1961,7 @@ msgstr "הוסף רווח אנכי נוסף של"
 msgid "Add/Edit TeX"
 msgstr ""
 
-#: ../ui/settings.glade:4426
+#: ../ui/settings.glade:4494
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
 msgstr ""
 
@@ -1969,7 +1973,7 @@ msgstr ""
 msgid "All pages"
 msgstr "כל הדפים"
 
-#: ../ui/settings.glade:4787
+#: ../ui/settings.glade:4855
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
 msgstr ""
@@ -1990,11 +1994,11 @@ msgstr ""
 msgid "Artifact workaround"
 msgstr ""
 
-#: ../ui/settings.glade:5385
+#: ../ui/settings.glade:5453
 msgid "Audio Devices"
-msgstr "מכשירי שמע"
+msgstr "התקני שמע"
 
-#: ../ui/settings.glade:5628
+#: ../ui/settings.glade:5696
 msgid "Audio Recording"
 msgstr "הקלטת שמע"
 
@@ -2026,32 +2030,32 @@ msgstr ""
 msgid "Averaging method"
 msgstr ""
 
-#: ../ui/settings.glade:2750
+#: ../ui/settings.glade:2818
 msgid "Background color between pages"
 msgstr "צבע רקע בין דפים"
 
-#: ../ui/settings.glade:3385
+#: ../ui/settings.glade:3453
 msgid "Base speed"
 msgstr ""
 
-#: ../ui/settings.glade:2933
+#: ../ui/settings.glade:3001
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
 msgstr ""
 
-#: ../ui/settings.glade:3137
+#: ../ui/settings.glade:3205
 msgid "Border Color"
 msgstr "צבע גבול"
 
-#: ../ui/settings.glade:3098
+#: ../ui/settings.glade:3166
 msgid "Border Width"
 msgstr "רוחב הגבול"
 
-#: ../ui/settings.glade:2739
+#: ../ui/settings.glade:2807
 msgid "Border color"
 msgstr "צבע גבול"
 
-#: ../ui/settings.glade:2724
+#: ../ui/settings.glade:2792
 msgid "Border color for current page and other selections"
 msgstr "צבע הגבול של הדף הנוכחי ובחירות אחרות"
 
@@ -2083,19 +2087,19 @@ msgstr "כפתור 2"
 msgid "Choose a global LaTeX template file"
 msgstr ""
 
-#: ../ui/settings.glade:2980 ../ui/settings.glade:3123
+#: ../ui/settings.glade:3048 ../ui/settings.glade:3191
 msgid "Choose the color to use for \"Highlight cursor position\""
 msgstr "בחר את הצבע ש\"ידגיש את מיקום הסמן\""
 
-#: ../ui/settings.glade:2994
+#: ../ui/settings.glade:3062
 msgid "Circle Color"
 msgstr "צבע העיגול"
 
-#: ../ui/settings.glade:3661
+#: ../ui/settings.glade:3729
 msgid "Clear cached paged while scrolling"
 msgstr ""
 
-#: ../ui/settings.glade:2860
+#: ../ui/settings.glade:2928
 msgid "Colors"
 msgstr "צבעים"
 
@@ -2123,11 +2127,11 @@ msgstr "העתק את רקע הדף הנוכחי במקום להשתמש ברק�
 msgid "Current page"
 msgstr "דף נוכחי"
 
-#: ../ui/settings.glade:3180
+#: ../ui/settings.glade:3248
 msgid "Cursor"
 msgstr "סמן"
 
-#: ../ui/settings.glade:2915
+#: ../ui/settings.glade:2983
 msgid "Cursor icon for pen"
 msgstr ""
 
@@ -2139,7 +2143,7 @@ msgstr ""
 msgid "Custom Commands (for Method \"Custom\")"
 msgstr ""
 
-#: ../ui/settings.glade:2798
+#: ../ui/settings.glade:2866
 msgid "Dark Theme (requires restart)"
 msgstr "ערכת נושא כהה (תידרש הפעלה מחדש)"
 
@@ -2155,7 +2159,7 @@ msgstr ""
 msgid "Default Save Name"
 msgstr "שם ברירת המחדל לשמירה"
 
-#: ../ui/settings.glade:5528
+#: ../ui/settings.glade:5596
 msgid "Default Seek Time (in seconds)"
 msgstr ""
 
@@ -2163,7 +2167,7 @@ msgstr ""
 msgid "Default name: "
 msgstr "שם ברירת מחדל: "
 
-#: ../ui/settings.glade:5127
+#: ../ui/settings.glade:5195
 msgid "Defaults"
 msgstr "ברירות מחדל"
 
@@ -2183,11 +2187,15 @@ msgstr "מכשיר"
 msgid "Disable"
 msgstr "השבת"
 
+#: ../ui/settings.glade:2626
+msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
+msgstr ""
+
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
 msgstr "השבת ציור בשביל מכשיר זה"
 
-#: ../ui/settings.glade:3306
+#: ../ui/settings.glade:3374
 msgid "Disable scrollbar fade out"
 msgstr ""
 
@@ -2199,11 +2207,11 @@ msgstr ""
 msgid "Disabling Method"
 msgstr ""
 
-#: ../ui/settings.glade:3988
+#: ../ui/settings.glade:4056
 msgid "Display DPI Calibration"
 msgstr ""
 
-#: ../ui/settings.glade:4662
+#: ../ui/settings.glade:4730
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
 msgstr ""
 
@@ -2218,7 +2226,7 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    <i>Useful for operating without keyboard.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4326
+#: ../ui/settings.glade:4394
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
@@ -2241,31 +2249,31 @@ msgstr ""
 msgid "Draw _Line"
 msgstr ""
 
-#: ../ui/settings.glade:2962
+#: ../ui/settings.glade:3030
 msgid "Draw a transparent circle around the cursor"
 msgstr ""
 
-#: ../ui/settings.glade:4982
+#: ../ui/settings.glade:5050
 msgid "Drawing Area"
 msgstr ""
 
-#: ../ui/settings.glade:4394
+#: ../ui/settings.glade:4462
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
 #: ../ui/main.glade:2637
 msgid "Duplicate"
-msgstr ""
+msgstr "שכפול"
 
 #: ../ui/main.glade:2674
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "עריכה (לא מיושם עדיין)"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
-msgstr ""
+msgstr "הפעלה"
 
-#: ../ui/settings.glade:4321
+#: ../ui/settings.glade:4389
 msgid "Enable  with determination radius of "
 msgstr ""
 
@@ -2285,7 +2293,7 @@ msgstr ""
 msgid "Enable Pressure Sensitivity"
 msgstr ""
 
-#: ../ui/settings.glade:4657
+#: ../ui/settings.glade:4725
 msgid "Enable Tap action"
 msgstr ""
 
@@ -2358,15 +2366,15 @@ msgstr ""
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
-#: ../ui/settings.glade:4238
+#: ../ui/settings.glade:4306
 msgid "First Page Offset "
 msgstr ""
 
-#: ../ui/main.glade:532 ../ui/settings.glade:3480
+#: ../ui/main.glade:532 ../ui/settings.glade:3548
 msgid "Fullscreen"
 msgstr ""
 
-#: ../ui/settings.glade:5430
+#: ../ui/settings.glade:5498
 msgid "Gain"
 msgstr ""
 
@@ -2382,7 +2390,7 @@ msgstr ""
 msgid "Git commit"
 msgstr ""
 
-#: ../ui/settings.glade:2878
+#: ../ui/settings.glade:2946
 msgid "Global"
 msgstr ""
 
@@ -2392,19 +2400,19 @@ msgstr ""
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
-msgstr "עבור לדף"
+msgstr "מעבר לדף"
 
-#: ../ui/settings.glade:4564
+#: ../ui/settings.glade:4632
 msgid "Grid size"
 msgstr "גודל רשת"
 
-#: ../ui/settings.glade:4521
+#: ../ui/settings.glade:4589
 msgid "Grid snapping tolerance"
 msgstr ""
 
 #: ../ui/main.glade:1537
 msgid "H_and Tool"
-msgstr ""
+msgstr "כלי _יד"
 
 #: ../ui/settings.glade:2378
 msgid "Hand Recognition"
@@ -2412,42 +2420,42 @@ msgstr "זיהוי יד"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "גובה"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
 msgstr "גובה:"
 
-#: ../ui/main.glade:951 ../ui/settings.glade:3442 ../ui/settings.glade:3509
+#: ../ui/main.glade:951 ../ui/settings.glade:3510 ../ui/settings.glade:3577
 msgid "Hide Menubar"
 msgstr "הסתר סרגל תפריט"
 
-#: ../ui/settings.glade:3458 ../ui/settings.glade:3525
+#: ../ui/settings.glade:3526 ../ui/settings.glade:3593
 msgid "Hide Sidebar"
 msgstr "הסתר סרגל צד"
 
-#: ../ui/settings.glade:3276
+#: ../ui/settings.glade:3344
 msgid "Hide the horizontal scrollbar"
 msgstr "הסתר סרגל גלילה אופקי"
 
-#: ../ui/settings.glade:3291
+#: ../ui/settings.glade:3359
 msgid "Hide the vertical scrollbar"
 msgstr "הסתר סרגל גלילה אנכי"
 
-#: ../ui/settings.glade:2957
+#: ../ui/settings.glade:3025
 msgid "Highlight cursor position"
 msgstr "הדגש מיקום סמן"
 
 #: ../ui/main.glade:1810
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "אפשרויות מ_דגיש"
 
-#: ../ui/settings.glade:4707
+#: ../ui/settings.glade:4775
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
 msgstr ""
 
-#: ../ui/settings.glade:4687
+#: ../ui/settings.glade:4755
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr ""
@@ -2456,7 +2464,7 @@ msgstr ""
 msgid "Icon Designers"
 msgstr ""
 
-#: ../ui/settings.glade:4609
+#: ../ui/settings.glade:4677
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
 msgstr ""
 
@@ -2476,7 +2484,7 @@ msgstr ""
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
 msgstr ""
 
-#: ../ui/settings.glade:4675
+#: ../ui/settings.glade:4743
 msgid "Ignore Time (ms)"
 msgstr "זמן התעלמות (מילי שניות)"
 
@@ -2492,7 +2500,7 @@ msgstr ""
 msgid "Inertia"
 msgstr ""
 
-#: ../ui/settings.glade:5313
+#: ../ui/settings.glade:5381
 msgid "Input Device"
 msgstr "מכשיר קלט"
 
@@ -2524,7 +2532,7 @@ msgstr "הכנס דף אחרי"
 msgid "Insert Page Before"
 msgstr "הכנס דף לפני"
 
-#: ../ui/settings.glade:5653
+#: ../ui/settings.glade:5721
 msgid "LaTeX"
 msgstr ""
 
@@ -2536,19 +2544,19 @@ msgstr ""
 msgid "LaTeX generation command"
 msgstr ""
 
-#: ../ui/settings.glade:5742 ../ui/settings.glade:5790
+#: ../ui/settings.glade:5810 ../ui/settings.glade:5858
 msgid "Language"
-msgstr ""
+msgstr "שפה"
 
-#: ../ui/settings.glade:5760
+#: ../ui/settings.glade:5828
 msgid "Language Settings"
-msgstr ""
+msgstr "הגדרות שפה"
 
 #: ../ui/main.glade:575
 msgid "Layout"
-msgstr ""
+msgstr "פריסה"
 
-#: ../ui/settings.glade:3247
+#: ../ui/settings.glade:3315
 msgid "Left / Right-Handed"
 msgstr "ימני/שמאלי"
 
@@ -2570,19 +2578,19 @@ msgstr "נהל סרגל כלים"
 
 #: ../ui/settings.glade:1109
 msgid "Mass"
-msgstr ""
+msgstr "נפח"
 
 #: ../ui/settings.glade:1108 ../ui/settings.glade:1120
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "נפח: ככל שהנפח גדול יותר, ככה יש יותר התמדה ויותר יציבות"
 
-#: ../ui/settings.glade:4727
+#: ../ui/settings.glade:4795
 msgid "Max Length (mm)"
 msgstr "אורך מקסימלי (מילימטרים)"
 
-#: ../ui/settings.glade:3398
+#: ../ui/settings.glade:3466
 msgid "Max multiplier"
-msgstr ""
+msgstr "מכפיל מרבי"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2617,7 +2625,7 @@ msgstr "לרדת"
 msgid "Move Up"
 msgstr "לעלות"
 
-#: ../ui/settings.glade:3396
+#: ../ui/settings.glade:3464
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr ""
 
@@ -2639,12 +2647,12 @@ msgstr ""
 
 #: ../ui/main.glade:1234
 msgid "New _Layer"
-msgstr ""
+msgstr "_שכבה חדשה"
 
-#: ../ui/settings.glade:2931
+#: ../ui/settings.glade:2999
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "אין סמל"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2655,7 +2663,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: ../ui/settings.glade:4237
+#: ../ui/settings.glade:4305
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
 msgstr ""
 
@@ -2667,11 +2675,11 @@ msgstr ""
 msgid "Options"
 msgstr "אפשרויות"
 
-#: ../ui/settings.glade:5336
+#: ../ui/settings.glade:5404
 msgid "Output Device"
 msgstr "מכשיר פלט"
 
-#: ../ui/settings.glade:4951
+#: ../ui/settings.glade:5019
 msgid "PDF Cache"
 msgstr ""
 
@@ -2683,7 +2691,7 @@ msgstr ""
 msgid "Pages:"
 msgstr "דפים:"
 
-#: ../ui/settings.glade:4291
+#: ../ui/settings.glade:4359
 msgid "Paired Pages"
 msgstr "דפים צמודים"
 
@@ -2714,49 +2722,49 @@ msgstr ""
 
 #: ../ui/main.glade:1555
 msgid "Pen _Options"
-msgstr ""
+msgstr "_אפשרויות עט"
 
-#: ../ui/settings.glade:3690
+#: ../ui/settings.glade:3758
 msgid "Performance"
-msgstr ""
+msgstr "ביצועים"
 
-#: ../ui/settings.glade:5582
+#: ../ui/settings.glade:5650
 msgid "Playback Settings"
-msgstr ""
+msgstr "הגדרות ניגון"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "מנהל תוספים"
 
 #: ../ui/main.glade:1993
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "מ_נהל תוספים"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
 msgstr ""
 
-#: ../ui/settings.glade:3624
+#: ../ui/settings.glade:3692
 msgid "Pre-load pages after"
 msgstr ""
 
-#: ../ui/settings.glade:3612
+#: ../ui/settings.glade:3680
 msgid "Pre-load pages before"
 msgstr ""
 
 #: ../ui/main.glade:487
 msgid "Preferences"
-msgstr ""
+msgstr "העדפות"
 
 #: ../ui/settings.glade:1174
 msgid "Preprocessor"
 msgstr ""
 
-#: ../ui/settings.glade:3581
+#: ../ui/settings.glade:3649
 msgid "Presentation Mode"
 msgstr ""
 
-#: ../ui/settings.glade:4421
+#: ../ui/settings.glade:4489
 msgid "Preserve line width"
 msgstr ""
 
@@ -2772,7 +2780,7 @@ msgstr ""
 msgid "RELEASE_IDENTIFIER"
 msgstr ""
 
-#: ../ui/settings.glade:3046
+#: ../ui/settings.glade:3114
 msgid "Radius"
 msgstr ""
 
@@ -2780,7 +2788,7 @@ msgstr ""
 msgid "Range"
 msgstr ""
 
-#: ../ui/settings.glade:4881
+#: ../ui/settings.glade:4949
 msgid "Re-render when the page's zoom changes by more than "
 msgstr ""
 
@@ -2792,7 +2800,7 @@ msgstr ""
 msgid "Record / Stop"
 msgstr ""
 
-#: ../ui/settings.glade:5495
+#: ../ui/settings.glade:5563
 msgid "Recording Quality"
 msgstr ""
 
@@ -2804,111 +2812,111 @@ msgstr ""
 msgid "Rename selected layer"
 msgstr ""
 
-#: ../ui/settings.glade:4468
+#: ../ui/settings.glade:4536
 msgid "Resizing"
 msgstr ""
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
-msgstr ""
+msgstr "רזולוציה"
 
 #: ../ui/settings.glade:1405
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "כפתור העכבר הימני"
 
-#: ../ui/settings.glade:4508
+#: ../ui/settings.glade:4576
 msgid "Rotation snapping tolerance"
 msgstr ""
 
-#: ../ui/settings.glade:5418
+#: ../ui/settings.glade:5486
 msgid "Sample Rate"
-msgstr ""
+msgstr "קצב דגימה"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "שם שכבת דגימה"
 
-#: ../ui/settings.glade:3326
+#: ../ui/settings.glade:3394
 msgid "Scrollbars"
-msgstr ""
+msgstr "סרגלי גלילה"
 
-#: ../ui/settings.glade:4204
+#: ../ui/settings.glade:4272
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "גלילה אל מחוץ לעמוד"
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr ""
+msgstr "בחירת צבע הרקע"
 
-#: ../ui/settings.glade:5215
+#: ../ui/settings.glade:5283
 msgid "Select Folder"
-msgstr ""
+msgstr "בחירת תיקייה"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "בחירת תמונה"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "בחירת דף PDF"
 
-#: ../ui/settings.glade:3546
+#: ../ui/settings.glade:3614
 msgid "Select toolbar:"
-msgstr ""
+msgstr "בחירת סרגל כלים:"
 
-#: ../ui/settings.glade:2775
+#: ../ui/settings.glade:2843
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "צבע בחירה (טקסט, בחירת מתאר וכו׳)"
 
-#: ../ui/settings.glade:3413
+#: ../ui/settings.glade:3481
 msgid "Selection Edge Panning"
 msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "הרחקה אחורה"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "קידום לחזית"
 
 #: ../ui/settings.glade:1649
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "דירוג רגישות"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
-msgstr ""
+msgstr "הגדרת עמודות"
 
 #: ../ui/main.glade:789
 msgid "Set Rows"
-msgstr ""
+msgstr "הגדרת שורות"
 
-#: ../ui/settings.glade:4790
+#: ../ui/settings.glade:4858
 msgid "Settings:"
-msgstr ""
+msgstr "הגדרות:"
 
-#: ../ui/settings.glade:4799
+#: ../ui/settings.glade:4867
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "הצגת סרגל כלים מרחף"
 
-#: ../ui/settings.glade:2666
+#: ../ui/settings.glade:2734
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "הצגת שורת תפריטים עם ההפעלה"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "הצגת סרגל הצד"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "הצגת סרגלי הכלים"
 
-#: ../ui/settings.glade:3209
+#: ../ui/settings.glade:3277
 msgid "Show sidebar on the right side"
 msgstr "הצג סרגל צד בצד הימני"
 
-#: ../ui/settings.glade:3225
+#: ../ui/settings.glade:3293
 msgid "Show vertical scrollbar on the left side"
 msgstr "הצג סרגל צד אנכי בצד השמאלי"
 
@@ -2917,24 +2925,24 @@ msgid "Slower strokes are assigned a greater pressure than faster strokes, if pr
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr ""
 
-#: ../ui/settings.glade:2932
+#: ../ui/settings.glade:3000
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
 msgstr ""
 
-#: ../ui/settings.glade:4627
+#: ../ui/settings.glade:4695
 msgid "Snapping"
-msgstr ""
+msgstr "הצמדה"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
 msgstr ""
 
-#: ../ui/settings.glade:3774
+#: ../ui/settings.glade:3842
 msgid "Speed for Ctrl + Scroll"
 msgstr ""
 
-#: ../ui/settings.glade:3802
+#: ../ui/settings.glade:3870
 msgid "Speed for a Zoomstep"
 msgstr ""
 
@@ -2946,7 +2954,7 @@ msgstr "סטנדרטי"
 msgid "Start zooming after a distance "
 msgstr ""
 
-#: ../ui/settings.glade:5200 ../ui/settings.glade:5258
+#: ../ui/settings.glade:5268 ../ui/settings.glade:5326
 msgid "Storage Folder"
 msgstr "תיקיית אחסון"
 
@@ -2958,7 +2966,7 @@ msgstr "עט סטיילוס"
 msgid "Stylus Buttons"
 msgstr "כפתורי עט סטיילוס"
 
-#: ../ui/settings.glade:4738
+#: ../ui/settings.glade:4806
 msgid "Successive (ms)"
 msgstr "רציף (מילישניות)"
 
@@ -2988,7 +2996,7 @@ msgstr ""
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
-msgstr "גופן טקסט..."
+msgstr "גופן טקסט…"
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3006,7 +3014,7 @@ msgstr ""
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr ""
 
-#: ../ui/settings.glade:3965
+#: ../ui/settings.glade:4033
 msgid "The unit of the ruler is cm"
 msgstr "יחידת המידה של הסרגל היא סנטימטרים"
 
@@ -3022,24 +3030,28 @@ msgstr ""
 msgid "Touch Drawing"
 msgstr ""
 
-#: ../ui/settings.glade:2056 ../ui/settings.glade:2612
+#: ../ui/settings.glade:2649
+msgid "Touch Scrolling"
+msgstr ""
+
+#: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
 msgstr "מסך מגע"
 
-#: ../ui/settings.glade:4767
+#: ../ui/settings.glade:4835
 msgid "Try to select object first."
 msgstr "נסה לבחור אובייקט קודם."
 
-#: ../ui/settings.glade:4772 ../ui/settings.glade:4804
+#: ../ui/settings.glade:4840 ../ui/settings.glade:4872
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr ""
 
-#: ../ui/settings.glade:2814
+#: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
 msgstr ""
 
-#: ../ui/settings.glade:4605
+#: ../ui/settings.glade:4673
 msgid "Use snapping for recognized shapes"
 msgstr ""
 
@@ -3047,11 +3059,11 @@ msgstr ""
 msgid "Use the current page size instead of the page size above."
 msgstr "השתמש בגודל הדף הנוכחי במקום בגודל הדף העליון."
 
-#: ../ui/settings.glade:2563
+#: ../ui/settings.glade:2563 ../ui/settings.glade:2631
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
 msgstr ""
 
-#: ../ui/settings.glade:4250
+#: ../ui/settings.glade:4318
 msgid "Usually 0 or 1"
 msgstr "בד\"כ 0 או 1"
 
@@ -3067,7 +3079,7 @@ msgstr "גירסה"
 msgid "Version: "
 msgstr "גירסה: "
 
-#: ../ui/settings.glade:3721
+#: ../ui/settings.glade:3789
 msgid "View"
 msgstr "תצוגה"
 
@@ -3075,7 +3087,7 @@ msgstr "תצוגה"
 msgid "Website"
 msgstr ""
 
-#: ../ui/settings.glade:3383
+#: ../ui/settings.glade:3451
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
 msgstr ""
 
@@ -3084,7 +3096,7 @@ msgid "When drawing with touch, two-finger gestures intended to pan the view can
 "This setting can make it easier to draw with touch. "
 msgstr ""
 
-#: ../ui/settings.glade:4878
+#: ../ui/settings.glade:4946
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
 msgstr ""
@@ -3095,7 +3107,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "רוחב"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3107,31 +3119,31 @@ msgstr "באמצעות עזרה מהקהילה"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
-msgstr "העדפות Xournal++"
+msgstr "העדפות Xournal++‎"
 
-#: ../ui/settings.glade:4019
+#: ../ui/settings.glade:4087
 msgid "Zoom"
 msgstr "תקריב"
 
 #: ../ui/settings.glade:2513
 msgid "Zoom Gestures"
-msgstr "תנועות תקריב"
+msgstr "מחוות תקריב"
 
-#: ../ui/settings.glade:3865
+#: ../ui/settings.glade:3933
 msgid "Zoom Speed"
 msgstr "מהירות תקריב"
 
 #: ../ui/main.glade:696
 msgid "_1 Column"
-msgstr "_1 עמודה"
+msgstr "עמודה _1"
 
 #: ../ui/main.glade:801
 msgid "_1 Row"
-msgstr "_1 שורה"
+msgstr "שורה _1"
 
 #: ../ui/main.glade:707
 msgid "_2 Columns"
@@ -3171,23 +3183,23 @@ msgstr "_6 עמודות"
 
 #: ../ui/main.glade:856
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 שורות"
 
 #: ../ui/main.glade:762
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 עמודות"
 
 #: ../ui/main.glade:867
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 שורות"
 
 #: ../ui/main.glade:773
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 עמודות"
 
 #: ../ui/main.glade:878
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 שורות"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
@@ -3195,63 +3207,63 @@ msgstr ""
 
 #: ../ui/main.glade:656
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "מלמ_טה למעלה"
 
 #: ../ui/main.glade:671
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_עמודות/שורות"
 
 #: ../ui/main.glade:931
 msgid "_Customize"
-msgstr ""
+msgstr "ה_תאמה אישית"
 
 #: ../ui/main.glade:1377
 msgid "_Default Tools"
-msgstr ""
+msgstr "_כלי ברירת מחדל"
 
 #: ../ui/main.glade:1217
 msgid "_Delete Page"
-msgstr ""
+msgstr "מ_חיקת דף"
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr ""
+msgstr "_עריכה"
 
 #: ../ui/main.glade:1329
 msgid "_Eraser"
-msgstr ""
+msgstr "מ_חק"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr ""
+msgstr "יי_צוא כ־PDF"
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr ""
+msgstr "_קובץ"
 
 #: ../ui/main.glade:1030
 msgid "_First Page"
-msgstr ""
+msgstr "דף _ראשון"
 
 #: ../ui/main.glade:1052
 msgid "_Goto Page"
-msgstr ""
+msgstr "מ_עבר לדף"
 
 #: ../ui/main.glade:2007
 msgid "_Help"
-msgstr ""
+msgstr "ע_זרה"
 
 #: ../ui/main.glade:1341
 msgid "_Highlighter"
-msgstr ""
+msgstr "מ_דגיש"
 
 #: ../ui/main.glade:587
 msgid "_Horizontal"
-msgstr ""
+msgstr "_אופקי"
 
 #: ../ui/main.glade:1365
 msgid "_Image"
-msgstr ""
+msgstr "_תמונה"
 
 #: ../ui/main.glade:1155
 msgid "_Journal"
@@ -3259,27 +3271,27 @@ msgstr ""
 
 #: ../ui/main.glade:1074
 msgid "_Last Page"
-msgstr ""
+msgstr "דף _אחרון"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "מ_שמאל לימין"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
-msgstr ""
+msgstr "_ניהול"
 
 #: ../ui/main.glade:1019
 msgid "_Navigation"
-msgstr ""
+msgstr "ניוו_ט"
 
 #: ../ui/main.glade:1102
 msgid "_Next Layer"
-msgstr ""
+msgstr "השכבה ה_באה"
 
 #: ../ui/main.glade:1063
 msgid "_Next Page"
-msgstr ""
+msgstr "הדף ה_בא"
 
 #: ../ui/main.glade:512
 msgid "_Pair Pages"
@@ -3287,55 +3299,55 @@ msgstr ""
 
 #: ../ui/main.glade:1317
 msgid "_Pen"
-msgstr ""
+msgstr "_עט"
 
 #: ../ui/main.glade:1982
 msgid "_Plugin"
-msgstr ""
+msgstr "_תוסף"
 
 #: ../ui/main.glade:522
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_מצב מצגת"
 
 #: ../ui/main.glade:1091
 msgid "_Previous Layer"
-msgstr ""
+msgstr "השכבה ה_קודמת"
 
 #: ../ui/main.glade:1041
 msgid "_Previous Page"
-msgstr ""
+msgstr "הדף ה_קודם"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "מ_ימין לשמאל"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "מ_זהה צורות"
 
 #: ../ui/main.glade:1353
 msgid "_Text"
-msgstr ""
+msgstr "_טקסט"
 
 #: ../ui/main.glade:1306
 msgid "_Tools"
-msgstr ""
+msgstr "_כלים"
 
 #: ../ui/main.glade:1113
 msgid "_Top Layer"
-msgstr ""
+msgstr "שכבה _עליונה"
 
 #: ../ui/main.glade:645
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "מלמ_עלה למטה"
 
 #: ../ui/main.glade:598
 msgid "_Vertical"
-msgstr ""
+msgstr "א_נכי"
 
 #: ../ui/main.glade:1513
 msgid "_Vertical Space"
-msgstr ""
+msgstr "רווח _אנכי"
 
 #: ../ui/main.glade:501
 msgid "_View"
@@ -3387,19 +3399,19 @@ msgstr "אירועים"
 
 #: ../ui/settings.glade:399
 msgid "every"
-msgstr "כֹּל"
+msgstr "כל"
 
 #: ../ui/pageTemplate.glade:54
 msgid "load from file"
-msgstr "טען מקובץ"
+msgstr "טעינה מקובץ"
 
 #: ../ui/settings.glade:426
 msgid "minutes"
 msgstr "דקות"
 
-#: ../ui/settings.glade:3018 ../ui/settings.glade:3069
-#: ../ui/settings.glade:4162 ../ui/settings.glade:4173
-#: ../ui/settings.glade:4361
+#: ../ui/settings.glade:3086 ../ui/settings.glade:3137
+#: ../ui/settings.glade:4230 ../ui/settings.glade:4241
+#: ../ui/settings.glade:4429
 msgid "pixels"
 msgstr "פיקסלים"
 
@@ -3409,13 +3421,13 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:40
 msgid "save to file"
-msgstr "שמור לקובץ"
+msgstr "שמירה לקובץ"
 
 #: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
-msgstr ""
+msgstr "עבה _מאוד"
 
 #: ../ui/about.glade:141
 msgid "with libgtk"
-msgstr ""
+msgstr "עם libgtk"
 
