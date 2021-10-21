@@ -3,6 +3,8 @@
 #include <array>
 #include <fstream>
 
+#include <config-paths.h>
+#include <config.h>
 #include <glib.h>
 #include <stdlib.h>
 
@@ -295,4 +297,24 @@ bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
         fs::remove(from);
     }
     return true;
+}
+
+auto Util::getDataPath() -> fs::path {
+#ifdef _WIN32
+    std::string exePath = std::string(argv[0]);
+    std::string::size_type pos = exePath.find_last_of("\\/");
+    fs::path p = exePath.substr(0, pos));
+    p /= "../share";
+    p /= PROJECT_PACKAGE;
+    return p;
+#elif defined(__APPLE__)
+    fs::path p = Stacktrace::getExePath();
+    p /= "../Resources/share/";
+    p /= PROJECT_PACKAGE;
+    return p;
+#else
+    fs::path p = PACKAGE_DATA_DIR;
+    p /= PROJECT_PACKAGE;
+    return p;
+#endif
 }

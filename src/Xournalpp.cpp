@@ -28,15 +28,6 @@ auto main(int argc, char* argv[]) -> int {
     attachConsole();
 #endif
 
-    /*
-     * Set the current working directory to the application directory.
-     * Otherwise, translations are handled inconsistently.
-     * GitHub #3433
-     */
-    std::string exePath = std::string(argv[0]);
-    std::string::size_type pos = exePath.find_last_of("\\/");
-    fs::current_path(exePath.substr(0, pos));
-
     // init crash handler
     installCrashHandlers();
 

@@ -124,5 +124,6 @@ fs::path getLongPath(const fs::path& path);
 [[maybe_unused]] [[nodiscard]] fs::path getTmpDirSubfolder(const fs::path& subfolder = "");
 [[maybe_unused]] [[nodiscard]] fs::path getAutosaveFilepath();
 [[maybe_unused]] [[nodiscard]] fs::path getGettextFilepath(const char* localeDir);
+[[maybe_unused]] [[nodiscard]] fs::path getDataPath();
 
 }  // namespace Util

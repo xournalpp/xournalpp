@@ -62,19 +62,9 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
 void initLocalisation() {
 #ifdef ENABLE_NLS
 
-#ifdef _WIN32
-#undef PACKAGE_LOCALE_DIR
-#define PACKAGE_LOCALE_DIR "../share/locale/"
-#endif
-
-#ifdef __APPLE__
-#undef PACKAGE_LOCALE_DIR
-    fs::path p = Stacktrace::getExePath();
-    p /= "../Resources/share/locale/";
-    const char* PACKAGE_LOCALE_DIR = p.c_str();
-#endif
-
-    fs::path localeDir = Util::getGettextFilepath(PACKAGE_LOCALE_DIR);
+    fs::path p = Util::getDataPath();
+    p /= "../locale";
+    fs::path localeDir = Util::getGettextFilepath(p.c_str());
     bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
     textdomain(GETTEXT_PACKAGE);
 
@@ -436,9 +426,8 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
 
     // -----------------------------------------------------------------------
 
-#ifdef __APPLE__
-    fs::path p = Stacktrace::getExePath();
-    p /= "../Resources";
+    fs::path p = Util::getDataPath();
+    p /= "..";
     p /= relativePathAndFile;
 
     if (fs::exists(p)) {
@@ -446,34 +435,15 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
         return;
     }
 
-    std::string msg = FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile %
-                         p.u8string());
-
-    if (!failIfNotFound) {
-        msg += _("\nWill now attempt to run without this file.");
-    }
-    XojMsgBox::showErrorToUser(nullptr, msg);
-#else
-    // Check at the target installation directory
-    fs::path absolute = PACKAGE_DATA_DIR;
-    absolute /= PROJECT_PACKAGE;
-    absolute /= relativePathAndFile;
-
-    if (fs::exists(absolute)) {
-        gladePath->addSearchDirectory(absolute.parent_path());
-        return;
-    }
-
     std::string msg =
             FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
                   "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
-               relativePathAndFile % PACKAGE_DATA_DIR);
+               relativePathAndFile % Util::getDataPath());
 
     if (!failIfNotFound) {
         msg += _("\n\nWill now attempt to run without this file.");
     }
     XojMsgBox::showErrorToUser(nullptr, msg);
-#endif
 
     if (failIfNotFound) {
         exit(12);
