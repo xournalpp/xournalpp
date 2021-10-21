@@ -118,9 +118,5 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/%{name}/ui
 
 %changelog
-* Sat Feb 20 2021 Luya Tshimbalanga <luya@fedoraproject.org>
-- Add librsvg2 dependencies
-- Add notice about daily git snapshot
-
-* Mon Dec 16 2019 Luya Tshimbalanga <luya@fedoraproject.org>
-- Implement some version autodetection to reduce maintenance work.
+* Thu Oct 20 2021 Ulrich Huber <ulrich@huberulrich.de>
+- See https://github.com/%{name}/%{name}/CHANGELOG.md
