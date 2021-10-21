@@ -291,15 +291,6 @@ Unfortunately, the iOS app is not published yet in the Apple App Store. See [her
 Official Windows releases are provided on the [Releases
 page](https://github.com/xournalpp/xournalpp/releases).
 
-**Notes:**
-
-- Currently, only WinTab drivers are supported. This is due to a limitation with
-  the underlying library that we use, GTK.
-- There is a GTK bug that prevents stylus input from working correctly. Please start
-  Xournal++, touch with the stylus, quit Xournal++ and start again. Then stylus
-  input will be working, until you restart Windows. See
-  [#659](https://github.com/xournalpp/xournalpp/issues/659).
-
 ### Mac OS X
 
 Mac OS X releases are provided on the [Releases
