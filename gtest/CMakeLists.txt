@@ -51,7 +51,9 @@ target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/gtest")
 ###############################################################################
 # Register Tests
 ###############################################################################
-gtest_discover_tests(test-units)
+# MacOs needs a bit longer to find the tests on azure
+# Hence, set the timeout to 30s (default 5s)
+gtest_discover_tests(test-units DISCOVERY_TIMEOUT 30)
 
 
 
