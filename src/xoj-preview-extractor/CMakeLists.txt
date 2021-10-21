@@ -8,13 +8,14 @@ endif ()
 add_definitions (-DBUILD_THUMBNAILER)
 
 add_executable (xournalpp-thumbnailer
-        "${PROJECT_SOURCE_DIR}/src/util/PathUtil.cpp"
         xournalpp-thumbnailer.cpp
-  "${PROJECT_SOURCE_DIR}/src/util/GzUtil.cpp"
-  "${PROJECT_SOURCE_DIR}/src/util/PlaceholderString.cpp"
-  "${PROJECT_SOURCE_DIR}/src/util/StringUtils.cpp"
-  "${PROJECT_SOURCE_DIR}/src/util/XojPreviewExtractor.cpp"
-)
+        "${PROJECT_SOURCE_DIR}/src/util/GzUtil.cpp"
+        "${PROJECT_SOURCE_DIR}/src/util/PlaceholderString.cpp"
+        "${PROJECT_SOURCE_DIR}/src/util/StringUtils.cpp"
+        "${PROJECT_SOURCE_DIR}/src/util/PathUtil.cpp"
+        "${PROJECT_SOURCE_DIR}/src/util/Stacktrace.cpp"
+        "${PROJECT_SOURCE_DIR}/src/util/XojPreviewExtractor.cpp"
+        )
 
 # MacOS workaround: "-framework ____" flags need to be passed as one string.
 # See https://sourceforge.net/p/plplot/mailman/message/19574644/ for more details

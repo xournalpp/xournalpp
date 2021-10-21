@@ -64,7 +64,7 @@ void initLocalisation() {
 
     fs::path p = Util::getDataPath();
     p /= "../locale";
-    fs::path localeDir = Util::getGettextFilepath(p.c_str());
+    fs::path localeDir = Util::getGettextFilepath(p.u8string().c_str());
     bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
     textdomain(GETTEXT_PACKAGE);
 
@@ -438,7 +438,7 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
     std::string msg =
             FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
                   "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
-               relativePathAndFile % Util::getDataPath());
+               relativePathAndFile % Util::getDataPath().string());
 
     if (!failIfNotFound) {
         msg += _("\n\nWill now attempt to run without this file.");

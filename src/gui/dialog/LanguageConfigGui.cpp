@@ -23,7 +23,7 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
     try {
         fs::path localeDir = Util::getDataPath();
         localeDir /= "../locale";
-        fs::path baseLocaleDir = Util::getGettextFilepath(localeDir.c_str());
+        fs::path baseLocaleDir = Util::getGettextFilepath(localeDir.u8string().c_str());
         for (auto const& d: fs::directory_iterator(baseLocaleDir)) {
             if (fs::exists(d.path() / "LC_MESSAGES" / (std::string(GETTEXT_PACKAGE) + ".mo"))) {
                 availableLocales.push_back(d.path().filename().u8string());

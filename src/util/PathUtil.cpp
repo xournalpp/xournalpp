@@ -8,6 +8,7 @@
 #include <glib.h>
 #include <stdlib.h>
 
+#include "Stacktrace.h"
 #include "StringUtils.h"
 #include "Util.h"
 #include "XojMsgBox.h"
@@ -302,9 +303,11 @@ bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
 
 auto Util::getDataPath() -> fs::path {
 #ifdef _WIN32
-    std::string exePath = std::string(argv[0]);
+    TCHAR szFileName[MAX_PATH];
+    GetModuleFileName(nullptr, szFileName, MAX_PATH);
+    auto exePath = std::string(szFileName);
     std::string::size_type pos = exePath.find_last_of("\\/");
-    fs::path p = exePath.substr(0, pos));
+    fs::path p = exePath.substr(0, pos);
     p /= "../share";
     p /= PROJECT_PACKAGE;
     return p;
