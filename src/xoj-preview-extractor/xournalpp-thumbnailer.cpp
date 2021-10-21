@@ -21,6 +21,7 @@
 #include <config-paths.h>
 #include <config.h>
 
+#include "PathUtil.h"
 #include "XojPreviewExtractor.h"
 #include "i18n.h"
 using std::cerr;
@@ -33,7 +34,9 @@ using std::string;
 
 void initLocalisation() {
 #ifdef ENABLE_NLS
-    bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+    fs::path localeDir = Util::getDataPath();
+    localeDir /= "../locale";
+    bindtextdomain(GETTEXT_PACKAGE, localeDir.c_str());
     textdomain(GETTEXT_PACKAGE);
 #endif  // ENABLE_NLS
 
@@ -156,9 +159,7 @@ int main(int argc, char* argv[]) {
                     return CAIRO_STATUS_READ_ERROR;
                 }
 
-                for (auto i = 0; i < length; i++) {
-                    data[i] = closure->data[closure->pos + i];
-                }
+                for (auto i = 0; i < length; i++) { data[i] = closure->data[closure->pos + i]; }
                 closure->pos += length;
                 return CAIRO_STATUS_SUCCESS;
             };

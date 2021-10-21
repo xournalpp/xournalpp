@@ -8,7 +8,8 @@ endif ()
 add_definitions (-DBUILD_THUMBNAILER)
 
 add_executable (xournalpp-thumbnailer
-  xournalpp-thumbnailer.cpp
+        "${PROJECT_SOURCE_DIR}/src/util/PathUtil.cpp"
+        xournalpp-thumbnailer.cpp
   "${PROJECT_SOURCE_DIR}/src/util/GzUtil.cpp"
   "${PROJECT_SOURCE_DIR}/src/util/PlaceholderString.cpp"
   "${PROJECT_SOURCE_DIR}/src/util/StringUtils.cpp"
