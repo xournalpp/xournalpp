@@ -573,7 +573,7 @@ auto ToolHandler::getButtonTool(Button button) -> Tool* {
 }
 
 void ToolHandler::resetButtonTool(ToolType type, Button button) {
-    auto& tool = *tools[type - TOOL_PEN];
+    auto& tool = *(tools[type - TOOL_PEN]);
     switch (button) {
         case Button::BUTTON_ERASER:
             this->eraserButtonTool.reset(new Tool(tool));
