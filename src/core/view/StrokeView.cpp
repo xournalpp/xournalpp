@@ -7,6 +7,7 @@
 #include "util/LoopUtil.h"
 
 #include "DocumentView.h"
+#include "View.h"
 
 using xoj::util::Rectangle;
 
@@ -198,7 +199,7 @@ void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool 
 
         // If the stroke has no audio attached, we draw it (even more) translucent
         if (drawTranslucent) {
-            groupAlpha *= AudioElement::OPACITY_NO_AUDIO;
+            groupAlpha *= xoj::view::OPACITY_NO_AUDIO;
             groupAlpha = std::max(MINIMAL_ALPHA, groupAlpha);
         }
 

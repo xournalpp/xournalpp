@@ -21,5 +21,7 @@ public:
     virtual ~ElementView() = default;
     virtual void draw(cairo_t* cr) const = 0;
 };
+
+constexpr double OPACITY_NO_AUDIO = 0.3;
 };  // namespace view
 };  // namespace xoj

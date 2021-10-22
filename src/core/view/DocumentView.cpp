@@ -8,6 +8,7 @@
 
 #include "StrokeView.h"
 #include "TextView.h"
+#include "View.h"
 
 
 DocumentView::DocumentView() { this->backgroundPainter = new MainBackgroundPainter(); }
@@ -62,7 +63,7 @@ void DocumentView::drawText(cairo_t* cr, Text* t) const {
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
     // make elements without audio translucent when highlighting elements with audio
     if (this->markAudioStroke && t->getAudioFilename().empty()) {
-        Util::cairo_set_source_rgbi(cr, t->getColor(), AudioElement::OPACITY_NO_AUDIO);
+        Util::cairo_set_source_rgbi(cr, t->getColor(), xoj::view::OPACITY_NO_AUDIO);
     } else {
         applyColor(cr, t);
     }
@@ -89,7 +90,7 @@ void DocumentView::drawImage(cairo_t* cr, Image* i) const {
     cairo_set_source_surface(cr, img, i->getX() / xFactor, i->getY() / yFactor);
     // make images translucent when highlighting elements with audio, as they can not have audio
     if (this->markAudioStroke) {
-        cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
+        cairo_paint_with_alpha(cr, xoj::view::OPACITY_NO_AUDIO);
     } else {
         cairo_paint(cr);
     }
@@ -133,7 +134,7 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) const {
             cairo_pop_group_to_source(cr);
 
             // paint the temporary surface with opacity level
-            cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
+            cairo_paint_with_alpha(cr, xoj::view::OPACITY_NO_AUDIO);
         } else {
             poppler_page_render(page, cr);
         }
@@ -153,7 +154,7 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) const {
         cairo_set_source_surface(cr, img, texImage->getX() / xFactor, texImage->getY() / yFactor);
         // Make TeX images translucent when highlighting audio strokes as they can not have audio
         if (this->markAudioStroke) {
-            cairo_paint_with_alpha(cr, AudioElement::OPACITY_NO_AUDIO);
+            cairo_paint_with_alpha(cr, xoj::view::OPACITY_NO_AUDIO);
         } else {
             cairo_paint(cr);
         }
