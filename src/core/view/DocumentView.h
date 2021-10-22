@@ -97,9 +97,6 @@ public:
     void finializeDrawing();
 
 private:
-    void drawImage(cairo_t* cr, Image* i) const;
-    void drawTexImage(cairo_t* cr, TexImage* texImage) const;
-
     void drawElement(cairo_t* cr, Element* e) const;
 
     void paintBackgroundImage();

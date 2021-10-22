@@ -6,9 +6,10 @@
 #include "model/eraser/ErasableStroke.h"
 #include "view/background/MainBackgroundPainter.h"
 
+#include "ImageView.h"
 #include "StrokeView.h"
+#include "TexImageView.h"
 #include "TextView.h"
-#include "View.h"
 
 
 DocumentView::DocumentView() { this->backgroundPainter = new MainBackgroundPainter(); }
@@ -53,97 +54,6 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, bool noColor) const {
     sv.paint(this->dontRenderEditingStroke, this->markAudioStroke, noColor);
 }
 
-void DocumentView::drawImage(cairo_t* cr, Image* i) const {
-    cairo_matrix_t defaultMatrix = {0};
-    cairo_get_matrix(cr, &defaultMatrix);
-
-    cairo_surface_t* img = i->getImage();
-    int width = cairo_image_surface_get_width(img);
-    int height = cairo_image_surface_get_height(img);
-
-    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-
-    double xFactor = i->getElementWidth() / width;
-    double yFactor = i->getElementHeight() / height;
-
-    cairo_scale(cr, xFactor, yFactor);
-
-    cairo_set_source_surface(cr, img, i->getX() / xFactor, i->getY() / yFactor);
-    // make images translucent when highlighting elements with audio, as they can not have audio
-    if (this->markAudioStroke) {
-        cairo_paint_with_alpha(cr, xoj::view::OPACITY_NO_AUDIO);
-    } else {
-        cairo_paint(cr);
-    }
-
-    cairo_set_matrix(cr, &defaultMatrix);
-}
-
-void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) const {
-    cairo_matrix_t defaultMatrix = {0};
-    cairo_get_matrix(cr, &defaultMatrix);
-
-    PopplerDocument* pdf = texImage->getPdf();
-    cairo_surface_t* img = texImage->getImage();
-
-    if (pdf != nullptr) {
-        if (poppler_document_get_n_pages(pdf) < 1) {
-            g_warning("Got latex PDf without pages!: %s", texImage->getText().c_str());
-            return;
-        }
-
-        PopplerPage* page = poppler_document_get_page(pdf, 0);
-
-        double pageWidth = 0;
-        double pageHeight = 0;
-        poppler_page_get_size(page, &pageWidth, &pageHeight);
-
-        double xFactor = texImage->getElementWidth() / pageWidth;
-        double yFactor = texImage->getElementHeight() / pageHeight;
-
-        cairo_translate(cr, texImage->getX(), texImage->getY());
-        cairo_scale(cr, xFactor, yFactor);
-
-        // Make TeX images translucent when highlighting audio strokes as they can not have audio
-        if (this->markAudioStroke) {
-            /**
-             * Switch to a temporary surface, render the page, then switch back.
-             * This sets the current pattern to the temporary surface.
-             */
-            cairo_push_group(cr);
-            poppler_page_render(page, cr);
-            cairo_pop_group_to_source(cr);
-
-            // paint the temporary surface with opacity level
-            cairo_paint_with_alpha(cr, xoj::view::OPACITY_NO_AUDIO);
-        } else {
-            poppler_page_render(page, cr);
-        }
-
-        g_clear_object(&page);
-    } else if (img != nullptr) {
-        int width = cairo_image_surface_get_width(img);
-        int height = cairo_image_surface_get_height(img);
-
-        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-
-        double xFactor = texImage->getElementWidth() / width;
-        double yFactor = texImage->getElementHeight() / height;
-
-        cairo_scale(cr, xFactor, yFactor);
-
-        cairo_set_source_surface(cr, img, texImage->getX() / xFactor, texImage->getY() / yFactor);
-        // Make TeX images translucent when highlighting audio strokes as they can not have audio
-        if (this->markAudioStroke) {
-            cairo_paint_with_alpha(cr, xoj::view::OPACITY_NO_AUDIO);
-        } else {
-            cairo_paint(cr);
-        }
-    }
-
-    cairo_set_matrix(cr, &defaultMatrix);
-}
-
 void DocumentView::drawElement(cairo_t* cr, Element* e) const {
     xoj::view::Context ctx{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                            (xoj::view::EditionTreatment)this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
@@ -153,9 +63,11 @@ void DocumentView::drawElement(cairo_t* cr, Element* e) const {
         xoj::view::TextView textView(dynamic_cast<Text*>(e));
         textView.draw(ctx);
     } else if (e->getType() == ELEMENT_IMAGE) {
-        drawImage(cr, dynamic_cast<Image*>(e));
+        xoj::view::ImageView imageView(dynamic_cast<Image*>(e));
+        imageView.draw(ctx);
     } else if (e->getType() == ELEMENT_TEXIMAGE) {
-        drawTexImage(cr, dynamic_cast<TexImage*>(e));
+        xoj::view::TexImageView texImageView(dynamic_cast<TexImage*>(e));
+        texImageView.draw(ctx);
     }
 }
 

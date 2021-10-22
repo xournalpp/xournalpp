@@ -33,6 +33,8 @@ public:
     virtual void draw(const Context& ctx) const = 0;
 };
 
+class TexImageView;
+class ImageView;
 class TextView;
 
 constexpr double OPACITY_NO_AUDIO = 0.3;
