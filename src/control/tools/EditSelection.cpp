@@ -49,14 +49,14 @@ EditSelection::EditSelection(UndoRedoHandler* undo, const PageRef& page, XojPage
         width(0),
         height(0),
         snappedBounds(Rectangle<double>{}) {
-    contstruct(undo, view, page);
+    construct(undo, view, page);
 }
 
 EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view):
         snappingHandler(view->getXournal()->getControl()->getSettings()) {
     calcSizeFromElements(selection->selectedElements);
 
-    contstruct(undo, view, view->getPage());
+    construct(undo, view, view->getPage());
 
     // Construct the insert order
     std::vector<std::pair<Element*, Layer::ElementIndex>> order;
@@ -76,7 +76,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPag
 EditSelection::EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, const PageRef& page):
         snappingHandler(view->getXournal()->getControl()->getSettings()) {
     calcSizeFromElements(std::vector<Element*>{e});
-    contstruct(undo, view, page);
+    construct(undo, view, page);
 
     addElement(e, this->sourceLayer->indexOf(e));
     this->sourceLayer->removeElement(e, false);
@@ -88,7 +88,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, const vector<Element*>& elem
                              const PageRef& page):
         snappingHandler(view->getXournal()->getControl()->getSettings()) {
     calcSizeFromElements(elements);
-    contstruct(undo, view, page);
+    construct(undo, view, page);
 
     for (Element* e: elements) {
         addElement(e, this->sourceLayer->indexOf(e));
@@ -128,7 +128,7 @@ void EditSelection::calcSizeFromElements(vector<Element*> elements) {
     snappedBounds = rect;
 }
 
-void EditSelection::contstruct(UndoRedoHandler* undo, XojPageView* view, const PageRef& sourcePage) {
+void EditSelection::construct(UndoRedoHandler* undo, XojPageView* view, const PageRef& sourcePage) {
     this->view = view;
     this->undo = undo;
     this->sourcePage = sourcePage;
