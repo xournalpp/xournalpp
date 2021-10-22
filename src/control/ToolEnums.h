@@ -88,7 +88,7 @@ std::string eraserTypeToString(EraserType type);
 EraserType eraserTypeFromString(const std::string& type);
 
 
-enum ToolCapabilities {
+enum ToolCapabilities : unsigned int {
     TOOL_CAP_NONE = 0,
     TOOL_CAP_COLOR = 1 << 0,
     TOOL_CAP_SIZE = 1 << 1,
