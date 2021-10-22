@@ -29,7 +29,7 @@ public:
     void setImage(std::string data);
     void setImage(cairo_surface_t* image);
     void setImage(GdkPixbuf* img);
-    cairo_surface_t* getImage();
+    cairo_surface_t* getImage() const;
 
     virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth);
     virtual void rotate(double x0, double y0, double th);
@@ -47,12 +47,12 @@ public:
 private:
     void calcSize() const override;
 
-    static cairo_status_t cairoReadFunction(Image* image, unsigned char* data, unsigned int length);
+    static cairo_status_t cairoReadFunction(const Image* image, unsigned char* data, unsigned int length);
 
 private:
-    cairo_surface_t* image = nullptr;
+    mutable cairo_surface_t* image = nullptr;
 
     std::string data;
 
-    std::string::size_type read = false;
+    mutable std::string::size_type read = false;
 };
