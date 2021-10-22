@@ -47,7 +47,7 @@ private:
     /**
      * Our internal constructor
      */
-    void contstruct(UndoRedoHandler* undo, XojPageView* view, const PageRef& sourcePage);
+    void construct(UndoRedoHandler* undo, XojPageView* view, const PageRef& sourcePage);
 
     /**
      * Calculate the size from the element list
