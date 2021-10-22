@@ -34,9 +34,7 @@ using std::string;
 
 void initLocalisation() {
 #ifdef ENABLE_NLS
-    fs::path localeDir = Util::getDataPath();
-    localeDir /= "../locale";
-    bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
+    bindtextdomain(GETTEXT_PACKAGE, Util::getLocalePath().u8string().c_str());
     textdomain(GETTEXT_PACKAGE);
 #endif  // ENABLE_NLS
 

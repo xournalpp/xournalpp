@@ -308,17 +308,25 @@ auto Util::getDataPath() -> fs::path {
     auto exePath = std::string(szFileName);
     std::string::size_type pos = exePath.find_last_of("\\/");
     fs::path p = exePath.substr(0, pos);
-    p /= "../share";
-    p /= PROJECT_PACKAGE;
+    p = p / ".." / "share" / PROJECT_PACKAGE;
     return p;
 #elif defined(__APPLE__)
     fs::path p = Stacktrace::getExePath();
-    p /= "../Resources/share/";
-    p /= PROJECT_PACKAGE;
+    p = p / ".." / "Resources";
     return p;
 #else
     fs::path p = PACKAGE_DATA_DIR;
     p /= PROJECT_PACKAGE;
     return p;
+#endif
+}
+
+auto Util::getLocalePath() -> fs::path {
+#ifdef _WIN32
+    return getDataPath() / ".." / "locale";
+#elif defined(__APPLE__)
+    return getDataPath() / "share" / "locale";
+#else
+    return getDataPath() / ".." / "locale";
 #endif
 }
