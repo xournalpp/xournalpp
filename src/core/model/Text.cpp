@@ -50,7 +50,7 @@ void Text::setText(std::string text) {
 }
 
 void Text::calcSize() const {
-    TextView::calcSize(this, this->width, this->height);
+    xoj::view::TextView::calcSize(this, this->width, this->height);
     this->updateSnapping();
 }
 

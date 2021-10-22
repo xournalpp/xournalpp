@@ -6,15 +6,11 @@
 #include "util/StringUtils.h"
 #include "util/Util.h"
 
-using std::string;
+using namespace xoj::view;
 
-TextView::TextView() = default;
+TextView::TextView(const Text* text): text(text) {}
 
 TextView::~TextView() = default;
-
-static int textDpi = 72;
-
-void TextView::setDpi(int dpi) { textDpi = dpi; }
 
 auto TextView::initPango(cairo_t* cr, const Text* t) -> PangoLayout* {
     PangoLayout* layout = pango_cairo_create_layout(cr);
@@ -23,7 +19,6 @@ auto TextView::initPango(cairo_t* cr, const Text* t) -> PangoLayout* {
     // the next xournal release (with new fileformat...)
     // pango_layout_set_wrap
 
-    pango_cairo_context_set_resolution(pango_layout_get_context(layout), textDpi);
     pango_cairo_update_layout(cr, layout);
 
     pango_context_set_matrix(pango_layout_get_context(layout), nullptr);
@@ -43,54 +38,69 @@ void TextView::updatePangoFont(PangoLayout* layout, const Text* t) {
     pango_font_description_free(desc);
 }
 
-void TextView::drawText(cairo_t* cr, const Text* t) {
-    cairo_save(cr);
+void TextView::draw(const Context& ctx) const {
+    if (text->isInEditing()) {
+        // The drawing is handled by gui/TextEditor
+        return;
+    }
 
-    cairo_translate(cr, t->getX(), t->getY());
+    cairo_save(ctx.cr);
 
-    PangoLayout* layout = initPango(cr, t);
-    string str = t->getText();
-    pango_layout_set_text(layout, str.c_str(), str.length());
+    // make elements without audio translucent when highlighting elements with audio
+    if (ctx.fadeOutNonAudio && text->getAudioFilename().empty()) {
+        cairo_set_operator(ctx.cr, CAIRO_OPERATOR_OVER);
+        Util::cairo_set_source_rgbi(ctx.cr, text->getColor(), OPACITY_NO_AUDIO);
+    } else {
+        cairo_set_operator(ctx.cr, CAIRO_OPERATOR_SOURCE);
+        Util::cairo_set_source_rgbi(ctx.cr, text->getColor());
+    }
 
-    pango_cairo_show_layout(cr, layout);
+    cairo_translate(ctx.cr, text->getX(), text->getY());
+
+    PangoLayout* layout = initPango(ctx.cr, text);
+    std::string content = text->getText();
+    pango_layout_set_text(layout, content.c_str(), static_cast<int>(content.length()));
+
+    pango_cairo_show_layout(ctx.cr, layout);
 
     g_object_unref(layout);
 
-    cairo_restore(cr);
+    cairo_restore(ctx.cr);
 }
 
-auto TextView::findText(const Text* t, string& search) -> std::vector<XojPdfRectangle> {
+auto TextView::findText(const Text* t, std::string& search) -> std::vector<XojPdfRectangle> {
+    size_t patternLength = search.length();
+    if (patternLength == 0) {
+        return {};
+    }
+
     cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
     cairo_t* cr = cairo_create(surface);
 
     PangoLayout* layout = initPango(cr, t);
-    string str = t->getText();
-    pango_layout_set_text(layout, str.c_str(), str.length());
+    std::string content = t->getText();
+    pango_layout_set_text(layout, content.c_str(), static_cast<int>(content.length()));
 
 
-    string text = t->getText();
+    std::string text = StringUtils::toLowerCase(content);
 
-    string srch = StringUtils::toLowerCase(search);
+    std::string pattern = StringUtils::toLowerCase(search);
 
     std::vector<XojPdfRectangle> list;
 
-    int pos = -1;
-    do {
-        pos = StringUtils::toLowerCase(text).find(srch, pos + 1);
-        if (pos != -1) {
-            XojPdfRectangle mark;
-            PangoRectangle rect = {0};
-            pango_layout_index_to_pos(layout, pos, &rect);
-            mark.x1 = (static_cast<double>(rect.x)) / PANGO_SCALE + t->getX();
-            mark.y1 = (static_cast<double>(rect.y)) / PANGO_SCALE + t->getY();
+    for (size_t pos = text.find(pattern); pos != std::string::npos; pos = text.find(pattern, pos + 1)) {
+        XojPdfRectangle mark;
+        PangoRectangle rect = {0};
+        pango_layout_index_to_pos(layout, static_cast<int>(pos), &rect);
+        mark.x1 = (static_cast<double>(rect.x)) / PANGO_SCALE + t->getX();
+        mark.y1 = (static_cast<double>(rect.y)) / PANGO_SCALE + t->getY();
 
-            pango_layout_index_to_pos(layout, pos + srch.length() - 1, &rect);
-            mark.x2 = (static_cast<double>(rect.x) + rect.width) / PANGO_SCALE + t->getX();
-            mark.y2 = (static_cast<double>(rect.y) + rect.height) / PANGO_SCALE + t->getY();
+        pango_layout_index_to_pos(layout, static_cast<int>(pos + patternLength - 1), &rect);
+        mark.x2 = (static_cast<double>(rect.x) + rect.width) / PANGO_SCALE + t->getX();
+        mark.y2 = (static_cast<double>(rect.y) + rect.height) / PANGO_SCALE + t->getY();
 
-            list.push_back(mark);
-        }
-    } while (pos != -1);
+        list.push_back(mark);
+    }
 
     g_object_unref(layout);
     cairo_surface_destroy(surface);
@@ -104,8 +114,8 @@ void TextView::calcSize(const Text* t, double& width, double& height) {
     cairo_t* cr = cairo_create(surface);
 
     PangoLayout* layout = initPango(cr, t);
-    string str = t->getText();
-    pango_layout_set_text(layout, str.c_str(), str.length());
+    std::string content = t->getText();
+    pango_layout_set_text(layout, content.c_str(), static_cast<int>(content.length()));
     int w = 0;
     int h = 0;
     pango_layout_get_size(layout, &w, &h);
