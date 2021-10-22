@@ -47,12 +47,9 @@ public:
     void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground = false,
                   bool hideImageBackground = false, bool hideRulingBackground = false);
 
-
-    void drawStroke(cairo_t* cr, Stroke* s, bool noColor = false) const;
-
-    static void applyColor(cairo_t* cr, Stroke* s);
+    static void applyColor(cairo_t* cr, const Stroke* s);
     static void applyColor(cairo_t* cr, Color c, uint8_t alpha = 0xff);
-    static void applyColor(cairo_t* cr, Element* e, uint8_t alpha = 0xff);
+    static void applyColor(cairo_t* cr, const Element* e, uint8_t alpha = 0xff);
 
     void limitArea(double x, double y, double width, double height);
 

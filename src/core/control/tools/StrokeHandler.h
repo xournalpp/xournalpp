@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "view/DocumentView.h"
+#include "view/View.h"
 
 #include "InputHandler.h"
 #include "SnapToGridInputHandler.h"
@@ -81,9 +81,6 @@ private:
      * And the corresponding cairo_t*
      */
     cairo_t* crMask = nullptr;
-
-    DocumentView view;
-
 
     // to filter out short strokes (usually the user tapping on the page to select it)
     guint32 startStrokeTime{};

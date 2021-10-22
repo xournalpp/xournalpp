@@ -9,6 +9,7 @@
 #include "gui/XournalppCursor.h"
 #include "model/SplineSegment.h"
 #include "undo/InsertUndoAction.h"
+#include "view/StrokeView.h"
 
 using xoj::util::Rectangle;
 
@@ -93,7 +94,8 @@ void SplineHandler::draw(cairo_t* cr) {
     // create stroke and draw spline
     this->updateStroke();
     if (this->getKnotCount() > 1) {
-        view.drawStroke(cr, stroke);
+        auto context = xoj::view::Context::createDefault(cr);
+        strokeView->draw(context);
     }
 }
 
@@ -264,6 +266,7 @@ void SplineHandler::onButtonPressEvent(const PositionInputData& pos) {
 
     if (!stroke) {
         createStroke(this->currPoint);
+        strokeView.emplace(stroke);
         this->addKnot(this->currPoint);
         this->redrawable->rerenderRect(this->currPoint.x - radius, this->currPoint.y - radius, 2 * radius, 2 * radius);
     } else {

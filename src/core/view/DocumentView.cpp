@@ -24,41 +24,30 @@ DocumentView::~DocumentView() {
  */
 void DocumentView::setMarkAudioStroke(bool markAudioStroke) { this->markAudioStroke = markAudioStroke; }
 
-void DocumentView::applyColor(cairo_t* cr, Stroke* s) {
+void DocumentView::applyColor(cairo_t* cr, const Stroke* s) {
     if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
         if (s->getFill() != -1) {
             applyColor(cr, s, static_cast<uint8_t>(s->getFill()));
         } else {
-            applyColor(cr, s, StrokeView::HIGHLIGHTER_ALPHA);
+            applyColor(cr, s, xoj::view::StrokeView::HIGHLIGHTER_ALPHA);
         }
     } else {
-        applyColor(cr, static_cast<Element*>(s));
+        applyColor(cr, static_cast<const Element*>(s));
     }
 }
 
-void DocumentView::applyColor(cairo_t* cr, Element* e, uint8_t alpha) { applyColor(cr, e->getColor(), alpha); }
+void DocumentView::applyColor(cairo_t* cr, const Element* e, uint8_t alpha) { applyColor(cr, e->getColor(), alpha); }
 
 void DocumentView::applyColor(cairo_t* cr, Color c, uint8_t alpha) {
     Util::cairo_set_source_rgbi(cr, c, alpha / 255.0);
-}
-
-void DocumentView::drawStroke(cairo_t* cr, Stroke* s, bool noColor) const {
-    if (s->getPointCount() < 2) {
-        // Should not happen
-        g_warning("DocumentView::drawStroke empty stroke...");
-        return;
-    }
-
-    StrokeView sv(cr, s);
-
-    sv.paint(this->dontRenderEditingStroke, this->markAudioStroke, noColor);
 }
 
 void DocumentView::drawElement(cairo_t* cr, Element* e) const {
     xoj::view::Context ctx{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                            (xoj::view::EditionTreatment)this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
     if (e->getType() == ELEMENT_STROKE) {
-        drawStroke(cr, dynamic_cast<Stroke*>(e));
+        xoj::view::StrokeView strokeView(dynamic_cast<Stroke*>(e));
+        strokeView.draw(ctx);
     } else if (e->getType() == ELEMENT_TEXT) {
         xoj::view::TextView textView(dynamic_cast<Text*>(e));
         textView.draw(ctx);

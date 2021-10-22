@@ -8,6 +8,7 @@
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
 #include "undo/InsertUndoAction.h"
+#include "view/StrokeView.h"
 
 using xoj::util::Rectangle;
 
@@ -17,9 +18,9 @@ guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
                                      bool flipControl):
         InputHandler(xournal, redrawable, page),
-        snappingHandler(xournal->getControl()->getSettings()),
         flipShift(flipShift),
-        flipControl(flipControl) {}
+        flipControl(flipControl),
+        snappingHandler(xournal->getControl()->getSettings()) {}
 
 BaseStrokeHandler::~BaseStrokeHandler() = default;
 
@@ -32,7 +33,9 @@ void BaseStrokeHandler::draw(cairo_t* cr) {
     int dpiScaleFactor = xournal->getDpiScaleFactor();
 
     cairo_scale(cr, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
-    view.drawStroke(cr, stroke);
+
+    auto context = xoj::view::Context::createDefault(cr);
+    strokeView->draw(context);
 }
 
 auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
@@ -186,6 +189,7 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
 
     if (!stroke) {
         createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
+        strokeView.emplace(stroke);
     }
 
     this->startStrokeTime = pos.timestamp;

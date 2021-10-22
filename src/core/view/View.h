@@ -25,6 +25,9 @@ struct Context {
     NonAudioTreatment fadeOutNonAudio;
     EditionTreatment showCurrentEdition;
     ColorTreatment noColor;
+
+    static Context createDefault(cairo_t* cr) { return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, NORMAL_COLOR}; }
+    static Context createColorBlind(cairo_t* cr) { return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, COLORBLIND}; }
 };
 
 class ElementView {
@@ -35,6 +38,7 @@ public:
 
 class TexImageView;
 class ImageView;
+class StrokeView;
 class TextView;
 
 constexpr double OPACITY_NO_AUDIO = 0.3;

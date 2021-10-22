@@ -18,6 +18,7 @@
 
 #include "gui/inputdevices/PositionInputData.h"
 #include "model/PageRef.h"
+#include "view/StrokeView.h"
 
 class Point;
 class Stroke;
@@ -111,4 +112,5 @@ protected:
     XojPageView* redrawable;
     PageRef page;
     Stroke* stroke;
+    std::optional<xoj::view::StrokeView> strokeView;
 };
