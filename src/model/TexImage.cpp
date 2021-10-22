@@ -71,7 +71,7 @@ auto TexImage::getBinaryData() const -> std::string const& { return this->binary
 
 void TexImage::setText(std::string text) { this->text = std::move(text); }
 
-auto TexImage::getText() -> std::string { return this->text; }
+auto TexImage::getText() const -> std::string { return this->text; }
 
 auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
     this->freeImageAndPdf();
@@ -102,9 +102,9 @@ auto TexImage::loadData(std::string&& bytes, GError** err) -> bool {
     return true;
 }
 
-auto TexImage::getImage() -> cairo_surface_t* { return this->image; }
+auto TexImage::getImage() const -> cairo_surface_t* { return this->image; }
 
-auto TexImage::getPdf() -> PopplerDocument* { return this->pdf; }
+auto TexImage::getPdf() const -> PopplerDocument* { return this->pdf; }
 
 void TexImage::scale(double x0, double y0, double fx, double fy, double rotation,
                      bool) {  // line width scaling option is not used
