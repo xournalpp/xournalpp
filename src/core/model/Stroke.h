@@ -98,7 +98,7 @@ public:
 
     bool isInSelection(ShapeContainer* container) override;
 
-    ErasableStroke* getErasable();
+    ErasableStroke* getErasable() const;
     void setErasable(ErasableStroke* eraseable);
 
     StrokeCapStyle getStrokeCapStyle() const;

@@ -424,7 +424,7 @@ void Stroke::calcSize() const {
     Element::snappedBounds = Rectangle<double>(minSnapX, minSnapY, maxSnapX - minSnapX, maxSnapY - minSnapY);
 }
 
-auto Stroke::getErasable() -> ErasableStroke* { return this->eraseable; }
+auto Stroke::getErasable() const -> ErasableStroke* { return this->eraseable; }
 
 void Stroke::setErasable(ErasableStroke* eraseable) { this->eraseable = eraseable; }
 

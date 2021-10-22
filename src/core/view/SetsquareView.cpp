@@ -9,7 +9,7 @@
 #include "model/Setsquare.h"
 #include "undo/InsertUndoAction.h"
 
-#include "DocumentView.h"
+#include "StrokeView.h"
 
 using xoj::util::Rectangle;
 
@@ -26,8 +26,9 @@ void SetsquareView::paint(cairo_t* cr) {
 
 void SetsquareView::drawTemporaryStroke(cairo_t* cr) {
     if (stroke) {
-        DocumentView docView;
-        docView.drawStroke(cr, stroke, 0);
+        auto context = xoj::view::Context::createDefault(cr);
+        xoj::view::StrokeView strokeView(stroke);
+        strokeView.draw(context);
     }
 }
 

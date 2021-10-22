@@ -12,7 +12,6 @@
 #pragma once
 
 #include "model/Point.h"
-#include "view/DocumentView.h"
 
 #include "InputHandler.h"
 #include "SnapToGridInputHandler.h"
@@ -72,7 +71,6 @@ public:
     int getKnotCount() const;
 
 protected:
-    DocumentView view;
     Point currPoint;
     Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid. See startPoint defined in
                             // derived classes such as EllipseHandler.

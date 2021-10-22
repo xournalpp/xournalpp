@@ -13,6 +13,8 @@
 #include "gui/XournalView.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/RecognizerUndoAction.h"
+#include "view/DocumentView.h"
+#include "view/StrokeView.h"
 
 #include "StrokeStabilizer.h"
 #include "config-features.h"
@@ -43,8 +45,8 @@ void StrokeHandler::draw(cairo_t* cr) {
         cairo_set_operator(crMask, CAIRO_OPERATOR_CLEAR);
         cairo_paint(crMask);
 
-        cairo_set_operator(crMask, CAIRO_OPERATOR_SOURCE);
-        view.drawStroke(crMask, stroke, true);
+        auto context = xoj::view::Context::createColorBlind(crMask);
+        strokeView->draw(context);
     }
     DocumentView::applyColor(cr, stroke);
 
@@ -158,7 +160,9 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
         lastSegment.addPoint(point);
         lastSegment.setWidth(width);
 
-        view.drawStroke(crMask, &lastSegment, true);
+        auto context = xoj::view::Context::createColorBlind(crMask);
+        xoj::view::StrokeView sView(&lastSegment);
+        sView.draw(context);
     }
 
     width = prevPoint.z != Point::NO_PRESSURE ? prevPoint.z : width;
@@ -326,6 +330,10 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
 
         this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
         this->fullRedraw = this->stroke->getFill() != -1 || stroke->getLineStyle().hasDashes();
+
+        if (this->fullRedraw) {
+            strokeView.emplace(stroke);
+        }
 
         stabilizer->initialize(this, zoom, pos);
     }

@@ -13,13 +13,13 @@
 
 #include <cstdint>
 
-#include <gtk/gtk.h>
+#include "View.h"
 
 class Stroke;
 
-class StrokeView {
+class xoj::view::StrokeView: public xoj::view::ElementView {
 public:
-    StrokeView(cairo_t* cr, Stroke* s);
+    StrokeView(const Stroke* s);
     ~StrokeView() = default;
 
 public:
@@ -30,28 +30,25 @@ public:
      * @param markAudioStroke If true, the stroke is faded out if it has no audio playback attached.
      * @param noColor If true, paint as if on a colorblind mask (only the alpha values are painted).
      */
-    void paint(bool dontRenderEditingStroke, bool markAudioStroke, bool noColor = false) const;
+    void draw(const Context& ctx) const override;
 
 private:
-    inline void pathToCairo() const;
-    static void drawErasableStroke(cairo_t* cr, Stroke* s);
+    inline void pathToCairo(cairo_t* cr) const;
+    static void drawErasableStroke(cairo_t* cr, const Stroke* s);
 
     /**
      * No pressure sensitivity, one line is drawn
      */
-    void drawNoPressure() const;
+    void drawNoPressure(cairo_t* cr) const;
 
     /**
      * Draw a stroke with pressure, for this multiple
      * lines with different widths needs to be drawn
      */
-    void drawWithPressure() const;
-
+    void drawWithPressure(cairo_t* cr) const;
 
 private:
-    cairo_t* cr;
-    mutable cairo_t* crEffective;
-    Stroke* s;
+    const Stroke* s;
 
 public:
     static constexpr uint8_t HIGHLIGHTER_ALPHA = 120;

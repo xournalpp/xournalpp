@@ -7,19 +7,19 @@
 #include "util/LoopUtil.h"
 
 #include "DocumentView.h"
-#include "View.h"
 
 using xoj::util::Rectangle;
+using namespace xoj::view;
 
-StrokeView::StrokeView(cairo_t* cr, Stroke* s): cr(cr), crEffective(cr), s(s) {}
+StrokeView::StrokeView(const Stroke* s): s(s) {}
 
-void StrokeView::pathToCairo() const {
+void StrokeView::pathToCairo(cairo_t* cr) const {
     for_first_then_each(
-            s->getPointVector(), [this](auto const& first) { cairo_move_to(this->crEffective, first.x, first.y); },
-            [this](auto const& other) { cairo_line_to(this->crEffective, other.x, other.y); });
+            s->getPointVector(), [cr](auto const& first) { cairo_move_to(cr, first.x, first.y); },
+            [cr](auto const& other) { cairo_line_to(cr, other.x, other.y); });
 }
 
-void StrokeView::drawErasableStroke(cairo_t* cr, Stroke* s) {
+void StrokeView::drawErasableStroke(cairo_t* cr, const Stroke* s) {
     ErasableStroke* e = s->getErasable();
     e->draw(cr);
 }
@@ -27,23 +27,23 @@ void StrokeView::drawErasableStroke(cairo_t* cr, Stroke* s) {
 /**
  * No pressure sensitivity, one line is drawn
  */
-void StrokeView::drawNoPressure() const {
-    cairo_set_line_width(crEffective, s->getWidth());
+void StrokeView::drawNoPressure(cairo_t* cr) const {
+    cairo_set_line_width(cr, s->getWidth());
 
     const double* dashes = nullptr;
     int dashCount = 0;
     s->getLineStyle().getDashes(dashes, dashCount);
     assert((dashCount == 0 && dashes == nullptr) || (dashCount != 0 && dashes != nullptr));
-    cairo_set_dash(crEffective, dashes, dashCount, 0);
+    cairo_set_dash(cr, dashes, dashCount, 0);
 
-    pathToCairo();
-    cairo_stroke(crEffective);
+    pathToCairo(cr);
+    cairo_stroke(cr);
 }
 
 /**
  * Draw a stroke with pressure, for this multiple lines with different widths needs to be drawn
  */
-void StrokeView::drawWithPressure() const {
+void StrokeView::drawWithPressure(cairo_t* cr) const {
     double dashOffset = 0;
     const double* dashes = nullptr;
     int dashCount = 0;
@@ -53,30 +53,39 @@ void StrokeView::drawWithPressure() const {
     for (auto p1i = begin(s->getPointVector()), p2i = std::next(p1i), endi = end(s->getPointVector());
          p1i != endi && p2i != endi; ++p1i, ++p2i) {
         auto width = p1i->z != Point::NO_PRESSURE ? p1i->z : s->getWidth();
-        cairo_set_line_width(crEffective, width);
+        cairo_set_line_width(cr, width);
         if (dashes) {
-            cairo_set_dash(crEffective, dashes, dashCount, dashOffset);
+            cairo_set_dash(cr, dashes, dashCount, dashOffset);
             dashOffset += p1i->lineLengthTo(*p2i);
         }
-        cairo_move_to(crEffective, p1i->x, p1i->y);
-        cairo_line_to(crEffective, p2i->x, p2i->y);
-        cairo_stroke(crEffective);
+        cairo_move_to(cr, p1i->x, p1i->y);
+        cairo_line_to(cr, p2i->x, p2i->y);
+        cairo_stroke(cr);
     }
 }
 
-void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool noColor) const {
+void StrokeView::draw(const Context& ctx) const {
 
-    cairo_save(cr);
+    if (s->getPointCount() < 2) {
+        // Should not happen
+        g_warning("View::StrokeView::draw empty stroke...");
+        return;
+    }
+
+    cairo_save(ctx.cr);
 
     const bool highlighter = s->getToolType() == STROKE_TOOL_HIGHLIGHTER;
     const bool filledHighlighter = highlighter && s->getFill() != -1;
-    const bool drawTranslucent = markAudioStroke && s->getAudioFilename().empty();
-    const bool useMask = (!noColor && filledHighlighter) || drawTranslucent;
+    const bool drawTranslucent = ctx.fadeOutNonAudio && s->getAudioFilename().empty();
+    const bool useMask = (!ctx.noColor && filledHighlighter) || drawTranslucent;
 
     // The mask will be colorblind
-    noColor = noColor || useMask;
+    const bool noColor = ctx.noColor || useMask;
 
     cairo_surface_t* surfMask = nullptr;
+
+    // If not using a mask, draw directly onto the given cairo context
+    cairo_t* cr = ctx.cr;
 
     if (useMask) {
         /**
@@ -89,7 +98,7 @@ void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool 
          * We find out this scaling by looking at the transformation matrix
          */
         cairo_matrix_t matrix;
-        cairo_get_matrix(cr, &matrix);
+        cairo_get_matrix(ctx.cr, &matrix);
         // We assume the matrix is diagonal (i.e. only scaling, no rotation)
         assert(matrix.xy == 0 && matrix.yx == 0);
 
@@ -108,15 +117,15 @@ void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool 
         cairo_surface_set_device_scale(surfMask, matrix.xx, matrix.yy);
 
         // Get a context to draw on our mask
-        crEffective = cairo_create(surfMask);
+        cr = cairo_create(surfMask);
 
 #ifdef DEBUG_SHOW_MASK
-        cairo_set_source_rgba(crEffective, 1, 1, 1, 0.3);
-        cairo_paint(crEffective);
+        cairo_set_source_rgba(cr, 1, 1, 1, 0.3);
+        cairo_paint(cr);
 #endif
     }
 
-    cairo_set_line_join(crEffective, CAIRO_LINE_JOIN_ROUND);
+    cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
 
     cairo_line_cap_t capType;
     switch (s->getStrokeCapStyle()) {
@@ -129,7 +138,7 @@ void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool 
         default:
             capType = CAIRO_LINE_CAP_ROUND;
     }
-    cairo_set_line_cap(crEffective, capType);
+    cairo_set_line_cap(cr, capType);
 
     if (auto fill = s->getFill(); fill != -1) {
         /**
@@ -138,17 +147,17 @@ void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool 
         if (noColor) {
             // Painting on an Alpha-only mask. No need for colors.
             if (filledHighlighter) {
-                cairo_set_source_rgba(crEffective, 1, 1, 1, 1);
+                cairo_set_source_rgba(cr, 1, 1, 1, 1);
             } else {
-                cairo_set_source_rgba(crEffective, 1, 1, 1, static_cast<double>(fill) / 255.0);
+                cairo_set_source_rgba(cr, 1, 1, 1, static_cast<double>(fill) / 255.0);
             }
         } else {
-            DocumentView::applyColor(crEffective, s, static_cast<uint8_t>(fill));
+            DocumentView::applyColor(cr, s, static_cast<uint8_t>(fill));
         }
-        cairo_set_operator(crEffective, useMask ? CAIRO_OPERATOR_SOURCE : CAIRO_OPERATOR_OVER);
-        pathToCairo();
+        cairo_set_operator(cr, useMask ? CAIRO_OPERATOR_SOURCE : CAIRO_OPERATOR_OVER);
+        pathToCairo(cr);
 
-        cairo_fill(crEffective);
+        cairo_fill(cr);
     }
 
     /**
@@ -158,29 +167,29 @@ void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool 
         /**
          * No color: painting onto an alpha mask. Colors will be applied upon blitting.
          */
-        cairo_set_source_rgba(crEffective, 1, 1, 1, 1);
-        cairo_set_operator(crEffective, CAIRO_OPERATOR_SOURCE);
+        cairo_set_source_rgba(cr, 1, 1, 1, 1);
+        cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
     } else if (highlighter) {
         /**
          * Highlighter without filling.
          */
-        DocumentView::applyColor(crEffective, s, HIGHLIGHTER_ALPHA);
-        cairo_set_operator(crEffective, CAIRO_OPERATOR_MULTIPLY);
+        DocumentView::applyColor(cr, s, HIGHLIGHTER_ALPHA);
+        cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
     } else {
         /**
          * Normal pen
          */
-        DocumentView::applyColor(crEffective, static_cast<Element*>(s));
-        cairo_set_operator(crEffective, CAIRO_OPERATOR_SOURCE);
+        DocumentView::applyColor(cr, static_cast<const Element*>(s));
+        cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
     }
 
-    if (s->getErasable() && !dontRenderEditingStroke) {
+    if (s->getErasable() && ctx.showCurrentEdition) {
         // don't render erasable for previews
-        drawErasableStroke(crEffective, s);
+        drawErasableStroke(cr, s);
     } else if (s->hasPressure() && !highlighter) {
-        drawWithPressure();
+        drawWithPressure(cr);
     } else {
-        drawNoPressure();
+        drawNoPressure(cr);
     }
 
     if (useMask) {
@@ -199,21 +208,22 @@ void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool 
 
         // If the stroke has no audio attached, we draw it (even more) translucent
         if (drawTranslucent) {
-            groupAlpha *= xoj::view::OPACITY_NO_AUDIO;
+            groupAlpha *= OPACITY_NO_AUDIO;
             groupAlpha = std::max(MINIMAL_ALPHA, groupAlpha);
         }
 
-        cairo_set_operator(cr, highlighter ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER);
+        // Blit the mask onto the given cairo context
+        cairo_set_operator(ctx.cr, highlighter ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER);
 
-        DocumentView::applyColor(cr, s, (uint8_t)(groupAlpha));
+        DocumentView::applyColor(ctx.cr, s, (uint8_t)(groupAlpha));
 
-        cairo_mask_surface(cr, surfMask, 0, 0);
+        cairo_mask_surface(ctx.cr, surfMask, 0, 0);
 
-        cairo_destroy(crEffective);
-        crEffective = cr;
+        cairo_destroy(cr);
+        cr = nullptr;
         cairo_surface_destroy(surfMask);
         surfMask = nullptr;
     }
 
-    cairo_restore(cr);
+    cairo_restore(ctx.cr);
 }

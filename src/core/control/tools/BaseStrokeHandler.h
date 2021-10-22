@@ -12,7 +12,6 @@
 #pragma once
 
 #include "model/Point.h"
-#include "view/DocumentView.h"
 
 #include "InputHandler.h"
 #include "SnapToGridInputHandler.h"
@@ -56,7 +55,6 @@ protected:
     void modifyModifiersByDrawDir(double width, double height, bool changeCursor = true);
 
 protected:
-    DocumentView view;
     Point currPoint;
     Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid. See startPoint defined in
                             // derived classes such as CircleHandler.
