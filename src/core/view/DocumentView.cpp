@@ -53,25 +53,6 @@ void DocumentView::drawStroke(cairo_t* cr, Stroke* s, bool noColor) const {
     sv.paint(this->dontRenderEditingStroke, this->markAudioStroke, noColor);
 }
 
-void DocumentView::drawText(cairo_t* cr, Text* t) const {
-    cairo_matrix_t defaultMatrix = {0};
-    cairo_get_matrix(cr, &defaultMatrix);
-    if (t->isInEditing()) {
-        return;
-    }
-
-    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-    // make elements without audio translucent when highlighting elements with audio
-    if (this->markAudioStroke && t->getAudioFilename().empty()) {
-        Util::cairo_set_source_rgbi(cr, t->getColor(), xoj::view::OPACITY_NO_AUDIO);
-    } else {
-        applyColor(cr, t);
-    }
-
-    TextView::drawText(cr, t);
-    cairo_set_matrix(cr, &defaultMatrix);
-}
-
 void DocumentView::drawImage(cairo_t* cr, Image* i) const {
     cairo_matrix_t defaultMatrix = {0};
     cairo_get_matrix(cr, &defaultMatrix);
@@ -164,10 +145,13 @@ void DocumentView::drawTexImage(cairo_t* cr, TexImage* texImage) const {
 }
 
 void DocumentView::drawElement(cairo_t* cr, Element* e) const {
+    xoj::view::Context ctx{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
+                           (xoj::view::EditionTreatment)this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
     if (e->getType() == ELEMENT_STROKE) {
         drawStroke(cr, dynamic_cast<Stroke*>(e));
     } else if (e->getType() == ELEMENT_TEXT) {
-        drawText(cr, dynamic_cast<Text*>(e));
+        xoj::view::TextView textView(dynamic_cast<Text*>(e));
+        textView.draw(ctx);
     } else if (e->getType() == ELEMENT_IMAGE) {
         drawImage(cr, dynamic_cast<Image*>(e));
     } else if (e->getType() == ELEMENT_TEXIMAGE) {

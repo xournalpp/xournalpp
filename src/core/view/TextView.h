@@ -11,19 +11,21 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-
 #include "pdf/base/XojPdfPage.h"
+
+#include "View.h"
 
 class Text;
 
-class TextView {
-private:
-    TextView();
+class xoj::view::TextView: public xoj::view::ElementView {
+public:
+    TextView(const Text* t);
     virtual ~TextView();
 
-public:
-    static void setDpi(int dpi);
+    /**
+     * Draws a Text model to a cairo surface
+     */
+    void draw(const Context& ctx) const override;
 
     /**
      * Calculates the size of a Text model
@@ -31,12 +33,7 @@ public:
     static void calcSize(const Text* t, double& width, double& height);
 
     /**
-     * Draws a Text model to a cairo surface
-     */
-    static void drawText(cairo_t* cr, const Text* t);
-
-    /**
-     * Searches text within a Text model, returns XojPopplerRectangle, have to been freed
+     * Searches text within a Text model
      */
     static std::vector<XojPdfRectangle> findText(const Text* t, std::string& search);
 
@@ -49,4 +46,7 @@ public:
      * Sets the font name from Text model
      */
     static void updatePangoFont(PangoLayout* layout, const Text* t);
+
+private:
+    const Text* text;
 };

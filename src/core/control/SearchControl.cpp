@@ -51,7 +51,7 @@ auto SearchControl::search(std::string text, int* occures, double* top) -> bool 
             if (e->getType() == ELEMENT_TEXT) {
                 Text* t = dynamic_cast<Text*>(e);
 
-                std::vector<XojPdfRectangle> textResult = TextView::findText(t, text);
+                std::vector<XojPdfRectangle> textResult = xoj::view::TextView::findText(t, text);
 
                 this->results.insert(this->results.end(), textResult.begin(), textResult.end());
             }

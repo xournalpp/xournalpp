@@ -78,8 +78,6 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
 
     this->applyPreferredLanguage();
 
-    TextView::setDpi(settings->getDisplayDpi());
-
     this->pageTypes = new PageTypeHandler(gladeSearchPath);
     this->newPageType = std::make_unique<PageTypeMenu>(this->pageTypes, settings, true, true);
 
@@ -1970,8 +1968,6 @@ void Control::showSettings() {
 
     getWindow()->getXournal()->getHandRecognition()->reload();
     getWindow()->updateColorscheme();
-
-    TextView::setDpi(settings->getDisplayDpi());
 
     delete dlg;
 }

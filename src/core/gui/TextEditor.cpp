@@ -134,7 +134,7 @@ auto TextEditor::setColor(Color color) -> UndoAction* {
 
 void TextEditor::setFont(XojFont font) {
     this->text->setFont(font);
-    TextView::updatePangoFont(this->layout, this->text);
+    xoj::view::TextView::updatePangoFont(this->layout, this->text);
     this->repaintEditor();
 }
 
@@ -970,7 +970,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
     double y1 = this->gui->getY();
 
     if (this->layout == nullptr) {
-        this->layout = TextView::initPango(cr, this->text);
+        this->layout = xoj::view::TextView::initPango(cr, this->text);
     }
 
     if (!this->preeditString.empty()) {
