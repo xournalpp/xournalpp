@@ -11,7 +11,7 @@ Layer::~Layer() {
     this->elements.clear();
 }
 
-auto Layer::clone() -> Layer* {
+auto Layer::clone() const -> Layer* {
     auto* layer = new Layer();
 
     if (hasName()) {
@@ -71,7 +71,7 @@ void Layer::insertElement(Element* e, ElementIndex pos) {
     }
 }
 
-auto Layer::indexOf(Element* e) -> ElementIndex {
+auto Layer::indexOf(Element* e) const -> ElementIndex {
     for (unsigned int i = 0; i < this->elements.size(); i++) {
         if (this->elements[i] == e) {
             return i;
@@ -98,7 +98,7 @@ auto Layer::removeElement(Element* e, bool free) -> ElementIndex {
     return InvalidElementIndex;
 }
 
-auto Layer::isAnnotated() -> bool { return !this->elements.empty(); }
+auto Layer::isAnnotated() const -> bool { return !this->elements.empty(); }
 
 /**
  * @return true if the layer is visible
@@ -110,8 +110,7 @@ auto Layer::isVisible() const -> bool { return visible; }
  */
 void Layer::setVisible(bool visible) { this->visible = visible; }
 
-auto Layer::getElements() -> std::vector<Element*>* { return &this->elements; }
-
+auto Layer::getElements() const -> const std::vector<Element*>& { return this->elements; }
 
 auto Layer::hasName() const -> bool { return name.has_value(); }
 

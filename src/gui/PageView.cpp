@@ -207,7 +207,7 @@ void XojPageView::startText(double x, double y) {
         // Is there already a textfield?
         Text* text = nullptr;
 
-        for (Element* e: *this->page->getSelectedLayer()->getElements()) {
+        for (Element* e: this->page->getSelectedLayer()->getElements()) {
             if (e->getType() == ELEMENT_TEXT) {
                 GdkRectangle matchRect = {gint(x), gint(y), 1, 1};
                 if (e->intersectsArea(&matchRect)) {

@@ -45,7 +45,7 @@ public:
     /**
      * Returns the index of the given Element with respect to the internal list
      */
-    ElementIndex indexOf(Element* e);
+    ElementIndex indexOf(Element* e) const;
 
     /**
      * Removes an Element from the Layer and optionally deletes it
@@ -55,12 +55,12 @@ public:
     /**
      * Returns an iterator over the Element%s contained in this Layer
      */
-    std::vector<Element*>* getElements();
+    const std::vector<Element*>& getElements() const;
 
     /**
      * Returns whether or not the Layer is empty
      */
-    bool isAnnotated();
+    bool isAnnotated() const;
 
     /**
      * @return true if the layer is visible
@@ -75,7 +75,7 @@ public:
     /**
      * Creates a deep copy of this Layer by copying all of the Element%s contained in it
      */
-    Layer* clone();
+    Layer* clone() const;
 
 
     /**

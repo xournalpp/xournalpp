@@ -44,7 +44,7 @@ auto RectSelection::finalize(PageRef page) -> bool {
     this->page = page;
 
     Layer* l = page->getSelectedLayer();
-    for (Element* e: *l->getElements()) {
+    for (Element* e: l->getElements()) {
         if (e->isInSelection(this)) {
             this->selectedElements.push_back(e);
         }
@@ -295,7 +295,7 @@ auto RegionSelect::finalize(PageRef page) -> bool {
     }
 
     Layer* l = page->getSelectedLayer();
-    for (Element* e: *l->getElements()) {
+    for (Element* e: l->getElements()) {
         if (e->isInSelection(this)) {
             this->selectedElements.push_back(e);
         }

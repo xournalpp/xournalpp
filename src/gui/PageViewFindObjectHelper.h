@@ -47,7 +47,7 @@ protected:
          */
         bool found = false;
         double minDistSq = std::numeric_limits<double>::max();
-        for (Element* e: *l->getElements()) {
+        for (Element* e: l->getElements()) {
             const double eX = e->getX() + e->getElementWidth() / 2.0;
             const double eY = e->getY() + e->getElementHeight() / 2.0;
             const double dx = eX - this->x;
