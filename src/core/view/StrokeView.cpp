@@ -152,7 +152,7 @@ void StrokeView::draw(const Context& ctx) const {
                 cairo_set_source_rgba(cr, 1, 1, 1, static_cast<double>(fill) / 255.0);
             }
         } else {
-            DocumentView::applyColor(cr, s, static_cast<uint8_t>(fill));
+            Util::cairo_set_source_rgbi(cr, s->getColor(), static_cast<double>(fill) / 255.0);
         }
         cairo_set_operator(cr, useMask ? CAIRO_OPERATOR_SOURCE : CAIRO_OPERATOR_OVER);
         pathToCairo(cr);
@@ -173,13 +173,13 @@ void StrokeView::draw(const Context& ctx) const {
         /**
          * Highlighter without filling.
          */
-        DocumentView::applyColor(cr, s, HIGHLIGHTER_ALPHA);
+        Util::cairo_set_source_rgbi(cr, s->getColor(), OPACITY_HIGHLIGHTER);
         cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
     } else {
         /**
          * Normal pen
          */
-        DocumentView::applyColor(cr, static_cast<const Element*>(s));
+        Util::cairo_set_source_rgbi(cr, s->getColor());
         cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
     }
 
@@ -199,12 +199,13 @@ void StrokeView::draw(const Context& ctx) const {
 
         /**
          * Opacity for the mask's content: the base value depends on the tool:
-         * Pen                     : 255
-         * Highlighter (no filling): HIGHLIGHTER_ALPHA
-         * Highlighter (filled)    : s->getFill()
+         * Pen                     : 1
+         * Highlighter (no filling): OPACITY_HIGHLIGHTER
+         * Highlighter (filled)    : s->getFill() / 255
          */
         double groupAlpha =
-                highlighter ? static_cast<double>(filledHighlighter ? s->getFill() : HIGHLIGHTER_ALPHA) : 255.0;
+                highlighter ? (filledHighlighter ? static_cast<double>(s->getFill()) / 255.0 : OPACITY_HIGHLIGHTER) :
+                              1.0;
 
         // If the stroke has no audio attached, we draw it (even more) translucent
         if (drawTranslucent) {
@@ -215,7 +216,7 @@ void StrokeView::draw(const Context& ctx) const {
         // Blit the mask onto the given cairo context
         cairo_set_operator(ctx.cr, highlighter ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER);
 
-        DocumentView::applyColor(ctx.cr, s, (uint8_t)(groupAlpha));
+        Util::cairo_set_source_rgbi(ctx.cr, s->getColor(), groupAlpha);
 
         cairo_mask_surface(ctx.cr, surfMask, 0, 0);
 

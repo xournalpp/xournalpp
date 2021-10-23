@@ -23,24 +23,6 @@ DocumentView::~DocumentView() {
  */
 void DocumentView::setMarkAudioStroke(bool markAudioStroke) { this->markAudioStroke = markAudioStroke; }
 
-void DocumentView::applyColor(cairo_t* cr, const Stroke* s) {
-    if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
-        if (s->getFill() != -1) {
-            applyColor(cr, s, static_cast<uint8_t>(s->getFill()));
-        } else {
-            applyColor(cr, s, xoj::view::StrokeView::HIGHLIGHTER_ALPHA);
-        }
-    } else {
-        applyColor(cr, static_cast<const Element*>(s));
-    }
-}
-
-void DocumentView::applyColor(cairo_t* cr, const Element* e, uint8_t alpha) { applyColor(cr, e->getColor(), alpha); }
-
-void DocumentView::applyColor(cairo_t* cr, Color c, uint8_t alpha) {
-    Util::cairo_set_source_rgbi(cr, c, alpha / 255.0);
-}
-
 void DocumentView::paintBackgroundImage() {
     GdkPixbuf* pixbuff = page->getBackgroundImage().getPixbuf();
     if (pixbuff) {

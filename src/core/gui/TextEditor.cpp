@@ -6,7 +6,6 @@
 
 #include "control/Control.h"
 #include "undo/ColorUndoAction.h"
-#include "view/DocumentView.h"
 #include "view/TextView.h"
 
 #include "PageView.h"
@@ -949,7 +948,7 @@ void TextEditor::drawCursor(cairo_t* cr, double x, double y, double height, doub
             cairo_restore(cr);
         }
     }
-    DocumentView::applyColor(cr, this->text);
+    Util::cairo_set_source_rgbi(cr, this->text->getColor());
 }
 
 void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
@@ -957,7 +956,7 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
 
     cairo_save(cr);
 
-    DocumentView::applyColor(cr, this->text);
+    Util::cairo_set_source_rgbi(cr, this->text->getColor());
 
     GtkTextIter cursorIter = {nullptr};
     GtkTextMark* cursor = gtk_text_buffer_get_insert(this->buffer);
