@@ -294,8 +294,6 @@ void MainWindow::setGtkTouchscreenScrollingEnabled(bool enabled) {
             G_PRIORITY_HIGH);
 }
 
-bool MainWindow::getGtkTouchscreenScrollingEnabled() const { return gtkTouchscreenScrollingEnabled.load(); }
-
 /**
  * Allow to hide menubar, but only if global menu is not enabled
  */

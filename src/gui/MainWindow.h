@@ -106,7 +106,6 @@ public:
      */
     void setGtkTouchscreenScrollingForDeviceMapping();
     void setGtkTouchscreenScrollingEnabled(bool enabled);
-    bool getGtkTouchscreenScrollingEnabled() const;
 
     void rebindMenubarAccelerators();
 
