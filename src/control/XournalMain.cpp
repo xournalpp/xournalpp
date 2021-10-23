@@ -424,7 +424,6 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
     // -----------------------------------------------------------------------
 
     fs::path p = Util::getDataPath();
-    p /= "..";
     p /= relativePathAndFile;
 
     if (fs::exists(p)) {
