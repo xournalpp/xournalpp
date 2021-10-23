@@ -6,11 +6,10 @@
 #include "model/eraser/ErasableStroke.h"
 #include "view/background/MainBackgroundPainter.h"
 
-#include "ImageView.h"
+#include "LayerView.h"
 #include "StrokeView.h"
-#include "TexImageView.h"
-#include "TextView.h"
 
+using xoj::util::Rectangle;
 
 DocumentView::DocumentView() { this->backgroundPainter = new MainBackgroundPainter(); }
 
@@ -42,71 +41,6 @@ void DocumentView::applyColor(cairo_t* cr, Color c, uint8_t alpha) {
     Util::cairo_set_source_rgbi(cr, c, alpha / 255.0);
 }
 
-void DocumentView::drawElement(cairo_t* cr, Element* e) const {
-    xoj::view::Context ctx{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
-                           (xoj::view::EditionTreatment)this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
-    if (e->getType() == ELEMENT_STROKE) {
-        xoj::view::StrokeView strokeView(dynamic_cast<Stroke*>(e));
-        strokeView.draw(ctx);
-    } else if (e->getType() == ELEMENT_TEXT) {
-        xoj::view::TextView textView(dynamic_cast<Text*>(e));
-        textView.draw(ctx);
-    } else if (e->getType() == ELEMENT_IMAGE) {
-        xoj::view::ImageView imageView(dynamic_cast<Image*>(e));
-        imageView.draw(ctx);
-    } else if (e->getType() == ELEMENT_TEXIMAGE) {
-        xoj::view::TexImageView texImageView(dynamic_cast<TexImage*>(e));
-        texImageView.draw(ctx);
-    }
-}
-
-/**
- * Draw a single layer
- * @param cr Draw to thgis context
- * @param l The layer to draw
- */
-void DocumentView::drawLayer(cairo_t* cr, Layer* l) {
-    cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
-
-#ifdef DEBUG_SHOW_REPAINT_BOUNDS
-    int drawn = 0;
-    int notDrawn = 0;
-#endif  // DEBUG_SHOW_REPAINT_BOUNDS
-    for (Element* e: l->getElements()) {
-#ifdef DEBUG_SHOW_ELEMENT_BOUNDS
-        cairo_set_source_rgb(cr, 0, 1, 0);
-        cairo_set_line_width(cr, 1);
-        cairo_rectangle(cr, e->getX(), e->getY(), e->getElementWidth(), e->getElementHeight());
-        cairo_stroke(cr);
-#endif  // DEBUG_SHOW_REPAINT_BOUNDS
-        // cairo_new_path(cr);
-
-        if (this->lX != -1) {
-            if (e->intersectsArea(this->lX, this->lY, this->width, this->height)) {
-                drawElement(cr, e);
-#ifdef DEBUG_SHOW_REPAINT_BOUNDS
-                drawn++;
-#endif  // DEBUG_SHOW_REPAINT_BOUNDS
-            }
-#ifdef DEBUG_SHOW_REPAINT_BOUNDS
-            else {
-                notDrawn++;
-            }
-#endif  // DEBUG_SHOW_REPAINT_BOUNDS
-
-        } else {
-#ifdef DEBUG_SHOW_REPAINT_BOUNDS
-            drawn++;
-#endif  // DEBUG_SHOW_REPAINT_BOUNDS
-            drawElement(cr, e);
-        }
-    }
-
-#ifdef DEBUG_SHOW_REPAINT_BOUNDS
-    g_message("DBG:DocumentView: draw %i / not draw %i", drawn, notDrawn);
-#endif  // DEBUG_SHOW_REPAINT_BOUNDS
-}
-
 void DocumentView::paintBackgroundImage() {
     GdkPixbuf* pixbuff = page->getBackgroundImage().getPixbuf();
     if (pixbuff) {
@@ -129,7 +63,12 @@ void DocumentView::paintBackgroundImage() {
 }
 
 void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container) {
-    for (Element* e: *container->getElements()) { drawElement(cr, e); }
+    xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
+                               (xoj::view::EditionTreatment)this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
+    for (Element* e: *container->getElements()) {
+        auto elementView = xoj::view::ElementView::createFromElement(e);
+        elementView->draw(context);
+    }
 }
 
 void DocumentView::limitArea(double x, double y, double width, double height) {
@@ -233,14 +172,18 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
         drawTransparentBackgroundPattern();
     }
 
-    int layer = 0;
-    for (Layer* l: *page->getLayers()) {
-        if (!page->isLayerVisible(l)) {
-            continue;
+    xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
+                               (xoj::view::EditionTreatment)this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
+    const Rectangle<double> drawArea{this->lX, this->lY, this->lWidth, this->lHeight};
+    for (Layer* layer: *page->getLayers()) {
+        if (page->isLayerVisible(layer)) {
+            xoj::view::LayerView layerView(layer);
+            if (this->lX == -1) {
+                layerView.draw(context);
+            } else {
+                layerView.draw(context, drawArea);
+            }
         }
-
-        drawLayer(cr, l);
-        layer++;
     }
 
     finializeDrawing();
