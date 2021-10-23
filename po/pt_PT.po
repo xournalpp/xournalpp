@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-23 12:03\n"
+"PO-Revision-Date: 2021-10-23 13:04\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -471,11 +471,11 @@ msgstr "Editar texto"
 
 #: ../src/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
-msgstr ""
+msgstr "Documento guardado de emergência"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:281
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "Ative a sensibilidade à pressão ou inferência da pressão para alterar esta configuração!"
 
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
@@ -495,7 +495,7 @@ msgstr "Erro ao anotar PDF \"{1}\"\n"
 
 #: ../src/gui/GladeGui.cpp:22
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
+msgstr "Erro ao carregar o ficheiro glade \"{1}\" (tente carregar \"{2}\")"
 
 #: ../src/control/Control.cpp:2033
 msgid "Error opening file \"{1}\""
@@ -545,11 +545,12 @@ msgstr "Erro: {1}. Por favor, verifique o conteúdo de {2}"
 #: ../src/control/XournalMain.cpp:187
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr ""
+msgstr "O registo de erro não pode ser eliminado. Tem de fazer isso manualmente.\n"
+"Ficheiro de registos: {1}"
 
 #: ../src/control/XournalMain.cpp:648
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Exportar FICHEIRO como PDF"
 
 #: ../src/control/XournalMain.cpp:650
 msgid "Export FILE as image files (one per page)\n"
@@ -2505,15 +2506,15 @@ msgstr ""
 
 #: ../ui/settings.glade:1716
 msgid "Ignore the first"
-msgstr ""
+msgstr "Ignorar o primeiro"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Qualidade da imagem"
 
 #: ../ui/settings.glade:240
 msgid "Inertia"
-msgstr ""
+msgstr "Inércia"
 
 #: ../ui/settings.glade:5381
 msgid "Input Device"
@@ -2529,7 +2530,7 @@ msgstr "Sistema de entrada"
 
 #: ../ui/settings.glade:1247
 msgid "Input stabilization"
-msgstr ""
+msgstr "Estabilização de entrada"
 
 #: ../ui/settings.glade:1227
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
@@ -2549,23 +2550,23 @@ msgstr "Inserir Página Antes"
 
 #: ../ui/settings.glade:5721
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Configurações do executável LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Comando de geração LaTeX"
 
 #: ../ui/settings.glade:5810 ../ui/settings.glade:5858
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: ../ui/settings.glade:5828
 msgid "Language Settings"
-msgstr ""
+msgstr "Definições de idioma"
 
 #: ../ui/main.glade:575
 msgid "Layout"
@@ -2593,11 +2594,11 @@ msgstr "Gerir Barras de Ferramentas"
 
 #: ../ui/settings.glade:1109
 msgid "Mass"
-msgstr ""
+msgstr "Massa"
 
 #: ../ui/settings.glade:1108 ../ui/settings.glade:1120
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Massa: quanto maior a massa, mais inércia e mais estabilização"
 
 #: ../ui/settings.glade:4795
 msgid "Max Length (mm)"
@@ -2605,7 +2606,7 @@ msgstr "Comprimento máximo (mm)"
 
 #: ../ui/settings.glade:3466
 msgid "Max multiplier"
-msgstr ""
+msgstr "Multiplicador máximo"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2618,7 +2619,7 @@ msgstr "Botão do meio do rato"
 
 #: ../ui/settings.glade:1577
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Pressão mínima:"
 
 #: ../ui/settings.glade:1454 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2667,7 +2668,7 @@ msgstr ""
 #: ../ui/settings.glade:2999
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Sem ícone"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2676,7 +2677,7 @@ msgstr ""
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:217
 #: ../ui/settings.glade:234
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 #: ../ui/settings.glade:4305
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2696,7 +2697,7 @@ msgstr "Dispositivo de Saída"
 
 #: ../ui/settings.glade:5019
 msgid "PDF Cache"
-msgstr ""
+msgstr "Cache PDF"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
