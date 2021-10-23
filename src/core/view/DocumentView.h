@@ -82,20 +82,11 @@ public:
     void drawTransparentBackgroundPattern();
 
     /**
-     * Draw a single layer
-     * @param cr Draw to thgis context
-     * @param l The layer to draw
-     */
-    void drawLayer(cairo_t* cr, Layer* l);
-
-    /**
      * Last step in drawing
      */
     void finializeDrawing();
 
 private:
-    void drawElement(cairo_t* cr, Element* e) const;
-
     void paintBackgroundImage();
 
 private:

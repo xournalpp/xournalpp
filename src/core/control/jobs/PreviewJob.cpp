@@ -7,6 +7,7 @@
 #include "gui/sidebar/previews/layer/SidebarPreviewLayerEntry.h"
 #include "model/Document.h"
 #include "view/DocumentView.h"
+#include "view/LayerView.h"
 #include "view/PdfView.h"
 
 PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar): sidebarPreview(sidebar) {}
@@ -96,6 +97,8 @@ void PreviewJob::drawPage() {
             break;
     }
 
+    auto context = xoj::view::Context::createDefault(cr2);
+
     switch (type) {
         case RENDER_TYPE_PAGE_PREVIEW:
             // render all layers
@@ -109,7 +112,8 @@ void PreviewJob::drawPage() {
                 view.drawBackground();
             } else {
                 Layer* drawLayer = (*page->getLayers())[layer];
-                view.drawLayer(cr2, drawLayer);
+                xoj::view::LayerView layerView(drawLayer);
+                layerView.draw(context);
             }
             view.finializeDrawing();
             break;
@@ -120,7 +124,8 @@ void PreviewJob::drawPage() {
             view.drawBackground();
             for (int i = 0; i <= layer; i++) {
                 Layer* drawLayer = (*page->getLayers())[i];
-                view.drawLayer(cr2, drawLayer);
+                xoj::view::LayerView layerView(drawLayer);
+                layerView.draw(context);
             }
             view.finializeDrawing();
             break;

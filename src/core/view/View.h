@@ -11,7 +11,11 @@
 
 #pragma once
 
+#include <memory>
+
 #include <gtk/gtk.h>
+
+class Element;
 
 namespace xoj {
 namespace view {
@@ -34,12 +38,15 @@ class ElementView {
 public:
     virtual ~ElementView() = default;
     virtual void draw(const Context& ctx) const = 0;
+    static std::unique_ptr<ElementView> createFromElement(const Element* e);
 };
 
 class TexImageView;
 class ImageView;
 class StrokeView;
 class TextView;
+
+class LayerView;
 
 constexpr double OPACITY_NO_AUDIO = 0.3;
 };  // namespace view
