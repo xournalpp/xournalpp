@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:50\n"
+"PO-Revision-Date: 2021-10-23 12:03\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -1255,7 +1255,7 @@ msgstr ""
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
-msgstr ""
+msgstr "Padrão do sistema"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
@@ -1462,7 +1462,7 @@ msgstr "Branco"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:33
 msgid "With PDF background"
-msgstr ""
+msgstr "Com fundo em PDF"
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
@@ -1499,7 +1499,7 @@ msgstr "Ficheiros Xournal++"
 #: ../src/control/stockdlg/XojOpenDlg.cpp:65
 #: ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Modelo Xournal++"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
@@ -1752,43 +1752,43 @@ msgstr ""
 
 #: ../ui/settings.glade:1090
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1142
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4962
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1735
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5609
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1058
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2458
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:1029
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3150
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1122
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1817,7 +1817,8 @@ msgstr "<b>Predefinição</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Configurações de exportação de documentos</b>\n"
+"Defina os parâmetros de exportação"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1973,7 +1974,7 @@ msgstr "Adicione espaço vertical adicional de"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Adicionar/editar Tex"
 
 #: ../ui/settings.glade:4494
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -1981,7 +1982,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Tudo"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -2022,7 +2023,7 @@ msgstr "Autor: "
 
 #: ../ui/about.glade:449
 msgid "Authors"
-msgstr ""
+msgstr "Autores"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2030,7 +2031,7 @@ msgstr "Deteção automática"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
-msgstr ""
+msgstr "Carregamento automático"
 
 #: ../ui/settings.glade:456
 msgid "Autosaving"
@@ -2050,7 +2051,7 @@ msgstr "Cor de fundo entre as páginas"
 
 #: ../ui/settings.glade:3453
 msgid "Base speed"
-msgstr ""
+msgstr "Velocidade base"
 
 #: ../ui/settings.glade:3001
 msgctxt "stylus cursor uses a big pen icon"
@@ -2059,11 +2060,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3205
 msgid "Border Color"
-msgstr ""
+msgstr "Cor da borda"
 
 #: ../ui/settings.glade:3166
 msgid "Border Width"
-msgstr ""
+msgstr "Espessura da borda"
 
 #: ../ui/settings.glade:2807
 msgid "Border color"
@@ -2075,15 +2076,15 @@ msgstr "Cor da borda para a página atual e outras seleções"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Trazer para a frente"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "Trazer para o primeiro plano"
 
 #: ../ui/settings.glade:1017
 msgid "Buffersize"
-msgstr ""
+msgstr "Tamanho do buffer"
 
 #: ../ui/about.glade:99
 msgid "Built on"
@@ -2231,7 +2232,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1077
 msgid "Drag"
-msgstr ""
+msgstr "Arrastar"
 
 #: ../ui/settings.glade:871
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2418,7 +2419,7 @@ msgstr "Ir para a página"
 
 #: ../ui/settings.glade:4632
 msgid "Grid size"
-msgstr ""
+msgstr "Tamanho da grelha"
 
 #: ../ui/settings.glade:4589
 msgid "Grid snapping tolerance"
@@ -2434,7 +2435,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Altura"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
