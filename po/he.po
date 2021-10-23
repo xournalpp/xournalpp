@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-10-20 12:57\n"
+"PO-Revision-Date: 2021-10-23 20:53\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -295,7 +295,7 @@ msgstr ""
 
 #: ../src/control/latex/LatexGenerator.cpp:70
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "לא ניתן לשמור קובץ ‎.tex:‏ {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:86
 msgid "Could not start {1}: {2} (exit code: {3})"
