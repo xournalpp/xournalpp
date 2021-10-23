@@ -17,6 +17,7 @@
 #include "SnapToGridInputHandler.h"
 
 class ShapeRecognizer;
+class ShapeRecognizerResult;
 
 namespace StrokeStabilizer {
 class Base;
