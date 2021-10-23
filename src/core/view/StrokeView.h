@@ -51,6 +51,6 @@ private:
     const Stroke* s;
 
 public:
-    static constexpr uint8_t HIGHLIGHTER_ALPHA = 120;
-    static constexpr double MINIMAL_ALPHA = 10;
+    static constexpr double OPACITY_HIGHLIGHTER = 0.47;
+    static constexpr double MINIMAL_ALPHA = 0.04;
 };

@@ -13,7 +13,6 @@
 #include "gui/XournalView.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/RecognizerUndoAction.h"
-#include "view/DocumentView.h"
 #include "view/StrokeView.h"
 
 #include "StrokeStabilizer.h"
@@ -48,10 +47,19 @@ void StrokeHandler::draw(cairo_t* cr) {
         auto context = xoj::view::Context::createColorBlind(crMask);
         strokeView->draw(context);
     }
-    DocumentView::applyColor(cr, stroke);
 
-    cairo_set_operator(
-            cr, stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER);
+    // set the stroke color and blend mode
+    if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+        if (auto fill = stroke->getFill(); fill != -1) {
+            Util::cairo_set_source_rgbi(cr, stroke->getColor(), static_cast<double>(fill) / 255.0);
+        } else {
+            Util::cairo_set_source_rgbi(cr, stroke->getColor(), xoj::view::StrokeView::OPACITY_HIGHLIGHTER);
+        }
+        cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
+    } else {
+        Util::cairo_set_source_rgbi(cr, stroke->getColor());
+        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+    }
 
     cairo_mask_surface(cr, surfMask, 0, 0);
 }
