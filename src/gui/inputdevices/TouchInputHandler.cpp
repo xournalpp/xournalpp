@@ -130,14 +130,6 @@ void TouchInputHandler::zoomStart() {
     }
 
     auto* mainWindow = inputContext->getView()->getControl()->getWindow();
-
-    // When not using touch drawing, we're using a different scrolling method.
-    // This requires different centering.
-    if (!mainWindow->getGtkTouchscreenScrollingEnabled()) {
-        Rectangle zoomSequenceRectangle = zoomControl->getVisibleRect();
-        center += utl::Point<double>{zoomSequenceRectangle.x, zoomSequenceRectangle.y};
-    }
-
     zoomControl->startZoomSequence(center);
 }
 
