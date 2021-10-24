@@ -38,7 +38,7 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
     g_object_get(settings, "gtk-cursor-blink-timeout", &this->cursorBlinkTimeout, nullptr);
 
     this->imContext = gtk_im_multicontext_new();
-    gtk_im_context_set_client_window(this->imContext, gtk_widget_get_window(this->widget));
+    gtk_im_context_set_client_window(this->imContext, gtk_widget_get_root_window(this->widget));
     gtk_im_context_focus_in(this->imContext);
 
     g_signal_connect(this->imContext, "commit", G_CALLBACK(iMCommitCallback), this);
