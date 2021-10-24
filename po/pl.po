@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:50\n"
+"PO-Revision-Date: 2021-10-24 08:28\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1906,7 +1906,7 @@ msgstr "<i>Określ, które narzędzie zostanie wybrane po naciśnięciu przycisk
 
 #: ../ui/settings.glade:2612
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr ""
+msgstr "<i>Dezaktywacja przewijania ekranu dotykowego GTK może działać wokół przewijania błędów na niektórych platformach. Rozważ zmianę tego ustawienia, jeśli doświadczysz skoków/nagłych zmian w pozycji przewijania podczas próby przewijania ekranem dotykowym.</i>"
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -2253,7 +2253,7 @@ msgstr "Wyłącz"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "Wyłącz wbudowaną funkcję bezwładnościowego przewijania GTK (wymaga ponownego uruchomienia)."
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -2943,7 +2943,7 @@ msgstr "Kolor zaznaczenia (Tekst, Wybór śladów itp.)"
 
 #: ../ui/settings.glade:3481
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Wybieranie krawędzi"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3106,7 +3106,7 @@ msgstr "Rysowanie dotykiem"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Przewijanie dotykowe"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
