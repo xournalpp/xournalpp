@@ -254,6 +254,8 @@ public:
     void assertStrokeEquality(const Stroke& stroke1, const Stroke& stroke2) {
         CPPUNIT_ASSERT_EQUAL(stroke1.getAudioFilename(), stroke2.getAudioFilename());
         CPPUNIT_ASSERT_EQUAL(stroke1.getToolType(), stroke2.getToolType());
+        CPPUNIT_ASSERT_EQUAL(stroke1.getFill(), stroke2.getFill());
+        CPPUNIT_ASSERT_EQUAL(stroke1.getWidth(), stroke2.getWidth());
 
         double avgPressure1 = stroke1.getAvgPressure();
         double avgPressure2 = stroke2.getAvgPressure();
