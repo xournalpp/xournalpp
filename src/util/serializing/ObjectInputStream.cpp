@@ -56,7 +56,7 @@ auto ObjectInputStream::readObject() -> std::string {
 
 auto ObjectInputStream::getNextObjectName() -> std::string {
     std::streambuf* pBuffer = istream.rdbuf();
-    int pos = len - pBuffer->in_avail();
+    std::streamsize pos = len - pBuffer->in_avail();
 
     checkType('{');
     std::string name = readString();
