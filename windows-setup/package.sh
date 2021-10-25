@@ -61,6 +61,9 @@ echo "copy gspawn-win64-helper"
 cp /mingw64/bin/gspawn-win64-helper.exe "$setup_dir"/bin
 cp /mingw64/bin/gspawn-win64-helper-console.exe "$setup_dir"/bin
 
+echo "copy gdbus"
+cp /mingw64/bin/gdbus.exe "$setup_dir"/bin
+
 echo "create installer"
 bash make_version_nsh.sh
 "/c/Program Files (x86)/NSIS/Bin/makensis.exe" xournalpp.nsi
