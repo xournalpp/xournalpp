@@ -30,7 +30,7 @@ public:
     virtual void selected(ActionGroup group, ActionType action);
 
 protected:
-    virtual GtkToolItem* newItem();
+    virtual GtkWidget* newItem();
     void addMenuitem(const std::string& text, const std::string& icon, ActionType type, ActionGroup group);
 
 private:

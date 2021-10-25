@@ -26,7 +26,7 @@ class Settings;
 class MainBackgroundPainter;
 
 typedef struct {
-    GtkWidget* entry;
+    GMenuItem* entry;
     PageTypeInfo* info;
 } MenuCallbackInfo;
 
@@ -40,13 +40,13 @@ enum class ApplyPageTypeSource {
 class PageTypeMenuChangeListener {
 public:
     virtual void changeCurrentPageBackground(PageTypeInfo* info) = 0;
-    virtual ~PageTypeMenuChangeListener();
+    virtual ~PageTypeMenuChangeListener() = default;
 };
 
 class PageTypeApplyListener {
 public:
     virtual void applySelectedPageBackground(bool allPages, ApplyPageTypeSource src) = 0;
-    virtual ~PageTypeApplyListener();
+    virtual ~PageTypeApplyListener() = default;
 };
 
 class PageTypeMenu {
@@ -54,7 +54,7 @@ public:
     PageTypeMenu(PageTypeHandler* types, Settings* settings, bool showPreview, bool showSpecial);
 
 public:
-    GtkWidget* getMenu();
+    GMenu* getMenu();
     PageType getSelected();
     void loadDefaultPage();
     void setSelected(const PageType& selected);
@@ -68,16 +68,16 @@ public:
                                   ApplyPageTypeSource ptSource);
 
 private:
-    static GtkWidget* createApplyMenuItem(const char* text);
+    static GMenuItem* createApplyMenuItem(const char* text);
     void initDefaultMenu();
-    void addMenuEntry(MainBackgroundPainter* bgPainter, PageTypeInfo* t);
+    auto createMenuEntry(MainBackgroundPainter* bgPainter, PageTypeInfo* t) -> GMenuItem*;
     void entrySelected(PageTypeInfo* t);
     cairo_surface_t* createPreviewImage(MainBackgroundPainter* bgPainter, const PageType& pt);
 
 private:
     bool showSpecial;
 
-    GtkWidget* menu;
+    GMenu* menu;
     PageTypeHandler* types;
     Settings* settings;
 

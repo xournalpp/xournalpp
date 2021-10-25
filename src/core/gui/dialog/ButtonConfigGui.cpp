@@ -37,8 +37,10 @@ void addToolToList(GtkListStore* typeModel, const char* icon, const char* name, 
     GtkTreeIter iter;
 
     gtk_list_store_append(typeModel, &iter);
-    GdkPixbuf* pixbuf = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24,
-                                                 static_cast<GtkIconLookupFlags>(0), nullptr);
+    GdkPixbuf* pixbuf{};
+    // Todo (gtk4): fix this
+    // = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), icon, 24,
+    //                                           static_cast<GtkIconLookupFlags>(0), nullptr);
     gtk_list_store_set(typeModel, &iter, 0, pixbuf, -1);
     gtk_list_store_set(typeModel, &iter, 1, name, 2, action, -1);
 }
@@ -52,9 +54,8 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
         iconNameHelper(settings) {
 
     GtkWidget* mainGrid = get("mainGrid");
-    gtk_container_remove(GTK_CONTAINER(getWindow()), mainGrid);
-    gtk_container_add(GTK_CONTAINER(w), mainGrid);
-    gtk_widget_show_all(mainGrid);
+    gtk_window_set_child(GTK_WINDOW(getWindow()), nullptr);
+    gtk_box_append(GTK_BOX(w), mainGrid);
 
     this->cbDevice = get("labelDevice");
     this->cbDisableDrawing = get("cbDisableDrawing");

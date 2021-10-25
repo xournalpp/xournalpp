@@ -31,12 +31,11 @@ void ToolSelectCombocontrol::addMenuitem(const string& text, const string& icon,
     GtkWidget* label = gtk_label_new(text.c_str());
     GtkWidget* menuItem = gtk_menu_item_new();
 
-    gtk_container_add(GTK_CONTAINER(box), gtk_image_new_from_icon_name(icon.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR));
+    gtk_box_append(GTK_BOX(box), gtk_image_new_from_icon_name(icon.c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR));
     gtk_label_set_xalign(GTK_LABEL(label), 0.0);
-    gtk_box_pack_end(GTK_BOX(box), label, true, true, 0);
+    gtk_box_append(GTK_BOX(box), label);
 
     gtk_container_add(GTK_CONTAINER(menuItem), box);
-    gtk_widget_show_all(menuItem);
     gtk_container_add(GTK_CONTAINER(popup), menuItem);
 
     toolMenuHandler->registerMenupoint(menuItem, type, group);
@@ -44,7 +43,7 @@ void ToolSelectCombocontrol::addMenuitem(const string& text, const string& icon,
 
 void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action) {
     if (this->item) {
-        if (!GTK_IS_TOGGLE_TOOL_BUTTON(this->item)) {
+        if (!GTK_IS_TOGGLE_BUTTON(this->item)) {
             g_warning("selected action %i which is not a toggle action! 2", action);
             return;
         }
@@ -76,25 +75,25 @@ void ToolSelectCombocontrol::selected(ActionGroup group, ActionType action) {
 
             description = _("Play Object");
         }
-        gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(item), description.c_str());
+        gtk_widget_set_tooltip_text(GTK_TOOL_ITEM(item), description.c_str());
 
 
-        if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action)) {
+        if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->item)) != (this->action == action)) {
             this->toolToggleButtonActive = (this->action == action);
-            gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->toolToggleButtonActive);
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->item), this->toolToggleButtonActive);
         }
     }
 }
 
-auto ToolSelectCombocontrol::newItem() -> GtkToolItem* {
-    GtkToolItem* it = nullptr;
+auto ToolSelectCombocontrol::newItem() -> GtkButton* {
+    GtkButton* it = nullptr;
 
     labelWidget = gtk_label_new(_("Select Rectangle"));
     iconWidget =
             gtk_image_new_from_icon_name(toolMenuHandler->iconName("select-rect").c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
 
-    it = gtk_menu_tool_toggle_button_new(iconWidget, "test0");
-    gtk_tool_button_set_label_widget(GTK_TOOL_BUTTON(it), labelWidget);
-    gtk_menu_tool_toggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
+    it = gtktoggle_button_new(iconWidget, "test0");
+    gtk_button_set_label_widget(GTK_BUTTON(it), labelWidget);
+    gtktoggle_button_set_menu(GTK_MENU_TOOL_TOGGLE_BUTTON(it), popupMenu);
     return it;
 }

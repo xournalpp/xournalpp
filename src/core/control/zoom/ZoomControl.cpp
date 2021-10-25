@@ -5,8 +5,8 @@
 #include "control/Control.h"
 #include "gui/XournalView.h"
 
-auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom) -> bool {
-    guint state = event->state & gtk_accelerator_get_default_mod_mask();
+auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEvent* event, ZoomControl* zoom) -> bool {
+    guint state = gdk_event_get_modifier_state(event) & gtk_accelerator_get_default_mod_mask();
 
     // do not handle e.g. ALT + Scroll (e.g. Compiz use this shortcut for setting transparency...)
     if (state != 0 && (state & ~(GDK_CONTROL_MASK | GDK_SHIFT_MASK))) {
@@ -14,11 +14,15 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
     }
 
     if (state & GDK_CONTROL_MASK) {
-        auto direction =
-                (event->direction == GDK_SCROLL_UP || (event->direction == GDK_SCROLL_SMOOTH && event->delta_y < 0)) ?
-                        ZOOM_IN :
-                        ZOOM_OUT;
-        zoom->zoomScroll(direction, {event->x, event->y});
+        auto direction0 = gdk_scroll_event_get_direction(event);
+        double delta_y;  // NOLINT (cppcoreguidelines-init-variables)
+        gdk_scroll_event_get_deltas(event, nullptr, &delta_y);
+        auto direction = (direction0 == GDK_SCROLL_UP || (direction0 == GDK_SCROLL_SMOOTH && delta_y < 0)) ?  //
+                                 ZOOM_IN :                                                                    //
+                                 ZOOM_OUT;
+        double x, y;  // NOLINT (cppcoreguidelines-init-variables)
+        gdk_event_get_position(event, &x, &y);
+        zoom->zoomScroll(direction, {x, y});
         return true;
     }
 
@@ -26,22 +30,25 @@ auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, Z
     return zoom->isZoomPresentationMode();
 }
 
-auto onTouchpadPinchEvent(GtkWidget* widget, GdkEventTouchpadPinch* event, ZoomControl* zoom) -> bool {
-    if (event->type == GDK_TOUCHPAD_PINCH && event->n_fingers == 2) {
+auto onTouchpadPinchEvent(GtkWidget* widget, /* GdkEventTouchpadPinch */ GdkEvent* event, ZoomControl* zoom) -> bool {
+    auto event_type = gdk_event_get_event_type(event);
+    auto event_n_fingers = gdk_touchpad_event_get_n_fingers(event);
+    if (event_type == GDK_TOUCHPAD_PINCH && event_n_fingers == 2) {
         utl::Point<double> center;
-        switch (event->phase) {
+        auto event_phase = gdk_touchpad_event_get_gesture_phase(event);
+        switch (event_phase) {
             case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN:
                 if (zoom->isZoomFitMode()) {
                     zoom->setZoomFitMode(false);
                 }
-                center = {event->x, event->y};
+                gdk_event_get_position(event, &center.x, &center.y);
                 // Need to adjust the center because the event coordinates are relative
                 // to the widget, not to the zoomed (and translated) view
                 center += {zoom->getVisibleRect().x, zoom->getVisibleRect().y};
                 zoom->startZoomSequence(center);
                 break;
             case GDK_TOUCHPAD_GESTURE_PHASE_UPDATE:
-                zoom->zoomSequenceChange(event->scale, true);
+                zoom->zoomSequenceChange(gdk_touchpad_event_get_pinch_scale(event), true);
                 break;
             case GDK_TOUCHPAD_GESTURE_PHASE_END:
                 zoom->endZoomSequence();
@@ -207,7 +214,8 @@ void ZoomControl::addZoomListener(ZoomListener* l) { this->listener.emplace_back
 void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c) {
     this->control = c;
     this->view = v;
-    gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
+    // Todo (gtk4, fabian): replace with touch input controler
+    // gtk_widget_add_events(widget, GDK_TOUCHPAD_GESTURE_MASK);
     g_signal_connect(widget, "scroll-event", G_CALLBACK(onScrolledwindowMainScrollEvent), this);
     g_signal_connect(widget, "event", G_CALLBACK(onTouchpadPinchEvent), this);
     g_signal_connect(window, "configure-event", G_CALLBACK(onWindowSizeChangedEvent), this);

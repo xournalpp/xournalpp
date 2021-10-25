@@ -3,6 +3,7 @@
 #include <utility>
 
 #include "control/Control.h"
+#include "util/GtkDialogUtil.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
@@ -16,8 +17,6 @@ BaseExportJob::~BaseExportJob() = default;
 void BaseExportJob::initDialog() {
     dialog = gtk_file_chooser_dialog_new(_("Export PDF"), control->getGtkWindow(), GTK_FILE_CHOOSER_ACTION_SAVE,
                                          _("_Cancel"), GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
-
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 }
 
 void BaseExportJob::addFileFilterToDialog(const string& name, const string& pattern) {
@@ -66,18 +65,18 @@ auto BaseExportJob::showFilechooser() -> bool {
     fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
     doc->unlock();
 
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(folder).c_str());
+    // Todo (gtk4, fabian): replace nullptr with GError
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(folder).get(), nullptr);
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(name).c_str());
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->control->getWindow()->getWindow()));
 
     while (true) {
-        if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-            gtk_widget_destroy(dialog);
+        if (wait_for_gtk_dialog_result(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
+            gtk_window_destroy(GTK_WINDOW(dialog));
             return false;
         }
-        auto file = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        auto file = Util::fromGFile(Util::GOwned<GFile>(gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog))).get());
         Util::clearExtensions(file);
         // Since we add the extension after the OK button, we have to check manually on existing files
         if (testAndSetFilepath(std::move(file)) && control->askToReplace(this->filepath)) {
@@ -87,7 +86,7 @@ auto BaseExportJob::showFilechooser() -> bool {
 
     settings->setLastSavePath(this->filepath.parent_path());
 
-    gtk_widget_destroy(dialog);
+    gtk_window_destroy(GTK_WINDOW(dialog));
 
     return true;
 }

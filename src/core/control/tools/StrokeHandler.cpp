@@ -53,7 +53,7 @@ void StrokeHandler::draw(cairo_t* cr) {
 }
 
 
-auto StrokeHandler::onKeyEvent(GdkEventKey* event) -> bool { return false; }
+auto StrokeHandler::onKeyEvent(GdkEvent* event) -> bool { return false; }
 
 
 auto StrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {

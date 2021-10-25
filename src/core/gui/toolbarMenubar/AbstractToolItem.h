@@ -19,15 +19,15 @@ public:
     virtual ~AbstractToolItem();
 
 public:
-    virtual void selected(ActionGroup group, ActionType action);
-    virtual GtkToolItem* createItem(bool horizontal);
-    virtual GtkToolItem* createTmpItem(bool horizontal);
+    void selected(ActionGroup group, ActionType action) override;
+    virtual GtkWidget* createItem(bool horizontal);
+    virtual GtkWidget* createTmpItem(bool horizontal);
     void setPopupMenu(GtkWidget* popupMenu);
 
     bool isUsed() const;
     void setUsed(bool used);
 
-    static void toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item);
+    static void toolButtonCallback(GtkButton* toolbutton, AbstractToolItem* item);
 
     /**
      * @brief Get the Pixbuf representation of the instantiation of the abstract tool item
@@ -50,14 +50,14 @@ public:
     /**
      * Enable / Disable the tool item
      */
-    virtual void enable(bool enabled);
+    void enable(bool enabled) override;
 
 protected:
-    virtual GtkToolItem* newItem() = 0;
+    virtual GtkWidget* newItem() = 0;
 
 public:
 protected:
-    GtkToolItem* item = nullptr;
+    GtkWidget* item = nullptr;
     GtkWidget* popupMenu = nullptr;
 
     bool toolToggleButtonActive = false;

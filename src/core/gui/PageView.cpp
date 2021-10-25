@@ -51,6 +51,7 @@
 #include "config-debug.h"
 #include "config-features.h"
 #include "config.h"
+#include "safe_casts.h"
 
 using std::string;
 
@@ -622,9 +623,9 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     return false;
 }
 
-auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
+auto XojPageView::onKeyPressEvent(GdkEvent* event) -> bool {
     // Esc leaves text edition
-    if (event->keyval == GDK_KEY_Escape) {
+    if (gdk_key_event_get_keyval(event) == GDK_KEY_Escape) {
         if (this->textEditor) {
             endText();
             return true;
@@ -650,7 +651,7 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
     return false;
 }
 
-auto XojPageView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
+auto XojPageView::onKeyReleaseEvent(GdkEvent* event) -> bool {
     if (this->textEditor && this->textEditor->onKeyReleaseEvent(event)) {
         return true;
     }

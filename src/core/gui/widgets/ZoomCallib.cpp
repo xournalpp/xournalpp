@@ -61,13 +61,13 @@ static void zoomcallib_size_allocate(GtkWidget* widget, GtkAllocation* allocatio
     gtk_widget_set_allocation(widget, allocation);
 
     if (gtk_widget_get_realized(widget)) {
-        gdk_window_move_resize(gtk_widget_get_window(widget), allocation->x, allocation->y, allocation->width,
-                               allocation->height);
+        gdk_surface_move_resize(gtk_widget_get_window(widget), allocation->x, allocation->y, allocation->width,
+                                allocation->height);
     }
 }
 
 static void zoomcallib_realize(GtkWidget* widget) {
-    GdkWindowAttr attributes;
+    GdkSurfaceAttr attributes;
     guint attributes_mask = 0;
     GtkAllocation allocation;
 
@@ -90,9 +90,9 @@ static void zoomcallib_realize(GtkWidget* widget) {
 
     attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-    gtk_widget_set_window(widget, gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask));
+    gtk_widget_set_window(widget, gdk_surface_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask));
 
-    gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
+    gdk_surface_set_user_data(gtk_widget_get_window(widget), widget);
 }
 
 static auto zoomcallib_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {

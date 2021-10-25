@@ -80,8 +80,7 @@ static int applib_saveAs(lua_State* L) {
     // Create a 'Save As' native dialog
     native = gtk_file_chooser_native_new(_("Save file"), nullptr, GTK_FILE_CHOOSER_ACTION_SAVE, nullptr, nullptr);
 
-    // If user tries to overwrite a file, ask if it's OK
-    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(native), TRUE);
+    // Todo (gtk4, fabian) : check if user tries to overwrite a file, ask if it's OK
     // Offer a suggestion for the filename if filename absent
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(native),
                                       filename ? filename : (std::string{_("Untitled")}).c_str());
@@ -246,8 +245,8 @@ static int applib_uiAction(lua_State* L) {
 
     ActionType action = ActionType_fromString(actionStr);
     GdkEvent* event = nullptr;
-    GtkMenuItem* menuitem = nullptr;
-    GtkToolButton* toolbutton = nullptr;
+    GtkButton* menuitem = nullptr;
+    GtkButton* toolbutton = nullptr;
 
     Control* ctrl = plugin->getControl();
     ctrl->actionPerformed(action, group, event, menuitem, toolbutton, enabled);

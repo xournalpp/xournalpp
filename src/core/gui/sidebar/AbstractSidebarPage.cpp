@@ -15,11 +15,11 @@ auto AbstractSidebarPage::getControl() -> Control* { return this->control; }
 void AbstractSidebarPage::setTmpDisabled(bool disabled) {
     GdkCursor* cursor = nullptr;
     if (disabled) {
-        cursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
+        cursor = gdk_cursor_new_from_name("watch", nullptr);
     }
 
-    if (gtk_widget_get_window(this->getWidget())) {
-        gdk_window_set_cursor(gtk_widget_get_window(this->getWidget()), cursor);
+    if (auto* surface = gtk_native_get_surface(gtk_widget_get_native(this->getWidget())); surface) {
+        gdk_surface_set_cursor(surface, cursor);
     }
 
     gtk_widget_set_sensitive(this->getWidget(), !disabled);

@@ -55,7 +55,7 @@ auto DeviceListHelper::getDeviceList(Settings* settings, bool ignoreTouchDevices
     GdkSeat* defaultSeat = gdk_display_get_default_seat(display);
     GdkDevice* pointer = gdk_seat_get_pointer(defaultSeat);
     GdkSeat* pointerSeat = gdk_device_get_seat(pointer);
-    GList* pointerSlaves = gdk_seat_get_slaves(pointerSeat, GDK_SEAT_CAPABILITY_ALL_POINTING);
+    GList* pointerSlaves = gdk_seat_get_devices(pointerSeat, GDK_SEAT_CAPABILITY_ALL_POINTING);
 
     addDevicesToList(deviceList, pointerSlaves, ignoreTouchDevices);
     g_list_free(pointerSlaves);
@@ -99,10 +99,6 @@ auto InputDevice::getType() const -> std::string {
             return _("mouse");
         case GDK_SOURCE_PEN:
             return _("pen");
-        case GDK_SOURCE_ERASER:
-            return _("eraser");
-        case GDK_SOURCE_CURSOR:
-            return _("cursor");
         case GDK_SOURCE_KEYBOARD:
             // not used: filtered above
             return _("keyboard");
@@ -110,12 +106,10 @@ auto InputDevice::getType() const -> std::string {
             return _("touchscreen");
         case GDK_SOURCE_TOUCHPAD:
             return _("touchpad");
-#if (GDK_MAJOR_VERSION >= 3 && GDK_MINOR_VERSION >= 22)
         case GDK_SOURCE_TRACKPOINT:
             return _("trackpoint");
         case GDK_SOURCE_TABLET_PAD:
             return _("tablet pad");
-#endif
     }
 
     return "";

@@ -15,6 +15,9 @@
 
 #include <utility>
 
+#include "GtkDialogUtil.h"
+#include "pixbuf-utils.h"
+
 LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearchPath, "texdialog.glade", "texDialog") {
     this->texBox = get("texView");
     this->textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(this->texBox));
@@ -26,7 +29,8 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearch
     // Background color for the temporary render, default is white because
     // on dark themed DE the LaTex is hard to read
     this->cssProvider = gtk_css_provider_new();
-    gtk_css_provider_load_from_data(this->cssProvider, "*{background-color:white;padding:10px;}", -1, nullptr);
+    constexpr std::string_view css{"*{background-color:white;padding:10px;}"};
+    gtk_css_provider_load_from_data(this->cssProvider, css.data(), css.size());
     gtk_style_context_add_provider(gtk_widget_get_style_context(this->texTempRender),
                                    GTK_STYLE_PROVIDER(this->cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
@@ -59,8 +63,11 @@ void LatexDialog::setTempRender(PopplerDocument* pdf) {
         zoom = 1200 / pageWidth;
     }
 
-    this->scaledRender = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(pageWidth * zoom),
-                                                    static_cast<int>(pageHeight * zoom));
+    auto const width = static_cast<int>(pageWidth * zoom);
+    auto const height = static_cast<int>(pageHeight * zoom);
+
+
+    this->scaledRender = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
     cairo_t* cr = cairo_create(this->scaledRender);
 
     cairo_scale(cr, zoom, zoom);
@@ -72,7 +79,10 @@ void LatexDialog::setTempRender(PopplerDocument* pdf) {
     g_clear_object(&page);
 
     // Update GTK widget
-    gtk_image_set_from_surface(GTK_IMAGE(this->texTempRender), this->scaledRender);
+
+    auto* pixbuf = xoj_pixbuf_get_from_surface(this->scaledRender, 0, 0, width, height);
+    gtk_image_set_from_pixbuf(GTK_IMAGE(this->texTempRender), pixbuf);
+    g_object_unref(pixbuf);
 }
 
 auto LatexDialog::getTextBuffer() -> GtkTextBuffer* { return this->textBuffer; }
@@ -97,7 +107,7 @@ void LatexDialog::show(GtkWindow* parent, bool selectText) {
     }
 
     gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    int res = gtk_dialog_run(GTK_DIALOG(this->window));
+    int res = wait_for_gtk_dialog_result(GTK_DIALOG(this->window));
     this->finalLatex = res == GTK_RESPONSE_OK ? this->getBufferContents() : "";
 
     gtk_widget_hide(this->window);

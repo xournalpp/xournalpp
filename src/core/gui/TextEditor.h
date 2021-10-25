@@ -31,8 +31,8 @@ public:
 
     void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
 
-    bool onKeyPressEvent(GdkEventKey* event);
-    bool onKeyReleaseEvent(GdkEventKey* event);
+    bool onKeyPressEvent(/*GdkKeyEvent*/ GdkEvent* event);
+    bool onKeyReleaseEvent(/*GdkKeyEvent*/ GdkEvent* event);
 
     void toggleOverwrite();
     void selectAtCursor(TextEditor::SelectType ty);
@@ -69,7 +69,7 @@ private:
     int getByteOffset(int charOffset);
     int getCharOffset(int byteOffset);
 
-    static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te);
+    static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GdkClipboard* clipboard, TextEditor* te);
 
     static void iMCommitCallback(GtkIMContext* context, const gchar* str, TextEditor* te);
     static void iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te);
@@ -109,9 +109,9 @@ private:
     double markPosY = 0;
 
     bool cursorBlink = true;
-    int cursorBlinkTime = 0;
-    int cursorBlinkTimeout = 0;
-    int blinkTimeout = 0;  // handler id
+    uint cursorBlinkTime = 0;
+    uint cursorBlinkTimeout = 0;
+    uint blinkTimeout = 0;  // handler id
 
     bool ownText = false;
     bool markPosExtendSelection = false;

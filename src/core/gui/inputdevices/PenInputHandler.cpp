@@ -381,9 +381,10 @@ void PenInputHandler::actionPerform(InputEvent const& event) {
     }
 
     PositionInputData pos = this->getInputDataRelativeToCurrentPage(currentPage, event);
-    if (event.type == BUTTON_2_PRESS_EVENT) {
+    // Todo (gtk4): fix it
+    if (event.type == /* BUTTON_2_PRESS_EVENT */ BUTTON_PRESS_EVENT) {
         currentPage->onButtonDoublePressEvent(pos);
-    } else if (event.type == BUTTON_3_PRESS_EVENT) {
+    } else if (event.type == /* BUTTON_3_PRESS_EVENT */ BUTTON_PRESS_EVENT) {
         currentPage->onButtonTriplePressEvent(pos);
     }
 }

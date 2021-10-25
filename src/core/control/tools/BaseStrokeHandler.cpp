@@ -3,6 +3,8 @@
 #include <cmath>
 #include <memory>
 
+#include <gtk/gtk.h>
+
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
@@ -20,8 +22,6 @@ BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawab
         flipShift(flipShift),
         flipControl(flipControl) {}
 
-BaseStrokeHandler::~BaseStrokeHandler() = default;
-
 void BaseStrokeHandler::draw(cairo_t* cr) {
     if (!stroke) {
         return;
@@ -34,20 +34,23 @@ void BaseStrokeHandler::draw(cairo_t* cr) {
     view.drawStroke(cr, stroke);
 }
 
-auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
-    if (event->is_modifier) {
+/*GdkKeyEvent*/
+auto BaseStrokeHandler::onKeyEvent(GdkEvent* event) -> bool {
+    if (gdk_key_event_is_modifier(event)) {
         Rectangle<double> rect = stroke->boundingRect();
 
-        PositionInputData pos{};
-        pos.x = pos.y = pos.pressure = 0;  // not used in redraw
-        if (event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R) {
-            pos.state = static_cast<GdkModifierType>(
-                    event->state ^ GDK_SHIFT_MASK);  // event state does not include current this modifier keypress - so
-                                                     // ^toggle will work for press and release.
-        } else if (event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R) {
-            pos.state = static_cast<GdkModifierType>(event->state ^ GDK_CONTROL_MASK);
-        } else if (event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R) {
-            pos.state = static_cast<GdkModifierType>(event->state ^ GDK_MOD1_MASK);
+        auto pos = PositionInputData{0, 0, 0};
+        auto state = gdk_event_get_modifier_state(event);
+        auto key_val = gdk_key_event_get_keyval(event);
+        if (key_val == GDK_KEY_Shift_L || key_val == GDK_KEY_Shift_R) {
+            // event state does not include current this modifier keypress - so
+            // ^toggle will work for press and release.
+            // Todo(gtk4, fabian): evaluate this again;
+            pos.state = GdkModifierType(state ^ GDK_SHIFT_MASK);
+        } else if (key_val == GDK_KEY_Control_L || key_val == GDK_KEY_Control_R) {
+            pos.state = GdkModifierType(state ^ GDK_CONTROL_MASK);
+        } else if (key_val == GDK_KEY_Alt_L || key_val == GDK_KEY_Alt_R) {
+            pos.state = GdkModifierType(state ^ GDK_ALT_MASK);
         } else {
             return false;
         }

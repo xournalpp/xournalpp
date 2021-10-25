@@ -13,40 +13,29 @@ SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarT
 
     this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
 
-    this->iconViewPreview = gtk_layout_new(nullptr, nullptr);
+    this->iconViewPreview = gtk_fixed_new();
     g_object_ref(this->iconViewPreview);
 
-    this->scrollPreview = gtk_scrolled_window_new(nullptr, nullptr);
+    this->scrollPreview = gtk_scrolled_window_new();
     g_object_ref(this->scrollPreview);
 
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_POLICY_AUTOMATIC,
                                    GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_SHADOW_IN);
+    // gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(this->scrollPreview), GTK_SHADOW_IN);
 
-    gtk_container_add(GTK_CONTAINER(this->scrollPreview), this->iconViewPreview);
-    gtk_widget_show(this->scrollPreview);
-
-    gtk_widget_show(this->iconViewPreview);
-
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(this->scrollPreview), this->iconViewPreview);
     registerListener(this->control);
 
     g_signal_connect(this->scrollPreview, "size-allocate", G_CALLBACK(sizeChanged), this);
 
-    gtk_widget_show_all(this->scrollPreview);
+    gtk_widget_show(this->scrollPreview);
 }
 
 SidebarPreviewBase::~SidebarPreviewBase() {
-    gtk_widget_destroy(this->iconViewPreview);
+    g_object_unref(this->iconViewPreview);
     this->iconViewPreview = nullptr;
-
     delete this->cache;
-    this->cache = nullptr;
-
     delete this->layoutmanager;
-    this->layoutmanager = nullptr;
-
-    this->scrollPreview = nullptr;
-
     for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
     this->previews.clear();
 }

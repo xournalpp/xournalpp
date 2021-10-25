@@ -14,6 +14,7 @@ FullscreenHandler::~FullscreenHandler() = default;
 
 auto FullscreenHandler::isFullscreen() const -> bool { return this->fullscreen; }
 
+// Todo (gtk4, fabian): this looks not good;
 void FullscreenHandler::hideWidget(MainWindow* win, const std::string& widgetName) {
     if ("sidebarContents" == widgetName && settings->isSidebarVisible()) {
         this->sidebarHidden = true;
@@ -37,17 +38,7 @@ void FullscreenHandler::hideWidget(MainWindow* win, const std::string& widgetNam
         }
 
         // Remove menu from parent
-        gtk_container_remove(GTK_CONTAINER(gtk_widget_get_parent(mainMenubar)), mainMenubar);
-
-        GtkWidget* fix = gtk_invisible_new();
-
-        gtk_widget_set_size_request(fix, 0, 0);
-        gtk_fixed_put(GTK_FIXED(fix), mainMenubar, 0, 0);
-
-        gtk_widget_show(fix);
-
-        gtk_box_pack_end(GTK_BOX(mainBox), fix, false, false, 0);
-
+        gtk_box_remove(GTK_BOX(mainBox), mainMenubar);
         menubarHidden = true;
 
         return;
@@ -75,22 +66,11 @@ void FullscreenHandler::disableFullscreen(MainWindow* win) {
     if (this->menubarHidden) {
         GtkWidget* mainMenubar = win->get("mainMenubar");
         GtkWidget* mainBox = win->get("mainBox");
-
         GtkWidget* parent = gtk_widget_get_parent(mainMenubar);
 
         // Remove menu from parent
-        gtk_container_remove(GTK_CONTAINER(parent), mainMenubar);
-        gtk_box_pack_start(GTK_BOX(mainBox), mainMenubar, false, true, 0);
 
-
-        GValue value = G_VALUE_INIT;
-        g_value_init(&value, G_TYPE_INT);
-        g_value_set_int(&value, 0);
-        gtk_container_child_set_property(GTK_CONTAINER(mainBox), mainMenubar, "position", &value);
-
-        // not needed, will be recreated next time
-        gtk_widget_destroy(parent);
-
+        gtk_box_prepend(GTK_BOX(mainBox), mainMenubar);
         menubarHidden = false;
     }
 }
@@ -107,6 +87,7 @@ void FullscreenHandler::setFullscreen(MainWindow* win, bool enabled) {
 
 ///////////////////////////////////////////////////////////////////////////////
 // Widget which allow to hide the menu, but let the shortcuts active
+// Todo (gtk4, fabian): remove, there is a better way...
 ///////////////////////////////////////////////////////////////////////////////
 
 struct GtkInvisibleMenuClass {
@@ -117,23 +98,20 @@ struct GtkInvisibleMenu {
     GtkFixed widget;
 };
 
-static void gtk_invisible_menu_get_preferred_width(GtkWidget* /*widget*/, gint* minimum, gint* natural) {
+static void gtk_invisible_menu_measure(GtkWidget* widget, GtkOrientation orientation, int for_size, int* minimum,
+                                       int* natural, int* minimum_baseline, int* natural_baseline) {
     *minimum = 0;
     *natural = 0;
+    *natural_baseline = 0;
+    *minimum_baseline = 0;
 }
 
-static void gtk_invisible_menu_get_preferred_height(GtkWidget* /*widget*/, gint* minimum, gint* natural) {
-    *minimum = 0;
-    *natural = 0;
-}
-
-static auto gtk_invisible_menu_draw(GtkWidget* /*widget*/, cairo_t* /*cr*/) -> gboolean { return false; }
+static auto gtk_invisible_menu_snapshot(GtkWidget* widget, GtkSnapshot* snapshot) {}
 
 static void gtk_invisible_menu_class_init(GtkInvisibleMenuClass* klass) {
     auto widget_class = reinterpret_cast<GtkWidgetClass*>(klass);
-    widget_class->get_preferred_width = gtk_invisible_menu_get_preferred_width;
-    widget_class->get_preferred_height = gtk_invisible_menu_get_preferred_height;
-    widget_class->draw = gtk_invisible_menu_draw;
+    widget_class->measure = gtk_invisible_menu_measure;
+    widget_class->snapshot = gtk_invisible_menu_snapshot;
 }
 
 auto gtk_invisible_get_type() -> GType {

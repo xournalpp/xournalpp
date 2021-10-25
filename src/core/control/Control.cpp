@@ -1,6 +1,8 @@
 #include "Control.h"
 
+#include <chrono>
 #include <ctime>
+#include <future>
 #include <memory>
 #include <numeric>
 
@@ -243,7 +245,7 @@ void Control::saveSettings() {
 
     gint width = 0;
     gint height = 0;
-    gtk_window_get_size(getGtkWindow(), &width, &height);
+    gtk_window_get_default_size(getGtkWindow(), &width, &height);
 
     if (!this->win->isMaximized()) {
         this->settings->setMainWndSize(width, height);
@@ -358,8 +360,8 @@ void Control::updatePageNumbers(size_t page, size_t pdfPage) {
     fireEnableAction(ACTION_GOTO_NEXT_ANNOTATED_PAGE, current < count - 1);
 }
 
-void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
-                              GtkToolButton* toolbutton, bool enabled) {
+void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkWidget* menuitem,
+                              GtkButton* toolbutton, bool enabled) {
     if (layerController->actionPerformed(type)) {
         return;
     }
@@ -897,7 +899,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
 
             if (!result) {
                 Util::execInUiThread([=]() {
-                    gtk_toggle_tool_button_set_active(reinterpret_cast<GtkToggleToolButton*>(toolbutton), !enabled);
+                    gtk_toggle_button_set_active(reinterpret_cast<GtkToggleButton*>(toolbutton), !enabled);
                     string msg = _("Recorder could not be started.");
                     g_warning("%s", msg.c_str());
                     XojMsgBox::showErrorToUser(Control::getGtkWindow(), msg);
@@ -1094,27 +1096,26 @@ void Control::customizeToolbars() {
                                           this->win->getSelectedToolbar()->getName()));
 
         gtk_window_set_transient_for(GTK_WINDOW(dialog), getGtkWindow());
-        int res = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
+        g_signal_connect(  //
+                dialog, "response", GCallback(+[](GtkDialog*, int res, Control* ctl) {
+                    if (!(res == -8)) {
+                        return;
+                    }
 
-        if (res == -8)  // Yes
-        {
-            auto* data = new ToolbarData(*this->win->getSelectedToolbar());
+                    auto* data = new ToolbarData(*ctl->win->getSelectedToolbar());
 
-            ToolbarModel* model = this->win->getToolbarModel();
-            model->initCopyNameId(data);
-            model->add(data);
-            this->win->toolbarSelected(data);
-            this->win->updateToolbarMenu();
-        } else {
-            return;
-        }
+                    ToolbarModel* model = ctl->win->getToolbarModel();
+                    model->initCopyNameId(data);
+                    model->add(data);
+                    ctl->win->toolbarSelected(data);
+                    ctl->win->updateToolbarMenu();
+                    if (!ctl->dragDropHandler) {
+                        ctl->dragDropHandler = new ToolbarDragDropHandler(ctl);
+                    }
+                    ctl->dragDropHandler->configure();
+                }),
+                this);
     }
-
-    if (!this->dragDropHandler) {
-        this->dragDropHandler = new ToolbarDragDropHandler(this);
-    }
-    this->dragDropHandler->configure();
 }
 
 void Control::endDragDropToolbar() {
@@ -2036,15 +2037,13 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
         gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
         gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-        int res = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
 
-        if (res == 2)  // remove PDF background
-        {
+        int res = wait_for_gtk_dialog_result(GTK_DIALOG(dialog));
+
+        if (res == 2) {  // remove PDF background
             loadHandler.removePdfBackground();
             loadedDocument = loadHandler.loadDocument(filepath);
-        } else if (res == 1)  // select another PDF background
-        {
+        } else if (res == 1) {  // select another PDF background
             bool attachToDocument = false;
             XojOpenDlg dlg(getGtkWindow(), this->settings);
             auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
@@ -2066,8 +2065,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
                 getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_WARNING, GTK_BUTTONS_YES_NO, "%s",
                 _("The file being loaded has a file format version newer than the one currently supported by this "
                   "version of Xournal++, so it may not load properly. Open anyways?"));
-        int response = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
+        int response = wait_for_gtk_dialog_result(GTK_DIALOG(dialog));
         if (response != GTK_RESPONSE_YES) {
             loadedDocument->clearDocument();
             return false;
@@ -2325,8 +2323,6 @@ auto Control::showSaveDialog() -> bool {
             gtk_file_chooser_dialog_new(_("Save File"), getGtkWindow(), GTK_FILE_CHOOSER_ACTION_SAVE, _("_Cancel"),
                                         GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
 
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
-
     GtkFileFilter* filterXoj = gtk_file_filter_new();
     gtk_file_filter_set_name(filterXoj, _("Xournal++ files"));
     gtk_file_filter_add_pattern(filterXoj, "*.xopp");
@@ -2337,22 +2333,20 @@ auto Control::showSaveDialog() -> bool {
     auto suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
     this->doc->unlock();
 
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggested_folder).c_str());
+    // Todo (gtk4, fabian): error handling
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(suggested_folder).get(), nullptr);
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggested_name).c_str());
     gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog),
-                                         Util::toGFilename(this->settings->getLastOpenPath()).c_str(), nullptr);
-
-    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), false);  // handled below
+                                         Util::toGFile(this->settings->getLastOpenPath()).get(), nullptr);
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
 
     while (true) {
-        if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-            gtk_widget_destroy(dialog);
+        if (wait_for_gtk_dialog_result(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
             return false;
         }
 
-        auto fileTmp = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+        auto fileTmp = Util::fromGFile(Util::GOwned<GFile>(gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog))).get());
         Util::clearExtensions(fileTmp);
         fileTmp += ".xopp";
         // Since we add the extension after the OK button, we have to check manually on existing files
@@ -2361,9 +2355,9 @@ auto Control::showSaveDialog() -> bool {
         }
     }
 
-    auto filename = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    auto filename = Util::fromGFile(Util::GOwned<GFile>(gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog))).get());
     settings->setLastSavePath(filename.parent_path());
-    gtk_widget_destroy(dialog);
+    gtk_window_destroy(GTK_WINDOW(dialog));
 
     this->doc->lock();
 
@@ -2489,8 +2483,8 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
         }
 
         gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
-        const auto dialogResponse = gtk_dialog_run(GTK_DIALOG(dialog));
-        gtk_widget_destroy(dialog);
+        const auto dialogResponse = wait_for_gtk_dialog_result(GTK_DIALOG(dialog));
+        gtk_window_destroy(GTK_WINDOW(dialog));
 
         switch (dialogResponse) {
             case GTK_RESPONSE_ACCEPT:
@@ -2574,13 +2568,13 @@ void Control::clipboardPasteText(string text) {
     clipboardPaste(t);
 }
 
-void Control::clipboardPasteImage(GdkPixbuf* img) {
+void Control::clipboardPasteImage(GdkPaintable* img) {
     auto image = new Image();
     image->setImage(img);
 
-    auto width =
-            static_cast<double>(gdk_pixbuf_get_width(img)) / settings->getDisplayDpi() * Util::DPI_NORMALIZATION_FACTOR;
-    auto height = static_cast<double>(gdk_pixbuf_get_height(img)) / settings->getDisplayDpi() *
+    auto width = static_cast<double>(gdk_paintable_get_intrinsic_width(img)) / settings->getDisplayDpi() *
+                 Util::DPI_NORMALIZATION_FACTOR;
+    auto height = static_cast<double>(gdk_paintable_get_intrinsic_height(img)) / settings->getDisplayDpi() *
                   Util::DPI_NORMALIZATION_FACTOR;
 
     auto pageNr = getCurrentPageNo();

@@ -17,25 +17,26 @@ auto KeyboardInputHandler::handleImpl(InputEvent const& event) -> bool {
     GdkEvent* gdkEvent = event.sourceEvent;
 
     if (gdk_event_get_event_type(gdkEvent) == GDK_KEY_PRESS) {
-        auto keyEvent = reinterpret_cast<GdkEventKey*>(gdkEvent);
+        auto keyEvent = reinterpret_cast<GdkKeyEvent*>(gdkEvent);
         EditSelection* selection = xournal->selection;
         if (selection) {
             int d = 3;
-            if (keyEvent->state & GDK_MOD1_MASK) {
+            auto event_state = gdk_event_get_modifier_state(gdkEvent);
+            if (event_state & GDK_ALT_MASK) {
                 d = 1;
-            } else if (keyEvent->state & GDK_SHIFT_MASK) {
+            } else if (event_state & GDK_SHIFT_MASK) {
                 d = 20;
             }
 
             int xdir = 0;
             int ydir = 0;
-            if (keyEvent->keyval == GDK_KEY_Left) {
+            if (auto event_keyval = gdk_key_event_get_keyval(gdkEvent); event_keyval == GDK_KEY_Left) {
                 xdir = -1;
-            } else if (keyEvent->keyval == GDK_KEY_Up) {
+            } else if (event_keyval == GDK_KEY_Up) {
                 ydir = -1;
-            } else if (keyEvent->keyval == GDK_KEY_Right) {
+            } else if (event_keyval == GDK_KEY_Right) {
                 xdir = 1;
-            } else if (keyEvent->keyval == GDK_KEY_Down) {
+            } else if (event_keyval == GDK_KEY_Down) {
                 ydir = 1;
             }
             if (xdir != 0 || ydir != 0) {
@@ -44,10 +45,9 @@ auto KeyboardInputHandler::handleImpl(InputEvent const& event) -> bool {
                 return true;
             }
         }
-        return xournal->view->onKeyPressEvent(keyEvent);
+        return xournal->view->onKeyPressEvent(gdkEvent);
     } else if (gdk_event_get_event_type(gdkEvent) == GDK_KEY_RELEASE) {
-        auto keyEvent = reinterpret_cast<GdkEventKey*>(gdkEvent);
-        return inputContext->getView()->onKeyReleaseEvent(keyEvent);
+        return inputContext->getView()->onKeyReleaseEvent(gdkEvent);
     }
 
     return false;

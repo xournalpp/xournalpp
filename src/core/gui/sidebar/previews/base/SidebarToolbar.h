@@ -61,10 +61,10 @@ public:
 
 private:
 private:
-    static void btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
-    static void btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
-    static void btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
-    static void btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar);
+    static void btUpClicked(GtkButton* toolbutton, SidebarToolbar* toolbar);
+    static void btDownClicked(GtkButton* toolbutton, SidebarToolbar* toolbar);
+    static void btCopyClicked(GtkButton* toolbutton, SidebarToolbar* toolbar);
+    static void btDeleteClicked(GtkButton* toolbutton, SidebarToolbar* toolbar);
 
 private:
     /**

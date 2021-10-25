@@ -1,5 +1,7 @@
 #include "util/XojMsgBox.h"
 
+#include <future>
+
 #include "util/i18n.h"
 
 #ifdef _WIN32
@@ -28,12 +30,10 @@ void XojMsgBox::showErrorToUser(GtkWindow* win, const string& msg) {
 
     char* formattedMsg = g_markup_escape_text(msg.c_str(), -1);
     gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), formattedMsg);
+    g_free(formattedMsg);
     if (win != nullptr) {
         gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
     }
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-    g_free(formattedMsg);
 }
 
 auto XojMsgBox::showPluginMessage(const string& pluginName, const string& msg, const map<int, string>& button,
@@ -61,10 +61,13 @@ auto XojMsgBox::showPluginMessage(const string& pluginName, const string& msg, c
 
     for (auto& kv: button) { gtk_dialog_add_button(GTK_DIALOG(dialog), kv.second.c_str(), kv.first); }
 
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+    std::promise<int> promise;
+    auto future = promise.get_future();
+    g_signal_connect(dialog, "response",
+                     GCallback(+[](int response_id, std::promise<int>* promise) { promise->set_value(response_id); }),
+                     &promise);
     g_free(formattedHeader);
-    return res;
+    return future.get();
 }
 
 auto XojMsgBox::replaceFileQuestion(GtkWindow* win, const string& msg) -> int {
@@ -75,9 +78,13 @@ auto XojMsgBox::replaceFileQuestion(GtkWindow* win, const string& msg) -> int {
     }
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another name"), GTK_RESPONSE_CANCEL);
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace"), GTK_RESPONSE_OK);
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-    return res;
+
+    std::promise<int> promise;
+    auto future = promise.get_future();
+    g_signal_connect(dialog, "response",
+                     GCallback(+[](int response_id, std::promise<int>* promise) { promise->set_value(response_id); }),
+                     &promise);
+    return future.get();
 }
 
 constexpr auto* XOJ_HELP = "https://xournalpp.github.io/community/help/";
@@ -88,14 +95,6 @@ void XojMsgBox::showHelp(GtkWindow* win) {
     // Instead, we use the native API instead.
     ShellExecute(nullptr, "open", XOJ_HELP, nullptr, nullptr, SW_SHOW);
 #else
-    GError* error = nullptr;
-    gtk_show_uri(gtk_window_get_screen(win), XOJ_HELP, gtk_get_current_event_time(), &error);
-
-    if (error) {
-        string msg = FS(_F("There was an error displaying help: {1}") % error->message);
-        XojMsgBox::showErrorToUser(win, msg);
-
-        g_error_free(error);
-    }
+    gtk_show_uri(win, XOJ_HELP, GDK_CURRENT_TIME);
 #endif
 }

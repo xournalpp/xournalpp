@@ -21,13 +21,13 @@ public:
     bool isAltDown() const;
 
 public:
-    double x;
-    double y;
-    double pressure;
-    guint32 timestamp;
+    double x{};
+    double y{};
+    double pressure{};
+    guint32 timestamp{};
 
     /**
      * State flags from GDKevent (Shift down etc.)
      */
-    GdkModifierType state;
+    GdkModifierType state{};
 };

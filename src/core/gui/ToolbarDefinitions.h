@@ -9,35 +9,33 @@
  * @license GNU GPLv2 or later
  */
 
+#pragma once
+
+#include <array>
+
 typedef struct {
-    /**
-     * The name in the glade.xml file
-     */
-    const char* guiName;
-
-    /**
-     * The name in the .ini file
-     */
-    const char* propName;
-
-    /**
-     * if horizontal (true) or vertical (false)
-     */
-    bool horizontal;
+    const char* guiName;   ///< The name in the glade.xml file
+    const char* propName;  ///< The name in the .ini file
+    bool horizontal;       ///< if horizontal (true) or vertical (false)
 } ToolbarEntryDefintion;
 
-const static ToolbarEntryDefintion TOOLBAR_DEFINITIONS[] = {
-        {"tbTop1", "toolbarTop1", true},       {"tbTop2", "toolbarTop2", true},
-        {"tbLeft1", "toolbarLeft1", false},    {"tbLeft2", "toolbarLeft2", false},
-        {"tbRight1", "toolbarRight1", false},  {"tbRight2", "toolbarRight2", false},
-        {"tbBottom1", "toolbarBottom1", true}, {"tbBottom2", "toolbarBottom2", true},
-        {"tbFloat1", "toolbarFloat1", true},  // define this index below as TBFloatFirst
-        {"tbFloat2", "toolbarFloat2", true},   {"tbFloat3", "toolbarFloat3", true},
-        {"tbFloat4", "toolbarFloat4", true}  // define this index below as TBFloatLast
+constexpr std::array TOOLBAR_DEFINITIONS{
+        ToolbarEntryDefintion{"tbTop1", "toolbarTop1", true},
+        ToolbarEntryDefintion{"tbTop2", "toolbarTop2", true},
+        ToolbarEntryDefintion{"tbLeft1", "toolbarLeft1", false},
+        ToolbarEntryDefintion{"tbLeft2", "toolbarLeft2", false},
+        ToolbarEntryDefintion{"tbRight1", "toolbarRight1", false},
+        ToolbarEntryDefintion{"tbRight2", "toolbarRight2", false},
+        ToolbarEntryDefintion{"tbBottom1", "toolbarBottom1", true},
+        ToolbarEntryDefintion{"tbBottom2", "toolbarBottom2", true},
+        ToolbarEntryDefintion{"tbFloat1", "toolbarFloat1", true},  // define this index below as TBFloatFirst
+        ToolbarEntryDefintion{"tbFloat2", "toolbarFloat2", true},
+        ToolbarEntryDefintion{"tbFloat3", "toolbarFloat3", true},
+        ToolbarEntryDefintion{"tbFloat4", "toolbarFloat4", true}  // define this index below as TBFloatLast
 };
 
 
-const static int TOOLBAR_DEFINITIONS_LEN = G_N_ELEMENTS(TOOLBAR_DEFINITIONS);
+constexpr auto TOOLBAR_DEFINITIONS_LEN = TOOLBAR_DEFINITIONS.size();
 
-#define TBFloatFirst 8
-#define TBFloatLast 11
+constexpr auto TBFloatFirst = 8;
+constexpr auto TBFloatLast = 11;

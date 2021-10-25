@@ -33,7 +33,7 @@ public:
     virtual void selected(ActionGroup group, ActionType action);
 
     virtual void actionEnabledAction(ActionType action, bool enabled);
-    virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
+    virtual void activated(GdkEvent* event, GtkWidget* menuitem, GtkButton* toolbutton);
 
     virtual std::string getId() const;
 
@@ -50,8 +50,8 @@ public:
 protected:
     virtual void enable(bool enabled);
 
-    virtual void actionPerformed(ActionType action, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
-                                 GtkToolButton* toolbutton, bool selected);
+    virtual void actionPerformed(ActionType action, ActionGroup group, GdkEvent* event, GtkWidget* menuitem,
+                                 GtkButton* toolbutton, bool selected);
 
 private:
 protected:

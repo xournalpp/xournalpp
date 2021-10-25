@@ -30,7 +30,7 @@ public:
 public:
     virtual void actionSelected(ActionGroup group, ActionType action);
     void enableColor(Color color);
-    virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
+    virtual void activated(GdkEvent* event, GtkButton* menuitem, GtkButton* toolbutton);
 
     virtual std::string getToolDisplayName() const;
     virtual GtkWidget* getNewToolIcon() const;
@@ -46,7 +46,7 @@ public:
     virtual void enable(bool enabled);
 
 protected:
-    virtual GtkToolItem* newItem();
+    GtkWidget* newItem() override;
     bool isSelector() const;
 
     /**

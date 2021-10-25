@@ -57,7 +57,7 @@ void PdfPagesDialog::onlyNotUsedCallback(GtkToggleButton* tb, PdfPagesDialog* dl
             pv->setHideUnused();
         }
     } else {
-        gtk_widget_show_all(dlg->scrollPreview);
+        gtk_widget_show(dlg->scrollPreview);
     }
 
     dlg->layout();

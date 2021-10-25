@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstring>
+#include <memory>
 #include <optional>
 
 #include <gio/gio.h>
@@ -19,6 +20,14 @@
 #include "filesystem.h"
 
 namespace Util {
+
+struct GDeleter {
+    void operator()(void* mem) { g_free(mem); }
+};
+
+template <class S>
+using GOwned = std::unique_ptr<S, GDeleter>;
+
 /**
  * Read a file to a string
  *
@@ -59,7 +68,7 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
 
 
 [[maybe_unused]] [[nodiscard]] fs::path fromGFile(GFile* file);
-[[maybe_unused]] [[nodiscard]] GFile* toGFile(fs::path const& path);
+[[maybe_unused]] [[nodiscard]] GOwned<GFile> toGFile(fs::path const& path);
 
 [[maybe_unused]] [[nodiscard]] inline fs::path fromGFilename(char* path, bool owned = true) {
     auto deleter = [path, owned]() {
@@ -100,7 +109,6 @@ void clearExtensions(fs::path& path, const std::string& ext = "");
     g_free(local);
     return ret;
 }
-
 
 void openFileWithDefaultApplication(const fs::path& filename);
 void openFileWithFilebrowser(const fs::path& filename);

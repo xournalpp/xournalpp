@@ -11,6 +11,7 @@
 
 #pragma once
 
+#undef X11_ENABLED
 #ifdef X11_ENABLED
 
 #include <string>

@@ -38,7 +38,7 @@ public:
     virtual void changeCurrentPageBackground(PageTypeInfo* info);
     void changeAllPagesBackground(const PageType& pt);
     void insertNewPage(size_t position);
-    GtkWidget* getMenu();
+    GMenu* getMenu();
 
     // DocumentListener
 public:

@@ -54,14 +54,15 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
-
     g_signal_connect(get("btTestEnable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
-                         Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtEnableTouchCommand"))));
+                         Util::systemWithMessage(gtk_entry_buffer_get_text(
+                                 gtk_entry_get_buffer(GTK_ENTRY(self->get("txtEnableTouchCommand")))));
                      }),
                      this);
 
     g_signal_connect(get("btTestDisable"), "clicked", G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) {
-                         Util::systemWithMessage(gtk_entry_get_text(GTK_ENTRY(self->get("txtDisableTouchCommand"))));
+                         Util::systemWithMessage(gtk_entry_buffer_get_text(
+                                 gtk_entry_get_buffer(GTK_ENTRY(self->get("txtDisableTouchCommand")))));
                      }),
                      this);
 
@@ -130,7 +131,7 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      this);
 
 
-    gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
+    gtk_box_append(GTK_BOX(vbox), callib);
     gtk_widget_show(callib);
 
     initLanguageSettings();
@@ -147,11 +148,11 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         GtkWidget* label = gtk_label_new("");
         gtk_label_set_markup(GTK_LABEL(label),
                              _("<b>No devices were found. This seems wrong - maybe file a bug report?</b>"));
-        gtk_box_pack_end(GTK_BOX(container), label, true, true, 0);
+        gtk_box_append(GTK_BOX(container), label);
         gtk_widget_show(label);
     }
 
-    gtk_container_add(GTK_CONTAINER(this->get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
+    gtk_box_append(GTK_BOX(this->get("latexTabBox")), this->latexPanel.get("latexSettingsPanel"));
 }
 
 SettingsDialog::~SettingsDialog() {
@@ -200,11 +201,11 @@ void SettingsDialog::show(GtkWindow* parent) {
     // Window up to 1000x740.
     GdkDisplay* disp = gdk_display_get_default();
     if (disp != NULL) {
-        GdkWindow* win = gtk_widget_get_window(GTK_WIDGET(parent));
+        GdkSurface* win = gtk_native_get_surface(gtk_widget_get_native(GTK_WIDGET(parent)));
         if (win != NULL) {
-            GdkMonitor* moni = gdk_display_get_monitor_at_window(disp, win);
+            GdkMonitor* moni = gdk_display_get_monitor_at_surface(disp, win);
             GdkRectangle workarea;
-            gdk_monitor_get_workarea(moni, &workarea);
+            gdk_monitor_get_geometry(moni, &workarea);
             gint w = -1;
             gint h = -1;
             if (workarea.width > 1100) {
@@ -224,7 +225,7 @@ void SettingsDialog::show(GtkWindow* parent) {
     }
 
     gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    int res = gtk_dialog_run(GTK_DIALOG(this->window));
+    int res = wait_for_gtk_dialog_result(GTK_DIALOG(this->window));
 
     if (res == 1) {
         this->save();
@@ -387,10 +388,11 @@ void SettingsDialog::load() {
     /***********/
 
     GtkWidget* txtDefaultSaveName = get("txtDefaultSaveName");
-    string txt = settings->getDefaultSaveName();
-    gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt.c_str());
+    string const& txt = settings->getDefaultSaveName();
+    gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(txtDefaultSaveName)), txt.c_str(), txt.size());
 
-    gtk_file_chooser_set_uri(GTK_FILE_CHOOSER(get("fcAudioPath")), settings->getAudioFolder().c_str());
+    gtk_file_chooser_set_file(GTK_FILE_CHOOSER(get("fcAudioPath")),
+                              g_file_new_for_path(settings->getAudioFolder().c_str()), nullptr);
 
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
@@ -560,11 +562,11 @@ void SettingsDialog::load() {
 
     string cmd;
     touch.getString("cmdEnable", cmd);
-    gtk_entry_set_text(GTK_ENTRY(get("txtEnableTouchCommand")), cmd.c_str());
+    gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(get("txtEnableTouchCommand"))), cmd.c_str(), cmd.size());
 
     cmd = "";
     touch.getString("cmdDisable", cmd);
-    gtk_entry_set_text(GTK_ENTRY(get("txtDisableTouchCommand")), cmd.c_str());
+    gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(get("txtDisableTouchCommand"))), cmd.c_str(), cmd.size());
 
     int timeoutMs = 1000;
     touch.getInt("timeout", timeoutMs);
@@ -770,28 +772,27 @@ void SettingsDialog::save() {
     settings->setPreloadPagesBefore(preloadPagesBefore);
     settings->setEagerPageCleanup(getCheckbox("cbEagerPageCleanup"));
 
-    settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
+    settings->setDefaultSaveName(
+            gtk_entry_buffer_get_text(gtk_entry_get_buffer((GTK_ENTRY(get("txtDefaultSaveName"))))));
     // Todo(fabian): use Util::fromGFilename!
-    char* uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(get("fcAudioPath")));
-    if (uri != nullptr) {
-        settings->setAudioFolder(uri);
-        g_free(uri);
+    if (auto path = Util::fromGFile(gtk_file_chooser_get_file(GTK_FILE_CHOOSER(get("fcAudioPath")))); !path.empty()) {
+        settings->setAudioFolder(path);
     }
 
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
-    int autosaveTimeout = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAutosaveTimeout));
+    int autosaveTimeout = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spAutosaveTimeout));
     settings->setAutosaveTimeout(autosaveTimeout);
 
     if (getCheckbox("cbIgnoreFirstStylusEvents")) {
         GtkWidget* spNumIgnoredStylusEvents = get("spNumIgnoredStylusEvents");
-        int numIgnoredStylusEvents = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents));
+        int numIgnoredStylusEvents = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spNumIgnoredStylusEvents));
         settings->setIgnoredStylusEvents(numIgnoredStylusEvents);
     } else {
         settings->setIgnoredStylusEvents(0);  // This means nothing will be ignored
     }
 
     GtkWidget* spPairsOffset = get("spPairsOffset");
-    int numPairsOffset = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spPairsOffset));
+    int numPairsOffset = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spPairsOffset));
     settings->setPairsOffset(numPairsOffset);
 
     settings->setEdgePanSpeed(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("edgePanSpeed"))));
@@ -807,23 +808,23 @@ void SettingsDialog::save() {
 
 
     GtkWidget* spAddHorizontalSpace = get("spAddHorizontalSpace");
-    int addHorizontalSpaceAmount = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddHorizontalSpace));
+    int addHorizontalSpaceAmount = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spAddHorizontalSpace));
     settings->setAddHorizontalSpaceAmount(addHorizontalSpaceAmount);
 
     GtkWidget* spAddVerticalSpace = get("spAddVerticalSpace");
-    int addVerticalSpaceAmount = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spAddVerticalSpace));
+    int addVerticalSpaceAmount = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spAddVerticalSpace));
     settings->setAddVerticalSpaceAmount(addVerticalSpaceAmount);
 
     GtkWidget* spDrawDirModsRadius = get("spDrawDirModsRadius");
-    int drawDirModsRadius = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spDrawDirModsRadius));
+    int drawDirModsRadius = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spDrawDirModsRadius));
     settings->setDrawDirModsRadius(drawDirModsRadius);
 
     GtkWidget* spStrokeIgnoreTime = get("spStrokeIgnoreTime");
-    int strokeIgnoreTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreTime));
+    int strokeIgnoreTime = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spStrokeIgnoreTime));
     GtkWidget* spStrokeIgnoreLength = get("spStrokeIgnoreLength");
     double strokeIgnoreLength = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeIgnoreLength));
     GtkWidget* spStrokeSuccessiveTime = get("spStrokeSuccessiveTime");
-    int strokeSuccessiveTime = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
+    int strokeSuccessiveTime = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spStrokeSuccessiveTime));
     settings->setStrokeFilter(strokeIgnoreTime, strokeIgnoreLength, strokeSuccessiveTime);
 
     GtkWidget* spTouchZoomStartThreshold = get("spTouchZoomStartThreshold");
@@ -856,8 +857,10 @@ void SettingsDialog::save() {
         default:
             touch.setString("method", "auto");
     }
-    touch.setString("cmdEnable", gtk_entry_get_text(GTK_ENTRY(get("txtEnableTouchCommand"))));
-    touch.setString("cmdDisable", gtk_entry_get_text(GTK_ENTRY(get("txtDisableTouchCommand"))));
+    touch.setString("cmdEnable",
+                    gtk_entry_buffer_get_text(gtk_entry_get_buffer((GTK_ENTRY(get("txtEnableTouchCommand"))))));
+    touch.setString("cmdDisable",
+                    gtk_entry_buffer_get_text(gtk_entry_get_buffer((GTK_ENTRY(get("txtDisableTouchCommand"))))));
 
     touch.setInt("timeout",
                  static_cast<int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spTouchDisableTimeout"))) * 1000));
@@ -898,8 +901,7 @@ void SettingsDialog::save() {
     }
 
     settings->setAudioGain(static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spAudioGain")))));
-    settings->setDefaultSeekTime(
-            static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
+    settings->setDefaultSeekTime(gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(get("spDefaultSeekTime"))));
 
     for (DeviceClassConfigGui* deviceClassConfigGui: this->deviceClassConfigs) { deviceClassConfigGui->saveSettings(); }
 

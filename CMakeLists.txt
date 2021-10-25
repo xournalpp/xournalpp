@@ -83,7 +83,7 @@ endif (Backtrace_FOUND)
 
 set(pkg-module-spec "")
 list(APPEND pkg-module-spec "glib-2.0 >= 2.32.0")
-list(APPEND pkg-module-spec "gtk+-3.0 >= 3.18.9")
+list(APPEND pkg-module-spec "gtk4 >= 4.0")
 list(APPEND pkg-module-spec "poppler-glib >= 0.41.0")
 list(APPEND pkg-module-spec "gthread-2.0 >= 2.4.0")
 list(APPEND pkg-module-spec "libxml-2.0 >= 2.0.0")

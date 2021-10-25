@@ -1,0 +1,1214 @@
+<interface>
+    <menu id="menubar2">
+        <item>
+            <attribute name="label" translatable="yes">_File</attribute>
+            <attribute name="link">menuitemFile</attribute>
+        </item>
+        <item>
+            <attribute name="label" translatable="yes">Expelliarmus</attribute>
+            <attribute name="action">app.expelliarmus</attribute>
+            <attribute name="icon">/usr/share/my-app/poof!.png</attribute>
+        </item>
+    </menu>
+<!-- 
+	<menu id="menubar">
+        <submenu id="menuitemFile">
+            <attribute name="label" translatable="yes">_File</attribute>
+                    <child>
+                        <item id="menuFileNew">
+                            <attribute name="label">gtk-new</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_NEW" swapped="no" />
+                            <accelerator key="n" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuFileOpen">
+                            <attribute name="label">gtk-open</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_OPEN" swapped="no" />
+                            <accelerator key="o" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuFileRecent">
+                            <attribute name="label" translatable="yes">Recent _Documents</attribute>
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuFileAnnotate">
+                            <attribute name="label" translatable="yes">_Annotate PDF</attribute>
+                            <signal name="activate" handler="ACTION_ANNOTATE_PDF" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuFileSave">
+                            <attribute name="label">gtk-save</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_SAVE" swapped="no" />
+                            <accelerator key="s" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuFileSaveAs">
+                            <attribute name="label">gtk-save-as</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_SAVE_AS" swapped="no" />
+                            <accelerator key="u" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                            <accelerator key="s" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem2">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuFileExportPdf">
+                            <attribute name="label" translatable="yes">_Export as PDF</attribute>
+                            <signal name="activate" handler="ACTION_EXPORT_AS_PDF" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuFileExportAs">
+                            <attribute name="label" translatable="yes">Export as...</attribute>
+                            <signal name="activate" handler="ACTION_EXPORT_AS" swapped="no" />
+                            <accelerator key="e" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem1">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuFilePrint">
+                            <attribute name="label">gtk-print</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_PRINT" swapped="no" />
+                            <accelerator key="p" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuFileQuit">
+                            <attribute name="label">gtk-quit</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_QUIT" swapped="no" />
+                            <accelerator key="q" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                </object>
+            </child>
+        </object>
+    </child>
+    <child>
+        <item id="menuitemEdit">
+            <attribute name="label" translatable="yes">_Edit</attribute>
+            <child type="submenu">
+                <object class="GtkMenu" id="menu2">
+                    <child>
+                        <item id="menuArrange">
+                            <attribute name="label" translatable="yes">Arrange</attribute>
+                            <child type="submenu">
+                                <object class="GtkMenu">
+                                    <child>
+                                        <item id="menuArrangeBringToFront">
+                                            <attribute name="label" translatable="yes">Bring to Front</attribute>
+                                            <signal name="activate" handler="ACTION_ARRANGE_BRING_TO_FRONT" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <item id="menuArrangeBringForward">
+                                            <attribute name="label" translatable="yes">Bring Forward</attribute>
+                                            <signal name="activate" handler="ACTION_ARRANGE_BRING_FORWARD" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <item id="menuArrangeSendBackward">
+                                            <attribute name="label" translatable="yes">Send Backward</attribute>
+                                            <signal name="activate" handler="ACTION_ARRANGE_SEND_BACKWARD" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <item id="menuArrangeSendToBack">
+                                            <attribute name="label" translatable="yes">Send to Back</attribute>
+                                            <signal name="activate" handler="ACTION_ARRANGE_SEND_TO_BACK" swapped="no" />
+                                        </object>
+                                    </child>
+                                </object>
+                            </child>
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuEditUndo">
+                            <attribute name="label">gtk-undo</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_UNDO" swapped="no" />
+                            <accelerator key="z" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuEditRedo">
+                            <attribute name="label">gtk-redo</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_REDO" swapped="no" />
+                            <accelerator key="y" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem4">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuEditCut">
+                            <attribute name="label">gtk-cut</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_CUT" swapped="no" />
+                            <accelerator key="x" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuEditCopy">
+                            <attribute name="label">gtk-copy</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_COPY" swapped="no" />
+                            <accelerator key="c" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuEditPaste">
+                            <attribute name="label">gtk-paste</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_PASTE" swapped="no" />
+                            <accelerator key="v" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem5">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuEditSearch">
+                            <attribute name="label">gtk-find</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_SEARCH" swapped="no" />
+                            <accelerator key="f" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem6">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuEditDelete">
+                            <attribute name="label">gtk-delete</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_DELETE" swapped="no" />
+                            <accelerator key="Delete" signal="activate" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="menuitem5">
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuSnapRotation">
+                            <attribute name="use-action-appearance">False</attribute>
+                            <attribute name="label" translatable="yes">Rotation Snapping</attribute>
+                            <signal name="toggled" handler="ACTION_ROTATION_SNAPPING" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuSnapGrid">
+                            <attribute name="use-action-appearance">False</attribute>
+                            <attribute name="label" translatable="yes">Grid Snapping</attribute>
+                            <signal name="toggled" handler="ACTION_GRID_SNAPPING" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="menuitem4">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuEditSettings">
+                            <attribute name="label" translatable="yes">Preferences</attribute>
+                            <signal name="activate" handler="ACTION_SETTINGS" swapped="no" />
+                        </object>
+                    </child>
+                </object>
+            </child>
+        </object>
+    </child>
+    <child>
+        <item id="menuitemView">
+            <attribute name="label" translatable="yes">_View</attribute>
+            <child type="submenu">
+                <object class="GtkMenu" id="menu4">
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuViewPairedPages">
+                            <attribute name="label" translatable="yes">_Pair Pages</attribute>
+                            <signal name="toggled" handler="ACTION_VIEW_PAIRED_PAGES" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuViewPresMode">
+                            <attribute name="label" translatable="yes">_Presentation Mode</attribute>
+                            <signal name="toggled" handler="ACTION_VIEW_PRESENTATION_MODE" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuViewFullScreen">
+                            <attribute name="label" translatable="yes">Fullscreen</attribute>
+                            <signal name="toggled" handler="ACTION_FULLSCREEN" swapped="no" />
+                            <accelerator key="F11" signal="activate" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuViewSidebarVisible">
+                            <attribute name="label" translatable="yes">Show Sidebar</attribute>
+                            <accelerator key="F12" signal="activate" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem3">
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuViewToolbarsVisible">
+                            <attribute name="label" translatable="yes">Show Toolbars</attribute>
+                            <accelerator key="F9" signal="activate" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="menuViewToolbarsVisibleSeparator">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuitemLayout">
+                            <attribute name="label" translatable="yes">Layout</attribute>
+                            <child type="submenu">
+                                <object class="GtkMenu" id="layoutmenu">
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="menuLayoutHorizontal">
+                                            <attribute name="label" translatable="yes">_Horizontal</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_SET_LAYOUT_HORIZONTAL:GROUP_LAYOUT_HORIZONTAL" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="menuLayoutVertical">
+                                            <attribute name="label" translatable="yes">_Vertical</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_SET_LAYOUT_VERTICAL:GROUP_LAYOUT_HORIZONTAL" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout1">
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="menuLayoutLR">
+                                            <attribute name="label" translatable="yes">_Left to Right</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_SET_LAYOUT_L2R:GROUP_LAYOUT_LR" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="menuLayoutRL">
+                                            <attribute name="label" translatable="yes">_Right to Left</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_SET_LAYOUT_R2L:GROUP_LAYOUT_LR" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkSeparatorMenuItem" id="separatormenuitemLayout2">
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="menuLayoutTB">
+                                            <attribute name="label" translatable="yes">_Top to Bottom</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_SET_LAYOUT_T2B:GROUP_LAYOUT_TB" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="menuLayoutBT">
+                                            <attribute name="label" translatable="yes">_Bottom to Top</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_SET_LAYOUT_B2T:GROUP_LAYOUT_TB" swapped="no" />
+                                        </object>
+                                    </child>
+                                </object>
+                            </child>
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuitemViewDimensions">
+                            <attribute name="label" translatable="yes">_Cols/Rows</attribute>
+                            <child type="submenu">
+                                <object class="GtkMenu" id="menuViewDimensions">
+                                    <child>
+                                        <item id="menuitemViewColumns">
+                                            <attribute name="width-request">-1</attribute>
+                                            <attribute name="label" translatable="yes">Set Columns</attribute>
+                                            <child type="submenu">
+                                                <object class="GtkMenu" id="menuViewColumns">
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewColumns1">
+                                                            <attribute name="label" translatable="yes">_1 Column</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_COLUMNS_1:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewColumns2">
+                                                            <attribute name="label" translatable="yes">_2 Columns</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_COLUMNS_2:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewColumns3">
+                                                            <attribute name="label" translatable="yes">_3 Columns</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_COLUMNS_3:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewColumns4">
+                                                            <attribute name="label" translatable="yes">_4 Columns</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_COLUMNS_4:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewColumns5">
+                                                            <attribute name="label" translatable="yes">_5 Columns</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_COLUMNS_5:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewColumns6">
+                                                            <attribute name="label" translatable="yes">_6 Columns</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_COLUMNS_6:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewColumns7">
+                                                            <attribute name="label" translatable="yes">_7 Columns</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_COLUMNS_7:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewColumns8">
+                                                            <attribute name="label" translatable="yes">_8 Columns</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_COLUMNS_8:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                </object>
+                                            </child>
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <item id="menuitemViewRows">
+                                            <attribute name="width-request">-1</attribute>
+                                            <attribute name="label" translatable="yes">Set Rows</attribute>
+                                            <child type="submenu">
+                                                <object class="GtkMenu" id="menuViewRows">
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewRows1">
+                                                            <attribute name="label" translatable="yes">_1 Row</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_ROWS_1:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewRows2">
+                                                            <attribute name="label" translatable="yes">_2 Rows</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_ROWS_2:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewRows3">
+                                                            <attribute name="label" translatable="yes">_3 Rows</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_ROWS_3:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewRows4">
+                                                            <attribute name="label" translatable="yes">_4 Rows</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_ROWS_4:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewRows5">
+                                                            <attribute name="label" translatable="yes">_5 Rows</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_ROWS_5:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewRows6">
+                                                            <attribute name="label" translatable="yes">_6 Rows</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_ROWS_6:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewRows7">
+                                                            <attribute name="label" translatable="yes">_7 Rows</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_ROWS_7:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                    <child>
+                                                        <object class="GtkCheckMenuItem" id="menuViewRows8">
+                                                            <attribute name="label" translatable="yes">_8 Rows</attribute>
+                                                            <attribute name="draw-as-radio">True</attribute>
+                                                            <signal name="toggled" handler="ACTION_SET_ROWS_8:GROUP_FIXED_ROW_OR_COLS" swapped="no" />
+                                                        </object>
+                                                    </child>
+                                                </object>
+                                            </child>
+                                        </object>
+                                    </child>
+                                </object>
+                            </child>
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem7">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuitemViewToolbar">
+                            <attribute name="label" translatable="yes">T_oolbars</attribute>
+                            <child type="submenu">
+                                <object class="GtkMenu" id="menuViewToolbar">
+                                    <child>
+                                        <object class="GtkSeparatorMenuItem" id="separatormenuitem16">
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <item id="menuViewToolbarManage">
+                                            <attribute name="label" translatable="yes">_Manage</attribute>
+                                            <signal name="activate" handler="ACTION_MANAGE_TOOLBAR" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <item id="menuViewToolbarCustomize">
+                                            <attribute name="label" translatable="yes">_Customize</attribute>
+                                            <signal name="activate" handler="ACTION_CUSTOMIZE_TOOLBAR" swapped="no" />
+                                        </object>
+                                    </child>
+                                </object>
+                            </child>
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem8">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuHideMenu">
+                            <attribute name="label" translatable="yes">Hide Menubar</attribute>
+                            <accelerator key="F10" signal="activate" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="menuitem3">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuViewZoomIn">
+                            <attribute name="label">gtk-zoom-in</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_ZOOM_IN" swapped="no" />
+                            <accelerator key="KP_Add" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                            <accelerator key="plus" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuViewZoomOut">
+                            <attribute name="label">gtk-zoom-out</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_ZOOM_OUT" swapped="no" />
+                            <accelerator key="KP_Subtract" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                            <accelerator key="minus" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuViewZoom100">
+                            <attribute name="label">gtk-zoom-100</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_ZOOM_100" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuViewZoomFit">
+                            <attribute name="label">gtk-zoom-fit</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_ZOOM_FIT" swapped="no" />
+                        </object>
+                    </child>
+                </object>
+            </child>
+        </object>
+    </child>
+    <child>
+        <item id="menuitemNavigation">
+            <attribute name="label" translatable="yes">_Navigation</attribute>
+            <child type="submenu">
+                <object class="GtkMenu" id="menu6">
+                    <child>
+                        <item id="menuViewFirstPage">
+                            <attribute name="label" translatable="yes">_First Page</attribute>
+                            <signal name="activate" handler="ACTION_GOTO_FIRST" swapped="no" />
+                            <accelerator key="Home" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuNavigationPreviousPage">
+                            <attribute name="label" translatable="yes">_Previous Page</attribute>
+                            <signal name="activate" handler="ACTION_GOTO_BACK" swapped="no" />
+                            <accelerator key="Page_Up" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuNavigationGotoPage">
+                            <attribute name="label" translatable="yes">_Goto Page</attribute>
+                            <signal name="activate" handler="ACTION_GOTO_PAGE" swapped="no" />
+                            <accelerator key="g" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuNavigationNextPage">
+                            <attribute name="label" translatable="yes">_Next Page</attribute>
+                            <signal name="activate" handler="ACTION_GOTO_NEXT" swapped="no" />
+                            <accelerator key="Page_Down" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuNavigationLastPage">
+                            <attribute name="label" translatable="yes">_Last Page</attribute>
+                            <signal name="activate" handler="ACTION_GOTO_LAST" swapped="no" />
+                            <accelerator key="End" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem17">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuNavigationPreviousLayer">
+                            <attribute name="label" translatable="yes">_Previous Layer</attribute>
+                            <signal name="activate" handler="ACTION_GOTO_PREVIOUS_LAYER" swapped="no" />
+                            <accelerator key="Page_Down" signal="activate" modifiers="GDK_SHIFT_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuNavigationNextLayer">
+                            <attribute name="label" translatable="yes">_Next Layer</attribute>
+                            <signal name="activate" handler="ACTION_GOTO_NEXT_LAYER" swapped="no" />
+                            <accelerator key="Page_Up" signal="activate" modifiers="GDK_SHIFT_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuNavigationTopLayer">
+                            <attribute name="label" translatable="yes">_Top Layer</attribute>
+                            <signal name="activate" handler="ACTION_GOTO_TOP_LAYER" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem9">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuNavigationNextAnnotatedPage">
+                            <attribute name="label" translatable="yes">N_ext Annotated Page</attribute>
+                            <signal name="activate" handler="ACTION_GOTO_NEXT_ANNOTATED_PAGE" swapped="no" />
+                            <accelerator key="Page_Down" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuNavigationPreviousAnnotatedPage">
+                            <attribute name="label" translatable="yes">P_revious Annotated Page</attribute>
+                            <signal name="activate" handler="ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE" swapped="no" />
+                            <accelerator key="Page_Up" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                </object>
+            </child>
+        </object>
+    </child>
+    <child>
+        <item id="menuitemJournal">
+            <attribute name="label" translatable="yes">_Journal</attribute>
+            <child type="submenu">
+                <object class="GtkMenu" id="menu7">
+                    <child>
+                        <item id="menuJournalNewPageBefore">
+                            <attribute name="label" translatable="yes">New Page _Before</attribute>
+                            <signal name="activate" handler="ACTION_NEW_PAGE_BEFORE" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuJournalNewPageAfter">
+                            <attribute name="label" translatable="yes">New Page _After</attribute>
+                            <signal name="activate" handler="ACTION_NEW_PAGE_AFTER" swapped="no" />
+                            <accelerator key="d" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuJournalNewPageAtEnd">
+                            <attribute name="label" translatable="yes">New Page at _End</attribute>
+                            <signal name="activate" handler="ACTION_NEW_PAGE_AT_END" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuJournalAddNewPdfPages">
+                            <attribute name="label" translatable="yes">Append New PDF Pages</attribute>
+                            <signal name="activate" handler="ACTION_APPEND_NEW_PDF_PAGES" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuJournalTemplateConfig">
+                            <attribute name="label" translatable="yes">Configure Page Template</attribute>
+                            <signal name="activate" handler="ACTION_CONFIGURE_PAGE_TEMPLATE" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuDeletePage">
+                            <attribute name="label" translatable="yes">_Delete Page</attribute>
+                            <signal name="activate" handler="ACTION_DELETE_PAGE" swapped="no" />
+                            <accelerator key="Delete" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem10">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuJournalNewLayer">
+                            <attribute name="label" translatable="yes">New _Layer</attribute>
+                            <signal name="activate" handler="ACTION_NEW_LAYER" swapped="no" />
+                            <accelerator key="l" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuJournalDeleteLayer">
+                            <attribute name="label" translatable="yes">Delete Layer</attribute>
+                            <signal name="activate" handler="ACTION_DELETE_LAYER" swapped="no" />
+                            <accelerator key="l" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuJournalRenameLayer">
+                            <attribute name="label" translatable="yes">Rename Layer</attribute>
+                            <signal name="activate" handler="ACTION_RENAME_LAYER" swapped="no" />
+                            <accelerator key="r" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem11">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuJournalPaperFormat">
+                            <attribute name="label" translatable="yes">Paper _Format</attribute>
+                            <signal name="activate" handler="ACTION_PAPER_FORMAT" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuJournalPaperColor">
+                            <attribute name="label" translatable="yes">Paper _Color</attribute>
+                            <signal name="activate" handler="ACTION_PAPER_BACKGROUND_COLOR" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuJournalPaperBackground">
+                            <attribute name="label" translatable="yes">Paper B_ackground</attribute>
+                        </object>
+                    </child>
+                </object>
+            </child>
+        </object>
+    </child>
+    <child>
+        <item id="menuitemTools">
+            <attribute name="label" translatable="yes">_Tools</attribute>
+            <child type="submenu">
+                <object class="GtkMenu" id="menu10">
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsPen">
+                            <attribute name="label" translatable="yes">_Pen</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_PEN" swapped="no" />
+                            <accelerator key="p" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsEraser">
+                            <attribute name="label" translatable="yes">_Eraser</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_ERASER" swapped="no" />
+                            <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsHighlighter">
+                            <attribute name="label" translatable="yes">_Highlighter</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER" swapped="no" />
+                            <accelerator key="h" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsText">
+                            <attribute name="label" translatable="yes">_Text</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_TEXT" swapped="no" />
+                            <accelerator key="t" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsImage">
+                            <attribute name="label" translatable="yes">_Image</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_IMAGE" swapped="no" />
+                            <accelerator key="i" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuToolsDefault">
+                            <attribute name="label" translatable="yes">_Default Tools</attribute>
+                            <signal name="activate" handler="ACTION_TOOL_DEFAULT" swapped="no" />
+                            <accelerator key="d" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem12">
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsShapeRecognizer">
+                            <attribute name="label" translatable="yes">_Shape Recognizer</attribute>
+                            <signal name="toggled" handler="ACTION_SHAPE_RECOGNIZER" swapped="no" />
+                            <accelerator key="1" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsDrawRect">
+                            <attribute name="label" translatable="yes">Draw Rectangle</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_DRAW_RECT" swapped="no" />
+                            <accelerator key="2" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsDrawEllipse">
+                            <attribute name="label" translatable="yes">Draw Ellipse</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_DRAW_ELLIPSE" swapped="no" />
+                            <accelerator key="3" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsDrawArrow">
+                            <attribute name="label" translatable="yes">Draw Arrow</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_DRAW_ARROW" swapped="no" />
+                            <accelerator key="4" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsDrawCoordinateSystem">
+                            <attribute name="label" translatable="yes">Draw Coordinate System</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_DRAW_COORDINATE_SYSTEM" swapped="no" />
+                            <accelerator key="5" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsRuler">
+                            <attribute name="label" translatable="yes">Draw _Line</attribute>
+                            <signal name="toggled" handler="ACTION_RULER" swapped="no" />
+                            <accelerator key="6" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsDrawSpline">
+                            <attribute name="label" translatable="yes">Draw Spline</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_DRAW_SPLINE" swapped="no" />
+                            <accelerator key="7" signal="activate" modifiers="GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem13">
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsSelectRegion">
+                            <attribute name="label" translatable="yes">Select Region</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_SELECT_REGION" swapped="no" />
+                            <accelerator key="g" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsSelectRectangle">
+                            <attribute name="label" translatable="yes">Select Rectangle</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_SELECT_RECT" swapped="no" />
+                            <accelerator key="r" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsSelectObject">
+                            <attribute name="label" translatable="yes">Select Object</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_SELECT_OBJECT" swapped="no" />
+                            <accelerator key="o" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsVerticalSpace">
+                            <attribute name="label" translatable="yes">_Vertical Space</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_VERTICAL_SPACE" swapped="no" />
+                            <accelerator key="v" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsPlayObject">
+                            <attribute name="use-action-appearance">False</attribute>
+                            <attribute name="label" translatable="yes">Play Object</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_PLAY_OBJECT" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuToolsHand">
+                            <attribute name="label" translatable="yes">H_and Tool</attribute>
+                            <attribute name="draw-as-radio">True</attribute>
+                            <signal name="toggled" handler="ACTION_TOOL_HAND" swapped="no" />
+                            <accelerator key="a" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkSeparatorMenuItem" id="separatormenuitem14">
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuToolsPenOptions">
+                            <attribute name="label" translatable="yes">Pen _Options</attribute>
+                            <child type="submenu">
+                                <object class="GtkMenu" id="menu11">
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="penthicknessVeryFine">
+                                            <attribute name="label" translatable="yes">_very fine</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_VERY_FINE:GROUP_PEN_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="penthicknessFine">
+                                            <attribute name="label" translatable="yes">_fine</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_FINE:GROUP_PEN_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="penthicknessMedium">
+                                            <attribute name="label" translatable="yes">_medium</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_MEDIUM:GROUP_PEN_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="penthicknessThick">
+                                            <attribute name="label" translatable="yes">_thick</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_THICK:GROUP_PEN_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="penthicknessVeryThick">
+                                            <attribute name="label" translatable="yes">ver_y thick</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_PEN_SIZE_VERY_THICK:GROUP_PEN_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkSeparatorMenuItem" id="menuitem6">
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="penStandard">
+                                            <attribute name="label" translatable="yes">standard</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_PLAIN:GROUP_LINE_STYLE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="penStyleDashed">
+                                            <attribute name="label" translatable="yes">dashed</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_DASH:GROUP_LINE_STYLE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="penStyleDashDotted">
+                                            <attribute name="label" translatable="yes">dash-/ dotted</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_DASH_DOT:GROUP_LINE_STYLE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="penStyleDotted">
+                                            <attribute name="label" translatable="yes">dotted</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_DOT:GROUP_LINE_STYLE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkSeparatorMenuItem" id="menuitem1">
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="penFill">
+                                            <attribute name="label" translatable="yes">Fi_ll</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_PEN_FILL:GROUP_PEN_FILL" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <item id="penFillOpacity">
+                                            <attribute name="label" translatable="yes">Fill opacity</attribute>
+                                            <signal name="activate" handler="ACTION_TOOL_PEN_FILL_OPACITY" swapped="no" />
+                                        </object>
+                                    </child>
+                                </object>
+                            </child>
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuToolsEraserOptions">
+                            <attribute name="label" translatable="yes">Eraser Optio_ns</attribute>
+                            <child type="submenu">
+                                <object class="GtkMenu" id="menu12">
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="eraserVeryFine">
+                                            <attribute name="label" translatable="yes">_very fine</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_VERY_FINE:GROUP_ERASER_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="eraserFine">
+                                            <attribute name="label" translatable="yes">_fine</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_FINE:GROUP_ERASER_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="eraserMedium">
+                                            <attribute name="label" translatable="yes">_medium</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_MEDIUM:GROUP_ERASER_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="eraserThick">
+                                            <attribute name="label" translatable="yes">_thick</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_THICK:GROUP_ERASER_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="eraserVeryThick">
+                                            <attribute name="label" translatable="yes">ver_y thick</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_ERASER_SIZE_VERY_THICK:GROUP_ERASER_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkSeparatorMenuItem" id="separatormenuitem15">
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="eraserStandard">
+                                            <attribute name="label" translatable="yes">_standard</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_ERASER_STANDARD:GROUP_ERASER_MODE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="eraserWhiteout">
+                                            <attribute name="label" translatable="yes">_whiteout</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_ERASER_WHITEOUT:GROUP_ERASER_MODE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="eraserDeleteStrokes">
+                                            <attribute name="label" translatable="yes">_delete strokes</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_ERASER_DELETE_STROKE:GROUP_ERASER_MODE" swapped="no" />
+                                        </object>
+                                    </child>
+                                </object>
+                            </child>
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuToolsHighlighterOptions">
+                            <attribute name="label" translatable="yes">Highlighter Opti_ons</attribute>
+                            <child type="submenu">
+                                <object class="GtkMenu" id="menu13">
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="highlighterVeryFine">
+                                            <attribute name="label" translatable="yes">_very fine</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_FINE:GROUP_HIGHLIGHTER_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="highlighterFine">
+                                            <attribute name="label" translatable="yes">_fine</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_FINE:GROUP_HIGHLIGHTER_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="highlighterMedium">
+                                            <attribute name="label" translatable="yes">_medium</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_MEDIUM:GROUP_HIGHLIGHTER_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="highlighterThick">
+                                            <attribute name="label" translatable="yes">_thick</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_THICK:GROUP_HIGHLIGHTER_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="highlighterVeryThick">
+                                            <attribute name="label" translatable="yes">ver_y thick</attribute>
+                                            <attribute name="draw-as-radio">True</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_SIZE_VERY_THICK:GROUP_HIGHLIGHTER_SIZE" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkSeparatorMenuItem" id="menuitem2">
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <object class="GtkCheckMenuItem" id="highlighterFill">
+                                            <attribute name="label" translatable="yes">Fi_ll</attribute>
+                                            <signal name="toggled" handler="ACTION_TOOL_HIGHLIGHTER_FILL:GROUP_HIGHLIGHTER_FILL" swapped="no" />
+                                        </object>
+                                    </child>
+                                    <child>
+                                        <item id="highlighterFillOpacity">
+                                            <attribute name="label" translatable="yes">Fill opacity</attribute>
+                                            <signal name="activate" handler="ACTION_TOOL_HIGHLIGHTER_FILL_OPACITY" swapped="no" />
+                                        </object>
+                                    </child>
+                                </object>
+                            </child>
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuToolsTextFont">
+                            <attribute name="label" translatable="yes">Text Font...</attribute>
+                            <signal name="activate" handler="ACTION_SELECT_FONT" swapped="no" />
+                            <accelerator key="f" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuAudioRecord">
+                            <attribute name="use-action-appearance">False</attribute>
+                            <attribute name="label" translatable="yes">Record / Stop</attribute>
+                            <signal name="toggled" handler="ACTION_AUDIO_RECORD" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <object class="GtkCheckMenuItem" id="menuAudioPausePlayback">
+                            <attribute name="use-action-appearance">False</attribute>
+                            <attribute name="label" translatable="yes">Pause</attribute>
+                            <signal name="toggled" handler="ACTION_AUDIO_PAUSE_PLAYBACK" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuAudioStopPlayback">
+                            <attribute name="label" translatable="yes">Stop</attribute>
+                            <signal name="activate" handler="ACTION_AUDIO_STOP_PLAYBACK" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuAudioSeekForwards">
+                            <attribute name="label" translatable="yes">Forward</attribute>
+                            <signal name="activate" handler="ACTION_AUDIO_SEEK_FORWARDS" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuAudioSeekBackwards">
+                            <attribute name="label" translatable="yes">Back</attribute>
+                            <signal name="activate" handler="ACTION_AUDIO_SEEK_BACKWARDS" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuEditTex">
+                            <attribute name="label" translatable="yes">Add/Edit TeX</attribute>
+                            <signal name="activate" handler="ACTION_TEX" swapped="no" />
+                            <accelerator key="x" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK" />
+                        </object>
+                    </child>
+                </object>
+            </child>
+        </object>
+    </child>
+    <child>
+        <item id="menuitemPlugin">
+            <attribute name="label" translatable="yes">_Plugin</attribute>
+            <child type="submenu">
+                <object class="GtkMenu" id="menuPlugin">
+                    <child>
+                        <item id="menuitem8">
+                            <attribute name="label" translatable="yes">Plugin _Manager</attribute>
+                            <signal name="activate" handler="ACTION_PLUGIN_MANAGER" swapped="no" />
+                        </object>
+                    </child>
+                </object>
+            </child>
+        </object>
+    </child>
+    <child>
+        <item id="menuitemHelp">
+            <attribute name="label" translatable="yes">_Help</attribute>
+            <child type="submenu">
+                <object class="GtkMenu" id="menu3">
+                    <child>
+                        <item id="menuHelpHelp">
+                            <attribute name="label">gtk-help</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_HELP" swapped="no" />
+                        </object>
+                    </child>
+                    <child>
+                        <item id="menuHelpAbout">
+                            <attribute name="label">gtk-about</attribute>
+                            <attribute name="use-stock">True</attribute>
+                            <signal name="activate" handler="ACTION_ABOUT" swapped="no" />
+                        </object>
+                    </child>
+                </object>
+            </child>
+            <accelerator key="h" signal="activate" modifiers="GDK_CONTROL_MASK" />
+        </object>
+    </child>
+</object>
+</interface> -->

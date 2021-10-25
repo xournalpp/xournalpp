@@ -42,7 +42,7 @@ public:
     void onButtonReleaseEvent(const PositionInputData& pos);
     void onButtonPressEvent(const PositionInputData& pos);
     void onButtonDoublePressEvent(const PositionInputData& pos);
-    bool onKeyEvent(GdkEventKey* event);
+    bool onKeyEvent(GdkEvent* event);
 
     /**
      * @brief Add a straight line to the stroke (if the movement is valid).

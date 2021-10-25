@@ -8,6 +8,7 @@
 #include "GladeGui.h"
 #include "MainWindow.h"
 #include "ToolbarDefinitions.h"
+#include "safe_casts.h"
 
 
 FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay) {
@@ -18,8 +19,9 @@ FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay)
     this->floatingToolboxState = recalcSize;
 
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);
-    gtk_overlay_set_overlay_pass_through(overlay, this->floatingToolbox, true);
-    gtk_widget_add_events(this->floatingToolbox, GDK_LEAVE_NOTIFY_MASK);
+    // Todo (gtk4, fabian): find solution for this
+    // gtk_overlay_set_overlay_pass_through(overlay, this->floatingToolbox, true);
+    // gtk_widget_add_events(this->floatingToolbox, GDK_LEAVE_NOTIFY_MASK);
     g_signal_connect(this->floatingToolbox, "leave-notify-event", G_CALLBACK(handleLeaveFloatingToolbox), this);
     // position overlay widgets
     g_signal_connect(overlay, "get-child-position", G_CALLBACK(this->getOverlayPosition), this);
@@ -72,12 +74,21 @@ auto FloatingToolbox::floatingToolboxActivated() -> bool {
 
 
 auto FloatingToolbox::countWidgets() -> int {
-    int count = 0;
+    auto count_childs = [](GtkWidget* w) {
+        size_t cnt{};
+        for (auto *iter = gtk_widget_get_first_child(w), *end = gtk_widget_get_last_child(w); iter != end;
+             iter = gtk_widget_get_next_sibling(iter)) {
+            ++cnt;
+        }
+        return cnt;
+    };
+
+    size_t count = 0;
 
     for (int index = TBFloatFirst; index <= TBFloatLast; index++) {
         const char* guiName = TOOLBAR_DEFINITIONS[index].guiName;
-        GtkToolbar* toolbar1 = GTK_TOOLBAR(this->mainWindow->get(guiName));
-        count += gtk_toolbar_get_n_items(toolbar1);
+        auto* toolbar1 = this->mainWindow->get(guiName);
+        count += count_childs(toolbar1);
     }
 
     return count;
@@ -88,10 +99,10 @@ void FloatingToolbox::showForConfiguration() {
     if (this->floatingToolboxActivated())  // Do not show if not being used - at least while experimental.
     {
         GtkWidget* boxContents = this->mainWindow->get("boxContents");
-        gint wx = 0, wy = 0;
-        gtk_widget_translate_coordinates(boxContents, gtk_widget_get_toplevel(boxContents), 0, 0, &wx, &wy);
-        this->floatingToolboxX = wx + 40;  // when configuration state these are
-        this->floatingToolboxY = wy + 40;  // topleft coordinates( otherwise center).
+        double wx, wy;  // NOLINT(cppcoreguidelines-init-variables)
+        gtk_widget_translate_coordinates(boxContents, GTK_WIDGET(gtk_widget_get_native(boxContents)), 0, 0, &wx, &wy);
+        this->floatingToolboxX = round_cast<int>(wx) + 40;  // when configuration state these are
+        this->floatingToolboxY = round_cast<int>(wy) + 40;  // topleft coordinates( otherwise center).
         this->floatingToolboxState = configuration;
         this->show();
     }
@@ -100,7 +111,7 @@ void FloatingToolbox::showForConfiguration() {
 
 void FloatingToolbox::show() {
     gtk_widget_hide(this->floatingToolbox);  // force showing in new position
-    gtk_widget_show_all(this->floatingToolbox);
+    gtk_widget_show(this->floatingToolbox);
 
     if (this->floatingToolboxState != configuration) {
         gtk_widget_hide(this->mainWindow->get("labelFloatingToolbox"));

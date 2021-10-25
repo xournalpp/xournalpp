@@ -7,6 +7,7 @@
 #include "util/PathUtil.h"
 #include "util/i18n.h"
 
+#include "GtkDialogUtil.h"
 #include "filesystem.h"
 
 LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
@@ -27,16 +28,19 @@ LatexSettingsPanel::~LatexSettingsPanel() {
 void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_toggle_button_set_active(this->cbAutoDepCheck, settings.autoCheckDependencies);
     if (!settings.globalTemplatePath.empty()) {
-        gtk_file_chooser_set_filename(this->globalTemplateChooser,
-                                      Util::toGFilename(settings.globalTemplatePath).c_str());
+        gtk_file_chooser_set_file(this->globalTemplateChooser, Util::toGFile(settings.globalTemplatePath).get(),
+                                  nullptr);
     }
-    gtk_entry_set_text(GTK_ENTRY(this->get("latexSettingsGenCmd")), settings.genCmd.c_str());
+
+    gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(this->get("latexSettingsGenCmd"))),
+                              settings.genCmd.c_str(), settings.genCmd.size());
 }
 
 void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.autoCheckDependencies = gtk_toggle_button_get_active(this->cbAutoDepCheck);
-    settings.globalTemplatePath = Util::fromGFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
-    settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
+    settings.globalTemplatePath =
+            Util::fromGFile(Util::GOwned<GFile>(gtk_file_chooser_get_file(this->globalTemplateChooser)).get());
+    settings.genCmd = gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(this->get("latexSettingsGenCmd"))));
 }
 
 void LatexSettingsPanel::show(GtkWindow* parent) {}
@@ -77,6 +81,6 @@ void LatexSettingsPanel::checkDeps() {
     }
     GtkWidget* dialog =
             gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "%s", msg.c_str());
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+    wait_for_gtk_dialog_result(GTK_DIALOG(dialog));
+    gtk_window_destroy(GTK_WINDOW(dialog));
 }

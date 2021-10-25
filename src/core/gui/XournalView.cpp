@@ -45,8 +45,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
     // we need to refer widget here, because we unref it somewhere twice!?
     g_object_ref(this->widget);
 
-    gtk_container_add(GTK_CONTAINER(parent), this->widget);
-    gtk_widget_show(this->widget);
+    gtk_viewport_set_child(GTK_VIEWPORT(parent), this->widget);
 
     g_signal_connect(getWidget(), "realize", G_CALLBACK(onRealized), this);
 
@@ -55,9 +54,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
     control->getZoomControl()->addZoomListener(this);
 
-    gtk_widget_set_can_default(this->widget, true);
-    gtk_widget_grab_default(this->widget);
-
+    gtk_window_set_default_widget(GTK_WINDOW(gtk_widget_get_root(this->widget)), this->widget);
     gtk_widget_grab_focus(this->widget);
 
     this->cleanupTimeout = g_timeout_add_seconds(5, reinterpret_cast<GSourceFunc>(clearMemoryTimer), this);
@@ -68,17 +65,10 @@ XournalView::~XournalView() {
 
     for (auto&& page: viewPages) { delete page; }
     viewPages.clear();
-
     delete this->cache;
-    this->cache = nullptr;
     delete this->repaintHandler;
-    this->repaintHandler = nullptr;
-
-    gtk_widget_destroy(this->widget);
-    this->widget = nullptr;
-
+    gtk_viewport_set_child(GTK_VIEWPORT(gtk_widget_get_parent(this->widget)), nullptr);
     delete this->handRecognition;
-    this->handRecognition = nullptr;
 }
 
 auto pageViewIncreasingClockTime(XojPageView* a, XojPageView* b) -> gint {
@@ -114,7 +104,7 @@ auto XournalView::getCurrentPage() const -> size_t { return currentPage; }
 
 const int scrollKeySize = 30;
 
-auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
+auto XournalView::onKeyPressEvent(/* GdkKeyEvent */ GdkEvent* event) -> bool {
     size_t p = getCurrentPage();
     if (p != npos && p < this->viewPages.size()) {
         XojPageView* v = this->viewPages[p];
@@ -123,8 +113,9 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
     }
 
+    auto event_keyval = gdk_key_event_get_keyval(event);
     // Esc leaves fullscreen mode
-    if (event->keyval == GDK_KEY_Escape) {
+    if (event_keyval == GDK_KEY_Escape) {
         if (control->isFullscreen()) {
             control->setFullscreen(false);
             return true;
@@ -132,7 +123,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
     // F5 starts presentation modus
-    if (event->keyval == GDK_KEY_F5) {
+    if (event_keyval == GDK_KEY_F5) {
         if (!control->isFullscreen()) {
             control->setViewPresentationMode(true);
             control->setFullscreen(true);
@@ -140,8 +131,8 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
     }
 
-    guint state = event->state & gtk_accelerator_get_default_mod_mask();
-
+    auto event_state = gdk_event_get_modifier_state(event);
+    guint state = event_state & gtk_accelerator_get_default_mod_mask();
     Layout* layout = gtk_xournal_get_layout(this->widget);
 
     if (state & GDK_SHIFT_MASK) {
@@ -149,26 +140,26 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
         int windowHeight = alloc.height - scrollKeySize;
 
-        if (event->keyval == GDK_KEY_Page_Down) {
+        if (event_keyval == GDK_KEY_Page_Down) {
             layout->scrollRelative(0, windowHeight);
             return false;
         }
-        if (event->keyval == GDK_KEY_Page_Up || event->keyval == GDK_KEY_space) {
+        if (event_keyval == GDK_KEY_Page_Up || event_keyval == GDK_KEY_space) {
             layout->scrollRelative(0, -windowHeight);
             return true;
         }
     } else {
-        if (event->keyval == GDK_KEY_Page_Down || event->keyval == GDK_KEY_KP_Page_Down) {
+        if (event_keyval == GDK_KEY_Page_Down || event_keyval == GDK_KEY_KP_Page_Down) {
             control->getScrollHandler()->goToNextPage();
             return true;
         }
-        if (event->keyval == GDK_KEY_Page_Up || event->keyval == GDK_KEY_KP_Page_Up) {
+        if (event_keyval == GDK_KEY_Page_Up || event_keyval == GDK_KEY_KP_Page_Up) {
             control->getScrollHandler()->goToPreviousPage();
             return true;
         }
     }
 
-    if (event->keyval == GDK_KEY_space) {
+    if (event_keyval == GDK_KEY_space) {
         GtkAllocation alloc = {0};
         gtk_widget_get_allocation(gtk_widget_get_parent(this->widget), &alloc);
         int windowHeight = alloc.height - scrollKeySize;
@@ -178,28 +169,28 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     }
 
     // Numeric keypad always navigates by page
-    if (event->keyval == GDK_KEY_KP_Up) {
+    if (event_keyval == GDK_KEY_KP_Up) {
         this->pageRelativeXY(0, -1);
         return true;
     }
 
-    if (event->keyval == GDK_KEY_KP_Down) {
+    if (event_keyval == GDK_KEY_KP_Down) {
         this->pageRelativeXY(0, 1);
         return true;
     }
 
-    if (event->keyval == GDK_KEY_KP_Left) {
+    if (event_keyval == GDK_KEY_KP_Left) {
         this->pageRelativeXY(-1, 0);
         return true;
     }
 
-    if (event->keyval == GDK_KEY_KP_Right) {
+    if (event_keyval == GDK_KEY_KP_Right) {
         this->pageRelativeXY(1, 0);
         return true;
     }
 
 
-    if (event->keyval == GDK_KEY_Up || event->keyval == GDK_KEY_k) {
+    if (event_keyval == GDK_KEY_Up || event_keyval == GDK_KEY_k) {
         if (control->getSettings()->isPresentationMode()) {
             control->getScrollHandler()->goToPreviousPage();
             return true;
@@ -214,7 +205,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Down || event->keyval == GDK_KEY_j) {
+    if (event_keyval == GDK_KEY_Down || event_keyval == GDK_KEY_j) {
         if (control->getSettings()->isPresentationMode()) {
             control->getScrollHandler()->goToNextPage();
             return true;
@@ -229,7 +220,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Left || event->keyval == GDK_KEY_h) {
+    if (event_keyval == GDK_KEY_Left || event_keyval == GDK_KEY_h) {
         if (state & GDK_SHIFT_MASK) {
             this->pageRelativeXY(-1, 0);
         } else {
@@ -242,7 +233,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Right || event->keyval == GDK_KEY_l) {
+    if (event_keyval == GDK_KEY_Right || event_keyval == GDK_KEY_l) {
         if (state & GDK_SHIFT_MASK) {
             this->pageRelativeXY(1, 0);
         } else {
@@ -255,12 +246,12 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
         return true;
     }
 
-    if (event->keyval == GDK_KEY_End || event->keyval == GDK_KEY_KP_End) {
+    if (event_keyval == GDK_KEY_End || event_keyval == GDK_KEY_KP_End) {
         control->getScrollHandler()->goToLastPage();
         return true;
     }
 
-    if (event->keyval == GDK_KEY_Home || event->keyval == GDK_KEY_KP_Home) {
+    if (event_keyval == GDK_KEY_Home || event_keyval == GDK_KEY_KP_Home) {
         control->getScrollHandler()->goToFirstPage();
         return true;
     }
@@ -270,7 +261,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
 
 auto XournalView::getRepaintHandler() -> RepaintHandler* { return this->repaintHandler; }
 
-auto XournalView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
+auto XournalView::onKeyReleaseEvent(/* GdkKeyEvent */ GdkEvent* event) -> bool {
     size_t p = getCurrentPage();
     if (p != npos && p < this->viewPages.size()) {
         XojPageView* v = this->viewPages[p];
@@ -285,7 +276,8 @@ auto XournalView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
 void XournalView::onRealized(GtkWidget* widget, XournalView* view) {
     // Disable event compression
     if (gtk_widget_get_realized(view->getWidget())) {
-        gdk_window_set_event_compression(gtk_widget_get_window(view->getWidget()), false);
+        // TODO (gtk4): apply this on event handler?
+        // gdk_surface_set_event_compression(gtk_native_get_surface(gtk_widget_get_native(view->getWidget())), false);
     } else {
         g_warning("could not disable event compression");
     }

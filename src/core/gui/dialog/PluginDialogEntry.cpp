@@ -7,9 +7,8 @@
 PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkWidget* w):
         GladeGui(gladeSearchPath, "pluginEntry.glade", "offscreenwindow"), plugin(plugin) {
     GtkWidget* pluginMainBox = get("pluginMainBox");
-    gtk_container_remove(GTK_CONTAINER(getWindow()), pluginMainBox);
-    gtk_container_add(GTK_CONTAINER(w), pluginMainBox);
-    gtk_widget_show_all(pluginMainBox);
+    gtk_window_set_child(GTK_WINDOW(getWindow()), nullptr);
+    gtk_box_append(GTK_BOX(w), pluginMainBox);
 
     loadSettings();
 }

@@ -11,19 +11,14 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
 #include <gtk/gtk.h>
-
 
 class Control;
 class XojPageView;
 
-class ImageHandler {
+class ImageHandler final {
 public:
-    ImageHandler(Control* control, XojPageView* view);
-    virtual ~ImageHandler();
+    ImageHandler(Control* control, XojPageView* view): control(control), view(view){};
 
 public:
     bool insertImage(double x, double y);

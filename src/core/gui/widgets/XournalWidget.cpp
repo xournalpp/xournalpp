@@ -162,8 +162,8 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
     gtk_widget_set_allocation(widget, allocation);
 
     if (gtk_widget_get_realized(widget)) {
-        gdk_window_move_resize(gtk_widget_get_window(widget), allocation->x, allocation->y, allocation->width,
-                               allocation->height);
+        gdk_surface_move_resize(gtk_widget_get_window(widget), allocation->x, allocation->y, allocation->width,
+                                allocation->height);
     }
 
     GtkXournal* xournal = GTK_XOURNAL(widget);
@@ -173,7 +173,7 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
 }
 
 static void gtk_xournal_realize(GtkWidget* widget) {
-    GdkWindowAttr attributes;
+    GdkSurfaceAttr attributes;
     guint attributes_mask = 0;
 
     g_return_if_fail(widget != nullptr);
@@ -197,8 +197,8 @@ static void gtk_xournal_realize(GtkWidget* widget) {
 
     attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-    gtk_widget_set_window(widget, gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask));
-    gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
+    gtk_widget_set_window(widget, gdk_surface_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask));
+    gdk_surface_set_user_data(gtk_widget_get_window(widget), widget);
 }
 
 static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, int top, int width, int height,

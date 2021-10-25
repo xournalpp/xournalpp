@@ -23,7 +23,5 @@ public:
 
     // returns the selected page or -1 if closed
     int getSelectedPage() const;
-
-private:
     int selectedPage = -1;
 };

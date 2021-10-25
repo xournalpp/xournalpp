@@ -1,8 +1,10 @@
+#undef X11_ENABLED
+
 #include "TouchDisableX11.h"
 
 #ifdef X11_ENABLED
 
-#include <gdk/gdkx.h>
+#include <gdk/gdk.h>
 
 TouchDisableX11::TouchDisableX11() = default;
 
@@ -17,7 +19,7 @@ TouchDisableX11::~TouchDisableX11() {
 
 void TouchDisableX11::init() {
     // Get display from GTK
-    display = gdk_x11_display_get_xdisplay(gdk_display_get_default());
+    display = get_xrootwindow gdk_display_get_default();
     if (display == nullptr) {
         g_error("Could not open X11 display");
         return;

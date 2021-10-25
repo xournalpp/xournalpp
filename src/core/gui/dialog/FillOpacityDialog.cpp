@@ -1,5 +1,8 @@
 #include "FillOpacityDialog.h"
 
+#include "GtkDialogUtil.h"
+#include "pixbuf-utils.h"
+
 FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen):
         GladeGui(gladeSearchPath, "fillOpacity.glade", "fillOpacityDialog"), pen(pen) {
     GtkWidget* scaleAlpha = get("scaleAlpha");
@@ -48,7 +51,11 @@ void FillOpacityDialog::setPreviewImage(int alpha) {
     cairo_destroy(cr);
 
     GtkWidget* preview = get("imgPreview");
-    gtk_image_set_from_surface(GTK_IMAGE(preview), surface);
+
+    auto* pixbuf = xoj_pixbuf_get_from_surface(surface, 0, 0, PREVIEW_WIDTH, PREVIEW_WIDTH);
+    gtk_image_set_from_pixbuf(GTK_IMAGE(preview), pixbuf);
+    g_object_unref(pixbuf);
+    g_object_unref(surface);
 
     cairo_surface_destroy(surface);
 }
@@ -57,7 +64,7 @@ auto FillOpacityDialog::getResultAlpha() const -> int { return resultAlpha; }
 
 void FillOpacityDialog::show(GtkWindow* parent) {
     gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    int result = gtk_dialog_run(GTK_DIALOG(this->window));
+    int result = wait_for_gtk_dialog_result(GTK_DIALOG(this->window));
     gtk_widget_hide(this->window);
 
     // OK Button

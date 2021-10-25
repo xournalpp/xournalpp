@@ -23,19 +23,12 @@ public:
 
 
 MainWindowToolbarMenu::MainWindowToolbarMenu(MainWindow* win): win(win) {}
+MainWindowToolbarMenu::~MainWindowToolbarMenu() = default;
 
-MainWindowToolbarMenu::~MainWindowToolbarMenu() {
-    menuitems.clear();
-    freeToolMenu();
-}
-
-void MainWindowToolbarMenu::freeToolMenu() {
-    for (MenuSelectToolbarData* data: toolbarMenuData) { delete data; }
-    this->toolbarMenuData.clear();
-}
+void MainWindowToolbarMenu::freeToolMenu() { this->toolbarMenuData.clear(); }
 
 void MainWindowToolbarMenu::setTmpDisabled(bool disabled) {
-    for (MenuSelectToolbarData* data: this->toolbarMenuData) { gtk_widget_set_sensitive(data->item, !disabled); }
+    for (auto&& data: this->toolbarMenuData) { gtk_widget_set_sensitive(data->item, !disabled); }
 }
 
 void MainWindowToolbarMenu::selectToolbar(Settings* settings, ToolMenuHandler* toolbar) {
@@ -57,6 +50,7 @@ void MainWindowToolbarMenu::selectToolbar(Settings* settings, ToolMenuHandler* t
 
 auto MainWindowToolbarMenu::getSelectedToolbar() -> ToolbarData* { return selectedToolbar; }
 
+/* // TODO (gtk4, fabian): replace with action
 void MainWindowToolbarMenu::removeOldElements(GtkMenuShell* menubar) {
     for (GtkWidget* w: menuitems) { gtk_container_remove(GTK_CONTAINER(menubar), w); }
     menuitems.clear();
@@ -64,12 +58,14 @@ void MainWindowToolbarMenu::removeOldElements(GtkMenuShell* menubar) {
     freeToolMenu();
 }
 
+// TODO (gtk4, fabian): replace with action
 void MainWindowToolbarMenu::tbSelectMenuitemActivated(GtkCheckMenuItem* checkmenuitem, MenuSelectToolbarData* data) {
     data->tbm->menuClicked(checkmenuitem, data);
 }
 
+// TODO (gtk4, fabian): replace with action
 void MainWindowToolbarMenu::menuClicked(GtkCheckMenuItem* menuitem, MenuSelectToolbarData* data) {
-    if (!gtk_check_menu_item_get_active(menuitem)) {
+    if (!gtk_check_button_get_active(menuitem)) {
         // Ignore disabled menus
         return;
     }
@@ -83,21 +79,22 @@ void MainWindowToolbarMenu::menuClicked(GtkCheckMenuItem* menuitem, MenuSelectTo
 
         GtkWidget* w = this->toolbarMenuData[i]->item;
 
-        if (GTK_IS_CHECK_MENU_ITEM(w)) {
-            gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), false);
+        if (GTK_IS_CHECK_BUTTON(w)) {
+            gtk_check_button_set_active(GTK_CHECK_BUTTON(w), false);
         }
     }
 }
 
+// TODO (gtk4, fabian): replace with action
 void MainWindowToolbarMenu::addToolbarMenuEntry(ToolbarData* d, GtkMenuShell* menubar, int& menuPos) {
-    GtkWidget* item = gtk_check_menu_item_new_with_label(d->getName().c_str());
-    gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(item), true);
+    GtkWidget* item = gtk_check_button_new_with_label(d->getName().c_str());
+    gtk_check_button_set_draw_as_radio(GTK_CHECK_BUTTON(item), true);
     gtk_widget_show(item);
     gtk_menu_shell_insert(menubar, item, menuPos);
 
     menuitems.push_back(item);
 
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), d == selectedToolbar);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(item), d == selectedToolbar);
 
     auto* data = new MenuSelectToolbarData(this, item, d, toolbarMenuData.size());
     toolbarMenuData.push_back(data);
@@ -114,6 +111,7 @@ void MainWindowToolbarMenu::addToolbarMenuEntry(ToolbarData* d, GtkMenuShell* me
     }
 }
 
+// TODO (gtk4, fabian): replace with action
 void MainWindowToolbarMenu::updateToolbarMenu(GtkMenuShell* menubar, Settings* settings, ToolMenuHandler* toolbar) {
     selectToolbar(settings, toolbar);
     removeOldElements(menubar);
@@ -125,4 +123,4 @@ void MainWindowToolbarMenu::updateToolbarMenu(GtkMenuShell* menubar, Settings* s
         addToolbarMenuEntry(d, menubar, menuPos);
         menuPos++;
     }
-}
+} */

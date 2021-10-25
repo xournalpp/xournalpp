@@ -66,7 +66,8 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 
     // Window handler
     g_signal_connect(this->window, "delete-event", G_CALLBACK(deleteEventCallback), this->control);
-    g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
+    // Todo (gtk4): find replacement
+    // g_signal_connect(this->window, "window_state_event", G_CALLBACK(windowStateEventCallback), this);
 
     g_signal_connect(get("buttonCloseSidebar"), "clicked", G_CALLBACK(buttonCloseSidebarClicked), this);
 
@@ -102,11 +103,12 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
 
     setToolbarVisible(control->getSettings()->isToolbarVisible());
 
-    GtkWidget* menuViewSidebarVisible = get("menuViewSidebarVisible");
-    g_signal_connect(menuViewSidebarVisible, "toggled", G_CALLBACK(viewShowSidebar), this);
+    // Todo (gtk4): Fix it
+    // GtkWidget* menuViewSidebarVisible = get("menuViewSidebarVisible");
+    // g_signal_connect(menuViewSidebarVisible, "toggled", G_CALLBACK(viewShowSidebar), this);
 
-    GtkWidget* menuViewToolbarsVisible = get("menuViewToolbarsVisible");
-    g_signal_connect(menuViewToolbarsVisible, "toggled", G_CALLBACK(viewShowToolbar), this);
+    // GtkWidget* menuViewToolbarsVisible = get("menuViewToolbarsVisible");
+    // g_signal_connect(menuViewToolbarsVisible, "toggled", G_CALLBACK(viewShowToolbar), this);
 
     updateScrollbarSidebarPosition();
 
@@ -128,17 +130,20 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
     });
 
     // Drag and Drop
-    g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
+    // Todo (gtk4): Fix it
+    // g_signal_connect(this->window, "drag-data-received", G_CALLBACK(dragDataRecived), this);
 
-    gtk_drag_dest_set(this->window, GTK_DEST_DEFAULT_ALL, nullptr, 0, GDK_ACTION_COPY);
-    gtk_drag_dest_add_uri_targets(this->window);
-    gtk_drag_dest_add_image_targets(this->window);
-    gtk_drag_dest_add_text_targets(this->window);
+    // Todo (gtk4): Fix it
+    // gtk_drag_dest_set(this->window, GTK_DEST_DEFAULT_ALL, nullptr, 0, GDK_ACTION_COPY);
+    // gtk_drag_dest_add_uri_targets(this->window);
+    // gtk_drag_dest_add_image_targets(this->window);
+    // gtk_drag_dest_add_text_targets(this->window);
 
     LayerCtrlListener::registerListener(control->getLayerController());
 }
 
-gboolean MainWindow::isKeyForClosure(GtkAccelKey* key, GClosure* closure, gpointer data) { return closure == data; }
+// Todo (gtk4): Fix it
+// gboolean MainWindow::isKeyForClosure(GtkAccelKey* key, GClosure* closure, gpointer data) { return closure == data; }
 
 gboolean MainWindow::invokeMenu(GtkWidget* widget) {
     // g_warning("invoke_menu %s", gtk_widget_get_name(widget));
@@ -147,65 +152,58 @@ gboolean MainWindow::invokeMenu(GtkWidget* widget) {
 }
 
 void MainWindow::rebindAcceleratorsMenuItem(GtkWidget* widget, gpointer user_data) {
-    if (GTK_IS_MENU_ITEM(widget)) {
-        GtkAccelGroup* newAccelGroup = reinterpret_cast<GtkAccelGroup*>(user_data);
-        GList* menuAccelClosures = gtk_widget_list_accel_closures(widget);
-        for (GList* l = menuAccelClosures; l != nullptr; l = l->next) {
-            GClosure* closure = reinterpret_cast<GClosure*>(l->data);
-            GtkAccelGroup* accelGroup = gtk_accel_group_from_accel_closure(closure);
-            GtkAccelKey* key = gtk_accel_group_find(accelGroup, isKeyForClosure, closure);
+    // Todo (gtk4): Fix it
+    // if (GTK_IS_MENU_ITEM(widget)) {
+    //     GtkAccelGroup* newAccelGroup = reinterpret_cast<GtkAccelGroup*>(user_data);
+    //     GList* menuAccelClosures = gtk_widget_list_accel_closures(widget);
+    //     for (GList* l = menuAccelClosures; l != nullptr; l = l->next) {
+    //         GClosure* closure = reinterpret_cast<GClosure*>(l->data);
+    //         GtkAccelGroup* accelGroup = gtk_accel_group_from_accel_closure(closure);
+    //         GtkAccelKey* key = gtk_accel_group_find(accelGroup, isKeyForClosure, closure);
 
-            // g_warning("Rebind %s : %s", gtk_accelerator_get_label(key->accel_key, key->accel_mods),
-            // gtk_widget_get_name(widget));
+    //         // g_warning("Rebind %s : %s", gtk_accelerator_get_label(key->accel_key, key->accel_mods),
+    //         // gtk_widget_get_name(widget));
 
-            gtk_accel_group_connect(newAccelGroup, key->accel_key, key->accel_mods, GtkAccelFlags(0),
-                                    g_cclosure_new_swap(G_CALLBACK(MainWindow::invokeMenu), widget, nullptr));
-        }
+    //         gtk_accel_group_connect(newAccelGroup, key->accel_key, key->accel_mods, GtkAccelFlags(0),
+    //                                 g_cclosure_new_swap(G_CALLBACK(MainWindow::invokeMenu), widget, nullptr));
+    //     }
 
-        MainWindow::rebindAcceleratorsSubMenu(widget, newAccelGroup);
-    }
+    //     MainWindow::rebindAcceleratorsSubMenu(widget, newAccelGroup);
+    // }
 }
 
 void MainWindow::rebindAcceleratorsSubMenu(GtkWidget* widget, gpointer user_data) {
-    if (GTK_IS_MENU_ITEM(widget)) {
-        GtkMenuItem* menuItem = reinterpret_cast<GtkMenuItem*>(widget);
-        GtkWidget* subMenu = gtk_menu_item_get_submenu(menuItem);
-        if (GTK_IS_CONTAINER(subMenu)) {
-            gtk_container_foreach(reinterpret_cast<GtkContainer*>(subMenu), rebindAcceleratorsMenuItem, user_data);
-        }
-    }
+    // Todo (gtk4): Fix it
+    // if (GTK_IS_MENU_ITEM(widget)) {
+    //     GtkButton* menuItem = reinterpret_cast<GtkButton*>(widget);
+    //     GtkWidget* subMenu = gtk_menu_item_get_submenu(menuItem);
+    //     if (GTK_IS_CONTAINER(subMenu)) {
+    //         gtk_container_foreach(reinterpret_cast<GtkContainer*>(subMenu), rebindAcceleratorsMenuItem, user_data);
+    //     }
+    // }
 }
 
 // When the Menubar is hidden, accelerators no longer work so rebind them to the MainWindow
 // It should be called after all plugins have been initialised so that their injected menu items are captured
 void MainWindow::rebindMenubarAccelerators() {
-    this->globalAccelGroup = gtk_accel_group_new();
-    gtk_window_add_accel_group(GTK_WINDOW(this->getWindow()), this->globalAccelGroup);
+    // Todo (gtk4): Fix it
+    // this->globalAccelGroup = gtk_accel_group_new();
+    // gtk_window_add_accel_group(GTK_WINDOW(this->getWindow()), this->globalAccelGroup);
 
-    GtkMenuBar* menuBar = (GtkMenuBar*)this->get("mainMenubar");
-    gtk_container_foreach(reinterpret_cast<GtkContainer*>(menuBar), rebindAcceleratorsSubMenu, this->globalAccelGroup);
+    // GtkMenuBar* menuBar = (GtkMenuBar*)this->get("mainMenubar");
+    // gtk_container_foreach(reinterpret_cast<GtkContainer*>(menuBar), rebindAcceleratorsSubMenu,
+    // this->globalAccelGroup);
 }
 
 MainWindow::~MainWindow() {
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) { g_object_unref(this->toolbarWidgets[i]); }
 
     delete[] this->toolbarWidgets;
-    this->toolbarWidgets = nullptr;
-
     delete this->toolbarSelectMenu;
-    this->toolbarSelectMenu = nullptr;
-
     delete this->floatingToolbox;
-    this->floatingToolbox = nullptr;
-
     delete this->xournal;
-    this->xournal = nullptr;
-
     delete this->toolbar;
-    this->toolbar = nullptr;
-
     delete scrollHandling;
-    scrollHandling = nullptr;
 
     g_object_unref(panedContainerWidget);
     g_object_unref(boxContainerWidget);
@@ -240,25 +238,21 @@ void MainWindow::updateColorscheme() {
 }
 
 void MainWindow::initXournalWidget() {
-    GtkWidget* boxContents = get("boxContents");
 
-
-    winXournal = gtk_scrolled_window_new(nullptr, nullptr);
 
     setGtkTouchscreenScrollingForDeviceMapping();
 
-    gtk_container_add(GTK_CONTAINER(boxContents), winXournal);
+    winXournal = gtk_scrolled_window_new();
+    gtk_box_append(GTK_BOX(get("boxContents")), winXournal);
 
     GtkWidget* vpXournal = gtk_viewport_new(nullptr, nullptr);
-
-    gtk_container_add(GTK_CONTAINER(winXournal), vpXournal);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(winXournal), vpXournal);
 
     scrollHandling = new ScrollHandling(GTK_SCROLLABLE(vpXournal));
 
     this->xournal = new XournalView(vpXournal, control, scrollHandling);
 
     control->getZoomControl()->initZoomHandler(this->window, winXournal, xournal, control);
-    gtk_widget_show_all(winXournal);
 
     Layout* layout = gtk_xournal_get_layout(this->xournal->getWidget());
     scrollHandling->init(this->xournal->getWidget(), layout);
@@ -316,7 +310,7 @@ void MainWindow::initHideMenu() {
     } else {
         // Menu found, allow to hide it
         g_signal_connect(menuItem, "activate",
-                         G_CALLBACK(+[](GtkMenuItem* menuitem, MainWindow* self) { toggleMenuBar(self); }), this);
+                         G_CALLBACK(+[](GtkButton* menuitem, MainWindow* self) { toggleMenuBar(self); }), this);
     }
 
     // Hide menubar at startup if specified in settings
@@ -336,96 +330,97 @@ auto cancellable_cancel(GCancellable* cancel) -> bool {
     return false;
 }
 
-void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data,
-                                 guint info, guint time, MainWindow* win) {
-    GtkWidget* source = gtk_drag_get_source_widget(dragContext);
-    if (source && widget == gtk_widget_get_toplevel(source)) {
-        gtk_drag_finish(dragContext, false, false, time);
-        return;
-    }
+// void MainWindow::dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData*
+// data,
+//                                  guint info, guint time, MainWindow* win) {
+//     GtkWidget* source = gtk_drag_get_source_widget(dragContext);
+//     if (source && widget == gtk_widget_get_toplevel(source)) {
+//         gtk_drag_finish(dragContext, false, false, time);
+//         return;
+//     }
 
-    guchar* text = gtk_selection_data_get_text(data);
-    if (text) {
-        win->control->clipboardPasteText(reinterpret_cast<const char*>(text));
+//     guchar* text = gtk_selection_data_get_text(data);
+//     if (text) {
+//         win->control->clipboardPasteText(reinterpret_cast<const char*>(text));
 
-        g_free(text);
-        gtk_drag_finish(dragContext, true, false, time);
-        return;
-    }
+//         g_free(text);
+//         gtk_drag_finish(dragContext, true, false, time);
+//         return;
+//     }
 
-    GdkPixbuf* image = gtk_selection_data_get_pixbuf(data);
-    if (image) {
-        win->control->clipboardPasteImage(image);
+//     GdkPixbuf* image = gtk_selection_data_get_pixbuf(data);
+//     if (image) {
+//         win->control->clipboardPasteImage(image);
 
-        g_object_unref(image);
-        gtk_drag_finish(dragContext, true, false, time);
-        return;
-    }
+//         g_object_unref(image);
+//         gtk_drag_finish(dragContext, true, false, time);
+//         return;
+//     }
 
-    gchar** uris = gtk_selection_data_get_uris(data);
-    if (uris) {
-        for (int i = 0; uris[i] != nullptr && i < 3; i++) {
-            const char* uri = uris[i];
+//     gchar** uris = gtk_selection_data_get_uris(data);
+//     if (uris) {
+//         for (int i = 0; uris[i] != nullptr && i < 3; i++) {
+//             const char* uri = uris[i];
 
-            GCancellable* cancel = g_cancellable_new();
-            int cancelTimeout = g_timeout_add(3000, reinterpret_cast<GSourceFunc>(cancellable_cancel), cancel);
+//             GCancellable* cancel = g_cancellable_new();
+//             int cancelTimeout = g_timeout_add(3000, reinterpret_cast<GSourceFunc>(cancellable_cancel), cancel);
 
-            GFile* file = g_file_new_for_uri(uri);
-            GError* err = nullptr;
-            GFileInputStream* in = g_file_read(file, cancel, &err);
-            if (g_cancellable_is_cancelled(cancel)) {
-                continue;
-            }
+//             GFile* file = g_file_new_for_uri(uri);
+//             GError* err = nullptr;
+//             GFileInputStream* in = g_file_read(file, cancel, &err);
+//             if (g_cancellable_is_cancelled(cancel)) {
+//                 continue;
+//             }
 
-            g_object_unref(file);
-            if (err == nullptr) {
-                GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, nullptr);
-                if (g_cancellable_is_cancelled(cancel)) {
-                    continue;
-                }
-                g_input_stream_close(G_INPUT_STREAM(in), cancel, nullptr);
-                if (g_cancellable_is_cancelled(cancel)) {
-                    continue;
-                }
+//             g_object_unref(file);
+//             if (err == nullptr) {
+//                 GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), cancel, nullptr);
+//                 if (g_cancellable_is_cancelled(cancel)) {
+//                     continue;
+//                 }
+//                 g_input_stream_close(G_INPUT_STREAM(in), cancel, nullptr);
+//                 if (g_cancellable_is_cancelled(cancel)) {
+//                     continue;
+//                 }
 
-                if (pixbuf) {
-                    win->control->clipboardPasteImage(pixbuf);
+//                 if (pixbuf) {
+//                     win->control->clipboardPasteImage(pixbuf);
 
-                    g_object_unref(pixbuf);
-                }
-            } else {
-                g_error_free(err);
-            }
+//                     g_object_unref(pixbuf);
+//                 }
+//             } else {
+//                 g_error_free(err);
+//             }
 
-            if (!g_cancellable_is_cancelled(cancel)) {
-                g_source_remove(cancelTimeout);
-            }
-            g_object_unref(cancel);
-        }
+//             if (!g_cancellable_is_cancelled(cancel)) {
+//                 g_source_remove(cancelTimeout);
+//             }
+//             g_object_unref(cancel);
+//         }
 
-        gtk_drag_finish(dragContext, true, false, time);
+//         gtk_drag_finish(dragContext, true, false, time);
 
-        g_strfreev(uris);
-    }
+//         g_strfreev(uris);
+//     }
 
-    gtk_drag_finish(dragContext, false, false, time);
-}
+//     gtk_drag_finish(dragContext, false, false, time);
+// }
 
-void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
-    bool a = gtk_check_menu_item_get_active(checkmenuitem);
-    if (win->control->getSettings()->isSidebarVisible() == a) {
-        return;
-    }
-    win->setSidebarVisible(a);
-}
+// void MainWindow::viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
+//     bool a = gtk_check_button_get_active(checkmenuitem);
+//     if (win->control->getSettings()->isSidebarVisible() == a) {
+//         return;
+//     }
+//     win->setSidebarVisible(a);
+// }
 
-void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
-    bool showToolbar = gtk_check_menu_item_get_active(checkmenuitem);
-    if (win->control->getSettings()->isToolbarVisible() == showToolbar) {
-        return;
-    }
-    win->setToolbarVisible(showToolbar);
-}
+// void MainWindow::viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win) {
+//     bool showToolbar = gtk_check_button_get_active(checkmenuitem);
+//     if (win->control->getSettings()->isToolbarVisible() == showToolbar) {
+//         return;
+//     }
+//     win->setToolbarVisible(showToolbar);
+// }
 
 auto MainWindow::getControl() -> Control* { return control; }
 
@@ -461,7 +456,7 @@ void MainWindow::updateScrollbarSidebarPosition() {
 
     int divider = gtk_paned_get_position(GTK_PANED(panelMainContents));
     bool sidebarRight = control->getSettings()->isSidebarOnRight();
-    if (sidebarRight == (gtk_paned_get_child2(GTK_PANED(panelMainContents)) == sidebar)) {
+    if (sidebarRight == (gtk_paned_get_end_child(GTK_PANED(panelMainContents)) == sidebar)) {
         // Already correct
         return;
     }
@@ -475,15 +470,12 @@ void MainWindow::updateScrollbarSidebarPosition() {
     g_object_ref(sidebar);
     g_object_ref(boxContents);
 
-    gtk_container_remove(GTK_CONTAINER(panelMainContents), sidebar);
-    gtk_container_remove(GTK_CONTAINER(panelMainContents), boxContents);
-
     if (sidebarRight) {
-        gtk_paned_pack1(GTK_PANED(panelMainContents), boxContents, true, false);
-        gtk_paned_pack2(GTK_PANED(panelMainContents), sidebar, false, false);
+        gtk_paned_set_start_child(GTK_PANED(panelMainContents), boxContents);
+        gtk_paned_set_end_child(GTK_PANED(panelMainContents), sidebar);
     } else {
-        gtk_paned_pack1(GTK_PANED(panelMainContents), sidebar, false, false);
-        gtk_paned_pack2(GTK_PANED(panelMainContents), boxContents, true, false);
+        gtk_paned_set_start_child(GTK_PANED(panelMainContents), sidebar);
+        gtk_paned_set_end_child(GTK_PANED(panelMainContents), boxContents);
     }
 
     gtk_paned_set_position(GTK_PANED(panelMainContents), divider);
@@ -493,7 +485,7 @@ void MainWindow::updateScrollbarSidebarPosition() {
 
 void MainWindow::buttonCloseSidebarClicked(GtkButton* button, MainWindow* win) { win->setSidebarVisible(false); }
 
-auto MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win) -> bool {
+auto MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEvent* event, MainWindow* win) -> bool {
 
     if (win->getXournal()->getSelection()) {
         // something is selected - give that control
@@ -503,7 +495,8 @@ auto MainWindow::onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainW
         // editing text - give that control
         return false;
     }
-    if (event->keyval == GDK_KEY_Escape) {
+
+    if (auto event_keyval = gdk_key_event_get_keyval(event); event_keyval == GDK_KEY_Escape) {
         win->getControl()->getSearchBar()->showSearchBar(false);
         return true;
     }
@@ -527,23 +520,24 @@ void MainWindow::setSidebarVisible(bool visible) {
     }
 
     if (visible != this->sidebarVisible) {
+        // TODO (gtk4): Fix this
         // Due to a GTK bug, we can't just hide the sidebar widget in the GtkPaned.
         // If we do this, we create a dead region where the pane separator was previously.
         // In this region, we can't use the touchscreen to start horizontal strokes.
         // As such:
-        if (!visible) {
-            gtk_container_remove(GTK_CONTAINER(panedContainerWidget), mainContentWidget);
-            gtk_container_remove(GTK_CONTAINER(boxContainerWidget), GTK_WIDGET(panedContainerWidget));
-            gtk_container_add(GTK_CONTAINER(boxContainerWidget), mainContentWidget);
-            this->sidebarVisible = false;
-        } else {
-            gtk_container_remove(GTK_CONTAINER(boxContainerWidget), mainContentWidget);
-            gtk_container_add(GTK_CONTAINER(panedContainerWidget), mainContentWidget);
-            gtk_container_add(GTK_CONTAINER(boxContainerWidget), GTK_WIDGET(panedContainerWidget));
-            this->sidebarVisible = true;
+        // if (!visible) {
+        //     gtk_container_remove(GTK_CONTAINER(panedContainerWidget), mainContentWidget);
+        //     gtk_container_remove(GTK_CONTAINER(boxContainerWidget), GTK_WIDGET(panedContainerWidget));
+        //     gtk_container_add(GTK_CONTAINER(boxContainerWidget), mainContentWidget);
+        //     this->sidebarVisible = false;
+        // } else {
+        //     gtk_container_remove(GTK_CONTAINER(boxContainerWidget), mainContentWidget);
+        //     gtk_container_add(GTK_CONTAINER(panedContainerWidget), mainContentWidget);
+        //     gtk_container_add(GTK_CONTAINER(boxContainerWidget), GTK_WIDGET(panedContainerWidget));
+        //     this->sidebarVisible = true;
 
-            updateScrollbarSidebarPosition();
-        }
+        //     updateScrollbarSidebarPosition();
+        // }
     }
 
     gtk_widget_set_visible(sidebarWidget, visible);
@@ -552,23 +546,23 @@ void MainWindow::setSidebarVisible(bool visible) {
         gtk_paned_set_position(GTK_PANED(panedContainerWidget), settings->getSidebarWidth());
     }
 
-    GtkWidget* w = get("menuViewSidebarVisible");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
+    // GtkWidget* w = get("menuViewSidebarVisible");
+    // gtk_check_button_set_active(GTK_CHECK_BUTTON(w), visible);
 }
 
 void MainWindow::setToolbarVisible(bool visible) {
     Settings* settings = control->getSettings();
 
     settings->setToolbarVisible(visible);
-    for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
-        auto widget = this->toolbarWidgets[i];
-        if (!visible || GTK_IS_CONTAINER(widget) && gtk_container_get_children(GTK_CONTAINER(widget))) {
-            gtk_widget_set_visible(widget, visible);
-        }
-    }
+    // for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
+    //     auto widget = this->toolbarWidgets[i];
+    //     if (!visible || GTK_IS_CONTAINER(widget) && gtk_container_get_children(GTK_CONTAINER(widget))) {
+    //         gtk_widget_set_visible(widget, visible);
+    //     }
+    // }
 
-    GtkWidget* w = get("menuViewToolbarsVisible");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(w), visible);
+    // GtkWidget* w = get("menuViewToolbarsVisible");
+    // gtk_check_button_set_active(GTK_CHECK_BUTTON(w), visible);
 }
 
 void MainWindow::saveSidebarSize() {
@@ -581,11 +575,11 @@ auto MainWindow::isMaximized() const -> bool { return this->maximized; }
 
 auto MainWindow::getXournal() -> XournalView* { return xournal; }
 
-auto MainWindow::windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win) -> bool {
-    win->setMaximized(gtk_window_is_maximized(GTK_WINDOW(window)));
-
-    return false;
-}
+// TODO (gtk4): fix this
+// auto MainWindow::windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win) -> bool {
+//     win->setMaximized(gtk_window_is_maximized(GTK_WINDOW(window)));
+//     return false;
+// }
 
 void MainWindow::reloadToolbars() {
     bool inDragAndDrop = this->control->isInDragAndDropToolbar();
@@ -648,7 +642,7 @@ auto MainWindow::getToolbarWidgets(int& length) -> GtkWidget** {
     return this->toolbarWidgets;
 }
 
-auto MainWindow::getToolbarName(GtkToolbar* toolbar) -> const char* {
+auto MainWindow::getToolbarName(GtkWidget* toolbar) -> const char* {
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         if (static_cast<void*>(this->toolbarWidgets[i]) == static_cast<void*>(toolbar)) {
             return TOOLBAR_DEFINITIONS[i].propName;
@@ -669,10 +663,11 @@ void MainWindow::setControlTmpDisabled(bool disabled) {
 void MainWindow::updateToolbarMenu() { createToolbarAndMenu(); }
 
 void MainWindow::createToolbarAndMenu() {
-    GtkMenuShell* menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
-    g_return_if_fail(menubar != nullptr);
+    // TODO (gtk4): fix this
+    // GtkMenuShell* menubar = GTK_MENU_SHELL(get("menuViewToolbar"));
+    // g_return_if_fail(menubar != nullptr);
 
-    toolbarSelectMenu->updateToolbarMenu(menubar, control->getSettings(), toolbar);
+    // toolbarSelectMenu->updateToolbarMenu(menubar, control->getSettings(), toolbar);
 
     ToolbarData* td = toolbarSelectMenu->getSelectedToolbar();
     if (td) {
@@ -729,10 +724,10 @@ void MainWindow::layerVisibilityChanged() {
     control->fireEnableAction(ACTION_GOTO_TOP_LAYER, layer < maxLayer);
 }
 
-void MainWindow::setRecentMenu(GtkWidget* submenu) {
-    GtkWidget* menuitem = get("menuFileRecent");
-    g_return_if_fail(menuitem != nullptr);
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), submenu);
+void MainWindow::setRecentMenu(GMenu* submenu) {
+    GMenuItem* menu_item = get("menuFileRecent", [](auto* p) { return G_MENU_ITEM(p); });
+    assert(menu_item != nullptr);
+    g_menu_item_set_submenu(menu_item, G_MENU_MODEL(submenu));
 }
 
 void MainWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
@@ -760,9 +755,9 @@ void MainWindow::setAudioPlaybackPaused(bool paused) { this->getToolMenuHandler(
 void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename) {
     auto filepath = gladeSearchPath->findFile("", cssFilename);
     GtkCssProvider* provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, filepath.u8string().c_str(), nullptr);
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider),
-                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    gtk_css_provider_load_from_path(provider, filepath.u8string().c_str());
+    gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_PROVIDER(provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     g_object_unref(provider);
 }
 

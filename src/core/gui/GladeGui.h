@@ -27,9 +27,18 @@ public:
     virtual void show(GtkWindow* parent) = 0;
 
     operator GtkWindow*();
-    operator GdkWindow*();
+    operator GdkSurface*();
 
-    GtkWidget* get(const std::string& name);
+    template <typename Func>
+    auto get(std::string const& name, Func&& func) -> decltype(std::declval<Func>()(std::declval<GObject*>())) {
+        auto* o = func(gtk_builder_get_object(builder, name.c_str()));
+        if (o == nullptr) {
+            g_warning("GladeGui::get: Could not find glade Object: \"%s\"", name.c_str());
+        }
+        return o;
+    }
+
+    auto get(std::string const& name) -> GtkWidget*;
 
     void setThemePath(std::string themePath);
 

@@ -17,8 +17,9 @@ namespace ToolbarDragDropHelper {
 void dragDestAddToolbar(GtkWidget* target);
 void dragSourceAddToolbar(GtkWidget* widget);
 
-auto gdk_context_set_icon_from_image(GdkDragContext* ctx, GtkWidget* image) -> bool;
+// auto gdk_context_set_icon_from_image(GdkDragContext* ctx, GtkWidget* image) -> bool;
 
-extern const GdkAtom atomToolItem;
-extern const GtkTargetEntry dropTargetEntry;
+extern const GValue atomToolItem;
+// TODO (gtk4): Find replacement
+// extern const GtkTargetEntry dropTargetEntry;
 };  // namespace ToolbarDragDropHelper

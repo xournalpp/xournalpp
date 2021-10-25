@@ -12,6 +12,7 @@
 #include "gui/MainWindow.h"
 #include "gui/XournalView.h"
 #include "undo/EmergencySaveRestore.h"
+#include "util/GtkDialogUtil.h"
 #include "util/Stacktrace.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
@@ -157,8 +158,7 @@ void checkForErrorlog() {
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete Logfile"), 4);
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 5);
 
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+    auto res = wait_for_gtk_dialog_result(GTK_DIALOG(dialog));
 
     auto const& errorlogPath = Util::getCacheSubfolder(ERRORLOG_DIR) / errorList[0];
     if (res == 1)  // Send Bugreport
@@ -184,6 +184,7 @@ void checkForErrorlog() {
     }
 }
 
+
 void checkForEmergencySave(Control* control) {
     auto file = Util::getConfigFile("emergencysave.xopp");
 
@@ -198,14 +199,11 @@ void checkForEmergencySave(Control* control) {
 
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Delete file"), 1);
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Restore file"), 2);
+    auto res = wait_for_gtk_dialog_result(GTK_DIALOG(dialog));
 
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-
-    if (res == 1)  // Delete file
-    {
+    if (res == 1) {  // Delete file
         fs::remove(file);
-    } else if (res == 2)  // Open File
-    {
+    } else if (res == 2) {  // Open File
         if (control->openFile(file, -1, true)) {
             control->getDocument()->setFilepath("");
 
@@ -215,8 +213,6 @@ void checkForEmergencySave(Control* control) {
             fs::remove(file);
         }
     }
-
-    gtk_widget_destroy(dialog);
 }
 
 /**
@@ -251,8 +247,8 @@ auto exportImg(const char* input, const char* output, const char* range, int png
  * @param output Path to the output file
  * @param range Page range to be parsed. If range=nullptr, exports the whole file
  * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported pdf file has white background
- * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
- * rendered one by one to produce as many pages as there are layers.
+ * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers
+ * are rendered one by one to produce as many pages as there are layers.
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
@@ -413,7 +409,9 @@ void on_startup(GApplication* application, XMPtr app_data) {
             iconLoadOrder.insert(iconLoadOrder.begin(), darkIcons.u8string());
         }
 
-        for (auto& p: iconLoadOrder) { gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), p.c_str()); }
+        for (auto& p: iconLoadOrder) {
+            gtk_icon_theme_add_search_path(gtk_icon_theme_get_for_display(gdk_display_get_default()), p.c_str());
+        }
     }
 
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;

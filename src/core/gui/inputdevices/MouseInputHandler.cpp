@@ -30,11 +30,11 @@ auto MouseInputHandler::handleImpl(InputEvent const& event) -> bool {
         this->actionStart(event);
         return true;
     }
-
-    if (event.type == BUTTON_2_PRESS_EVENT || event.type == BUTTON_3_PRESS_EVENT) {
-        this->actionPerform(event);
-        return true;
-    }
+    // Todo (gtk4): Fixit
+    // if (event.type == BUTTON_2_PRESS_EVENT || event.type == BUTTON_3_PRESS_EVENT) {
+    //     this->actionPerform(event);
+    //     return true;
+    // }
 
     /*
      * Trigger motion actions

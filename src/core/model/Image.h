@@ -29,6 +29,7 @@ public:
     void setImage(std::string data);
     void setImage(cairo_surface_t* image);
     void setImage(GdkPixbuf* img);
+    void setImage(GdkPaintable* img);
     cairo_surface_t* getImage() const;
 
     virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth);

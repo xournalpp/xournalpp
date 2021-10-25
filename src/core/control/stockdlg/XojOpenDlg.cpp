@@ -3,6 +3,7 @@
 #include <config.h>
 #include <gio/gio.h>
 
+#include "util/GtkDialogUtil.h"
 #include "util/PathUtil.h"
 #include "util/StringUtils.h"
 #include "util/XojPreviewExtractor.h"
@@ -11,9 +12,6 @@
 XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings): win(win), settings(settings) {
     dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),
                                          GTK_RESPONSE_CANCEL, _("_Open"), GTK_RESPONSE_OK, nullptr);
-
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
-
     fs::path currentFolder;
     if (!settings->getLastOpenPath().empty()) {
         currentFolder = settings->getLastOpenPath();
@@ -21,12 +19,12 @@ XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings): win(win), settings(s
         g_warning("lastOpenPath is not set!");
         currentFolder = g_get_home_dir();
     }
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(currentFolder).c_str());
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(currentFolder).get(), nullptr);
 }
 
 XojOpenDlg::~XojOpenDlg() {
     if (dialog) {
-        gtk_widget_destroy(dialog);
+        gtk_window_destroy(GTK_WINDOW(dialog));
     }
     dialog = nullptr;
 }
@@ -69,13 +67,13 @@ void XojOpenDlg::addFilterXopt() {
 
 auto XojOpenDlg::runDialog() -> fs::path {
     gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
-    if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-        gtk_widget_destroy(dialog);
+    if (wait_for_gtk_dialog_result(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
+        gtk_window_destroy(GTK_WINDOW(dialog));
         dialog = nullptr;
         return fs::path{};
     }
 
-    auto file = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    auto file = Util::fromGFile(Util::GOwned<GFile>(gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog))).get());
     settings->setLastOpenPath(file.parent_path());
     return file;
 }
@@ -109,24 +107,26 @@ auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> fs::path {
 
     GtkWidget* attachOpt = nullptr;
     if (pdf) {
-        attachOpt = gtk_check_button_new_with_label(_("Attach file to the journal"));
-        g_object_ref(attachOpt);
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(attachOpt), false);
-        gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), attachOpt);
+        // Todo (gtk4, fabian): filechooser has to be initialized by a factory function
+        // attachOpt = gtk_check_button_new_with_label(_("Attach file to the journal"));
+        // g_object_ref(attachOpt);
+        // gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(attachOpt), false);
+        // gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), attachOpt);
     }
 
-    GtkWidget* image = gtk_image_new();
-    gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
-    g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), nullptr);
+    // GtkWidget* image = gtk_image_new();
+    // gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), image);
+    // g_signal_connect(dialog, "update-preview", G_CALLBACK(updatePreviewCallback), nullptr);
 
     auto lastOpenPath = this->settings->getLastOpenPath();
     if (!lastOpenPath.empty()) {
-        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->dialog), Util::toGFilename(lastOpenPath).c_str());
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(this->dialog), Util::toGFile(lastOpenPath).get(), nullptr);
     }
 
     auto lastSavePath = this->settings->getLastSavePath();
     if (!lastSavePath.empty()) {
-        gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(this->dialog), lastSavePath.u8string().c_str(), nullptr);
+        gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(this->dialog), Util::toGFile(lastSavePath).get(),
+                                             nullptr);
     }
 
     fs::path file = runDialog();
@@ -145,43 +145,5 @@ auto XojOpenDlg::showOpenDialog(bool pdf, bool& attachPdf) -> fs::path {
 }
 
 void XojOpenDlg::updatePreviewCallback(GtkFileChooser* fileChooser, void* userData) {
-    auto filepath = Util::fromGFilename(gtk_file_chooser_get_preview_filename(fileChooser));
-
-    if (filepath.empty()) {
-        gtk_file_chooser_set_preview_widget_active(fileChooser, false);
-        return;
-    }
-
-    if (!Util::hasXournalFileExt(filepath)) {
-        gtk_file_chooser_set_preview_widget_active(fileChooser, false);
-        return;
-    }
-
-    XojPreviewExtractor extractor;
-    PreviewExtractResult result = extractor.readFile(filepath);
-
-    if (result != PREVIEW_RESULT_IMAGE_READ) {
-        gtk_file_chooser_set_preview_widget_active(fileChooser, false);
-        return;
-    }
-
-    GError* error = nullptr;
-    gsize dataLen = 0;
-    unsigned char* imageData = extractor.getData(dataLen);
-
-    GInputStream* in = g_memory_input_stream_new_from_data(imageData, dataLen, nullptr);
-    GdkPixbuf* pixbuf = gdk_pixbuf_new_from_stream(in, nullptr, &error);
-    if (error != nullptr) {
-        g_warning("Could not load preview image, error: %s\n", error->message);
-        g_error_free(error);
-    }
-
-    g_input_stream_close(in, nullptr, nullptr);
-
-    if (pixbuf) {
-        GtkWidget* image = gtk_file_chooser_get_preview_widget(fileChooser);
-        gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
-        g_object_unref(pixbuf);
-        gtk_file_chooser_set_preview_widget_active(fileChooser, true);
-    }
+    // Todo (gtk4, fabian): remove or find alternative in gtk4
 }

@@ -58,8 +58,8 @@ public:
     virtual ~ActionHandler();
 
 public:
-    virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
-                                 GtkToolButton* toolbutton, bool enabled) = 0;
+    virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkWidget* menuitem,
+                                 GtkButton* toolbutton, bool enabled) = 0;
 
     void fireEnableAction(ActionType action, bool enabled);
     void addListener(ActionEnabledListener* listener);

@@ -113,8 +113,8 @@ public:
     // Menu Help
     void showAbout();
 
-    virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
-                                 GtkToolButton* toolbutton, bool enabled);
+    virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkWidget* menuitem,
+                                 GtkButton* toolbutton, bool enabled);
 
     /**
      * @brief Update the Cursor and the Toolbar based on the active color
@@ -279,7 +279,7 @@ public:
     virtual void clipboardCutCopyEnabled(bool enabled);
     virtual void clipboardPasteEnabled(bool enabled);
     virtual void clipboardPasteText(std::string text);
-    virtual void clipboardPasteImage(GdkPixbuf* img);
+    virtual void clipboardPasteImage(GdkPaintable* img);
     virtual void clipboardPasteXournal(ObjectInputStream& in);
     virtual void deleteSelection();
 

@@ -12,7 +12,7 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
     GtkTextDirection direction = gtk_widget_get_direction(widget);
 
     auto* display = gtk_widget_get_display(GTK_WIDGET(menu));
-    GdkMonitor* monitor = gdk_display_get_monitor_at_window(display, gtk_widget_get_window(widget));
+    GdkMonitor* monitor = gdk_display_get_monitor_at_surface(display, gtk_widget_get_window(widget));
     GdkRectangle monitor_rect;
     gdk_monitor_get_geometry(monitor, &monitor_rect);
 
@@ -22,7 +22,7 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
     GtkAllocation allocation;
     gtk_widget_get_allocation(widget, &allocation);
 
-    gdk_window_get_origin(gtk_widget_get_window(widget), x, y);
+    gdk_surface_get_origin(gtk_widget_get_window(widget), x, y);
     *x += allocation.x;
     *y += allocation.y;
 

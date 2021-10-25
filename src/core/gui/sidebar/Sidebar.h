@@ -81,7 +81,7 @@ private:
     /**
      * Page selected
      */
-    static void buttonClicked(GtkToolButton* toolbutton, SidebarPageButton* buttonData);
+    static void buttonClicked(GtkButton* toolbutton, SidebarPageButton* buttonData);
 
 private:
     Control* control = nullptr;
@@ -96,7 +96,7 @@ private:
     /**
      * The Toolbar with the pages
      */
-    GtkToolbar* tbSelectPage = nullptr;
+    GtkWidget* tbSelectPage = nullptr;
 
     /**
      * The close button of the sidebar

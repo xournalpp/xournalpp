@@ -29,16 +29,17 @@ void AbstractItem::setMenuItem(GtkWidget* menuitem) {
         return;
     }
 
-    menuSignalHandler = g_signal_connect(
-            menuitem, "activate",
-            G_CALLBACK(+[](GtkMenuItem* menuitem, AbstractItem* self) { self->activated(nullptr, menuitem, nullptr); }),
-            this);
+    menuSignalHandler = g_signal_connect(menuitem, "activate", G_CALLBACK(+[](GtkButton* menuitem, AbstractItem* self) {
+                                             self->activated(nullptr, GTK_WIDGET(menuitem), nullptr);
+                                         }),
+                                         this);
 
     g_object_ref(G_OBJECT(menuitem));
     this->menuitem = menuitem;
 
-    if (GTK_IS_CHECK_MENU_ITEM(menuitem)) {
-        checkMenuItem = !gtk_check_menu_item_get_draw_as_radio(GTK_CHECK_MENU_ITEM(menuitem));
+    if (GTK_IS_CHECK_BUTTON(menuitem)) {
+        // Todo (gtk4): gt4 removed access to groups
+        checkMenuItem = true;
     }
 }
 
@@ -49,12 +50,12 @@ void AbstractItem::actionSelected(ActionGroup group, ActionType action) {
 
     itemActive = this->action == action;
 
-    if (this->menuitem && GTK_IS_CHECK_MENU_ITEM(this->menuitem)) {
-        if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(this->menuitem)) != itemActive) {
+    if (this->menuitem && GTK_IS_CHECK_BUTTON(this->menuitem)) {
+        if (gtk_check_button_get_active(GTK_CHECK_BUTTON(this->menuitem)) != itemActive) {
             if (checkMenuItem) {
                 ignoreNextCheckMenuEvent = true;
             }
-            gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(this->menuitem), itemActive);
+            gtk_check_button_set_active(GTK_CHECK_BUTTON(this->menuitem), itemActive);
         }
     }
     selected(group, action);
@@ -77,34 +78,35 @@ void AbstractItem::actionEnabledAction(ActionType action, bool enabled) {
     }
 }
 
-void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
+void AbstractItem::activated(GdkEvent* event, GtkWidget* menuitem, GtkButton* toolbutton) {
     bool selected = true;
 
-    if (menuitem) {
-        if (GTK_IS_CHECK_MENU_ITEM(menuitem)) {
-            selected = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menuitem));
+    // Todo (gtk4): this hole class might be obsolete, but fix this if not
+    // if (menuitem) {
+    //     if (GTK_IS_CHECK_BUTTON(menuitem)) {
+    //         selected = gtk_check_button_get_active(GTK_CHECK_BUTTON(menuitem));
 
-            if (gtk_check_menu_item_get_draw_as_radio(GTK_CHECK_MENU_ITEM(menuitem))) {
-                if (itemActive && !selected) {
-                    // Unselect radio menu item, select again
-                    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(this->menuitem), true);
-                    return;
-                }
+    //         if (gtk_check_button_get_draw_as_radio(GTK_CHECK_BUTTON(menuitem))) {
+    //             if (itemActive && !selected) {
+    //                 // Unselect radio menu item, select again
+    //                 gtk_check_button_set_active(GTK_CHECK_BUTTON(this->menuitem), true);
+    //                 return;
+    //             }
 
-                if (itemActive == selected) {
-                    // State not changed, this event is probably from GTK generated
-                    return;
-                }
+    //             if (itemActive == selected) {
+    //                 // State not changed, this event is probably from GTK generated
+    //                 return;
+    //             }
 
-                if (!selected) {
-                    // Unselect radio menu item
-                    return;
-                }
-            }
-        }
-    } else if (toolbutton && GTK_IS_TOGGLE_TOOL_BUTTON(toolbutton)) {
-        selected = gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton));
-    }
+    //             if (!selected) {
+    //                 // Unselect radio menu item
+    //                 return;
+    //             }
+    //         }
+    //     }
+    // } else if (toolbutton && GTK_IS_TOGGLE_BUTTON(toolbutton)) {
+    //     selected = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toolbutton));
+    // }
 
     if (checkMenuItem && ignoreNextCheckMenuEvent) {
         ignoreNextCheckMenuEvent = false;
@@ -114,8 +116,8 @@ void AbstractItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButt
     actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 
-void AbstractItem::actionPerformed(ActionType action, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
-                                   GtkToolButton* toolbutton, bool selected) {
+void AbstractItem::actionPerformed(ActionType action, ActionGroup group, GdkEvent* event, GtkWidget* menuitem,
+                                   GtkButton* toolbutton, bool selected) {
     handler->actionPerformed(action, group, event, menuitem, toolbutton, selected);
 }
 

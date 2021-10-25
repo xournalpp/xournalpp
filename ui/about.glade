@@ -1,468 +1,335 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
 <interface>
-  <requires lib="gtk+" version="3.18"/>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.0"/>
   <object class="GtkDialog" id="aboutDialog">
     <property name="name">aboutDialog</property>
     <property name="width-request">320</property>
-    <property name="can-focus">False</property>
     <property name="title" translatable="yes">About Xournal++</property>
-    <property name="resizable">False</property>
+    <property name="resizable">0</property>
     <property name="window-position">center</property>
-    <property name="destroy-with-parent">True</property>
+    <property name="destroy-with-parent">1</property>
     <property name="icon-name">dialog-information</property>
     <property name="type-hint">dialog</property>
-    <child internal-child="vbox">
+    <child internal-child="content_area">
       <object class="GtkBox" id="dialog-vbox2">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="visible">0</property>
         <property name="valign">end</property>
         <property name="orientation">vertical</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area2">
-            <property name="name">dialog-action_area2</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="halign">center</property>
-            <property name="hexpand">True</property>
-            <property name="layout-style">end</property>
-            <child>
-              <object class="GtkButton" id="closebutton1">
-                <property name="label">gtk-close</property>
-                <property name="use-action-appearance">False</property>
-                <property name="name">closebutton1</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="can-default">True</property>
-                <property name="receives-default">False</property>
-                <property name="use-stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack-type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
         <child>
-          <!-- n-columns=2 n-rows=5 -->
           <object class="GtkGrid">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="column-homogeneous">True</property>
+            <property name="visible">0</property>
+            <property name="column-homogeneous">1</property>
             <child>
               <object class="GtkImage" id="XournalIcon">
+                <property name="visible">0</property>
                 <property name="name">XournalIcon</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="pixbuf">pixmaps/com.github.xournalpp.xournalpp.svg</property>
+                <property name="file">pixmaps/com.github.xournalpp.xournalpp.svg</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                </layout>
               </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">0</property>
-              </packing>
             </child>
             <child>
-              <!-- n-columns=2 n-rows=4 -->
               <object class="GtkGrid" id="versionInfoGrid">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
+                <property name="visible">0</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="row-spacing">12</property>
                 <property name="column-spacing">10</property>
                 <child>
                   <object class="GtkLabel" id="lbVersion">
+                    <property name="visible">0</property>
                     <property name="name">lbVersion</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="halign">start</property>
                     <property name="label">X.X.X</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">0</property>
+                    </layout>
                   </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="halign">start</property>
                     <property name="label" translatable="yes">Built on</property>
                     <attributes>
-                      <attribute name="weight" value="bold"/>
+                      <attribute name="weight" value="bold"></attribute>
                     </attributes>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">2</property>
+                    </layout>
                   </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">2</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="halign">start</property>
                     <property name="label" translatable="yes">Git commit</property>
                     <attributes>
-                      <attribute name="weight" value="bold"/>
+                      <attribute name="weight" value="bold"></attribute>
                     </attributes>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">1</property>
+                    </layout>
                   </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="lbRevId">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="halign">start</property>
                     <property name="label" translatable="yes">RELEASE_IDENTIFIER</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">1</property>
+                    </layout>
                   </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">1</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="halign">start</property>
                     <property name="label" translatable="yes">with libgtk</property>
                     <attributes>
-                      <attribute name="weight" value="bold"/>
+                      <attribute name="weight" value="bold"></attribute>
                     </attributes>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">3</property>
+                    </layout>
                   </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">3</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="lbGtkVersion">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="halign">start</property>
                     <property name="label" translatable="yes">X.X.X</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">3</property>
+                    </layout>
                   </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">3</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="lbBuildDate">
+                    <property name="visible">0</property>
                     <property name="name">lbBuildDate</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="halign">start</property>
                     <property name="label">DATE TIME</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">2</property>
+                    </layout>
                   </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">2</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="halign">start</property>
                     <property name="label" translatable="yes">Version</property>
                     <attributes>
-                      <attribute name="weight" value="bold"/>
+                      <attribute name="weight" value="bold"></attribute>
                     </attributes>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
+                    </layout>
                   </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                  </packing>
                 </child>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                  <property name="row-span">2</property>
+                </layout>
               </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">0</property>
-                <property name="height">2</property>
-              </packing>
             </child>
             <child>
               <object class="GtkLabel" id="lbTitle">
+                <property name="visible">0</property>
                 <property name="name">labelTitle</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">&lt;span size="xx-large" weight="bold"&gt;Xournal++&lt;/span&gt;
+                <property name="label" translatable="yes">&lt;span size=&quot;xx-large&quot; weight=&quot;bold&quot;&gt;Xournal++&lt;/span&gt;
 &lt;i&gt;The next generation&lt;/i&gt;</property>
-                <property name="use-markup">True</property>
+                <property name="use-markup">1</property>
                 <property name="justify">center</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">1</property>
+                </layout>
               </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">1</property>
-              </packing>
             </child>
             <child>
               <object class="GtkSeparator" id="spLine">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
+                <property name="visible">0</property>
                 <property name="margin-top">12</property>
                 <property name="margin-bottom">12</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">2</property>
+                  <property name="column-span">2</property>
+                </layout>
               </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">2</property>
-                <property name="width">2</property>
-              </packing>
             </child>
             <child>
               <object class="GtkBox" id="vboxRight">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
+                <property name="visible">0</property>
                 <property name="valign">start</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkBox" id="vboxDesigners">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkLabel" id="lbelDesigners">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
+                        <property name="visible">0</property>
                         <property name="margin-top">10</property>
                         <property name="label" translatable="yes">Icon Designers</property>
                         <property name="justify">center</property>
                         <attributes>
-                          <attribute name="weight" value="bold"/>
+                          <attribute name="weight" value="bold"></attribute>
                         </attributes>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="lbIconDesigner">
+                        <property name="visible">0</property>
                         <property name="name">lbAuthors</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
                         <property name="margin-top">5</property>
                         <property name="label">Nararyans R.I.
 Luya Tshimbalanga</property>
-                        <property name="use-markup">True</property>
+                        <property name="use-markup">1</property>
                         <property name="justify">center</property>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="lbSpace">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
+                        <property name="visible">0</property>
                         <property name="ypad">8</property>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
                     </child>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="lbXournal">
+                    <property name="visible">0</property>
                     <property name="name">lbXournal</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Partially based on Xournal
 by Denis Auroux</property>
-                    <property name="use-markup">True</property>
+                    <property name="use-markup">1</property>
                     <property name="justify">center</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="ypad">4</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkBox" id="vboxWebsite">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkLabel" id="lbWebsite">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
+                        <property name="visible">0</property>
                         <property name="label" translatable="yes">Website</property>
                         <attributes>
-                          <attribute name="weight" value="bold"/>
+                          <attribute name="weight" value="bold"></attribute>
                         </attributes>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
                     </child>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">3</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkBox" id="vboxRepo">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkLabel" id="lbRepo">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
+                        <property name="visible">0</property>
                         <property name="margin-top">6</property>
                         <property name="label" translatable="yes">Source Code / Bug Tracker</property>
                         <attributes>
-                          <attribute name="weight" value="bold"/>
+                          <attribute name="weight" value="bold"></attribute>
                         </attributes>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
                     </child>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">4</property>
-                  </packing>
                 </child>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">3</property>
+                </layout>
               </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">3</property>
-              </packing>
             </child>
             <child>
               <object class="GtkBox" id="vboxCommunity">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
+                <property name="visible">0</property>
                 <property name="valign">start</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="lbComunity">
+                    <property name="visible">0</property>
                     <property name="name">lbComunity</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="valign">start</property>
                     <property name="margin-top">6</property>
                     <property name="label" translatable="yes">With help from the community</property>
-                    <property name="use-markup">True</property>
+                    <property name="use-markup">1</property>
                     <property name="justify">center</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">4</property>
+                </layout>
               </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">4</property>
-              </packing>
             </child>
             <child>
               <object class="GtkBox" id="vboxLicense">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
+                <property name="visible">0</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="lbLicense">
+                    <property name="visible">0</property>
                     <property name="name">lbLicense</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="valign">start</property>
                     <property name="margin-top">6</property>
                     <property name="label" translatable="yes">License</property>
                     <attributes>
-                      <attribute name="weight" value="bold"/>
+                      <attribute name="weight" value="bold"></attribute>
                     </attributes>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">4</property>
+                </layout>
               </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">4</property>
-              </packing>
             </child>
             <child>
               <object class="GtkBox" id="vboxAuthors">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
+                <property name="visible">0</property>
                 <property name="valign">start</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="lblAuthors">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
+                    <property name="visible">0</property>
                     <property name="margin-top">10</property>
                     <property name="label" translatable="yes">Authors</property>
                     <property name="justify">center</property>
                     <attributes>
-                      <attribute name="weight" value="bold"/>
+                      <attribute name="weight" value="bold"></attribute>
                     </attributes>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="lbAuthors">
+                    <property name="visible">0</property>
                     <property name="name">lbAuthors</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="margin-top">5</property>
                     <property name="label">Andreas Butti
 Wilson Brenna
@@ -478,32 +345,48 @@ Fabian Keßler
 Julius Lehmann
 Tobias Hermann
 Roland Lötscher</property>
-                    <property name="use-markup">True</property>
+                    <property name="use-markup">1</property>
                     <property name="justify">center</property>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">3</property>
+                </layout>
               </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">3</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
         </child>
       </object>
     </child>
     <action-widgets>
       <action-widget response="-7">closebutton1</action-widget>
     </action-widgets>
+    <child internal-child="action_area">
+      <object class="GtkButtonBox" id="dialog-action_area2">
+        <property name="name">dialog-action_area2</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="halign">center</property>
+        <property name="hexpand">True</property>
+        <property name="layout-style">end</property>
+        <child>
+          <object class="GtkButton" id="closebutton1">
+            <property name="visible">0</property>
+            <property name="label">gtk-close</property>
+            <property name="use-action-appearance">False</property>
+            <property name="name">closebutton1</property>
+            <property name="focusable">1</property>
+            <property name="can-default">True</property>
+            <property name="use-stock">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
   </object>
 </interface>

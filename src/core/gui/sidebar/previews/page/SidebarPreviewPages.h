@@ -72,7 +72,7 @@ private:
     /**
      * The context menu to display when a page is right-clicked.
      */
-    GtkWidget* const contextMenu = nullptr;
+    GMenu* const contextMenu = nullptr;
 
     GtkWidget* contextMenuMoveUp = nullptr;
     GtkWidget* contextMenuMoveDown = nullptr;

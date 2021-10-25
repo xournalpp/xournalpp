@@ -104,11 +104,11 @@ void ToolPageLayer::layerMenuClicked(GtkWidget* menu) {
     }
 
 
-    if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menu))) {
+    if (!gtk_check_button_get_active(GTK_CHECK_BUTTON(menu))) {
         if (layerId == static_cast<int>(lc->getCurrentLayerId())) {
             // This is the current layer, don't allow to deselect it
             inMenuUpdate = true;
-            gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menu), true);
+            gtk_check_button_set_active(GTK_CHECK_BUTTON(menu), true);
             inMenuUpdate = false;
         }
         return;
@@ -137,14 +137,14 @@ void ToolPageLayer::layerMenuShowClicked(GtkWidget* menu) {
         return;
     }
 
-    bool checked = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(menu));
+    bool checked = gtk_check_button_get_active(GTK_CHECK_BUTTON(menu));
 
     lc->setLayerVisible(layerId, checked);
 }
 
 void ToolPageLayer::createLayerMenuItem(const std::string& text, int layerId) {
-    GtkWidget* itLayer = gtk_check_menu_item_new_with_label(text.c_str());
-    gtk_check_menu_item_set_draw_as_radio(GTK_CHECK_MENU_ITEM(itLayer), true);
+    GtkWidget* itLayer = gtk_check_button_new_with_label(text.c_str());
+    gtk_check_button_set_draw_as_radio(GTK_CHECK_BUTTON(itLayer), true);
     gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);
 
     g_signal_connect(itLayer, "activate",
@@ -154,7 +154,7 @@ void ToolPageLayer::createLayerMenuItem(const std::string& text, int layerId) {
 }
 
 void ToolPageLayer::createLayerMenuItemShow(int layerId) {
-    GtkWidget* itShow = gtk_check_menu_item_new_with_label(_("show"));
+    GtkWidget* itShow = gtk_check_button_new_with_label(_("show"));
     gtk_menu_attach(GTK_MENU(menu), itShow, 2, 3, menuY, menuY + 1);
     gtk_widget_set_hexpand(itShow, false);
 
@@ -203,7 +203,6 @@ void ToolPageLayer::updateMenu() {
 
     menuY++;
 
-    gtk_widget_show_all(menu);
 
     updateLayerData();
 }
@@ -218,9 +217,9 @@ void ToolPageLayer::updateLayerData() {
 
     for (auto& kv: layerItems) {
         if (kv.first == layerId) {
-            gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(kv.second), true);
+            gtk_check_button_set_active(GTK_CHECK_BUTTON(kv.second), true);
         } else {
-            gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(kv.second), false);
+            gtk_check_button_set_active(GTK_CHECK_BUTTON(kv.second), false);
         }
     }
 
@@ -228,7 +227,7 @@ void ToolPageLayer::updateLayerData() {
 
     if (page) {
         for (auto& kv: showLayerItems) {
-            gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(kv.second), page->isLayerVisible(kv.first));
+            gtk_check_button_set_active(GTK_CHECK_BUTTON(kv.second), page->isLayerVisible(kv.first));
         }
     }
 
@@ -247,14 +246,14 @@ auto ToolPageLayer::getNewToolIcon() const -> GtkWidget* {
 auto ToolPageLayer::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
 
 
-auto ToolPageLayer::newItem() -> GtkToolItem* {
-    GtkToolItem* it = gtk_tool_item_new();
+auto ToolPageLayer::newItem() -> GtkButton* {
+    GtkButton* it = gtk_widget_new();
 
     GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
-    gtk_box_pack_start(GTK_BOX(hbox), gtk_label_new(_("Layer")), false, false, 7);
+    gtk_box_append(GTK_BOX(hbox), gtk_label_new(_("Layer")), false, false, 7);
 
-    gtk_box_pack_start(GTK_BOX(hbox), this->layerLabel, false, false, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), this->layerButton, false, false, 0);
+    gtk_box_append(GTK_BOX(hbox), this->layerLabel, false, false, 0);
+    gtk_box_append(GTK_BOX(hbox), this->layerButton, false, false, 0);
 
     gtk_container_add(GTK_CONTAINER(it), hbox);
 

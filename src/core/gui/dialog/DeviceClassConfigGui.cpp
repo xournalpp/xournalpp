@@ -16,9 +16,9 @@ DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, Gtk
         settings(settings),
         device(device) {
     GtkWidget* mainGrid = get("deviceClassGrid");
-    gtk_container_remove(GTK_CONTAINER(getWindow()), mainGrid);
-    gtk_box_pack_end(GTK_BOX(w), mainGrid, true, true, 0);
-    gtk_widget_show_all(mainGrid);
+    gtk_window_set_child(GTK_WINDOW(getWindow()), nullptr);
+    gtk_box_append(GTK_BOX(w), mainGrid);
+    gtk_widget_show(mainGrid);
 
     this->labelDevice = get("labelDevice");
     this->cbDeviceClass = get("cbDeviceClass");

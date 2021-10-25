@@ -68,13 +68,11 @@ auto PopplerGlibDocument::load(fs::path const& file, string password, GError** e
     return this->document != nullptr;
 }
 
-auto PopplerGlibDocument::load(gpointer data, gsize length, string password, GError** error) -> bool {
+auto PopplerGlibDocument::load(GBytes* bytes, string password, GError** error) -> bool {
     if (document) {
         g_object_unref(document);
     }
-
-    this->document =
-            poppler_document_new_from_data(static_cast<char*>(data), static_cast<int>(length), password.c_str(), error);
+    this->document = poppler_document_new_from_bytes(bytes, password.c_str(), error);
     return this->document != nullptr;
 }
 

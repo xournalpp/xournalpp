@@ -44,7 +44,7 @@
 }
 
 /*
-	Use :checked for a selected ToggleButton.
+	Use :checked for a selected GtkToggleButton.
 	See https://stackoverflow.com/questions/39824345/use-css-to-style-gtktogglebutton-depending-on-the-state
 */
 #floatingToolbox button:checked {

@@ -54,10 +54,11 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
     }
 
     // Trigger discrete action on double tap
-    if (event.type == BUTTON_2_PRESS_EVENT || event.type == BUTTON_3_PRESS_EVENT) {
-        this->actionPerform(event);
-        return true;
-    }
+    // Todo (gtk4): get button and fix it:
+    // if (event.type == BUTTON_2_PRESS_EVENT || event.type == BUTTON_3_PRESS_EVENT) {
+    //     this->actionPerform(event);
+    //     return true;
+    // }
 
     // Trigger motion action when pen/mouse is pressed and moved
     if (event.type == MOTION_EVENT)  // mouse or pen moved

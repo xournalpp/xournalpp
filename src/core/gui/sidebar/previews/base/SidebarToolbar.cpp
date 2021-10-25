@@ -16,19 +16,19 @@ SidebarToolbar::~SidebarToolbar() = default;
 
 void SidebarToolbar::runAction(SidebarActions actions) { this->listener->actionPerformed(actions); }
 
-void SidebarToolbar::btUpClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar) {
+void SidebarToolbar::btUpClicked(GtkButton* toolbutton, SidebarToolbar* toolbar) {
     toolbar->runAction(SIDEBAR_ACTION_MOVE_UP);
 }
 
-void SidebarToolbar::btDownClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar) {
+void SidebarToolbar::btDownClicked(GtkButton* toolbutton, SidebarToolbar* toolbar) {
     toolbar->runAction(SIDEBAR_ACTION_MOVE_DOWN);
 }
 
-void SidebarToolbar::btCopyClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar) {
+void SidebarToolbar::btCopyClicked(GtkButton* toolbutton, SidebarToolbar* toolbar) {
     toolbar->runAction(SIDEBAR_ACTION_COPY);
 }
 
-void SidebarToolbar::btDeleteClicked(GtkToolButton* toolbutton, SidebarToolbar* toolbar) {
+void SidebarToolbar::btDeleteClicked(GtkButton* toolbutton, SidebarToolbar* toolbar) {
     toolbar->runAction(SIDEBAR_ACTION_DELETE);
 }
 

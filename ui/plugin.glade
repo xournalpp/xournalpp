@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.0"/>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
@@ -9,88 +9,40 @@
   </object>
   <object class="GtkDialog" id="pluginDialog">
     <property name="name">pluginDialog</property>
-    <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Plugin Manager</property>
-    <property name="modal">True</property>
-    <property name="destroy_with_parent">True</property>
+    <property name="modal">1</property>
+    <property name="destroy_with_parent">1</property>
     <property name="type_hint">dialog</property>
     <child>
       <placeholder/>
     </child>
-    <child internal-child="vbox">
+    <child internal-child="content_area">
       <object class="GtkBox" id="dialog-vbox2">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="visible">0</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area2">
-            <property name="name">dialog-action_area2</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button1">
-                <property name="label">gtk-close</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button2">
-                <property name="label">gtk-ok</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-                <accelerator key="Return" signal="activate"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
         <child>
           <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="visible">0</property>
+            <property name="vexpand">1</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkScrolledWindow">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="visible">0</property>
+                <property name="vexpand">1</property>
+                <property name="focusable">1</property>
                 <property name="shadow_type">in</property>
                 <property name="min_content_width">400</property>
                 <property name="min_content_height">300</property>
-                <child>
+                <property name="child">
                   <object class="GtkViewport">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
+                    <property name="visible">0</property>
+                    <property name="child">
                       <object class="GtkBox" id="pluginBox">
+                        <property name="visible">0</property>
                         <property name="name">pluginBox</property>
                         <property name="name">pluginBox</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
                           <placeholder/>
@@ -102,36 +54,20 @@
                           <placeholder/>
                         </child>
                       </object>
-                    </child>
+                    </property>
                   </object>
-                </child>
+                </property>
               </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="visible">0</property>
                 <property name="margin_top">5</property>
                 <property name="margin_bottom">5</property>
                 <property name="label" translatable="yes">Plugin changes are only applied after Xournal++ is restarted</property>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
       </object>
     </child>
@@ -139,5 +75,44 @@
       <action-widget response="1">button1</action-widget>
       <action-widget response="2">button2</action-widget>
     </action-widgets>
+    <child internal-child="action_area">
+      <object class="GtkButtonBox" id="dialog-action_area2">
+        <property name="name">dialog-action_area2</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="layout_style">end</property>
+        <child>
+          <object class="GtkButton" id="button1">
+            <property name="visible">0</property>
+            <property name="label">gtk-close</property>
+            <property name="use_action_appearance">False</property>
+            <property name="focusable">1</property>
+            <property name="receives_default">1</property>
+            <property name="use_stock">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="button2">
+            <property name="visible">0</property>
+            <property name="label">gtk-ok</property>
+            <property name="use_action_appearance">False</property>
+            <property name="focusable">1</property>
+            <property name="receives_default">1</property>
+            <property name="use_stock">True</property>
+            <accelerator key="Return" signal="activate"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
   </object>
 </interface>

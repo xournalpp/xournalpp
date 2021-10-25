@@ -13,6 +13,7 @@
 #include "util/i18n.h"
 
 #include "FormatDialog.h"
+#include "GtkDialogUtil.h"
 #include "filesystem.h"
 using std::ofstream;
 
@@ -77,7 +78,6 @@ void PageTemplateDialog::saveToFile() {
             gtk_file_chooser_dialog_new(_("Save File"), GTK_WINDOW(this->getWindow()), GTK_FILE_CHOOSER_ACTION_SAVE,
                                         _("_Cancel"), GTK_RESPONSE_CANCEL, _("_Save"), GTK_RESPONSE_OK, nullptr);
 
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
 
     GtkFileFilter* filterXoj = gtk_file_filter_new();
     gtk_file_filter_set_name(filterXoj, _("Xournal++ template"));
@@ -85,8 +85,8 @@ void PageTemplateDialog::saveToFile() {
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
     if (!settings->getLastSavePath().empty()) {
-        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog),
-                                            Util::toGFilename(settings->getLastSavePath()).c_str());
+        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFile(settings->getLastSavePath()).get(),
+                                            nullptr);
     }
 
     time_t curtime = time(nullptr);
@@ -95,17 +95,16 @@ void PageTemplateDialog::saveToFile() {
     std::string saveFilename = stime;
 
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), saveFilename.c_str());
-    gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), true);
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()));
-    if (gtk_dialog_run(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
-        gtk_widget_destroy(dialog);
+    if (wait_for_gtk_dialog_result(GTK_DIALOG(dialog)) != GTK_RESPONSE_OK) {
+        gtk_window_destroy(GTK_WINDOW(dialog));
         return;
     }
 
-    auto filepath = Util::fromGFilename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    auto filepath = Util::fromGFile(Util::GOwned<GFile>(gtk_file_chooser_get_file(GTK_FILE_CHOOSER(dialog))).get());
     settings->setLastSavePath(filepath.parent_path());
-    gtk_widget_destroy(dialog);
+    gtk_window_destroy(GTK_WINDOW(dialog));
 
     std::ofstream out{filepath};
     out << model.toString();
@@ -163,7 +162,7 @@ auto PageTemplateDialog::isSaved() const -> bool { return saved; }
 
 void PageTemplateDialog::show(GtkWindow* parent) {
     gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    int ret = gtk_dialog_run(GTK_DIALOG(this->window));
+    int ret = wait_for_gtk_dialog_result(GTK_DIALOG(this->window));
 
     if (ret == 1)  // OK
     {

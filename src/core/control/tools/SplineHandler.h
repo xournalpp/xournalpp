@@ -45,7 +45,7 @@ public:
     void onButtonReleaseEvent(const PositionInputData& pos);
     void onButtonPressEvent(const PositionInputData& pos);
     void onButtonDoublePressEvent(const PositionInputData& pos);
-    virtual bool onKeyEvent(GdkEventKey* event);
+    virtual bool onKeyEvent(GdkEvent* event);
 
 private:
     void finalizeSpline();

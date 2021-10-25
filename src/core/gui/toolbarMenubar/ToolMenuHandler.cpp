@@ -80,11 +80,9 @@ void ToolMenuHandler::freeDynamicToolbarItems() {
 }
 
 void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
-    for (int i = gtk_toolbar_get_n_items(GTK_TOOLBAR(toolbar)) - 1; i >= 0; i--) {
-        GtkToolItem* tbItem = gtk_toolbar_get_nth_item(GTK_TOOLBAR(toolbar), i);
-        gtk_container_remove(GTK_CONTAINER(toolbar), GTK_WIDGET(tbItem));
-    }
-
+    auto const begi = gtk_widget_get_first_child(toolbar);
+    auto const endi = gtk_widget_get_last_child(toolbar);
+    for (auto i = begi; i != endi; i = gtk_widget_get_next_sibling(i)) { gtk_box_remove(GTK_BOX(toolbar), i); }
     gtk_widget_hide(toolbar);
 }
 
@@ -120,9 +118,8 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                 }
 
                 if (name == "SEPARATOR") {
-                    GtkToolItem* it = gtk_separator_tool_item_new();
-                    gtk_widget_show(GTK_WIDGET(it));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
+                    GtkWidget* it = gtk_separator_new();
+                    gtk_box_prepend(GTK_BOX(toolbar), it, -1);
 
                     ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), TOOL_ITEM_SEPARATOR);
 
@@ -130,11 +127,11 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                 }
 
                 if (name == "SPACER") {
-                    GtkToolItem* toolItem = gtk_separator_tool_item_new();
+                    GtkButton* toolItem = gtk_separator_tool_item_new();
                     gtk_separator_tool_item_set_draw(GTK_SEPARATOR_TOOL_ITEM(toolItem), false);
                     gtk_tool_item_set_expand(toolItem, true);
                     gtk_widget_show(GTK_WIDGET(toolItem));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolItem, -1);
+                    gtk_box_insert(GTK_BOX(toolbar), toolItem, -1);
 
                     ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem->getId(), TOOL_ITEM_SPACER);
 
@@ -174,9 +171,8 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     auto* item = new ColorToolItem(listener, toolHandler, this->parent, namedColor);
                     this->toolbarColorItems.push_back(item);
 
-                    GtkToolItem* it = item->createItem(horizontal);
-                    gtk_widget_show_all(GTK_WIDGET(it));
-                    gtk_toolbar_insert(GTK_TOOLBAR(toolbar), it, -1);
+                    GtkButton* it = item->createItem(horizontal);
+                    gtk_box_insert(GTK_BOX(toolbar), it, -1);
 
                     ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item);
 
@@ -194,9 +190,8 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                         item->setUsed(true);
 
                         count++;
-                        GtkToolItem* it = item->createItem(horizontal);
-                        gtk_widget_show_all(GTK_WIDGET(it));
-                        gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
+                        GtkButton* it = item->createItem(horizontal);
+                        gtk_box_insert(GTK_BOX(toolbar), GTK_TOOL_ITEM(it), -1);
 
                         ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item);
 
@@ -620,7 +615,7 @@ void ToolMenuHandler::enableAudioPlaybackButtons() {
 
 void ToolMenuHandler::setAudioPlaybackPaused(bool paused) {
     this->audioPausePlaybackButton->setActive(paused);
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gui->get("menuAudioPausePlayback")), paused);
+    gtk_check_button_set_active(GTK_CHECK_BUTTON(gui->get("menuAudioPausePlayback")), paused);
 }
 
 auto ToolMenuHandler::iconName(const char* icon) -> std::string { return iconNameHelper.iconName(icon); }

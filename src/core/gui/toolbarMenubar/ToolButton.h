@@ -22,7 +22,7 @@ public:
     ToolButton(ActionHandler* handler, std::string id, ActionType type, ActionGroup group, bool toolToggleOnlyEnable,
                std::string iconName, std::string description, GtkWidget* menuitem = nullptr);
 
-    virtual ~ToolButton();
+    ~ToolButton() override = default;
 
 public:
     /**
@@ -35,14 +35,14 @@ public:
     GtkWidget* registerPopupMenuEntry(const std::string& name, const std::string& iconName = "");
 
     void updateDescription(const std::string& description);
-    virtual std::string getToolDisplayName() const;
+    virtual std::string getToolDisplayName();
     void setActive(bool active);
 
 protected:
-    virtual GtkToolItem* newItem();
+    GtkWidget* newItem() override;
 
-    virtual GtkWidget* getNewToolIcon() const;
-    virtual GdkPixbuf* getNewToolPixbuf() const;
+    GtkWidget* getNewToolIcon() const override;
+    GdkPixbuf* getNewToolPixbuf() const override;
 
 private:
     std::string iconName;

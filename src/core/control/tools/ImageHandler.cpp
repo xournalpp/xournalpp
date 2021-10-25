@@ -4,20 +4,12 @@
 
 #include "control/Control.h"
 #include "control/stockdlg/ImageOpenDlg.h"
-#include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "model/Image.h"
 #include "model/Layer.h"
 #include "undo/InsertUndoAction.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
-
-ImageHandler::ImageHandler(Control* control, XojPageView* view) {
-    this->control = control;
-    this->view = view;
-}
-
-ImageHandler::~ImageHandler() = default;
 
 auto ImageHandler::insertImage(double x, double y) -> bool {
     GFile* file = ImageOpenDlg::show(control->getGtkWindow(), control->getSettings());

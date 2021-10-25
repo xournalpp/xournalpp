@@ -46,7 +46,7 @@ public:
 public:
     virtual void show(GtkWindow* parent);
 
-    void setRecentMenu(GtkWidget* submenu);
+    void setRecentMenu(GMenu* submenu);
     void toolbarSelected(ToolbarData* d);
     ToolbarData* getSelectedToolbar();
     [[maybe_unused]] void reloadToolbars();
@@ -96,7 +96,7 @@ public:
     void updateColorscheme();
 
     GtkWidget** getToolbarWidgets(int& length);
-    const char* getToolbarName(GtkToolbar* toolbar);
+    char const* getToolbarName(GtkWidget* toolbar);
 
     Layout* getLayout();
 
@@ -124,20 +124,20 @@ private:
     void createToolbarAndMenu();
     static void rebindAcceleratorsMenuItem(GtkWidget* widget, gpointer user_data);
     static void rebindAcceleratorsSubMenu(GtkWidget* widget, gpointer user_data);
-    static gboolean isKeyForClosure(GtkAccelKey* key, GClosure* closure, gpointer data);
+    // static gboolean isKeyForClosure(GtkAccelKey* key, GClosure* closure, gpointer data);
     static gboolean invokeMenu(GtkWidget* widget);
 
     static void buttonCloseSidebarClicked(GtkButton* button, MainWindow* win);
 
-    /**
-     * Sidebar show / hidden
-     */
-    static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
+    // /**
+    //  * Sidebar show / hidden
+    //  */
+    // static void viewShowSidebar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
 
-    /**
-     * Toolbar show / hidden
-     */
-    static void viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
+    // /**
+    //  * Toolbar show / hidden
+    //  */
+    // static void viewShowToolbar(GtkCheckMenuItem* checkmenuitem, MainWindow* win);
 
     /**
      * Window close Button is pressed
@@ -147,18 +147,20 @@ private:
     /**
      * Key is pressed
      */
-    static bool onKeyPressCallback(GtkWidget* widget, GdkEventKey* event, MainWindow* win);
+    static bool onKeyPressCallback(GtkWidget* widget, GdkEvent* event, MainWindow* win);
 
-    /**
-     * Callback fro window states, we ned to know if the window is fullscreen
-     */
-    static bool windowStateEventCallback(GtkWidget* window, GdkEventWindowState* event, MainWindow* win);
+    // Todo (gtk4): find replacement
+    // /**
+    //  * Callback fro window states, we ned to know if the window is fullscreen
+    //  */
+    // static bool windowStateEventCallback(GtkWidget* window, GdkWindowEventState* event, MainWindow* win);
 
-    /**
-     * Callback for drag & drop files
-     */
-    static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data,
-                                guint info, guint time, MainWindow* win);
+    // /**
+    //  * Callback for drag & drop files
+    //  */
+    // static void dragDataRecived(GtkWidget* widget, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData*
+    // data,
+    //                             guint info, guint time, MainWindow* win);
 
     /**
      * Load Overall CSS file with custom icons, other styling and potentially, user changes
@@ -168,30 +170,30 @@ private:
 private:
     Control* control;
 
-    XournalView* xournal = nullptr;
-    GtkWidget* winXournal = nullptr;
-    ScrollHandling* scrollHandling = nullptr;
+    XournalView* xournal{};
+    GtkWidget* winXournal{};
+    ScrollHandling* scrollHandling{};
 
-    std::atomic_bool gtkTouchscreenScrollingEnabled{true};
+    std::atomic<bool> gtkTouchscreenScrollingEnabled{true};
 
     std::unique_ptr<PdfFloatingToolbox> pdfFloatingToolBox;
 
     // Toolbars
-    ToolMenuHandler* toolbar;
-    ToolbarData* selectedToolbar = nullptr;
+    ToolMenuHandler* toolbar{};
+    ToolbarData* selectedToolbar{};
     bool toolbarIntialized = false;
 
     bool maximized = false;
 
-    GtkWidget** toolbarWidgets;
+    GtkWidget** toolbarWidgets{};
 
-    MainWindowToolbarMenu* toolbarSelectMenu;
-    GtkAccelGroup* globalAccelGroup;
+    MainWindowToolbarMenu* toolbarSelectMenu{};
+    // GtkAccelGroup* globalAccelGroup;
 
     bool sidebarVisible = true;
 
-    GtkWidget* boxContainerWidget;
-    GtkWidget* panedContainerWidget;
-    GtkWidget* mainContentWidget;
-    GtkWidget* sidebarWidget;
+    GtkWidget* boxContainerWidget{};
+    GtkWidget* panedContainerWidget{};
+    GtkWidget* mainContentWidget{};
+    GtkWidget* sidebarWidget{};
 };

@@ -24,30 +24,28 @@ class FontButton: public AbstractToolItem {
 public:
     FontButton(ActionHandler* handler, GladeGui* gui, std::string id, ActionType type, std::string description,
                GtkWidget* menuitem = nullptr);
-    virtual ~FontButton();
 
 public:
-    virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
+    void activated(GdkEvent* event, GtkWidget* menuitem, GtkButton* toolbutton) override;
     void setFont(XojFont& font);
     XojFont getFont() const;
-    virtual std::string getToolDisplayName() const;
+    std::string getToolDisplayName() const override;
     void showFontDialog();
 
 protected:
-    virtual GtkToolItem* createItem(bool horizontal);
-    virtual GtkToolItem* createTmpItem(bool horizontal);
-    virtual GtkToolItem* newItem();
+    GtkWidget* createItem(bool horizontal) override;
+    GtkWidget* createTmpItem(bool horizontal) override;
+    GtkWidget* newItem() override;
 
     static GtkWidget* newFontButton();
     static void setFontFontButton(GtkWidget* fontButton, XojFont& font);
 
-    virtual GtkWidget* getNewToolIcon() const;
-    virtual GdkPixbuf* getNewToolPixbuf() const;
+    GtkWidget* getNewToolIcon() const override;
+    GdkPixbuf* getNewToolPixbuf() const override;
 
 private:
     GtkWidget* fontButton = nullptr;
     GladeGui* gui = nullptr;
     std::string description;
-
     XojFont font;
 };

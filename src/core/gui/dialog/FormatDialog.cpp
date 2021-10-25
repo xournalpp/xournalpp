@@ -121,8 +121,8 @@ void FormatDialog::setOrientation(Orientation orientation) {
     GtkWidget* btPortrait = get("btPortrait");
     GtkWidget* btLandscape = get("btLandscape");
 
-    gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(btPortrait), orientation == ORIENTATION_PORTRAIT);
-    gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(btLandscape), orientation == ORIENTATION_LANDSCAPE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(btPortrait), orientation == ORIENTATION_PORTRAIT);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(btLandscape), orientation == ORIENTATION_LANDSCAPE);
 }
 
 void FormatDialog::spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg) {
@@ -217,11 +217,11 @@ void FormatDialog::cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg) {
     dlg->setSpinValues(width, height);
 }
 
-void FormatDialog::portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg) {
-    bool activated = gtk_toggle_tool_button_get_active(bt);
+void FormatDialog::portraitSelectedCb(GtkToggleButton* bt, FormatDialog* dlg) {
+    bool activated = gtk_toggle_button_get_active(bt);
 
     if (activated) {
-        gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(dlg->get("btLandscape")), false);
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dlg->get("btLandscape")), false);
         dlg->orientation = ORIENTATION_PORTRAIT;
 
         double width = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dlg->get("spinWidth")));
@@ -234,11 +234,11 @@ void FormatDialog::portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg
     }
 }
 
-void FormatDialog::landscapeSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg) {
-    bool activated = gtk_toggle_tool_button_get_active(bt);
+void FormatDialog::landscapeSelectedCb(GtkToggleButton* bt, FormatDialog* dlg) {
+    bool activated = gtk_toggle_button_get_active(bt);
 
     if (activated) {
-        gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(dlg->get("btPortrait")), false);
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dlg->get("btPortrait")), false);
         dlg->orientation = ORIENTATION_LANDSCAPE;
 
         double width = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dlg->get("spinWidth")));
@@ -262,7 +262,7 @@ void FormatDialog::show(GtkWindow* parent) {
     int ret = 0;
     while (ret == 0) {
         gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-        ret = gtk_dialog_run(GTK_DIALOG(this->window));
+        ret = wait_for_gtk_dialog_result(GTK_DIALOG(this->window));
         if (ret == 0) {
             setSpinValues(this->origWidth / this->scale, this->origHeight / this->scale);
         }

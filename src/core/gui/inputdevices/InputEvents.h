@@ -23,8 +23,6 @@ class Settings;
 enum InputEventType {
     UNKNOWN,
     BUTTON_PRESS_EVENT,
-    BUTTON_2_PRESS_EVENT,
-    BUTTON_3_PRESS_EVENT,
     BUTTON_RELEASE_EVENT,
     MOTION_EVENT,
     ENTER_EVENT,
@@ -48,22 +46,46 @@ enum InputDeviceClass {
 };
 
 struct GdkEventGuard {
-    static inline GdkEvent* safeRef(GdkEvent* source) { return gdk_event_copy(source); }
+    static inline GdkEvent* safeRef(GdkEvent* source) { return source != nullptr ? gdk_event_ref(source) : nullptr; }
+    static inline void safeUnref(GdkEvent* source) {
+        if (source)
+            gdk_event_unref(source);
+    }
+    static inline GdkEvent* safeMove(GdkEvent*& source) {
+        auto ret = source;
+        source = nullptr;
+        return ret;
+    }
 
     GdkEventGuard() = default;
 
-    [[maybe_unused]] explicit GdkEventGuard(GdkEvent* source): event(safeRef(source), &gdk_event_free) {}
+    [[maybe_unused]] explicit GdkEventGuard(GdkEvent* source): event(safeRef(source)) {}
+    [[maybe_unused]] explicit GdkEventGuard(GdkEventGuard const& other): event(safeRef(other.event)) {}
+    [[maybe_unused]] explicit GdkEventGuard(GdkEventGuard&& other): event(safeMove(other.event)) {}
+
 
     GdkEventGuard& operator=(GdkEvent* source) {
-        event = {safeRef(source), &gdk_event_free};
+        safeUnref(event);
+        event = safeRef(source);
         return *this;
     }
 
-    operator GdkEvent*() const { return event.get(); }
+    GdkEventGuard& operator=(GdkEventGuard const& other) {
+        safeUnref(event);
+        event = safeRef(other.event);
+        return *this;
+    }
+    GdkEventGuard& operator=(GdkEventGuard&& other) {
+        safeUnref(event);
+        event = safeMove(other.event);
+        return *this;
+    }
+
+    operator GdkEvent*() const { return event; }
 
     // it's more performant to manage the GdkEvent over C++ than over gdk
     // Since the gdk_copy is extreme expansive
-    std::shared_ptr<GdkEvent> event{};
+    GdkEvent* event{};
 };
 
 struct InputEvent final {
@@ -73,7 +95,7 @@ struct InputEvent final {
 
     InputEventType type{UNKNOWN};
     InputDeviceClass deviceClass{INPUT_DEVICE_IGNORE};
-    gchar* deviceName{};
+    gchar const* deviceName{};
 
     gdouble absoluteX{0};
     gdouble absoluteY{0};

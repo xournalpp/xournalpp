@@ -23,36 +23,37 @@ public:
 private:
     void cleanupToolbars();
     void prepareToolItems();
-    void cleanToolItem(GtkToolItem* it);
-    void prepareToolItem(GtkToolItem* it);
+    void cleanToolItem(GtkButton* it);
+    void prepareToolItem(GtkButton* it);
     void showToolbar();
 
 private:
     /**
      * Drag a Toolitem from toolbar
      */
-    static void toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, void* unused);
+    // TODO(gtk4):
+    // static void toolitemDragBegin(GtkWidget* widget, GdkDragContext* context, void* unused);
 
-    /**
-     * Drag a Toolitem from toolbar STOPPED
-     */
-    static void toolitemDragEnd(GtkWidget* widget, GdkDragContext* context, void* unused);
+    // /**
+    //  * Drag a Toolitem from toolbar STOPPED
+    //  */
+    // static void toolitemDragEnd(GtkWidget* widget, GdkDragContext* context, void* unused);
 
     /**
      * Remove a toolbar item from the tool where it was
      */
     void removeFromToolbar(AbstractToolItem* item, const std::string& toolbarName, int id);
-    static void toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
-                                    guint info, guint time, ToolbarAdapter* adapter);
+    // static void toolitemDragDataGet(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selection_data,
+    // guint info, guint time, ToolbarAdapter* adapter);
 
-    /**
-     * A tool item was dragged to the toolbar
-     */
-    static bool toolbarDragMotionCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y, guint time,
-                                    ToolbarAdapter* adapter);
-    static void toolbarDragLeafeCb(GtkToolbar* toolbar, GdkDragContext* context, guint time, ToolbarAdapter* adapter);
-    static void toolbarDragDataReceivedCb(GtkToolbar* toolbar, GdkDragContext* context, gint x, gint y,
-                                          GtkSelectionData* data, guint info, guint time, ToolbarAdapter* adapter);
+    // /**
+    //  * A tool item was dragged to the toolbar
+    //  */
+    // static bool toolbarDragMotionCb(GtkBox* toolbar, GdkDragContext* context, gint x, gint y, guint time,
+    //                                 ToolbarAdapter* adapter);
+    // static void toolbarDragLeafeCb(GtkBox* toolbar, GdkDragContext* context, guint time, ToolbarAdapter* adapter);
+    // static void toolbarDragDataReceivedCb(GtkBox* toolbar, GdkDragContext* context, gint x, gint y,
+    //                                       GtkSelectionData* data, guint info, guint time, ToolbarAdapter* adapter);
 
     /**
      * @brief Wrapper around gtk_toolbar_get_drop index with coorect coordinate handling
@@ -70,6 +71,6 @@ private:
     std::string toolbarName;
     MainWindow* window;
 
-    GtkToolItem* spacerItem{};
+    GtkButton* spacerItem{};
     ToolMenuHandler* toolHandler;
 };

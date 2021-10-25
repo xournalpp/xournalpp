@@ -1,0 +1,60 @@
+/*
+ * Xournal++
+ *
+ * Part of the customizable toolbars
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+#include <string>
+#include <vector>
+
+#include "gui/GladeGui.h"
+#include "model/Font.h"
+
+#include "AbstractToolItem.h"
+
+
+class FontButton: public AbstractToolItem {
+public:
+    FontButton(ActionHandler* handler, GladeGui* gui, std::string id, ActionType type, std::string description,
+               GtkWidget* menuitem = nullptr);
+
+public:
+    void activated(GdkEvent* event, GtkWidget* menuitem, GtkButton* toolbutton) override;
+    void setFont(XojFont& font);
+<<<<<<< HEAD:src/core/gui/toolbarMenubar/FontButton.h
+    XojFont getFont() const;
+    virtual std::string getToolDisplayName() const;
+=======
+    XojFont getFont();
+    std::string getToolDisplayName() override;
+>>>>>>> 23eddcf1 (Commit #1; active migration):src/gui/toolbarMenubar/FontButton.h
+    void showFontDialog();
+
+protected:
+    GtkWidget* createItem(bool horizontal) override;
+    GtkWidget* createTmpItem(bool horizontal) override;
+    GtkWidget* newItem() override;
+
+    static GtkWidget* newFontButton();
+    static void setFontFontButton(GtkWidget* fontButton, XojFont& font);
+
+<<<<<<< HEAD:src/core/gui/toolbarMenubar/FontButton.h
+    virtual GtkWidget* getNewToolIcon() const;
+    virtual GdkPixbuf* getNewToolPixbuf() const;
+=======
+    GtkWidget* getNewToolIcon() override;
+>>>>>>> 23eddcf1 (Commit #1; active migration):src/gui/toolbarMenubar/FontButton.h
+
+private:
+    GtkWidget* fontButton = nullptr;
+    GladeGui* gui = nullptr;
+    std::string description;
+    XojFont font;
+};

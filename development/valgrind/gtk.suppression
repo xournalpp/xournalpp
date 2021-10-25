@@ -151,7 +151,7 @@
    fun:_XlcCurrentLC
    fun:XSupportsLocale
    fun:_gdk_x11_initialize_locale
-   fun:_gdk_windowing_init
+   fun:_gdk_surfaceing_init
    fun:gdk_pre_parse_libgtk_only
    fun:pre_parse_hook
    fun:g_option_context_parse

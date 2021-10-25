@@ -1,5 +1,8 @@
 #include "SearchBar.h"
 
+#include <array>
+#include <string_view>
+
 #include <config.h>
 
 #include "control/Control.h"
@@ -23,9 +26,9 @@ SearchBar::SearchBar(Control* control): control(control) {
     g_signal_connect(searchTextField, "search-changed", G_CALLBACK(searchTextChangedCallback), this);
     // Enable next/previous search when pressing Enter / Shift+Enter
     g_signal_connect(searchTextField, "key-press-event",
-                     G_CALLBACK(+[](GtkWidget* entry, GdkEventKey* event, SearchBar* self) {
-                         if (event->keyval == GDK_KEY_Return) {
-                             if (event->state & GDK_SHIFT_MASK)
+                     G_CALLBACK(+[](GtkWidget* entry, GdkEvent* event, SearchBar* self) {
+                         if (gdk_key_event_get_keyval(event) == GDK_KEY_Return) {
+                             if (gdk_event_get_modifier_state(event) & GDK_SHIFT_MASK)
                                  self->searchPrevious();
                              else
                                  self->searchNext();
@@ -76,14 +79,16 @@ void SearchBar::search(const char* text) {
     }
 
     if (found) {
-        gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry {}", -1, nullptr);
+        constexpr std::string_view entry{"GtkSearchEntry {}"};
+        gtk_css_provider_load_from_data(cssTextFild, entry.data(), entry.size());
     } else {
-        gtk_css_provider_load_from_data(cssTextFild, "GtkSearchEntry { color: #ff0000; }", -1, nullptr);
+        constexpr std::string_view entry{"GtkSearchEntry { color: #ff0000; }"};
+        gtk_css_provider_load_from_data(cssTextFild, entry.data(), entry.size());
     }
 }
 
 void SearchBar::searchTextChangedCallback(GtkEntry* entry, SearchBar* searchBar) {
-    const char* text = gtk_entry_get_text(entry);
+    const char* text = gtk_entry_buffer_get_text(gtk_entry_get_buffer(entry));
     searchBar->search(text);
 }
 
@@ -100,7 +105,7 @@ void SearchBar::searchNext() {
     MainWindow* win = control->getWindow();
     int x = page + 1;
     GtkWidget* searchTextField = win->get("searchTextField");
-    const char* text = gtk_entry_get_text(GTK_ENTRY(searchTextField));
+    const char* text = gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(searchTextField)));
     GtkWidget* lbSearchState = win->get("lbSearchState");
     if (*text == 0) {
         return;
@@ -144,7 +149,7 @@ void SearchBar::searchPrevious() {
     MainWindow* win = control->getWindow();
     int x = page - 1;
     GtkWidget* searchTextField = win->get("searchTextField");
-    const char* text = gtk_entry_get_text(GTK_ENTRY(searchTextField));
+    const char* text = gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(searchTextField)));
     GtkWidget* lbSearchState = win->get("lbSearchState");
     if (*text == 0) {
         return;
@@ -184,7 +189,7 @@ void SearchBar::showSearchBar(bool show) {
     if (show) {
         GtkWidget* searchTextField = win->get("searchTextField");
         gtk_widget_grab_focus(searchTextField);
-        gtk_widget_show_all(searchBar);
+        gtk_widget_show(searchBar);
     } else {
         gtk_widget_hide(searchBar);
         for (int i = control->getDocument()->getPageCount() - 1; i >= 0; i--) {

@@ -5,18 +5,20 @@
 #include "util/Util.h"
 
 #include "BaseElementView.h"
+#include "GtkDialogUtil.h"
 
 
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,
                                                        Settings* settings, const std::string& glade,
                                                        const std::string& mainWnd):
         GladeGui(gladeSearchPath, glade, std::move(mainWnd)), settings(settings), doc(doc) {
-    this->layoutContainer = gtk_layout_new(nullptr, nullptr);
+    this->layoutContainer = gtk_fixed_new();
     gtk_widget_show(this->layoutContainer);
     this->scrollPreview = get("scrollContents");
-    gtk_container_add(GTK_CONTAINER(scrollPreview), layoutContainer);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrollPreview), layoutContainer);
 
-    gtk_widget_set_events(this->layoutContainer, GDK_EXPOSURE_MASK);
+    // Todo (gtk4): add EventHandler
+    // gtk_widget_set_events(this->layoutContainer, GDK_EXPOSURE_MASK);
     g_signal_connect(this->layoutContainer, "draw", G_CALLBACK(Util::paintBackgroundWhite), nullptr);
 
     g_signal_connect(this->window, "size-allocate", G_CALLBACK(sizeAllocate), this);
@@ -62,7 +64,7 @@ void BackgroundSelectDialogBase::layout() {
         }
         max_row_width = std::max(max_row_width, x + static_cast<double>(p->getWidth()));
 
-        gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), x, y);
+        gtk_fixed_move(GTK_FIXED(this->layoutContainer), p->getWidget(), x, y);
 
         row_height =
                 std::max(row_height,
@@ -71,11 +73,11 @@ void BackgroundSelectDialogBase::layout() {
         x += p->getWidth();
     }
 
-    gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), max_row_width, y + row_height);
+    // gtk_fixed_set_size(GTK_FIXED(this->layoutContainer), max_row_width, y + row_height);
 }
 
 void BackgroundSelectDialogBase::show(GtkWindow* parent) {
-    for (BaseElementView* e: elements) { gtk_layout_put(GTK_LAYOUT(this->layoutContainer), e->getWidget(), 0, 0); }
+    for (BaseElementView* e: elements) { gtk_fixed_put(GTK_FIXED(this->layoutContainer), e->getWidget(), 0, 0); }
 
     if (!elements.empty()) {
         setSelected(0);
@@ -84,7 +86,7 @@ void BackgroundSelectDialogBase::show(GtkWindow* parent) {
     layout();
 
     gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
-    gtk_dialog_run(GTK_DIALOG(this->window));
+    wait_for_gtk_dialog_result(GTK_DIALOG(this->window));
     gtk_widget_hide(this->window);
 }
 

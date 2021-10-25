@@ -19,16 +19,15 @@ SidebarIndexPage::SidebarIndexPage(Control* control, SidebarToolbar* toolbar):
                                         reinterpret_cast<GtkTreeViewSearchEqualFunc>(treeSearchFunction), this,
                                         nullptr);
 
-    this->scrollBookmarks = gtk_scrolled_window_new(nullptr, nullptr);
+    this->scrollBookmarks = gtk_scrolled_window_new();
     g_object_ref(this->scrollBookmarks);
 
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollBookmarks), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollBookmarks), GTK_SHADOW_IN);
 
     GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeViewBookmarks));
     gtk_tree_selection_set_mode(selection, GTK_SELECTION_SINGLE);
     gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeViewBookmarks), false);
-    gtk_container_add(GTK_CONTAINER(scrollBookmarks), treeViewBookmarks);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrollBookmarks), treeViewBookmarks);
 
 
     GtkTreeViewColumn* column = gtk_tree_view_column_new();
@@ -85,8 +84,8 @@ void SidebarIndexPage::askInsertPdfPage(size_t pdfPage) {
     gtk_dialog_add_button(GTK_DIALOG(dialog), "Insert at end", 3);
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), control->getGtkWindow());
-    int res = gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+    int res = wait_for_gtk_dialog_result(GTK_DIALOG(dialog));
+    gtk_window_destroy(GTK_WINDOW(dialog));
     if (res == 1) {
         return;
     }

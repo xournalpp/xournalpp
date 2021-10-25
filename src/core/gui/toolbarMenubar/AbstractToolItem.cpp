@@ -18,20 +18,20 @@ void AbstractToolItem::selected(ActionGroup group, ActionType action) {
         return;
     }
 
-    if (!GTK_IS_TOGGLE_TOOL_BUTTON(this->item)) {
+    if (!GTK_IS_TOGGLE_BUTTON(this->item)) {
         g_warning("selected action %i (group=%i) which is not a toggle action!", action, group);
         return;
     }
 
-    if (gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(this->item)) != (this->action == action)) {
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->item)) != (this->action == action)) {
         this->toolToggleButtonActive = (this->action == action);
-        gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(this->item), this->toolToggleButtonActive);
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->item), this->toolToggleButtonActive);
     }
 }
 
-void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToolItem* item) {
-    if (toolbutton && GTK_IS_TOGGLE_TOOL_BUTTON(toolbutton)) {
-        bool selected = gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton));
+void AbstractToolItem::toolButtonCallback(GtkButton* toolbutton, AbstractToolItem* item) {
+    if (toolbutton && GTK_IS_TOGGLE_BUTTON(toolbutton)) {
+        bool selected = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toolbutton));
 
         // ignore this event... GTK Broadcast to much events, e.g. if you call set_active
         if (item->toolToggleButtonActive == selected) {
@@ -40,7 +40,7 @@ void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToo
 
         // don't allow deselect this button
         if (item->toolToggleOnlyEnable && !selected) {
-            gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(toolbutton), true);
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toolbutton), true);
             return;
         }
 
@@ -50,7 +50,7 @@ void AbstractToolItem::toolButtonCallback(GtkToolButton* toolbutton, AbstractToo
     item->activated(nullptr, nullptr, toolbutton);
 }
 
-auto AbstractToolItem::createItem(bool horizontal) -> GtkToolItem* {
+auto AbstractToolItem::createItem(bool horizontal) -> GtkWidget* {
     if (this->item) {
         return this->item;
     }
@@ -58,21 +58,21 @@ auto AbstractToolItem::createItem(bool horizontal) -> GtkToolItem* {
     this->item = createTmpItem(horizontal);
     g_object_ref(this->item);
 
-    if (GTK_IS_TOOL_BUTTON(this->item) || GTK_IS_TOGGLE_TOOL_BUTTON(this->item)) {
+    if (GTK_IS_BUTTON(this->item) || GTK_IS_TOGGLE_BUTTON(this->item)) {
         g_signal_connect(this->item, "clicked", G_CALLBACK(&toolButtonCallback), this);
     }
 
     return this->item;
 }
 
-auto AbstractToolItem::createTmpItem(bool horizontal) -> GtkToolItem* {
-    GtkToolItem* item = newItem();
+auto AbstractToolItem::createTmpItem(bool horizontal) -> GtkWidget* {
+    GtkWidget* item = newItem();
 
-    if (GTK_IS_TOOL_ITEM(item)) {
-        gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(item), false);
-    }
+    // TODO (gtk4): set the parent box to be homogeneous.
+    // if (GTK_IS_TOOL_ITEM(item)) {
+    //     gtk_tool_item_set_homogeneous(GTK_TOOL_ITEM(item), false);
+    // }
 
-    gtk_widget_show_all(GTK_WIDGET(item));
     return item;
 }
 

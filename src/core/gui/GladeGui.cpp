@@ -1,6 +1,7 @@
 #include "GladeGui.h"
 
 #include <cstdlib>
+#include <type_traits>
 #include <utility>
 
 #include <config.h>
@@ -43,7 +44,7 @@ GladeGui::~GladeGui() {
     g_object_unref(builder);
 }
 
-auto GladeGui::get(const std::string& name) -> GtkWidget* {
+auto GladeGui::get(std::string const& name) -> GtkWidget* {
     GtkWidget* w = GTK_WIDGET(gtk_builder_get_object(builder, name.c_str()));
     if (w == nullptr) {
         g_warning("GladeGui::get: Could not find glade Widget: \"%s\"", name.c_str());
@@ -57,6 +58,6 @@ auto GladeGui::getGladeSearchPath() -> GladeSearchpath* { return this->gladeSear
 
 auto GladeGui::getBuilder() -> GtkBuilder* { return this->builder; }
 
-GladeGui::operator GdkWindow*() { return gtk_widget_get_window(GTK_WIDGET(getWindow())); }
+GladeGui::operator GdkSurface*() { return gtk_native_get_surface(GTK_NATIVE(getWindow())); }
 
 GladeGui::operator GtkWindow*() { return GTK_WINDOW(getWindow()); }

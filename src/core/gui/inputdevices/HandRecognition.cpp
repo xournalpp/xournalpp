@@ -1,3 +1,4 @@
+#undef X11_ENABLED
 #include "HandRecognition.h"
 
 #include "control/settings/Settings.h"
@@ -7,6 +8,7 @@
 #include "gui/inputdevices/touchdisable/TouchDisableX11.h"
 
 #include "InputContext.h"
+#undef X11_ENABLED
 
 using std::string;
 
@@ -64,6 +66,7 @@ void HandRecognition::reload() {
             enabled = false;
             return;
         }
+#undef X11_ENABLED
 #ifdef X11_ENABLED
         touchImpl = new TouchDisableX11();
 #endif
@@ -76,7 +79,8 @@ void HandRecognition::reload() {
         touchImpl = new TouchDisableCustom(enableCommand, disableCommand);
     } else  // Auto detect
     {
-        // touchImpl = new TouchDisableGdk(this->widget);
+// touchImpl = new TouchDisableGdk(this->widget);
+#undef X11_ENABLED
 #ifdef X11_ENABLED
         if (x11Session) {
             touchImpl = new TouchDisableX11();
@@ -164,7 +168,7 @@ void HandRecognition::disableTouch() {
 void HandRecognition::event(GdkDevice* device) {
     GdkInputSource dev = gdk_device_get_source(device);
 
-    if (dev == GDK_SOURCE_PEN || dev == GDK_SOURCE_ERASER) {
+    if (dev == GDK_SOURCE_PEN) {
         penEvent();
     }
 }

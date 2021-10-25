@@ -13,7 +13,8 @@
 
 SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
         SidebarPreviewBase(control, gui, toolbar),
-        contextMenu(gui->get("sidebarPreviewContextMenu")),
+        contextMenu(
+                gui->get("sidebarPreviewContextMenu"), +[](auto* ptr) { return G_MENU(ptr); }),
         iconNameHelper(control->getSettings()) {
     // Connect the context menu actions
     const std::map<std::string, SidebarActions> ctxMenuActions = {
@@ -34,8 +35,7 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
         using Data = SidebarPreviewPages::ContextMenuData;
         auto userdata = std::make_unique<Data>(Data{this->toolbar, pair.second});
 
-        const auto callback =
-                G_CALLBACK(+[](GtkMenuItem* item, Data* data) { data->toolbar->runAction(data->actions); });
+        const auto callback = G_CALLBACK(+[](GtkButton* item, Data* data) { data->toolbar->runAction(data->actions); });
         const gulong signalId = g_signal_connect(entry, "activate", callback, userdata.get());
         g_object_ref(entry);
         this->contextMenuSignals.emplace_back(entry, signalId, std::move(userdata));
@@ -193,7 +193,7 @@ void SidebarPreviewPages::updatePreviews() {
     for (size_t i = 0; i < len; i++) {
         SidebarPreviewBaseEntry* p = new SidebarPreviewPageEntry(this, doc->getPage(i));
         this->previews.push_back(p);
-        gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+        gtk_fixed_put(GTK_FIXED(this->iconViewPreview), p->getWidget(), 0, 0);
     }
 
     layout();
@@ -244,7 +244,7 @@ void SidebarPreviewPages::pageInserted(size_t page) {
 
     this->previews.insert(this->previews.begin() + page, p);
 
-    gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
+    gtk_fixed_put(GTK_FIXED(this->iconViewPreview), p->getWidget(), 0, 0);
 
     // Unselect page, to prevent double selection displaying
     unselectPage();
@@ -299,6 +299,4 @@ void SidebarPreviewPages::pageSelected(size_t page) {
     }
 }
 
-void SidebarPreviewPages::openPreviewContextMenu() {
-    gtk_menu_popup(GTK_MENU(this->contextMenu), nullptr, nullptr, nullptr, nullptr, 3, gtk_get_current_event_time());
-}
+void SidebarPreviewPages::openPreviewContextMenu() { gtk_popover_menu_new_from_model(G_MENU_MODEL(this->contextMenu)); }

@@ -5,6 +5,8 @@
 #include "util/PageRange.h"
 #include "util/i18n.h"
 
+#include "GtkDialogUtil.h"
+
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
         GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog") {
 
@@ -17,14 +19,15 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
     g_signal_connect(get("cbQuality"), "changed", G_CALLBACK(ExportDialog::selectQualityCriterion), this);
 
 
-    GSList* radios = gtk_radio_button_get_group(GTK_RADIO_BUTTON(get("rdRangeAll")));
-    for (GSList* head = radios; head != nullptr; head = head->next) {
-        g_signal_connect(reinterpret_cast<GtkRadioButton*>(head->data), "activate",
-                         G_CALLBACK(+[](GtkButton*, ExportDialog* self) {
-                             gtk_dialog_response(GTK_DIALOG(self->window), GTK_RESPONSE_OK);
-                         }),
-                         this);
-    }
+    // Todo (gtk4): find replacement, get_group is not a member anymore
+    // GSList* radios = gtk_check_button_get_group(GTK_CHECK_BUTTON(get("rdRangeAll")));
+    // for (GSList* head = radios; head != nullptr; head = head->next) {
+    //     g_signal_connect(reinterpret_cast<GtkCheckButton*>(head->data), "activate",
+    //                      G_CALLBACK(+[](GtkButton*, ExportDialog* self) {
+    //                          gtk_dialog_response(GTK_DIALOG(self->window), GTK_RESPONSE_OK);
+    //                      }),
+    //                      this);
+    // }
 }
 
 ExportDialog::~ExportDialog() = default;
@@ -89,7 +92,8 @@ auto ExportDialog::getRange() -> PageRangeVector {
     GtkWidget* rdRangePages = get("rdRangePages");
 
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangePages))) {
-        return PageRange::parse(gtk_entry_get_text(GTK_ENTRY(get("txtPages"))), this->pageCount);
+        return PageRange::parse(gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(get("txtPages")))),
+                                this->pageCount);
     }
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangeCurrent))) {
         PageRangeVector range;
@@ -108,7 +112,7 @@ void ExportDialog::show(GtkWindow* parent) {
 
     gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
 
-    int res = gtk_dialog_run(GTK_DIALOG(this->window));
+    int res = wait_for_gtk_dialog_result(GTK_DIALOG(this->window));
 
     if (res == GTK_RESPONSE_OK) {
         confirmed = true;

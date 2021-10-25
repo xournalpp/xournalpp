@@ -63,6 +63,10 @@ void Image::setImage(std::string data) {
     this->data = std::move(data);
 }
 
+void Image::setImage(GdkPaintable* img) {
+    // Todo (gtk4, fabian): add GdkPaintable, GdkPixbuf **and** cairo to a variant.
+}
+
 void Image::setImage(GdkPixbuf* img) { setImage(f_pixbuf_to_cairo_surface(img)); }
 
 void Image::setImage(cairo_surface_t* image) {

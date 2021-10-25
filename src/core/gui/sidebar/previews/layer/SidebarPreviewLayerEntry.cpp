@@ -26,23 +26,18 @@ SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, 
     // Left padding
     gtk_widget_set_margin_start(cbVisible, Shadow::getShadowTopLeftSize());
 
-    gtk_container_add(GTK_CONTAINER(toolbar), cbVisible);
+    gtk_box_append(GTK_BOX(toolbar), cbVisible);
 
     gtk_widget_set_vexpand(widget, false);
-    gtk_container_add(GTK_CONTAINER(box), widget);
+    gtk_box_append(GTK_BOX(box), widget);
 
     gtk_widget_set_vexpand(toolbar, false);
-    gtk_container_add(GTK_CONTAINER(box), toolbar);
-
-    gtk_widget_show_all(box);
+    gtk_box_append(GTK_BOX(box), toolbar);
 
     toolbarHeight = gtk_widget_get_allocated_height(cbVisible) + Shadow::getShadowTopLeftSize() + 20;
 }
 
-SidebarPreviewLayerEntry::~SidebarPreviewLayerEntry() {
-    gtk_widget_destroy(this->box);
-    this->box = nullptr;
-}
+SidebarPreviewLayerEntry::~SidebarPreviewLayerEntry() { g_object_unref(this->box); }
 
 void SidebarPreviewLayerEntry::checkboxToggled() {
     if (inUpdate) {

@@ -24,8 +24,8 @@ void ToolbarDragDropHandler::prepareToolbarsForDragAndDrop() {
 
     for (int i = 0; i < len; i++) {
         GtkWidget* w = widgets[i];
-        this->toolbars[i] = new ToolbarAdapter(w, win->getToolbarName(GTK_TOOLBAR(w)),
-                                               control->getWindow()->getToolMenuHandler(), control->getWindow());
+        this->toolbars[i] = new ToolbarAdapter(w, win->getToolbarName(w), control->getWindow()->getToolMenuHandler(),
+                                               control->getWindow());
     }
 }
 

@@ -101,16 +101,19 @@ constexpr double SCALE_AMOUNT = 1.05;
 constexpr double MAX_TANGENT_LENGTH = 2000.0;
 constexpr double MIN_TANGENT_LENGTH = 1.0;
 
-auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
-    if (!stroke ||
-        event->type != GDK_KEY_PRESS && event->keyval != GDK_KEY_Escape) {  // except for escape key only act on key
-                                                                            // press event, not on key release event
+auto SplineHandler::onKeyEvent(GdkEvent* event) -> bool {
+    auto state = gdk_event_get_modifier_state(event);
+    auto keyval = gdk_key_event_get_keyval(event);
+    if (!stroke || gdk_event_get_event_type(event) != GDK_KEY_PRESS &&
+                           keyval != GDK_KEY_Escape) {  // except for escape key only act on key
+                                                        // press event, not on key release event
         return false;
     }
 
     Rectangle<double> rect = this->computeRepaintRectangle();
 
-    switch (event->keyval) {
+
+    switch (keyval) {
         case GDK_KEY_Escape: {
             this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
             this->finalizeSpline();
@@ -146,7 +149,7 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
         }
         case GDK_KEY_r:
         case GDK_KEY_R: {  // r like "rotate"
-            double angle = (event->state & GDK_SHIFT_MASK) ? -ROTATE_AMOUNT : ROTATE_AMOUNT;
+            double angle = (state & GDK_SHIFT_MASK) ? -ROTATE_AMOUNT : ROTATE_AMOUNT;
             double xOld = this->tangents.back().x;
             double yOld = this->tangents.back().y;
             double xNew = cos(angle * M_PI / 180) * xOld + sin(angle * M_PI / 180) * yOld;
@@ -161,9 +164,9 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
             double yOld = this->tangents.back().y;
             double length = 2 * sqrt(pow(xOld, 2) + pow(yOld, 2));
             double factor = 1;
-            if ((event->state & GDK_SHIFT_MASK) && length >= MIN_TANGENT_LENGTH) {
+            if ((state & GDK_SHIFT_MASK) && length >= MIN_TANGENT_LENGTH) {
                 factor = 1 / SCALE_AMOUNT;
-            } else if (!(event->state & GDK_SHIFT_MASK) && length <= MAX_TANGENT_LENGTH) {
+            } else if (!(state & GDK_SHIFT_MASK) && length <= MAX_TANGENT_LENGTH) {
                 factor = SCALE_AMOUNT;
             }
             double xNew = xOld * factor;

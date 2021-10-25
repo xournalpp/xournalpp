@@ -25,38 +25,30 @@ InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling) {
 
 InputContext::~InputContext() {
     delete this->stylusHandler;
-    this->stylusHandler = nullptr;
-
     delete this->touchHandler;
-    this->touchHandler = nullptr;
-
     delete this->touchDrawingHandler;
-    this->touchDrawingHandler = nullptr;
-
     delete this->mouseHandler;
-    this->mouseHandler = nullptr;
-
     delete this->keyboardHandler;
-    this->keyboardHandler = nullptr;
 }
 
 void InputContext::connect(GtkWidget* pWidget) {
     this->widget = pWidget;
-    gtk_widget_set_support_multidevice(widget, true);
+    // gtk_widget_set_support_multidevice(widget, true);
 
-    int mask =
-            // Key handling
-            GDK_KEY_PRESS_MASK |
+    // Todo (gtk4): Add EventHandler/Controler
+    // int mask =
+    //         // Key handling
+    //         GDK_KEY_PRESS_MASK |
 
-            // Allow scrolling
-            GDK_SCROLL_MASK |
+    //         // Allow scrolling
+    //         GDK_SCROLL_MASK |
 
-            // Touch / Pen / Mouse
-            GDK_TOUCH_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-            GDK_SMOOTH_SCROLL_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK |
-            GDK_PROXIMITY_OUT_MASK;
+    //         // Touch / Pen / Mouse
+    //         GDK_TOUCH_MASK | GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
+    //         GDK_SMOOTH_SCROLL_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | GDK_PROXIMITY_IN_MASK |
+    //         GDK_PROXIMITY_OUT_MASK;
 
-    gtk_widget_add_events(pWidget, mask);
+    // gtk_widget_add_events(pWidget, mask);
 
     g_signal_connect(pWidget, "event", G_CALLBACK(eventCallback), this);
 }
@@ -77,8 +69,8 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
 
     // Add the device to the list of known devices if it is currently unknown
     GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
-    if (inputSource != GDK_SOURCE_KEYBOARD && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
-        this->knownDevices.find(std::string(event.deviceName)) == this->knownDevices.end()) {
+    if (inputSource != GDK_SOURCE_KEYBOARD /* && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER */
+        && this->knownDevices.find(std::string(event.deviceName)) == this->knownDevices.end()) {
 
         this->knownDevices.insert(std::string(event.deviceName));
         this->getSettings()->transactionStart();

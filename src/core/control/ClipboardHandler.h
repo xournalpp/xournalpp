@@ -21,16 +21,18 @@
 
 class ObjectInputStream;
 
-class ClipboardListener {
-public:
+struct ClipboardListener {
     virtual void clipboardCutCopyEnabled(bool enabled) = 0;
     virtual void clipboardPasteEnabled(bool enabled) = 0;
     virtual void clipboardPasteText(std::string text) = 0;
-    virtual void clipboardPasteImage(GdkPixbuf* img) = 0;
+    virtual void clipboardPasteImage(GdkPaintable* img) = 0;
     virtual void clipboardPasteXournal(ObjectInputStream& in) = 0;
     virtual void deleteSelection() = 0;
 
-    virtual ~ClipboardListener();
+    virtual ~ClipboardListener() = default;
+
+protected:
+    ClipboardListener() = default;
 };
 
 class ClipboardHandler {
@@ -48,20 +50,12 @@ public:
     void setCopyPasteEnabled(bool enabled);
 
 private:
-    static void ownerChangedCallback(GtkClipboard* clip, GdkEvent* event, ClipboardHandler* handler);
-    void clipboardUpdated(GdkAtom atom);
-    static void receivedClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
-                                          ClipboardHandler* handler);
-
-    static void pasteClipboardContents(GtkClipboard* clipboard, GtkSelectionData* selectionData,
-                                       ClipboardHandler* handler);
-    static void pasteClipboardImage(GtkClipboard* clipboard, GdkPixbuf* pixbuf, ClipboardHandler* handler);
-
-    static void pasteClipboardText(GtkClipboard* clipboard, const gchar* text, ClipboardHandler* handler);
+    static void ownerChangedCallback(GdkClipboard* clip, ClipboardHandler* handler);
+    void clipboardUpdated();
 
 private:
     ClipboardListener* listener = nullptr;
-    GtkClipboard* clipboard = nullptr;
+    GdkClipboard* clipboard = nullptr;
     gulong hanlderId = -1;
 
     EditSelection* selection = nullptr;

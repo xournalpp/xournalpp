@@ -1,6 +1,7 @@
 #include "SelectBackgroundColorDialog.h"
 
 #include "control/Control.h"
+#include "util/GtkDialogUtil.h"
 #include "util/Util.h"
 #include "util/i18n.h"
 
@@ -112,9 +113,7 @@ void SelectBackgroundColorDialog::show(GtkWindow* parent) {
     gtk_color_chooser_add_palette(GTK_COLOR_CHOOSER(dialog), GTK_ORIENTATION_HORIZONTAL, 9, lastBackgroundColors.size(),
                                   lastBackgroundColors.data());
 
-
-    int response = gtk_dialog_run(GTK_DIALOG(dialog));
-    if (response == GTK_RESPONSE_OK) {
+    if (int response = wait_for_gtk_dialog_result(GTK_DIALOG(dialog)); response == GTK_RESPONSE_OK) {
         GdkRGBA color;
         gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(dialog), &color);
         this->selected = Util::GdkRGBA_to_argb(color);
@@ -122,5 +121,5 @@ void SelectBackgroundColorDialog::show(GtkWindow* parent) {
         storeLastUsedValuesInSettings();
     }
 
-    gtk_widget_destroy(dialog);
+    gtk_window_destroy(GTK_WINDOW(dialog));
 }

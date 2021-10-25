@@ -33,8 +33,8 @@ private:
     void setOrientation(Orientation orientation);
     void setSpinValues(double width, double heigth);
 
-    static void portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg);
-    static void landscapeSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg);
+    static void portraitSelectedCb(GtkToggleButton* bt, FormatDialog* dlg);
+    static void landscapeSelectedCb(GtkToggleButton* bt, FormatDialog* dlg);
     static void cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg);
     static void cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg);
     static void spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg);
