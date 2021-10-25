@@ -255,6 +255,15 @@ public:
         CPPUNIT_ASSERT_EQUAL(stroke1.getAudioFilename(), stroke2.getAudioFilename());
         CPPUNIT_ASSERT_EQUAL(stroke1.getToolType(), stroke2.getToolType());
 
+        double avgPressure1 = stroke1.getAvgPressure();
+        double avgPressure2 = stroke2.getAvgPressure();
+
+        if (!std::isnan(avgPressure1)) {
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(avgPressure1, avgPressure2, 1e-8);
+        } else {
+            CPPUNIT_ASSERT(std::isnan(avgPressure2));
+        }
+
         std::vector<Point> points1 = stroke1.getPointVector();
         std::vector<Point> points2 = stroke2.getPointVector();
 
@@ -263,13 +272,40 @@ public:
     }
 
     void testReadStroke() {
-        std::vector<Stroke> strokes(2);
+        std::vector<Stroke> strokes(8);
+        // strokes[0]: empty stroke
+
         strokes[1].addPoint(Point(42, 42));
         strokes[1].addPoint(Point(42.1, 42.1));
         strokes[1].addPoint(Point(1312., 8));
-        strokes[1].setWidth(42.);
-        strokes[1].setFill(245);
-        strokes[1].setToolType(StrokeTool::STROKE_TOOL_ERASER);
+
+        strokes[2].setWidth(42.);
+
+        strokes[3].setFill(245);
+
+        strokes[4].setToolType(StrokeTool::STROKE_TOOL_ERASER);
+
+        strokes[5].setAudioFilename("foo.mp3");
+
+        // strokes[6]: complex stroke
+        strokes[6].addPoint(Point(-1312., 8));
+        strokes[6].addPoint(Point(-42, -42));
+        strokes[6].addPoint(Point(42.1, -42.1));
+        strokes[6].setPressure({42., 1332.});
+        strokes[6].setWidth(1337.);
+        strokes[6].setFill(-1);
+        strokes[6].setToolType(StrokeTool::STROKE_TOOL_PEN);
+        strokes[6].setAudioFilename("assets/bar.mp3");
+
+        // strokes[7]: invalid stroke
+        strokes[7].addPoint(Point(0., 0.));
+        strokes[7].addPoint(Point(1., 2.));
+        strokes[7].addPoint(Point(1., 2.));
+        strokes[7].setPressure({42., 1332.});
+        strokes[7].setFill(-42);
+        strokes[7].setToolType((StrokeTool)42);
+        strokes[7].setWidth(-1337.);
+
 
         for (auto&& stroke: strokes) {
             std::string out_string = serializeStroke(stroke);
