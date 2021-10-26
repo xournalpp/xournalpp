@@ -105,7 +105,7 @@ const char* TOOLBAR_INI_HEADER =
         " Delete this file to generate a new config file with default values\n"
         "\n"
         " Available buttons:\n"
-        " File: NEW,SAVE,OPEN,PRINT\n"
+        " File: NEW,SAVE,OPEN,PRINT,SAVEPDF\n"
         "\n"
         " Edit: CUT,COPY,PASTE,SEARCH,UNDO,REDO,INSERT_NEW_PAGE\n"
         "\n"

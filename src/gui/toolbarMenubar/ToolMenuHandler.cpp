@@ -333,7 +333,8 @@ void ToolMenuHandler::initToolItems() {
     addCustomItem("NEW", ACTION_NEW, "document-new", _("New Xournal"));
     addCustomItem("OPEN", ACTION_OPEN, "document-open", _("Open file"));
     addCustomItem("SAVE", ACTION_SAVE, "document-save", _("Save"));
-    addStockItem("PRINT", ACTION_PRINT, "document-print", _("Print"));
+    addCustomItem("SAVEPDF", ACTION_EXPORT_AS_PDF, "document-export-pdf", _("Export as PDF"));
+    addCustomItem("PRINT", ACTION_PRINT, "document-print", _("Print"));
 
     // Menu Edit
     // ************************************************************************
