@@ -7,6 +7,7 @@
 #include <cairo.h>
 #include <cppunit/TestAssert.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <model/Stroke.h>
 #include <util/serializing/BinObjectEncoding.h>
 #include <util/serializing/HexObjectEncoding.h>
 #include <util/serializing/ObjectInputStream.h>
@@ -23,6 +24,7 @@ class ObjectIOStreamTest: public CppUnit::TestFixture {
     CPPUNIT_TEST(testReadImage);
     CPPUNIT_TEST(testReadData);
     CPPUNIT_TEST(testReadComplexObject);
+    CPPUNIT_TEST(testReadStroke);
     CPPUNIT_TEST_SUITE_END();
 
 
@@ -69,6 +71,13 @@ public:
     std::string serializeInt(int x) {
         ObjectOutputStream outStream(new BinObjectEncoding);
         outStream.writeInt(x);
+        auto outStr = outStream.getStr();
+        return {outStr->str, outStr->len};
+    }
+
+    std::string serializeStroke(Stroke& stroke) {
+        ObjectOutputStream outStream(new BinObjectEncoding);
+        stroke.serialize(outStream);
         auto outStr = outStream.getStr();
         return {outStr->str, outStr->len};
     }
@@ -239,6 +248,75 @@ public:
             CPPUNIT_ASSERT(stream.read(&str[0], (int)str.size() + 1));
             double output = stream.readDouble();
             CPPUNIT_ASSERT_DOUBLES_EQUAL(dbl, output, 0.001);
+        }
+    }
+
+    void assertStrokeEquality(const Stroke& stroke1, const Stroke& stroke2) {
+        CPPUNIT_ASSERT_EQUAL(stroke1.getAudioFilename(), stroke2.getAudioFilename());
+        CPPUNIT_ASSERT_EQUAL(stroke1.getToolType(), stroke2.getToolType());
+        CPPUNIT_ASSERT_EQUAL(stroke1.getFill(), stroke2.getFill());
+        CPPUNIT_ASSERT_EQUAL(stroke1.getWidth(), stroke2.getWidth());
+
+        double avgPressure1 = stroke1.getAvgPressure();
+        double avgPressure2 = stroke2.getAvgPressure();
+
+        if (!std::isnan(avgPressure1)) {
+            CPPUNIT_ASSERT_DOUBLES_EQUAL(avgPressure1, avgPressure2, 1e-8);
+        } else {
+            CPPUNIT_ASSERT(std::isnan(avgPressure2));
+        }
+
+        std::vector<Point> points1 = stroke1.getPointVector();
+        std::vector<Point> points2 = stroke2.getPointVector();
+
+        CPPUNIT_ASSERT_EQUAL(points1.size(), points2.size());
+        for (size_t i = 0; i < points1.size(); ++i) { CPPUNIT_ASSERT(points1[i].equalsPos(points2[i])); }
+    }
+
+    void testReadStroke() {
+        std::vector<Stroke> strokes(8);
+        // strokes[0]: empty stroke
+
+        strokes[1].addPoint(Point(42, 42));
+        strokes[1].addPoint(Point(42.1, 42.1));
+        strokes[1].addPoint(Point(1312., 8));
+
+        strokes[2].setWidth(42.);
+
+        strokes[3].setFill(245);
+
+        strokes[4].setToolType(StrokeTool::STROKE_TOOL_ERASER);
+
+        strokes[5].setAudioFilename("foo.mp3");
+
+        // strokes[6]: complex stroke
+        strokes[6].addPoint(Point(-1312., 8));
+        strokes[6].addPoint(Point(-42, -42));
+        strokes[6].addPoint(Point(42.1, -42.1));
+        strokes[6].setPressure({42., 1332.});
+        strokes[6].setWidth(1337.);
+        strokes[6].setFill(-1);
+        strokes[6].setToolType(StrokeTool::STROKE_TOOL_PEN);
+        strokes[6].setAudioFilename("assets/bar.mp3");
+
+        // strokes[7]: invalid stroke
+        strokes[7].addPoint(Point(0., 0.));
+        strokes[7].addPoint(Point(1., 2.));
+        strokes[7].addPoint(Point(1., 2.));
+        strokes[7].setPressure({42., 1332.});
+        strokes[7].setFill(-42);
+        strokes[7].setToolType((StrokeTool)42);
+        strokes[7].setWidth(-1337.);
+
+
+        for (auto&& stroke: strokes) {
+            std::string out_string = serializeStroke(stroke);
+            ObjectInputStream istream;
+            istream.read(out_string.c_str(), (int)out_string.size());
+
+            Stroke in_stroke;
+            in_stroke.readSerialized(istream);
+            assertStrokeEquality(stroke, in_stroke);
         }
     }
 };
