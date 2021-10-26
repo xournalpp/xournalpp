@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-27 10:25+0000\n"
-"PO-Revision-Date: 2021-09-27 10:50\n"
+"POT-Creation-Date: 2021-10-26 21:28+0000\n"
+"PO-Revision-Date: 2021-10-26 21:29\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -62,7 +62,7 @@ msgstr "<span foreground='red' size='x-large'>A szükséges UI fájl hiányzik:\
 "  A munkakönyvtárban nem található\n"
 "  A {2} könyvtárban nem található"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
 msgid "Add/Edit Tex"
 msgstr "Tex hozzáadása/szerkesztése"
 
@@ -139,8 +139,8 @@ msgstr "Az automatikus mentés átnevezve {1}-ról {2}-ra"
 msgid "Autosaving to {1}"
 msgstr "Automatikus mentés ide: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:451
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:452
 msgid "Back"
 msgstr "Vissza"
 
@@ -199,7 +199,7 @@ msgstr "A \"{1}\" szín ismeretlen (nincs definiálva az alapértelmezett színl
 msgid "Contents"
 msgstr "Tartalom"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:348
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:78
 #: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:84
 msgid "Copy"
@@ -329,7 +329,7 @@ msgstr "Egyéni"
 msgid "Custom Export"
 msgstr "Egyéni exportálás"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Customize Toolbars"
 msgstr "Eszköztár testreszabása"
 
@@ -337,15 +337,15 @@ msgstr "Eszköztár testreszabása"
 msgid "Customized"
 msgstr "Egyéni"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:347
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Cut"
 msgstr "Kivágás"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Default Tool"
 msgstr "Alapértelmezett eszköz"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:353
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:354
 #: ../src/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "Törlés"
@@ -354,7 +354,7 @@ msgstr "Törlés"
 msgid "Delete Logfile"
 msgstr "Eseménynapló fájl törlése"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:401
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Delete current page"
 msgstr "Aktuális oldal törlése"
 
@@ -417,19 +417,19 @@ msgstr "Pontozott"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Draw Arrow"
 msgstr "Nyíl rajzolása"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Draw Ellipse"
 msgstr "Ellipszis rajzolása"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Draw Line"
 msgstr "Vonal rajzolása"
 
@@ -437,19 +437,19 @@ msgstr "Vonal rajzolása"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:99
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:102
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 msgid "Draw Rectangle"
 msgstr "Téglalap rajzolása"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Draw Spline"
 msgstr "Görbe rajzolása"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw coordinate system"
 msgstr "Koordináta-rendszer rajzolása"
 
@@ -564,6 +564,10 @@ msgstr "FILE exportálása képfájlként (egy kép oldalanként)\n"
 msgid "Export PDF"
 msgstr "Exportálás PDF-be"
 
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
+msgid "Export as PDF"
+msgstr ""
+
 #: ../src/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
@@ -613,7 +617,7 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "A fájl megnyitása nem sikerült. Manuálisan kell megnyitnia:\n"
 "URL: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:475
 msgid "Fill"
 msgstr "Kitöltés"
 
@@ -621,7 +625,7 @@ msgstr "Kitöltés"
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Nyomásszűrés. A nyomást a nyomási szorzóval szorozza. Ha az eredmény kevesebb a minimális értéknél, akkor a minimális nyomást alkalmazza."
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Fine"
 msgstr "Finom"
 
@@ -633,7 +637,7 @@ msgstr "Lebegő eszköztár (kísérleti)"
 msgid "Font"
 msgstr "Betűtípus"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:448
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Forward"
 msgstr "Következő"
 
@@ -653,27 +657,27 @@ msgstr "A globális sablonfájl nem létezik. Kérem ellenőrizze a beállítás
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "A globális sablonfájl nem szabályos. Kérem ellenőrizze a beállításait. "
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:380
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Go to first page"
 msgstr "Ugrás az első oldalra"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 msgid "Go to last page"
 msgstr "Ugrás az utolsó oldalra"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:388
 msgid "Go to next layer"
 msgstr "Ugrás a következő oldalra"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Go to page"
 msgstr "Ugrás oldalra"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:386
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "Go to previous layer"
 msgstr "Váltás előző rétegre"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:388
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:389
 msgid "Go to top layer"
 msgstr "Váltás legfelső rétegre"
 
@@ -691,12 +695,12 @@ msgstr "Szürke"
 msgid "Green"
 msgstr "Zöld"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:358
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
 msgid "Grid Snapping"
 msgstr "Rácshoz illeszt"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Hand"
 msgstr "Kéz"
 
@@ -705,12 +709,12 @@ msgid "Hide all"
 msgstr "Összes elrejtése"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Highlighter"
 msgstr "Kiemelő"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:34
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Image"
 msgstr "Kép"
 
@@ -746,7 +750,7 @@ msgstr "LaTeX beszúrása"
 msgid "Insert layer"
 msgstr "Réteg beszúrása"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:397
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "Insert page"
 msgstr "Oldal beszúrása"
 
@@ -807,11 +811,11 @@ msgstr "Betöltés..."
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Manage Toolbars"
 msgstr "Eszköztárak kezelése"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:490
 msgid "Medium"
 msgstr "Közepes"
 
@@ -849,11 +853,11 @@ msgstr "Új"
 msgid "New Xournal"
 msgstr "Új Xournal"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Next"
 msgstr "Tovább"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:391
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Next annotated page"
 msgstr "Következő feljegyzést tartalmazó oldal"
 
@@ -965,16 +969,16 @@ msgstr "Oldal beszúrva"
 msgid "Page number"
 msgstr "Oldalszám"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:364
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Paired pages"
 msgstr "Páros oldalak"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 #: ../src/undo/AddUndoAction.cpp:77
 msgid "Paste"
 msgstr "Beilleszt"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Pause / Play"
 msgstr "Szünet/Lejátszás"
 
@@ -987,7 +991,7 @@ msgstr "Toll"
 msgid "Plain"
 msgstr "Sima"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
 msgid "Play Object"
@@ -997,7 +1001,7 @@ msgstr "Objektum lejátszása"
 msgid "Predefined"
 msgstr "Előre meghatározott"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Presentation mode"
 msgstr "Bemutató mód"
 
@@ -1005,11 +1009,11 @@ msgstr "Bemutató mód"
 msgid "Previously selected language not available anymore!"
 msgstr "Az előzőleg választott nyelv már nem elérhető el!"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Print"
 msgstr "Nyomtatás"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:440
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Record Audio / Stop Recording"
 msgstr "Hang rögzítése / Rögzítés megállítása"
 
@@ -1022,7 +1026,7 @@ msgstr "A felvevőt nem sikerült elindítani."
 msgid "Red"
 msgstr "Piros"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:344
 #: ../src/undo/UndoRedoHandler.cpp:217
 msgid "Redo"
 msgstr "Ismétlés"
@@ -1063,7 +1067,7 @@ msgstr "Fájlt helyreállítása"
 msgid "Rotation"
 msgstr "Forgatás"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:356
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:357
 msgid "Rotation Snapping"
 msgstr "Forgatási igazítás"
 
@@ -1105,7 +1109,7 @@ msgstr "Hiba a fájl mentése közben: {1}"
 msgid "Scale"
 msgstr "Méretezés"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:351
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
 msgid "Search"
 msgstr "Keresés"
 
@@ -1113,24 +1117,24 @@ msgstr "Keresés"
 msgid "See the full list of contributors"
 msgstr "A közreműködők teljes listája"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:436
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Select Font"
 msgstr "Betűtípus kiválasztása"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Select Object"
 msgstr "Objektum kijelölése"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:430
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
 msgstr "Téglalap alakú kijelölés"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:65
 msgid "Select Region"
@@ -1203,7 +1207,7 @@ msgstr "Oldalszélesség beállítása PNG exportokhoz\n"
 "                                 Nincs hatása -i/--create-img=foo.png nélkül\n"
 "                                 Figyelmen kívül hagyva ha --export-png-dpi használatban van"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:419
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Shape Recognizer"
 msgstr "Alakzatfelismerő"
 
@@ -1235,7 +1239,7 @@ msgstr "Elnézést, a Xournal++ jelenleg nem tud távoli fájlokat megnyitni.\n"
 msgid "Staves"
 msgstr "Kottavonalas"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:445
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
 msgid "Stop"
 msgstr "Állj"
 
@@ -1274,7 +1278,7 @@ msgid "System Default"
 msgstr "Alapértelmezett"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Text"
 msgstr "Szöveg"
 
@@ -1367,7 +1371,7 @@ msgstr "A Xournal++ hibanaplót mentett. Kérem írjon hibajelentést, hogy a hi
 msgid "There was an error displaying help: {1}"
 msgstr "Hiba a súgó megjelenítésekor: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Thick"
 msgstr "Vastag"
 
@@ -1380,7 +1384,7 @@ msgstr "Ez a dokumentum még nincs elmentve."
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "A kép betöltése nem sikerült. Hibaüzenet: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Toggle fullscreen"
 msgstr "Teljes képernyőre váltás"
 
@@ -1412,7 +1416,7 @@ msgstr ""
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:342
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 #: ../src/undo/UndoRedoHandler.cpp:205
 msgid "Undo"
 msgstr "Visszavonás"
@@ -1457,7 +1461,7 @@ msgstr ""
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Vertical Space"
 msgstr ""
 
@@ -1465,11 +1469,11 @@ msgstr ""
 msgid "Vertical space"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:487
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Very Fine"
 msgstr "Nagyon vékony"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:492
 msgid "Very Thick"
 msgstr "Nagyon vastag"
 
@@ -1543,19 +1547,19 @@ msgstr ""
 msgid "Zoom Slider"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Zoom fit to screen"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Zoom in"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:372
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Zoom out"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 msgid "Zoom to 100%"
 msgstr ""
 
