@@ -7,6 +7,7 @@
 #include "control/layer/LayerController.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
+#include "model/SplineSegment.h"
 #include "undo/InsertUndoAction.h"
 
 guint32 SplineHandler::lastStrokeTime;  // persist for next stroke

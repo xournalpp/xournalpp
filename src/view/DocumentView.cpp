@@ -191,7 +191,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l) {
     int drawn = 0;
     int notDrawn = 0;
 #endif  // DEBUG_SHOW_REPAINT_BOUNDS
-    for (Element* e: *l->getElements()) {
+    for (Element* e: l->getElements()) {
 #ifdef DEBUG_SHOW_ELEMENT_BOUNDS
         cairo_set_source_rgb(cr, 0, 1, 0);
         cairo_set_line_width(cr, 1);

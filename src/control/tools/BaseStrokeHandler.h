@@ -12,7 +12,6 @@
 #pragma once
 
 #include "model/Point.h"
-#include "model/Snapping.h"
 #include "view/DocumentView.h"
 
 #include "InputHandler.h"

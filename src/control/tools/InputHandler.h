@@ -16,13 +16,11 @@
 
 #include <gtk/gtk.h>
 
-#include "control/shaperecognizer/ShapeRecognizer.h"
 #include "gui/inputdevices/PositionInputData.h"
 #include "model/PageRef.h"
-#include "model/Stroke.h"
 
-
-class DocumentView;
+class Point;
+class Stroke;
 class XournalView;
 class XojPageView;
 
@@ -119,6 +117,4 @@ protected:
     XojPageView* redrawable;
     PageRef page;
     Stroke* stroke;
-
-private:
 };

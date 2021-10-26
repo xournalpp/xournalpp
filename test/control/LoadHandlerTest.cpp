@@ -94,7 +94,7 @@ public:
         CPPUNIT_ASSERT_EQUAL((size_t)1, (*page).getLayerCount());
         Layer* layer = (*(*page).getLayers())[0];
 
-        Element* element = (*layer->getElements())[0];
+        Element* element = layer->getElements().front();
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, element->getType());
 
         Text* text = (Text*)element;
@@ -112,7 +112,7 @@ public:
         CPPUNIT_ASSERT_EQUAL((size_t)1, (*page).getLayerCount());
         Layer* layer = (*(*page).getLayers())[0];
 
-        Element* element = (*layer->getElements())[0];
+        Element* element = layer->getElements().front();
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, element->getType());
 
         Text* text = (Text*)element;
@@ -130,7 +130,7 @@ public:
         CPPUNIT_ASSERT_EQUAL((size_t)1, (*page).getLayerCount());
         Layer* layer = (*(*page).getLayers())[0];
 
-        Element* element = (*layer->getElements())[0];
+        Element* element = layer->getElements().front();
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, element->getType());
 
         Text* text = (Text*)element;
@@ -161,7 +161,7 @@ public:
         CPPUNIT_ASSERT_EQUAL((size_t)1, (*page).getLayerCount());
         Layer* layer = (*(*page).getLayers())[0];
 
-        Element* element = (*layer->getElements())[0];
+        Element* element = layer->getElements().front();
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, element->getType());
 
         Text* text = (Text*)element;
@@ -197,7 +197,7 @@ public:
     void checkLayer(PageRef page, int layerIndex, string expectedText) {
         Layer* layer = (*(*page).getLayers())[layerIndex];
 
-        Element* element = (*layer->getElements())[0];
+        Element* element = layer->getElements().front();
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, element->getType());
 
         Text* text = (Text*)element;
@@ -240,13 +240,13 @@ public:
         CPPUNIT_ASSERT_EQUAL((size_t)1, (*page).getLayerCount());
         Layer* layer = (*(*page).getLayers())[0];
 
-        Text* t1 = (Text*)(*layer->getElements())[0];
+        Text* t1 = (Text*)layer->getElements()[0];
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, t1->getType());
 
-        Text* t2 = (Text*)(*layer->getElements())[1];
+        Text* t2 = (Text*)layer->getElements()[1];
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, t2->getType());
 
-        Text* t3 = (Text*)(*layer->getElements())[2];
+        Text* t3 = (Text*)layer->getElements()[2];
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, t3->getType());
 
         CPPUNIT_ASSERT_EQUAL(string("red"), t1->getText());
@@ -268,13 +268,13 @@ public:
         CPPUNIT_ASSERT_EQUAL((size_t)1, (*page).getLayerCount());
         Layer* layer = (*(*page).getLayers())[0];
 
-        Text* t1 = (Text*)(*layer->getElements())[0];
+        Text* t1 = (Text*)layer->getElements()[0];
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, t1->getType());
 
-        Text* t2 = (Text*)(*layer->getElements())[1];
+        Text* t2 = (Text*)layer->getElements()[1];
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, t2->getType());
 
-        Text* t3 = (Text*)(*layer->getElements())[2];
+        Text* t3 = (Text*)layer->getElements()[2];
         CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, t3->getType());
 
         CPPUNIT_ASSERT_EQUAL(string("red"), t1->getText());
@@ -298,31 +298,31 @@ public:
             CPPUNIT_ASSERT_EQUAL((size_t)1, (*page).getLayerCount());
             Layer* layer = (*(*page).getLayers())[0];
 
-            std::vector<Element*>* elements = layer->getElements();
-            CPPUNIT_ASSERT_EQUAL(8, static_cast<int>(layer->getElements()->size()));
+            const std::vector<Element*>& elements = layer->getElements();
+            CPPUNIT_ASSERT_EQUAL(8, static_cast<int>(layer->getElements().size()));
 
-            Stroke* e0 = (Stroke*)(*layer->getElements())[0];
+            Stroke* e0 = (Stroke*)layer->getElements()[0];
             CPPUNIT_ASSERT_EQUAL(ELEMENT_STROKE, e0->getType());
 
-            Stroke* e1 = (Stroke*)(*layer->getElements())[1];
+            Stroke* e1 = (Stroke*)layer->getElements()[1];
             CPPUNIT_ASSERT_EQUAL(ELEMENT_STROKE, e1->getType());
 
-            Stroke* e2 = (Stroke*)(*layer->getElements())[2];
+            Stroke* e2 = (Stroke*)layer->getElements()[2];
             CPPUNIT_ASSERT_EQUAL(ELEMENT_STROKE, e2->getType());
 
-            Stroke* e3 = (Stroke*)(*layer->getElements())[3];
+            Stroke* e3 = (Stroke*)layer->getElements()[3];
             CPPUNIT_ASSERT_EQUAL(ELEMENT_STROKE, e3->getType());
 
-            Stroke* e4 = (Stroke*)(*layer->getElements())[4];
+            Stroke* e4 = (Stroke*)layer->getElements()[4];
             CPPUNIT_ASSERT_EQUAL(ELEMENT_STROKE, e4->getType());
 
-            Text* e5 = (Text*)(*layer->getElements())[5];
+            Text* e5 = (Text*)layer->getElements()[5];
             CPPUNIT_ASSERT_EQUAL(ELEMENT_TEXT, e5->getType());
 
-            Stroke* e6 = (Stroke*)(*layer->getElements())[6];
+            Stroke* e6 = (Stroke*)layer->getElements()[6];
             CPPUNIT_ASSERT_EQUAL(ELEMENT_STROKE, e6->getType());
 
-            Stroke* e7 = (Stroke*)(*layer->getElements())[7];
+            Stroke* e7 = (Stroke*)layer->getElements()[7];
             CPPUNIT_ASSERT_EQUAL(ELEMENT_STROKE, e7->getType());
 
             return elements;
@@ -344,9 +344,9 @@ public:
         // Check that the coordinates from both files don't differ more than the precision they were saved with
         auto coordEq = [](double a, double b) { return std::abs(a - b) <= 1e-8; };
 
-        for (unsigned long i = 0; i < elements1->size(); i++) {
-            Element* a = elements1->at(i);
-            Element* b = elements2->at(i);
+        for (unsigned long i = 0; i < elements1.size(); i++) {
+            Element* a = elements1.at(i);
+            Element* b = elements2.at(i);
             CPPUNIT_ASSERT_EQUAL(a->getType(), b->getType());
             CPPUNIT_ASSERT(coordEq(a->getX(), b->getX()));
             CPPUNIT_ASSERT(coordEq(a->getY(), b->getY()));

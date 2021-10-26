@@ -41,21 +41,21 @@ public:
     /**
      * @return The image, if render source is PNG. Note: this is deprecated.
      */
-    cairo_surface_t* getImage();
+    cairo_surface_t* getImage() const;
 
     /**
      * @return The PDF Document, if rendered as a PDF.
      *
      * The document needs to be referenced, if it will be hold somewhere
      */
-    PopplerDocument* getPdf();
+    PopplerDocument* getPdf() const;
 
     virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth);
     virtual void rotate(double x0, double y0, double th);
 
     // text tag to alow latex
     void setText(std::string text);
-    std::string getText();
+    std::string getText() const;
 
     virtual Element* clone();
 

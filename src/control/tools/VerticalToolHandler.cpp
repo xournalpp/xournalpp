@@ -13,7 +13,7 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, 
     double ySnapped = snappingHandler.snapVertically(y, false);
     this->startY = ySnapped;
     this->endY = ySnapped;
-    for (Element* e: *this->layer->getElements()) {
+    for (Element* e: this->layer->getElements()) {
         if (e->getY() >= y) {
             this->elements.push_back(e);
         }

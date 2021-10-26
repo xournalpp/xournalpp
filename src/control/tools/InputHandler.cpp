@@ -3,7 +3,6 @@
 #include <cmath>
 
 #include "control/Control.h"
-#include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/MainWindow.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
@@ -12,7 +11,6 @@
 #include "undo/InsertUndoAction.h"
 #include "undo/RecognizerUndoAction.h"
 #include "util/Rectangle.h"
-#include "view/DocumentView.h"
 
 InputHandler::InputHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
         xournal(xournal), redrawable(redrawable), page(page), stroke(nullptr) {}

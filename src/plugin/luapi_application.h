@@ -840,7 +840,7 @@ static int applib_scaleTextElements(lua_State* L) {
 
     control->clearSelectionEndText();
 
-    std::vector<Element*> elements = *control->getCurrentPage()->getSelectedLayer()->getElements();
+    const std::vector<Element*>& elements = control->getCurrentPage()->getSelectedLayer()->getElements();
 
     for (Element* e: elements) {
         if (e->getType() == ELEMENT_TEXT) {
@@ -848,8 +848,6 @@ static int applib_scaleTextElements(lua_State* L) {
             t->scale(t->getX(), t->getY(), f, f, 0.0, false);
         }
     }
-
-    elements.clear();
 
     return 1;
 }

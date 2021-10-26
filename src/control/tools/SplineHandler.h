@@ -12,12 +12,12 @@
 #pragma once
 
 #include "model/Point.h"
-#include "model/Snapping.h"
-#include "model/SplineSegment.h"
 #include "view/DocumentView.h"
 
 #include "InputHandler.h"
 #include "SnapToGridInputHandler.h"
+
+class SplineSegment;
 
 /**
  * @brief A class to handle splines

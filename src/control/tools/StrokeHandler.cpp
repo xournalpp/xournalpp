@@ -8,6 +8,7 @@
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
 #include "control/settings/Settings.h"
+#include "control/shaperecognizer/ShapeRecognizer.h"
 #include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"

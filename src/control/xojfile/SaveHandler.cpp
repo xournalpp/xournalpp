@@ -159,7 +159,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
         layer->setAttrib("name", l->getName().c_str());
     }
 
-    for (Element* e: *l->getElements()) {
+    for (Element* e: l->getElements()) {
         if (e->getType() == ELEMENT_STROKE) {
             auto* s = dynamic_cast<Stroke*>(e);
             auto* stroke = new XmlPointNode("stroke");

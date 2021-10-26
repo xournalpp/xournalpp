@@ -44,7 +44,7 @@ void Image::setHeight(double height) {
     this->calcSize();
 }
 
-auto Image::cairoReadFunction(Image* image, unsigned char* data, unsigned int length) -> cairo_status_t {
+auto Image::cairoReadFunction(const Image* image, unsigned char* data, unsigned int length) -> cairo_status_t {
     for (unsigned int i = 0; i < length; i++, image->read++) {
         if (image->read >= image->data.length()) {
             return CAIRO_STATUS_READ_ERROR;
@@ -75,11 +75,11 @@ void Image::setImage(cairo_surface_t* image) {
     this->image = image;
 }
 
-auto Image::getImage() -> cairo_surface_t* {
+auto Image::getImage() const -> cairo_surface_t* {
     if (this->image == nullptr && this->data.length()) {
         this->read = 0;
         this->image = cairo_image_surface_create_from_png_stream(
-                reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), this);
+                reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), const_cast<Image*>(this));
     }
 
     return this->image;
