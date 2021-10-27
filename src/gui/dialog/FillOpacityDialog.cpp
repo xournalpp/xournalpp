@@ -1,7 +1,7 @@
 #include "FillOpacityDialog.h"
 
-FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha):
-        GladeGui(gladeSearchPath, "fillOpacity.glade", "fillOpacityDialog") {
+FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen):
+        GladeGui(gladeSearchPath, "fillOpacity.glade", "fillOpacityDialog"), pen(pen) {
     GtkWidget* scaleAlpha = get("scaleAlpha");
 
     gtk_range_set_value(GTK_RANGE(scaleAlpha), static_cast<int>(alpha / 255.0 * 100));
@@ -28,8 +28,7 @@ void FillOpacityDialog::setPreviewImage(int alpha) {
 
     cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
     cairo_set_source_rgb(cr, 255, 255, 255);
-    cairo_rectangle(cr, 0, 0, PREVIEW_WIDTH, PREVIEW_WIDTH);
-    cairo_fill(cr);
+    cairo_paint(cr);
 
     cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
     cairo_set_source_rgba(cr, 0, 0x80 / 255.0, 0, alpha / 255.0);
@@ -37,17 +36,21 @@ void FillOpacityDialog::setPreviewImage(int alpha) {
                     PREVIEW_HEIGTH - PREVIEW_BORDER * 2);
     cairo_fill(cr);
 
-    cairo_set_line_width(cr, 5);
-    cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
-    cairo_set_source_rgb(cr, 0, 0x80 / 255.0, 0);
-    cairo_rectangle(cr, PREVIEW_BORDER, PREVIEW_BORDER, PREVIEW_WIDTH - PREVIEW_BORDER * 2,
-                    PREVIEW_HEIGTH - PREVIEW_BORDER * 2);
-    cairo_stroke(cr);
+    if (pen) {
+        cairo_set_line_width(cr, 5);
+        cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+        cairo_set_source_rgb(cr, 0, 0x80 / 255.0, 0);
+        cairo_rectangle(cr, PREVIEW_BORDER, PREVIEW_BORDER, PREVIEW_WIDTH - PREVIEW_BORDER * 2,
+                        PREVIEW_HEIGTH - PREVIEW_BORDER * 2);
+        cairo_stroke(cr);
+    }
 
     cairo_destroy(cr);
 
     GtkWidget* preview = get("imgPreview");
     gtk_image_set_from_surface(GTK_IMAGE(preview), surface);
+
+    cairo_surface_destroy(surface);
 }
 
 auto FillOpacityDialog::getResultAlpha() const -> int { return resultAlpha; }

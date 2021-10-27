@@ -15,7 +15,7 @@
 
 class FillOpacityDialog: public GladeGui {
 public:
-    FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha);
+    FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen);
     virtual ~FillOpacityDialog();
 
 public:
@@ -28,4 +28,5 @@ private:
 
 private:
     int resultAlpha = -1;
+    bool pen;
 };
