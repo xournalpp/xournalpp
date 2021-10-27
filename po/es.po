@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-26 21:28+0000\n"
-"PO-Revision-Date: 2021-10-26 21:29\n"
+"PO-Revision-Date: 2021-10-27 11:34\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -566,7 +566,7 @@ msgstr "Exportar PDF"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exportar como PDF"
 
 #: ../src/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
