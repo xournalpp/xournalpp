@@ -5,6 +5,7 @@
 #include <stack>
 
 #include <cairo-pdf.h>
+#include <config.h>
 
 #include "view/DocumentView.h"
 
@@ -34,6 +35,7 @@ auto XojCairoPdfExport::startPdf(const fs::path& file) -> bool {
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
     cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilepath().filename().u8string().c_str());
+    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_CREATOR, PROJECT_STRING);
     GtkTreeModel* tocModel = doc->getContentsModel();
     this->populatePdfOutline(tocModel);
 #endif
