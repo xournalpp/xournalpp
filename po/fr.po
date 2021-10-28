@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-26 21:28+0000\n"
-"PO-Revision-Date: 2021-10-26 21:30\n"
+"PO-Revision-Date: 2021-10-28 10:05\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -566,7 +566,7 @@ msgstr "Exporter en PDF"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exporter en PDF"
 
 #: ../src/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
@@ -1911,7 +1911,7 @@ msgstr "<i>Définissez quels outils seront sélectionnés si vous appuyez sur un
 
 #: ../ui/settings.glade:2612
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr ""
+msgstr "<i>La désactivation du défilement de l'écran tactile intégré de GTK peut éviter certains bugs de défilement sur certaines plateformes. Essayez de changer ce paramètre si vous rencontrez des sauts / changements soudains dans la position du défilement lorsque vous essayez de faire défiler avec un écran tactile.</i>"
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -2258,7 +2258,7 @@ msgstr "Désactiver"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "Désactiver le défilement inertiel intégré de GTK (nécessite un redémarrage)."
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -3112,7 +3112,7 @@ msgstr "Dessin Tactile"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Défilement tactile"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
