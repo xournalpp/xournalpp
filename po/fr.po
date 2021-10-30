@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 21:28+0000\n"
-"PO-Revision-Date: 2021-10-28 10:05\n"
+"POT-Creation-Date: 2021-10-30 18:08+0000\n"
+"PO-Revision-Date: 2021-10-30 18:16\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -575,7 +575,7 @@ msgid "Export layers progressively\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr "Exporter progressivement les calques\n"
-"                                 Dans l'export PDF, rendre les calques progressivement un par un.\n"
+"                                 Dans l'export PDF, générer les calques progressivement un par un.\n"
 "                                 Il en résulte N pages d'exportation pour chaque page de N calques,\n"
 "                                 construisant progressivement la pile de calques.\n"
 "                                 Le fichier PDF généré peut être utilisé pour une présentation.\n"
@@ -866,8 +866,8 @@ msgstr "Page annotée suivante"
 msgid "No device"
 msgstr "Aucun appareil"
 
-#: ../src/pdf/base/XojCairoPdfExport.cpp:148
-#: ../src/pdf/base/XojCairoPdfExport.cpp:190
+#: ../src/pdf/base/XojCairoPdfExport.cpp:150
+#: ../src/pdf/base/XojCairoPdfExport.cpp:192
 msgid "No pages to export!"
 msgstr "Aucune page à exporter !"
 
