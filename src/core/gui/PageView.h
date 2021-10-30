@@ -68,8 +68,6 @@ public:
 
     bool actionDelete();
 
-    void resetShapeRecognizer();
-
     void deleteViewBuffer();
 
     /**

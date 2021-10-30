@@ -387,13 +387,6 @@ void StrokeHandler::destroySurface() {
     }
 }
 
-void StrokeHandler::resetShapeRecognizer() {
-    if (reco) {
-        delete reco;
-        reco = nullptr;
-    }
-}
-
 void StrokeHandler::paintDot(const double x, const double y, const double width) const {
     cairo_set_line_cap(crMask, CAIRO_LINE_CAP_ROUND);
     cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);

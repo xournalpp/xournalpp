@@ -46,11 +46,6 @@ public:
     void onButtonPressEvent(const PositionInputData& pos);
     void onButtonDoublePressEvent(const PositionInputData& pos);
     bool onKeyEvent(GdkEventKey* event);
-    /**
-     * Reset the shape recognizer, only implemented by drawing instances,
-     * but needs to be in the base interface.
-     */
-    virtual void resetShapeRecognizer();
 
     /**
      * @brief Add a straight line to the stroke (if the movement is valid).

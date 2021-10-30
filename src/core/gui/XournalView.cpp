@@ -535,10 +535,6 @@ auto XournalView::getTextEditor() -> TextEditor* {
     return nullptr;
 }
 
-void XournalView::resetShapeRecognizer() {
-    for (auto&& page: viewPages) { page->resetShapeRecognizer(); }
-}
-
 auto XournalView::getCache() -> PdfCache* { return this->cache; }
 
 void XournalView::pageInserted(size_t page) {

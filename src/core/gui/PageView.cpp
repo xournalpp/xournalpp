@@ -462,12 +462,6 @@ auto XojPageView::onButtonTriplePressEvent(const PositionInputData& pos) -> bool
     return true;
 }
 
-void XojPageView::resetShapeRecognizer() {
-    if (this->inputHandler != nullptr) {
-        this->inputHandler->resetShapeRecognizer();
-    }
-}
-
 auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     double zoom = xournal->getZoom();
     double x = pos.x / zoom;

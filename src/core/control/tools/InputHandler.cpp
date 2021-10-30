@@ -22,14 +22,6 @@ InputHandler::~InputHandler() = default;
  */
 auto InputHandler::getStroke() -> Stroke* { return stroke; }
 
-/**
- * Reset the shape recognizer, only implemented by drawing instances,
- * but needs to be in the base interface.
- */
-void InputHandler::resetShapeRecognizer() {
-    // Does nothing here. Implemented in the extending classes
-}
-
 void InputHandler::createStroke(Point p) {
     ToolHandler* h = xournal->getControl()->getToolHandler();
 
