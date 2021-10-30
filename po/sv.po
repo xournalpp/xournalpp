@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 21:28+0000\n"
-"PO-Revision-Date: 2021-10-26 21:29\n"
+"POT-Creation-Date: 2021-10-30 18:08+0000\n"
+"PO-Revision-Date: 2021-10-30 18:16\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -844,8 +844,8 @@ msgstr ""
 msgid "No device"
 msgstr "Ingen enhet"
 
-#: ../src/pdf/base/XojCairoPdfExport.cpp:148
-#: ../src/pdf/base/XojCairoPdfExport.cpp:190
+#: ../src/pdf/base/XojCairoPdfExport.cpp:150
+#: ../src/pdf/base/XojCairoPdfExport.cpp:192
 msgid "No pages to export!"
 msgstr "Inga sidor att exportera!"
 
