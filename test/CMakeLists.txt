@@ -50,10 +50,15 @@ add_executable (test-loadHandler $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJEC
 add_dependencies (test-loadHandler xournalpp-core xournalpp-test-base util)
 target_link_libraries (test-loadHandler ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS} std::filesystem)
 
+# ToolEnums
+add_executable (test-toolEnums $<TARGET_OBJECTS:xournalpp-core> $<TARGET_OBJECTS:xournalpp-test-base>
+    control/ToolEnumsTest.cpp
+)
+add_dependencies (test-toolEnums xournalpp-core xournalpp-test-base)
+target_link_libraries (test-toolEnums ${xournalpp_LDFLAGS} ${CppUnit_LDFLAGS})
+
 ## CTest ##
 add_test (util test-util)
 add_test (LoadHandler test-loadHandler)
-
-
-
+add_test (ToolEnums test-toolEnums)
 

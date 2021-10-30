@@ -16,6 +16,7 @@
 
 #include "CrashHandler.h"
 #include "Stacktrace.h"
+#include "filesystem.h"
 
 #ifdef _WIN32
 #include "win32/console.h"

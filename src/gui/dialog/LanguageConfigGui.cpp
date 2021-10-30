@@ -12,18 +12,6 @@
 #include "filesystem.h"
 #include "i18n.h"
 
-#ifdef _WIN32
-#undef PACKAGE_LOCALE_DIR
-#define PACKAGE_LOCALE_DIR "../share/locale/"
-#endif
-
-#ifdef __APPLE__
-#include "Stacktrace.h"
-#undef PACKAGE_LOCALE_DIR
-fs::path p = Stacktrace::getExePath() / "../Resources/share/locale/";
-const char* PACKAGE_LOCALE_DIR = p.c_str();
-#endif
-
 LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings):
         GladeGui(gladeSearchPath, "settingsLanguageConfig.glade", "offscreenwindow"), settings(settings) {
     auto dropdown = get("languageSettingsDropdown");
@@ -33,7 +21,7 @@ LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget
 
     // Fetch available locales
     try {
-        fs::path baseLocaleDir = Util::getGettextFilepath(PACKAGE_LOCALE_DIR);
+        fs::path baseLocaleDir = Util::getGettextFilepath(Util::getLocalePath().u8string().c_str());
         for (auto const& d: fs::directory_iterator(baseLocaleDir)) {
             if (fs::exists(d.path() / "LC_MESSAGES" / (std::string(GETTEXT_PACKAGE) + ".mo"))) {
                 availableLocales.push_back(d.path().filename().u8string());

@@ -20,7 +20,7 @@ extern const char* XML_VERSION_STR;
 
 class Serializeable {
 public:
-    virtual void serialize(ObjectOutputStream& out) = 0;
+    virtual void serialize(ObjectOutputStream& out) const = 0;
     virtual void readSerialized(ObjectInputStream& in) = 0;
 
     virtual ~Serializeable() = default;
