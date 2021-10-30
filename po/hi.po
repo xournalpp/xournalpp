@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 21:28+0000\n"
-"PO-Revision-Date: 2021-10-26 21:29\n"
+"POT-Creation-Date: 2021-10-30 18:08+0000\n"
+"PO-Revision-Date: 2021-10-30 18:16\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -852,8 +852,8 @@ msgstr "अगला टिप्पणी पृष्ठ"
 msgid "No device"
 msgstr "उपकरण नहीं"
 
-#: ../src/pdf/base/XojCairoPdfExport.cpp:148
-#: ../src/pdf/base/XojCairoPdfExport.cpp:190
+#: ../src/pdf/base/XojCairoPdfExport.cpp:150
+#: ../src/pdf/base/XojCairoPdfExport.cpp:192
 msgid "No pages to export!"
 msgstr "निर्यात करने के लिए कोई पृष्ठ नहीं"
 
