@@ -16,9 +16,6 @@
 #include "InputHandler.h"
 #include "SnapToGridInputHandler.h"
 
-class ShapeRecognizer;
-class ShapeRecognizerResult;
-
 namespace StrokeStabilizer {
 class Base;
 class Active;
@@ -67,7 +64,7 @@ protected:
      */
     void drawSegmentTo(const Point& point);
 
-    void strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer);
+    void strokeRecognizerDetected(Stroke* recognized, Layer* layer);
     void destroySurface();
 
 protected:
@@ -86,8 +83,6 @@ private:
     cairo_t* crMask = nullptr;
 
     DocumentView view;
-
-    ShapeRecognizer* reco = nullptr;
 
 
     // to filter out short strokes (usually the user tapping on the page to select it)

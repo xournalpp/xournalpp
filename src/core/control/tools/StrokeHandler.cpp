@@ -9,7 +9,6 @@
 #include "control/layer/LayerController.h"
 #include "control/settings/Settings.h"
 #include "control/shaperecognizer/ShapeRecognizer.h"
-#include "control/shaperecognizer/ShapeRecognizerResult.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "undo/InsertUndoAction.h"
@@ -28,8 +27,6 @@ StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, cons
 
 StrokeHandler::~StrokeHandler() {
     destroySurface();
-    delete reco;
-    reco = nullptr;
 }
 
 void StrokeHandler::draw(cairo_t* cr) {
@@ -248,14 +245,12 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     ToolHandler* h = control->getToolHandler();
 
     if (h->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
-        if (reco == nullptr) {
-            reco = new ShapeRecognizer();
-        }
+        ShapeRecognizer reco;
 
-        ShapeRecognizerResult* result = reco->recognizePatterns(stroke);
+        Stroke* recognized = reco.recognizePatterns(stroke);
 
-        if (result) {
-            strokeRecognizerDetected(result, layer);
+        if (recognized) {
+            strokeRecognizerDetected(recognized, layer);
 
             // Full repaint is done anyway
             // So repaint don't need to be done here
@@ -276,8 +271,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     stroke = nullptr;
 }
 
-void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer) {
-    Stroke* recognized = result->getRecognized();
+void StrokeHandler::strokeRecognizerDetected(Stroke* recognized, Layer* layer) {
     recognized->setWidth(stroke->hasPressure() ? stroke->getAvgPressure() : stroke->getWidth());
 
     // snapping
@@ -302,7 +296,6 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
     }
 
     auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, snappedStroke);
-    auto& locRecUndo = *recognizerUndo;
 
     UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
     undo->addUndoAction(std::move(recognizerUndo));
@@ -315,19 +308,7 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
     range.addPoint(stroke->getX(), stroke->getY());
     range.addPoint(stroke->getX() + stroke->getElementWidth(), stroke->getY() + stroke->getElementHeight());
 
-    for (Stroke* s: *result->getSources()) {
-        layer->removeElement(s, false);
-
-        locRecUndo.addSourceElement(s);
-
-        range.addPoint(s->getX(), s->getY());
-        range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
-    }
-
     page->fireRangeChanged(range);
-
-    // delete the result object, this is not needed anymore, the stroke are not deleted with this
-    delete result;
 }
 
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {

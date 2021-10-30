@@ -8,7 +8,6 @@
 
 #include "CircleRecognizer.h"
 #include "Inertia.h"
-#include "ShapeRecognizerResult.h"
 
 ShapeRecognizer::ShapeRecognizer() {
     resetRecognizer();
@@ -238,7 +237,7 @@ void ShapeRecognizer::optimizePolygonal(const Point* pt, int nsides, int* breaks
 /**
  * The main pattern recognition function
  */
-auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult* {
+auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> Stroke* {
     this->stroke = stroke;
 
     if (stroke->getPointCount() < 3) {
@@ -280,12 +279,8 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
             rs[i].calcSegmentGeometry(stroke->getPoints(), brk[i], brk[i + 1], ss + i);
         }
 
-        Stroke* tmp = nullptr;
-
-        if ((tmp = tryRectangle()) != nullptr) {
-            auto* result = new ShapeRecognizerResult(tmp, this);
-            resetRecognizer();
-            RDEBUG("return tryRectangle()");
+        if (Stroke* result = tryRectangle(); result != nullptr) {
+            RDEBUG("return rectangle");
             return result;
         }
 
@@ -317,10 +312,8 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
                 s->addPoint(points.back());
             }
 
-            rs->stroke = s;
-            auto* result = new ShapeRecognizerResult(s);
             RDEBUG("return line");
-            return result;
+            return s;
         }
     }
 
@@ -328,7 +321,7 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
     Stroke* s = CircleRecognizer::recognize(stroke);
     if (s) {
         RDEBUG("return circle");
-        return new ShapeRecognizerResult(s);
+        return s;
     }
 
     return nullptr;
