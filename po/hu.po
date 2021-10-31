@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-10-30 18:16\n"
+"PO-Revision-Date: 2021-10-31 08:14\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -566,7 +566,7 @@ msgstr "Exportálás PDF-be"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exportálás PDF-fájlként"
 
 #: ../src/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
@@ -1459,15 +1459,15 @@ msgstr ""
 
 #: ../src/control/Control.cpp:2356
 msgid "Unsaved Document"
-msgstr ""
+msgstr "Nem mentett dokumentum"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Vertical Space"
-msgstr ""
+msgstr "Függőleges térköz"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:88
 msgid "Vertical space"
-msgstr ""
+msgstr "Függőleges térköz"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Very Fine"
@@ -1488,7 +1488,7 @@ msgstr ""
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
-msgstr ""
+msgstr "Szöveg írása"
 
 #: ../src/control/xojfile/LoadHandler.cpp:910
 msgid "Wrong count of points ({1})"
@@ -1553,22 +1553,22 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Zoom in"
-msgstr ""
+msgstr "Nagyítás"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
 msgid "Zoom out"
-msgstr ""
+msgstr "Kicsinyítés"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
 msgid "Zoom to 100%"
-msgstr ""
+msgstr "Tényleges méret"
 
 #: ../src/control/Control.cpp:2299 ../src/control/jobs/BaseExportJob.cpp:19
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Cancel"
-msgstr ""
+msgstr "_Mégse"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:13
@@ -1578,7 +1578,7 @@ msgstr ""
 #: ../src/control/Control.cpp:2300 ../src/control/jobs/BaseExportJob.cpp:19
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
-msgstr ""
+msgstr "_Mentés"
 
 #: ../src/util/DeviceListHelper.cpp:111
 msgid "cursor"
@@ -3295,7 +3295,7 @@ msgstr ""
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Exportálás PDF-fájlként"
 
 #: ../ui/main.glade:152
 msgid "_File"
