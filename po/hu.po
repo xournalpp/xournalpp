@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-10-31 08:14\n"
+"PO-Revision-Date: 2021-10-31 09:12\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1435,23 +1435,23 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:496
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Ismeretlen háttértípus: {1}"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:62
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Ismeretlen színérték: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:450
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "Ismeretlen tartománytípus: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:226
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Ismeretlen elemzőhiba"
 
 #: ../src/control/xojfile/LoadHandler.cpp:397
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "Ismeretlen pixmap::domain típus: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:593
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1500,28 +1500,28 @@ msgstr ""
 
 #: ../src/control/xojfile/LoadHandler.cpp:223
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "XML-elemző hiba: {1}"
 
 #: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (kompatibilitás)"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:51
 msgid "Xournal files"
-msgstr ""
+msgstr "Xournal fájlok"
 
 #: ../src/control/XournalMain.cpp:204
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "A Xournal++ legutóbb összeomlott. Szeretné visszaállítani az utoljára szerkesztett fájlt?"
 
 #: ../src/control/Control.cpp:2305 ../src/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++ fájlok"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:65
 #: ../src/gui/dialog/PageTemplateDialog.cpp:83
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Xournal++ sablon"
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
@@ -1545,11 +1545,11 @@ msgstr ""
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
-msgstr ""
+msgstr "Nagyítócsúszka"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Zoom fit to screen"
-msgstr ""
+msgstr "Képernyőhöz igazítás"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Zoom in"
@@ -1573,7 +1573,7 @@ msgstr "_Mégse"
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:13
 msgid "_Open"
-msgstr ""
+msgstr "_Megnyitás"
 
 #: ../src/control/Control.cpp:2300 ../src/control/jobs/BaseExportJob.cpp:19
 #: ../src/gui/dialog/PageTemplateDialog.cpp:78
