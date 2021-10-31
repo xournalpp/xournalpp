@@ -35,6 +35,11 @@ auto main(int argc, char* argv[]) -> int {
     Log::initlog();
 #endif
 
+#ifdef _WIN32
+    // Switch to the FontConfig backend for Pango - See #3371
+    setenv("PANGOCAIRO_BACKEND", "fc", true);
+#endif
+
     // Use this two line to test the crash handler...
     // int* crash = nullptr;
     // *crash = 0;
