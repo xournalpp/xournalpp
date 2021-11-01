@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-01 08:54\n"
+"PO-Revision-Date: 2021-11-01 09:57\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -216,7 +216,7 @@ msgstr "Oldal másolása"
 #: ../src/util/PathUtil.cpp:249
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr "Nem sikerült létrehozni a(z) {1} mappát\n"
+msgstr "A következő mappa nem hozható létre: {1}\n"
 "Hiba: {2}"
 
 #: ../src/control/LatexController.cpp:273
@@ -490,7 +490,7 @@ msgstr "Radír"
 #: ../src/control/Control.cpp:2210
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr "Hiba a PDF jegyzetek készítése közben: \"{1}\"\n"
+msgstr "Hiba történt a(z) „{1}” PDF-fájl megjegyzése közben\n"
 "{2}"
 
 #: ../src/gui/GladeGui.cpp:22
@@ -859,7 +859,7 @@ msgstr "Tovább"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Next annotated page"
-msgstr "Következő feljegyzést tartalmazó oldal"
+msgstr "Következő széljegyzeteket tartalmazó lap"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
@@ -2307,7 +2307,7 @@ msgstr ""
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
-msgstr ""
+msgstr "_Vonal rajzolása"
 
 #: ../ui/settings.glade:3030
 msgid "Draw a transparent circle around the cursor"
@@ -2351,7 +2351,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Nyomásérzékenység engedélyezése"
 
 #: ../ui/settings.glade:4725
 msgid "Enable Tap action"
@@ -2383,7 +2383,7 @@ msgstr ""
 
 #: ../ui/main.glade:1701
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Radír _beállításai"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2408,7 +2408,7 @@ msgstr ""
 
 #: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
-msgstr ""
+msgstr "_Kitöltés"
 
 #: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
@@ -2472,7 +2472,7 @@ msgstr ""
 
 #: ../ui/main.glade:1537
 msgid "H_and Tool"
-msgstr ""
+msgstr "_Kéz eszköz"
 
 #: ../ui/settings.glade:2378
 msgid "Hand Recognition"
@@ -2488,19 +2488,19 @@ msgstr "Magasság:"
 
 #: ../ui/main.glade:951 ../ui/settings.glade:3510 ../ui/settings.glade:3577
 msgid "Hide Menubar"
-msgstr ""
+msgstr "Menüsor elrejtése"
 
 #: ../ui/settings.glade:3526 ../ui/settings.glade:3593
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "Oldalsáv elrejtése"
 
 #: ../ui/settings.glade:3344
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "Vízszintes görgetősáv elrejtése"
 
 #: ../ui/settings.glade:3359
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "Függőleges görgetősáv elrejtése"
 
 #: ../ui/settings.glade:3025
 msgid "Highlight cursor position"
@@ -2508,7 +2508,7 @@ msgstr ""
 
 #: ../ui/main.glade:1810
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "_Kiemelő beállításai"
 
 #: ../ui/settings.glade:4775
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2558,19 +2558,19 @@ msgstr ""
 
 #: ../ui/settings.glade:240
 msgid "Inertia"
-msgstr ""
+msgstr "Tehetetlenség"
 
 #: ../ui/settings.glade:5381
 msgid "Input Device"
-msgstr ""
+msgstr "Bemeneti eszköz"
 
 #: ../ui/settings.glade:813
 msgid "Input Devices"
-msgstr ""
+msgstr "Bemeneti eszközök"
 
 #: ../ui/settings.glade:1278
 msgid "Input System"
-msgstr ""
+msgstr "Bemeneti rendszer"
 
 #: ../ui/settings.glade:1247
 msgid "Input stabilization"
@@ -2594,7 +2594,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5721
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
@@ -2606,15 +2606,15 @@ msgstr ""
 
 #: ../ui/settings.glade:5810 ../ui/settings.glade:5858
 msgid "Language"
-msgstr ""
+msgstr "Nyelv"
 
 #: ../ui/settings.glade:5828
 msgid "Language Settings"
-msgstr ""
+msgstr "Nyelvi beállítások"
 
 #: ../ui/main.glade:575
 msgid "Layout"
-msgstr ""
+msgstr "Elrendezés"
 
 #: ../ui/settings.glade:3315
 msgid "Left / Right-Handed"
@@ -2638,7 +2638,7 @@ msgstr "Eszköztár kezelése"
 
 #: ../ui/settings.glade:1109
 msgid "Mass"
-msgstr ""
+msgstr "Tömeg"
 
 #: ../ui/settings.glade:1108 ../ui/settings.glade:1120
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
@@ -2646,11 +2646,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4795
 msgid "Max Length (mm)"
-msgstr "Maximális hossz (mm)"
+msgstr "Legnagyobb hossz (mm)"
 
 #: ../ui/settings.glade:3466
 msgid "Max multiplier"
-msgstr ""
+msgstr "Legfeljebb szorzó"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2663,7 +2663,7 @@ msgstr "Középső egérgomb"
 
 #: ../ui/settings.glade:1577
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Legkisebb nyomás:"
 
 #: ../ui/settings.glade:1454 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2691,7 +2691,7 @@ msgstr ""
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "_Következő széljegyzeteket tartalmazó lap"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2745,7 +2745,7 @@ msgstr ""
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "_Előző széljegyzeteket tartalmazó lap"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2842,7 +2842,7 @@ msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/settings.glade:3114
 msgid "Radius"
-msgstr ""
+msgstr "Sugár"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
@@ -2934,7 +2934,7 @@ msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Hátrébb küldés"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
@@ -2942,7 +2942,7 @@ msgstr "Hátraküldés"
 
 #: ../ui/settings.glade:1649
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Érzékenységi méret"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
@@ -2958,27 +2958,27 @@ msgstr "Beállítások:"
 
 #: ../ui/settings.glade:4867
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "Lebegő eszköztár megjelenítése"
 
 #: ../ui/settings.glade:2734
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "Menüsor megjelenítése indításkor"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Oldalsáv megjelenítése"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Eszköztárak megjelenítése"
 
 #: ../ui/settings.glade:3277
 msgid "Show sidebar on the right side"
-msgstr ""
+msgstr "Oldalsáv megjelenítése a jobb oldalon"
 
 #: ../ui/settings.glade:3293
 msgid "Show vertical scrollbar on the left side"
-msgstr ""
+msgstr "Függőleges görgetősáv megjelenítése a bal oldalon"
 
 #: ../ui/settings.glade:903
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
@@ -3201,71 +3201,71 @@ msgstr "Nagyítás sebessége"
 
 #: ../ui/main.glade:696
 msgid "_1 Column"
-msgstr "_1 Oszlop"
+msgstr "_1 oszlop"
 
 #: ../ui/main.glade:801
 msgid "_1 Row"
-msgstr "_1 Sor"
+msgstr "_1 sor"
 
 #: ../ui/main.glade:707
 msgid "_2 Columns"
-msgstr "_2 Oszlop"
+msgstr "_2 oszlop"
 
 #: ../ui/main.glade:812
 msgid "_2 Rows"
-msgstr "_2 Sor"
+msgstr "_2 sor"
 
 #: ../ui/main.glade:718
 msgid "_3 Columns"
-msgstr "_3 Oszlop"
+msgstr "_3 oszlop"
 
 #: ../ui/main.glade:823
 msgid "_3 Rows"
-msgstr "_3 Sor"
+msgstr "_3 sor"
 
 #: ../ui/main.glade:729
 msgid "_4 Columns"
-msgstr "_4 Oszlop"
+msgstr "_4 oszlop"
 
 #: ../ui/main.glade:834
 msgid "_4 Rows"
-msgstr "_4 Sor"
+msgstr "_4 sor"
 
 #: ../ui/main.glade:740
 msgid "_5 Columns"
-msgstr "_5 Oszlop"
+msgstr "_5 oszlop"
 
 #: ../ui/main.glade:845
 msgid "_5 Rows"
-msgstr "_5 Sor"
+msgstr "_5 sor"
 
 #: ../ui/main.glade:751
 msgid "_6 Columns"
-msgstr "_6 Oszlop"
+msgstr "_6 oszlop"
 
 #: ../ui/main.glade:856
 msgid "_6 Rows"
-msgstr "_6 Sor"
+msgstr "_6 sor"
 
 #: ../ui/main.glade:762
 msgid "_7 Columns"
-msgstr "_7 Oszlop"
+msgstr "_7 oszlop"
 
 #: ../ui/main.glade:867
 msgid "_7 Rows"
-msgstr "_7 Sor"
+msgstr "_7 sor"
 
 #: ../ui/main.glade:773
 msgid "_8 Columns"
-msgstr "_8 Oszlop"
+msgstr "_8 oszlop"
 
 #: ../ui/main.glade:878
 msgid "_8 Rows"
-msgstr "_8 Sor"
+msgstr "_8 sor"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr "_Jegyzetkészítés PDF-be"
+msgstr "_Jegyzetkészítés PDF-fájlban"
 
 #: ../ui/main.glade:656
 msgid "_Bottom to Top"
@@ -3277,11 +3277,11 @@ msgstr "_Oszlopok/Sorok"
 
 #: ../ui/main.glade:931
 msgid "_Customize"
-msgstr "_Testreszab"
+msgstr "_Testreszabás"
 
 #: ../ui/main.glade:1377
 msgid "_Default Tools"
-msgstr "_Alapértelmezett eszközök"
+msgstr "_Alapértelmezett eszköz"
 
 #: ../ui/main.glade:1217
 msgid "_Delete Page"
