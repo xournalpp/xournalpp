@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-01 09:57\n"
+"PO-Revision-Date: 2021-11-01 10:54\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -221,11 +221,11 @@ msgstr "A következő mappa nem hozható létre: {1}\n"
 
 #: ../src/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
-msgstr "Nem sikerült a LaTeX PDF fájl betöltése"
+msgstr "Nem sikerült a LaTeX PDF-fájl betöltése"
 
 #: ../src/control/LatexController.cpp:267
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr "Nem sikerült a LaTeX PDF fájl betöltése: {1}"
+msgstr "Nem sikerült a LaTeX PDF-fájl betöltése: {1}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:17
 msgid "Could not load pagetemplates.ini file"
@@ -392,7 +392,7 @@ msgstr "Ne nyissa meg az automatikusan mentett fájlokat. Felülíródhatnak!\n"
 
 #: ../src/control/jobs/BaseExportJob.cpp:41
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "Ne írja felül a háttér PDF-et! Ez hibákat okozhat!"
+msgstr "Ne írja felül a PDF-hátterét! Ez hibákat okozhat!"
 
 #: ../src/control/Control.cpp:2453
 msgid "Document file was removed."
@@ -508,7 +508,7 @@ msgstr "Hiba a fájl megnyitása során: {1}"
 #: ../src/control/xojfile/LoadHandler.cpp:443
 #: ../src/control/xojfile/LoadHandler.cpp:463
 msgid "Error reading PDF: {1}"
-msgstr "Hiba a PDF olvasásakor: {1}"
+msgstr "Hiba történt a PDF-fájl olvasásakor: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:520
 msgid "Error reading width of a stroke: {1}"
@@ -550,7 +550,7 @@ msgstr "A hibanapló nem törölhető. Manuálisan kell törölnie.\n"
 
 #: ../src/control/XournalMain.cpp:648
 msgid "Export FILE as PDF"
-msgstr "FILE exportálása PDF-ként"
+msgstr "FILE exportálása PDF-fájlként"
 
 #: ../src/control/XournalMain.cpp:650
 msgid "Export FILE as image files (one per page)\n"
@@ -562,7 +562,7 @@ msgstr "FILE exportálása képfájlként (egy kép oldalanként)\n"
 
 #: ../src/control/jobs/BaseExportJob.cpp:18
 msgid "Export PDF"
-msgstr "Exportálás PDF-be"
+msgstr "PDF-fájl exportálása"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Export as PDF"
@@ -736,7 +736,7 @@ msgstr "Jelenlegi oldal másolatának beillesztése alulra"
 
 #: ../src/undo/InsertUndoAction.cpp:79
 msgid "Insert elements"
-msgstr "Elemek beillesztése"
+msgstr "Elemek beszúrása"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:87 ../src/undo/InsertUndoAction.cpp:34
 msgid "Insert image"
@@ -880,7 +880,7 @@ msgstr "Normál rajz"
 
 #: ../src/plugin/Plugin.cpp:233 ../src/plugin/Plugin.cpp:249
 msgid "OK"
-msgstr "OK"
+msgstr "Rendben"
 
 #: ../src/control/XournalMain.cpp:671
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -925,7 +925,7 @@ msgstr "PDF oldal {1}"
 
 #: ../src/view/PdfView.cpp:31
 msgid "PDF background missing"
-msgstr "PDF háttér hiányzik"
+msgstr "PDF-háttér hiányzik"
 
 #: ../src/control/XournalMain.cpp:348
 msgid "PDF file successfully created"
@@ -1037,7 +1037,7 @@ msgstr "Ismétlés: "
 
 #: ../src/control/Control.cpp:2010
 msgid "Remove PDF Background"
-msgstr "PDF háttér eltávolítása"
+msgstr "PDF-háttér eltávolítása"
 
 #: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
 msgid "Removed tool item from Toolbar {1} ID {2}"
@@ -1484,7 +1484,7 @@ msgstr "Fehér"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:33
 msgid "With PDF background"
-msgstr ""
+msgstr "PDF-háttérrel"
 
 #: ../src/undo/InsertUndoAction.cpp:32
 msgid "Write text"
@@ -1531,7 +1531,8 @@ msgstr "Sárga"
 #: ../src/control/PageBackgroundChangeController.cpp:179
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "Nincsenek PDF-oldalak, amelyek közül választhat. A művelet megszakítása.\n"
+"Kérjük, válasszon másik háttértípust: Menü „Napló” → „Oldalsablon beállítása”."
 
 #: ../src/control/XournalMain.cpp:156
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
@@ -1541,7 +1542,9 @@ msgstr ""
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "Jelenlegi dokumentuma nem tartalmaz PDF-oldalszámot: {1}\n"
+"Szeretné beszúrni ezt az oldalt?\n\n"
+"Tipp: PDF-oldal beszúrásához válassza a Napló → Papírháttér → PDF-háttérrel lehetőséget."
 
 #: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
 msgid "Zoom Slider"
@@ -2027,7 +2030,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Mind"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -2064,7 +2067,7 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "Szerző(k): "
 
 #: ../ui/about.glade:449
 msgid "Authors"
@@ -2157,7 +2160,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3729
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "Gyorsítótárazott oldalak törlése görgetés közben"
 
 #: ../ui/settings.glade:2928
 msgid "Colors"
@@ -2323,15 +2326,15 @@ msgstr ""
 
 #: ../ui/main.glade:2637
 msgid "Duplicate"
-msgstr ""
+msgstr "Megkettőzés"
 
 #: ../ui/main.glade:2674
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Szerkesztés (még nincsen megvalósítva)"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
-msgstr ""
+msgstr "Engedélyezés"
 
 #: ../ui/settings.glade:4389
 msgid "Enable  with determination radius of "
@@ -2404,7 +2407,7 @@ msgstr ""
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Dokumentum exportálás háttér nélkül (Nincs), vagy csak PDF-fájl és kép hátterével (Nincs döntés), vagy minden háttértípussal (Mind)."
 
 #: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
@@ -2464,7 +2467,7 @@ msgstr "Ugrás az oldalra"
 
 #: ../ui/settings.glade:4632
 msgid "Grid size"
-msgstr ""
+msgstr "Rácsméret"
 
 #: ../ui/settings.glade:4589
 msgid "Grid snapping tolerance"
@@ -2480,7 +2483,7 @@ msgstr "Kézfelismerés"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Magasság"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2554,7 +2557,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Képminőség"
 
 #: ../ui/settings.glade:240
 msgid "Inertia"
@@ -2574,7 +2577,7 @@ msgstr "Bemeneti rendszer"
 
 #: ../ui/settings.glade:1247
 msgid "Input stabilization"
-msgstr ""
+msgstr "Bemeneti stabilizálás"
 
 #: ../ui/settings.glade:1227
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
@@ -2582,15 +2585,15 @@ msgstr ""
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr ""
+msgstr "LaTeX beszúrása"
 
 #: ../ui/main.glade:2629
 msgid "Insert Page After"
-msgstr ""
+msgstr "Oldal beszúrása után"
 
 #: ../ui/main.glade:2621
 msgid "Insert Page Before"
-msgstr ""
+msgstr "Oldal beszúrása előtt"
 
 #: ../ui/settings.glade:5721
 msgid "LaTeX"
@@ -2707,21 +2710,21 @@ msgstr ""
 
 #: ../ui/main.glade:1234
 msgid "New _Layer"
-msgstr ""
+msgstr "Új _réteg"
 
 #: ../ui/settings.glade:2999
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Nincs ikon"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "Nincs döntés"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:217
 #: ../ui/settings.glade:234
 msgid "None"
-msgstr ""
+msgstr "Nincs"
 
 #: ../ui/settings.glade:4305
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2729,7 +2732,7 @@ msgstr ""
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "Átlátszatlanság beállításai"
 
 #: ../ui/settings.glade:933
 msgid "Options"
@@ -2741,7 +2744,7 @@ msgstr "Kimeneti eszköz"
 
 #: ../ui/settings.glade:5019
 msgid "PDF Cache"
-msgstr ""
+msgstr "PDF-gyorsítótár"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
@@ -2753,23 +2756,23 @@ msgstr "Oldalak:"
 
 #: ../ui/settings.glade:4359
 msgid "Paired Pages"
-msgstr ""
+msgstr "Párosított oldalak"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "P_apír háttér"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr ""
+msgstr "Papírformátum"
 
 #: ../ui/main.glade:1283
 msgid "Paper _Color"
-msgstr ""
+msgstr "Papír_szín"
 
 #: ../ui/main.glade:1273
 msgid "Paper _Format"
-msgstr ""
+msgstr "Papír_formátum"
 
 #: ../ui/about.glade:296
 msgid "Partially based on Xournal\n"
@@ -2782,7 +2785,7 @@ msgstr "Szünet"
 
 #: ../ui/main.glade:1555
 msgid "Pen _Options"
-msgstr "Toll _Beállítások"
+msgstr "Toll _tulajdonságok"
 
 #: ../ui/settings.glade:3758
 msgid "Performance"
@@ -2790,19 +2793,19 @@ msgstr "Teljesítmény"
 
 #: ../ui/settings.glade:5650
 msgid "Playback Settings"
-msgstr ""
+msgstr "Lejátszási beállítások"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr "Pluginok kezelése"
+msgstr "Beépülő modul-kezelő"
 
 #: ../ui/main.glade:1993
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "Beépülő modul-_kezelő"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "A beépülő modulok módosításai csak a Xournal++ újraindítása után kerülnek alkalmazásra"
 
 #: ../ui/settings.glade:3692
 msgid "Pre-load pages after"
@@ -2918,7 +2921,7 @@ msgstr "Kép kiválasztása"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr "PDF oldal kiválasztása"
+msgstr "PDF oldal kijelölése"
 
 #: ../ui/settings.glade:3614
 msgid "Select toolbar:"
