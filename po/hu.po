@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-01 04:22\n"
+"PO-Revision-Date: 2021-11-01 06:50\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1142,11 +1142,11 @@ msgstr "Terület kijelölése"
 
 #: ../src/control/Control.cpp:2009
 msgid "Select another PDF"
-msgstr "Másik PDF kiválasztása"
+msgstr "Másik PDF kijelölése"
 
 #: ../src/util/XojMsgBox.cpp:76
 msgid "Select another name"
-msgstr "Másik név kiválasztása"
+msgstr "Másik név kijelölése"
 
 #: ../src/gui/dialog/SelectBackgroundColorDialog.cpp:104
 msgid "Select background color"
@@ -1155,11 +1155,11 @@ msgstr "Háttérszín kiválasztása"
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:42
 #: ../src/gui/toolbarMenubar/ColorToolItem.cpp:94
 msgid "Select color"
-msgstr "Szín kiválasztása"
+msgstr "Szín kijelölése"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Select rectangle"
-msgstr "Téglalap alakú kijelölés"
+msgstr "Téglalap alakú kijelölése"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select region"
@@ -2165,11 +2165,11 @@ msgstr ""
 
 #: ../ui/main.glade:1207
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Oldalsablon beállítása"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr ""
+msgstr "Új oldalsablon beállítása"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
@@ -2906,7 +2906,7 @@ msgstr "Görgetés az oldalon kívül"
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr ""
+msgstr "Háttérszín kijelölése"
 
 #: ../ui/settings.glade:5283
 msgid "Select Folder"
@@ -3036,11 +3036,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "Sablonfájl beállításai"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr ""
+msgstr "Sablon:"
 
 #: ../ui/settings.glade:2305 ../ui/settings.glade:2318
 msgid "Test"
@@ -3163,11 +3163,11 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr ""
+msgstr "Fehér kitöltés"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Szélesség"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3439,7 +3439,7 @@ msgstr "_nagyon finom"
 
 #: ../ui/main.glade:1784
 msgid "_whiteout"
-msgstr "kife_héredés"
+msgstr "_fehér kitöltés"
 
 #: ../ui/pageTemplate.glade:160
 msgid "change"
