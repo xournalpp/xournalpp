@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-01 03:26\n"
+"PO-Revision-Date: 2021-11-01 04:22\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -3145,7 +3145,7 @@ msgstr "Nézet"
 
 #: ../ui/about.glade:328
 msgid "Website"
-msgstr ""
+msgstr "Honlap"
 
 #: ../ui/settings.glade:3451
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
@@ -3179,7 +3179,7 @@ msgstr "A Közösségtől kapott segítséggel"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
@@ -3359,35 +3359,35 @@ msgstr ""
 
 #: ../ui/main.glade:1317
 msgid "_Pen"
-msgstr ""
+msgstr "_Toll"
 
 #: ../ui/main.glade:1982
 msgid "_Plugin"
-msgstr ""
+msgstr "_Beépülő modul"
 
 #: ../ui/main.glade:522
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Bemutató mód"
 
 #: ../ui/main.glade:1091
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Előző réteg"
 
 #: ../ui/main.glade:1041
 msgid "_Previous Page"
-msgstr ""
+msgstr "_Előző oldal"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "_Jobbról balra"
 
 #: ../ui/main.glade:1394
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Alakzatfelismerő"
 
 #: ../ui/main.glade:1353
 msgid "_Text"
-msgstr ""
+msgstr "S&zöveg"
 
 #: ../ui/main.glade:1306
 msgid "_Tools"
@@ -3395,19 +3395,19 @@ msgstr "_Eszközök"
 
 #: ../ui/main.glade:1113
 msgid "_Top Layer"
-msgstr ""
+msgstr "_Felső réteg"
 
 #: ../ui/main.glade:645
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "_Felülről lefelé"
 
 #: ../ui/main.glade:598
 msgid "_Vertical"
-msgstr ""
+msgstr "_Függőleges"
 
 #: ../ui/main.glade:1513
 msgid "_Vertical Space"
-msgstr ""
+msgstr "Térköz _függőlegesen"
 
 #: ../ui/main.glade:501
 msgid "_View"
@@ -3415,7 +3415,7 @@ msgstr "_Nézet"
 
 #: ../ui/main.glade:1795
 msgid "_delete strokes"
-msgstr ""
+msgstr "vonások _törlése"
 
 #: ../ui/main.glade:1577 ../ui/main.glade:1723 ../ui/main.glade:1832
 msgid "_fine"
@@ -3431,19 +3431,19 @@ msgstr "_szabványos"
 
 #: ../ui/main.glade:1599 ../ui/main.glade:1745 ../ui/main.glade:1854
 msgid "_thick"
-msgstr ""
+msgstr "_vastag"
 
 #: ../ui/main.glade:1566 ../ui/main.glade:1712 ../ui/main.glade:1821
 msgid "_very fine"
-msgstr ""
+msgstr "_nagyon finom"
 
 #: ../ui/main.glade:1784
 msgid "_whiteout"
-msgstr ""
+msgstr "kife_héredés"
 
 #: ../ui/pageTemplate.glade:160
 msgid "change"
-msgstr ""
+msgstr "változás"
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
@@ -3455,7 +3455,7 @@ msgstr "engedélyezve,"
 
 #: ../ui/settings.glade:1751
 msgid "events"
-msgstr ""
+msgstr "események"
 
 #: ../ui/settings.glade:399
 msgid "every"
@@ -3485,9 +3485,9 @@ msgstr "mentés fájlba"
 
 #: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
-msgstr ""
+msgstr "nagy_on vastag"
 
 #: ../ui/about.glade:141
 msgid "with libgtk"
-msgstr ""
+msgstr "a libgtk segítségével"
 
