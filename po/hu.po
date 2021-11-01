@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-01 07:52\n"
+"PO-Revision-Date: 2021-11-01 08:54\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2782,11 +2782,11 @@ msgstr "Szünet"
 
 #: ../ui/main.glade:1555
 msgid "Pen _Options"
-msgstr ""
+msgstr "Toll _Beállítások"
 
 #: ../ui/settings.glade:3758
 msgid "Performance"
-msgstr ""
+msgstr "Teljesítmény"
 
 #: ../ui/settings.glade:5650
 msgid "Playback Settings"
@@ -2854,7 +2854,7 @@ msgstr ""
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr ""
+msgstr "Legutóbbi _Dokumentumok"
 
 #: ../ui/main.glade:1918
 msgid "Record / Stop"
@@ -2866,15 +2866,15 @@ msgstr "Felvétel minősége"
 
 #: ../ui/main.glade:1256
 msgid "Rename Layer"
-msgstr ""
+msgstr "Réteg átnevezése"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Kiválasztott réteg átnevezése"
 
 #: ../ui/settings.glade:4536
 msgid "Resizing"
-msgstr ""
+msgstr "Átméretezés"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -2886,7 +2886,7 @@ msgstr "Jobb egérgomb"
 
 #: ../ui/settings.glade:4576
 msgid "Rotation snapping tolerance"
-msgstr ""
+msgstr "Forgatási igazitás tűréshatára"
 
 #: ../ui/settings.glade:5486
 msgid "Sample Rate"
@@ -2910,23 +2910,23 @@ msgstr "Háttérszín kijelölése"
 
 #: ../ui/settings.glade:5283
 msgid "Select Folder"
-msgstr ""
+msgstr "Mappa kiválasztása"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr ""
+msgstr "Kép kiválasztása"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "PDF oldal kiválasztása"
 
 #: ../ui/settings.glade:3614
 msgid "Select toolbar:"
-msgstr ""
+msgstr "Eszköztár kiválasztása:"
 
 #: ../ui/settings.glade:2843
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "Kijelölés színe (szöveg, vonás kijelölése stb.)"
 
 #: ../ui/settings.glade:3481
 msgid "Selection Edge Panning"
@@ -2938,7 +2938,7 @@ msgstr ""
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "Hátraküldés"
 
 #: ../ui/settings.glade:1649
 msgid "Sensitivity Scale"
@@ -2946,15 +2946,15 @@ msgstr ""
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
-msgstr ""
+msgstr "Oszlopok beállítása"
 
 #: ../ui/main.glade:789
 msgid "Set Rows"
-msgstr ""
+msgstr "Sorok beállítása"
 
 #: ../ui/settings.glade:4858
 msgid "Settings:"
-msgstr ""
+msgstr "Beállítások:"
 
 #: ../ui/settings.glade:4867
 msgid "Show Floating Toolbox"
@@ -2992,7 +2992,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4695
 msgid "Snapping"
-msgstr ""
+msgstr "Igazítás"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
@@ -3008,7 +3008,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr ""
+msgstr "Szabványos"
 
 #: ../ui/settings.glade:2446
 msgid "Start zooming after a distance "
@@ -3016,23 +3016,23 @@ msgstr ""
 
 #: ../ui/settings.glade:5268 ../ui/settings.glade:5326
 msgid "Storage Folder"
-msgstr ""
+msgstr "Tárolómappa"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
-msgstr ""
+msgstr "Mutató"
 
 #: ../ui/settings.glade:1939
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "Mutató gombok"
 
 #: ../ui/settings.glade:4806
 msgid "Successive (ms)"
-msgstr ""
+msgstr "Egymást követő (ms)"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
-msgstr ""
+msgstr "_Eszköztárak"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
@@ -3044,7 +3044,7 @@ msgstr "Sablon:"
 
 #: ../ui/settings.glade:2305 ../ui/settings.glade:2318
 msgid "Test"
-msgstr ""
+msgstr "Teszt"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
@@ -3052,7 +3052,7 @@ msgstr "Állapot vizsgálata"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "Tesztelje, hogy az aktuális konfiguráció érvényes-e a LaTeX generálási parancs futtatásával a globális sablonfájlban egy tesztképlettel."
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
@@ -3060,7 +3060,7 @@ msgstr "Szöveg betűkészlete…"
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "A LaTeX-fájl a LaTeX-eszköz sablonjaként."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
@@ -3068,7 +3068,7 @@ msgstr "Szövegeszköz aktuális színe hexadecimális RGB formátumban."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "A következő karakterláncok helyettesítésre kerülnek a globális sablonfájlban a LaTeX eszköz futtatásakor:"
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
@@ -3109,11 +3109,11 @@ msgstr "Először próbálja meg kiválasztani az objektumot; ha nincs kiválasz
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Használja a rendelkezésre álló árfolyamikonokat (újraindítás szükséges)"
 
 #: ../ui/settings.glade:4673
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Felismert alakzatokhoz használjon illesztést"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
@@ -3121,7 +3121,7 @@ msgstr "Használja az aktuális oldalméretet a fenti oldalméret helyett."
 
 #: ../ui/settings.glade:2563 ../ui/settings.glade:2631
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Két ujjal pásztázhat/nagyíthat és egy ujjal pedig a kiválasztott eszközt használhatja."
 
 #: ../ui/settings.glade:4318
 msgid "Usually 0 or 1"
@@ -3129,7 +3129,7 @@ msgstr "Általában 0 vagy 1"
 
 #: ../ui/settings.glade:223
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Sebesség alapú Gauss-súlyok"
 
 #: ../ui/about.glade:181
 msgid "Version"
@@ -3149,17 +3149,19 @@ msgstr "Honlap"
 
 #: ../ui/settings.glade:3451
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Ha egy elemet kijelöl, és a vászon látható részén túl van mozgatva, pásztázzon a képernyőn a vászon látható részének ezen százalékával megegyező mértékben. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Amikor érintéssel rajzol, a nézet pásztázására szolgáló kétujjas kézmozdulatok ehelyett nagyítást okozhatnak, ami teljesítménybeli problémákat okozhat. \n"
+"Ez a beállítás megkönnyítheti az érintéssel történő rajzolást. "
 
 #: ../ui/settings.glade:4946
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "Ha nagy felbontású PDF-re nagyít, minden újrarenderelés hosszú ideig tarthat. Ha ezt nagy értékre állítja, ezek az újramegjelenítések ritkábban fordulnak elő.\n\n"
+"Állítsa ezt 0%-ra, ha mindig újra szeretné megjeleníteni a nagyításkor."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
