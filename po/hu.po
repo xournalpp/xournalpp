@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-01 06:50\n"
+"PO-Revision-Date: 2021-11-01 07:52\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -177,7 +177,7 @@ msgstr "Szín változtatása"
 
 #: ../src/undo/FontUndoAction.cpp:105
 msgid "Change font"
-msgstr "Betűtípus megváltoztatása"
+msgstr "Betűkészlet megváltoztatása"
 
 #: ../src/undo/LineStyleUndoAction.cpp:71
 msgid "Change line style"
@@ -635,7 +635,7 @@ msgstr "Lebegő eszköztár (kísérleti)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:62
 msgid "Font"
-msgstr "Betűtípus"
+msgstr "Betűkészlet"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
 msgid "Forward"
@@ -1119,7 +1119,7 @@ msgstr "A közreműködők teljes listája"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Select Font"
-msgstr "Betűtípus kiválasztása"
+msgstr "Betűkészlet kijelölése"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1132,7 +1132,7 @@ msgstr "Objektum kijelölése"
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
-msgstr "Téglalap alakú kijelölés"
+msgstr "Téglalap alakú kijelölése"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
@@ -3048,7 +3048,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "Állapot vizsgálata"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
@@ -3056,7 +3056,7 @@ msgstr ""
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
-msgstr ""
+msgstr "Szöveg betűkészlete…"
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3064,7 +3064,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "Szövegeszköz aktuális színe hexadecimális RGB formátumban."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
@@ -3072,15 +3072,15 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "A LaTeX eszközbe beírt matematikai mód képlet."
 
 #: ../ui/settings.glade:4033
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "A vonalzó mértékegysége cm"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "Ezeket a beállításokat a rendszer az új oldalakhoz használja"
 
 #: ../ui/settings.glade:2143
 msgid "Timeout"
@@ -3088,11 +3088,11 @@ msgstr "Időtúllépés"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Rajz érintése"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Görgetés érintése"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -3101,11 +3101,11 @@ msgstr "Érintőképernyő"
 
 #: ../ui/settings.glade:4835
 msgid "Try to select object first."
-msgstr ""
+msgstr "Először próbálja meg kiválasztani az objektumot."
 
 #: ../ui/settings.glade:4840 ../ui/settings.glade:4872
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr ""
+msgstr "Először próbálja meg kiválasztani az objektumot; ha nincs kiválasztva, akkor mutasson lebegő eszköztárat, ha engedélyezve van."
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
@@ -3117,7 +3117,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "Használja az aktuális oldalméretet a fenti oldalméret helyett."
 
 #: ../ui/settings.glade:2563 ../ui/settings.glade:2631
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
@@ -3263,35 +3263,35 @@ msgstr "_8 Sor"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_Jegyzetkészítés PDF-be"
 
 #: ../ui/main.glade:656
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "_Alulról felfelé"
 
 #: ../ui/main.glade:671
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Oszlopok/Sorok"
 
 #: ../ui/main.glade:931
 msgid "_Customize"
-msgstr ""
+msgstr "_Testreszab"
 
 #: ../ui/main.glade:1377
 msgid "_Default Tools"
-msgstr ""
+msgstr "_Alapértelmezett eszközök"
 
 #: ../ui/main.glade:1217
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Oldal törlése"
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr ""
+msgstr "_Szerkesztés"
 
 #: ../ui/main.glade:1329
 msgid "_Eraser"
-msgstr ""
+msgstr "_Radír"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
@@ -3299,63 +3299,63 @@ msgstr "_Exportálás PDF-fájlként"
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr ""
+msgstr "_Fájl"
 
 #: ../ui/main.glade:1030
 msgid "_First Page"
-msgstr ""
+msgstr "_Első oldal"
 
 #: ../ui/main.glade:1052
 msgid "_Goto Page"
-msgstr ""
+msgstr "_Menjen az oldalra"
 
 #: ../ui/main.glade:2007
 msgid "_Help"
-msgstr ""
+msgstr "_Súgó"
 
 #: ../ui/main.glade:1341
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Kiemelő"
 
 #: ../ui/main.glade:587
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Vízszintes"
 
 #: ../ui/main.glade:1365
 msgid "_Image"
-msgstr ""
+msgstr "_Kép"
 
 #: ../ui/main.glade:1155
 msgid "_Journal"
-msgstr ""
+msgstr "_Napló"
 
 #: ../ui/main.glade:1074
 msgid "_Last Page"
-msgstr ""
+msgstr "_Utolsó oldal"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "_Balról jobbra"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
-msgstr ""
+msgstr "_ Kezelés"
 
 #: ../ui/main.glade:1019
 msgid "_Navigation"
-msgstr ""
+msgstr "_Navigáció"
 
 #: ../ui/main.glade:1102
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Következő réteg"
 
 #: ../ui/main.glade:1063
 msgid "_Next Page"
-msgstr ""
+msgstr "_Következő oldal"
 
 #: ../ui/main.glade:512
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Páros oldalak"
 
 #: ../ui/main.glade:1317
 msgid "_Pen"
