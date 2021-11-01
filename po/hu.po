@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-10-31 09:12\n"
+"PO-Revision-Date: 2021-11-01 03:26\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2003,7 +2003,7 @@ msgstr ""
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr ""
+msgstr "A Xournal++ névjegye"
 
 #: ../ui/settings.glade:4890
 msgid "Action on Tool Tap"
@@ -2019,7 +2019,7 @@ msgstr ""
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "TeX hozzáadása/szerkesztése"
 
 #: ../ui/settings.glade:4494
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2031,7 +2031,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
-msgstr ""
+msgstr "Minden oldal"
 
 #: ../ui/settings.glade:4855
 msgid "All three conditions must be met before stroke is ignored.\n"
@@ -2048,7 +2048,7 @@ msgstr ""
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Számtani közep"
 
 #: ../ui/settings.glade:1774
 msgid "Artifact workaround"
@@ -3391,7 +3391,7 @@ msgstr ""
 
 #: ../ui/main.glade:1306
 msgid "_Tools"
-msgstr ""
+msgstr "_Eszközök"
 
 #: ../ui/main.glade:1113
 msgid "_Top Layer"
@@ -3411,7 +3411,7 @@ msgstr ""
 
 #: ../ui/main.glade:501
 msgid "_View"
-msgstr ""
+msgstr "_Nézet"
 
 #: ../ui/main.glade:1795
 msgid "_delete strokes"
@@ -3419,15 +3419,15 @@ msgstr ""
 
 #: ../ui/main.glade:1577 ../ui/main.glade:1723 ../ui/main.glade:1832
 msgid "_fine"
-msgstr ""
+msgstr "_finom"
 
 #: ../ui/main.glade:1588 ../ui/main.glade:1734 ../ui/main.glade:1843
 msgid "_medium"
-msgstr ""
+msgstr "_közepes"
 
 #: ../ui/main.glade:1773
 msgid "_standard"
-msgstr ""
+msgstr "_szabványos"
 
 #: ../ui/main.glade:1599 ../ui/main.glade:1745 ../ui/main.glade:1854
 msgid "_thick"
