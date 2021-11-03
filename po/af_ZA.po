@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-10-30 18:16\n"
+"PO-Revision-Date: 2021-11-03 14:39\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -565,7 +565,7 @@ msgstr "Voer PDF uit"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Export as PDF"
-msgstr ""
+msgstr "Voer as PDF uit"
 
 #: ../src/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
@@ -583,20 +583,23 @@ msgstr "Voer lêers uit geleidelik   \n"
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Voer uit sonder agtergrond\n"
+"                                 Die uitgevoerde lêer het 'n deurskynende of wit agtergrond\n"
+"                                 afhangend van wat die formaat ondersteun\n"
 
 #: ../src/control/XournalMain.cpp:660
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Voer uit sonder lyne\n"
+"                                 Die uitgevoerde lêer het nie papier lyne nie\n"
 
 #: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Kon nie LaTeX generator program in PATH vind nie: {1}"
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Kon nie LaTeX generator bevel ontleed nie: {1}"
 
 #: ../src/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
