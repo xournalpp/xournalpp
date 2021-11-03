@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-03 14:39\n"
+"PO-Revision-Date: 2021-11-03 15:35\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -603,17 +603,19 @@ msgstr "Kon nie LaTeX generator bevel ontleed nie: {1}"
 
 #: ../src/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Kon nie globale templaat lêer lees nie. Kyk asseblief na jou verstellings."
 
 #: ../src/control/jobs/BaseExportJob.cpp:103
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Kon nie roete oplos nie, met die volgende fout:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "Lêer kon nie oopgemaak word nie. Jy sal dit handmatig moet doen:\n"
+"URL: {1}"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:475
 msgid "Fill"
@@ -621,7 +623,7 @@ msgstr "Vul"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:285
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Filter inset druk. Maal die druk met die druk vermenigvuldiger. Indien dit minder as die minimum is, gebruik die minimum druk."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Fine"
@@ -629,7 +631,7 @@ msgstr "Fyn"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "Drywende gereedskapskis (eksperimenteel)"
 
 #: ../src/gui/toolbarMenubar/FontButton.cpp:62
 msgid "Font"
@@ -649,11 +651,11 @@ msgstr "Kry die weergawe van xournalpp"
 
 #: ../src/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Globale templaat lêer bestaan nie. Kyk asseblief na jou verstellings."
 
 #: ../src/control/LatexController.cpp:64
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Globale templaat lêer is nie 'n gewone lêer nie. Kyk asseblief na jou verstellings. "
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
 msgid "Go to first page"
@@ -766,7 +768,7 @@ msgstr "Spring na bladsy (eerste Bladsy: 1)"
 
 #: ../src/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "Latex generator het 'n fout tee gekom: {1} (uitgangkode: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:250
 msgid "Layer"
@@ -822,7 +824,10 @@ msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
 "Path: {2}"
-msgstr ""
+msgstr "Vermis die benodigde UI lêer:\n"
+"{1}\n"
+" .app korrup?\n"
+"Roete: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:16
 msgid "Move"
@@ -867,7 +872,7 @@ msgstr "Geen bladsye om uit te voer nie!"
 
 #: ../src/control/Control.cpp:1265
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Geen pdf blaai is beskikbaar om aan te heg nie. Jy moet dalk die dokument eers weer oop maak."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
@@ -880,7 +885,8 @@ msgstr "OK"
 #: ../src/control/XournalMain.cpp:671
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Voer net die blaaie in die gespesifiseerde reeks uit (bv. \"2-3,5,7-\")\n"
+"                                 Geen effek sonder -p/--create-pdf of -i/--create-img"
 
 #: ../src/control/stockdlg/ImageOpenDlg.cpp:12
 msgid "Open Image"
@@ -1001,7 +1007,7 @@ msgstr "Aanbiedingsmodus"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:68
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Vorige gekose taal nie meer beskikbaar nie!"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:337
 msgid "Print"
@@ -1009,11 +1015,11 @@ msgstr "Druk"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "Neem klank op / Stop klank opneming"
 
 #: ../src/control/Control.cpp:874
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "Opnemer kon nie begin word nie."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:100
@@ -1051,11 +1057,11 @@ msgstr "Vervang"
 
 #: ../src/control/xojfile/LoadHandler.cpp:1056
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "Aangevraagde tydelike lêer was nie gevind vir aanhegting {1} nie"
 
 #: ../src/control/XournalMain.cpp:210
 msgid "Restore file"
-msgstr ""
+msgstr "Herstel lêer"
 
 #: ../src/undo/RotateUndoAction.cpp:51
 msgid "Rotation"
@@ -1097,11 +1103,11 @@ msgstr "Save lêer"
 #: ../src/control/jobs/CustomExportJob.cpp:130
 #: ../src/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "Save lêer fout: {1}"
 
 #: ../src/undo/ScaleUndoAction.cpp:56
 msgid "Scale"
-msgstr ""
+msgstr "Skaal"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
 msgid "Search"
@@ -1109,7 +1115,7 @@ msgstr "Soek"
 
 #: ../src/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Sien die volle lys bydraers"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
 msgid "Select Font"
