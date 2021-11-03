@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-01 10:54\n"
+"PO-Revision-Date: 2021-11-03 02:29\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2833,7 +2833,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Nyomásszorzó: "
 
 #: ../ui/settings.glade:1667
 msgid "Pressure Sensitivity"
@@ -2897,7 +2897,7 @@ msgstr "Mintavételi frekvencia"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "Minta rétegnév"
 
 #: ../ui/settings.glade:3394
 msgid "Scrollbars"
