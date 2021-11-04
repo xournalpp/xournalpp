@@ -46,7 +46,7 @@ target_link_libraries (test-units ${xournalpp_LDFLAGS} std::filesystem gtest_mai
 # Add gtest to include directories
 # This enables usage of 
 #     #include <config-test.h>
-target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/gtest")
+target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/test")
 
 ###############################################################################
 # Register Tests
