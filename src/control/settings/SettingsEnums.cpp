@@ -10,6 +10,9 @@ auto stylusCursorTypeFromString(const std::string& stylusCursorTypeStr) -> Stylu
     if (stylusCursorTypeStr == "big") {
         return STYLUS_CURSOR_BIG;
     }
+    if (stylusCursorTypeStr == "arrow") {
+        return STYLUS_CURSOR_ARROW;
+    }
     g_warning("Settings::Unknown stylus cursor type: %s\n", stylusCursorTypeStr.c_str());
     return STYLUS_CURSOR_DOT;
 }

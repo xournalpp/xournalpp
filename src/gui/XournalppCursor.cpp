@@ -400,6 +400,10 @@ auto XournalppCursor::getPenCursor() -> GdkCursor* {
         setCursor(CRSR_BLANK_CURSOR);
         return nullptr;
     }
+    if (control->getSettings()->getStylusCursorType() == STYLUS_CURSOR_ARROW) {
+        setCursor(CRSR_ARROW);
+        return nullptr;
+    }
     if (this->drawDirActive) {
         return createCustomDrawDirCursor(48, this->drawDirShift, this->drawDirCtrl);
     }

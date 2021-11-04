@@ -2999,6 +2999,7 @@ This setting can make it easier to draw with touch. </property>
                                                   <item id="none" translatable="yes" context="stylus cursor uses no icon">No icon</item>
                                                   <item id="dot" translatable="yes" context="stylus cursor uses a small dot">Small dot icon</item>
                                                   <item id="big" translatable="yes" context="stylus cursor uses a big pen icon">Big pen icon</item>
+                                                  <item id="arrow" translatable="yes" context="stylus cursor uses system cursor">System cursor</item>
                                                 </items>
                                               </object>
                                               <packing>

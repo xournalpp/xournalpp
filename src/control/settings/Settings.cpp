@@ -847,7 +847,7 @@ void Settings::save() {
     ATTACH_COMMENT("Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)");
 
     xmlNode = saveProperty("stylusCursorType", stylusCursorTypeToString(this->stylusCursorType), root);
-    ATTACH_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\"");
+    ATTACH_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"");
 
     SAVE_BOOL_PROP(highlightPosition);
     SAVE_UINT_PROP(cursorHighlightColor);
