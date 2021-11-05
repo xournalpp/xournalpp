@@ -374,8 +374,7 @@ void ensure_input_model_compatibility() {
     if (imModule != nullptr) {
         std::string imModuleString{imModule};
         if (imModuleString == "xim" || imModuleString == "gcin") {
-            g_setenv("GTK_IM_MODULE", "ibus", true);
-            g_warning("Unsupported input method: %s, changed to: ibus", imModule);
+            g_warning("Unsupported input method: %s", imModule);
         }
     }
 }
