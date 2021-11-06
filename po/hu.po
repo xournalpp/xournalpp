@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-06 01:30\n"
+"PO-Revision-Date: 2021-11-06 02:32\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -524,7 +524,7 @@ msgstr "Hiba a kép mentése közben! #2"
 
 #: ../src/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr "Hiba az automatikus mentés közben: {1}"
+msgstr "Hiba történt az automatikus mentés közben: {1}"
 
 #: ../src/util/Util.cpp:76
 msgid "Error {1} executing system command: {2}"
@@ -1967,23 +1967,24 @@ msgstr "<i>Adja meg azokat a parancsokat, amelyeket a kézfelismerés indítása
 #: ../ui/settings.glade:5357
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>Adja meg a hangmellékletek rögzítéséhez és lejátszásához használt hangeszközöket.\n"
+"Ha elérhető, adja meg a <small><tt>pulse</tt></small> kijelölést bemeneti/kimeneti eszközként.</i>"
 
 #: ../ui/settings.glade:1805
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Adja meg azokat az eszközöket, amelyek a mutató valamelyik gombjának megnyomásakor vagy a radír használatakor kiválasztásra kerülnek. A gomb elengedése után az előző eszköz kerül kiválasztásra.</i>"
 
 #: ../ui/settings.glade:486
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr ""
+msgstr "<i>A rendszer ezt a nevet javasolja, ha új dokumentumot ment el.</i>"
 
 #: ../ui/settings.glade:3964
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr ""
+msgstr "<i>A tényleges méret megtekintésekor az elemek mérete természetes. (újraindítás szükséges)</i>"
 
 #: ../ui/settings.glade:2753
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
+msgstr "<i>A menüsor láthatóságának váltása az F10 billentyűvel</i>"
 
 #: ../ui/settings.glade:2409
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
@@ -2074,11 +2075,11 @@ msgstr "Szerző(k): "
 
 #: ../ui/about.glade:449
 msgid "Authors"
-msgstr ""
+msgstr "Szerzők"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
-msgstr ""
+msgstr "Automatikus felismerés"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
@@ -2107,19 +2108,19 @@ msgstr ""
 #: ../ui/settings.glade:3001
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Nagy toll ikonra"
 
 #: ../ui/settings.glade:3205
 msgid "Border Color"
-msgstr ""
+msgstr "Szegélyszín"
 
 #: ../ui/settings.glade:3166
 msgid "Border Width"
-msgstr ""
+msgstr "Szegélyszélesség"
 
 #: ../ui/settings.glade:2807
 msgid "Border color"
-msgstr ""
+msgstr "Szegélyszín"
 
 #: ../ui/settings.glade:2792
 msgid "Border color for current page and other selections"
@@ -2127,7 +2128,7 @@ msgstr "Szegélyszín a jelenlegi oldalhoz és többi kijelöléséhez"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Előbbre hozás"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
@@ -2135,7 +2136,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1017
 msgid "Buffersize"
-msgstr ""
+msgstr "Pufferméret"
 
 #: ../ui/about.glade:99
 msgid "Built on"
@@ -2369,7 +2370,7 @@ msgstr ""
 
 #: ../ui/settings.glade:852
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "Az ablakon kívüli rajzolás engedélyezése <i>(A rajz nem áll meg az ablak szélén)</i>"
 
 #: ../ui/settings.glade:2101
 msgid "Enable internal Hand Recognition"
@@ -2662,7 +2663,8 @@ msgstr "Legfeljebb szorzó"
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Egyesítse a gombeseményeket a mutatótipp eseményekkel\n"
+"\t    <i>(Jelölje be, ha</i> „<tt>xsetwacom get *deviceId* TabletPCButton</tt>” <i>visszaadja</i> „<tt>on</tt>”<i>)</i>"
 
 #: ../ui/settings.glade:1367
 msgid "Middle Mouse Button"
@@ -2996,7 +2998,7 @@ msgstr "A lassabb vonásírásokhoz nagyobb nyomást rendelnek, mint a gyorsabb 
 #: ../ui/settings.glade:3000
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Kis toll ikonra"
 
 #: ../ui/settings.glade:4695
 msgid "Snapping"
