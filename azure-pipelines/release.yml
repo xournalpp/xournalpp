@@ -72,6 +72,7 @@ stages:
               build_type: 'RelWithDebInfo'
               cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=/usr -DCPACK_GENERATOR="TGZ;DEB"'
               cmake_commands: '--target package'
+              gcc_version: '10'
           - task: PublishPipelineArtifact@1
             inputs:
               artifactName: 'linux-debian-packages'
