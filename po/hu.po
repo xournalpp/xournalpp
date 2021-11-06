@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-06 07:04\n"
+"PO-Revision-Date: 2021-11-06 08:00\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2095,7 +2095,7 @@ msgstr ""
 
 #: ../ui/settings.glade:967
 msgid "Averaging method"
-msgstr ""
+msgstr "Átlagoló módszer"
 
 #: ../ui/settings.glade:2818
 msgid "Background color between pages"
@@ -2103,7 +2103,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3453
 msgid "Base speed"
-msgstr ""
+msgstr "Alapsebesség"
 
 #: ../ui/settings.glade:3001
 msgctxt "stylus cursor uses a big pen icon"
@@ -2140,7 +2140,7 @@ msgstr "Pufferméret"
 
 #: ../ui/about.glade:99
 msgid "Built on"
-msgstr ""
+msgstr "Készítési időpont"
 
 #: ../ui/settings.glade:1845
 msgid "Button 1"
@@ -2180,15 +2180,15 @@ msgstr "Új oldalsablon beállítása"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "Jelenlegi oldal hátterének másolása"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "Másolja a jelenlegi oldalméretet helyette"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr ""
+msgstr "Másolja a jelenlegi oldal hátterét a fenti háttérkészlet használata helyett."
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
@@ -2216,19 +2216,19 @@ msgstr ""
 
 #: ../ui/settings.glade:237
 msgid "Deadzone"
-msgstr ""
+msgstr "Holtzóna"
 
 #: ../ui/settings.glade:1046
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Holtzóna sugara"
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
-msgstr ""
+msgstr "Alapértelmezett mentési név"
 
 #: ../ui/settings.glade:5596
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "Alapértelmezett keresési idő (másodperc)"
 
 #: ../ui/settings.glade:518
 msgid "Default name: "
@@ -2280,11 +2280,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4730
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr ""
+msgstr "Ne rajzoljon rövid időre és hosszúságú bemenetekre, hacsak nem rövid egymásutánban érkezik. Ehelyett mutasson lebegő eszköztárat."
 
 #: ../ui/settings.glade:1077
 msgid "Drag"
-msgstr ""
+msgstr "Húzás"
 
 #: ../ui/settings.glade:871
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2302,11 +2302,11 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Az alkatrészeket ide vagy az eszköztárra húzva helyezze el."
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Húzás: Ha az érték túl kicsi, nem kívánt rezgések jelenhetnek meg. Ha az érték túl magas, nem lesz stabilizálódás."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
