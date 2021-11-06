@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-06 02:32\n"
+"PO-Revision-Date: 2021-11-06 03:34\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -124,8 +124,8 @@ msgstr "A tulajdonság színe nincs beállítva!"
 #: ../src/control/AudioController.cpp:97
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "Audió mappa nincs megadva! A felvétel nem fog elindulni!\n"
-"Kérem adja meg a felvételek mentési helyét a \"Beállítások > Hangfelvétel\" helyen"
+msgstr "Hangmappa nincs megadva! A felvétel nem fog elindulni!\n"
+"Kérem adja meg a felvételek mentési helyét a „Beállítások > Hangfelvétel” helyen"
 
 #: ../src/control/Control.cpp:206
 msgid "Autosave failed with an error: {1}"
@@ -160,11 +160,11 @@ msgstr "Kék"
 
 #: ../src/control/tools/EditSelection.cpp:368
 msgid "Bring forward"
-msgstr "Előrébb hozás"
+msgstr "Előbbre hozás"
 
 #: ../src/control/tools/EditSelection.cpp:358
 msgid "Bring to front"
-msgstr "Előtérbe hozás"
+msgstr "Előrehozás"
 
 #: ../src/control/Control.cpp:2011 ../src/control/Control.cpp:2462
 #: ../src/control/XournalMain.cpp:168
@@ -1015,11 +1015,11 @@ msgstr "Nyomtatás"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
 msgid "Record Audio / Stop Recording"
-msgstr "Hang rögzítése / Rögzítés megállítása"
+msgstr "Hangfelvétel indítása/leállítása"
 
 #: ../src/control/Control.cpp:874
 msgid "Recorder could not be started."
-msgstr "A felvevőt nem sikerült elindítani."
+msgstr "A felvételt nem sikerült elindítani."
 
 #: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
 #: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:100
@@ -2063,11 +2063,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5453
 msgid "Audio Devices"
-msgstr ""
+msgstr "Hangeszközök"
 
 #: ../ui/settings.glade:5696
 msgid "Audio Recording"
-msgstr ""
+msgstr "Hangfelvétel"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
@@ -2132,7 +2132,7 @@ msgstr "Előbbre hozás"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "Előrehozás"
 
 #: ../ui/settings.glade:1017
 msgid "Buffersize"
@@ -2144,11 +2144,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1845
 msgid "Button 1"
-msgstr ""
+msgstr "1. gomb"
 
 #: ../ui/settings.glade:1883
 msgid "Button 2"
-msgstr ""
+msgstr "2. gomb"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2160,7 +2160,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3062
 msgid "Circle Color"
-msgstr ""
+msgstr "Kör színe"
 
 #: ../ui/settings.glade:3729
 msgid "Clear cached paged while scrolling"
@@ -2168,7 +2168,7 @@ msgstr "Gyorsítótárazott oldalak törlése görgetés közben"
 
 #: ../ui/settings.glade:2928
 msgid "Colors"
-msgstr ""
+msgstr "Színek"
 
 #: ../ui/main.glade:1207
 msgid "Configure Page Template"
@@ -2192,11 +2192,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
-msgstr ""
+msgstr "Jelenlegi oldal"
 
 #: ../ui/settings.glade:3248
 msgid "Cursor"
-msgstr ""
+msgstr "Kurzor"
 
 #: ../ui/settings.glade:2983
 msgid "Cursor icon for pen"
@@ -2236,11 +2236,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5195
 msgid "Defaults"
-msgstr ""
+msgstr "Alapértelmezések"
 
 #: ../ui/main.glade:1245
 msgid "Delete Layer"
-msgstr ""
+msgstr "Réteg törlése"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2310,7 +2310,7 @@ msgstr ""
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Koordinátarendszer megjelenítése"
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
@@ -2322,7 +2322,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5050
 msgid "Drawing Area"
-msgstr ""
+msgstr "Rajzterület"
 
 #: ../ui/settings.glade:4462
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
@@ -2867,7 +2867,7 @@ msgstr "Legutóbbi _Dokumentumok"
 
 #: ../ui/main.glade:1918
 msgid "Record / Stop"
-msgstr "Felvétel / Leállítás"
+msgstr "Felvétel indítása/leállítása"
 
 #: ../ui/settings.glade:5563
 msgid "Recording Quality"
@@ -3195,7 +3195,7 @@ msgstr "X.X.X"
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
-msgstr "Xournal++ beállítások"
+msgstr "Xournal++ beállításai"
 
 #: ../ui/settings.glade:4087
 msgid "Zoom"
