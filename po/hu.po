@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-06 05:06\n"
+"PO-Revision-Date: 2021-11-06 06:04\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -697,7 +697,7 @@ msgstr "Zöld"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
 msgid "Grid Snapping"
-msgstr "Rácshoz illeszt"
+msgstr "Rács igazítása"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
@@ -1069,7 +1069,7 @@ msgstr "Forgatás"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:357
 msgid "Rotation Snapping"
-msgstr "Forgatási igazítás"
+msgstr "Forgatás igazítása"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled"
@@ -2475,7 +2475,7 @@ msgstr "Rácsméret"
 
 #: ../ui/settings.glade:4589
 msgid "Grid snapping tolerance"
-msgstr ""
+msgstr "Rács igazítás tűréshatára"
 
 #: ../ui/main.glade:1537
 msgid "H_and Tool"
@@ -2534,7 +2534,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4677
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "When activated, the shapes recognized by the shape recognizer are automatically aligned to the grid. This can lead to unexpected results if shape recognition is turned on while writing."
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
@@ -2895,7 +2895,7 @@ msgstr "Jobb egérgomb"
 
 #: ../ui/settings.glade:4576
 msgid "Rotation snapping tolerance"
-msgstr "Forgatási igazítás tűréshatára"
+msgstr "Forgatás igazítás tűréshatára"
 
 #: ../ui/settings.glade:5486
 msgid "Sample Rate"
@@ -3002,7 +3002,7 @@ msgstr "Kis toll ikonra"
 
 #: ../ui/settings.glade:4695
 msgid "Snapping"
-msgstr "Illesztése"
+msgstr "Igazítás"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
@@ -3123,7 +3123,7 @@ msgstr "Használja a rendelkezésre álló árfolyamikonokat (újraindítás sz�
 
 #: ../ui/settings.glade:4673
 msgid "Use snapping for recognized shapes"
-msgstr "Felismert alakzatokhoz használjon illesztést"
+msgstr "Igazítás használata felismert alakzatokhoz"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
