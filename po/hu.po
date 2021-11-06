@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-06 06:04\n"
+"PO-Revision-Date: 2021-11-06 07:04\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -356,7 +356,7 @@ msgstr "Eseménynapló fájl törlése"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Delete current page"
-msgstr "Aktuális oldal törlése"
+msgstr "Jelenlegi oldal törlése"
 
 #: ../src/control/XournalMain.cpp:209
 msgid "Delete file"
@@ -1085,7 +1085,7 @@ msgstr "SVG ábra"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr "A sablon LaTeX-fájl sikeresen generálva."
+msgstr "A LaTeX-mintafájl sikeresen generálva."
 
 #: ../src/control/Control.cpp:2454 ../src/control/jobs/SaveJob.cpp:15
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
@@ -1259,19 +1259,19 @@ msgstr "Támogatott fájltípusok"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one above"
-msgstr "Aktuális réteg megcserélése a felette levővel"
+msgstr "Jelenlegi réteg megcserélése a felette levővel"
 
 #: ../src/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Swap the current layer with the one below"
-msgstr "Aktuális réteg megcserélése az alatta levővel"
+msgstr "Jelenlegi réteg megcserélése az alatta levővel"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
-msgstr "Aktuális oldal megcserélése a felette levővel"
+msgstr "Jelenlegi oldal megcserélése a felette levővel"
 
 #: ../src/gui/sidebar/previews/page/SidebarPreviewPages.cpp:68
 msgid "Swap the current page with the one below"
-msgstr "Aktuális oldal megcserélése az alatta levővel"
+msgstr "Jelenlegi oldal megcserélése az alatta levővel"
 
 #: ../src/gui/dialog/LanguageConfigGui.cpp:52
 msgid "System Default"
@@ -1402,7 +1402,7 @@ msgstr "Eszköztárak"
 
 #: ../src/util/CrashHandler.cpp:30
 msgid "Trying to emergency save the current open document…"
-msgstr "Megkíséreljük menteni az éppen megnyitott dokumentumot…"
+msgstr "Megkíséreljük menteni a jelenlegi megnyitott dokumentumot…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
@@ -1542,7 +1542,7 @@ msgstr "Ön a(z) „{1}/{2}” ágat használja. A hibajelentés küldése a ler
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr "Jelenlegi dokumentuma nem tartalmaz PDF-oldalszámot: {1}\n"
+msgstr "Jelenlegi dokumentum nem tartalmaz PDF-oldalszámot: {1}\n"
 "Szeretné beszúrni ezt az oldalt?\n\n"
 "Tipp: PDF-oldal beszúrásához válassza a Napló → Papírháttér → PDF-háttérrel lehetőséget."
 
@@ -2051,7 +2051,7 @@ msgstr ""
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Új PDF-oldalak hozzáfűzése"
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
@@ -2083,11 +2083,11 @@ msgstr "Automatikus felismerés"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
-msgstr ""
+msgstr "Automatikus betöltés"
 
 #: ../ui/settings.glade:456
 msgid "Autosaving"
-msgstr ""
+msgstr "Automatikus mentés"
 
 #: ../ui/settings.glade:604
 msgid "Available Placeholders"
@@ -2232,7 +2232,7 @@ msgstr ""
 
 #: ../ui/settings.glade:518
 msgid "Default name: "
-msgstr ""
+msgstr "Alapértelmezett név: "
 
 #: ../ui/settings.glade:5195
 msgid "Defaults"
@@ -2554,7 +2554,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4743
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "Figyelmen kívül hagyás időtartama (ezredmásodperc)"
 
 #: ../ui/settings.glade:1716
 msgid "Ignore the first"
@@ -2704,15 +2704,15 @@ msgstr "_Következő széljegyzeteket tartalmazó lap"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
-msgstr ""
+msgstr "Új oldal beszúrása a kijelölt oldal _után"
 
 #: ../ui/main.glade:1166
 msgid "New Page _Before"
-msgstr ""
+msgstr "Új oldal beszúrása a kijelölt oldal _előtt"
 
 #: ../ui/main.glade:1187
 msgid "New Page at _End"
-msgstr ""
+msgstr "Új oldal beszúrása a napló _végen"
 
 #: ../ui/main.glade:1234
 msgid "New _Layer"
@@ -2827,7 +2827,7 @@ msgstr "Beállítások"
 
 #: ../ui/settings.glade:1174
 msgid "Preprocessor"
-msgstr ""
+msgstr "Előfeldolgozó"
 
 #: ../ui/settings.glade:3649
 msgid "Presentation Mode"
@@ -3038,7 +3038,7 @@ msgstr "Mutató gombok"
 
 #: ../ui/settings.glade:4806
 msgid "Successive (ms)"
-msgstr "Egymást követő (ms)"
+msgstr "Egymást követő (ezredmásodperc)"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
@@ -3062,7 +3062,7 @@ msgstr "Állapot vizsgálata"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr "Tesztelje, hogy az aktuális konfiguráció érvényes-e a LaTeX generálási parancs futtatásával a globális sablonfájlban egy tesztképlettel."
+msgstr "Tesztelje, hogy a jelenlegi konfiguráció érvényes-e a LaTeX létrehozási parancs futtatásával a globális sablonfájlban egy tesztképlettel."
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
@@ -3074,7 +3074,7 @@ msgstr "A LaTeX-fájl a LaTeX-eszköz sablonjaként."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr "Szövegeszköz aktuális színe hexadecimális RGB formátumban."
+msgstr "Szövegeszköz jelenlegi színe hexadecimális RGB-formátumban."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
@@ -3127,7 +3127,7 @@ msgstr "Igazítás használata felismert alakzatokhoz"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr "Használja az aktuális oldalméretet a fenti oldalméret helyett."
+msgstr "Használja a jelenlegi oldalméretet a fenti oldalméret helyett."
 
 #: ../ui/settings.glade:2563 ../ui/settings.glade:2631
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
