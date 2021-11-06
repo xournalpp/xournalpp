@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-06 08:00\n"
+"PO-Revision-Date: 2021-11-06 09:07\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -451,7 +451,7 @@ msgstr "Görbe rajzolása"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Draw coordinate system"
-msgstr "Koordináta-rendszer rajzolása"
+msgstr "Koordinátarendszer rajzolása"
 
 #: ../src/undo/InsertUndoAction.cpp:30
 msgid "Draw stroke"
@@ -768,7 +768,7 @@ msgstr "Ugrás adott oldalra (első oldal: 1)"
 
 #: ../src/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "A LaTeX generálása közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
+msgstr "A LaTeX létrehozási közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
 
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:250
 msgid "Layer"
@@ -1877,8 +1877,8 @@ msgstr "<b>Üres eszköztár</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr "<b>Telítési átlátszósági beállítások</b>\n"
-"A telítési szín átlátszóságának kijelölése"
+msgstr "<b>Telítési átlátszatlansági beállítások</b>\n"
+"Kitöltőszín átlátszatlanságának kijelölése"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2005,7 +2005,8 @@ msgstr ""
 #: ../ui/about.glade:203
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>Következő létrehozás</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
@@ -2013,7 +2014,7 @@ msgstr "A Xournal++ névjegye"
 
 #: ../ui/settings.glade:4890
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "Eszközkoppintás művelete"
 
 #: ../ui/settings.glade:4191
 msgid "Add additional horizontal space of"
@@ -2047,7 +2048,7 @@ msgstr "A vonásírás figyelmen kívül hagyása előtt mindhárom feltételnek
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Mindig ellenőrizze a LaTeX függőségeit a futtatás előtt"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
@@ -2059,7 +2060,7 @@ msgstr "Számtani közep"
 
 #: ../ui/settings.glade:1774
 msgid "Artifact workaround"
-msgstr ""
+msgstr "Műtermékek megoldása"
 
 #: ../ui/settings.glade:5453
 msgid "Audio Devices"
@@ -2091,7 +2092,7 @@ msgstr "Automatikus mentés"
 
 #: ../ui/settings.glade:604
 msgid "Available Placeholders"
-msgstr ""
+msgstr "Elérhető helyőrzők"
 
 #: ../ui/settings.glade:967
 msgid "Averaging method"
@@ -2099,7 +2100,7 @@ msgstr "Átlagoló módszer"
 
 #: ../ui/settings.glade:2818
 msgid "Background color between pages"
-msgstr ""
+msgstr "Háttérszín az oldalak között"
 
 #: ../ui/settings.glade:3453
 msgid "Base speed"
@@ -2152,7 +2153,7 @@ msgstr "2. gomb"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Válasszon ki egy globális LaTeX-sablonfájlt"
 
 #: ../ui/settings.glade:3048 ../ui/settings.glade:3191
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2200,7 +2201,7 @@ msgstr "Kurzor"
 
 #: ../ui/settings.glade:2983
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Kurzor ikon a tollhoz"
 
 #: ../ui/settings.glade:1205
 msgid "Cusp detection"
@@ -2276,7 +2277,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4056
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "Hüvelykenkénti pontok száma (DPI) kalibrálása megjelenítése"
 
 #: ../ui/settings.glade:4730
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
@@ -2291,14 +2292,20 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "A BALRA húzás a kezdőponttól úgy működik, mintha a Shift billentyűt nyomva tartanák.\n"
+"\t    A FELFELÉ húzás úgy működik, mintha a Control billentyűt nyomva tartanák\n\n"
+"            Meghatározási sugár: Az a sugár, amelynél a módosítók bezáródnak a rajzolás befejezéséig.\n\n"
+"\t    <i>Hasznos billentyűzet nélküli működéshez.</i>"
 
 #: ../ui/settings.glade:4394
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "A BALRA húzás a kezdőponttól úgy működik, mintha a Shift billentyűt nyomva tartanák.\n"
+"A FELFELÉ húzás úgy működik, mintha a Control billentyűt nyomva tartanák.\n\n"
+"Meghatározási sugár: Az a sugár, amelynél a módosítók bezáródnak a rajzolás befejezéséig.\n\n"
+"<i>Hasznos billentyűzet nélküli működéshez.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
@@ -2310,7 +2317,7 @@ msgstr "Húzás: Ha az érték túl kicsi, nem kívánt rezgések jelenhetnek me
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
-msgstr "Koordinátarendszer megjelenítése"
+msgstr "Koordinátarendszer rajzolása"
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
@@ -2346,11 +2353,11 @@ msgstr ""
 
 #: ../ui/settings.glade:659
 msgid "Enable Autoloading of Journals"
-msgstr ""
+msgstr "Naplók automatikus betöltésének bekapcsolása"
 
 #: ../ui/settings.glade:375
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "Automatikus mentés bekapcsolása"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
@@ -2362,11 +2369,11 @@ msgstr "Nyomásérzékenység engedélyezése"
 
 #: ../ui/settings.glade:4725
 msgid "Enable Tap action"
-msgstr ""
+msgstr "Koppintási művelet engedélyezése"
 
 #: ../ui/settings.glade:676
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "Legutóbbi fájl automatikus betöltésének bekapcsolása az alkalmazás indításakor"
 
 #: ../ui/settings.glade:852
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2378,7 +2385,7 @@ msgstr "Belső kézfelismerés engedélyezése"
 
 #: ../ui/settings.glade:2558
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Érintéses rajzolás engedélyezése"
 
 #: ../ui/settings.glade:2421
 msgid "Enable zoom gestures (requires restart)"
@@ -2386,7 +2393,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "LaTeX-szöveg szerkesztése"
 
 #: ../ui/main.glade:1701
 msgid "Eraser Optio_ns"
@@ -2419,7 +2426,7 @@ msgstr "_Kitöltés"
 
 #: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
-msgstr ""
+msgstr "Kitöltés átlátszatlansága"
 
 #: ../ui/settings.glade:1222
 msgid "Finalize the stroke"
@@ -2451,7 +2458,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "LaTeX-eszköz általános beállításai"
 
 #: ../ui/about.glade:114
 msgid "Git commit"
@@ -2538,7 +2545,7 @@ msgstr "When activated, the shapes recognized by the shape recognizer are automa
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "Ha be van kapcsolva, a(z) Xournal++ automatikusan megnyitja a legutóbbi naplót, így folytathatja az utoljára mentett napló szerkesztését."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2606,11 +2613,11 @@ msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "LaTeX végrehajtható beállítások"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "LaTeX létrehozási parancs"
 
 #: ../ui/settings.glade:5810 ../ui/settings.glade:5858
 msgid "Language"
@@ -2684,7 +2691,7 @@ msgstr "Egérgombok"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "Egér+billentyűzet kombináció"
 
 #: ../ui/main.glade:2659
 msgid "Move Down"
@@ -3010,7 +3017,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3842
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Ctrl+Görgetés sebessége"
 
 #: ../ui/settings.glade:3870
 msgid "Speed for a Zoomstep"
@@ -3022,7 +3029,7 @@ msgstr "Szabványos"
 
 #: ../ui/settings.glade:2446
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "Távolság után kezdje el a nagyítást "
 
 #: ../ui/settings.glade:5268 ../ui/settings.glade:5326
 msgid "Storage Folder"
@@ -3062,7 +3069,7 @@ msgstr "Állapot vizsgálata"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr "Tesztelje, hogy a jelenlegi konfiguráció érvényes-e a LaTeX létrehozási parancs futtatásával a globális sablonfájlban egy tesztképlettel."
+msgstr "Tesztelje, hogy a jelenlegi beállítások érvényesek-e a LaTeX létrehozási parancs futtatásával a globális sablonfájlban egy tesztképlettel."
 
 #: ../ui/main.glade:1906
 msgid "Text Font..."
@@ -3074,7 +3081,7 @@ msgstr "A LaTeX-fájl a LaTeX-eszköz sablonjaként."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr "Szövegeszköz jelenlegi színe hexadecimális RGB-formátumban."
+msgstr "Szövegeszköz jelenlegi színe hexadecimális vörös-zöld-kék formátumban."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
