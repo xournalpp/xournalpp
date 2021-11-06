@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-05 23:18\n"
+"PO-Revision-Date: 2021-11-06 00:20\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -480,7 +480,7 @@ msgstr "Az opció módosításához engedélyezd a nyomásérzékelést vagy a n
 #: ../src/undo/AddUndoAction.cpp:75 ../src/undo/DeleteUndoAction.cpp:71
 #: ../src/undo/EraseUndoAction.cpp:90
 msgid "Erase stroke"
-msgstr "Vonal kiradírozása"
+msgstr "Vonásírás kiradírozása"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
@@ -1333,23 +1333,23 @@ msgstr "A háttér felülírásának ellenőrzése sikertelen volt:\n"
 
 #: ../src/control/Control.cpp:2041
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "A betöltendő fájl fájlformátumának verziója újabb, mint a Xournal++ jelen verziója által jelenleg támogatott, ezért előfordulhat, hogy nem töltődik be megfelelően. Megnyitás mégis?"
 
 #: ../src/control/xojfile/LoadHandler.cpp:119
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "A fájl nem érvényes .xopp fájl (hiányzó mimetípus): „{1}”"
 
 #: ../src/control/xojfile/LoadHandler.cpp:126
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "A fájl nem érvényes .xopp fájl (hibás mimetípus): „{1}”"
 
 #: ../src/control/xojfile/LoadHandler.cpp:135
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "A fájl nem érvényes .xopp fájl (hiányzó verzió): „{1}”"
 
 #: ../src/control/xojfile/LoadHandler.cpp:147
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "A fájl nem érvényes .xopp fájl (a verzió karakterlánca sérült): „{1}”"
 
 #: ../src/control/LatexController.cpp:240
 msgid "The formula is empty when rendered or invalid."
@@ -1406,15 +1406,15 @@ msgstr "Megkíséreljük menteni az éppen megnyitott dokumentumot…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Nem lehet megnyitni a globális sablonfájlt itt: {1}. Létezik?"
 
 #: ../src/gui/PageView.cpp:350
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "Nem sikerült a hangfelvétel lejátszása: {1}"
 
 #: ../src/control/Control.cpp:1279
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Nem sikerült a PDF-oldal lekérése."
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
 #: ../src/undo/UndoRedoHandler.cpp:205
@@ -1427,11 +1427,11 @@ msgstr "Visszavonás: "
 
 #: ../src/control/xojfile/LoadHandler.cpp:286
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Váratlan gyökércímke: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:307
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Váratlan címke a dokumentumban: „{1}”"
 
 #: ../src/control/xojfile/LoadHandler.cpp:496
 msgid "Unknown background type: {1}"
@@ -1455,7 +1455,7 @@ msgstr "Ismeretlen pixmap::domain típus: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:593
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "Ismeretlen vonásírás típusa: „{1}”, tollat feltételezve"
 
 #: ../src/control/Control.cpp:2356
 msgid "Unsaved Document"
@@ -1605,7 +1605,7 @@ msgstr "alapértelmezetten engedélyezve"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:254
 msgid "delete stroke"
-msgstr "vonal törlése"
+msgstr "vonásírás törlése"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:242
 msgid "dotted"
@@ -1654,7 +1654,7 @@ msgstr "Normál"
 
 #: ../src/undo/AddUndoAction.cpp:94 ../src/undo/DeleteUndoAction.cpp:91
 msgid "stroke"
-msgstr "vonal"
+msgstr "vonásírás"
 
 #: ../src/util/DeviceListHelper.cpp:123
 msgid "tablet pad"
@@ -1993,7 +1993,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1698
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
+msgstr "<i>Bizonyos beállításokkal a tollvonások elején műtermékek vannak. Ez elkerülhető, ha figyelmen kívül hagyjuk az első néhány eseményt/vonásírás-pontot, amikor a toll megérinti a képernyőt.</i>"
 
 #: ../ui/settings.glade:2021
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -2026,7 +2026,7 @@ msgstr "TeX hozzáadása/szerkesztése"
 
 #: ../ui/settings.glade:4494
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "Egy kijelölés átméretezése után az összes vonásírási szélessége megegyezik az átméretezés előttivel. "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
@@ -2240,7 +2240,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr ""
+msgstr "Vonásírás törlése"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
@@ -2419,7 +2419,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1222
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Vonásírás véglegesítése"
 
 #: ../ui/main.glade:2431
 msgid "Find next occurrence of the search string"
@@ -2516,7 +2516,8 @@ msgstr "_Kiemelő beállításai"
 #: ../ui/settings.glade:4775
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Vonásírás hosszúság (képernyő mm) ÉS…\n\n"
+"<i>Javasolt: 1 mm</i>"
 
 #: ../ui/settings.glade:4755
 msgid "How short (time)  AND...\n\n"
@@ -2581,7 +2582,7 @@ msgstr "Bemeneti stabilizálás"
 
 #: ../ui/settings.glade:1227
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "A bemeneti stabilizálás réseket képezhet a vonásírás végén. Ha engedélyezve van, ez a hiányosság kitöltésre kerül."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
@@ -2986,7 +2987,8 @@ msgstr "Függőleges görgetősáv megjelenítése a bal oldalon"
 #: ../ui/settings.glade:903
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "A lassabb vonásírásokhoz nagyobb nyomást rendelnek, mint a gyorsabb vonásírásokhoz, ha a nyomásadatok hiányoznak.\n\n"
+"<i>Ez a funkció hasznos lehet azoknál az eszközöknél, amelyek nem rendelkeznek nyomásérzékenységgel. Például egy egér vagy érintőképernyő.</i>"
 
 #: ../ui/settings.glade:3000
 msgctxt "stylus cursor uses a small dot"
@@ -3420,7 +3422,7 @@ msgstr "_Nézet"
 
 #: ../ui/main.glade:1795
 msgid "_delete strokes"
-msgstr "vonások _törlése"
+msgstr "vonásírások _törlése"
 
 #: ../ui/main.glade:1577 ../ui/main.glade:1723 ../ui/main.glade:1832
 msgid "_fine"
