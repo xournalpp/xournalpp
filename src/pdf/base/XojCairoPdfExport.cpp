@@ -68,6 +68,7 @@ void XojCairoPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
         auto pageDest = pdfBgPage == npos ? npos : doc->findPdfPage(pdfBgPage);  // Destination in document
         if (pageDest != npos) {
             std::ostringstream linkAttrBuf;
+            linkAttrBuf.imbue(std::locale::classic());
             linkAttrBuf << "page=" << pageDest + 1;
             if (dest->shouldChangeLeft() && dest->shouldChangeTop()) {
                 linkAttrBuf << " pos=[" << dest->getLeft() << " " << dest->getTop() << "]";
