@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 
 project ("Xournal++" CXX C)
 
@@ -23,6 +23,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # enable clang tidy to use correct include
 set_directory_properties(PROPERTIES EP_BASE "${PROJECT_BINARY_DIR}/external")
 
 add_definitions(-D_USE_MATH_DEFINES)
+
+# Check for OS
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(MACOSX TRUE)
+endif()
+
 
 # package version
 include (Version)
@@ -69,8 +75,8 @@ endif ()
 macro(add_includes_ldflags LDFLAGS INCLUDES)
 	set(xournalpp_LDFLAGS ${xournalpp_LDFLAGS} "${LDFLAGS}")
     include_directories(SYSTEM ${INCLUDES})
-    # Do not add system headers and external libraries to the additional include paths
-    # set(xournalpp_INCLUDE_DIRS ${xournalpp_INCLUDE_DIRS} "${INCLUDES}")
+    # Note: System headers and external libraries are  intentionally
+    #       NOT added to the additional include paths
 endmacro (add_includes_ldflags LDFLAGS INCLUDES)
 
 find_package(CXX17 REQUIRED COMPONENTS optional)
@@ -82,6 +88,7 @@ if(X11_FOUND AND X11_Xi_FOUND)
 	add_includes_ldflags ("${X11_X11_LIB}" "${X11_INCLUDE_DIR}")
 	add_includes_ldflags ("${X11_Xi_LIB}" "${X11_Xi_INCLUDE_PATH}")
 endif()
+
 
 # libexec
 if (WIN32)
@@ -114,7 +121,6 @@ add_includes_ldflags ("${Libxml_LDFLAGS}" "${Libxml_INCLUDE_DIRS}")
 # Poppler
 pkg_check_modules (PopplerGlib REQUIRED "poppler-glib >= 0.41.0")
 add_includes_ldflags ("${PopplerGlib_LDFLAGS}" "${PopplerGlib_INCLUDE_DIRS}")
-set(POPPLER_INCLUDE_DIR, "${PopplerGlib_INCLUDE_DIRS}")
 
 # librsvg
 pkg_check_modules (librsvg REQUIRED "librsvg-2.0 >= 2.40")
@@ -140,13 +146,21 @@ pkg_check_modules(SNDFILE REQUIRED "sndfile >= 1.0.25")
 add_includes_ldflags ("${SNDFILE_LDFLAGS}" "${SNDFILE_INCLUDE_DIRS}")
 
 ## Additional features ##
-
-# CppUnit
-option (ENABLE_CPPUNIT "Build CppUnit test instead of xournalpp application" OFF)
-if (ENABLE_CPPUNIT)
-	pkg_check_modules(CppUnit REQUIRED "cppunit >= 1.12-0")
+# Testing Framework: gtest
+option (ENABLE_GTEST "Enable gtest build for xournalpp application" OFF)
+if (ENABLE_GTEST)
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+    )
+	# Prevent reloading if already downloaed
+	set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+    # For Windows: Prevent overriding the parent project's compiler/linker settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
 	enable_testing()
-endif (ENABLE_CPPUNIT)
+endif (ENABLE_GTEST)
 
 # Plugins / scripting
 find_package (Lua 5.3 EXACT)
@@ -165,7 +179,7 @@ unset(add_includes_ldflags)
 #
 # DO NOT INCLUDE LIBRARIES WITH pkg_check_modules AFTER THIS LINE!!!
 #
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+if(MACOSX)
 	# Fix linker flag handling for MacOS builds where frameworks are separated from their flag
 	string(REPLACE "-framework;" "-framework " xournalpp_LDFLAGS "${xournalpp_LDFLAGS}")
 endif()
@@ -326,9 +340,10 @@ add_custom_target(uninstall
 
 message("
 Configuration:
-	Compiler:                   ${CMAKE_CXX_COMPILER}
-	CppUnit enabled:            ${ENABLE_CPPUNIT}
-	Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
+    Compiler:                   ${CMAKE_CXX_COMPILER}
+    GTEST enabled:              ${ENABLE_GTEST}
+    GCOV enabled:               ${DEV_ENABLE_GCOV}
+    Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
 ")
 
 option(CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)

@@ -1,5 +1,3 @@
-## Build poppler ##
-
 ## Basic variables ##
 
 include_directories (
@@ -9,6 +7,11 @@ include_directories (
 
   ${xournalpp_INCLUDE_DIRS}
 )
+
+if (DEV_ENABLE_GCOV)
+  add_compile_options(--coverage)
+  add_link_options(--coverage)
+endif (DEV_ENABLE_GCOV)
 
 # Build xournalpp-thumbnailer as it doesn't need CXX_FLAGS from below
 add_subdirectory (xoj-preview-extractor)
@@ -26,10 +29,6 @@ mark_as_advanced (FORCE DEBUG_COMPILE)
 if (DEBUG_COMPILE)
   add_definitions (-Wall)
 endif (DEBUG_COMPILE)
-
-if (DEV_ENABLE_GCOV)
-  add_definitions (--coverage)
-endif (DEV_ENABLE_GCOV)
 
 # Used to compile xournalpp and xournalpp-test
 set (xournalpp_LDFLAGS
@@ -139,7 +138,6 @@ install (TARGETS xournalpp
   COMPONENT xournalpp
 )
 
-if (ENABLE_CPPUNIT)
+if (ENABLE_GTEST)
   add_subdirectory (${CMAKE_SOURCE_DIR}/test ${CMAKE_BINARY_DIR}/test)
-endif (ENABLE_CPPUNIT)
-
+endif (ENABLE_GTEST)

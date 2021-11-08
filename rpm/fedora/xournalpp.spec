@@ -11,7 +11,7 @@
 %define	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
 %global	build_timestamp %(date +"%Y%m%d")
 %global	rel_build %{build_timestamp}git%{build_shortcommit}%{?dist}
-%bcond_without  cppunit
+%bcond_without  gtest
 
 
 Name:           xournalpp
@@ -29,9 +29,6 @@ BuildRequires:  gcc-c++
 BuildRequires:  gettext
 BuildRequires:  git
 BuildRequires:  libappstream-glib
-%if %{with cppunit}
-BuildRequires:  pkgconfig(cppunit) >= 1.12-0
-%endif
 BuildRequires:  pkgconfig(glib-2.0) >= 2.32.0
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.18.9
 BuildRequires:  pkgconfig(librsvg-2.0)
@@ -73,8 +70,8 @@ The %{name}-ui package contains a graphical user interface for  %{name}.
 
 %build
 %cmake \
-        %if %{with cppunit}
-         -DENABLE_CPPUNIT=ON
+        %if %{with gtest}
+         -DENABLE_GTEST=ON
         %endif
 %cmake_build
 

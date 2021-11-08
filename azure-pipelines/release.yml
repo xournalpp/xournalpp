@@ -5,11 +5,11 @@ trigger:
     exclude:
       - nightly
 schedules:
-  - cron: "0 0 * * *"
+  - cron: '0 0 * * *'
     displayName: Nightly build
     branches:
       include:
-      - master
+        - master
 pr: none
 variables:
   versionNumber: ''
@@ -64,13 +64,13 @@ stages:
         steps:
           - bash: |
               sudo apt-get update
-              sudo apt-get install -y build-essential gcc-10 g++-10 cmake ninja-build libcppunit-dev libgtk-3-dev libpoppler-glib-dev libxml2-dev portaudio19-dev libsndfile-dev liblua5.3-dev \
+              sudo apt-get install -y build-essential gcc-10 g++-10 cmake ninja-build libgtk-3-dev libpoppler-glib-dev libxml2-dev portaudio19-dev libsndfile-dev liblua5.3-dev \
                                       libzip-dev gettext lsb-release librsvg2-dev help2man
             displayName: 'Install dependencies'
           - template: steps/build_linux.yml
             parameters:
               build_type: 'RelWithDebInfo'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=/usr -DCPACK_GENERATOR="TGZ;DEB"'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=/usr -DCPACK_GENERATOR="TGZ;DEB"'
               cmake_commands: '--target package'
               gcc_version: '10'
           - task: PublishPipelineArtifact@1
@@ -78,7 +78,7 @@ stages:
               artifactName: 'linux-debian-packages'
               targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
             displayName: 'Publish packages'
-          
+
       - job: Windows
         pool:
           vmImage: 'vs2017-win2016'
@@ -122,4 +122,3 @@ stages:
               artifactName: 'macOS'
               targetPath: './mac-setup/Xournal++.zip'
             displayName: 'Publish macOS Setup'
-
