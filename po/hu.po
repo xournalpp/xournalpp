@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-11-06 09:07\n"
+"POT-Creation-Date: 2021-11-07 06:03+0000\n"
+"PO-Revision-Date: 2021-11-08 09:25\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -800,7 +800,7 @@ msgstr "Világoskék"
 msgid "Light Green"
 msgstr "Világoszöld"
 
-#: ../src/gui/PageView.cpp:703
+#: ../src/gui/PageView.cpp:713
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
@@ -1390,7 +1390,7 @@ msgstr "Teljes képernyőre váltás"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:82
 msgid "Tool - don't change"
-msgstr "Eszköz - ne változtassa meg"
+msgstr "Eszköz - ne változzon"
 
 #: ../src/gui/toolbarMenubar/model/ToolbarData.cpp:108
 msgid "Toolbar found: {1}"
@@ -2018,11 +2018,11 @@ msgstr "Eszközkoppintás művelete"
 
 #: ../ui/settings.glade:4191
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "További vízszintes terület hozzáadása:"
 
 #: ../ui/settings.glade:4169
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "További függőleges terület hozzáadása:"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
@@ -2157,7 +2157,7 @@ msgstr "Válasszon ki egy globális LaTeX-sablonfájlt"
 
 #: ../ui/settings.glade:3048 ../ui/settings.glade:3191
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "Válassza ki a „Kurzor pozíciójának kiemeléséhez” használandó színt"
 
 #: ../ui/settings.glade:3062
 msgid "Circle Color"
@@ -2213,7 +2213,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2866
 msgid "Dark Theme (requires restart)"
-msgstr ""
+msgstr "Sötét téma (újraindítás szükséges)"
 
 #: ../ui/settings.glade:237
 msgid "Deadzone"
@@ -2361,7 +2361,7 @@ msgstr "Automatikus mentés bekapcsolása"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Nyomáskövetkeztetés engedélyezése <i>(Nyomás kitalálása a rajz sebességéből, ha az eszköz által biztosított nyomás nem áll rendelkezésre)</i>"
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
@@ -2401,7 +2401,7 @@ msgstr "Radír _beállításai"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "Radír típusa - ne változzon"
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
@@ -2518,7 +2518,7 @@ msgstr "Függőleges görgetősáv elrejtése"
 
 #: ../ui/settings.glade:3025
 msgid "Highlight cursor position"
-msgstr ""
+msgstr "Kurzor pozíciójának kiemeléséhez"
 
 #: ../ui/main.glade:1810
 msgid "Highlighter Opti_ons"
@@ -2565,7 +2565,7 @@ msgstr "Figyelmen kívül hagyás időtartama (ezredmásodperc)"
 
 #: ../ui/settings.glade:1716
 msgid "Ignore the first"
-msgstr ""
+msgstr "Az első mellőzése"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
@@ -2601,11 +2601,11 @@ msgstr "LaTeX beszúrása"
 
 #: ../ui/main.glade:2629
 msgid "Insert Page After"
-msgstr "Oldal beszúrása után"
+msgstr "Oldal beszúrása utána"
 
 #: ../ui/main.glade:2621
 msgid "Insert Page Before"
-msgstr "Oldal beszúrása előtt"
+msgstr "Új oldal beszúrása előtte"
 
 #: ../ui/settings.glade:5721
 msgid "LaTeX"
@@ -2703,7 +2703,7 @@ msgstr "Mozgatás fel"
 
 #: ../ui/settings.glade:3464
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "A pásztázási sebességet legfeljebb ezzel az értékkel szorozza meg, attól függően, hogy a kijelölt elem mekkora része nem látható."
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
@@ -2711,11 +2711,11 @@ msgstr "_Következő széljegyzeteket tartalmazó lap"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
-msgstr "Új oldal beszúrása a kijelölt oldal _után"
+msgstr "Oldal beszúrása _utána"
 
 #: ../ui/main.glade:1166
 msgid "New Page _Before"
-msgstr "Új oldal beszúrása a kijelölt oldal _előtt"
+msgstr "Új oldal beszúrása _előtte"
 
 #: ../ui/main.glade:1187
 msgid "New Page at _End"
@@ -2822,11 +2822,11 @@ msgstr "A beépülő modulok módosításai csak a Xournal++ újraindítása ut�
 
 #: ../ui/settings.glade:3692
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Oldalak-előzetes betöltése utána"
 
 #: ../ui/settings.glade:3680
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Oldalak-előzetes betöltése előtte"
 
 #: ../ui/main.glade:487
 msgid "Preferences"
@@ -2842,7 +2842,7 @@ msgstr "Bemutató mód"
 
 #: ../ui/settings.glade:4489
 msgid "Preserve line width"
-msgstr ""
+msgstr "Vonal szélességének megőrzése"
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
@@ -3017,11 +3017,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3842
 msgid "Speed for Ctrl + Scroll"
-msgstr "Ctrl+Görgetés sebessége"
+msgstr "Ctrl+Görgetés nagyítási lépés sebessége"
 
 #: ../ui/settings.glade:3870
 msgid "Speed for a Zoomstep"
-msgstr ""
+msgstr "Nagyítási lépés sebessége"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
