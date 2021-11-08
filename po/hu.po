@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-07 06:03+0000\n"
-"PO-Revision-Date: 2021-11-08 09:25\n"
+"PO-Revision-Date: 2021-11-08 10:26\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -259,7 +259,7 @@ msgstr "Nem sikerült megnyitni a \"{1}\" fájlt"
 #: ../src/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr "Nem sikerült beolvasni az egyedi toolbar.ini fájlt: {1}\n"
+msgstr "Nem sikerült beolvasni az egyéni toolbar.ini fájlt: {1}\n"
 "Az eszköztár nem lesz elérhető"
 
 #: ../src/gui/MainWindow.cpp:85
@@ -331,11 +331,11 @@ msgstr "Egyéni exportálás"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Customize Toolbars"
-msgstr "Eszköztár testreszabása"
+msgstr "Eszköztárak testreszabása"
 
 #: ../src/gui/dialog/ToolbarManageDialog.cpp:29
 msgid "Customized"
-msgstr "Egyéni"
+msgstr "Testreszabott"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:348
 msgid "Cut"
@@ -396,20 +396,20 @@ msgstr "Ne írja felül a PDF-hátterét! Ez hibákat okozhat!"
 
 #: ../src/control/Control.cpp:2453
 msgid "Document file was removed."
-msgstr "A dokumentum fájl el lett távolítva."
+msgstr "A naplófájl eltávolításra került."
 
 #: ../src/control/xojfile/LoadHandler.cpp:241
 msgid "Document is corrupted (no pages found in file)"
-msgstr "A dokumentum hibás (nem találhatók oldalak a fájlban)"
+msgstr "A napló hibás (nem találhatók oldalak a fájlban)"
 
 #: ../src/control/xojfile/LoadHandler.cpp:237
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr "A dokumentum nem teljes (talán a vége le lett vágva?)"
+msgstr "A napló nem teljes (talán a vége le lett vágva?)"
 
 #: ../src/model/Document.cpp:285 ../src/model/Document.cpp:294
 #: ../src/model/Document.cpp:297
 msgid "Document not loaded! ({1}), {2}"
-msgstr "A dokumentum nincs betöltve! ({1}), {2}"
+msgstr "A napló nincs betöltve! ({1}), {2}"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:26
 msgid "Dotted"
@@ -471,7 +471,7 @@ msgstr "Szöveg szerkesztése"
 
 #: ../src/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
-msgstr "Biztonsági mentett dokumentum"
+msgstr "Biztonsági mentett napló"
 
 #: ../src/gui/dialog/SettingsDialog.cpp:281
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
@@ -872,7 +872,7 @@ msgstr "Nincs exportálandó oldal!"
 
 #: ../src/control/Control.cpp:1265
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr "Nem érhető el több hozzáfűzhető pdf oldal. Szükséges lehet a dokumentum újbóli megnyitása."
+msgstr "Nem érhető el több hozzáfűzhető pdf oldal. Szükséges lehet a napló újbóli megnyitása."
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
@@ -971,7 +971,7 @@ msgstr "Oldalszám"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
 msgid "Paired pages"
-msgstr "Páros oldalak"
+msgstr "Oldalak párosítása"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:350
 #: ../src/undo/AddUndoAction.cpp:77
@@ -1251,7 +1251,7 @@ msgstr "Vonalfelismerő"
 
 #: ../src/util/CrashHandler.cpp:41
 msgid "Successfully saved document to \"{1}\""
-msgstr "Sikeresen elmentett dokumentum \"{1}\""
+msgstr "A napló sikeresen elmentve ide: „{1}”"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
@@ -1377,7 +1377,7 @@ msgstr "Vastag"
 
 #: ../src/control/Control.cpp:2453
 msgid "This document is not saved yet."
-msgstr "Ez a dokumentum még nincs elmentve."
+msgstr "Ez a napló még nincs elmentve."
 
 #: ../src/control/PageBackgroundChangeController.cpp:144
 #: ../src/control/tools/ImageHandler.cpp:44
@@ -1402,7 +1402,7 @@ msgstr "Eszköztárak"
 
 #: ../src/util/CrashHandler.cpp:30
 msgid "Trying to emergency save the current open document…"
-msgstr "Megkíséreljük menteni a jelenlegi megnyitott dokumentumot…"
+msgstr "Jelenlegi nyitott napló biztonsági mentése folyamatban van…"
 
 #: ../src/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
@@ -1431,7 +1431,7 @@ msgstr "Váratlan gyökércímke: {1}"
 
 #: ../src/control/xojfile/LoadHandler.cpp:307
 msgid "Unexpected tag in document: \"{1}\""
-msgstr "Váratlan címke a dokumentumban: „{1}”"
+msgstr "Váratlan címke a naplóban: „{1}”"
 
 #: ../src/control/xojfile/LoadHandler.cpp:496
 msgid "Unknown background type: {1}"
@@ -1459,7 +1459,7 @@ msgstr "Ismeretlen vonásírás típusa: „{1}”, tollat feltételezve"
 
 #: ../src/control/Control.cpp:2356
 msgid "Unsaved Document"
-msgstr "Nem mentett dokumentum"
+msgstr "Nem mentett napló"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Vertical Space"
@@ -1542,7 +1542,7 @@ msgstr "Ön a(z) „{1}/{2}” ágat használja. A hibajelentés küldése a ler
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr "Jelenlegi dokumentum nem tartalmaz PDF-oldalszámot: {1}\n"
+msgstr "Jelenlegi napló nem tartalmaz PDF-oldalszámot: {1}\n"
 "Szeretné beszúrni ezt az oldalt?\n\n"
 "Tipp: PDF-oldal beszúrásához válassza a Napló → Papírháttér → PDF-háttérrel lehetőséget."
 
@@ -1945,7 +1945,7 @@ msgstr "<i>Helyezzen egy vonalzót a képernyőre, és mozgassa a csúszkát, am
 #: ../ui/settings.glade:4921
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr "<i>A jobb megjelenítési minőség érdekében nagyítás közben gyakrabban jelenítse meg újra a PDF-háttéreket.\n"
+msgstr "<i>A jobb megjelenítési minőség érdekében nagyítás közben gyakrabban jelenítse meg újra a PDF-háttereket.\n"
 "<b>Megjegyzés:</b> Ez nem befolyásolja a nyomtatás minőségét.</i>"
 
 #: ../ui/settings.glade:5773
@@ -1988,11 +1988,11 @@ msgstr "<i>A menüsor láthatóságának váltása az F10 billentyűvel</i>"
 
 #: ../ui/settings.glade:2409
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
+msgstr "<i>Használjon csípőmozdulatokat a naplóoldalak nagyításához.</i>"
 
 #: ../ui/settings.glade:2544
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>Használja az érintőképernyőt, mint egy többérintéses tollat.</i>"
 
 #: ../ui/settings.glade:1698
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -2000,7 +2000,7 @@ msgstr "<i>Bizonyos beállításokkal a tollvonások elején műtermékek vannak
 
 #: ../ui/settings.glade:2021
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
+msgstr "<i>A GTK által nem érintőképernyőként azonosított eszközöket beállíthatja úgy, hogy azok úgy viselkedjenek, mintha azok lennének.</i>"
 
 #: ../ui/about.glade:203
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2205,11 +2205,11 @@ msgstr "Kurzor ikon a tollhoz"
 
 #: ../ui/settings.glade:1205
 msgid "Cusp detection"
-msgstr ""
+msgstr "Csücsökérzékelés"
 
 #: ../ui/settings.glade:2353
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "Egyéni parancsok (az „Egyéni” módszerhez)"
 
 #: ../ui/settings.glade:2866
 msgid "Dark Theme (requires restart)"
@@ -2257,7 +2257,7 @@ msgstr "Letiltás"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "GTK beépített inerciális görgetési funkciója letiltsa (újraindítás szükséges)."
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -2265,7 +2265,7 @@ msgstr "Rajzolás letiltása az eszközön"
 
 #: ../ui/settings.glade:3374
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "Görgetősáv elhalványításának letiltása"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
@@ -2273,7 +2273,7 @@ msgstr "Letiltva"
 
 #: ../ui/settings.glade:2132
 msgid "Disabling Method"
-msgstr ""
+msgstr "Letiltási módszer"
 
 #: ../ui/settings.glade:4056
 msgid "Display DPI Calibration"
@@ -2325,7 +2325,7 @@ msgstr "_Vonal rajzolása"
 
 #: ../ui/settings.glade:3030
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "Rajzolj átlátszó kört a kurzor köré"
 
 #: ../ui/settings.glade:5050
 msgid "Drawing Area"
@@ -2333,7 +2333,7 @@ msgstr "Rajzterület"
 
 #: ../ui/settings.glade:4462
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
+msgstr "Rajzeszközök – Módosítók beállítása rajzolási irány szerint (kísérleti)"
 
 #: ../ui/main.glade:2637
 msgid "Duplicate"
@@ -2349,7 +2349,7 @@ msgstr "Engedélyezés"
 
 #: ../ui/settings.glade:4389
 msgid "Enable  with determination radius of "
-msgstr ""
+msgstr "Engedélyezés a következő meghatározási sugárral: "
 
 #: ../ui/settings.glade:659
 msgid "Enable Autoloading of Journals"
@@ -2389,7 +2389,7 @@ msgstr "Érintéses rajzolás engedélyezése"
 
 #: ../ui/settings.glade:2421
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "Nagyítási kézmozdulatok engedélyezése (újraindítás szükséges)"
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
@@ -2413,7 +2413,7 @@ msgstr "Exportálás másként..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Rétegek fokozatos exportálása"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
@@ -2442,7 +2442,7 @@ msgstr "Keresett szöveg előző előfordulása"
 
 #: ../ui/settings.glade:4306
 msgid "First Page Offset "
-msgstr ""
+msgstr "Első oldal eltolás "
 
 #: ../ui/main.glade:532 ../ui/settings.glade:3548
 msgid "Fullscreen"
@@ -2454,7 +2454,7 @@ msgstr "Erősítés"
 
 #: ../ui/settings.glade:1140 ../ui/settings.glade:1160
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Gauss-paraméter: minél magasabb, annál nagyobb a stabilitás, és annál nagyobb a késés a kurzor és a festési csúcs között."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
@@ -2470,7 +2470,7 @@ msgstr "Globális"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "Globális sablonfájl elérési útja"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -2533,11 +2533,12 @@ msgstr "Vonásírás hosszúság (képernyő mm) ÉS…\n\n"
 #: ../ui/settings.glade:4755
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Milyen rövid (idő) ÉS…\n\n"
+"<i>Javasolt: 150 ezredmásodperc</i>"
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr ""
+msgstr "Ikontervezők"
 
 #: ../ui/settings.glade:4677
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2549,15 +2550,15 @@ msgstr "Ha be van kapcsolva, a(z) Xournal++ automatikusan megnyitja a legutóbbi
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Ha engedélyezve van, a LaTeX eszköz futtatása előtt ellenőrizze, hogy a szükséges LaTeX csomagok telepítve vannak-e, és hogy elérhetőek-e a LaTeX parancsok."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "Ha engedélyezve van, az egyes oldalak rétegei egyenként kerülnek hozzáadásra. Az így kapott PDF-fájl bemutatóhoz használható."
 
 #: ../ui/settings.glade:664
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "Ha megnyit egy PDF-fájlt, és rendelkezik egy azonos nevű Xournal-fájllal, az xoj-fájl megnyílik."
 
 #: ../ui/settings.glade:4743
 msgid "Ignore Time (ms)"
@@ -2657,7 +2658,7 @@ msgstr "Tömeg"
 
 #: ../ui/settings.glade:1108 ../ui/settings.glade:1120
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Tömeg: minél nagyobb a tömeg, annál nagyobb a tehetetlenség és annál nagyobb a stabilizáció"
 
 #: ../ui/settings.glade:4795
 msgid "Max Length (mm)"
@@ -2741,7 +2742,7 @@ msgstr "Nincs"
 
 #: ../ui/settings.glade:4305
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
+msgstr "Az első oldal eltolása ennyi oldallal, ha engedélyezve van az <b>Oldalak párosítása</b>"
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
@@ -2769,7 +2770,7 @@ msgstr "Oldalak:"
 
 #: ../ui/settings.glade:4359
 msgid "Paired Pages"
-msgstr "Párosított oldalak"
+msgstr "Oldalak párosítása"
 
 #: ../ui/main.glade:1293
 msgid "Paper B_ackground"
@@ -2790,7 +2791,8 @@ msgstr "Papír_formátum"
 #: ../ui/about.glade:296
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Részben a Xournal alapján\n"
+"írta: Auroux Denis"
 
 #: ../ui/main.glade:1928
 msgid "Pause"
@@ -2866,7 +2868,7 @@ msgstr "Tartomány"
 
 #: ../ui/settings.glade:4949
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "Újra megjelenítés, ha az oldal nagyítása változik több mint: "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2946,7 +2948,7 @@ msgstr "Kijelölt szín (szöveg, vonásírás kijelölése stb.)"
 
 #: ../ui/settings.glade:3481
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Kijelölés élpásztázás"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3013,7 +3015,7 @@ msgstr "Igazítás"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Forráskód/Hibakövető"
 
 #: ../ui/settings.glade:3842
 msgid "Speed for Ctrl + Scroll"
@@ -3306,7 +3308,7 @@ msgstr "_Oldal törlése"
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "_Szerkesztés"
+msgstr "S_zerkesztés"
 
 #: ../ui/main.glade:1329
 msgid "_Eraser"
@@ -3346,7 +3348,7 @@ msgstr "_Kép"
 
 #: ../ui/main.glade:1155
 msgid "_Journal"
-msgstr "_Napló"
+msgstr "N_apló"
 
 #: ../ui/main.glade:1074
 msgid "_Last Page"
@@ -3362,7 +3364,7 @@ msgstr "_ Kezelés"
 
 #: ../ui/main.glade:1019
 msgid "_Navigation"
-msgstr "_Navigáció"
+msgstr "Navigá_ció"
 
 #: ../ui/main.glade:1102
 msgid "_Next Layer"
@@ -3374,7 +3376,7 @@ msgstr "_Következő oldal"
 
 #: ../ui/main.glade:512
 msgid "_Pair Pages"
-msgstr "_Páros oldalak"
+msgstr "Oldalak _párosítása"
 
 #: ../ui/main.glade:1317
 msgid "_Pen"
