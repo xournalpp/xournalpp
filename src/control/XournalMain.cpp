@@ -101,12 +101,12 @@ auto migrateSettings() -> MigrateResult {
             Util::ensureFolderExists(newConfigPath.parent_path());
             try {
                 fs::copy(oldPath, newConfigPath, fs::copy_options::recursive);
-                constexpr auto msg = "Due to a recent update, Xournal++ has changed where it's configuration files are "
+                constexpr auto msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
                                      "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
                 return {MigrateStatus::Success, FS(_F(msg) % oldPath.u8string() % newConfigPath.u8string())};
             } catch (fs::filesystem_error const& except) {
                 constexpr auto msg =
-                        "Due to a recent update, Xournal++ has changed where it's configuration files are "
+                        "Due to a recent update, Xournal++ has changed where its configuration files are "
                         "stored.\nHowever, when attempting to copy\n\t{1}\nto\n\t{2}\nmigration failed:\n{3}";
                 g_message("Migration failed: %s", except.what());
                 return {MigrateStatus::Failure,
