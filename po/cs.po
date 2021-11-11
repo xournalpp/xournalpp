@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-30 18:08+0000\n"
-"PO-Revision-Date: 2021-10-30 18:16\n"
+"POT-Creation-Date: 2021-11-11 18:04+0000\n"
+"PO-Revision-Date: 2021-11-11 19:03\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -801,7 +801,7 @@ msgstr "Světle modrá"
 msgid "Light Green"
 msgstr "Světle zelená"
 
-#: ../src/gui/PageView.cpp:703
+#: ../src/gui/PageView.cpp:713
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
@@ -1547,7 +1547,7 @@ msgstr "Aktuální dokument neobsahuje žádnou stránku {1}\n"
 "Přejete si tuto stránku vložit?\n\n"
 "Tip: Můžete vybrat Zápisník → Pozadí papíru → PDF pozadí pro vložení stránky z PDF."
 
-#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
+#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:130
 msgid "Zoom Slider"
 msgstr "Nastavení přiblížení"
 
