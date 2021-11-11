@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-07 06:03+0000\n"
-"PO-Revision-Date: 2021-11-08 09:25\n"
+"POT-Creation-Date: 2021-11-11 18:04+0000\n"
+"PO-Revision-Date: 2021-11-11 19:03\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -1531,7 +1531,7 @@ msgid "Your current document does not contain PDF Page no {1}\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
+#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:130
 msgid "Zoom Slider"
 msgstr ""
 
