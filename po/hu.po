@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-07 06:03+0000\n"
-"PO-Revision-Date: 2021-11-08 11:33\n"
+"POT-Creation-Date: 2021-11-11 18:04+0000\n"
+"PO-Revision-Date: 2021-11-11 19:03\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1546,7 +1546,7 @@ msgstr "Jelenlegi napló nem tartalmaz PDF-oldalszámot: {1}\n"
 "Szeretné beszúrni ezt az oldalt?\n\n"
 "Tipp: PDF-oldal beszúrásához válassza a Napló → Papírháttér → PDF-háttérrel lehetőséget."
 
-#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
+#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:130
 msgid "Zoom Slider"
 msgstr "Nagyítócsúszka"
 
