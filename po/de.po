@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-07 06:03+0000\n"
-"PO-Revision-Date: 2021-11-08 09:25\n"
+"POT-Creation-Date: 2021-11-11 18:04+0000\n"
+"PO-Revision-Date: 2021-11-11 19:04\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1547,7 +1547,7 @@ msgstr "Ihr aktuelles Dokument beinhaltet die PDF Seite {1} nicht\n"
 "Möchten Sie diese Seite einfügen?\n\n"
 "Tipp: Sie können im Menü Journal → Seitenhintergrund → PDF-Hintergrund eine beliebige PDF Seite einfügen."
 
-#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
+#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:130
 msgid "Zoom Slider"
 msgstr "Zoom-Regler"
 
@@ -2050,7 +2050,7 @@ msgstr "Alle drei Bedingungen müssen erfüllt sein, bevor der Strich ignoriert 
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr "Überprüfen Sie vor dem Ausführen immer die LaTeX-Abhängigkeiten"
+msgstr "LaTeX-Abhängigkeiten vor dem Ausführen immer überprüfen"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
