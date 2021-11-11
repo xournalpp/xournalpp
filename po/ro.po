@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-07 06:03+0000\n"
-"PO-Revision-Date: 2021-11-08 09:25\n"
+"POT-Creation-Date: 2021-11-11 18:04+0000\n"
+"PO-Revision-Date: 2021-11-11 19:03\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1540,7 +1540,7 @@ msgstr "Documentul dvs. nu conține pagina PDF nr. {1}\n"
 "Doriți să inserați această pagină?\n\n"
 "Sfat: Puteţi selecta Journal → Fundal Pagină → PDF Fundal pentru a insera o pagină PDF."
 
-#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:73
+#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:130
 msgid "Zoom Slider"
 msgstr "Glisor zoom"
 
