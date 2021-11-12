@@ -4,7 +4,7 @@
 
 #include "InputContext.h"
 
-#include "util/DeviceListHelper.h"
+#include "control/settings/DeviceListHelper.h"
 
 #include "InputEvents.h"
 

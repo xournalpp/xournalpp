@@ -2,9 +2,11 @@
 
 ## How to add a new test
 
-Add a new `.cpp` file somewhere within `test/unit_tests`.
-This test will be automatically discovered by gtest (see `gtest_discover_tests` in `CMakeLists.txt`).
+Add a new `.cpp` file under the respective folder within `test/unit_tests` analogous to the hierarchy in `src`.
+If the directory already exists, this test will be automatically discovered by gtest (see `gtest_discover_tests` in `CMakeLists.txt`).
 However, **you still need to call** `touch test/CMakeLists.txt` as otherwise the `GLOB` recursive lookup for test files will not be triggered!!!
+
+If the directory does not yet exist you need to create a new test program (see below section).
 
 A basic example for a test file would be 
 
@@ -21,7 +23,12 @@ TEST(HelloTest, BasicAssertions) {
 ```
 as taken from the official [docs](http://google.github.io/googletest/quickstart-cmake.html).
 
-As all `test/unit_tests` are built with a dependency on `xournalpp-core` you can include any file from `src` as you would in the main code.
+This distinction between subdirectories is done to reduce build & test time when working on only one part of the project.
+Right now this is only implemented for the `unit-tests-util` target as the dependencies in the `src` file are not yet disentangled sufficiently.
+
+This way of narrowing down the build scope also allows to test for the intended boundaries of parts of the application.
+For example, if anyone will implement code in `src/util` which includes parts from outside `src/util` the CI will fail as the test cannot even be built.
+This is a feature not a bug of this approach, as it makes the architectural impact of changes testable to some degree.
 
 ## How to migrate existing CPPUnit Test code
 
@@ -35,7 +42,8 @@ It's mostly:
 
 ## How to add a new test program
 
-First why: This would make sense in case you have a very different testing usecase than with unit-tests and you might want to collect code coverage separately. Otherwise, adding to unit-tests is way simpler and preferred as  `gtest_discover_tests` does all the book keeping for you then.
+First why: This makes sense either if you are adding unit tests for a whole new part of the application which is not covered yet, or if you're intending to write something that is not really a unit test.
+Otherwise, adding to tests to the existent tests is way simpler and preferred as  `gtest_discover_tests` does all the book keeping for you then.
 
 * create a new folder for your test program
 * add the definition of your test program to `test/CMakeLists.txt`
@@ -43,10 +51,23 @@ First why: This would make sense in case you have a very different testing useca
 
 For further pointers see the official [Quickstart Cmake Guide](http://google.github.io/googletest/quickstart-cmake.html).
 
+## Problems when building tests
+
+If you added a file to an existing unit-test directory and the build step fails the following might have happened.
+
+ 1. Your test includes a file from a different corresponding folder in `src`
+     - This is a good indication that your test is not really a unit test of the specific part of the application. 
+       E.g. If you're including `model/Stroke.h` from a unit test in `unit-tests/util` then it is questionable whether this is a real unit test for `util`.
+     - In this case you probably want to either move you're whole test file or at least some parts to a different part of the testing directory.
+       If there is no fitting place, then you might actually need to create a new test program, but this is really not as much work as it sounds (see above).
+ 2. Changes you did in the code violated a component boundary of the architecture of the application.
+     - E.g. If in a `util/String.h` file you include `model/Stroke.h` it is questionable if the `String.h` code is really a util code or is rather something specific to `model`
+     - In this case refactoring your code change is probably the best idea. The simplest solution is to just move the relevant file in a different part of the source code (of course as long as this is also semantically reasonable).
+
 ## Problems running `make test`
 
-If CMake is generating UNIX Makefiles and `make test` fails with  the error `Unable to find executable: test-units_NOT_BUILT`, make sure that:
- 1. `make test-units` has been run (to compile the test executable)
+If CMake is generating UNIX Makefiles and `make test` fails with  the error `Unable to find executable: unit_test_util_NOT_BUILT`, make sure that:
+ 1. `make all-unit-tests` has been run (to compile the test executable)
  2. The project was configured with `-DENABLE_GTEST=ON` (e.g. by configuring with `cmake .. -DENABLE_GTEST=ON`)
 
  The fact that 1. is not handled automatically seems to be a known limitation of CMake (see [issue](https://gitlab.kitware.com/cmake/cmake/-/issues/8774) and [stackoverflow](https://stackoverflow.com/questions/733475/cmake-ctest-make-test-doesnt-build-tests)).

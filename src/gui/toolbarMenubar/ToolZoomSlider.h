@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "control/zoom/ZoomListener.h"
-#include "util/IconNameHelper.h"
+#include "gui/IconNameHelper.h"
 
 #include "AbstractToolItem.h"
 

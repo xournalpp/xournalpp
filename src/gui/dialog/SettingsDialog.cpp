@@ -4,11 +4,11 @@
 
 #include <config.h>
 
+#include "control/settings/DeviceListHelper.h"
 #include "control/tools/StrokeStabilizerEnum.h"
 #include "gui/widgets/ZoomCallib.h"
 
 #include "ButtonConfigGui.h"
-#include "DeviceListHelper.h"
 #include "StringUtils.h"
 #include "Util.h"
 #include "i18n.h"
@@ -155,14 +155,10 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
 }
 
 SettingsDialog::~SettingsDialog() {
-    for (ButtonConfigGui* bcg: this->buttonConfigs) {
-        delete bcg;
-    }
+    for (ButtonConfigGui* bcg: this->buttonConfigs) { delete bcg; }
     this->buttonConfigs.clear();
 
-    for (DeviceClassConfigGui* dev: this->deviceClassConfigs) {
-        delete dev;
-    }
+    for (DeviceClassConfigGui* dev: this->deviceClassConfigs) { delete dev; }
     this->deviceClassConfigs.clear();
 
     // DO NOT delete settings!
@@ -834,9 +830,7 @@ void SettingsDialog::save() {
 
     settings->setDisplayDpi(dpi);
 
-    for (ButtonConfigGui* bcg: this->buttonConfigs) {
-        bcg->saveSettings();
-    }
+    for (ButtonConfigGui* bcg: this->buttonConfigs) { bcg->saveSettings(); }
 
     languageConfig->saveSettings();
 
@@ -900,9 +894,7 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<double>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
-    for (DeviceClassConfigGui* deviceClassConfigGui: this->deviceClassConfigs) {
-        deviceClassConfigGui->saveSettings();
-    }
+    for (DeviceClassConfigGui* deviceClassConfigGui: this->deviceClassConfigs) { deviceClassConfigGui->saveSettings(); }
 
     this->latexPanel.save(settings->latexSettings);
 

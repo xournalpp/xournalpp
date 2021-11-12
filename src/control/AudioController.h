@@ -14,10 +14,10 @@
 #include <string>
 #include <vector>
 
+#include "control/audio/AudioPlayer.h"
+#include "control/audio/AudioRecorder.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "settings/Settings.h"
-#include "util/audio/AudioPlayer.h"
-#include "util/audio/AudioRecorder.h"
 
 #include "Control.h"
 #include "filesystem.h"

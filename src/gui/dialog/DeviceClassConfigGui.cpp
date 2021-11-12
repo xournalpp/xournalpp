@@ -3,8 +3,8 @@
 #include <config.h>
 
 #include "control/settings/ButtonConfig.h"
+#include "control/settings/DeviceListHelper.h"
 #include "control/settings/Settings.h"
-#include "util/DeviceListHelper.h"
 
 #include "SettingsDialog.h"
 #include "Util.h"

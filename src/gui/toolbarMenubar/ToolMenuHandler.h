@@ -14,7 +14,7 @@
 #include <gtk/gtk.h>
 
 #include "control/Actions.h"
-#include "util/IconNameHelper.h"
+#include "gui/IconNameHelper.h"
 
 #include "ColorToolItem.h"
 #include "MenuItem.h"

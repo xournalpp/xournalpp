@@ -11,10 +11,10 @@
 
 #include <config-dev.h>
 
+#include "control/CrashHandler.h"
 #include "control/XournalMain.h"
 #include "util/logger/Logger.h"
 
-#include "CrashHandler.h"
 #include "Stacktrace.h"
 
 #ifdef _WIN32

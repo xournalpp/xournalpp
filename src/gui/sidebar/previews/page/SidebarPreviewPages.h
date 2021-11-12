@@ -16,8 +16,8 @@
 #include <utility>
 #include <vector>
 
+#include "gui/IconNameHelper.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
-#include "util/IconNameHelper.h"
 
 
 class SidebarPreviewPages: public SidebarPreviewBase {

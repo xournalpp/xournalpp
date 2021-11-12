@@ -15,8 +15,8 @@
 #include <vector>
 
 #include "control/layer/LayerCtrlListener.h"
+#include "gui/IconNameHelper.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
-#include "util/IconNameHelper.h"
 
 
 class SidebarPreviewLayers: public SidebarPreviewBase, public LayerCtrlListener {

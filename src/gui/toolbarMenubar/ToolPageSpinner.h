@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-#include "util/IconNameHelper.h"
+#include "gui/IconNameHelper.h"
 
 #include "AbstractToolItem.h"
 

@@ -12,9 +12,9 @@
 #pragma once
 
 #include "control/Control.h"
+#include "control/audio/DeviceInfo.h"
 #include "control/settings/Settings.h"
 #include "gui/GladeGui.h"
-#include "util/audio/DeviceInfo.h"
 
 #include "DeviceClassConfigGui.h"
 #include "LanguageConfigGui.h"

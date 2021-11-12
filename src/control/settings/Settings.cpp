@@ -2,8 +2,8 @@
 
 #include <utility>
 
+#include "control/settings/DeviceListHelper.h"
 #include "model/FormatDefinitions.h"
-#include "util/DeviceListHelper.h"
 
 #include "ButtonConfig.h"
 #include "Util.h"

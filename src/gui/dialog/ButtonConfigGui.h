@@ -14,9 +14,9 @@
 #include <gdk/gdk.h>
 
 #include "control/Actions.h"
+#include "control/settings/DeviceListHelper.h"
 #include "gui/GladeGui.h"
-#include "util/DeviceListHelper.h"
-#include "util/IconNameHelper.h"
+#include "gui/IconNameHelper.h"
 
 class Settings;
 class SettingsDialog;

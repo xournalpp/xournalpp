@@ -4,11 +4,11 @@
 
 #include "TouchDrawingInputHandler.h"
 
+#include "control/settings/DeviceListHelper.h"
 #include "gui/XournalppCursor.h"
 #include "gui/inputdevices/InputUtils.h"
 #include "gui/widgets/XournalWidget.h"
 #include "model/Stroke.h"
-#include "util/DeviceListHelper.h"
 
 #include "InputContext.h"
 

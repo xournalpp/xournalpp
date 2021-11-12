@@ -1,12 +1,17 @@
 #include "MainWindow.h"
 
+#include <utility>
+
 #include <config-dev.h>
 #include <config-features.h>
 #include <config.h>
+#include <gdk/gdk.h>
 
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
+#include "control/settings/DeviceListHelper.h"
 #include "gui/GladeSearchpath.h"
+#include "gui/inputdevices/InputEvents.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "toolbarMenubar/ToolMenuHandler.h"
 #include "toolbarMenubar/model/ToolbarData.h"
@@ -21,13 +26,6 @@
 #include "XojMsgBox.h"
 #include "XournalView.h"
 #include "i18n.h"
-
-#include <utility>
-
-#include <gdk/gdk.h>
-
-#include "gui/inputdevices/InputEvents.h"
-#include "util/DeviceListHelper.h"
 
 using std::string;
 

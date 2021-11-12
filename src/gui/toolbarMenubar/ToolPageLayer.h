@@ -14,7 +14,7 @@
 #include <map>
 
 #include "control/layer/LayerCtrlListener.h"
-#include "util/IconNameHelper.h"
+#include "gui/IconNameHelper.h"
 
 #include "AbstractToolItem.h"
 

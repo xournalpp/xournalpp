@@ -16,8 +16,8 @@
 
 #include <gtk/gtk.h>
 
+#include "gui/IconNameHelper.h"
 #include "gui/sidebar/AbstractSidebarPage.h"
-#include "util/IconNameHelper.h"
 
 
 class Control;
