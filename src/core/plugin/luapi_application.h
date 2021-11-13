@@ -787,6 +787,7 @@ static int applib_getToolInfo(lua_State* L) {
  *   }
  *   "currentPage" = integer,
  *   "pdfBackgroundFilename" = string (empty if there is none)
+ *   "xoppFilename" = string (empty if there is none)
  * }
  *
  * Example: local docStructure = app.getDocumentStructure()
@@ -892,6 +893,10 @@ static int applib_getDocumentStructure(lua_State* L) {
 
     lua_pushliteral(L, "pdfBackgroundFilename");
     lua_pushstring(L, doc->getPdfFilepath().string().c_str());
+    lua_settable(L, -3);
+
+    lua_pushliteral(L, "xoppFilename");
+    lua_pushstring(L, doc->getFilepath().string().c_str());
     lua_settable(L, -3);
 
     return 1;
