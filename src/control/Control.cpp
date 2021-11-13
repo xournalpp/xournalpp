@@ -976,7 +976,7 @@ void Control::selectFillAlpha(bool pen) {
         alpha = toolHandler->getHighlighterFill();
     }
 
-    FillOpacityDialog dlg(gladeSearchPath, alpha);
+    FillOpacityDialog dlg(gladeSearchPath, alpha, pen);
     dlg.show(getGtkWindow());
 
     if (dlg.getResultAlpha() == -1) {
