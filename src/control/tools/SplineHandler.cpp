@@ -91,7 +91,7 @@ void SplineHandler::draw(cairo_t* cr) {
     // create stroke and draw spline
     this->updateStroke();
     if (this->getKnotCount() > 1) {
-        view.drawStroke(cr, stroke, 0);
+        view.drawStroke(cr, stroke);
     }
 }
 

@@ -31,7 +31,7 @@ void BaseStrokeHandler::draw(cairo_t* cr) {
     int dpiScaleFactor = xournal->getDpiScaleFactor();
 
     cairo_scale(cr, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
-    view.drawStroke(cr, stroke, 0);
+    view.drawStroke(cr, stroke);
 }
 
 auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {

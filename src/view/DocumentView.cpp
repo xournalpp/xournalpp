@@ -25,9 +25,9 @@ void DocumentView::setMarkAudioStroke(bool markAudioStroke) { this->markAudioStr
 void DocumentView::applyColor(cairo_t* cr, Stroke* s) {
     if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
         if (s->getFill() != -1) {
-            applyColor(cr, s, s->getFill());
+            applyColor(cr, s, static_cast<uint8_t>(s->getFill()));
         } else {
-            applyColor(cr, s, 120);
+            applyColor(cr, s, StrokeView::HIGHLIGHTER_ALPHA);
         }
     } else {
         applyColor(cr, static_cast<Element*>(s));
@@ -40,21 +40,16 @@ void DocumentView::applyColor(cairo_t* cr, Color c, uint8_t alpha) {
     Util::cairo_set_source_rgbi(cr, c, alpha / 255.0);
 }
 
-void DocumentView::drawStroke(cairo_t* cr, Stroke* s, int startPoint, double scaleFactor, bool changeSource,
-                              bool noAlpha) const {
+void DocumentView::drawStroke(cairo_t* cr, Stroke* s, bool noColor) const {
     if (s->getPointCount() < 2) {
         // Should not happen
         g_warning("DocumentView::drawStroke empty stroke...");
         return;
     }
 
-    StrokeView sv(cr, s, startPoint, scaleFactor, noAlpha);
+    StrokeView sv(cr, s);
 
-    if (changeSource) {
-        sv.changeCairoSource(this->markAudioStroke);
-    }
-
-    sv.paint(this->dontRenderEditingStroke);
+    sv.paint(this->dontRenderEditingStroke, this->markAudioStroke, noColor);
 }
 
 void DocumentView::drawText(cairo_t* cr, Text* t) const {

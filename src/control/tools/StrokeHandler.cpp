@@ -37,13 +37,20 @@ void StrokeHandler::draw(cairo_t* cr) {
         return;
     }
 
+    if (this->fullRedraw) {
+        /**
+         * Erase the mask entirely in this case
+         */
+        cairo_set_operator(crMask, CAIRO_OPERATOR_CLEAR);
+        cairo_paint(crMask);
+
+        cairo_set_operator(crMask, CAIRO_OPERATOR_SOURCE);
+        view.drawStroke(crMask, stroke, true);
+    }
     DocumentView::applyColor(cr, stroke);
 
-    if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
-        cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
-    } else {
-        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-    }
+    cairo_set_operator(
+            cr, stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER);
 
     cairo_mask_surface(cr, surfMask, 0, 0);
 }
@@ -129,32 +136,21 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
     Range rg(prevPoint.x, prevPoint.y);
     rg.addPoint(point.x, point.y);
 
-    if ((stroke->getFill() != -1 || stroke->getLineStyle().hasDashes()) &&
-        !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)) {
-        // Clear surface
-
-        // for debugging purposes
-        // cairo_set_source_rgba(crMask, 1, 0, 0, 1);
-        cairo_set_source_rgba(crMask, 0, 0, 0, 0);
-        cairo_rectangle(crMask, 0, 0, cairo_image_surface_get_width(surfMask),
-                        cairo_image_surface_get_height(surfMask));
-        cairo_fill(crMask);
-
-        view.drawStroke(crMask, stroke, 0, 1, true, true);
-
+    if (stroke->getFill() != -1) {
+        /**
+         * Add the first point to the redraw range, so that the filling is painted.
+         * Note: the actual stroke painting will only happen in this->draw() which is called less often
+         */
         const Point& firstPoint = stroke->getPointVector().front();
         rg.addPoint(firstPoint.x, firstPoint.y);
-    } else {
+    } else if (!this->fullRedraw) {
         Stroke lastSegment;
 
         lastSegment.addPoint(prevPoint);
         lastSegment.addPoint(point);
         lastSegment.setWidth(width);
 
-        cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
-        cairo_set_source_rgba(crMask, 1, 1, 1, 1);
-
-        view.drawStroke(crMask, &lastSegment, 0, 1, false);
+        view.drawStroke(crMask, &lastSegment, true);
     }
 
     width = prevPoint.z != Point::NO_PRESSURE ? prevPoint.z : width;
@@ -258,19 +254,11 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         }
     }
 
-    if (stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
-        // The stroke is not filled on drawing time
-        // If the stroke has fill values, it needs to be re-rendered
-        // else the fill will not be visible.
-
-        view.drawStroke(crMask, stroke, 0, 1, true, true);
-    }
-
     layer->addElement(stroke);
     page->fireElementChanged(stroke);
 
     // Manually force the rendering of the stroke, if no motion event occurred between, that would rerender the page.
-    if (stroke->getPointCount() == 2 || (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER && stroke->getFill() != -1)) {
+    if (stroke->getPointCount() == 2) {
         this->redrawable->rerenderElement(stroke);
     }
 
@@ -334,26 +322,7 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
     destroySurface();
 
-    double zoom = xournal->getZoom();
-    PageRef page = redrawable->getPage();
-
-    int dpiScaleFactor = xournal->getDpiScaleFactor();
-
-    double width = page->getWidth() * zoom * dpiScaleFactor;
-    double height = page->getHeight() * zoom * dpiScaleFactor;
-
-    surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
-
-    crMask = cairo_create(surfMask);
-
-    // for debugging purposes
-    // cairo_set_source_rgba(crMask, 0, 0, 0, 1);
-    cairo_set_source_rgba(crMask, 0, 0, 0, 0);
-    cairo_rectangle(crMask, 0, 0, width, height);
-
-    cairo_fill(crMask);
-
-    cairo_scale(crMask, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
+    const double zoom = xournal->getZoom();
 
     if (!stroke) {
         this->buttonDownPoint.x = pos.x / zoom;
@@ -362,8 +331,29 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
         createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
 
         this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
+        this->fullRedraw = this->stroke->getFill() != -1 || stroke->getLineStyle().hasDashes();
 
         stabilizer->initialize(this, zoom, pos);
+    }
+
+    {  // Initialize the mask
+        const double ratio = zoom * static_cast<double>(xournal->getDpiScaleFactor());
+
+        std::unique_ptr<Rectangle<double>> visibleRect(xournal->getVisibleRect(redrawable));
+
+        // We add a padding to limit graphical bugs when scrolling right after completing a stroke
+        const double strokeWidth = this->stroke->getWidth();
+        const int width = static_cast<int>(std::ceil((visibleRect->width + strokeWidth) * ratio));
+        const int height = static_cast<int>(std::ceil((visibleRect->height + strokeWidth) * ratio));
+
+        surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
+
+        cairo_surface_set_device_offset(surfMask, (0.5 * strokeWidth - visibleRect->x) * ratio,
+                                        (0.5 * strokeWidth - visibleRect->y) * ratio);
+
+        crMask = cairo_create(surfMask);
+
+        cairo_scale(crMask, ratio, ratio);
     }
 
     this->startStrokeTime = pos.timestamp;
