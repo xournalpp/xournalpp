@@ -80,6 +80,12 @@ void initLocalisation() {
                   "xournalpp with msvc",
                   e.what());
     }
+    /**
+     * Force numbers to be printed out and parsed by C libraries (cairo) in the "classic" locale.
+     * This avoids issue with tags when exporting to PDF, see #3551
+     */
+    setlocale(LC_NUMERIC, "C");
+
     std::cout.imbue(std::locale());
 }
 

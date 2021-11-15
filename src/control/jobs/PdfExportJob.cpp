@@ -33,10 +33,9 @@ void PdfExportJob::run() {
     doc->unlock();
 
     if (!pdfe->createPdf(this->filepath, false)) {
+        this->errorMsg = pdfe->getLastError();
         if (control->getWindow()) {
             callAfterRun();
-        } else {
-            this->errorMsg = pdfe->getLastError();
         }
     }
 
