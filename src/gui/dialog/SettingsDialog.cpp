@@ -297,7 +297,8 @@ void SettingsDialog::customHandRecognitionToggled() {
 void SettingsDialog::customStylusIconTypeChanged() {
     GtkWidget* cbStylusCursorType = get("cbStylusCursorType");
     int stylusCursorType = gtk_combo_box_get_active(GTK_COMBO_BOX(cbStylusCursorType));
-    bool showCursorHighlightOptions = stylusCursorType != STYLUS_CURSOR_NONE;
+    bool showCursorHighlightOptions =
+            (stylusCursorType != STYLUS_CURSOR_NONE && stylusCursorType != STYLUS_CURSOR_ARROW);
     gtk_widget_set_sensitive(get("highlightCursorGrid"), showCursorHighlightOptions);
 }
 
@@ -482,6 +483,9 @@ void SettingsDialog::load() {
             break;
         case STYLUS_CURSOR_BIG:
             gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbStylusCursorType")), 2);
+            break;
+        case STYLUS_CURSOR_ARROW:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbStylusCursorType")), 3);
             break;
         case STYLUS_CURSOR_DOT:
         default:
@@ -738,6 +742,9 @@ void SettingsDialog::save() {
             break;
         case 2:
             settings->setStylusCursorType(STYLUS_CURSOR_BIG);
+            break;
+        case 3:
+            settings->setStylusCursorType(STYLUS_CURSOR_ARROW);
             break;
         case 1:
         default:

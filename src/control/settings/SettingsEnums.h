@@ -66,6 +66,7 @@ enum StylusCursorType {
     STYLUS_CURSOR_NONE = 0,
     STYLUS_CURSOR_DOT = 1,
     STYLUS_CURSOR_BIG = 2,
+    STYLUS_CURSOR_ARROW = 3,
 };
 
 constexpr auto buttonToString(Button button) -> const char* {
@@ -97,6 +98,8 @@ constexpr auto stylusCursorTypeToString(StylusCursorType stylusCursorType) -> co
             return "dot";
         case STYLUS_CURSOR_BIG:
             return "big";
+        case STYLUS_CURSOR_ARROW:
+            return "arrow";
         default:
             return "unknown";
     }
