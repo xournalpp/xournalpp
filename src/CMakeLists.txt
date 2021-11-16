@@ -139,5 +139,5 @@ install (TARGETS xournalpp
 )
 
 if (ENABLE_GTEST)
-  add_subdirectory (${CMAKE_SOURCE_DIR}/test ${CMAKE_BINARY_DIR}/test)
+  add_subdirectory (${CMAKE_SOURCE_DIR}/test ${CMAKE_BINARY_DIR}/test EXCLUDE_FROM_ALL)
 endif (ENABLE_GTEST)

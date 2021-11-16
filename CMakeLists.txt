@@ -148,19 +148,10 @@ add_includes_ldflags ("${SNDFILE_LDFLAGS}" "${SNDFILE_INCLUDE_DIRS}")
 ## Additional features ##
 # Testing Framework: gtest
 option (ENABLE_GTEST "Enable gtest build for xournalpp application" OFF)
-if (ENABLE_GTEST)
-    include(FetchContent)
-    FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
-    )
-	# Prevent reloading if already downloaed
-	set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
-    # For Windows: Prevent overriding the parent project's compiler/linker settings
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    FetchContent_MakeAvailable(googletest)
+if(ENABLE_GTEST)
 	enable_testing()
-endif (ENABLE_GTEST)
+endif()
+
 
 # Plugins / scripting
 find_package (Lua 5.3 EXACT)
@@ -269,6 +260,9 @@ add_subdirectory (src)
 
 ## Man page generation ##
 add_subdirectory (man)
+
+## Tests ##
+# ./test is added via src to enable cleaner includes
 
 ## Final targets and installing ##
 
