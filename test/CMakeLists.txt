@@ -17,13 +17,30 @@ if(MACOSX)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
 endif()
 
+
+# Download and Build GoogleTest
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+)
+# Prevent reloading if already downloaed
+set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+# Prevent GoogleTest from being installed with xournalpp
+# This is not strictly necessary as add_subdirectory is called on ./test with
+# EXCLUDE_FROM_ALL, but better safe than sorry
+option(INSTALL_GTEST "Enable installation of googletest." OFF)
+FetchContent_MakeAvailable(googletest)
+
 # Load configure file including constants and helper Macros
 configure_file (
     config-test.h.in
     config-test.h
     ESCAPE_QUOTES @ONLY
 )
-include(GoogleTest)
 
 
 ###############################################################################
@@ -49,10 +66,11 @@ target_link_libraries (test-units ${xournalpp_LDFLAGS} std::filesystem gtest_mai
 target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/test")
 
 ###############################################################################
-# Register Tests
+# Discover and Register Tests
 ###############################################################################
 # MacOs needs a bit longer to find the tests on azure
 # Hence, set the timeout to 30s (default 5s)
+include(GoogleTest)
 gtest_discover_tests(test-units DISCOVERY_TIMEOUT 30)
 
 
