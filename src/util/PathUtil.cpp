@@ -193,7 +193,7 @@ auto Util::getGettextFilepath(const char* localeDir) -> fs::path {
 }
 
 auto Util::getAutosaveFilepath() -> fs::path {
-    fs::path p(getConfigSubfolder("autosave"));
+    fs::path p(getCacheSubfolder("autosaves"));
     p /= std::to_string(getPid()) + ".xopp";
     return p;
 }
