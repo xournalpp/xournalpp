@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-15 18:06+0000\n"
-"PO-Revision-Date: 2021-11-15 18:43\n"
+"PO-Revision-Date: 2021-11-18 10:00\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -566,7 +566,7 @@ msgstr "PDF olarak dışa aktar"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Export as PDF"
-msgstr ""
+msgstr "PDF olarak dışa aktar"
 
 #: ../src/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
@@ -2658,7 +2658,7 @@ msgstr "En fazla Uzunluk (mm)"
 
 #: ../ui/settings.glade:3467
 msgid "Max multiplier"
-msgstr ""
+msgstr "En fazla çarpan"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2729,7 +2729,7 @@ msgstr ""
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:217
 #: ../ui/settings.glade:234
 msgid "None"
-msgstr ""
+msgstr "Hiçbiri"
 
 #: ../ui/settings.glade:4306
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2737,7 +2737,7 @@ msgstr "<b>Sayfaları Eşleştir</b> etkin olduğunda ilk sayfayı bu kadar sayf
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "Opaklık ayarları"
 
 #: ../ui/settings.glade:933
 msgid "Options"
@@ -2749,7 +2749,7 @@ msgstr "Çıktı Aygıtı"
 
 #: ../ui/settings.glade:5020
 msgid "PDF Cache"
-msgstr ""
+msgstr "PDF Önbellek"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
@@ -3043,7 +3043,7 @@ msgstr "Ardışık (ms)"
 #: ../ui/settings.glade:3002
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "Sistem imleci"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
@@ -3174,7 +3174,8 @@ msgstr ""
 #: ../ui/settings.glade:4947
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "Yüksek çözünürlüklü bir PDF'e yakınlaştırıldığında, her yeniden oluşturma işlemi uzun zaman alabilir. Bunu büyük bir değere ayarlamak, bu yeniden oluşturmaların daha az sıklıkta gerçekleşmesine neden olur.\n\n"
+"Yakınlaştırmada her zaman yeniden işlemek için bunu %0'a ayarlayın."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
