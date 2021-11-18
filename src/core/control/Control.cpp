@@ -179,7 +179,7 @@ void Control::renameLastAutosaveFile() {
     Util::clearExtensions(renamed);
     if (!filename.empty() && filename.string().front() != '.') {
         // This file must be a fresh, unsaved document. Since this file is
-        // already in ~/.xournalpp/autosave/, we need to change the renamed filename.
+        // already in the autosave directory, we need to change the renamed filename.
         renamed += ".old.autosave.xopp";
     } else {
         // The file is a saved document with the form ".<filename>.autosave.xopp"
