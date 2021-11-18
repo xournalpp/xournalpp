@@ -410,13 +410,6 @@ auto Document::operator=(const Document& doc) -> Document& {
     buildContentsModel();
     updateIndexPageNumbers();
 
-    bool lastLock = tryLock();
-    unlock();
-    this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-    if (!lastLock)  // document was locked before
-    {
-        lock();
-    }
     return *this;
 }
 
