@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-15 18:06+0000\n"
-"PO-Revision-Date: 2021-11-15 18:43\n"
+"PO-Revision-Date: 2021-11-18 16:45\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -566,7 +566,7 @@ msgstr "Esporta PDF"
 
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
 msgid "Export as PDF"
-msgstr ""
+msgstr "Esporta come PDF"
 
 #: ../src/control/XournalMain.cpp:664
 msgid "Export layers progressively\n"
@@ -3062,7 +3062,7 @@ msgstr "Successivo (ms)"
 #: ../ui/settings.glade:3002
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "Cursore di sistema"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
