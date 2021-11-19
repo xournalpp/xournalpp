@@ -1983,7 +1983,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         return loadXoptTemplate(filepath);
     }
 
-    if (filepath.extension() == ".pdf") {
+    if (Util::hasPdfFileExt(filepath)) {
         return loadPdf(filepath, scrollToPage);
     }
 

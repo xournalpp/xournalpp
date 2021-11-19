@@ -40,10 +40,15 @@ namespace Util {
 [[maybe_unused]] [[nodiscard]] bool hasXournalFileExt(const fs::path& path);
 
 /**
- * Clear the the last known xournal extension (last .xoj, .xopp etc.)
+ * @return true if this file has a pdf extension
+ */
+bool hasPdfFileExt(const fs::path& path);
+
+/**
+ * Clear the xournal extensions ignoring case (.xoj, .xopp)
  *
  * @param ext An extension to clear additionally, eg .pdf (would also clear
- *  .pdf.xopp etc.)
+ *  .PDF.xopp etc.)
  */
 void clearExtensions(fs::path& path, const std::string& ext = "");
 
