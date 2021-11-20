@@ -88,24 +88,22 @@ void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool 
          */
         cairo_matrix_t matrix;
         cairo_get_matrix(cr, &matrix);
-        // We assume the matrix is an homothety (i.e. only a uniform scaling)
-        assert(matrix.xx == matrix.yy && matrix.xy == 0 && matrix.yx == 0);
-
-        const double ratio = matrix.xx;
+        // We assume the matrix is diagonal (i.e. only scaling, no rotation)
+        assert(matrix.xy == 0 && matrix.yx == 0);
 
         /**
          * Create a surface tailored to the stroke's bounding box
          */
         Rectangle<double> box = s->boundingRect();
 
-        const int width = static_cast<int>(std::ceil(box.width * ratio));
-        const int height = static_cast<int>(std::ceil(box.height * ratio));
+        const int width = static_cast<int>(std::ceil(box.width * matrix.xx));
+        const int height = static_cast<int>(std::ceil(box.height * matrix.yy));
 
         surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
 
         // Apply offset and scaling
-        cairo_surface_set_device_offset(surfMask, -box.x * ratio, -box.y * ratio);
-        cairo_surface_set_device_scale(surfMask, ratio, ratio);
+        cairo_surface_set_device_offset(surfMask, -box.x * matrix.xx, -box.y * matrix.yy);
+        cairo_surface_set_device_scale(surfMask, matrix.xx, matrix.yy);
 
         // Get a context to draw on our mask
         crEffective = cairo_create(surfMask);
