@@ -14,14 +14,9 @@
 /* --- Project info --- */
 
 /**
- * Full name of this project
+ * Full name of this project and package
  */
 constexpr auto PROJECT_NAME = "@PROJECT_NAME@";
-
-/**
- * Name of package
- */
-constexpr auto PROJECT_PACKAGE = "@PROJECT_PACKAGE@";
 
 /**
  * Project version number

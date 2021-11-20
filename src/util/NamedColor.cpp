@@ -1,23 +1,25 @@
-#include "NamedColor.h"
+#include "util/NamedColor.h"
 
 #include <sstream>
 
 #include "util/StringUtils.h"
 
 NamedColor::NamedColor():
-        paletteIndex{0}, isPaletteColor{false}, name{"Custom Color"}, color{Color(0u)}, colorU16{ColorU16{}} {}
+        paletteIndex{0}, name{"Custom Color"}, colorU16{ColorU16{}}, color{Color(0u)}, isPaletteColor{false} {}
 
 NamedColor::NamedColor(const size_t& paletteIndex):
         paletteIndex{paletteIndex},
-        isPaletteColor{true},
         name{"Fallback Color"},
+        colorU16{ColorU16{}},
         color{Color(0u)},
-        colorU16{ColorU16{}} {}
+        isPaletteColor{true} {}
 
-NamedColor::NamedColor(const Color& color): paletteIndex{0}, isPaletteColor{false}, name{"Custom Color"} {
-    this->color = color;
-    this->colorU16 = Util::GdkRGBA_to_ColorU16(Util::argb_to_GdkRGBA(color));
-};
+NamedColor::NamedColor(const Color& color):
+        paletteIndex{0},
+        name{"Custom Color"},
+        colorU16(Util::GdkRGBA_to_ColorU16(Util::argb_to_GdkRGBA(color))),
+        color(color),
+        isPaletteColor{false} {};
 
 auto operator>>(std::istream& str, NamedColor& namedColor) -> std::istream& {
     std::string line;

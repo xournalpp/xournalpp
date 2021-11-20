@@ -1158,7 +1158,7 @@ If the file was not yet saved you can find it in your home directory, in ~/.xour
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
                                             <property name="tooltip-text" translatable="yes">Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip.</property>
-                                            <property name="label" translatable="yes">σ</property>
+                                            <property name="label" translatable="no">σ</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">2</property>

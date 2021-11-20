@@ -1,3 +1,6 @@
+cmake_minimum_required(VERSION 3.12)
+cmake_policy(VERSION 3.12)
+
 if (WIN32)
   # Windows does not support man pages and has no thumbnailer like this
   return ()
@@ -12,10 +15,10 @@ if (HELP2MAN)
   set(MAN_FILE "${CMAKE_CURRENT_BINARY_DIR}/xournalpp.1.gz")
 
   add_custom_command(
-      OUTPUT ${MAN_FILE}
-      COMMAND ${HELP2MAN} --no-info -i ${MAN_INCLUDE} -o ${MAN_PAGE} --version-string=${PROJECT_VERSION} --name="open-source hand note-taking program" ${CMAKE_BINARY_DIR}/src/xournalpp
-      COMMAND gzip -n -f -9 ${MAN_PAGE}
-      DEPENDS ${CMAKE_BINARY_DIR}/src/xournalpp
+          OUTPUT ${MAN_FILE}
+          COMMAND ${HELP2MAN} --no-info -i ${MAN_INCLUDE} -o ${MAN_PAGE} --version-string=${PROJECT_VERSION} --name="open-source hand note-taking program" ${CMAKE_BINARY_DIR}/xournalpp
+          COMMAND gzip -n -f -9 ${MAN_PAGE}
+          DEPENDS ${CMAKE_BINARY_DIR}/xournalpp
   )
 
   set(MAN_PAGE_THUMBNAILER "${CMAKE_CURRENT_BINARY_DIR}/xournalpp-thumbnailer.1")

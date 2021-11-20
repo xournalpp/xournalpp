@@ -12,9 +12,12 @@
 #include <cstdlib>
 #include <ctime>
 
-#include <XojPreviewExtractor.h>
-#include <config-test.h>
 #include <gtest/gtest.h>
+
+#include "util/XojPreviewExtractor.h"
+
+#include "config-test.h"
+
 
 using namespace std;
 

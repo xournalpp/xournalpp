@@ -1,4 +1,4 @@
-#include "GzUtil.h"
+#include "util/GzUtil.h"
 
 auto GzUtil::openPath(const fs::path& path, const std::string& flags) -> gzFile {
 #ifdef _WIN32

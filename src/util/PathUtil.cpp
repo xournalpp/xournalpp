@@ -1,4 +1,4 @@
-#include "PathUtil.h"
+#include "util/PathUtil.h"
 
 #include <array>
 #include <fstream>
@@ -8,11 +8,11 @@
 #include <glib.h>
 #include <stdlib.h>
 
-#include "Stacktrace.h"
-#include "StringUtils.h"
-#include "Util.h"
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/Stacktrace.h"
+#include "util/StringUtils.h"
+#include "util/Util.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 #ifdef GHC_FILESYSTEM
 // Fix of ghc::filesystem bug (path::operator/=() won't support string_views)
@@ -308,7 +308,7 @@ auto Util::getDataPath() -> fs::path {
     auto exePath = std::string(szFileName);
     std::string::size_type pos = exePath.find_last_of("\\/");
     fs::path p = exePath.substr(0, pos);
-    p = p / ".." / "share" / PROJECT_PACKAGE;
+    p = p / ".." / "share" / PROJECT_NAME;
     return p;
 #elif defined(__APPLE__)
     fs::path p = Stacktrace::getExePath();
@@ -316,7 +316,7 @@ auto Util::getDataPath() -> fs::path {
     return p;
 #else
     fs::path p = PACKAGE_DATA_DIR;
-    p /= PROJECT_PACKAGE;
+    p /= PROJECT_NAME;
     return p;
 #endif
 }
