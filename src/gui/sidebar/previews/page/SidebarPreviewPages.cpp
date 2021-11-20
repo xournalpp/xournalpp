@@ -187,11 +187,6 @@ void SidebarPreviewPages::updatePreviews() {
     doc->lock();
     size_t len = doc->getPageCount();
 
-    if (this->previews.size() == len) {
-        doc->unlock();
-        return;
-    }
-
     for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
     this->previews.clear();
 
