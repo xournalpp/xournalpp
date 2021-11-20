@@ -32,8 +32,8 @@ auto XojPdfDocument::load(fs::path const& file, std::string password, GError** e
     return doc->load(file, password, error);
 }
 
-auto XojPdfDocument::load(gpointer data, gsize length, std::string password, GError** error) -> bool {
-    return doc->load(data, length, password, error);
+auto XojPdfDocument::load(GBytes* bytes, std::string password, GError** error) -> bool {
+    return doc->load(bytes, password, error);
 }
 
 auto XojPdfDocument::isLoaded() -> bool { return doc->isLoaded(); }

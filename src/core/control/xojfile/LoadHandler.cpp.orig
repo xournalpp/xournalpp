@@ -16,7 +16,11 @@
 #include "util/i18n.h"
 
 #include "LoadHandlerHelper.h"
+<<<<<<< HEAD:src/core/control/xojfile/LoadHandler.cpp
+=======
 #include "PathUtil.h"
+#include "i18n.h"
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked):src/control/xojfile/LoadHandler.cpp
 
 using std::string;
 

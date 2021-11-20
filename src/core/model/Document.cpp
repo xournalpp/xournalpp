@@ -280,14 +280,13 @@ void Document::updateIndexPageNumbers() {
     }
 }
 
-auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data, gsize length)
-        -> bool {
+auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDocument, GBytes* data) -> bool {
     GError* popplerError = nullptr;
 
     lock();
 
-    if (data != nullptr) {
-        if (!pdfDocument.load(data, length, password, &popplerError)) {
+    if (data != nullptr && g_bytes_get_size(data) > 0) {
+        if (!pdfDocument.load(data, password, &popplerError)) {
             lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.u8string() % popplerError->message);
             g_error_free(popplerError);
             unlock();

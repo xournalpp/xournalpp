@@ -99,20 +99,21 @@ auto PageTypeMenu::createMenuEntry(MainBackgroundPainter* bgPainter, PageTypeInf
     //                  this);
 }
 
-// void PageTypeMenu::entrySelected(PageTypeInfo* t) {
-//     ignoreEvents = true;
-//     for (MenuCallbackInfo& info: menuInfos) {
-//         bool enabled = info.info == t;
-//         gtk_check_button_set_active(GTK_CHECK_BUTTON(info.entry), enabled);
-//     }
-//     ignoreEvents = false;
+void PageTypeMenu::entrySelected(PageTypeInfo* t) {
+    ignoreEvents = true;
+    for (MenuCallbackInfo& info: menuInfos) {
+        bool enabled = info.info == t;
+        // TODO(gtk4): fix this
+        // gtk_check_button_set_active(GTK_CHECK_BUTTON(info.entry), enabled);
+    }
+    ignoreEvents = false;
 
-//     selected = t->page;
+    selected = t->page;
 
-//     if (listener != nullptr) {
-//         listener->changeCurrentPageBackground(t);
-//     }
-// }
+    if (listener != nullptr) {
+        listener->changeCurrentPageBackground(t);
+    }
+}
 
 void PageTypeMenu::setSelected(const PageType& selected) {
     for (MenuCallbackInfo& info: menuInfos) {
@@ -157,7 +158,7 @@ void PageTypeMenu::addApplyBackgroundButton(PageTypeApplyListener* pageTypeApply
     //                  }),
     //                  this);
     g_menu_append_section(menu, nullptr, G_MENU_MODEL(apply_menu));
-    g_free(apply_menu);
+    // g_free(apply_menu);
 }
 
 auto PageTypeMenu::createApplyMenuItem(const char* text) -> GMenuItem* {

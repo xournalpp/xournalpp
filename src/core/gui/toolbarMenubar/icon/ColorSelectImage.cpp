@@ -57,7 +57,8 @@ void ColorSelectImage::setState(ColorIconState state) {
  */
 auto ColorSelectImage::newColorIcon(Color color, int size, bool circle) -> GtkWidget* {
     cairo_surface_t* surface = newColorIconSurface(color, size, circle);
-    GtkWidget* w = gtk_image_new_from_surface(surface);
+    GtkWidget* w = gtk_image_new_from_pixbuf(xoj_pixbuf_get_from_surface(surface, 0, 0, size, size));
+
     cairo_surface_destroy(surface);
 
     return w;

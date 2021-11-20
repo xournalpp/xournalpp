@@ -21,7 +21,8 @@ PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Setting
         GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),
         settings(settings),
         pageMenu(new PageTypeMenu(types, settings, true, false)),
-        popupMenuButton(new PopupMenuButton(get("btBackgroundDropdown"), pageMenu->getMenu())) {
+        popupMenuButton(new PopupMenuButton(get("btBackgroundDropdown"),
+                                            gtk_popover_menu_new_from_model(G_MENU_MODEL(pageMenu->getMenu())))) {
     model.parse(settings->getPageTemplate());
 
     pageMenu->setListener(this);

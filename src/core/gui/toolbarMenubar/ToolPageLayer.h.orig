@@ -56,13 +56,13 @@ protected:
     void updateLayerData();
 
 <<<<<<< HEAD:src/core/gui/toolbarMenubar/ToolPageLayer.h
-    virtual GtkToolItem* newItem();
+    virtual GtkButton* newItem();
     virtual GtkWidget* getNewToolIcon() const;
     virtual GdkPixbuf* getNewToolPixbuf() const;
 =======
-    virtual GtkButton* newItem();
+    virtual GtkWidget* newItem();
     virtual GtkWidget* getNewToolIcon();
->>>>>>> 23eddcf1 (Commit #1; active migration):src/gui/toolbarMenubar/ToolPageLayer.h
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked):src/gui/toolbarMenubar/ToolPageLayer.h
 
 private:
     void createLayerMenuItem(const std::string& text, int layerId);

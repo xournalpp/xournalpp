@@ -11,6 +11,66 @@
         </item>
     </menu>
 <!-- 
+<object class="GtkMenu" id="sidebarPreviewContextMenu">
+    <property name="name">sidebarPreviewContextMenu</property>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewNewBefore">
+        <property name="name">sidebarPreviewNewBefore</property>
+        <property name="label" translatable="yes">Insert Page Before</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewNewAfter">
+        <property name="name">sidebarPreviewNewAfter</property>
+        <property name="label" translatable="yes">Insert Page After</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewDuplicate">
+        <property name="name">sidebarPreviewDuplicate</property>
+        <property name="label" translatable="yes">Duplicate</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem">
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewMoveUp">
+        <property name="name">sidebarPreviewMoveUp</property>
+        <property name="label" translatable="yes">Move Up</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewMoveDown">
+        <property name="name">sidebarPreviewMoveDown</property>
+        <property name="label" translatable="yes">Move Down</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem">
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewEdit">
+        <property name="name">sidebarPreviewEdit</property>
+        <property name="sensitive">False</property>
+        <property name="label" translatable="yes">Edit (not implemented yet)</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem">
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="sidebarPreviewDelete">
+        <property name="name">sidebarPreviewDelete</property>
+        <property name="label" translatable="yes">Delete</property>
+      </object>
+    </child>
+  </object>
+
+
 	<menu id="menubar">
         <submenu id="menuitemFile">
             <attribute name="label" translatable="yes">_File</attribute>

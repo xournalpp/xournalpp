@@ -31,7 +31,7 @@ public:
     virtual void selected(ActionGroup group, ActionType action);
 
 protected:
-    virtual GtkButton* newItem();
+    virtual GtkWidget* newItem();
     void createMenuItem(const std::string& name, const std::string& icon, ActionType type);
 
 private:

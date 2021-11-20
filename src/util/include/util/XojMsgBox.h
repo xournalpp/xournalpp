@@ -11,25 +11,22 @@
 
 #pragma once
 
+#include <functional>
 #include <map>
 #include <string>
 
 #include <gtk/gtk.h>
 
-class XojMsgBox {
-private:
-    XojMsgBox();
-    virtual ~XojMsgBox();
+#include "filesystem.h"
 
-public:
-    /**
-     * Set window for messages without window
-     */
-    static void setDefaultWindow(GtkWindow* win);
+namespace XojMsgBox {
 
-    static void showErrorToUser(GtkWindow* win, const std::string& msg);
-    static int showPluginMessage(const std::string& pluginName, const std::string& msg,
-                                 const std::map<int, std::string>& button, bool error = false);
-    static int replaceFileQuestion(GtkWindow* win, const std::string& msg);
-    static void showHelp(GtkWindow* win);
-};
+void setDefaultWindow(GtkWindow* win);
+void showErrorToUser(GtkWindow* win, std::string msg);
+void showPluginMessage(GtkWindow* win, const std::string& pluginName, const std::string& msg,
+                       const std::map<int, std::string>& button, bool error,
+                       std::function<void(GtkDialog*, gint)>&& on_response);
+void replaceFileQuestion(GtkWindow* win, std::filesystem::path const& path,
+                         std::function<void(GtkDialog*, gint)>&& on_response);
+void showHelp(GtkWindow* win);
+};  // namespace XojMsgBox

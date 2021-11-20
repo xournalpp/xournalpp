@@ -25,6 +25,7 @@
 #include "model/Text.h"
 
 #include "LoadHandlerHelper.h"
+#include "PathUtil.h"
 
 
 enum ParserPosition {
@@ -100,7 +101,7 @@ private:
 
 private:
     static std::string parseBase64(const gchar* base64, gsize length);
-    bool readZipAttachment(fs::path const& filename, gpointer& data, gsize& length);
+    auto readZipAttachment(fs::path const& filename) -> Util::GOwned<GBytes>;
     fs::path getTempFileForPath(fs::path const& filename);
 
 private:

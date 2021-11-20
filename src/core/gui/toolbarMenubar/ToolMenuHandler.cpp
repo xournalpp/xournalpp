@@ -5,6 +5,7 @@
 
 #include <config-features.h>
 #include <config.h>
+#include <gio/gmenu.h>
 
 #include "control/Actions.h"
 #include "control/Control.h"
@@ -118,8 +119,8 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                 }
 
                 if (name == "SEPARATOR") {
-                    GtkWidget* it = gtk_separator_new();
-                    gtk_box_prepend(GTK_BOX(toolbar), it, -1);
+                    GtkWidget* it = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
+                    gtk_box_prepend(GTK_BOX(toolbar), it);
 
                     ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), TOOL_ITEM_SEPARATOR);
 
@@ -127,14 +128,9 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                 }
 
                 if (name == "SPACER") {
-                    GtkButton* toolItem = gtk_separator_tool_item_new();
-                    gtk_separator_tool_item_set_draw(GTK_SEPARATOR_TOOL_ITEM(toolItem), false);
-                    gtk_tool_item_set_expand(toolItem, true);
-                    gtk_widget_show(GTK_WIDGET(toolItem));
-                    gtk_box_insert(GTK_BOX(toolbar), toolItem, -1);
-
+                    GtkWidget* toolItem = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
+                    gtk_box_prepend(GTK_BOX(toolbar), toolItem);
                     ToolitemDragDrop::attachMetadata(GTK_WIDGET(toolItem), dataItem->getId(), TOOL_ITEM_SPACER);
-
                     continue;
                 }
                 if (StringUtils::startsWith(name, "COLOR(") && StringUtils::endsWith(name, ")")) {
@@ -171,8 +167,8 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     auto* item = new ColorToolItem(listener, toolHandler, this->parent, namedColor);
                     this->toolbarColorItems.push_back(item);
 
-                    GtkButton* it = item->createItem(horizontal);
-                    gtk_box_insert(GTK_BOX(toolbar), it, -1);
+                    GtkWidget* it = item->createItem(horizontal);
+                    gtk_box_prepend(GTK_BOX(toolbar), it);
 
                     ToolitemDragDrop::attachMetadataColor(GTK_WIDGET(it), dataItem->getId(), &namedColor, item);
 
@@ -190,8 +186,8 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                         item->setUsed(true);
 
                         count++;
-                        GtkButton* it = item->createItem(horizontal);
-                        gtk_box_insert(GTK_BOX(toolbar), GTK_TOOL_ITEM(it), -1);
+                        GtkWidget* it = item->createItem(horizontal);
+                        gtk_box_prepend(GTK_BOX(toolbar), it);
 
                         ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item);
 
@@ -278,44 +274,46 @@ void ToolMenuHandler::initEraserToolItem() {
     addToolItem(tbEraser);
 }
 
+
+// Todo (gtk4): This functions caller is removed, find a replacement
 void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object, const gchar* signalName,
                                             const gchar* handlerName, GObject* connectObject, GConnectFlags flags,
                                             ToolMenuHandler* self) {
-    string actionName = handlerName;
-    string groupName{};
+    // string actionName = handlerName;
+    // string groupName{};
 
-    size_t pos = actionName.find(':');
-    if (pos != string::npos) {
-        groupName = actionName.substr(pos + 1);
-        actionName = actionName.substr(0, pos);
-    }
+    // size_t pos = actionName.find(':');
+    // if (pos != string::npos) {
+    //     groupName = actionName.substr(pos + 1);
+    //     actionName = actionName.substr(0, pos);
+    // }
 
-    ActionGroup group = GROUP_NOGROUP;
-    ActionType action = ActionType_fromString(actionName);
+    // ActionGroup group = GROUP_NOGROUP;
+    // ActionType action = ActionType_fromString(actionName);
 
-    if (action == ACTION_NONE) {
-        g_error("Unknown action name from glade file: \"%s\" / \"%s\"", signalName, handlerName);
-        return;
-    }
+    // if (action == ACTION_NONE) {
+    //     g_error("Unknown action name from glade file: \"%s\" / \"%s\"", signalName, handlerName);
+    //     return;
+    // }
 
-    if (!groupName.empty()) {
-        group = ActionGroup_fromString(groupName);
-    }
+    // if (!groupName.empty()) {
+    //     group = ActionGroup_fromString(groupName);
+    // }
 
-    if (GTK_IS_MENU_ITEM(object)) {
-        for (AbstractToolItem* it: self->toolItems) {
-            if (it->getActionType() == action) {
-                // There is already a toolbar item -> attach menu to it
-                it->setMenuItem(GTK_WIDGET(object));
-                return;
-            }
-        }
+    // if (GTK_IS_MENU_ITEM(object)) {
+    //     for (AbstractToolItem* it: self->toolItems) {
+    //         if (it->getActionType() == action) {
+    //             // There is already a toolbar item -> attach menu to it
+    //             it->setMenuItem(GTK_WIDGET(object));
+    //             return;
+    //         }
+    //     }
 
-        // There is no toolbar item -> register the menu only
-        self->registerMenupoint(GTK_WIDGET(object), action, group);
-    } else {
-        g_error("Unsupported signal handler from glade file: \"%s\" / \"%s\"", signalName, handlerName);
-    }
+    //     // There is no toolbar item -> register the menu only
+    //     self->registerMenupoint(GTK_WIDGET(object), action, group);
+    // } else {
+    //     g_error("Unsupported signal handler from glade file: \"%s\" / \"%s\"", signalName, handlerName);
+    // }
 }
 
 void ToolMenuHandler::initToolItems() {
@@ -433,12 +431,12 @@ void ToolMenuHandler::initToolItems() {
     auto* tbInsertNewPage = new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER,
                                            iconName("page-add").c_str(), _("Insert page"));
     addToolItem(tbInsertNewPage);
-    tbInsertNewPage->setPopupMenu(this->newPageType->getMenu());
+    tbInsertNewPage->setPopupMenu(gtk_popover_menu_new_from_model(G_MENU_MODEL(this->newPageType->getMenu())));
 
     addCustomItem("DELETE_CURRENT_PAGE", ACTION_DELETE_PAGE, "page-delete", _("Delete current page"));
 
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")),
-                              pageBackgroundChangeController->getMenu());
+    g_menu_item_set_submenu(G_MENU_ITEM(gui->get("menuJournalPaperBackground")),
+                            G_MENU_MODEL(pageBackgroundChangeController->getMenu()));
 
     /*
      * Menu Tool
@@ -542,11 +540,10 @@ void ToolMenuHandler::initToolItems() {
     addCustomItemTgl("MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness-medium", _("Medium"));
     addCustomItemTgl("THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness-thick", _("Thick"));
     addCustomItemTgl("VERY_THICK", ACTION_SIZE_VERY_THICK, GROUP_SIZE, true, "thickness-thicker", _("Very Thick"));
-
-
     // now connect all Glade Signals
-    gtk_builder_connect_signals_full(gui->getBuilder(), reinterpret_cast<GtkBuilderConnectFunc>(signalConnectCallback),
-                                     this);
+
+    // Todo (gtk4): This has been removed, find replacement
+    // gtk_builder_connect_signals_full(gui->getBuilder(), GtkBuilderConnectFunc(signalConnectCallback), this);
 }
 
 void ToolMenuHandler::setFontButtonFont(XojFont& font) { this->fontButton->setFont(font); }
@@ -557,12 +554,12 @@ void ToolMenuHandler::showFontSelectionDlg() { this->fontButton->showFontDialog(
 
 void ToolMenuHandler::setUndoDescription(const string& description) {
     this->undoButton->updateDescription(description);
-    gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditUndo")), description.c_str());
+    gtk_button_set_label(GTK_BUTTON(gui->get("menuEditUndo")), description.c_str());
 }
 
 void ToolMenuHandler::setRedoDescription(const string& description) {
     this->redoButton->updateDescription(description);
-    gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditRedo")), description.c_str());
+    gtk_button_set_label(GTK_BUTTON(gui->get("menuEditRedo")), description.c_str());
 }
 
 auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter* { return this->toolPageSpinner->getPageSpinner(); }

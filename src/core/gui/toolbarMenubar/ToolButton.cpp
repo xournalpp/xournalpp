@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "gui/widgets/gtkmenutooltogglebutton.h"
+#include "Gtk4Util.h"
 
 using std::string;
 
@@ -70,7 +70,7 @@ void ToolButton::updateDescription(const string& description) {
 auto ToolButton::newItem() -> GtkWidget* {
     GtkWidget* it = nullptr;
     if (popupMenu) {
-        it = gtk_menu_button_new();
+        it = gtk_button_new();
         gtk_menu_button_set_label(GTK_MENU_BUTTON(it), description.c_str());
         gtk_menu_button_set_child(GTK_MENU_BUTTON(it), gtk_image_new_from_icon_name(iconName.c_str()));
         gtk_menu_button_set_popover(GTK_MENU_BUTTON(it), popupMenu);

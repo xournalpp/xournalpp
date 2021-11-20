@@ -1,61 +1,91 @@
 #include "util/XojMsgBox.h"
 
+#include <functional>
+#include <future>
+#include <type_traits>
+#include <utility>
+
 <<<<<<< HEAD
 #include "util/i18n.h"
 =======
-#include <future>
-
+#include "GtkDialogUtil.h"
+#include "Util.h"
 #include "i18n.h"
->>>>>>> 23eddcf1 (Commit #1; active migration)
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked)
 
 #ifdef _WIN32
 // Needed for help dialog workaround on Windows; see XojMsgBox::showHelp
 #include <shlwapi.h>
 #endif
 
-using std::map;
-using std::string;
+constexpr auto DEFAULT_FLAGS = GtkDialogFlags(GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL);
 
-GtkWindow* defaultWindow = nullptr;
+
+struct WindowHolder {
+    GtkWindow* defaultWindow{};
+};
+
+static auto getWindowHolder() -> WindowHolder& {
+    static WindowHolder wh{};
+    return wh;
+}
+
+static void response_connected_fn(GtkDialog* d, gint response, std::function<void(GtkDialog*, gint)>* fn) {
+    (*fn)(d, response);
+    gtk_window_destroy(GTK_WINDOW(d));  // delete window
+    delete fn;                          // delete self
+}
+
+template <class Fn>
+static void connect_fn_to_dialog(GtkWidget* dialog, Fn&& on_response) {
+    auto* fn = new std::remove_reference_t<Fn>(std::forward<Fn>(on_response));
+    g_signal_connect(dialog, "response", GCallback(response_connected_fn), fn);
+}
 
 /**
  * Set window for messages without window
  */
-void XojMsgBox::setDefaultWindow(GtkWindow* win) { defaultWindow = win; }
+void XojMsgBox::setDefaultWindow(GtkWindow* win) { getWindowHolder().defaultWindow = win; }
 
 
-void XojMsgBox::showErrorToUser(GtkWindow* win, const string& msg) {
+void XojMsgBox::showErrorToUser(GtkWindow* win, std::string msg) {
     if (win == nullptr) {
-        win = defaultWindow;
+        win = getWindowHolder().defaultWindow;
     }
+    g_assert(win);
+    // Append this after the current execution, only way to make the dialog modal
+    Util::execInUiThread([=, msg = std::move(msg)] {
+        auto flags = GtkDialogFlags(GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL);
+        GtkWidget* dialog = gtk_message_dialog_new_with_markup(win, flags, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, nullptr);
 
-    GtkWidget* dialog =
-            gtk_message_dialog_new_with_markup(win, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, nullptr);
-
-    char* formattedMsg = g_markup_escape_text(msg.c_str(), -1);
-    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), formattedMsg);
-    g_free(formattedMsg);
-    if (win != nullptr) {
+        char* formattedMsg = g_markup_escape_text(msg.c_str(), msg.size());
+        gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), formattedMsg);
+        g_free(formattedMsg);
         gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
-    }
+        //
+        g_signal_connect(dialog, "response", G_CALLBACK(gtk_window_destroy), dialog);
+        gtk_widget_set_visible(GTK_WIDGET(dialog), true);
+    });
 }
 
-auto XojMsgBox::showPluginMessage(const string& pluginName, const string& msg, const map<int, string>& button,
-                                  bool error) -> int {
-    string header = string("Xournal++ Plugin «") + pluginName + "»";
-
+void XojMsgBox::showPluginMessage(GtkWindow* parent, const std::string& pluginName, const std::string& msg,
+                                  const std::map<int, std::string>& button, bool error,
+                                  std::function<void(GtkDialog*, gint)>&& on_response) {
+    auto header = std::string("Xournal++ Plugin »") + pluginName + "«";
     if (error) {
         header = "<b>Error in </b>" + header;
     }
+    if (parent == nullptr) {
+        parent = getWindowHolder().defaultWindow;
+        g_assert(parent);
+    }
 
-    GtkWidget* dialog = gtk_message_dialog_new_with_markup(defaultWindow, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
-                                                           GTK_BUTTONS_NONE, nullptr);
+    GtkWidget* dialog = gtk_message_dialog_new_with_markup(getWindowHolder().defaultWindow, DEFAULT_FLAGS,
+                                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE, nullptr);
     char* formattedHeader = g_markup_escape_text(header.c_str(), -1);
     gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), formattedHeader);
+    g_free(formattedHeader);
 
-    if (defaultWindow != nullptr) {
-        gtk_window_set_transient_for(GTK_WINDOW(dialog), defaultWindow);
-    }
 
     GValue val = G_VALUE_INIT;
     g_value_init(&val, G_TYPE_STRING);
@@ -65,30 +95,49 @@ auto XojMsgBox::showPluginMessage(const string& pluginName, const string& msg, c
 
     for (auto& kv: button) { gtk_dialog_add_button(GTK_DIALOG(dialog), kv.second.c_str(), kv.first); }
 
+<<<<<<< HEAD
     std::promise<int> promise;
     auto future = promise.get_future();
-    g_signal_connect(dialog, "response" , GCallback(+[](int response_id, std::promise<int>* promise){
-        promise->set_value(response_id);
-    }) ,&promise);
+    g_signal_connect(dialog, "response",
+                     GCallback(+[](int response_id, std::promise<int>* promise) { promise->set_value(response_id); }),
+                     &promise);
     g_free(formattedHeader);
     return future.get();
+=======
+    connect_fn_to_dialog(dialog, std::move(on_response));
+    gtk_window_set_transient_for(GTK_WINDOW(dialog), getWindowHolder().defaultWindow);
+    gtk_widget_show(GTK_WIDGET(dialog));
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked)
 }
 
-auto XojMsgBox::replaceFileQuestion(GtkWindow* win, const string& msg) -> int {
-    GtkWidget* dialog =
-            gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
-    if (win != nullptr) {
-        gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+void XojMsgBox::replaceFileQuestion(GtkWindow* win, std::filesystem::path const& path,
+                                    std::function<void(GtkDialog*, gint)>&& on_response) {
+    std::string msg =
+            FS(FORMAT_STR("The file {1} already exists! Do you want to replace it?") % path.filename().u8string());
+    if (win == nullptr) {
+        win = getWindowHolder().defaultWindow;
+        g_assert(win);
     }
+
+    GtkWidget* dialog =
+            gtk_message_dialog_new(win, DEFAULT_FLAGS, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another name"), GTK_RESPONSE_CANCEL);
     gtk_dialog_add_button(GTK_DIALOG(dialog), _("Replace"), GTK_RESPONSE_OK);
+<<<<<<< HEAD
 
     std::promise<int> promise;
     auto future = promise.get_future();
-    g_signal_connect(dialog, "response" , GCallback(+[](int response_id, std::promise<int>* promise){
-        promise->set_value(response_id);
-    }) ,&promise);
+    g_signal_connect(dialog, "response",
+                     GCallback(+[](int response_id, std::promise<int>* promise) { promise->set_value(response_id); }),
+                     &promise);
     return future.get();
+=======
+    //
+    gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+    connect_fn_to_dialog(dialog, std::move(on_response));
+    gtk_widget_show(GTK_WIDGET(dialog));
+    return;
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked)
 }
 
 constexpr auto* XOJ_HELP = "https://xournalpp.github.io/community/help/";

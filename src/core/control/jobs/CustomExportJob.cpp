@@ -23,7 +23,7 @@ CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Cu
     filters[_("PDF files")] = new ExportType(".pdf");
     filters[_("PNG graphics")] = new ExportType(".png");
     filters[_("SVG graphics")] = new ExportType(".svg");
-    filters[_("Xournal (Compatibility)")] = new ExportType(".xoj");
+    filters[_("Xournal (Compatibilit y)")] = new ExportType(".xoj");
 }
 
 CustomExportJob::~CustomExportJob() {

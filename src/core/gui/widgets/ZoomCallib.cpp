@@ -14,11 +14,13 @@ G_DEFINE_TYPE(ZoomCallib, zoomcallib, GTK_TYPE_WIDGET);  // NOLINT // @suppress(
 
 static void zoomcallib_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width);
 static void zoomcallib_get_preferred_height(GtkWidget* widget, gint* minimal_height, gint* natural_height);
+static void zoomcallib_measure(GtkWidget* widget, GtkOrientation orientation, int for_size, int* minimum, int* natural,
+                               int* minimum_baseline, int* natural_baseline);
 
-static void zoomcallib_size_allocate(GtkWidget* widget, GtkAllocation* allocation);
+static void zoomcallib_size_allocate(GtkWidget* widget, int width, int height, int baseline);
 static void zoomcallib_realize(GtkWidget* widget);
-static auto zoomcallib_draw(GtkWidget* widget, cairo_t* cr) -> gboolean;
-// static void zoomcallib_destroy(GtkObject* object);
+static void zoomcallib_snapshot(GtkWidget* widget, GtkSnapshot* snapshot);
+// TODO (gtk4): replace all cairo drawings with render node based drawing
 
 void zoomcallib_set_val(ZoomCallib* callib, gint val) {
     callib->val = val;
@@ -35,12 +37,11 @@ static void zoomcallib_class_init(ZoomCallibClass* klass) {
 
     widget_class = reinterpret_cast<GtkWidgetClass*>(klass);
 
-    widget_class->realize = zoomcallib_realize;
+    // widget_class->realize = zoomcallib_realize;
     widget_class->size_allocate = zoomcallib_size_allocate;
 
-    widget_class->draw = zoomcallib_draw;
-    widget_class->get_preferred_width = zoomcallib_get_preferred_width;
-    widget_class->get_preferred_height = zoomcallib_get_preferred_height;
+    widget_class->snapshot = zoomcallib_snapshot;
+    widget_class->measure = zoomcallib_measure;
 }
 
 static void zoomcallib_init(ZoomCallib* zc) { zc->val = 72; }
@@ -53,102 +54,84 @@ static void zoomcallib_get_preferred_height(GtkWidget* widget, gint* minimal_hei
     *minimal_height = *natural_height = 75;
 }
 
-static void zoomcallib_size_allocate(GtkWidget* widget, GtkAllocation* allocation) {
-    g_return_if_fail(widget != nullptr);
-    g_return_if_fail(IS_ZOOM_CALLIB(widget));
-    g_return_if_fail(allocation != nullptr);
+static void zoomcallib_measure(GtkWidget* widget, GtkOrientation orientation, int for_size, int* minimum, int* natural,
+                               int* minimum_baseline, int* natural_baseline) {
+    auto setter = [](auto* ptr, auto val) {
+        if (ptr) {
+            *ptr = val;
+        }
+    };
 
-    gtk_widget_set_allocation(widget, allocation);
-
-    if (gtk_widget_get_realized(widget)) {
-        gdk_surface_move_resize(gtk_widget_get_window(widget), allocation->x, allocation->y, allocation->width,
-                                allocation->height);
+    if (orientation == GTK_ORIENTATION_HORIZONTAL) {
+        setter(minimum, 75);
+        setter(natural, 75);
+        setter(minimum_baseline, -1);
+        setter(natural_baseline, -1);
+    } else {
+        setter(minimum, 200);
+        setter(natural, 200);
+        setter(minimum_baseline, -1);
+        setter(natural_baseline, -1);
     }
 }
 
-static void zoomcallib_realize(GtkWidget* widget) {
-    GdkSurfaceAttr attributes;
-    guint attributes_mask = 0;
-    GtkAllocation allocation;
+static void zoomcallib_size_allocate(GtkWidget* widget, int width, int height, int baseline) {}
 
-    g_return_if_fail(widget != nullptr);
-    g_return_if_fail(IS_ZOOM_CALLIB(widget));
+// static void zoomcallib_realize(GtkWidget*) {} /*  */
 
-    gtk_widget_set_realized(widget, true);
-
-    attributes.window_type = GDK_WINDOW_CHILD;
-
-    gtk_widget_get_allocation(widget, &allocation);
-
-    attributes.x = allocation.x;
-    attributes.y = allocation.y;
-    attributes.width = allocation.width;
-    attributes.height = allocation.height;
-
-    attributes.wclass = GDK_INPUT_OUTPUT;
-    attributes.event_mask = gtk_widget_get_events(widget) | GDK_EXPOSURE_MASK;
-
-    attributes_mask = GDK_WA_X | GDK_WA_Y;
-
-    gtk_widget_set_window(widget, gdk_surface_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask));
-
-    gdk_surface_set_user_data(gtk_widget_get_window(widget), widget);
-}
-
-static auto zoomcallib_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
-    if (!IS_ZOOM_CALLIB(widget)) {
-        g_message("zoomcallib_draw without a ZoomCallib");
-    }
+// https://blog.gtk.org/2020/04/24/custom-widgets-in-gtk-4-drawing/
+static void zoomcallib_draw_func(ZoomCallib* widget, cairo_t* cr, int width, int height, gpointer data) {
 
     cairo_text_extents_t extents;
-    GtkAllocation allocation;
 
     cairo_set_source_rgb(cr, 1, 1, 1);
     cairo_paint(cr);
 
-    gtk_widget_get_allocation(widget, &allocation);
+    gdouble hafCm = (widget->val / 2.54) / 2;
 
-    gdouble hafCm = (ZOOM_CALLIB(widget)->val / 2.54) / 2;
-
-    int h = allocation.height;
-    int height = 50;
-    if (h < height) {
-        height = allocation.height - 10;
-    }
-
+    // Todo (low-prio): find out whats this for:
+    auto height2 = height < 50 ? std::max(height - 10, 0) : 50;
 
     cairo_select_font_face(cr, "Serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
     cairo_set_font_size(cr, 13);
 
     auto cx = [x_base = 2, hafCm](int i) { return x_base + i * hafCm; };
-    for (int i = 0; cx(i) < allocation.width; ++i) {
+    for (int i = 0; cx(i) < width; ++i) {
         gdouble x = cx(i);
 
         int y = 0;
         if (i % 2 == 0) {
             cairo_set_source_rgb(cr, 0, 0, 0);
-            y = height - 3;
+            y = height2 - 3;
         } else {
             cairo_set_source_rgb(cr, 0.5, 0.5, 0.5);
-            y = height - 17;
+            y = height2 - 17;
         }
 
-        cairo_rectangle(cr, x, 2 + h - y, 1, y);
+        cairo_rectangle(cr, x, 2 + height - y, 1, y);
 
         cairo_fill(cr);
 
-        if (i % 2 == 0 && i != 0 && x < allocation.width - 20) {
+        if (i % 2 == 0 && i != 0 && x < width - 20) {
             cairo_set_source_rgb(cr, 0, 0, 0);
 
             char* txt = g_strdup_printf("%i", i / 2);
             cairo_text_extents(cr, txt, &extents);
 
-            cairo_move_to(cr, x - extents.width / 2, h - y - 3);
+            cairo_move_to(cr, x - extents.width / 2, height - y - 3);
 
             cairo_show_text(cr, txt);
             g_free(txt);
         }
     }
+}
 
-    return true;
+void zoomcallib_snapshot(GtkWidget* widget, GtkSnapshot* snapshot) {
+    auto width = gtk_widget_get_width(widget);
+    auto height = gtk_widget_get_height(widget);
+
+    graphene_rect_t rect{GRAPHENE_RECT_INIT(0, 0, width, height)};
+    auto* cairo = gtk_snapshot_append_cairo(snapshot, &rect);
+
+    zoomcallib_draw_func(ZOOM_CALLIB(widget), cairo, width, height, nullptr);
 }

@@ -13,6 +13,8 @@
 
 #include "gui/GladeGui.h"
 
+static void show_about_dialog(GtkWindow* parent);
+
 class AboutDialog: public GladeGui {
 public:
     AboutDialog(GladeSearchpath* gladeSearchPath);

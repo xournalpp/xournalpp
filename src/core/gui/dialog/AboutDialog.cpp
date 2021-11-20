@@ -1,5 +1,11 @@
 #include "AboutDialog.h"
 
+<<<<<<< HEAD:src/core/gui/dialog/AboutDialog.cpp
+=======
+#include <array>
+
+#include <config.h>
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked):src/gui/dialog/AboutDialog.cpp
 #include <gtk/gtk.h>
 
 #include "util/StringUtils.h"
@@ -8,42 +14,52 @@
 #include "config-git.h"
 #include "config.h"
 
-AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
+constexpr auto UI_FILE = "about.glade";
+constexpr auto UI_DIALOG_NAME = "aboutDialog";
+constexpr auto GIT_REPO = "https://github.com/xournalpp/xournalpp";
+constexpr auto WEBSITE = "https://xournalpp.github.io";
+
+auto gtk_version() -> std::string_view {
+    static std::array<char, 10> version = [] {
+        std::array<char, 10> version_int{};
+        sprintf(version_int.data(), "%d.%d.%d", gtk_get_major_version(), gtk_get_minor_version(),
+                gtk_get_micro_version());
+        return version_int;
+    }();
+    return {version.data(), version.size()};
+}
+
+void show_about_dialog(GtkWindow* parent) {
+    GtkWidget* dialog;  // Todo (fabian): init
+
+
+    gtk_window_set_transient_for(GTK_WINDOW(dialog), parent);
+    //
+    g_signal_connect_swapped(dialog, "response", G_CALLBACK(gtk_window_destroy), dialog);
+    gtk_widget_show(dialog);
+}
+
+AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearchPath, UI_FILE, UI_DIALOG_NAME) {
     gtk_label_set_markup(GTK_LABEL(get("lbBuildDate")), __DATE__ ", " __TIME__);
     gtk_label_set_markup(GTK_LABEL(get("lbVersion")), PROJECT_VERSION);
     gtk_label_set_markup(GTK_LABEL(get("lbRevId")), GIT_COMMIT_ID);
+    gtk_label_set_markup(GTK_LABEL(get("lbGtkVersion")), gtk_version().data());
+    gtk_link_button_set_uri(GTK_LINK_BUTTON(get("linkRepo")), GIT_REPO);    // Todo (gtk4): append to "vboxRepo"
+    gtk_link_button_set_uri(GTK_LINK_BUTTON(get("linkWebsite")), WEBSITE);  // Todo (gtk4): append to "vboxWebsite"
 
+<<<<<<< HEAD:src/core/gui/dialog/AboutDialog.cpp
     char gtkVersion[10];
     sprintf(gtkVersion, "%u.%u.%u", gtk_get_major_version(), gtk_get_minor_version(), gtk_get_micro_version());
+=======
+    auto* lnkbtn1 = GTK_LINK_BUTTON(get("linkAuthors"));
+    gtk_link_button_set_uri(lnkbtn1, "https://raw.githubusercontent.com/xournalpp/xournalpp/master/AUTHORS");
+    gtk_button_set_label(GTK_BUTTON(lnkbtn1), _("See the full list of contributors"));
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked):src/gui/dialog/AboutDialog.cpp
 
-    gtk_label_set_markup(GTK_LABEL(get("lbGtkVersion")), gtkVersion);
-
-    auto w1 = get("vboxRepo");
-    auto linkButton1 = gtk_link_button_new("https://github.com/xournalpp/xournalpp");
-    gtk_widget_show(linkButton1);
-    gtk_box_append(GTK_BOX(w1), linkButton1);
-
-    auto w2 = get("vboxWebsite");
-    auto linkButton2 = gtk_link_button_new("https://xournalpp.github.io");
-    gtk_widget_show(linkButton2);
-    gtk_box_append(GTK_BOX(w2), linkButton2);
-
-
-    auto w3 = get("vboxCommunity");
-    auto linkButton3 =
-            gtk_link_button_new_with_label("https://raw.githubusercontent.com/xournalpp/xournalpp/master/AUTHORS",
-                                           _("See the full list of contributors"));
-    gtk_widget_show(linkButton3);
-    gtk_box_append(GTK_BOX(w3), linkButton3);
-
-
-    auto w4 = get("vboxLicense");
-    auto linkButton4 = gtk_link_button_new_with_label(
-            "https://raw.githubusercontent.com/xournalpp/xournalpp/master/LICENSE", _("GNU GPLv2 or later"));
-    gtk_widget_show(linkButton4);
-    gtk_box_append(GTK_BOX(w4), linkButton4);
+    auto* lnkbtn2 = GTK_LINK_BUTTON(get("linkAuthors"));
+    gtk_link_button_set_uri(lnkbtn2, "https://raw.githubusercontent.com/xournalpp/xournalpp/master/LICENSE");
+    gtk_button_set_label(GTK_BUTTON(lnkbtn2), _("GNU GPLv2 or later"));
 }
-
 
 AboutDialog::~AboutDialog() = default;
 

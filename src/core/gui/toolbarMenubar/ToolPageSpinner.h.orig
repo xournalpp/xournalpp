@@ -33,22 +33,22 @@ public:
     void setPageInfo(size_t pagecount, size_t pdfpage);
 <<<<<<< HEAD:src/core/gui/toolbarMenubar/ToolPageSpinner.h
     std::string getToolDisplayName() const override;
-    GtkToolItem* createItem(bool horizontal) override;
-    GtkToolItem* createTmpItem(bool horizontal) override;
-
-protected:
-    GtkToolItem* newItem() override;
-    GtkWidget* getNewToolIcon() const override;
-    GdkPixbuf* getNewToolPixbuf() const override;
-=======
-    std::string getToolDisplayName() override;
     GtkButton* createItem(bool horizontal) override;
     GtkButton* createTmpItem(bool horizontal) override;
 
 protected:
     GtkButton* newItem() override;
+    GtkWidget* getNewToolIcon() const override;
+    GdkPixbuf* getNewToolPixbuf() const override;
+=======
+    std::string getToolDisplayName() override;
+    GtkWidget* createItem(bool horizontal) override;
+    GtkWidget* createTmpItem(bool horizontal) override;
+
+protected:
+    GtkWidget* newItem() override;
     GtkWidget* getNewToolIcon() override;
->>>>>>> 23eddcf1 (Commit #1; active migration):src/gui/toolbarMenubar/ToolPageSpinner.h
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked):src/gui/toolbarMenubar/ToolPageSpinner.h
 
 private:
     void updateLabels();

@@ -14,7 +14,7 @@ ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* 
         AbstractToolItem(std::move(id), handler, type, nullptr),
         lc(lc),
         gui(gui),
-        menu(gtk_menu_new()),
+        menu(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6)),
         iconNameHelper(iconNameHelper) {
     this->layerLabel = gtk_label_new(_("Loading..."));
     this->layerButton = gtk_button_new_with_label("⌄");
@@ -40,12 +40,11 @@ void ToolPageLayer::layerVisibilityChanged() { updateLayerData(); }
 const int MENU_WIDTH = 3;
 
 void ToolPageLayer::createSeparator() {
-    gtk_menu_attach(GTK_MENU(menu), gtk_separator_menu_item_new(), 0, MENU_WIDTH, menuY, menuY + 1);
+    gtk_box_append(GTK_BOX(menu), gtk_separator_new(GTK_ORIENTATION_VERTICAL));
     menuY++;
 }
 
 auto ToolPageLayer::createSpecialMenuEntry(const std::string& name) -> GtkWidget* {
-    GtkWidget* it = gtk_menu_item_new();
     GtkWidget* lb = gtk_label_new(name.c_str());
     gtk_widget_set_halign(lb, GTK_ALIGN_START);
 
@@ -53,11 +52,10 @@ auto ToolPageLayer::createSpecialMenuEntry(const std::string& name) -> GtkWidget
     pango_attr_list_insert(attrs, pango_attr_weight_new(PANGO_WEIGHT_BOLD));
     gtk_label_set_attributes(GTK_LABEL(lb), attrs);
 
-    gtk_container_add(GTK_CONTAINER(it), lb);
-    gtk_menu_attach(GTK_MENU(menu), it, 0, MENU_WIDTH, menuY, menuY + 1);
+    gtk_box_append(GTK_BOX(menu), lb);
     menuY++;
 
-    return it;
+    return lb;
 }
 
 /**
@@ -144,8 +142,7 @@ void ToolPageLayer::layerMenuShowClicked(GtkWidget* menu) {
 
 void ToolPageLayer::createLayerMenuItem(const std::string& text, int layerId) {
     GtkWidget* itLayer = gtk_check_button_new_with_label(text.c_str());
-    gtk_check_button_set_draw_as_radio(GTK_CHECK_BUTTON(itLayer), true);
-    gtk_menu_attach(GTK_MENU(menu), itLayer, 0, 2, menuY, menuY + 1);
+    gtk_box_append(GTK_BOX(menu), itLayer);
 
     g_signal_connect(itLayer, "activate",
                      G_CALLBACK(+[](GtkWidget* menu, ToolPageLayer* self) { self->layerMenuClicked(menu); }), this);
@@ -155,7 +152,7 @@ void ToolPageLayer::createLayerMenuItem(const std::string& text, int layerId) {
 
 void ToolPageLayer::createLayerMenuItemShow(int layerId) {
     GtkWidget* itShow = gtk_check_button_new_with_label(_("show"));
-    gtk_menu_attach(GTK_MENU(menu), itShow, 2, 3, menuY, menuY + 1);
+    gtk_box_append(GTK_BOX(menu), itShow);
     gtk_widget_set_hexpand(itShow, false);
 
     g_signal_connect(itShow, "activate",
@@ -174,7 +171,7 @@ void ToolPageLayer::updateMenu() {
      */
 
     // Create a new menu on refresh
-    menu = gtk_menu_new();
+    menu = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
     popupMenuButton->setMenu(menu);
     layerItems.clear();
     showLayerItems.clear();
@@ -238,21 +235,17 @@ void ToolPageLayer::updateLayerData() {
 
 auto ToolPageLayer::getToolDisplayName() const -> std::string { return _("Layer Combo"); }
 
+<<<<<<< HEAD:src/core/gui/toolbarMenubar/ToolPageLayer.cpp
 auto ToolPageLayer::getNewToolIcon() const -> GtkWidget* {
     return gtk_image_new_from_icon_name(this->iconNameHelper.iconName("combo-layer").c_str(),
                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
 }
 
-<<<<<<< HEAD:src/core/gui/toolbarMenubar/ToolPageLayer.cpp
 auto ToolPageLayer::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
 
 
-auto ToolPageLayer::newItem() -> GtkToolItem* {
-    GtkToolItem* it = gtk_tool_item_new();
-=======
 auto ToolPageLayer::newItem() -> GtkButton* {
     GtkButton* it = gtk_widget_new();
->>>>>>> 23eddcf1 (Commit #1; active migration):src/gui/toolbarMenubar/ToolPageLayer.cpp
 
     GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
     gtk_box_append(GTK_BOX(hbox), gtk_label_new(_("Layer")), false, false, 7);
@@ -263,4 +256,16 @@ auto ToolPageLayer::newItem() -> GtkButton* {
     gtk_container_add(GTK_CONTAINER(it), hbox);
 
     return it;
+=======
+auto ToolPageLayer::getNewToolIcon() -> GtkWidget* {
+    return gtk_image_new_from_icon_name(this->iconNameHelper.iconName("combo-layer").c_str());
+}
+
+auto ToolPageLayer::newItem() -> GtkWidget* {
+    GtkWidget* hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_append(GTK_BOX(hbox), gtk_label_new(_("Layer")));
+    gtk_box_append(GTK_BOX(hbox), this->layerLabel);
+    gtk_box_append(GTK_BOX(hbox), this->layerButton);
+    return hbox;
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked):src/gui/toolbarMenubar/ToolPageLayer.cpp
 }

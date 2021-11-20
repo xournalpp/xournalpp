@@ -259,6 +259,7 @@ static void convert_no_alpha(guchar* dest_data, int dest_stride, guchar* src_dat
  * Return value: (transfer full): A newly-created pixbuf with a reference
  *     count of 1, or %nullptr on error
  */
+
 auto xoj_pixbuf_get_from_surface(cairo_surface_t* surface, gint src_x, gint src_y, gint width, gint height)
         -> GdkPixbuf* {
     /* General sanity checks */

@@ -55,7 +55,7 @@ protected:
      */
     void updateLayerData();
 
-    virtual GtkButton* newItem();
+    virtual GtkWidget* newItem();
     virtual GtkWidget* getNewToolIcon() const;
     virtual GdkPixbuf* getNewToolPixbuf() const;
 

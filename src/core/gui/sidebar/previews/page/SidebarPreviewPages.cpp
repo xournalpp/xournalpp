@@ -13,8 +13,7 @@
 
 SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, SidebarToolbar* toolbar):
         SidebarPreviewBase(control, gui, toolbar),
-        contextMenu(
-                gui->get("sidebarPreviewContextMenu"), +[](auto* ptr) { return G_MENU(ptr); }),
+        contextMenu(gui->get("sidebarPreviewContextMenu", [](auto* ptr) { return G_MENU(ptr); })),
         iconNameHelper(control->getSettings()) {
     // Connect the context menu actions
     const std::map<std::string, SidebarActions> ctxMenuActions = {
@@ -28,7 +27,11 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
 
     for (const auto& pair: ctxMenuActions) {
         GtkWidget* const entry = gui->get(pair.first);
-        g_assert(entry != nullptr);
+        if (entry == nullptr) {
+            // Todo (gtk4): fix and remove
+            g_warning("No element named \"%s\" in Builder", pair.first.data());
+            continue;
+        }
 
         // Unfortunately, we need a fairly complicated mechanism to keep track
         // of which action we want to execute.
@@ -46,8 +49,8 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
             this->contextMenuMoveUp = entry;
         }
     }
-    g_assert(this->contextMenuMoveDown != nullptr);
-    g_assert(this->contextMenuMoveUp != nullptr);
+    // g_assert(this->contextMenuMoveDown != nullptr);
+    // g_assert(this->contextMenuMoveUp != nullptr);
 }
 
 SidebarPreviewPages::~SidebarPreviewPages() {

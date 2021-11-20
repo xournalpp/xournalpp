@@ -45,7 +45,7 @@
 
 /*
 	Use :checked for a selected GtkToggleButton.
-	See https://stackoverflow.com/questions/39824345/use-css-to-style-gtktogglebutton-depending-on-the-state
+	See https://stackoverflow.com/questions/39824345/use-css-to-style-gtk_togglebutton-depending-on-the-state
 */
 #floatingToolbox button:checked {
 	/*background-color: lightblue;*/

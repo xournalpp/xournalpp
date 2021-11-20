@@ -100,11 +100,13 @@ public:
      */
     bool close(bool allowDestroy = false, bool allowCancel = true);
 
+<<<<<<< HEAD:src/core/control/Control.h
     // Asks user to replace an existing file when saving / exporting, since we add the extension
     // after the OK, we need to check manually
     bool askToReplace(fs::path const& filepath) const;
-
+=======
     void resetShapeRecognizer();
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked):src/control/Control.h
 
     // Menu edit
     void showSettings();

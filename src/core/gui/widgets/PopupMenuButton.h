@@ -19,7 +19,7 @@
 
 class PopupMenuButton {
 public:
-    PopupMenuButton(GtkWidget* button, GMenu* menu);
+    PopupMenuButton(GtkWidget* button, GtkWidget* menu);
     virtual ~PopupMenuButton();
 
 public:
@@ -27,5 +27,5 @@ public:
 
 private:
     GtkWidget* button;
-    GMenu* menu;
+    GtkWidget* menu;
 };

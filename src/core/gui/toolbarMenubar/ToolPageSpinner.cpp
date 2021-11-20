@@ -50,7 +50,7 @@ void ToolPageSpinner::updateLabels() {
             }
         } else {
             if (gtk_widget_get_parent(this->lbVerticalPdfPage) != nullptr) {
-                gtk_container_remove(GTK_BOX(box), this->lbVerticalPdfPage);
+                gtk_box_remove(GTK_BOX(box), this->lbVerticalPdfPage);
             }
         }
     }
@@ -59,12 +59,12 @@ void ToolPageSpinner::updateLabels() {
 auto ToolPageSpinner::getToolDisplayName() const -> std::string { return _("Page number"); }
 
 auto ToolPageSpinner::getNewToolIcon() const -> GtkWidget* {
-    return gtk_image_new_from_icon_name(iconNameHelper.iconName("page-spinner").c_str(), GTK_ICON_SIZE_SMALL_TOOLBAR);
+    return gtk_image_new_from_icon_name(iconNameHelper.iconName("page-spinner").c_str());
 }
 
 auto ToolPageSpinner::getNewToolPixbuf() const -> GdkPixbuf* { return getPixbufFromImageIconName(); }
 
-auto ToolPageSpinner::newItem() -> GtkButton* {
+auto ToolPageSpinner::newItem() -> GtkWidget* {
     if (this->pageSpinner->hasWidget()) {
         this->pageSpinner->removeWidget();
     }
@@ -103,19 +103,16 @@ auto ToolPageSpinner::newItem() -> GtkButton* {
     }
     this->box = gtk_box_new(orientation, 1);
     g_object_ref_sink(this->box);
-    gtk_box_append(GTK_BOX(box), pageLabel, false, false, 7);
-    gtk_box_append(GTK_BOX(box), spinner, false, false, 0);
-    gtk_box_append(GTK_BOX(box), this->lbPageNo, false, false, 7);
-
-    GtkButton* it = gtk_widget_new();
-    gtk_container_add(GTK_CONTAINER(it), box);
+    gtk_box_append(GTK_BOX(box), pageLabel);
+    gtk_box_append(GTK_BOX(box), spinner);
+    gtk_box_append(GTK_BOX(box), this->lbPageNo);
 
     updateLabels();
 
-    return it;
+    return box;
 }
 
-auto ToolPageSpinner::createItem(bool horizontal) -> GtkButton* {
+auto ToolPageSpinner::createItem(bool horizontal) -> GtkWidget* {
     this->orientation = horizontal ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
 
     this->item = createTmpItem(horizontal);
@@ -123,8 +120,8 @@ auto ToolPageSpinner::createItem(bool horizontal) -> GtkButton* {
     return this->item;
 }
 
-auto ToolPageSpinner::createTmpItem(bool horizontal) -> GtkButton* {
-    GtkButton* item = AbstractToolItem::createTmpItem(horizontal);
+auto ToolPageSpinner::createTmpItem(bool horizontal) -> GtkWidget* {
+    GtkWidget* item = AbstractToolItem::createTmpItem(horizontal);
     g_object_ref(item);
     return item;
 }

@@ -726,7 +726,7 @@ void MainWindow::layerVisibilityChanged() {
 
 void MainWindow::setRecentMenu(GMenu* submenu) {
     GMenuItem* menu_item = get("menuFileRecent", [](auto* p) { return G_MENU_ITEM(p); });
-    assert(menu_item != nullptr);
+    g_return_if_fail(menu_item != nullptr);
     g_menu_item_set_submenu(menu_item, G_MENU_MODEL(submenu));
 }
 

@@ -1,10 +1,7 @@
 #include "PopupMenuButton.h"
 
-static void menu_detacher(GtkWidget* widget, GtkMenu* menu) {
-    // Nothing to do
-}
 // See gtkmenutooltogglebutton.cpp
-static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in, GtkWidget* widget) {
+static void menu_position_func(GtkWidget* menu, int* x, int* y, gboolean* push_in, GtkWidget* widget) {
     GtkRequisition minimum_size;
     GtkRequisition menu_req;
     gtk_widget_get_preferred_size(GTK_WIDGET(menu), &minimum_size, &menu_req);
@@ -12,7 +9,8 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
     GtkTextDirection direction = gtk_widget_get_direction(widget);
 
     auto* display = gtk_widget_get_display(GTK_WIDGET(menu));
-    GdkMonitor* monitor = gdk_display_get_monitor_at_surface(display, gtk_widget_get_window(widget));
+    GdkMonitor* monitor =
+            gdk_display_get_monitor_at_surface(display, gtk_native_get_surface(gtk_widget_get_native(widget)));
     GdkRectangle monitor_rect;
     gdk_monitor_get_geometry(monitor, &monitor_rect);
 
@@ -21,8 +19,12 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 
     GtkAllocation allocation;
     gtk_widget_get_allocation(widget, &allocation);
+    double dx;
+    double dy;
+    gtk_native_get_surface_transform(gtk_widget_get_native(widget), &dx, &dy);
+    *x = dx;
+    *y = dy;
 
-    gdk_surface_get_origin(gtk_widget_get_window(widget), x, y);
     *x += allocation.x;
     *y += allocation.y;
 
@@ -47,24 +49,17 @@ static void menu_position_func(GtkMenu* menu, int* x, int* y, gboolean* push_in,
 
 PopupMenuButton::PopupMenuButton(GtkWidget* button, GtkWidget* menu): button(button), menu(menu) {
     g_signal_connect(button, "clicked", G_CALLBACK(+[](GtkButton* button, PopupMenuButton* self) {
-                         gtk_menu_popup(GTK_MENU(self->menu), nullptr, nullptr, (GtkMenuPositionFunc)menu_position_func,
-                                        button, 0, gtk_get_current_event_time());
-
-                         gtk_menu_shell_select_first(GTK_MENU_SHELL(self->menu), false);
-
-                         // GTK 3.22: gtk_menu_popup_at_widget(menu, button, GDK_GRAVITY_SOUTH_WEST,
-                         // GDK_GRAVITY_NORTH_WEST, nullptr);
+                         gtk_popover_popup(GTK_POPOVER(self->menu));
                      }),
                      this);
 
-    gtk_menu_attach_to_widget(GTK_MENU(menu), button, menu_detacher);
+    gtk_box_append(GTK_BOX(menu), button);
 }
 
 PopupMenuButton::~PopupMenuButton() = default;
 
 void PopupMenuButton::setMenu(GtkWidget* menu) {
-    gtk_menu_detach(GTK_MENU(this->menu));
+    gtk_box_remove(GTK_BOX(menu), button);
     this->menu = menu;
-
-    gtk_menu_attach_to_widget(GTK_MENU(menu), button, menu_detacher);
+    gtk_box_append(GTK_BOX(menu), button);
 }

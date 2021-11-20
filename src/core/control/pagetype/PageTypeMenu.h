@@ -77,7 +77,7 @@ private:
 private:
     bool showSpecial;
 
-    GMenu* menu;
+    GMenu* menu{};
     PageTypeHandler* types;
     Settings* settings;
 

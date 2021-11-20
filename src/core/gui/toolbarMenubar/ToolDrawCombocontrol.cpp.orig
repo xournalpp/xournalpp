@@ -4,10 +4,13 @@
 
 #include <config.h>
 
+<<<<<<< HEAD:src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp
 #include "gui/widgets/gtkmenutooltogglebutton.h"
 #include "util/i18n.h"
 
+=======
 #include "Gtk4Util.h"
+>>>>>>> 7793d150 (WIP: temporary gtk4 - to be splitted or cherry picked):src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp
 #include "ToolMenuHandler.h"
 
 using std::string;
