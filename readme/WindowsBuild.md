@@ -75,7 +75,7 @@ settings (assuming default installation folder for MSYS2).
 
 You can now run Xournal++ with
 ```bash
-./src/xournalpp.exe
+./xournalpp.exe
 ```
 or package it in an installer (see below).
 

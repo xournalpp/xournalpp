@@ -12,9 +12,12 @@
 #include <cstdlib>
 #include <ctime>
 
-#include <config-test.h>
 #include <gtest/gtest.h>
-#include <i18n.h>
+
+#include "util/i18n.h"
+
+#include "config-test.h"
+
 
 using namespace std;
 

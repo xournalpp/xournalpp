@@ -1,6 +1,6 @@
-#include "XojMsgBox.h"
+#include "util/XojMsgBox.h"
 
-#include "i18n.h"
+#include "util/i18n.h"
 
 #ifdef _WIN32
 // Needed for help dialog workaround on Windows; see XojMsgBox::showHelp

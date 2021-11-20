@@ -1,7 +1,7 @@
-#include "ObjectInputStream.h"
+#include "util/serializing/ObjectInputStream.h"
 
-#include "Serializable.h"
-#include "i18n.h"
+#include "util/i18n.h"
+#include "util/serializing/Serializable.h"
 
 // This function requires that T is read from its binary representation to work (e.g. integer type)
 template <typename T>

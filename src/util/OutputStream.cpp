@@ -1,11 +1,9 @@
-#include "OutputStream.h"
-
-#include <cstdlib>
+#include "util/OutputStream.h"
 
 #include <glib.h>
 
-#include "GzUtil.h"
-#include "i18n.h"
+#include "util/GzUtil.h"
+#include "util/i18n.h"
 
 OutputStream::OutputStream() = default;
 

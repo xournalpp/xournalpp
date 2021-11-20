@@ -10,27 +10,28 @@
  */
 
 // Set to true to write a log with errors and debug logs to /tmp/xojtmb.log
-#include "filesystem.h"
 #define DEBUG_THUMBNAILER false
-
 
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 
-#include <config-paths.h>
-#include <config.h>
+#include <cairo.h>
+#include <librsvg/rsvg.h>
 
-#include "PathUtil.h"
-#include "XojPreviewExtractor.h"
-#include "i18n.h"
+#include "util/PathUtil.h"
+#include "util/XojPreviewExtractor.h"
+#include "util/i18n.h"
+
+#include "config-paths.h"
+#include "config.h"
+#include "filesystem.h"
+
+
 using std::cerr;
 using std::cout;
 using std::endl;
 using std::string;
-#include <cairo-svg.h>
-#include <cairo.h>
-#include <librsvg/rsvg.h>
 
 void initLocalisation() {
 #ifdef ENABLE_NLS

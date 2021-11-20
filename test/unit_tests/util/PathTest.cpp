@@ -12,7 +12,8 @@
 
 #include <gtest/gtest.h>
 
-#include "PathUtil.h"
+#include "util/PathUtil.h"
+
 #include "filesystem.h"
 
 using namespace std;

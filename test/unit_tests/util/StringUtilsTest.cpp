@@ -12,9 +12,12 @@
 #include <cstdlib>
 #include <ctime>
 
-#include <StringUtils.h>
-#include <config-test.h>
 #include <gtest/gtest.h>
+
+#include "util/StringUtils.h"
+
+#include "config-test.h"
+
 
 using namespace std;
 
