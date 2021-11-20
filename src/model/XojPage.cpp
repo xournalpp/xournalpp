@@ -47,6 +47,25 @@ void XojPage::insertLayer(Layer* layer, int index) {
     this->currentLayer = index + 1;
 }
 
+void XojPage::changeLayer(Layer* layer, int layerId) {
+  int index = layerId - 1;
+  if (index < 0) { return; }
+  if (index > static_cast<int>(this->layer.size())) {
+    g_message("Cannot change inexistent layer %i", index);
+    return;
+  }
+
+  int current = getSelectedLayerId();
+  // we allow creation of a new layer if index is just one above the
+  // last layer.
+  if (index == static_cast<int>(this->layer.size())) {
+        addLayer(layer);
+    }
+
+  this->layer[index] = layer;
+  setSelectedLayerId(current);
+}
+
 void XojPage::removeLayer(Layer* layer) {
     for (unsigned int i = 0; i < this->layer.size(); i++) {
         if (layer == this->layer[i]) {

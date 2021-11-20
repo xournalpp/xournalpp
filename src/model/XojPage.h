@@ -30,6 +30,11 @@ public:
     XojPage(const XojPage& page);
     void operator=(const XojPage& p) = delete;
 
+  // This will discard layer "layerId" and replace it by "layer".  In
+  // case "layerId" is just one above the last layer, we insert
+  // "layer" as a new layer;
+    void changeLayer(Layer* layer, int layerId);
+
     // Do not modify layers directly, use LayerController
     // So notification can be sent on change
 protected:

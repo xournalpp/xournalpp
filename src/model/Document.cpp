@@ -93,6 +93,8 @@ void Document::clearDocument(bool destroy) {
 
     this->filepath = fs::path{};
     this->pdfFilepath = fs::path{};
+    this->collabPath = fs::path{};
+    this->collabMonitor = nullptr;
 }
 
 /**
@@ -107,6 +109,19 @@ void Document::setFilepath(fs::path filepath) { this->filepath = std::move(filep
 auto Document::getFilepath() -> fs::path { return filepath; }
 
 auto Document::getPdfFilepath() -> fs::path { return pdfFilepath; }
+
+fs::path Document::getCollabPath() { return this->collabPath; }
+
+void Document::setCollab(fs::path collabPath, GFileMonitor* collabMonitor) {
+  this->collabPath = collabPath;
+  if (this->collabMonitor != nullptr) {
+    g_file_monitor_cancel(this->collabMonitor);
+  }
+  this->collabMonitor = collabMonitor;
+}
+bool Document::hasCollab() {
+  return (this->collabMonitor != nullptr);
+}
 
 auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     if (!filepath.empty()) {
@@ -229,6 +244,13 @@ void Document::indexPdfPages() {
     this->pageIndex.swap(index);
 }
 
+void Document::setSelectedLayerId(int id) {
+    for (size_t i = 0; i < this->pages.size(); ++i) {
+      const auto& p = this->pages[i];
+      p->setSelectedLayerId(id);
+    }
+}
+
 
 void Document::buildContentsModel() {
     freeTreeContentModel();
@@ -327,6 +349,28 @@ auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDo
     this->handler->fireDocumentChanged(DOCUMENT_CHANGE_PDF_BOOKMARKS);
 
     return true;
+}
+
+void Document::mergeLayer(const Document& sourceDoc, int srcLayerId, int dstLayerId){
+
+  if (!tryLock()) {
+    // call again later
+    g_message ("Cannot merge layers, we're busy right now.");
+    return;
+  }
+  size_t pageMax = std::min(this->pages.size(), sourceDoc.pages.size());
+  for (size_t i = 0; i < pageMax; ++i) {
+    PageRef p = this->pages[i];
+    PageRef ps = sourceDoc.pages[i];
+    auto layers = * ps->getLayers();
+    if (srcLayerId > 0 && srcLayerId <= layers.size()) {
+      Layer* ls = layers[srcLayerId-1];
+      Layer* cloneL = ls->clone ();
+      p->changeLayer(cloneL, dstLayerId);
+      cloneL->setName(g_strdup_printf("Collab %i", srcLayerId));
+    }
+  }
+  unlock();
 }
 
 void Document::setPageSize(PageRef p, double width, double height) { p->setSize(width, height); }
