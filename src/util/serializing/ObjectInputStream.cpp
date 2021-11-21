@@ -19,7 +19,7 @@ T readTypeFromSStream(std::istringstream& istream) {
     return output;
 }
 
-size_t ObjectInputStream::pos() { return len - istream.str().size(); }
+size_t ObjectInputStream::pos() { return istream.tellg(); }
 
 auto ObjectInputStream::read(const char* data, int data_len) -> bool {
     istream.clear();
@@ -55,13 +55,12 @@ auto ObjectInputStream::readObject() -> std::string {
 }
 
 auto ObjectInputStream::getNextObjectName() -> std::string {
-    std::streambuf* pBuffer = istream.rdbuf();
-    std::streamsize pos = len - pBuffer->in_avail();
+    auto position = istream.tellg();
 
     checkType('{');
     std::string name = readString();
 
-    pBuffer->pubseekpos(pos);
+    istream.seekg(position);
     return name;
 }
 
