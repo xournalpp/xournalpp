@@ -9,12 +9,12 @@
 #include "gui/XournalppCursor.h"
 #include "gui/dialog/AboutDialog.h"
 #include "gui/dialog/FillOpacityDialog.h"
-#include "gui/dialog/FormatDialog.h"
 #include "gui/dialog/GotoDialog.h"
-#include "gui/dialog/PageTemplateDialog.h"
 #include "gui/dialog/SelectBackgroundColorDialog.h"
 #include "gui/dialog/SettingsDialog.h"
 #include "gui/dialog/ToolbarManageDialog.h"
+#include "gui/dialog/pageFormat/NewPageTemplateDialog.h"
+#include "gui/dialog/pageFormat/PageFormatDialog.h"
 #include "gui/dialog/toolbarCustomize/ToolbarDragDropHandler.h"
 #include "gui/inputdevices/HandRecognition.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
@@ -467,10 +467,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             deletePage();
             break;
         case ACTION_PAPER_FORMAT:
-            paperFormat();
+            pageFormat();
             break;
         case ACTION_CONFIGURE_PAGE_TEMPLATE:
-            paperTemplate();
+            pageTemplate();
             break;
         case ACTION_PAPER_BACKGROUND_COLOR:
             changePageBackgroundColor();
@@ -1335,8 +1335,8 @@ void Control::updateBackgroundSizeButton() {
     gtk_widget_set_sensitive(pageSize, !bg.isPdfPage());
 }
 
-void Control::paperTemplate() {
-    auto dlg = std::make_unique<PageTemplateDialog>(this->gladeSearchPath, settings, pageTypes);
+void Control::pageTemplate() {
+    auto dlg = std::make_unique<NewPageTemplateDialog>(this->gladeSearchPath, settings, pageTypes);
     dlg->show(GTK_WINDOW(this->win->getWindow()));
 
     if (dlg->isSaved()) {
@@ -1344,31 +1344,16 @@ void Control::paperTemplate() {
     }
 }
 
-void Control::paperFormat() {
+void Control::pageFormat() {
     auto const& page = getCurrentPage();
+
     if (!page || page->getBackgroundType().isPdfPage()) {
         return;
     }
     clearSelectionEndText();
 
-    auto* dlg = new FormatDialog(this->gladeSearchPath, settings, page->getWidth(), page->getHeight());
+    auto dlg = std::make_unique<PageFormatDialog>(this->gladeSearchPath, page, this, settings, pageTypes);
     dlg->show(GTK_WINDOW(this->win->getWindow()));
-
-    double width = dlg->getWidth();
-    double height = dlg->getHeight();
-
-    if (width > 0) {
-        this->doc->lock();
-        Document::setPageSize(page, width, height);
-        this->doc->unlock();
-    }
-
-    size_t pageNo = doc->indexOf(page);
-    if (pageNo != npos && pageNo < doc->getPageCount()) {
-        this->firePageSizeChanged(pageNo);
-    }
-
-    delete dlg;
 }
 
 void Control::changePageBackgroundColor() {

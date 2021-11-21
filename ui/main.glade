@@ -2669,9 +2669,8 @@
       <object class="GtkMenuItem" id="sidebarPreviewEdit">
         <property name="name">sidebarPreviewEdit</property>
         <property name="visible">True</property>
-        <property name="sensitive">False</property>
         <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Edit (not implemented yet)</property>
+        <property name="label" translatable="yes">Edit</property>
       </object>
     </child>
     <child>

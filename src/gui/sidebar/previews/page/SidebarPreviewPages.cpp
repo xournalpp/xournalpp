@@ -23,6 +23,7 @@ SidebarPreviewPages::SidebarPreviewPages(Control* control, GladeGui* gui, Sideba
             {"sidebarPreviewMoveDown", SIDEBAR_ACTION_MOVE_DOWN},
             {"sidebarPreviewNewBefore", SIDEBAR_ACTION_NEW_BEFORE},
             {"sidebarPreviewNewAfter", SIDEBAR_ACTION_NEW_AFTER},
+            {"sidebarPreviewEdit", SIDEBAR_ACTION_EDIT},
     };
 
     for (const auto& pair: ctxMenuActions) {
@@ -174,6 +175,9 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
             break;
         case SIDEBAR_ACTION_NEW_AFTER:
             control->insertNewPage(control->getCurrentPageNo() + 1);
+            break;
+        case SIDEBAR_ACTION_EDIT:
+            control->pageFormat();
             break;
         default:
             break;

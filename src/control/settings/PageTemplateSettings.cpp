@@ -42,9 +42,9 @@ auto PageTemplateSettings::getBackgroundColor() const -> Color { return this->ba
 
 void PageTemplateSettings::setBackgroundColor(Color backgroundColor) { this->backgroundColor = backgroundColor; }
 
-auto PageTemplateSettings::getBackgroundType() -> PageType { return backgroundType; }
+auto PageTemplateSettings::getBackgroundType() const -> PageType { return backgroundType; }
 
-auto PageTemplateSettings::getPageInsertType() -> PageType {
+auto PageTemplateSettings::getPageInsertType() const -> PageType {
     if (copyLastPageSettings) {
         return PageType(PageTypeFormat::Copy);
     }

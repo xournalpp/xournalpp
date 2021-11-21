@@ -1,4 +1,4 @@
-#include "FormatDialog.h"
+#include "PageSizeDialog.h"
 
 #include <config.h>
 
@@ -8,8 +8,8 @@
 #include "i18n.h"
 
 
-FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height):
-        GladeGui(gladeSearchPath, "pagesize.glade", "pagesizeDialog"), settings(settings) {
+PageSizeDialog::PageSizeDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height):
+        GladeGui(gladeSearchPath, "pageSizeDialog.glade", "pagesizeDialog"), settings(settings) {
     this->selectedScale = settings->getSizeUnitIndex();
 
     this->scale = XOJ_UNITS[this->selectedScale].scale;
@@ -85,7 +85,7 @@ FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings,
     g_signal_connect(get("spinHeight"), "value-changed", G_CALLBACK(spinValueChangedCb), this);
 }
 
-FormatDialog::~FormatDialog() {
+PageSizeDialog::~PageSizeDialog() {
     for (GList* l = this->list; l != nullptr; l = l->next) {
         auto* s = static_cast<GtkPaperSize*>(l->data);
         gtk_paper_size_free(s);
@@ -97,7 +97,7 @@ FormatDialog::~FormatDialog() {
 
 #define ADD_FORMAT(format) this->list = g_list_append(this->list, gtk_paper_size_new(format))
 
-void FormatDialog::loadPageFormats() {
+void PageSizeDialog::loadPageFormats() {
     this->list = gtk_paper_size_get_paper_sizes(false);
 
     GList* next = nullptr;
@@ -121,11 +121,11 @@ void FormatDialog::loadPageFormats() {
     ADD_FORMAT("custom_4x3_320x240mm");
 }
 
-auto FormatDialog::getWidth() const -> double { return this->width; }
+auto PageSizeDialog::getWidth() const -> double { return this->width; }
 
-auto FormatDialog::getHeight() const -> double { return this->height; }
+auto PageSizeDialog::getHeight() const -> double { return this->height; }
 
-void FormatDialog::setOrientation(Orientation orientation) {
+void PageSizeDialog::setOrientation(Orientation orientation) {
     if (this->orientation == orientation) {
         return;
     }
@@ -138,7 +138,7 @@ void FormatDialog::setOrientation(Orientation orientation) {
     gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(btLandscape), orientation == ORIENTATION_LANDSCAPE);
 }
 
-void FormatDialog::spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* dlg) {
+void PageSizeDialog::spinValueChangedCb(GtkSpinButton* spinbutton, PageSizeDialog* dlg) {
     if (dlg->ignoreSpinChange) {
         return;
     }
@@ -171,7 +171,7 @@ void FormatDialog::spinValueChangedCb(GtkSpinButton* spinbutton, FormatDialog* d
     gtk_combo_box_set_active(GTK_COMBO_BOX(dlg->get("cbTemplate")), i);
 }
 
-void FormatDialog::cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg) {
+void PageSizeDialog::cbUnitChanged(GtkComboBox* widget, PageSizeDialog* dlg) {
     int selectd = gtk_combo_box_get_active(widget);
     if (dlg->selectedScale == selectd) {
         return;
@@ -189,7 +189,7 @@ void FormatDialog::cbUnitChanged(GtkComboBox* widget, FormatDialog* dlg) {
     dlg->setSpinValues(width / dlg->scale, height / dlg->scale);
 }
 
-void FormatDialog::cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg) {
+void PageSizeDialog::cbFormatChangedCb(GtkComboBox* widget, PageSizeDialog* dlg) {
     GtkTreeIter iter;
 
     if (!gtk_combo_box_get_active_iter(widget, &iter)) {
@@ -231,7 +231,7 @@ void FormatDialog::cbFormatChangedCb(GtkComboBox* widget, FormatDialog* dlg) {
     dlg->setSpinValues(width, height);
 }
 
-void FormatDialog::portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg) {
+void PageSizeDialog::portraitSelectedCb(GtkToggleToolButton* bt, PageSizeDialog* dlg) {
     bool activated = gtk_toggle_tool_button_get_active(bt);
 
     if (activated) {
@@ -248,7 +248,7 @@ void FormatDialog::portraitSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg
     }
 }
 
-void FormatDialog::landscapeSelectedCb(GtkToggleToolButton* bt, FormatDialog* dlg) {
+void PageSizeDialog::landscapeSelectedCb(GtkToggleToolButton* bt, PageSizeDialog* dlg) {
     bool activated = gtk_toggle_tool_button_get_active(bt);
 
     if (activated) {
@@ -265,14 +265,14 @@ void FormatDialog::landscapeSelectedCb(GtkToggleToolButton* bt, FormatDialog* dl
     }
 }
 
-void FormatDialog::setSpinValues(double width, double heigth) {
+void PageSizeDialog::setSpinValues(double width, double heigth) {
     ignoreSpinChange = true;
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinWidth")), width);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("spinHeight")), heigth);
     ignoreSpinChange = false;
 }
 
-void FormatDialog::show(GtkWindow* parent) {
+void PageSizeDialog::show(GtkWindow* parent) {
     int ret = 0;
     while (ret == 0) {
         gtk_window_set_transient_for(GTK_WINDOW(this->window), parent);
