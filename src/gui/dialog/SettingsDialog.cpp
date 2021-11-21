@@ -129,6 +129,9 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
                      }),
                      this);
 
+    g_signal_connect(get("btEditPageTemplate"), "clicked",
+                     G_CALLBACK(+[](GtkButton* bt, SettingsDialog* self) { self->control->pageTemplate(); }), this);
+
 
     gtk_box_pack_start(GTK_BOX(vbox), callib, false, true, 0);
     gtk_widget_show(callib);
