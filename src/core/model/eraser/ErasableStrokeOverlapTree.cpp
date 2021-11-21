@@ -4,10 +4,10 @@
 #include <optional>   // for optional
 #include <tuple>      // for tie, tuple
 
-#include "model/PathParameter.h"          // for PathParameter
 #include "model/Point.h"                  // for Point
 #include "model/Stroke.h"                 // for Stroke
 #include "model/eraser/ErasableStroke.h"  // for ErasableStroke::SubSection
+#include "model/path/Path.h"              // for Path::Parameter
 #include "util/Assert.h"                  // for xoj_assert
 #include "util/Range.h"                   // for Range
 

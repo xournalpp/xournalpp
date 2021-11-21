@@ -44,7 +44,7 @@ void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedI
 
     xoj_assert(paddedIntersections.size() % 2 == 0);
 
-    UnionOfIntervals<PathParameter> sections;
+    UnionOfIntervals<Path::Parameter> sections;
     // Contains the removed sections
     sections.appendData(paddedIntersections);
 
@@ -144,7 +144,7 @@ void ErasableStroke::erase(const PaddedBox& box, Range& range) {
         }
     }
 
-    UnionOfIntervals<PathParameter> newErasedSections;
+    UnionOfIntervals<Path::Parameter> newErasedSections;
 
     for (auto& i: indexIntervals) {
         newErasedSections.appendData(this->stroke.intersectWithPaddedBox(box, i.min, i.max));
@@ -236,8 +236,8 @@ auto ErasableStroke::getStrokes() const -> std::vector<std::unique_ptr<Stroke>> 
     strokes.reserve(sections.size());
 
     bool mergeFirstAndLast = this->closedStroke && sections.size() >= 2 &&
-                             sections.front().min == PathParameter(0, 0.0) &&
-                             sections.back().max == PathParameter(this->stroke.getPointCount() - 2, 1.0);
+                             sections.front().min == Path::Parameter(0, 0.0) &&
+                             sections.back().max == Path::Parameter(this->stroke.getPointCount() - 2, 1.0);
 
     auto sectionIt = sections.cbegin();
     auto sectionEndIt = sections.cend();
