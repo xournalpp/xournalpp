@@ -16,12 +16,12 @@
 #include <vector>   // for vector
 
 #include "model/Element.h"
+#include "path/Path.h"
 
 #include "AudioElement.h"  // for AudioElement
 #include "LineStyle.h"     // for LineStyle
 #include "Point.h"         // for Point
 
-class Element;
 class ObjectInputStream;
 class ObjectOutputStream;
 class Range;
@@ -41,6 +41,7 @@ private:
     Value value = PEN;
 };
 
+
 enum StrokeCapStyle {
     ROUND = 0,
     BUTT = 1,
@@ -50,11 +51,10 @@ enum StrokeCapStyle {
 
 class ErasableStroke;
 struct PaddedBox;
-struct PathParameter;
+
 template <class T, size_t N>
 class SmallVector;
-
-using IntersectionParametersContainer = SmallVector<PathParameter, 4>;
+using IntersectionParametersContainer = SmallVector<Path::Parameter, 4>;
 
 class Stroke: public AudioElement {
 public:
@@ -74,15 +74,15 @@ public:
      * @brief Create a partial clone whose points are those of parameters between lowerBound and upperBound
      * Assumes both lowerBound and upperBound are valid parameters of the stroke, and lowerBound <= upperBound
      */
-    std::unique_ptr<Stroke> cloneSection(const PathParameter& lowerBound, const PathParameter& upperBound) const;
+    std::unique_ptr<Stroke> cloneSection(const Path::Parameter& lowerBound, const Path::Parameter& upperBound) const;
 
     /**
      * @brief Create a partial clone of a closed stroke (i.e. points.front() == points.back()) with points
      *     getPoint(startParam) -- ... -- points.back() == points.front() -- ... -- getPoint(endParam)
      * Assumes both startParam and endParam are valid parameters of the stroke, and endParam.index < startParam.index
      */
-    std::unique_ptr<Stroke> cloneCircularSectionOfClosedStroke(const PathParameter& startParam,
-                                                               const PathParameter& endParam) const;
+    std::unique_ptr<Stroke> cloneCircularSectionOfClosedStroke(const Path::Parameter& startParam,
+                                                               const Path::Parameter& endParam) const;
 
     /**
      * Clone style attributes, but not the data (position, width etc.)
@@ -115,7 +115,7 @@ public:
     void freeUnusedPointItems();
     std::vector<Point> const& getPointVector() const;
     Point getPoint(size_t index) const;
-    Point getPoint(PathParameter parameter) const;
+    Point getPoint(Path::Parameter parameter) const;
     const Point* getPoints() const;
 
     /**
