@@ -66,37 +66,6 @@ std::string serializeStroke(Stroke& stroke) {
     return {outStr->str, outStr->len};
 }
 
-TEST(UtilObjectIOStream, testReadComplexObject) {
-
-    std::string objectName = "TestObject";
-    double d = 42.;
-    std::string s = "Test";
-    int i = -1337;
-
-    ObjectOutputStream outStream(new BinObjectEncoding);
-    outStream.writeObject(objectName.c_str());
-    outStream.writeDouble(d);
-    outStream.writeString(s);
-    outStream.writeInt(i);
-    outStream.endObject();
-
-    auto gstr = outStream.getStr();
-    std::string str(gstr->str, gstr->len);
-
-    ObjectInputStream stream;
-    EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
-
-    std::string outputName = stream.readObject();
-    EXPECT_EQ(outputName, objectName);
-    double outputD = stream.readDouble();
-    EXPECT_EQ(outputD, d);
-    std::string outputS = stream.readString();
-    EXPECT_EQ(outputS, s);
-    int outputI = stream.readInt();
-    EXPECT_EQ(outputI, i);
-    stream.endObject();
-}
-
 template <typename T, unsigned int N>
 void testReadDataType(const std::array<T, N>& data) {
     std::string str = serializeData<T, N>(data);
@@ -234,6 +203,72 @@ TEST(UtilObjectIOStream, testReadDouble) {
     }
 }
 
+TEST(UtilObjectIOStream, testReadComplexObject) {
+    std::string objectName = "TestObject";
+    std::vector<std::string> subobjectNames = {"FirstTestSubobject", "SecondTestSubobject"};
+    double d = 42.;
+    std::string s = "Test";
+    int i = -1337;
+    size_t n = 1234567;
+
+    try {
+        for (size_t iterNum = 0; iterNum < subobjectNames.size(); ++iterNum) {
+            ObjectOutputStream outStream(new BinObjectEncoding);
+            outStream.writeObject(objectName.c_str());
+            outStream.writeDouble(d);
+            outStream.writeString(s);
+
+            outStream.writeObject(subobjectNames[iterNum].c_str());
+            if (iterNum == 0) {
+                outStream.writeInt(i);
+            } else {
+                outStream.writeSizeT(n);
+                outStream.writeSizeT(12 * n);
+            }
+            outStream.endObject();
+
+            outStream.writeDouble(-d);
+            outStream.endObject();
+
+            auto gstr = outStream.getStr();
+            std::string str(gstr->str, gstr->len);
+
+            ObjectInputStream stream;
+            EXPECT_TRUE(stream.read(&str[0], (int)str.size() + 1));
+
+            std::string outputName = stream.readObject();
+            EXPECT_EQ(outputName, objectName);
+            double outputD = stream.readDouble();
+            EXPECT_EQ(outputD, d);
+            std::string outputS = stream.readString();
+            EXPECT_EQ(outputS, s);
+
+            std::string nextsubname = stream.getNextObjectName();
+            EXPECT_EQ(nextsubname, subobjectNames[iterNum]);
+            std::string subname = stream.readObject();
+            EXPECT_EQ(subname, subobjectNames[iterNum]);
+            if (iterNum == 0) {
+                int outputI = stream.readInt();
+                EXPECT_EQ(outputI, i);
+            } else {
+                size_t outputN = stream.readSizeT();
+                EXPECT_EQ(outputN, n);
+                size_t output12N = stream.readSizeT();
+                EXPECT_EQ(output12N, 12 * n);
+            }
+            stream.endObject();
+
+            double outputMinusD = stream.readDouble();
+            EXPECT_EQ(outputMinusD, -d);
+
+            stream.endObject();
+        }
+    } catch (InputStreamException& e) {
+        std::cerr << "InputStreamException testing complex object: " << e.what() << std::endl;
+        FAIL();
+    }
+}
+
 void assertStrokeEquality(const Stroke& stroke1, const Stroke& stroke2) {
     EXPECT_EQ(stroke1.getAudioFilename(), stroke2.getAudioFilename());
     EXPECT_EQ(stroke1.getToolType(), stroke2.getToolType());
@@ -291,14 +326,20 @@ TEST(UtilObjectIOStream, testReadStroke) {
     strokes[7].setToolType((StrokeTool)42);
     strokes[7].setWidth(-1337.);
 
+    size_t i = 0;
+    try {
+        for (auto&& stroke: strokes) {
+            std::string out_string = serializeStroke(stroke);
+            ObjectInputStream istream;
+            istream.read(out_string.c_str(), (int)out_string.size());
 
-    for (auto&& stroke: strokes) {
-        std::string out_string = serializeStroke(stroke);
-        ObjectInputStream istream;
-        istream.read(out_string.c_str(), (int)out_string.size());
-
-        Stroke in_stroke;
-        in_stroke.readSerialized(istream);
-        assertStrokeEquality(stroke, in_stroke);
+            Stroke in_stroke;
+            in_stroke.readSerialized(istream);
+            assertStrokeEquality(stroke, in_stroke);
+            ++i;
+        }
+    } catch (InputStreamException& e) {
+        std::cerr << "InputStreamException testing stroke " << i << ": " << e.what() << std::endl;
+        FAIL();
     }
 }
