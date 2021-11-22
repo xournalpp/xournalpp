@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 09:31+0000\n"
-"PO-Revision-Date: 2021-11-22 09:42\n"
+"POT-Creation-Date: 2021-11-22 15:44+0000\n"
+"PO-Revision-Date: 2021-11-22 16:41\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/control/XournalMain.cpp:472
+#: ../src/control/XournalMain.cpp:444
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -28,12 +28,6 @@ msgid "\n"
 " Do you want to continue?"
 msgstr "\n"
 "Wilt u doorgaan?"
-
-#: ../src/control/XournalMain.cpp:452
-msgid "\n"
-"Will now attempt to run without this file."
-msgstr "\n"
-"Er wordt nu geprobeerd op te starten zonder dit bestand."
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -48,7 +42,7 @@ msgstr "%F-Notitie-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Geen apparaten aangetroffen. Dit lijkt niet de bedoeling - wil je een bugmelding opmaken?</b>"
 
-#: ../src/control/XournalMain.cpp:467
+#: ../src/control/XournalMain.cpp:439
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -66,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Het benodigde UI-bestand ontbreekt
 msgid "Add/Edit Tex"
 msgstr "Tex toevoegen/bewerken"
 
-#: ../src/control/XournalMain.cpp:686
+#: ../src/control/XournalMain.cpp:657
 msgid "Advanced export options"
 msgstr "Geavanceerde exportopties"
 
@@ -82,7 +76,7 @@ msgstr "Toepassen op alle pagina's"
 msgid "Apply to current page"
 msgstr "Toepassen op huidige pagina"
 
-#: ../src/control/tools/EditSelection.cpp:351
+#: ../src/control/tools/EditSelection.cpp:352
 msgid "Arrange"
 msgstr "Ordenen"
 
@@ -148,16 +142,16 @@ msgstr "Terug"
 msgid "Background"
 msgstr "Achtergrond"
 
-#: ../src/control/tools/EditSelection.cpp:368
+#: ../src/control/tools/EditSelection.cpp:369
 msgid "Bring forward"
 msgstr "Naar voren brengen"
 
-#: ../src/control/tools/EditSelection.cpp:358
+#: ../src/control/tools/EditSelection.cpp:359
 msgid "Bring to front"
 msgstr "Naar voorgrond brengen"
 
 #: ../src/control/Control.cpp:2011 ../src/control/Control.cpp:2462
-#: ../src/control/XournalMain.cpp:167
+#: ../src/control/XournalMain.cpp:160
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -203,7 +197,7 @@ msgstr "Huidige kopiëren"
 msgid "Copy page"
 msgstr "Pagina kopiëren"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:253
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Kon map niet aanmaken: {1}\n"
@@ -221,28 +215,28 @@ msgstr "Kan LaTeX PDF-bestand niet openen: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Kan pagetemplates.ini niet openen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:787
+#: ../src/control/xojfile/LoadHandler.cpp:790
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet uitlezen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:796
+#: ../src/control/xojfile/LoadHandler.cpp:800
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: kan bestand niet wegschrijven"
 
-#: ../src/control/xojfile/LoadHandler.cpp:768
-#: ../src/control/xojfile/LoadHandler.cpp:1019
-#: ../src/control/xojfile/LoadHandler.cpp:1037
+#: ../src/control/xojfile/LoadHandler.cpp:770
+#: ../src/control/xojfile/LoadHandler.cpp:1023
+#: ../src/control/xojfile/LoadHandler.cpp:1042
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: geen geldige grootte opgegeven"
 
-#: ../src/control/xojfile/LoadHandler.cpp:759
-#: ../src/control/xojfile/LoadHandler.cpp:775
-#: ../src/control/xojfile/LoadHandler.cpp:1010
-#: ../src/control/xojfile/LoadHandler.cpp:1026
+#: ../src/control/xojfile/LoadHandler.cpp:761
+#: ../src/control/xojfile/LoadHandler.cpp:777
+#: ../src/control/xojfile/LoadHandler.cpp:1014
+#: ../src/control/xojfile/LoadHandler.cpp:1030
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Kan bijlage niet openen: {1}. Foutmelding: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:159
+#: ../src/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open file: \"{1}\""
 msgstr "Kan bestand niet openen: '{1}'"
 
@@ -258,12 +252,12 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Kan algemeen toolbar.ini-bestand niet verwerken: {1}\n"
 "Werkbalken zijn niet beschikbaar"
 
-#: ../src/control/xojfile/LoadHandler.cpp:355
-#: ../src/control/xojfile/LoadHandler.cpp:379
+#: ../src/control/xojfile/LoadHandler.cpp:357
+#: ../src/control/xojfile/LoadHandler.cpp:381
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Kan afbeelding niet uitlezen: {1}. Foutmelding: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:389
+#: ../src/control/xojfile/LoadHandler.cpp:391
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Het paginanummer kan niet gelezen worden van de gekloonde achtergrond: {1}."
 
@@ -315,7 +309,7 @@ msgstr "Nieuwe laag creëren"
 msgid "Custom"
 msgstr "Aangepast"
 
-#: ../src/control/jobs/CustomExportJob.cpp:19
+#: ../src/control/jobs/CustomExportJob.cpp:21
 msgid "Custom Export"
 msgstr "Aangepaste export"
 
@@ -340,7 +334,7 @@ msgstr "Standaard gereedschap"
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: ../src/control/XournalMain.cpp:166
+#: ../src/control/XournalMain.cpp:159
 msgid "Delete Logfile"
 msgstr "Logbestand verwijderen"
 
@@ -348,7 +342,7 @@ msgstr "Logbestand verwijderen"
 msgid "Delete current page"
 msgstr "Huidige pagina verwijderen"
 
-#: ../src/control/XournalMain.cpp:208
+#: ../src/control/XournalMain.cpp:201
 msgid "Delete file"
 msgstr "Bestand verwijderen"
 
@@ -368,7 +362,7 @@ msgstr "Huidige pagina verwijderen"
 msgid "Discard"
 msgstr "Verwerpen"
 
-#: ../src/control/XournalMain.cpp:687
+#: ../src/control/XournalMain.cpp:658
 msgid "Display advanced export options"
 msgstr "Toon geavanceerde exportopties"
 
@@ -388,16 +382,16 @@ msgstr "Overschrijf de achtergrond-pdf niet: dit veroorzaakt fouten!"
 msgid "Document file was removed."
 msgstr "Het documentbestand is verwijderd."
 
-#: ../src/control/xojfile/LoadHandler.cpp:241
+#: ../src/control/xojfile/LoadHandler.cpp:243
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Document is beschadigd (geen pagina's gevonden in bestand)"
 
-#: ../src/control/xojfile/LoadHandler.cpp:237
+#: ../src/control/xojfile/LoadHandler.cpp:239
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Het document is onvolledig (is het einde afgesneden?)"
 
-#: ../src/model/Document.cpp:285 ../src/model/Document.cpp:294
-#: ../src/model/Document.cpp:297
+#: ../src/model/Document.cpp:288 ../src/model/Document.cpp:297
+#: ../src/model/Document.cpp:300
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Het document is niet geladen! ({1}); {2}"
 
@@ -495,12 +489,12 @@ msgstr "Kan bestand '{1}' niet openen"
 msgid "Error opening file: \"{1}\""
 msgstr "Kan bestand niet openen: '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:443
-#: ../src/control/xojfile/LoadHandler.cpp:463
+#: ../src/control/xojfile/LoadHandler.cpp:445
+#: ../src/control/xojfile/LoadHandler.cpp:465
 msgid "Error reading PDF: {1}"
 msgstr "Kan PDF niet uitlezen: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:520
+#: ../src/control/xojfile/LoadHandler.cpp:522
 msgid "Error reading width of a stroke: {1}"
 msgstr "Kan breedte van penseelstreek niet uitlezen: {1}"
 
@@ -532,17 +526,17 @@ msgstr "Fout: {1} is geen normaal bestand. Controleer uw LaTeX template bestand 
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Fout: {1}. Controleer de inhoud van {2}"
 
-#: ../src/control/XournalMain.cpp:186
+#: ../src/control/XournalMain.cpp:179
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr "Het foutlog kan niet worden verwijderd; doe dit handmatig.\n"
 "Logbestand: {1}"
 
-#: ../src/control/XournalMain.cpp:644
+#: ../src/control/XournalMain.cpp:615
 msgid "Export FILE as PDF"
 msgstr "Exporteer bestand als PDF"
 
-#: ../src/control/XournalMain.cpp:646
+#: ../src/control/XournalMain.cpp:617
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -558,7 +552,7 @@ msgstr "PDF-bestand exporteren"
 msgid "Export as PDF"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:660
+#: ../src/control/XournalMain.cpp:631
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -570,7 +564,7 @@ msgstr "Exporteer lagen progressief\n"
 "                                 bouw de laagstack progressief op.\n"
 "                                 Het resulterende PDF-bestand kan gebruikt worden voor een presentatie.\n"
 
-#: ../src/control/XournalMain.cpp:651
+#: ../src/control/XournalMain.cpp:622
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -578,7 +572,7 @@ msgstr "Exporteren zonder achtergrond\n"
 "                                 Het geëxporteerde bestand heeft een transparante of witte achtergrond,\n"
 "                                 afhankelijk van wat het formaat ondersteunt\n"
 
-#: ../src/control/XournalMain.cpp:656
+#: ../src/control/XournalMain.cpp:627
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Exporteren zonder regels\n"
@@ -587,6 +581,11 @@ msgstr "Exporteren zonder regels\n"
 #: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Kan LaTeX generator programma niet vinden in PATH: {1}"
+
+#: ../src/pdf/base/XojCairoPdfExport.cpp:156
+#: ../src/pdf/base/XojCairoPdfExport.cpp:201
+msgid "Failed to initialize PDF Cairo surface"
+msgstr ""
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -602,7 +601,7 @@ msgid "Failed to resolve path with the following error:\n"
 msgstr "Fout bij het oplossen van het pad met de volgende fout:\n"
 "{1}"
 
-#: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
+#: ../src/util/PathUtil.cpp:154 ../src/util/PathUtil.cpp:171
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Het bestand kan niet worden geopend; doe dit handmatig.\n"
@@ -636,7 +635,7 @@ msgstr "Doorsturen"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 of hoger"
 
-#: ../src/control/XournalMain.cpp:635
+#: ../src/control/XournalMain.cpp:606
 msgid "Get version of xournalpp"
 msgstr "Versie van xournalpp ophalen"
 
@@ -699,7 +698,7 @@ msgstr "Markeerstift"
 msgid "Image"
 msgstr "Afbeelding"
 
-#: ../src/control/XournalMain.cpp:293
+#: ../src/control/XournalMain.cpp:286
 msgid "Image file successfully created"
 msgstr "Afbeeldingsbestand is gecreëerd"
 
@@ -743,7 +742,7 @@ msgstr "Isometrisch gestippeld"
 msgid "Isometric Graph"
 msgstr "Isometrische Grafiek"
 
-#: ../src/control/XournalMain.cpp:631
+#: ../src/control/XournalMain.cpp:602
 msgid "Jump to Page (first Page: 1)"
 msgstr "Ga naar pagina (eerste pagina: 1)"
 
@@ -771,8 +770,8 @@ msgstr "Laag {1}"
 msgid "Layerstack Preview"
 msgstr ""
 
-#: ../src/gui/PageView.cpp:713
-#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
+#: ../src/gui/PageView.cpp:709
+#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
 msgstr "Bezig met laden..."
@@ -784,16 +783,6 @@ msgstr "Werkbalk beheren"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Medium"
 msgstr "Normaal"
-
-#: ../src/control/XournalMain.cpp:448
-msgid "Missing the needed UI file:\n"
-"{1}\n"
-" .app corrupted?\n"
-"Path: {2}"
-msgstr "Het benodigde UI-bestand ontbreekt:\n"
-"{1}\n"
-"Is .app beschadigd?\n"
-"Pad: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:16
 msgid "Move"
@@ -831,8 +820,8 @@ msgstr "Volgende pagina met aantekeningen"
 msgid "No device"
 msgstr "Geen apparaat"
 
-#: ../src/pdf/base/XojCairoPdfExport.cpp:150
-#: ../src/pdf/base/XojCairoPdfExport.cpp:192
+#: ../src/pdf/base/XojCairoPdfExport.cpp:151
+#: ../src/pdf/base/XojCairoPdfExport.cpp:196
 msgid "No pages to export!"
 msgstr "Geen te exporteren pagina's!"
 
@@ -849,7 +838,7 @@ msgstr "Normaal tekenen"
 msgid "OK"
 msgstr "Oké"
 
-#: ../src/control/XournalMain.cpp:667
+#: ../src/control/XournalMain.cpp:638
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
@@ -858,11 +847,11 @@ msgstr ""
 msgid "Open Image"
 msgstr "Afbeelding openen"
 
-#: ../src/control/XournalMain.cpp:164
+#: ../src/control/XournalMain.cpp:157
 msgid "Open Logfile"
 msgstr "Logbestand openen"
 
-#: ../src/control/XournalMain.cpp:165
+#: ../src/control/XournalMain.cpp:158
 msgid "Open Logfile directory"
 msgstr "Logboekmap openen"
 
@@ -888,11 +877,11 @@ msgstr "PDF-pagina {1}"
 msgid "PDF background missing"
 msgstr "PDF-achtergrond ontbreekt"
 
-#: ../src/control/XournalMain.cpp:347
+#: ../src/control/XournalMain.cpp:340
 msgid "PDF file successfully created"
 msgstr "Het PDF-bestand is gecreëerd"
 
-#: ../src/control/jobs/CustomExportJob.cpp:21
+#: ../src/control/jobs/CustomExportJob.cpp:23
 #: ../src/control/jobs/PdfExportJob.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
@@ -902,7 +891,7 @@ msgstr "PDF-bestanden"
 msgid "PDF {1}"
 msgstr "PDF {1}"
 
-#: ../src/control/jobs/CustomExportJob.cpp:22
+#: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "PNG graphics"
 msgstr "PNG-afbeeldingen"
 
@@ -966,7 +955,7 @@ msgstr "Vooringesteld"
 msgid "Presentation mode"
 msgstr "Presentatiemodus"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:68
+#: ../src/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
 msgstr "De eerder geselecteerde taal is niet meer beschikbaar!"
 
@@ -1011,11 +1000,11 @@ msgstr "Laag hernoemen"
 msgid "Replace"
 msgstr "Vervangen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1056
+#: ../src/control/xojfile/LoadHandler.cpp:1061
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Het opgevraagde tijdelijke bestand van bijlage {1} is niet aangetroffen"
 
-#: ../src/control/XournalMain.cpp:209
+#: ../src/control/XournalMain.cpp:202
 msgid "Restore file"
 msgstr "Bestand herstellen"
 
@@ -1035,7 +1024,7 @@ msgstr "Met gemeten afstand"
 msgid "Ruled with vertical line"
 msgstr "Verticaal gelijnd"
 
-#: ../src/control/jobs/CustomExportJob.cpp:23
+#: ../src/control/jobs/CustomExportJob.cpp:25
 msgid "SVG graphics"
 msgstr "SVG-afbeeldingen"
 
@@ -1056,7 +1045,7 @@ msgstr "Opslaan als..."
 msgid "Save File"
 msgstr "Bestand opslaan"
 
-#: ../src/control/jobs/CustomExportJob.cpp:130
+#: ../src/control/jobs/CustomExportJob.cpp:131
 #: ../src/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
 msgstr "Fout tijdens opslaan: {1}"
@@ -1124,15 +1113,15 @@ msgstr "Gebied kiezen"
 msgid "Selection Combo"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:163
+#: ../src/control/XournalMain.cpp:156
 msgid "Send Bugreport"
 msgstr "Bugmelding versturen"
 
-#: ../src/control/tools/EditSelection.cpp:379
+#: ../src/control/tools/EditSelection.cpp:380
 msgid "Send backward"
 msgstr "Naar achter sturen"
 
-#: ../src/control/tools/EditSelection.cpp:387
+#: ../src/control/tools/EditSelection.cpp:388
 msgid "Send to back"
 msgstr "Naar achtergrond sturen"
 
@@ -1140,13 +1129,13 @@ msgstr "Naar achtergrond sturen"
 msgid "Separator"
 msgstr "Scheidingsteken"
 
-#: ../src/control/XournalMain.cpp:671
+#: ../src/control/XournalMain.cpp:642
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Stel DPI in voor PNG exports. Standaard is 300\n"
 "                                 Geen effect zonder -i/--create-img=foo.png"
 
-#: ../src/control/XournalMain.cpp:681
+#: ../src/control/XournalMain.cpp:652
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1154,7 +1143,7 @@ msgstr "Stel paginahoogte in voor PNG-exportering\n"
 "                                 Geen effect zonder -i/--create-img=foo.png\n"
 "                                 Genegeerd als --export-png-dpi of --export-png-breedte wordt gebruikt"
 
-#: ../src/control/XournalMain.cpp:675
+#: ../src/control/XournalMain.cpp:646
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1176,13 +1165,13 @@ msgstr "Alleen ongebruikte pagina's tonen (één ongebruikte pagina)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Alleen ongebruikte pagina's tonen ({1} ongebruikte pagina's)"
 
-#: ../src/control/XournalMain.cpp:543
+#: ../src/control/XournalMain.cpp:514
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Xournal++ kan slechts één bestand tegelijk openen.\n"
 "Andere bestanden worden genegeerd."
 
-#: ../src/control/XournalMain.cpp:558
+#: ../src/control/XournalMain.cpp:529
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "Momenteel kan Xournal++ geen bestanden op afstand openen.\n"
@@ -1226,7 +1215,7 @@ msgstr "Huidige pagina omwisselen met bovenstaande pagina"
 msgid "Swap the current page with the one below"
 msgstr "Huidige pagina omwisselen met onderstaande pagina"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:52
+#: ../src/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
 msgstr "Standaard systeeminstelling"
 
@@ -1290,15 +1279,15 @@ msgstr ""
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (mimetype ontbreekt): '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:126
+#: ../src/control/xojfile/LoadHandler.cpp:127
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (onjuist mimetype): '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:135
+#: ../src/control/xojfile/LoadHandler.cpp:136
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (versie ontbreekt): '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:147
+#: ../src/control/xojfile/LoadHandler.cpp:149
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (versie is beschadigd): '{1}'"
 
@@ -1306,15 +1295,15 @@ msgstr "Het bestand is geen geldig .xopp-bestand (versie is beschadigd): '{1}'"
 msgid "The formula is empty when rendered or invalid."
 msgstr "De formule blijkt na het renderen leeg te zijn of is ongeldig."
 
-#: ../src/control/XournalMain.cpp:158
+#: ../src/control/XournalMain.cpp:151
 msgid "The most recent log file name: {1}"
 msgstr "Meest recente logbestand: {1}"
 
-#: ../src/control/XournalMain.cpp:153
+#: ../src/control/XournalMain.cpp:146
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Er zijn logbestanden van Xournal++. Maak een bugmelding op en verstuur deze."
 
-#: ../src/control/XournalMain.cpp:152
+#: ../src/control/XournalMain.cpp:145
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Er is een logbestand van Xournal++. Maak een bugmelding op en verstuur deze."
 
@@ -1359,7 +1348,7 @@ msgstr "Bezig met opslaan van huidig document voor noodgevallen…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/gui/PageView.cpp:350
+#: ../src/gui/PageView.cpp:346
 msgid "Unable to play audio recording {1}"
 msgstr "Kan audio-opname {1} niet afspelen"
 
@@ -1376,15 +1365,15 @@ msgstr "Ongedaan maken"
 msgid "Undo: "
 msgstr "Ongedaan maken: "
 
-#: ../src/control/xojfile/LoadHandler.cpp:286
+#: ../src/control/xojfile/LoadHandler.cpp:288
 msgid "Unexpected root tag: {1}"
 msgstr "Onverwacht rootlabel: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:307
+#: ../src/control/xojfile/LoadHandler.cpp:309
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Onverwacht label in document: '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:496
+#: ../src/control/xojfile/LoadHandler.cpp:498
 msgid "Unknown background type: {1}"
 msgstr "Onbekende achtergrond: {1}"
 
@@ -1392,19 +1381,19 @@ msgstr "Onbekende achtergrond: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Onbekende kleurwaarde: '{1}'"
 
-#: ../src/control/xojfile/LoadHandler.cpp:450
+#: ../src/control/xojfile/LoadHandler.cpp:452
 msgid "Unknown domain type: {1}"
 msgstr "Onbekend domein: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:226
+#: ../src/control/xojfile/LoadHandler.cpp:228
 msgid "Unknown parser error"
 msgstr "Onbekende verwerkfout"
 
-#: ../src/control/xojfile/LoadHandler.cpp:397
+#: ../src/control/xojfile/LoadHandler.cpp:399
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Onbekend pixmap::domein: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:593
+#: ../src/control/xojfile/LoadHandler.cpp:595
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Onbekende penseelsoort: '{1}' - aangenomen wordt dat het een pen is"
 
@@ -1436,19 +1425,19 @@ msgstr "Witte PDF-achtergrond"
 msgid "Write text"
 msgstr "Tekst opstellen"
 
-#: ../src/control/xojfile/LoadHandler.cpp:910
+#: ../src/control/xojfile/LoadHandler.cpp:914
 msgid "Wrong count of points ({1})"
 msgstr "Onjuiste puntentelling ({1})"
 
-#: ../src/control/xojfile/LoadHandler.cpp:920
+#: ../src/control/xojfile/LoadHandler.cpp:924
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Onjuist aantal punten - verkregen: {1}, verwacht: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:223
+#: ../src/control/xojfile/LoadHandler.cpp:225
 msgid "XML Parser error: {1}"
 msgstr "XML-verwerkfout: {1}"
 
-#: ../src/control/jobs/CustomExportJob.cpp:24
+#: ../src/control/jobs/CustomExportJob.cpp:26
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (comptabiliteit)"
 
@@ -1456,7 +1445,7 @@ msgstr "Xournal (comptabiliteit)"
 msgid "Xournal files"
 msgstr "Xournal-bestanden"
 
-#: ../src/control/XournalMain.cpp:203
+#: ../src/control/XournalMain.cpp:196
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ is de vorige keer gecrasht. Wil je het laatstgebruikte bestand herstellen?"
 
@@ -1475,7 +1464,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "De actie is afgebroken: je hebt geen PDF-pagina's om uit te kiezen.\n"
 "Kies een ander soort achtergrond via 'Document' →'Paginasjabloon instellen'."
 
-#: ../src/control/XournalMain.cpp:155
+#: ../src/control/XournalMain.cpp:148
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr ""
 
@@ -1621,43 +1610,43 @@ msgstr "spoorpunt"
 msgid "whiteout"
 msgstr "correctievloeistof"
 
-#: ../src/control/xojfile/LoadHandler.cpp:919
+#: ../src/control/xojfile/LoadHandler.cpp:923
 msgid "xoj-File: {1}"
 msgstr "xoj-bestand: {1}"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:111
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:112
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr "xoj-preview-extractor: roep aan met INVOER.xoj UITVOER.xoj"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:177
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:176
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "xoj-preview-extractor: kon icon \"{1}\" niet vinden"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:132
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:133
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr "xoj-preview-extractor: het bestand '{1}' bevat geen voorbeeld"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:124
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:125
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr "xoj-preview-extractor: het bestand '{1}' is geen .xoj-bestand"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:137
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: geen voorbeeld en pagina aangetroffen - onjuist bestand?"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:128
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:129
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr "xoj-preview-extractor: kan het bestand '{1}' niet openen"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:194
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor: kan het bestand '{1}' niet openen"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:201
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:200
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: uitpakken voltooid"
 
-#: ../src/util/PathUtil.cpp:239
+#: ../src/util/PathUtil.cpp:243
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
