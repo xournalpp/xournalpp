@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-15 18:06+0000\n"
-"PO-Revision-Date: 2021-11-15 18:43\n"
+"POT-Creation-Date: 2021-11-22 09:31+0000\n"
+"PO-Revision-Date: 2021-11-22 09:42\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/control/XournalMain.cpp:473
+#: ../src/control/XournalMain.cpp:472
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -29,7 +29,7 @@ msgid "\n"
 msgstr "\n"
 "Wil U voortgaan?"
 
-#: ../src/control/XournalMain.cpp:453
+#: ../src/control/XournalMain.cpp:452
 msgid "\n"
 "Will now attempt to run without this file."
 msgstr "\n"
@@ -40,7 +40,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " van {1}"
 
-#: ../src/control/settings/Settings.cpp:119
+#: ../src/control/settings/Settings.cpp:121
 msgid "%F-Note-%H-%M"
 msgstr "%F-Nota-%H-%M"
 
@@ -48,7 +48,7 @@ msgstr "%F-Nota-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Geen toestelle was gevind nie. Hierdie lyk verkeerd - dalk wil U 'n fout rapporteer?</b>"
 
-#: ../src/control/XournalMain.cpp:468
+#: ../src/control/XournalMain.cpp:467
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -61,11 +61,11 @@ msgstr "<span foreground='red' size='x-large'>Vermis die nodige verbruikers kopp
 "  Nie in die werkende-pad nie\n"
 "  Nie in {2}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:416
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:458
 msgid "Add/Edit Tex"
 msgstr "Voeg by/Redigeer teks"
 
-#: ../src/control/XournalMain.cpp:690
+#: ../src/control/XournalMain.cpp:686
 msgid "Advanced export options"
 msgstr "Gevorderde uitvoer opsies"
 
@@ -138,24 +138,14 @@ msgstr "Autosave vernoem van {1} na {2}"
 msgid "Autosaving to {1}"
 msgstr "Autosaving na {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:382
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:452
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Back"
 msgstr "Terug"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:197 ../src/model/XojPage.cpp:174
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:199 ../src/model/XojPage.cpp:174
 msgid "Background"
 msgstr "Agtergrond"
-
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:10
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:94
-msgid "Black"
-msgstr "Swart"
-
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:14
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:98
-msgid "Blue"
-msgstr "Blou"
 
 #: ../src/control/tools/EditSelection.cpp:368
 msgid "Bring forward"
@@ -166,7 +156,7 @@ msgid "Bring to front"
 msgstr "Bring na vore"
 
 #: ../src/control/Control.cpp:2011 ../src/control/Control.cpp:2462
-#: ../src/control/XournalMain.cpp:168
+#: ../src/control/XournalMain.cpp:167
 msgid "Cancel"
 msgstr "Kanselleer"
 
@@ -198,9 +188,9 @@ msgstr "Kleur \"{1}\" onbekend (nie gedefinieer in die verstek kleur lys nie)!"
 msgid "Contents"
 msgstr "Inhoud"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:349
-#: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:78
-#: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:84
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
+#: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:74
+#: ../src/gui/toolbarMenubar/model/ToolbarModel.cpp:80
 msgid "Copy"
 msgstr "Kopieer"
 
@@ -282,11 +272,11 @@ msgid "Could not redo \"{1}\"\n"
 msgstr "Kon nie \"{1}\" herstel nie\n"
 "Iets het fout gegaan... Skryf asseblief 'n fout verslag…"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:166
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
 msgstr "Kon nie werktuig item van Taakbalk {1} op posisie {2} verwyder nie"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:161
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:163
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "Kon nie werktuig item {1} van Taakbalk {2} op posisie {3} verwyder nie"
 
@@ -328,7 +318,7 @@ msgstr "Pasgemaak"
 msgid "Custom Export"
 msgstr "Pasgemaakte Uitvoer"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:371
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Customize Toolbars"
 msgstr "Pas Taakbalk aan"
 
@@ -336,28 +326,28 @@ msgstr "Pas Taakbalk aan"
 msgid "Customized"
 msgstr "Pasgemaakte"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:348
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Cut"
 msgstr "Knip"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:418
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Default Tool"
 msgstr "Verstek Werktuig"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:354
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:389
 #: ../src/undo/DeleteUndoAction.cpp:74
 msgid "Delete"
 msgstr "Verwyder"
 
-#: ../src/control/XournalMain.cpp:167
+#: ../src/control/XournalMain.cpp:166
 msgid "Delete Logfile"
 msgstr "Vee Logfile uit"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:402
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:442
 msgid "Delete current page"
 msgstr "Verwyder huidige bladsy"
 
-#: ../src/control/XournalMain.cpp:209
+#: ../src/control/XournalMain.cpp:208
 msgid "Delete file"
 msgstr "Verwyder lêer"
 
@@ -377,7 +367,7 @@ msgstr "Verwyder hierdie bladsy"
 msgid "Discard"
 msgstr "Gooi weg"
 
-#: ../src/control/XournalMain.cpp:691
+#: ../src/control/XournalMain.cpp:687
 msgid "Display advanced export options"
 msgstr "Wys gevorderde uitvoer opsies"
 
@@ -416,19 +406,19 @@ msgstr "Gestippel"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:465
 msgid "Draw Arrow"
 msgstr "Teken Pyl"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Draw Ellipse"
 msgstr "Teken Ellips"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Draw Line"
 msgstr "Teken Lyn"
 
@@ -436,19 +426,19 @@ msgstr "Teken Lyn"
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:99
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:102
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:463
 msgid "Draw Rectangle"
 msgstr "Teken Reghoek"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Draw Spline"
 msgstr "Teken Spline"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Draw coordinate system"
 msgstr "Teken koördinaatstelsel"
 
@@ -482,7 +472,7 @@ msgid "Erase stroke"
 msgstr "Verwyder penslag"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:84
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:250
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:275
 msgid "Eraser"
 msgstr "Uitveër"
 
@@ -541,17 +531,17 @@ msgstr "Fout: {1} is nie n normale lêer nie. Kyk asseblief na jou LaTeX templaa
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Fout\" {1}. Kyk asseblief na die inhoud van {2}"
 
-#: ../src/control/XournalMain.cpp:187
+#: ../src/control/XournalMain.cpp:186
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr "Fout aanmelding kon nie verwyder word nie. Jy moet dit handmatig doen.\n"
 "Foutlêer: {1}"
 
-#: ../src/control/XournalMain.cpp:648
+#: ../src/control/XournalMain.cpp:644
 msgid "Export FILE as PDF"
 msgstr "Voer LÊER uit as PDF"
 
-#: ../src/control/XournalMain.cpp:650
+#: ../src/control/XournalMain.cpp:646
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -563,11 +553,11 @@ msgstr "Voer LÊER uit as foto lêers (een per bladsy)\n"
 msgid "Export PDF"
 msgstr "Voer PDF uit"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:336
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Export as PDF"
 msgstr "Voer as PDF uit"
 
-#: ../src/control/XournalMain.cpp:664
+#: ../src/control/XournalMain.cpp:660
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -579,7 +569,7 @@ msgstr "Voer lêers uit geleidelik   \n"
 "                                 bou die lae stapel geleidelik.\n"
 "                                 Die gevolglike PDF lêer kan gebruik word vir 'n voorlegging.\n"
 
-#: ../src/control/XournalMain.cpp:655
+#: ../src/control/XournalMain.cpp:651
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -587,7 +577,7 @@ msgstr "Voer uit sonder agtergrond\n"
 "                                 Die uitgevoerde lêer het 'n deurskynende of wit agtergrond\n"
 "                                 afhangend van wat die formaat ondersteun\n"
 
-#: ../src/control/XournalMain.cpp:660
+#: ../src/control/XournalMain.cpp:656
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Voer uit sonder lyne\n"
@@ -617,7 +607,7 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Lêer kon nie oopgemaak word nie. Jy sal dit handmatig moet doen:\n"
 "URL: {1}"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:475
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:521
 msgid "Fill"
 msgstr "Vul"
 
@@ -625,7 +615,7 @@ msgstr "Vul"
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filter inset druk. Maal die druk met die druk vermenigvuldiger. Indien dit minder as die minimum is, gebruik die minimum druk."
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:489
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:540
 msgid "Fine"
 msgstr "Fyn"
 
@@ -637,7 +627,7 @@ msgstr "Drywende gereedskapskis (eksperimenteel)"
 msgid "Font"
 msgstr "Lettertipe"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:449
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Forward"
 msgstr "Vorentoe"
 
@@ -645,7 +635,7 @@ msgstr "Vorentoe"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 of later"
 
-#: ../src/control/XournalMain.cpp:639
+#: ../src/control/XournalMain.cpp:635
 msgid "Get version of xournalpp"
 msgstr "Kry die weergawe van xournalpp"
 
@@ -657,27 +647,27 @@ msgstr "Globale templaat lêer bestaan nie. Kyk asseblief na jou verstellings."
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Globale templaat lêer is nie 'n gewone lêer nie. Kyk asseblief na jou verstellings. "
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:381
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Go to first page"
 msgstr "Gaan na eerste bladsy"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Go to last page"
 msgstr "Gaan na laaste bladsy"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:388
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Go to next layer"
 msgstr "Gaan na volgende laag"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:383
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Go to page"
 msgstr "Gaan na bladsy"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Go to previous layer"
 msgstr "Gaan na vorige laag"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:389
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Go to top layer"
 msgstr "Gaan na boonste laag"
 
@@ -685,22 +675,12 @@ msgstr "Gaan na boonste laag"
 msgid "Graph"
 msgstr "Grafiek"
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:15
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:99
-msgid "Gray"
-msgstr "Grys"
-
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:11
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:95
-msgid "Green"
-msgstr "Groen"
-
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:359
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:394
 msgid "Grid Snapping"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:435
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Hand"
 msgstr "Hand"
 
@@ -709,16 +689,16 @@ msgid "Hide all"
 msgstr "Versteek alles"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:85
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:455
 msgid "Highlighter"
 msgstr "Ligstreper"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:34
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:417
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Image"
 msgstr "Foto"
 
-#: ../src/control/XournalMain.cpp:294
+#: ../src/control/XournalMain.cpp:293
 msgid "Image file successfully created"
 msgstr "Foto lêer suksesvol geskep"
 
@@ -750,7 +730,7 @@ msgstr "Voeg latex by"
 msgid "Insert layer"
 msgstr "Voeg laag by"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:398
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Insert page"
 msgstr "Voeg bladsy by"
 
@@ -762,7 +742,7 @@ msgstr "Isometries Gestippel"
 msgid "Isometric Graph"
 msgstr "Isometries Grafiek"
 
-#: ../src/control/XournalMain.cpp:635
+#: ../src/control/XournalMain.cpp:631
 msgid "Jump to Page (first Page: 1)"
 msgstr "Spring na bladsy (eerste Bladsy: 1)"
 
@@ -770,11 +750,11 @@ msgstr "Spring na bladsy (eerste Bladsy: 1)"
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Latex generator het 'n fout tee gekom: {1} (uitgangkode: {2})"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:250
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:255
 msgid "Layer"
 msgstr "Laag"
 
-#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:239
+#: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:241
 msgid "Layer Combo"
 msgstr "Laag Kombinasie"
 
@@ -790,36 +770,21 @@ msgstr "Laag {1}"
 msgid "Layerstack Preview"
 msgstr "Laag-stapel Voorskou"
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:12
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:96
-msgid "Light Blue"
-msgstr "Ligte Blou"
-
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:13
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:97
-msgid "Light Green"
-msgstr "Ligte Groen"
-
 #: ../src/gui/PageView.cpp:713
 #: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
 msgstr "Laai tans..."
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:17
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:101
-msgid "Magenta"
-msgstr "Magenta"
-
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Manage Toolbars"
 msgstr "Bestuur taakbalke"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Medium"
 msgstr "Middelmatig"
 
-#: ../src/control/XournalMain.cpp:449
+#: ../src/control/XournalMain.cpp:448
 msgid "Missing the needed UI file:\n"
 "{1}\n"
 " .app corrupted?\n"
@@ -849,15 +814,15 @@ msgstr "Beweeg bladsy op"
 msgid "New"
 msgstr "Nuwe"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:333
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:366
 msgid "New Xournal"
 msgstr "Nuwe Xournal"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:384
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 msgid "Next"
 msgstr "Volgende"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Next annotated page"
 msgstr "Nuwe geannoteerde bladsy"
 
@@ -878,11 +843,12 @@ msgstr "Geen pdf blaai is beskikbaar om aan te heg nie. Jy moet dalk die dokumen
 msgid "Normal drawing"
 msgstr "Gewone tekening"
 
+#: ../src/gui/toolbarMenubar/model/ColorPalette.cpp:186
 #: ../src/plugin/Plugin.cpp:233 ../src/plugin/Plugin.cpp:249
 msgid "OK"
 msgstr "OK"
 
-#: ../src/control/XournalMain.cpp:671
+#: ../src/control/XournalMain.cpp:667
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Voer net die blaaie in die gespesifiseerde reeks uit (bv. \"2-3,5,7-\")\n"
@@ -892,16 +858,16 @@ msgstr "Voer net die blaaie in die gespesifiseerde reeks uit (bv. \"2-3,5,7-\")\
 msgid "Open Image"
 msgstr "Maak foto oop"
 
-#: ../src/control/XournalMain.cpp:165
+#: ../src/control/XournalMain.cpp:164
 msgid "Open Logfile"
 msgstr "Maak log-lêer oop"
 
-#: ../src/control/XournalMain.cpp:166
+#: ../src/control/XournalMain.cpp:165
 msgid "Open Logfile directory"
 msgstr "Maak Log-lêer gids oop"
 
 #: ../src/control/stockdlg/XojOpenDlg.cpp:12
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:334
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Open file"
 msgstr "Maak lêer oop"
 
@@ -909,11 +875,6 @@ msgstr "Maak lêer oop"
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Maak {1} oop"
-
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:18
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:102
-msgid "Orange"
-msgstr "Oranje"
 
 #: ../src/control/jobs/PdfExportJob.cpp:9
 msgid "PDF Export"
@@ -927,7 +888,7 @@ msgstr "PDF Bladsy {1}"
 msgid "PDF background missing"
 msgstr "PDF agtergrond nie beskikbaar nie"
 
-#: ../src/control/XournalMain.cpp:348
+#: ../src/control/XournalMain.cpp:347
 msgid "PDF file successfully created"
 msgstr "PDF lêer suksesvol geskep"
 
@@ -945,7 +906,7 @@ msgstr "PDF {1}"
 msgid "PNG graphics"
 msgstr "PNG grafieke"
 
-#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:85
+#: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:87
 msgid "Page"
 msgstr "Bladsy"
 
@@ -969,21 +930,21 @@ msgstr "Bladsy bygevoeg"
 msgid "Page number"
 msgstr "Bladsy nommer"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:365
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Paired pages"
 msgstr "Gepaarde bladsye"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:350
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 #: ../src/undo/AddUndoAction.cpp:77
 msgid "Paste"
 msgstr "Plak"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Pause / Play"
 msgstr "Pause / Speel"
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:83
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:231
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:256
 msgid "Pen"
 msgstr "Pen"
 
@@ -991,7 +952,7 @@ msgstr "Pen"
 msgid "Plain"
 msgstr "Eenvoudig"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:434
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
 msgid "Play Object"
@@ -1001,7 +962,7 @@ msgstr "Speel objek"
 msgid "Predefined"
 msgstr "Vooraf bepaal"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:367
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Presentation mode"
 msgstr "Aanbiedingsmodus"
 
@@ -1009,11 +970,11 @@ msgstr "Aanbiedingsmodus"
 msgid "Previously selected language not available anymore!"
 msgstr "Vorige gekose taal nie meer beskikbaar nie!"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:337
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Print"
 msgstr "Druk"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:441
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Record Audio / Stop Recording"
 msgstr "Neem klank op / Stop klank opneming"
 
@@ -1021,12 +982,7 @@ msgstr "Neem klank op / Stop klank opneming"
 msgid "Recorder could not be started."
 msgstr "Opnemer kon nie begin word nie."
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:16
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:100
-msgid "Red"
-msgstr "Rooi"
-
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:344
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/undo/UndoRedoHandler.cpp:217
 msgid "Redo"
 msgstr "Doen weer"
@@ -1039,11 +995,11 @@ msgstr "Doen weer: "
 msgid "Remove PDF Background"
 msgstr "Verwyder PDF agtergrond"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
 msgid "Removed tool item from Toolbar {1} ID {2}"
 msgstr "Hulpmiddel item verwyder van Taakbalk {1} ID {2}"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:155
+#: ../src/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
 msgstr "Hulpmiddel item {1} verwyder van Taakbalk {2} ID {3}"
 
@@ -1059,7 +1015,7 @@ msgstr "Vervang"
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Aangevraagde tydelike lêer was nie gevind vir aanhegting {1} nie"
 
-#: ../src/control/XournalMain.cpp:210
+#: ../src/control/XournalMain.cpp:209
 msgid "Restore file"
 msgstr "Herstel lêer"
 
@@ -1067,7 +1023,7 @@ msgstr "Herstel lêer"
 msgid "Rotation"
 msgstr "Rotasie"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:357
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Rotation Snapping"
 msgstr ""
 
@@ -1088,7 +1044,7 @@ msgid "Sample LaTeX file generated successfully."
 msgstr "Voorbeeld LaTex lêer suksesvol gegenereer."
 
 #: ../src/control/Control.cpp:2454 ../src/control/jobs/SaveJob.cpp:15
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:335
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Save"
 msgstr "Save"
 
@@ -1109,7 +1065,7 @@ msgstr "Save lêer fout: {1}"
 msgid "Scale"
 msgstr "Skaal"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:352
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:387
 msgid "Search"
 msgstr "Soek"
 
@@ -1117,24 +1073,24 @@ msgstr "Soek"
 msgid "See the full list of contributors"
 msgstr "Sien die volle lys bydraers"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:437
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Select Font"
 msgstr "Selekteer lettertipe"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Select Object"
 msgstr "Kies Objek"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:431
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
 msgstr "Kies Reghoek"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:65
 msgid "Select Region"
@@ -1152,8 +1108,7 @@ msgstr "Kies 'n ander naam"
 msgid "Select background color"
 msgstr "Kies agtergrond kleur"
 
-#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:42
-#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:94
+#: ../src/gui/toolbarMenubar/ColorToolItem.cpp:83
 msgid "Select color"
 msgstr "Kies kleur"
 
@@ -1169,7 +1124,7 @@ msgstr "Kies gebied"
 msgid "Selection Combo"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:164
+#: ../src/control/XournalMain.cpp:163
 msgid "Send Bugreport"
 msgstr ""
 
@@ -1181,28 +1136,28 @@ msgstr "Stuur agtertoe"
 msgid "Send to back"
 msgstr "Stuur na agter"
 
-#: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:47
+#: ../src/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Separator"
 msgstr "Verdeler"
 
-#: ../src/control/XournalMain.cpp:675
+#: ../src/control/XournalMain.cpp:671
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:685
+#: ../src/control/XournalMain.cpp:681
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:679
+#: ../src/control/XournalMain.cpp:675
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:420
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Shape Recognizer"
 msgstr ""
 
@@ -1218,12 +1173,12 @@ msgstr ""
 msgid "Show only not used pages ({1} unused pages)"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:546
+#: ../src/control/XournalMain.cpp:543
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:561
+#: ../src/control/XournalMain.cpp:558
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr ""
@@ -1232,7 +1187,7 @@ msgstr ""
 msgid "Staves"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:446
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Stop"
 msgstr "Stop"
 
@@ -1271,7 +1226,7 @@ msgid "System Default"
 msgstr ""
 
 #: ../src/gui/dialog/ButtonConfigGui.cpp:86
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:415
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Text"
 msgstr "Teks"
 
@@ -1346,15 +1301,15 @@ msgstr ""
 msgid "The formula is empty when rendered or invalid."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:159
+#: ../src/control/XournalMain.cpp:158
 msgid "The most recent log file name: {1}"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:154
+#: ../src/control/XournalMain.cpp:153
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:153
+#: ../src/control/XournalMain.cpp:152
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr ""
 
@@ -1362,7 +1317,7 @@ msgstr ""
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:542
 msgid "Thick"
 msgstr ""
 
@@ -1375,7 +1330,7 @@ msgstr ""
 msgid "This image could not be loaded. Error message: {1}"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:368
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:405
 msgid "Toggle fullscreen"
 msgstr ""
 
@@ -1407,7 +1362,7 @@ msgstr ""
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:343
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:378
 #: ../src/undo/UndoRedoHandler.cpp:205
 msgid "Undo"
 msgstr "Ontdoen"
@@ -1452,7 +1407,7 @@ msgstr ""
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:433
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:475
 msgid "Vertical Space"
 msgstr "Vertikale Spasie"
 
@@ -1460,18 +1415,13 @@ msgstr "Vertikale Spasie"
 msgid "Vertical space"
 msgstr "Vertikale spasie"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:488
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:539
 msgid "Very Fine"
 msgstr "Baie fyn"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:492
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:543
 msgid "Very Thick"
 msgstr "Baie dik"
-
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:20
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:104
-msgid "White"
-msgstr "Wit"
 
 #: ../src/control/pagetype/PageTypeHandler.cpp:33
 msgid "With PDF background"
@@ -1501,7 +1451,7 @@ msgstr ""
 msgid "Xournal files"
 msgstr "Xournal lêers"
 
-#: ../src/control/XournalMain.cpp:204
+#: ../src/control/XournalMain.cpp:203
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
@@ -1514,17 +1464,12 @@ msgstr ""
 msgid "Xournal++ template"
 msgstr ""
 
-#: ../src/gui/dialog/toolbarCustomize/CustomizeableColorList.cpp:19
-#: ../src/gui/toolbarMenubar/model/ToolbarColorNames.cpp:103
-msgid "Yellow"
-msgstr ""
-
 #: ../src/control/PageBackgroundChangeController.cpp:179
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:156
+#: ../src/control/XournalMain.cpp:155
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr ""
 
@@ -1534,23 +1479,23 @@ msgid "Your current document does not contain PDF Page no {1}\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:130
+#: ../src/gui/toolbarMenubar/ToolZoomSlider.cpp:132
 msgid "Zoom Slider"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:375
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Zoom fit to screen"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:374
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Zoom in"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:373
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Zoom out"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:376
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Zoom to 100%"
 msgstr ""
 
@@ -1575,11 +1520,11 @@ msgstr "_Save"
 msgid "cursor"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:239
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:264
 msgid "dash-/ dotted"
 msgstr "streep-/ stippel"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:236
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:261
 msgid "dashed"
 msgstr "gestreep"
 
@@ -1591,11 +1536,11 @@ msgstr ""
 msgid "default enabled"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:254
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:279
 msgid "delete stroke"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:242
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:267
 msgid "dotted"
 msgstr "gestippel"
 
@@ -1635,8 +1580,8 @@ msgstr "pen"
 msgid "show"
 msgstr "wys"
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:233
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:252
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:258
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:277
 msgid "standard"
 msgstr "standaard"
 
@@ -1664,7 +1609,7 @@ msgstr ""
 msgid "trackpoint"
 msgstr ""
 
-#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:253
+#: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:278
 msgid "whiteout"
 msgstr ""
 
