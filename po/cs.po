@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 09:31+0000\n"
-"PO-Revision-Date: 2021-11-22 09:41\n"
+"POT-Creation-Date: 2021-11-22 15:44+0000\n"
+"PO-Revision-Date: 2021-11-22 16:41\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/control/XournalMain.cpp:472
+#: ../src/control/XournalMain.cpp:444
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -28,12 +28,6 @@ msgid "\n"
 " Do you want to continue?"
 msgstr "\n"
 "Přejete si pokračovat?"
-
-#: ../src/control/XournalMain.cpp:452
-msgid "\n"
-"Will now attempt to run without this file."
-msgstr "\n"
-"Nyní se pokusí o spuštění bez tohoto souboru."
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -48,7 +42,7 @@ msgstr "%F-Poznámka-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Žádná zařízení nebyla nalezena. Zdá se to být špatně - možná můžete nahlásit chybu?</b>"
 
-#: ../src/control/XournalMain.cpp:467
+#: ../src/control/XournalMain.cpp:439
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -66,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Chybí požadovaný soubor uživat
 msgid "Add/Edit Tex"
 msgstr "Přidat/Upravit TeX"
 
-#: ../src/control/XournalMain.cpp:686
+#: ../src/control/XournalMain.cpp:657
 msgid "Advanced export options"
 msgstr "Pokročilé možnosti exportu"
 
@@ -82,7 +76,7 @@ msgstr "Použít na všechny stránky"
 msgid "Apply to current page"
 msgstr "Použít na aktuální stránku"
 
-#: ../src/control/tools/EditSelection.cpp:351
+#: ../src/control/tools/EditSelection.cpp:352
 msgid "Arrange"
 msgstr "Uspořádat"
 
@@ -148,16 +142,16 @@ msgstr "Zpět"
 msgid "Background"
 msgstr "Pozadí"
 
-#: ../src/control/tools/EditSelection.cpp:368
+#: ../src/control/tools/EditSelection.cpp:369
 msgid "Bring forward"
 msgstr "Přenést blíž"
 
-#: ../src/control/tools/EditSelection.cpp:358
+#: ../src/control/tools/EditSelection.cpp:359
 msgid "Bring to front"
 msgstr "Přenést do popředí"
 
 #: ../src/control/Control.cpp:2011 ../src/control/Control.cpp:2462
-#: ../src/control/XournalMain.cpp:167
+#: ../src/control/XournalMain.cpp:160
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -203,7 +197,7 @@ msgstr "Kopírovat aktuální"
 msgid "Copy page"
 msgstr "Kopírovat stránku"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:253
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nelze vytvořit složku: {1}\n"
@@ -221,28 +215,28 @@ msgstr "Nelze načíst LaTeX PDF soubor: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Soubor pagetemplates.ini nelze načíst"
 
-#: ../src/control/xojfile/LoadHandler.cpp:787
+#: ../src/control/xojfile/LoadHandler.cpp:790
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Nelze otevřít přílohu: {1}. Chybová zpráva: Nelze přečíst soubor"
 
-#: ../src/control/xojfile/LoadHandler.cpp:796
+#: ../src/control/xojfile/LoadHandler.cpp:800
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Nelze otevřít přílohu: {1}. Chybová zpráva: Nelze zapsat do souboru"
 
-#: ../src/control/xojfile/LoadHandler.cpp:768
-#: ../src/control/xojfile/LoadHandler.cpp:1019
-#: ../src/control/xojfile/LoadHandler.cpp:1037
+#: ../src/control/xojfile/LoadHandler.cpp:770
+#: ../src/control/xojfile/LoadHandler.cpp:1023
+#: ../src/control/xojfile/LoadHandler.cpp:1042
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Nelze otevřít přílohu: {1}. Chybová zpráva: Není zadána platná velikost souboru"
 
-#: ../src/control/xojfile/LoadHandler.cpp:759
-#: ../src/control/xojfile/LoadHandler.cpp:775
-#: ../src/control/xojfile/LoadHandler.cpp:1010
-#: ../src/control/xojfile/LoadHandler.cpp:1026
+#: ../src/control/xojfile/LoadHandler.cpp:761
+#: ../src/control/xojfile/LoadHandler.cpp:777
+#: ../src/control/xojfile/LoadHandler.cpp:1014
+#: ../src/control/xojfile/LoadHandler.cpp:1030
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Nelze otevřít přílohu: {1}. Chybová zpráva: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:159
+#: ../src/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open file: \"{1}\""
 msgstr "Nelze otevřít soubor: „{1}“"
 
@@ -258,12 +252,12 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Nelze načíst obecný soubor toolbar.ini: {1}\n"
 "Žádné nástrojové lišty nebudou k dispozici"
 
-#: ../src/control/xojfile/LoadHandler.cpp:355
-#: ../src/control/xojfile/LoadHandler.cpp:379
+#: ../src/control/xojfile/LoadHandler.cpp:357
+#: ../src/control/xojfile/LoadHandler.cpp:381
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Nelze načíst obrázek: {1}. Chybová zpráva: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:389
+#: ../src/control/xojfile/LoadHandler.cpp:391
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Nelze přečíst číslo stránky pro obrázek na pozadí: {1}."
 
@@ -315,7 +309,7 @@ msgstr "Vytvořit novou vrstvu"
 msgid "Custom"
 msgstr "Vlastní"
 
-#: ../src/control/jobs/CustomExportJob.cpp:19
+#: ../src/control/jobs/CustomExportJob.cpp:21
 msgid "Custom Export"
 msgstr "Vlastní Export"
 
@@ -340,7 +334,7 @@ msgstr "Výchozí nástroj"
 msgid "Delete"
 msgstr "Smazat"
 
-#: ../src/control/XournalMain.cpp:166
+#: ../src/control/XournalMain.cpp:159
 msgid "Delete Logfile"
 msgstr "Smazat soubor protokolu"
 
@@ -348,7 +342,7 @@ msgstr "Smazat soubor protokolu"
 msgid "Delete current page"
 msgstr "Smazat aktuální stránku"
 
-#: ../src/control/XournalMain.cpp:208
+#: ../src/control/XournalMain.cpp:201
 msgid "Delete file"
 msgstr "Smazat soubor"
 
@@ -368,7 +362,7 @@ msgstr "Odstranit tuto stránku"
 msgid "Discard"
 msgstr "Zahodit"
 
-#: ../src/control/XournalMain.cpp:687
+#: ../src/control/XournalMain.cpp:658
 msgid "Display advanced export options"
 msgstr "Zobrazit rozšírené možnosti exportu"
 
@@ -388,16 +382,16 @@ msgstr "Nepřepisuj PDF na pozadí! Toto způsobí chyby!"
 msgid "Document file was removed."
 msgstr "Soubor s dokumentem byl odstraněn."
 
-#: ../src/control/xojfile/LoadHandler.cpp:241
+#: ../src/control/xojfile/LoadHandler.cpp:243
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Dokument je poškozen (v souboru nebyly nalezeny žádné stránky)"
 
-#: ../src/control/xojfile/LoadHandler.cpp:237
+#: ../src/control/xojfile/LoadHandler.cpp:239
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Dokument není kompletní (jeho konec je nejspíš uřízlý)"
 
-#: ../src/model/Document.cpp:285 ../src/model/Document.cpp:294
-#: ../src/model/Document.cpp:297
+#: ../src/model/Document.cpp:288 ../src/model/Document.cpp:297
+#: ../src/model/Document.cpp:300
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Dokument není načten! ({1}), {2}"
 
@@ -495,12 +489,12 @@ msgstr "Chyba otevírání souboru „{1}“"
 msgid "Error opening file: \"{1}\""
 msgstr "Chyba otevírání souboru: „{1}“"
 
-#: ../src/control/xojfile/LoadHandler.cpp:443
-#: ../src/control/xojfile/LoadHandler.cpp:463
+#: ../src/control/xojfile/LoadHandler.cpp:445
+#: ../src/control/xojfile/LoadHandler.cpp:465
 msgid "Error reading PDF: {1}"
 msgstr "Chyba čtení PDF: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:520
+#: ../src/control/xojfile/LoadHandler.cpp:522
 msgid "Error reading width of a stroke: {1}"
 msgstr "Chyba čtení šířky čáry: {1}"
 
@@ -532,17 +526,17 @@ msgstr "Chyba: {1} není obvyklý soubor. Prosím, zkontrolujte si nastavení š
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Chyba: {1}. Zkontrolujte prosím obsah {2}"
 
-#: ../src/control/XournalMain.cpp:186
+#: ../src/control/XournalMain.cpp:179
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr "Nelze smazat chybový protokol. Udělejte to prosím ručně.\n"
 "Soubor protokolu: {1}"
 
-#: ../src/control/XournalMain.cpp:644
+#: ../src/control/XournalMain.cpp:615
 msgid "Export FILE as PDF"
 msgstr "Exportovat soubor jako PDF"
 
-#: ../src/control/XournalMain.cpp:646
+#: ../src/control/XournalMain.cpp:617
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -558,7 +552,7 @@ msgstr "Export do PDF"
 msgid "Export as PDF"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:660
+#: ../src/control/XournalMain.cpp:631
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -570,7 +564,7 @@ msgstr "Exportovat vrstvy postupně\n"
 "                                 v pořadí od spodní po vrchní.\n"
 "                                 Vzniklé PDF je možné použít pro prezentaci.\n"
 
-#: ../src/control/XournalMain.cpp:651
+#: ../src/control/XournalMain.cpp:622
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -578,7 +572,7 @@ msgstr "Export bez pozadí\n"
 "                                 Exportovaný soubor má průhledné nebo bílé pozadí,\n"
 "                                 v závislosti na tom, jaký formát podporuje\n"
 
-#: ../src/control/XournalMain.cpp:656
+#: ../src/control/XournalMain.cpp:627
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Exportovat bez pravítka\n"
@@ -587,6 +581,11 @@ msgstr "Exportovat bez pravítka\n"
 #: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Nepodařilo se najít program na generování LaTeX v PATH: {1}"
+
+#: ../src/pdf/base/XojCairoPdfExport.cpp:156
+#: ../src/pdf/base/XojCairoPdfExport.cpp:201
+msgid "Failed to initialize PDF Cairo surface"
+msgstr ""
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -602,7 +601,7 @@ msgid "Failed to resolve path with the following error:\n"
 msgstr "Nepodařilo se najít cestu k souboru kvůli následující chybě:\n"
 "{1}"
 
-#: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
+#: ../src/util/PathUtil.cpp:154 ../src/util/PathUtil.cpp:171
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Soubor se nepodařilo otevřít. Udělejte to prosím ručně:\n"
@@ -636,7 +635,7 @@ msgstr "Vpřed"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 nebo novější"
 
-#: ../src/control/XournalMain.cpp:635
+#: ../src/control/XournalMain.cpp:606
 msgid "Get version of xournalpp"
 msgstr "Získat verzi xournalpp"
 
@@ -699,7 +698,7 @@ msgstr "Zvýrazňovač"
 msgid "Image"
 msgstr "Obrázek"
 
-#: ../src/control/XournalMain.cpp:293
+#: ../src/control/XournalMain.cpp:286
 msgid "Image file successfully created"
 msgstr "Obrázek úspěšně vytvořen"
 
@@ -743,7 +742,7 @@ msgstr "Isomericky tečkovaný"
 msgid "Isometric Graph"
 msgstr "Isometrický čtverečkovaný"
 
-#: ../src/control/XournalMain.cpp:631
+#: ../src/control/XournalMain.cpp:602
 msgid "Jump to Page (first Page: 1)"
 msgstr "Přejít na stránku (první stránka: 1)"
 
@@ -771,8 +770,8 @@ msgstr "Vrstva {1}"
 msgid "Layerstack Preview"
 msgstr "Náhled balíčku vrstev"
 
-#: ../src/gui/PageView.cpp:713
-#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
+#: ../src/gui/PageView.cpp:709
+#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
 msgstr "Načítání..."
@@ -784,16 +783,6 @@ msgstr "Spravovat lištu nástrojů"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Medium"
 msgstr "Střední"
-
-#: ../src/control/XournalMain.cpp:448
-msgid "Missing the needed UI file:\n"
-"{1}\n"
-" .app corrupted?\n"
-"Path: {2}"
-msgstr "Chybí potřebný soubor uživatelského rozhraní:\n"
-"{1}\n"
-" .app poškozeno?\n"
-"Cesta: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:16
 msgid "Move"
@@ -831,8 +820,8 @@ msgstr "Další anotovaná stránka"
 msgid "No device"
 msgstr "Žádné zařízení"
 
-#: ../src/pdf/base/XojCairoPdfExport.cpp:150
-#: ../src/pdf/base/XojCairoPdfExport.cpp:192
+#: ../src/pdf/base/XojCairoPdfExport.cpp:151
+#: ../src/pdf/base/XojCairoPdfExport.cpp:196
 msgid "No pages to export!"
 msgstr "Žádné stránky k exportu!"
 
@@ -849,7 +838,7 @@ msgstr "Normální výkres"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/control/XournalMain.cpp:667
+#: ../src/control/XournalMain.cpp:638
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportovat pouze stránky specifikované příkazem RANGE (např. \"2-3,5,7-\")\n"
@@ -859,11 +848,11 @@ msgstr "Exportovat pouze stránky specifikované příkazem RANGE (např. \"2-3,
 msgid "Open Image"
 msgstr "Otevřít obrázek"
 
-#: ../src/control/XournalMain.cpp:164
+#: ../src/control/XournalMain.cpp:157
 msgid "Open Logfile"
 msgstr "Otevřít soubor protokolu"
 
-#: ../src/control/XournalMain.cpp:165
+#: ../src/control/XournalMain.cpp:158
 msgid "Open Logfile directory"
 msgstr "Otevřít složku s protokoly"
 
@@ -889,11 +878,11 @@ msgstr "PDF stránka {1}"
 msgid "PDF background missing"
 msgstr "PDF pozadí chybí"
 
-#: ../src/control/XournalMain.cpp:347
+#: ../src/control/XournalMain.cpp:340
 msgid "PDF file successfully created"
 msgstr "PDF soubor úspěšně vytvořen"
 
-#: ../src/control/jobs/CustomExportJob.cpp:21
+#: ../src/control/jobs/CustomExportJob.cpp:23
 #: ../src/control/jobs/PdfExportJob.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
@@ -903,7 +892,7 @@ msgstr "PDF soubory"
 msgid "PDF {1}"
 msgstr "PDF {1}"
 
-#: ../src/control/jobs/CustomExportJob.cpp:22
+#: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "PNG graphics"
 msgstr "PNG grafika"
 
@@ -967,7 +956,7 @@ msgstr "Předdefinované"
 msgid "Presentation mode"
 msgstr "Prezentace"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:68
+#: ../src/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
 msgstr "Dříve vybraný jazyk již není k dispozici!"
 
@@ -1012,11 +1001,11 @@ msgstr "Přejmenovat vrstvu"
 msgid "Replace"
 msgstr "Nahradit"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1056
+#: ../src/control/xojfile/LoadHandler.cpp:1061
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Požadovaný dočasný soubor nebyl nalezen pro přílohu {1}"
 
-#: ../src/control/XournalMain.cpp:209
+#: ../src/control/XournalMain.cpp:202
 msgid "Restore file"
 msgstr "Obnovit soubor"
 
@@ -1036,7 +1025,7 @@ msgstr "Linkovaný"
 msgid "Ruled with vertical line"
 msgstr "Linkovaný se svislou čarou"
 
-#: ../src/control/jobs/CustomExportJob.cpp:23
+#: ../src/control/jobs/CustomExportJob.cpp:25
 msgid "SVG graphics"
 msgstr "SVG grafika"
 
@@ -1057,7 +1046,7 @@ msgstr "Uložit jako..."
 msgid "Save File"
 msgstr "Uložit soubor"
 
-#: ../src/control/jobs/CustomExportJob.cpp:130
+#: ../src/control/jobs/CustomExportJob.cpp:131
 #: ../src/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
 msgstr "Chyba ukládání souboru: {1}"
@@ -1125,15 +1114,15 @@ msgstr "Výběr oblasti"
 msgid "Selection Combo"
 msgstr "Kombinace výběru"
 
-#: ../src/control/XournalMain.cpp:163
+#: ../src/control/XournalMain.cpp:156
 msgid "Send Bugreport"
 msgstr "Zaslat hlášení o chybě"
 
-#: ../src/control/tools/EditSelection.cpp:379
+#: ../src/control/tools/EditSelection.cpp:380
 msgid "Send backward"
 msgstr "Odsunout dozadu"
 
-#: ../src/control/tools/EditSelection.cpp:387
+#: ../src/control/tools/EditSelection.cpp:388
 msgid "Send to back"
 msgstr "Odsunout do pozadí"
 
@@ -1141,13 +1130,13 @@ msgstr "Odsunout do pozadí"
 msgid "Separator"
 msgstr "Oddělovač"
 
-#: ../src/control/XournalMain.cpp:671
+#: ../src/control/XournalMain.cpp:642
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Nastavte DPI pro export do PNG. Výchozí hodnota je 300\n"
 "                                 Nemá efekt bez -i/--create-img=foo.png"
 
-#: ../src/control/XournalMain.cpp:681
+#: ../src/control/XournalMain.cpp:652
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1155,7 +1144,7 @@ msgstr "Nastavte výšku stránky pro export do PNG\n"
 "                                 Nemá efekt bez -i/--create-img=foo.png\n"
 "                                 Ignorováno při použití --export-png-dpi nebo --export-png-width"
 
-#: ../src/control/XournalMain.cpp:675
+#: ../src/control/XournalMain.cpp:646
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1179,13 +1168,13 @@ msgstr "Zobrazit pouze nevyužité stránky (jedna nevyužitá stránka)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Zobrazit pouze nevyužité stránky ({1} nevyužitých stránek)"
 
-#: ../src/control/XournalMain.cpp:543
+#: ../src/control/XournalMain.cpp:514
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Promiň, Xournal++ může otevřít pouze jeden soubor najednou.\n"
 "Ostatní jsou ignorovány."
 
-#: ../src/control/XournalMain.cpp:558
+#: ../src/control/XournalMain.cpp:529
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "Promiň, Xournal++ momentálně nemůže otevřít vzdálené soubory.\n"
@@ -1229,7 +1218,7 @@ msgstr "Prohodit aktuální stránku s výše uvedenou"
 msgid "Swap the current page with the one below"
 msgstr "Prohodit aktuální stránku s níže uvedenou"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:52
+#: ../src/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
 msgstr "Výchozí nastavení systému"
 
@@ -1295,15 +1284,15 @@ msgstr "Nahraný soubor má novější formát, než který je podporován touto
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Soubor není platný soubor .xopp (Mimetype chybí): \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:126
+#: ../src/control/xojfile/LoadHandler.cpp:127
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "Soubor není platný .xopp soubor (Mimetype špatně): \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:135
+#: ../src/control/xojfile/LoadHandler.cpp:136
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Soubor není platný .xopp soubor (chybí verze): \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:147
+#: ../src/control/xojfile/LoadHandler.cpp:149
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Soubor není platný .xopp soubor (Version string je poškozený): \"{1}\""
 
@@ -1311,15 +1300,15 @@ msgstr "Soubor není platný .xopp soubor (Version string je poškozený): \"{1}
 msgid "The formula is empty when rendered or invalid."
 msgstr "Vzorec je prázdný, když je vykreslený, nebo neplatný."
 
-#: ../src/control/XournalMain.cpp:158
+#: ../src/control/XournalMain.cpp:151
 msgid "The most recent log file name: {1}"
 msgstr "Název nejnovějšího souboru protokolu: {1}"
 
-#: ../src/control/XournalMain.cpp:153
+#: ../src/control/XournalMain.cpp:146
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Xournal++ vytvořil soubory se záznamy o chybách. Zašlete prosím hlášení o chybě, abychom ji mohli opravit."
 
-#: ../src/control/XournalMain.cpp:152
+#: ../src/control/XournalMain.cpp:145
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Xournal++ vytvořil soubor se záznamy o chybách. Zašlete prosím hlášení o chybě, abychom ji mohli opravit."
 
@@ -1364,7 +1353,7 @@ msgstr "Pokus o nouzové uložení aktuálně otevřeného dokumentu…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Nepodařilo se otevřít soubor globální šablony {1}. Existuje?"
 
-#: ../src/gui/PageView.cpp:350
+#: ../src/gui/PageView.cpp:346
 msgid "Unable to play audio recording {1}"
 msgstr "Nebylo možno přehrát zvukovou nahrávku {1}"
 
@@ -1381,15 +1370,15 @@ msgstr "Zpět"
 msgid "Undo: "
 msgstr "Zpět: "
 
-#: ../src/control/xojfile/LoadHandler.cpp:286
+#: ../src/control/xojfile/LoadHandler.cpp:288
 msgid "Unexpected root tag: {1}"
 msgstr "Neočekávaný kořenový tag: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:307
+#: ../src/control/xojfile/LoadHandler.cpp:309
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Neočekávaný tag v dokumentu: „{1}“"
 
-#: ../src/control/xojfile/LoadHandler.cpp:496
+#: ../src/control/xojfile/LoadHandler.cpp:498
 msgid "Unknown background type: {1}"
 msgstr "Neznámý typ pozadí: {1}"
 
@@ -1397,19 +1386,19 @@ msgstr "Neznámý typ pozadí: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Neznámá hodnota barvy „{1}“"
 
-#: ../src/control/xojfile/LoadHandler.cpp:450
+#: ../src/control/xojfile/LoadHandler.cpp:452
 msgid "Unknown domain type: {1}"
 msgstr "Neznámý typ domény: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:226
+#: ../src/control/xojfile/LoadHandler.cpp:228
 msgid "Unknown parser error"
 msgstr "Neznámá chyba načítání XML"
 
-#: ../src/control/xojfile/LoadHandler.cpp:397
+#: ../src/control/xojfile/LoadHandler.cpp:399
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Neznámý typ pixmap::domain: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:593
+#: ../src/control/xojfile/LoadHandler.cpp:595
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Neznámý typ čáry: „{1}“, bereme jej jako pero"
 
@@ -1441,19 +1430,19 @@ msgstr "S PDF pozadím"
 msgid "Write text"
 msgstr "Psát text"
 
-#: ../src/control/xojfile/LoadHandler.cpp:910
+#: ../src/control/xojfile/LoadHandler.cpp:914
 msgid "Wrong count of points ({1})"
 msgstr "Špatný počet bodů ({1})"
 
-#: ../src/control/xojfile/LoadHandler.cpp:920
+#: ../src/control/xojfile/LoadHandler.cpp:924
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Špatný počet bodů, obdrženo {1}, očekáváno {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:223
+#: ../src/control/xojfile/LoadHandler.cpp:225
 msgid "XML Parser error: {1}"
 msgstr "Chyba načítání XML: {1}"
 
-#: ../src/control/jobs/CustomExportJob.cpp:24
+#: ../src/control/jobs/CustomExportJob.cpp:26
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (kompatibilita)"
 
@@ -1461,7 +1450,7 @@ msgstr "Xournal (kompatibilita)"
 msgid "Xournal files"
 msgstr "Soubory Xournalu"
 
-#: ../src/control/XournalMain.cpp:203
+#: ../src/control/XournalMain.cpp:196
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ naposledy spadnul. Chcete obnovit poslední upravený soubor?"
 
@@ -1480,7 +1469,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Nemáte žádné PDF stránky k výběru. Zrušit operaci.\n"
 "Prosím vyberte jiný typ pozadí: Menu \"Journal\" → \"Konfigurovat šablonu stránky\"."
 
-#: ../src/control/XournalMain.cpp:155
+#: ../src/control/XournalMain.cpp:148
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr "Používáte vývojovou větev \"{1}/{2}\". \"Odeslat zprávu o chybě\" vás přesměruje do správce problémů tohoto repozitáře."
 
@@ -1626,43 +1615,43 @@ msgstr "trackpoint"
 msgid "whiteout"
 msgstr "bělení"
 
-#: ../src/control/xojfile/LoadHandler.cpp:919
+#: ../src/control/xojfile/LoadHandler.cpp:923
 msgid "xoj-File: {1}"
 msgstr "xoj-soubor: {1}"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:111
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:112
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr "xoj-preview-extractor: spoušťejte s VSTUP.xoj VÝSTUP.png"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:177
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:176
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "xoj-preview-extractor: nelze najít ikonu \"{1}\""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:132
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:133
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr "xoj-preview-extractor: soubor „{1}“ neobsahuje žádný náhled"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:124
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:125
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr "xoj-preview-extractor: soubor „{1}“ není .xoj soubor"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:137
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: nenalezen žádný náhled ani stránka, není soubor poškozen?"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:128
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:129
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr "xoj-preview-extractor: otevírání vstupního souboru „{1}“ selhalo"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:194
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor: otevírání výstupního souboru „{1}“ selhalo"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:201
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:200
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: úspěšně extrahováno"
 
-#: ../src/util/PathUtil.cpp:239
+#: ../src/util/PathUtil.cpp:243
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
