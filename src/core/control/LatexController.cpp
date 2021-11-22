@@ -148,6 +148,13 @@ void LatexController::triggerImageUpdate(const string& texString) {
     if (this->isUpdating()) {
         return;
     }
+    if (texString.empty()) {
+        GtkWidget* okButton = this->dlg.get("texokbutton");
+        gtk_widget_set_sensitive(okButton, false);
+        GtkLabel* errorLabel = GTK_LABEL(this->dlg.get("texErrorLabel"));
+        gtk_label_set_text(errorLabel, N_("The formula must not be empty."));
+        return;
+    }
 
     this->lastPreviewedTex = texString;
     const std::string texContents = LatexGenerator::templateSub(
