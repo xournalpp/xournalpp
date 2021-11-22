@@ -4,7 +4,7 @@
 #include <iterator>
 #include <regex>
 #include <sstream>
-
+#include <fstream>
 #include <glib.h>
 #include <util/PathUtil.h>
 
@@ -12,9 +12,9 @@
 
 LatexGenerator::LatexGenerator(const LatexSettings& settings): settings(settings) {}
 
-auto LatexGenerator::templateSub(const std::string& input, const std::string& templ, const Color textColor)
+auto LatexGenerator::templateSub(const std::string& input, const std::string& templ, const fs::path& texDir, const Color textColor)
         -> std::string {
-    const static std::regex substRe("%%XPP_((TOOL_INPUT)|(TEXT_COLOR))%%");
+    const static std::regex substRe("%%XPP_((TOOL_INPUT)|(TEXT_COLOR)|(MARKDOWN_FILE))%%");
     std::string output;
     output.reserve(templ.length());
     int templatePos = 0;
@@ -30,6 +30,12 @@ auto LatexGenerator::templateSub(const std::string& input, const std::string& te
             s.imbue(std::locale::classic());
             s << std::hex << std::setfill('0') << std::setw(6) << std::right << (textColor & 0xFFFFFFU);
             repl = s.str();
+        } else if (matchStr == "MARKDOWN_FILE") {
+            repl = "markdown.md";
+            auto file_path = (Util::getLongPath(texDir) / "markdown.md").string();
+            std::ofstream markdown_file(file_path);
+            markdown_file << input;
+            markdown_file.close();
         }
         output.append(templ, templatePos, match.position() - templatePos);
         output.append(repl);

@@ -46,7 +46,7 @@ public:
     /**
      * Instantiate the LaTeX template.
      */
-    static std::string templateSub(const std::string& input, const std::string& templ, Color textColor);
+    static std::string templateSub(const std::string& input, const std::string& templ, const fs::path& texDir, Color textColor);
 
 private:
     const LatexSettings& settings;

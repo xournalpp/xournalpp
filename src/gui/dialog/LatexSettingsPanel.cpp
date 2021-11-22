@@ -54,8 +54,8 @@ void LatexSettingsPanel::checkDeps() {
                      settings.globalTemplatePath.u8string().c_str());
         } else {
             std::string templ(std::istreambuf_iterator<char>(is), {});
-            std::string sample = LatexGenerator::templateSub("x^2", templ, 0x000000U);
             auto const& tmpDir = Util::getTmpDirSubfolder("tex");
+            std::string sample = LatexGenerator::templateSub("3x", templ, tmpDir, 0x000000U);
             auto result = LatexGenerator(settings).asyncRun(tmpDir, sample);
             if (auto* proc = std::get_if<GSubprocess*>(&result)) {
                 GError* err = nullptr;

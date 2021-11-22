@@ -1,0 +1,46 @@
+% This template uses the scontents package, which is only available on relatively recent TeX distributions. In case it is not available on your system, use the legacy_template.tex
+\documentclass[varwidth=true, crop, border=5pt]{standalone}
+
+% Packages
+% \usepackage{amsmath}
+% \usepackage{amssymb}
+\usepackage{xcolor}
+
+\usepackage[fencedCode,definitionLists,pipeTables,tableCaptions]{markdown}
+% code syntax highlighting
+\usepackage{minted}
+
+
+% for storing in memory verbatim content to be reused later
+\usepackage{scontents}
+
+% Blank formula checking
+\usepackage{ifthen}
+\newlength{\pheight}
+
+% User input
+\begin{scontents}[store-env=preview]
+    %%XPP_TOOL_INPUT%%
+\end{scontents}
+
+% Command to set colour globally
+\makeatletter
+\newcommand{\globalcolor}[1]{%
+  \color{#1}\global\let\default@color\current@color
+}
+\makeatother
+
+% Set the color globally
+% \definecolor{xpp_font_color}{HTML}{%%XPP_TEXT_COLOR%%}
+% \AtBeginDocument{\globalcolor{xpp_font_color}}
+
+\begin{document}
+
+
+  % Check if the formula is empty
+  \settoheight{\pheight}{\getstored[1]{preview}}%
+  \ifthenelse{\pheight=0}{\GenericError{}{xournalpp:blankformula}{}{}}
+
+  % Render the user input
+  \markdownInput[hybrid=false]{%%XPP_MARKDOWN_FILE%%}
+\end{document}
