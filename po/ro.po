@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 09:31+0000\n"
-"PO-Revision-Date: 2021-11-22 09:42\n"
+"POT-Creation-Date: 2021-11-22 15:44+0000\n"
+"PO-Revision-Date: 2021-11-22 16:41\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/control/XournalMain.cpp:472
+#: ../src/control/XournalMain.cpp:444
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -28,12 +28,6 @@ msgid "\n"
 " Do you want to continue?"
 msgstr "\n"
 "Dorești să continui?"
-
-#: ../src/control/XournalMain.cpp:452
-msgid "\n"
-"Will now attempt to run without this file."
-msgstr "\n"
-"Va încerca acum să ruleze fără acest fișier."
 
 #: ../src/gui/toolbarMenubar/ToolPageSpinner.cpp:36
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -48,7 +42,7 @@ msgstr "%F-Notă-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Niciun dispozitiv nu a fost găsit. Poți să încarci un raport de eroare?</b>"
 
-#: ../src/control/XournalMain.cpp:467
+#: ../src/control/XournalMain.cpp:439
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -66,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Lipsește fișierul necesar UI:\n"
 msgid "Add/Edit Tex"
 msgstr "Adăugare/Editare Tab"
 
-#: ../src/control/XournalMain.cpp:686
+#: ../src/control/XournalMain.cpp:657
 msgid "Advanced export options"
 msgstr "Opțiuni avansate de export"
 
@@ -82,7 +76,7 @@ msgstr "Aplică la toate paginile"
 msgid "Apply to current page"
 msgstr "Aplică la pagina curentă"
 
-#: ../src/control/tools/EditSelection.cpp:351
+#: ../src/control/tools/EditSelection.cpp:352
 msgid "Arrange"
 msgstr ""
 
@@ -148,16 +142,16 @@ msgstr "Înapoi"
 msgid "Background"
 msgstr "Fundal"
 
-#: ../src/control/tools/EditSelection.cpp:368
+#: ../src/control/tools/EditSelection.cpp:369
 msgid "Bring forward"
 msgstr "Adu mai aproape"
 
-#: ../src/control/tools/EditSelection.cpp:358
+#: ../src/control/tools/EditSelection.cpp:359
 msgid "Bring to front"
 msgstr "Adu în prim plan"
 
 #: ../src/control/Control.cpp:2011 ../src/control/Control.cpp:2462
-#: ../src/control/XournalMain.cpp:167
+#: ../src/control/XournalMain.cpp:160
 msgid "Cancel"
 msgstr "Anulează"
 
@@ -203,7 +197,7 @@ msgstr "Copiază curent"
 msgid "Copy page"
 msgstr "Copiază pagina"
 
-#: ../src/util/PathUtil.cpp:249
+#: ../src/util/PathUtil.cpp:253
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nu s-a putut crea directorul: {1}\n"
@@ -221,28 +215,28 @@ msgstr "Nu s-a putut încărca fișierul LaTeX PDF:{1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Nu s-a putut încărca fișierul pagetemplates.ini"
 
-#: ../src/control/xojfile/LoadHandler.cpp:787
+#: ../src/control/xojfile/LoadHandler.cpp:790
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Atașamentul nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut citi fișierul"
 
-#: ../src/control/xojfile/LoadHandler.cpp:796
+#: ../src/control/xojfile/LoadHandler.cpp:800
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Atașamentul nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut scrie fișierul"
 
-#: ../src/control/xojfile/LoadHandler.cpp:768
-#: ../src/control/xojfile/LoadHandler.cpp:1019
-#: ../src/control/xojfile/LoadHandler.cpp:1037
+#: ../src/control/xojfile/LoadHandler.cpp:770
+#: ../src/control/xojfile/LoadHandler.cpp:1023
+#: ../src/control/xojfile/LoadHandler.cpp:1042
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Atașarea nu a putut fi deschisă: {1}. Mesaj de eroare: Nicio dimensiune validă a fișierului furnizată"
 
-#: ../src/control/xojfile/LoadHandler.cpp:759
-#: ../src/control/xojfile/LoadHandler.cpp:775
-#: ../src/control/xojfile/LoadHandler.cpp:1010
-#: ../src/control/xojfile/LoadHandler.cpp:1026
+#: ../src/control/xojfile/LoadHandler.cpp:761
+#: ../src/control/xojfile/LoadHandler.cpp:777
+#: ../src/control/xojfile/LoadHandler.cpp:1014
+#: ../src/control/xojfile/LoadHandler.cpp:1030
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Atașarea nu a putut fi deschisă: {1}. Mesaj de eroare: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:159
+#: ../src/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open file: \"{1}\""
 msgstr "Nu s-a putut deschide fișierul: \"{1}\""
 
@@ -258,12 +252,12 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Nu s-a putut analiza fișierul general toolbar.ini: {1}\n"
 "Barele de instrumente nu vor fi disponibile"
 
-#: ../src/control/xojfile/LoadHandler.cpp:355
-#: ../src/control/xojfile/LoadHandler.cpp:379
+#: ../src/control/xojfile/LoadHandler.cpp:357
+#: ../src/control/xojfile/LoadHandler.cpp:381
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Imaginea nu a putut fi citită: {1}. Mesaj de eroare: {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:389
+#: ../src/control/xojfile/LoadHandler.cpp:391
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Nu s-a putut citi numărul paginii pentru imaginea de fundal clonată: {1}."
 
@@ -315,7 +309,7 @@ msgstr "Creare strat nou"
 msgid "Custom"
 msgstr "Personalizat"
 
-#: ../src/control/jobs/CustomExportJob.cpp:19
+#: ../src/control/jobs/CustomExportJob.cpp:21
 msgid "Custom Export"
 msgstr "Export personalizat"
 
@@ -340,7 +334,7 @@ msgstr "Unealta Implicită"
 msgid "Delete"
 msgstr "Ștergere"
 
-#: ../src/control/XournalMain.cpp:166
+#: ../src/control/XournalMain.cpp:159
 msgid "Delete Logfile"
 msgstr "Ștergere jurnal"
 
@@ -348,7 +342,7 @@ msgstr "Ștergere jurnal"
 msgid "Delete current page"
 msgstr "Ştergeți pagina curentă"
 
-#: ../src/control/XournalMain.cpp:208
+#: ../src/control/XournalMain.cpp:201
 msgid "Delete file"
 msgstr "Ştergeţi fişierul"
 
@@ -368,7 +362,7 @@ msgstr "Ștergeți această pagină"
 msgid "Discard"
 msgstr "Renunțați"
 
-#: ../src/control/XournalMain.cpp:687
+#: ../src/control/XournalMain.cpp:658
 msgid "Display advanced export options"
 msgstr "Afișează opțiuni avansate de export"
 
@@ -388,16 +382,16 @@ msgstr "Nu suprascrieți fișierul PDF de fundal! Acest lucru va provoca erori!"
 msgid "Document file was removed."
 msgstr "Fișierul documentului a fost șters."
 
-#: ../src/control/xojfile/LoadHandler.cpp:241
+#: ../src/control/xojfile/LoadHandler.cpp:243
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Documentul este corupt (nu s-au găsit pagini în fișier)"
 
-#: ../src/control/xojfile/LoadHandler.cpp:237
+#: ../src/control/xojfile/LoadHandler.cpp:239
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Documentul nu este complet (poate finalul este întrerupt?)"
 
-#: ../src/model/Document.cpp:285 ../src/model/Document.cpp:294
-#: ../src/model/Document.cpp:297
+#: ../src/model/Document.cpp:288 ../src/model/Document.cpp:297
+#: ../src/model/Document.cpp:300
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Documentul nu a fost încărcat! ({1}), {2}"
 
@@ -495,12 +489,12 @@ msgstr "Eroare de deschidere fişier \"{1}\""
 msgid "Error opening file: \"{1}\""
 msgstr "Eroare de deschidere fişier \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:443
-#: ../src/control/xojfile/LoadHandler.cpp:463
+#: ../src/control/xojfile/LoadHandler.cpp:445
+#: ../src/control/xojfile/LoadHandler.cpp:465
 msgid "Error reading PDF: {1}"
 msgstr "Eroare la citirea PDF: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:520
+#: ../src/control/xojfile/LoadHandler.cpp:522
 msgid "Error reading width of a stroke: {1}"
 msgstr "Eroare la citirea grosimii liniei: {1}"
 
@@ -532,17 +526,17 @@ msgstr "Eroare: {1} nu este un fișier obișnuit. Vă rugăm să verificați set
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Eroare: {1}. Te rugăm să verifici conținutul {2}"
 
-#: ../src/control/XournalMain.cpp:186
+#: ../src/control/XournalMain.cpp:179
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr "Eroarea nu poate fi ștearsă. Trebuie să o faceți manual.\n"
 "Jurnal: {1}"
 
-#: ../src/control/XournalMain.cpp:644
+#: ../src/control/XournalMain.cpp:615
 msgid "Export FILE as PDF"
 msgstr "Exportă FIȘIERUL ca PDF"
 
-#: ../src/control/XournalMain.cpp:646
+#: ../src/control/XournalMain.cpp:617
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -558,7 +552,7 @@ msgstr "Exportă ca PDF"
 msgid "Export as PDF"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:660
+#: ../src/control/XournalMain.cpp:631
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -566,7 +560,7 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/control/XournalMain.cpp:651
+#: ../src/control/XournalMain.cpp:622
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -574,7 +568,7 @@ msgstr "Exportă fără fundal\n"
 "                                 Fișierul exportat are un fundal transparent sau alb,\n"
 "                                 în funcție de formatul suportat de acesta\n"
 
-#: ../src/control/XournalMain.cpp:656
+#: ../src/control/XournalMain.cpp:627
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
@@ -582,6 +576,11 @@ msgstr ""
 #: ../src/control/latex/LatexGenerator.cpp:61
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Nu s-a putut găsi programul de generare LaTeX în PATH: {1}"
+
+#: ../src/pdf/base/XojCairoPdfExport.cpp:156
+#: ../src/pdf/base/XojCairoPdfExport.cpp:201
+msgid "Failed to initialize PDF Cairo surface"
+msgstr ""
 
 #: ../src/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -596,7 +595,7 @@ msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:151 ../src/util/PathUtil.cpp:168
+#: ../src/util/PathUtil.cpp:154 ../src/util/PathUtil.cpp:171
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Fișierul nu a putut fi deschis. Trebuie să îl faceți manual:\n"
@@ -630,7 +629,7 @@ msgstr "Mergi înainte"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 sau o versiune ulterioară"
 
-#: ../src/control/XournalMain.cpp:635
+#: ../src/control/XournalMain.cpp:606
 msgid "Get version of xournalpp"
 msgstr "Obține versiunea xournalpp"
 
@@ -693,7 +692,7 @@ msgstr "Evidenţiat"
 msgid "Image"
 msgstr "Imagine"
 
-#: ../src/control/XournalMain.cpp:293
+#: ../src/control/XournalMain.cpp:286
 msgid "Image file successfully created"
 msgstr "Fișier imagine creat cu succes"
 
@@ -737,7 +736,7 @@ msgstr "Punctat Izometric"
 msgid "Isometric Graph"
 msgstr "Grafic izometric"
 
-#: ../src/control/XournalMain.cpp:631
+#: ../src/control/XournalMain.cpp:602
 msgid "Jump to Page (first Page: 1)"
 msgstr "Salt la pagina (prima pagină: 1)"
 
@@ -765,8 +764,8 @@ msgstr "Strat {1}"
 msgid "Layerstack Preview"
 msgstr ""
 
-#: ../src/gui/PageView.cpp:713
-#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:76
+#: ../src/gui/PageView.cpp:709
+#: ../src/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/gui/toolbarMenubar/ToolPageLayer.cpp:20
 msgid "Loading..."
 msgstr "Încărcare..."
@@ -778,16 +777,6 @@ msgstr "Gestionare bară cu instrumente"
 #: ../src/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Medium"
 msgstr "Mediu"
-
-#: ../src/control/XournalMain.cpp:448
-msgid "Missing the needed UI file:\n"
-"{1}\n"
-" .app corrupted?\n"
-"Path: {2}"
-msgstr "Fișierul necesar pentru UI lipsă:\n"
-"{1}\n"
-" .app este corupt?\n"
-"Cale: {2}"
 
 #: ../src/undo/MoveUndoAction.cpp:16
 msgid "Move"
@@ -825,8 +814,8 @@ msgstr "Pagina următoare adnotată"
 msgid "No device"
 msgstr "Niciun dispozitiv"
 
-#: ../src/pdf/base/XojCairoPdfExport.cpp:150
-#: ../src/pdf/base/XojCairoPdfExport.cpp:192
+#: ../src/pdf/base/XojCairoPdfExport.cpp:151
+#: ../src/pdf/base/XojCairoPdfExport.cpp:196
 msgid "No pages to export!"
 msgstr "Nicio pagină de exportat!"
 
@@ -843,7 +832,7 @@ msgstr "Desen normal"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/control/XournalMain.cpp:667
+#: ../src/control/XournalMain.cpp:638
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
@@ -852,11 +841,11 @@ msgstr ""
 msgid "Open Image"
 msgstr "Deschide imaginea"
 
-#: ../src/control/XournalMain.cpp:164
+#: ../src/control/XournalMain.cpp:157
 msgid "Open Logfile"
 msgstr "Deschide jurnal"
 
-#: ../src/control/XournalMain.cpp:165
+#: ../src/control/XournalMain.cpp:158
 msgid "Open Logfile directory"
 msgstr "Deschide dosarul cu jurnale"
 
@@ -882,11 +871,11 @@ msgstr "Pagina PDF {1}"
 msgid "PDF background missing"
 msgstr "Fundal PDF lipsă"
 
-#: ../src/control/XournalMain.cpp:347
+#: ../src/control/XournalMain.cpp:340
 msgid "PDF file successfully created"
 msgstr "Fişierul PDF a fost creat cu succes"
 
-#: ../src/control/jobs/CustomExportJob.cpp:21
+#: ../src/control/jobs/CustomExportJob.cpp:23
 #: ../src/control/jobs/PdfExportJob.cpp:13
 #: ../src/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
@@ -896,7 +885,7 @@ msgstr "Fișiere PDF"
 msgid "PDF {1}"
 msgstr "PDF {1}"
 
-#: ../src/control/jobs/CustomExportJob.cpp:22
+#: ../src/control/jobs/CustomExportJob.cpp:24
 msgid "PNG graphics"
 msgstr "Grafice PNG"
 
@@ -960,7 +949,7 @@ msgstr "Predefinit"
 msgid "Presentation mode"
 msgstr "Mod de prezentare"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:68
+#: ../src/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
 msgstr "Limba selectată anterior nu mai este valabilă!"
 
@@ -1005,11 +994,11 @@ msgstr "Redenumiţi stratul"
 msgid "Replace"
 msgstr "Înlocuiește"
 
-#: ../src/control/xojfile/LoadHandler.cpp:1056
+#: ../src/control/xojfile/LoadHandler.cpp:1061
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Fișierul temporar solicitat nu a fost găsit pentru atașamentul {1}"
 
-#: ../src/control/XournalMain.cpp:209
+#: ../src/control/XournalMain.cpp:202
 msgid "Restore file"
 msgstr "Restaurează din fișier"
 
@@ -1029,7 +1018,7 @@ msgstr "Liniat"
 msgid "Ruled with vertical line"
 msgstr "Liniat cu linie verticală"
 
-#: ../src/control/jobs/CustomExportJob.cpp:23
+#: ../src/control/jobs/CustomExportJob.cpp:25
 msgid "SVG graphics"
 msgstr "Grafică SVG"
 
@@ -1050,7 +1039,7 @@ msgstr "Salvează ca..."
 msgid "Save File"
 msgstr "Salvează fișierul"
 
-#: ../src/control/jobs/CustomExportJob.cpp:130
+#: ../src/control/jobs/CustomExportJob.cpp:131
 #: ../src/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
 msgstr "Eroare la salvarea fişierului: {1}"
@@ -1118,15 +1107,15 @@ msgstr "Selectați regiunea"
 msgid "Selection Combo"
 msgstr "Selecție combinată"
 
-#: ../src/control/XournalMain.cpp:163
+#: ../src/control/XournalMain.cpp:156
 msgid "Send Bugreport"
 msgstr "Trimite eroarea"
 
-#: ../src/control/tools/EditSelection.cpp:379
+#: ../src/control/tools/EditSelection.cpp:380
 msgid "Send backward"
 msgstr "Trimite mai departe"
 
-#: ../src/control/tools/EditSelection.cpp:387
+#: ../src/control/tools/EditSelection.cpp:388
 msgid "Send to back"
 msgstr "Trimite în ultimul plan"
 
@@ -1134,13 +1123,13 @@ msgstr "Trimite în ultimul plan"
 msgid "Separator"
 msgstr "Separator"
 
-#: ../src/control/XournalMain.cpp:671
+#: ../src/control/XournalMain.cpp:642
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Alege DPI-ul pentru exporturile PNG. Valoarea implicită este de 300\n"
 "                                 Niciun efect fără -i/--create-img=foo.png"
 
-#: ../src/control/XournalMain.cpp:681
+#: ../src/control/XournalMain.cpp:652
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1148,7 +1137,7 @@ msgstr "Setează înălțimea paginii pentru exporturile PNG\n"
 "                                 Niciun efect fără -i/--create-img=foo.png\n"
 "                                 Ignorat dacă --export-png-dpi sau --export-png-width este folosit"
 
-#: ../src/control/XournalMain.cpp:675
+#: ../src/control/XournalMain.cpp:646
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1172,13 +1161,13 @@ msgstr "Arată doar paginile neutilizate (o pagină nefolosită)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Arată numai paginile nefolosite ({1} pagini nefolosite)"
 
-#: ../src/control/XournalMain.cpp:543
+#: ../src/control/XournalMain.cpp:514
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Ne pare rău, Xournal++ poate deschide doar un singur fișier simultan.\n"
 "Altele sunt ignorate."
 
-#: ../src/control/XournalMain.cpp:558
+#: ../src/control/XournalMain.cpp:529
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "Ne pare rău, Xournal++ nu poate deschide fișiere la distanță momentan.\n"
@@ -1222,7 +1211,7 @@ msgstr "Schimbă poziția paginii actuale cu cea a paginii de deasupra"
 msgid "Swap the current page with the one below"
 msgstr "Schimbă poziția paginii actuale cu cea a paginii de dedesubt"
 
-#: ../src/gui/dialog/LanguageConfigGui.cpp:52
+#: ../src/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
 msgstr "Setarea de sistem implicită"
 
@@ -1288,15 +1277,15 @@ msgstr "Fişierul în curs de încărcare are o versiune mai nouă decât cea ac
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
 msgstr "Fisierul nu este un fisier .xopp valid (Lipseste Mimetype): \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:126
+#: ../src/control/xojfile/LoadHandler.cpp:127
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
 msgstr "Fisierul nu este un fisier .xopp valid (Lipseste Mimetype): \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:135
+#: ../src/control/xojfile/LoadHandler.cpp:136
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
 msgstr "Fisierul nu este un fisier .xopp valid (Lipseste Mimetype): \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:147
+#: ../src/control/xojfile/LoadHandler.cpp:149
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Fișierul nu este un fișier .xopp valid (Șirul Versiunii este corupt): \"{1}\""
 
@@ -1304,15 +1293,15 @@ msgstr "Fișierul nu este un fișier .xopp valid (Șirul Versiunii este corupt):
 msgid "The formula is empty when rendered or invalid."
 msgstr "Formula este goală la randare sau nevalidă."
 
-#: ../src/control/XournalMain.cpp:158
+#: ../src/control/XournalMain.cpp:151
 msgid "The most recent log file name: {1}"
 msgstr "Cel mai recent nume de fișier jurnal: {1}"
 
-#: ../src/control/XournalMain.cpp:153
+#: ../src/control/XournalMain.cpp:146
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Există fişiere de erori din Xournal++. Vă rugăm să trimiteţi un Bugreport, deci eroarea poate fi rezolvată."
 
-#: ../src/control/XournalMain.cpp:152
+#: ../src/control/XournalMain.cpp:145
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Există un fișier de erori din Xournal++. Te rugăm să trimiți un Bugreport, deci eroarea poate fi rezolvată."
 
@@ -1357,7 +1346,7 @@ msgstr "Se încearcă salvarea de urgență a documentului deschis actual…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Fișierul de șablon global de la {1} nu poate fi deschis. Sigur există?"
 
-#: ../src/gui/PageView.cpp:350
+#: ../src/gui/PageView.cpp:346
 msgid "Unable to play audio recording {1}"
 msgstr "Imposibil de redat înregistrarea audio {1}"
 
@@ -1374,15 +1363,15 @@ msgstr "Revenire"
 msgid "Undo: "
 msgstr "Revenire: "
 
-#: ../src/control/xojfile/LoadHandler.cpp:286
+#: ../src/control/xojfile/LoadHandler.cpp:288
 msgid "Unexpected root tag: {1}"
 msgstr "Tag-ul rădăcină neașteptat: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:307
+#: ../src/control/xojfile/LoadHandler.cpp:309
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Etichetă neașteptată în document: \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:496
+#: ../src/control/xojfile/LoadHandler.cpp:498
 msgid "Unknown background type: {1}"
 msgstr "Tip de fundal necunoscut: {1}"
 
@@ -1390,19 +1379,19 @@ msgstr "Tip de fundal necunoscut: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Valoare necunoscută a culorii \"{1}\""
 
-#: ../src/control/xojfile/LoadHandler.cpp:450
+#: ../src/control/xojfile/LoadHandler.cpp:452
 msgid "Unknown domain type: {1}"
 msgstr "Tip domeniu necunoscut: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:226
+#: ../src/control/xojfile/LoadHandler.cpp:228
 msgid "Unknown parser error"
 msgstr "Eroare necunoscută a parser-ului"
 
-#: ../src/control/xojfile/LoadHandler.cpp:397
+#: ../src/control/xojfile/LoadHandler.cpp:399
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Tip domeniu necunoscut: {1}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:593
+#: ../src/control/xojfile/LoadHandler.cpp:595
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tip de AVC necunoscut: \"{1}\", presupunând un stilou"
 
@@ -1434,19 +1423,19 @@ msgstr "Cu fundal PDF"
 msgid "Write text"
 msgstr "Scrie text"
 
-#: ../src/control/xojfile/LoadHandler.cpp:910
+#: ../src/control/xojfile/LoadHandler.cpp:914
 msgid "Wrong count of points ({1})"
 msgstr "Număr greșit de puncte ({1})"
 
-#: ../src/control/xojfile/LoadHandler.cpp:920
+#: ../src/control/xojfile/LoadHandler.cpp:924
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Număr greșit de puncte, obținut {1}, așteptat {2}"
 
-#: ../src/control/xojfile/LoadHandler.cpp:223
+#: ../src/control/xojfile/LoadHandler.cpp:225
 msgid "XML Parser error: {1}"
 msgstr "Eroare la analiza XML: {1}"
 
-#: ../src/control/jobs/CustomExportJob.cpp:24
+#: ../src/control/jobs/CustomExportJob.cpp:26
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (Compatibilitate)"
 
@@ -1454,7 +1443,7 @@ msgstr "Xournal (Compatibilitate)"
 msgid "Xournal files"
 msgstr "Fișiere Xournal"
 
-#: ../src/control/XournalMain.cpp:203
+#: ../src/control/XournalMain.cpp:196
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ s-a prăbușit ultima dată. Doriți să restaurați ultimul fișier editat?"
 
@@ -1473,7 +1462,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Nu ai nicio pagină PDF de selectat. Anulează operațiunea.\n"
 "Selectează un alt tip de fundal: Meniul \"Jurnal\" → \"Configurează șablonul de pagină\"."
 
-#: ../src/control/XournalMain.cpp:155
+#: ../src/control/XournalMain.cpp:148
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr ""
 
@@ -1619,43 +1608,43 @@ msgstr "Punct pe traseu"
 msgid "whiteout"
 msgstr "fără"
 
-#: ../src/control/xojfile/LoadHandler.cpp:919
+#: ../src/control/xojfile/LoadHandler.cpp:923
 msgid "xoj-File: {1}"
 msgstr "Xoj-Fișier: {1}"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:111
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:112
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
 msgstr "xoj-preview-extractor: apelare cu INPUT.xoj OUTPUT.png"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:177
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:176
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
 msgstr "xoj-preview-extractor: nu a putut găsi pictograma \"{1}\""
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:132
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:133
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
 msgstr "xoj-preview-extractor: fișierul \"{1}\" nu conține previzualizare"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:124
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:125
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
 msgstr "xoj-preview-extractor: fișierul \"{1}\" nu conține previzualizare"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:137
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:138
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
 msgstr "xoj-preview-extractor: nici o previzualizare și pagină găsite, poate un fișier nevalid?"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:128
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:129
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
 msgstr "xoj-preview-extractor: deschiderea fișierului de intrare \"{1}\" a eșuat"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:194
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:193
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
 msgstr "xoj-preview-extractor: deschiderea fișierului de intrare \"{1}\" a eșuat"
 
-#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:201
+#: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:200
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: extras cu succes"
 
-#: ../src/util/PathUtil.cpp:239
+#: ../src/util/PathUtil.cpp:243
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
