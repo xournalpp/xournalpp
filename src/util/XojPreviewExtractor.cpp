@@ -128,18 +128,21 @@ auto XojPreviewExtractor::readFile(const fs::path& file) -> PreviewExtractResult
     zip_stat_t thumbStat;
     int statStatus = zip_stat(zipFp, "thumbnails/thumbnail.png", 0, &thumbStat);
     if (statStatus != 0) {
+        zip_close(zipFp);
         return PREVIEW_RESULT_NO_PREVIEW;
     }
 
     if (thumbStat.valid & ZIP_STAT_SIZE) {
         dataLen = thumbStat.size;
     } else {
+        zip_close(zipFp);
         return PREVIEW_RESULT_ERROR_READING_PREVIEW;
     }
 
     zip_file_t* thumb = zip_fopen(zipFp, "thumbnails/thumbnail.png", 0);
 
     if (!thumb) {
+        zip_close(zipFp);
         return PREVIEW_RESULT_ERROR_READING_PREVIEW;
     }
 
@@ -149,9 +152,10 @@ auto XojPreviewExtractor::readFile(const fs::path& file) -> PreviewExtractResult
         zip_int64_t read = zip_fread(thumb, data, thumbStat.size);
         if (read == -1) {
             g_free(data);
+            zip_fclose(thumb);
+            zip_close(zipFp);
             return PREVIEW_RESULT_ERROR_READING_PREVIEW;
         }
-
         readBytes += read;
     }
 

@@ -104,7 +104,7 @@ public:
 
 public:
     // Serialize interface
-    void serialize(ObjectOutputStream& out) override;
+    void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;
 
     bool rescaleWithMirror() override;

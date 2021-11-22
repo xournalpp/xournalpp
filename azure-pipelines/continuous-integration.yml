@@ -66,6 +66,7 @@ stages:
           - bash: |
               export PATH="$HOME/.local/bin:/Users/xournal-dev/gtk/inst/bin:$PATH"
               cmake --build . --target test-units
+              install_name_tool -add_rpath /Users/xournal-dev/gtk/inst/lib/. test/test-toolEnums
               CI=true ctest --verbose
             workingDirectory: ./build
             displayName: 'Run tests'

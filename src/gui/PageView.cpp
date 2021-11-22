@@ -57,10 +57,6 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page) {
     this->xournal = xournal;
     this->settings = xournal->getControl()->getSettings();
 
-    g_mutex_init(&this->drawingMutex);
-
-    g_mutex_init(&this->repaintRectMutex);
-
     // this does not have to be deleted afterwards:
     // (we need it for undo commands)
     this->oldtext = nullptr;
@@ -100,12 +96,12 @@ auto XojPageView::getLastVisibleTime() -> int {
 }
 
 void XojPageView::deleteViewBuffer() {
-    g_mutex_lock(&this->drawingMutex);
+    this->drawingMutex.lock();
     if (this->crBuffer) {
         cairo_surface_destroy(this->crBuffer);
         this->crBuffer = nullptr;
     }
-    g_mutex_unlock(&this->drawingMutex);
+    this->drawingMutex.unlock();
 }
 
 auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
@@ -649,7 +645,7 @@ void XojPageView::addRerenderRect(double x, double y, double width, double heigh
 
     auto rect = Rectangle<double>{x, y, width, height};
 
-    g_mutex_lock(&this->repaintRectMutex);
+    this->repaintRectMutex.lock();
 
     for (auto&& r: this->rerenderRects) {
         // its faster to redraw only one rect than repaint twice the same area
@@ -657,13 +653,13 @@ void XojPageView::addRerenderRect(double x, double y, double width, double heigh
         // intersects any of them, replace it by the union with the new one
         if (r.intersects(rect)) {
             r.unite(rect);
-            g_mutex_unlock(&this->repaintRectMutex);
+            this->repaintRectMutex.unlock();
             return;
         }
     }
 
     this->rerenderRects.push_back(rect);
-    g_mutex_unlock(&this->repaintRectMutex);
+    this->repaintRectMutex.unlock();
 
     this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
@@ -818,11 +814,11 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect) {
 }
 
 auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
-    g_mutex_lock(&this->drawingMutex);
+    this->drawingMutex.lock();
 
     paintPageSync(cr, rect);
 
-    g_mutex_unlock(&this->drawingMutex);
+    this->drawingMutex.unlock();
     return true;
 }
 
@@ -925,7 +921,7 @@ void XojPageView::pageChanged() { rerenderPage(); }
 
 void XojPageView::elementChanged(Element* elem) {
     if (this->inputHandler && elem == this->inputHandler->getStroke()) {
-        g_mutex_lock(&this->drawingMutex);
+        this->drawingMutex.lock();
 
         cairo_t* cr = cairo_create(this->crBuffer);
 
@@ -933,7 +929,7 @@ void XojPageView::elementChanged(Element* elem) {
 
         cairo_destroy(cr);
 
-        g_mutex_unlock(&this->drawingMutex);
+        this->drawingMutex.unlock();
     } else {
         rerenderElement(elem);
     }

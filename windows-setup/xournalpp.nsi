@@ -267,11 +267,9 @@ Section "Xournal++" SecXournalpp
 	WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Xournal++" "NoRepair" 1
 
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-		;Create shortcuts and set working directory for Xournal++ to the bin subfolder to make localizations work
+		;Create shortcuts
 		CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-		SetOutPath "$INSTDIR\bin"
 		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk" '"$INSTDIR\bin\xournalpp.exe"'
-		SetOutPath "$INSTDIR"
 		CreateShortcut "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk" '"$INSTDIR\Uninstall.exe"'
 		
 		!insertmacro RefreshShellIconCreate "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk"

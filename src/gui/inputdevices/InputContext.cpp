@@ -68,10 +68,14 @@ auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContex
 auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     printDebug(sourceEvent);
 
+    GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
+    if (sourceDevice == NULL) {
+        return false;
+    }
+
     InputEvent event = InputEvents::translateEvent(sourceEvent, this->getSettings());
 
     // Add the device to the list of known devices if it is currently unknown
-    GdkDevice* sourceDevice = gdk_event_get_source_device(sourceEvent);
     GdkInputSource inputSource = gdk_device_get_source(sourceDevice);
     if (inputSource != GDK_SOURCE_KEYBOARD && gdk_device_get_device_type(sourceDevice) != GDK_DEVICE_TYPE_MASTER &&
         this->knownDevices.find(std::string(event.deviceName)) == this->knownDevices.end()) {

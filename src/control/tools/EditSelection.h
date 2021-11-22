@@ -165,6 +165,7 @@ public:
      * Returns all containing elements of this selection
      */
     std::vector<Element*>* getElements();
+    const std::vector<Element*>* getElements() const;
 
     /**
      * Returns the insert order of this selection
@@ -239,7 +240,7 @@ public:
 
 public:
     // Serialize interface
-    void serialize(ObjectOutputStream& out);
+    void serialize(ObjectOutputStream& out) const;
     void readSerialized(ObjectInputStream& in);
 
 private:

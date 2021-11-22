@@ -121,10 +121,10 @@ void TexImage::rotate(double x0, double y0, double th) {
     // Rotation for TexImages not yet implemented
 }
 
-void TexImage::serialize(ObjectOutputStream& out) {
+void TexImage::serialize(ObjectOutputStream& out) const {
     out.writeObject("TexImage");
 
-    serializeElement(out);
+    this->Element::serialize(out);
 
     out.writeDouble(this->width);
     out.writeDouble(this->height);
@@ -138,7 +138,7 @@ void TexImage::serialize(ObjectOutputStream& out) {
 void TexImage::readSerialized(ObjectInputStream& in) {
     in.readObject("TexImage");
 
-    readSerializedElement(in);
+    this->Element::readSerialized(in);
 
     this->width = in.readDouble();
     this->height = in.readDouble();

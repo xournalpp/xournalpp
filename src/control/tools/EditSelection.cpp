@@ -336,6 +336,7 @@ void EditSelection::addElement(Element* e, Layer::ElementIndex order) {
  * Returns all containing elements of this selection
  */
 auto EditSelection::getElements() -> vector<Element*>* { return this->contents->getElements(); }
+auto EditSelection::getElements() const -> const vector<Element*>* { return this->contents->getElements(); }
 
 /**
  * Returns the insert order of this selection
@@ -1039,7 +1040,7 @@ void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom)
 
 auto EditSelection::getView() -> XojPageView* { return this->view; }
 
-void EditSelection::serialize(ObjectOutputStream& out) {
+void EditSelection::serialize(ObjectOutputStream& out) const {
     out.writeObject("EditSelection");
 
     out.writeDouble(this->x);

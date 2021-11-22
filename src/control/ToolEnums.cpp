@@ -1,8 +1,6 @@
 #include "ToolEnums.h"
 
-using std::string;
-
-auto toolSizeToString(ToolSize size) -> string {
+auto toolSizeToString(ToolSize size) -> std::string {
     switch (size) {
         case TOOL_SIZE_NONE:
             return "none";
@@ -21,7 +19,7 @@ auto toolSizeToString(ToolSize size) -> string {
     }
 }
 
-auto toolSizeFromString(const string& size) -> ToolSize {
+auto toolSizeFromString(const std::string& size) -> ToolSize {
     if (size == "veryThin") {
         return TOOL_SIZE_VERY_FINE;
     }
@@ -40,7 +38,7 @@ auto toolSizeFromString(const string& size) -> ToolSize {
     return TOOL_SIZE_NONE;
 }
 
-auto drawingTypeToString(DrawingType type) -> string {
+auto drawingTypeToString(DrawingType type) -> std::string {
     switch (type) {
         case DRAWING_TYPE_DONT_CHANGE:
             return "dontChange";
@@ -65,7 +63,7 @@ auto drawingTypeToString(DrawingType type) -> string {
     }
 }
 
-auto drawingTypeFromString(const string& type) -> DrawingType {
+auto drawingTypeFromString(const std::string& type) -> DrawingType {
     if (type == "dontChange") {
         return DRAWING_TYPE_DONT_CHANGE;
     }
@@ -93,7 +91,7 @@ auto drawingTypeFromString(const string& type) -> DrawingType {
     return DRAWING_TYPE_DEFAULT;
 }
 
-auto toolTypeToString(ToolType type) -> string {
+auto toolTypeToString(ToolType type) -> std::string {
     switch (type) {
         case TOOL_NONE:
             return "none";
@@ -114,7 +112,7 @@ auto toolTypeToString(ToolType type) -> string {
         case TOOL_SELECT_OBJECT:
             return "selectObject";
         case TOOL_PLAY_OBJECT:
-            return "PlayObject";
+            return "playObject";
         case TOOL_VERTICAL_SPACE:
             return "verticalSpace";
         case TOOL_HAND:
@@ -136,7 +134,7 @@ auto toolTypeToString(ToolType type) -> string {
     }
 }
 
-auto toolTypeFromString(const string& type) -> ToolType {
+auto toolTypeFromString(const std::string& type) -> ToolType {
     if (type == "pen") {
         return TOOL_PEN;
     }
@@ -193,7 +191,7 @@ auto toolTypeFromString(const string& type) -> ToolType {
     return TOOL_NONE;
 }
 
-auto eraserTypeToString(EraserType type) -> string {
+auto eraserTypeToString(EraserType type) -> std::string {
     switch (type) {
         case ERASER_TYPE_NONE:
             return "none";
@@ -208,7 +206,7 @@ auto eraserTypeToString(EraserType type) -> string {
     }
 }
 
-auto eraserTypeFromString(const string& type) -> EraserType {
+auto eraserTypeFromString(const std::string& type) -> EraserType {
     if (type == "default") {
         return ERASER_TYPE_DEFAULT;
     }

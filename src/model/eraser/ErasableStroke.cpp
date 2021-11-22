@@ -10,7 +10,6 @@
 
 ErasableStroke::ErasableStroke(Stroke* stroke): stroke(stroke) {
     this->parts = new PartList();
-    g_mutex_init(&this->partLock);
 
     for (int i = 1; i < stroke->getPointCount(); i++) {
         this->parts->add(new ErasableStrokePart(stroke->getPoint(i - 1), stroke->getPoint(i)));
@@ -27,9 +26,9 @@ ErasableStroke::~ErasableStroke() {
 ////////////////////////////////////////////////////////////////////////////////
 
 void ErasableStroke::draw(cairo_t* cr) {
-    g_mutex_lock(&this->partLock);
+    this->partLock.lock();
     PartList* tmpCopy = this->parts->clone();
-    g_mutex_unlock(&this->partLock);
+    this->partLock.unlock();
 
     double w = this->stroke->getWidth();
 
@@ -66,9 +65,9 @@ void ErasableStroke::draw(cairo_t* cr) {
 auto ErasableStroke::erase(double x, double y, double halfEraserSize, Range* range) -> Range* {
     this->repaintRect = range;
 
-    g_mutex_lock(&this->partLock);
+    this->partLock.lock();
     PartList* tmpCopy = this->parts->clone();
-    g_mutex_unlock(&this->partLock);
+    this->partLock.unlock();
 
     for (GList* l = tmpCopy->data; l != nullptr;) {
         auto* p = static_cast<ErasableStrokePart*>(l->data);
@@ -76,10 +75,10 @@ auto ErasableStroke::erase(double x, double y, double halfEraserSize, Range* ran
         erase(x, y, halfEraserSize, p, tmpCopy);
     }
 
-    g_mutex_lock(&this->partLock);
+    this->partLock.lock();
     PartList* old = this->parts;
     this->parts = tmpCopy;
-    g_mutex_unlock(&this->partLock);
+    this->partLock.unlock();
 
     delete old;
 
