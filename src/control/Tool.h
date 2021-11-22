@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <array>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -19,22 +21,20 @@
 
 class Tool: public ToolBase {
 public:
-    Tool(std::string name, ToolType type, Color color, int capabilities, double* thickness);
-    /**
-     * @brief Construct a new Tool object based on the pointer to another tool
-     * Ideally this should be refactored to a copy constructor like Tool(const Tool& tool).
-     * However, this would would require to much refactoring as of now.
-     *
-     * @param t tool to use as basis for new copy
-     */
-    Tool(Tool* t);
-    virtual ~Tool();
-
     /**
      * @brief number of different sizes defined for tools with Size capability
      *
      */
-    static const int toolSizes = 5;
+    static constexpr int toolSizes = 5;
+
+    Tool(std::string name, ToolType type, Color color, unsigned int capabilities,
+         std::optional<std::array<double, Tool::toolSizes>> thickness);
+    /**
+     * @brief Construct a new Tool object based on another tool.
+     * @param t tool to use as basis for new copy.
+     */
+    Tool(const Tool& t);
+    virtual ~Tool();
 
 public:
     std::string getName() const;
@@ -57,7 +57,7 @@ public:
     bool isDrawingTool() const;
 
 protected:
-    void setCapability(int capability, bool enabled);
+    void setCapability(unsigned int capability, bool enabled);
 
 private:
     void operator=(const Tool& t);
@@ -66,9 +66,9 @@ private:
     std::string name;
     ToolType type;
 
-    double* thickness;
+    std::optional<std::array<double, toolSizes>> thickness;
 
-    int capabilities;
+    unsigned int capabilities;
 
     friend class ToolHandler;
 };

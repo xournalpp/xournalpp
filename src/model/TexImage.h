@@ -66,8 +66,8 @@ public:
 
 public:
     // Serialize interface
-    void serialize(ObjectOutputStream& out);
-    void readSerialized(ObjectInputStream& in);
+    void serialize(ObjectOutputStream& out) const override;
+    void readSerialized(ObjectInputStream& in) override;
 
 private:
     void calcSize() const override;

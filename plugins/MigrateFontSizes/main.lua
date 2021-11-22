@@ -27,7 +27,7 @@ function showDialog()
   end
 
   --lgi module has been found
-  local Gtk = lgi.Gtk
+  local Gtk = lgi.require("Gtk", "3.0")
   local Gdk = lgi.Gdk
   local assert = lgi.assert
   local builder = Gtk.Builder()

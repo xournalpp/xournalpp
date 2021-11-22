@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include <mutex>
+#include <vector>
+
 #include "gui/inputdevices/PositionInputData.h"
 #include "model/PageListener.h"
 #include "model/PageRef.h"
@@ -238,11 +241,11 @@ private:
      */
     int lastVisibleTime = -1;
 
-    GMutex repaintRectMutex{};
+    std::mutex repaintRectMutex;
     std::vector<Rectangle<double>> rerenderRects;
     bool rerenderComplete = false;
 
-    GMutex drawingMutex{};
+    std::mutex drawingMutex;
 
     int dispX{};  // position on display - set in Layout::layoutPages
     int dispY{};

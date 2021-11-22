@@ -1,37 +1,23 @@
 #include "Tool.h"
 
+#include <optional>
 #include <utility>
 
-Tool::Tool(std::string name, ToolType type, Color color, int capabilities, double* thickness) {
-    this->name = std::move(name);
-    this->type = type;
-    this->thickness = thickness;
-
-    this->capabilities = capabilities;
-
+Tool::Tool(std::string name, ToolType type, Color color, unsigned int capabilities,
+           std::optional<std::array<double, toolSizes>> thickness):
+        name{std::move(name)}, type{type}, capabilities{capabilities}, thickness{std::move(thickness)} {
     setColor(color);
 }
 
-Tool::Tool(Tool* t): name{t->name}, type{t->type}, capabilities{t->capabilities} {
-    if (t->thickness) {
-        this->thickness = new double[toolSizes];
-        for (int i{0}; i < toolSizes; i++) {
-            this->thickness[i] = t->thickness[i];
-        }
-    } else {
-        this->thickness = nullptr;
-    }
-    setColor(t->getColor());
+Tool::Tool(const Tool& t): name{t.name}, type{t.type}, capabilities{t.capabilities}, thickness{t.thickness} {
+    setColor(t.getColor());
 }
 
-Tool::~Tool() {
-    delete[] this->thickness;
-    this->thickness = nullptr;
-}
+Tool::~Tool() {}
 
 auto Tool::getName() const -> std::string { return this->name; }
 
-void Tool::setCapability(int capability, bool enabled) {
+void Tool::setCapability(unsigned int capability, bool enabled) {
     if (enabled) {
         this->capabilities |= capability;
     } else {
@@ -41,7 +27,7 @@ void Tool::setCapability(int capability, bool enabled) {
 
 auto Tool::hasCapability(ToolCapabilities cap) const -> bool { return (this->capabilities & cap) != 0; }
 
-auto Tool::getThickness(ToolSize size) const -> double { return this->thickness[size - TOOL_SIZE_VERY_FINE]; }
+auto Tool::getThickness(ToolSize size) const -> double { return this->thickness.value()[size - TOOL_SIZE_VERY_FINE]; }
 
 auto Tool::isDrawingTool() const -> bool {
     return this->type == TOOL_PEN || this->type == TOOL_HIGHLIGHTER || this->type == TOOL_ERASER;

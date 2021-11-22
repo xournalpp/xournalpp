@@ -19,8 +19,9 @@
 #include <mutex>
 #include <string>
 
-#include "Job.h"
+#include <gtk/gtk.h>
 
+#include "Job.h"
 
 /**
  * @file Scheduler.h

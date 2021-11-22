@@ -60,20 +60,7 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
 
 void initLocalisation() {
 #ifdef ENABLE_NLS
-
-#ifdef _WIN32
-#undef PACKAGE_LOCALE_DIR
-#define PACKAGE_LOCALE_DIR "../share/locale/"
-#endif
-
-#ifdef __APPLE__
-#undef PACKAGE_LOCALE_DIR
-    fs::path p = Stacktrace::getExePath();
-    p /= "../Resources/share/locale/";
-    const char* PACKAGE_LOCALE_DIR = p.c_str();
-#endif
-
-    fs::path localeDir = Util::getGettextFilepath(PACKAGE_LOCALE_DIR);
+    fs::path localeDir = Util::getGettextFilepath(Util::getLocalePath().u8string().c_str());
     bindtextdomain(GETTEXT_PACKAGE, localeDir.u8string().c_str());
     textdomain(GETTEXT_PACKAGE);
 
@@ -92,6 +79,12 @@ void initLocalisation() {
                   "xournalpp with msvc",
                   e.what());
     }
+    /**
+     * Force numbers to be printed out and parsed by C libraries (cairo) in the "classic" locale.
+     * This avoids issue with tags when exporting to PDF, see #3551
+     */
+    setlocale(LC_NUMERIC, "C");
+
     std::cout.imbue(std::locale());
 }
 
@@ -113,12 +106,12 @@ auto migrateSettings() -> MigrateResult {
             Util::ensureFolderExists(newConfigPath.parent_path());
             try {
                 fs::copy(oldPath, newConfigPath, fs::copy_options::recursive);
-                constexpr auto msg = "Due to a recent update, Xournal++ has changed where it's configuration files are "
+                constexpr auto msg = "Due to a recent update, Xournal++ has changed where its configuration files are "
                                      "stored.\nThey have been automatically copied from\n\t{1}\nto\n\t{2}";
                 return {MigrateStatus::Success, FS(_F(msg) % oldPath.u8string() % newConfigPath.u8string())};
             } catch (fs::filesystem_error const& except) {
                 constexpr auto msg =
-                        "Due to a recent update, Xournal++ has changed where it's configuration files are "
+                        "Due to a recent update, Xournal++ has changed where its configuration files are "
                         "stored.\nHowever, when attempting to copy\n\t{1}\nto\n\t{2}\nmigration failed:\n{3}";
                 g_message("Migration failed: %s", except.what());
                 return {MigrateStatus::Failure,
@@ -386,8 +379,7 @@ void ensure_input_model_compatibility() {
     if (imModule != nullptr) {
         std::string imModuleString{imModule};
         if (imModuleString == "xim" || imModuleString == "gcin") {
-            g_setenv("GTK_IM_MODULE", "ibus", true);
-            g_warning("Unsupported input method: %s, changed to: ibus", imModule);
+            g_warning("Unsupported input method: %s", imModule);
         }
     }
 }
@@ -435,9 +427,7 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
 
     // -----------------------------------------------------------------------
 
-#ifdef __APPLE__
-    fs::path p = Stacktrace::getExePath();
-    p /= "../Resources";
+    fs::path p = Util::getDataPath();
     p /= relativePathAndFile;
 
     if (fs::exists(p)) {
@@ -445,34 +435,15 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
         return;
     }
 
-    std::string msg = FS(_F("Missing the needed UI file:\n{1}\n .app corrupted?\nPath: {2}") % relativePathAndFile %
-                         p.u8string());
-
-    if (!failIfNotFound) {
-        msg += _("\nWill now attempt to run without this file.");
-    }
-    XojMsgBox::showErrorToUser(nullptr, msg);
-#else
-    // Check at the target installation directory
-    fs::path absolute = PACKAGE_DATA_DIR;
-    absolute /= PROJECT_PACKAGE;
-    absolute /= relativePathAndFile;
-
-    if (fs::exists(absolute)) {
-        gladePath->addSearchDirectory(absolute.parent_path());
-        return;
-    }
-
     std::string msg =
             FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
                   "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
-               relativePathAndFile % PACKAGE_DATA_DIR);
+               relativePathAndFile % Util::getDataPath().string());
 
     if (!failIfNotFound) {
         msg += _("\n\nWill now attempt to run without this file.");
     }
     XojMsgBox::showErrorToUser(nullptr, msg);
-#endif
 
     if (failIfNotFound) {
         exit(12);

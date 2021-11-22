@@ -14,6 +14,7 @@
 #pragma once
 
 #include <memory>
+#include <mutex>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -154,7 +155,7 @@ private:
     /**
      * The lock of the document
      */
-    GMutex documentLock{};
+    std::mutex documentLock;
 };
 
 template <class InputIter>

@@ -15,7 +15,7 @@
 #include "filesystem.h"
 #include "i18n.h"
 
-Document::Document(DocumentHandler* handler): handler(handler) { g_mutex_init(&this->documentLock); }
+Document::Document(DocumentHandler* handler): handler(handler) {}
 
 Document::~Document() {
     clearDocument(true);
@@ -49,7 +49,7 @@ auto Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, 
 }
 
 void Document::lock() {
-    g_mutex_lock(&this->documentLock);
+    this->documentLock.lock();
 
     //	if(tryLock()) {
     //		fprintf(stderr, "Locked by\n");
@@ -61,14 +61,17 @@ void Document::lock() {
 }
 
 void Document::unlock() {
-    g_mutex_unlock(&this->documentLock);
+    this->documentLock.unlock();
 
     //	fprintf(stderr, "Unlocked by\n");
     //	Stacktrace::printStracktrace();
     //	fprintf(stderr, "\n\n\n\n");
 }
 
-auto Document::tryLock() -> bool { return g_mutex_trylock(&this->documentLock); }
+/*
+** Returns true when successfully acquiring lock.
+*/
+auto Document::tryLock() -> bool { return this->documentLock.try_lock(); }
 
 void Document::clearDocument(bool destroy) {
     if (this->preview) {

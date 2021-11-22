@@ -40,7 +40,7 @@ auto XojCairoPdfExport::startPdf(const fs::path& file) -> bool {
     this->populatePdfOutline(tocModel);
 #endif
 
-    return true;
+    return cairo_surface_status(this->surface) == CAIRO_STATUS_SUCCESS;
 }
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
@@ -70,6 +70,7 @@ void XojCairoPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
         auto pageDest = pdfBgPage == npos ? npos : doc->findPdfPage(pdfBgPage);  // Destination in document
         if (pageDest != npos) {
             std::ostringstream linkAttrBuf;
+            linkAttrBuf.imbue(std::locale::classic());
             linkAttrBuf << "page=" << pageDest + 1;
             if (dest->shouldChangeLeft() && dest->shouldChangeTop()) {
                 linkAttrBuf << " pos=[" << dest->getLeft() << " " << dest->getTop() << "]";
@@ -152,6 +153,9 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range, 
     }
 
     if (!startPdf(file)) {
+        this->lastError = _("Failed to initialize PDF Cairo surface");
+        this->lastError += "\nCairo error: ";
+        this->lastError += cairo_status_to_string(cairo_surface_status(this->surface));
         return false;
     }
 
@@ -194,6 +198,9 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) ->
     }
 
     if (!startPdf(file)) {
+        this->lastError = _("Failed to initialize PDF Cairo surface");
+        this->lastError += "\nCairo error: ";
+        this->lastError += cairo_status_to_string(cairo_surface_status(this->surface));
         return false;
     }
 

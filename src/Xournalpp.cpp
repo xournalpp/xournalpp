@@ -16,6 +16,7 @@
 
 #include "CrashHandler.h"
 #include "Stacktrace.h"
+#include "filesystem.h"
 
 #ifdef _WIN32
 #include "win32/console.h"
@@ -32,6 +33,11 @@ auto main(int argc, char* argv[]) -> int {
 
 #ifdef DEV_CALL_LOG
     Log::initlog();
+#endif
+
+#ifdef _WIN32
+    // Switch to the FontConfig backend for Pango - See #3371
+    _putenv_s("PANGOCAIRO_BACKEND", "fc");
 #endif
 
     // Use this two line to test the crash handler...

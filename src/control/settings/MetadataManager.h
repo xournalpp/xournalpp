@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -77,6 +78,6 @@ private:
 
 
 private:
-    GMutex mutex{};
+    std::mutex mutex;
     MetadataEntry* metadata;
 };

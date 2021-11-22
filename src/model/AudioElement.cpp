@@ -14,10 +14,10 @@ void AudioElement::setTimestamp(size_t timestamp) { this->timestamp = timestamp;
 
 auto AudioElement::getTimestamp() const -> size_t { return this->timestamp; }
 
-void AudioElement::serializeAudioElement(ObjectOutputStream& out) {
+void AudioElement::serialize(ObjectOutputStream& out) const {
     out.writeObject("AudioElement");
 
-    serializeElement(out);
+    this->Element::serialize(out);
 
     out.writeString(this->audioFilename);
     out.writeSizeT(this->timestamp);
@@ -25,10 +25,10 @@ void AudioElement::serializeAudioElement(ObjectOutputStream& out) {
     out.endObject();
 }
 
-void AudioElement::readSerializedAudioElement(ObjectInputStream& in) {
+void AudioElement::readSerialized(ObjectInputStream& in) {
     in.readObject("AudioElement");
 
-    readSerializedElement(in);
+    this->Element::readSerialized(in);
 
     this->audioFilename = in.readString();
     this->timestamp = in.readSizeT();

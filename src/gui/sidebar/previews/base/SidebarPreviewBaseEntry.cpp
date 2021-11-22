@@ -13,8 +13,6 @@ SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, co
     gtk_widget_show(this->widget);
     g_object_ref(this->widget);
 
-    g_mutex_init(&this->drawingMutex);
-
     updateSize();
     gtk_widget_set_events(widget, GDK_EXPOSURE_MASK);
 
@@ -90,7 +88,7 @@ void SidebarPreviewBaseEntry::drawLoadingPage() {
 void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
     bool doRepaint = false;
 
-    g_mutex_lock(&this->drawingMutex);
+    this->drawingMutex.lock();
 
     if (this->crBuffer == nullptr) {
         drawLoadingPage();
@@ -122,7 +120,7 @@ void SidebarPreviewBaseEntry::paint(cairo_t* cr) {
         Shadow::drawShadow(cr, Shadow::getShadowTopLeftSize() + 2, Shadow::getShadowTopLeftSize() + 2, width, height);
     }
 
-    g_mutex_unlock(&this->drawingMutex);
+    this->drawingMutex.unlock();
 
     if (doRepaint) {
         repaint();

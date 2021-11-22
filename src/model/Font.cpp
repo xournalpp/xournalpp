@@ -22,7 +22,7 @@ void XojFont::operator=(const XojFont& font) {
     this->size = font.size;
 }
 
-void XojFont::serialize(ObjectOutputStream& out) {
+void XojFont::serialize(ObjectOutputStream& out) const {
     out.writeObject("XojFont");
 
     out.writeString(this->name);

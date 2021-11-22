@@ -3,9 +3,12 @@
 #include <array>
 #include <fstream>
 
+#include <config-paths.h>
+#include <config.h>
 #include <glib.h>
 #include <stdlib.h>
 
+#include "Stacktrace.h"
 #include "StringUtils.h"
 #include "Util.h"
 #include "XojMsgBox.h"
@@ -184,7 +187,8 @@ auto Util::getGettextFilepath(const char* localeDir) -> fs::path {
         }
     }
     const char* dir = (gettextEnv) ? directories.c_str() : localeDir;
-    g_message("TEXTDOMAINDIR = %s, PACKAGE_LOCALE_DIR = %s, chosen directory = %s", gettextEnv, localeDir, dir);
+    g_message("TEXTDOMAINDIR = %s, Platform-specific locale dir = %s, chosen directory = %s", gettextEnv, localeDir,
+              dir);
     return fs::path(dir);
 }
 
@@ -295,4 +299,34 @@ bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
         fs::remove(from);
     }
     return true;
+}
+
+auto Util::getDataPath() -> fs::path {
+#ifdef _WIN32
+    TCHAR szFileName[MAX_PATH];
+    GetModuleFileName(nullptr, szFileName, MAX_PATH);
+    auto exePath = std::string(szFileName);
+    std::string::size_type pos = exePath.find_last_of("\\/");
+    fs::path p = exePath.substr(0, pos);
+    p = p / ".." / "share" / PROJECT_PACKAGE;
+    return p;
+#elif defined(__APPLE__)
+    fs::path p = Stacktrace::getExePath();
+    p = p / ".." / "Resources";
+    return p;
+#else
+    fs::path p = PACKAGE_DATA_DIR;
+    p /= PROJECT_PACKAGE;
+    return p;
+#endif
+}
+
+auto Util::getLocalePath() -> fs::path {
+#ifdef _WIN32
+    return getDataPath() / ".." / "locale";
+#elif defined(__APPLE__)
+    return getDataPath() / "share" / "locale";
+#else
+    return getDataPath() / ".." / "locale";
+#endif
 }
