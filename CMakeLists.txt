@@ -219,6 +219,13 @@ endif ()
 ## Source building ##
 add_subdirectory(src)
 
+## Tests ##
+option (ENABLE_GTEST "Enable gtest build for xournalpp application" OFF)
+if (ENABLE_GTEST)
+  enable_testing()
+  add_subdirectory (test ${CMAKE_BINARY_DIR}/test EXCLUDE_FROM_ALL)
+endif (ENABLE_GTEST)
+
 ## Man page generation ##
 add_subdirectory (man)
 
