@@ -3,21 +3,16 @@ Type=Application
 
 Name=Xournal++
 Comment=Take handwritten notes
-Keywords=Tablet;Wacom;Pen Input;PDF Annotation;Markup
-Name[fr]=Xournal++
-Comment[fr]=Prise de notes manuscrites
-Name[ca]=Xournal++
 Comment[ca]=Preneu notes a mà
-Name[cs]=Xournal++
 Comment[cs]=Dělejte si rukou psané poznámky
-Name[de]=Xournal++
 Comment[de]=Handnotizen erstellen
-Name[pl]=Xournal++
+Comment[fr]=Prise de notes manuscrites
+Comment[hu]=Készítsen kézzel írott jegyzeteket
 Comment[pl]=Notatki odręczne
-Name[zh_CN]=Xournal++
-Comment[zh_CN]=手写注释工具，可为PDF文件添加各种元素的注释标记
-Name[ru]=Xournal++
 Comment[ru]=Делайте рукописные заметки
+Comment[zh_CN]=手写注释工具，可为PDF文件添加各种元素的注释标记
+Keywords=tablet;Wacom;pen input;PDF Annotation;markup
+Keywords[hu]=táblagép;Wacom;tollas bevitel;PDF-megjegyzés;korrektúra
 
 Exec=xournalpp %f
 StartupWMClass=xournalpp
