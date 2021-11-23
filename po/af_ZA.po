@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-22 17:30+0000\n"
-"PO-Revision-Date: 2021-11-22 17:39\n"
+"PO-Revision-Date: 2021-11-23 09:36\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -586,7 +586,7 @@ msgstr "Kon nie LaTeX generator program in PATH vind nie: {1}"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Inisialisering van PDF Cairo oppervlak het misluk"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:57
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -1115,11 +1115,11 @@ msgstr "Kies gebied"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
-msgstr ""
+msgstr "Keuse Kombinasie"
 
 #: ../src/core/control/XournalMain.cpp:156
 msgid "Send Bugreport"
-msgstr ""
+msgstr "Stuur foutverslag"
 
 #: ../src/core/control/tools/EditSelection.cpp:380
 msgid "Send backward"
@@ -1136,23 +1136,28 @@ msgstr "Verdeler"
 #: ../src/core/control/XournalMain.cpp:642
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Stel DPI vir PNG uitvoerings. Standaard is 300\n"
+"                                 Geen effek sonder -i/--create-img=foo.png"
 
 #: ../src/core/control/XournalMain.cpp:652
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Stel bladsy hoogte vir PNG uitvoerings\n"
+"                                 Geen effek sonder -i/--create-img=foo.png\n"
+"                                 Geignoreer indien --export-png-dpi of --export-png-width gebruik word"
 
 #: ../src/core/control/XournalMain.cpp:646
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Stel bladsy wydte vir PNG uitvoerings\n"
+"                                 Geen effek sonder -i/--create-img=foo.png\n"
+"                                 Geignoreer indien --export-png-dpi gebruik word"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "Vorm Herkenner"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:67
 msgid "Show all"
@@ -1160,25 +1165,27 @@ msgstr "Wys al"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
-msgstr ""
+msgstr "Wys slegs ongebruikte blaaie (een ongebruikte bladsy)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:89
 msgid "Show only not used pages ({1} unused pages)"
-msgstr ""
+msgstr "Wys slegs ongebruikte blaaie ({1} ongebruikte bladsye)"
 
 #: ../src/core/control/XournalMain.cpp:514
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "Jammer, Xournal++ kan slegs een lêer per slag oop maak.\n"
+"Ander is geïgnoreer."
 
 #: ../src/core/control/XournalMain.cpp:529
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "Jammer, Xournal++ kan nie afstand lêers oop maak op die oomblik nie.\n"
+"Jy sal die 'n plaaslike afskrif moet maak."
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
-msgstr ""
+msgstr "Stokke"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Stop"
@@ -1196,27 +1203,27 @@ msgstr ""
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
-msgstr ""
+msgstr "Ondersteunde lêers"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Ruil die huidige laag met die een bo"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Ruil die huidige laag met die een onder"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Ruil die huidige bladsy met die een bo"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:68
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Ruil die huidige bladsy met die een onder"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
-msgstr ""
+msgstr "Stelselstandaard"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
@@ -1226,7 +1233,7 @@ msgstr "Teks"
 #: ../src/core/gui/SearchBar.cpp:66
 #, c-format
 msgid "Text %i times found on this page"
-msgstr ""
+msgstr "Teks %i keer gevind op hierdie bladsy"
 
 #: ../src/core/undo/TextUndoAction.cpp:29
 msgid "Text changes"
@@ -1234,23 +1241,23 @@ msgstr "Teks veranderinge"
 
 #: ../src/core/gui/SearchBar.cpp:64
 msgid "Text found on this page"
-msgstr ""
+msgstr "Teks gevind op hierdie bladsy"
 
 #: ../src/core/gui/SearchBar.cpp:122 ../src/core/gui/SearchBar.cpp:166
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "Teks een keer gevind op bladsy {1}"
 
 #: ../src/core/gui/SearchBar.cpp:123 ../src/core/gui/SearchBar.cpp:167
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "Teks {1} keer gevind op bladsy {2}"
 
 #: ../src/core/gui/SearchBar.cpp:71
 msgid "Text not found"
-msgstr ""
+msgstr "Teks nie gevind nie"
 
 #: ../src/core/gui/SearchBar.cpp:133 ../src/core/gui/SearchBar.cpp:177
 msgid "Text not found, searched on all pages"
-msgstr ""
+msgstr "Teks nie gevind nie, gesoek op alle blaaie"
 
 #: ../src/core/control/Control.cpp:1068
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
@@ -1483,11 +1490,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
 msgid "Zoom in"
-msgstr ""
+msgstr "Zoem in"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Zoom out"
-msgstr ""
+msgstr "Zoem uit"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Zoom to 100%"
