@@ -18,6 +18,8 @@
 #include "control/Control.h"
 #include "control/PageBackgroundChangeController.h"
 #include "control/Tool.h"
+#include "control/jobs/ImageExport.h"
+#include "control/jobs/ProgressListener.h"
 #include "control/layer/LayerController.h"
 #include "control/pagetype/PageTypeHandler.h"
 #include "gui/XournalView.h"
@@ -25,6 +27,8 @@
 #include "model/Font.h"
 #include "model/StrokeStyle.h"
 #include "model/Text.h"
+#include "pdf/base/XojPdfExport.h"
+#include "pdf/base/XojPdfExportFactory.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
 #include "util/safe_casts.h"
@@ -1157,6 +1161,134 @@ static int applib_getDisplayDpi(lua_State* L) {
 }
 
 
+/**
+ * Exports the current document as a pdf or as a svg or png image
+
+ * Example 1:
+ * app.export({["outputFile"] = "Test.pdf", ["range"] = "2-5; 7", ["background"] = "none", ["progressiveMode"] = true})
+ * uses progressiveMode, so for each page of the document, instead of rendering one PDF page, the page layers are
+ * rendered one by one to produce as many pages as there are layers.
+ *
+ * Example 2:
+ * app.export({["outputFile"] = "Test.svg", ["range"] = "3-", ["background"] = "unruled"})
+ *
+ * Example 3:
+ * app.export({["outputFile"] = "Test.png", ["range"] = "1-2", ["background"] = "all", ["pngWidth"] = 800})
+ **/
+static int applib_export(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+    Document* doc = control->getDocument();
+
+    // discard any extra arguments passed in
+    lua_settop(L, 1);
+    luaL_checktype(L, 1, LUA_TTABLE);
+
+    lua_getfield(L, 1, "outputFile");
+    lua_getfield(L, 1, "range");
+    lua_getfield(L, 1, "background");
+    lua_getfield(L, 1, "progressiveMode");
+    lua_getfield(L, 1, "pngDpi");
+    lua_getfield(L, 1, "pngWidth");
+    lua_getfield(L, 1, "dpiHeight");
+
+    const char* outputFile = luaL_optstring(L, -7, nullptr);
+    const char* range = luaL_optstring(L, -6, nullptr);
+    const char* background = luaL_optstring(L, -5, "all");
+    bool progressiveMode = lua_toboolean(L, -4);  // true unless nil or false
+    int pngDpi = luaL_optinteger(L, -3, -1);
+    int pngWidth = luaL_optinteger(L, -2, -1);
+    int pngHeight = luaL_optinteger(L, -1, -1);
+
+    ExportBackgroundType bgType = EXPORT_BACKGROUND_ALL;
+    if (strcmp(background, "unruled") == 0) {
+        bgType = EXPORT_BACKGROUND_UNRULED;
+    } else if (strcmp(background, "none") == 0) {
+        bgType = EXPORT_BACKGROUND_NONE;
+    }
+
+    if (outputFile == nullptr) {
+        luaL_error(L, "Missing output file!");
+    }
+
+    fs::path file = fs::path(outputFile);
+    auto extension = file.extension();
+
+    if (extension == ".pdf") {
+        // exportPdf("test.xopp", outputFile, range, bgType, progressiveMode);
+        GFile* file = g_file_new_for_commandline_arg(outputFile);
+
+        XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, nullptr);
+        pdfe->setExportBackground(bgType);
+        char* cpath = g_file_get_path(file);
+        std::string path = cpath;
+        g_free(cpath);
+        g_object_unref(file);
+
+        bool exportSuccess;  // Return of the export job
+
+        if (range) {
+            PageRangeVector exportRange = PageRange::parse(range, doc->getPageCount());
+            exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
+            for (PageRangeEntry* e: exportRange) { delete e; }
+            exportRange.clear();
+        } else {
+            exportSuccess = pdfe->createPdf(path, progressiveMode);
+        }
+
+        if (!exportSuccess) {
+            g_error("%s", pdfe->getLastError().c_str());
+        }
+        delete pdfe;
+
+        g_message("%s %s", _("PDF file successfully exported to"), outputFile);
+    } else if (extension == ".svg" || extension == ".png") {
+        // exportImg("test.xopp", outputFile, range, bgType, pngDpi, pngWidth, pngHeight);
+
+        ExportGraphicsFormat format = (extension == ".svg") ? EXPORT_GRAPHICS_SVG : EXPORT_GRAPHICS_PNG;
+
+        PageRangeVector exportRange;
+        if (range) {
+            exportRange = PageRange::parse(range, int(doc->getPageCount()));
+        } else {
+            exportRange.push_back(new PageRangeEntry(0, int(doc->getPageCount() - 1)));
+        }
+
+        DummyProgressListener progress;
+
+        ImageExport imgExport(doc, file, format, bgType, exportRange);
+
+        if (format == EXPORT_GRAPHICS_PNG) {
+            if (pngDpi > 0) {
+                imgExport.setQualityParameter(EXPORT_QUALITY_DPI, pngDpi);
+            } else if (pngWidth > 0) {
+                imgExport.setQualityParameter(EXPORT_QUALITY_WIDTH, pngWidth);
+            } else if (pngHeight > 0) {
+                imgExport.setQualityParameter(EXPORT_QUALITY_HEIGHT, pngHeight);
+            }
+        }
+
+        imgExport.exportGraphics(&progress);
+
+        for (PageRangeEntry* e: exportRange) { delete e; }
+        exportRange.clear();
+
+        std::string errorMsg = imgExport.getLastErrorMsg();
+        if (!errorMsg.empty()) {
+            g_message("Error exporting image: %s\n", errorMsg.c_str());
+        }
+
+        g_message("%s %s-*%s", _("Image file successfully created with pattern"), file.stem().string().c_str(),
+                  file.extension().string().c_str());
+    }
+
+    // Make sure to remove all vars which are put to the stack before!
+    lua_pop(L, 7);
+
+    return 1;
+}
+
+
 /*
  * The full Lua Plugin API.
  * See above for example usage of each function.
@@ -1184,6 +1316,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"setBackgroundName", applib_setBackgroundName},
                                   {"scaleTextElements", applib_scaleTextElements},
                                   {"getDisplayDpi", applib_getDisplayDpi},
+                                  {"export", applib_export},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
 
