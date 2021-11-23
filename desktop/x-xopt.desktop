@@ -6,5 +6,6 @@ Patterns=*.xopt;
 
 Comment=Xournal++ template file
 Comment[de]=Xournal++ Vorlage
-Comment[zh_CN]=Xournal++ 模板文件
+Comment[hu]=Xournal++ sablonfájl
 Comment[ru]=Файл шаблона Xournal++
+Comment[zh_CN]=Xournal++ 模板文件

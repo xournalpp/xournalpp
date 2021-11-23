@@ -1,4 +1,4 @@
-Xournal++ is a hand note taking software written in C++ with the target of
+Xournal++ is a hand note-taking software written in C++ with the target of
 flexibility, functionality and speed. Stroke recognizer and other parts are
 based on Xournal Code, which you can find at sourceforge.
 It supports Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows 10.
@@ -6,24 +6,24 @@ Supports pen input from devices such as Wacom Tablets.
 .
 Xournal++ features:
 .
- - Supports pressure senstive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
- - Paper backgrounds for notetaking, scratch paper, or whiteboarding
+ - Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
+ - Paper backgrounds for note-taking, scratch paper, or whiteboarding
  - Annotate on top of PDFs
  - Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line
- - Different drawing tools (e.g.pen, highlighter) and stroke styles (e.g. solid, dotted)
+ - Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)
  - Shape drawing (line, arrow, circle, rectangle, spline)
  - Fill shape functionality
  - Shape resizing and rotation
  - Rotation and grid snapping for precise alignment of objects
  - Input stabilization for smoother writing/drawing
- - Text tool for adding text in different fonts, colors and sizes
+ - Text tool for adding text in different fonts, colors, and sizes
  - Enhanced support for image insertion
  - Eraser with multiple configurations
- - LaTeX support (requires a working LaTeX installation) with customizeable template
- - Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden/edited)
+ - LaTeX support (requires a working LaTeX installation) with customizable template
+ - Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)
  - Allows maping different tools/colors etc. to stylus/mouse buttons
- - Customizeable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape
- - Page Template definitions
+ - Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape
+ - Page template definitions
  - Bug reporting, autosave, and auto backup tools
  - Audio recording and playback alongside with handwritten notes
  - Multi language support (over 20 languages supported)
