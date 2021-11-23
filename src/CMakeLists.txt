@@ -97,9 +97,4 @@ install(TARGETS xournalpp
         COMPONENT xournalpp
         )
 
-option (ENABLE_GTEST "Enable gtest build for xournalpp application" OFF)
-if (ENABLE_GTEST)
-  add_subdirectory (${CMAKE_SOURCE_DIR}/test ${CMAKE_BINARY_DIR}/test EXCLUDE_FROM_ALL)
-endif (ENABLE_GTEST)
-
 add_subdirectory(xoj-preview-extractor)
