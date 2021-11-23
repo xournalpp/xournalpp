@@ -2,14 +2,17 @@
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
 	<mime-type type="application/x-xojpp">
 		<comment>Xournal note file</comment>
+		<comment xml:lang="hu">Xournal jegyzetfájl</comment>
 		<glob pattern="*.xoj"/>
 	</mime-type>
 	<mime-type type="application/x-xopp">
 		<comment>Xournal++ note file</comment>
+		<comment xml:lang="hu">Xournal++ jegyzetfájl</comment>
 		<glob pattern="*.xopp"/>
 	</mime-type>
 	<mime-type type="application/x-xopt">
 		<comment>Xournal++ note file</comment>
+		<comment xml:lang="hu">Xournal++ jegyzetfájl</comment>
 		<glob pattern="*.xopt"/>
 	</mime-type>
 </mime-info>
