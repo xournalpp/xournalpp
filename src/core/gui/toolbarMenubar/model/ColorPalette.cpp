@@ -70,7 +70,8 @@ auto Palette::parseHeaderLine(const std::string& line) -> bool {
 }
 
 auto Palette::parseColorLine(const std::string& line) -> bool {
-    NamedColor color{namedColors.size()};
+    uint16_t nextIndex = this->size();
+    NamedColor color{nextIndex};
     std::istringstream iss{line};
     if (iss >> color) {
         namedColors.emplace_back(std::move(color));
@@ -90,9 +91,9 @@ auto Palette::parseLineFallback(int lineNumber) const -> const bool {
     throw std::invalid_argument(FS(FORMAT_STR("The line {1} is malformed.") % lineNumber));
 }
 
-auto Palette::getColorAt(size_t i) const -> NamedColor const& {
-    if (i >= namedColors.size()) {
-        i = i % namedColors.size();
+auto Palette::getColorAt(uint16_t i) const -> NamedColor const& {
+    if (i >= this->size()) {
+        i = i % this->size();
         g_warning("There are more Coloritems in the Toolbar than your Palette defines.\n"
                   "Hence, cycling through palette from the beginning.");
     }
@@ -100,7 +101,7 @@ auto Palette::getColorAt(size_t i) const -> NamedColor const& {
     return namedColors.at(i);
 }
 
-auto Palette::size() const -> size_t { return namedColors.size(); }
+auto Palette::size() const -> uint16_t { return static_cast<uint16_t>(namedColors.size()); }
 
 
 auto Palette::default_palette() -> const std::string {

@@ -112,9 +112,9 @@ struct Palette {
     /**
      * @brief Get the number of namedColors part of the palette
      *
-     * @return size_t number of namedColors in palette
+     * @return uint16_t number of namedColors in palette
      */
-    size_t size() const;
+    uint16_t size() const;
 
     /**
      * @brief Get a NamedColor from the palette
@@ -122,7 +122,7 @@ struct Palette {
      * @param i palette index
      * @return NamedColor of palette at palette index
      */
-    NamedColor const& getColorAt(size_t i) const;
+    NamedColor const& getColorAt(uint16_t i) const;
 
 
 private:
@@ -133,17 +133,17 @@ private:
     fs::path filepath;
 
     /**
-     * @brief Vector containing all colors of the palette
-     *
-     */
-    std::vector<NamedColor> namedColors;
-
-    /**
      * @brief Map containing the key value pairs of the gpl header
      * e.g. "Palette Name", "Description"
      *
      */
     std::map<std::string, std::string> header;
+
+    /**
+     * @brief Vector containing all colors of the palette
+     *
+     */
+    std::vector<NamedColor> namedColors;
 
     /**
      * @brief Verify if line contains the expected "GIMP Palette" string

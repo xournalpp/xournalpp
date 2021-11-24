@@ -7,7 +7,7 @@
 NamedColor::NamedColor():
         paletteIndex{0}, name{"Custom Color"}, colorU16{ColorU16{}}, color{Color(0u)}, isPaletteColor{false} {}
 
-NamedColor::NamedColor(const size_t& paletteIndex):
+NamedColor::NamedColor(const uint16_t& paletteIndex):
         paletteIndex{paletteIndex},
         name{"Fallback Color"},
         colorU16{ColorU16{}},
@@ -51,6 +51,6 @@ auto NamedColor::getColorU16() const -> ColorU16 { return colorU16; }
 
 auto NamedColor::getColor() const -> Color { return color; }
 
-auto NamedColor::getIndex() const -> size_t { return paletteIndex; };
+auto NamedColor::getIndex() const -> uint16_t { return paletteIndex; };
 
 auto NamedColor::getName() const -> std::string { return name; };

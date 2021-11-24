@@ -43,7 +43,7 @@ struct NamedColor {
      *
      * @param paletteIndex
      */
-    NamedColor(const size_t& paletteIndex);
+    NamedColor(const uint16_t& paletteIndex);
 
     /**
      * @brief Construct a new NamedColor instance
@@ -81,9 +81,9 @@ struct NamedColor {
     /**
      * @brief Get the Index of the NamedColor inside the Palette
      *
-     * @return size_t index
+     * @return uint16_t index
      */
-    size_t getIndex() const;
+    uint16_t getIndex() const;
 
     /**
      * @brief Get the Name of the NamedColor
@@ -98,7 +98,7 @@ private:
      * This is useful for loading the toolbar from the toolbar.ini
      *
      */
-    size_t paletteIndex;
+    uint16_t paletteIndex;
 
     std::string name;
     ColorU16 colorU16;
