@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 17:30+0000\n"
-"PO-Revision-Date: 2021-11-22 17:39\n"
+"POT-Creation-Date: 2021-11-25 10:32+0000\n"
+"PO-Revision-Date: 2021-11-25 11:34\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -833,7 +833,7 @@ msgstr "No hi ha pàgines PDF disponibles per a afegir. És possible que sigui n
 msgid "Normal drawing"
 msgstr "Dibuix normal"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:186
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
 msgid "OK"
 msgstr "D'acord"
