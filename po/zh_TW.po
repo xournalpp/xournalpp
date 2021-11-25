@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 17:30+0000\n"
-"PO-Revision-Date: 2021-11-22 17:39\n"
+"POT-Creation-Date: 2021-11-25 10:32+0000\n"
+"PO-Revision-Date: 2021-11-25 11:34\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -550,7 +550,7 @@ msgstr "輸出為PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Export as PDF"
-msgstr ""
+msgstr "匯出成 PDF"
 
 #: ../src/core/control/XournalMain.cpp:631
 msgid "Export layers progressively\n"
@@ -833,7 +833,7 @@ msgstr ""
 msgid "Normal drawing"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:185
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:186
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
 msgid "OK"
 msgstr "確定"
@@ -961,7 +961,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Print"
-msgstr ""
+msgstr "列印"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Record Audio / Stop Recording"
@@ -994,7 +994,7 @@ msgstr ""
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
-msgstr ""
+msgstr "重新命名圖層"
 
 #: ../src/util/XojMsgBox.cpp:77
 msgid "Replace"
@@ -1039,7 +1039,7 @@ msgstr "保存"
 
 #: ../src/core/control/Control.cpp:2457
 msgid "Save As..."
-msgstr ""
+msgstr "另存為..."
 
 #: ../src/core/control/Control.cpp:2302
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
@@ -1175,11 +1175,11 @@ msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
-msgstr ""
+msgstr "五線譜"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Stop"
-msgstr ""
+msgstr "停止"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
@@ -1213,7 +1213,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
-msgstr ""
+msgstr "系統預設"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
@@ -1411,7 +1411,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:543
 msgid "Very Thick"
-msgstr ""
+msgstr "極粗"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "With PDF background"
@@ -1496,18 +1496,18 @@ msgstr "原始尺寸"
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Cancel"
-msgstr ""
+msgstr "取消 (_C)"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:13
 msgid "_Open"
-msgstr ""
+msgstr "開啟 (_O)"
 
 #: ../src/core/control/Control.cpp:2303
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
-msgstr ""
+msgstr "儲存 (_S)"
 
 #: ../src/core/control/DeviceListHelper.cpp:112
 msgid "cursor"
@@ -1557,7 +1557,7 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:115
 msgid "keyboard"
-msgstr ""
+msgstr "鍵盤"
 
 #: ../src/core/undo/AddUndoAction.cpp:100
 #: ../src/core/undo/DeleteUndoAction.cpp:97
@@ -1574,7 +1574,7 @@ msgstr "畫筆"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
 msgid "show"
-msgstr ""
+msgstr "顯示"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:258
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:277
@@ -1588,20 +1588,20 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:124
 msgid "tablet pad"
-msgstr ""
+msgstr "繪圖板"
 
 #: ../src/core/undo/AddUndoAction.cpp:103
 #: ../src/core/undo/DeleteUndoAction.cpp:100
 msgid "text"
-msgstr ""
+msgstr "文本"
 
 #: ../src/core/control/DeviceListHelper.cpp:119
 msgid "touchpad"
-msgstr ""
+msgstr "觸控板"
 
 #: ../src/core/control/DeviceListHelper.cpp:117
 msgid "touchscreen"
-msgstr ""
+msgstr "觸控螢幕"
 
 #: ../src/core/control/DeviceListHelper.cpp:122
 msgid "trackpoint"
@@ -1708,43 +1708,43 @@ msgstr ""
 
 #: ../ui/settings.glade:1090
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1142
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4963
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1735
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5610
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1058
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2458
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:1029
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3151
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1122
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1752,11 +1752,11 @@ msgstr "<b>...或者選擇已用圖片：</b>"
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
-msgstr ""
+msgstr "<b>背景顏色</b>"
 
 #: ../ui/pageTemplate.glade:258
 msgid "<b>Background</b>"
-msgstr ""
+msgstr "<b>背景</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
@@ -1936,7 +1936,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -2046,11 +2046,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1845
 msgid "Button 1"
-msgstr ""
+msgstr "按鈕 1"
 
 #: ../ui/settings.glade:1883
 msgid "Button 2"
-msgstr ""
+msgstr "按鈕 2"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2070,7 +2070,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2928
 msgid "Colors"
-msgstr ""
+msgstr "顏色"
 
 #: ../ui/main.glade:1207
 msgid "Configure Page Template"
@@ -2098,7 +2098,7 @@ msgstr "當前頁"
 
 #: ../ui/settings.glade:3249
 msgid "Cursor"
-msgstr ""
+msgstr "游標"
 
 #: ../ui/settings.glade:2983
 msgid "Cursor icon for pen"
@@ -2118,7 +2118,7 @@ msgstr ""
 
 #: ../ui/settings.glade:237
 msgid "Deadzone"
-msgstr ""
+msgstr "盲區"
 
 #: ../ui/settings.glade:1046
 msgid "Deadzone radius"
@@ -2154,7 +2154,7 @@ msgstr "設備"
 
 #: ../ui/settings.glade:2272
 msgid "Disable"
-msgstr ""
+msgstr "停用"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
@@ -2170,7 +2170,7 @@ msgstr ""
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
-msgstr ""
+msgstr "已停用"
 
 #: ../ui/settings.glade:2132
 msgid "Disabling Method"
@@ -2475,11 +2475,11 @@ msgstr "輸入設備"
 
 #: ../ui/settings.glade:813
 msgid "Input Devices"
-msgstr ""
+msgstr "輸入裝置"
 
 #: ../ui/settings.glade:1278
 msgid "Input System"
-msgstr ""
+msgstr "輸入系統"
 
 #: ../ui/settings.glade:1247
 msgid "Input stabilization"
@@ -2503,7 +2503,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5722
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
@@ -2576,11 +2576,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1454 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "滑鼠"
 
 #: ../ui/settings.glade:1423
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "滑鼠按鍵"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
@@ -2621,7 +2621,7 @@ msgstr "新建圖層(_L)"
 #: ../ui/settings.glade:2999
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "沒有圖示"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -2646,11 +2646,11 @@ msgstr "選項"
 
 #: ../ui/settings.glade:5405
 msgid "Output Device"
-msgstr ""
+msgstr "輸出裝置"
 
 #: ../ui/settings.glade:5020
 msgid "PDF Cache"
-msgstr ""
+msgstr "PDF 快取"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
@@ -2687,7 +2687,7 @@ msgstr ""
 
 #: ../ui/main.glade:1928
 msgid "Pause"
-msgstr ""
+msgstr "暫停"
 
 #: ../ui/main.glade:1555
 msgid "Pen _Options"
@@ -2695,11 +2695,11 @@ msgstr "畫筆選項(_O)"
 
 #: ../ui/settings.glade:3759
 msgid "Performance"
-msgstr ""
+msgstr "效能"
 
 #: ../ui/settings.glade:5651
 msgid "Playback Settings"
-msgstr ""
+msgstr "播放設定"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -2727,11 +2727,11 @@ msgstr "偏好設置"
 
 #: ../ui/settings.glade:1174
 msgid "Preprocessor"
-msgstr ""
+msgstr "前置處理器"
 
 #: ../ui/settings.glade:3650
 msgid "Presentation Mode"
-msgstr ""
+msgstr "展示模式"
 
 #: ../ui/settings.glade:4490
 msgid "Preserve line width"
@@ -2787,7 +2787,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
-msgstr ""
+msgstr "解析度"
 
 #: ../ui/settings.glade:1405
 msgid "Right Mouse Button"
@@ -3093,7 +3093,7 @@ msgstr ""
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
