@@ -135,6 +135,7 @@ auto Palette::default_palette() -> const std::string {
 
 void Palette::create_default(fs::path filepath) {
     std::ofstream myfile{filepath};
+    myfile.imbue(std::locale::classic());
     myfile << default_palette();
 }
 
