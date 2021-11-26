@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-25 10:32+0000\n"
-"PO-Revision-Date: 2021-11-25 11:34\n"
+"PO-Revision-Date: 2021-11-26 02:59\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -355,7 +355,7 @@ msgstr "刪除此圖層"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
-msgstr "刪除此頁"
+msgstr "刪除此頁面"
 
 #: ../src/core/control/Control.cpp:2462
 msgid "Discard"
@@ -823,7 +823,7 @@ msgstr "沒有設備"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:151
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:194
 msgid "No pages to export!"
-msgstr ""
+msgstr "沒有頁面可以匯出！"
 
 #: ../src/core/control/Control.cpp:1268
 msgid "No pdf pages available to append. You may need to reopen the document first."
