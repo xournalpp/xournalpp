@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-25 10:32+0000\n"
-"PO-Revision-Date: 2021-11-26 02:59\n"
+"PO-Revision-Date: 2021-11-26 08:06\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -2875,11 +2875,11 @@ msgstr ""
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
-msgstr ""
+msgstr "顯示側邊欄"
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "顯示工具列"
 
 #: ../ui/settings.glade:3278
 msgid "Show sidebar on the right side"
@@ -2905,7 +2905,7 @@ msgstr "對齊"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "原始碼 / 錯誤追蹤"
 
 #: ../ui/settings.glade:3843
 msgid "Speed for Ctrl + Scroll"
@@ -2942,7 +2942,7 @@ msgstr ""
 #: ../ui/settings.glade:3002
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "系統游標"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
@@ -2950,7 +2950,7 @@ msgstr "工具條(_o)"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "樣本檔案設定"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -3039,7 +3039,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4319
 msgid "Usually 0 or 1"
-msgstr ""
+msgstr "通常為 0 或 1"
 
 #: ../ui/settings.glade:223
 msgid "Velocity based Gaussian weights"
@@ -3081,7 +3081,7 @@ msgstr "涂白"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "寬度"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
