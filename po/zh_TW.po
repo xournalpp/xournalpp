@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-25 10:32+0000\n"
-"PO-Revision-Date: 2021-11-26 08:06\n"
+"PO-Revision-Date: 2021-11-26 09:10\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -930,7 +930,7 @@ msgstr "粘貼"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Pause / Play"
-msgstr ""
+msgstr "暫停 / 播放"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:256
@@ -1153,7 +1153,7 @@ msgstr "識別形狀"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:67
 msgid "Show all"
-msgstr ""
+msgstr "顯示全部"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
@@ -1448,12 +1448,12 @@ msgstr ""
 #: ../src/core/control/Control.cpp:2308
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++ 檔案"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:65
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:83
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Xournal++ 樣本"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:179
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
@@ -1553,7 +1553,7 @@ msgstr ""
 #: ../src/core/undo/AddUndoAction.cpp:97
 #: ../src/core/undo/DeleteUndoAction.cpp:94
 msgid "image"
-msgstr ""
+msgstr "圖片"
 
 #: ../src/core/control/DeviceListHelper.cpp:115
 msgid "keyboard"
@@ -1562,7 +1562,7 @@ msgstr "鍵盤"
 #: ../src/core/undo/AddUndoAction.cpp:100
 #: ../src/core/undo/DeleteUndoAction.cpp:97
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 #: ../src/core/control/DeviceListHelper.cpp:106
 msgid "mouse"
@@ -1657,7 +1657,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3899 ../ui/settings.glade:3910
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../ui/settings.glade:2473
 msgid "% greater than the initial distance between the two touches."
@@ -1673,7 +1673,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4979
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:557
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -2240,7 +2240,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
-msgstr ""
+msgstr "啟用"
 
 #: ../ui/settings.glade:4390
 msgid "Enable  with determination radius of "
@@ -2252,7 +2252,7 @@ msgstr ""
 
 #: ../ui/settings.glade:375
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "啟用自動儲存"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
@@ -2361,7 +2361,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2946
 msgid "Global"
-msgstr ""
+msgstr "全域"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
@@ -2389,7 +2389,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "高度"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2515,15 +2515,15 @@ msgstr ""
 
 #: ../ui/settings.glade:5811 ../ui/settings.glade:5859
 msgid "Language"
-msgstr ""
+msgstr "語言"
 
 #: ../ui/settings.glade:5829
 msgid "Language Settings"
-msgstr ""
+msgstr "語言設定"
 
 #: ../ui/main.glade:575
 msgid "Layout"
-msgstr ""
+msgstr "版面"
 
 #: ../ui/settings.glade:3316
 msgid "Left / Right-Handed"
@@ -2531,7 +2531,7 @@ msgstr ""
 
 #: ../ui/about.glade:421
 msgid "License"
-msgstr ""
+msgstr "授權條款"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2547,7 +2547,7 @@ msgstr "定製工具條"
 
 #: ../ui/settings.glade:1109
 msgid "Mass"
-msgstr ""
+msgstr "質量"
 
 #: ../ui/settings.glade:1108 ../ui/settings.glade:1120
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
@@ -2568,7 +2568,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1367
 msgid "Middle Mouse Button"
-msgstr ""
+msgstr "滑鼠中鍵"
 
 #: ../ui/settings.glade:1577
 msgid "Minimum Pressure:"
@@ -2588,11 +2588,11 @@ msgstr ""
 
 #: ../ui/main.glade:2659
 msgid "Move Down"
-msgstr ""
+msgstr "向下移動"
 
 #: ../ui/main.glade:2651
 msgid "Move Up"
-msgstr ""
+msgstr "向上移動"
 
 #: ../ui/settings.glade:3465
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
@@ -2638,7 +2638,7 @@ msgstr ""
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "透明度設定"
 
 #: ../ui/settings.glade:933
 msgid "Options"
@@ -2775,7 +2775,7 @@ msgstr ""
 
 #: ../ui/main.glade:1256
 msgid "Rename Layer"
-msgstr ""
+msgstr "重新命名圖層"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
@@ -2791,7 +2791,7 @@ msgstr "解析度"
 
 #: ../ui/settings.glade:1405
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "滑鼠右鍵"
 
 #: ../ui/settings.glade:4577
 msgid "Rotation snapping tolerance"
@@ -2819,7 +2819,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5284
 msgid "Select Folder"
-msgstr ""
+msgstr "選擇資料夾"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
@@ -2863,7 +2863,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4859
 msgid "Settings:"
-msgstr ""
+msgstr "設定："
 
 #: ../ui/settings.glade:4868
 msgid "Show Floating Toolbox"
@@ -3105,11 +3105,11 @@ msgstr "縮放"
 
 #: ../ui/settings.glade:2513
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "縮放手勢"
 
 #: ../ui/settings.glade:3934
 msgid "Zoom Speed"
-msgstr ""
+msgstr "縮放速度"
 
 #: ../ui/main.glade:696
 msgid "_1 Column"
