@@ -5,37 +5,37 @@
 #include "util/i18n.h"
 
 static inline std::array<GdkRGBA, 9> background1 = {
-        Util::rgb_to_GdkRGBA(0xfabebeU),  //
-        Util::rgb_to_GdkRGBA(0xfee7c4U),  //
-        Util::rgb_to_GdkRGBA(0xfef8c9U),  //
-        Util::rgb_to_GdkRGBA(0xdcf6c1U),  //
-        Util::rgb_to_GdkRGBA(0xd4e2f0U),  //
-        Util::rgb_to_GdkRGBA(0xe6d8e4U),  //
-        Util::rgb_to_GdkRGBA(0xf8ead3U),  //
-        Util::rgb_to_GdkRGBA(0xdadcdaU),  //
-        Util::rgb_to_GdkRGBA(0xfafaf9U)   //
+        Util::rgb_to_GdkRGBA(Color(0xfabebeU)),  //
+        Util::rgb_to_GdkRGBA(Color(0xfee7c4U)),  //
+        Util::rgb_to_GdkRGBA(Color(0xfef8c9U)),  //
+        Util::rgb_to_GdkRGBA(Color(0xdcf6c1U)),  //
+        Util::rgb_to_GdkRGBA(Color(0xd4e2f0U)),  //
+        Util::rgb_to_GdkRGBA(Color(0xe6d8e4U)),  //
+        Util::rgb_to_GdkRGBA(Color(0xf8ead3U)),  //
+        Util::rgb_to_GdkRGBA(Color(0xdadcdaU)),  //
+        Util::rgb_to_GdkRGBA(Color(0xfafaf9U))   //
 };
 
 static inline std::array<GdkRGBA, 6> backgroundXournal = {
-        Util::rgb_to_GdkRGBA(0xffffffU),  //
-        Util::rgb_to_GdkRGBA(0xa0e8ffU),  //
-        Util::rgb_to_GdkRGBA(0x80ffc0U),  //
-        Util::rgb_to_GdkRGBA(0xffc0d4U),  //
-        Util::rgb_to_GdkRGBA(0xffc080U),  //
-        Util::rgb_to_GdkRGBA(0xffff80U)   //
+        Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
+        Util::rgb_to_GdkRGBA(Color(0xa0e8ffU)),  //
+        Util::rgb_to_GdkRGBA(Color(0x80ffc0U)),  //
+        Util::rgb_to_GdkRGBA(Color(0xffc0d4U)),  //
+        Util::rgb_to_GdkRGBA(Color(0xffc080U)),  //
+        Util::rgb_to_GdkRGBA(Color(0xffff80U))   //
 };
 
 SelectBackgroundColorDialog::SelectBackgroundColorDialog(Control* control):
         control(control),
-        lastBackgroundColors{Util::rgb_to_GdkRGBA(0xffffffU),  //
-                             Util::rgb_to_GdkRGBA(0xffffffU),  //
-                             Util::rgb_to_GdkRGBA(0xffffffU),  //
-                             Util::rgb_to_GdkRGBA(0xffffffU),  //
-                             Util::rgb_to_GdkRGBA(0xffffffU),  //
-                             Util::rgb_to_GdkRGBA(0xffffffU),  //
-                             Util::rgb_to_GdkRGBA(0xffffffU),  //
-                             Util::rgb_to_GdkRGBA(0xffffffU),  //
-                             Util::rgb_to_GdkRGBA(0xffffffU)}
+        lastBackgroundColors{Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
+                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
+                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
+                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
+                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
+                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
+                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
+                             Util::rgb_to_GdkRGBA(Color(0xffffffU)),  //
+                             Util::rgb_to_GdkRGBA(Color(0xffffffU))}
 
 {
     Settings* settings = control->getSettings();
@@ -88,7 +88,7 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings() {
     el.setInt("count", LAST_BACKGROUND_COLOR_COUNT);
     for (int i = 0; i < LAST_BACKGROUND_COLOR_COUNT; i++) {
         char* settingName = g_strdup_printf("color%02i", i);
-        el.setIntHex(settingName, int(Util::GdkRGBA_to_argb(lastBackgroundColors[i])));
+        el.setIntHex(settingName, int(uint32_t(Util::GdkRGBA_to_argb(lastBackgroundColors[i]))));
         g_free(settingName);
     }
 

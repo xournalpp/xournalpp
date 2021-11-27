@@ -25,24 +25,25 @@ struct PredefinedColor {
 };
 
 constexpr PredefinedColor PREDEFINED_COLORS[] = {
-        {"black", 0x000000U},  {"blue", 0x3333ccU},      {"red", 0xff0000U},        {"green", 0x008000U},
-        {"gray", 0x808080U},   {"lightblue", 0x00c0ffU}, {"lightgreen", 0x00ff00U}, {"magenta", 0xff00ffU},
-        {"orange", 0xff8000U}, {"yellow", 0xffff00U},    {"white", 0xffffffU}};
+        {"black", Color(0x000000U)},      {"blue", Color(0x3333ccU)},    {"red", Color(0xff0000U)},
+        {"green", Color(0x008000U)},      {"gray", Color(0x808080U)},    {"lightblue", Color(0x00c0ffU)},
+        {"lightgreen", Color(0x00ff00U)}, {"magenta", Color(0xff00ffU)}, {"orange", Color(0xff8000U)},
+        {"yellow", Color(0xffff00U)},     {"white", Color(0xffffffU)}};
 
 auto LoadHandlerHelper::parseBackgroundColor(LoadHandler* loadHandler) -> Color {
     const char* sColor = LoadHandlerHelper::getAttrib("color", false, loadHandler);
 
     Color color{0xffffffU};
     if (strcmp("blue", sColor) == 0) {
-        color = {0xa0e8ffU};
+        color = 0xa0e8ffU;
     } else if (strcmp("pink", sColor) == 0) {
-        color = {0xffc0d4U};
+        color = 0xffc0d4U;
     } else if (strcmp("green", sColor) == 0) {
-        color = {0x80FFC0U};
+        color = 0x80FFC0U;
     } else if (strcmp("orange", sColor) == 0) {
-        color = {0xFFC080U};
+        color = 0xFFC080U;
     } else if (strcmp("yellow", sColor) == 0) {
-        color = {0xFFFF80U};
+        color = 0xFFFF80U;
     } else {
         LoadHandlerHelper::parseColor(sColor, color, loadHandler);
     }

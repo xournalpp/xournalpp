@@ -1,5 +1,6 @@
 #include "Settings.h"
 
+#include <cstdint>
 #include <utility>
 
 #include "control/DeviceListHelper.h"
@@ -10,6 +11,7 @@
 
 #include "ButtonConfig.h"
 #include "filesystem.h"
+
 
 using std::string;
 
@@ -760,7 +762,7 @@ void Settings::saveButtonConfig() {
         }  // end if pen or highlighter
 
         if (type == TOOL_PEN || type == TOOL_HIGHLIGHTER || type == TOOL_TEXT) {
-            e.setIntHex("color", int32_t(cfg->color));
+            e.setIntHex("color", int32_t(uint32_t(cfg->color)));
         }
 
         if (type == TOOL_ERASER) {
@@ -869,8 +871,8 @@ void Settings::save() {
     ATTACH_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"");
 
     SAVE_BOOL_PROP(highlightPosition);
-    SAVE_UINT_PROP(cursorHighlightColor);
-    SAVE_UINT_PROP(cursorHighlightBorderColor);
+    xmlNode = savePropertyUnsigned("cursorHighlightColor", uint32_t(cursorHighlightColor), root);
+    xmlNode = savePropertyUnsigned("cursorHighlightBorderColor", uint32_t(cursorHighlightBorderColor), root);
     SAVE_DOUBLE_PROP(cursorHighlightRadius);
     SAVE_DOUBLE_PROP(cursorHighlightBorderWidth);
     SAVE_BOOL_PROP(darkTheme);
@@ -916,9 +918,9 @@ void Settings::save() {
     SAVE_BOOL_PROP(gtkTouchInertialScrolling);
     SAVE_BOOL_PROP(pressureGuessing);
 
-    SAVE_UINT_PROP(selectionBorderColor);
-    SAVE_UINT_PROP(backgroundColor);
-    SAVE_UINT_PROP(selectionMarkerColor);
+    xmlNode = savePropertyUnsigned("selectionBorderColor", uint32_t(selectionBorderColor), root);
+    xmlNode = savePropertyUnsigned("backgroundColor", uint32_t(backgroundColor), root);
+    xmlNode = savePropertyUnsigned("selectionMarkerColor", uint32_t(selectionMarkerColor), root);
 
     SAVE_DOUBLE_PROP(touchZoomStartThreshold);
     SAVE_DOUBLE_PROP(pageRerenderThreshold);

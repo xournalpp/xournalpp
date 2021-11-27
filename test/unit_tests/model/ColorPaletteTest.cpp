@@ -64,11 +64,11 @@ TEST(ColorPalette, testRainbowLoad) {
     EXPECT_EQ((size_t)6, palette.size());
     EXPECT_EQ(palette.getColorAt(4).getName(), std::string{"Royal Blue"});
     EXPECT_EQ(palette.getColorAt(4).getIndex(), (size_t)4);
-    EXPECT_EQ(palette.getColorAt(4).getColorU16().alpha, (uint16_t)0);
-    EXPECT_EQ(palette.getColorAt(4).getColorU16().red, (uint16_t)0);
-    EXPECT_EQ(palette.getColorAt(4).getColorU16().green, (uint16_t)77);
-    EXPECT_EQ(palette.getColorAt(4).getColorU16().blue, (uint16_t)255);
-    EXPECT_EQ(palette.getColorAt(4).getColor(), Color{19967});
+    EXPECT_EQ(palette.getColorAt(4).getColorU16().alpha, 0U);
+    EXPECT_EQ(palette.getColorAt(4).getColorU16().red, 0U);
+    EXPECT_EQ(palette.getColorAt(4).getColorU16().green, 0x4D4DU);
+    EXPECT_EQ(palette.getColorAt(4).getColorU16().blue, 0xFFFFU);
+    EXPECT_EQ(palette.getColorAt(4).getColor(), Color{0x004DFF});
 }
 
 TEST(ColorPalette, testNotExistLoad) {
