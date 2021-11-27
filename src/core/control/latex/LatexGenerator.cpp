@@ -28,7 +28,9 @@ auto LatexGenerator::templateSub(const std::string& input, const std::string& te
         } else if (matchStr == "TEXT_COLOR") {
             std::ostringstream s;
             s.imbue(std::locale::classic());
-            s << std::hex << std::setfill('0') << std::setw(6) << std::right << (textColor & 0xFFFFFFU);
+            auto tmp_color = textColor;
+            tmp_color.alpha = 0;
+            s << std::hex << std::setfill('0') << std::setw(6) << std::right << tmp_color;
             repl = s.str();
         }
         output.append(templ, templatePos, match.position() - templatePos);

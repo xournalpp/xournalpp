@@ -358,7 +358,7 @@ void ToolHandler::saveSettings() {
     for (auto&& tool: tools) {
         SElement& st = s.child(tool->getName());
         if (tool->hasCapability(TOOL_CAP_COLOR)) {
-            st.setIntHex("color", int(tool->getColor()));
+            st.setIntHex("color", int(uint32_t(tool->getColor())));
         }
 
         st.setString("drawingType", drawingTypeToString(tool->getDrawingType()));

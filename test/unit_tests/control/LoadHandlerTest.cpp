@@ -292,9 +292,9 @@ TEST(ControlLoadHandler, testText) {
     EXPECT_EQ(string("blue"), t2->getText());
     EXPECT_EQ(string("green"), t3->getText());
 
-    EXPECT_EQ(0xff0000U, t1->getColor());
-    EXPECT_EQ(0x3333CCU, t2->getColor());
-    EXPECT_EQ(0x00f000U, t3->getColor());
+    EXPECT_EQ(Color(0xff0000U), t1->getColor());
+    EXPECT_EQ(Color(0x3333CCU), t2->getColor());
+    EXPECT_EQ(Color(0x00f000U), t3->getColor());
 }
 
 TEST(ControlLoadHandler, testTextZipped) {
@@ -320,9 +320,9 @@ TEST(ControlLoadHandler, testTextZipped) {
     EXPECT_EQ(string("blue"), t2->getText());
     EXPECT_EQ(string("green"), t3->getText());
 
-    EXPECT_EQ(0xff0000U, t1->getColor());
-    EXPECT_EQ(0x3333CCU, t2->getColor());
-    EXPECT_EQ(0x00f000U, t3->getColor());
+    EXPECT_EQ(Color(0xff0000U), t1->getColor());
+    EXPECT_EQ(Color(0x3333CCU), t2->getColor());
+    EXPECT_EQ(Color(0x00f000U), t3->getColor());
 }
 
 TEST(ControlLoadHandler, testLoadStoreLoadDefault) { testLoadStoreLoad(); }

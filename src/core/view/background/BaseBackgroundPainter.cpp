@@ -18,19 +18,17 @@ void BaseBackgroundPainter::resetConfig() {
 auto BaseBackgroundPainter::alternativeColor(Color color1, Color color2) const -> Color {
     auto backgroundColor = this->page->getBackgroundColor();
 
-    auto greyscale = [](uint32_t color) {
-        return ((0xff & color) + (0xff & (color >> 8)) + (0xff & (color >> 16))) / 3;
-    };
+    auto greyscale = [](Color const& color) { return uint32_t(color.red + color.green + color.blue) / 3; };
 
-    return greyscale(backgroundColor) < 0x80 ? color2 : color1;
+    return greyscale(backgroundColor) < 0x80U ? color2 : color1;
 }
 
 auto BaseBackgroundPainter::getForegroundColor1() const -> Color {
     uint32_t temp{};
 
-    const uint32_t foregroundColor = this->config->loadValueHex("f1", temp) ? temp : this->defaultForegroundColor1;
-    const uint32_t altForegroundColor =
-            this->config->loadValueHex("af1", temp) ? temp : this->defaultAlternativeForegroundColor1;
+    const Color foregroundColor = this->config->loadValueHex("f1", temp) ? Color(temp) : this->defaultForegroundColor1;
+    const Color altForegroundColor =
+            this->config->loadValueHex("af1", temp) ? Color(temp) : this->defaultAlternativeForegroundColor1;
 
     return this->alternativeColor(foregroundColor, altForegroundColor);
 }
@@ -38,9 +36,9 @@ auto BaseBackgroundPainter::getForegroundColor1() const -> Color {
 auto BaseBackgroundPainter::getForegroundColor2() const -> Color {
     uint32_t temp{};
 
-    const uint32_t foregroundColor = this->config->loadValueHex("f2", temp) ? temp : this->defaultForegroundColor2;
-    const uint32_t altForegroundColor =
-            this->config->loadValueHex("af2", temp) ? temp : this->defaultAlternativeForegroundColor2;
+    const Color foregroundColor = this->config->loadValueHex("f2", temp) ? Color(temp) : this->defaultForegroundColor2;
+    const Color altForegroundColor =
+            this->config->loadValueHex("af2", temp) ? Color(temp) : this->defaultAlternativeForegroundColor2;
 
     return this->alternativeColor(foregroundColor, altForegroundColor);
 }

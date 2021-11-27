@@ -490,7 +490,7 @@ void LoadHandler::parsePage() {
         } else if (strcmp("pdf", type) == 0) {
             if (this->removePdfBackgroundFlag) {
                 this->page->setBackgroundType(PageType(PageTypeFormat::Plain));
-                this->page->setBackgroundColor(0xffffffU);
+                this->page->setBackgroundColor(Color(0xffffffU));
             } else {
                 parseBgPdf();
             }

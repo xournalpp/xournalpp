@@ -17,7 +17,7 @@ NamedColor::NamedColor(const size_t& paletteIndex):
 NamedColor::NamedColor(const Color& color):
         paletteIndex{0},
         name{"Custom Color"},
-        colorU16(Util::GdkRGBA_to_ColorU16(Util::argb_to_GdkRGBA(color))),
+        colorU16(Util::argb_to_ColorU16(color)),
         color(color),
         isPaletteColor{false} {};
 

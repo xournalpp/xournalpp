@@ -1,6 +1,7 @@
 #include "XournalppCursor.h"
 
 #include <cmath>
+#include <cstdint>
 
 #include "control/Control.h"
 #include "util/Util.h"
@@ -411,7 +412,6 @@ auto XournalppCursor::getPenCursor() -> GdkCursor* {
     return createHighlighterOrPenCursor(3, 1.0);
 }
 
-
 auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> GdkCursor* {
     auto irgb = control->getToolHandler()->getColor();
     auto drgb = Util::rgb_to_GdkRGBA(irgb);
@@ -421,8 +421,8 @@ auto XournalppCursor::createHighlighterOrPenCursor(int size, double alpha) -> Gd
     int width = size;
 
     // create a hash of variables so we notice if one changes despite being the same cursor type:
-    gulong flavour = (big ? 1 : 0) | (bright ? 2 : 0) | static_cast<gulong>(64 * alpha) << 2 |
-                     static_cast<gulong>(size) << 9 | static_cast<gulong>(irgb) << 14;
+    gulong flavour = (big ? 1U : 0U) | (bright ? 2U : 0U) | static_cast<gulong>(64 * alpha) << 2U |
+                     static_cast<gulong>(size) << 9U | static_cast<gulong>(uint32_t(irgb)) << 14U;
 
     if (CRSR_PENORHIGHLIGHTER == this->currentCursor && flavour == this->currentCursorFlavour) {
         return nullptr;

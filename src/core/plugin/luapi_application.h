@@ -13,6 +13,7 @@
 #include <map>
 
 #include <gtk/gtk.h>
+#include <stdint.h>
 
 #include "control/Control.h"
 #include "control/PageBackgroundChangeController.h"
@@ -26,6 +27,7 @@
 #include "model/Text.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
+#include "util/safe_casts.h"
 
 /**
  * Renames file 'from' to file 'to' in the file system.
@@ -396,10 +398,10 @@ static int applib_changeToolColor(lua_State* L) {
         return 0;
     }
 
-    int color = 0x000000;
+    uint32_t color = 0x000000;
     if (lua_isinteger(L, -1)) {
-        color = lua_tointeger(L, -1);
-        if (color < 0x000000 || color > 0xffffff) {
+        color = as_unsigned(lua_tointeger(L, -1));
+        if (color > 0xffffff) {
             g_warning("Color 0x%x is no valid RGB color. ", color);
             return 0;
         }
@@ -412,7 +414,7 @@ static int applib_changeToolColor(lua_State* L) {
     Tool& tool = toolHandler->getTool(toolType);
 
     if (tool.hasCapability(TOOL_CAP_COLOR)) {
-        tool.setColor(color);
+        tool.setColor(Color(color));
         ctrl->toolColorChanged();
         if (selection)
             ctrl->changeColorOfSelection();
@@ -603,7 +605,7 @@ static int applib_getToolInfo(lua_State* L) {
         lua_settable(L, -3);  // end of "size" table
 
         lua_pushliteral(L, "color");
-        lua_pushinteger(L, color);
+        lua_pushinteger(L, int(uint32_t(color)));
         lua_settable(L, -3);
 
         lua_pushliteral(L, "fillOpacity");
@@ -643,7 +645,7 @@ static int applib_getToolInfo(lua_State* L) {
         lua_settable(L, -3);  // end of "size" table
 
         lua_pushliteral(L, "color");
-        lua_pushinteger(L, color);
+        lua_pushinteger(L, int(uint32_t(color)));
         lua_settable(L, -3);
 
         lua_pushliteral(L, "drawingType");
@@ -686,7 +688,7 @@ static int applib_getToolInfo(lua_State* L) {
         lua_settable(L, -3);  // end of "size" table
 
         lua_pushliteral(L, "color");
-        lua_pushinteger(L, color);
+        lua_pushinteger(L, int(uint32_t(color)));
         lua_settable(L, -3);
 
         lua_pushliteral(L, "drawingType");
@@ -747,7 +749,7 @@ static int applib_getToolInfo(lua_State* L) {
         lua_settable(L, -3);
 
         lua_pushliteral(L, "color");
-        lua_pushinteger(L, color);
+        lua_pushinteger(L, int(uint32_t(color)));
         lua_settable(L, -3);
     }
     return 1;

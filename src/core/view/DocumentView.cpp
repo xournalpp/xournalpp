@@ -310,11 +310,11 @@ void DocumentView::drawBackground(bool hidePdfBackground, bool hideImageBackgrou
  * Draw background if there is no background shown, like in GIMP etc.
  */
 void DocumentView::drawTransparentBackgroundPattern() {
-    Util::cairo_set_source_rgbi(cr, 0x666666U);
+    Util::cairo_set_source_rgbi(cr, Color(0x666666U));
     cairo_rectangle(cr, 0, 0, width, height);
     cairo_fill(cr);
 
-    Util::cairo_set_source_rgbi(cr, 0x999999U);
+    Util::cairo_set_source_rgbi(cr, Color(0x999999U));
 
     bool second = false;
     for (int y = 0; y < height; y += 8) {

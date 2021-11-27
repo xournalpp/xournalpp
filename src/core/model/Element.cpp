@@ -124,7 +124,7 @@ void Element::serialize(ObjectOutputStream& out) const {
 
     out.writeDouble(this->x);
     out.writeDouble(this->y);
-    out.writeInt(int(this->color));
+    out.writeInt(int(uint32_t(this->color)));
 
     out.endObject();
 }

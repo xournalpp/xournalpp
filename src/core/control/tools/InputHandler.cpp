@@ -53,7 +53,7 @@ void InputHandler::createStroke(Point p) {
         stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
     } else if (h->getToolType() == TOOL_ERASER) {
         stroke->setToolType(STROKE_TOOL_ERASER);
-        stroke->setColor(0xffffffU);
+        stroke->setColor(Color(0xffffffU));
     }
 
     stroke->addPoint(p);

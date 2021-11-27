@@ -11,77 +11,70 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cassert>
 #include <cstdint>
-#include <limits>
-
-#include <gtk/gtk.h>
-
-#ifndef XOURNAL_ENFORCE_COLOR
-using Color = uint32_t;
-#else
+#include <cstring>
 #include <iostream>
 #include <limits>
 #include <type_traits>
-struct Color {
-    constexpr Color() = default;
 
-    template <typename T, std::enable_if_t<std::is_same_v<T, uint32_t>, int> = 0>
-    constexpr Color(T t): val(uint32_t(t)) {}
-    template <typename T, std::enable_if_t<std::is_unsigned_v<T> && !std::is_same_v<T, uint32_t>, int> = 0>
-    constexpr explicit Color(T t): val(uint32_t(t)) {}
-    template <typename T, std::enable_if_t<std::is_signed_v<T>, int> = 0>
-    constexpr explicit Color(T t): val(uint32_t(t)) {}
+#include <gtk/gtk.h>
 
-    constexpr explicit operator uint32_t&() { return val; }
 
-    template <typename T, std::enable_if_t<std::is_same_v<T, uint32_t>, int> = 0>
-    constexpr explicit operator T() const {
+struct ColorU8 {
+    uint8_t red{};
+    uint8_t green{};
+    uint8_t blue{};
+    uint8_t alpha{};
+
+    constexpr ColorU8() = default;
+    constexpr ColorU8(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 0): red(r), green(g), blue(b), alpha(a) {}
+    constexpr explicit ColorU8(uint32_t val):
+            // Legacy ordering for serdes: 0xAARRGGBB
+            red(uint8_t((val >> 16U) & 0xffU)),
+            green(uint8_t((val >> 8U) & 0xffU)),
+            blue(uint8_t((val >> 0U) & 0xffU)),
+            alpha(uint8_t((val >> 24U) & 0xffU)) {}
+
+    constexpr explicit operator uint32_t() const {
+        // Legacy ordering for serdes: 0xAARRGGBB
+        uint32_t val = (uint32_t(red) << 16U) | (uint32_t(green) << 8U) | uint32_t(blue) | (uint32_t(alpha) << 24U);
         return val;
     }
-    template <typename T, std::enable_if_t<std::is_unsigned_v<T> && !std::is_same_v<T, uint32_t>, int> = 0>
-    constexpr explicit operator T() const {
-        return val;
-    }
-    template <typename T, std::enable_if_t<std::is_signed_v<T>, int> = 0>
-    constexpr explicit operator T() const {
-        return val;
+
+    constexpr auto operator=(uint32_t rhs) -> ColorU8& {
+        *this = ColorU8(rhs);
+        return *this;
     }
 
-    constexpr auto operator=(Color const& rhs) -> Color& = default;
-    constexpr auto operator=(uint32_t rhs) -> Color& { return *this = Color(rhs); }
+    constexpr friend bool operator==(ColorU8 const& lhs, ColorU8 const& rhs) { return uint32_t(lhs) == uint32_t(rhs); }
+    constexpr friend bool operator!=(ColorU8 const& lhs, ColorU8 const& rhs) { return uint32_t(lhs) != uint32_t(rhs); }
+    constexpr friend bool operator<(ColorU8 const& lhs, ColorU8 const& rhs) { return uint32_t(lhs) < uint32_t(rhs); }
 
-    constexpr friend auto operator&(Color lhs, uint32_t rhs) -> uint32_t { return lhs.val & rhs; }
-    constexpr friend auto operator|(Color lhs, uint32_t rhs) -> uint32_t { return lhs.val | rhs; }
-    constexpr friend auto operator^(Color lhs, uint32_t rhs) -> uint32_t { return lhs.val ^ rhs; }
-    constexpr friend auto operator&(uint32_t lhs, Color rhs) -> uint32_t { return lhs & rhs.val; }
-    constexpr friend auto operator|(uint32_t lhs, Color rhs) -> uint32_t { return lhs | rhs.val; }
-    constexpr friend auto operator^(uint32_t lhs, Color rhs) -> uint32_t { return lhs ^ rhs.val; }
-    constexpr friend auto operator>>(Color lhs, uint32_t rhs) -> uint32_t { return lhs.val << rhs; }
-    constexpr friend auto operator<<(Color lhs, uint32_t rhs) -> uint32_t { return lhs.val >> rhs; }
+    constexpr friend bool operator==(ColorU8 const& lhs, uint32_t rhs) { return uint32_t(lhs) == rhs; }
+    constexpr friend bool operator!=(ColorU8 const& lhs, uint32_t rhs) { return uint32_t(lhs) != rhs; }
+    constexpr friend bool operator<(ColorU8 const& lhs, uint32_t rhs) { return uint32_t(lhs) < rhs; }
 
-    constexpr friend bool operator==(Color lhs, Color rhs) { return lhs.val == rhs.val; }
-    constexpr friend bool operator!=(Color lhs, Color rhs) { return lhs.val != rhs.val; }
-    constexpr friend bool operator<(Color lhs, Color rhs) { return lhs.val < rhs.val; }
-    constexpr friend bool operator<=(Color lhs, Color rhs) { return lhs.val <= rhs.val; }
-    constexpr friend bool operator>(Color lhs, Color rhs) { return lhs.val > rhs.val; }
-    constexpr friend bool operator>=(Color lhs, Color rhs) { return lhs.val >= rhs.val; }
-
-    inline friend std::ostream& operator<<(std::ostream& os, Color rhs) { return os << rhs.val; }
-
-    uint32_t val{};
+    inline friend std::ostream& operator<<(std::ostream& os, ColorU8 rhs) { return os << uint32_t(rhs); }
+    inline friend std::istream& operator>>(std::istream& is, ColorU8& rhs) {
+        uint32_t val{};
+        is >> val;
+        rhs = val;
+        return is;
+    };
 };
+
+static_assert(sizeof(ColorU8) == sizeof(uint32_t), "Color is not 32 bit");
+using Color = ColorU8;
 
 namespace std {
 template <>
 struct hash<Color> {
-    size_t operator()(Color c) const noexcept { return c.val; }
+    size_t operator()(Color c) const noexcept { return uint32_t(c); }
 };
 
-
 }  // namespace std
-
-#endif
 
 struct ColorU16 {
     uint16_t red{};
@@ -90,6 +83,13 @@ struct ColorU16 {
     uint16_t alpha{};
 };
 
+inline std::ostream& operator<<(std::ostream& os, ColorU16 rhs) {
+    return os << rhs.red << rhs.green << rhs.blue << rhs.alpha;
+}
+inline std::istream& operator>>(std::istream& is, ColorU16& rhs) {
+    return is >> rhs.red >> rhs.green >> rhs.blue >> rhs.alpha;
+}
+
 namespace Util {
 
 constexpr auto rgb_to_GdkRGBA(Color color) -> GdkRGBA;
@@ -97,55 +97,64 @@ constexpr auto argb_to_GdkRGBA(Color color) -> GdkRGBA;
 constexpr auto argb_to_GdkRGBA(Color color, double alpha) -> GdkRGBA;
 constexpr auto GdkRGBA_to_argb(const GdkRGBA& color) -> Color;
 constexpr auto GdkRGBA_to_rgb(const GdkRGBA& color) -> Color;
-constexpr auto colorU16_to_argb(const ColorU16& color) -> Color;
 
+constexpr auto ColorU16_to_argb(const ColorU16& color) -> Color;
+constexpr auto argb_to_ColorU16(const Color& color) -> ColorU16;
 constexpr auto GdkRGBA_to_ColorU16(const GdkRGBA& color) -> ColorU16;
 
 
 void cairo_set_source_rgbi(cairo_t* cr, Color color);
 void cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha);
 
-constexpr auto floatToUIntColor(double color) -> uint32_t;
+constexpr auto floatToUIntColor(double color) -> uint8_t;
 
 }  // namespace Util
 
-constexpr auto Util::rgb_to_GdkRGBA(const Color color) -> GdkRGBA {  //
-    return Util::argb_to_GdkRGBA(Color{0xFF000000U | color});
+constexpr auto Util::rgb_to_GdkRGBA(Color color) -> GdkRGBA {  //
+    color.alpha = 0xFF;
+    return Util::argb_to_GdkRGBA(color);
 }
 
 constexpr auto Util::argb_to_GdkRGBA(const Color color) -> GdkRGBA {
-    return {((color >> 16U) & 0xFFU) / 255.0,  //
-            ((color >> 8U) & 0xFFU) / 255.0,   //
-            ((color >> 0U) & 0xFFU) / 255.0,   //
-            ((color >> 24U) & 0xFFU) / 255.0};
+    return {color.red / 255.0,    //
+            color.green / 255.0,  //
+            color.blue / 255.0,   //
+            color.alpha / 255.0};
 }
 
 constexpr auto Util::argb_to_GdkRGBA(Color color, double alpha) -> GdkRGBA {
-    return {((color >> 16U) & 0xFFU) / 255.0,  //
-            ((color >> 8U) & 0xFFU) / 255.0,   //
-            ((color >> 0U) & 0xFFU) / 255.0,   //
+    return {color.red / 255.0,    //
+            color.green / 255.0,  //
+            color.blue / 255.0,   //
             alpha};
 }
 
 constexpr auto Util::GdkRGBA_to_argb(const GdkRGBA& color) -> Color {
-    return floatToUIntColor(color.alpha) << 24U |  //
-           GdkRGBA_to_rgb(color);                  //
+    auto ret = GdkRGBA_to_rgb(color);
+    ret.alpha = floatToUIntColor(color.alpha);
+    return ret;
 }
 
 constexpr auto Util::GdkRGBA_to_rgb(const GdkRGBA& color) -> Color {
-    return floatToUIntColor(color.red) << 16U |   //
-           floatToUIntColor(color.green) << 8U |  //
-           floatToUIntColor(color.blue);
+    return Color{floatToUIntColor(color.red),    //
+                 floatToUIntColor(color.green),  //
+                 floatToUIntColor(color.blue)};
 }
 
-constexpr auto Util::colorU16_to_argb(const ColorU16& color) -> Color {
-    return uint32_t(color.alpha) << 24U |  //
-           uint32_t(color.red) << 16U |    //
-           uint32_t(color.green) << 8U |   //
-           uint32_t(color.blue);
+constexpr auto Util::argb_to_ColorU16(const Color& color) -> ColorU16 {
+    /* 0xff should map to 0xffff in 16 bit. Therefore multipliing by 257 instead of 256*/
+    return {static_cast<uint16_t>((color.red << 8U) + color.red),
+            static_cast<uint16_t>((color.green << 8U) + color.green),
+            static_cast<uint16_t>((color.blue << 8U) + color.blue),
+            static_cast<uint16_t>((color.alpha << 8U) + color.alpha)};
 }
 
-constexpr auto Util::floatToUIntColor(const double color) -> uint32_t {
+constexpr auto Util::ColorU16_to_argb(const ColorU16& color) -> Color {
+    return Color{static_cast<uint8_t>(color.red >> 8U), static_cast<uint8_t>(color.green >> 8U),
+                 static_cast<uint8_t>(color.blue >> 8U), static_cast<uint8_t>(color.alpha >> 8U)};
+}
+
+constexpr auto Util::floatToUIntColor(const double color) -> uint8_t {
     /*
      * Splits the double into a equal sized distribution between [0,256[ and rounding down
      * inspired by, which isn't completely correct:
@@ -153,7 +162,7 @@ constexpr auto Util::floatToUIntColor(const double color) -> uint32_t {
      */
     constexpr double MAX_COLOR = 256.0 - std::numeric_limits<double>::epsilon() * 128;
     static_assert(MAX_COLOR < 256.0, "MAX_COLOR isn't smaller than 256");
-    return static_cast<uint32_t>(color * MAX_COLOR);
+    return static_cast<uint8_t>(color * MAX_COLOR);
 }
 
 constexpr auto Util::GdkRGBA_to_ColorU16(const GdkRGBA& color) -> ColorU16 {

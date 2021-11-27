@@ -9,6 +9,8 @@
  * @license GNU GPLv2 or later
  */
 
+#include <cstdint>
+
 #include <gtest/gtest.h>
 
 #include "util/Color.h"
@@ -26,10 +28,10 @@ std::ostream& operator<<(std::ostream& os, GdkRGBA const& val) {
 
 
 TEST(UtilColor, testColorToRGB) {
-    auto color1 = 0U;
-    auto color2 = 0xffffffU;
-    auto color3 = 0x7f7f7fU;
-    auto color4 = 0x808080U;
+    Color color1{0U};
+    Color color2{0xffffffU};
+    Color color3{0x7f7f7fU};
+    Color color4{0x808080U};
     auto rgb1 = GdkRGBA{0.0, 0.0, 0.0, 1.0};
     auto rgb2 = GdkRGBA{1, 1, 1, 1.0};
     auto rgb3 = GdkRGBA{0.5, 0.5, 0.5, 1.0};
@@ -45,9 +47,10 @@ TEST(UtilColor, testColorToRGB) {
 }
 
 TEST(UtilColor, testColorToRGBAndBack) {
-    for (size_t i = 0; i < 256; ++i) {
-        Color color = i << 16U | i << 8U | i;
-        Color color2 = color | i << 24U;
+    for (size_t i = 0U; i < 256U; ++i) {
+        uint8_t ii = static_cast<uint8_t>(i);
+        Color color{ii, ii, ii};
+        Color color2{ii, ii, ii, ii};
         EXPECT_EQ(color, Util::GdkRGBA_to_rgb(Util::rgb_to_GdkRGBA(color)));
         EXPECT_EQ(color2, Util::GdkRGBA_to_argb(Util::argb_to_GdkRGBA(color2)));
     }
