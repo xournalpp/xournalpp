@@ -7,6 +7,7 @@
 #include <config.h>
 
 #include "util/i18n.h"
+#include "util/serdesstream.h"
 
 using std::string;
 
@@ -33,9 +34,7 @@ void FontButton::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton
 
 void FontButton::setFontFontButton(GtkWidget* fontButton, XojFont& font) {
     GtkFontButton* button = GTK_FONT_BUTTON(fontButton);
-    // Fixing locale to make format of font-size string independent of localization setting
-    std::stringstream fontSizeStream;
-    fontSizeStream.imbue(std::locale("C"));
+    auto fontSizeStream = serdes_stream<std::stringstream>();
     fontSizeStream << font.getSize();
     string name = font.getName() + " " + fontSizeStream.str();
     gtk_font_button_set_font_name(button, name.c_str());

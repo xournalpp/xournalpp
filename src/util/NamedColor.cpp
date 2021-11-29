@@ -1,8 +1,11 @@
 #include "util/NamedColor.h"
 
+#include <cstdint>
 #include <sstream>
 
 #include "util/StringUtils.h"
+#include "util/serdesstream.h"
+
 
 NamedColor::NamedColor():
         paletteIndex{0}, name{"Custom Color"}, colorU16{ColorU16{}}, color{Color(0u)}, isPaletteColor{false} {}
@@ -25,18 +28,15 @@ auto operator>>(std::istream& str, NamedColor& namedColor) -> std::istream& {
     std::string line;
     NamedColor tmp;
     if (std::getline(str, line)) {
-        std::istringstream iss{line};
-        /**
-         * Some locales have a white space as a thousand separator, leading the following parsing to fail.
-         * We avoid that by parsing in the classic locale.
-         */
-        iss.imbue(std::locale::classic());
-        if (iss >> tmp.colorU16.red >> tmp.colorU16.green >> tmp.colorU16.blue && std::getline(iss, tmp.name)) {
-            if (tmp.colorU16.red > 255 || tmp.colorU16.green > 255 || tmp.colorU16.blue > 255) {
+        auto iss = serdes_stream<std::istringstream>(line);
+        uint16_t r{}, g{}, b{};
+        if (iss >> r >> g >> b && std::getline(iss, tmp.name)) {
+            if (r > 255 || g > 255 || b > 255) {
                 throw std::invalid_argument("RGB values bigger than 255 are not supported.");
             }
+            tmp.color = Color(uint8_t(r), uint8_t(g), uint8_t(b));
             tmp.name = StringUtils::trim(tmp.name);
-            tmp.color = Util::colorU16_to_argb(tmp.colorU16);
+            tmp.colorU16 = Util::argb_to_ColorU16(tmp.color);
             tmp.isPaletteColor = true;
             tmp.paletteIndex = namedColor.paletteIndex;
             // All read operations worked

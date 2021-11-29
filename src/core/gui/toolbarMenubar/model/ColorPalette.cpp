@@ -8,9 +8,10 @@
 
 #include "util/StringUtils.h"
 #include "util/i18n.h"
+#include "util/serdesstream.h"
 
 
-Palette::Palette(fs::path path): filepath{std::move(path)}, header{}, namedColors{} {}
+Palette::Palette(fs::path path): filepath{std::move(path)}, namedColors{}, header{} {}
 
 void Palette::load() {
     if (!fs::exists(this->filepath))
@@ -20,7 +21,8 @@ void Palette::load() {
     header.clear();
     namedColors.clear();
 
-    std::ifstream gplFile{filepath};
+
+    auto gplFile = serdes_stream<std::ifstream>(filepath);
     std::string line;
 
     if (gplFile.is_open()) {
@@ -79,12 +81,7 @@ auto Palette::parseColorLine(const std::string& line) -> bool {
     return false;
 }
 
-auto Palette::parseCommentLine(const std::string& line) const -> bool {
-    if (line.front() == '#')
-        return true;
-    else
-        return false;
-}
+auto Palette::parseCommentLine(const std::string& line) const -> bool { return line.front() == '#'; }
 
 auto Palette::parseLineFallback(int lineNumber) const -> const bool {
     throw std::invalid_argument(FS(FORMAT_STR("The line {1} is malformed.") % lineNumber));
@@ -104,38 +101,37 @@ auto Palette::size() const -> size_t { return namedColors.size(); }
 
 
 auto Palette::default_palette() -> const std::string {
-    std::stringstream d{};
-    d << "GIMP Palette" << std::endl;
-    d << "Name: Xournal Default Palette" << std::endl;
-    d << "#" << std::endl;
-    d << 0 << " " << 0 << " " << 0 << " "
-      << "Black" << std::endl;
-    d << 0 << " " << 128 << " " << 0 << " "
-      << "Green" << std::endl;
-    d << 0 << " " << 192 << " " << 255 << " "
-      << "Light Blue" << std::endl;
-    d << 0 << " " << 255 << " " << 0 << " "
-      << "Light Green" << std::endl;
-    d << 51 << " " << 51 << " " << 204 << " "
-      << "Blue" << std::endl;
-    d << 128 << " " << 128 << " " << 128 << " "
-      << "Gray" << std::endl;
-    d << 255 << " " << 0 << " " << 0 << " "
-      << "Red" << std::endl;
-    d << 255 << " " << 0 << " " << 255 << " "
-      << "Magenta" << std::endl;
-    d << 255 << " " << 128 << " " << 0 << " "
-      << "Orange" << std::endl;
-    d << 255 << " " << 255 << " " << 0 << " "
-      << "Yellow" << std::endl;
-    d << 255 << " " << 255 << " " << 255 << " "
+    auto d = serdes_stream<std::stringstream>();
+    d << "GIMP Palette\n"
+      << "Name: Xournal Default Palette\n"
+      << "#\n"
+      << 0 << " " << 0 << " " << 0 << " "
+      << "Black\n"
+      << 0 << " " << 128 << " " << 0 << " "
+      << "Green\n"
+      << 0 << " " << 192 << " " << 255 << " "
+      << "Light Blue\n"
+      << 0 << " " << 255 << " " << 0 << " "
+      << "Light Green\n"
+      << 51 << " " << 51 << " " << 204 << " "
+      << "Blue\n"
+      << 128 << " " << 128 << " " << 128 << " "
+      << "Gray\n"
+      << 255 << " " << 0 << " " << 0 << " "
+      << "Red\n"
+      << 255 << " " << 0 << " " << 255 << " "
+      << "Magenta\n"
+      << 255 << " " << 128 << " " << 0 << " "
+      << "Orange\n"
+      << 255 << " " << 255 << " " << 0 << " "
+      << "Yellow\n"
+      << 255 << " " << 255 << " " << 255 << " "
       << "White" << std::endl;
     return d.str();
 }
 
 void Palette::create_default(fs::path filepath) {
-    std::ofstream myfile{filepath};
-    myfile.imbue(std::locale::classic());
+    auto myfile = serdes_stream<std::ofstream>(filepath);
     myfile << default_palette();
 }
 
@@ -188,5 +184,5 @@ auto Palette::parseErrorDialog(const std::exception& e) const -> void {
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 
-    g_warning(msg_stream.str().c_str());
+    g_warning("%s", msg_stream.str().c_str());
 }

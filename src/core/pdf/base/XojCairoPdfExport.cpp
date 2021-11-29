@@ -9,6 +9,7 @@
 
 #include "util/Util.h"
 #include "util/i18n.h"
+#include "util/serdesstream.h"
 #include "view/DocumentView.h"
 
 #include "filesystem.h"
@@ -69,8 +70,7 @@ void XojCairoPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
         auto pdfBgPage = dest->getPdfPage();  // Link destination in original background PDF
         auto pageDest = pdfBgPage == npos ? npos : doc->findPdfPage(pdfBgPage);  // Destination in document
         if (pageDest != npos) {
-            std::ostringstream linkAttrBuf;
-            linkAttrBuf.imbue(std::locale::classic());
+            auto linkAttrBuf = serdes_stream<std::ostringstream>();
             linkAttrBuf << "page=" << pageDest + 1;
             if (dest->shouldChangeLeft() && dest->shouldChangeTop()) {
                 linkAttrBuf << " pos=[" << dest->getLeft() << " " << dest->getTop() << "]";

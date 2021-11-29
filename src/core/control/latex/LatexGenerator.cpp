@@ -9,6 +9,7 @@
 
 #include "util/PathUtil.h"
 #include "util/i18n.h"
+#include "util/serdesstream.h"
 
 LatexGenerator::LatexGenerator(const LatexSettings& settings): settings(settings) {}
 
@@ -26,8 +27,7 @@ auto LatexGenerator::templateSub(const std::string& input, const std::string& te
         if (matchStr == "TOOL_INPUT") {
             repl = input;
         } else if (matchStr == "TEXT_COLOR") {
-            std::ostringstream s;
-            s.imbue(std::locale::classic());
+            auto s = serdes_stream<std::ostringstream>();
             auto tmp_color = textColor;
             tmp_color.alpha = 0;
             s << std::hex << std::setfill('0') << std::setw(6) << std::right << tmp_color;
