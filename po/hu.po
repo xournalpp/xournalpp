@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-25 10:32+0000\n"
-"PO-Revision-Date: 2021-11-25 11:34\n"
+"POT-Creation-Date: 2021-11-29 17:54+0000\n"
+"PO-Revision-Date: 2021-11-29 17:55\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -34,7 +34,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " / {1}"
 
-#: ../src/core/control/settings/Settings.cpp:120
+#: ../src/core/control/settings/Settings.cpp:122
 msgid "%F-Note-%H-%M"
 msgstr "%F-Jegyzet-%H-%M"
 
@@ -85,33 +85,33 @@ msgstr "Elrendezés"
 msgid "Attach file to the journal"
 msgstr "Fájl csatolása a naplóhoz"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:113
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:114
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr "A(z) \"{1}\" tulajdonság nem olvasható be double számként, az értéke \"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:106
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:107
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr "A(z) \"{1}\" tulajdonság nem olvasható be double számként, az értéke nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:149
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:131
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr "A(z) \"{1}\" tulajdonság nem olvasható be egész számként, az értéke \"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:124
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr "A(z) \"{1}\" tulajdonság nem olvasható be egész számként, az értéke nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:168
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:188
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "A(z) \"{1}\" tulajdonság nem olvasható be size_t számként, az értéke \"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:161
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:162
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr "A(z) \"{1}\" tulajdonság nem olvasható be size_t számként, az értéke nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:55
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
 msgstr "A tulajdonság színe nincs beállítva!"
 
@@ -176,7 +176,7 @@ msgstr "Vonalkitöltés megváltoztatása"
 msgid "Change stroke width"
 msgstr "Vonalvastagság megváltoztatása"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:79
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "A \"{1}\" szín ismeretlen (nincs definiálva az alapértelmezett színlistában)!"
 
@@ -280,11 +280,11 @@ msgstr "Nem sikerült eltávolítani a(z) {1} eszközt az {2} eszköztár {3} po
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nem sikerült átnevezni az automatikusan mentett fájlt erről: \"{1}\" erre: \"{2}\": {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:70
+#: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Could not save .tex file: {1}"
 msgstr "Nem sikerült elmenteni a .tex fájlt: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:86
+#: ../src/core/control/latex/LatexGenerator.cpp:88
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "A(z) {1} elindítása sikertelen: {2} (kilépési kód: {3})"
 
@@ -580,7 +580,7 @@ msgid "Export without ruling\n"
 msgstr "Margó nélküli exportálás\n"
 "                                 Az exportált fájl papírmargó nélküli\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:63
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "A LaTeX generáló program nem található a PATH helyen: {1}"
 
@@ -589,7 +589,7 @@ msgstr "A LaTeX generáló program nem található a PATH helyen: {1}"
 msgid "Failed to initialize PDF Cairo surface"
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:57
+#: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Hiba a LaTeX parancs értelmezése közben: {1}"
 
@@ -624,7 +624,7 @@ msgstr "Finom"
 msgid "Floating Toolbox (experimental)"
 msgstr "Lebegő eszköztár (kísérleti)"
 
-#: ../src/core/gui/toolbarMenubar/FontButton.cpp:62
+#: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
 msgstr "Betűkészlet"
 
@@ -835,7 +835,7 @@ msgstr "Nem érhető el több hozzáfűzhető pdf oldal. Szükséges lehet a dok
 msgid "Normal drawing"
 msgstr "Normál rajz"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:186
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
 msgid "OK"
 msgstr "Rendben"
@@ -1385,7 +1385,7 @@ msgstr "Váratlan címke a dokumentumban: „{1}”"
 msgid "Unknown background type: {1}"
 msgstr "Ismeretlen háttértípus: {1}"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:63
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
 msgid "Unknown color value \"{1}\""
 msgstr "Ismeretlen színérték: {1}"
 
@@ -1864,9 +1864,8 @@ msgstr "<i>Például:</i> 1-3 vagy 1,3,5-7 stb."
 
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
-"If the file was not yet saved you can find it in your home directory, in ~/.xournalpp/autosave</i>"
-msgstr "<i>Ha a dokumentumot már elmentették, akkor ugyanabban a mappában találhatja meg .autosave.xoj fájlkiterjesztéssel\n"
-"Ha a fájlt még nem mentette, megtalálhatja a kezdőkönyvtárában, a ~/.xournalp/autosave</i> alatt."
+"If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
+msgstr ""
 
 #: ../ui/settings.glade:4139
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
