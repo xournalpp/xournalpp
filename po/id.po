@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-25 10:32+0000\n"
-"PO-Revision-Date: 2021-11-25 11:34\n"
+"PO-Revision-Date: 2021-11-29 15:12\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -1722,23 +1722,23 @@ msgstr ""
 
 #: ../ui/settings.glade:1735
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5610
 msgid "1,00"
-msgstr ""
+msgstr "1.00"
 
 #: ../ui/settings.glade:1058
 msgid "1,30"
-msgstr ""
+msgstr "1.30"
 
 #: ../ui/settings.glade:2458
 msgid "1.0"
-msgstr ""
+msgstr "1,0"
 
 #: ../ui/settings.glade:1029
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3151
 msgid "30"
