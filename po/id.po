@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-25 10:32+0000\n"
-"PO-Revision-Date: 2021-11-29 15:12\n"
+"PO-Revision-Date: 2021-11-29 16:25\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -552,7 +552,7 @@ msgstr "Ekspor PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Export as PDF"
-msgstr ""
+msgstr "Ekspor ke PDF"
 
 #: ../src/core/control/XournalMain.cpp:631
 msgid "Export layers progressively\n"
@@ -1674,7 +1674,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4979
 msgid "%."
-msgstr ""
+msgstr "%."
 
 #: ../ui/settings.glade:557
 msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
@@ -1742,11 +1742,11 @@ msgstr "20"
 
 #: ../ui/settings.glade:3151
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1122
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
@@ -1940,7 +1940,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Semua"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -2019,11 +2019,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3206
 msgid "Border Color"
-msgstr ""
+msgstr "Warna Bingkai"
 
 #: ../ui/settings.glade:3167
 msgid "Border Width"
-msgstr ""
+msgstr "Lebar Batas"
 
 #: ../ui/settings.glade:2807
 msgid "Border color"
@@ -2067,7 +2067,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3063
 msgid "Circle Color"
-msgstr ""
+msgstr "Warna Lingkaran"
 
 #: ../ui/settings.glade:3730
 msgid "Clear cached paged while scrolling"
@@ -2191,7 +2191,7 @@ msgstr "Jangan menggambar untuk masukan dalam waktu dan ukuran yang pendek, kecu
 
 #: ../ui/settings.glade:1077
 msgid "Drag"
-msgstr ""
+msgstr "Seret"
 
 #: ../ui/settings.glade:871
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2220,7 +2220,7 @@ msgstr ""
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Gambar Sistem Koordinat"
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
@@ -2381,7 +2381,7 @@ msgstr "Ke Halaman"
 
 #: ../ui/settings.glade:4633
 msgid "Grid size"
-msgstr ""
+msgstr "Ukuran kisi"
 
 #: ../ui/settings.glade:4590
 msgid "Grid snapping tolerance"
@@ -2397,7 +2397,7 @@ msgstr "Pengenal Tangan"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Tinggi"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2469,15 +2469,15 @@ msgstr "Abaikan Waktu (ms)"
 
 #: ../ui/settings.glade:1716
 msgid "Ignore the first"
-msgstr ""
+msgstr "Abaikan yang pertama"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Kualitas gambar"
 
 #: ../ui/settings.glade:240
 msgid "Inertia"
-msgstr ""
+msgstr "Inersia"
 
 #: ../ui/settings.glade:5382
 msgid "Input Device"
@@ -2513,7 +2513,7 @@ msgstr "Sisipkan Halaman Sebelum"
 
 #: ../ui/settings.glade:5722
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
@@ -2525,11 +2525,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5811 ../ui/settings.glade:5859
 msgid "Language"
-msgstr ""
+msgstr "Bahasa"
 
 #: ../ui/settings.glade:5829
 msgid "Language Settings"
-msgstr ""
+msgstr "Pengaturan Bahasa"
 
 #: ../ui/main.glade:575
 msgid "Layout"
@@ -2640,7 +2640,7 @@ msgstr ""
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:217
 #: ../ui/settings.glade:234
 msgid "None"
-msgstr ""
+msgstr "Nihil"
 
 #: ../ui/settings.glade:4306
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
@@ -2706,7 +2706,7 @@ msgstr "_Opsi Pena"
 
 #: ../ui/settings.glade:3759
 msgid "Performance"
-msgstr ""
+msgstr "Kinerja"
 
 #: ../ui/settings.glade:5651
 msgid "Playback Settings"
