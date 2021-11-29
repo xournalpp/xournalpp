@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-25 10:32+0000\n"
-"PO-Revision-Date: 2021-11-25 11:35\n"
+"POT-Creation-Date: 2021-11-29 17:54+0000\n"
+"PO-Revision-Date: 2021-11-29 17:55\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -34,7 +34,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " van {1}"
 
-#: ../src/core/control/settings/Settings.cpp:120
+#: ../src/core/control/settings/Settings.cpp:122
 msgid "%F-Note-%H-%M"
 msgstr "%F-Nota-%H-%M"
 
@@ -84,33 +84,33 @@ msgstr "Rangskik"
 msgid "Attach file to the journal"
 msgstr "Voeg lêer by aan joernaal"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:113
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:114
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr "Kenmerk \"{1}\" kon nie verwerk word as dubbel nie, die waarde is \"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:106
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:107
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr "Kenmerk \"{1}\" kon nie verwerk word as dubbel nie, die waarde is nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:149
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:131
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr "Kenmerk \"{1}\" kon nie verwerk word as heelgetal nie, die waarde is \"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:124
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr "Kenmerk \"{1}\" kon nie verwerk word as heelgetal nie, die waarde is nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:168
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:188
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "Kenmerk \"{1}\" kon nie verwerk word as size_t nie, die waarde is \"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:161
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:162
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr "Kenmerk \"{1}\" kon nie verwerk word as size_t nie, die waarde is nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:55
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
 msgstr "Kenmerk kleur is nie gestel nie!"
 
@@ -175,7 +175,7 @@ msgstr "Verander pen vul"
 msgid "Change stroke width"
 msgstr "Verander pen wydte"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:79
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "Kleur \"{1}\" onbekend (nie gedefinieer in die verstek kleur lys nie)!"
 
@@ -279,11 +279,11 @@ msgstr "Kon nie werktuig item {1} van Taakbalk {2} op posisie {3} verwyder nie"
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Kon nie autosave lêer vernoem van \"{1}\" na \"{2}\": {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:70
+#: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Could not save .tex file: {1}"
 msgstr "Kon nie .tex lêer save nie: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:86
+#: ../src/core/control/latex/LatexGenerator.cpp:88
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Kon nie begin nie {1}: {2} (afskakel kode: {3})"
 
@@ -579,7 +579,7 @@ msgid "Export without ruling\n"
 msgstr "Voer uit sonder lyne\n"
 "                                 Die uitgevoerde lêer het nie papier lyne nie\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:63
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Kon nie LaTeX generator program in PATH vind nie: {1}"
 
@@ -588,7 +588,7 @@ msgstr "Kon nie LaTeX generator program in PATH vind nie: {1}"
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Inisialisering van PDF Cairo oppervlak het misluk"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:57
+#: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Kon nie LaTeX generator bevel ontleed nie: {1}"
 
@@ -624,7 +624,7 @@ msgstr "Fyn"
 msgid "Floating Toolbox (experimental)"
 msgstr "Drywende gereedskapskis (eksperimenteel)"
 
-#: ../src/core/gui/toolbarMenubar/FontButton.cpp:62
+#: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
 msgstr "Lettertipe"
 
@@ -835,7 +835,7 @@ msgstr "Geen pdf blaai is beskikbaar om aan te heg nie. Jy moet dalk die dokumen
 msgid "Normal drawing"
 msgstr "Gewone tekening"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:186
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
 msgid "OK"
 msgstr "OK"
@@ -1383,7 +1383,7 @@ msgstr ""
 msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:63
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
@@ -1833,7 +1833,7 @@ msgstr ""
 
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
-"If the file was not yet saved you can find it in your home directory, in ~/.xournalpp/autosave</i>"
+"If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
 msgstr ""
 
 #: ../ui/settings.glade:4139
