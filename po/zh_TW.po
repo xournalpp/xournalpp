@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-25 10:32+0000\n"
-"PO-Revision-Date: 2021-11-26 09:10\n"
+"POT-Creation-Date: 2021-11-29 17:54+0000\n"
+"PO-Revision-Date: 2021-11-29 17:55\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -34,7 +34,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " 頁，共 {1} 頁"
 
-#: ../src/core/control/settings/Settings.cpp:120
+#: ../src/core/control/settings/Settings.cpp:122
 msgid "%F-Note-%H-%M"
 msgstr "%F-筆記-%H-%M"
 
@@ -85,33 +85,33 @@ msgstr "排序"
 msgid "Attach file to the journal"
 msgstr "將檔案附加到日記"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:113
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:114
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr "變數\"{1\"}不能為浮點數，其值為\"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:106
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:107
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr "屬性值\"{1}\" 不能轉為浮點數，其值為空值"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:149
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:131
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr "變數\"{1\"}不能為整數，其值為\"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:124
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr "屬性值\"{1}\" 不能轉為整數，其值為空值"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:168
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:188
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "屬性值\"{1}\"不能轉為size_t，其值為\"{2}\""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:161
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:162
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr "屬性值\"{1}\"不能轉為size_t，其值為空值"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:55
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
 msgstr "顏色未設置"
 
@@ -175,7 +175,7 @@ msgstr "改變筆劃粗細"
 msgid "Change stroke width"
 msgstr "改變筆劃粗細"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:79
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "色彩\"{1}\"未定義！"
 
@@ -278,11 +278,11 @@ msgstr "無法移除於工具列 {2}，位置為 {3} 的工具項目：{1}"
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "無法將自動儲存檔案 \"{1}\" 重新命名至 \"{2}\"： {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:70
+#: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Could not save .tex file: {1}"
 msgstr "無法儲存 .tex 檔案： {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:86
+#: ../src/core/control/latex/LatexGenerator.cpp:88
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "無法啟動 {1}: {2} (退出代碼: {3})"
 
@@ -578,7 +578,7 @@ msgid "Export without ruling\n"
 msgstr "無格線輸出\n"
 "                                 輸出的檔案不會有紙張格線\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:63
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "無法從 PATH: {1} 中找到 LaTeX 產生格式"
 
@@ -587,7 +587,7 @@ msgstr "無法從 PATH: {1} 中找到 LaTeX 產生格式"
 msgid "Failed to initialize PDF Cairo surface"
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:57
+#: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "無法剖析 LaTeX 產生器指令: {1}"
 
@@ -622,7 +622,7 @@ msgstr "細"
 msgid "Floating Toolbox (experimental)"
 msgstr "浮動工具箱 (實驗功能)"
 
-#: ../src/core/gui/toolbarMenubar/FontButton.cpp:62
+#: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
 msgstr "字型"
 
@@ -833,7 +833,7 @@ msgstr ""
 msgid "Normal drawing"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:186
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
 msgid "OK"
 msgstr "確定"
@@ -1373,7 +1373,7 @@ msgstr ""
 msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:63
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
@@ -1823,7 +1823,7 @@ msgstr "<i>比如：</i> 1-3 或者 1,3,5-7 等。"
 
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
-"If the file was not yet saved you can find it in your home directory, in ~/.xournalpp/autosave</i>"
+"If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
 msgstr ""
 
 #: ../ui/settings.glade:4139
