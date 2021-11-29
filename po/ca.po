@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-25 10:32+0000\n"
-"PO-Revision-Date: 2021-11-25 11:34\n"
+"POT-Creation-Date: 2021-11-29 17:54+0000\n"
+"PO-Revision-Date: 2021-11-29 17:55\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -33,7 +33,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr ""
 
-#: ../src/core/control/settings/Settings.cpp:120
+#: ../src/core/control/settings/Settings.cpp:122
 msgid "%F-Note-%H-%M"
 msgstr "%F-Nota-%H-%M"
 
@@ -84,33 +84,33 @@ msgstr "Ordenar"
 msgid "Attach file to the journal"
 msgstr "Adjuntar arxiu al quadern"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:113
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:114
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
 msgstr "No s'ha pogut processar l'atribut «{1}» com a «double»; el valor és «{2}»"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:106
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:107
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
 msgstr "No s'ha pogut processar l'atribut «{1}» com a «double»; el valor és «nullptr»"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:130
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:149
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:131
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
 msgstr "No s'ha pogut procesar l'atribut «{1}» com a «int»; el valor és «{2}»"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:123
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:124
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
 msgstr "L'atribut \"{1}\" no s'ha pogut analitzar com a int, el valor és nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:168
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:188
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
 msgstr "No s'ha pogut processar l'atribut «{1}» com a «size_t»; el valor és «{2}»"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:161
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:162
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
 msgstr "L'atribut \"{1}\" no s'ha pogut analitzar com a size_t, el valor és nullptr"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:55
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
 msgstr "Atribut de color no definit!"
 
@@ -175,7 +175,7 @@ msgstr "Canviar emplenament de traç"
 msgid "Change stroke width"
 msgstr "Canviar amplada de traç"
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:79
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
 msgstr "Es desconeix el color \"{1}\" (no està definit a la llista de colors predeterminada)!"
 
@@ -279,11 +279,11 @@ msgstr "No s'ha pogut eliminar l'element {1} de la barra d'eines {2} a la posici
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "No s'ha pogut canviar el nom de l'arxiu de desat automàtic de \"{1}\" a \"{2}\": {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:70
+#: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Could not save .tex file: {1}"
 msgstr "No s'ha pogut desar l'arxiu .tex: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:86
+#: ../src/core/control/latex/LatexGenerator.cpp:88
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "No s'ha pogut iniciar {1}: {2} (codi de sortida: {3})"
 
@@ -579,7 +579,7 @@ msgid "Export without ruling\n"
 msgstr "Exportar sense línies\n"
 "                                 El fitxer exportat no te línies al paper\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:63
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "No s'ha pogut trobar el programa generador LaTeX a la RUTA: {1}"
 
@@ -588,7 +588,7 @@ msgstr "No s'ha pogut trobar el programa generador LaTeX a la RUTA: {1}"
 msgid "Failed to initialize PDF Cairo surface"
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:57
+#: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr ""
 
@@ -622,7 +622,7 @@ msgstr ""
 msgid "Floating Toolbox (experimental)"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/FontButton.cpp:62
+#: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
 msgstr ""
 
@@ -833,7 +833,7 @@ msgstr "No hi ha pàgines PDF disponibles per a afegir. És possible que sigui n
 msgid "Normal drawing"
 msgstr "Dibuix normal"
 
-#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:186
+#: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
 msgid "OK"
 msgstr "D'acord"
@@ -1374,7 +1374,7 @@ msgstr ""
 msgid "Unknown background type: {1}"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:63
+#: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
 msgid "Unknown color value \"{1}\""
 msgstr ""
 
@@ -1824,7 +1824,7 @@ msgstr ""
 
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
-"If the file was not yet saved you can find it in your home directory, in ~/.xournalpp/autosave</i>"
+"If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
 msgstr ""
 
 #: ../ui/settings.glade:4139
