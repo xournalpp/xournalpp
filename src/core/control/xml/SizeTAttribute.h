@@ -22,5 +22,5 @@ public:
     virtual void writeOut(OutputStream* out);
 
 private:
-    int value;
+    size_t value;
 };
