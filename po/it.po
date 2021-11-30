@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-29 17:54+0000\n"
-"PO-Revision-Date: 2021-11-30 10:08\n"
+"PO-Revision-Date: 2021-11-30 11:32\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1889,7 +1889,7 @@ msgstr "<i>La sensibilità alla pressione ti consente di disegnare linee con div
 
 #: ../ui/settings.glade:3986
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr "<i>Appoggia un righello sullo schermo e muovi lo slider finchè non corrisponde<i>"
+msgstr "<i>Appoggia un righello sullo schermo e muovi lo slider finchè non corrisponde.</i>"
 
 #: ../ui/settings.glade:4922
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
