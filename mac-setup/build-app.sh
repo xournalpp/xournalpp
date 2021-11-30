@@ -25,10 +25,13 @@ rm ./Xournal++.zip
 echo "prepare gtk-mac-bundler"
 if [ ! -d "gtk-mac-bundler" ]; then
   git clone https://gitlab.gnome.org/GNOME/gtk-mac-bundler.git
+  # Temporarily use fixed commit, since the neweer commit 9ecfd3d097371a98530f9cf537e5cb1926501fcd seems to have a corrupted Makefile
+  git checkout 8bc37b7feed7d6c87b8b01d682e43ac15d6c1862
   cd gtk-mac-bundler || exit
 else
   cd gtk-mac-bundler || exit
   git pull
+  git checkout 8bc37b7feed7d6c87b8b01d682e43ac15d6c1862
 fi
 
 make install
