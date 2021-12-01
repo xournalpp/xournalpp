@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-29 17:54+0000\n"
-"PO-Revision-Date: 2021-11-29 17:55\n"
+"POT-Creation-Date: 2021-12-01 16:58+0000\n"
+"PO-Revision-Date: 2021-12-01 17:01\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -294,11 +294,11 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "Nelze vrátit zpět „{1}“\n"
 "Něco je špatně… Napište prosím hlášení o chybě…"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:240
+#: ../src/core/control/xojfile/SaveHandler.cpp:218
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Nelze zapsat pozadí „{1}“, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:340
+#: ../src/core/control/xojfile/SaveHandler.cpp:314
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Nelze zapsat pozadí „{1}“. Přesto pokračujeme."
 
@@ -306,7 +306,7 @@ msgstr "Nelze zapsat pozadí „{1}“. Přesto pokračujeme."
 msgid "Create new layer"
 msgstr "Vytvořit novou vrstvu"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:66
+#: ../src/core/gui/dialog/FormatDialog.cpp:64
 msgid "Custom"
 msgstr "Vlastní"
 
@@ -331,7 +331,7 @@ msgid "Default Tool"
 msgstr "Výchozí nástroj"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:389
-#: ../src/core/undo/DeleteUndoAction.cpp:74
+#: ../src/core/undo/DeleteUndoAction.cpp:56
 msgid "Delete"
 msgstr "Smazat"
 
@@ -462,9 +462,9 @@ msgstr "Nouzově uložený dokument"
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Pro změnu tohoto nastavení zapněte citlivost na tlak nebo odvozování tlaku!"
 
-#: ../src/core/undo/AddUndoAction.cpp:75
-#: ../src/core/undo/DeleteUndoAction.cpp:71
-#: ../src/core/undo/EraseUndoAction.cpp:90
+#: ../src/core/undo/AddUndoAction.cpp:55
+#: ../src/core/undo/DeleteUndoAction.cpp:53
+#: ../src/core/undo/EraseUndoAction.cpp:52
 msgid "Erase stroke"
 msgstr "Vymazat čáru"
 
@@ -928,7 +928,7 @@ msgid "Paired pages"
 msgstr "Spárované stránky"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
-#: ../src/core/undo/AddUndoAction.cpp:77
+#: ../src/core/undo/AddUndoAction.cpp:57
 msgid "Paste"
 msgstr "Vložit"
 
@@ -1553,8 +1553,8 @@ msgstr "odstranit čáru"
 msgid "dotted"
 msgstr "tečkovaně"
 
-#: ../src/core/undo/AddUndoAction.cpp:86
-#: ../src/core/undo/DeleteUndoAction.cpp:83
+#: ../src/core/undo/AddUndoAction.cpp:65
+#: ../src/core/undo/DeleteUndoAction.cpp:64
 msgid "elements"
 msgstr "prvky"
 
@@ -1566,8 +1566,8 @@ msgstr "guma"
 msgid "file: {1}"
 msgstr "soubor: {1}"
 
-#: ../src/core/undo/AddUndoAction.cpp:97
-#: ../src/core/undo/DeleteUndoAction.cpp:94
+#: ../src/core/undo/AddUndoAction.cpp:76
+#: ../src/core/undo/DeleteUndoAction.cpp:75
 msgid "image"
 msgstr "obrázek"
 
@@ -1575,8 +1575,8 @@ msgstr "obrázek"
 msgid "keyboard"
 msgstr "klávesnice"
 
-#: ../src/core/undo/AddUndoAction.cpp:100
-#: ../src/core/undo/DeleteUndoAction.cpp:97
+#: ../src/core/undo/AddUndoAction.cpp:79
+#: ../src/core/undo/DeleteUndoAction.cpp:78
 msgid "latex"
 msgstr "latex"
 
@@ -1597,8 +1597,8 @@ msgstr "zobrazit"
 msgid "standard"
 msgstr "standardní"
 
-#: ../src/core/undo/AddUndoAction.cpp:94
-#: ../src/core/undo/DeleteUndoAction.cpp:91
+#: ../src/core/undo/AddUndoAction.cpp:73
+#: ../src/core/undo/DeleteUndoAction.cpp:72
 msgid "stroke"
 msgstr "čára"
 
@@ -1606,8 +1606,8 @@ msgstr "čára"
 msgid "tablet pad"
 msgstr "tablet"
 
-#: ../src/core/undo/AddUndoAction.cpp:103
-#: ../src/core/undo/DeleteUndoAction.cpp:100
+#: ../src/core/undo/AddUndoAction.cpp:82
+#: ../src/core/undo/DeleteUndoAction.cpp:81
 msgid "text"
 msgstr "text"
 
