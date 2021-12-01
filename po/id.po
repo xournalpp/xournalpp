@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-29 17:54+0000\n"
-"PO-Revision-Date: 2021-11-29 17:55\n"
+"POT-Creation-Date: 2021-12-01 16:58+0000\n"
+"PO-Revision-Date: 2021-12-01 17:01\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -294,11 +294,11 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "Tidak dapat membatalkan \"{1}\"\n"
 "Ada sesuatu yang salah… Silakan mengirimkan laporan kutu…"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:240
+#: ../src/core/control/xojfile/SaveHandler.cpp:218
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Tidak dapat menulis latar belakang \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:340
+#: ../src/core/control/xojfile/SaveHandler.cpp:314
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Tidak dapat menulis latar belakang \"{1}\". Tetap melanjutkan."
 
@@ -306,7 +306,7 @@ msgstr "Tidak dapat menulis latar belakang \"{1}\". Tetap melanjutkan."
 msgid "Create new layer"
 msgstr "Buat lapisan baru"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:66
+#: ../src/core/gui/dialog/FormatDialog.cpp:64
 msgid "Custom"
 msgstr "Kustom"
 
@@ -331,7 +331,7 @@ msgid "Default Tool"
 msgstr "Alat Bawaan"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:389
-#: ../src/core/undo/DeleteUndoAction.cpp:74
+#: ../src/core/undo/DeleteUndoAction.cpp:56
 msgid "Delete"
 msgstr "Hapus"
 
@@ -462,9 +462,9 @@ msgstr "Dokumen tersimpan darurat"
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Aktifkan sensitivitas tekanan atau sensitivitas inferensi untuk mengubah pengaturan ini!"
 
-#: ../src/core/undo/AddUndoAction.cpp:75
-#: ../src/core/undo/DeleteUndoAction.cpp:71
-#: ../src/core/undo/EraseUndoAction.cpp:90
+#: ../src/core/undo/AddUndoAction.cpp:55
+#: ../src/core/undo/DeleteUndoAction.cpp:53
+#: ../src/core/undo/EraseUndoAction.cpp:52
 msgid "Erase stroke"
 msgstr "Hapus goresan"
 
@@ -920,7 +920,7 @@ msgid "Paired pages"
 msgstr "Halaman berpasangan"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
-#: ../src/core/undo/AddUndoAction.cpp:77
+#: ../src/core/undo/AddUndoAction.cpp:57
 msgid "Paste"
 msgstr "Tempel"
 
@@ -1538,8 +1538,8 @@ msgstr "hapus goresan"
 msgid "dotted"
 msgstr "titik-titik"
 
-#: ../src/core/undo/AddUndoAction.cpp:86
-#: ../src/core/undo/DeleteUndoAction.cpp:83
+#: ../src/core/undo/AddUndoAction.cpp:65
+#: ../src/core/undo/DeleteUndoAction.cpp:64
 msgid "elements"
 msgstr "elemen"
 
@@ -1551,8 +1551,8 @@ msgstr "penghapus"
 msgid "file: {1}"
 msgstr ""
 
-#: ../src/core/undo/AddUndoAction.cpp:97
-#: ../src/core/undo/DeleteUndoAction.cpp:94
+#: ../src/core/undo/AddUndoAction.cpp:76
+#: ../src/core/undo/DeleteUndoAction.cpp:75
 msgid "image"
 msgstr "gambar"
 
@@ -1560,8 +1560,8 @@ msgstr "gambar"
 msgid "keyboard"
 msgstr "papan tik"
 
-#: ../src/core/undo/AddUndoAction.cpp:100
-#: ../src/core/undo/DeleteUndoAction.cpp:97
+#: ../src/core/undo/AddUndoAction.cpp:79
+#: ../src/core/undo/DeleteUndoAction.cpp:78
 msgid "latex"
 msgstr "latex"
 
@@ -1582,8 +1582,8 @@ msgstr "tampilkan"
 msgid "standard"
 msgstr "standar"
 
-#: ../src/core/undo/AddUndoAction.cpp:94
-#: ../src/core/undo/DeleteUndoAction.cpp:91
+#: ../src/core/undo/AddUndoAction.cpp:73
+#: ../src/core/undo/DeleteUndoAction.cpp:72
 msgid "stroke"
 msgstr "goresan"
 
@@ -1591,8 +1591,8 @@ msgstr "goresan"
 msgid "tablet pad"
 msgstr ""
 
-#: ../src/core/undo/AddUndoAction.cpp:103
-#: ../src/core/undo/DeleteUndoAction.cpp:100
+#: ../src/core/undo/AddUndoAction.cpp:82
+#: ../src/core/undo/DeleteUndoAction.cpp:81
 msgid "text"
 msgstr "teks"
 
