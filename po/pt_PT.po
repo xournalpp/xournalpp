@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-29 17:54+0000\n"
-"PO-Revision-Date: 2021-11-29 17:55\n"
+"POT-Creation-Date: 2021-12-01 16:58+0000\n"
+"PO-Revision-Date: 2021-12-01 17:02\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -294,11 +294,11 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "Não foi possível desfazer \"{1}\"\n"
 "Ocorreu um problema… Por favor, submeta um relatório de erro…"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:240
+#: ../src/core/control/xojfile/SaveHandler.cpp:218
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Não foi possível escrever o fundo \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:340
+#: ../src/core/control/xojfile/SaveHandler.cpp:314
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Não foi possível escrever o fundo \"{1}\". Continuando mesmo assim."
 
@@ -306,7 +306,7 @@ msgstr "Não foi possível escrever o fundo \"{1}\". Continuando mesmo assim."
 msgid "Create new layer"
 msgstr "Criar nova camada"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:66
+#: ../src/core/gui/dialog/FormatDialog.cpp:64
 msgid "Custom"
 msgstr "Personalizado"
 
@@ -331,7 +331,7 @@ msgid "Default Tool"
 msgstr "Ferramenta Padrão"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:389
-#: ../src/core/undo/DeleteUndoAction.cpp:74
+#: ../src/core/undo/DeleteUndoAction.cpp:56
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -462,9 +462,9 @@ msgstr "Documento guardado de emergência"
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Ative a sensibilidade à pressão ou inferência da pressão para alterar esta configuração!"
 
-#: ../src/core/undo/AddUndoAction.cpp:75
-#: ../src/core/undo/DeleteUndoAction.cpp:71
-#: ../src/core/undo/EraseUndoAction.cpp:90
+#: ../src/core/undo/AddUndoAction.cpp:55
+#: ../src/core/undo/DeleteUndoAction.cpp:53
+#: ../src/core/undo/EraseUndoAction.cpp:52
 msgid "Erase stroke"
 msgstr "Apagar traço"
 
@@ -917,7 +917,7 @@ msgid "Paired pages"
 msgstr "Páginas emparelhadas"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
-#: ../src/core/undo/AddUndoAction.cpp:77
+#: ../src/core/undo/AddUndoAction.cpp:57
 msgid "Paste"
 msgstr "Colar"
 
@@ -1532,8 +1532,8 @@ msgstr "apagar o traço"
 msgid "dotted"
 msgstr "pontilhado"
 
-#: ../src/core/undo/AddUndoAction.cpp:86
-#: ../src/core/undo/DeleteUndoAction.cpp:83
+#: ../src/core/undo/AddUndoAction.cpp:65
+#: ../src/core/undo/DeleteUndoAction.cpp:64
 msgid "elements"
 msgstr "elementos"
 
@@ -1545,8 +1545,8 @@ msgstr "borracha"
 msgid "file: {1}"
 msgstr ""
 
-#: ../src/core/undo/AddUndoAction.cpp:97
-#: ../src/core/undo/DeleteUndoAction.cpp:94
+#: ../src/core/undo/AddUndoAction.cpp:76
+#: ../src/core/undo/DeleteUndoAction.cpp:75
 msgid "image"
 msgstr "imagem"
 
@@ -1554,8 +1554,8 @@ msgstr "imagem"
 msgid "keyboard"
 msgstr "teclado"
 
-#: ../src/core/undo/AddUndoAction.cpp:100
-#: ../src/core/undo/DeleteUndoAction.cpp:97
+#: ../src/core/undo/AddUndoAction.cpp:79
+#: ../src/core/undo/DeleteUndoAction.cpp:78
 msgid "latex"
 msgstr "latex"
 
@@ -1576,8 +1576,8 @@ msgstr "mostrar"
 msgid "standard"
 msgstr "padrão"
 
-#: ../src/core/undo/AddUndoAction.cpp:94
-#: ../src/core/undo/DeleteUndoAction.cpp:91
+#: ../src/core/undo/AddUndoAction.cpp:73
+#: ../src/core/undo/DeleteUndoAction.cpp:72
 msgid "stroke"
 msgstr "traço"
 
@@ -1585,8 +1585,8 @@ msgstr "traço"
 msgid "tablet pad"
 msgstr ""
 
-#: ../src/core/undo/AddUndoAction.cpp:103
-#: ../src/core/undo/DeleteUndoAction.cpp:100
+#: ../src/core/undo/AddUndoAction.cpp:82
+#: ../src/core/undo/DeleteUndoAction.cpp:81
 msgid "text"
 msgstr "texto"
 
