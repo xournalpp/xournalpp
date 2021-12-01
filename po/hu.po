@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-29 17:54+0000\n"
-"PO-Revision-Date: 2021-11-29 17:55\n"
+"PO-Revision-Date: 2021-12-01 09:18\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -587,7 +587,7 @@ msgstr "A LaTeX generáló program nem található a PATH helyen: {1}"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Nem sikerült a PDF-Kairó felületének inicializálása"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
