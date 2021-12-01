@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-29 17:54+0000\n"
-"PO-Revision-Date: 2021-11-29 17:55\n"
+"POT-Creation-Date: 2021-12-01 16:58+0000\n"
+"PO-Revision-Date: 2021-12-01 17:01\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -294,11 +294,11 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "\"{1}\" geri alınamadı\n"
 "Bir şeyler ters gitti… Lütfen hata raporu yazın…"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:240
+#: ../src/core/control/xojfile/SaveHandler.cpp:218
 msgid "Could not write background \"{1}\", {2}"
 msgstr "\"{1}\" arka planı yazılamadı, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:340
+#: ../src/core/control/xojfile/SaveHandler.cpp:314
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Arka plan \"{1}\" yazılamadı. Yine de devam ediliyor."
 
@@ -306,7 +306,7 @@ msgstr "Arka plan \"{1}\" yazılamadı. Yine de devam ediliyor."
 msgid "Create new layer"
 msgstr "Yeni katman oluştur"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:66
+#: ../src/core/gui/dialog/FormatDialog.cpp:64
 msgid "Custom"
 msgstr "Özel"
 
@@ -331,7 +331,7 @@ msgid "Default Tool"
 msgstr "Varsayılan Araç"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:389
-#: ../src/core/undo/DeleteUndoAction.cpp:74
+#: ../src/core/undo/DeleteUndoAction.cpp:56
 msgid "Delete"
 msgstr "Sil"
 
@@ -462,9 +462,9 @@ msgstr "Acil durum kaydedilmiş belge"
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Bu ayarı değiştirmek için basınç duyarlılığını veya basınç çıkarımını etkinleştirin!"
 
-#: ../src/core/undo/AddUndoAction.cpp:75
-#: ../src/core/undo/DeleteUndoAction.cpp:71
-#: ../src/core/undo/EraseUndoAction.cpp:90
+#: ../src/core/undo/AddUndoAction.cpp:55
+#: ../src/core/undo/DeleteUndoAction.cpp:53
+#: ../src/core/undo/EraseUndoAction.cpp:52
 msgid "Erase stroke"
 msgstr "Kontur sil"
 
@@ -928,7 +928,7 @@ msgid "Paired pages"
 msgstr "Eşlenen sayfalar"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
-#: ../src/core/undo/AddUndoAction.cpp:77
+#: ../src/core/undo/AddUndoAction.cpp:57
 msgid "Paste"
 msgstr "Yapıştır"
 
@@ -1549,8 +1549,8 @@ msgstr "konturu sil"
 msgid "dotted"
 msgstr "noktalı"
 
-#: ../src/core/undo/AddUndoAction.cpp:86
-#: ../src/core/undo/DeleteUndoAction.cpp:83
+#: ../src/core/undo/AddUndoAction.cpp:65
+#: ../src/core/undo/DeleteUndoAction.cpp:64
 msgid "elements"
 msgstr "öğeler"
 
@@ -1562,8 +1562,8 @@ msgstr "silgi"
 msgid "file: {1}"
 msgstr "dosya: {1}"
 
-#: ../src/core/undo/AddUndoAction.cpp:97
-#: ../src/core/undo/DeleteUndoAction.cpp:94
+#: ../src/core/undo/AddUndoAction.cpp:76
+#: ../src/core/undo/DeleteUndoAction.cpp:75
 msgid "image"
 msgstr "resim"
 
@@ -1571,8 +1571,8 @@ msgstr "resim"
 msgid "keyboard"
 msgstr "klavye"
 
-#: ../src/core/undo/AddUndoAction.cpp:100
-#: ../src/core/undo/DeleteUndoAction.cpp:97
+#: ../src/core/undo/AddUndoAction.cpp:79
+#: ../src/core/undo/DeleteUndoAction.cpp:78
 msgid "latex"
 msgstr "latex"
 
@@ -1593,8 +1593,8 @@ msgstr "göster"
 msgid "standard"
 msgstr "standart"
 
-#: ../src/core/undo/AddUndoAction.cpp:94
-#: ../src/core/undo/DeleteUndoAction.cpp:91
+#: ../src/core/undo/AddUndoAction.cpp:73
+#: ../src/core/undo/DeleteUndoAction.cpp:72
 msgid "stroke"
 msgstr "vuruş"
 
@@ -1602,8 +1602,8 @@ msgstr "vuruş"
 msgid "tablet pad"
 msgstr "tablet ped"
 
-#: ../src/core/undo/AddUndoAction.cpp:103
-#: ../src/core/undo/DeleteUndoAction.cpp:100
+#: ../src/core/undo/AddUndoAction.cpp:82
+#: ../src/core/undo/DeleteUndoAction.cpp:81
 msgid "text"
 msgstr "metin"
 
