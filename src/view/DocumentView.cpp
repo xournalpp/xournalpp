@@ -23,7 +23,7 @@ DocumentView::~DocumentView() {
 void DocumentView::setMarkAudioStroke(bool markAudioStroke) { this->markAudioStroke = markAudioStroke; }
 
 void DocumentView::applyColor(cairo_t* cr, Stroke* s) {
-    if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+    if (s->getStrokeToolType() == STROKE_TOOL_HIGHLIGHTER) {
         if (s->getFill() != -1) {
             applyColor(cr, s, s->getFill());
         } else {

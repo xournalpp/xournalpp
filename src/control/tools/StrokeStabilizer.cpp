@@ -125,7 +125,7 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
 
     /**
      * Set the pressure values. We assume the tool is pressure sensitive:
-     *      stroke->getToolType() == STROKE_TOOL_PEN
+     *      stroke->getStrokeToolType() == STROKE_TOOL_PEN
      */
     bool usePressure = ev.pressure != Point::NO_PRESSURE;
     if (usePressure) {

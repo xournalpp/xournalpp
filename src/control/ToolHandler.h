@@ -320,7 +320,10 @@ public:
      */
     void setSelectionEditTools(bool setColor, bool setSize, bool setFill);
 
-    const double* getToolThickness(ToolType type);
+    /**
+     * @brief Thickness width for tool type and size.
+     */
+    auto getToolThickness(ToolType type, ToolSize size) -> double;
 
     /**
      * Returns whether the current tool will create an element that may only reside on a single page even when the

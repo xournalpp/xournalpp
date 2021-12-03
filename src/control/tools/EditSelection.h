@@ -13,6 +13,7 @@
 #pragma once
 
 #include <deque>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -118,9 +119,10 @@ public:
     /**
      * Sets the tool size for pen or eraser, returns an undo action
      * (or nullptr if nothing is done)
+     *
+     * @param toolToThickness A function that maps tools to thickness widths.
      */
-    UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                        const double* thicknessEraser);
+    UndoAction* setSize(std::function<double(ToolType)> toolToThickness);
 
     /**
      * Set the line style of all strokes, return an undo action

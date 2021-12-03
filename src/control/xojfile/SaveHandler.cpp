@@ -98,20 +98,20 @@ void SaveHandler::writeTimestamp(AudioElement* audioElement, XmlAudioNode* xmlAu
 }
 
 void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
-    StrokeTool t = s->getToolType();
+    auto strokeToolType = s->getStrokeToolType();
 
     unsigned char alpha = 0xff;
 
-    if (t == STROKE_TOOL_PEN) {
+    if (strokeToolType == STROKE_TOOL_PEN) {
         stroke->setAttrib("tool", "pen");
         writeTimestamp(s, stroke);
-    } else if (t == STROKE_TOOL_ERASER) {
+    } else if (strokeToolType == STROKE_TOOL_ERASER) {
         stroke->setAttrib("tool", "eraser");
-    } else if (t == STROKE_TOOL_HIGHLIGHTER) {
+    } else if (strokeToolType == STROKE_TOOL_HIGHLIGHTER) {
         stroke->setAttrib("tool", "highlighter");
         alpha = 0x7f;
     } else {
-        g_warning("Unknown stroke tool type: %i", t);
+        g_warning("Unknown stroke tool type: %i", strokeToolType);
         stroke->setAttrib("tool", "pen");
     }
 

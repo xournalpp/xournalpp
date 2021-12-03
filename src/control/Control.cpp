@@ -2781,9 +2781,8 @@ void Control::setToolSize(ToolSize size) {
     }
 
     if (sel) {
-        undoRedo->addUndoAction(UndoActionPtr(sel->setSize(size, toolHandler->getToolThickness(TOOL_PEN),
-                                                           toolHandler->getToolThickness(TOOL_HIGHLIGHTER),
-                                                           toolHandler->getToolThickness(TOOL_ERASER))));
+        undoRedo->addUndoAction(UndoActionPtr(
+                sel->setSize([this, size](ToolType type) { return this->toolHandler->getToolThickness(type, size); })));
     }
     this->toolHandler->setSize(size);
 }

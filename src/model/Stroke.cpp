@@ -45,7 +45,7 @@ Stroke::~Stroke() = default;
  */
 void Stroke::applyStyleFrom(const Stroke* other) {
     setColor(other->getColor());
-    setToolType(other->getToolType());
+    setStrokeToolType(other->getStrokeToolType());
     setWidth(other->getWidth());
     setFill(other->getFill());
     setLineStyle(other->getLineStyle());
@@ -76,7 +76,7 @@ void Stroke::serialize(ObjectOutputStream& out) const {
 
     out.writeDouble(this->width);
 
-    out.writeInt(this->toolType);
+    out.writeInt(this->strokeToolType);
 
     out.writeInt(fill);
 
@@ -94,7 +94,7 @@ void Stroke::readSerialized(ObjectInputStream& in) {
 
     this->width = in.readDouble();
 
-    this->toolType = static_cast<StrokeTool>(in.readInt());
+    this->strokeToolType = static_cast<StrokeToolType>(in.readInt());
 
     this->fill = in.readInt();
 
@@ -195,9 +195,21 @@ auto Stroke::getPoints() const -> const Point* { return this->points.data(); }
 
 void Stroke::freeUnusedPointItems() { this->points = {begin(this->points), end(this->points)}; }
 
-void Stroke::setToolType(StrokeTool type) { this->toolType = type; }
+void Stroke::setStrokeToolType(StrokeToolType type) { this->strokeToolType = type; }
 
-auto Stroke::getToolType() const -> StrokeTool { return this->toolType; }
+auto Stroke::getStrokeToolType() const -> StrokeToolType { return this->strokeToolType; }
+
+auto Stroke::getToolType() const -> ToolType {
+    switch (this->strokeToolType) {
+        case STROKE_TOOL_PEN:
+            return TOOL_PEN;
+        case STROKE_TOOL_ERASER:
+            return TOOL_ERASER;
+        case STROKE_TOOL_HIGHLIGHTER:
+            return TOOL_HIGHLIGHTER;
+    }
+}
+
 
 void Stroke::setLineStyle(const LineStyle& style) { this->lineStyle = style; }
 

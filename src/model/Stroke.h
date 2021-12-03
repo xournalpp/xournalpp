@@ -11,12 +11,14 @@
 
 #pragma once
 
+#include "../control/ToolEnums.h"
+
 #include "AudioElement.h"
 #include "Element.h"
 #include "LineStyle.h"
 #include "Point.h"
 
-enum StrokeTool { STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER };
+enum StrokeToolType { STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER };
 
 class EraseableStroke;
 
@@ -73,8 +75,9 @@ public:
     void deletePoint(int index);
     void deletePointsFrom(int index);
 
-    void setToolType(StrokeTool type);
-    StrokeTool getToolType() const;
+    void setStrokeToolType(StrokeToolType type);
+    StrokeToolType getStrokeToolType() const;
+    ToolType getToolType() const;
 
     const LineStyle& getLineStyle() const;
     void setLineStyle(const LineStyle& style);
@@ -116,7 +119,7 @@ private:
     // The stroke width cannot be inherited from Element
     double width = 0;
 
-    StrokeTool toolType = STROKE_TOOL_PEN;
+    StrokeToolType strokeToolType = STROKE_TOOL_PEN;
 
     // The array with the points
     std::vector<Point> points{};

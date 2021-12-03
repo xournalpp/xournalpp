@@ -607,7 +607,7 @@ void XournalView::setSelection(EditSelection* selection) {
             canChangeColor = true;
         } else if (e->getType() == ELEMENT_STROKE) {
             auto* s = dynamic_cast<Stroke*>(e);
-            if (s->getToolType() != STROKE_TOOL_ERASER) {
+            if (s->getStrokeToolType() != STROKE_TOOL_ERASER) {
                 canChangeColor = true;
                 canChangeFill = true;
             }

@@ -12,6 +12,7 @@
 #pragma once
 
 #include <deque>
+#include <functional>
 #include <utility>
 #include <vector>
 
@@ -49,9 +50,10 @@ public:
     /**
      * Sets the tool size for pen or eraser, returs an undo action
      * (or nullptr if nothing is done)
+     *
+     * @param toolToThickness A function that maps tools to thickness widths.
      */
-    UndoAction* setSize(ToolSize size, const double* thicknessPen, const double* thicknessHighlighter,
-                        const double* thicknessEraser);
+    UndoAction* setSize(std::function<double(ToolType)> toolToThickness);
 
     /**
      * Set the color of all elements, return an undo action
