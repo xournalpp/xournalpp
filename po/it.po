@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-01 16:58+0000\n"
-"PO-Revision-Date: 2021-12-01 17:01\n"
+"PO-Revision-Date: 2021-12-03 10:41\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -100,7 +100,7 @@ msgstr "L'attributo \"{1}\" non può essere interpretato come int, il valore è 
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:124
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr "L'attributo \"{1}\" non può essere analizzato come int, il valore è nullptr"
+msgstr "L'attributo \"{1}\" non può essere interpretato come int, il valore è nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
@@ -781,7 +781,7 @@ msgstr "Caricamento..."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Manage Toolbars"
-msgstr "Gestisci Barre degli Strumenti"
+msgstr "Gestisci barre degli strumenti"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Medium"
@@ -1026,7 +1026,7 @@ msgstr "Quadretti"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled with vertical line"
-msgstr "Righe con linea verticale"
+msgstr "Rigato con linee verticali"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:25
 msgid "SVG graphics"
