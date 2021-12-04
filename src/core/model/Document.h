@@ -34,6 +34,9 @@ public:
     virtual ~Document();
 
 public:
+    /* Mutex for monitor implementation. */
+    std::recursive_mutex mutex;
+
     enum DocumentType { XOPP, XOJ, PDF };
 
     bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,

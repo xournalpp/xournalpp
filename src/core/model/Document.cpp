@@ -22,7 +22,10 @@ Document::~Document() {
     freeTreeContentModel();
 }
 
+//TODO
 void Document::freeTreeContentModel() {
+    std::unique_lock<std::recursive_mutex> lock(mutex);
+
     if (this->contentsModel) {
         gtk_tree_model_foreach(this->contentsModel, reinterpret_cast<GtkTreeModelForeachFunc>(freeTreeContentEntry),
                                this);
@@ -32,8 +35,10 @@ void Document::freeTreeContentModel() {
     }
 }
 
-auto Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc)
-        -> bool {
+//TODO
+bool Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc) {
+    std::unique_lock<std::recursive_mutex> lock(mutex);
+
     XojLinkDest* link = nullptr;
     gtk_tree_model_get(treeModel, iter, DOCUMENT_LINKS_COLUMN_LINK, &link, -1);
 
@@ -48,46 +53,29 @@ auto Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, 
     return false;
 }
 
-void Document::lock() {
-    this->documentLock.lock();
-
-    //	if(tryLock()) {
-    //		fprintf(stderr, "Locked by\n");
-    //		Stacktrace::printStracktrace();
-    //		fprintf(stderr, "\n\n\n\n");
-    //	} else {
-    //		g_mutex_lock(&this->documentLock);
-    //	}
-}
-
-void Document::unlock() {
-    this->documentLock.unlock();
-
-    //	fprintf(stderr, "Unlocked by\n");
-    //	Stacktrace::printStracktrace();
-    //	fprintf(stderr, "\n\n\n\n");
-}
-
 /*
-** Returns true when successfully acquiring lock.
-*/
-auto Document::tryLock() -> bool { return this->documentLock.try_lock(); }
-
+ * Clears the document.
+ *
+ * Write operation.
+ */
 void Document::clearDocument(bool destroy) {
+    std::unique_lock<std::recursive_mutex> lock(mutex);
+
     if (this->preview) {
         cairo_surface_destroy(this->preview);
         this->preview = nullptr;
     }
 
     if (!destroy) {
-        // release lock
-        bool lastLock = tryLock();
-        unlock();
-        this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
-        if (!lastLock)  // document was locked before
-        {
-            lock();
-        }
+        /* // release lock */
+        /* bool lastLock = tryLock(); */
+        /* unlock(); */
+        //TODO
+        /* this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED); */
+        /* if (!lastLock)  // document was locked before */
+        /* { */
+        /*     lock(); */
+        /* } */
     }
 
     this->pages.clear();
@@ -98,20 +86,66 @@ void Document::clearDocument(bool destroy) {
     this->pdfFilepath = fs::path{};
 }
 
-/**
- * Returns the pageCount, this call don't need to be synchronized (if it's not critical, you may get wrong data)
+/*
+ * Returns the page count.
+ *
+ * Read operation.
  */
-auto Document::getPageCount() -> size_t { return this->pages.size(); }
+size_t Document::getPageCount() {
+    std::shared_lock<std::recursive_mutex> lock(mutex);
+    return this->pages.size();
+}
 
-auto Document::getPdfPageCount() -> size_t { return pdfDocument.getPageCount(); }
+/*
+ * Returns the page count.
+ *
+ * Read operation.
+ */
+//TODO: lock pdfDocument?
+size_t Document::getPdfPageCount() {
+    std::shared_lock<std::recursive_mutex> lock(mutex);
+    return pdfDocument.getPageCount();
+}
 
-void Document::setFilepath(fs::path filepath) { this->filepath = std::move(filepath); }
+/*
+ * Returns the filepath of the document.
+ *
+ * Write operation.
+ */
+void Document::setFilepath(fs::path filepath) {
+    std::unique_lock<std::recursive_mutex> lock(mutex);
+    this->filepath = std::move(filepath);
+}
 
-auto Document::getFilepath() -> fs::path { return filepath; }
+/*
+ * Returns the filepath of the document.
+ *
+ * Read operation.
+ */
+fs::path Document::getFilepath() {
+    std::shared_lock<std::recursive_mutex> lock(mutex);
+    return filepath;
+}
 
-auto Document::getPdfFilepath() -> fs::path { return pdfFilepath; }
+/*
+ * Returns the filepath of the pdf.
+ *
+ * Read operation.
+ */
+fs::path Document::getPdfFilepath() {
+    std::shared_lock<std::recursive_mutex> lock(mutex);
+    return pdfFilepath;
+}
 
-auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
+/*
+ * TODO
+ *
+ * Read operation.
+ */
+fs::path Document::createSaveFolder(fs::path lastSavePath) {
+    std::shared_lock<std::recursive_mutex> lock(mutex);
+
+    //TODO: nothing created here?? rename to getSaveFolder
     if (!filepath.empty()) {
         return filepath.parent_path();
     }
@@ -123,7 +157,15 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     return lastSavePath;
 }
 
+/*
+ * TODO
+ *
+ * Read operation.
+ */
 auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName) -> fs::path {
+    std::shared_lock<std::recursive_mutex> lock(mutex);
+
+    //TODO: nothing created here?? rename to getSaveFolder
     if (!filepath.empty()) {
         // This can be any extension
         fs::path p = filepath.filename();
@@ -148,10 +190,24 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
     return p;
 }
 
+/*
+ * TODO
+ *
+ * Read operation.
+ */
+cairo_surface_t* Document::getPreview() {
+    std::shared_lock<std::recursive_mutex> lock(mutex);
+    return this->preview;
+}
 
-auto Document::getPreview() -> cairo_surface_t* { return this->preview; }
-
+/*
+ * TODO
+ *
+ * Write operation.
+ */
 void Document::setPreview(cairo_surface_t* preview) {
+    std::unique_lock<std::recursive_mutex> lock(mutex);
+
     if (this->preview) {
         cairo_surface_destroy(this->preview);
     }
@@ -162,7 +218,14 @@ void Document::setPreview(cairo_surface_t* preview) {
     }
 }
 
-auto Document::getEvMetadataFilename() -> fs::path {
+/*
+ * TODO
+ *
+ * Read operation.
+ */
+fs::path Document::getEvMetadataFilename() {
+    std::shared_lock<std::recursive_mutex> lock(mutex);
+
     if (!this->filepath.empty()) {
         return this->filepath;
     }
@@ -172,7 +235,15 @@ auto Document::getEvMetadataFilename() -> fs::path {
     return fs::path{};
 }
 
-auto Document::isAttachPdf() const -> bool { return this->attachPdf; }
+/*
+ * TODO
+ *
+ * Read operation.
+ */
+const bool Document::isAttachPdf() {
+    std::shared_lock<std::recursive_mutex> lock(mutex);
+    return this->attachPdf;
+}
 
 auto Document::findPdfPage(size_t pdfPage) -> size_t {
     // Create a page index if not already indexed.
@@ -410,13 +481,14 @@ auto Document::operator=(const Document& doc) -> Document& {
     buildContentsModel();
     updateIndexPageNumbers();
 
-    bool lastLock = tryLock();
-    unlock();
+    /* bool lastLock = tryLock(); */
+    /* unlock(); */
+    //TODO
     this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-    if (!lastLock)  // document was locked before
-    {
-        lock();
-    }
+    /* if (!lastLock)  // document was locked before */
+    /* { */
+    /*     lock(); */
+    /* } */
     return *this;
 }
 

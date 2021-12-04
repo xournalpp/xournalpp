@@ -2571,11 +2571,12 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
         return;
     }
 
-    this->doc->lock();
-    PageRef page = this->doc->getPage(pageNr);
-    auto pageWidth = page->getWidth();
-    auto pageHeight = page->getHeight();
-    this->doc->unlock();
+    {
+        std::lock_guard<std::recursive_mutex> doc_lock(this->doc.mutex);
+        PageRef page = this->doc->getPage(pageNr);
+        auto pageWidth = page->getWidth();
+        auto pageHeight = page->getHeight();
+    }
 
     // Size: 3/4 of the page size
     pageWidth = pageWidth * 3.0 / 4.0;
