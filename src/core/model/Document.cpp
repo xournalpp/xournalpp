@@ -55,6 +55,13 @@ bool Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, 
 
 /*
  * Returns a lock_guard (writing + reading) on this Document for reentrant functionality.
+ *
+ * Note: using the reentrant functionality always uses unique locking since else we could deadlock.
+ * Example:
+ * Thread 1:                Thread 2:
+ * doc.lock_shared()        doc.lock_shared()
+ * doc.writing_operation()  doc.writing_operation()
+ * Now both threads are waiting for the unique (writing) lock but both hold a shared lock.
  */
 auto Document::lock() -> std::lock_guard<std::recursive_mutex> {
     return std::lock_guard<std::recursive_mutex> lock(this->mutex);
