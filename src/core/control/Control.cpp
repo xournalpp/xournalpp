@@ -2572,8 +2572,8 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
     }
 
     {
-        std::lock_guard<std::recursive_mutex> doc_lock(this->doc.mutex);
-        PageRef page = this->doc->getPage(pageNr);
+        std::lock_guard<std::recursive_mutex> this->doc.lock();
+        PageRef page = this->doc->getPage(pageNr); // TODO update getPage to return this lock itself
         auto pageWidth = page->getWidth();
         auto pageHeight = page->getHeight();
     }
