@@ -75,7 +75,7 @@ auto Document::tryLock() -> std::pair<bool, std::lock_guard<std::recursive_mutex
     /* Create lock_guard without actually locking. */
     std::lock_guard<std::recursive_mutex> lock(this->mutex, std::defer_lock);
     bool res = lock.try_lock();
-    return std::pair<bool, std::unique_lock<std::recursive_mutex>>(res, lock);
+    return { res, lock };
 }
 
 /*
@@ -216,13 +216,12 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
 }
 
 /*
- * TODO
- *
- * Read operation.
+ * TODO: shared guard also possible here?
  */
-cairo_surface_t* Document::getPreview() {
-    std::shared_lock<std::recursive_mutex> lock(mutex);
-    return this->preview;
+auto Document::getPreview() -> std::pair<cairo_surface_t*, std::lock_guard<std::recursive_mutex>> {
+    std::lock_guard<std::recursive_mutex> lock = this->lock();
+
+    return { this->preview, lock };
 }
 
 /*
