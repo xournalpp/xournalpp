@@ -54,6 +54,24 @@ bool Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, 
 }
 
 /*
+ * Returns a lock_guard (writing + reading) on this Document for reentrant functionality.
+ */
+auto Document::lock() -> std::lock_guard<std::recursive_mutex> {
+    return std::lock_guard<std::recursive_mutex> lock(this->mutex);
+}
+
+/*
+ * Returns a lock_guard (writing + reading) on this Document for reentrant functionality.
+ * Returns true when successfully acquiring lock.
+ */
+auto Document::tryLock() -> std::pair<bool, std::lock_guard<std::recursive_mutex>> {
+    /* Create lock_guard without actually locking. */
+    std::lock_guard<std::recursive_mutex> lock(this->mutex, std::defer_lock);
+    bool res = lock.try_lock();
+    return std::pair<bool, std::unique_lock<std::recursive_mutex>>(res, lock);
+}
+
+/*
  * Clears the document.
  *
  * Write operation.
