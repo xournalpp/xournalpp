@@ -64,9 +64,9 @@ auto ClipboardHandler::cut() -> bool {
 
 auto ElementCompareFunc(Element* a, Element* b) -> bool {
     if (a->getY() == b->getY()) {
-        return (a->getX() - b->getX()) > 0;
+        return (a->getX() - b->getX()) < 0;
     }
-    return (a->getY() - b->getY()) > 0;
+    return (a->getY() - b->getY()) < 0;
 }
 
 static GdkAtom atomSvg1 = gdk_atom_intern_static_string("image/svg");
