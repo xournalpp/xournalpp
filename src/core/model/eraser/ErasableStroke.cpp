@@ -233,16 +233,14 @@ auto ErasableStroke::erasePart(double x, double y, double halfEraserSize, PartLi
 
     std::vector<std::vector<Point>> splitPoints{{}};
 
-    for (auto pointIter = points.begin(); pointIter != points.end();) {
+    for (auto pointIter = points.begin(); pointIter != points.end(); ++pointIter) {
         if (pointIter->x >= x1 && pointIter->y >= y1 && pointIter->x <= x2 && pointIter->y <= y2) {
-            pointIter = points.erase(pointIter);
             if (!splitPoints.back().empty()) {
                 splitPoints.push_back({});
             }
             changed = true;
         } else {
             splitPoints.back().push_back(*pointIter);
-            ++pointIter;
         }
     }
     if (splitPoints.back().empty()) {
@@ -251,16 +249,16 @@ auto ErasableStroke::erasePart(double x, double y, double halfEraserSize, PartLi
 
     points.clear();
     if (!splitPoints.empty()) {
+        // Replace the points of the current part with this first subpart
         points = std::move(splitPoints.front());
-        splitPoints.erase(splitPoints.begin());
 
-        PartList::iterator insertPos = partIter + 1;
+        PartList::iterator insertPos = std::next(partIter);
 
         // create data structure for all new (splitted) parts
-        for (auto& l: splitPoints) {
+        for (auto it = splitPoints.begin() + 1; it != splitPoints.end(); ++it) {
+            // Push the other subparts
             PartList::iterator newPart = list.emplace(insertPos, partIter->getWidth());
-            newPart->getPoints() = std::move(l);
-            ++insertPos;
+            newPart->getPoints() = std::move(*it);
         }
     } else {
         // no parts, all deleted

@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <list>
 #include <memory>
 #include <mutex>
 #include <vector>
@@ -19,7 +20,7 @@
 
 #include "ErasableStrokePart.h"
 
-using PartList = std::vector<ErasableStrokePart>;
+using PartList = std::list<ErasableStrokePart>;
 
 class Range;
 class Stroke;
