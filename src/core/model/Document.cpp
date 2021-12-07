@@ -48,31 +48,6 @@ auto Document::freeTreeContentEntry(GtkTreeModel* treeModel, GtkTreePath* path, 
     return false;
 }
 
-void Document::lock() {
-    this->documentLock.lock();
-
-    //	if(tryLock()) {
-    //		fprintf(stderr, "Locked by\n");
-    //		Stacktrace::printStracktrace();
-    //		fprintf(stderr, "\n\n\n\n");
-    //	} else {
-    //		g_mutex_lock(&this->documentLock);
-    //	}
-}
-
-void Document::unlock() {
-    this->documentLock.unlock();
-
-    //	fprintf(stderr, "Unlocked by\n");
-    //	Stacktrace::printStracktrace();
-    //	fprintf(stderr, "\n\n\n\n");
-}
-
-/*
-** Returns true when successfully acquiring lock.
-*/
-auto Document::tryLock() -> bool { return this->documentLock.try_lock(); }
-
 void Document::clearDocument(bool destroy) {
     if (this->preview) {
         cairo_surface_destroy(this->preview);
@@ -80,14 +55,15 @@ void Document::clearDocument(bool destroy) {
     }
 
     if (!destroy) {
-        // release lock
-        bool lastLock = tryLock();
-        unlock();
-        this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED);
-        if (!lastLock)  // document was locked before
-        {
-            lock();
-        }
+        /* // release lock */
+        /* bool lastLock = tryLock(); */
+        /* unlock(); */
+        //TODO
+        /* this->handler->fireDocumentChanged(DOCUMENT_CHANGE_CLEARED); */
+        /* if (!lastLock)  // document was locked before */
+        /* { */
+        /*     lock(); */
+        /* } */
     }
 
     this->pages.clear();
@@ -98,11 +74,13 @@ void Document::clearDocument(bool destroy) {
     this->pdfFilepath = fs::path{};
 }
 
+//TODO
 /**
  * Returns the pageCount, this call don't need to be synchronized (if it's not critical, you may get wrong data)
  */
 auto Document::getPageCount() -> size_t { return this->pages.size(); }
 
+//TODO: lock pdfDocument?
 auto Document::getPdfPageCount() -> size_t { return pdfDocument.getPageCount(); }
 
 void Document::setFilepath(fs::path filepath) { this->filepath = std::move(filepath); }
@@ -112,6 +90,7 @@ auto Document::getFilepath() -> fs::path { return filepath; }
 auto Document::getPdfFilepath() -> fs::path { return pdfFilepath; }
 
 auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
+    //TODO: nothing created here?? rename to getSaveFolder
     if (!filepath.empty()) {
         return filepath.parent_path();
     }
@@ -124,6 +103,7 @@ auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
 }
 
 auto Document::createSaveFilename(DocumentType type, const std::string& defaultSaveName) -> fs::path {
+    //TODO: nothing created here?? rename to getSaveFilename
     if (!filepath.empty()) {
         // This can be any extension
         fs::path p = filepath.filename();
@@ -410,13 +390,15 @@ auto Document::operator=(const Document& doc) -> Document& {
     buildContentsModel();
     updateIndexPageNumbers();
 
-    bool lastLock = tryLock();
-    unlock();
+    //TODO
+    /* bool lastLock = tryLock(); */
+    /* unlock(); */
+    //TODO
     this->handler->fireDocumentChanged(DOCUMENT_CHANGE_COMPLETE);
-    if (!lastLock)  // document was locked before
-    {
-        lock();
-    }
+    /* if (!lastLock)  // document was locked before */
+    /* { */
+    /*     lock(); */
+    /* } */
     return *this;
 }
 

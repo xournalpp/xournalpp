@@ -86,9 +86,6 @@ public:
     cairo_surface_t* getPreview();
     void setPreview(cairo_surface_t* preview);
 
-    void lock();
-    void unlock();
-    bool tryLock();
 
 private:
     void buildContentsModel();
@@ -151,11 +148,6 @@ private:
      * The preview for the file
      */
     cairo_surface_t* preview = nullptr;
-
-    /**
-     * The lock of the document
-     */
-    std::mutex documentLock;
 };
 
 template <class InputIter>

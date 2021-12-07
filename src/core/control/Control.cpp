@@ -222,6 +222,7 @@ void Control::deleteLastAutosaveFile(fs::path newAutosaveFile) {
 auto Control::checkChangedDocument(Control* control) -> bool {
     if (!control->doc->tryLock()) {
         // call again later
+        // TODO: we always return true
         return true;
     }
     for (auto const& page: control->changedPages) {
