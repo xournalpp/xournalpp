@@ -88,7 +88,7 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
 
     this->scheduler = new XournalScheduler();
 
-    this->doc = new Document(this);
+    this->doc = Monitor<Document>(this);
 
     // for crashhandling
     setEmergencyDocument(this->doc);
@@ -140,8 +140,6 @@ Control::~Control() {
     this->toolHandler = nullptr;
     delete this->sidebar;
     this->sidebar = nullptr;
-    delete this->doc;
-    this->doc = nullptr;
     delete this->searchBar;
     this->searchBar = nullptr;
     delete this->scrollHandler;
@@ -1037,9 +1035,7 @@ void Control::reorderSelection(const ActionType type) {
  * @return the page ID or size_t_npos if the page is not found
  */
 auto Control::firePageSelected(const PageRef& page) -> size_t {
-    this->doc->lock();
     size_t pageId = this->doc->indexOf(page);
-    this->doc->unlock();
     if (pageId == npos) {
         return npos;
     }
@@ -1198,9 +1194,7 @@ void Control::addDefaultPage(string pageTemplate) {
     page->setBackgroundColor(model.getBackgroundColor());
     page->setBackgroundType(model.getBackgroundType());
 
-    this->doc->lock();
     this->doc->addPage(std::move(page));
-    this->doc->unlock();
 
     updateDeletePageButton();
 }
@@ -1226,16 +1220,13 @@ void Control::deletePage() {
         return;
     }
 
-    this->doc->lock();
+    // TODO
     PageRef page = doc->getPage(pNr);
-    this->doc->unlock();
 
     // first send event, then delete page...
     firePageDeleted(pNr);
 
-    this->doc->lock();
     doc->deletePage(pNr);
-    this->doc->unlock();
 
     updateDeletePageButton();
     this->undoRedo->addUndoAction(std::make_unique<InsertDeletePageUndoAction>(page, pNr, false));
@@ -1287,9 +1278,7 @@ void Control::appendNewPdfPages() {
 }
 
 void Control::insertPage(const PageRef& page, size_t position) {
-    this->doc->lock();
     this->doc->insertPage(page, position);  // insert the new page to the document and update page numbers
-    this->doc->unlock();
 
     // notify document listeners about the inserted page; this creates the new XojViewPage, recalculates the layout
     // and creates a preview page in the sidebar
@@ -1362,9 +1351,7 @@ void Control::paperFormat() {
     double height = dlg->getHeight();
 
     if (width > 0) {
-        this->doc->lock();
         Document::setPageSize(page, width, height);
-        this->doc->unlock();
     }
 
     size_t pageNo = doc->indexOf(page);
@@ -1377,9 +1364,7 @@ void Control::paperFormat() {
 
 void Control::changePageBackgroundColor() {
     auto pNr = getCurrentPageNo();
-    this->doc->lock();
     auto const& p = this->doc->getPage(pNr);
-    this->doc->unlock();
 
     if (!p) {
         return;
@@ -1627,9 +1612,7 @@ auto Control::searchTextOnPage(string text, int p, int* occures, double* top) ->
 }
 
 auto Control::getCurrentPage() -> PageRef {
-    this->doc->lock();
     PageRef p = this->doc->getPage(getCurrentPageNo());
-    this->doc->unlock();
 
     return p;
 }
@@ -1932,14 +1915,16 @@ auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {
         return false;
     }
 
-    Document newDoc(this);
+    {
+        Monitor<Document>::LockedMonitor lockedDoc = this->doc.lock();
+        lockedDoc->ReplaceModel(newDoc(this));
 
-    this->doc->lock();
-    *doc = newDoc;
-    if (!filepath.empty()) {
-        this->doc->setFilepath(std::move(filepath));
+        //TODO
+        /* *doc = newDoc; */
+        if (!filepath.empty()) {
+            lockedDoc->setFilepath(std::move(filepath));
+        }
     }
-    this->doc->unlock();
 
     addDefaultPage(std::move(pageTemplate));
 
@@ -2054,10 +2039,12 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 
     this->closeDocument();
 
-    this->doc->lock();
-    this->doc->clearDocument();
-    *this->doc = *loadedDocument;
-    this->doc->unlock();
+    {
+        Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
+        lockedDoc->clearDocument();
+        //TODO
+        lockedDoc->ReplaceModel(*loadedDocument);
+    }
 
     // Set folder as last save path, so the next save will be at the current document location
     // This is important because of the new .xopp format, where Xournal .xoj handled as import,
@@ -2084,10 +2071,12 @@ auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
                 break;
         }
         if (tmp) {
-            this->doc->lock();
-            this->doc->clearDocument();
-            *this->doc = *tmp;
-            this->doc->unlock();
+            {
+                Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
+                lockedDoc->clearDocument();
+                //TODO
+                lockedDoc->ReplaceModel(*tmp);
+            }
 
             fileLoaded(scrollToPage);
             return true;
@@ -2110,9 +2099,7 @@ auto Control::loadXoptTemplate(fs::path const& filepath) -> bool {
 }
 
 void Control::fileLoaded(int scrollToPage) {
-    this->doc->lock();
     auto filepath = this->doc->getEvMetadataFilename();
-    this->doc->unlock();
 
     if (!filepath.empty()) {
         MetadataEntry md = MetadataManager::getForFile(filepath);
@@ -2195,21 +2182,18 @@ auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDo
 
     getCursor()->setCursorBusy(true);
 
-    this->doc->setFilepath("");
-    bool res = this->doc->readPdf(filepath, true, attachToDocument);
+    Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
+    lockedDoc->setFilepath("");
+    bool res = lockedDoc->readPdf(filepath, true, attachToDocument);
 
     if (res) {
         RecentManager::addRecentFileFilename(filepath.c_str());
 
-        this->doc->lock();
-        auto filepath = this->doc->getEvMetadataFilename();
-        this->doc->unlock();
+        auto filepath = lockedDoc->getEvMetadataFilename();
         MetadataEntry md = MetadataManager::getForFile(filepath);
         loadMetadata(md);
     } else {
-        this->doc->lock();
-        string errMsg = doc->getLastErrorMsg();
-        this->doc->unlock();
+        string errMsg = lockedDoc->getLastErrorMsg();
 
         string msg = FS(_F("Error annotate PDF file \"{1}\"\n{2}") % filepath.u8string() % errMsg);
         XojMsgBox::showErrorToUser(getGtkWindow(), msg);
@@ -2224,9 +2208,10 @@ auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDo
 }
 
 void Control::print() {
-    this->doc->lock();
-    PrintHandler::print(this->doc, getCurrentPageNo(), this->getGtkWindow());
-    this->doc->unlock();
+    //TODO
+    /* this->doc->lock(); */
+    /* PrintHandler::print(this->doc, getCurrentPageNo(), this->getGtkWindow()); */
+    /* this->doc->unlock(); */
 }
 
 void Control::block(const string& name) {
@@ -2274,9 +2259,7 @@ auto Control::save(bool synchron) -> bool {
     // clear selection before saving
     clearSelectionEndText();
 
-    this->doc->lock();
     fs::path filepath = this->doc->getFilepath();
-    this->doc->unlock();
 
     if (filepath.empty()) {
         if (!showSaveDialog()) {
@@ -2310,10 +2293,13 @@ auto Control::showSaveDialog() -> bool {
     gtk_file_filter_add_pattern(filterXoj, "*.xopp");
     gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filterXoj);
 
-    this->doc->lock();
-    auto suggested_folder = this->doc->createSaveFolder(this->settings->getLastSavePath());
-    auto suggested_name = this->doc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
-    this->doc->unlock();
+    fs::path suggested_folder{};
+    fs::path suggested_name{};
+    {
+        Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
+        suggested_folder = lockedDoc->createSaveFolder(this->settings->getLastSavePath());
+        suggested_name = lockedDoc->createSaveFilename(Document::XOPP, this->settings->getDefaultSaveName());
+    }
 
     gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggested_folder).c_str());
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), Util::toGFilename(suggested_name).c_str());
@@ -2343,10 +2329,7 @@ auto Control::showSaveDialog() -> bool {
     settings->setLastSavePath(filename.parent_path());
     gtk_widget_destroy(dialog);
 
-    this->doc->lock();
-
     this->doc->setFilepath(filename);
-    this->doc->unlock();
 
     return true;
 }
@@ -2354,24 +2337,25 @@ auto Control::showSaveDialog() -> bool {
 void Control::updateWindowTitle() {
     string title{};
 
-    this->doc->lock();
-    if (doc->getFilepath().empty()) {
-        if (doc->getPdfFilepath().empty()) {
-            title = _("Unsaved Document");
+    {
+        Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
+        if (lockedDoc->getFilepath().empty()) {
+            if (lockedDoc->getPdfFilepath().empty()) {
+                title = _("Unsaved Document");
+            } else {
+                if (undoRedo->isChanged()) {
+                    title += "*";
+                }
+                title += lockedDoc->getPdfFilepath().filename().u8string();
+            }
         } else {
             if (undoRedo->isChanged()) {
                 title += "*";
             }
-            title += doc->getPdfFilepath().filename().u8string();
-        }
-    } else {
-        if (undoRedo->isChanged()) {
-            title += "*";
-        }
 
-        title += doc->getFilepath().filename().u8string();
+            title += lockedDoc->getFilepath().filename().u8string();
+        }
     }
-    this->doc->unlock();
 
     title += " - Xournal++";
 
@@ -2402,9 +2386,7 @@ auto Control::saveAs() -> bool {
     if (!showSaveDialog()) {
         return false;
     }
-    this->doc->lock();
     auto filepath = doc->getFilepath();
-    this->doc->unlock();
 
     if (filepath.empty()) {
         return false;
@@ -2416,9 +2398,7 @@ auto Control::saveAs() -> bool {
 }
 
 void Control::resetSavedStatus() {
-    this->doc->lock();
     auto filepath = this->doc->getFilepath();
-    this->doc->unlock();
 
     this->undoRedo->documentSaved();
     RecentManager::addRecentFileFilename(filepath);
@@ -2452,7 +2432,11 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
     metadata->documentChanged();
 
     bool discard = false;
-    const bool fileRemoved = !doc->getFilepath().empty() && !fs::exists(this->doc->getFilepath());
+    const bool fileRemoved{};
+    {
+        Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
+        fileRemoved = !lockedDoc->getFilepath().empty() && !fs::exists(lockedDoc->getFilepath());
+    }
     if (undoRedo->isChanged()) {
         const auto message = fileRemoved ? _("Document file was removed.") : _("This document is not saved yet.");
         const auto saveLabel = fileRemoved ? _("Save As...") : _("Save");
@@ -2496,9 +2480,7 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
 void Control::closeDocument() {
     this->undoRedo->clearContents();
 
-    this->doc->lock();
     this->doc->clearDocument(true);
-    this->doc->unlock();
 
     this->undoRedoChanged();
 }
@@ -2572,11 +2554,15 @@ void Control::clipboardPasteImage(GdkPixbuf* img) {
         return;
     }
 
-    this->doc->lock();
-    PageRef page = this->doc->getPage(pageNr);
-    auto pageWidth = page->getWidth();
-    auto pageHeight = page->getHeight();
-    this->doc->unlock();
+    double pageWidth;
+    double pageHeight;
+    {
+        Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
+        //TODO
+        PageRef page = lockedDoc->getPage(pageNr);
+        pageWidth = page->getWidth();
+        pageHeight = page->getHeight();
+    }
 
     // Size: 3/4 of the page size
     pageWidth = pageWidth * 3.0 / 4.0;
@@ -2614,22 +2600,23 @@ void Control::clipboardPaste(Element* e) {
         return;
     }
 
-    this->doc->lock();
-    PageRef page = this->doc->getPage(pageNr);
-    Layer* layer = page->getSelectedLayer();
-    win->getXournal()->getPasteTarget(x, y);
+    {
+        Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
+        //TODO
+        PageRef page = lockedDoc->getPage(pageNr);
+        Layer* layer = page->getSelectedLayer();
+        win->getXournal()->getPasteTarget(x, y);
 
-    double width = e->getElementWidth();
-    double height = e->getElementHeight();
+        double width = e->getElementWidth();
+        double height = e->getElementHeight();
 
-    x = std::max(0.0, x - width / 2);
-    y = std::max(0.0, y - height / 2);
+        x = std::max(0.0, x - width / 2);
+        y = std::max(0.0, y - height / 2);
 
-    e->setX(x);
-    e->setY(y);
-    layer->addElement(e);
-
-    this->doc->unlock();
+        e->setX(x);
+        e->setY(y);
+        layer->addElement(e);
+    }
 
     undoRedo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, e));
     auto* selection = new EditSelection(this->undoRedo, e, view, page);
@@ -2638,89 +2625,90 @@ void Control::clipboardPaste(Element* e) {
 }
 
 void Control::clipboardPasteXournal(ObjectInputStream& in) {
-    auto pNr = getCurrentPageNo();
-    if (pNr == npos && win != nullptr) {
-        return;
-    }
+    //TODO
+    /* auto pNr = getCurrentPageNo(); */
+    /* if (pNr == npos && win != nullptr) { */
+    /*     return; */
+    /* } */
 
-    this->doc->lock();
-    PageRef page = this->doc->getPage(pNr);
-    Layer* layer = page->getSelectedLayer();
+    /* this->doc->lock(); */
+    /* PageRef page = this->doc->getPage(pNr); */
+    /* Layer* layer = page->getSelectedLayer(); */
 
-    XojPageView* view = win->getXournal()->getViewFor(pNr);
+    /* XojPageView* view = win->getXournal()->getViewFor(pNr); */
 
-    if (!view || !page) {
-        this->doc->unlock();
-        return;
-    }
+    /* if (!view || !page) { */
+    /*     this->doc->unlock(); */
+    /*     return; */
+    /* } */
 
-    EditSelection* selection = nullptr;
-    try {
-        std::unique_ptr<Element> element;
-        string version = in.readString();
-        if (version != PROJECT_STRING) {
-            g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PROJECT_STRING);
-        }
+    /* EditSelection* selection = nullptr; */
+    /* try { */
+    /*     std::unique_ptr<Element> element; */
+    /*     string version = in.readString(); */
+    /*     if (version != PROJECT_STRING) { */
+    /*         g_warning("Paste from Xournal Version %s to Xournal Version %s", version.c_str(), PROJECT_STRING); */
+    /*     } */
 
-        selection = new EditSelection(this->undoRedo, page, view);
-        selection->readSerialized(in);
+    /*     selection = new EditSelection(this->undoRedo, page, view); */
+    /*     selection->readSerialized(in); */
 
-        // document lock not needed anymore, because we don't change the document, we only change the selection
-        this->doc->unlock();
+    /*     // document lock not needed anymore, because we don't change the document, we only change the selection */
+    /*     this->doc->unlock(); */
 
-        int count = in.readInt();
-        auto pasteAddUndoAction = std::make_unique<AddUndoAction>(page, false);
-        // this will undo a group of elements that are inserted
+    /*     int count = in.readInt(); */
+    /*     auto pasteAddUndoAction = std::make_unique<AddUndoAction>(page, false); */
+    /*     // this will undo a group of elements that are inserted */
 
-        for (int i = 0; i < count; i++) {
-            string name = in.getNextObjectName();
-            element.reset();
+    /*     for (int i = 0; i < count; i++) { */
+    /*         string name = in.getNextObjectName(); */
+    /*         element.reset(); */
 
-            if (name == "Stroke") {
-                element = std::make_unique<Stroke>();
-            } else if (name == "Image") {
-                element = std::make_unique<Image>();
-            } else if (name == "TexImage") {
-                element = std::make_unique<TexImage>();
-            } else if (name == "Text") {
-                element = std::make_unique<Text>();
-            } else {
-                throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__);
-            }
+    /*         if (name == "Stroke") { */
+    /*             element = std::make_unique<Stroke>(); */
+    /*         } else if (name == "Image") { */
+    /*             element = std::make_unique<Image>(); */
+    /*         } else if (name == "TexImage") { */
+    /*             element = std::make_unique<TexImage>(); */
+    /*         } else if (name == "Text") { */
+    /*             element = std::make_unique<Text>(); */
+    /*         } else { */
+    /*             throw InputStreamException(FS(FORMAT_STR("Get unknown object {1}") % name), __FILE__, __LINE__); */
+    /*         } */
 
-            element->readSerialized(in);
+    /*         element->readSerialized(in); */
 
-            pasteAddUndoAction->addElement(layer, element.get(), layer->indexOf(element.get()));
-            // Todo: unique_ptr
-            selection->addElement(element.release(), Layer::InvalidElementIndex);
-        }
-        undoRedo->addUndoAction(std::move(pasteAddUndoAction));
+    /*         pasteAddUndoAction->addElement(layer, element.get(), layer->indexOf(element.get())); */
+    /*         // Todo: unique_ptr */
+    /*         selection->addElement(element.release(), Layer::InvalidElementIndex); */
+    /*     } */
+    /*     undoRedo->addUndoAction(std::move(pasteAddUndoAction)); */
 
-        double x = 0;
-        double y = 0;
-        // calculate x/y of paste target, see clipboardPaste(Element* e)
-        win->getXournal()->getPasteTarget(x, y);
+    /*     double x = 0; */
+    /*     double y = 0; */
+    /*     // calculate x/y of paste target, see clipboardPaste(Element* e) */
+    /*     win->getXournal()->getPasteTarget(x, y); */
 
-        x = std::max(0.0, x - selection->getWidth() / 2);
-        y = std::max(0.0, y - selection->getHeight() / 2);
+    /*     x = std::max(0.0, x - selection->getWidth() / 2); */
+    /*     y = std::max(0.0, y - selection->getHeight() / 2); */
 
-        // calculate difference between current selection position and destination
-        auto dx = x - selection->getXOnView();
-        auto dy = y - selection->getYOnView();
+    /*     // calculate difference between current selection position and destination */
+    /*     auto dx = x - selection->getXOnView(); */
+    /*     auto dy = y - selection->getYOnView(); */
 
-        selection->moveSelection(dx, dy);
-        // update all Elements (same procedure as moving a element selection by hand and releasing the mouse button)
-        selection->mouseUp();
+    /*     selection->moveSelection(dx, dy); */
+    /*     // update all Elements (same procedure as moving a element selection by hand and releasing the mouse button) */
+    /*     selection->mouseUp(); */
 
-        win->getXournal()->setSelection(selection);
-    } catch (std::exception& e) {
-        g_warning("could not paste, Exception occurred: %s", e.what());
-        Stacktrace::printStracktrace();
-        if (selection) {
-            for (Element* el: *selection->getElements()) { delete el; }
-            delete selection;
-        }
-    }
+    /*     win->getXournal()->setSelection(selection); */
+    /* } catch (std::exception& e) { */
+    /*     g_warning("could not paste, Exception occurred: %s", e.what()); */
+    /*     Stacktrace::printStracktrace(); */
+    /*     if (selection) { */
+    /*         for (Element* el: *selection->getElements()) { delete el; } */
+    /*         delete selection; */
+    /*     } */
+    /* } */
 }
 
 void Control::deleteSelection() {
@@ -2828,7 +2816,7 @@ auto Control::getZoomControl() -> ZoomControl* { return this->zoom; }
 
 auto Control::getCursor() -> XournalppCursor* { return this->cursor; }
 
-auto Control::getDocument() -> Document* { return this->doc; }
+auto Control::getDocument() -> Monitor<Document>* { return this->doc; }
 
 auto Control::getToolHandler() -> ToolHandler* { return this->toolHandler; }
 

@@ -39,7 +39,7 @@ SaveHandler::~SaveHandler() {
     this->backgroundImages = nullptr;
 }
 
-void SaveHandler::prepareSave(Document* doc) {
+void SaveHandler::prepareSave(Monitor<Document>* doc) {
     if (this->root) {
         // cleanup old data
         delete this->root;
@@ -59,21 +59,23 @@ void SaveHandler::prepareSave(Document* doc) {
 
     writeHeader();
 
-    cairo_surface_t* preview = doc->getPreview();
-    if (preview) {
-        auto* image = new XmlImageNode("preview");
-        image->setImage(preview);
-        this->root->addChild(image);
-    }
+    Monitor<Document>::LockedMonitor lockedDoc = doc.lock();
+    //TODO
+    /* Monitor<cairo_surface_t*>::LockedMonitor lockedPreview = lockedDoc->getPreview(); */
+    /* if (preview) { */
+    /*     auto* image = new XmlImageNode("preview"); */
+    /*     image->setImage(preview); */
+    /*     this->root->addChild(image); */
+    /* } */
 
-    for (size_t i = 0; i < doc->getPageCount(); i++) {
-        PageRef p = doc->getPage(i);
+    for (size_t i = 0; i < lockedDoc->getPageCount(); i++) {
+        Monitor<PageRef>::LockedMonitor p = lockedDoc->getPage(i);
         p->getBackgroundImage().clearSaveState();
     }
 
-    for (size_t i = 0; i < doc->getPageCount(); i++) {
-        PageRef p = doc->getPage(i);
-        visitPage(this->root, p, doc, i);
+    for (size_t i = 0; i < lockedDoc->getPageCount(); i++) {
+        Monitor<PageRef>::LockedMonitor p = lockedDoc->getPage(i);
+        visitPage(this->root, p, lockedDoc, i);
     }
 }
 

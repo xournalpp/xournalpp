@@ -134,9 +134,8 @@ auto ImageExport::getFilenameWithNumber(int no) const -> fs::path {
  */
 void ImageExport::exportImagePage(int pageId, int id, double zoomRatio, ExportGraphicsFormat format,
                                   DocumentView& view) {
-    doc->lock();
+    //TODO
     PageRef page = doc->getPage(pageId);
-    doc->unlock();
 
     zoomRatio = createSurface(page->getWidth(), page->getHeight(), id, zoomRatio);
 
@@ -148,6 +147,7 @@ void ImageExport::exportImagePage(int pageId, int id, double zoomRatio, ExportGr
 
     if (page->getBackgroundType().isPdfPage() && (exportBackground >= EXPORT_BACKGROUND_UNRULED)) {
         auto pgNo = page->getPdfPageNr();
+        //TODO
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
         PdfView::drawPage(nullptr, popplerPage, cr, zoomRatio, page->getWidth(), page->getHeight());

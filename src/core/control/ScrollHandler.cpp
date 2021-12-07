@@ -24,7 +24,7 @@ void ScrollHandler::goToNextPage() {
 
 void ScrollHandler::goToLastPage() {
     if (this->control->getWindow()) {
-        scrollToPage(this->control->getDocument()->getPageCount() - 1);
+        scrollToPage((*this->control->getDocument())->getPageCount() - 1);
     }
 }
 
@@ -35,11 +35,7 @@ void ScrollHandler::goToFirstPage() {
 }
 
 void ScrollHandler::scrollToPage(const PageRef& page, double top) {
-    Document* doc = this->control->getDocument();
-
-    doc->lock();
-    auto p = doc->indexOf(page);
-    doc->unlock();
+    auto p = (*this->control->getDocument())->indexOf(page);
 
     if (p != npos) {
         scrollToPage(p, top);

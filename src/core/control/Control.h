@@ -24,6 +24,7 @@
 #include "gui/dialog/LatexDialog.h"
 #include "gui/sidebar/Sidebar.h"
 #include "model/Document.h"
+#include "model/Monitor.h"
 #include "undo/UndoRedoHandler.h"
 #include "util/PathUtil.h"
 
@@ -234,7 +235,7 @@ public:
     Settings* getSettings();
     ToolHandler* getToolHandler();
     ZoomControl* getZoomControl();
-    Document* getDocument();
+    Monitor<Document>* getDocument();
     UndoRedoHandler* getUndoRedoHandler();
     MainWindow* getWindow();
     GtkWindow* getGtkWindow() const;
@@ -343,7 +344,7 @@ private:
     Settings* settings = nullptr;
     MainWindow* win = nullptr;
 
-    Document* doc = nullptr;
+    Monitor<Document> doc = nullptr;
 
     Sidebar* sidebar = nullptr;
     SearchBar* searchBar = nullptr;
