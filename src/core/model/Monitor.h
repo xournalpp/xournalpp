@@ -6,7 +6,7 @@ class Monitor
 {
 public:
     template<typename ...Args>
-    Monitor(Args&&... args) : model(std::forward<Args>(args)...) {}
+    Monitor(Args&&... args);
 
     struct LockedMonitor
     {
