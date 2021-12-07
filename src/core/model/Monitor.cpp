@@ -1,53 +1,44 @@
-#include <cassert>
+#include "Monitor.h"
 
 /*
  * Credit to Mike Vine on StackOverflow.
  * https://stackoverflow.com/a/48408987
  */
-template<class T>
-class Monitor
+
+Monitor::Monitor(Args&&... args) : model(std::forward<Args>(args)...) {}
+
+struct Monitor::LockedMonitor
 {
-public:
-    template<typename ...Args>
-    Monitor(Args&&... args) : model(std::forward<Args>(args)...){}
+    LockedMonitor(Monitor* monitor) : mon(monitor), lock(monitor->mutex) {}
+    T* operator->() { return &mon->model;}
+    void ReplaceModel(T model) {
+        this->model = model;
+    }
+};
 
-    struct LockedMonitor
-    {
-        LockedMonitor(Monitor* monitor) : mon(monitor), lock(monitor->mutex) {}
-        T* operator->() { return &mon->model;}
-        private:
-            Monitor* mon;
-            std::unique_lock<std::mutex> lock;
-    };
-
-    struct TryLockedMonitor
+struct Monitor::TryLockedMonitor
     {
         TryLockedMonitor(Monitor* monitor) {
             this->lock = std::unique_lock<std::mutex>(monitor->mutex, std::defer_lock);
-            this->lock_acquired = lock.try_lock();
-            if (this->lock_acquired) {
+            this->lockAcquired = lock.try_lock();
+            if (this->lockAcquired) {
                 this->mon = monitor;
             }
         }
         T* operator->() {
-            assert(lock_acquired);
+            assert(lockAcquired);
             return &mon->model;
         };
-        bool lock_acquired;
-        private:
-            Monitor* mon = NULL;
-            std::unique_lock<std::mutex> lock;
+        void ReplaceModel(T model) {
+            assert(lockAcquired);
+            this->model = model;
+        }
     };
 
-    LockedMonitor operator->() { return LockedMonitor(this); }
+Monitor::LockedMonitor operator->() { return LockedMonitor(this); }
 
-    LockedMonitor lock() { return LockedMonitor(this); }
+Monitor::LockedMonitor lock() { return LockedMonitor(this); }
 
-    TryLockedMonitor try_lock() { return TryLockedMonitor(this); }
+Monitor::TryLockedMonitor tryLock() { return TryLockedMonitor(this); }
 
-    T& get_unsafe_access() { return model; }
-
-private:
-    T model;
-    std::mutex mutex;
-};
+T& Monitor::getUnsafeAccess() { return model; }
