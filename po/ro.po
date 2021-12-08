@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 16:58+0000\n"
-"PO-Revision-Date: 2021-12-01 17:01\n"
+"POT-Creation-Date: 2021-12-08 21:06+0000\n"
+"PO-Revision-Date: 2021-12-08 21:22\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -151,7 +151,7 @@ msgstr "Adu mai aproape"
 msgid "Bring to front"
 msgstr "Adu în prim plan"
 
-#: ../src/core/control/Control.cpp:2014 ../src/core/control/Control.cpp:2465
+#: ../src/core/control/Control.cpp:2013 ../src/core/control/Control.cpp:2464
 #: ../src/core/control/XournalMain.cpp:160
 msgid "Cancel"
 msgstr "Anulează"
@@ -359,7 +359,7 @@ msgstr "Șterge acest strat"
 msgid "Delete this page"
 msgstr "Ștergeți această pagină"
 
-#: ../src/core/control/Control.cpp:2462
+#: ../src/core/control/Control.cpp:2461
 msgid "Discard"
 msgstr "Renunțați"
 
@@ -367,7 +367,7 @@ msgstr "Renunțați"
 msgid "Display advanced export options"
 msgstr "Afișează opțiuni avansate de export"
 
-#: ../src/core/control/Control.cpp:1959
+#: ../src/core/control/Control.cpp:1958
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -379,7 +379,7 @@ msgstr "Nu deschide fişierele Salvare automată. Acestea pot fi suprascrise!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Nu suprascrieți fișierul PDF de fundal! Acest lucru va provoca erori!"
 
-#: ../src/core/control/Control.cpp:2456
+#: ../src/core/control/Control.cpp:2455
 msgid "Document file was removed."
 msgstr "Fișierul documentului a fost șters."
 
@@ -473,7 +473,7 @@ msgstr "Șterge linie"
 msgid "Eraser"
 msgstr "Radieră"
 
-#: ../src/core/control/Control.cpp:2213
+#: ../src/core/control/Control.cpp:2212
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Eroare adnotare fisier PDF \"{1}\"\n"
@@ -483,7 +483,7 @@ msgstr "Eroare adnotare fisier PDF \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Eroare la încărcarea fișierului glade \"{1}\" (încercați să încărcați \"{2}\")"
 
-#: ../src/core/control/Control.cpp:2036
+#: ../src/core/control/Control.cpp:2035
 msgid "Error opening file \"{1}\""
 msgstr "Eroare de deschidere fişier \"{1}\""
 
@@ -759,7 +759,7 @@ msgstr ""
 msgid "Layer Preview"
 msgstr "Previzualizare strat"
 
-#: ../src/core/control/layer/LayerController.cpp:321
+#: ../src/core/control/layer/LayerController.cpp:319
 msgid "Layer {1}"
 msgstr "Strat {1}"
 
@@ -767,7 +767,7 @@ msgstr "Strat {1}"
 msgid "Layerstack Preview"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:709
+#: ../src/core/gui/PageView.cpp:703
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -822,7 +822,7 @@ msgstr "Niciun dispozitiv"
 msgid "No pages to export!"
 msgstr "Nicio pagină de exportat!"
 
-#: ../src/core/control/Control.cpp:1268
+#: ../src/core/control/Control.cpp:1267
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
@@ -977,7 +977,7 @@ msgstr "Refacere"
 msgid "Redo: "
 msgstr "Refacere: "
 
-#: ../src/core/control/Control.cpp:2013
+#: ../src/core/control/Control.cpp:2012
 msgid "Remove PDF Background"
 msgstr "Elimină fundal PDF"
 
@@ -1029,16 +1029,16 @@ msgstr "Grafică SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Exemplu de fișier LaTeX generat cu succes."
 
-#: ../src/core/control/Control.cpp:2457 ../src/core/control/jobs/SaveJob.cpp:15
+#: ../src/core/control/Control.cpp:2456 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Save"
 msgstr "Salvează"
 
-#: ../src/core/control/Control.cpp:2457
+#: ../src/core/control/Control.cpp:2456
 msgid "Save As..."
 msgstr "Salvează ca..."
 
-#: ../src/core/control/Control.cpp:2302
+#: ../src/core/control/Control.cpp:2301
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Salvează fișierul"
@@ -1083,7 +1083,7 @@ msgstr "Selectaţi dreptunghiul"
 msgid "Select Region"
 msgstr "Selectează regiunea"
 
-#: ../src/core/control/Control.cpp:2012
+#: ../src/core/control/Control.cpp:2011
 msgid "Select another PDF"
 msgstr "Selectaţi un alt PDF"
 
@@ -1257,13 +1257,13 @@ msgstr "Textul nu a fost găsit, căutat pe toate paginile"
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Configurarea barei de instrumente \"{1}\" este predefinită, ai crea o copie pentru a o edita?"
 
-#: ../src/core/control/Control.cpp:2001
+#: ../src/core/control/Control.cpp:2000
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Fișierul de fundal atașat {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau șters.\n"
 "A fost văzut ultima dată în: {2}"
 
-#: ../src/core/control/Control.cpp:2005
+#: ../src/core/control/Control.cpp:2004
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Fișierul de fundal {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau șters.\n"
@@ -1273,7 +1273,7 @@ msgstr "Fișierul de fundal {1} nu a putut fi găsit. Este posibil să fi fost m
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Verificarea pentru suprascrierea fundalului a eșuat cu:\n"
 
-#: ../src/core/control/Control.cpp:2044
+#: ../src/core/control/Control.cpp:2043
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Fişierul în curs de încărcare are o versiune mai nouă decât cea acceptată în prezent de această versiune de Xournal++, deci este posibil să nu se încarce în mod corespunzător. Deschideți oricum?"
 
@@ -1317,7 +1317,7 @@ msgstr "A apărut o eroare la afișarea ajutorului: {1}"
 msgid "Thick"
 msgstr "Gros"
 
-#: ../src/core/control/Control.cpp:2456
+#: ../src/core/control/Control.cpp:2455
 msgid "This document is not saved yet."
 msgstr "Acest document nu este salvat încă."
 
@@ -1354,7 +1354,7 @@ msgstr "Fișierul de șablon global de la {1} nu poate fi deschis. Sigur există
 msgid "Unable to play audio recording {1}"
 msgstr "Imposibil de redat înregistrarea audio {1}"
 
-#: ../src/core/control/Control.cpp:1282
+#: ../src/core/control/Control.cpp:1281
 msgid "Unable to retrieve pdf page."
 msgstr "Nu s-a putut afișa pagina pdf."
 
@@ -1399,7 +1399,7 @@ msgstr "Tip domeniu necunoscut: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tip de AVC necunoscut: \"{1}\", presupunând un stilou"
 
-#: ../src/core/control/Control.cpp:2359
+#: ../src/core/control/Control.cpp:2358
 msgid "Unsaved Document"
 msgstr "Document nesalvat"
 
@@ -1451,7 +1451,7 @@ msgstr "Fișiere Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ s-a prăbușit ultima dată. Doriți să restaurați ultimul fișier editat?"
 
-#: ../src/core/control/Control.cpp:2308
+#: ../src/core/control/Control.cpp:2307
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Fișiere Xournal++"
@@ -1499,7 +1499,7 @@ msgstr "Micșorează"
 msgid "Zoom to 100%"
 msgstr "Zoom până la 100%"
 
-#: ../src/core/control/Control.cpp:2302
+#: ../src/core/control/Control.cpp:2301
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
@@ -1512,7 +1512,7 @@ msgstr "Revocă"
 msgid "_Open"
 msgstr "Deschide"
 
-#: ../src/core/control/Control.cpp:2303
+#: ../src/core/control/Control.cpp:2302
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
@@ -1555,7 +1555,7 @@ msgstr "elemente"
 msgid "eraser"
 msgstr "Radieră"
 
-#: ../src/core/control/Control.cpp:1973
+#: ../src/core/control/Control.cpp:1972
 msgid "file: {1}"
 msgstr "fișier: {1}"
 
