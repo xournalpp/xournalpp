@@ -105,7 +105,7 @@ def get_whitelist_not_listed():
     white_list.add("rpm/fedora/xournalpp.spec") # false positive
     white_list.add("windows-setup/xournalpp.nsi") # false positive
     white_list.add("ui/about.glade") # false positive
-    white_list.add("src/win32/xpp.rc.in") # false positive
+    white_list.add("src/exe/win32/xpp.rc.in") # false positive
     return white_list
 
 # II: Add an entry to the whitelist if you added a file which has special

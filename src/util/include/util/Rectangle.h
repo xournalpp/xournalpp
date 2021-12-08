@@ -15,6 +15,7 @@
 #include <cassert>
 #include <optional>
 
+#include "util/Point.h"
 #include "util/Range.h"
 
 template <class T>
@@ -30,6 +31,7 @@ public:
      * @param other the other rectangle
      * @return whether the rectangles intersect and if so, the intersection
      */
+
     std::optional<Rectangle> intersects(const Rectangle& other) const {
         auto x1 = std::max(this->x, other.x);
         auto y1 = std::max(this->y, other.y);
@@ -70,6 +72,10 @@ public:
         width *= factor;
         height *= factor;
         return *this;
+    }
+
+    bool contains(utl::Point<double> pt) {  //
+        return pt.x >= x && pt.x <= x + width && pt.y >= y && pt.y <= y + height;
     }
 
     /**

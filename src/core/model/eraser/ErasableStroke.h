@@ -11,16 +11,24 @@
 
 #pragma once
 
-#include <list>
 #include <memory>
 #include <mutex>
+#include <optional>
 #include <vector>
 
 #include <gtk/gtk.h>
 
-#include "ErasableStrokePart.h"
+#include "model/Point.h"
+#include "util/Range.h"
 
-using PartList = std::list<ErasableStrokePart>;
+struct ErasableStrokeEdge {
+    ErasableStrokeEdge() = default;
+    ErasableStrokeEdge(Point p1, Point p2): p1(p1), p2(p2){};
+    Point p1;
+    Point p2;
+};
+
+using PartList = std::vector<ErasableStrokeEdge>;
 
 class Range;
 class Stroke;
@@ -33,24 +41,22 @@ public:
     /**
      * Returns a repaint rectangle or nullptr, the rectangle is own by the caller
      */
-    Range* erase(double x, double y, double halfEraserSize, Range* range = nullptr);
+    [[nodiscard]] Range erase(double x, double y, double halfEraserSize, Range range = Range());
 
-    std::vector<std::unique_ptr<Stroke>> getStroke(Stroke* original);
+    [[nodiscard]] std::vector<std::unique_ptr<Stroke>> getStroke(Stroke* original);
 
     void draw(cairo_t* cr);
 
 private:
-    bool erase(double x, double y, double halfEraserSize, PartList::iterator& part, PartList& list);
-    static bool erasePart(double x, double y, double halfEraserSize, PartList::iterator& part, PartList& list,
-                          bool* deleteStrokeAfter);
+    [[nodiscard]] auto erase(double x, double y, double halfEraserSize, PartList::iterator const& partIter,
+                             PartList& list) -> PartList::iterator;
 
     void addRepaintRect(double x, double y, double width, double height);
 
 private:
     std::mutex partLock;
     PartList parts{};
-
-    Range* repaintRect = nullptr;
+    std::optional<Range> repaintRect{};
 
     Stroke* stroke = nullptr;
 };

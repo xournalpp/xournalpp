@@ -1,14 +1,8 @@
 #include "util/Range.h"
 
-Range::Range(double x, double y) {
-    this->x1 = x;
-    this->x2 = x;
+#include <cmath>
 
-    this->y1 = y;
-    this->y2 = y;
-}
-
-Range::~Range() = default;
+Range::Range(double x, double y): x1(x), x2(x), y1(y), y2(y) {}
 
 void Range::addPoint(double x, double y) {
     this->x1 = std::min(this->x1, x);

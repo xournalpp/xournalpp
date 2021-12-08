@@ -111,7 +111,7 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
             eraseable = s->getErasable();
         }
 
-        eraseable->erase(x, y, halfEraserSize, range);
+        *range = eraseable->erase(x, y, halfEraserSize, *range);
     }
 }
 

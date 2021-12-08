@@ -11,14 +11,10 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-
-class Range {
+class Range final {
 public:
+    Range();
     Range(double x, double y);
-    virtual ~Range();
 
     void addPoint(double x, double y);
 
@@ -31,8 +27,8 @@ public:
     double getY2() const;
 
 private:
-    double x1;
-    double y1;
-    double y2;
-    double x2;
+    double x1{};
+    double x2{};
+    double y1{};
+    double y2{};
 };

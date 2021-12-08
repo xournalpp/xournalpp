@@ -11,10 +11,13 @@
 
 #pragma once
 
+#include <vector>
+
 #include "AudioElement.h"
 #include "Element.h"
 #include "LineStyle.h"
 #include "Point.h"
+
 
 enum StrokeTool { STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER };
 
@@ -23,6 +26,7 @@ class ErasableStroke;
 class Stroke: public AudioElement {
 public:
     Stroke();
+    Stroke(size_t sizeHint);
     Stroke(Stroke const&) = default;
     Stroke(Stroke&&) = default;
 

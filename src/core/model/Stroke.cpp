@@ -37,6 +37,8 @@ constexpr void updateBounds(Float& x, Float& y, Float& width, Float& height, Rec
 
 Stroke::Stroke(): AudioElement(ELEMENT_STROKE) {}
 
+Stroke::Stroke(size_t sizeHint): AudioElement(ELEMENT_STROKE) { points.reserve(sizeHint); }
+
 Stroke::~Stroke() = default;
 
 /**
