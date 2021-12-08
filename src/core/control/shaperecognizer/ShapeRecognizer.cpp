@@ -313,8 +313,8 @@ auto ShapeRecognizer::recognizePatterns(Stroke* stroke) -> ShapeRecognizerResult
                 s->addPoint(Point(rs->x2, rs->y2));
             } else {
                 auto points = stroke->getPointVector();
-                s->addPoint(points.front());
-                s->addPoint(points.back());
+                s->addPoint(Point(points.front().x, points.front().y));
+                s->addPoint(Point(points.back().x, points.back().y));
             }
 
             rs->stroke = s;
