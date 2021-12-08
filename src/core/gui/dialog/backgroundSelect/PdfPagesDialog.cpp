@@ -8,24 +8,29 @@
 #include "PdfElementView.h"
 
 
-PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings):
+PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Monitor<Document>* doc, Settings* settings):
         BackgroundSelectDialogBase(gladeSearchPath, doc, settings, "pdfpages.glade", "pdfPagesDialog") {
-    for (size_t i = 0; i < doc->getPdfPageCount(); i++) {
-        XojPdfPageSPtr p = doc->getPdfPage(i);
-        auto* pv = new PdfElementView(elements.size(), p, this);
-        elements.push_back(pv);
-    }
-    if (doc->getPdfPageCount() > 0) {
-        setSelected(0);
-    }
+    {
+        Monitor<Document>::LockedMonitor lockedDoc = doc->lock();
+        for (size_t i = 0; i < lockedDoc->getPdfPageCount(); i++) {
+            //TODO
+            XojPdfPageSPtr p = lockedDoc->getPdfPage(i);
+            auto* pv = new PdfElementView(elements.size(), p, this);
+            elements.push_back(pv);
+        }
+        if (lockedDoc->getPdfPageCount() > 0) {
+            setSelected(0);
+        }
 
-    for (size_t i = 0; i < doc->getPageCount(); i++) {
-        PageRef p = doc->getPage(i);
+        for (size_t i = 0; i < lockedDoc->getPageCount(); i++) {
+            //TODO
+            PageRef p = lockedDoc->getPage(i);
 
-        if (p->getBackgroundType().isPdfPage()) {
-            auto pdfPage = p->getPdfPageNr();
-            if (pdfPage >= 0 && pdfPage < elements.size()) {
-                (dynamic_cast<PdfElementView*>(elements[p->getPdfPageNr()]))->setUsed(true);
+            if (p->getBackgroundType().isPdfPage()) {
+                auto pdfPage = p->getPdfPageNr();
+                if (pdfPage >= 0 && pdfPage < elements.size()) {
+                    (dynamic_cast<PdfElementView*>(elements[p->getPdfPageNr()]))->setUsed(true);
+                }
             }
         }
     }

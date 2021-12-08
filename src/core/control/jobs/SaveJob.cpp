@@ -81,9 +81,10 @@ auto SaveJob::save() -> bool {
     SaveHandler h;
 
     {
-        Monitor<Document>::LockedMonitor lockedDoc = (*control->getDocument()).lock();
-        h.prepareSave(doc);
-        fs::path filepath = doc->getFilepath();
+        //TODO: pass lockedDoc to prepareSave?
+        h.prepareSave(control->getDocument());
+        Monitor<Document>::LockedMonitor lockedDoc = control->getDocument()->lock();
+        fs::path filepath = lockedDoc->getFilepath();
 
         Util::clearExtensions(filepath, ".pdf");
         auto const target = fs::path{filepath}.concat(".xopp");

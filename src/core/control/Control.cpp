@@ -1917,7 +1917,7 @@ auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {
 
     {
         Monitor<Document>::LockedMonitor lockedDoc = this->doc.lock();
-        lockedDoc->ReplaceModel(newDoc(this));
+        lockedDoc.ReplaceModel(newDoc(this));
 
         //TODO
         /* *doc = newDoc; */
@@ -2043,7 +2043,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
         lockedDoc->clearDocument();
         //TODO
-        lockedDoc->ReplaceModel(*loadedDocument);
+        lockedDoc.ReplaceModel(*loadedDocument);
     }
 
     // Set folder as last save path, so the next save will be at the current document location
@@ -2075,7 +2075,7 @@ auto Control::loadPdf(const fs::path& filepath, int scrollToPage) -> bool {
                 Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
                 lockedDoc->clearDocument();
                 //TODO
-                lockedDoc->ReplaceModel(*tmp);
+                lockedDoc.ReplaceModel(*tmp);
             }
 
             fileLoaded(scrollToPage);

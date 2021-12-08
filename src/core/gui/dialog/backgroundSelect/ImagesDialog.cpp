@@ -6,7 +6,7 @@
 #include "ImageElementView.h"
 
 
-ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings):
+ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Monitor<Document>* doc, Settings* settings):
         BackgroundSelectDialogBase(gladeSearchPath, doc, settings, "images.glade", "ImagesDialog") {
     loadImagesFromPages();
 
@@ -17,8 +17,10 @@ ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Sett
 ImagesDialog::~ImagesDialog() = default;
 
 void ImagesDialog::loadImagesFromPages() {
-    for (size_t i = 0; i < doc->getPageCount(); i++) {
-        PageRef p = doc->getPage(i);
+    Monitor<Document>::LockedMonitor lockedDoc = doc->lock();
+    for (size_t i = 0; i < lockedDoc->getPageCount(); i++) {
+        //TODO
+        PageRef p = lockedDoc->getPage(i);
 
         if (!p->getBackgroundType().isImagePage()) {
             continue;

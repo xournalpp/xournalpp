@@ -28,7 +28,7 @@ void BaseExportJob::addFileFilterToDialog(const string& name, const string& patt
 }
 
 auto BaseExportJob::checkOverwriteBackgroundPDF(fs::path const& file) const -> bool {
-    auto backgroundPDF = control->getDocument()->getPdfFilepath();
+    auto backgroundPDF = (*control->getDocument())->getPdfFilepath();
     // If there is no background, we can return
     try {
         if (!fs::exists(backgroundPDF)) {
@@ -60,11 +60,9 @@ auto BaseExportJob::showFilechooser() -> bool {
     addFilterToDialog();
 
     Settings* settings = control->getSettings();
-    Document* doc = control->getDocument();
-    doc->lock();
-    fs::path folder = doc->createSaveFolder(settings->getLastSavePath());
-    fs::path name = doc->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
-    doc->unlock();
+
+    fs::path folder = (*control->getDocument())->createSaveFolder(settings->getLastSavePath());
+    fs::path name = (*control->getDocument())->createSaveFilename(Document::PDF, settings->getDefaultSaveName());
 
     gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), true);
     gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), Util::toGFilename(folder).c_str());

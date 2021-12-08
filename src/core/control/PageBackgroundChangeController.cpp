@@ -31,7 +31,7 @@ auto PageBackgroundChangeController::getMenu() -> GtkWidget* { return currentPag
 void PageBackgroundChangeController::changeAllPagesBackground(const PageType& pt) {
     control->clearSelectionEndText();
 
-    Document* doc = control->getDocument();
+    Monitor<Document>* doc = control->getDocument();
 
     auto groupUndoAction = std::make_unique<GroupUndoAction>();
 
@@ -65,7 +65,7 @@ void PageBackgroundChangeController::changeCurrentPageBackground(PageType& pageT
         return;
     }
 
-    Document* doc = control->getDocument();
+    Monitor<Document>* doc = control->getDocument();
     const size_t pageNr = doc->indexOf(page);
     g_assert(pageNr != npos);
 
@@ -86,7 +86,7 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
         return {};
     }
 
-    Document* doc = control->getDocument();
+    Monitor<Document>* doc = control->getDocument();
     const size_t pageNr = doc->indexOf(page);
     g_assert(pageNr != npos);
 
@@ -112,11 +112,9 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
  * @return true on success, false if the user cancels
  */
 auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool {
-    Document* doc = control->getDocument();
+    Monitor<Document>* doc = control->getDocument();
 
-    doc->lock();
     ImagesDialog dlg(control->getGladeSearchPath(), doc, control->getSettings());
-    doc->unlock();
 
     dlg.show(GTK_WINDOW(control->getGtkWindow()));
     BackgroundImage img = dlg.getSelectedImage();
@@ -172,9 +170,9 @@ auto PageBackgroundChangeController::applyImageBackground(PageRef page) -> bool 
  * @return true on success, false if the user cancels
  */
 auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool {
-    Document* doc = control->getDocument();
+    Monitor<Document>* doc = control->getDocument();
 
-    if (doc->getPdfPageCount() == 0) {
+    if ((*doc)->getPdfPageCount() == 0) {
 
         std::string msg = _("You don't have any PDF pages to select from. Cancel operation.\n"
                             "Please select another background type: Menu \"Journal\" → \"Configure Page Template\".");
@@ -182,9 +180,7 @@ auto PageBackgroundChangeController::applyPdfBackground(PageRef page) -> bool {
         return false;
     }
 
-    doc->lock();
     auto* dlg = new PdfPagesDialog(control->getGladeSearchPath(), doc, control->getSettings());
-    doc->unlock();
 
     dlg->show(GTK_WINDOW(control->getGtkWindow()));
 
@@ -247,8 +243,9 @@ void PageBackgroundChangeController::insertNewPage(size_t position) {
     control->clearSelectionEndText();
 
     Document* doc = control->getDocument();
-    if (position > doc->getPageCount()) {
-        position = doc->getPageCount();
+    size_t currentPageCount = doc->getPageCount();
+    if (position > currentPageCount) {
+        position = currentPageCount;
     }
 
     PageTemplateSettings model;

@@ -18,11 +18,16 @@ auto RenderJob::getSource() -> void* { return this->view; }
 
 void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     double zoom = view->xournal->getZoom();
-    Document* doc = view->xournal->getDocument();
-    doc->lock();
-    double pageWidth = view->page->getWidth();
-    double pageHeight = view->page->getHeight();
-    doc->unlock();
+    Monitor<Document>* doc = view->xournal->getDocument();
+
+    double pageWidth;
+    double pageHeight;
+    {
+        //TODO
+        Monitor<Document>*::LockedMonitor lockedDoc = doc->lock();
+        pageWidth = view->page->getWidth();
+        pageHeight = view->page->getHeight();
+    }
 
     auto x = int(std::lround(rect.x * zoom));
     auto y = int(std::lround(rect.y * zoom));
@@ -42,14 +47,17 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     bool backgroundVisible = view->page->isLayerVisible(0);
     if (backgroundVisible && view->page->getBackgroundType().isPdfPage()) {
         auto pgNo = view->page->getPdfPageNr();
+        //TODO
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
         PdfCache* cache = view->xournal->getCache();
         PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
     }
 
-    doc->lock();
-    v.drawPage(view->page, crRect, false);
-    doc->unlock();
+    {
+        //TODO
+        Monitor<Document>*::LockedMonitor lockedDoc = doc->lock();
+        v.drawPage(view->page, crRect, false);
+    }
 
     cairo_destroy(crRect);
 
@@ -99,11 +107,12 @@ void RenderJob::run() {
 
         XojPdfPageSPtr popplerPage;
 
-        doc->lock();
+        //TODO
+        Monitor<Document>*::LockedMonitor lockedDoc = doc->lock();
 
         if (this->view->page->getBackgroundType().isPdfPage()) {
             auto pgNo = this->view->page->getPdfPageNr();
-            popplerPage = doc->getPdfPage(pgNo);
+            popplerPage = lockedDoc->getPdfPage(pgNo);
         }
 
         Control* control = view->getXournal()->getControl();
@@ -128,7 +137,6 @@ void RenderJob::run() {
         this->view->crBuffer = crBuffer;
 
         this->view->drawingMutex.unlock();
-        doc->unlock();
     } else {
         for (Rectangle<double> const& rect: rerenderRects) { rerenderRectangle(rect); }
     }

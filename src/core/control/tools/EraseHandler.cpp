@@ -8,6 +8,7 @@
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "model/Document.h"
+#include "model/Monitor.h"
 #include "model/Layer.h"
 #include "model/Stroke.h"
 #include "model/eraser/ErasableStroke.h"
@@ -17,7 +18,7 @@
 #include "util/Range.h"
 #include "util/Rectangle.h"
 
-EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler,
+EraseHandler::EraseHandler(UndoRedoHandler* undo, Monitor<Document>* doc, const PageRef& page, ToolHandler* handler,
                            Redrawable* view) {
     this->page = page;
     this->handler = handler;
@@ -66,9 +67,12 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
 
     // delete complete element
     if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
-        this->doc->lock();
-        int pos = l->removeElement(s, false);
-        this->doc->unlock();
+        int pos;
+        {
+            //TODO
+            Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
+            pos = l->removeElement(s, false);
+        }
 
         if (pos == -1) {
             return;
@@ -102,10 +106,12 @@ void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* r
 
         ErasableStroke* eraseable = nullptr;
         if (s->getErasable() == nullptr) {
-            doc->lock();
-            eraseable = new ErasableStroke(s);
-            s->setErasable(eraseable);
-            doc->unlock();
+            {
+                //TODO
+                Monitor<Document>::LockedMonitor lockedDoc = this->doc->lock();
+                eraseable = new ErasableStroke(s);
+                s->setErasable(eraseable);
+            }
             this->eraseUndoAction->addOriginal(l, s, pos);
         } else {
             eraseable = s->getErasable();

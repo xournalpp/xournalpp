@@ -7,7 +7,6 @@
 
 #include "control/xojfile/SaveHandler.h"
 #include "model/Document.h"
-#include "model/Monitor.h"
 #include "util/PathUtil.h"
 #include "util/Stacktrace.h"
 #include "util/i18n.h"

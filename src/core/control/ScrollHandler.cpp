@@ -71,11 +71,11 @@ void ScrollHandler::scrollToAnnotatedPage(bool next) {
 
     int step = next ? 1 : -1;
 
-    Document* doc = this->control->getDocument();
+    Monitor<Document>::LockedMonitor lockedDoc = this->control->getDocument()->lock();
 
-    for (size_t i = this->control->getCurrentPageNo() + step; i != npos && i < doc->getPageCount();
+    for (size_t i = this->control->getCurrentPageNo() + step; i != npos && i < lockedDoc->getPageCount();
          i = ((i == 0 && step == -1) ? npos : i + step)) {
-        if (doc->getPage(i)->isAnnotated()) {
+        if (lockedDoc->getPage(i)->isAnnotated()) {
             scrollToPage(i);
             break;
         }

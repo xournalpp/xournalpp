@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "gui/GladeGui.h"
+#include "model/Monitor.h"
 
 
 class Document;
@@ -23,7 +24,7 @@ class BaseElementView;
 
 class BackgroundSelectDialogBase: public GladeGui {
 public:
-    BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings,
+    BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Monitor<Document>* doc, Settings* settings,
                                const std::string& glade, const std::string& mainWnd);
     ~BackgroundSelectDialogBase();
 
@@ -44,7 +45,7 @@ protected:
     GtkWidget* scrollPreview = nullptr;
     GtkWidget* layoutContainer = nullptr;
 
-    Document* doc = nullptr;
+    Monitor<Document>* doc = nullptr;
 
     /**
      * Selection confirmed

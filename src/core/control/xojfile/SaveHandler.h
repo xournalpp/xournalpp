@@ -16,6 +16,7 @@
 
 #include "control/xml/XmlAudioNode.h"
 #include "model/Document.h"
+#include "model/Monitor.h"
 #include "model/PageRef.h"
 #include "model/Stroke.h"
 #include "util/OutputStream.h"
@@ -31,7 +32,7 @@ public:
     virtual ~SaveHandler();
 
 public:
-    void prepareSave(Document* doc);
+    void prepareSave(Monitor<Document>* doc);
     void saveTo(const fs::path& filepath, ProgressListener* listener = nullptr);
     void saveTo(OutputStream* out, const fs::path& filepath, ProgressListener* listener = nullptr);
     std::string getErrorMessage();
@@ -39,7 +40,7 @@ public:
 protected:
     static std::string getColorStr(Color c, unsigned char alpha = 0xff);
 
-    virtual void visitPage(XmlNode* root, PageRef p, Document* doc, int id);
+    virtual void visitPage(XmlNode* root, PageRef p, Monitor<Document>* doc, int id);
     virtual void visitLayer(XmlNode* page, Layer* l);
     virtual void visitStroke(XmlPointNode* stroke, Stroke* s);
 

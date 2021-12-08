@@ -29,7 +29,7 @@ class UndoRedoHandler;
 
 class EraseHandler {
 public:
-    EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler, Redrawable* view);
+    EraseHandler(UndoRedoHandler* undo, Monitor<Document>* doc, const PageRef& page, ToolHandler* handler, Redrawable* view);
     virtual ~EraseHandler();
 
 public:
@@ -43,7 +43,7 @@ private:
     PageRef page;
     ToolHandler* handler;
     Redrawable* view;
-    Document* doc;
+    Monitor<Document>* doc;
     UndoRedoHandler* undo;
 
     DeleteUndoAction* eraseDeleteUndoAction;

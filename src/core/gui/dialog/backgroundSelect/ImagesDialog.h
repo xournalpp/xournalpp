@@ -23,7 +23,7 @@ class BackgroundImage;
 
 class ImagesDialog: public BackgroundSelectDialogBase {
 public:
-    ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings);
+    ImagesDialog(GladeSearchpath* gladeSearchPath, Monitor<Document>* doc, Settings* settings);
     virtual ~ImagesDialog();
 
 public:

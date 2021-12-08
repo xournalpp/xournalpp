@@ -7,7 +7,7 @@
 #include "BaseElementView.h"
 
 
-BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,
+BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Monitor<Document>* doc,
                                                        Settings* settings, const std::string& glade,
                                                        const std::string& mainWnd):
         GladeGui(gladeSearchPath, glade, std::move(mainWnd)), settings(settings), doc(doc) {

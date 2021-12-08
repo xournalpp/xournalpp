@@ -59,7 +59,7 @@ void SaveHandler::prepareSave(Monitor<Document>* doc) {
 
     writeHeader();
 
-    Monitor<Document>::LockedMonitor lockedDoc = doc.lock();
+    Monitor<Document>::LockedMonitor lockedDoc = doc->lock();
     //TODO
     /* Monitor<cairo_surface_t*>::LockedMonitor lockedPreview = lockedDoc->getPreview(); */
     /* if (preview) { */
@@ -68,15 +68,16 @@ void SaveHandler::prepareSave(Monitor<Document>* doc) {
     /*     this->root->addChild(image); */
     /* } */
 
-    for (size_t i = 0; i < lockedDoc->getPageCount(); i++) {
-        Monitor<PageRef>::LockedMonitor p = lockedDoc->getPage(i);
-        p->getBackgroundImage().clearSaveState();
-    }
+    //TODO
+    /* for (size_t i = 0; i < lockedDoc->getPageCount(); i++) { */
+    /*     Monitor<PageRef>::LockedMonitor p = lockedDoc->getPage(i); */
+    /*     p->getBackgroundImage().clearSaveState(); */
+    /* } */
 
-    for (size_t i = 0; i < lockedDoc->getPageCount(); i++) {
-        Monitor<PageRef>::LockedMonitor p = lockedDoc->getPage(i);
-        visitPage(this->root, p, lockedDoc, i);
-    }
+    /* for (size_t i = 0; i < lockedDoc->getPageCount(); i++) { */
+    /*     Monitor<PageRef>::LockedMonitor p = lockedDoc->getPage(i); */
+    /*     visitPage(this->root, p, lockedDoc, i); */
+    /* } */
 }
 
 void SaveHandler::writeHeader() {
@@ -203,7 +204,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
     }
 }
 
-void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
+void SaveHandler::visitPage(XmlNode* root, PageRef p, Monitor<Document>* doc, int id) {
     auto* page = new XmlNode("page");
     root->addChild(page);
     page->setAttrib("width", p->getWidth());
@@ -224,15 +225,17 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
         if (!firstPdfPageVisited) {
             firstPdfPageVisited = true;
 
-            if (doc->isAttachPdf()) {
+            //TODO lock here?
+            if ((*doc)->isAttachPdf()) {
                 background->setAttrib("domain", "attach");
-                auto filepath = doc->getFilepath();
+                auto filepath = (*doc)->getFilepath();
                 Util::clearExtensions(filepath);
                 filepath += ".xopp.bg.pdf";
                 background->setAttrib("filename", "bg.pdf");
 
                 GError* error = nullptr;
-                doc->getPdfDocument().save(filepath, &error);
+                //TODO
+                (*doc)->getPdfDocument().save(filepath, &error);
 
                 if (error) {
                     if (!this->errorMessage.empty()) {
@@ -245,7 +248,7 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                 }
             } else {
                 background->setAttrib("domain", "absolute");
-                background->setAttrib("filename", doc->getPdfFilepath().string());
+                background->setAttrib("filename", (*doc)->getPdfFilepath().string());
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
