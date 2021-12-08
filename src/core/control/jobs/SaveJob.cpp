@@ -35,12 +35,10 @@ void SaveJob::afterRun() {
 void SaveJob::updatePreview(Control* control) {
     const int previewSize = 128;
 
-    Document* doc = control->getDocument();
+    Monitor<Document>::LockedMonitor lockedDoc = (*control->getDocument()).lock();
 
-    doc->lock();
-
-    if (doc->getPageCount() > 0) {
-        PageRef page = doc->getPage(0);
+    if (lockedDoc->getPageCount() > 0) {
+        PageRef page = lockedDoc->getPage(0);
 
         double width = page->getWidth();
         double height = page->getHeight();
@@ -62,7 +60,7 @@ void SaveJob::updatePreview(Control* control) {
 
         if (page->getBackgroundType().isPdfPage()) {
             auto pgNo = page->getPdfPageNr();
-            XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
+            XojPdfPageSPtr popplerPage = lockedDoc->getPdfPage(pgNo);
             if (popplerPage) {
                 popplerPage->render(cr, false);
             }
@@ -71,44 +69,40 @@ void SaveJob::updatePreview(Control* control) {
         DocumentView view;
         view.drawPage(page, cr, true);
         cairo_destroy(cr);
-        doc->setPreview(crBuffer);
+        lockedDoc->setPreview(crBuffer);
         cairo_surface_destroy(crBuffer);
     } else {
-        doc->setPreview(nullptr);
+        lockedDoc->setPreview(nullptr);
     }
-
-    doc->unlock();
 }
 
 auto SaveJob::save() -> bool {
     updatePreview(control);
-    Document* doc = this->control->getDocument();
     SaveHandler h;
 
-    doc->lock();
-    h.prepareSave(doc);
-    fs::path filepath = doc->getFilepath();
-    doc->unlock();
+    {
+        Monitor<Document>::LockedMonitor lockedDoc = (*control->getDocument()).lock();
+        h.prepareSave(doc);
+        fs::path filepath = doc->getFilepath();
 
-    Util::clearExtensions(filepath, ".pdf");
-    auto const target = fs::path{filepath}.concat(".xopp");
+        Util::clearExtensions(filepath, ".pdf");
+        auto const target = fs::path{filepath}.concat(".xopp");
 
-    if (doc->shouldCreateBackupOnSave()) {
-        try {
-            // Note: The backup must be created for the target as this is the filepath
-            // which will be written to. Do not use the `filepath` variable!
-            Util::safeRenameFile(target, fs::path{target} += "~");
-        } catch (fs::filesystem_error const& fe) {
-            g_warning("Could not create backup! Failed with %s", fe.what());
-            return false;
+        if (lockedDoc->shouldCreateBackupOnSave()) {
+            try {
+                // Note: The backup must be created for the target as this is the filepath
+                // which will be written to. Do not use the `filepath` variable!
+                Util::safeRenameFile(target, fs::path{target} += "~");
+            } catch (fs::filesystem_error const& fe) {
+                g_warning("Could not create backup! Failed with %s", fe.what());
+                return false;
+            }
+            lockedDoc->setCreateBackupOnSave(false);
         }
-        doc->setCreateBackupOnSave(false);
-    }
 
-    doc->lock();
-    h.saveTo(target, this->control);
-    doc->setFilepath(target);
-    doc->unlock();
+        h.saveTo(target, this->control);
+        lockedDoc->setFilepath(target);
+    }
 
     if (!h.getErrorMessage().empty()) {
         this->lastError = FS(_F("Save file error: {1}") % h.getErrorMessage());

@@ -53,9 +53,9 @@ void PreviewJob::finishPaint() {
     this->sidebarPreview->drawingMutex.unlock();
 }
 
-void PreviewJob::drawBackgroundPdf(Document* doc) {
+void PreviewJob::drawBackgroundPdf(Monitor<Document>* doc) {
     int pgNo = this->sidebarPreview->page->getPdfPageNr();
-    XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
+    XojPdfPageSPtr popplerPage = (*doc)->getPdfPage(pgNo);
 
     PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), popplerPage, cr2, zoom,
                       this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
@@ -64,11 +64,12 @@ void PreviewJob::drawBackgroundPdf(Document* doc) {
 void PreviewJob::drawPage() {
     DocumentView view;
     PageRef page = this->sidebarPreview->page;
-    Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
+    /* Monitor<Document>* doc = this->sidebarPreview->sidebar->getControl()->getDocument(); */
     PreviewRenderType type = this->sidebarPreview->getRenderType();
     int layer;
 
-    doc->lock();
+    //TODO: do we need to lock for the whole time?
+    /* Monitor<Document>::LockedMonitor lockedDoc = (*this->sidebarPreview->sidebar->getControl()->getDocument()).lock(); */
 
     // getLayer is not defined for page preview
     if (type != RENDER_TYPE_PAGE_PREVIEW) {
@@ -87,7 +88,7 @@ void PreviewJob::drawPage() {
         case RENDER_TYPE_PAGE_LAYERSTACK:
         case RENDER_TYPE_PAGE_PREVIEW:
             if (page->getBackgroundType().isPdfPage()) {
-                drawBackgroundPdf(doc);
+                drawBackgroundPdf(this->sidebarPreview->sidebar->getControl()->getDocument());
             }
             break;
 
@@ -131,7 +132,6 @@ void PreviewJob::drawPage() {
     }
 
     cairo_destroy(cr2);
-    doc->unlock();
 }
 
 void PreviewJob::clipToPage() {

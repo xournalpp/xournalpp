@@ -218,19 +218,19 @@ void Control::deleteLastAutosaveFile(fs::path newAutosaveFile) {
 }
 
 auto Control::checkChangedDocument(Control* control) -> bool {
-    if (!control->doc->tryLock()) {
+    Monitor<Document>::TryLockedMonitor tryLockedDoc = control->doc.tryLock();
+    if (!tryLockedDoc.lockAcquired) {
         // call again later
         // TODO: we always return true
         return true;
     }
     for (auto const& page: control->changedPages) {
-        auto p = control->doc->indexOf(page);
+        auto p = tryLockedDock->indexOf(page);
         if (p != npos) {
             control->firePageChanged(p);
         }
     }
     control->changedPages.clear();
-    control->doc->unlock();
 
     // Call again
     return true;
