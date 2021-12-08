@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 16:58+0000\n"
-"PO-Revision-Date: 2021-12-01 17:02\n"
+"POT-Creation-Date: 2021-12-08 21:06+0000\n"
+"PO-Revision-Date: 2021-12-08 21:22\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -151,7 +151,7 @@ msgstr "Przesuń warstwę wyżej"
 msgid "Bring to front"
 msgstr "Przenieś przed inne warstwy"
 
-#: ../src/core/control/Control.cpp:2014 ../src/core/control/Control.cpp:2465
+#: ../src/core/control/Control.cpp:2013 ../src/core/control/Control.cpp:2464
 #: ../src/core/control/XournalMain.cpp:160
 msgid "Cancel"
 msgstr "Anuluj"
@@ -359,7 +359,7 @@ msgstr "Usuń tę warstwę"
 msgid "Delete this page"
 msgstr "Usuń stronę"
 
-#: ../src/core/control/Control.cpp:2462
+#: ../src/core/control/Control.cpp:2461
 msgid "Discard"
 msgstr "Odrzuć"
 
@@ -367,7 +367,7 @@ msgstr "Odrzuć"
 msgid "Display advanced export options"
 msgstr "Wyświetl zaawansowane opcje eksportu"
 
-#: ../src/core/control/Control.cpp:1959
+#: ../src/core/control/Control.cpp:1958
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -379,7 +379,7 @@ msgstr "Nie otwieraj plików Auto-zapisu. Mogą zostać nadpisane!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Nie nadpisuj pliku kanwy PDF! To może spowodować błędy!"
 
-#: ../src/core/control/Control.cpp:2456
+#: ../src/core/control/Control.cpp:2455
 msgid "Document file was removed."
 msgstr "Dokument został usunięty."
 
@@ -473,7 +473,7 @@ msgstr "Wymaż kreskę"
 msgid "Eraser"
 msgstr "Gumka"
 
-#: ../src/core/control/Control.cpp:2213
+#: ../src/core/control/Control.cpp:2212
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Błąd przy adnotowaniu pliku PDF \"{1}\"\n"
@@ -483,7 +483,7 @@ msgstr "Błąd przy adnotowaniu pliku PDF \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Błąd przy otwieraniu pliku glade \"{1}\" (spróbuj załadować \"{2}\")"
 
-#: ../src/core/control/Control.cpp:2036
+#: ../src/core/control/Control.cpp:2035
 msgid "Error opening file \"{1}\""
 msgstr "Błąd przy otwieraniu pliku \"{1}\""
 
@@ -764,7 +764,7 @@ msgstr "Kombinacja warstw"
 msgid "Layer Preview"
 msgstr "Podgląd warstwy"
 
-#: ../src/core/control/layer/LayerController.cpp:321
+#: ../src/core/control/layer/LayerController.cpp:319
 msgid "Layer {1}"
 msgstr "Warstwa {1}"
 
@@ -772,7 +772,7 @@ msgstr "Warstwa {1}"
 msgid "Layerstack Preview"
 msgstr "Podgląd warstw"
 
-#: ../src/core/gui/PageView.cpp:709
+#: ../src/core/gui/PageView.cpp:703
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -827,7 +827,7 @@ msgstr "Brak urządzenia"
 msgid "No pages to export!"
 msgstr "Brak stron do wyeksportowania!"
 
-#: ../src/core/control/Control.cpp:1268
+#: ../src/core/control/Control.cpp:1267
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Brak dostępnych stron pdf do dodania. Może być konieczne ponowne otwarcie dokumentu."
 
@@ -983,7 +983,7 @@ msgstr "Powtórz"
 msgid "Redo: "
 msgstr "Powtórz: "
 
-#: ../src/core/control/Control.cpp:2013
+#: ../src/core/control/Control.cpp:2012
 msgid "Remove PDF Background"
 msgstr "Usuń PDF w tle"
 
@@ -1035,16 +1035,16 @@ msgstr "Obraz SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Przykładowy plik LaTeX został wygenerowany pomyślnie."
 
-#: ../src/core/control/Control.cpp:2457 ../src/core/control/jobs/SaveJob.cpp:15
+#: ../src/core/control/Control.cpp:2456 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Save"
 msgstr "Zapisz"
 
-#: ../src/core/control/Control.cpp:2457
+#: ../src/core/control/Control.cpp:2456
 msgid "Save As..."
 msgstr "Zapisz jako..."
 
-#: ../src/core/control/Control.cpp:2302
+#: ../src/core/control/Control.cpp:2301
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Zapisz plik"
@@ -1089,7 +1089,7 @@ msgstr "Wybierz prostokąt"
 msgid "Select Region"
 msgstr "Wybierz obszar"
 
-#: ../src/core/control/Control.cpp:2012
+#: ../src/core/control/Control.cpp:2011
 msgid "Select another PDF"
 msgstr "Wybierz inny PDF"
 
@@ -1263,13 +1263,13 @@ msgstr "Tekst nie został znaleziony, szukano na wszystkich stronach"
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Konfiguracja paska narzędzi \"{1}\" jest predefiniowana. Czy stworzyć możliwą do edycji kopię?"
 
-#: ../src/core/control/Control.cpp:2001
+#: ../src/core/control/Control.cpp:2000
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Załączony plik tła {1} nie został znaleziony. Być może zmieniła się jego nazwa bądź został przeniesiony lub usunięty.\n"
 "Ostatnio był widoczny w: {2}"
 
-#: ../src/core/control/Control.cpp:2005
+#: ../src/core/control/Control.cpp:2004
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Plik tła {1} nie został znaleziony. Być może zmieniła się jego nazwa bądź został przeniesiony lub usunięty.\n"
@@ -1279,7 +1279,7 @@ msgstr "Plik tła {1} nie został znaleziony. Być może zmieniła się jego naz
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Próba nadpisania tła wywołała błąd:\n"
 
-#: ../src/core/control/Control.cpp:2044
+#: ../src/core/control/Control.cpp:2043
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Załadowany plik ma nowszą wersję formatu niż ta obecnie obsługiwana przez tę wersję Xournal++, może to spowodować, że nie załaduje się prawidłowo. Otworzyć mimo to?"
 
@@ -1323,7 +1323,7 @@ msgstr "Błąd podczas wyświetlania pomocy: {1}"
 msgid "Thick"
 msgstr "Gruby"
 
-#: ../src/core/control/Control.cpp:2456
+#: ../src/core/control/Control.cpp:2455
 msgid "This document is not saved yet."
 msgstr "Dokument nie został jeszcze zapisany."
 
@@ -1360,7 +1360,7 @@ msgstr "Nie można otworzyć pliku szablonu globalnego w {1}. Czy istnieje?"
 msgid "Unable to play audio recording {1}"
 msgstr "Nie można odtworzyć nagrania audio: {1}"
 
-#: ../src/core/control/Control.cpp:1282
+#: ../src/core/control/Control.cpp:1281
 msgid "Unable to retrieve pdf page."
 msgstr "Nie można pobrać strony pdf."
 
@@ -1405,7 +1405,7 @@ msgstr "Nieznany typ pixmap::domain: {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Nieznany rodzaj kreski: \"{1}\", zakładam, że to pióro"
 
-#: ../src/core/control/Control.cpp:2359
+#: ../src/core/control/Control.cpp:2358
 msgid "Unsaved Document"
 msgstr "Niezapisany dokument"
 
@@ -1457,7 +1457,7 @@ msgstr "Pliki Xournala"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ przestał odpowiadać się ostatnim razem. Czy chcesz przywrócić ostatni edytowany plik?"
 
-#: ../src/core/control/Control.cpp:2308
+#: ../src/core/control/Control.cpp:2307
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Pliki Xournal++"
@@ -1505,7 +1505,7 @@ msgstr "Oddal"
 msgid "Zoom to 100%"
 msgstr "Powiększ do 100%"
 
-#: ../src/core/control/Control.cpp:2302
+#: ../src/core/control/Control.cpp:2301
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
@@ -1518,7 +1518,7 @@ msgstr "_Anuluj"
 msgid "_Open"
 msgstr "_Otwórz"
 
-#: ../src/core/control/Control.cpp:2303
+#: ../src/core/control/Control.cpp:2302
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
@@ -1561,7 +1561,7 @@ msgstr "elementy"
 msgid "eraser"
 msgstr "gumka"
 
-#: ../src/core/control/Control.cpp:1973
+#: ../src/core/control/Control.cpp:1972
 msgid "file: {1}"
 msgstr "plik: {1}"
 
