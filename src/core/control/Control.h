@@ -104,8 +104,6 @@ public:
     // after the OK, we need to check manually
     bool askToReplace(fs::path const& filepath) const;
 
-    void resetShapeRecognizer();
-
     // Menu edit
     void showSettings();
 

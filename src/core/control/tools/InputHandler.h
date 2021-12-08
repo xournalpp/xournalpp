@@ -95,12 +95,6 @@ public:
     Stroke* getStroke();
 
     /**
-     * Reset the shape recognizer, only implemented by drawing instances,
-     * but needs to be in the base interface.
-     */
-    virtual void resetShapeRecognizer();
-
-    /**
      * userTapped - experimental feature to take action on filtered draw. See cbDoActionOnStrokeFilter
      */
     bool userTapped = false;

@@ -166,7 +166,6 @@ void LayerController::deleteCurrentLayer() {
     }
 
     control->getUndoRedoHandler()->addUndoAction(std::make_unique<RemoveLayerUndoAction>(this, p, l, lId - 1));
-    control->resetShapeRecognizer();
 
     fireRebuildLayerMenu();
 }
@@ -240,7 +239,6 @@ void LayerController::copyCurrentLayer() {
     }
 
     control->getUndoRedoHandler()->addUndoAction(std::make_unique<InsertLayerUndoAction>(this, p, cloned, lId));
-    control->resetShapeRecognizer();
 
     fireRebuildLayerMenu();
 }

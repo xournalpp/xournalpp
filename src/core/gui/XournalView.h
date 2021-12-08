@@ -73,8 +73,6 @@ public:
 
     void endTextAllPages(XojPageView* except = nullptr);
 
-    void resetShapeRecognizer();
-
     int getDisplayWidth() const;
     int getDisplayHeight() const;
 

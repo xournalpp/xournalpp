@@ -16,9 +16,6 @@
 #include "InputHandler.h"
 #include "SnapToGridInputHandler.h"
 
-class ShapeRecognizer;
-class ShapeRecognizerResult;
-
 namespace StrokeStabilizer {
 class Base;
 class Active;
@@ -46,11 +43,6 @@ public:
     void onButtonPressEvent(const PositionInputData& pos);
     void onButtonDoublePressEvent(const PositionInputData& pos);
     bool onKeyEvent(GdkEventKey* event);
-    /**
-     * Reset the shape recognizer, only implemented by drawing instances,
-     * but needs to be in the base interface.
-     */
-    virtual void resetShapeRecognizer();
 
     /**
      * @brief Add a straight line to the stroke (if the movement is valid).
@@ -72,7 +64,7 @@ protected:
      */
     void drawSegmentTo(const Point& point);
 
-    void strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer);
+    void strokeRecognizerDetected(Stroke* recognized, Layer* layer);
     void destroySurface();
 
 protected:
@@ -91,8 +83,6 @@ private:
     cairo_t* crMask = nullptr;
 
     DocumentView view;
-
-    ShapeRecognizer* reco = nullptr;
 
 
     // to filter out short strokes (usually the user tapping on the page to select it)

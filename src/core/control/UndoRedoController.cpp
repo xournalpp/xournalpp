@@ -23,8 +23,6 @@ void UndoRedoController::before() {
 }
 
 void UndoRedoController::after() {
-    control->resetShapeRecognizer();
-
     // Restore selection, if any
 
     if (layer == nullptr) {

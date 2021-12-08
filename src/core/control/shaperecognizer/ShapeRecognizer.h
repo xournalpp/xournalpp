@@ -19,14 +19,13 @@
 
 class Stroke;
 class Point;
-class ShapeRecognizerResult;
 
 class ShapeRecognizer {
 public:
     ShapeRecognizer();
     virtual ~ShapeRecognizer();
 
-    ShapeRecognizerResult* recognizePatterns(Stroke* stroke);
+    Stroke* recognizePatterns(Stroke* stroke);
     void resetRecognizer();
 
 private:
@@ -42,6 +41,4 @@ private:
     int queueLength;
 
     Stroke* stroke;
-
-    friend class ShapeRecognizerResult;
 };

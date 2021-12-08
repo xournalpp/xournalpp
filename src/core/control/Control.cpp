@@ -1166,7 +1166,6 @@ void Control::setShapeTool(ActionType type, bool enabled) {
 
         case ACTION_SHAPE_RECOGNIZER:
             this->toolHandler->setDrawingType(DRAWING_TYPE_STROKE_RECOGNIZER);
-            this->resetShapeRecognizer();
             break;
 
         default:
@@ -2528,12 +2527,6 @@ auto Control::askToReplace(fs::path const& filepath) const -> bool {
         return res == GTK_RESPONSE_OK;
     }
     return true;
-}
-
-void Control::resetShapeRecognizer() {
-    if (this->win) {
-        this->win->getXournal()->resetShapeRecognizer();
-    }
 }
 
 void Control::showAbout() {
