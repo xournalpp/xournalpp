@@ -80,6 +80,22 @@ auto XojMsgBox::replaceFileQuestion(GtkWindow* win, const string& msg) -> int {
     return res;
 }
 
+auto XojMsgBox::overwriteBackgroundQuestion(GtkWindow* win, const string& msg) -> int {
+    GtkWidget* dialog =
+            gtk_message_dialog_new(win, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s", msg.c_str());
+    if (win != nullptr) {
+        gtk_window_set_transient_for(GTK_WINDOW(dialog), win);
+    }
+    // TODO: reformulate dialog?
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another name"), GTK_RESPONSE_CANCEL);
+    gtk_dialog_add_button(GTK_DIALOG(dialog), _("Overwrite, no backup"), GTK_RESPONSE_REJECT);
+    auto backupBtn = gtk_dialog_add_button(GTK_DIALOG(dialog), _("Overwrite, but make backup"), GTK_RESPONSE_ACCEPT);
+    gtk_widget_grab_focus(backupBtn);
+    int res = gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+    return res;
+}
+
 constexpr auto* XOJ_HELP = "https://xournalpp.github.io/community/help/";
 
 void XojMsgBox::showHelp(GtkWindow* win) {

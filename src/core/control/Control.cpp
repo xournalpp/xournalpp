@@ -2389,7 +2389,33 @@ void Control::exportAs() {
 
 void Control::exportBase(BaseExportJob* job) {
     if (job->showFilechooser()) {
+        if (job->overwriteBackground) {
+            fs::path backgroundPdfPath = this->doc->getPdfFilepath();
+            fs::path backupPdfPath = backgroundPdfPath;
+            Util::clearExtensions(backupPdfPath, ".pdf");
+            backupPdfPath += ".back.pdf";
+            if (job->makeBackgroundBackup) {
+                if (!fs::exists(backupPdfPath)) {
+                    /* Copy */
+                    std::filesystem::copy_file(backgroundPdfPath, backupPdfPath);
+                    this->doc->readPdf2(backupPdfPath);
+                    goto end;
+                } else {
+                    // TODO: we may just overwrite that file
+                    printf("Couldn't backup background PDF since file already exists.\n");  // TODO: log correctly
+                    goto copy_to_temp;
+                }
+            }
+        copy_to_temp: {
+            /* Copy background pdf to tmp file and set it as new background. */
+            fs::path tmpFilePath = fs::path(std::tmpnam(nullptr));  // TODO: tmpnam is not ideal
+            std::filesystem::copy_file(backgroundPdfPath, tmpFilePath);
+            this->doc->readPdf2(tmpFilePath);
+        }
+        end:;
+        }
         this->scheduler->addJob(job, JOB_PRIORITY_NONE);
+        // TODO: remove tmp file and reopen pdf
     } else {
         // The job blocked, so we have to unblock, because the job unblocks only after run
         unblock();

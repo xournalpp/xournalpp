@@ -31,5 +31,6 @@ public:
     static int showPluginMessage(const std::string& pluginName, const std::string& msg,
                                  const std::map<int, std::string>& button, bool error = false);
     static int replaceFileQuestion(GtkWindow* win, const std::string& msg);
+    static int overwriteBackgroundQuestion(GtkWindow* win, const std::string& msg);
     static void showHelp(GtkWindow* win);
 };

@@ -277,6 +277,25 @@ void Document::updateIndexPageNumbers() {
     }
 }
 
+// TODO: rename and factor out code from readPdf
+auto Document::readPdf2(const fs::path& filename) -> bool {
+    GError* popplerError = nullptr;
+    lock();
+    if (!pdfDocument.load(filename, password, &popplerError)) {
+        if (popplerError) {
+            lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.u8string() % popplerError->message);
+            g_error_free(popplerError);
+        } else {
+            lastError = FS(_F("Document not loaded! ({1}), {2}") % filename.u8string() % "");
+        }
+        unlock();
+        return false;
+    }
+    unlock();
+    this->pdfFilepath = filename;
+    return true;
+}
+
 auto Document::readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data, gsize length)
         -> bool {
     GError* popplerError = nullptr;

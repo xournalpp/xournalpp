@@ -36,6 +36,7 @@ public:
 public:
     enum DocumentType { XOPP, XOJ, PDF };
 
+    bool readPdf2(const fs::path& filename);
     bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
                  gsize length = 0);
 

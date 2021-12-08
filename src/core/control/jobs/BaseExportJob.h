@@ -46,10 +46,14 @@ protected:
     void initDialog();
     virtual void addFilterToDialog() = 0;
     void addFileFilterToDialog(const std::string& name, const std::string& pattern);
-    bool checkOverwriteBackgroundPDF(fs::path const& file) const;
+    bool checkOverwriteBackgroundPDF(fs::path const& file);
     virtual bool testAndSetFilepath(fs::path file);
 
 private:
+public:
+    bool overwriteBackground = false;
+    bool makeBackgroundBackup = true;
+
 protected:
     GtkWidget* dialog = nullptr;
 
