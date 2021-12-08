@@ -86,9 +86,8 @@ public:
     cairo_surface_t* getPreview();
     void setPreview(cairo_surface_t* preview);
 
-    void lock();
-    void unlock();
-    bool tryLock();
+    std::lock_guard<std::recursive_mutex> lock();
+    std::pair<bool, std::lock_guard<std::recursive_mutex>> tryLock();
 
 private:
     void buildContentsModel();
@@ -153,9 +152,9 @@ private:
     cairo_surface_t* preview = nullptr;
 
     /**
-     * The lock of the document
+     * Mutex for all operations on the document.
      */
-    std::mutex documentLock;
+    std::recursive_mutex mutex;
 };
 
 template <class InputIter>
