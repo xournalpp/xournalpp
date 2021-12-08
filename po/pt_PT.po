@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 16:58+0000\n"
-"PO-Revision-Date: 2021-12-01 17:02\n"
+"POT-Creation-Date: 2021-12-08 21:06+0000\n"
+"PO-Revision-Date: 2021-12-08 21:22\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -151,7 +151,7 @@ msgstr "Trazer para frente"
 msgid "Bring to front"
 msgstr "Trazer para o primeiro plano"
 
-#: ../src/core/control/Control.cpp:2014 ../src/core/control/Control.cpp:2465
+#: ../src/core/control/Control.cpp:2013 ../src/core/control/Control.cpp:2464
 #: ../src/core/control/XournalMain.cpp:160
 msgid "Cancel"
 msgstr "Cancelar"
@@ -359,7 +359,7 @@ msgstr "Apagar a camada"
 msgid "Delete this page"
 msgstr "Eliminar esta página"
 
-#: ../src/core/control/Control.cpp:2462
+#: ../src/core/control/Control.cpp:2461
 msgid "Discard"
 msgstr "Descartar"
 
@@ -367,7 +367,7 @@ msgstr "Descartar"
 msgid "Display advanced export options"
 msgstr "Exibir opções avançadas de exportação"
 
-#: ../src/core/control/Control.cpp:1959
+#: ../src/core/control/Control.cpp:1958
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -379,7 +379,7 @@ msgstr "Não abra os arquivos de guardados automaticamente. Eles podem ser subst
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Não sobrescreva o PDF origem! Isto causará erros!"
 
-#: ../src/core/control/Control.cpp:2456
+#: ../src/core/control/Control.cpp:2455
 msgid "Document file was removed."
 msgstr "Ficheiro de document foi removido."
 
@@ -473,7 +473,7 @@ msgstr "Apagar traço"
 msgid "Eraser"
 msgstr "Borracha"
 
-#: ../src/core/control/Control.cpp:2213
+#: ../src/core/control/Control.cpp:2212
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Erro ao anotar PDF \"{1}\"\n"
@@ -483,7 +483,7 @@ msgstr "Erro ao anotar PDF \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Erro ao carregar o ficheiro glade \"{1}\" (tente carregar \"{2}\")"
 
-#: ../src/core/control/Control.cpp:2036
+#: ../src/core/control/Control.cpp:2035
 msgid "Error opening file \"{1}\""
 msgstr "Erro a abrir o ficheiro \"{1}\""
 
@@ -755,7 +755,7 @@ msgstr ""
 msgid "Layer Preview"
 msgstr "Pré-visualização da camada"
 
-#: ../src/core/control/layer/LayerController.cpp:321
+#: ../src/core/control/layer/LayerController.cpp:319
 msgid "Layer {1}"
 msgstr "Camada {1}"
 
@@ -763,7 +763,7 @@ msgstr "Camada {1}"
 msgid "Layerstack Preview"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:709
+#: ../src/core/gui/PageView.cpp:703
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -818,7 +818,7 @@ msgstr "Nenhum dispositivo"
 msgid "No pages to export!"
 msgstr "Nenhuma página para exportar!"
 
-#: ../src/core/control/Control.cpp:1268
+#: ../src/core/control/Control.cpp:1267
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
@@ -973,7 +973,7 @@ msgstr "Refazer"
 msgid "Redo: "
 msgstr "Refazer: "
 
-#: ../src/core/control/Control.cpp:2013
+#: ../src/core/control/Control.cpp:2012
 msgid "Remove PDF Background"
 msgstr "Remover fundo do PDF"
 
@@ -1025,16 +1025,16 @@ msgstr "Gráficos SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2457 ../src/core/control/jobs/SaveJob.cpp:15
+#: ../src/core/control/Control.cpp:2456 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Save"
 msgstr "Guardar"
 
-#: ../src/core/control/Control.cpp:2457
+#: ../src/core/control/Control.cpp:2456
 msgid "Save As..."
 msgstr "Guardar como..."
 
-#: ../src/core/control/Control.cpp:2302
+#: ../src/core/control/Control.cpp:2301
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Guardar Ficheiro"
@@ -1079,7 +1079,7 @@ msgstr "Selecionar Retângulo"
 msgid "Select Region"
 msgstr "Selecionar região"
 
-#: ../src/core/control/Control.cpp:2012
+#: ../src/core/control/Control.cpp:2011
 msgid "Select another PDF"
 msgstr "Selecione outro PDF"
 
@@ -1248,12 +1248,12 @@ msgstr "Texto não encontrado, pesquisado em todas as páginas"
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "A configuração da barra de ferramentas \"{1}\" é predefinida, quer criar uma cópia para editar?"
 
-#: ../src/core/control/Control.cpp:2001
+#: ../src/core/control/Control.cpp:2000
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2005
+#: ../src/core/control/Control.cpp:2004
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr ""
@@ -1262,7 +1262,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2044
+#: ../src/core/control/Control.cpp:2043
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1306,7 +1306,7 @@ msgstr "Ocorreu um erro ao exibir a ajuda: {1}"
 msgid "Thick"
 msgstr "Espessa"
 
-#: ../src/core/control/Control.cpp:2456
+#: ../src/core/control/Control.cpp:2455
 msgid "This document is not saved yet."
 msgstr "Este documento ainda não foi guardado."
 
@@ -1343,7 +1343,7 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:1282
+#: ../src/core/control/Control.cpp:1281
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
@@ -1388,7 +1388,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2359
+#: ../src/core/control/Control.cpp:2358
 msgid "Unsaved Document"
 msgstr "Documento não guardado"
 
@@ -1440,7 +1440,7 @@ msgstr "Ficheiros Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Ocorreu um erro no Xournal++ da última vez que foi utilizado. Gostaria de recuperar o último arquivo editado?"
 
-#: ../src/core/control/Control.cpp:2308
+#: ../src/core/control/Control.cpp:2307
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Ficheiros Xournal++"
@@ -1485,7 +1485,7 @@ msgstr "Afastar"
 msgid "Zoom to 100%"
 msgstr "Ampliar para o tamanho real"
 
-#: ../src/core/control/Control.cpp:2302
+#: ../src/core/control/Control.cpp:2301
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
@@ -1498,7 +1498,7 @@ msgstr "_Cancelar"
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../src/core/control/Control.cpp:2303
+#: ../src/core/control/Control.cpp:2302
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
@@ -1541,7 +1541,7 @@ msgstr "elementos"
 msgid "eraser"
 msgstr "borracha"
 
-#: ../src/core/control/Control.cpp:1973
+#: ../src/core/control/Control.cpp:1972
 msgid "file: {1}"
 msgstr ""
 
