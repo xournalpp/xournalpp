@@ -9,6 +9,7 @@ template <class T>
 template<typename ...Args>
 Monitor<T>::Monitor(Args&&... args) : model(std::forward<Args>(args)...) {}
 
+
 template <class T>
 Monitor<T>::LockedMonitor::LockedMonitor(Monitor* monitor) : mon(monitor), lock(monitor->mutex) {}
 
@@ -19,6 +20,7 @@ template <class T>
 void Monitor<T>::LockedMonitor::ReplaceModel(T model) {
     mon->model = model;
 }
+
 
 template <class T>
 Monitor<T>::TryLockedMonitor::TryLockedMonitor(Monitor* monitor) {
@@ -41,14 +43,15 @@ void Monitor<T>::TryLockedMonitor::ReplaceModel(T model) {
     mon->model = model;
 }
 
-template <class T>
-typename Monitor<T>::LockedMonitor Monitor<T>::operator->() { return LockedMonitor(this); }
 
 template <class T>
-typename Monitor<T>::LockedMonitor Monitor<T>::lock() { return LockedMonitor(this); }
+auto Monitor<T>::operator->() -> typename Monitor<T>::LockedMonitor { return LockedMonitor(this); }
 
 template <class T>
-typename Monitor<T>::TryLockedMonitor Monitor<T>::tryLock() { return TryLockedMonitor(this); }
+auto Monitor<T>::lock() -> typename Monitor<T>::LockedMonitor { return LockedMonitor(this); }
+
+template <class T>
+auto Monitor<T>::tryLock() -> typename Monitor<T>::TryLockedMonitor { return TryLockedMonitor(this); }
 
 template <class T>
 T& Monitor<T>::getUnsafeAccess() { return model; }
