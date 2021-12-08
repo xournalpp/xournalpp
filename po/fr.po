@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-01 16:58+0000\n"
-"PO-Revision-Date: 2021-12-01 17:02\n"
+"POT-Creation-Date: 2021-12-08 21:06+0000\n"
+"PO-Revision-Date: 2021-12-08 21:22\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -151,7 +151,7 @@ msgstr "Mettre au premier plan"
 msgid "Bring to front"
 msgstr "Mettre en avant"
 
-#: ../src/core/control/Control.cpp:2014 ../src/core/control/Control.cpp:2465
+#: ../src/core/control/Control.cpp:2013 ../src/core/control/Control.cpp:2464
 #: ../src/core/control/XournalMain.cpp:160
 msgid "Cancel"
 msgstr "Annuler"
@@ -359,7 +359,7 @@ msgstr "Supprimer ce calque"
 msgid "Delete this page"
 msgstr "Supprimer cette page"
 
-#: ../src/core/control/Control.cpp:2462
+#: ../src/core/control/Control.cpp:2461
 msgid "Discard"
 msgstr "Fermer sans enregistrer"
 
@@ -367,7 +367,7 @@ msgstr "Fermer sans enregistrer"
 msgid "Display advanced export options"
 msgstr "Afficher les options d'exportation avancées"
 
-#: ../src/core/control/Control.cpp:1959
+#: ../src/core/control/Control.cpp:1958
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -379,7 +379,7 @@ msgstr "Ne pas ouvrir les fichiers de sauvegarde automatique. Ils peuvent être 
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ne pas écraser le PDF d'arrière-plan ! Cela causera des erreurs !"
 
-#: ../src/core/control/Control.cpp:2456
+#: ../src/core/control/Control.cpp:2455
 msgid "Document file was removed."
 msgstr "Le fichier du document a été supprimé."
 
@@ -473,7 +473,7 @@ msgstr "Effacer le trait"
 msgid "Eraser"
 msgstr "Gomme"
 
-#: ../src/core/control/Control.cpp:2213
+#: ../src/core/control/Control.cpp:2212
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Erreur dans l'annotation du PDF \"{1}\"\n"
@@ -483,7 +483,7 @@ msgstr "Erreur dans l'annotation du PDF \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Erreur lors du chargement du fichier glade \"{1}\" (essayez de charger \"{2}\")"
 
-#: ../src/core/control/Control.cpp:2036
+#: ../src/core/control/Control.cpp:2035
 msgid "Error opening file \"{1}\""
 msgstr "Erreur lors de l'ouverture du fichier \"{1}\""
 
@@ -765,7 +765,7 @@ msgstr "Combinaison du calque"
 msgid "Layer Preview"
 msgstr "Aperçu du calque"
 
-#: ../src/core/control/layer/LayerController.cpp:321
+#: ../src/core/control/layer/LayerController.cpp:319
 msgid "Layer {1}"
 msgstr "Calque {1}"
 
@@ -773,7 +773,7 @@ msgstr "Calque {1}"
 msgid "Layerstack Preview"
 msgstr "Aperçu de la pile de calques"
 
-#: ../src/core/gui/PageView.cpp:709
+#: ../src/core/gui/PageView.cpp:703
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -828,7 +828,7 @@ msgstr "Aucun appareil"
 msgid "No pages to export!"
 msgstr "Aucune page à exporter !"
 
-#: ../src/core/control/Control.cpp:1268
+#: ../src/core/control/Control.cpp:1267
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Aucune page PDF de disponible à ajouter. Vous devrez peut-être rouvrir le document d'abord."
 
@@ -984,7 +984,7 @@ msgstr "Refaire"
 msgid "Redo: "
 msgstr "Refaire : "
 
-#: ../src/core/control/Control.cpp:2013
+#: ../src/core/control/Control.cpp:2012
 msgid "Remove PDF Background"
 msgstr "Supprimer l'arrière-plan du PDF"
 
@@ -1036,16 +1036,16 @@ msgstr "Graphiques SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Fichier LaTeX d'exemple généré avec succès."
 
-#: ../src/core/control/Control.cpp:2457 ../src/core/control/jobs/SaveJob.cpp:15
+#: ../src/core/control/Control.cpp:2456 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: ../src/core/control/Control.cpp:2457
+#: ../src/core/control/Control.cpp:2456
 msgid "Save As..."
 msgstr "Enregistrer sous..."
 
-#: ../src/core/control/Control.cpp:2302
+#: ../src/core/control/Control.cpp:2301
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Enregistrer le fichier"
@@ -1090,7 +1090,7 @@ msgstr "Sélectionner un rectangle"
 msgid "Select Region"
 msgstr "Sélectionner une région"
 
-#: ../src/core/control/Control.cpp:2012
+#: ../src/core/control/Control.cpp:2011
 msgid "Select another PDF"
 msgstr "Sélectionnez un autre PDF"
 
@@ -1264,13 +1264,13 @@ msgstr "Texte introuvable, recherché sur toutes les pages"
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "La configuration de l'outil \"{1}\" est prédéfinie, voulez-vous créer une copie à modifier ?"
 
-#: ../src/core/control/Control.cpp:2001
+#: ../src/core/control/Control.cpp:2000
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Le fichier d'arrière-plan joint {1} n'a pas pu être trouvé. Il a peut-être été déplacé, renommé ou supprimé.\n"
 "Il a été vu pour la dernière fois à: {2}"
 
-#: ../src/core/control/Control.cpp:2005
+#: ../src/core/control/Control.cpp:2004
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Le fichier d'arrière-plan {1} n'a pas pu être trouvé. Il a peut-être été déplacé, renommé ou supprimé.\n"
@@ -1280,7 +1280,7 @@ msgstr "Le fichier d'arrière-plan {1} n'a pas pu être trouvé. Il a peut-être
 msgid "The check for overwriting the background failed with:\n"
 msgstr "La vérification pour le remplacement de l'arrière-plan a échoué avec :\n"
 
-#: ../src/core/control/Control.cpp:2044
+#: ../src/core/control/Control.cpp:2043
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Le fichier en cours de chargement utilise une version du format de fichier plus récente que celle actuellement supportée par cette version de Xournal++, il pourrait par conséquent ne pas se charger correctement. L'ouvrir quand même ?"
 
@@ -1324,7 +1324,7 @@ msgstr "Une erreur s'est produite lors de l'affichage de l'aide : {1}"
 msgid "Thick"
 msgstr "Gras"
 
-#: ../src/core/control/Control.cpp:2456
+#: ../src/core/control/Control.cpp:2455
 msgid "This document is not saved yet."
 msgstr "Ce document n'est pas encore enregistré."
 
@@ -1361,7 +1361,7 @@ msgstr "Impossible d'ouvrir le fichier de modèle global à {1}. Existe-t-il ?"
 msgid "Unable to play audio recording {1}"
 msgstr "Impossible de lire l'enregistrement audio {1}"
 
-#: ../src/core/control/Control.cpp:1282
+#: ../src/core/control/Control.cpp:1281
 msgid "Unable to retrieve pdf page."
 msgstr "Impossible de récupérer la page pdf."
 
@@ -1406,7 +1406,7 @@ msgstr "Type de domaine inconnu : {1}"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Type de trait inconnu : \"{1}\", en supposant le stylo"
 
-#: ../src/core/control/Control.cpp:2359
+#: ../src/core/control/Control.cpp:2358
 msgid "Unsaved Document"
 msgstr "Document non enregistré"
 
@@ -1458,7 +1458,7 @@ msgstr "Fichiers Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ a échoué la dernière fois. Voulez-vous restaurer le dernier fichier modifié ?"
 
-#: ../src/core/control/Control.cpp:2308
+#: ../src/core/control/Control.cpp:2307
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Fichiers Xournal++"
@@ -1506,7 +1506,7 @@ msgstr "Dézoomer"
 msgid "Zoom to 100%"
 msgstr "Zoom à 100%"
 
-#: ../src/core/control/Control.cpp:2302
+#: ../src/core/control/Control.cpp:2301
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
@@ -1519,7 +1519,7 @@ msgstr "_Annuler"
 msgid "_Open"
 msgstr "_Ouvrir"
 
-#: ../src/core/control/Control.cpp:2303
+#: ../src/core/control/Control.cpp:2302
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
@@ -1562,7 +1562,7 @@ msgstr "éléments"
 msgid "eraser"
 msgstr "gomme"
 
-#: ../src/core/control/Control.cpp:1973
+#: ../src/core/control/Control.cpp:1972
 msgid "file: {1}"
 msgstr "fichier : {1}"
 
