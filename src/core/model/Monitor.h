@@ -36,7 +36,7 @@ public:
 
     std::optional<LockedMonitor> try_lock();
 
-    T& getUnsafeAccess();
+    [[deprecated]] T& getUnsafeAccess();
 
 private:
     T model;
