@@ -151,4 +151,5 @@ void CustomExportJob::afterRun() {
     if (!this->lastError.empty()) {
         XojMsgBox::showErrorToUser(control->getGtkWindow(), this->lastError);
     }
+    printf("after run custom\n");
 }

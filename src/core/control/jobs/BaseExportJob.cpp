@@ -111,4 +111,10 @@ void BaseExportJob::afterRun() {
     if (!this->errorMsg.empty()) {
         XojMsgBox::showErrorToUser(control->getGtkWindow(), this->errorMsg);
     }
+    printf("after run baseexportjob\n");
+    /* if (this->overwriteBackground && !this->makeBackgroundBackup) { */
+    /*     fs::path tmp = this->control->getDocument()->getPdfFilepath(); */
+    /*     // open new doc */
+    /*     printf("%s\n", tmp.c_str()); */
+    /* } */
 }

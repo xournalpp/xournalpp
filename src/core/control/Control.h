@@ -270,6 +270,7 @@ public:
     // UndoRedoListener interface
     void undoRedoChanged();
     void undoRedoPageChanged(PageRef page);
+    void undoRedoFakeSaved();
 
 public:
     // ProgressListener interface
@@ -291,7 +292,6 @@ public:
      * Discards the document, preparing the editor for a new document.
      */
     void discardDocument();
-
 protected:
     /**
      * This callback is used by used to be called later in the UI Thread

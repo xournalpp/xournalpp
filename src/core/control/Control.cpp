@@ -1651,6 +1651,10 @@ void Control::undoRedoPageChanged(PageRef page) {
     }
 }
 
+void Control::undoRedoFakeSaved() {
+    this->undoRedo->documentSaved();
+}
+
 void Control::selectTool(ToolType type) {
     toolHandler->selectTool(type);
     toolHandler->fireToolChanged();
@@ -2401,12 +2405,13 @@ void Control::exportBase(BaseExportJob* job) {
             backupPdfPath += ".back.pdf";
             if (job->makeBackgroundBackup) {
                 if (!fs::exists(backupPdfPath)) {
-                    /* Copy */
+                    /* Make backup of background pdf and set it as new background. */
                     std::filesystem::copy_file(backgroundPdfPath, backupPdfPath);
                     this->doc->readPdf2(backupPdfPath);
                     goto end;
                 } else {
                     // TODO: we may just overwrite that file
+                    job->makeBackgroundBackup = false;
                     printf("Couldn't backup background PDF since file already exists.\n");  // TODO: log correctly
                     goto copy_to_temp;
                 }
@@ -2420,7 +2425,6 @@ void Control::exportBase(BaseExportJob* job) {
         end:;
         }
         this->scheduler->addJob(job, JOB_PRIORITY_NONE);
-        // TODO: remove tmp file and reopen pdf
     } else {
         // The job blocked, so we have to unblock, because the job unblocks only after run
         unblock();

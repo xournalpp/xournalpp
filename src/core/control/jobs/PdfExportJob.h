@@ -19,6 +19,7 @@ public:
 
 protected:
     virtual ~PdfExportJob();
+    virtual void afterRun();
 
 public:
     void run();
