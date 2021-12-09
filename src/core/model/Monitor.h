@@ -34,7 +34,7 @@ public:
 
     LockedMonitor lock();
 
-    TryLockedMonitor tryLock();
+    std::optional<LockedMonitor> try_lock();
 
     T& getUnsafeAccess();
 
