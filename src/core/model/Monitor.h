@@ -1,5 +1,6 @@
 #include <cassert>
 #include <mutex>
+#include <optional>
 
 template<class T>
 class Monitor
@@ -11,6 +12,7 @@ public:
     struct LockedMonitor
     {
         LockedMonitor(Monitor* monitor);
+        LockedMonitor(Monitor* monitor, std::unique_lock<std::mutex> lock);
         T* operator->();
         void ReplaceModel(T model);
         private:
@@ -18,24 +20,13 @@ public:
             std::unique_lock<std::mutex> lock;
     };
 
-    struct TryLockedMonitor
-    {
-        TryLockedMonitor(Monitor* monitor);
-        T* operator->();
-        void ReplaceModel(T model);
-        bool lockAcquired;
-        private:
-            Monitor* mon = nullptr;
-            std::unique_lock<std::mutex> lock;
-    };
-
-
     LockedMonitor operator->();
 
     LockedMonitor lock();
 
     std::optional<LockedMonitor> try_lock();
 
+    // TODO: remove after refactoring
     [[deprecated]] T& getUnsafeAccess();
 
 private:
