@@ -292,6 +292,7 @@ public:
      * Discards the document, preparing the editor for a new document.
      */
     void discardDocument();
+
 protected:
     /**
      * This callback is used by used to be called later in the UI Thread

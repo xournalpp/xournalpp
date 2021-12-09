@@ -49,18 +49,19 @@ void PdfExportJob::afterRun() {
     /* if (!this->errorMsg.empty()) { */
     /*     XojMsgBox::showErrorToUser(control->getGtkWindow(), this->errorMsg); */
     /* } */
-    //TODO: what is with custom export job?
+    // TODO: what is with custom export job?
     printf("after run pdfexportjob\n");
     if (this->overwriteBackground) {
         if (this->makeBackgroundBackup) {
-            /* We previously changed the background pdf to the backup. Keep the document open as is but fake a saving action. */
+            /* We previously changed the background pdf to the backup. Keep the document open as is but fake a saving
+             * action. */
             this->control->undoRedoFakeSaved();
         } else {
             /* We previously saved the background pdf temporarily and changed the background to it. */
             fs::path tmp = this->control->getDocument()->getPdfFilepath();
             /* Discard old changes and load newly created pdf file. */
-            this->control->discardDocument(); // TODO: calling discardDocument and newFile here should not
-            this->control->newFile();         //       be needed but it doesn't work without both of them
+            this->control->discardDocument();  // TODO: calling discardDocument and newFile here should not
+            this->control->newFile();          //       be needed but it doesn't work without both of them
             this->control->annotatePdf(this->filepath, true, true, true);
             /* Remove the tmp background pdf. */
             remove(tmp);

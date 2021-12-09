@@ -1651,9 +1651,7 @@ void Control::undoRedoPageChanged(PageRef page) {
     }
 }
 
-void Control::undoRedoFakeSaved() {
-    this->undoRedo->documentSaved();
-}
+void Control::undoRedoFakeSaved() { this->undoRedo->documentSaved(); }
 
 void Control::selectTool(ToolType type) {
     toolHandler->selectTool(type);
@@ -2198,7 +2196,7 @@ auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDo
         }
     }
 
-    //TODO: we should have closed before??
+    // TODO: we should have closed before??
     /* this->discardDocument(); */
 
     getCursor()->setCursorBusy(true);
