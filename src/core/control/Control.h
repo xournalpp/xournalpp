@@ -71,7 +71,7 @@ public:
     // Menu File
     bool newFile(std::string pageTemplate = "", fs::path filepath = {});
     bool openFile(fs::path filepath = "", int scrollToPage = -1, bool forceOpen = false);
-    bool annotatePdf(fs::path filepath, bool attachPdf, bool attachToDocument);
+    bool annotatePdf(fs::path filepath, bool attachPdf, bool attachToDocument, bool forceDiscard = false);
     void print();
     void exportAsPdf();
     void exportAs();
@@ -98,7 +98,7 @@ public:
      * @param allowCancel Whether the user should be able to cancel closing the document.
      * @return true if the user closed the document, otherwise false.
      */
-    bool close(bool allowDestroy = false, bool allowCancel = true);
+    bool closeDocumentInteractively(bool allowDestroy = false, bool allowCancel = true);
 
     // Asks user to replace an existing file when saving / exporting, since we add the extension
     // after the OK, we need to check manually
@@ -287,6 +287,11 @@ public:
 
     void clipboardPaste(Element* e);
 
+    /**
+     * Discards the document, preparing the editor for a new document.
+     */
+    void discardDocument();
+
 protected:
     /**
      * This callback is used by used to be called later in the UI Thread
@@ -326,10 +331,6 @@ protected:
     bool loadPdf(fs::path const& filepath, int scrollToPage);
 
 private:
-    /**
-     * "Closes" the document, preparing the editor for a new document.
-     */
-    void closeDocument();
 
     /**
      * Applies the preferred language to the UI

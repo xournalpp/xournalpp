@@ -1927,7 +1927,7 @@ void Control::showSettings() {
 }
 
 auto Control::newFile(string pageTemplate, fs::path filepath) -> bool {
-    if (!this->close(true)) {
+    if (!this->closeDocumentInteractively(true)) {
         return false;
     }
 
@@ -1977,7 +1977,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         return false;
     }
 
-    if (!this->close(false)) {
+    if (!this->closeDocumentInteractively(false)) {
         return false;
     }
 
@@ -2051,7 +2051,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         }
     }
 
-    this->closeDocument();
+    this->discardDocument();
 
     this->doc->lock();
     this->doc->clearDocument();
@@ -2177,9 +2177,13 @@ void Control::loadMetadata(MetadataEntry md) {
     g_idle_add(reinterpret_cast<GSourceFunc>(loadMetadataCallback), data);
 }
 
-auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDocument) -> bool {
-    if (!this->close(false)) {
-        return false;
+auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDocument, bool forceDiscard) -> bool {
+    if (forceDiscard) {
+        this->discardDocument();
+    } else {
+        if (!this->closeDocumentInteractively(false)) {
+            return false;
+        }
     }
 
     if (filepath.empty()) {
@@ -2190,7 +2194,8 @@ auto Control::annotatePdf(fs::path filepath, bool /*attachPdf*/, bool attachToDo
         }
     }
 
-    this->closeDocument();
+    //TODO: we should have closed before??
+    /* this->discardDocument(); */
 
     getCursor()->setCursorBusy(true);
 
@@ -2451,7 +2456,7 @@ void Control::resetSavedStatus() {
 }
 
 void Control::quit(bool allowCancel) {
-    if (!this->close(false, allowCancel)) {
+    if (!this->closeDocumentInteractively(false, allowCancel)) {
         if (!allowCancel) {
             // Cancel is not allowed, and the user close or did not save
             // This is probably called from macOS, where the Application
@@ -2467,12 +2472,12 @@ void Control::quit(bool allowCancel) {
     this->scheduler->removeAllJobs();
     this->scheduler->unlock();
     this->scheduler->stop();  // Finish current task. Must be called to finish pending saves.
-    this->closeDocument();    // Must be done after all jobs has finished (Segfault on save/export)
+    this->discardDocument();  // Must be done after all jobs has finished (Segfault on save/export)
     settings->save();
     g_application_quit(G_APPLICATION(gtkApp));
 }
 
-auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
+auto Control::closeDocumentInteractively(const bool allowDestroy, const bool allowCancel) -> bool {
     clearSelectionEndText();
     metadata->documentChanged();
 
@@ -2513,12 +2518,12 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
     }
 
     if (allowDestroy && discard) {
-        this->closeDocument();
+        this->discardDocument();
     }
     return true;
 }
 
-void Control::closeDocument() {
+void Control::discardDocument() {
     this->undoRedo->clearContents();
 
     this->doc->lock();
