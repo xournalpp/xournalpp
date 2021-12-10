@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 21:06+0000\n"
+"POT-Creation-Date: 2021-12-10 17:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,7 +196,7 @@ msgstr ""
 msgid "Copy page"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:253
+#: ../src/util/PathUtil.cpp:257
 msgid ""
 "Could not create folder: {1}\n"
 "Failed with error: {2}"
@@ -389,8 +389,8 @@ msgstr ""
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr ""
 
-#: ../src/core/model/Document.cpp:288 ../src/core/model/Document.cpp:297
-#: ../src/core/model/Document.cpp:300
+#: ../src/core/model/Document.cpp:291 ../src/core/model/Document.cpp:300
+#: ../src/core/model/Document.cpp:303
 msgid "Document not loaded! ({1}), {2}"
 msgstr ""
 
@@ -604,7 +604,7 @@ msgid ""
 "{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:154 ../src/util/PathUtil.cpp:171
+#: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
 msgid ""
 "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
@@ -1685,7 +1685,7 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:243
+#: ../src/util/PathUtil.cpp:247
 msgid "xournalpp-{1}"
 msgstr ""
 
