@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 21:06+0000\n"
-"PO-Revision-Date: 2021-12-08 21:22\n"
+"POT-Creation-Date: 2021-12-10 17:59+0000\n"
+"PO-Revision-Date: 2021-12-10 18:08\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -198,7 +198,7 @@ msgstr "Copia corrente"
 msgid "Copy page"
 msgstr "Copia pagina"
 
-#: ../src/util/PathUtil.cpp:253
+#: ../src/util/PathUtil.cpp:257
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Impossibile creare la cartella: {1}\n"
@@ -391,8 +391,8 @@ msgstr "Il documento è danneggiato (nessuna pagina trovata nel file)"
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Il documento non è completo (forse è stata tagliata la fine?)"
 
-#: ../src/core/model/Document.cpp:288 ../src/core/model/Document.cpp:297
-#: ../src/core/model/Document.cpp:300
+#: ../src/core/model/Document.cpp:291 ../src/core/model/Document.cpp:300
+#: ../src/core/model/Document.cpp:303
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Documento non caricato! ({1}), {2}"
 
@@ -603,7 +603,7 @@ msgid "Failed to resolve path with the following error:\n"
 msgstr "Impossibile risolvere il percorso con il seguente errore:\n"
 "{1}"
 
-#: ../src/util/PathUtil.cpp:154 ../src/util/PathUtil.cpp:171
+#: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Impossibile aprire il file, Devi farlo manualmente:\n"
@@ -1663,7 +1663,7 @@ msgstr "xoj-preview-extractor: Apertura del file di output \"{1}\" fallita"
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: Estratto con successo"
 
-#: ../src/util/PathUtil.cpp:243
+#: ../src/util/PathUtil.cpp:247
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
