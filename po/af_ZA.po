@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 21:06+0000\n"
-"PO-Revision-Date: 2021-12-08 21:22\n"
+"POT-Creation-Date: 2021-12-10 17:59+0000\n"
+"PO-Revision-Date: 2021-12-10 18:09\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -197,7 +197,7 @@ msgstr "Kopieer huidige"
 msgid "Copy page"
 msgstr "Kopieer bladsy"
 
-#: ../src/util/PathUtil.cpp:253
+#: ../src/util/PathUtil.cpp:257
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Kon die lêer skep nie: {1}\n"
@@ -390,8 +390,8 @@ msgstr "Dokument is beskadig (geen blaaie gevind in die lêer nie)"
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Dokument is onvoltooi (dalk is die einde afgesny?)"
 
-#: ../src/core/model/Document.cpp:288 ../src/core/model/Document.cpp:297
-#: ../src/core/model/Document.cpp:300
+#: ../src/core/model/Document.cpp:291 ../src/core/model/Document.cpp:300
+#: ../src/core/model/Document.cpp:303
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Dokument is nie gelaai nie! ({1}), {2}"
 
@@ -602,7 +602,7 @@ msgid "Failed to resolve path with the following error:\n"
 msgstr "Kon nie roete oplos nie, met die volgende fout:\n"
 "{1}"
 
-#: ../src/util/PathUtil.cpp:154 ../src/util/PathUtil.cpp:171
+#: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Lêer kon nie oopgemaak word nie. Jy sal dit handmatig moet doen:\n"
@@ -1657,7 +1657,7 @@ msgstr ""
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:243
+#: ../src/util/PathUtil.cpp:247
 msgid "xournalpp-{1}"
 msgstr ""
 
