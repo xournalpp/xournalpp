@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-08 21:06+0000\n"
-"PO-Revision-Date: 2021-12-10 15:42\n"
+"PO-Revision-Date: 2021-12-10 16:56\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -409,7 +409,7 @@ msgstr "Σχεδίασε Βέλος"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Σχεδίαση Έλλειψης"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -525,7 +525,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Σφάλμα: {1}. Ελέγξτε τα περιεχόμενα του {2}"
 
 #: ../src/core/control/XournalMain.cpp:179
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -549,7 +549,7 @@ msgstr "Εξαγωγή σε PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Export as PDF"
-msgstr ""
+msgstr "Εξαγωγή ως PDF"
 
 #: ../src/core/control/XournalMain.cpp:631
 msgid "Export layers progressively\n"
@@ -628,7 +628,7 @@ msgstr "GNU GPLv2 ή νεότερη έκδοση"
 
 #: ../src/core/control/XournalMain.cpp:606
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "Δείτε την έκδοση του xournalpp"
 
 #: ../src/core/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
@@ -699,7 +699,7 @@ msgstr "Εικόνες"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Εισαγάγετε ένα αντίγραφο του τρέχοντος στρώματος παρακάτω"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
@@ -728,11 +728,11 @@ msgstr "Εισαγωγή σελίδας"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Ισομετρική Διακεκομμένη"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Ισομετρικό Γράφημα"
 
 #: ../src/core/control/XournalMain.cpp:602
 msgid "Jump to Page (first Page: 1)"
@@ -949,11 +949,11 @@ msgstr "Λειτουργία παρουσίασης"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Η προηγούμενη επιλεγμένη γλώσσα δεν είναι διαθέσιμη πια!"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Print"
-msgstr ""
+msgstr "Εκτύπωση"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Record Audio / Stop Recording"
@@ -986,7 +986,7 @@ msgstr "Αφαιρέθηκε το εργαλείο {1} από την γραμμ�
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
-msgstr ""
+msgstr "Μετονομασία επιπέδου"
 
 #: ../src/util/XojMsgBox.cpp:77
 msgid "Replace"
@@ -1022,7 +1022,7 @@ msgstr "SVG γραφικά"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "Το δείγμα αρχείου LaTeX δημιουργήθηκε επιτυχώς."
 
 #: ../src/core/control/Control.cpp:2456 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
@@ -1053,7 +1053,7 @@ msgstr "Αναζήτηση"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Δείτε τον πλήρη κατάλογο των συνεισφερόντων"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Select Font"
@@ -1112,11 +1112,11 @@ msgstr "Στείλε Αναφορά Σφάλματος"
 
 #: ../src/core/control/tools/EditSelection.cpp:380
 msgid "Send backward"
-msgstr ""
+msgstr "Αποστολή στο παρασκήνιο"
 
 #: ../src/core/control/tools/EditSelection.cpp:388
 msgid "Send to back"
-msgstr ""
+msgstr "Αποστολή πίσω"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Separator"
