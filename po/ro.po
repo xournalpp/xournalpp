@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 21:06+0000\n"
-"PO-Revision-Date: 2021-12-08 21:22\n"
+"POT-Creation-Date: 2021-12-10 17:59+0000\n"
+"PO-Revision-Date: 2021-12-10 18:08\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -198,7 +198,7 @@ msgstr "Copiază curent"
 msgid "Copy page"
 msgstr "Copiază pagina"
 
-#: ../src/util/PathUtil.cpp:253
+#: ../src/util/PathUtil.cpp:257
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nu s-a putut crea directorul: {1}\n"
@@ -391,8 +391,8 @@ msgstr "Documentul este corupt (nu s-au găsit pagini în fișier)"
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Documentul nu este complet (poate finalul este întrerupt?)"
 
-#: ../src/core/model/Document.cpp:288 ../src/core/model/Document.cpp:297
-#: ../src/core/model/Document.cpp:300
+#: ../src/core/model/Document.cpp:291 ../src/core/model/Document.cpp:300
+#: ../src/core/model/Document.cpp:303
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Documentul nu a fost încărcat! ({1}), {2}"
 
@@ -597,7 +597,7 @@ msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:154 ../src/util/PathUtil.cpp:171
+#: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Fișierul nu a putut fi deschis. Trebuie să îl faceți manual:\n"
@@ -1656,7 +1656,7 @@ msgstr "xoj-preview-extractor: deschiderea fișierului de intrare \"{1}\" a eșu
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: extras cu succes"
 
-#: ../src/util/PathUtil.cpp:243
+#: ../src/util/PathUtil.cpp:247
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
