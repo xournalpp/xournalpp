@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 21:06+0000\n"
-"PO-Revision-Date: 2021-12-10 16:56\n"
+"POT-Creation-Date: 2021-12-10 17:59+0000\n"
+"PO-Revision-Date: 2021-12-10 18:08\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -198,7 +198,7 @@ msgstr "Αντιγραφή τρέχοντος"
 msgid "Copy page"
 msgstr "Αντιγραφή σελίδας"
 
-#: ../src/util/PathUtil.cpp:253
+#: ../src/util/PathUtil.cpp:257
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr ""
@@ -390,8 +390,8 @@ msgstr "Το έγγραφο είναι κατεστραμμένο (δεν βρέ
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Το έγγραφο είναι ημιτελές (μήπως έχει αποκοπεί το τέλος;)"
 
-#: ../src/core/model/Document.cpp:288 ../src/core/model/Document.cpp:297
-#: ../src/core/model/Document.cpp:300
+#: ../src/core/model/Document.cpp:291 ../src/core/model/Document.cpp:300
+#: ../src/core/model/Document.cpp:303
 msgid "Document not loaded! ({1}), {2}"
 msgstr "Το έγγραφο δεν φορτώθηκε! ({1}),{2}"
 
@@ -592,7 +592,7 @@ msgid "Failed to resolve path with the following error:\n"
 "{1}"
 msgstr ""
 
-#: ../src/util/PathUtil.cpp:154 ../src/util/PathUtil.cpp:171
+#: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr "Δεν ήταν δυνατό το άνοιγμα του αρχείου Πρέπει να γίνει χειροκίνητα.\n"
@@ -1644,7 +1644,7 @@ msgstr "xoj-preview-extractor: το άνοιγμα του αρχείου εξα�
 msgid "xoj-preview-extractor: successfully extracted"
 msgstr "xoj-preview-extractor: εξαγάγαμε επιτυχώς"
 
-#: ../src/util/PathUtil.cpp:243
+#: ../src/util/PathUtil.cpp:247
 msgid "xournalpp-{1}"
 msgstr "xournalpp-{1}"
 
