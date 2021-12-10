@@ -132,8 +132,11 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
     }
     if (!pdfFilepath.empty()) {
         fs::path p = pdfFilepath.filename();
-        std::string ext = this->attachPdf ? ".pdf" : "";
-        Util::clearExtensions(p, ext);
+        if (this->attachPdf) {
+            Util::clearExtensions(p, ".pdf");
+        } else {
+            Util::clearExtensions(p);
+        }
         return p;
     }
 

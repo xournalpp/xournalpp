@@ -43,9 +43,11 @@ void InputHandler::createStroke(Point p) {
         }
     } else if (h->getToolType() == TOOL_HIGHLIGHTER) {
         stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
+        p.z = Point::NO_PRESSURE;
     } else if (h->getToolType() == TOOL_ERASER) {
         stroke->setToolType(STROKE_TOOL_ERASER);
         stroke->setColor(Color(0xffffffU));
+        p.z = Point::NO_PRESSURE;
     }
 
     stroke->addPoint(p);
