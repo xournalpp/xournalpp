@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-10 17:59+0000\n"
-"PO-Revision-Date: 2021-12-15 03:22\n"
+"PO-Revision-Date: 2021-12-15 04:21\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -192,7 +192,7 @@ msgstr "Kopyala"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Copy current"
-msgstr "Mevcut olanı kopyala"
+msgstr "Geçerliyi kopyala"
 
 #: ../src/core/undo/CopyUndoAction.cpp:59
 msgid "Copy page"
@@ -1993,7 +1993,7 @@ msgstr "Çalıştırmadan önce LaTeX bağımlılıklarını kontrol et"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Yeni PDF Sayfaları Ekle"
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
@@ -2198,7 +2198,7 @@ msgstr "Devre dışı bırak"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "GTK'nın yerleşik ivmeli kaydırma işlevini devre dışı bırakın (yeniden başlatma gerektirir)."
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -2251,7 +2251,7 @@ msgstr "Bileşenleri buradan araç çubuklarına sürükleyip bırakın."
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Sürüklenme: Bu değer çok küçükse istenmeyen titremeler görünebilir. Değer çok yüksekse, dengeleme olmayacaktır."
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
@@ -2299,7 +2299,7 @@ msgstr "Otomatik Kaydetmeyi Etkinleştir"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Basınç Tahminini Etkinleştir <i>(Cihaz tarafından sağlanan basınç bildirimi mevcut olmadığında çizim hızından gelen basıncı tahmin edilir)</i>"
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
@@ -2311,7 +2311,7 @@ msgstr "Dokunma eylemini etkinleştir"
 
 #: ../ui/settings.glade:676
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "Uygulama başlangıcında en son dosyanın otomatik açılmasını etkinleştir"
 
 #: ../ui/settings.glade:852
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
@@ -2356,7 +2356,7 @@ msgstr "Katmanları aşamalı olarak dışa aktar"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Belgeyi arka plan olmadan (Yok) veya yalnızca PDF ve görüntü arka planıyla (Ölçekleme olmadan) veya tüm arka plan türleriyle (Tümü) dışa aktarın."
 
 #: ../ui/main.glade:1677 ../ui/main.glade:1882
 msgid "Fi_ll"
@@ -2488,11 +2488,11 @@ msgstr "Eğer etkinleştirilirse, Xournal++ düzenlemeye devam edebileceğiniz e
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Etkinleştirilirse, LaTeX aracını çalıştırmadan önce gerekli LaTeX paketlerinin kurulu olduğunu ve LaTeX komutlarının kullanılabilir olduğunu kontrol edin."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "Etkinleştirilirse, her sayfanın katmanları birer birer eklenecektir. Ortaya çıkan PDF dosyası bir sunum için kullanılabilir."
 
 #: ../ui/settings.glade:664
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
@@ -2762,11 +2762,11 @@ msgstr "Eklenti değişiklikleri yalnızca Xournal++ yeniden başlatıldıktan s
 
 #: ../ui/settings.glade:3693
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Sonraki sayfaları önyükle"
 
 #: ../ui/settings.glade:3681
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Önceki sayfaları önyükle"
 
 #: ../ui/main.glade:487
 msgid "Preferences"
@@ -2786,7 +2786,7 @@ msgstr "Çizgi genişliğini koru"
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Basınç Çarpanı: "
 
 #: ../ui/settings.glade:1667
 msgid "Pressure Sensitivity"
@@ -2806,7 +2806,7 @@ msgstr "Aralık"
 
 #: ../ui/settings.glade:4950
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "Sayfanın yakınlaştırması belirtilenden fazla değişirse sayfayı yeniden işle "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2886,7 +2886,7 @@ msgstr "Seçim Rengi (Metin, Kontur Seçimi vb.)"
 
 #: ../ui/settings.glade:3482
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Seçim Kenarı Kaydırma"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3022,19 +3022,19 @@ msgstr "Metin Yazı Tipi..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "LaTeX aracı için şablon olarak kullanılacak LaTeX dosyası."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "Metin Aracının geçerli rengi, onaltılık RGB biçiminde."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "LaTeX aracı çalıştırılırken genel şablon dosyasında aşağıdaki dizeler olarak değiştirilecektir:"
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "LaTeX aracında yazılan matematik modu formülü."
 
 #: ../ui/settings.glade:4034
 msgid "The unit of the ruler is cm"
@@ -3054,7 +3054,7 @@ msgstr "Dokunarak çizme"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Dokunarak Kaydır"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -3083,7 +3083,7 @@ msgstr "Yukarıdaki sayfa boyutu yerine geçerli sayfa boyutunu kullan."
 
 #: ../ui/settings.glade:2563 ../ui/settings.glade:2631
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Kaydırma/yakınlaştırma için iki parmağınızı ve seçili aracı kullanmak için bir parmağınızı kullanın."
 
 #: ../ui/settings.glade:4319
 msgid "Usually 0 or 1"
@@ -3116,7 +3116,8 @@ msgstr "Bir öğe seçilerek tuvalin görünen kısmının dışına taşındı�
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Dokunarak çizim yapılırken, sayfayı kaydırmaya yönelik olan iki parmak hareketi, yakınlaştırmaya hareketi ile karıştırılabilir. Bu da performans sorunlarına neden olabilir. \n"
+"Bu durumda yapılacak bu ayar dokunarak çizmeyi kolaylaştırır. "
 
 #: ../ui/settings.glade:4947
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
@@ -3426,7 +3427,7 @@ msgstr "her"
 
 #: ../ui/pageTemplate.glade:54
 msgid "load from file"
-msgstr "dosyadan yükle"
+msgstr "Dosyadan Yükle"
 
 #: ../ui/settings.glade:426
 msgid "minutes"
@@ -3436,7 +3437,7 @@ msgstr "dakika"
 #: ../ui/settings.glade:4231 ../ui/settings.glade:4242
 #: ../ui/settings.glade:4430
 msgid "pixels"
-msgstr "pikseller"
+msgstr "piksel"
 
 #: ../ui/settings.glade:2187
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
@@ -3444,7 +3445,7 @@ msgstr "s <i>(bundan sonra dokunmatik ekran tekrar etkinleştirilecek)</i>"
 
 #: ../ui/pageTemplate.glade:40
 msgid "save to file"
-msgstr "dosyaya kaydet"
+msgstr "Dosyaya kaydet"
 
 #: ../ui/main.glade:1610 ../ui/main.glade:1756 ../ui/main.glade:1865
 msgid "ver_y thick"
@@ -3452,5 +3453,5 @@ msgstr "_çok kalın"
 
 #: ../ui/about.glade:141
 msgid "with libgtk"
-msgstr "libgtk ile birlikte"
+msgstr "libgtk ile"
 
