@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-10 17:59+0000\n"
-"PO-Revision-Date: 2021-12-13 19:51\n"
+"PO-Revision-Date: 2021-12-15 03:22\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1908,7 +1908,8 @@ msgstr "<i>El Tanıma tetikleyicilerini bir kez çağıran komutları belirtin. 
 #: ../ui/settings.glade:5358
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>Ses eklerinin kaydedilmesi ve çalınması için kullanılan ses aygıtlarını belirtin. \n"
+"Varsa, giriş / çıkış aygıtı olarak <small><tt>pulse</tt></small> seçin.</i>"
 
 #: ../ui/settings.glade:1805
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -1932,7 +1933,7 @@ msgstr "<i>Günlük sayfalarını yakınlaştırmak için sıkıştırma hareket
 
 #: ../ui/settings.glade:2544
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>Dokunmatik yüzeyi çoklu dokunmaya duyarlı kalem gibi kullan.</i>"
 
 #: ../ui/settings.glade:1698
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
