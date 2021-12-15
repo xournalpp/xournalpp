@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-10 17:59+0000\n"
-"PO-Revision-Date: 2021-12-10 18:08\n"
+"PO-Revision-Date: 2021-12-15 14:46\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -535,7 +535,7 @@ msgstr "Αδυναμία διαγραφής errorlog. Πρέπει να γίνε
 
 #: ../src/core/control/XournalMain.cpp:615
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Εξαγωγή σε αρχείο PDF"
 
 #: ../src/core/control/XournalMain.cpp:617
 msgid "Export FILE as image files (one per page)\n"
