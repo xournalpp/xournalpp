@@ -327,7 +327,7 @@ private:
     /**
      * "Closes" the document, preparing the editor for a new document.
      */
-    void closeDocument();
+    void closeDocument(bool destroy = true);
 
     /**
      * Applies the preferred language to the UI

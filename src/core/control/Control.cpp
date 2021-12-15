@@ -2485,17 +2485,17 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
         }
     }
 
-    if (allowDestroy && discard) {
-        this->closeDocument();
+    if (discard) {
+        this->closeDocument(allowDestroy);
     }
     return true;
 }
 
-void Control::closeDocument() {
+void Control::closeDocument(bool destroy) {
     this->undoRedo->clearContents();
 
     this->doc->lock();
-    this->doc->clearDocument(true);
+    this->doc->clearDocument(destroy);
     this->doc->unlock();
 
     this->undoRedoChanged();
