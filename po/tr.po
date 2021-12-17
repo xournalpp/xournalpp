@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-10 17:59+0000\n"
-"PO-Revision-Date: 2021-12-15 05:20\n"
+"PO-Revision-Date: 2021-12-17 21:28\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -1892,7 +1892,8 @@ msgstr "<i>Ekranınıza bir cetvel koyun ve her iki cetvel eşleşene kadar kayd
 #: ../ui/settings.glade:4922
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>PDF üzerine yazılırken, yakınlaştırma yapıldığında daha kaliteli görüntüler elde etmek için daha sık yenileme yap. \n"
+"<b>Not:</b> Bu özellik baskı kalitesini etkilemeyecektir.</i>"
 
 #: ../ui/settings.glade:5774
 msgid "<i>Select language (requires restart)</i>"
@@ -1976,7 +1977,7 @@ msgstr "TeX Ekle/Düzenle"
 
 #: ../ui/settings.glade:4495
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "Bir seçimi yeniden boyutlandırdıktan sonra, tüm kalem darbelerinin çizgi genişliği yeniden boyutlandırma işleminden öncekiyle aynı olacaktır. "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
