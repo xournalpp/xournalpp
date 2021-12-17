@@ -35,29 +35,29 @@ If you would like to help us improve the localization of Xournal++, take a look 
 
 ## Features
 
-Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is a hand note taking software written in C++ with the target of flexibility, functionality and speed.
+Xournal++ (/ˌzɚnl̟ˌplʌsˈplʌs/) is a hand note-taking software written in C++ with the target of flexibility, functionality and speed.
 Stroke recognizer and other parts are based on Xournal Code, which you can find at [sourceforge](http://sourceforge.net/projects/xournal/)
 
 Xournal++ features:
 
-- Supports pressure senstive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
-- Paper backgrounds for notetaking, scratch paper, or whiteboarding
+- Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
+- Paper backgrounds for note-taking, scratch paper, or whiteboarding
 - Annotate on top of PDFs
 - Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line
-- Different drawing tools (e.g.pen, highlighter) and stroke styles (e.g. solid, dotted)
+- Different drawing tools (e.g. pen, highlighter) and stroke styles (e.g. solid, dotted)
 - Shape drawing (line, arrow, circle, rectangle, spline)
 - Fill shape functionality
 - Shape resizing and rotation
 - Rotation and grid snapping for precise alignment of objects
 - Input stabilization for smoother writing/drawing
-- Text tool for adding text in different fonts, colors and sizes
+- Text tool for adding text in different fonts, colors, and sizes
 - Enhanced support for image insertion
 - Eraser with multiple configurations
-- LaTeX support (requires a working LaTeX installation) with customizeable template
-- Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden/edited)
+- LaTeX support (requires a working LaTeX installation) with customizable template
+- Sidebar containing page previews with advanced page sorting, PDF bookmarks and layers (can be individually hidden/edited)
 - Allows mapping different tools/colors etc. to stylus/mouse buttons
-- Customizeable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape
-- Page Template definitions
+- Customizable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape
+- Page template definitions
 - Bug reporting, auto-save, and auto backup tools
 - Audio recording and playback alongside with handwritten notes
 - Multi language support (over 20 languages supported)
@@ -65,7 +65,7 @@ Xournal++ features:
 
 ## Mobile & web app
 
-Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (coming soon) as well as a **web app** available. Even though it is not perfectly stable nor are all of Xournal++'s features fully supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in it's [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
+Since mid 2020, there is a Flutter-written mobile app for **Android**, **Chrome OS** and **iOS** (coming soon) as well as a **web app** available. Even though it is not perfectly stable nor are all of Xournal++'s features fully supported yet, you may check it out and open your Xournal++ notebooks on your mobile devices. You can get in touch in its [separate repository on GitLab](https://gitlab.com/TheOneWithTheBraid/xournalpp_mobile).
 
 [Get it on Google Play](https://play.google.com/store/apps/details?id=online.xournal.mobile)
 
@@ -110,13 +110,13 @@ Multiple page background, easy selectable on the toolbar
 
 </td><td>
 
-## Layer sidebar and advance Layer selection.
+## Layer sidebar and advanced layer selection
 
 <img src="readme/layer.png" width=100% title="Xournal++ Screenshot"/>
 
 </td></tr><tr><td>
 
-## Multiple predefined and fully customizable Toolbar.
+## Multiple predefined and fully customizable toolbars
 
 <img src="readme/toolbar.png" width=100% title="Xournal++ Screenshot"/>
 
@@ -129,14 +129,14 @@ Manual](https://github.com/xournalpp/xournalpp/wiki/User-Manual). Answers to
 some common questions can be found in the
 [FAQ](https://github.com/xournalpp/xournalpp/wiki/Frequently-Asked-Questions-&-Problem-Solving).
 
-## Experimental Features:
+## Experimental Features
 
-Sometimes a feature is added that might not be rock solid, or the developers aren't sure it is useful.
+Sometimes a feature is added that might not be rock solid, or the developers aren't sure if it is useful.
 Try these out and give us some feedback.
 
-Here are a few under development that you can play with now.
+Here are a few under development that you can play with now:
 
-- <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++ Screenshot"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor. You can also modify what is in the toolbox through the usual View->Toolbars->Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** ( or selected a toolbar configuration that uses it).
+- <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++ Screenshot"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor. You can also modify what is in the toolbox through the usual View → Toolbars → Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** (or selected a toolbar configuration that uses it).
 
   - This is an experimental feature because not everything you can put in the toolbox behaves. So be aware.
 
@@ -144,7 +144,7 @@ Here are a few under development that you can play with now.
 
 * Keep your eyes out for other experimental features in preferences as seen here:
 
-  DrawingTools: When drawing a box, circle etc simulate ctrl or shift modifiers by the initial direction you move the mouse.
+  DrawingTools: When drawing a box, circle etc, simulate ctrl or shift modifiers by the initial direction you move the mouse.
 
   Action on Tool Tap: Allow a brief tap on the screen to bring up the floating toolbox and/or select an object. May work with pen and highlighter only.
 
@@ -304,7 +304,7 @@ page](https://github.com/xournalpp/xournalpp/releases).
   [#1757](https://github.com/xournalpp/xournalpp/issues/1757)). Unfortunately,
   we don't have the resources to adequately support Catalina at this time. Help
   would be appreciated!
-- Xournal++ will be delivered with a patched GTK. Else pressure sensitivity will not work on Mac
+- Xournal++ will be delivered with a patched GTK. Else, pressure sensitivity will not work on Mac
   [#569](https://github.com/xournalpp/xournalpp/issues/569).
 
 ## Building
@@ -332,14 +332,14 @@ All new files will be saved as _.xopp. If an _.xoj file that was created by Xour
 ## Development
 
 For developing new features, create an issue or comment on an existing issue to let others know what you are doing.
-For development create a fork, and use the master as base. Create a Pull request for each fix.
+For development, create a fork and use the master as base. Create a pull request for each fix.
 Do not create big pull requests, as long as you don't break anything features also can be
 merged, even if they are not 100% finished.
 
 See [GitHub:xournalpp](http://github.com/xournalpp/xournalpp) for current development. You can also join
 our Gitter channel via the badge on top.
 
-Also take a look at our [Coding Conventions](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions)
+Also take a look at our [coding conventions](https://github.com/xournalpp/xournalpp/wiki/Coding-conventions)
 
 ## Code documentation
 
@@ -352,7 +352,7 @@ sudo apt install doxygen
 sudo apt install graphviz
 ```
 
-on Debian or Ubuntu. Finally, type in `doxygen` in the root directory of the repository.
+on Debian or Ubuntu. Finally, execute `doxygen` in the root directory of the repository.
 The documentation can be found in `doc/html` and `doc/latex`. Conveniently display the
 documentation with `python3 -m http.server 8000` and visit the shown URL to view the
 documentation.
