@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-10 17:59+0000\n"
-"PO-Revision-Date: 2021-12-20 21:24\n"
+"PO-Revision-Date: 2021-12-20 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -552,7 +552,7 @@ msgstr "PDF-bestand exporteren"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exporteer als PDF"
 
 #: ../src/core/control/XournalMain.cpp:631
 msgid "Export layers progressively\n"
@@ -587,7 +587,7 @@ msgstr "Kan LaTeX generator programma niet vinden in PATH: {1}"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Kan PDF Cairo oppervlak niet initialiseren"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -1720,39 +1720,39 @@ msgstr "... EN hoeveel tijd er verstreken moet zijn sinds de laatste streek.\n\n
 
 #: ../ui/settings.glade:1090
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1142
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4963
 msgid "0.00"
-msgstr ""
+msgstr "0,00"
 
 #: ../ui/settings.glade:1735
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../ui/settings.glade:5610
 msgid "1,00"
-msgstr ""
+msgstr "1,00"
 
 #: ../ui/settings.glade:1058
 msgid "1,30"
-msgstr ""
+msgstr "1,30"
 
 #: ../ui/settings.glade:2458
 msgid "1.0"
-msgstr ""
+msgstr "1,0"
 
 #: ../ui/settings.glade:1029
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../ui/settings.glade:3151
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../ui/settings.glade:1122
 msgid "5"
@@ -1830,7 +1830,7 @@ msgstr "<i>Geef op welk gereedschap moet worden gekozen als je een muisknop indr
 
 #: ../ui/settings.glade:2612
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr ""
+msgstr "<i>Het uitschakelen van GTK's ingebouwd touchscreen scrollen kan op sommige platformen helpen met scroll problemen. Overweeg deze instelling te wijzigen als je plotselinge veranderingen ondervindt in de scrollpositie wanneer je probeert te scrollen met een touchscreen.</i>"
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -1943,15 +1943,15 @@ msgstr "Voeg extra verticale ruimte toe: "
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "TeX toevoegen/bewerken"
 
 #: ../ui/settings.glade:4495
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "Alle lijnbreedtes blijven dezelfde na het aanpassen van de selectiegrootte. "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #: ../ui/exportSettings.glade:174
 msgid "All pages"
@@ -1965,15 +1965,15 @@ msgstr "Er moet aan alle drie de voorwaarden worden voldaan voordat de streek ge
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Altijd LaTeX dependencies controleren alvorens uit te uitvoeren"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Nieuwe PDF-pagina's toevoegen"
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Rekenkundig gemiddelde"
 
 #: ../ui/settings.glade:1774
 msgid "Artifact workaround"
