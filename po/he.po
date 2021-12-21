@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-10 17:59+0000\n"
-"PO-Revision-Date: 2021-12-10 18:09\n"
+"PO-Revision-Date: 2021-12-21 08:52\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -2305,7 +2305,7 @@ msgstr ""
 
 #: ../ui/main.glade:1687 ../ui/main.glade:1892
 msgid "Fill opacity"
-msgstr ""
+msgstr "אטימות המילוי"
 
 #: ../ui/settings.glade:1222
 msgid "Finalize the stroke"
