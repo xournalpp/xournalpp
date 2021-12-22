@@ -1,8 +1,10 @@
 #include "BackgroundConfig.h"
 
+#include <sstream>
 #include <utility>
 
 #include "util/StringUtils.h"
+#include "util/serdesstream.h"
 
 using std::string;
 
@@ -42,7 +44,8 @@ auto BackgroundConfig::loadValue(const string& key, int& value) const -> bool {
 auto BackgroundConfig::loadValue(const string& key, double& value) const -> bool {
     string str;
     if (loadValue(key, str)) {
-        value = std::stoul(str, nullptr, 10);
+        auto valueStream = serdes_stream<std::istringstream>(str);
+        valueStream >> value;
         return true;
     }
 
