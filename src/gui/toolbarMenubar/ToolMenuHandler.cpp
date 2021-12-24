@@ -57,12 +57,26 @@ ToolMenuHandler::~ToolMenuHandler() {
         it = nullptr;
     }
 
-    freeDynamicToolbarItems();
+    deleteAllToolbarItems();
+}
+
+void ToolMenuHandler::deleteAllToolbarItems() {
+    this->freeDynamicToolbarItems();
 
     for (AbstractToolItem* it: this->toolItems) {
         delete it;
-        it = nullptr;
     }
+    this->toolItems.clear();
+    // the preaviusly foreach delete all the obj but not the private pointer.
+    this->undoButton.clear();
+    this->redoButton.clear();
+    this->audioPausePlaybackButton.clear();
+    this->audioStopPlaybackButton.clear();
+    this->audioSeekBackwardsButton.clear();
+    this->audioSeekForwardsButton.clear();
+    this->toolPageSpinner.clear();
+    this->toolPageLayer.clear();
+    this->fontButton.clear();
 }
 
 void ToolMenuHandler::freeDynamicToolbarItems() {
@@ -85,6 +99,7 @@ void ToolMenuHandler::unloadToolbar(GtkWidget* toolbar) {
     gtk_widget_hide(toolbar);
 }
 
+// Load expext to start with items toolbar just empty
 void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal) {
     int count = 0;
 
@@ -157,35 +172,30 @@ void ToolMenuHandler::load(ToolbarData* d, GtkWidget* toolbar, const char* toolb
                     continue;
                 }
 
-                bool found = false;
-                for (AbstractToolItem* item: this->toolItems) {
-                    if (name == item->getId()) {
-                        if (item->isUsed()) {
-                            g_warning("You can use the toolbar item \"%s\" only once!", item->getId().c_str());
-                            found = true;
-                            continue;
-                        }
-                        item->setUsed(true);
+                AbstractToolItem* item = addToolItemsfromName(name);
 
-                        count++;
-                        GtkToolItem* it = item->createItem(horizontal);
-                        gtk_widget_show_all(GTK_WIDGET(it));
-                        gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
-
-                        ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item);
-
-                        found = true;
-                        break;
-                    }
+                if (item->isUsed()) {
+                    g_warning("You can use the toolbar item \"%s\" only once!", item->getId().c_str());
+                    continue;
                 }
-                if (!found) {
-                    g_warning("Toolbar item \"%s\" not found!", name.c_str());
-                }
+                item->setUsed(true);
+
+                count++;
+                GtkToolItem* it = item->createItem(horizontal);
+
+                gtk_widget_show_all(GTK_WIDGET(it));
+                gtk_toolbar_insert(GTK_TOOLBAR(toolbar), GTK_TOOL_ITEM(it), -1);
+
+                ToolitemDragDrop::attachMetadata(GTK_WIDGET(it), dataItem->getId(), item);
             }
-
-            break;
         }
     }
+
+    // this tool are indispensable
+    // if not present before, are add here without duplication
+    initToolItems();
+
+    this->connectSignalsOfToolItems();
 
     if (count == 0) {
         gtk_widget_hide(toolbar);
@@ -227,13 +237,16 @@ void ToolMenuHandler::setTmpDisabled(bool disabled) {
     gtk_widget_set_sensitive(menuViewSidebarVisible, !disabled);
 }
 
-void ToolMenuHandler::addToolItem(AbstractToolItem* it) { this->toolItems.push_back(it); }
+AbstractToolItem* ToolMenuHandler::addToolItem(AbstractToolItem* it) {
+    this->toolItems.push_back(it);
+    return it;
+}
 
 void ToolMenuHandler::registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group) {
     this->menuItems.push_back(new MenuItem(listener, widget, type, group));
 }
 
-void ToolMenuHandler::initPenToolItem() {
+ToolButton* ToolMenuHandler::initPenToolItem() {
     auto* tbPen = new ToolButton(listener, "PEN", ACTION_TOOL_PEN, GROUP_TOOL, true, "tool_pencil", _("Pen"));
 
     registerMenupoint(tbPen->registerPopupMenuEntry(_("standard"), "line-style-plain"), ACTION_TOOL_LINE_STYLE_PLAIN,
@@ -249,9 +262,10 @@ void ToolMenuHandler::initPenToolItem() {
                       GROUP_LINE_STYLE);
 
     addToolItem(tbPen);
+    return tbPen;
 }
 
-void ToolMenuHandler::initEraserToolItem() {
+ToolButton* ToolMenuHandler::initEraserToolItem() {
     auto* tbEraser =
             new ToolButton(listener, "ERASER", ACTION_TOOL_ERASER, GROUP_TOOL, true, "tool_eraser", _("Eraser"));
 
@@ -261,6 +275,7 @@ void ToolMenuHandler::initEraserToolItem() {
                       GROUP_ERASER_MODE);
 
     addToolItem(tbEraser);
+    return tbEraser;
 }
 
 void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object, const gchar* signalName,
@@ -307,15 +322,100 @@ void ToolMenuHandler::signalConnectCallback(GtkBuilder* builder, GObject* object
 #define ADD_STOCK_ITEM(name, action, stockIcon, text) \
     addToolItem(new ToolButton(listener, name, action, stockIcon, text))
 
+#define ADD_STOCK_ITEM_IF_NAME_EQ(nameVar, name, action, stockIcon, text)                   \
+    do {                                                                                    \
+        if (nameVar == name) {                                                              \
+            AbstractToolItem* it = new ToolButton(listener, name, action, stockIcon, text); \
+            addToolItem(it);                                                                \
+            return it;                                                                      \
+        }                                                                                   \
+    } while (0)
+
 // Use Custom loading Icon
 #define ADD_CUSTOM_ITEM(name, action, icon, text) addToolItem(new ToolButton(listener, name, action, icon, text))
+
+#define ADD_CUSTOM_ITEM_IF_NAME_EQ(nameVar, name, action, icon, text)                  \
+    do {                                                                               \
+        if (nameVar == name) {                                                         \
+            AbstractToolItem* it = new ToolButton(listener, name, action, icon, text); \
+            addToolItem(it);                                                           \
+            return it;                                                                 \
+        }                                                                              \
+    } while (0)
 
 // Use Custom loading Icon, toggle item
 // switchOnly: You can select pen, eraser etc. but you cannot unselect pen.
 #define ADD_CUSTOM_ITEM_TGL(name, action, group, switchOnly, icon, text) \
     addToolItem(new ToolButton(listener, name, action, group, switchOnly, icon, text))
 
+#define ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(nameVar, name, action, group, switchOnly, icon, text)              \
+    do {                                                                                                  \
+        if (nameVar == name) {                                                                            \
+            ADD_CUSTOM_ITEM_TGL(name, action, group, switchOnly, icon, text);                             \
+            AbstractToolItem* it = new ToolButton(listener, name, action, group, switchOnly, icon, text); \
+            addToolItem(it);                                                                              \
+            return it;                                                                                    \
+        }                                                                                                 \
+    } while (0)
+
+#define ADD_VECTOR_ToolButton_IF_NAME_EQ(vectorVar, nameVar, name, action, stockIcon, text) \
+    do {                                                                                    \
+        if (nameVar == name) {                                                              \
+            ToolButton* it = new ToolButton(listener, name, action, stockIcon, _(text));    \
+            this->vectorVar.push_back(it);                                                  \
+            addToolItem(it);                                                                \
+            return it;                                                                      \
+        }                                                                                   \
+    } while (0)
+
+#define ADD_VECTOR_ToolButton_EXTENDED_IF_NAME_EQ(vectorVar, nameVar, name, action, group, toolToggleOnlyEnable,      \
+                                                  stockIcon, text)                                                    \
+    do {                                                                                                              \
+        if (nameVar == name) {                                                                                        \
+            ToolButton* it = new ToolButton(listener, name, action, group, toolToggleOnlyEnable, stockIcon, _(text)); \
+            this->vectorVar.push_back(it);                                                                            \
+            addToolItem(it);                                                                                          \
+            return it;                                                                                                \
+        }                                                                                                             \
+    } while (0)
+
+#define ADD_VECTOR_FontButton_IF_NAME_EQ(vectorVar, nameVar, name, action, text)   \
+    do {                                                                           \
+        if (nameVar == name) {                                                     \
+            FontButton* it = new FontButton(listener, gui, name, action, _(text)); \
+            this->vectorVar.push_back(it);                                         \
+            addToolItem(it);                                                       \
+            return it;                                                             \
+        }                                                                          \
+    } while (0)
+
+
 void ToolMenuHandler::initToolItems() {
+    // this is the indispensable tools
+    if (undoButton.empty())
+        addToolItemsfromName("UNDO");
+    if (redoButton.empty())
+        addToolItemsfromName("REDO");
+
+    if (audioPausePlaybackButton.empty())
+        addToolItemsfromName("AUDIO_PAUSE_PLAYBACK");
+    if (audioStopPlaybackButton.empty())
+        addToolItemsfromName("AUDIO_STOP_PLAYBACK");
+    if (audioSeekBackwardsButton.empty())
+        addToolItemsfromName("AUDIO_SEEK_BACKWARDS");
+    if (audioSeekForwardsButton.empty())
+        addToolItemsfromName("AUDIO_SEEK_FORWARDS");
+
+    if (toolPageSpinner.empty())
+        addToolItemsfromName("PAGE_SPIN");
+    if (toolPageLayer.empty())
+        addToolItemsfromName("LAYER");
+
+    if (fontButton.empty())
+        addToolItemsfromName("SELECT_FONT");
+}
+
+AbstractToolItem* ToolMenuHandler::addToolItemsfromName(string name) {
     // Items ordered by menu, if possible.
     // There are some entries which are not available in the menu, like the Zoom slider
     // All menu items without tool icon are not listed here - they are connected by Glade Signals
@@ -323,131 +423,153 @@ void ToolMenuHandler::initToolItems() {
     // Menu File
     // ************************************************************************
 
-    ADD_STOCK_ITEM("NEW", ACTION_NEW, "document-new", _("New Xournal"));
-    ADD_STOCK_ITEM("OPEN", ACTION_OPEN, "document-open", _("Open file"));
-    ADD_STOCK_ITEM("SAVE", ACTION_SAVE, "document-save", _("Save"));
-    ADD_STOCK_ITEM("PRINT", ACTION_PRINT, "document-print", _("Print"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "NEW", ACTION_NEW, "document-new", _("New Xournal"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "OPEN", ACTION_OPEN, "document-open", _("Open file"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "SAVE", ACTION_SAVE, "document-save", _("Save"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "PRINT", ACTION_PRINT, "document-print", _("Print"));
 
     // Menu Edit
     // ************************************************************************
 
     // Undo / Redo Texts are updated from code, therefore a reference is hold for this items
-    undoButton = new ToolButton(listener, "UNDO", ACTION_UNDO, "edit-undo", _("Undo"));
-    redoButton = new ToolButton(listener, "REDO", ACTION_REDO, "edit-redo", _("Redo"));
-    addToolItem(undoButton);
-    addToolItem(redoButton);
 
-    ADD_STOCK_ITEM("CUT", ACTION_CUT, "edit-cut", _("Cut"));
-    ADD_STOCK_ITEM("COPY", ACTION_COPY, "edit-copy", _("Copy"));
-    ADD_STOCK_ITEM("PASTE", ACTION_PASTE, "edit-paste", _("Paste"));
+    ADD_VECTOR_ToolButton_IF_NAME_EQ(undoButton, name, "UNDO", ACTION_UNDO, "edit-undo", "Undo");
+    ADD_VECTOR_ToolButton_IF_NAME_EQ(redoButton, name, "REDO", ACTION_REDO, "edit-redo", "Redo");
 
-    ADD_STOCK_ITEM("SEARCH", ACTION_SEARCH, "edit-find", _("Search"));
 
-    ADD_STOCK_ITEM("DELETE", ACTION_DELETE, "edit-delete", _("Delete"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "CUT", ACTION_CUT, "edit-cut", _("Cut"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "COPY", ACTION_COPY, "edit-copy", _("Copy"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "PASTE", ACTION_PASTE, "edit-paste", _("Paste"));
+
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "SEARCH", ACTION_SEARCH, "edit-find", _("Search"));
+
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "DELETE", ACTION_DELETE, "edit-delete", _("Delete"));
 
     // Icon snapping.svg made by www.freepik.com from www.flaticon.com
-    ADD_CUSTOM_ITEM_TGL("ROTATION_SNAPPING", ACTION_ROTATION_SNAPPING, GROUP_SNAPPING, false, "snapping",
-                        _("Rotation Snapping"));
-    ADD_CUSTOM_ITEM_TGL("GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false, "grid_snapping",
-                        _("Grid Snapping"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "ROTATION_SNAPPING", ACTION_ROTATION_SNAPPING, GROUP_SNAPPING, false,
+                                   "snapping", _("Rotation Snapping"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "GRID_SNAPPING", ACTION_GRID_SNAPPING, GROUP_GRID_SNAPPING, false,
+                                   "grid_snapping", _("Grid Snapping"));
 
     // Menu View
     // ************************************************************************
 
-    ADD_CUSTOM_ITEM_TGL("PAIRED_PAGES", ACTION_VIEW_PAIRED_PAGES, GROUP_PAIRED_PAGES, false, "showpairedpages",
-                        _("Paired pages"));
-    ADD_CUSTOM_ITEM_TGL("PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE, false,
-                        "presentation-mode", _("Presentation mode"));
-    ADD_CUSTOM_ITEM_TGL("FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false, "fullscreen", _("Toggle fullscreen"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "PAIRED_PAGES", ACTION_VIEW_PAIRED_PAGES, GROUP_PAIRED_PAGES, false,
+                                   "showpairedpages", _("Paired pages"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "PRESENTATION_MODE", ACTION_VIEW_PRESENTATION_MODE, GROUP_PRESENTATION_MODE,
+                                   false, "presentation-mode", _("Presentation mode"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "FULLSCREEN", ACTION_FULLSCREEN, GROUP_FULLSCREEN, false, "fullscreen",
+                                   _("Toggle fullscreen"));
 
-    ADD_STOCK_ITEM("MANAGE_TOOLBAR", ACTION_MANAGE_TOOLBAR, "manage_toolbars", _("Manage Toolbars"));
-    ADD_STOCK_ITEM("CUSTOMIZE_TOOLBAR", ACTION_CUSTOMIZE_TOOLBAR, "customize_toolbars", _("Customize Toolbars"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "MANAGE_TOOLBAR", ACTION_MANAGE_TOOLBAR, "manage_toolbars", _("Manage Toolbars"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "CUSTOMIZE_TOOLBAR", ACTION_CUSTOMIZE_TOOLBAR, "customize_toolbars",
+                              _("Customize Toolbars"));
 
-    ADD_STOCK_ITEM("ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _("Zoom out"));
-    ADD_STOCK_ITEM("ZOOM_IN", ACTION_ZOOM_IN, "zoom-in", _("Zoom in"));
-    ADD_CUSTOM_ITEM_TGL("ZOOM_FIT", ACTION_ZOOM_FIT, GROUP_ZOOM_FIT, false, "zoom-fit-best", _("Zoom fit to screen"));
-    ADD_STOCK_ITEM("ZOOM_100", ACTION_ZOOM_100, "zoom-original", _("Zoom to 100%"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "ZOOM_OUT", ACTION_ZOOM_OUT, "zoom-out", _("Zoom out"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "ZOOM_IN", ACTION_ZOOM_IN, "zoom-in", _("Zoom in"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "ZOOM_FIT", ACTION_ZOOM_FIT, GROUP_ZOOM_FIT, false, "zoom-fit-best",
+                                   _("Zoom fit to screen"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "ZOOM_100", ACTION_ZOOM_100, "zoom-original", _("Zoom to 100%"));
 
     // Menu Navigation
     // ************************************************************************
 
-    ADD_STOCK_ITEM("GOTO_FIRST", ACTION_GOTO_FIRST, "go-first", _("Go to first page"));
-    ADD_STOCK_ITEM("GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _("Back"));
-    ADD_CUSTOM_ITEM("GOTO_PAGE", ACTION_GOTO_PAGE, "goto", _("Go to page"));
-    ADD_STOCK_ITEM("GOTO_NEXT", ACTION_GOTO_NEXT, "go-next", _("Next"));
-    ADD_STOCK_ITEM("GOTO_LAST", ACTION_GOTO_LAST, "go-last", _("Go to last page"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "GOTO_FIRST", ACTION_GOTO_FIRST, "go-first", _("Go to first page"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "GOTO_BACK", ACTION_GOTO_BACK, "go-previous", _("Back"));
+    ADD_CUSTOM_ITEM_IF_NAME_EQ(name, "GOTO_PAGE", ACTION_GOTO_PAGE, "goto", _("Go to page"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "GOTO_NEXT", ACTION_GOTO_NEXT, "go-next", _("Next"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "GOTO_LAST", ACTION_GOTO_LAST, "go-last", _("Go to last page"));
 
-    ADD_STOCK_ITEM("GOTO_PREVIOUS_LAYER", ACTION_GOTO_PREVIOUS_LAYER, "go-previous", _("Go to previous layer"));
-    ADD_STOCK_ITEM("GOTO_NEXT_LAYER", ACTION_GOTO_NEXT_LAYER, "go-next", _("Go to next layer"));
-    ADD_STOCK_ITEM("GOTO_TOP_LAYER", ACTION_GOTO_TOP_LAYER, "go-top", _("Go to top layer"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "GOTO_PREVIOUS_LAYER", ACTION_GOTO_PREVIOUS_LAYER, "go-previous",
+                              _("Go to previous layer"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "GOTO_NEXT_LAYER", ACTION_GOTO_NEXT_LAYER, "go-next", _("Go to next layer"));
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "GOTO_TOP_LAYER", ACTION_GOTO_TOP_LAYER, "go-top", _("Go to top layer"));
 
-    ADD_CUSTOM_ITEM("GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE, "nextAnnotatedPage",
-                    _("Next annotated page"));
+    ADD_CUSTOM_ITEM_IF_NAME_EQ(name, "GOTO_NEXT_ANNOTATED_PAGE", ACTION_GOTO_NEXT_ANNOTATED_PAGE, "nextAnnotatedPage",
+                               _("Next annotated page"));
 
     // Menu Journal
     // ************************************************************************
+    if (name == "INSERT_NEW_PAGE") {
+        auto* tbInsertNewPage =
+                new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER, "addPage", _("Insert page"));
+        addToolItem(tbInsertNewPage);
+        tbInsertNewPage->setPopupMenu(this->newPageType->getMenu());
 
-    auto* tbInsertNewPage =
-            new ToolButton(listener, "INSERT_NEW_PAGE", ACTION_NEW_PAGE_AFTER, "addPage", _("Insert page"));
-    addToolItem(tbInsertNewPage);
-    tbInsertNewPage->setPopupMenu(this->newPageType->getMenu());
+        gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")),
+                                  pageBackgroundChangeController->getMenu());
 
-    ADD_CUSTOM_ITEM("DELETE_CURRENT_PAGE", ACTION_DELETE_PAGE, "delPage", _("Delete current page"));
+        return tbInsertNewPage;
+    }
 
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(gui->get("menuJournalPaperBackground")),
-                              pageBackgroundChangeController->getMenu());
+    ADD_CUSTOM_ITEM_IF_NAME_EQ(name, "DELETE_CURRENT_PAGE", ACTION_DELETE_PAGE, "delPage", _("Delete current page"));
 
-    ADD_STOCK_ITEM("CHANGE_LAYER_NAME", ACTION_RENAME_LAYER, "changeLayer", _("Change current layer name"));
+
+    ADD_STOCK_ITEM_IF_NAME_EQ(name, "CHANGE_LAYER_NAME", ACTION_RENAME_LAYER, "changeLayer",
+                              _("Change current layer name"));
     // Menu Tool
     // ************************************************************************
 
-    initPenToolItem();
-    initEraserToolItem();
+    if (name == "PEN") {
+        return initPenToolItem();
+    }
 
-    ADD_CUSTOM_ITEM_TGL("HIGHLIGHTER", ACTION_TOOL_HIGHLIGHTER, GROUP_TOOL, true, "tool_highlighter", _("Highlighter"));
+    if (name == "ERASER") {
+        return initEraserToolItem();
+    }
 
-    ADD_CUSTOM_ITEM_TGL("TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, true, "tool_text", _("Text"));
-    ADD_CUSTOM_ITEM("MATH_TEX", ACTION_TEX, "tool_math_tex", _("Add/Edit Tex"));
-    ADD_CUSTOM_ITEM_TGL("IMAGE", ACTION_TOOL_IMAGE, GROUP_TOOL, true, "tool_image", _("Image"));
-    ADD_CUSTOM_ITEM("DEFAULT_TOOL", ACTION_TOOL_DEFAULT, "default", _("Default Tool"));
-    ADD_CUSTOM_ITEM_TGL("SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_RULER, false, "shape_recognizer",
-                        _("Shape Recognizer"));
-    ADD_CUSTOM_ITEM_TGL("DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw", _("Draw Rectangle"));
-    ADD_CUSTOM_ITEM_TGL("DRAW_ELLIPSE", ACTION_TOOL_DRAW_ELLIPSE, GROUP_RULER, false, "ellipse-draw",
-                        _("Draw Ellipse"));
-    ADD_CUSTOM_ITEM_TGL("DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false, "arrow-draw", _("Draw Arrow"));
-    ADD_CUSTOM_ITEM_TGL("DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER, false,
-                        "coordinate-system-draw", _("Draw coordinate system"));
-    ADD_CUSTOM_ITEM_TGL("RULER", ACTION_RULER, GROUP_RULER, false, "ruler", _("Ruler"));
-    ADD_CUSTOM_ITEM_TGL("DRAW_SPLINE", ACTION_TOOL_DRAW_SPLINE, GROUP_RULER, false, "spline-draw", _("Draw Spline"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "HIGHLIGHTER", ACTION_TOOL_HIGHLIGHTER, GROUP_TOOL, true, "tool_highlighter",
+                                   _("Highlighter"));
 
-    ADD_CUSTOM_ITEM_TGL("SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, true, "lasso", _("Select Region"));
-    ADD_CUSTOM_ITEM_TGL("SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select",
-                        _("Select Rectangle"));
-    ADD_CUSTOM_ITEM_TGL("SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true, "object-select",
-                        _("Select Object"));
-    ADD_CUSTOM_ITEM_TGL("VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true, "stretch", _("Vertical Space"));
-    ADD_CUSTOM_ITEM_TGL("PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true, "object-play", _("Play Object"));
-    ADD_CUSTOM_ITEM_TGL("HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand", _("Hand"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "TEXT", ACTION_TOOL_TEXT, GROUP_TOOL, true, "tool_text", _("Text"));
+    ADD_CUSTOM_ITEM_IF_NAME_EQ(name, "MATH_TEX", ACTION_TEX, "tool_math_tex", _("Add/Edit Tex"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "IMAGE", ACTION_TOOL_IMAGE, GROUP_TOOL, true, "tool_image", _("Image"));
+    ADD_CUSTOM_ITEM_IF_NAME_EQ(name, "DEFAULT_TOOL", ACTION_TOOL_DEFAULT, "default", _("Default Tool"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_RULER, false,
+                                   "shape_recognizer", _("Shape Recognizer"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "rect-draw",
+                                   _("Draw Rectangle"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "DRAW_ELLIPSE", ACTION_TOOL_DRAW_ELLIPSE, GROUP_RULER, false, "ellipse-draw",
+                                   _("Draw Ellipse"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false, "arrow-draw",
+                                   _("Draw Arrow"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER,
+                                   false, "coordinate-system-draw", _("Draw coordinate system"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "RULER", ACTION_RULER, GROUP_RULER, false, "ruler", _("Ruler"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "DRAW_SPLINE", ACTION_TOOL_DRAW_SPLINE, GROUP_RULER, false, "spline-draw",
+                                   _("Draw Spline"));
 
-    fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
-    addToolItem(fontButton);
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "SELECT_REGION", ACTION_TOOL_SELECT_REGION, GROUP_TOOL, true, "lasso",
+                                   _("Select Region"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "SELECT_RECTANGLE", ACTION_TOOL_SELECT_RECT, GROUP_TOOL, true, "rect-select",
+                                   _("Select Rectangle"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "SELECT_OBJECT", ACTION_TOOL_SELECT_OBJECT, GROUP_TOOL, true, "object-select",
+                                   _("Select Object"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "VERTICAL_SPACE", ACTION_TOOL_VERTICAL_SPACE, GROUP_TOOL, true, "stretch",
+                                   _("Vertical Space"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "PLAY_OBJECT", ACTION_TOOL_PLAY_OBJECT, GROUP_TOOL, true, "object-play",
+                                   _("Play Object"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand", _("Hand"));
 
-    ADD_CUSTOM_ITEM_TGL("AUDIO_RECORDING", ACTION_AUDIO_RECORD, GROUP_AUDIO, false, "audio-record",
-                        _("Record Audio / Stop Recording"));
-    audioPausePlaybackButton = new ToolButton(listener, "AUDIO_PAUSE_PLAYBACK", ACTION_AUDIO_PAUSE_PLAYBACK,
-                                              GROUP_AUDIO, false, "audio-playback-pause", _("Pause / Play"));
-    addToolItem(audioPausePlaybackButton);
-    audioStopPlaybackButton = new ToolButton(listener, "AUDIO_STOP_PLAYBACK", ACTION_AUDIO_STOP_PLAYBACK,
-                                             "audio-playback-stop", _("Stop"));
-    addToolItem(audioStopPlaybackButton);
-    audioSeekForwardsButton = new ToolButton(listener, "AUDIO_SEEK_FORWARDS", ACTION_AUDIO_SEEK_FORWARDS,
-                                             "audio-seek-forwards", _("Forward"));
-    addToolItem(audioSeekForwardsButton);
-    audioSeekBackwardsButton = new ToolButton(listener, "AUDIO_SEEK_BACKWARDS", ACTION_AUDIO_SEEK_BACKWARDS,
-                                              "audio-seek-backwards", _("Back"));
-    addToolItem(audioSeekBackwardsButton);
 
+    ADD_VECTOR_FontButton_IF_NAME_EQ(fontButton, name, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, "Select Font");
+
+
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "AUDIO_RECORDING", ACTION_AUDIO_RECORD, GROUP_AUDIO, false, "audio-record",
+                                   _("Record Audio / Stop Recording"));
+
+    ADD_VECTOR_ToolButton_EXTENDED_IF_NAME_EQ(audioPausePlaybackButton, name, "AUDIO_PAUSE_PLAYBACK",
+                                              ACTION_AUDIO_PAUSE_PLAYBACK, GROUP_AUDIO, false, "audio-playback-pause",
+                                              "Pause / Play");
+    ADD_VECTOR_ToolButton_EXTENDED_IF_NAME_EQ(audioStopPlaybackButton, name, "AUDIO_STOP_PLAYBACK",
+                                              ACTION_AUDIO_STOP_PLAYBACK, GROUP_AUDIO, false, "audio-playback-stop",
+                                              "Stop");
+    ADD_VECTOR_ToolButton_EXTENDED_IF_NAME_EQ(audioSeekBackwardsButton, name, "AUDIO_SEEK_BACKWARDS",
+                                              ACTION_AUDIO_SEEK_BACKWARDS, GROUP_AUDIO, false, "audio-seek-backwards",
+                                              "Back");
+    ADD_VECTOR_ToolButton_EXTENDED_IF_NAME_EQ(audioSeekForwardsButton, name, "AUDIO_SEEK_FORWARDS",
+                                              ACTION_AUDIO_SEEK_FORWARDS, GROUP_AUDIO, false, "audio-seek-forwards",
+                                              "Forward");
     // Menu Help
     // ************************************************************************
     // All tools are registered by the Glade Signals
@@ -458,60 +580,109 @@ void ToolMenuHandler::initToolItems() {
 
     // Footer tools
     // ************************************************************************
-    toolPageSpinner = new ToolPageSpinner(gui, listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN);
-    addToolItem(toolPageSpinner);
 
-    auto* toolZoomSlider = new ToolZoomSlider(listener, "ZOOM_SLIDER", ACTION_FOOTER_ZOOM_SLIDER, zoom);
-    addToolItem(toolZoomSlider);
+    if (name == "PAGE_SPIN") {
+        ToolPageSpinner* it = new ToolPageSpinner(gui, listener, "PAGE_SPIN", ACTION_FOOTER_PAGESPIN);
+        this->toolPageSpinner.push_back(it);
+        addToolItem(it);
+        return it;
+    }
 
-    toolPageLayer = new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
-    addToolItem(toolPageLayer);
 
-    ADD_CUSTOM_ITEM_TGL("TOOL_FILL", ACTION_TOOL_FILL, GROUP_FILL, false, "fill", _("Fill"));
+    if (name == "ZOOM_SLIDER") {
+        auto* toolZoomSlider = new ToolZoomSlider(listener, "ZOOM_SLIDER", ACTION_FOOTER_ZOOM_SLIDER, zoom);
+        addToolItem(toolZoomSlider);
+        return toolZoomSlider;
+    }
+
+    if (name == "LAYER") {
+        ToolPageLayer* it =
+                new ToolPageLayer(control->getLayerController(), gui, listener, "LAYER", ACTION_FOOTER_LAYER);
+        this->toolPageLayer.push_back(it);
+        addToolItem(it);
+        return it;
+    }
+
+
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "TOOL_FILL", ACTION_TOOL_FILL, GROUP_FILL, false, "fill", _("Fill"));
 
 
     // Non-menu items
     // ************************************************************************
 
     // Color item - not in the menu
-    addToolItem(new ColorToolItem(listener, toolHandler, this->parent, Color{0xff0000U}, true));
 
-    addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT"));
-    addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
+    if (name == "COLOR_SELECT") {
+        return addToolItem(new ColorToolItem(listener, toolHandler, this->parent, Color{0xff0000U}, true));
+    }
+
+    if (name == "SELECT") {
+        return addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT"));
+    }
+    if (name == "DRAW") {
+        return addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
+    }
 
     // General tool configuration - working for every tool which support it
-    ADD_CUSTOM_ITEM_TGL("VERY_FINE", ACTION_SIZE_VERY_FINE, GROUP_SIZE, true, "thickness_very_fine", _("Very Fine"));
-    ADD_CUSTOM_ITEM_TGL("FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness_fine", _("Fine"));
-    ADD_CUSTOM_ITEM_TGL("MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness_medium", _("Medium"));
-    ADD_CUSTOM_ITEM_TGL("THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness_thick", _("Thick"));
-    ADD_CUSTOM_ITEM_TGL("VERY_THICK", ACTION_SIZE_VERY_THICK, GROUP_SIZE, true, "thickness_very_thick",
-                        _("Very Thick"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "VERY_FINE", ACTION_SIZE_VERY_FINE, GROUP_SIZE, true, "thickness_very_fine",
+                                   _("Very Fine"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "FINE", ACTION_SIZE_FINE, GROUP_SIZE, true, "thickness_fine", _("Fine"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "MEDIUM", ACTION_SIZE_MEDIUM, GROUP_SIZE, true, "thickness_medium",
+                                   _("Medium"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "THICK", ACTION_SIZE_THICK, GROUP_SIZE, true, "thickness_thick", _("Thick"));
+    ADD_CUSTOM_ITEM_TGL_IF_NAME_EQ(name, "VERY_THICK", ACTION_SIZE_VERY_THICK, GROUP_SIZE, true, "thickness_very_thick",
+                                   _("Very Thick"));
 
+    // If arrive here, the variable name have to contain an error
+    g_error("You try to add an item not exist \"%s\"", name.c_str());
+    return nullptr;
+}
 
-    // now connect all Glade Signals
+void ToolMenuHandler::connectSignalsOfToolItems() {
     gtk_builder_connect_signals_full(gui->getBuilder(), reinterpret_cast<GtkBuilderConnectFunc>(signalConnectCallback),
                                      this);
 }
 
-void ToolMenuHandler::setFontButtonFont(XojFont& font) { this->fontButton->setFont(font); }
+void ToolMenuHandler::setFontButtonFont(XojFont& font) {
+    for (FontButton* it: this->fontButton) {
+        it->setFont(font);
+    }
+}
 
-auto ToolMenuHandler::getFontButtonFont() -> XojFont { return this->fontButton->getFont(); }
+auto ToolMenuHandler::getFontButtonFont() -> XojFont {
+    // every object shuld be set at the same value
+    return this->fontButton.front()->getFont();
+}
 
-void ToolMenuHandler::showFontSelectionDlg() { this->fontButton->showFontDialog(); }
+void ToolMenuHandler::showFontSelectionDlg() {
+    // every object shuld be set at the same value
+    this->fontButton.front()->showFontDialog();
+}
 
 void ToolMenuHandler::setUndoDescription(const string& description) {
-    this->undoButton->updateDescription(description);
+    for (ToolButton* it: this->undoButton) {
+        it->updateDescription(description);
+    }
     gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditUndo")), description.c_str());
 }
 
 void ToolMenuHandler::setRedoDescription(const string& description) {
-    this->redoButton->updateDescription(description);
+    for (ToolButton* it: this->redoButton) {
+        it->updateDescription(description);
+    }
     gtk_menu_item_set_label(GTK_MENU_ITEM(gui->get("menuEditRedo")), description.c_str());
 }
 
-auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter* { return this->toolPageSpinner->getPageSpinner(); }
+auto ToolMenuHandler::getPageSpinner() -> SpinPageAdapter* {
+    // every object shuld be set at the same value
+    return this->toolPageSpinner.front()->getPageSpinner();
+}
 
-void ToolMenuHandler::setPageText(const string& text) { this->toolPageSpinner->setText(text); }
+void ToolMenuHandler::setPageText(const string& text) {
+    for (ToolPageSpinner* it: this->toolPageSpinner) {
+        it->setText(text);
+    }
+}
 
 auto ToolMenuHandler::getModel() -> ToolbarModel* { return this->tbModel; }
 
@@ -530,10 +701,19 @@ auto ToolMenuHandler::getToolItems() -> vector<AbstractToolItem*>* { return &thi
 void ToolMenuHandler::disableAudioPlaybackButtons() {
     setAudioPlaybackPaused(false);
 
-    this->audioPausePlaybackButton->enable(false);
-    this->audioStopPlaybackButton->enable(false);
-    this->audioSeekBackwardsButton->enable(false);
-    this->audioSeekForwardsButton->enable(false);
+    for (ToolButton* it: this->audioPausePlaybackButton) {
+        it->enable(false);
+    }
+    for (ToolButton* it: this->audioStopPlaybackButton) {
+        it->enable(false);
+    }
+    for (ToolButton* it: this->audioSeekBackwardsButton) {
+        it->enable(false);
+    }
+    for (ToolButton* it: this->audioSeekForwardsButton) {
+        it->enable(false);
+    }
+
 
     gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), false);
     gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), false);
@@ -542,10 +722,19 @@ void ToolMenuHandler::disableAudioPlaybackButtons() {
 }
 
 void ToolMenuHandler::enableAudioPlaybackButtons() {
-    this->audioPausePlaybackButton->enable(true);
-    this->audioStopPlaybackButton->enable(true);
-    this->audioSeekBackwardsButton->enable(true);
-    this->audioSeekForwardsButton->enable(true);
+
+    for (ToolButton* it: this->audioPausePlaybackButton) {
+        it->enable(true);
+    }
+    for (ToolButton* it: this->audioStopPlaybackButton) {
+        it->enable(true);
+    }
+    for (ToolButton* it: this->audioSeekBackwardsButton) {
+        it->enable(true);
+    }
+    for (ToolButton* it: this->audioSeekForwardsButton) {
+        it->enable(true);
+    }
 
     gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioPausePlayback")), true);
     gtk_widget_set_sensitive(GTK_WIDGET(gui->get("menuAudioStopPlayback")), true);
@@ -554,6 +743,8 @@ void ToolMenuHandler::enableAudioPlaybackButtons() {
 }
 
 void ToolMenuHandler::setAudioPlaybackPaused(bool paused) {
-    this->audioPausePlaybackButton->setActive(paused);
+    for (ToolButton* it: this->audioPausePlaybackButton) {
+        it->setActive(paused);
+    }
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gui->get("menuAudioPausePlayback")), paused);
 }
