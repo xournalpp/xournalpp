@@ -15,7 +15,7 @@ ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType typ
     zoom->addZoomListener(this);
 }
 
-ToolZoomSlider::~ToolZoomSlider() = default;
+ToolZoomSlider::~ToolZoomSlider() { zoom->removeZoomListener(this);}
 
 void ToolZoomSlider::sliderChanged(GtkRange* range, ToolZoomSlider* self) {
     if (!self->sliderChangingByZoomControlOrInit && !self->zoom->isZoomPresentationMode() &&

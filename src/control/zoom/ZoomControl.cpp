@@ -190,6 +190,11 @@ auto ZoomControl::getScrollPositionAfterZoom() const -> utl::Point<double> {
 
 void ZoomControl::addZoomListener(ZoomListener* l) { this->listener.emplace_back(l); }
 
+void ZoomControl::removeZoomListener(ZoomListener* l) {
+    this->listener.erase(std::find(this->listener.begin(), this->listener.end(), l));
+}
+
+
 void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c) {
     this->control = c;
     this->view = v;
