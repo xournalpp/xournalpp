@@ -131,7 +131,7 @@ https://brew.sh/
 
 ## Install dependencies
 ````bash
-brew install cmake pkg-config gtk+3 poppler librsvg adwaita-icon-theme
+brew install cmake pkg-config gtk+3 poppler librsvg adwaita-icon-theme libzip portaudio libsndfile
 ````
 
 ## Build Xournal++:

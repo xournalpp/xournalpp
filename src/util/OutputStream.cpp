@@ -1,15 +1,15 @@
-#include "OutputStream.h"
+#include "util/OutputStream.h"
 
-#include <cstdlib>
+#include <glib.h>
 
-#include "GzUtil.h"
-#include "i18n.h"
+#include "util/GzUtil.h"
+#include "util/i18n.h"
 
 OutputStream::OutputStream() = default;
 
 OutputStream::~OutputStream() = default;
 
-void OutputStream::write(const string& str) { write(str.c_str(), str.length()); }
+void OutputStream::write(const std::string& str) { write(str.c_str(), str.length()); }
 
 void OutputStream::write(const char* str) { write(str, strlen(str)); }
 
@@ -31,7 +31,7 @@ GzOutputStream::~GzOutputStream() {
     this->fp = nullptr;
 }
 
-auto GzOutputStream::getLastError() -> string& { return this->error; }
+auto GzOutputStream::getLastError() -> std::string& { return this->error; }
 
 void GzOutputStream::write(const char* data, int len) { gzwrite(this->fp, data, len); }
 

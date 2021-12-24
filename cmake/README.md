@@ -15,7 +15,6 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 
 | Variable name               | Description
 | --------------------------- | -----------
-| `DEBUG_COMPILE`             | Pass `-Wall` to `CXX_FLAGS`
 | `DEBUG_INPUT`               | Input debugging, e.g. eraser events etc
 | `DEBUG_RECOGNIZER`          | Shape recognizer debug: output score etc
 | `DEBUG_SHEDULER`            | Scheduler debug: show jobs etc
@@ -31,8 +30,6 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 | `DEV_CALL_LOG`                 | OFF              | Call log (can take loooot of disk space and IO!)
 | `DEV_CHECK_GTK3_COMPAT` *[A]*  | OFF              | Adds a few compiler flags to check basic GTK3 upgradeability support (still compiles for GTK2!)
 | `DEV_ENABLE_GCOV` *[A]*        | OFF              | Build with gcov support
-| `DEV_MEMORY_CHECKING`          | ON               | Memory checking
-| `DEV_MEMORY_LEAK_CHECKING`     | ON               | Memory leak checking
 | `DEV_METADATA_FILE` *[A]*      | metadata.ini     | Metadata file name
 | `DEV_METADATA_MAX_ITEMS` *[A]* | 50               | Maximal amount of metadata elements
 | `DEV_PRINT_CONFIG_FILE` *[A]*  | print-config.ini | Print config file name
@@ -52,14 +49,7 @@ Here you can find complete list of Xournal++ CMake flags (sorted by categories).
 
 | Variable name        | Default | Description
 | -------------------- | ------- | -----------
-| `ENABLE_CPPUNIT`     | OFF     | Build CppUnit test instead of xournalpp application
-
-
-## `TEST` – optional features of CppUnit tests
-
-| Variable name      | Default | Description
-| ------------------ | ------- | -----------
-| `TEST_CHECK_SPEED` | OFF     | Show speed benchmarks for some tests
+| `ENABLE_GTEST`       | OFF     | Download and build GoogleTest (if not previously done) and build tests instead of xournalpp application
 
 
 ## `PATH` – here you can specify alternative location of these binaries (there are no defaults)

@@ -1,8 +1,7 @@
-#include "Logger.h"
+#include "util/logger/Logger.h"
 
 #include <config-dev.h>
 
-#include "XournalType.h"
 
 #ifdef DEV_CALL_LOG
 

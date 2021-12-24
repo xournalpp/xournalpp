@@ -53,6 +53,10 @@
     ${prefix}/share/locale
   </translations>
 
+  <translations  name="xournalpp">
+    ${prefix}/share/locale
+  </translations>
+
 
   <!-- Data to copy in, usually Glade/UI files, images, sounds files
        etc. The destination inside the bundle can be specified if the
@@ -64,6 +68,11 @@
     ${prefix}/share/gtk3-demo
   </data -->
 
+  <!--
+    Infos on how to structure the .app-file can be found on 
+    https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html#//apple_ref/doc/uid/20001119-110730
+  -->
+   
   <!-- Copy in the themes data. You may want to trim this to save space
        in your bundle. -->
   <data>
@@ -72,6 +81,14 @@
 
   <data>
     ${prefix}/share/icons
+  </data>
+
+  <data dest="${bundle}/Contents/Resources/plugins">
+    ${prefix}/share/xournalpp/plugins
+  </data>
+
+  <data dest="${bundle}/Contents/Resources">
+    ${prefix}/share/xournalpp/resources
   </data>
 
   <data dest="${bundle}/Contents/Resources">

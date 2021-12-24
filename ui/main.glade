@@ -296,6 +296,56 @@
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <child>
+                          <object class="GtkMenuItem" id="menuArrange">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Arrange</property>
+                            <property name="use-underline">True</property>
+                            <child type="submenu">
+                              <object class="GtkMenu">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <child>
+                                  <object class="GtkMenuItem" id="menuArrangeBringToFront">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Bring to Front</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_ARRANGE_BRING_TO_FRONT" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkMenuItem" id="menuArrangeBringForward">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Bring Forward</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_ARRANGE_BRING_FORWARD" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkMenuItem" id="menuArrangeSendBackward">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Send Backward</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_ARRANGE_SEND_BACKWARD" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkMenuItem" id="menuArrangeSendToBack">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="yes">Send to Back</property>
+                                    <property name="use-underline">True</property>
+                                    <signal name="activate" handler="ACTION_ARRANGE_SEND_TO_BACK" swapped="no"/>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkImageMenuItem" id="menuEditUndo">
                             <property name="label">gtk-undo</property>
                             <property name="name">menuEditUndo</property>
@@ -490,7 +540,7 @@
                             <property name="name">menuViewSidebarVisible</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Show sidebar</property>
+                            <property name="label" translatable="yes">Show Sidebar</property>
                             <property name="use-underline">True</property>
                             <accelerator key="F12" signal="activate"/>
                           </object>
@@ -506,7 +556,7 @@
                             <property name="name">menuViewToolbarsVisible</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Show toolbars</property>
+                            <property name="label" translatable="yes">Show Toolbars</property>
                             <property name="use-underline">True</property>
                             <accelerator key="F9" signal="activate"/>
                           </object>
@@ -563,7 +613,7 @@
                                     <property name="name">menuLayoutLR</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">_Left To Right</property>
+                                    <property name="label" translatable="yes">_Left to Right</property>
                                     <property name="use-underline">True</property>
                                     <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_SET_LAYOUT_L2R:GROUP_LAYOUT_LR" swapped="no"/>
@@ -574,7 +624,7 @@
                                     <property name="name">menuLayoutRL</property>
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">_Right To Left</property>
+                                    <property name="label" translatable="yes">_Right to Left</property>
                                     <property name="use-underline">True</property>
                                     <property name="draw-as-radio">True</property>
                                     <signal name="toggled" handler="ACTION_SET_LAYOUT_R2L:GROUP_LAYOUT_LR" swapped="no"/>
@@ -1041,7 +1091,7 @@
                             <property name="label" translatable="yes">_Previous Layer</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_PREVIOUS_LAYER" swapped="no"/>
-                            <accelerator key="Left" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                            <accelerator key="Page_Down" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1052,7 +1102,7 @@
                             <property name="label" translatable="yes">_Next Layer</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_NEXT_LAYER" swapped="no"/>
-                            <accelerator key="Right" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                            <accelerator key="Page_Up" signal="activate" modifiers="GDK_SHIFT_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1076,7 +1126,7 @@
                             <property name="name">menuNavigationNextAnnotatedPage</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">N_ext annotated page</property>
+                            <property name="label" translatable="yes">N_ext Annotated Page</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_NEXT_ANNOTATED_PAGE" swapped="no"/>
                             <accelerator key="Page_Down" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
@@ -1087,7 +1137,7 @@
                             <property name="name">menuNavigationPreviousAnnotatedPage</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">P_revious annotated Page</property>
+                            <property name="label" translatable="yes">P_revious Annotated Page</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_GOTO_PREVIOUS_ANNOTATED_PAGE" swapped="no"/>
                             <accelerator key="Page_Up" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
@@ -1144,7 +1194,7 @@
                             <property name="name">menuJournalNewPageAtEnd</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Append New Pdf Pages</property>
+                            <property name="label" translatable="yes">Append New PDF Pages</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_APPEND_NEW_PDF_PAGES" swapped="no"/>
                           </object>
@@ -1167,7 +1217,7 @@
                             <property name="label" translatable="yes">_Delete Page</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_DELETE_PAGE" swapped="no"/>
-                            <accelerator key="Delete" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="Delete" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1202,9 +1252,9 @@
                           <object class="GtkMenuItem" id="menuJournalRenameLayer">
                             <property name="name">menuJournalRenameLayer</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can-focus">False</property>
                             <property name="label" translatable="yes">Rename Layer</property>
-                            <property name="use_underline">True</property>
+                            <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_RENAME_LAYER" swapped="no"/>
                             <accelerator key="r" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
@@ -1240,7 +1290,7 @@
                             <property name="name">menuJournalPaperBackground</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Paper b_ackground</property>
+                            <property name="label" translatable="yes">Paper B_ackground</property>
                             <property name="use-underline">True</property>
                           </object>
                         </child>
@@ -1327,6 +1377,7 @@
                             <property name="label" translatable="yes">_Default Tools</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_TOOL_DEFAULT" swapped="no"/>
+                            <accelerator key="d" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1913,7 +1964,7 @@
                             <property name="name">menuEditTex</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Add/Edit Tex</property>
+                            <property name="label" translatable="yes">Add/Edit TeX</property>
                             <property name="use-underline">True</property>
                             <signal name="activate" handler="ACTION_TEX" swapped="no"/>
                             <accelerator key="x" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
@@ -2052,50 +2103,91 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkPaned" id="panelMainContents">
-                    <property name="name">panelMainContents</property>
+                  <object class="GtkBox" id="mainContentContainer">
                     <property name="visible">True</property>
-                    <property name="can-focus">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkBox" id="sidebar">
-                        <property name="name">sidebar</property>
+                      <object class="GtkPaned" id="panelMainContents">
+                        <property name="name">panelMainContents</property>
                         <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="orientation">vertical</property>
+                        <property name="can-focus">True</property>
                         <child>
-                          <object class="GtkToolbar" id="tbSelectSidebarPage">
-                            <property name="name">tbSelectSidebarPage</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkBox" id="sidebarContents">
-                            <property name="name">sidebarContents</property>
+                          <object class="GtkBox" id="sidebar">
+                            <property name="name">sidebar</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <placeholder/>
+                              <object class="GtkBox" id="bxSidebarTopActions">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <child>
+                                  <object class="GtkToolbar" id="tbSelectSidebarPage">
+                                    <property name="name">tbSelectSidebarPage</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="buttonCloseSidebar">
+                                    <property name="name">buttonCloseSidebar</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">False</property>
+                                    <property name="relief">none</property>
+                                    <child>
+                                      <object class="GtkImage" id="image8">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="stock">gtk-close</property>
+                                      </object>
+                                    </child>
+                                    <style>
+                                      <class name="raised"/>
+                                    </style>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="pack-type">end</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <style>
+                                  <class name="linked"/>
+                                  <class name="inline-toolbar"/>
+                                </style>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
                             </child>
-                          </object>
-                          <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkBox" id="box2">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
                             <child>
-                              <object class="GtkBox" id="box5">
+                              <object class="GtkBox" id="sidebarContents">
+                                <property name="name">sidebarContents</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkBox" id="box2">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <child>
@@ -2104,8 +2196,6 @@
                                     <property name="visible">True</property>
                                     <property name="can-focus">True</property>
                                     <property name="receives-default">True</property>
-                                    <property name="tooltip-text" translatable="yes">Swap the current page with the one above</property>
-                                    <property name="margin-left">2</property>
                                     <child>
                                       <object class="GtkImage" id="image1">
                                         <property name="visible">True</property>
@@ -2117,7 +2207,7 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
-                                    <property name="position">0</property>
+                                    <property name="position">1</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -2126,7 +2216,6 @@
                                     <property name="visible">True</property>
                                     <property name="can-focus">True</property>
                                     <property name="receives-default">True</property>
-                                    <property name="tooltip-text" translatable="yes">Swap the current page with the one below</property>
                                     <child>
                                       <object class="GtkImage" id="image5">
                                         <property name="visible">True</property>
@@ -2138,7 +2227,7 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
-                                    <property name="position">1</property>
+                                    <property name="position">2</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -2147,7 +2236,6 @@
                                     <property name="visible">True</property>
                                     <property name="can-focus">True</property>
                                     <property name="receives-default">True</property>
-                                    <property name="tooltip-text" translatable="yes">Insert a copy of the current page below</property>
                                     <child>
                                       <object class="GtkImage" id="image6">
                                         <property name="visible">True</property>
@@ -2159,7 +2247,7 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
-                                    <property name="position">2</property>
+                                    <property name="position">3</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -2168,7 +2256,6 @@
                                     <property name="visible">True</property>
                                     <property name="can-focus">True</property>
                                     <property name="receives-default">True</property>
-                                    <property name="tooltip-text" translatable="yes">Delete this page</property>
                                     <child>
                                       <object class="GtkImage" id="image7">
                                         <property name="visible">True</property>
@@ -2180,79 +2267,54 @@
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
-                                    <property name="position">3</property>
+                                    <property name="position">4</property>
                                   </packing>
                                 </child>
                                 <style>
-                                  <class name="raised"/>
                                   <class name="linked"/>
-                                </style>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="buttonCloseSidebar">
-                                <property name="name">buttonCloseSidebar</property>
-                                <property name="visible">True</property>
-                                <property name="can-focus">True</property>
-                                <property name="receives-default">False</property>
-                                <property name="relief">none</property>
-                                <child>
-                                  <object class="GtkImage" id="image8">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">False</property>
-                                    <property name="stock">gtk-close</property>
-                                  </object>
-                                </child>
-                                <style>
                                   <class name="raised"/>
                                 </style>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="pack-type">end</property>
-                                <property name="position">1</property>
+                                <property name="padding">2</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                           </object>
                           <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="padding">2</property>
-                            <property name="position">2</property>
+                            <property name="resize">False</property>
+                            <property name="shrink">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="boxContents">
+                            <property name="name">boxContents</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <placeholder/>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="resize">True</property>
+                            <property name="shrink">True</property>
                           </packing>
                         </child>
                       </object>
                       <packing>
-                        <property name="resize">False</property>
-                        <property name="shrink">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="boxContents">
-                        <property name="name">boxContents</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="resize">True</property>
-                        <property name="shrink">True</property>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>

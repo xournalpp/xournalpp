@@ -1,10 +1,12 @@
-#include "StringUtils.h"
+#include "util/StringUtils.h"
 
 #include <cstring>
 #include <sstream>  // std::istringstream
 #include <utility>
 
 #include <glib.h>
+using std::string;
+using std::vector;
 
 auto StringUtils::toLowerCase(const string& input) -> string {
     char* lower = g_utf8_strdown(input.c_str(), input.size());

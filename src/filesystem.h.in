@@ -13,5 +13,5 @@
 
 #include <@CXX_FILESYSTEM_HEADER@>
 
-//enable fs
+// enable fs
 namespace fs = @CXX_FILESYSTEM_NAMESPACE@;
