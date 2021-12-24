@@ -1,7 +1,7 @@
-#include "ObjectOutputStream.h"
+#include "util/serializing/ObjectOutputStream.h"
 
-#include "ObjectEncoding.h"
-#include "Serializeable.h"
+#include "util/serializing/ObjectEncoding.h"
+#include "util/serializing/Serializable.h"
 
 ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder) {
     g_assert(encoder != nullptr);
@@ -38,9 +38,9 @@ void ObjectOutputStream::writeSizeT(size_t st) {
     this->encoder->addData(&st, sizeof(size_t));
 }
 
-void ObjectOutputStream::writeString(const char* str) { writeString(string(str)); }
+void ObjectOutputStream::writeString(const char* str) { writeString(std::string(str)); }
 
-void ObjectOutputStream::writeString(const string& s) {
+void ObjectOutputStream::writeString(const std::string& s) {
     this->encoder->addStr("_s");
     int len = s.length();
     this->encoder->addData(&len, sizeof(int));

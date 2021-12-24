@@ -1,15 +1,15 @@
 trigger:
   tags:
     include:
-      - ?*.?*.?*
+      - v?*.?*.?*
     exclude:
       - nightly
 schedules:
-  - cron: "0 0 * * *"
+  - cron: '0 0 * * *'
     displayName: Nightly build
     branches:
       include:
-      - master
+        - master
 pr: none
 variables:
   versionNumber: ''
@@ -64,20 +64,21 @@ stages:
         steps:
           - bash: |
               sudo apt-get update
-              sudo apt-get install -y gcc-8 g++-8 cmake ninja-build libcppunit-dev libgtk-3-dev libpoppler-glib-dev libxml2-dev portaudio19-dev libsndfile-dev liblua5.3-dev \
-                                      libzip-dev gettext lsb-release
+              sudo apt-get install -y build-essential gcc-10 g++-10 cmake ninja-build libgtk-3-dev libpoppler-glib-dev libxml2-dev portaudio19-dev libsndfile-dev liblua5.3-dev \
+                                      libzip-dev gettext lsb-release librsvg2-dev help2man
             displayName: 'Install dependencies'
           - template: steps/build_linux.yml
             parameters:
               build_type: 'RelWithDebInfo'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DCMAKE_INSTALL_PREFIX=/usr -DCPACK_GENERATOR="TGZ;DEB"'
               cmake_commands: '--target package'
+              gcc_version: '10'
           - task: PublishPipelineArtifact@1
             inputs:
               artifactName: 'linux-debian-packages'
               targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
             displayName: 'Publish packages'
-          
+
       - job: Windows
         pool:
           vmImage: 'vs2017-win2016'
@@ -89,7 +90,7 @@ stages:
               cmake_flags: '-GNinja -DCMAKE_CXX_FLAGS="-Os -s"'
           - script: |
               set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
-              C:\msys64\usr\bin\bash -lc "./build-setup.sh"
+              C:\msys64\usr\bin\bash -lc "./package.sh"
             workingDirectory: ./windows-setup
             env:
               MSYS2_ARCH: x86_64
@@ -110,10 +111,10 @@ stages:
           - template: steps/build_mac.yml
             parameters:
               build_type: 'RelWithDebInfo'
-              cmake_flags: '-DCMAKE_OSX_DEPLOYMENT_TARGET=10.13'
+              generation_path: '/Users/xournal-dev'
           - bash: |
-              export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
-              ./build-app.sh /Users/git-bin/gtk
+              export PATH="$HOME/.local/bin:/Users/xournal-dev/gtk/inst/bin:$PATH"
+              ./build-app.sh /Users/xournal-dev/gtk
             workingDirectory: ./mac-setup
             displayName: 'Create App'
           - task: PublishPipelineArtifact@0
@@ -121,4 +122,3 @@ stages:
               artifactName: 'macOS'
               targetPath: './mac-setup/Xournal++.zip'
             displayName: 'Publish macOS Setup'
-

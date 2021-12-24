@@ -1,0 +1,52 @@
+/*
+ * Xournal++
+ *
+ * Serialized input stream
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+#include <sstream>
+
+#include <gtk/gtk.h>
+
+#include "InputStreamException.h"
+
+class Serializable;
+
+class ObjectInputStream {
+public:
+    ObjectInputStream() = default;
+    virtual ~ObjectInputStream() = default;
+
+public:
+    bool read(const char* data, int len);
+
+    void readObject(const char* name);
+    std::string readObject();
+    std::string getNextObjectName();
+    void endObject();
+
+    int readInt();
+    double readDouble();
+    size_t readSizeT();
+    std::string readString();
+
+    void readData(void** data, int* len);
+    cairo_surface_t* readImage();
+
+private:
+    void checkType(char type);
+
+    static std::string getType(char type);
+
+private:
+    std::istringstream istream;
+    size_t pos();
+    size_t len = 0;
+};

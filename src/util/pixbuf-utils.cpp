@@ -39,7 +39,7 @@
  *
  */
 
-#include "pixbuf-utils.h"
+#include "util/pixbuf-utils.h"
 
 #include <cerrno>
 #include <cmath>

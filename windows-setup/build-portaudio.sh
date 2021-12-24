@@ -1,12 +1,12 @@
 #!/bin/bash
 
-PA_CHECKSUM=56c596bba820d90df7d057d8f6a0ec6bf9ab82e8
-PA_FILENAME=pa_stable_v190600_20161030.tgz
+PA_CHECKSUM=b7e9b9c53d993f6d110487ef56a3d4529d21b2f1
+PA_FILENAME=pa_stable_v190700_20210406.tgz
 
 # go to script directory
 cd "${0%/*}"
 
-wget http://www.portaudio.com/archives/${PA_FILENAME}
+wget http://files.portaudio.com/archives/${PA_FILENAME}
 
 #Check the checksum of the downloaded archive
 printf "Checking integrity of downloaded files..."

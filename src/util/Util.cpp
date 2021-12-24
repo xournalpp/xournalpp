@@ -1,16 +1,14 @@
-#include "Util.h"
+#include "util/Util.h"
 
 #include <array>
-#include <cassert>
 #include <cstdlib>
 
 #include <unistd.h>
 
-#include "Color.h"
-#include "PathUtil.h"
-#include "StringUtils.h"
-#include "XojMsgBox.h"
-#include "i18n.h"
+#include "util/Color.h"
+#include "util/PathUtil.h"
+#include "util/XojMsgBox.h"
+#include "util/i18n.h"
 
 struct CallbackUiData {
     explicit CallbackUiData(std::function<void()> callback): callback(std::move(callback)) {}
@@ -73,7 +71,7 @@ void Util::writeCoordinateString(OutputStream* out, double xVal, double yVal) {
 
 void Util::systemWithMessage(const char* command) {
     if (auto errc = std::system(command); errc != 0) {
-        string msg = FS(_F("Error {1} executing system command: {2}") % errc % command);
+        std::string msg = FS(_F("Error {1} executing system command: {2}") % errc % command);
         XojMsgBox::showErrorToUser(nullptr, msg);
     }
 }

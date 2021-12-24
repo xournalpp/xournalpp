@@ -29,8 +29,8 @@ pacman -S mingw-w64-x86_64-toolchain \
           mingw-w64-x86_64-cmake \
           mingw-w64-x86_64-ninja \
           patch \
-          mingw-w64-x86_64-cppunit \
-          make
+          make \
+          mingw-w64-x86_64-imagemagick
 ```
 -> press enter multiple times / confirm all default values
 
@@ -75,14 +75,16 @@ settings (assuming default installation folder for MSYS2).
 
 You can now run Xournal++ with
 ```bash
-./src/xournalpp.exe
+./xournalpp.exe
 ```
 or package it in an installer (see below).
 
 ## Packaging and Setup
 Create the installer with
 ```bash
-windows-setup/build-setup.sh
+windows-setup/package.sh
 ```
 
-The installer will be located at `windows-setup/xournalpp-setup.exe`
+The installer will be located at `windows-setup/xournalpp-setup.exe`. This
+command will also create a portable version of Xournal++ located in
+`windows-setup/dist`.

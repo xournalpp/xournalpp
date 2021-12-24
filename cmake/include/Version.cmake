@@ -4,8 +4,12 @@
 if(NOT DISTRO_CODENAME)
   find_program(LSB_RELEASE_CMD lsb_release)
   if(NOT LSB_RELEASE_CMD)
-    message(WARNING "include/Version.cmake: Can't find lsb_release in your path. Setting DISTRO_CODENAME to unknown.")
-    set(DISTRO_CODENAME unknown)
+    if (WIN32)
+	  set (DISTRO_CODENAME "Windows")
+	else ()
+      message(WARNING "include/Version.cmake: Can't find lsb_release in your path. Setting DISTRO_CODENAME to unknown.")
+      set(DISTRO_CODENAME unknown)
+	endif ()
   else()
     execute_process(COMMAND ${LSB_RELEASE_CMD} -cs
                     OUTPUT_VARIABLE DISTRO_CODENAME
@@ -46,14 +50,16 @@ function(core_find_git_rev stamp)
                         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
         endif()
         # get HEAD commit SHA-1
-        execute_process(COMMAND ${GIT_EXECUTABLE} log --no-show-signature -n 1 --pretty=format:"%h" HEAD
+        execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --short=8 HEAD
                         OUTPUT_VARIABLE HASH
                         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
         string(REPLACE "\"" "" HASH ${HASH})
+		string(STRIP ${HASH} HASH)
 
         if(status_code)
           string(CONCAT HASH ${HASH} "-dirty")
         endif()
+		message(${HASH})
 
       # get HEAD commit date
       execute_process(COMMAND ${GIT_EXECUTABLE} log --no-show-signature -1 --pretty=format:"%cd" --date=short HEAD

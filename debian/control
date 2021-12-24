@@ -2,40 +2,43 @@ Source: xournalpp
 Maintainer: Andreas Butti <andreasbutti@gmail.com>
 Section: misc
 Priority: optional
-Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 9), cmake, git, libgtk-3-dev, libpoppler-glib-dev, libxml2-dev, portaudio19-dev, libsndfile-dev, liblua5.3-dev, libzip-dev
+Standards-Version: 4.5.1
+Build-Depends: debhelper (>= 11), cmake, help2man, git, libgtk-3-dev, libpoppler-glib-dev, libxml2-dev, portaudio19-dev, libsndfile1-dev | libsndfile-dev, liblua5.3-dev, libzip-dev, librsvg2-dev
 Homepage: https://github.com/xournalpp/xournalpp/
 
 Package: xournalpp
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6
+Depends: ${shlibs:Depends}, ${misc:Depends}, libglib2.0-0 (>= 2.32), libgtk-3-0 (>= 3.18), libpoppler-glib8 (>= 0.41.0), libxml2 (>= 2.0.0), libportaudiocpp0 (>= 12), libsndfile1 (>= 1.0.25), liblua5.3-0, libzip4 (>= 1.0.1) | libzip5, zlib1g, libc6, librsvg2-2 (>= 2.40)
 Suggests: texlive-base, texlive-latex-extra
+Recommends: lua-lgi
 Description: Xournal++ - Open source hand note-taking program
- Xournal++ is a hand note taking software written in C++ with the target of 
- flexibility, functionality and speed. Stroke recognizer and other parts are 
- based on Xournal Code, which you can find at sourceforge. 
- It supports Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows 10. 
+ Xournal++ is a hand note taking software written in C++ with the target of
+ flexibility, functionality and speed. Stroke recognizer and other parts are
+ based on Xournal Code, which you can find at sourceforge.
+ It supports Linux (e.g. Ubuntu, Debian, Arch, SUSE), macOS and Windows 10.
  Supports pen input from devices such as Wacom Tablets.
  .
  Xournal++ features:
  .
-  - Support for Pen pressure, e.g. Wacom Tablet
-  - Support for annotating PDFs
+  - Supports pressure senstive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
+  - Paper backgrounds for notetaking, scratch paper, or whiteboarding
+  - Annotate on top of PDFs
+  - Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line
+  - Different drawing tools (e.g.pen, highlighter) and stroke styles (e.g. solid, dotted)
+  - Shape drawing (line, arrow, circle, rectangle, spline)
   - Fill shape functionality
-  - PDF Export (with and without paper style)
-  - PNG Export (with and without transparent background)
-  - Allows maping different tools/colors etc. to stylus/mouse buttons
-  - Sidebar with Page Previews with page sorting, PDF Bookmarks and Layers
+  - Shape resizing and rotation
+  - Rotation and grid snapping for precise alignment of objects
+  - Input stabilization for smoother writing/drawing
+  - Text tool for adding text in different fonts, colors and sizes
   - Enhanced support for image insertion
   - Eraser with multiple configurations
-  - LaTeX support (requires a working LaTeX install)
-  - Bug reporting, autosave, and auto backup tools
-  - Customizeable toolbar, with multiple configurations
+  - LaTeX support (requires a working LaTeX installation) with customizeable template
+  - Sidebar with Page Previews with advanced page sorting, PDF Bookmarks and Layers (can be individually hidden/edited)
+  - Allows maping different tools/colors etc. to stylus/mouse buttons
+  - Customizeable toolbar with multiple configurations, e.g. to optimize toolbar for portrait/landscape
   - Page Template definitions
-  - Shape drawing (line, arrow, circle, rect)
-  - Shape resizing and rotation
-  - Rotation snapping every 45 degrees
-  - Rect snapping to grid
+  - Bug reporting, autosave, and auto backup tools
   - Audio recording and playback alongside with handwritten notes
-  - Multi Language Support, English, German, Italian ...
+  - Multi language support (over 20 languages supported)
   - Plugins using Lua scripting

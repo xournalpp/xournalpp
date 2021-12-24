@@ -10,7 +10,6 @@ trigger:
       - po/xournalpp.pot
       - po/*.po
 
-
 stages:
   - stage: 'Build_Test_Stage'
     jobs:
@@ -23,12 +22,13 @@ stages:
           - template: steps/build_linux.yml
             parameters:
               build_type: 'Debug'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON'
           - bash: |
               echo "de_DE.UTF-8 UTF-8" | sudo tee /etc/locale.gen
               sudo locale-gen
             displayName: 'Generate test locales'
           - bash: |
+              cmake --build . --target test-units
               CI=true ctest --verbose
             workingDirectory: ./build
             displayName: 'Run tests'
@@ -41,9 +41,10 @@ stages:
           - template: steps/build_windows.yml
             parameters:
               build_type: 'Debug'
-              cmake_flags: '-GNinja -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
+              cmake_flags: '-GNinja -DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON'
           - script: |
               set PATH=%PATH%;C:\msys64\usr\bin;C:\msys64\mingw64\bin"
+              C:\msys64\usr\bin\bash -lc "cmake --build . --target test-units"
               C:\msys64\usr\bin\bash -lc "CI=true ctest --verbose"
             workingDirectory: ./build
             env:
@@ -60,11 +61,12 @@ stages:
           - template: steps/build_mac.yml
             parameters:
               build_type: 'Debug'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON'
+              generation_path: '/Users/xournal-dev'
           - bash: |
-              export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"
-              install_name_tool -add_rpath /Users/git-bin/gtk/inst/lib/. test/test-loadHandler
-              install_name_tool -add_rpath /Users/git-bin/gtk/inst/lib/. test/test-util
+              export PATH="$HOME/.local/bin:/Users/xournal-dev/gtk/inst/bin:$PATH"
+              cmake --build . --target test-units
+              install_name_tool -add_rpath /Users/xournal-dev/gtk/inst/lib/. test/test-toolEnums
               CI=true ctest --verbose
             workingDirectory: ./build
             displayName: 'Run tests'

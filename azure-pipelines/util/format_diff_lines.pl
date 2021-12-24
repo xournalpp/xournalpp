@@ -13,7 +13,7 @@ my @hunks;
 # Current file
 my $current_file;
 
-my @CLANG_FMT_CMDS = ("clang-format", "clang-format-9");
+my @CLANG_FMT_CMDS = ("clang-format-13","clang-format-12", "clang-format");
 my $clang_format_cmd = "";
 for my $c (@CLANG_FMT_CMDS) {
 	if (`$c --version`) {
