@@ -16,7 +16,10 @@
 
 Name:           xournalpp
 Version:        %{version_string}
-Release:        %{rel_build}
+# For prerelease, use 0
+# For postrelease, use 1^
+# See https://docs.fedoraproject.org/en-US/packaging-guidelines/Versioning/#_examples
+Release:        1^%{rel_build}
 Summary:        Handwriting note-taking software with PDF annotation support
 
 License:        GPLv2+
