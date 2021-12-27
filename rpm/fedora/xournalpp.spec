@@ -16,7 +16,7 @@
 
 Name:           xournalpp
 Version:        %{version_string}
-Release:        0.1.%{rel_build}
+Release:        %{rel_build}
 Summary:        Handwriting note-taking software with PDF annotation support
 
 License:        GPLv2+
@@ -101,7 +101,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %exclude %{_datadir}/mimelnk/application/*
 %{_datadir}/thumbnailers/com.github.%{name}.%{name}.thumbnailer
 %dir %{_datadir}/%{name}
-%{_datadir}/%{name}/resources/default_template.tex
+%{_datadir}/%{name}/resources/{default,legacy}_template.tex
 %{_metainfodir}/com.github.%{name}.%{name}.appdata.xml
 
 %files plugins
