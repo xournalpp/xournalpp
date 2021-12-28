@@ -26,7 +26,7 @@ private:
     virtual ~XojPdfExportFactory();
 
 public:
-    static XojPdfExport* createExport(Document* doc, ProgressListener* listener);
+    static std::unique_ptr<XojPdfExport> createExport(Document* doc, ProgressListener* listener);
 
 private:
 };

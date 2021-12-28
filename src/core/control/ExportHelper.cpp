@@ -79,7 +79,7 @@ auto exportPdf(Document* doc, const char* output, const char* range, ExportBackg
 
     GFile* file = g_file_new_for_commandline_arg(output);
 
-    XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, nullptr);
+    std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr);
     pdfe->setExportBackground(exportBackground);
     char* cpath = g_file_get_path(file);
     std::string path = cpath;
@@ -102,9 +102,7 @@ auto exportPdf(Document* doc, const char* output, const char* range, ExportBackg
 
     if (!exportSuccess) {
         g_error("%s", pdfe->getLastError().c_str());
-        // delete pdfe; Unreachable. Todo: use std::unique_ptr
     }
-    delete pdfe;
 
     g_message("%s", _("PDF file successfully created"));
 
