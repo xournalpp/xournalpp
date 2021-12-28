@@ -7,14 +7,10 @@
 #include <gtk/gtk.h>
 #include <libintl.h>
 
-#include "control/jobs/ImageExport.h"
-#include "control/jobs/ProgressListener.h"
 #include "control/xojfile/LoadHandler.h"
 #include "gui/GladeSearchpath.h"
 #include "gui/MainWindow.h"
 #include "gui/XournalView.h"
-#include "pdf/base/XojPdfExport.h"
-#include "pdf/base/XojPdfExportFactory.h"
 #include "undo/EmergencySaveRestore.h"
 #include "util/Stacktrace.h"
 #include "util/StringUtils.h"
@@ -22,6 +18,7 @@
 #include "util/i18n.h"
 
 #include "Control.h"
+#include "ExportHelper.h"
 #include "config-dev.h"
 #include "config-paths.h"
 #include "config.h"
@@ -244,48 +241,7 @@ auto exportImg(const char* input, const char* output, const char* range, int png
         g_error("%s", loader.getLastError().c_str());
     }
 
-    fs::path const path(output);
-
-    ExportGraphicsFormat format = EXPORT_GRAPHICS_PNG;
-
-    if (path.extension() == ".svg") {
-        format = EXPORT_GRAPHICS_SVG;
-    }
-
-    PageRangeVector exportRange;
-    if (range) {
-        exportRange = PageRange::parse(range, int(doc->getPageCount()));
-    } else {
-        exportRange.push_back(new PageRangeEntry(0, int(doc->getPageCount() - 1)));
-    }
-
-    DummyProgressListener progress;
-
-    ImageExport imgExport(doc, path, format, exportBackground, exportRange);
-
-    if (format == EXPORT_GRAPHICS_PNG) {
-        if (pngDpi > 0) {
-            imgExport.setQualityParameter(EXPORT_QUALITY_DPI, pngDpi);
-        } else if (pngWidth > 0) {
-            imgExport.setQualityParameter(EXPORT_QUALITY_WIDTH, pngWidth);
-        } else if (pngHeight > 0) {
-            imgExport.setQualityParameter(EXPORT_QUALITY_HEIGHT, pngHeight);
-        }
-    }
-
-    imgExport.exportGraphics(&progress);
-
-    for (PageRangeEntry* e: exportRange) { delete e; }
-    exportRange.clear();
-
-    std::string errorMsg = imgExport.getLastErrorMsg();
-    if (!errorMsg.empty()) {
-        g_message("Error exporting image: %s\n", errorMsg.c_str());
-    }
-
-    g_message("%s", _("Image file successfully created"));
-
-    return 0;  // no error
+    return ExportHelper::exportImg(doc, output, range, pngDpi, pngWidth, pngHeight, exportBackground);
 }
 
 /**
@@ -307,39 +263,7 @@ auto exportPdf(const char* input, const char* output, const char* range, ExportB
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
-
-    GFile* file = g_file_new_for_commandline_arg(output);
-
-    XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, nullptr);
-    pdfe->setExportBackground(exportBackground);
-    char* cpath = g_file_get_path(file);
-    std::string path = cpath;
-    g_free(cpath);
-    g_object_unref(file);
-
-    bool exportSuccess;  // Return of the export job
-
-    if (range) {
-        // Parse the range
-        PageRangeVector exportRange = PageRange::parse(range, doc->getPageCount());
-        // Do the export
-        exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
-        // Clean up
-        for (PageRangeEntry* e: exportRange) { delete e; }
-        exportRange.clear();
-    } else {
-        exportSuccess = pdfe->createPdf(path, progressiveMode);
-    }
-
-    if (!exportSuccess) {
-        g_error("%s", pdfe->getLastError().c_str());
-        // delete pdfe; Unreachable. Todo: use std::unique_ptr
-    }
-    delete pdfe;
-
-    g_message("%s", _("PDF file successfully created"));
-
-    return 0;  // no error
+    return ExportHelper::exportPdf(doc, output, range, exportBackground, progressiveMode);
 }
 
 struct XournalMainPrivate {
