@@ -133,7 +133,7 @@ void CustomExportJob::run() {
         // the ui is blocked, so there should be no changes...
         Document* doc = control->getDocument();
 
-        XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
+        std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, control);
 
         pdfe->setExportBackground(exportBackground);
 
@@ -141,7 +141,6 @@ void CustomExportJob::run() {
             this->errorMsg = pdfe->getLastError();
         }
 
-        delete pdfe;
     } else {
         exportGraphics();
     }

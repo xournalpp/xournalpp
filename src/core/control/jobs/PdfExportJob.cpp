@@ -28,7 +28,7 @@ void PdfExportJob::run() {
     Document* doc = control->getDocument();
 
     doc->lock();
-    XojPdfExport* pdfe = XojPdfExportFactory::createExport(doc, control);
+    std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, control);
     doc->unlock();
 
     if (!pdfe->createPdf(this->filepath, false)) {
@@ -37,6 +37,4 @@ void PdfExportJob::run() {
             callAfterRun();
         }
     }
-
-    delete pdfe;
 }
