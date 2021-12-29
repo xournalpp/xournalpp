@@ -764,6 +764,8 @@ static int applib_getToolInfo(lua_State* L) {
  *       "pageHeight" = number,
  *       "isAnnoated" = bool,
  *       "pageTypeFormat" = string,
+ *       "pageTypeConfig" = string,
+ *       "backgroundColor" = integer,
  *       "pdfBackgroundPageNo" = integer (0, if there is no pdf background page),
  *       "layers" = {
  *         [0] = {
@@ -818,6 +820,14 @@ static int applib_getDocumentStructure(lua_State* L) {
         PageType pt = page->getBackgroundType();
         std::string pageTypeFormat = PageTypeHandler::getStringForPageTypeFormat(pt.format);
         lua_pushstring(L, pageTypeFormat.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "pageTypeConfig");
+        lua_pushstring(L, pt.config.c_str());
+        lua_settable(L, -3);
+
+        lua_pushliteral(L, "backgroundColor");
+        lua_pushinteger(L, int(uint32_t(page->getBackgroundColor())));
         lua_settable(L, -3);
 
         lua_pushliteral(L, "pdfBackgroundPageNo");
