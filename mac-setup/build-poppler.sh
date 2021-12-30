@@ -1,7 +1,7 @@
 #!/bin/bash -x
 export PATH="$HOME/.new_local/bin:$PATH"
 
-curl -L https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz -o openjpeg.tar.gz
+curl -L https://github.com/uclouvain/openjpeg/archive/v2.4.0.tar.gz -o openjpeg.tar.gz
 tar xf openjpeg.tar.gz
 cd openjpeg-* || exit
 mkdir build
@@ -19,13 +19,13 @@ export LIBRARY_PATH="$HOME/gtk/inst/lib:$LIBRARY_PATH"
 jhbuild build freetype fontconfig
 jhbuild buildone -acf cairo
 
-curl https://poppler.freedesktop.org/poppler-0.72.0.tar.xz -o poppler.tar.xz
+curl https://poppler.freedesktop.org/poppler-21.12.0.tar.xz -o poppler.tar.xz
 tar xf poppler.tar.xz
 cd poppler-* || exit
 mkdir build
 cd build || exit
 echo "Build Poppler"
 pwd
-"$HOME"/gtk/inst/bin/cmake -DCMAKE_INSTALL_PREFIX:PATH="$HOME"/gtk/inst ..
+"$HOME"/gtk/inst/bin/cmake -DCMAKE_INSTALL_PREFIX:PATH="$HOME"/gtk/inst -DENABLE_QT5=OFF -DENABLE_QT6=OFF -DENABLE_BOOST=OFF ..
 make -j8
 make install

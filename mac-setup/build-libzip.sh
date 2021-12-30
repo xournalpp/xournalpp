@@ -1,7 +1,7 @@
 #!/bin/bash -x
 export PATH="$HOME/.new_local/bin:$PATH"
 
-curl -L https://libzip.org/download/libzip-1.5.2.tar.gz -o libzip.tar.gz
+curl -L https://libzip.org/download/libzip-1.8.0.tar.gz -o libzip.tar.gz
 tar xf libzip.tar.gz
 cd libzip-* || exit
 mkdir build
