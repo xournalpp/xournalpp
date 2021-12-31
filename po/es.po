@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-10 17:59+0000\n"
-"PO-Revision-Date: 2021-12-10 18:09\n"
+"PO-Revision-Date: 2021-12-31 11:46\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -166,7 +166,7 @@ msgstr "Cambiar tipo de letra"
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:70
 msgid "Change line style"
-msgstr "Cambiar estilo de línea"
+msgstr "Cambiar el estilo de línea"
 
 #: ../src/core/undo/FillUndoAction.cpp:76
 msgid "Change stroke fill"
@@ -1865,7 +1865,8 @@ msgstr "<i>Ejemplo:</i> 1-3 o 1,3,5-7 etc."
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Si el documento ya ha sido guardado, puede encontrarlo en la misma carpeta con la extensión .autosave.xoj\n"
+"Si el archivo aún no se ha guardado, puede encontrarlo en ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4139
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2997,7 +2998,7 @@ msgstr "Consecutivo (ms)"
 #: ../ui/settings.glade:3002
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "Cursor del sistema"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
