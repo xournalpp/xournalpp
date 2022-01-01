@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-10 17:59+0000\n"
-"PO-Revision-Date: 2021-12-23 18:19\n"
+"PO-Revision-Date: 2022-01-01 16:28\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -74,7 +74,7 @@ msgstr "Zastosuj do wszystkich stron"
 
 #: ../src/core/control/pagetype/PageTypeMenu.cpp:182
 msgid "Apply to current page"
-msgstr "Zastosuj do aktywnej strony"
+msgstr "Zastosuj do bieżącej strony"
 
 #: ../src/core/control/tools/EditSelection.cpp:352
 msgid "Arrange"
