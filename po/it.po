@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-10 17:59+0000\n"
-"PO-Revision-Date: 2021-12-10 18:08\n"
+"PO-Revision-Date: 2022-01-04 17:29\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1868,7 +1868,8 @@ msgstr "<i>Esempio:</i> 1-3 o 1,3,5-7 ecc."
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Se il documento è già stato salvato, puoi trovarlo nella stessa cartella con l'estensione .autosave. xoj\n"
+"Se il file non è stato ancora salvato, puoi trovarlo in ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4139
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
