@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-10 17:59+0000\n"
-"PO-Revision-Date: 2021-12-10 18:09\n"
+"PO-Revision-Date: 2022-01-05 22:52\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -587,7 +587,7 @@ msgstr "Konnte LaTeX-Programm nicht in \"PATH\" finden: {1}"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Fehler beim Initialisieren der PDF-Kairo-Oberfläche"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
