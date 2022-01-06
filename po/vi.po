@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-06 17:09\n"
+"PO-Revision-Date: 2022-01-06 18:14\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -817,7 +817,7 @@ msgstr "Tiếp"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Next annotated page"
-msgstr "Trang đã chú thích tiếp theo"
+msgstr "Trang được chú thích tiếp theo"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
@@ -879,7 +879,7 @@ msgstr "Trang PDF {1}"
 
 #: ../src/core/view/PdfView.cpp:31
 msgid "PDF background missing"
-msgstr "Thiếu nền cho PDF"
+msgstr "Nền PDF đang thiếu"
 
 #: ../src/core/control/ExportHelper.cpp:107
 msgid "PDF file successfully created"
@@ -889,15 +889,15 @@ msgstr "Tệp PDF đã được tạo thành công"
 #: ../src/core/control/jobs/PdfExportJob.cpp:12
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
-msgstr "Tập tin PDF"
+msgstr "Các tệp PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:45
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "PNG graphics"
-msgstr ""
+msgstr "Đồ họa cho PNG"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:86
 msgid "Page"
@@ -909,7 +909,7 @@ msgstr "Xem trước trang"
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:80
 msgid "Page background changed"
-msgstr ""
+msgstr "Nền trang đã thay đổi"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:97
 msgid "Page deleted"
@@ -917,7 +917,7 @@ msgstr "Đã xóa Trang"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:93
 msgid "Page inserted"
-msgstr ""
+msgstr "Đã chèn Trang"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:59
 msgid "Page number"
@@ -925,7 +925,7 @@ msgstr "Số trang"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:402
 msgid "Paired pages"
-msgstr ""
+msgstr "Các trang đã ghép"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 #: ../src/core/undo/AddUndoAction.cpp:57
@@ -943,17 +943,17 @@ msgstr "Bút"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
-msgstr ""
+msgstr "Trơn"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
 msgid "Play Object"
-msgstr ""
+msgstr "Chơi Đối tượng"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:16
 msgid "Predefined"
-msgstr "Xác định trước"
+msgstr "Được xác định trước"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Presentation mode"
@@ -961,19 +961,19 @@ msgstr "Chế độ trình chiếu"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "Ngôn ngữ được chọn trước đây không còn nữa!"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Print"
-msgstr ""
+msgstr "In"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Record Audio / Stop Recording"
-msgstr "Thu âm / Ngừng"
+msgstr "Ghi Âm / Dừng Ghi"
 
 #: ../src/core/control/Control.cpp:877
 msgid "Recorder could not be started."
-msgstr "Không thể mở được máy ghi âm."
+msgstr "Không thể khởi động máy ghi âm."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/core/undo/UndoRedoHandler.cpp:215
@@ -986,19 +986,19 @@ msgstr "Làm lại: "
 
 #: ../src/core/control/Control.cpp:2012
 msgid "Remove PDF Background"
-msgstr "Xóa nền PDF"
+msgstr "Xóa Nền PDF"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "Đã xóa mục công cụ khỏi Thanh công cụ {1} ID {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "Đã xóa mục công cụ {1} khỏi Thanh công cụ {2} ID {3}"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
-msgstr ""
+msgstr "Đổi tên lớp"
 
 #: ../src/util/XojMsgBox.cpp:77
 msgid "Replace"
@@ -1006,11 +1006,11 @@ msgstr "Thay thế"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1061
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "Không tìm thấy tệp tạm thời đã yêu cầu để đính kèm {1}"
 
 #: ../src/core/control/XournalMain.cpp:199
 msgid "Restore file"
-msgstr "Khôi phục tập tin"
+msgstr "Khôi phục tệp tin"
 
 #: ../src/core/undo/RotateUndoAction.cpp:50
 msgid "Rotation"
@@ -1018,7 +1018,7 @@ msgstr "Xoay"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "Chụp Xoay"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
