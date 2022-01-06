@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-06 15:57\n"
+"PO-Revision-Date: 2022-01-06 17:09\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
-"Giờ sẽ thử chạy mà không sử dụng tệp này."
+"Giờ sẽ chạy thử mà không có tệp này."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:47
 msgid "\n"
@@ -113,25 +113,25 @@ msgstr "Thuộc tính \"{1}\" không thể phân tích được thành kiểu d�
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
-msgstr "Thuộc tính màu chưa được cài đặt!"
+msgstr "Thuộc tính màu chưa cài đặt!"
 
 #: ../src/core/control/AudioController.cpp:97
 msgid "Audio folder not set! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr "Thư mục âm thanh chưa được cài đặt! Chức năng ghi âm sẽ không hoạt động!\n"
-"Vui lòng cìa đặt thư mục ghi âm trong \"Tùy chọn> Ghi âm\""
+"Vui lòng cài đặt thư mục ghi âm trong \"Tùy chọn> Ghi âm\""
 
 #: ../src/core/control/Control.cpp:209
 msgid "Autosave failed with an error: {1}"
-msgstr "Tự động lưu đã thất bại với lỗi: {1}"
+msgstr "Lưu tự động đã thất bại với lỗi: {1}"
 
 #: ../src/core/control/Control.cpp:189
 msgid "Autosave renamed from {1} to {2}"
-msgstr "Tệp tin lưu tự động đã đổi tên từ {1} thành {2}"
+msgstr "Lưu tự động đã được đổi tên từ {1} thành {2}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr "Lưu tự động vào {1}"
+msgstr "Đang lưu tự động vào {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
@@ -218,7 +218,7 @@ msgstr "Không thể nạp tệp pagetemplates.ini"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:790
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr "Không thể mở tập tin được gắn: {1} Thông báo lỗi: không đọc được tập tin"
+msgstr "Không thể mở tập tin được gắn: {1} Thông báo lỗi: không thể đọc được tập tin"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:800
 msgid "Could not open attachment: {1}. Error message: Could not write file"
@@ -228,14 +228,14 @@ msgstr "Không thể mở tập tin được gắn: {1} Thông báo lỗi: khôn
 #: ../src/core/control/xojfile/LoadHandler.cpp:1023
 #: ../src/core/control/xojfile/LoadHandler.cpp:1042
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr "Không thể mở tệp đính kèm: {1}. Thông báo lỗi: Không có kích thước tệp hợp lệ đã cung cấp"
+msgstr "Không thể mở tệp đính kèm: {1}. Thông báo lỗi: Không có kích thước tệp hợp lệ đã được cung cấp"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:761
 #: ../src/core/control/xojfile/LoadHandler.cpp:777
 #: ../src/core/control/xojfile/LoadHandler.cpp:1014
 #: ../src/core/control/xojfile/LoadHandler.cpp:1030
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr "Không thể mở tập tin được gắn: {1} Thông báo lỗi: {2}"
+msgstr "Không thể mở tệp đính kèm: {1} Thông báo lỗi: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open file: \"{1}\""
@@ -244,14 +244,14 @@ msgstr "Không thể mở tệp: \"{1}\""
 #: ../src/core/gui/MainWindow.cpp:92
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr "Không thể phân tích được tập tin toolbar.ini tùy chỉnh: {1}\n"
+msgstr "Không thể phân tích được tệp toolbar.ini tùy chỉnh: {1}\n"
 "Các thanh công cụ sẽ không có sẵn"
 
 #: ../src/core/gui/MainWindow.cpp:83
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr "Không thể phân tích được tập tin toolbar.ini tổng quát: {1}\n"
-"Các thanh công cụ sẽ không có sẵn"
+msgstr "Không thể phân tích được tệp toolbar.ini chung: {1}\n"
+"Không Thanh công cụ nào sẽ được có sẵn"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:357
 #: ../src/core/control/xojfile/LoadHandler.cpp:381
@@ -270,11 +270,11 @@ msgstr "Không thể làm lại \"{1}\"\n"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr "Không thể gỡ công cụ khỏi thanh công cụ {1} ở vị trí {2}"
+msgstr "Không thể gỡ công cụ từ Thanh công cụ {1} ở vị trí {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:163
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr "Không thể gỡ công cụ {1} khỏi thanh công cụ {2} ở vị trí {3}"
+msgstr "Không thể gỡ công cụ {1} từ Thanh công cụ {2} ở vị trí {3}"
 
 #: ../src/core/control/Control.cpp:200
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
@@ -312,15 +312,15 @@ msgstr "Tuỳ chỉnh"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:21
 msgid "Custom Export"
-msgstr "Xuất Tùy Chỉnh"
+msgstr "Xuất Tùy chỉnh"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
 msgid "Customize Toolbars"
-msgstr "Thanh công cụ tùy chỉnh"
+msgstr "Các thanh công cụ Tùy chỉnh"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:28
 msgid "Customized"
-msgstr "Đã tuỳ chỉnh"
+msgstr "Đã được tuỳ chỉnh"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:383
 msgid "Cut"
@@ -328,7 +328,7 @@ msgstr "Cắt"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Default Tool"
-msgstr "Công Cụ Mặc Định"
+msgstr "Công cụ Mặc định"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:389
 #: ../src/core/undo/DeleteUndoAction.cpp:56
@@ -373,7 +373,7 @@ msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Files from Folder {1} cannot be opened."
 msgstr "Không mở các tệp tin lưu tự động. Chúng sẽ có thể bị ghi đè!\n"
 "Sao chép các tệp tin vào một thư mục khác.\n"
-"Các tệp tin từ Thư Mục {1} không mở được."
+"Các tệp tin từ Thư mục {1} không mở được."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
@@ -398,7 +398,7 @@ msgstr "Tài liệu không nạp được! ({1}), {2}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:25
 msgid "Dotted"
-msgstr "Chấm chấm"
+msgstr "Nhiều chấm"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -448,7 +448,7 @@ msgstr "Kiểu Bản vẽ - không thay đổi"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr "Kết Hợp Kiểu Bản Vẽ"
+msgstr "Kết hợp Kiểu Bản vẽ"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:35
 msgid "Edit text"
@@ -456,7 +456,7 @@ msgstr "Chỉnh sửa văn bản"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
-msgstr "Tệp tin đã sao lưu khẩn cấp"
+msgstr "Tệp tin đã được sao lưu khẩn cấp"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:277
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
@@ -510,7 +510,7 @@ msgstr "Lỗi lưu ảnh #2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr "Lỗi khi đang tự động lưu: {1}"
+msgstr "Lỗi khi đang lưu tự động: {1}"
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -531,7 +531,7 @@ msgstr "Lỗi: {1}. Vui lòng kiểm tra nội dung của {2}"
 #: ../src/core/control/XournalMain.cpp:176
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr "Nhật ký ghi lỗi không thể bị xóa. Bạn phải làm điều đó bằng tay.\n"
+msgstr "Nhật ký ghi lỗi không thể bị xóa. Bạn phải làm điều đó theo cách thủ công.\n"
 "Tệp nhật ký: {1}"
 
 #: ../src/core/control/XournalMain.cpp:539
@@ -560,45 +560,54 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Xuất dần dần các lớp\n"
+"                                 Trong lúc xuất PDF, Hiển thị dần dần từng lớp một.\n"
+"                                 Điều này dẫn đến N trang xuất trên mỗi trang với N lớp,\n"
+"                                 tăng dần lớp chồng lên nhau.\n"
+"                                 Kết quả của tệp PDF có thể được sử dụng cho một bản trình bày.\n"
 
 #: ../src/core/control/XournalMain.cpp:546
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "Xuất không nền\n"
+"                                 Tệp được xuất có nền trong suốt hoặc trắng,\n"
+"                                 tùy thuộc vào những gì định dạng của nó hỗ trợ\n"
 
 #: ../src/core/control/XournalMain.cpp:551
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Xuất không quy định\n"
+"                                 Tệp đã xuất không có quy định về giấy tờ\n"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:63
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Không tìm thấy chương trình tạo LaTeX trong ĐƯỜNG DẪN: {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Không thể khởi chạy bề mặt PDF Cairo"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Không thể phân tích cú pháp lệnh của trình tạo LaTeX: {1}"
 
 #: ../src/core/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Không đọc được tệp mẫu chung. Vui lòng kiểm tra cài đặt của bạn."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:102
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Không thể giải quyết đường dẫn với lỗi sau:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "Không thể mở tệp. Bạn phải làm điều đó theo cách thủ công:\n"
+"URL: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:521
 msgid "Fill"
@@ -606,7 +615,7 @@ msgstr "Lấp"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:281
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Lọc lực nén đầu vào. Nhân lực nén với nhân tử áp suất. Nếu nhỏ hơn mức tối thiểu, sử dụng lực nén tối thiểu."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:540
 msgid "Fine"
@@ -614,7 +623,7 @@ msgstr "Mịn"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "Hộp công cụ Nổi (thử nghiệm)"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
@@ -626,19 +635,19 @@ msgstr "Tới trước"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:40
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "Giấy phép Công cộng Chung GNU phiên bản 2 trở lên"
 
 #: ../src/core/control/XournalMain.cpp:530
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "Tải phiên bản của xournalpp"
 
 #: ../src/core/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Tệp mẫu chung không tồn tại. Vui lòng kiểm tra cài đặt của bạn."
 
 #: ../src/core/control/LatexController.cpp:64
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Tệp mẫu chung không phải là tệp thông thường. Vui lòng kiểm tra cài đặt của bạn. "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Go to first page"
@@ -705,11 +714,11 @@ msgstr "Chèn một bản sao chép của lớp hiện tại bên dưới"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "Chèn một bản sao chép của trang hiện tại bên dưới"
 
 #: ../src/core/undo/InsertUndoAction.cpp:78
 msgid "Insert elements"
-msgstr ""
+msgstr "Chèn các phần tử"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 #: ../src/core/undo/InsertUndoAction.cpp:33
@@ -730,39 +739,39 @@ msgstr "Chèn trang"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Chiếu Chấm ba chiều"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Chiếu Đồ thị ba chiều"
 
 #: ../src/core/control/XournalMain.cpp:526
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "Nhảy đến Trang (Trang đầu tiên: 1)"
 
 #: ../src/core/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "Việc tạo latex gặp lỗi: {1} (mã lỗi: {2})"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:254
 msgid "Layer"
-msgstr ""
+msgstr "Lớp"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
 msgid "Layer Combo"
-msgstr ""
+msgstr "Tổ hợp Lớp"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layer Preview"
-msgstr ""
+msgstr "Xem trước Lớp"
 
 #: ../src/core/control/layer/LayerController.cpp:319
 msgid "Layer {1}"
-msgstr ""
+msgstr "Lớp {1}"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Xem trước Chồng lớp"
 
 #: ../src/core/gui/PageView.cpp:703
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
@@ -772,11 +781,11 @@ msgstr "Đang nạp..."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Manage Toolbars"
-msgstr ""
+msgstr "Quản lý Thanh công cụ"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:541
 msgid "Medium"
-msgstr ""
+msgstr "Trung bình"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -808,34 +817,35 @@ msgstr "Tiếp"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Next annotated page"
-msgstr ""
+msgstr "Trang đã chú thích tiếp theo"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
-msgstr ""
+msgstr "Không có thiết bị"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:151
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:194
 msgid "No pages to export!"
-msgstr ""
+msgstr "Không có trang nào để xuất!"
 
 #: ../src/core/control/Control.cpp:1267
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Không có trang pdf nào hiện sẵn để gắn vào. Bạn có thể cần phải mở lại tài liệu trước."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Normal drawing"
-msgstr ""
+msgstr "Bản vẽ thường"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
 msgid "OK"
-msgstr "OK"
+msgstr "Đồng ý"
 
 #: ../src/core/control/XournalMain.cpp:562
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Chỉ xuất các trang được chỉ định theo PHẠM VI (ví dụ: \"2-3,5,7-\")\n"
+"                                 Không có hiệu ứng nếu thiếu -p / - create-pdf hay -i / - create-img"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
@@ -843,16 +853,16 @@ msgstr "Mở ảnh"
 
 #: ../src/core/control/XournalMain.cpp:154
 msgid "Open Logfile"
-msgstr ""
+msgstr "Mở Tệp nhật ký"
 
 #: ../src/core/control/XournalMain.cpp:155
 msgid "Open Logfile directory"
-msgstr ""
+msgstr "Mở thư mục Tệp nhật ký"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "Open file"
-msgstr "Mở tập tin"
+msgstr "Mở tệp tin"
 
 #: ../src/core/control/RecentManager.cpp:183
 msgctxt "{1} is a URI"
@@ -861,19 +871,19 @@ msgstr "Mở {1}"
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:8
 msgid "PDF Export"
-msgstr ""
+msgstr "Xuất PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:39
 msgid "PDF Page {1}"
-msgstr ""
+msgstr "Trang PDF {1}"
 
 #: ../src/core/view/PdfView.cpp:31
 msgid "PDF background missing"
-msgstr ""
+msgstr "Thiếu nền cho PDF"
 
 #: ../src/core/control/ExportHelper.cpp:107
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "Tệp PDF đã được tạo thành công"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:23
 #: ../src/core/control/jobs/PdfExportJob.cpp:12
@@ -1510,7 +1520,7 @@ msgstr "con trỏ"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:264
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "gạch-/ chấm"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:261
 msgid "dashed"
@@ -1530,7 +1540,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:267
 msgid "dotted"
-msgstr ""
+msgstr "nhiều chấm"
 
 #: ../src/core/undo/AddUndoAction.cpp:65
 #: ../src/core/undo/DeleteUndoAction.cpp:64
@@ -1819,7 +1829,8 @@ msgstr ""
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Nếu tài liệu đã được lưu, bạn có thể tìm thấy nó trong cùng một thư mục với phần mở rộng .autosave.xoj\n"
+"Nếu tệp chưa được lưu, bạn có thể tìm thấy nó trong ~ / .cache / xournalpp / autosaves</i>"
 
 #: ../ui/settings.glade:4139
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
