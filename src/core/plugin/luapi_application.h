@@ -18,6 +18,7 @@
 #include "control/Control.h"
 #include "control/ExportHelper.h"
 #include "control/PageBackgroundChangeController.h"
+#include "control/PluginNotifier.h"
 #include "control/Tool.h"
 #include "control/layer/LayerController.h"
 #include "control/pagetype/PageTypeHandler.h"
@@ -1229,6 +1230,43 @@ static int applib_export(lua_State* L) {
 }
 
 
+/**
+ * Returns a table consisting of the last time period since program start that the pages and document has changed in the
+ * form
+ * {
+ *   "document" = number,
+ *   "pages" = { [1] = number, [2] = number, ...}
+ * }
+ *
+ * Example: local timesTable = app.getChangeTimes()
+ *          local page1changedTime = timesTable["pages"][1]
+ */
+static int applib_getChangeTimes(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* ctrl = plugin->getControl();
+    PluginNotifier* notifier = ctrl->getPluginNotifier();
+
+    lua_newtable(L);
+
+    lua_pushliteral(L, "document");
+    lua_pushnumber(L, notifier->getLastDocumentChangeTime());
+    lua_settable(L, -3);
+
+    lua_pushliteral(L, "pages");
+    auto updateTimes = notifier->getLastPageChangeTimes();
+
+    lua_newtable(L);  // beginning of "pages" table
+
+    for (size_t i = 0; i < updateTimes.size(); ++i) {
+        lua_pushinteger(L, static_cast<int>(i + 1));
+        lua_pushnumber(L, updateTimes.at(i));
+        lua_settable(L, -3);
+    }
+    lua_settable(L, -3);  // end of "pages" table
+
+    return 1;
+}
+
 /*
  * The full Lua Plugin API.
  * See above for example usage of each function.
@@ -1257,6 +1295,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"scaleTextElements", applib_scaleTextElements},
                                   {"getDisplayDpi", applib_getDisplayDpi},
                                   {"export", applib_export},
+                                  {"getChangeTimes", applib_getChangeTimes},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
 
