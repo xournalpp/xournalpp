@@ -38,6 +38,11 @@ public:
     void registerToolbar();
 
     /**
+     * Cleanup plugins when Xournal++ exits
+     */
+    void cleanupOnExit();
+
+    /**
      * Register menu stuff
      */
     void registerMenu();

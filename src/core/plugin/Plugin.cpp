@@ -59,6 +59,27 @@ void Plugin::registerToolbar() {
     inInitUi = false;
 }
 
+void Plugin::cleanupOnExit() {
+    if (!this->valid || !this->enabled) {
+        return;
+    }
+
+    inCleanup = true;
+
+    lua_getglobal(lua.get(), "cleanup");
+    if (lua_isfunction(lua.get(), -1) == 1) {
+        if (callFunction("cleanup")) {
+            g_message("Plugin \"%s\" cleaned up", name.c_str());
+        } else {
+            g_warning("Plugin \"%s\" clean up failed!", name.c_str());
+        }
+    } else {
+        g_message("Plugin \"%s\" has no clean up", name.c_str());
+    }
+
+    inCleanup = false;
+}
+
 void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu) {
     if (menuEntries.empty() || !this->enabled) {
         // No entries - nothing to do
@@ -106,6 +127,8 @@ void Plugin::setEnabled(bool lEnabled) { this->enabled = lEnabled; }
 auto Plugin::isDefaultEnabled() const -> bool { return defaultEnabled; }
 
 auto Plugin::isInInitUi() const -> bool { return inInitUi; }
+
+auto Plugin::isInCleanup() const -> bool { return inCleanup; }
 
 auto Plugin::registerMenu(std::string menu, std::string callback, std::string accelerator) -> size_t {
     menuEntries.emplace_back(this, std::move(menu), std::move(callback), std::move(accelerator));

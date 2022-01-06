@@ -62,6 +62,9 @@ public:
     /// Register toolbar item and all other UI stuff
     void registerToolbar();
 
+    /// Cleanup when Xournal++ exits
+    void cleanupOnExit();
+
     /// Register all menu entries to the menu
     void registerMenu(GtkWindow* mainWindow, GtkWidget* menu);
 
@@ -91,6 +94,9 @@ public:
 
     ///@return Flag to check if init ui is currently running
     auto isInInitUi() const -> bool;
+
+    ///@return Flag to check if cleanup is currently running
+    auto isInCleanup() const -> bool;
 
     /// Register a menu item
     /// @return Internal ID, can e.g. be used to disable the menu
@@ -130,6 +136,7 @@ private:
     bool enabled = false;         ///< The plugin is enabled
     bool defaultEnabled = false;  ///< The plugin is default enabled
     bool inInitUi = false;        ///< Flag to check if init ui is currently running
+    bool inCleanup = false;       ///< Flag to check if cleanup is currently running
     bool valid = false;           ///< Flag if the plugin is valid / correct loaded
 };
 

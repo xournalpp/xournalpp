@@ -7,6 +7,10 @@ function initUi()
   app.registerUi({["menu"] = "End auto-exporting", ["callback"] = "endAutoExport"})
 end
 
+function cleanup()
+  endAutoExport()
+end
+
 local DEFAULT_PATH = "/tmp/temp"  -- change this to get a different default path for xopp-files that have not been saved yet
 
 function exportPdf()

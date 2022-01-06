@@ -59,6 +59,12 @@ void PluginController::registerToolbar() {
 #endif
 }
 
+void PluginController::cleanupOnExit() {
+#ifdef ENABLE_PLUGINS
+    for (auto&& p: this->plugins) { p->cleanupOnExit(); }
+#endif
+}
+
 void PluginController::showPluginManager() const {
     PluginDialog dlg(control->getGladeSearchPath(), control->getSettings());
     dlg.loadPluginList(this);

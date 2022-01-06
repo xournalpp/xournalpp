@@ -2464,6 +2464,7 @@ void Control::quit(bool allowCancel) {
 
         return;
     }
+    this->pluginController->cleanupOnExit();
 
     audioController->stopRecording();
     this->scheduler->lock();
