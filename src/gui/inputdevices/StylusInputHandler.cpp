@@ -152,16 +152,18 @@ void StylusInputHandler::setPressedState(InputEvent const& event) {
                 break;
             case 2:
                 this->modifier2 = false;
+                if (this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
+                    this->deviceClassPressed = false;
+                }
                 break;
             case 3:
                 this->modifier3 = false;
+                if (this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
+                    this->deviceClassPressed = false;
+                }
             default:
                 break;
         }
-    }
-
-    if (this->inputContext->getSettings()->getInputSystemTPCButtonEnabled()) {
-        this->deviceClassPressed = this->deviceClassPressed || this->modifier2 || this->modifier3;
     }
 }
 
