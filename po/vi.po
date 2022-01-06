@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-06 05:10\n"
+"PO-Revision-Date: 2022-01-06 14:53\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -21,18 +21,18 @@ msgstr ""
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
-"Sẽ thử chạy không sử dụng tệp tin này."
+"Giờ sẽ thử chạy mà không sử dụng tệp này."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:47
 msgid "\n"
 " Do you want to continue?"
 msgstr "\n"
-"Bạn có muốn tiếp tục không?"
+" Bạn có muốn tiếp tục không?"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:35
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr " trên {1}"
+msgstr " của {1}"
 
 #: ../src/core/control/settings/Settings.cpp:122
 msgid "%F-Note-%H-%M"
@@ -40,7 +40,7 @@ msgstr "%F-Ghi chú-%H-%M"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:149
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr "<b>Không tìm thấy thiết bị nào. Nếu đây là lỗi, hãy báo với chúng tôi.</b>"
+msgstr "<b> Không có thiết bị nào được tìm thấy. Điều này có vẻ không ổn - có lẽ nên gửi tin báo cáo lỗi? </b>"
 
 #: ../src/core/control/XournalMain.cpp:363
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -49,7 +49,12 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>Thiếu tệp giao diện người dùng cần thiết:\n"
+"<b>{1}</b></span>\n"
+"Không thể tìm thấy ở bất kỳ vị trí nào.\n"
+"  Không tương đối\n"
+"  Không có trong Lộ trình làm việc\n"
+"  Không có trong {2}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:458
 msgid "Add/Edit Tex"
@@ -82,7 +87,7 @@ msgstr "Gắn tệp tin vào sổ"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:114
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "Thuộc tính \"{1}\" không thể được phân tích thành dạng double, giá trị là \"{2}\""
+msgstr "Thuộc tính \"{1}\" không thể phân tích được dạng kép này, giá trị là \"{2}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:107
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
@@ -140,11 +145,11 @@ msgstr "Hình nền"
 
 #: ../src/core/control/tools/EditSelection.cpp:369
 msgid "Bring forward"
-msgstr ""
+msgstr "Đưa ra trước"
 
 #: ../src/core/control/tools/EditSelection.cpp:359
 msgid "Bring to front"
-msgstr ""
+msgstr "Đưa ra phía trước"
 
 #: ../src/core/control/Control.cpp:2013 ../src/core/control/Control.cpp:2464
 #: ../src/core/control/XournalMain.cpp:157
@@ -165,11 +170,11 @@ msgstr "Đổi kiểu đường vẽ"
 
 #: ../src/core/undo/FillUndoAction.cpp:76
 msgid "Change stroke fill"
-msgstr ""
+msgstr "Thay đổi nét tô"
 
 #: ../src/core/undo/SizeUndoAction.cpp:101
 msgid "Change stroke width"
-msgstr ""
+msgstr "Thay đổi chiều rộng nét bút"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
@@ -223,7 +228,7 @@ msgstr "Không thể mở tập tin được gắn: {1} Thông báo lỗi: khôn
 #: ../src/core/control/xojfile/LoadHandler.cpp:1023
 #: ../src/core/control/xojfile/LoadHandler.cpp:1042
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "Không thể mở tệp đính kèm: {1}. Thông báo lỗi: Không có kích thước tệp hợp lệ đã cung cấp"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:761
 #: ../src/core/control/xojfile/LoadHandler.cpp:777
@@ -255,7 +260,7 @@ msgstr "Không thể đọc được hình ảnh: {1}. Thông báo lỗi: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:391
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Không thể đọc được số trang cho bản sao hình nền: {1}."
 
 #: ../src/core/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -291,11 +296,11 @@ msgstr "Không thể hoàn tắc \"{1}\"\n"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:218
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "Không thể viết lên nền \"{1}\", {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:314
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "Không thể viết lên nền \"{1}\". Vẫn tiếp tục."
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:78
 msgid "Create new layer"
@@ -384,16 +389,16 @@ msgstr "Tài liệu đã bị lỗi (không tìm được trang nào trong tập
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:239
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "Tài liệu chưa hoàn chỉnh (có thể phần cuối bị cắt?)"
 
 #: ../src/core/model/Document.cpp:291 ../src/core/model/Document.cpp:300
 #: ../src/core/model/Document.cpp:303
 msgid "Document not loaded! ({1}), {2}"
-msgstr ""
+msgstr "Tài liệu không tải được! ({1}), {2}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:25
 msgid "Dotted"
-msgstr ""
+msgstr "Chấm chấm"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -405,7 +410,7 @@ msgstr "Vẽ mũi tên"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Vẽ hình Elip"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -425,7 +430,7 @@ msgstr "Vẽ tam giác"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Draw Spline"
-msgstr ""
+msgstr "Vẽ Đường Cong Nối Trục"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
@@ -435,15 +440,15 @@ msgstr "Vẽ trục tọa độ"
 
 #: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Draw stroke"
-msgstr ""
+msgstr "Vẽ theo nét"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:117
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "Kiểu Bản Vẽ - không thay đổi"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Kết Hợp Kiểu Bản Vẽ"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:35
 msgid "Edit text"
@@ -455,7 +460,7 @@ msgstr "Tập tin được lưu khẩn cấp"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:277
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "Bật lực nhạy hoặc hệ quả của lực để thay đổi cài đặt này!"
 
 #: ../src/core/undo/AddUndoAction.cpp:55
 #: ../src/core/undo/DeleteUndoAction.cpp:53
