@@ -51,6 +51,7 @@ class PageTypeHandler;
 class PageTypeMenu;
 class BaseExportJob;
 class LayerController;
+class PluginNotifier;
 class PluginController;
 
 class Control:
@@ -251,6 +252,7 @@ public:
     PageTypeMenu* getNewPageType();
     PageBackgroundChangeController* getPageBackgroundChangeController();
     LayerController* getLayerController();
+    PluginNotifier* getPluginNotifier();
 
 
     bool copy();
@@ -411,6 +413,7 @@ private:
     PageBackgroundChangeController* pageBackgroundChangeController;
 
     LayerController* layerController;
+    PluginNotifier* pluginNotifier;
 
     /**
      * Manage all Xournal++ plugins

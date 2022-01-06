@@ -6,6 +6,7 @@
 
 #include <control/xojfile/LoadHandler.h>
 
+#include "control/PluginNotifier.h"
 #include "control/jobs/AutosaveJob.h"
 #include "control/jobs/BaseExportJob.h"
 #include "control/jobs/CustomExportJob.h"
@@ -104,14 +105,17 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     this->initButtonTool();
 
     /**
-     * This is needed to update the previews
+     * This is needed to update the previews and to notify plugins
      */
-    this->changeTimout = g_timeout_add_seconds(5, reinterpret_cast<GSourceFunc>(checkChangedDocument), this);
+    this->changeTimout = g_timeout_add_seconds(1, reinterpret_cast<GSourceFunc>(checkChangedDocument), this);
 
     this->pageBackgroundChangeController = new PageBackgroundChangeController(this);
 
     this->layerController = new LayerController(this);
     this->layerController->registerListener(this);
+
+    this->pluginNotifier = new PluginNotifier(this);
+    this->pluginNotifier->registerListener(this);
 
     this->fullscreenHandler = new FullscreenHandler(settings);
 
@@ -165,6 +169,8 @@ Control::~Control() {
     this->pageBackgroundChangeController = nullptr;
     delete this->layerController;
     this->layerController = nullptr;
+    delete this->pluginNotifier;
+    this->pluginNotifier = nullptr;
     delete this->fullscreenHandler;
     this->fullscreenHandler = nullptr;
 }
@@ -2899,3 +2905,5 @@ auto Control::getPageBackgroundChangeController() -> PageBackgroundChangeControl
 }
 
 auto Control::getLayerController() -> LayerController* { return this->layerController; }
+
+auto Control::getPluginNotifier() -> PluginNotifier* { return this->pluginNotifier; }
