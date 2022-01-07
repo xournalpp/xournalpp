@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-07 04:36\n"
+"PO-Revision-Date: 2022-01-07 05:32\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -1053,7 +1053,7 @@ msgstr "Lưu Tệp tin"
 #: ../src/core/control/jobs/CustomExportJob.cpp:127
 #: ../src/core/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
-msgstr "Lỗi khi lưu tập tin: {1}"
+msgstr "Lỗi lưu tệp tin: {1}"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:55
 msgid "Scale"
