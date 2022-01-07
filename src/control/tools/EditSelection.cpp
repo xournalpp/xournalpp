@@ -734,6 +734,15 @@ void EditSelection::setEdgePan(bool pan) {
 bool EditSelection::isEdgePanning() const { return this->edgePanHandler; }
 
 bool EditSelection::handleEdgePan(EditSelection* self) {
+    if (!self) {
+        g_warning("Selection does not exist anymore while handling edge panning");
+        return false;
+    }
+    if (!self->view) {
+        g_warning("View does not exist anymore while handling edge panning");
+        return false;
+    }
+
     if (self->view->getXournal()->getControl()->getZoomControl()->isZoomPresentationMode()) {
         self->setEdgePan(false);
         return false;
