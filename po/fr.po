@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-07 11:38\n"
+"PO-Revision-Date: 2022-01-07 12:33\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2308,7 +2308,7 @@ msgstr "Activer la sauvegarde automatique"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr "Activer l'Inférence de Pression <i>(devine la pression à partir de la vitesse de dessin lorsque l'appareil ne fourni pas cette information)</i>"
+msgstr "Activer l'Inférence de Pression <i>(devine la pression à partir de la vitesse de dessin lorsque l'appareil ne fournit pas cette information)</i>"
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
@@ -2489,7 +2489,7 @@ msgstr "Concepteurs des icônes"
 
 #: ../ui/settings.glade:4678
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr "Si activé, les formes qui ont été reconnues par l'identificateur de forme seront automatiquement accrochées à la grille. Cela peut entraîner des résultats inattendus si vous avez activé l'identificateur de forme lors de l'écriture."
+msgstr "Si activé, les formes qui ont été reconnues par l'identificateur de forme seront automatiquement ancrées à la grille. Cela peut entraîner des résultats inattendus si vous avez activé l'identificateur de forme lors de l'écriture."
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
@@ -2958,7 +2958,7 @@ msgstr "Petite icône de point"
 
 #: ../ui/settings.glade:4696
 msgid "Snapping"
-msgstr "Accrochage"
+msgstr "Ancrage"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
@@ -3084,7 +3084,7 @@ msgstr "Utiliser les icônes Stock disponibles (nécessite un redémarrage)"
 
 #: ../ui/settings.glade:4674
 msgid "Use snapping for recognized shapes"
-msgstr "Utiliser l'accrochage pour les formes reconnues"
+msgstr "Utiliser l'ancrage pour les formes reconnues"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
