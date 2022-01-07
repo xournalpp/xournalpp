@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-07 03:35\n"
+"PO-Revision-Date: 2022-01-07 04:36\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -679,7 +679,7 @@ msgstr "Đồ thị"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:394
 msgid "Grid Snapping"
-msgstr "Chụp Lưới"
+msgstr "Khoá Lưới"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:477
@@ -897,7 +897,7 @@ msgstr "PDF {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "PNG graphics"
-msgstr "Đồ họa cho PNG"
+msgstr "Ảnh PNG"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:86
 msgid "Page"
@@ -1018,23 +1018,23 @@ msgstr "Xoay"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "Khoá Xoay"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
-msgstr ""
+msgstr "Kẻ ngang"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "Kẻ ngang với một đường kẻ dọc"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:25
 msgid "SVG graphics"
-msgstr ""
+msgstr "Ảnh SVG"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "Tệp LaTeX mẫu được tạo thành công."
 
 #: ../src/core/control/Control.cpp:2456 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
@@ -1048,7 +1048,7 @@ msgstr "Lưu dưới dạng..."
 #: ../src/core/control/Control.cpp:2301
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
-msgstr "Lưu tập tin"
+msgstr "Lưu Tệp tin"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:127
 #: ../src/core/control/jobs/SaveJob.cpp:114
