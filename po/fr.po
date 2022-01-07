@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-06 05:10\n"
+"PO-Revision-Date: 2022-01-07 10:34\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -145,11 +145,11 @@ msgstr "Arrière-plan"
 
 #: ../src/core/control/tools/EditSelection.cpp:369
 msgid "Bring forward"
-msgstr "Mettre au premier plan"
+msgstr "Mettre en avant"
 
 #: ../src/core/control/tools/EditSelection.cpp:359
 msgid "Bring to front"
-msgstr "Mettre en avant"
+msgstr "Mettre au premier plan"
 
 #: ../src/core/control/Control.cpp:2013 ../src/core/control/Control.cpp:2464
 #: ../src/core/control/XournalMain.cpp:157
@@ -587,7 +587,7 @@ msgstr "Impossible de trouver le programme de génération LaTeX dans le CHEMIN�
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Échec de l'initialisation de la surface PDF Cairo"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -1065,7 +1065,7 @@ msgstr "Rechercher"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
-msgstr "Voir la liste complète de contributeurs"
+msgstr "Voir la liste complète des contributeurs"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Select Font"
@@ -1124,11 +1124,11 @@ msgstr "Envoyer un rapport de bogue"
 
 #: ../src/core/control/tools/EditSelection.cpp:380
 msgid "Send backward"
-msgstr "Mettre en arrière plan"
+msgstr "Mettre en arrière"
 
 #: ../src/core/control/tools/EditSelection.cpp:388
 msgid "Send to back"
-msgstr "Mettre en arrière"
+msgstr "Mettre en arrière-plan"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Separator"
@@ -1268,13 +1268,13 @@ msgstr "La configuration de l'outil \"{1}\" est prédéfinie, voulez-vous créer
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Le fichier d'arrière-plan joint {1} n'a pas pu être trouvé. Il a peut-être été déplacé, renommé ou supprimé.\n"
-"Il a été vu pour la dernière fois à: {2}"
+"Il a été vu pour la dernière fois à : {2}"
 
 #: ../src/core/control/Control.cpp:2004
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Le fichier d'arrière-plan {1} n'a pas pu être trouvé. Il a peut-être été déplacé, renommé ou supprimé.\n"
-"Il a été vu pour la dernière fois à: {2}"
+"Il a été vu pour la dernière fois à : {2}"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
@@ -1866,7 +1866,8 @@ msgstr "<i>Exemple :</i> 1-3 ou 1,3,5-7 etc."
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Si le document a déjà été enregistré, vous pouvez le trouver dans le même dossier avec l'extension .autosave.xoj\n"
+"Si le fichier n'a pas encore été enregistré, vous pouvez le trouver dans ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4139
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -1972,7 +1973,7 @@ msgstr "Ajouter un espace vertical supplémentaire de"
 
 #: ../ui/main.glade:1967
 msgid "Add/Edit TeX"
-msgstr "Ajout/Édition d'une formule Tex"
+msgstr "Ajout/Édition d'une formule TeX"
 
 #: ../ui/settings.glade:4495
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2762,11 +2763,11 @@ msgstr "Gestionnaire de plugins"
 
 #: ../ui/main.glade:1993
 msgid "Plugin _Manager"
-msgstr "Plugin _Manager"
+msgstr "Gestionnaire de greffons"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr "Les modifications de plugins ne sont appliquées qu'après le redémarrage de Xournal++"
+msgstr "Les modifications de greffons ne sont appliquées qu'après le redémarrage de Xournal++"
 
 #: ../ui/settings.glade:3693
 msgid "Pre-load pages after"
@@ -2998,7 +2999,7 @@ msgstr "Succession (ms)"
 #: ../ui/settings.glade:3002
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "Curseur système"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
@@ -3335,7 +3336,7 @@ msgstr "_Stylo"
 
 #: ../ui/main.glade:1982
 msgid "_Plugin"
-msgstr "_Plugin"
+msgstr "_Greffon"
 
 #: ../ui/main.glade:522
 msgid "_Presentation Mode"
