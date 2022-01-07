@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-07 10:34\n"
+"PO-Revision-Date: 2022-01-07 11:38\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1999,7 +1999,7 @@ msgstr "Toujours vérifier les dépendances LaTeX avant de lancer"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr "Ajouter de nouvelles pages de PDF"
+msgstr "Ajouter de nouvelles pages au PDF"
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
@@ -2076,11 +2076,11 @@ msgstr "Couleur de bordure pour la page courante et d'autres sélections"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr "Mettre au premier plan"
+msgstr "Mettre en avant"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr "Mettre en avant"
+msgstr "Mettre au premier plan"
 
 #: ../ui/settings.glade:1017
 msgid "Buffersize"
@@ -2242,7 +2242,7 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 msgstr "Glisser VERS LA GAUCHE à partir du point de départ agit comme un appui maintenu sur la touche SHIFT.\n"
 "\t    Glisser VERS LE HAUT agit comme un appui maintenu sur la touche CONTRÔLE.\n\n"
 "\t    Rayon de détermination : rayon auquel les modificateurs se verrouilleront jusqu'à la fin du dessin.\n\n"
-"\t    <i>Utile pour opérer sans clavier.</i>"
+"\t    <i>Utile pour travailler sans clavier.</i>"
 
 #: ../ui/settings.glade:4395
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2264,7 +2264,7 @@ msgstr "Glisser: Si la valeur est trop petite, des oscillations indésirables pe
 
 #: ../ui/main.glade:1438
 msgid "Draw Coordinate System"
-msgstr "Dessiner un Système de Coordonnées"
+msgstr "Dessiner un système de coordonnées"
 
 #: ../ui/main.glade:1449
 msgid "Draw _Line"
@@ -2308,7 +2308,7 @@ msgstr "Activer la sauvegarde automatique"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr "Activer l'Inférence de Pression <i>(Devine la pression à partir de la vitesse de dessin lorsque l'appareil ne fourni pas cette information)</i>"
+msgstr "Activer l'Inférence de Pression <i>(devine la pression à partir de la vitesse de dessin lorsque l'appareil ne fourni pas cette information)</i>"
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
@@ -2401,7 +2401,7 @@ msgstr "Gain"
 
 #: ../ui/settings.glade:1140 ../ui/settings.glade:1160
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr "Paramètre de Gauss : augmenter sa valeur, améliore la stabilisation, mais accentue le décalage entre le curseur et le point dessiné."
+msgstr "Paramètre de Gauss : augmenter sa valeur améliore la stabilisation, mais accentue le décalage entre le curseur et le point dessiné."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
@@ -2485,7 +2485,7 @@ msgstr "Très courte durée (temps)  ET...\n\n"
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr "Concepteurs de l’icône "
+msgstr "Concepteurs des icônes"
 
 #: ../ui/settings.glade:4678
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2505,7 +2505,7 @@ msgstr "Si activé, les calques de chaque page seront ajoutés une par une. Le f
 
 #: ../ui/settings.glade:664
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr "Quand vous ouvrez un fichier PDF, si il y a un fichier Xournal avec le même nom, ce dernier sera ouvert."
+msgstr "Quand vous ouvrez un fichier PDF et qu'il y a déja un fichier Xournal (. xoj) ayant le même nom, ce dernier sera ouvert."
 
 #: ../ui/settings.glade:4744
 msgid "Ignore Time (ms)"
@@ -2619,7 +2619,7 @@ msgstr "Multiplicateur maximal"
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 msgstr "Fusionner les événements de boutons avec ceux de la pointe du stylet\n"
-"\t    <i>(Cochez cette case si</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>renvoie</i> \"<tt>on</tt>\"<i>)</i>"
+"\t    <i>(cochez cette case si</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>renvoie</i> \"<tt>on</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:1367
 msgid "Middle Mouse Button"
@@ -2763,7 +2763,7 @@ msgstr "Gestionnaire de plugins"
 
 #: ../ui/main.glade:1993
 msgid "Plugin _Manager"
-msgstr "Gestionnaire de greffons"
+msgstr "_Gestionnaire de greffons"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -2859,7 +2859,7 @@ msgstr "Taux d'échantillonnage"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr "Échantillon de nom de calque"
+msgstr "Nom du calque d'échantillon"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -2895,15 +2895,15 @@ msgstr "Couleur de sélection (Texte, Sélection de traits etc.)"
 
 #: ../ui/settings.glade:3482
 msgid "Selection Edge Panning"
-msgstr "Séléction du bord de déplacement"
+msgstr "Sélection du bord de déplacement"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr "Mettre en arrière plan"
+msgstr "Mettre en arrière"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr "Mettre en arrière"
+msgstr "Mettre en arrière-plan"
 
 #: ../ui/settings.glade:1649
 msgid "Sensitivity Scale"
@@ -2958,7 +2958,7 @@ msgstr "Petite icône de point"
 
 #: ../ui/settings.glade:4696
 msgid "Snapping"
-msgstr "Snapping"
+msgstr "Accrochage"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
@@ -3059,7 +3059,7 @@ msgstr "Expiré"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
-msgstr "Dessin Tactile"
+msgstr "Dessin tactile"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
@@ -3100,7 +3100,7 @@ msgstr "Généralement 0 ou 1"
 
 #: ../ui/settings.glade:223
 msgid "Velocity based Gaussian weights"
-msgstr "Pondération Gaussienne basée sur la vitesse"
+msgstr "Pondération gaussienne basée sur la vitesse"
 
 #: ../ui/about.glade:181
 msgid "Version"
@@ -3108,7 +3108,7 @@ msgstr "Version"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Version: "
-msgstr "Version: "
+msgstr "Version : "
 
 #: ../ui/settings.glade:3790
 msgid "View"
