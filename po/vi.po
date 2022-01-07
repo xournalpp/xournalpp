@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-06 18:14\n"
+"PO-Revision-Date: 2022-01-07 03:35\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -986,7 +986,7 @@ msgstr "Làm lại: "
 
 #: ../src/core/control/Control.cpp:2012
 msgid "Remove PDF Background"
-msgstr "Xóa Nền PDF"
+msgstr "Xóa nền PDF"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
 msgid "Removed tool item from Toolbar {1} ID {2}"
@@ -1018,7 +1018,7 @@ msgstr "Xoay"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:392
 msgid "Rotation Snapping"
-msgstr "Chụp Xoay"
+msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
