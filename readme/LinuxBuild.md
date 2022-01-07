@@ -73,7 +73,9 @@ Use `cmake-gui ..` to graphically configure compilation.
 With Cairo 1.16 PDF Bookmarks will be possible, but this Version is not yet
 common available, therefore the Cairo PDF Export is without PDF Bookmarks.
 
-The binary executable will be placed in the `build/src/` subdirectory.
+The binary executable will be placed directly into the `build/` directory. 
+You can run it by executing `./xournalpp` from that directory. For testing
+purposes packaging and installation on the system are not required.
 
 ## Packaging and Installation
 
