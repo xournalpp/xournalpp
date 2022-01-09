@@ -2424,6 +2424,7 @@ void Control::resetSavedStatus() {
 }
 
 void Control::quit(bool allowCancel) {
+    g_message("Starting to quit");
     if (!this->close(false, allowCancel)) {
         if (!allowCancel) {
             // Cancel is not allowed, and the user close or did not save
@@ -2434,19 +2435,28 @@ void Control::quit(bool allowCancel) {
 
         return;
     }
-
+    g_message("Stop recording...");
     audioController->stopRecording();
+    g_message("Locking scheduler...");
     this->scheduler->lock();
+    g_message("Removing all jobs...");
     this->scheduler->removeAllJobs();
+    g_message("Unlocking scheduler...");
     this->scheduler->unlock();
+    g_message("Stopping scheduler...");
     this->scheduler->stop();  // Finish current task. Must be called to finish pending saves.
-    this->closeDocument();    // Must be done after all jobs has finished (Segfault on save/export)
+    g_message("Closing document...");
+    this->closeDocument();  // Must be done after all jobs has finished (Segfault on save/export)
+    g_message("Saving settings...");
     settings->save();
+    g_message("Now executing g_application_quit ..");
     g_application_quit(G_APPLICATION(gtkApp));
 }
 
 auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
+    g_message("Clear selection, end text");
     clearSelectionEndText();
+    g_message("Metadata update");
     metadata->documentChanged();
 
     bool discard = false;
@@ -2465,7 +2475,9 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
         }
 
         gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
+        g_message("Open dialog");
         const auto dialogResponse = gtk_dialog_run(GTK_DIALOG(dialog));
+        g_message("Destroy dialog");
         gtk_widget_destroy(dialog);
 
         switch (dialogResponse) {
@@ -2486,7 +2498,9 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
     }
 
     if (allowDestroy && discard) {
+        g_message("Closing document");
         this->closeDocument();
+        g_message("Document closed");
     }
     return true;
 }
