@@ -743,6 +743,11 @@ bool EditSelection::handleEdgePan(EditSelection* self) {
         return false;
     }
 
+    if (!self->view->getXournal()) {
+        g_warning("XournalView does not exist anymore while handling edge panning");
+        return false;
+    }
+
     if (self->view->getXournal()->getControl()->getZoomControl()->isZoomPresentationMode()) {
         self->setEdgePan(false);
         return false;
