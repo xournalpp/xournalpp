@@ -59,6 +59,8 @@ function go()
   local windowsUtilities = {} -- list of windows programs here
   local macUtilities = {} -- list of macOS programs here
   local elseUtilities = -- list of programs for other systems
+                        -- maim and xclip are not listed, because they
+                        -- are the default
     { "scrot --overwrite --select --silent "
 -- gnome-screenshot behaves oddly (pollutes the window)
 -- the line is added here to be indicative of what
@@ -74,6 +76,13 @@ function go()
   elseif operatingSystem == "Darwin" then
     app.msgbox("macOS not supported yet.", {[1] = "OK"})
   else
+    -- Skip all the detection of tools in case maim and xclip are
+	-- installed. Then a screenshot is made with maim and saved to the
+	-- clipboard, skipping all other tools
+    if existsUtility("maim") and existsUtility("xclip") then
+      os.execute("maim -s | xclip -selection clipboard -t image/png")
+      return
+    end
     -- This becomes true if at least one screenshot
     -- utility is available on the system
     local foundUtility = false
