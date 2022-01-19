@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-06 05:11\n"
+"PO-Revision-Date: 2022-01-19 14:53\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -759,7 +759,7 @@ msgstr "Livello"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
 msgid "Layer Combo"
-msgstr ""
+msgstr "Integrazione di Livelli"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
 msgid "Layer Preview"
@@ -1116,7 +1116,7 @@ msgstr "Seleziona regione"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
-msgstr ""
+msgstr "Combina selezione"
 
 #: ../src/core/control/XournalMain.cpp:153
 msgid "Send Bugreport"
