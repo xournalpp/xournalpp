@@ -105,6 +105,9 @@ auto RecentManager::sortRecentsEntries(GtkRecentInfo* a, GtkRecentInfo* b) -> gi
 
 auto RecentManager::getMostRecent() -> GtkRecentInfo* {
     GList* filteredItemsXoj = filterRecent(gtk_recent_manager_get_items(gtk_recent_manager_get_default()), true);
+    if (filteredItemsXoj == nullptr) {
+        return nullptr;
+    }
     auto mostRecent = static_cast<GtkRecentInfo*>(filteredItemsXoj->data);
 
     gtk_recent_info_ref(mostRecent);

@@ -80,6 +80,7 @@ public:
 
     /**
      * Returns the most recent xoj item from the underlying GtkRecentManager
+     * or nullptr, if no recent files exist
      */
     GtkRecentInfo* getMostRecent();
 
@@ -91,7 +92,7 @@ private:
      * @param xoj   Returns xoj files if xoj is set, pdf files otherwise
      *
      * @return      A pointer to a GList containing the relevant GtkRecentInfo%s sorted according to their
-     *              modification dates
+     *              modification dates or nullptr if no recent files match Xournal File Extension
      */
     static GList* filterRecent(GList* items, bool xoj);
     void addRecentMenu(GtkRecentInfo* info, int i);
