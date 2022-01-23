@@ -36,7 +36,12 @@ GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const std::string& glade, c
     this->window = get(mainWnd);
 }
 
-GladeGui::~GladeGui() { g_object_unref(builder); }
+GladeGui::~GladeGui() {
+    if (!gtk_widget_get_parent(window)) {
+        gtk_widget_destroy(window);
+    }
+    g_object_unref(builder);
+}
 
 auto GladeGui::get(const std::string& name) -> GtkWidget* {
     GtkWidget* w = GTK_WIDGET(gtk_builder_get_object(builder, name.c_str()));
