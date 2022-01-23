@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-23 15:15\n"
+"PO-Revision-Date: 2022-01-23 16:15\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -1132,7 +1132,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Separator"
-msgstr ""
+msgstr "Dấu ngăn cách"
 
 #: ../src/core/control/XournalMain.cpp:566
 msgid "Set DPI for PNG exports. Default is 300\n"
