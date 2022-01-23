@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-07 05:32\n"
+"PO-Revision-Date: 2022-01-23 15:15\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -1065,7 +1065,7 @@ msgstr "Tìm kiếm"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:33
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Xem toàn bộ danh sách người đóng góp"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 msgid "Select Font"
