@@ -78,7 +78,6 @@ if (WIN32)
   # windows specific source files
   file (GLOB xournalpp-sources-win32 exe/win32/*.cpp exe/win32/*.h)
   target_sources(xournalpp PRIVATE ${xournalpp-sources-win32})
-  target_compile_options(xournalpp PRIVATE -mwindows)
   target_include_directories(xournalpp PRIVATE exe)
 
   # windows specific appinfo
