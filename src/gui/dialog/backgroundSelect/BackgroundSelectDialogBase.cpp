@@ -45,7 +45,10 @@ auto BackgroundSelectDialogBase::getSettings() -> Settings* { return this->setti
 void BackgroundSelectDialogBase::layout() {
     double x = 0;
     double y = 0;
+
+    /** current row height */
     double height = 0;
+    /** max row width */
     double width = 0;
 
     GtkAllocation alloc = {0};
@@ -57,11 +60,12 @@ void BackgroundSelectDialogBase::layout() {
         }
 
         if (x + p->getWidth() > alloc.width) {
-            width = std::max(width, x);
+            // wrap line
             y += height;
             x = 0;
             height = 0;
         }
+        width = std::max(width, x + static_cast<double>(p->getWidth()));
 
         gtk_layout_move(GTK_LAYOUT(this->layoutContainer), p->getWidget(), x, y);
 
@@ -71,7 +75,7 @@ void BackgroundSelectDialogBase::layout() {
         x += p->getWidth();
     }
 
-    gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), width, y);
+    gtk_layout_set_size(GTK_LAYOUT(this->layoutContainer), width, y + height);
 }
 
 void BackgroundSelectDialogBase::show(GtkWindow* parent) {
