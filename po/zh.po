@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-06 04:55+0000\n"
-"PO-Revision-Date: 2022-01-23 22:39\n"
+"PO-Revision-Date: 2022-01-24 01:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -109,7 +109,7 @@ msgstr "属性 \"{1}\" 无法被解析为 size_t, 其值为 \"{2}\""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:162
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr "变量\"{1}\"不能被解析为size_t类型，其值为NULL"
+msgstr "变量\"{1}\"不能被解析为size_t类型，其值为 nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
