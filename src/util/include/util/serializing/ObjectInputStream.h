@@ -39,6 +39,16 @@ public:
 
     void readData(void** data, int* len);
     cairo_surface_t* readImage();
+    
+    struct AlignmentInt{ //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data & https://stackoverflow.com/questions/28727914/what-does-misaligned-address-error-mean#:~:text=%22Misaligned%20address%22%20usually%20means%20that,bit%20integer%20from%20address%200x1001).
+        char c;
+        __attribute__((__aligned__(4))) int32_t member;
+    }
+    struct AlignmentDouble{ //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data & https://stackoverflow.com/questions/28727914/what-does-misaligned-address-error-mean#:~:text=%22Misaligned%20address%22%20usually%20means%20that,bit%20integer%20from%20address%200x1001).
+        char c;
+        __attribute__((__aligned__(8))) double32_t member;
+    }
+
 
 private:
     void checkType(char type);

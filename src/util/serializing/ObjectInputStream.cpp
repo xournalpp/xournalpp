@@ -66,7 +66,7 @@ auto ObjectInputStream::getNextObjectName() -> std::string {
 
 void ObjectInputStream::endObject() { checkType('}'); }
 
-auto ObjectInputStream::readInt() -> int { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data 
+auto ObjectInputStream::readInt() -> int { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data & https://stackoverflow.com/questions/28727914/what-does-misaligned-address-error-mean#:~:text=%22Misaligned%20address%22%20usually%20means%20that,bit%20integer%20from%20address%200x1001).
     checkType('i');
     std::istringstream obj = readTypeFromSStream<int>(istream);
     string strObj = strObj.str();
@@ -80,7 +80,7 @@ auto ObjectInputStream::readInt() -> int { //referenced https://stackoverflow.co
     
 }
 
-auto ObjectInputStream::readDouble() -> double { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data 
+auto ObjectInputStream::readDouble() -> double { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data & https://stackoverflow.com/questions/28727914/what-does-misaligned-address-error-mean#:~:text=%22Misaligned%20address%22%20usually%20means%20that,bit%20integer%20from%20address%200x1001).
     checkType('d');
     std::istringstream obj = readTypeFromSStream<double>(istream);
     string strObj = strObj.str();
@@ -93,7 +93,7 @@ auto ObjectInputStream::readDouble() -> double { //referenced https://stackoverf
     return readValue;
 }
 
-auto ObjectInputStream::readSizeT() -> size_t { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data 
+auto ObjectInputStream::readSizeT() -> size_t { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data & https://stackoverflow.com/questions/28727914/what-does-misaligned-address-error-mean#:~:text=%22Misaligned%20address%22%20usually%20means%20that,bit%20integer%20from%20address%200x1001).
     checkType('l');
     std::istringstream obj = readTypeFromSStream<size_t>(istream);
     string strObj = strObj.str();
@@ -107,7 +107,7 @@ auto ObjectInputStream::readSizeT() -> size_t { //referenced https://stackoverfl
     
 }
 
-auto ObjectInputStream::readString() -> std::string { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data 
+auto ObjectInputStream::readString() -> std::string { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data & https://stackoverflow.com/questions/28727914/what-does-misaligned-address-error-mean#:~:text=%22Misaligned%20address%22%20usually%20means%20that,bit%20integer%20from%20address%200x1001).
 
     checkType('s');
 
