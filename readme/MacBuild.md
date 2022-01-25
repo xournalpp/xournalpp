@@ -1,5 +1,5 @@
 # Xournal++ MacOS .app Build
-hi
+
 Do not install macports or homebrew. If you have installed it, you need to
 create a new user, and use this for the whole process. jhbuild does not work,
 if there is such an environment installed.
