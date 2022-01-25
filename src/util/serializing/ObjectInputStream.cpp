@@ -66,22 +66,49 @@ auto ObjectInputStream::getNextObjectName() -> std::string {
 
 void ObjectInputStream::endObject() { checkType('}'); }
 
-auto ObjectInputStream::readInt() -> int {
+auto ObjectInputStream::readInt() -> int { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data 
     checkType('i');
-    return readTypeFromSStream<int>(istream);
+    std::istringstream obj = readTypeFromSStream<int>(istream);
+    string strObj = strObj.str();
+    string num =  "";
+    for(int i = 0; i < obj.length(); i++){
+        AlignmentInt number = strObj.at(i);
+        num+=number;
+    }
+    int readValue = stoi(num);
+    return readValue;
+    
 }
 
-auto ObjectInputStream::readDouble() -> double {
+auto ObjectInputStream::readDouble() -> double { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data 
     checkType('d');
-    return readTypeFromSStream<double>(istream);
+    std::istringstream obj = readTypeFromSStream<double>(istream);
+    string strObj = strObj.str();
+    string num =  "";
+    for(int i = 0; i < obj.length(); i++){
+        AlignmentDouble number = strObj.at(i);
+        num+=number;
+    }
+    double readValue = stod(num);
+    return readValue;
 }
 
-auto ObjectInputStream::readSizeT() -> size_t {
+auto ObjectInputStream::readSizeT() -> size_t { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data 
     checkType('l');
-    return readTypeFromSStream<size_t>(istream);
+    std::istringstream obj = readTypeFromSStream<size_t>(istream);
+    string strObj = strObj.str();
+    string num =  "";
+    for(int i = 0; i < obj.length(); i++){
+        char number = alignof(strObj.at(i));
+        num+=number;
+    }
+    int readValue = (size_t)(num);
+    return readValue;
+    
 }
 
-auto ObjectInputStream::readString() -> std::string {
+auto ObjectInputStream::readString() -> std::string { //referenced https://stackoverflow.com/questions/11983311/c-4-bytes-aligned-data 
+
     checkType('s');
 
     size_t lenString = (size_t)readTypeFromSStream<int>(istream);
@@ -91,7 +118,7 @@ auto ObjectInputStream::readString() -> std::string {
     }
 
     std::string output;
-    output.resize(lenString);
+    output.resize(lenString, 4);
 
     istream.read(&output[0], (long)lenString);
 
