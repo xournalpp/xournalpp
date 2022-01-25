@@ -6,6 +6,8 @@
 #include "util/StringUtils.h"
 #include "util/i18n.h"
 
+#include "config-git.h"
+
 AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
     gtk_label_set_markup(GTK_LABEL(get("lbBuildDate")), __DATE__ ", " __TIME__);
     gtk_label_set_markup(GTK_LABEL(get("lbVersion")), PROJECT_VERSION);

@@ -20,6 +20,7 @@
 #include "Control.h"
 #include "ExportHelper.h"
 #include "config-dev.h"
+#include "config-git.h"
 #include "config-paths.h"
 #include "config.h"
 #include "filesystem.h"

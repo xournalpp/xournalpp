@@ -206,6 +206,12 @@ configure_file(
 )
 
 configure_file(
+        src/config-git.h.in
+        src/config-git.h
+        ESCAPE_QUOTES @ONLY
+)
+
+configure_file(
         src/config-paths.h.in
         src/config-paths.h
         ESCAPE_QUOTES @ONLY
