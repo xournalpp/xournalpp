@@ -17,6 +17,7 @@
 #include "Point.h"
 
 enum StrokeTool { STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER };
+enum StrokeCapStyle { ROUND, BUTT, SQUARE };
 
 class ErasableStroke;
 
@@ -100,6 +101,9 @@ public:
     ErasableStroke* getErasable();
     void setErasable(ErasableStroke* eraseable);
 
+    StrokeCapStyle getStrokeCapStyle() const;
+    void setStrokeCapStyle(const StrokeCapStyle capStyle);
+
     [[maybe_unused]] void debugPrint();
 
 public:
@@ -115,7 +119,6 @@ protected:
 private:
     // The stroke width cannot be inherited from Element
     double width = 0;
-
     StrokeTool toolType = STROKE_TOOL_PEN;
 
     // The array with the points
@@ -136,4 +139,6 @@ private:
      *   1: The shape is nearly fully transparent filled
      */
     int fill = -1;
+
+    StrokeCapStyle capStyle = StrokeCapStyle::ROUND;
 };
