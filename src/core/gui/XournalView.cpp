@@ -329,7 +329,7 @@ void XournalView::pageSelected(size_t page) {
 
     control->getMetadataManager()->storeMetadata(file, page, getZoom());
 
-    control->getWindow()->pdfFloatingToolBox->postAction();
+    control->getWindow()->getPdfToolbox()->postAction();
 
     if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPages.size()) {
         this->viewPages[this->lastSelectedPage]->setSelected(false);
@@ -504,7 +504,7 @@ void XournalView::zoomChanged() {
 
     // if we changed the zoom of the page, we should hide the pdf floating toolbox
     // and if user clicked the selection again, the floating toolbox shows again
-    control->getWindow()->pdfFloatingToolBox->hide();
+    control->getWindow()->getPdfToolbox()->hide();
 
     this->control->getScheduler()->blockRerenderZoom();
 }

@@ -43,8 +43,6 @@ public:
     virtual void layerVisibilityChanged();
 
     FloatingToolbox* floatingToolbox;
-    std::unique_ptr<PdfFloatingToolbox> pdfFloatingToolBox;
-
 public:
     virtual void show(GtkWindow* parent);
 
@@ -76,6 +74,8 @@ public:
     void setToolbarVisible(bool visible);
 
     Control* getControl();
+
+    PdfFloatingToolbox* getPdfToolbox();
 
     void updateScrollbarSidebarPosition();
 
@@ -173,6 +173,8 @@ private:
     ScrollHandling* scrollHandling = nullptr;
 
     std::atomic_bool gtkTouchscreenScrollingEnabled{true};
+
+    std::unique_ptr<PdfFloatingToolbox> pdfFloatingToolBox;
 
     // Toolbars
     ToolMenuHandler* toolbar;

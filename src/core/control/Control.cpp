@@ -364,14 +364,14 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         return;
     }
 
-    if (getWindow() && getWindow()->pdfFloatingToolBox) {
-        if (type == ACTION_TOOL_HAND || type == ACTION_ZOOM_100 || type == ACTION_ZOOM_FIT || type == ACTION_ZOOM_IN ||
-            type == ACTION_ZOOM_OUT) {
-            // If type == ACTION_TOOL_HAND, do nothing;
-            // If type == `Zoom Related Action', we will hide pdfFloatingToolBox in XournalView::zoomChanged().
-        } else {
-            // add by @raffaem
-            getWindow()->pdfFloatingToolBox->postAction();
+    // If PDF toolbox is currently shown, end the PDF selection unless:
+    //   1) Hand tool action
+    //   2) zoom action (toolbox will be hidden in ZoomControl::zoomChanged)
+    if (getWindow() && getWindow()->getPdfToolbox()->hasSelection()) {
+        bool keepPdfToolbox = type == ACTION_TOOL_HAND || type == ACTION_ZOOM_100 || type == ACTION_ZOOM_FIT ||
+                              type == ACTION_ZOOM_IN || type == ACTION_ZOOM_OUT;
+        if (!keepPdfToolbox) {
+            getWindow()->getPdfToolbox()->postAction();
         }
     }
 
@@ -2748,7 +2748,7 @@ void Control::deleteSelection() {
 void Control::clearSelection() {
     if (this->win) {
         this->win->getXournal()->clearSelection();
-        this->win->pdfFloatingToolBox->postAction();
+        this->win->getPdfToolbox()->postAction();
     }
 }
 

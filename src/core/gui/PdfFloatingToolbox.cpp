@@ -24,19 +24,24 @@ PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* ov
     g_signal_connect(theMainWindow->get("pdfTbStrikethrough"), "clicked", G_CALLBACK(this->strikethroughCb), this);
     g_signal_connect(theMainWindow->get("pdfTbChangeType"), "clicked", G_CALLBACK(this->switchSelectTypeCb), this);
 
-    this->hideAndSelectionNullPtr();
+    this->clearSelection();
+    this->hide();
 }
 
-void PdfFloatingToolbox::show(int x, int y, PdfElemSelection* pSelection) {
-    this->pdfElemSelection = pSelection;
+PdfElemSelection* PdfFloatingToolbox::getSelection() const { return this->pdfElemSelection.get(); }
+bool PdfFloatingToolbox::hasSelection() const { return this->getSelection() != nullptr; }
+
+void PdfFloatingToolbox::clearSelection() { this->pdfElemSelection.reset(); }
+
+void PdfFloatingToolbox::newSelection(double x, double y, XojPageView* pageView) {
+    this->pdfElemSelection = std::make_unique<PdfElemSelection>(x, y, pageView);
+}
+
+void PdfFloatingToolbox::show(int x, int y) {
+    g_assert_nonnull(this->getSelection());
     this->floatingToolboxX = x;
     this->floatingToolboxY = y;
     this->show();
-}
-
-void PdfFloatingToolbox::hideAndSelectionNullPtr() {
-    this->pdfElemSelection = nullptr;
-    this->hide();
 }
 
 void PdfFloatingToolbox::hide() {
@@ -87,10 +92,7 @@ void PdfFloatingToolbox::postAction() {
     if (this->pdfElemSelection) {
         auto view = this->pdfElemSelection->getPageView();
 
-        delete this->pdfElemSelection;
         this->pdfElemSelection = nullptr;
-
-        view->pdfElemSelection = nullptr;
         view->rerenderPage();
     }
 

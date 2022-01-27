@@ -212,12 +212,6 @@ private:
     Selection* selection = nullptr;
 
     /**
-     * The selected especially for pdf text selection and will
-     * survive after selection
-     */
-    PdfElemSelection* pdfElemSelection = nullptr;
-
-    /**
      * The text editor View
      */
     TextEditor* textEditor = nullptr;

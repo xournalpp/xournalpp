@@ -1,6 +1,7 @@
 #pragma once
 
 #include "control/tools/PdfElemSelection.h"
+#include "gui/PageView.h"
 #include "gui/XournalView.h"
 
 #include "GladeGui.h"
@@ -27,12 +28,23 @@ public:
     ~PdfFloatingToolbox() = default;
 
 public:
-    void show(int x, int y, PdfElemSelection* pSelection);
+    void show(int x, int y);
     void hide();
-    void hideAndSelectionNullPtr();
 
     void postAction();
     bool getIsHidden() const;
+
+    /// Returns the selection, or nullptr if no PDF element is selected.
+    PdfElemSelection* getSelection() const;
+
+    /// Clears the current selection.
+    void clearSelection();
+
+    /// Create a new selection
+    void newSelection(double x, double y, XojPageView* pageView);
+
+    /// Returns true iff a PDF element is selected;
+    bool hasSelection() const;
 
 private:
     void show();
@@ -60,7 +72,7 @@ private:
     GtkWidget* floatingToolbox;
     MainWindow* theMainWindow;
 
-    PdfElemSelection* pdfElemSelection = nullptr;
+    std::unique_ptr<PdfElemSelection> pdfElemSelection = nullptr;
 
     int floatingToolboxX = 0;
     int floatingToolboxY = 0;
