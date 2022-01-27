@@ -765,3 +765,5 @@ void MainWindow::loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssF
                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     g_object_unref(provider);
 }
+
+PdfFloatingToolbox* MainWindow::getPdfToolbox() { return this->pdfFloatingToolBox.get(); }
