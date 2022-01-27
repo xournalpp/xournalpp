@@ -47,6 +47,7 @@ void Stroke::applyStyleFrom(const Stroke* other) {
     setToolType(other->getToolType());
     setWidth(other->getWidth());
     setFill(other->getFill());
+    setStrokeCapStyle(other->getStrokeCapStyle());
     setLineStyle(other->getLineStyle());
 
     cloneAudioData(other);
@@ -63,6 +64,7 @@ auto Stroke::cloneStroke() const -> Stroke* {
     s->Element::height = this->Element::height;
     s->snappedBounds = this->snappedBounds;
     s->sizeCalculated = this->sizeCalculated;
+    s->capStyle = this->capStyle;
     return s;
 }
 
@@ -78,6 +80,8 @@ void Stroke::serialize(ObjectOutputStream& out) const {
     out.writeInt(this->toolType);
 
     out.writeInt(fill);
+
+    out.writeInt(this->capStyle);
 
     out.writeData(this->points.data(), this->points.size(), sizeof(Point));
 
@@ -96,6 +100,8 @@ void Stroke::readSerialized(ObjectInputStream& in) {
     this->toolType = static_cast<StrokeTool>(in.readInt());
 
     this->fill = in.readInt();
+
+    this->capStyle = static_cast<StrokeCapStyle>(in.readInt());
 
     Point* p{};
     int count{};
@@ -419,6 +425,10 @@ void Stroke::calcSize() const {
 auto Stroke::getErasable() -> ErasableStroke* { return this->eraseable; }
 
 void Stroke::setErasable(ErasableStroke* eraseable) { this->eraseable = eraseable; }
+
+auto Stroke::getStrokeCapStyle() const -> StrokeCapStyle { return this->capStyle; }
+
+void Stroke::setStrokeCapStyle(const StrokeCapStyle capStyle) { this->capStyle = capStyle; }
 
 void Stroke::debugPrint() {
     g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t)this % this->hasPressure()));

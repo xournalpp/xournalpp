@@ -578,6 +578,19 @@ void LoadHandler::parseStroke() {
         stroke->setFill(fill);
     }
 
+    const char* capStyleStr = LoadHandlerHelper::getAttrib("capStyle", true, this);
+    if (capStyleStr != nullptr) {
+        if (strcmp("butt", capStyleStr) == 0) {
+            stroke->setStrokeCapStyle(StrokeCapStyle::BUTT);
+        } else if (strcmp("round", capStyleStr) == 0) {
+            stroke->setStrokeCapStyle(StrokeCapStyle::ROUND);
+        } else if (strcmp("square", capStyleStr) == 0) {
+            stroke->setStrokeCapStyle(StrokeCapStyle::SQUARE);
+        } else {
+            g_warning("%s", FC(_F("Unknown stroke cap type: \"{1}\", assuming round") % capStyleStr));
+        }
+    }
+
     const char* style = LoadHandlerHelper::getAttrib("style", true, this);
     if (style != nullptr) {
         stroke->setLineStyle(StrokeStyle::parseStyle(style));

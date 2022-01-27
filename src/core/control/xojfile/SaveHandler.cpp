@@ -122,6 +122,18 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
         stroke->setAttrib("fill", s->getFill());
     }
 
+    const StrokeCapStyle capStyle = s->getStrokeCapStyle();
+    if (capStyle == StrokeCapStyle::BUTT) {
+        stroke->setAttrib("capStyle", "butt");
+    } else if (capStyle == StrokeCapStyle::ROUND) {
+        stroke->setAttrib("capStyle", "round");
+    } else if (capStyle == StrokeCapStyle::SQUARE) {
+        stroke->setAttrib("capStyle", "square");
+    } else {
+        g_warning("Unknown stroke cap type: %i", capStyle);
+        stroke->setAttrib("capStyle", "round");
+    }
+
     if (s->getLineStyle().hasDashes()) {
         stroke->setAttrib("style", StrokeStyle::formatStyle(s->getLineStyle()));
     }
