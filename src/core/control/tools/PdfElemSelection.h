@@ -23,33 +23,33 @@
 class PdfElemSelection {
 public:
     PdfElemSelection(double x, double y, XojPageView* view);
+    PdfElemSelection& operator=(const PdfElemSelection&) = delete;
+    PdfElemSelection(const PdfElemSelection&) = delete;
+    PdfElemSelection& operator=(PdfElemSelection&&) = default;
+    PdfElemSelection(PdfElemSelection&&) = default;
     virtual ~PdfElemSelection();
 
 public:
-    virtual bool finalize(PageRef page);
-    virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
-    virtual void currentPos(double x, double y);
-    virtual bool contains(double x, double y);
+    bool finalize(PageRef page);
+    void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
+    void currentPos(double x, double y);
+    bool contains(double x, double y);
 
     bool selectHeadTailTextRegion();
     void selectFinally();
     void selectHeadTailFinally();
-    void clearSelection();
 
     const std::vector<XojPdfRectangle>& getSelectedTextRects() const;
     const std::string& getSelectedText() const;
     XojPageView* getPageView() const;
 
-    void setIsFinalized(const bool finalized);
     bool getIsFinalized() const;
-
-    void setIsFinished(const bool finished);
     bool getIsFinished() const;
 
     void doublePress();
     void triplePress();
 
-    int getSelectionPageNr() const;
+    uint64_t getSelectionPageNr() const;
     void setToolType(ToolType toolType);
 
 

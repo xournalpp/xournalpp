@@ -29,7 +29,11 @@ PdfElemSelection::PdfElemSelection(double x, double y, XojPageView* view):
     this->toolType = xournal->getControl()->getToolHandler()->getToolType();
 }
 
-PdfElemSelection::~PdfElemSelection() { this->clearSelection(); }
+PdfElemSelection::~PdfElemSelection() {
+    this->selectedTextRects.clear();
+    this->selectedText.clear();
+    cairo_region_destroy(this->selectedTextRegion);
+}
 
 auto PdfElemSelection::finalize(PageRef page) -> bool {
     this->isFinalized = true;
@@ -186,24 +190,16 @@ auto PdfElemSelection::selectHeadTailTextRegion() -> bool {
     return !cairo_region_is_empty(this->selectedTextRegion);
 }
 
-void PdfElemSelection::clearSelection() {
-    this->selectedTextRects.clear();
-    this->selectedText.clear();
-    cairo_region_destroy(this->selectedTextRegion);
-}
-
 auto PdfElemSelection::getSelectedTextRects() const -> const std::vector<XojPdfRectangle>& { return selectedTextRects; }
 
 auto PdfElemSelection::getSelectedText() const -> const std::string& { return selectedText; }
 
 auto PdfElemSelection::getPageView() const -> XojPageView* { return view; }
 
-auto PdfElemSelection::getSelectionPageNr() const -> int { return selectionPageNr; }
+auto PdfElemSelection::getSelectionPageNr() const -> uint64_t { return selectionPageNr; }
 
 auto PdfElemSelection::getIsFinalized() const -> bool { return this->isFinalized; }
-void PdfElemSelection::setIsFinalized(const bool finalized) { this->isFinalized = finalized; }
 
 auto PdfElemSelection::getIsFinished() const -> bool { return this->isFinished; }
-void PdfElemSelection::setIsFinished(const bool finished) { this->isFinished = finished; }
 
 void PdfElemSelection::setToolType(ToolType tType) { this->toolType = tType; }

@@ -138,7 +138,7 @@ void PdfFloatingToolbox::copyText() {
 }
 
 void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle width, int markerOpacity) {
-    auto currentPage = theMainWindow->getXournal()->getCurrentPage();
+    uint64_t currentPage = theMainWindow->getXournal()->getCurrentPage();
     if (currentPage != this->pdfElemSelection->getSelectionPageNr()) {
         return;
     }
