@@ -90,6 +90,8 @@ ButtonConfigGui::ButtonConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w,
     addTypeCB("select-rect", _("Select rectangle"), TOOL_SELECT_RECT);
     addTypeCB("hand", _("Hand"), TOOL_HAND);
     addTypeCB("floating-toolbox", _("Floating Toolbox (experimental)"), TOOL_FLOATING_TOOLBOX);
+    addTypeCB("select-pdf-text-head-tail", _("Select Text from pdf"), TOOL_SELECT_PDF_TEXT_LINEAR);
+    addTypeCB("select-pdf-text-area", _("Select Area Text from pdf"), TOOL_SELECT_PDF_TEXT_RECT);
 
     this->cbTool = get("cbTool");
     gtk_combo_box_set_model(GTK_COMBO_BOX(this->cbTool), GTK_TREE_MODEL(typeModel));
@@ -274,6 +276,8 @@ void ButtonConfigGui::enableDisableTools() {
     switch (action) {
         case TOOL_PEN:
         case TOOL_HIGHLIGHTER:
+        case TOOL_SELECT_PDF_TEXT_LINEAR:
+        case TOOL_SELECT_PDF_TEXT_RECT:
             gtk_widget_set_visible(cbThickness, true);
             gtk_widget_set_visible(colorButton, true);
             gtk_widget_set_visible(cbDrawingType, true);

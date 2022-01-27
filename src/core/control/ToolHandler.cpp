@@ -98,6 +98,14 @@ void ToolHandler::initTools() {
     tools[TOOL_FLOATING_TOOLBOX - TOOL_PEN] = std::make_unique<Tool>("showFloatingToolbox", TOOL_FLOATING_TOOLBOX,
                                                                      Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
+    tools[TOOL_SELECT_PDF_TEXT_LINEAR - TOOL_PEN] =
+            std::make_unique<Tool>("selectPdfTextLinear", TOOL_SELECT_PDF_TEXT_LINEAR, Color{0x000000U},
+                                   TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt);
+
+    tools[TOOL_SELECT_PDF_TEXT_RECT - TOOL_PEN] =
+            std::make_unique<Tool>("selectPdfTextRect", TOOL_SELECT_PDF_TEXT_RECT, Color{0x000000U},
+                                   TOOL_CAP_COLOR | TOOL_CAP_RULER, std::nullopt);
+
     this->eraserButtonTool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton1Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
     this->stylusButton2Tool = std::make_unique<Tool>(*tools[TOOL_HIGHLIGHTER - TOOL_PEN]);
@@ -536,7 +544,8 @@ auto ToolHandler::isSinglePageTool() -> bool {
            drawingType == DRAWING_TYPE_SPLINE || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT ||
            toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE ||
            toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
-           toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE;
+           toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE ||
+           toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT;
 }
 
 

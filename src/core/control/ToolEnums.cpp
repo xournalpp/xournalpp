@@ -129,6 +129,10 @@ auto toolTypeToString(ToolType type) -> std::string {
             return "drawSpline";
         case TOOL_FLOATING_TOOLBOX:
             return "showFloatingToolbox";
+        case TOOL_SELECT_PDF_TEXT_LINEAR:
+            return "selectPdfTextLinear";
+        case TOOL_SELECT_PDF_TEXT_RECT:
+            return "selectPdfTextRect";
         default:
             return "";
     }
@@ -187,6 +191,12 @@ auto toolTypeFromString(const std::string& type) -> ToolType {
     }
     if (type == "showFloatingToolbox") {
         return TOOL_FLOATING_TOOLBOX;
+    }
+    if (type == "selectPdfTextLinear") {
+        return TOOL_SELECT_PDF_TEXT_LINEAR;
+    }
+    if (type == "selectPdfTextRect") {
+        return TOOL_SELECT_PDF_TEXT_RECT;
     }
     return TOOL_NONE;
 }

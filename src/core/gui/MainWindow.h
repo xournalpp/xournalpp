@@ -12,6 +12,7 @@
 #pragma once
 
 #include <atomic>
+#include <memory>
 
 #include "control/layer/LayerCtrlListener.h"
 #include "model/Font.h"
@@ -29,6 +30,7 @@ class ToolbarData;
 class ToolbarModel;
 class XournalView;
 class MainWindowToolbarMenu;
+class PdfFloatingToolbox;
 
 class MainWindow: public GladeGui, public LayerCtrlListener {
 public:
@@ -41,6 +43,7 @@ public:
     virtual void layerVisibilityChanged();
 
     FloatingToolbox* floatingToolbox;
+    std::unique_ptr<PdfFloatingToolbox> pdfFloatingToolBox;
 
 public:
     virtual void show(GtkWindow* parent);

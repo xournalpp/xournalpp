@@ -13,6 +13,7 @@
 #include "control/jobs/SaveJob.h"
 #include "control/layer/LayerController.h"
 #include "control/pagetype/PageTypeHandler.h"
+#include "gui/PdfFloatingToolbox.h"
 #include "gui/TextEditor.h"
 #include "gui/XournalView.h"
 #include "gui/XournalppCursor.h"
@@ -363,6 +364,17 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         return;
     }
 
+    if (getWindow() && getWindow()->pdfFloatingToolBox) {
+        if (type == ACTION_TOOL_HAND || type == ACTION_ZOOM_100 || type == ACTION_ZOOM_FIT || type == ACTION_ZOOM_IN ||
+            type == ACTION_ZOOM_OUT) {
+            // If type == ACTION_TOOL_HAND, do nothing;
+            // If type == `Zoom Related Action', we will hide pdfFloatingToolBox in XournalView::zoomChanged().
+        } else {
+            // add by @raffaem
+            getWindow()->pdfFloatingToolBox->postAction();
+        }
+    }
+
     switch (type) {
             // Menu File
         case ACTION_NEW:
@@ -545,6 +557,18 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_TOOL_PLAY_OBJECT:
             if (enabled) {
                 selectTool(TOOL_PLAY_OBJECT);
+            }
+            break;
+        case ACTION_TOOL_SELECT_PDF_TEXT_LINEAR:
+            clearSelection();
+            if (enabled) {
+                selectTool(TOOL_SELECT_PDF_TEXT_LINEAR);
+            }
+            break;
+        case ACTION_TOOL_SELECT_PDF_TEXT_RECT:
+            clearSelection();
+            if (enabled) {
+                selectTool(TOOL_SELECT_PDF_TEXT_RECT);
             }
             break;
         case ACTION_TOOL_VERTICAL_SPACE:
@@ -2724,6 +2748,7 @@ void Control::deleteSelection() {
 void Control::clearSelection() {
     if (this->win) {
         this->win->getXournal()->clearSelection();
+        this->win->pdfFloatingToolBox->postAction();
     }
 }
 

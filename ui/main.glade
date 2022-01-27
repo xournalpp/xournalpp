@@ -108,7 +108,7 @@
             <property name="can-focus">False</property>
             <property name="margin-bottom">30</property>
             <property name="label" translatable="yes">&lt;b&gt;Empty Toolbox&lt;/b&gt;
-&lt;i&gt;Menu: View/Toolbars&lt;/i&gt;</property>
+            &lt;i&gt;Menu: View/Toolbars&lt;/i&gt;</property>
             <property name="use-markup">True</property>
             <property name="justify">center</property>
           </object>
@@ -121,6 +121,174 @@
         <style>
           <class name="tbCss"/>
         </style>
+      </object>
+    </child>
+  </object>
+  <object class="GtkRevealer" id="pdfFloatingToolbox">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="transition-type">none</property>
+    <property name="reveal-child">True</property>
+    <property name="name">pdfFloatingTool</property>
+    <child>
+      <object class="GtkGrid">
+        <property name="name">pdfFloatingToolGrid</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="vexpand">True</property>
+        <property name="orientation">vertical</property>
+        <property name="row-spacing">2</property>
+        <property name="column-spacing">1</property>
+        <child>
+          <object class="GtkButton" id="pdfTbCopyText">
+            <property name="name">pdfTbCopyText</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="image">imagePdfTbCopyText</property>
+            <property name="always-show-image">True</property>
+            <property name="tooltip-text" translatable="yes">Copy selected text</property>
+            <child>
+              <object class="GtkImage" id="imagePdfTbCopyText">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="stock">gtk-copy</property>
+              </object>
+            </child>
+            <!-- <signal name="clicked" handler="pdfTbCopyText_clicked_cb" swapped="no"/> <!-\-\-\-> -->
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">0</property>
+            <property name="width">2</property>
+            <property name="height">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="pdfTbHighlight">
+            <property name="name">pdfTbHighlight</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="image">imagePdfTbHighlight</property>
+            <property name="always-show-image">True</property>
+            <property name="tooltip-text" translatable="yes">Highlight selected text</property>
+            <child>
+              <object class="GtkImage" id="imagePdfTbHighlight">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="stock">gtk-info</property>
+              </object>
+            </child>
+            <!-- <signal name="clicked" handler="pdfTbCopyText_clicked_cb" swapped="no"/> <!-\-\-\-> -->
+          </object>
+          <packing>
+            <property name="left-attach">2</property>
+            <property name="top-attach">0</property>
+            <property name="width">1</property>
+            <property name="height">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="pdfTbUnderline">
+            <property name="name">pdfTbUnderline</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="image">imagePdfTbUnderline</property>
+            <property name="always-show-image">True</property>
+            <property name="tooltip-text" translatable="yes">Underline selected text</property>
+            <child>
+              <object class="GtkImage" id="imagePdfTbUnderline">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="stock">gtk-underline</property>
+              </object>
+              <!-- <signal name="clicked" handler="pdfTbCopyText_clicked_cb" swapped="no"/> <!-\-\-\-> -->
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">2</property>
+            <property name="top-attach">1</property>
+            <property name="width">1</property>
+            <property name="height">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="pdfTbStrikethrough">
+            <property name="name">pdfTbStrikethrough</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="image">imagePdfTbStrikethrough</property>
+            <property name="always-show-image">True</property>
+            <property name="tooltip-text" translatable="yes">Strikethrough selected text</property>
+            <child>
+              <object class="GtkImage" id="imagePdfTbStrikethrough">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="stock">gtk-strikethrough</property>
+              </object>
+              <!-- <signal name="clicked" handler="pdfTbCopyText_clicked_cb" swapped="no"/> <!-\-\-\-> -->
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">2</property>
+            <property name="top-attach">2</property>
+            <property name="width">1</property>
+            <property name="height">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="pdfTbDoNothing">
+            <property name="name">pdfTbDoNothing</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="image">imagePdfTbDoNothing</property>
+            <property name="always-show-image">True</property>
+            <property name="tooltip-text" translatable="yes">Exit this menu</property>
+            <child>
+              <object class="GtkImage" id="imagePdfTbDoNothing">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="stock">gtk-quit</property>
+              </object>
+            </child>
+            <!-- <signal name="clicked" handler="pdfTbCopyText_clicked_cb" swapped="no"/> <!-\-\-\-> -->
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">2</property>
+            <property name="width">1</property>
+            <property name="height">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="pdfTbChangeType">
+            <property name="name">pdfTbChangeType</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="image">imagePdfTbChangeType</property>
+            <property name="always-show-image">True</property>
+            <property name="tooltip-text" translatable="yes">Select with the other method</property>
+            <child>
+              <object class="GtkImage" id="imagePdfTbChangeType">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="stock">gtk-justify-center</property>
+              </object>
+            </child>
+            <!-- <signal name="clicked" handler="pdfTbCopyText_clicked_cb" swapped="no"/> <!-\-\-\-> -->
+          </object>
+          <packing>
+            <property name="left-attach">1</property>
+            <property name="top-attach">2</property>
+            <property name="width">1</property>
+            <property name="height">1</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
@@ -1331,6 +1499,30 @@
                             <property name="draw-as-radio">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_ERASER" swapped="no"/>
                             <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckMenuItem" id="menuToolsSelectPDFTextLinear">
+                            <property name="name">menuToolsSelectPDFTextHeadTail</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Select Linear Text</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
+                            <signal name="toggled" handler="ACTION_TOOL_SELECT_PDF_TEXT_LINEAR" swapped="no"/>
+                            <accelerator key="w" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkCheckMenuItem" id="menuToolsSelectPDFTextRect">
+                            <property name="name">menuToolsSelectPDFTextArea</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Select Text In Rectangle</property>
+                            <property name="use-underline">True</property>
+                            <property name="draw-as-radio">True</property>
+                            <signal name="toggled" handler="ACTION_TOOL_SELECT_PDF_TEXT_RECT" swapped="no"/>
+                            <accelerator key="y" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>

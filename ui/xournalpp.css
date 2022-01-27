@@ -7,9 +7,13 @@
  *  See: https://wiki.gnome.org/action/show/Projects/GTK/Inspector
  */
 
-/*Style the Floating Toolbox!*/
+#pdfFloatingToolGrid {
+    padding: 7px;
+}
 
-#floatingToolbox > box {
+/*Style the Floating Toolbox!*/
+#floatingToolbox > box,
+#pdfFloatingToolGrid {
 	background-color: white;
 	border-radius: 12px;
 
@@ -28,19 +32,31 @@
 	border-radius: 12px;
 }
 
+#pdfFloatingToolGrid button {
+	background: rgba(255, 255, 255, 0.8);
+	border: 12px;
+}
+
+#pdfFloatingToolGrid button:hover {
+	border-radius: 12px;
+	background: rgba(245, 245, 245, 0.8);
+	box-shadow: inset 0px 0px 2px gray;
+}
+
 /*
 	Use :checked for a selected ToggleButton.
 	See https://stackoverflow.com/questions/39824345/use-css-to-style-gtktogglebutton-depending-on-the-state
 */
 #floatingToolbox button:checked {
-	background-color: lightblue;
+	/*background-color: lightblue;*/
 	border-color: lightblue;
 	box-shadow: inset 0px 0px 3px lightblue;
 
 	transition: background-color 0.5s ease, border-color 0.5s ease, margin 0.3s ease;
 }
 
-#floatingToolbox toolbar {
+#floatingToolbox toolbar,
+#pdfFloatingToolGrid button {
     /*
       The Adaptia GTK theme adds box-shadows to toolbars.
       Remove them to avoid horizontal lines that extend outside
@@ -50,8 +66,10 @@
     box-shadow: none;
 }
 
-window.darkMode #floatingToolbox button {
+window.darkMode #floatingToolbox button,
+window.darkMode #pdfFloatingToolGrid button {
 	background: rgba(55, 53, 53, 0.5);
+	border: none;
 }
 
 window.darkMode #floatingToolbox button:checked {
@@ -60,7 +78,8 @@ window.darkMode #floatingToolbox button:checked {
 	box-shadow: 0px 0px 3px lightblue;
 }
 
-window.darkMode #floatingToolbox > box {
+window.darkMode #floatingToolbox > box,
+window.darkMode #pdfFloatingToolGrid  {
 	background-color: black;
 
 	/*

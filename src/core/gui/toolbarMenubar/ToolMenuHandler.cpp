@@ -22,6 +22,7 @@
 #include "ToolDrawCombocontrol.h"
 #include "ToolPageLayer.h"
 #include "ToolPageSpinner.h"
+#include "ToolPdfCombocontrol.h"
 #include "ToolSelectCombocontrol.h"
 #include "ToolZoomSlider.h"
 
@@ -460,6 +461,10 @@ void ToolMenuHandler::initToolItems() {
     addCustomItem("DEFAULT_TOOL", ACTION_TOOL_DEFAULT, "default", _("Default Tool"));
     addCustomItemTgl("SHAPE_RECOGNIZER", ACTION_SHAPE_RECOGNIZER, GROUP_RULER, false, "shape-recognizer",
                      _("Shape Recognizer"));
+    addCustomItemTgl("SELECT_PDF_TEXT_LINEAR", ACTION_TOOL_SELECT_PDF_TEXT_LINEAR, GROUP_TOOL, true,
+                     "select-pdf-text-ht", _("Select Linear PDF Text"));
+    addCustomItemTgl("SELECT_PDF_TEXT_RECT", ACTION_TOOL_SELECT_PDF_TEXT_RECT, GROUP_TOOL, true, "select-pdf-text-area",
+                     _("Select PDF Text in Rectangle"));
     addCustomItemTgl("DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "draw-rect", _("Draw Rectangle"));
     addCustomItemTgl("DRAW_ELLIPSE", ACTION_TOOL_DRAW_ELLIPSE, GROUP_RULER, false, "draw-ellipse", _("Draw Ellipse"));
     addCustomItemTgl("DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false, "draw-arrow", _("Draw Arrow"));
@@ -534,6 +539,7 @@ void ToolMenuHandler::initToolItems() {
 
     addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT"));
     addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
+    addToolItem(new ToolPdfCombocontrol(this, listener, "PDF_TOOL"));
 
     // General tool configuration - working for every tool which support it
     addCustomItemTgl("VERY_FINE", ACTION_SIZE_VERY_FINE, GROUP_SIZE, true, "thickness-finer", _("Very Fine"));

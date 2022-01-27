@@ -10,6 +10,7 @@
 #include "control/Control.h"
 #include "control/DeviceListHelper.h"
 #include "control/layer/LayerController.h"
+#include "gui/PdfFloatingToolbox.h"
 #include "gui/inputdevices/InputEvents.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
@@ -50,6 +51,7 @@ MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
     loadMainCSS(gladeSearchPath, "xournalpp.css");
 
     GtkOverlay* overlay = GTK_OVERLAY(get("mainOverlay"));
+    this->pdfFloatingToolBox = std::make_unique<PdfFloatingToolbox>(this, overlay);
     this->floatingToolbox = new FloatingToolbox(this, overlay);
 
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {

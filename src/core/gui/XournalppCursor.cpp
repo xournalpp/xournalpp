@@ -294,6 +294,8 @@ void XournalppCursor::updateCursor() {
             setCursor(CRSR_DEFAULT);
         } else if (type == TOOL_PLAY_OBJECT) {
             setCursor(CRSR_HAND2);
+        } else if (type == TOOL_SELECT_PDF_TEXT_LINEAR) {
+            setCursor(CRSR_XTERM);
         } else  // other selections are handled before anyway, because you can move a selection with every tool
         {
             setCursor(CRSR_TCROSS);
