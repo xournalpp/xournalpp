@@ -10,6 +10,7 @@
 #include "control/Control.h"
 #include "control/PdfCache.h"
 #include "control/settings/MetadataManager.h"
+#include "gui/PdfFloatingToolbox.h"
 #include "gui/inputdevices/HandRecognition.h"
 #include "gui/widgets/XournalWidget.h"
 #include "model/Document.h"
@@ -328,6 +329,8 @@ void XournalView::pageSelected(size_t page) {
 
     control->getMetadataManager()->storeMetadata(file, page, getZoom());
 
+    control->getWindow()->pdfFloatingToolBox->postAction();
+
     if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPages.size()) {
         this->viewPages[this->lastSelectedPage]->setSelected(false);
     }
@@ -498,6 +501,10 @@ void XournalView::zoomChanged() {
 
     // Updates the Eraser's cursor icon in order to make it as big as the erasing area
     control->getCursor()->updateCursor();
+
+    // if we changed the zoom of the page, we should hide the pdf floating toolbox
+    // and if user clicked the selection again, the floating toolbox shows again
+    control->getWindow()->pdfFloatingToolBox->hide();
 
     this->control->getScheduler()->blockRerenderZoom();
 }

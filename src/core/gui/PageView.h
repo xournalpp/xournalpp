@@ -14,6 +14,8 @@
 #include <mutex>
 #include <vector>
 
+#include <cairo.h>
+
 #include "gui/inputdevices/PositionInputData.h"
 #include "model/PageListener.h"
 #include "model/PageRef.h"
@@ -29,6 +31,7 @@ class EraseHandler;
 class InputHandler;
 class SearchControl;
 class Selection;
+class PdfElemSelection;
 class Settings;
 class Text;
 class TextEditor;
@@ -209,6 +212,12 @@ private:
     Selection* selection = nullptr;
 
     /**
+     * The selected especially for pdf text selection and will
+     * survive after selection
+     */
+    PdfElemSelection* pdfElemSelection = nullptr;
+
+    /**
      * The text editor View
      */
     TextEditor* textEditor = nullptr;
@@ -258,6 +267,7 @@ private:
     friend class BaseSelectObject;
     friend class SelectObject;
     friend class PlayObject;
+    friend class PdfFloatingToolbox;
     // only function allowed to setX(), setY(), setMappedRowCol():
     friend void Layout::layoutPages(int width, int height);
 };

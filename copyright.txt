@@ -44,6 +44,16 @@ License: GPL-3+
 Comment: Source for the licensing information is https://github.com/xournalpp/xournalpp/issues/3103#issuecomment-847043386.
          These icons where heavily inspired by https://github.com/elementary/icons
 
+Files: ui/iconsColor-light/hicolor/scalable/actions/xopp-Tselect-pdf-text-area.svg
+Copyright: 2021, aeghn
+License: GPL-3+
+Comment: See https://github.com/xournalpp/xournalpp/pull/3326
+
+Files: ui/iconsColor-light/hicolor/scalable/actions/xopp-Tselect-pdf-text-hd.svg
+Copyright: 2021, aeghn
+License: GPL-3+
+Comment: See https://github.com/xournalpp/xournalpp/pull/3326
+
 Files: ui/pixmaps/com.github.xournalpp.xournalpp.svg
        ui/pixmaps/com.github.xournalpp.xournalpp.png
        ui/pixmaps/application-x-xojpp.svg

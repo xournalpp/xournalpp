@@ -17,6 +17,7 @@
 
 #include <cairo/cairo.h>
 
+enum XojPdfPageSelectionStyle { XOJ_PDF_SELECTION_GLYPH, XOJ_PDF_SELECTION_WORD, XOJ_PDF_SELECTION_LINE };
 
 class XojPdfRectangle {
 public:
@@ -42,6 +43,16 @@ public:
     virtual void render(cairo_t* cr, bool forPrinting = false) = 0;
 
     virtual std::vector<XojPdfRectangle> findText(std::string& text) = 0;
+
+    virtual std::string selectHeadTailText(const XojPdfRectangle& rect,
+                                           XojPdfPageSelectionStyle style = XOJ_PDF_SELECTION_GLYPH) = 0;
+    virtual cairo_region_t* selectHeadTailTextRegion(const XojPdfRectangle& rect,
+                                                     XojPdfPageSelectionStyle style = XOJ_PDF_SELECTION_GLYPH) = 0;
+    virtual void selectHeadTailFinally(const XojPdfRectangle& se, cairo_region_t** region,
+                                       std::vector<XojPdfRectangle>* rects, std::string* text,
+                                       XojPdfPageSelectionStyle style = XOJ_PDF_SELECTION_GLYPH) = 0;
+    virtual void selectAreaFinally(const XojPdfRectangle& rect, cairo_region_t** region,
+                                   std::vector<XojPdfRectangle>* rects, std::string* text) = 0;
 
     virtual int getPageId() = 0;
 

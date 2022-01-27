@@ -64,3 +64,4 @@ lua-*
 compile_commands.json
 .clangd
 .cache
+Debug

@@ -18,12 +18,14 @@
 #include "control/tools/EraseHandler.h"
 #include "control/tools/ImageHandler.h"
 #include "control/tools/InputHandler.h"
+#include "control/tools/PdfElemSelection.h"
 #include "control/tools/RectangleHandler.h"
 #include "control/tools/RulerHandler.h"
 #include "control/tools/Selection.h"
 #include "control/tools/SplineHandler.h"
 #include "control/tools/StrokeHandler.h"
 #include "control/tools/VerticalToolHandler.h"
+#include "gui/PdfFloatingToolbox.h"
 #include "gui/widgets/XournalWidget.h"
 #include "model/Image.h"
 #include "model/Layer.h"
@@ -319,7 +321,8 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
         this->verticalSpace = new VerticalToolHandler(this, this->page, this->settings, y, zoom);
     } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
-               h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT) {
+               h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
+               h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
         if (h->getToolType() == TOOL_SELECT_RECT) {
             if (this->selection) {
                 delete this->selection;
@@ -334,6 +337,23 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
                 repaintPage();
             }
             this->selection = new RegionSelect(x, y, this);
+        } else if (h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
+            // so if we selected something && the pdf selection toolbox is hidden && we hit within the selection
+            // we could call the pdf floating toolbox again
+            bool isPdfToolboxHidden = control->getWindow()->pdfFloatingToolBox->getIsHidden();
+            bool keepOldSelection = this->pdfElemSelection && !this->pdfElemSelection->getIsFinished() &&
+                                    isPdfToolboxHidden && this->pdfElemSelection->contains(x, y);
+
+            if (!keepOldSelection) {
+                control->getWindow()->pdfFloatingToolBox->postAction();
+
+                this->pdfElemSelection = nullptr;
+                repaintPage();
+            }
+
+            if (this->page->getPdfPageNr() != npos && !this->pdfElemSelection) {
+                this->pdfElemSelection = new PdfElemSelection(x, y, this);
+            }
         } else if (h->getToolType() == TOOL_SELECT_OBJECT) {
             SelectObject select(this);
             select.at(x, y);
@@ -432,6 +452,11 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
     } else if (toolType == TOOL_TEXT) {
         this->startText(x, y);
         this->textEditor->selectAtCursor(TextEditor::SelectType::word);
+    } else if (toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT) {
+        if (this->pdfElemSelection) {
+            this->pdfElemSelection->doublePress();
+            this->repaintPage();
+        }
     } else if (drawingType == DRAWING_TYPE_SPLINE) {
         if (this->inputHandler) {
             this->inputHandler->onButtonDoublePressEvent(pos);
@@ -454,10 +479,16 @@ auto XojPageView::onButtonTriplePressEvent(const PositionInputData& pos) -> bool
     }
 
     ToolHandler* toolHandler = this->xournal->getControl()->getToolHandler();
+    ToolType toolType = toolHandler->getToolType();
 
-    if (toolHandler->getToolType() == TOOL_TEXT) {
+    if (toolType == TOOL_TEXT) {
         this->startText(x, y);
         this->textEditor->selectAtCursor(TextEditor::SelectType::paragraph);
+    } else if (toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT) {
+        if (this->pdfElemSelection) {
+            this->pdfElemSelection->triplePress();
+            this->repaintPage();
+        }
     }
     return true;
 }
@@ -474,6 +505,8 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
         // input handler used this event
     } else if (this->selection) {
         this->selection->currentPos(x, y);
+    } else if (this->pdfElemSelection && !this->pdfElemSelection->getIsFinalized()) {
+        this->pdfElemSelection->currentPos(x, y);
     } else if (this->verticalSpace) {
         this->verticalSpace->currentPos(x, y);
     } else if (this->textEditor) {
@@ -537,6 +570,25 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         control->getUndoRedoHandler()->addUndoAction(this->verticalSpace->finalize());
         delete this->verticalSpace;
         this->verticalSpace = nullptr;
+    }
+
+    if (this->pdfElemSelection) {
+        // if `finalize()' method return false, delete pdfElemSelection now, because we cann't
+        // do anything more;
+        // else, we should show the pdf floating toolbox near the end point.
+        if (this->pdfElemSelection->finalize(this->page)) {
+            gint wx = 0, wy = 0;
+            GtkWidget* widget = xournal->getWidget();
+            gtk_widget_translate_coordinates(widget, gtk_widget_get_toplevel(widget), 0, 0, &wx, &wy);
+
+            wx += static_cast<gint>(std::lround(pos.x)) + this->getX();
+            wy += static_cast<gint>(std::lround(pos.y)) + this->getY();
+
+            control->getWindow()->pdfFloatingToolBox->show(wx, wy, this->pdfElemSelection);
+        } else {
+            delete this->pdfElemSelection;
+            this->pdfElemSelection = nullptr;
+        }
     }
 
     if (this->selection) {
@@ -791,6 +843,10 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect) {
     if (this->selection) {
         cairo_scale(cr, zoom, zoom);
         this->selection->paint(cr, rect, zoom);
+    }
+    if (this->pdfElemSelection && !this->pdfElemSelection->getIsFinished()) {
+        cairo_scale(cr, zoom, zoom);
+        this->pdfElemSelection->paint(cr, rect, zoom);
     }
 
     if (this->search) {
