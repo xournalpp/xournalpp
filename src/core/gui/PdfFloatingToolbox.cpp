@@ -9,7 +9,8 @@
 #include "GladeGui.h"
 #include "MainWindow.h"
 
-PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay): theMainWindow(theMainWindow) {
+PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay):
+        theMainWindow(theMainWindow), position({0, 0}) {
     this->floatingToolbox = theMainWindow->get("pdfFloatingToolbox");
 
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);
@@ -124,8 +125,8 @@ void PdfFloatingToolbox::show() {
 
 void PdfFloatingToolbox::copyTextToClipboard() {
     GtkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow(), GDK_SELECTION_CLIPBOARD);
-    if (const gchar* text = this->pdfElemSelection->getSelectedText().c_str()) {
-        gtk_clipboard_set_text(clipboard, text, -1);
+    if (std::string text = this->pdfElemSelection->getSelectedText(); !text.empty()) {
+        gtk_clipboard_set_text(clipboard, text.c_str(), -1);
     }
 }
 
@@ -191,7 +192,7 @@ void PdfFloatingToolbox::switchSelectTypeCb(GtkButton* button, PdfFloatingToolbo
     pft->theMainWindow->getControl()->selectTool(type);
 
     pft->pdfElemSelection->setToolType(type);
-    pft->pdfElemSelection->selectFinally();
+    pft->pdfElemSelection->finalizeSelection(PdfElemSelection::selectionStyleForToolType(type));
     pft->pdfElemSelection->getPageView()->repaintPage();
 }
 
