@@ -198,6 +198,11 @@ private:
      */
     void showFloatingToolbox(const PositionInputData& pos);
 
+    /**
+     * Shows the PDF toolbox at the location of an input event
+     */
+    void showPdfToolbox(const PositionInputData& pos);
+
 
 private:
     PageRef page;

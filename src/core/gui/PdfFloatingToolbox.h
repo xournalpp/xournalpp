@@ -3,6 +3,7 @@
 #include "control/tools/PdfElemSelection.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
+#include "pdf/base/XojPdfPage.h"
 
 #include "GladeGui.h"
 
@@ -53,6 +54,9 @@ public:
     /// Cancel the selection, rerender the page, and hide the toolbox.
     void userCancelSelection();
 
+    /// Track selection style used for unfinalized selections
+    XojPdfPageSelectionStyle selectionStyle = XojPdfPageSelectionStyle::Linear;
+
 private:
     void show();
 
@@ -69,8 +73,6 @@ private:
     void createStrokes(PdfMarkerStyle position, PdfMarkerStyle width, int markerOpacity);
 
 private:
-    // bool hidden;
-
     GtkWidget* floatingToolbox;
     MainWindow* theMainWindow;
 

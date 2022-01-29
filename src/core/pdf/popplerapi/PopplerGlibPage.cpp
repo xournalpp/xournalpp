@@ -5,6 +5,9 @@
 #include <poppler-page.h>
 #include <poppler.h>
 
+#include "pdf/base/XojPdfPage.h"
+#include "util/Rectangle.h"
+
 #include "cairo.h"
 
 
@@ -88,235 +91,191 @@ auto PopplerGlibPage::findText(std::string& text) -> std::vector<XojPdfRectangle
 
 auto getPopplerSelectionStyle(XojPdfPageSelectionStyle style) -> PopplerSelectionStyle {
     switch (style) {
-        case XojPdfPageSelectionStyle::XOJ_PDF_SELECTION_WORD:
+        case XojPdfPageSelectionStyle::Word:
             return POPPLER_SELECTION_WORD;
-        case XojPdfPageSelectionStyle::XOJ_PDF_SELECTION_LINE:
+        case XojPdfPageSelectionStyle::Line:
             return POPPLER_SELECTION_LINE;
-        default:
+        case XojPdfPageSelectionStyle::Linear:
+        case XojPdfPageSelectionStyle::Area:
             return POPPLER_SELECTION_GLYPH;
+        default:
+            g_assert(false && "unimplemented");
     }
 }
 
-auto PopplerGlibPage::selectHeadTailText(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) -> std::string {
+auto PopplerGlibPage::selectText(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) -> std::string {
     PopplerRectangle pRect = {rect.x1, rect.y1, rect.x2, rect.y2};
+    const auto pStyle = getPopplerSelectionStyle(style);
+    if (style == XojPdfPageSelectionStyle::Area) {
+        PopplerRectangle* rectArray = nullptr;
+        guint numRects = 0;
+        if (!poppler_page_get_text_layout_for_area(this->page, &pRect, &rectArray, &numRects)) {
+            return "";
+        }
+        char* textBytes = poppler_page_get_text_for_area(page, &pRect);
+        g_assert_nonnull(textBytes);
 
-    auto pStyle = getPopplerSelectionStyle(style);
+        double y = rectArray[0].y2;
+        std::ostringstream ss;
+        for (guint i = 0; i < numRects; i++) {
+            // do not copy characters whose bounding box has a non-empty intersection with rect
+            const auto& r = rectArray[i];
+            {
+                auto x1 = std::max(rect.x1, r.x1);
+                auto y1 = std::max(rect.y1, r.y1);
+                auto x2 = std::min(rect.x2, r.x2);
+                auto y2 = std::min(rect.y2, r.y2);
 
-    return poppler_page_get_selected_text(page, pStyle, &pRect);
+                bool inBounds = x2 > x1 && y2 > y1;
+                if (!inBounds)
+                    continue;
+            }
+
+            const auto eps = 1e-5;
+            if (std::abs(y - r.y2) > eps) {
+                // new line
+                ss << '\n';
+                y = rectArray[i].y2;
+            }
+
+            char* const startPos = g_utf8_offset_to_pointer(textBytes, i);
+            char* const endPos = g_utf8_offset_to_pointer(textBytes, i + 1);
+            for (long j = 0; j < static_cast<ptrdiff_t>(endPos - startPos); ++j) { ss << startPos[j]; }
+        }
+        g_free(textBytes);
+        return ss.str();
+    } else {
+        char* text = poppler_page_get_selected_text(page, pStyle, &pRect);
+        if (text) {
+            std::string ret(text);
+            g_free(text);
+            return ret;
+        } else {
+            return "";
+        }
+    }
 }
 
-auto PopplerGlibPage::selectHeadTailTextRegion(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style)
-        -> cairo_region_t* {
+auto PopplerGlibPage::selectTextRegion(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) -> cairo_region_t* {
     PopplerRectangle pRect = {rect.x1, rect.y1, rect.x2, rect.y2};
-
-    auto pStyle = getPopplerSelectionStyle(style);
-
-    return poppler_page_get_selected_region(page, 1.0, pStyle, &pRect);
+    const auto pStyle = getPopplerSelectionStyle(style);
+    // The computed region is technically wrong for
+    // XojPdfPageSelectionStyle::Area, but there is no selection preview with
+    // area select.
+    cairo_region_t* region = poppler_page_get_selected_region(page, 1.0, pStyle, &pRect);
+    return region;
 }
 
-void PopplerGlibPage::selectHeadTailFinally(const XojPdfRectangle& rect, cairo_region_t** region,
-                                            std::vector<XojPdfRectangle>* rects, std::string* text,
-                                            XojPdfPageSelectionStyle style) {
-    rects->clear();
-    text->clear();
-    cairo_region_destroy(*region);
+namespace {
+cairo_rectangle_int_t cairoRectFromDouble(double x1, double y1, double width, double height) {
+    return {static_cast<int>(x1), static_cast<int>(y1), static_cast<int>(width), static_cast<int>(height)};
+}
+}  // namespace
 
-    *region = this->selectHeadTailTextRegion(rect, style);
-    if (cairo_region_is_empty(*region))
-        return;
+auto PopplerGlibPage::selectTextLines(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) -> TextSelection {
+    std::vector<XojPdfRectangle> textRects;
 
-    *text = this->selectHeadTailText(rect, style);
-    PopplerRectangle area = {
-            .x1 = rect.x1,
-            .y1 = rect.y1,
-            .x2 = rect.x2,
-            .y2 = rect.y2,
+    PopplerRectangle* rectArray = nullptr;
+    guint numRects = 0;
+    if (style == XojPdfPageSelectionStyle::Area) {
+        PopplerRectangle area{rect.x1, rect.y1, rect.x2, rect.y2};
+        if (!poppler_page_get_text_layout_for_area(this->page, &area, &rectArray, &numRects)) {
+            return {.region = cairo_region_create(), .rects = textRects};
+        }
+    } else {
+        if (!poppler_page_get_text_layout(this->page, &rectArray, &numRects)) {
+            return {.region = cairo_region_create(), .rects = textRects};
+        }
+    }
+
+    // construct the region later for area selection, but use poppler's region
+    // for other selection styles
+    cairo_region_t* region = nullptr;
+    if (style != XojPdfPageSelectionStyle::Area) {
+        region = selectTextRegion(rect, style);
+    }
+
+    const auto isSameLine = [&](const auto& r1, const auto& r2) {
+        const auto eps = 1e-5;
+        return std::abs(r1.y1 - r2.y1) < eps && std::abs(r1.y2 - r2.y2) < eps;
     };
 
-    // check if it was only clicked
-    if (std::abs(rect.y1 - rect.y2) + std::abs(rect.x1 - rect.x2) < 0.001) {
-        // if it was just a single click, do nothing
-        if (style == XOJ_PDF_SELECTION_GLYPH) {
-            rects->clear();
-            text->clear();
-            cairo_region_destroy(*region);
-        } else {
-            int count = cairo_region_num_rectangles(*region);
+    PopplerRectangle prevRect = rectArray[0];
+    if (style == XojPdfPageSelectionStyle::Area) {
+        // helper to add only those rectangles that have nonempty intersection with the selected area
+        const auto addTextRectsInArea = [&](const PopplerRectangle& r) {
+            auto x1 = std::max(rect.x1, r.x1);
+            auto y1 = std::max(rect.y1, r.y1);
+            auto x2 = std::min(rect.x2, r.x2);
+            auto y2 = std::min(rect.y2, r.y2);
 
-            for (int i = 0; i < count; ++i) {
-                cairo_rectangle_int_t r;
-                cairo_region_get_rectangle(*region, i, &r);
-                rects->emplace_back(r.x, r.y, r.x + r.width, r.y + r.height);
+            bool inBounds = x2 > x1 && y2 > y1;
+            if (inBounds) {
+                textRects.emplace_back(r.x1, r.y1, r.x2, r.y2);
             }
+        };
+
+        // construct the text rectangles
+        for (guint i = 1; i < numRects; i++) {
+            PopplerRectangle nextRect = rectArray[i];
+            if (isSameLine(prevRect, nextRect)) {
+                // Merge if both prev & next rectangles are in bounds. Note that
+                // only x is checked since rectArray was constructed for the
+                // selected area.
+                bool shouldMerge = (rect.x1 <= prevRect.x1 && prevRect.x2 <= rect.x2 && rect.x1 <= nextRect.x1 &&
+                                    nextRect.x2 <= rect.x2);
+                if (shouldMerge) {
+                    prevRect.x1 = std::min(prevRect.x1, nextRect.x2);
+                    prevRect.x2 = std::max(prevRect.x2, nextRect.x2);
+                    continue;
+                }
+            }
+
+            addTextRectsInArea(prevRect);
+            prevRect = nextRect;
         }
-        return;
-    }
+        addTextRectsInArea(prevRect);
 
-    // [2021-08-18] this part is come from:
-    // https://gitlab.freedesktop.org/poppler/poppler/-/blob/master/glib/demo/annots.c
-    PopplerRectangle* pRects;
-    guint rectNums;
-    if (!poppler_page_get_text_layout_for_area(this->page, &area, &pRects, &rectNums))
-        return;
-    auto r = PopplerRectangle{G_MAXDOUBLE, G_MAXDOUBLE, G_MINDOUBLE, G_MINDOUBLE};
-
-    for (int i = 0; i < rectNums; i++) {
-        /* Check if the rectangle belongs to the same line.
-           On a new line, start a new target rectangle.
-           On the same line, make an union of rectangles at
-           the same line */
-        if (std::abs(r.y2 - pRects[i].y2) > 0.0001) {
-            if (i > 0)
-                rects->emplace_back(r.x1, r.y1, r.x2, r.y2);
-            r.x1 = pRects[i].x1;
-            r.y1 = pRects[i].y1;
-            r.x2 = pRects[i].x2;
-            r.y2 = pRects[i].y2;
-        } else {
-            r.x1 = std::min(r.x1, pRects[i].x1);
-            r.y1 = std::min(r.y1, pRects[i].y1);
-            r.x2 = std::max(r.x2, pRects[i].x2);
-            r.y2 = std::max(r.y2, pRects[i].y2);
+        region = cairo_region_create();
+        for (const XojPdfRectangle& r: textRects) {
+            const auto x1 = std::min(r.x1, r.x2);
+            const auto x2 = std::max(r.x1, r.x2);
+            const auto y1 = std::min(r.y1, r.y2);
+            const auto y2 = std::max(r.y1, r.y2);
+            cairo_rectangle_int_t crect = cairoRectFromDouble(x1, y1, x2 - x1, y2 - y1);
+            cairo_region_union_rectangle(region, &crect);
         }
-    }
-    rects->emplace_back(r.x1, r.y1, r.x2, r.y2);
-    g_free(pRects);
+    } else {
+        // this is for all other styles (e.g., linear)
 
-    amendHeadAndTail(rects, *region, style);
-}
+        // helper to add only those rectangles that are contained in the selection region
+        const auto addTextRectsInRegion = [&](const PopplerRectangle& r) {
+            auto crect = cairoRectFromDouble(r.x1, r.y1, r.x2 - r.x1, r.y2 - r.y1);
+            if (cairo_region_contains_rectangle(region, &crect) == CAIRO_REGION_OVERLAP_IN) {
+                textRects.emplace_back(r.x1, r.y1, r.x2, r.y2);
+            }
+        };
 
-void PopplerGlibPage::amendHeadAndTail(std::vector<XojPdfRectangle>* rects, const cairo_region_t* region,
-                                       XojPdfPageSelectionStyle style) {
-    if (style == XojPdfPageSelectionStyle::XOJ_PDF_SELECTION_GLYPH || rects->empty())
-        return;
-
-    auto cairoRegion1 = cairo_region_copy(region);
-    auto rectFirst = &(rects->at(0));
-    cairo_rectangle_int_t rectCairo1 = {0, static_cast<int>(rectFirst->y1), static_cast<int>(rectFirst->x2),
-                                        static_cast<int>(rectFirst->y2 - rectFirst->y1)};
-
-    cairo_region_intersect_rectangle(cairoRegion1, &rectCairo1);
-    if (cairo_region_num_rectangles(cairoRegion1) > 0) {
-        cairo_rectangle_int_t r;
-        cairo_region_get_rectangle(cairoRegion1, 0, &r);
-        if (rectFirst->x1 > r.x)
-            rectFirst->x1 = r.x;
-    }
-    cairo_region_destroy(cairoRegion1);
-
-    auto cairoRegion2 = cairo_region_copy(region);
-    auto rectLast = &(rects->at(rects->size() - 1));
-    cairo_rectangle_int_t rectCairo2 = {static_cast<int>(rectLast->x1), static_cast<int>(rectLast->y1),
-                                        INT_MAX - static_cast<int>(rectLast->x1) - 1,
-                                        static_cast<int>(rectLast->y2 - rectLast->y1)};
-    cairo_region_intersect_rectangle(cairoRegion2, &rectCairo2);
-    int count2 = cairo_region_num_rectangles(cairoRegion2);
-    if (count2 > 0) {
-        cairo_rectangle_int_t r;
-        cairo_region_get_rectangle(cairoRegion2, count2 - 1, &r);
-
-        if (rectLast->x2 < r.x + r.width)
-            rectLast->x2 = r.x + r.width;
-    }
-    cairo_region_destroy(cairoRegion2);
-}
-
-void PopplerGlibPage::selectAreaFinally(const XojPdfRectangle& rect, cairo_region_t** region,
-                                        std::vector<XojPdfRectangle>* rects, std::string* text) {
-    rects->clear();
-    text->clear();
-
-    auto chars = poppler_page_get_text(this->page);
-    if (!g_utf8_validate(chars, -1, nullptr)) {
-        // Only support utf-8 string now, else fallback to use selectHeadTailFinally()
-        g_warning("Not a UTF-8 String");
-        g_free(chars);
-
-        selectHeadTailFinally(rect, region, rects, text);
-
-        return;
-    }
-
-    PopplerRectangle* pRects;
-    guint rectCount;
-    if (!poppler_page_get_text_layout(this->page, &pRects, &rectCount)) {
-        g_free(chars);
-        return;
-    }
-
-    auto x1Box = std::min(rect.x1, rect.x2);
-    auto x2Box = std::max(rect.x1, rect.x2);
-    auto y1Box = std::min(rect.y1, rect.y2);
-    auto y2Box = std::max(rect.y1, rect.y2);
-
-    auto r = PopplerRectangle{G_MAXDOUBLE, G_MAXDOUBLE, G_MINDOUBLE, G_MINDOUBLE};
-
-    int startIndex = -1;
-    for (int i = 0; i < rectCount; i++) {
-        if (pRects[i].x1 > x2Box || pRects[i].y1 > y2Box || pRects[i].x2 < x1Box || pRects[i].y2 < y1Box)
-            continue;
-        startIndex = i;
-
-        r.x1 = pRects[i].x1;
-        r.y1 = pRects[i].y1;
-        r.x2 = pRects[i].x2;
-        r.y2 = pRects[i].y2;
-
-        break;
-    }
-
-    if (startIndex == -1 || startIndex >= rectCount)
-        return;
-
-    std::string returnString;
-    std::string line;
-    for (int i = startIndex; i < rectCount; i++) {
-        if (pRects[i].x1 > x2Box || pRects[i].y1 > y2Box || pRects[i].x2 < x1Box || pRects[i].y2 < y1Box)
-            continue;
-
-        /* Check if the rectangle belongs to the same line.
-           On a new line, start a new target rectangle.
-           On the same line, make an union of rectangles at
-           the same line */
-        if (pRects[i].y2 - r.y2 > (pRects[i].y2 - pRects[i].y1) / 2) {
-            rects->emplace_back(r.x1, r.y1, r.x2, r.y2);
-            r.x1 = pRects[i].x1;
-            r.y1 = pRects[i].y1;
-            r.x2 = pRects[i].x2;
-            r.y2 = pRects[i].y2;
-            if (line.size() > 0 && line.compare(line.size() - 1, 1, "\n") != 0)
-                line.append("\n");
-            returnString.append(line);
-            line.clear();
-        } else {
-            r.x1 = std::min(r.x1, pRects[i].x1);
-            r.y1 = std::min(r.y1, pRects[i].y1);
-            r.x2 = std::max(r.x2, pRects[i].x2);
-            r.y2 = std::max(r.y2, pRects[i].y2);
+        // construct the text rectangles
+        for (guint i = 1; i < numRects; i++) {
+            PopplerRectangle nextRect = rectArray[i];
+            if (isSameLine(prevRect, nextRect)) {
+                // merge the rectangles if they, when combined, are contained in the selection region
+                auto x1 = std::min(prevRect.x1, nextRect.x2);
+                auto x2 = std::max(prevRect.x2, nextRect.x2);
+                auto crect = cairoRectFromDouble(x1, prevRect.y1, x2 - x1, prevRect.y2 - prevRect.y1);
+                if (cairo_region_contains_rectangle(region, &crect) == CAIRO_REGION_OVERLAP_IN) {
+                    prevRect.x1 = x1;
+                    prevRect.x2 = x2;
+                    continue;
+                }
+            }
+            addTextRectsInRegion(prevRect);
+            prevRect = nextRect;
         }
-
-        auto start = g_utf8_offset_to_pointer(chars, i) - chars;
-        auto end = g_utf8_offset_to_pointer(chars, i + 1) - chars;
-
-        line.append(chars, start, end - start);
-    }
-    rects->emplace_back(r.x1, r.y1, r.x2, r.y2);
-    returnString.append(line);
-    line.clear();
-
-    g_free(pRects);
-    g_free(chars);
-
-    auto tmpRegion = cairo_region_create();
-    cairo_rectangle_int_t cRect;
-    for (const auto& item: *rects) {
-        cRect.x = static_cast<int>(item.x1);
-        cRect.y = static_cast<int>(item.y1);
-        cRect.width = static_cast<int>(item.x2 - item.x1);
-        cRect.height = static_cast<int>(item.y2 - item.y1);
-        cairo_region_union_rectangle(tmpRegion, &cRect);
+        addTextRectsInRegion(prevRect);
     }
 
-    *region = tmpRegion;
-    *text = returnString;
+    g_assert_nonnull(region);
+    return {.region = region, .rects = textRects};
 }
