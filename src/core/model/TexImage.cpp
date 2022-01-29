@@ -129,6 +129,10 @@ void TexImage::rotate(double x0, double y0, double th) {
     // Rotation for TexImages not yet implemented
 }
 
+void TexImage::axis_reflect(double x0, double y0, double *axis) {
+    // Reflection for TexImages not yet implemented
+}
+
 void TexImage::serialize(ObjectOutputStream& out) const {
     out.writeObject("TexImage");
 

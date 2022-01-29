@@ -178,6 +178,8 @@ void Image::scale(double x0, double y0, double fx, double fy, double rotation,
 
 void Image::rotate(double x0, double y0, double th) {}
 
+void Image::axis_reflect(double x0, double y0, double *axis) {}
+
 void Image::serialize(ObjectOutputStream& out) const {
     out.writeObject("Image");
 

@@ -339,6 +339,11 @@ void Stroke::rotate(double x0, double y0, double th) {
     // Width and Height will likely be changed after this operation
 }
 
+void Stroke::axis_reflect(double x0, double y0, double * axis){
+}
+
+
+
 void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {
     double fz = (restoreLineWidth) ? 1 : sqrt(std::abs(fx * fy));
     cairo_matrix_t scaleMatrix;
