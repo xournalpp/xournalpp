@@ -68,6 +68,7 @@ public:
 
     bool actionDelete();
 
+    void recreateViewBuffer(bool lock);
     void deleteViewBuffer();
 
     /**

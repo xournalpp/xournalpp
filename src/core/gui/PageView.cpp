@@ -63,6 +63,8 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page) {
 
     this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(),
                                     this->page, xournal->getControl()->getToolHandler(), this);
+
+    recreateViewBuffer(true);
 }
 
 XojPageView::~XojPageView() {
@@ -93,6 +95,28 @@ auto XojPageView::getLastVisibleTime() -> int {
     }
 
     return this->lastVisibleTime;
+}
+
+void XojPageView::recreateViewBuffer(bool lock) {
+    int dpiScaleFactor = xournal->getDpiScaleFactor();
+
+    int dispWidth = getDisplayWidth();
+    int dispHeight = getDisplayHeight();
+
+    dispWidth *= dpiScaleFactor;
+    dispHeight *= dpiScaleFactor;
+
+    if (lock) {
+        this->drawingMutex.lock();
+    }
+    if (this->crBuffer != nullptr) {
+        cairo_surface_destroy(this->crBuffer);
+    }
+
+    this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
+    if (lock) {
+        this->drawingMutex.unlock();
+    }
 }
 
 void XojPageView::deleteViewBuffer() {
@@ -755,6 +779,7 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect) {
         cairo_set_source_surface(cr, this->crBuffer, 0, 0);
 
         if (rerender) {
+            recreateViewBuffer(false);
             rerenderPage();
         }
 
