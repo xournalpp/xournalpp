@@ -196,7 +196,7 @@ void DocumentView::drawLayer(cairo_t* cr, Layer* l) {
         // cairo_new_path(cr);
 
         if (this->lX != -1) {
-            if (e->intersectsArea(this->lX, this->lY, this->width, this->height)) {
+            if (e->intersectsArea(this->lX, this->lY, this->lWidth, this->lHeight)) {
                 drawElement(cr, e);
 #ifdef DEBUG_SHOW_REPAINT_BOUNDS
                 drawn++;
