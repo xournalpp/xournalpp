@@ -1,135 +1,168 @@
 #include "RenderJob.h"
 
 #include <cmath>
+#include <future>
 
 #include "control/Control.h"
 #include "control/ToolHandler.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
 #include "model/Document.h"
-#include "util/Rectangle.h"
 #include "util/Util.h"
 #include "view/DocumentView.h"
 #include "view/PdfView.h"
+
+// Dimension of a tile in pixels
+constexpr int tile_dim = 200;
 
 RenderJob::RenderJob(XojPageView* view): view(view) {}
 
 auto RenderJob::getSource() -> void* { return this->view; }
 
-void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
+void RenderJob::rerenderTile(utl::Point<double> const& view_offset, utl::Point<double> const& document_offset) const {
     double zoom = view->xournal->getZoom();
+    int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
+
+    // Tile dimensions in view
+    double view_offset_x = view_offset.x;
+    double view_offset_y = view_offset.y;
+    int view_width = tile_dim;
+    int view_height = tile_dim;
+
+    // Tile dimensions in document
+    double document_offset_x = document_offset.x;
+    double document_offset_y = document_offset.y;
+    double document_width = tile_dim / zoom / static_cast<double>(dpiScaleFactor);
+    double document_height = tile_dim / zoom / static_cast<double>(dpiScaleFactor);
+
+    // Create cairo surface and context for tile
+    cairo_surface_t* rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, view_width, view_height);
+    cairo_t* crRect = cairo_create(rectBuffer);
+
+    // Scale the tile for correct zoom and dpi
+    cairo_scale(crRect, dpiScaleFactor * zoom, dpiScaleFactor * zoom);
+
+    // Translate any drawings to the origin of the tile
+    cairo_translate(crRect, -document_offset_x, -document_offset_y);
+
+    // Create a view of the document for the area of this tile
+    DocumentView v;
+    Control* control = view->getXournal()->getControl();
+    v.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
+    v.limitArea(document_offset_x, document_offset_y, document_width, document_height);
+
+    // Get the document
     Document* doc = view->xournal->getDocument();
     doc->lock();
     double pageWidth = view->page->getWidth();
     double pageHeight = view->page->getHeight();
     doc->unlock();
 
-    auto x = int(std::lround(rect.x * zoom));
-    auto y = int(std::lround(rect.y * zoom));
-    auto width = int(std::lround(rect.width * zoom));
-    auto height = int(std::lround(rect.height * zoom));
-
-    cairo_surface_t* rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
-    cairo_t* crRect = cairo_create(rectBuffer);
-    cairo_translate(crRect, -x, -y);
-    cairo_scale(crRect, zoom, zoom);
-
-    DocumentView v;
-    Control* control = view->getXournal()->getControl();
-    v.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
-    v.limitArea(rect.x, rect.y, rect.width, rect.height);
-
+    // Draw the background layer
     bool backgroundVisible = view->page->isLayerVisible(0);
     if (backgroundVisible && view->page->getBackgroundType().isPdfPage()) {
         auto pgNo = view->page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
         PdfCache* cache = view->xournal->getCache();
-        PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
+        PdfView::drawPage(cache, popplerPage, crRect, zoom * dpiScaleFactor, pageWidth, pageHeight);
     }
 
+    // Draw the page
     doc->lock();
     v.drawPage(view->page, crRect, false);
     doc->unlock();
 
+    /*
+     * TODO: Remove once all done
+     */
+    /*cairo_set_source_rgb (crRect, 1, 0, 0);
+    cairo_set_line_width(crRect, 1.0);
+    cairo_rectangle(crRect, document_offset_x + 0.5, document_offset_y + 0.5, document_width - 1, document_height - 1);
+    cairo_stroke(crRect);*/
+
+    // Destroy the context
     cairo_destroy(crRect);
 
-    view->drawingMutex.lock();
+    /*
+     * TODO: Remove once all done
+     */
+    /*cairo_t* cr_debug = cairo_create(rectBuffer);
+    cairo_set_source_rgb (cr_debug, 0, 0, 0);
+    cairo_set_line_width(cr_debug, 1.0);
+    cairo_rectangle(cr_debug, 0.5, 0.5, view_width - 1, view_height - 1);
+    cairo_stroke(cr_debug);
+    cairo_destroy(cr_debug);*/
 
+    // Create a context for drawing
     cairo_t* crPageBuffer = cairo_create(view->crBuffer);
 
+    // Draw the tile
     cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
-    cairo_set_source_surface(crPageBuffer, rectBuffer, x, y);
-    cairo_rectangle(crPageBuffer, x, y, width, height);
+    cairo_set_source_surface(crPageBuffer, rectBuffer, view_offset_x, view_offset_y);
+    cairo_rectangle(crPageBuffer, view_offset_x, view_offset_y, view_width, view_height);
     cairo_fill(crPageBuffer);
 
+    // Destroy the context
     cairo_destroy(crPageBuffer);
 
+    // Destroy the surface of the tile
     cairo_surface_destroy(rectBuffer);
+}
 
-    view->drawingMutex.unlock();
+// TODO: Document that rectangle coordinates are in doc. coords (no zoom, no DPI scale)
+void RenderJob::rerenderRectangle(Rectangle<double> const& rect) const {
+    // Determine the amount of tiles we need for this rectangle in the view (take zoom and DPI into account)
+    double zoom = view->xournal->getZoom();
+    int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
+    auto xNumTiles = static_cast<long>(std::ceil(rect.width * dpiScaleFactor * zoom / tile_dim));
+    auto yNumTiles = static_cast<long>(std::ceil(rect.height * dpiScaleFactor * zoom / tile_dim));
+
+    std::vector<std::future<void>> tileFutures;
+    tileFutures.reserve(static_cast<unsigned long>(xNumTiles * yNumTiles));
+
+    // Lock the GUI for drawing
+    std::lock_guard drawingLock(view->drawingMutex);
+
+    // Split up the rectangle into tiles and start rendering
+    for (auto i = 0; i < xNumTiles; ++i) {
+        for (auto j = 0; j < yNumTiles; ++j) {
+            // TODO: Optimize with a static thread-pool
+            tileFutures.push_back(std::async([this, rect, i, j, dpiScaleFactor, zoom] {
+                this->rerenderTile(
+                        {rect.x * dpiScaleFactor * zoom + i * tile_dim, rect.y * dpiScaleFactor * zoom + j * tile_dim},
+                        {rect.x + i * (tile_dim / (static_cast<double>(dpiScaleFactor) * zoom)),
+                         rect.y + j * (tile_dim / (static_cast<double>(dpiScaleFactor) * zoom))});
+            }));
+        }
+    }
+
+    // Wait for all tiles to render
+    for (auto&& future: tileFutures) { future.wait(); }
 }
 
 void RenderJob::run() {
-    double zoom = this->view->xournal->getZoom();
+    // Get the global information for what areas to render
+    bool rerenderComplete{false};
+    std::vector<Rectangle<double>> rerenderRects;
+    {
+        std::lock_guard repaintRectLock(this->view->repaintRectMutex);
 
-    this->view->repaintRectMutex.lock();
+        rerenderComplete = this->view->rerenderComplete;
+        this->view->rerenderComplete = false;
+        rerenderRects = std::move(this->view->rerenderRects);
+    }
 
-    bool rerenderComplete = this->view->rerenderComplete;
-    auto rerenderRects = std::move(this->view->rerenderRects);
-
-    this->view->rerenderComplete = false;
-
-    this->view->repaintRectMutex.unlock();
-
-    int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
-
-    if (rerenderComplete || dpiScaleFactor > 1) {
+    // If a full rerender is requested, we rerender using one rectangle that spans the whole page
+    if (rerenderComplete) {
         Document* doc = this->view->xournal->getDocument();
-
-        int dispWidth = this->view->getDisplayWidth();
-        int dispHeight = this->view->getDisplayHeight();
-
-        dispWidth *= dpiScaleFactor;
-        dispHeight *= dpiScaleFactor;
-        zoom *= dpiScaleFactor;
-
-        cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
-        cairo_t* cr2 = cairo_create(crBuffer);
-        cairo_scale(cr2, zoom, zoom);
-
-        XojPdfPageSPtr popplerPage;
-
         doc->lock();
-
-        if (this->view->page->getBackgroundType().isPdfPage()) {
-            auto pgNo = this->view->page->getPdfPageNr();
-            popplerPage = doc->getPdfPage(pgNo);
-        }
-
-        Control* control = view->getXournal()->getControl();
-        DocumentView localView;
-        localView.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
-        int width = this->view->page->getWidth();
-        int height = this->view->page->getHeight();
-
-        bool backgroundVisible = this->view->page->isLayerVisible(0);
-        if (backgroundVisible && this->view->page->getBackgroundType().isPdfPage()) {
-            PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
-        }
-        localView.drawPage(this->view->page, cr2, false);
-
-        cairo_destroy(cr2);
-
-        this->view->drawingMutex.lock();
-
-        if (this->view->crBuffer) {
-            cairo_surface_destroy(this->view->crBuffer);
-        }
-        this->view->crBuffer = crBuffer;
-
-        this->view->drawingMutex.unlock();
+        double pageWidth = view->page->getWidth();
+        double pageHeight = view->page->getHeight();
         doc->unlock();
+
+        rerenderRectangle({0, 0, pageWidth, pageHeight});
     } else {
+        // TODO: Optimize by filtering intersections
         for (Rectangle<double> const& rect: rerenderRects) { rerenderRectangle(rect); }
     }
 

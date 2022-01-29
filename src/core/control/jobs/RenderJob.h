@@ -16,6 +16,7 @@
 
 #include <gtk/gtk.h>
 
+#include "util/Point.h"
 #include "util/Rectangle.h"
 
 #include "Job.h"
@@ -43,7 +44,9 @@ private:
      */
     static void repaintWidget(GtkWidget* widget);
 
-    void rerenderRectangle(Rectangle<double> const& rect);
+    void rerenderTile(utl::Point<double> const& view_offset, utl::Point<double> const& document_offset) const;
+
+    void rerenderRectangle(Rectangle<double> const& rect) const;
 
 private:
     XojPageView* view;
