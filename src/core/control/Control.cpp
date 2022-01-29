@@ -371,7 +371,7 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         bool keepPdfToolbox = type == ACTION_TOOL_HAND || type == ACTION_ZOOM_100 || type == ACTION_ZOOM_FIT ||
                               type == ACTION_ZOOM_IN || type == ACTION_ZOOM_OUT;
         if (!keepPdfToolbox) {
-            getWindow()->getPdfToolbox()->postAction();
+            getWindow()->getPdfToolbox()->userCancelSelection();
         }
     }
 
@@ -2748,7 +2748,7 @@ void Control::deleteSelection() {
 void Control::clearSelection() {
     if (this->win) {
         this->win->getXournal()->clearSelection();
-        this->win->getPdfToolbox()->postAction();
+        this->win->getPdfToolbox()->userCancelSelection();
     }
 }
 
