@@ -329,7 +329,7 @@ void XournalView::pageSelected(size_t page) {
 
     control->getMetadataManager()->storeMetadata(file, page, getZoom());
 
-    control->getWindow()->getPdfToolbox()->postAction();
+    control->getWindow()->getPdfToolbox()->userCancelSelection();
 
     if (this->lastSelectedPage != npos && this->lastSelectedPage < this->viewPages.size()) {
         this->viewPages[this->lastSelectedPage]->setSelected(false);

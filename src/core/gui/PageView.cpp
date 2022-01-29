@@ -341,12 +341,12 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
             // so if we selected something && the pdf selection toolbox is hidden && we hit within the selection
             // we could call the pdf floating toolbox again
             auto* pdfToolbox = control->getWindow()->getPdfToolbox();
-            bool isPdfToolboxHidden = pdfToolbox->getIsHidden();
+            bool isPdfToolboxHidden = pdfToolbox->isHidden();
             bool keepOldSelection = pdfToolbox->hasSelection() && !pdfToolbox->getSelection()->getIsFinished() &&
                                     isPdfToolboxHidden && pdfToolbox->getSelection()->contains(x, y);
 
             if (!keepOldSelection) {
-                pdfToolbox->postAction();
+                pdfToolbox->userCancelSelection();
                 pdfToolbox->clearSelection();
                 repaintPage();
             }

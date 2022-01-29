@@ -28,23 +28,30 @@ public:
     ~PdfFloatingToolbox() = default;
 
 public:
+    /// Show the toolbox at the provided coordinates. Must have an active
+    /// selection.
     void show(int x, int y);
+
+    /// Hide the floating toolbox widget (keeping the current selection).
     void hide();
 
-    void postAction();
-    bool getIsHidden() const;
+    /// Returns true if the toolbox is currently hidden.
+    bool isHidden() const;
 
     /// Returns the selection, or nullptr if no PDF element is selected.
     PdfElemSelection* getSelection() const;
 
-    /// Clears the current selection.
+    /// Clears the current selection (without any visual effects).
     void clearSelection();
 
-    /// Create a new selection
+    /// Create a new selection (without any visual effects)
     void newSelection(double x, double y, XojPageView* pageView);
 
     /// Returns true iff a PDF element is selected;
     bool hasSelection() const;
+
+    /// Cancel the selection, rerender the page, and hide the toolbox.
+    void userCancelSelection();
 
 private:
     void show();
@@ -58,22 +65,19 @@ private:
     static void copyTextCb(GtkButton* button, PdfFloatingToolbox* pft);
     static void highlightCb(GtkButton* button, PdfFloatingToolbox* pft);
 
-    void copyText();
+    void copyTextToClipboard();
     void createStrokes(PdfMarkerStyle position, PdfMarkerStyle width, int markerOpacity);
-    void createStrokesForStrikethrough();
-    void createStrokesForUnderline();
-    void createStrokesForHighlight();
-
 
 private:
-    long unsigned int selectionPage = npos;
-    bool isHidden;
+    // bool hidden;
 
     GtkWidget* floatingToolbox;
     MainWindow* theMainWindow;
 
     std::unique_ptr<PdfElemSelection> pdfElemSelection = nullptr;
 
-    int floatingToolboxX = 0;
-    int floatingToolboxY = 0;
+    struct {
+        int x;
+        int y;
+    } position;
 };

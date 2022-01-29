@@ -9,8 +9,7 @@
 #include "GladeGui.h"
 #include "MainWindow.h"
 
-PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay):
-        isHidden(false), theMainWindow(theMainWindow) {
+PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay): theMainWindow(theMainWindow) {
     this->floatingToolbox = theMainWindow->get("pdfFloatingToolbox");
 
     gtk_overlay_add_overlay(overlay, this->floatingToolbox);
@@ -39,17 +38,16 @@ void PdfFloatingToolbox::newSelection(double x, double y, XojPageView* pageView)
 
 void PdfFloatingToolbox::show(int x, int y) {
     g_assert_nonnull(this->getSelection());
-    this->floatingToolboxX = x;
-    this->floatingToolboxY = y;
+    this->position.x = x;
+    this->position.y = y;
     this->show();
 }
 
 void PdfFloatingToolbox::hide() {
-    if (this->isHidden)
+    if (isHidden())
         return;
 
     gtk_widget_hide(this->floatingToolbox);
-    this->isHidden = true;
 }
 
 auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widget, GdkRectangle* allocation,
@@ -70,16 +68,16 @@ auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widg
             GtkAllocation* alloc = g_new(GtkAllocation, 1);
             gtk_widget_get_allocation(gtk_widget_get_toplevel(widget), alloc);
 
-            bool rightOK = self->floatingToolboxX + allocation->width + gap <= alloc->width;
-            bool bottomOK = self->floatingToolboxY + allocation->height + gap <= alloc->height;
+            bool rightOK = self->position.x + allocation->width + gap <= alloc->width;
+            bool bottomOK = self->position.y + allocation->height + gap <= alloc->height;
 
-            allocation->x = rightOK ? self->floatingToolboxX + gap : self->floatingToolboxX - allocation->width - gap;
-            allocation->y = bottomOK ? self->floatingToolboxY + gap : self->floatingToolboxY - allocation->height - gap;
+            allocation->x = rightOK ? self->position.x + gap : self->position.x - allocation->width - gap;
+            allocation->y = bottomOK ? self->position.y + gap : self->position.y - allocation->height - gap;
 
             g_free(alloc);
         } else {
-            allocation->x = self->floatingToolboxX;
-            allocation->y = self->floatingToolboxY;
+            allocation->x = self->position.x;
+            allocation->y = self->position.y;
         }
 
         return true;
@@ -88,7 +86,7 @@ auto PdfFloatingToolbox::getOverlayPosition(GtkOverlay* overlay, GtkWidget* widg
     return false;
 }
 
-void PdfFloatingToolbox::postAction() {
+void PdfFloatingToolbox::userCancelSelection() {
     if (this->pdfElemSelection) {
         auto view = this->pdfElemSelection->getPageView();
 
@@ -100,40 +98,35 @@ void PdfFloatingToolbox::postAction() {
 }
 
 void PdfFloatingToolbox::highlightCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    pft->createStrokesForHighlight();
-    pft->postAction();
+    pft->createStrokes(PdfMarkerStyle::POS_TEXT_MIDDLE, PdfMarkerStyle::WIDTH_TEXT_HEIGHT, 60);
+    pft->userCancelSelection();
 }
 
 void PdfFloatingToolbox::copyTextCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    pft->copyText();
-    pft->postAction();
+    pft->copyTextToClipboard();
+    pft->userCancelSelection();
 }
 
 void PdfFloatingToolbox::underlineCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    pft->createStrokesForUnderline();
-    pft->postAction();
+    pft->createStrokes(PdfMarkerStyle::POS_TEXT_BOTTOM, PdfMarkerStyle::WIDTH_TEXT_LINE, 230);
+    pft->userCancelSelection();
 }
 
 void PdfFloatingToolbox::strikethroughCb(GtkButton* button, PdfFloatingToolbox* pft) {
-    pft->createStrokesForStrikethrough();
-    pft->postAction();
+    pft->createStrokes(PdfMarkerStyle::POS_TEXT_MIDDLE, PdfMarkerStyle::WIDTH_TEXT_LINE, 230);
+    pft->userCancelSelection();
 }
 
 void PdfFloatingToolbox::show() {
-    this->isHidden = false;
     gtk_widget_hide(this->floatingToolbox);  // force showing in new position
     gtk_widget_show_all(this->floatingToolbox);
 }
 
-void PdfFloatingToolbox::copyText() {
+void PdfFloatingToolbox::copyTextToClipboard() {
     GtkClipboard* clipboard = gtk_widget_get_clipboard(this->theMainWindow->getWindow(), GDK_SELECTION_CLIPBOARD);
-
-    const gchar* text = this->pdfElemSelection->getSelectedText().c_str();
-
-    if (!text || strlen(text) == 0)
-        return;
-
-    gtk_clipboard_set_text(clipboard, text, -1);
+    if (const gchar* text = this->pdfElemSelection->getSelectedText().c_str()) {
+        gtk_clipboard_set_text(clipboard, text, -1);
+    }
 }
 
 void PdfFloatingToolbox::createStrokes(PdfMarkerStyle position, PdfMarkerStyle width, int markerOpacity) {
@@ -202,17 +195,4 @@ void PdfFloatingToolbox::switchSelectTypeCb(GtkButton* button, PdfFloatingToolbo
     pft->pdfElemSelection->getPageView()->repaintPage();
 }
 
-
-void PdfFloatingToolbox::createStrokesForHighlight() {
-    this->createStrokes(PdfMarkerStyle::POS_TEXT_MIDDLE, PdfMarkerStyle::WIDTH_TEXT_HEIGHT, 60);
-}
-
-void PdfFloatingToolbox::createStrokesForUnderline() {
-    this->createStrokes(PdfMarkerStyle::POS_TEXT_BOTTOM, PdfMarkerStyle::WIDTH_TEXT_LINE, 230);
-}
-
-void PdfFloatingToolbox::createStrokesForStrikethrough() {
-    this->createStrokes(PdfMarkerStyle::POS_TEXT_MIDDLE, PdfMarkerStyle::WIDTH_TEXT_LINE, 230);
-}
-
-bool PdfFloatingToolbox::getIsHidden() const { return isHidden; }
+bool PdfFloatingToolbox::isHidden() const { return !gtk_widget_is_visible(this->floatingToolbox); }
