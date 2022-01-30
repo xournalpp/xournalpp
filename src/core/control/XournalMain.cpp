@@ -99,8 +99,8 @@ auto migrateSettings() -> MigrateResult {
             if (!fs::is_directory(oldPath)) {
                 continue;
             }
-            g_message("Migrating configuration from %s to %s", oldPath.string().c_str(),
-                      newConfigPath.string().c_str());
+            g_message("Migrating configuration from %s to %s", oldPath.u8string().c_str(),
+                      newConfigPath.u8string().c_str());
             Util::ensureFolderExists(newConfigPath.parent_path());
             try {
                 fs::copy(oldPath, newConfigPath, fs::copy_options::recursive);
@@ -146,7 +146,7 @@ void checkForErrorlog() {
     msg += FS(_F("You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker.") %
               GIT_ORIGIN_OWNER % GIT_BRANCH);
     msg += "\n";
-    msg += FS(_F("The most recent log file name: {1}") % errorList[0].string());
+    msg += FS(_F("The most recent log file name: {1}") % errorList[0].u8string());
 
     GtkWidget* dialog = gtk_message_dialog_new(nullptr, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
                                                msg.c_str());
@@ -363,7 +363,7 @@ void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFi
     std::string msg =
             FS(_F("<span foreground='red' size='x-large'>Missing the needed UI file:\n<b>{1}</b></span>\nCould "
                   "not find them at any location.\n  Not relative\n  Not in the Working Path\n  Not in {2}") %
-               relativePathAndFile % Util::getDataPath().string());
+               relativePathAndFile % Util::getDataPath().u8string());
 
     if (!failIfNotFound) {
         msg += _("\n\nWill now attempt to run without this file.");
@@ -419,7 +419,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
     auto& globalLatexTemplatePath = app_data->control->getSettings()->latexSettings.globalTemplatePath;
     if (globalLatexTemplatePath.empty()) {
         globalLatexTemplatePath = findResourcePath("resources/") / "default_template.tex";
-        g_message("Using default latex template in %s", globalLatexTemplatePath.string().c_str());
+        g_message("Using default latex template in %s", globalLatexTemplatePath.u8string().c_str());
         app_data->control->getSettings()->save();
     }
 

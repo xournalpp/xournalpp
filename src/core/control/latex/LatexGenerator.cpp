@@ -49,7 +49,7 @@ auto LatexGenerator::asyncRun(const fs::path& texDir, const std::string& texFile
         return res;
     };
 
-    auto texFilePath = (Util::getLongPath(texDir) / "tex.tex").string();
+    auto texFilePath = (Util::getLongPath(texDir) / "tex.tex").u8string();
     for (auto i = cmd.find(u8"{}"); i != std::string::npos; i = cmd.find(u8"{}", i + texFilePath.length())) {
         cmd.replace(i, 2, texFilePath);
     }

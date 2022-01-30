@@ -639,7 +639,7 @@ auto Settings::load() -> bool {
     xmlKeepBlanksDefault(0);
 
     if (!fs::exists(filepath)) {
-        g_warning("configfile does not exist %s\n", filepath.string().c_str());
+        g_warning("configfile does not exist %s\n", filepath.u8string().c_str());
         return false;
     }
 
@@ -652,14 +652,14 @@ auto Settings::load() -> bool {
 
     xmlNodePtr cur = xmlDocGetRootElement(doc);
     if (cur == nullptr) {
-        g_message("The settings file \"%s\" is empty", filepath.string().c_str());
+        g_message("The settings file \"%s\" is empty", filepath.u8string().c_str());
         xmlFreeDoc(doc);
 
         return false;
     }
 
     if (xmlStrcmp(cur->name, reinterpret_cast<const xmlChar*>("settings"))) {
-        g_message("File \"%s\" is of the wrong type", filepath.string().c_str());
+        g_message("File \"%s\" is of the wrong type", filepath.u8string().c_str());
         xmlFreeDoc(doc);
 
         return false;

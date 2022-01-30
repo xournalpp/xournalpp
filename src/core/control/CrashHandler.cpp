@@ -37,6 +37,6 @@ void emergencySave() {
     if (!handler.getErrorMessage().empty()) {
         g_error("%s", FC(_F("Error: {1}") % handler.getErrorMessage()));
     } else {
-        g_warning("%s", FC(_F("Successfully saved document to \"{1}\"") % filepath.string()));
+        g_warning("%s", FC(_F("Successfully saved document to \"{1}\"") % filepath.u8string()));
     }
 }

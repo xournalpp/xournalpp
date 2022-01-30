@@ -39,7 +39,7 @@ void AutosaveJob::run() {
 
     control->renameLastAutosaveFile();
 
-    g_message("%s", FS(_F("Autosaving to {1}") % filepath.string()).c_str());
+    g_message("%s", FS(_F("Autosaving to {1}") % filepath.u8string()).c_str());
 
     handler.saveTo(filepath);
 

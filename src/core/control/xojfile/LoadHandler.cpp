@@ -354,7 +354,8 @@ void LoadHandler::parseBgPixmap() {
         img.loadFile(fileToLoad, &error);
 
         if (error) {
-            error("%s", FC(_F("Could not read image: {1}. Error message: {2}") % fileToLoad.string() % error->message));
+            error("%s",
+                  FC(_F("Could not read image: {1}. Error message: {2}") % fileToLoad.u8string() % error->message));
             g_error_free(error);
         }
 
@@ -378,17 +379,17 @@ void LoadHandler::parseBgPixmap() {
         g_input_stream_close(inputStream, nullptr, nullptr);
 
         if (error) {
-            error("%s", FC(_F("Could not read image: {1}. Error message: {2}") % filepath.string() % error->message));
+            error("%s", FC(_F("Could not read image: {1}. Error message: {2}") % filepath.u8string() % error->message));
             g_error_free(error);
         }
 
         this->page->setBackgroundImage(img);
     } else if (!strcmp(domain, "clone")) {
         gchar* endptr = nullptr;
-        auto const& filename = filepath.string();
+        auto const& filename = filepath.u8string();
         size_t nr = static_cast<size_t>(g_ascii_strtoull(filename.c_str(), &endptr, 10));
         if (endptr == filename.c_str()) {
-            error("%s", FC(_F("Could not read page number for cloned background image: {1}.") % filepath.string()));
+            error("%s", FC(_F("Could not read page number for cloned background image: {1}.") % filepath.u8string()));
         }
         PageRef p = pages[nr];
 
@@ -555,7 +556,7 @@ void LoadHandler::parseStroke() {
         } else {
             auto tempFile = getTempFileForPath(fn);
             if (!tempFile.empty()) {
-                stroke->setAudioFilename(tempFile.string());
+                stroke->setAudioFilename(tempFile.u8string());
             }
         }
     }
@@ -635,7 +636,7 @@ void LoadHandler::parseText() {
         } else {
             auto tempFile = getTempFileForPath(fn);
             if (!tempFile.empty()) {
-                text->setAudioFilename(tempFile.string());
+                text->setAudioFilename(tempFile.u8string());
             }
         }
     }
@@ -920,7 +921,7 @@ void LoadHandler::parserText(GMarkupParseContext* context, const gchar* text, gs
                 handler->stroke->setPressure(handler->pressureBuffer);
                 handler->pressureBuffer.clear();
             } else {
-                g_warning("%s", FC(_F("xoj-File: {1}") % handler->filepath.string().c_str()));
+                g_warning("%s", FC(_F("xoj-File: {1}") % handler->filepath.u8string().c_str()));
                 g_warning("%s", FC(_F("Wrong number of points, got {1}, expected {2}") %
                                    handler->pressureBuffer.size() % (handler->stroke->getPointCount() - 1)));
             }
@@ -1011,7 +1012,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename, gpointer& data, gs
     zip_stat_t attachmentFileStat;
     int statStatus = zip_stat(this->zipFp, filename.u8string().c_str(), 0, &attachmentFileStat);
     if (statStatus != 0) {
-        error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.string() %
+        error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
                        zip_error_strerror(zip_get_error(this->zipFp))));
         return false;
     }
@@ -1019,15 +1020,15 @@ auto LoadHandler::readZipAttachment(fs::path const& filename, gpointer& data, gs
     if (attachmentFileStat.valid & ZIP_STAT_SIZE) {
         length = attachmentFileStat.size;
     } else {
-        error("%s",
-              FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") % filename.string()));
+        error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") %
+                       filename.u8string()));
         return false;
     }
 
     zip_file_t* attachmentFile = zip_fopen(this->zipFp, filename.u8string().c_str(), 0);
 
     if (!attachmentFile) {
-        error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.string() %
+        error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.u8string() %
                        zip_error_strerror(zip_get_error(this->zipFp))));
         return false;
     }
@@ -1040,7 +1041,7 @@ auto LoadHandler::readZipAttachment(fs::path const& filename, gpointer& data, gs
             g_free(data);
             zip_fclose(attachmentFile);
             error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") %
-                           filename.string()));
+                           filename.u8string()));
             return false;
         }
 
@@ -1058,7 +1059,7 @@ auto LoadHandler::getTempFileForPath(fs::path const& filename) -> fs::path {
         return string(static_cast<char*>(tmpFilename));
     }
 
-    error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename.string()));
+    error("%s", FC(_F("Requested temporary file was not found for attachment {1}") % filename.u8string()));
     return "";
 }
 

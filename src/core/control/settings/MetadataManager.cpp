@@ -28,13 +28,13 @@ MetadataManager::~MetadataManager() { documentChanged(); }
 void MetadataManager::deleteMetadataFile(fs::path const& path) {
     // be careful, delete the Metadata file, NOT the Document!
     if (path.extension() != ".metadata") {
-        g_warning("Try to delete non-metadata file: %s", path.string().c_str());
+        g_warning("Try to delete non-metadata file: %s", path.u8string().c_str());
         return;
     }
 
     try {
         fs::remove(path);
-    } catch (fs::filesystem_error const&) { g_warning("Could not delete metadata file %s", path.string().c_str()); }
+    } catch (fs::filesystem_error const&) { g_warning("Could not delete metadata file %s", path.u8string().c_str()); }
 }
 
 /**
@@ -93,7 +93,7 @@ auto MetadataManager::loadMetadataFile(fs::path const& path, fs::path const& fil
     string line;
     ifstream infile(path);
 
-    auto time = file.stem().string();
+    auto time = file.stem().u8string();
     entry.time = strtoll(time.c_str(), nullptr, 10);
 
     if (!getline(infile, line) || line != "XOJ-METADATA/1.0") {
@@ -169,7 +169,7 @@ void MetadataManager::storeMetadata(MetadataEntry* m) {
 
     ofstream out(path);
     out << "XOJ-METADATA/1.0\n";
-    out << m->path << "\n";
+    out << m->path.u8string() << "\n";
     out << "page=" << m->page << "\n";
     out << "zoom=" << m->zoom << "\n";
     out.close();

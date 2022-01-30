@@ -177,7 +177,7 @@ void Control::renameLastAutosaveFile() {
     auto const& filename = this->lastAutosaveFilename;
     auto renamed = Util::getAutosaveFilepath();
     Util::clearExtensions(renamed);
-    if (!filename.empty() && filename.string().front() != '.') {
+    if (!filename.empty() && filename.u8string().front() != '.') {
         // This file must be a fresh, unsaved document. Since this file is
         // already in the autosave directory, we need to change the renamed filename.
         renamed += ".old.autosave.xopp";
@@ -186,8 +186,9 @@ void Control::renameLastAutosaveFile() {
         renamed += filename.filename();
     }
 
-    g_message("%s", FS(_F("Autosave renamed from {1} to {2}") % this->lastAutosaveFilename.string() % renamed.string())
-                            .c_str());
+    g_message("%s",
+              FS(_F("Autosave renamed from {1} to {2}") % this->lastAutosaveFilename.u8string() % renamed.u8string())
+                      .c_str());
 
     if (!fs::exists(filename)) {
         this->save(false);
@@ -1969,7 +1970,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         bool attachPdf = false;
         XojOpenDlg dlg(getGtkWindow(), this->settings);
         filepath = dlg.showOpenDialog(false, attachPdf);
-        g_message("%s", (_F("file: {1}") % filepath.string()).c_str());
+        g_message("%s", (_F("file: {1}") % filepath.u8string()).c_str());
     }
 
     if (filepath.empty() || (!forceOpen && !shouldFileOpen(filepath))) {
@@ -1999,11 +2000,11 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         const std::string msg1 =
                 FS(_F("The attached background file {1} could not be found. It might have been moved, renamed or "
                       "deleted.\nIt was last seen at: {2}") %
-                   missingFilePath.filename().string() % missingFilePath.parent_path().string());
+                   missingFilePath.filename().u8string() % missingFilePath.parent_path().u8string());
         const std::string msg2 =
                 FS(_F("The background file {1} could not be found. It might have been moved, renamed or deleted.\nIt "
                       "was last seen at: {2}") %
-                   missingFilePath.filename().string() % missingFilePath.parent_path().string());
+                   missingFilePath.filename().u8string() % missingFilePath.parent_path().u8string());
         GtkWidget* dialog =
                 gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
                                        loadHandler.isAttachedPdfMissing() ? msg1.c_str() : msg2.c_str());

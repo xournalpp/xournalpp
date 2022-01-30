@@ -889,11 +889,11 @@ static int applib_getDocumentStructure(lua_State* L) {
     lua_settable(L, -3);
 
     lua_pushliteral(L, "pdfBackgroundFilename");
-    lua_pushstring(L, doc->getPdfFilepath().string().c_str());
+    lua_pushstring(L, doc->getPdfFilepath().u8string().c_str());
     lua_settable(L, -3);
 
     lua_pushliteral(L, "xoppFilename");
-    lua_pushstring(L, doc->getFilepath().string().c_str());
+    lua_pushstring(L, doc->getFilepath().u8string().c_str());
     lua_settable(L, -3);
 
     return 1;

@@ -30,7 +30,7 @@ auto AudioController::startRecording() -> bool {
 
         g_message("Start recording");
 
-        bool isRecording = this->audioRecorder->start((getAudioFolder() / data).string());
+        bool isRecording = this->audioRecorder->start((getAudioFolder() / data).u8string());
 
         if (!isRecording) {
             audioFilename = "";

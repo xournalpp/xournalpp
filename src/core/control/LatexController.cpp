@@ -49,7 +49,7 @@ auto LatexController::findTexDependencies() -> LatexController::FindDependencySt
     if (fs::is_regular_file(templatePath)) {
         std::ifstream is(templatePath, std::ios_base::binary);
         if (!is.is_open()) {
-            g_message("%s", templatePath.string().c_str());
+            g_message("%s", templatePath.u8string().c_str());
             string msg = _("Global template file does not exist. Please check your settings.");
             return LatexController::FindDependencyStatus(false, msg);
         }

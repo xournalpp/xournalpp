@@ -65,23 +65,23 @@ auto Util::readString(fs::path const& path, bool showErrorToUser) -> std::option
 }
 
 auto Util::getEscapedPath(const fs::path& path) -> std::string {
-    std::string escaped = path.string();
+    std::string escaped = path.u8string();
     StringUtils::replaceAllChars(escaped, {replace_pair('\\', "\\\\"), replace_pair('\"', "\\\"")});
     return escaped;
 }
 
 auto Util::hasXournalFileExt(const fs::path& path) -> bool {
-    auto extension = StringUtils::toLowerCase(path.extension().string());
+    auto extension = StringUtils::toLowerCase(path.extension().u8string());
     return extension == ".xoj" || extension == ".xopp";
 }
 
 auto Util::hasPdfFileExt(const fs::path& path) -> bool {
-    return StringUtils::toLowerCase(path.extension().string()) == ".pdf";
+    return StringUtils::toLowerCase(path.extension().u8string()) == ".pdf";
 }
 
 auto Util::clearExtensions(fs::path& path, const std::string& ext) -> void {
     auto rm_ext = [&path](const std::string ext) {
-        if (StringUtils::toLowerCase(path.extension().string()) == StringUtils::toLowerCase(ext)) {
+        if (StringUtils::toLowerCase(path.extension().u8string()) == StringUtils::toLowerCase(ext)) {
             path.replace_extension("");
         }
     };
@@ -298,7 +298,7 @@ bool Util::safeRenameFile(fs::path const& from, fs::path const& to) {
         // Attempt copy and delete
         g_warning("Renaming file %s to %s failed with %s. This may happen when source and target are on different "
                   "filesystems. Attempt to copy the file.",
-                  fe.path1().string().c_str(), fe.path2().string().c_str(), fe.what());
+                  fe.path1().u8string().c_str(), fe.path2().u8string().c_str(), fe.what());
         fs::copy_file(from, to, fs::copy_options::overwrite_existing);
         fs::remove(from);
     }

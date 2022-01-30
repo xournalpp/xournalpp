@@ -55,65 +55,65 @@ TEST(UtilPath, testClearExtensions) {
     auto a = fs::path("C:") / "test" / "abc" / "xyz.txt";
     fs::path old_path(a);
     Util::clearExtensions(a);
-    EXPECT_EQ(old_path.string(), a.string());
+    EXPECT_EQ(old_path.u8string(), a.u8string());
 
     a = fs::path("C:") / "test" / "abc" / "xyz";
     old_path = a;
     a += ".xopp";
     Util::clearExtensions(a);
-    EXPECT_EQ(old_path.string(), a.string());
+    EXPECT_EQ(old_path.u8string(), a.u8string());
 
 
     // The following tests use the generic separator which works on all systems
     auto b = fs::path("/test/asdf.TXT");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.TXT"), b.string());
+    EXPECT_EQ(string("/test/asdf.TXT"), b.u8string());
     Util::clearExtensions(b, ".txt");
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(string("/test/asdf"), b.u8string());
 
     b = fs::path("/test/asdf.asdf/asdf");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.asdf/asdf"), b.string());
+    EXPECT_EQ(string("/test/asdf.asdf/asdf"), b.u8string());
 
     b = fs::path("/test/asdf.PDF");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.PDF"), b.string());
+    EXPECT_EQ(string("/test/asdf.PDF"), b.u8string());
     Util::clearExtensions(b, ".pdf");
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(string("/test/asdf"), b.u8string());
 
     b = fs::path("/test/asdf.PDF.xoj");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.PDF"), b.string());
+    EXPECT_EQ(string("/test/asdf.PDF"), b.u8string());
 
     b = fs::path("/test/asdf.PDF.xoj");
     Util::clearExtensions(b, ".Pdf");
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(string("/test/asdf"), b.u8string());
 
     b = fs::path("/test/asdf.pdf.pdf");
     Util::clearExtensions(b, ".pdf");
-    EXPECT_EQ(string("/test/asdf.pdf"), b.string());
+    EXPECT_EQ(string("/test/asdf.pdf"), b.u8string());
 
     b = fs::path("/test/asdf.xopp.xopp");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.xopp"), b.string());
+    EXPECT_EQ(string("/test/asdf.xopp"), b.u8string());
 
     b = fs::path("/test/asdf.PDF.xopp");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.PDF"), b.string());
+    EXPECT_EQ(string("/test/asdf.PDF"), b.u8string());
 
     b = fs::path("/test/asdf.SVG.xopp");
     Util::clearExtensions(b, ".svg");
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(string("/test/asdf"), b.u8string());
 
     b = fs::path("/test/asdf.xoj");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(string("/test/asdf"), b.u8string());
 
     b = fs::path("/test/asdf.xopp");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf"), b.string());
+    EXPECT_EQ(string("/test/asdf"), b.u8string());
 
     b = fs::path("/test/asdf.pdf");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.pdf"), b.string());
+    EXPECT_EQ(string("/test/asdf.pdf"), b.u8string());
 }
