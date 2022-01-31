@@ -1996,7 +1996,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         !loadHandler.getMissingPdfFilename().empty()) {
         // give the user a second chance to select a new PDF filepath, or to discard the PDF
 
-        const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
+        const fs::path missingFilePath = fs::u8path(loadHandler.getMissingPdfFilename());
         const std::string msg1 =
                 FS(_F("The attached background file {1} could not be found. It might have been moved, renamed or "
                       "deleted.\nIt was last seen at: {2}") %

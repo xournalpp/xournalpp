@@ -109,7 +109,9 @@ auto MetadataManager::loadMetadataFile(fs::path const& path, fs::path const& fil
         return entry;
     }
     istringstream iss(line);
-    iss >> entry.path;
+    std::string pathStr;
+    iss >> std::quoted(pathStr);
+    entry.path = fs::u8path(pathStr);
 
     if (!getline(infile, line) || line.length() < 6 || line.substr(0, 5) != "page=") {
         deleteMetadataFile(path);

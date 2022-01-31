@@ -1213,7 +1213,7 @@ static int applib_export(lua_State* L) {
         luaL_error(L, "Missing output file!");
     }
 
-    fs::path file = fs::path(outputFile);
+    fs::path file = fs::u8path(outputFile);
     auto extension = file.extension();
 
     if (extension == ".pdf") {
