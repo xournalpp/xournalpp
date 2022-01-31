@@ -2,7 +2,7 @@
 
 #include <algorithm>  // std::sort
 #include <fstream>
-#include <iomanip> // std::quoted
+#include <iomanip>  // std::quoted
 #include <sstream>
 
 #include <fcntl.h>
