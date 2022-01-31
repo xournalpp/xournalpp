@@ -2,6 +2,7 @@
 
 #include <algorithm>  // std::sort
 #include <fstream>
+#include <iomanip> // std::quoted
 #include <sstream>
 
 #include <fcntl.h>
@@ -169,7 +170,7 @@ void MetadataManager::storeMetadata(MetadataEntry* m) {
 
     ofstream out(path);
     out << "XOJ-METADATA/1.0\n";
-    out << m->path.u8string() << "\n";
+    out << std::quoted(m->path.u8string()) << "\n";
     out << "page=" << m->page << "\n";
     out << "zoom=" << m->zoom << "\n";
     out.close();
