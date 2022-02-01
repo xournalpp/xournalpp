@@ -49,6 +49,8 @@ export GDK_PIXBUF_MODULE_FILE="$bundle_etc/gtk-2.0/gdk-pixbuf.loaders"
 mkdir -p ./Xournal++.app/Contents/Resources/etc/gtk-2.0/
 gdk-pixbuf-query-loaders >./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
 sed -i -e "s:$1/inst/:@executable_path/../Resources/:g" ./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
+# Replace old loaders cache location with new one in builtin launcher script, see https://gitlab.gnome.org/GNOME/gtk-mac-bundler/-/issues/12
+sed -i -e "s:bundle_etc/gtk-2.0/gdk-pixbuf.loaders:bundle_lib/gdk-pixbuf-2.0/2.10.0/loaders.cache:g" ./Xournal++.app/Contents/MacOS/xournalpp
 
 echo "Copy GTK Schema"
 mkdir -p ./Xournal++.app/Contents/Resources/share/glib-2.0/schemas
