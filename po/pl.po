@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-03 04:26+0000\n"
-"PO-Revision-Date: 2022-02-03 04:32\n"
+"PO-Revision-Date: 2022-02-03 08:51\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1092,19 +1092,19 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Wybierz Tekst PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Wybierz Tekst PDF W Prostokącie"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Wybierz Tekst PDF W Prostokącie"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Wybierz Tekst PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1121,7 +1121,7 @@ msgstr "Wybierz obszar"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Wybierz Tekst z PDF"
 
 #: ../src/core/control/Control.cpp:2035
 msgid "Select another PDF"
@@ -2172,7 +2172,7 @@ msgstr "Zamiast tego skopiuj bieżący rozmiar strony"
 
 #: ../ui/main.glade:2657
 msgid "Copy selected text"
-msgstr ""
+msgstr "Skopiuj zaznaczony tekst"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2509,7 +2509,7 @@ msgstr "Podświetl pozycję kursora"
 
 #: ../ui/main.glade:2679
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Wyróżnij zaznaczony tekst"
 
 #: ../ui/main.glade:1834
 msgid "Highlighter Opti_ons"
@@ -2934,7 +2934,7 @@ msgstr "Wybierz stronę PDF"
 
 #: ../ui/main.glade:1353
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Wybierz Tekst W Prostokącie"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3037,7 +3037,7 @@ msgstr "Folder Przechowywania"
 
 #: ../ui/main.glade:2719
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Przekreśl zaznaczony tekst"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3139,7 +3139,7 @@ msgstr "Najpierw wybierz obiekt; jeśli nic nie wybrano, pokaż pływający przy
 
 #: ../ui/main.glade:2699
 msgid "Underline selected text"
-msgstr ""
+msgstr "Podkreśl zaznaczony tekst"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
