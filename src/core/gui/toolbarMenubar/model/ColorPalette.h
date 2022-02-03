@@ -127,6 +127,8 @@ struct Palette {
      */
     NamedColor const& getColorAt(size_t i) const;
 
+    fs::path getFilePath() const;
+
 
 private:
     /**

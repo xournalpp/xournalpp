@@ -344,3 +344,5 @@ auto Util::getLocalePath() -> fs::path {
     return getDataPath() / ".." / "locale";
 #endif
 }
+
+auto Util::getPalettePath() -> fs::path { return getDataPath() / "palettes"; }

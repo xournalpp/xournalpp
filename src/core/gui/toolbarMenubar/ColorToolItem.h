@@ -54,6 +54,13 @@ public:
     Color getColor() const;
 
     /**
+     * @brief Update Color based on (new) palette
+     *
+     * @param palette
+     */
+    void updateColor(const Palette& palette);
+
+    /**
      * Enable / Disable the tool item
      */
     void enable(bool enabled) override;

@@ -139,7 +139,7 @@ void Palette::create_default(fs::path filepath) {
 
 auto Header::getAttribute() const -> std::string { return this->attribute; };
 auto Header::getValue() const -> std::string { return this->value; };
-
+auto Palette::getFilePath() const -> fs::path { return this->filepath; };
 
 auto operator>>(std::istream& str, Header& header) -> std::istream& {
     /*

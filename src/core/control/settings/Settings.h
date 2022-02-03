@@ -552,6 +552,7 @@ public:
     void setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preprocessor);
 
     const Palette& getColorPalette();
+    void setColorPalette(fs::path palettePath);
 
 public:
     // Custom settings
@@ -1101,4 +1102,6 @@ private:
      *
      */
     std::unique_ptr<Palette> palette;
+
+    std::string colorPaletteSetting;
 };

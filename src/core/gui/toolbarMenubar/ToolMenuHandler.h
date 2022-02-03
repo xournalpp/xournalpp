@@ -68,6 +68,13 @@ public:
      */
     void load(ToolbarData* d, GtkWidget* toolbar, const char* toolbarName, bool horizontal);
 
+    /**
+     * @brief Update all ColorToolItems based on palette
+     *
+     * @param palette
+     */
+    void updateColorToolItems(const Palette& palette);
+
     void registerMenupoint(GtkWidget* widget, ActionType type, ActionGroup group = GROUP_NOGROUP);
 
     void initToolItems();

@@ -1,5 +1,6 @@
 #include "SettingsDialog.h"
 
+#include <algorithm>
 #include <algorithm>    // for max
 #include <cstddef>      // for NULL, size_t
 #include <type_traits>  // for __underlying_type_im...
@@ -620,6 +621,25 @@ void SettingsDialog::load() {
         }
     }
 
+    {
+        auto userPalettes = Util::getConfigFile("palettes");
+        auto xPalettes = Util::getPalettePath();
+        std::vector<fs::path> paletteFilePaths{};
+        for (const fs::directory_entry& p: fs::directory_iterator(userPalettes)) {
+            paletteFilePaths.push_back(p.path());
+        }
+        for (const fs::directory_entry& p: fs::directory_iterator(xPalettes)) { paletteFilePaths.push_back(p.path()); }
+        std::sort(paletteFilePaths.begin(), paletteFilePaths.end());
+
+        int i = 0;
+        for (const fs::path& p: paletteFilePaths) {
+            gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbColorPalette")), "", p.u8string().c_str());
+            if (p == settings->getColorPalette().getFilePath())
+                gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbColorPalette")), i);
+            i++;
+        }
+    }
+
     this->audioOutputDevices = this->control->getAudioController()->getOutputDevices();
     gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbAudioOutputDevice")), "", "System default");
     gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbAudioOutputDevice")), 0);
@@ -953,6 +973,8 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
+    settings->setColorPalette(fs::path{gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(get("cbColorPalette")))});
+
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui->saveSettings();
     }
@@ -962,6 +984,9 @@ void SettingsDialog::save() {
     settings->transactionEnd();
 
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
+    this->control->getWindow()->getToolMenuHandler()->updateColorToolItems(settings->getColorPalette());
+    this->control->getWindow()->reloadToolbars();
+
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();
 }

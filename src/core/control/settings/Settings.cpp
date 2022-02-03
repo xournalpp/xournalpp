@@ -630,6 +630,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->stabilizerCuspDetection = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stabilizerFinalizeStroke")) == 0) {
         this->stabilizerFinalizeStroke = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("colorPalette")) == 0) {
+        this->colorPaletteSetting = std::string{reinterpret_cast<const char*>(value)};
     }
     /**/
 
@@ -758,24 +760,7 @@ auto Settings::load() -> bool {
 
     loadButtonConfig();
     loadDeviceClasses();
-
-    /*
-     * load Color Palette
-     *  - if path does not exist create default palette file
-     *  - if error during parsing load default, but do not overwrite
-     *    existing palette file (would be annoying for users)
-     */
-    auto paletteFile = Util::getConfigFile(PALETTE_FILE);
-    if (!fs::exists(paletteFile)) {
-        Palette::create_default(paletteFile);
-    }
-    this->palette = std::make_unique<Palette>(std::move(paletteFile));
-    try {
-        this->palette->load();
-    } catch (const std::exception& e) {
-        this->palette->parseErrorDialog(e);
-        this->palette->load_default();
-    }
+    setColorPalette(colorPaletteSetting);
 
     return true;
 }
@@ -1076,6 +1061,7 @@ void Settings::save() {
     SAVE_DOUBLE_PROP(stabilizerMass);
     SAVE_BOOL_PROP(stabilizerCuspDetection);
     SAVE_BOOL_PROP(stabilizerFinalizeStroke);
+    saveProperty("colorPalette", this->palette->getFilePath().u8string().c_str(), root);
     /**/
 
     SAVE_BOOL_PROP(latexSettings.autoCheckDependencies);
@@ -2451,3 +2437,16 @@ void Settings::setStabilizerPreprocessor(StrokeStabilizer::Preprocessor preproce
  * @return Palette&
  */
 auto Settings::getColorPalette() -> const Palette& { return *(this->palette); }
+
+void Settings::setColorPalette(fs::path palettePath) {
+    this->palette = std::make_unique<Palette>(std::move(palettePath));
+    if (!fs::exists(palettePath)) {
+        this->palette->load_default();
+    }
+    try {
+        this->palette->load();
+    } catch (const std::exception& e) {
+        this->palette->parseErrorDialog(e);
+        this->palette->load_default();
+    }
+}
