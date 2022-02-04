@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-03 04:26+0000\n"
-"PO-Revision-Date: 2022-02-04 09:43\n"
+"PO-Revision-Date: 2022-02-04 10:46\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1068,7 +1068,7 @@ msgstr "A közreműködők teljes listája"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Területszöveg kijelölése PDF-fájlból"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Select Font"
@@ -1078,7 +1078,7 @@ msgstr "Betűkészlet kijelölése"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Lineáris PDF-szöveg kijelölése"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1088,23 +1088,23 @@ msgstr "Objektum kijelölése"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "PDF-területszöveg kijelölése"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "PDF-szöveg kijelölése"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "PDF-szöveg kijelölése téglalapban"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "PDF-szöveg kijelölése téglalapban"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "PDF-szöveg kijelölése"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1121,7 +1121,7 @@ msgstr "Terület kijelölése"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Szöveg kijelölése PDF-fájlból"
 
 #: ../src/core/control/Control.cpp:2035
 msgid "Select another PDF"
@@ -1437,7 +1437,7 @@ msgstr "Ismeretlen pixmap::domain típus: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Ismeretlen vonásírásvégtípus: „{1}”, kereket feltételezve"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1855,7 +1855,8 @@ msgstr "<b>Dokumentumexport-beállítások</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Üres eszköztár</b>\n"
+"            <i>Menü: Nézet/Eszköztárak</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -2927,7 +2928,7 @@ msgstr "Kép kiválasztása"
 
 #: ../ui/main.glade:1341
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Lineáris szöveg kijelölése"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2935,7 +2936,7 @@ msgstr "PDF oldal kijelölése"
 
 #: ../ui/main.glade:1353
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Szöveg kijelölése téglalapban"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3115,7 +3116,7 @@ msgstr "Időtúllépés"
 
 #: ../ui/main.glade:2739
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Szabványos/régiószöveg-kijelölés váltása"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
