@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-03 04:26+0000\n"
-"PO-Revision-Date: 2022-02-03 04:33\n"
+"PO-Revision-Date: 2022-02-04 09:43\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2172,7 +2172,7 @@ msgstr "Másolja a jelenlegi oldalméretet helyette"
 
 #: ../ui/main.glade:2657
 msgid "Copy selected text"
-msgstr ""
+msgstr "Kijelölt szöveg másolása"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2509,7 +2509,7 @@ msgstr "Kurzor pozíciójának kiemeléséhez"
 
 #: ../ui/main.glade:2679
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Kijelölt szöveg kiemelése"
 
 #: ../ui/main.glade:1834
 msgid "Highlighter Opti_ons"
@@ -3038,7 +3038,7 @@ msgstr "Tárolómappa"
 
 #: ../ui/main.glade:2719
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Kijelölt szöveg áthúzása"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3140,7 +3140,7 @@ msgstr "Először próbálja meg kiválasztani az objektumot; ha nincs kiválasz
 
 #: ../ui/main.glade:2699
 msgid "Underline selected text"
-msgstr ""
+msgstr "Kijelölt szöveg aláhúzása"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
