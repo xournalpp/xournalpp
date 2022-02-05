@@ -1,5 +1,13 @@
 xournalpp (1.1.1~dev-1) UNRELEASED; urgency=medium
 
+  * This is a new minor version of Xournal++ with many new bug fixes and improvements
+    thanks to contributions from the community.
+  * Fixed several notable UX problems such as dark mode behavior and edge panning.
+  * Fixed several crash and freeze issues, including "random" freezes caused by the
+    sidebar scrolling logic and crashing on the gcin input method.
+  * Fixed many other miscellaneous bugs and issues.
+  * See the full changelog located on GitHub
+
  -- Ulrich Huber <ulrich@huberulrich.de>  Mon, 23 Sep 2021 20:54:35 +0200
 
 xournalpp (1.1.0-0) unstable; urgency=medium

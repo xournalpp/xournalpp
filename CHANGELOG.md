@@ -2,6 +2,70 @@
 
 ## 1.1.1~dev (Unreleased)
 
+Bugfixes from various community contributors.
+
+* Added `Minimal Top` and `Minimal Side` default toolbar layouts.
+* Added code to use GTK dark theme variant on startup if "Use Dark Theme" is
+  enabled in Preferences (#2771).
+* Improved Ctrl+Scroll zooming (#3358).
+* Improved behavior of stroke recognizer when a stroke is recognized as a line
+  (#3279, #3285).
+* Changed "Content" tab in sidebar to be hidden instead of disabled if no PDF
+  outline is available (#3359).
+* Changed panning behavior when an object is selected (#2893, #3776)
+  * The panning speed scales linearly up to some maximum multiplier,
+    configurable in Preferences under `View > Selection Edge Panning`.
+  * This fixes the absurdly fast edge pan speed bug (#2889).
+* Changed the application `.svg` icon with minified versions (#3345), fixing a
+  bug in the icon transparency in KDE Plasma (#3280).
+* Fixed pinch-to-zoom calculation error when using `Drawing Area > Scrolling
+  outside the page` vertical/horizontal space options (#3298, #3372).
+* Fixed a crash that occurs when using the `gcin` IME with the text tool
+  (#3315, #3500, #3511).
+* Fixed freezing when annotating PDF files (#3585, #3593, #3761).
+* Fixed a crash that occurs when "autoload most recent" is enabled but no recent
+  files are available (#3734, #3738).
+* Fixed inconsistent rendering of filled highligher strokes (#2904, #3355).
+* Fixed a bug where single dot strokes would not use pressure sensitivity
+  (#1534, #3344).
+* Fixed a bug where the first point in a highlight stroke would incorrectly have
+  a pressure value when it should not (#3651, #3652).
+* Fixed a bug where snapping would prevent text being created close to each
+  other (#3352, #3353).
+* Fixed a bug where "PDF background missing" would appear behind a transparent
+  image background (#3185, #3350).
+* Fixed a bug where toolbar button locations would be off-by-one after
+  restarting the program (#2970, #2980).
+* Fixed undo/redo of layer renaming also affecting the currently selected layer
+  (#3257, #3297).
+* Fixed a bug where PDF outlines would be exported incorrectly with some locales
+  (#3388, #3551).
+* Fixed a bug where the PDF background selection dialog that appears when adding
+  a new page would not show the last row of PDF page thumbnails (#3744).
+* Fixed a bug where a non-lowercase PDF file extension like `.PDF` would cause
+  PDF loading to fail (#3548, #3590).
+* Fixed a bug where `.xopp` files with dots before the `.xopp` file extension
+  would be saved with the wrong file name (#3330, #3333).
+* Fixed an issue where backups created during save (e.g., `~*.xopp` files) are
+  not deleted (#1498, #3399, #3445).
+* Fixed various memory leaks and related bugs (#3392, #3420).
+* Fixed the MigrateFontSizes plugin not loading correctly when both GTK 3 and
+  GTK 4 are installed (#3428).
+* Fixed issues with version number information on some platforms (#2820, #3492).
+* Linux: Fixed a bug where tools would be activated on hover when
+  TabletPCButtonEnabled is set (#3724, #3658, #3701).
+* MacOS: updated the application so that it runs on MacOS Monterey (#3759).
+* Windows: Fixed a bug that caused some input methods for non-English text
+  (e.g., Chinese, Korean, etc.) to not work (#1997, #3402).
+* Windows: Fixed several bugs causing fonts to load incorrectly, including when
+  the application is opened outside of the installation `bin` folder or when
+  other languages are used (#3207, #3371, #3474, #3534, #3477, #3426).
+* Windows: Fixed an issue where a console window would briefly flash when
+  starting the application (#2704).
+* Updated translations.
+* Other non-user-visible internal refactoring, minor bug fixes, and potential
+  performance improvements.
+
 ## 1.1.0
 
 This is a new major version of Xournal++ with many new features, improvements,
@@ -36,7 +100,8 @@ community.
       end-users, only maintainers and packagers.
     * The code has been updated to use C++17 (#1485) and must now be compiled
       using a supported compiler version, such as GCC 7 or Clang 5 (or newer).
-    * MacOS: Dropped support for macOS High Sierra; minimal version is now Catalina (#2989)
+    * MacOS: Dropped support for macOS High Sierra; minimal version is now
+      Catalina (#2989)
 * Document viewing
     * Changed page selection system to now select the current page during
       scrolling (#1613, #1184).
@@ -248,7 +313,8 @@ community.
 More bugfixes.
 
 * Fixed a regression with pdf files that could not be overwritten (#2355)
-* Fixed page layout update after inserting or deleting a page, changing the page layout or zooming (#1777, #2346, #2411)
+* Fixed page layout update after inserting or deleting a page, changing the page
+  layout or zooming (#1777, #2346, #2411)
 * Fixed incorrect rendering of pages after changing the page format (#2457)
 * Fixed blocked scrolling after saving a file (#2062)
 * Fixed presentation mode after startup 
