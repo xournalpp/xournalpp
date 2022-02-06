@@ -6,6 +6,8 @@
 #include "util/serializing/ObjectInputStream.h"
 #include "util/serializing/ObjectOutputStream.h"
 
+using xoj::util::Rectangle;
+
 Image::Image(): Element(ELEMENT_IMAGE) {}
 
 Image::~Image() {

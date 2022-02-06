@@ -43,7 +43,7 @@ private:
      */
     static void repaintWidget(GtkWidget* widget);
 
-    void rerenderRectangle(Rectangle<double> const& rect);
+    void rerenderRectangle(xoj::util::Rectangle<double> const& rect);
 
 private:
     XojPageView* view;

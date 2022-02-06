@@ -6,6 +6,8 @@
 #include "util/Rectangle.h"
 #include "util/i18n.h"
 
+using xoj::util::Rectangle;
+
 class ColorUndoActionEntry {
 public:
     ColorUndoActionEntry(Element* e, Color oldColor, Color newColor): e(e), oldColor(oldColor), newColor(newColor) {}

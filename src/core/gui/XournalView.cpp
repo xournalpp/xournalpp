@@ -26,6 +26,8 @@
 #include "XournalppCursor.h"
 #include "filesystem.h"
 
+using xoj::util::Rectangle;
+
 std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t maxPage) {
     const size_t preloadBefore = this->control->getSettings()->getPreloadPagesBefore();
     const size_t preloadAfter = this->control->getSettings()->getPreloadPagesAfter();

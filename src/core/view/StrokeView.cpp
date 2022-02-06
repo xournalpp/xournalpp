@@ -8,8 +8,9 @@
 
 #include "DocumentView.h"
 
-StrokeView::StrokeView(cairo_t* cr, Stroke* s): cr(cr), crEffective(cr), s(s) {}
+using xoj::util::Rectangle;
 
+StrokeView::StrokeView(cairo_t* cr, Stroke* s): cr(cr), crEffective(cr), s(s) {}
 
 void StrokeView::pathToCairo() const {
     for_first_then_each(

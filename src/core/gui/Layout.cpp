@@ -8,9 +8,13 @@
 #include "control/Control.h"
 #include "gui/scroll/ScrollHandling.h"
 #include "gui/widgets/XournalWidget.h"
+#include "util/Rectangle.h"
 #include "util/safe_casts.h"
 
 #include "XournalView.h"
+
+using xoj::util::Rectangle;
+
 /**
  * Padding outside the pages, including shadow
  */

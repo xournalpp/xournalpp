@@ -2,6 +2,8 @@
 
 #include "PageListener.h"
 
+using xoj::util::Rectangle;
+
 PageHandler::PageHandler() = default;
 
 PageHandler::~PageHandler() = default;

@@ -9,6 +9,7 @@
 #include "gui/XournalppCursor.h"
 #include "undo/InsertUndoAction.h"
 
+using xoj::util::Rectangle;
 
 guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
 

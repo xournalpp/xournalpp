@@ -28,7 +28,7 @@ public:
     virtual ~PageHandler();
 
 public:
-    void fireRectChanged(Rectangle<double>& rect);
+    void fireRectChanged(xoj::util::Rectangle<double>& rect);
     void fireRangeChanged(Range& range);
     void fireElementChanged(Element* elem);
     void firePageChanged();

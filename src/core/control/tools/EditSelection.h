@@ -92,7 +92,7 @@ public:
     /**
      * Get the bounding rectangle in document coordinates (multiple with zoom)
      */
-    Rectangle<double> getRect() const;
+    xoj::util::Rectangle<double> getRect() const;
 
     /**
      * Get the source page (where the selection was done)
@@ -210,7 +210,7 @@ public:
      * Gets the selection's bounding box in view coordinates. This takes document zoom
      * and selection rotation into account.
      */
-    auto getBoundingBoxInView() const -> Rectangle<double>;
+    auto getBoundingBoxInView() const -> xoj::util::Rectangle<double>;
 
     /**
      * If the selection is outside the visible area correct the coordinates
@@ -327,7 +327,7 @@ private:  // DATA
     /**
      * The size and dimensions for snapping
      */
-    Rectangle<double> snappedBounds{};
+    xoj::util::Rectangle<double> snappedBounds{};
 
 
     /**

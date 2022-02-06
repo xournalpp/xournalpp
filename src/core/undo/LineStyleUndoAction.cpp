@@ -6,6 +6,8 @@
 #include "util/Rectangle.h"
 #include "util/i18n.h"
 
+using xoj::util::Rectangle;
+
 LineStyleUndoAction::LineStyleUndoAction(const PageRef& page, Layer* layer): UndoAction("LineStyleUndoAction") {
     this->page = page;
     this->layer = layer;

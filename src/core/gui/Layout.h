@@ -84,7 +84,7 @@ public:
     /**
      * Returns the Rectangle which is currently visible
      */
-    Rectangle<double> getVisibleRect();
+    xoj::util::Rectangle<double> getVisibleRect();
 
 
     /**

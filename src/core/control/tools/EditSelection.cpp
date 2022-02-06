@@ -30,6 +30,7 @@
 #include "Selection.h"
 
 using std::vector;
+using xoj::util::Rectangle;
 
 /// Smallest can scale down to, in pixels.
 constexpr size_t MINPIXSIZE = 5;

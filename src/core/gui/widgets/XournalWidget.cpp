@@ -17,6 +17,8 @@
 #include "util/Rectangle.h"
 #include "util/Util.h"
 
+using xoj::util::Rectangle;
+
 static void gtk_xournal_class_init(GtkXournalClass* klass);
 static void gtk_xournal_init(GtkXournal* xournal);
 static void gtk_xournal_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width);

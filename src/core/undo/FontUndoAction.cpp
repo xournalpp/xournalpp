@@ -6,6 +6,8 @@
 #include "util/Rectangle.h"
 #include "util/i18n.h"
 
+using xoj::util::Rectangle;
+
 class FontUndoActionEntry {
 public:
     FontUndoActionEntry(Text* e, XojFont& oldFont, XojFont& newFont) {

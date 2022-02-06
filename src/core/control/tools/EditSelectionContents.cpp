@@ -29,6 +29,7 @@
 #include "Selection.h"
 
 using std::vector;
+using xoj::util::Rectangle;
 
 EditSelectionContents::EditSelectionContents(Rectangle<double> bounds, Rectangle<double> snappedBounds,
                                              const PageRef& sourcePage, Layer* sourceLayer, XojPageView* sourceView):

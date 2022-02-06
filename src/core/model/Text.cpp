@@ -7,6 +7,8 @@
 #include "util/serializing/ObjectOutputStream.h"
 #include "view/TextView.h"  // Hack: Needed to calculate the view size
 
+using xoj::util::Rectangle;
+
 Text::Text(): AudioElement(ELEMENT_TEXT) {
     this->font.setName("Sans");
     this->font.setSize(12);

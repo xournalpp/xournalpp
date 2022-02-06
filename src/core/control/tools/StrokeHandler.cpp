@@ -17,6 +17,8 @@
 #include "StrokeStabilizer.h"
 #include "config-features.h"
 
+using namespace xoj::util;
+
 guint32 StrokeHandler::lastStrokeTime;  // persist for next stroke
 
 
