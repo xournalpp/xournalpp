@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 04:26+0000\n"
-"PO-Revision-Date: 2022-02-03 04:32\n"
+"POT-Creation-Date: 2022-02-06 19:52+0000\n"
+"PO-Revision-Date: 2022-02-06 20:49\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -51,14 +51,14 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not in {2}"
 msgstr "<span foreground='red' size='x-large'>Gerekli kullanıcı arayüzü dosyası eksik:\n"
 "<b>{1}</b></span>\n"
-"Herhangi bir yerde bulunamadı.\n"
+"Herhangi bir dizinde bulunamadı.\n"
 "  İlgili değil\n"
-"  Çalışma Yolunda Değil\n"
+"  Çalışma Dizininde değil\n"
 "  {2} içinde değil"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
-msgid "Add/Edit Tex"
-msgstr "Tex Ekle/Düzenle"
+msgid "Add/Edit TeX"
+msgstr "TeX Ekle/Düzenle"
 
 #: ../src/core/control/XournalMain.cpp:582
 msgid "Advanced export options"
@@ -2007,10 +2007,6 @@ msgstr "Ek yatay alan ekle"
 #: ../ui/settings.glade:4170
 msgid "Add additional vertical space of"
 msgstr "Ek dikey alan ekle"
-
-#: ../ui/main.glade:1991
-msgid "Add/Edit TeX"
-msgstr "TeX Ekle/Düzenle"
 
 #: ../ui/settings.glade:4495
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
