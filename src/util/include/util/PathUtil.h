@@ -12,6 +12,7 @@
 #pragma once
 
 #include <cstring>
+#include <filesystem>
 #include <optional>
 
 #include <gio/gio.h>
@@ -116,6 +117,9 @@ void openFileWithFilebrowser(const fs::path& filename);
  * passing a path to another program.
  */
 fs::path getLongPath(const fs::path& path);
+
+[[deprecated("can produce invalid strings on windows, use fs::path::native()")]] [[nodiscard]]  //
+auto system_single_byte_filename(const fs::path& path) -> std::string;
 
 /**
  * Return the configuration folder path (may not be guaranteed to exist).

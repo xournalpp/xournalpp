@@ -1,6 +1,7 @@
 #include "Settings.h"
 
 #include <cstdint>
+#include <filesystem>
 #include <utility>
 
 #include "control/DeviceListHelper.h"
@@ -418,7 +419,7 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sizeUnit")) == 0) {
         this->sizeUnit = reinterpret_cast<const char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("audioFolder")) == 0) {
-        this->audioFolder = reinterpret_cast<const char*>(value);
+        this->audioFolder = fs::u8path(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveEnabled")) == 0) {
         this->autosaveEnabled = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("autosaveTimeout")) == 0) {
@@ -935,8 +936,10 @@ void Settings::save() {
     ATTACH_COMMENT("Config for new pages");
 
     SAVE_STRING_PROP(sizeUnit);
-
-    SAVE_STRING_PROP(audioFolder);
+    {
+        auto audioFolder = this->audioFolder.u8string();
+        SAVE_STRING_PROP(audioFolder);
+    }
     SAVE_INT_PROP(audioInputDevice);
     SAVE_INT_PROP(audioOutputDevice);
     SAVE_DOUBLE_PROP(audioSampleRate);
@@ -1394,14 +1397,14 @@ void Settings::setPageTemplate(const string& pageTemplate) {
     save();
 }
 
-auto Settings::getAudioFolder() const -> string const& { return this->audioFolder; }
+auto Settings::getAudioFolder() const -> fs::path const& { return this->audioFolder; }
 
-void Settings::setAudioFolder(const string& audioFolder) {
+void Settings::setAudioFolder(fs::path audioFolder) {
     if (this->audioFolder == audioFolder) {
         return;
     }
 
-    this->audioFolder = audioFolder;
+    this->audioFolder = std::move(audioFolder);
 
     save();
 }

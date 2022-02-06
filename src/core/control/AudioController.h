@@ -34,14 +34,14 @@ public:
     bool isRecording();
 
     bool isPlaying();
-    bool startPlayback(const std::string& filename, unsigned int timestamp);
+    bool startPlayback(fs::path const& file, unsigned int timestamp);
     void pausePlayback();
     void continuePlayback();
     void stopPlayback();
     void seekForwards();
     void seekBackwards();
 
-    std::string const& getAudioFilename() const;
+    fs::path const& getAudioFilename() const;
     fs::path getAudioFolder() const;
     size_t getStartTime() const;
     std::vector<DeviceInfo> getOutputDevices() const;
@@ -59,6 +59,6 @@ private:
     std::unique_ptr<AudioRecorder> audioRecorder = std::make_unique<AudioRecorder>(settings);
     std::unique_ptr<AudioPlayer> audioPlayer = std::make_unique<AudioPlayer>(control, settings);
 
-    std::string audioFilename;
+    fs::path audioFilename;
     size_t timestamp = 0;
 };

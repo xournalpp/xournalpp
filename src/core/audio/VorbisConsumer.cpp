@@ -3,7 +3,11 @@
 #include <algorithm>
 #include <cmath>
 
-auto VorbisConsumer::start(const std::string& filename) -> bool {
+#include "SNDFileCpp.h"
+
+using namespace xoj;
+
+auto VorbisConsumer::start(fs::path const& file) -> bool {
     auto [sampleRate, channels] = this->audioQueue.getAudioAttributes();
 
     if (sampleRate == -1) {
@@ -16,11 +20,9 @@ auto VorbisConsumer::start(const std::string& filename) -> bool {
     sfInfo.format = SF_FORMAT_OGG | SF_FORMAT_VORBIS;
     sfInfo.samplerate = static_cast<int>(this->settings.getAudioSampleRate());
 
-    auto SNDFILE_closer = [](SNDFILE* tag) { sf_close(tag); };
-    std::unique_ptr<SNDFILE, decltype(SNDFILE_closer)> sfFile{sf_open(filename.c_str(), SFM_WRITE, &sfInfo),
-                                                              std::move(SNDFILE_closer)};
+    auto sfFile = audio::make_snd_file(file.native(), SFM_WRITE, &sfInfo);
     if (!sfFile) {
-        g_warning("VorbisConsumer: output file \"%s\" could not be opened\ncaused by:%s", filename.c_str(),
+        g_warning("VorbisConsumer: output file \"%s\" could not be opened\ncaused by:%s", file.u8string().c_str(),
                   sf_strerror(sfFile.get()));
         return false;
     }

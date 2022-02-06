@@ -4,9 +4,9 @@
 
 AudioPlayer::~AudioPlayer() { this->stop(); }
 
-auto AudioPlayer::start(const std::string& filename, unsigned int timestamp) -> bool {
+auto AudioPlayer::start(fs::path const& file, unsigned int timestamp) -> bool {
     // Start the producer for reading the data
-    bool status = this->vorbisProducer->start(filename, timestamp);
+    bool status = this->vorbisProducer->start(file, timestamp);
 
     // Start playing
     if (status) {

@@ -1,5 +1,6 @@
 #include "SettingsDialog.h"
 
+#include <filesystem>
 #include <utility>
 
 #include <config.h>
@@ -7,6 +8,7 @@
 #include "control/DeviceListHelper.h"
 #include "control/tools/StrokeStabilizerEnum.h"
 #include "gui/widgets/ZoomCallib.h"
+#include "util/PathUtil.h"
 #include "util/StringUtils.h"
 #include "util/Util.h"
 #include "util/i18n.h"
@@ -390,7 +392,8 @@ void SettingsDialog::load() {
     string txt = settings->getDefaultSaveName();
     gtk_entry_set_text(GTK_ENTRY(txtDefaultSaveName), txt.c_str());
 
-    gtk_file_chooser_set_uri(GTK_FILE_CHOOSER(get("fcAudioPath")), settings->getAudioFolder().c_str());
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(get("fcAudioPath")),
+                                        Util::toGFilename(settings->getAudioFolder()).c_str());
 
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spAutosaveTimeout), settings->getAutosaveTimeout());
@@ -772,10 +775,11 @@ void SettingsDialog::save() {
 
     settings->setDefaultSaveName(gtk_entry_get_text(GTK_ENTRY(get("txtDefaultSaveName"))));
     // Todo(fabian): use Util::fromGFilename!
-    char* uri = gtk_file_chooser_get_uri(GTK_FILE_CHOOSER(get("fcAudioPath")));
-    if (uri != nullptr) {
-        settings->setAudioFolder(uri);
-        g_free(uri);
+    auto file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(get("fcAudioPath")));
+    auto path = Util::fromGFile(file);
+    g_object_unref(file);
+    if (fs::is_directory(path)) {
+        settings->setAudioFolder(path);
     }
 
     GtkWidget* spAutosaveTimeout = get("spAutosaveTimeout");
