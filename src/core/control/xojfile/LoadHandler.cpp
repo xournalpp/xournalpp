@@ -154,6 +154,11 @@ auto LoadHandler::openFile(fs::path const& filepath) -> bool {
 
         // open the main content file
         this->zipContentFile = zip_fopen(this->zipFp, "content.xml", 0);
+        if (!this->zipContentFile) {
+            this->lastError = FS(_F("Failed to open content.xml in zip archive: \"{1}\"") %
+                                 zip_error_strerror(zip_get_error(zipFp)));
+            return false;
+        }
     }
 
     // Fail if neither utility could open the file
@@ -169,6 +174,7 @@ auto LoadHandler::closeFile() -> bool {
         return static_cast<bool>(gzclose(this->gzFp));
     }
 
+    g_assert(this->zipContentFile != nullptr);
     zip_fclose(this->zipContentFile);
     int zipError = zip_close(this->zipFp);
     return zipError == 0;
@@ -182,6 +188,7 @@ auto LoadHandler::readContentFile(char* buffer, zip_uint64_t len) -> zip_int64_t
         return gzread(this->gzFp, buffer, static_cast<unsigned int>(len));
     }
 
+    g_assert(this->zipContentFile != nullptr);
     zip_int64_t lengthRead = zip_fread(this->zipContentFile, buffer, len);
     if (lengthRead > 0) {
         return lengthRead;
@@ -361,14 +368,13 @@ void LoadHandler::parseBgPixmap() {
         this->page->setBackgroundImage(img);
     } else if (!strcmp(domain, "attach")) {
         // This is the new zip file attach domain
-        gpointer data = nullptr;
-        gsize dataLength = 0;
-        bool success = readZipAttachment(filepath, data, dataLength);
-        if (!success) {
+        auto readResult = readZipAttachment(filepath);
+        if (!readResult) {
             return;
         }
+        std::string& imgData = *readResult;
 
-        GBytes* attachment = g_bytes_new_take(data, dataLength);
+        GBytes* attachment = g_bytes_new_take(imgData.data(), imgData.size());
         GInputStream* inputStream = g_memory_input_stream_new_from_bytes(attachment);
 
         GError* error = nullptr;
@@ -432,14 +438,12 @@ void LoadHandler::parseBgPdf() {
                 if (this->isGzFile) {
                     pdfFilename = (fs::path{xournalFilepath} += ".") += pdfFilename;
                 } else {
-                    gpointer data = nullptr;
-                    gsize dataLength = 0;
-                    bool success = readZipAttachment(pdfFilename, data, dataLength);
-                    if (!success) {
+                    auto readResult = readZipAttachment(pdfFilename);
+                    if (!readResult) {
                         return;
                     }
-
-                    doc.readPdf(pdfFilename, false, attachToDocument, data, dataLength);
+                    std::string& pdfBytes = readResult.value();
+                    doc.readPdf(pdfFilename, false, attachToDocument, pdfBytes.data(), pdfBytes.size());
 
                     if (!doc.getLastErrorMsg().empty()) {
                         error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
@@ -464,12 +468,10 @@ void LoadHandler::parseBgPdf() {
             if (!doc.getLastErrorMsg().empty()) {
                 error("%s", FC(_F("Error reading PDF: {1}") % doc.getLastErrorMsg()));
             }
+        } else if (attachToDocument) {
+            this->attachedPdfMissing = true;
         } else {
-            if (attachToDocument) {
-                this->attachedPdfMissing = true;
-            } else {
-                this->pdfMissing = pdfFilename.u8string();
-            }
+            this->pdfMissing = pdfFilename.u8string();
         }
     }
 }
@@ -697,17 +699,17 @@ void LoadHandler::parseTexImage() {
 }
 
 void LoadHandler::parseAttachment() {
-    if (this->pos != PARSER_POS_IN_IMAGE || this->pos != PARSER_POS_IN_TEXIMAGE) {
+    if (this->pos != PARSER_POS_IN_IMAGE && this->pos != PARSER_POS_IN_TEXIMAGE) {
         g_warning("Found attachment tag as child of a tag that should not have such a child (ignoring this tag)");
         return;
     }
     const char* path = LoadHandlerHelper::getAttrib("path", false, this);
 
-    // Todo(fabian) move the following 4 lines into readZipAttachment
-    gpointer data = nullptr;
-    gsize dataLength{0};
-    string imgData = readZipAttachment(path, data, dataLength) ? string{static_cast<char*>(data), dataLength} : "";
-    g_free(data);
+    auto readResult = readZipAttachment(path);
+    if (!readResult) {
+        return;
+    }
+    std::string& imgData = *readResult;
 
     switch (this->pos) {
         case PARSER_POS_IN_IMAGE: {
@@ -1018,51 +1020,46 @@ auto LoadHandler::loadDocument(fs::path const& filepath) -> Document* {
     return &this->doc;
 }
 
-// Todo(fabian): return data and length by value not by reference, to ensure data and length is assigned always
-//      return string not a pointer. Ownage is not clear!
-auto LoadHandler::readZipAttachment(fs::path const& filename, gpointer& data, gsize& length) -> bool {
+auto LoadHandler::readZipAttachment(fs::path const& filename) -> std::optional<std::string> {
     zip_stat_t attachmentFileStat;
-    int statStatus = zip_stat(this->zipFp, filename.u8string().c_str(), 0, &attachmentFileStat);
+    const int statStatus = zip_stat(this->zipFp, filename.u8string().c_str(), 0, &attachmentFileStat);
     if (statStatus != 0) {
         error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.string() %
                        zip_error_strerror(zip_get_error(this->zipFp))));
-        return false;
+        return {};
     }
 
-    if (attachmentFileStat.valid & ZIP_STAT_SIZE) {
-        length = attachmentFileStat.size;
-    } else {
+    if (!(attachmentFileStat.valid & ZIP_STAT_SIZE)) {
         error("%s",
               FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") % filename.string()));
-        return false;
+        return {};
     }
+    const zip_uint64_t length = attachmentFileStat.size;
 
     zip_file_t* attachmentFile = zip_fopen(this->zipFp, filename.u8string().c_str(), 0);
-
     if (!attachmentFile) {
         error("%s", FC(_F("Could not open attachment: {1}. Error message: {2}") % filename.string() %
                        zip_error_strerror(zip_get_error(this->zipFp))));
-        return false;
+        return {};
     }
 
-    data = g_malloc(attachmentFileStat.size);
+    std::string data(length, 0);
     zip_uint64_t readBytes = 0;
     while (readBytes < length) {
-        zip_int64_t read = zip_fread(attachmentFile, data, attachmentFileStat.size);
+        const zip_int64_t read = zip_fread(attachmentFile, data.data() + readBytes, length - readBytes);
         if (read == -1) {
-            g_free(data);
             zip_fclose(attachmentFile);
             error("%s", FC(_F("Could not open attachment: {1}. Error message: No valid file size provided") %
                            filename.string()));
-            return false;
+            return {};
         }
 
-        readBytes += read;
+        readBytes += static_cast<zip_uint64_t>(read);
     }
 
     zip_fclose(attachmentFile);
 
-    return true;
+    return {std::move(data)};
 }
 
 auto LoadHandler::getTempFileForPath(fs::path const& filename) -> fs::path {
