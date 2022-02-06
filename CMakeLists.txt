@@ -90,6 +90,14 @@ list(APPEND pkg-module-spec "libzip >= 1.0.1")
 list(APPEND pkg-module-spec "portaudiocpp >= 12")
 list(APPEND pkg-module-spec "sndfile >= 1.0.25")
 list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
+
+# Profiling
+option (ENABLE_PROFILING "Link with gperftools" OFF)
+if (ENABLE_PROFILING)
+  list(APPEND pkg-module-spec "libprofiler >= 2.5")
+  list(APPEND pkg-module-spec "libtcmalloc >= 2.5")
+endif (ENABLE_PROFILING)
+
 pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 
 if (#[[${CMAKE_VERSION} VERSION_LESS "3.18" AND]] ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -306,6 +314,7 @@ Configuration:
     GTEST enabled:              ${ENABLE_GTEST}
     GCOV enabled:               ${DEV_ENABLE_GCOV}
     Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
+    Profiling enabled:          ${ENABLE_PROFILING}
 ")
 
 option(CMAKE_DEBUG_INCLUDES_LDFLAGS "List include dirs and ldflags for xournalpp target" OFF)
