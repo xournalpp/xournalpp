@@ -725,6 +725,7 @@ void EditSelection::setEdgePan(bool pan) {
                               nullptr);
         g_source_attach(this->edgePanHandler, nullptr);
     } else if (!pan && this->edgePanHandler) {
+        g_source_destroy(this->edgePanHandler);
         g_source_unref(this->edgePanHandler);
         this->edgePanHandler = nullptr;
         this->edgePanInhibitNext = false;
