@@ -6,26 +6,27 @@ StrokeStyle::StrokeStyle() = default;
 
 StrokeStyle::~StrokeStyle() = default;
 
-const double dashLinePattern[] = {6, 3};
-const double dashDotLinePattern[] = {6, 3, 0.5, 3};
-const double dotLinePattern[] = {0.5, 3};
+const LineStyle dashLinePattern({6, 3}, 1.0);
+const LineStyle dashDotLinePattern({6, 3, 0.5, 3}, 1.0);
+const LineStyle dotLinePattern({0.5, 3}, 1.0);
+const LineStyle heavyDownstrokePattern({}, 0.2);
 
-#define PARSE_STYLE(name, def)                                \
-    if (strcmp(style, name) == 0) {                           \
-        LineStyle style;                                      \
-        style.setDashes(def, sizeof(def) / sizeof((def)[0])); \
-        return style;                                         \
+#define PARSE_STYLE(name, def)      \
+    if (strcmp(style, name) == 0) { \
+        return def;                 \
     }
 
 auto StrokeStyle::parseStyle(const char* style) -> LineStyle {
     PARSE_STYLE("dash", dashLinePattern);
     PARSE_STYLE("dashdot", dashDotLinePattern);
     PARSE_STYLE("dot", dotLinePattern);
-
+    PARSE_STYLE("heavyDownstroke", heavyDownstrokePattern);
 
     if (strncmp("cust: ", style, 6) != 0) {
         return LineStyle();
     }
+
+    // Todo(oddorb): support new options from here
 
     std::vector<double> dash;
 
@@ -54,33 +55,32 @@ auto StrokeStyle::parseStyle(const char* style) -> LineStyle {
     return ls;
 }
 
-#define FORMAT_STYLE(name, def)                                                                            \
-    if (count == (sizeof(def) / sizeof((def)[0])) && memcmp(dashes, def, count * sizeof((def)[0])) == 0) { \
-        return name;                                                                                       \
+#define FORMAT_STYLE(name, def) \
+    if (style == def) {         \
+        return name;            \
     }
 
-auto StrokeStyle::formatStyle(const double* dashes, int count) -> std::string {
+auto StrokeStyle::formatStyle(const LineStyle& style) -> std::string {
     FORMAT_STYLE("dash", dashLinePattern);
     FORMAT_STYLE("dashdot", dashDotLinePattern);
     FORMAT_STYLE("dot", dotLinePattern);
+    FORMAT_STYLE("heavyDownstroke", heavyDownstrokePattern);
 
-    std::string custom = "cust:";
+    // Todo(oddorb): support new options from here
 
-    for (int i = 0; i < count; i++) {
-        custom += " ";
-        char* str = g_strdup_printf("%0.2lf", dashes[i]);
-        custom += str;
-        g_free(str);
-    }
-
-    return custom;
-}
-
-auto StrokeStyle::formatStyle(const LineStyle& style) -> std::string {
     const double* dashes = nullptr;
     int dashCount = 0;
     if (style.getDashes(dashes, dashCount)) {
-        return StrokeStyle::formatStyle(dashes, dashCount);
+        std::string custom = "cust:";
+
+        for (int i = 0; i < dashCount; i++) {
+            custom += " ";
+            char* str = g_strdup_printf("%0.2lf", dashes[i]);
+            custom += str;
+            g_free(str);
+        }
+
+        return custom;
     }
 
     // Should not be returned, in this case the attribute is not written

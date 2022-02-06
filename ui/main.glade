@@ -1688,6 +1688,17 @@
                                   </object>
                                 </child>
                                 <child>
+                                  <object class="GtkCheckMenuItem" id="penStyleHeavyDownstroke">
+                                    <property name="name">penStyleHeavyDownstroke</property>
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="label" translatable="no">heavy down stroke</property>
+                                    <property name="use-underline">True</property>
+                                    <property name="draw-as-radio">True</property>
+                                    <signal name="toggled" handler="ACTION_TOOL_LINE_STYLE_HEAVY_DOWNSTROKE:GROUP_LINE_STYLE" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
                                   <object class="GtkSeparatorMenuItem" id="menuitem1">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>

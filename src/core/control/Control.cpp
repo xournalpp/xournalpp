@@ -645,6 +645,9 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
         case ACTION_TOOL_LINE_STYLE_DOT:
             setLineStyle("dot");
             break;
+        case ACTION_TOOL_LINE_STYLE_HEAVY_DOWNSTROKE:
+            setLineStyle("heavyDownstroke");
+            break;
 
         case ACTION_TOOL_ERASER_SIZE_VERY_FINE:
             if (enabled) {
@@ -1872,6 +1875,8 @@ void Control::toolLineStyleChanged() {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH_DOT);
     } else if (style == "dot") {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DOT);
+    } else if (style == "heavyDownstroke") {
+        fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_HEAVY_DOWNSTROKE);
     } else {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_PLAIN);
     }

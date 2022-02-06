@@ -323,7 +323,7 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
         createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pos.pressure));
 
         this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
-        this->fullRedraw = this->stroke->getFill() != -1 || stroke->getLineStyle().hasDashes();
+        this->fullRedraw = this->stroke->getFill() != -1 || stroke->getLineStyle().isNontrivial();
 
         stabilizer->initialize(this, zoom, pos);
     }

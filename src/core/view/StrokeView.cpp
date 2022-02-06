@@ -50,7 +50,20 @@ void StrokeView::drawWithPressure() const {
 
     for (auto p1i = begin(s->getPointVector()), p2i = std::next(p1i), endi = end(s->getPointVector());
          p1i != endi && p2i != endi; ++p1i, ++p2i) {
-        auto width = p1i->z != Point::NO_PRESSURE ? p1i->z : s->getWidth();
+        double width = p1i->z != Point::NO_PRESSURE ? p1i->z : s->getWidth();
+
+        if (s->getLineStyle().hasHeavyDownstroke()) {
+            double r = s->getLineStyle().getHeavyDownstrokeRatio();
+            double dx = p2i->x - p1i->x;
+            double dy = p2i->y - p1i->y;
+            double norm = sqrt(dx * dx + dy * dy);
+            double ndx = dx / norm;
+            double ndy = dy / norm;
+            // dotproduct between stroke direction and down
+            double p = ndy;
+            width = width * (r + 0.5 * (p + 1.0) * (1.0 - r));
+        }
+
         cairo_set_line_width(crEffective, width);
         if (dashes) {
             cairo_set_dash(crEffective, dashes, dashCount, dashOffset);
@@ -172,10 +185,10 @@ void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool 
         cairo_set_operator(crEffective, CAIRO_OPERATOR_SOURCE);
     }
 
-    if (s->getErasable() && !dontRenderEditingStroke) {
+    if (s->getErasable() and !dontRenderEditingStroke) {
         // don't render erasable for previews
         drawErasableStroke(crEffective, s);
-    } else if (s->hasPressure() && !highlighter) {
+    } else if ((s->hasPressure() or s->getLineStyle().hasHeavyDownstroke()) and !highlighter) {
         drawWithPressure();
     } else {
         drawNoPressure();

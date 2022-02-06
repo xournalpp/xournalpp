@@ -93,7 +93,7 @@ void testLoadStoreLoad() {
                 auto sB = dynamic_cast<Stroke*>(b);
                 EXPECT_EQ(sA->getPointCount(), sB->getPointCount());
                 EXPECT_EQ(sA->getToolType(), sB->getToolType());
-                EXPECT_EQ(sA->getLineStyle().hasDashes(), sB->getLineStyle().hasDashes());
+                EXPECT_EQ(sA->getLineStyle(), sB->getLineStyle());
                 EXPECT_TRUE(coordEq(sA->getAvgPressure(), sB->getAvgPressure()));
                 for (int j = 0; j < sA->getPointCount(); j++) {
                     Point pA = sA->getPoint(j);
