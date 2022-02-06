@@ -1,5 +1,8 @@
 #include "ExportHelper.h"
 
+#include <filesystem>
+
+
 namespace ExportHelper {
 
 /**
@@ -81,9 +84,7 @@ auto exportPdf(Document* doc, const char* output, const char* range, ExportBackg
 
     std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr);
     pdfe->setExportBackground(exportBackground);
-    char* cpath = g_file_get_path(file);
-    std::string path = cpath;
-    g_free(cpath);
+    auto path = fs::u8path(g_file_peek_path(file));
     g_object_unref(file);
 
     bool exportSuccess;  // Return of the export job

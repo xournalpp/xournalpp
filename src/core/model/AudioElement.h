@@ -18,6 +18,7 @@
 #include "util/serializing/ObjectOutputStream.h"
 
 #include "Element.h"
+#include "filesystem.h"
 
 
 class AudioElement: public Element {
@@ -30,8 +31,8 @@ public:
     void setTimestamp(size_t timestamp);
     size_t getTimestamp() const;
 
-    void setAudioFilename(std::string fn);
-    std::string getAudioFilename() const;
+    void setAudioFilename(fs::path fn);
+    auto getAudioFilename() const -> fs::path const&;
 
     virtual bool intersects(double x, double y, double halfSize) = 0;
     virtual bool intersects(double x, double y, double halfSize, double* gap) = 0;
@@ -45,7 +46,7 @@ protected:
 private:
     // Stroke timestamp, to match it to the audio stream
     size_t timestamp = 0;
-    std::string audioFilename = "";
+    fs::path audioFilename{};
 
 public:
     static constexpr double OPACITY_NO_AUDIO = 0.3;

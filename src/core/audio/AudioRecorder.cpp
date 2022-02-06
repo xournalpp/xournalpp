@@ -4,13 +4,10 @@
 
 AudioRecorder::~AudioRecorder() { this->stop(); }
 
-auto AudioRecorder::start(const std::string& filename) -> bool {
-    // Start recording
+auto AudioRecorder::start(fs::path const& file) -> bool {
     bool status = this->portAudioProducer->startRecording();
-
     // Start the consumer for writing the data
-    status = status && this->vorbisConsumer->start(filename);
-
+    status = status && this->vorbisConsumer->start(file);
     return status;
 }
 

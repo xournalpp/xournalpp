@@ -25,9 +25,13 @@
 class AudioPlayer final {
 public:
     explicit AudioPlayer(Control& control, Settings& settings): control(control), settings(settings) {}
-
+    AudioPlayer(AudioPlayer const&) = delete;
+    AudioPlayer(AudioPlayer&&) = delete;
+    auto operator=(AudioPlayer const&) -> AudioPlayer& = delete;
+    auto operator=(AudioPlayer&&) -> AudioPlayer& = delete;
     ~AudioPlayer();
-    bool start(const std::string& filename, unsigned int timestamp = 0);
+
+    bool start(fs::path const& file, unsigned int timestamp = 0);
     bool isPlaying();
     void stop();
     bool play();

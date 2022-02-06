@@ -228,7 +228,7 @@ void XojPageView::startText(double x, double y) {
             text->setY(y - text->getElementHeight() / 2);
 
             if (xournal->getControl()->getAudioController()->isRecording()) {
-                string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
+                fs::path audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
                 size_t sttime = xournal->getControl()->getAudioController()->getStartTime();
                 size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
                 text->setTimestamp(milliseconds);
@@ -368,7 +368,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
             if (play.playbackStatus) {
                 auto& status = *play.playbackStatus;
                 if (!status.success) {
-                    string message = FS(_F("Unable to play audio recording {1}") % status.filename);
+                    string message = FS(_F("Unable to play audio recording {1}") % status.filename.u8string());
                     XojMsgBox::showErrorToUser(this->xournal->getControl()->getGtkWindow(), message);
                 }
             }

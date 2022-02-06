@@ -355,8 +355,8 @@ public:
     std::string const& getPageTemplate() const;
     void setPageTemplate(const std::string& pageTemplate);
 
-    std::string const& getAudioFolder() const;
-    void setAudioFolder(const std::string& audioFolder);
+    fs::path const& getAudioFolder() const;
+    void setAudioFolder(fs::path audioFolder);
 
     PaDeviceIndex getAudioInputDevice() const;
     void setAudioInputDevice(PaDeviceIndex deviceIndex);
@@ -886,7 +886,7 @@ private:
     /**
      * Audio folder for audio recording
      */
-    std::string audioFolder;
+    fs::path audioFolder;
 
     /**
      * Snap tolerance for the graph/dotted grid

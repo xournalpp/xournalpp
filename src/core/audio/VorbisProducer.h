@@ -15,15 +15,14 @@
 #include <thread>
 #include <utility>
 
-#include <sndfile.h>
-
 #include "AudioQueue.h"
 #include "DeviceInfo.h"
+#include "filesystem.h"
 
 struct VorbisProducer final {
     explicit VorbisProducer(AudioQueue<float>& audioQueue): audioQueue(audioQueue) {}
 
-    bool start(const std::string& filename, unsigned int timestamp);
+    bool start(fs::path const& file, unsigned int timestamp);
     void abort();
     void stop();
     void seek(int seconds);

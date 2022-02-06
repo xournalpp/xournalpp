@@ -1,10 +1,12 @@
 #include "AudioController.h"
 
 #include <cinttypes>
+#include <filesystem>
 
 #include "util/Util.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
+
 
 using std::string;
 using std::vector;
@@ -30,7 +32,7 @@ auto AudioController::startRecording() -> bool {
 
         g_message("Start recording");
 
-        bool isRecording = this->audioRecorder->start((getAudioFolder() / data).string());
+        bool isRecording = this->audioRecorder->start(getAudioFolder() / data);
 
         if (!isRecording) {
             audioFilename = "";
@@ -58,9 +60,9 @@ auto AudioController::isRecording() -> bool { return this->audioRecorder->isReco
 
 auto AudioController::isPlaying() -> bool { return this->audioPlayer->isPlaying(); }
 
-auto AudioController::startPlayback(const string& filename, unsigned int timestamp) -> bool {
+auto AudioController::startPlayback(fs::path const& file, unsigned int timestamp) -> bool {
     this->audioPlayer->stop();
-    bool status = this->audioPlayer->start(filename, timestamp);
+    bool status = this->audioPlayer->start(file, timestamp);
     if (status) {
         this->control.getWindow()->getToolMenuHandler()->enableAudioPlaybackButtons();
     }
@@ -88,26 +90,19 @@ void AudioController::stopPlayback() {
     this->audioPlayer->stop();
 }
 
-auto AudioController::getAudioFilename() const -> string const& { return this->audioFilename; }
+auto AudioController::getAudioFilename() const -> fs::path const& { return this->audioFilename; }
 
 auto AudioController::getAudioFolder() const -> fs::path {
-    string const& af = this->settings.getAudioFolder();
+    auto const& af = this->settings.getAudioFolder();
 
-    if (af.length() < 8) {
-        string msg = _("Audio folder not set! Recording won't work!\nPlease set the "
+    if (!fs::is_directory(af)) {
+        string msg = _("Audio folder not set or invalid! Recording won't work!\nPlease set the "
                        "recording folder under \"Preferences > Audio recording\"");
         g_warning("%s", msg.c_str());
         XojMsgBox::showErrorToUser(this->control.getGtkWindow(), msg);
         return fs::path{};
     }
-
-    auto path = Util::fromUri(af);
-    if (!path) {
-        g_warning("Failed to fetch audio folder.");
-        return fs::path{};
-    }
-
-    return *Util::fromUri(af);
+    return af;
 }
 
 auto AudioController::getStartTime() const -> size_t { return this->timestamp; }

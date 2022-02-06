@@ -20,13 +20,14 @@
 #include "AudioQueue.h"
 #include "PortAudioProducer.h"
 #include "VorbisConsumer.h"
+#include "filesystem.h"
 
 
 struct AudioRecorder {
     explicit AudioRecorder(Settings& settings): settings(settings) {}
     ~AudioRecorder();
 
-    bool start(const std::string& filename);
+    bool start(fs::path const& file);
     void stop();
     bool isRecording() const;
     std::vector<DeviceInfo> getInputDevices() const;
