@@ -4,7 +4,13 @@
 #include "util/serializing/ObjectOutputStream.h"
 
 
-LineStyle::LineStyle() = default;
+LineStyle::LineStyle() : dashCount(0), dashes(nullptr), heavyDownstrokeRatio(1.0) {};
+
+LineStyle::LineStyle(std::vector<double> dashes, double heavyDownstrokeRatio):
+        dashCount(dashes.size()), heavyDownstrokeRatio(heavyDownstrokeRatio) {
+    this->dashes = static_cast<double*>(g_malloc(dashCount * sizeof(double)));
+    std::copy(dashes.begin(), dashes.end(), this->dashes);
+}
 
 LineStyle::LineStyle(std::initializer_list<double> dashes, double heavyDownstrokeRatio):
         dashCount(dashes.size()), heavyDownstrokeRatio(heavyDownstrokeRatio) {

@@ -20,6 +20,7 @@
 class LineStyle: public Serializable {
 public:
     LineStyle();
+    LineStyle(std::vector<double> dashes, double heavyDownStrokeRatio);
     LineStyle(std::initializer_list<double> dashes, double heavyDownStrokeRatio);
     LineStyle(const LineStyle& other);
     virtual ~LineStyle();
