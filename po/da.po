@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 04:26+0000\n"
-"PO-Revision-Date: 2022-02-03 04:33\n"
+"POT-Creation-Date: 2022-02-06 19:52+0000\n"
+"PO-Revision-Date: 2022-02-06 20:49\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -57,8 +57,8 @@ msgstr "<span foreground='red' size='x-large'>Mangler den nødvendige UI fil:\n"
 "  Ikke i {2}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
-msgid "Add/Edit Tex"
-msgstr "Tilføj/Rediger TeX"
+msgid "Add/Edit TeX"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:582
 msgid "Advanced export options"
@@ -1944,10 +1944,6 @@ msgstr ""
 
 #: ../ui/settings.glade:4170
 msgid "Add additional vertical space of"
-msgstr ""
-
-#: ../ui/main.glade:1991
-msgid "Add/Edit TeX"
 msgstr ""
 
 #: ../ui/settings.glade:4495
