@@ -20,7 +20,11 @@
 class Image: public Element {
 public:
     Image();
-    ~Image() override;
+    Image(const Image&) = delete;
+    Image& operator=(const Image&) = delete;
+    Image(Image&&) = delete;
+    Image& operator=(Image&&) = delete;
+    virtual ~Image();
 
 public:
     void setWidth(double width);
@@ -34,9 +38,6 @@ public:
     void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
     void rotate(double x0, double y0, double th) override;
 
-    /**
-     * @overwrite
-     */
     Element* clone() override;
 
 public:
