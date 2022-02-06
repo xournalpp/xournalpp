@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 04:26+0000\n"
-"PO-Revision-Date: 2022-02-04 10:46\n"
+"POT-Creation-Date: 2022-02-06 19:52+0000\n"
+"PO-Revision-Date: 2022-02-06 20:49\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -57,8 +57,8 @@ msgstr "<span foreground='red' size='x-large'>A szükséges UI fájl hiányzik:\
 "  A {2} könyvtárban nem található"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
-msgid "Add/Edit Tex"
-msgstr "Tex hozzáadása/szerkesztése"
+msgid "Add/Edit TeX"
+msgstr "TeX hozzáadása/szerkesztése"
 
 #: ../src/core/control/XournalMain.cpp:582
 msgid "Advanced export options"
@@ -2007,10 +2007,6 @@ msgstr "További vízszintes terület hozzáadása:"
 #: ../ui/settings.glade:4170
 msgid "Add additional vertical space of"
 msgstr "További függőleges terület hozzáadása:"
-
-#: ../ui/main.glade:1991
-msgid "Add/Edit TeX"
-msgstr "TeX hozzáadása/szerkesztése"
 
 #: ../ui/settings.glade:4495
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
