@@ -325,6 +325,20 @@ TEST(ControlLoadHandler, testTextZipped) {
     EXPECT_EQ(Color(0x00f000U), t3->getColor());
 }
 
+TEST(ControlLoadHandler, testImageZipped) {
+    LoadHandler handler;
+    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/new.xopp"));
+
+    EXPECT_EQ(1U, doc->getPageCount());
+    PageRef page = doc->getPage(0);
+    EXPECT_EQ(1U, page->getLayerCount());
+    Layer* layer = (*page->getLayers())[0];
+    EXPECT_EQ(layer->getElements().size(), 1);
+
+    Image* img = dynamic_cast<Image*>(layer->getElements()[0]);
+    EXPECT_TRUE(img);
+}
+
 TEST(ControlLoadHandler, testLoadStoreLoadDefault) { testLoadStoreLoad(); }
 
 

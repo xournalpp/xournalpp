@@ -667,6 +667,7 @@ void LoadHandler::parseImage() {
     double right = LoadHandlerHelper::getAttribDouble("right", this);
     double bottom = LoadHandlerHelper::getAttribDouble("bottom", this);
 
+    g_assert(this->image == nullptr);
     this->image = new Image();
     this->layer->addElement(this->image);
     this->image->setX(left);
@@ -883,6 +884,7 @@ void LoadHandler::parserEndElement(GMarkupParseContext* context, const gchar* el
         handler->pos = PARSER_POS_IN_LAYER;
         handler->text = nullptr;
     } else if (handler->pos == PARSER_POS_IN_IMAGE && strcmp(elementName, "image") == 0) {
+        g_assert(handler->image->getImage() != nullptr && "image can't be rendered");
         handler->pos = PARSER_POS_IN_LAYER;
         handler->image = nullptr;
     } else if (handler->pos == PARSER_POS_IN_TEXIMAGE && strcmp(elementName, "teximage") == 0) {
@@ -968,7 +970,8 @@ auto LoadHandler::parseBase64(const gchar* base64, gsize length) -> string {
 }
 
 void LoadHandler::readImage(const gchar* base64string, gsize base64stringLen) {
-    if (base64stringLen == 1 && !strcmp(base64string, "\n")) {
+    g_assert(this->image != nullptr);
+    if (base64stringLen == 0 || (base64stringLen == 1 && base64string[0] == '\n') || this->image->hasData()) {
         return;
     }
 
