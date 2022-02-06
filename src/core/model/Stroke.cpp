@@ -7,6 +7,8 @@
 #include "util/serializing/ObjectInputStream.h"
 #include "util/serializing/ObjectOutputStream.h"
 
+using xoj::util::Rectangle;
+
 template <typename Float>
 constexpr void updateBounds(Float& x, Float& y, Float& width, Float& height, Rectangle<Float>& snap, Point const& p,
                             double half_width) {

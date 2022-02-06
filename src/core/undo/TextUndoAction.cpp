@@ -10,6 +10,8 @@
 #include "util/Rectangle.h"
 #include "util/i18n.h"
 
+using xoj::util::Rectangle;
+
 TextUndoAction::TextUndoAction(const PageRef& page, Layer* layer, Text* text, std::string lastText,
                                TextEditor* textEditor):
         UndoAction("TextUndoAction") {

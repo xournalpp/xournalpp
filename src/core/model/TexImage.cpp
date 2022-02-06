@@ -6,6 +6,8 @@
 #include "util/serializing/ObjectInputStream.h"
 #include "util/serializing/ObjectOutputStream.h"
 
+using xoj::util::Rectangle;
+
 TexImage::TexImage(): Element(ELEMENT_TEXIMAGE) { this->sizeCalculated = true; }
 
 TexImage::~TexImage() { freeImageAndPdf(); }

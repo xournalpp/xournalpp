@@ -5,6 +5,8 @@
 #include "util/serializing/ObjectInputStream.h"
 #include "util/serializing/ObjectOutputStream.h"
 
+using xoj::util::Rectangle;
+
 Element::Element(ElementType type): type(type) {}
 
 Element::~Element() = default;

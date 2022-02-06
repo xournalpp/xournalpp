@@ -146,7 +146,7 @@ public:
     TexImage* getSelectedTex();
     Text* getSelectedText();
 
-    Rectangle<double> getRect() const;
+    xoj::util::Rectangle<double> getRect() const;
 
 public:  // event handler
     bool onButtonPressEvent(const PositionInputData& pos);
@@ -174,7 +174,7 @@ public:  // event handler
     void paintPageSync(cairo_t* cr, GdkRectangle* rect);
 
 public:  // listener
-    void rectChanged(Rectangle<double>& rect);
+    void rectChanged(xoj::util::Rectangle<double>& rect);
     void rangeChanged(Range& range);
     void pageChanged();
     void elementChanged(Element* elem);
@@ -248,7 +248,7 @@ private:
     int lastVisibleTime = -1;
 
     std::mutex repaintRectMutex;
-    std::vector<Rectangle<double>> rerenderRects;
+    std::vector<xoj::util::Rectangle<double>> rerenderRects;
     bool rerenderComplete = false;
 
     std::mutex drawingMutex;

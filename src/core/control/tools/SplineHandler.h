@@ -51,7 +51,7 @@ private:
     void finalizeSpline();
     void movePoint(double dx, double dy);
     void updateStroke();
-    Rectangle<double> computeRepaintRectangle() const;
+    xoj::util::Rectangle<double> computeRepaintRectangle() const;
 
     // to filter out short strokes (usually the user tapping on the page to select it)
     guint32 startStrokeTime{};

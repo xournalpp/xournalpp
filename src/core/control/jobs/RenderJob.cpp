@@ -12,6 +12,8 @@
 #include "view/DocumentView.h"
 #include "view/PdfView.h"
 
+using xoj::util::Rectangle;
+
 RenderJob::RenderJob(XojPageView* view): view(view) {}
 
 auto RenderJob::getSource() -> void* { return this->view; }

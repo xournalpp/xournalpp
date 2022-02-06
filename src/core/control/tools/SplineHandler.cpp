@@ -10,6 +10,8 @@
 #include "model/SplineSegment.h"
 #include "undo/InsertUndoAction.h"
 
+using xoj::util::Rectangle;
+
 guint32 SplineHandler::lastStrokeTime;  // persist for next stroke
 
 SplineHandler::SplineHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):

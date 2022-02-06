@@ -97,8 +97,8 @@ public:
     GtkWidget* getWidget();
     XournalppCursor* getCursor();
 
-    Rectangle<double>* getVisibleRect(int page);
-    Rectangle<double>* getVisibleRect(XojPageView* redrawable);
+    xoj::util::Rectangle<double>* getVisibleRect(int page);
+    xoj::util::Rectangle<double>* getVisibleRect(XojPageView* redrawable);
 
     /**
      * A pen action was detected now, therefore ignore touch events
@@ -140,7 +140,7 @@ private:
 
     std::pair<size_t, size_t> preloadPageBounds(size_t page, size_t maxPage);
 
-    Rectangle<double>* getVisibleRect(size_t page);
+    xoj::util::Rectangle<double>* getVisibleRect(size_t page);
 
     static gboolean clearMemoryTimer(XournalView* widget);
 

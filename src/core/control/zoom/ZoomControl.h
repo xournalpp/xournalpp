@@ -156,7 +156,7 @@ public:
     utl::Point<double> getScrollPositionAfterZoom() const;
 
     /// Get visible rect on xournal view, for Zoom Gesture
-    Rectangle<double> getVisibleRect();
+    xoj::util::Rectangle<double> getVisibleRect();
 
     void setZoomStep(double zoomStep);
 

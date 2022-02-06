@@ -5,6 +5,8 @@
 #include "control/Control.h"
 #include "gui/XournalView.h"
 
+using xoj::util::Rectangle;
+
 auto onScrolledwindowMainScrollEvent(GtkWidget* widget, GdkEventScroll* event, ZoomControl* zoom) -> bool {
     guint state = event->state & gtk_accelerator_get_default_mod_mask();
 

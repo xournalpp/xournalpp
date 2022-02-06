@@ -17,6 +17,8 @@
 
 #include "util/Range.h"
 
+namespace xoj::util {  // Rectangle is already defined in windows.h
+
 template <class T>
 class Rectangle final {
 public:
@@ -82,3 +84,5 @@ public:
     T width{};
     T height{};
 };
+
+}  // namespace xoj::util

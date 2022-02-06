@@ -35,8 +35,8 @@ class DeleteUndoAction;
 
 class EditSelectionContents: public ElementContainer, public Serializable {
 public:
-    EditSelectionContents(Rectangle<double> bounds, Rectangle<double> snappedBounds, const PageRef& sourcePage,
-                          Layer* sourceLayer, XojPageView* sourceView);
+    EditSelectionContents(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds,
+                          const PageRef& sourcePage, Layer* sourceLayer, XojPageView* sourceView);
     virtual ~EditSelectionContents();
 
 public:
@@ -110,12 +110,13 @@ public:
     /**
      * Finish the editing
      */
-    void finalizeSelection(Rectangle<double> bounds, Rectangle<double> snappedBounds, bool aspectRatio, Layer* layer,
-                           const PageRef& targetPage, XojPageView* targetView, UndoRedoHandler* undo);
+    void finalizeSelection(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds,
+                           bool aspectRatio, Layer* layer, const PageRef& targetPage, XojPageView* targetView,
+                           UndoRedoHandler* undo);
 
-    void updateContent(Rectangle<double> bounds, Rectangle<double> snappedBounds, double rotation, bool aspectRatio,
-                       Layer* layer, const PageRef& targetPage, XojPageView* targetView, UndoRedoHandler* undo,
-                       CursorSelectionType type);
+    void updateContent(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds, double rotation,
+                       bool aspectRatio, Layer* layer, const PageRef& targetPage, XojPageView* targetView,
+                       UndoRedoHandler* undo, CursorSelectionType type);
 
 private:
     /**
@@ -164,9 +165,9 @@ private:
      * The original dimensions to calculate the zoom factor for reascaling the items and the offset for moving the
      * selection
      */
-    Rectangle<double> originalBounds;
-    Rectangle<double> lastBounds;
-    Rectangle<double> lastSnappedBounds;
+    xoj::util::Rectangle<double> originalBounds;
+    xoj::util::Rectangle<double> lastBounds;
+    xoj::util::Rectangle<double> lastSnappedBounds;
 
     /**
      * The given rotation. Original rotation should always be zero (double)

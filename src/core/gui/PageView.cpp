@@ -53,6 +53,7 @@
 #include "config.h"
 
 using std::string;
+using xoj::util::Rectangle;
 
 XojPageView::XojPageView(XournalView* xournal, const PageRef& page) {
     this->page = page;
