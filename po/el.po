@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 04:26+0000\n"
-"PO-Revision-Date: 2022-02-03 04:33\n"
+"POT-Creation-Date: 2022-02-06 19:52+0000\n"
+"PO-Revision-Date: 2022-02-06 20:49\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -57,8 +57,8 @@ msgstr "<span foreground='red' size='x-large'>Το απαιτούμενο αρχ
 " Δεν είναι στο {2}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
-msgid "Add/Edit Tex"
-msgstr "Προσθήκη/επεξεργασία TeX"
+msgid "Add/Edit TeX"
+msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:582
 msgid "Advanced export options"
@@ -1961,10 +1961,6 @@ msgstr "Προσθήκη οριζόντιου χώρου μεγέθους"
 #: ../ui/settings.glade:4170
 msgid "Add additional vertical space of"
 msgstr "Προσθήκη κατακόρυφου χώρου μεγέθους"
-
-#: ../ui/main.glade:1991
-msgid "Add/Edit TeX"
-msgstr ""
 
 #: ../ui/settings.glade:4495
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
