@@ -81,6 +81,7 @@ auto Image::getImage() const -> cairo_surface_t* {
         this->read = 0;
         this->image = cairo_image_surface_create_from_png_stream(
                 reinterpret_cast<cairo_read_func_t>(&cairoReadFunction), const_cast<Image*>(this));
+        g_assert(this->image != nullptr);
     }
 
     return this->image;
@@ -137,4 +138,8 @@ void Image::readSerialized(ObjectInputStream& in) {
 void Image::calcSize() const {
     this->snappedBounds = Rectangle<double>(this->x, this->y, this->width, this->height);
     this->sizeCalculated = true;
+}
+
+bool Image::hasData() const {
+    return !this->data.empty();
 }

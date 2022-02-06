@@ -40,6 +40,8 @@ public:
 
     Element* clone() override;
 
+    bool hasData() const;
+
 public:
     // Serialize interface
     void serialize(ObjectOutputStream& out) const override;
