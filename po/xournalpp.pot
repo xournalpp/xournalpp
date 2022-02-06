@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp 1.1.0+dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-03 04:26+0000\n"
+"POT-Creation-Date: 2022-02-06 19:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,7 +55,7 @@ msgid ""
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
-msgid "Add/Edit Tex"
+msgid "Add/Edit TeX"
 msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:582
@@ -2052,10 +2052,6 @@ msgstr ""
 
 #: ../ui/settings.glade:4170
 msgid "Add additional vertical space of"
-msgstr ""
-
-#: ../ui/main.glade:1991
-msgid "Add/Edit TeX"
 msgstr ""
 
 #: ../ui/settings.glade:4495
