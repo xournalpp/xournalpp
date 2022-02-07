@@ -118,12 +118,14 @@ public:
     }
 
     /**
-     * @return std::pair<double, int>,
-     * std::pair<double, int>::first is the sample rate and std::pair<double, int>::second the channel count.
+     * @return a pair of the sample rate and the channel count,
+     * std::pair<>::first is the sample rate and std::pair<>::second the channel count.
+     * Todo (readability, type-safety): create a struct AudioAttributes; remove this comment
      */
-    [[nodiscard]] std::pair<double, int> getAudioAttributes() {
+
+    [[nodiscard]] std::pair<double, uint32_t> getAudioAttributes() {
         std::lock_guard<std::mutex> lock(internalLock);
-        return {this->sampleRate, static_cast<int>(this->channels)};
+        return {this->sampleRate, this->channels};
     }
 
 private:
@@ -136,7 +138,7 @@ private:
     std::condition_variable popLockCondition;
 
     double sampleRate{std::numeric_limits<double>::quiet_NaN()};
-    unsigned int channels{0};
+    uint32_t channels{0};
 
     bool streamEnd{false};
     bool pushNotified{false};

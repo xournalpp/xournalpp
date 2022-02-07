@@ -27,9 +27,7 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
     }
 }
 
-ExportDialog::~ExportDialog() = default;
-
-void ExportDialog::initPages(int current, int count) {
+void ExportDialog::initPages(size_t current, size_t count) {
     std::string allPages = "1 - " + std::to_string(count);
     gtk_label_set_text(GTK_LABEL(get("lbAllPagesInfo")), allPages.c_str());
     std::string currentPages = std::to_string(current);
@@ -71,7 +69,7 @@ void ExportDialog::selectQualityCriterion(GtkComboBox* comboBox, ExportDialog* s
 auto ExportDialog::getPngQualityParameter() -> RasterImageQualityParameter {
     return RasterImageQualityParameter(
             (ExportQualityCriterion)gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbQuality"))),
-            gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("sbQualityValue"))));
+            gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(get("sbQualityValue"))));
 }
 
 auto ExportDialog::isConfirmed() const -> bool { return this->confirmed; }
@@ -93,13 +91,13 @@ auto ExportDialog::getRange() -> PageRangeVector {
     }
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangeCurrent))) {
         PageRangeVector range;
-        range.push_back(new PageRangeEntry(this->currentPage - 1, this->currentPage - 1));
+        range.emplace_back(this->currentPage - 1, this->currentPage - 1);
         return range;
     }
 
 
     PageRangeVector range;
-    range.push_back(new PageRangeEntry(0, this->pageCount - 1));
+    range.emplace_back(0, this->pageCount - 1);
     return range;
 }
 

@@ -3,29 +3,21 @@
 #include <cctype>
 #include <cstdlib>
 
-PageRangeEntry::PageRangeEntry(int first, int last) {
-    this->first = first;
-    this->last = last;
-}
-
-PageRangeEntry::~PageRangeEntry() = default;
-
-auto PageRangeEntry::getLast() const -> int { return this->last; }
-
-auto PageRangeEntry::getFirst() const -> int { return this->first; }
-
 auto PageRange::isSeparator(char c) -> bool { return (c == ',' || c == ';' || c == ':'); }
 
-auto PageRange::parse(const char* str, int pageCount) -> PageRangeVector {
+
+// Todo (rename): what does this? Neither name or code is explaining.
+auto PageRange::parse(std::string_view str, size_t pageCount) -> PageRangeVector {
     PageRangeVector data;
 
-    if (*str == 0) {
+    if (str.empty()) {
         return data;
     }
 
-    int start = 0, end = 0;
+    size_t start = 0;
+    size_t end = 0;
     char* next = nullptr;
-    const char* p = str;
+    const char* p = str.data();
     while (*p) {
         while (isspace(*p)) {
             p++;
@@ -35,7 +27,7 @@ auto PageRange::parse(const char* str, int pageCount) -> PageRangeVector {
             // a half-open range like -2
             start = 1;
         } else {
-            start = static_cast<int>(strtol(p, &next, 10));
+            start = static_cast<size_t>(strtol(p, &next, 10));
             if (start < 1) {
                 start = 1;
             }
@@ -50,7 +42,7 @@ auto PageRange::parse(const char* str, int pageCount) -> PageRangeVector {
 
         if (*p == '-') {
             p++;
-            end = static_cast<int>(strtol(p, &next, 10));
+            end = static_cast<size_t>(strtol(p, &next, 10));
             if (next == p)  // a half-open range like 2-
             {
                 end = pageCount;
@@ -59,7 +51,7 @@ auto PageRange::parse(const char* str, int pageCount) -> PageRangeVector {
             }
         }
 
-        data.push_back(new PageRangeEntry(start - 1, end - 1));
+        data.emplace_back(start - 1, end - 1);
 
         // Skip until end or separator
         while (*p && !isSeparator(*p)) {

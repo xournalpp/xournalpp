@@ -21,9 +21,12 @@
 #include "PortAudioProducer.h"
 #include "VorbisConsumer.h"
 
-
-struct AudioRecorder {
+struct AudioRecorder final {
     explicit AudioRecorder(Settings& settings): settings(settings) {}
+    AudioRecorder(AudioRecorder const&) = delete;
+    AudioRecorder(AudioRecorder&&) = delete;
+    auto operator=(AudioRecorder const&) -> AudioRecorder& = delete;
+    auto operator=(AudioRecorder&&) -> AudioRecorder& = delete;
     ~AudioRecorder();
 
     bool start(const std::string& filename);

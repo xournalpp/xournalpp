@@ -11,32 +11,24 @@
 
 #pragma once
 
-#include <string>
+#include <string_view>
 #include <vector>
 
 
-class PageRangeEntry {
-public:
-    PageRangeEntry(int first, int last);
-    virtual ~PageRangeEntry();
+struct PageRangeEntry final {
+    PageRangeEntry(size_t first, size_t last): first(first), last(last){};
 
-public:
-    int getLast() const;
-    int getFirst() const;
+    size_t getLast() const { return this->last; }
+    size_t getFirst() const { return this->first; }
 
 private:
-    int first;
-    int last;
+    size_t first;
+    size_t last;
 };
 
-typedef std::vector<PageRangeEntry*> PageRangeVector;
+using PageRangeVector = std::vector<PageRangeEntry>;
 
-class PageRange {
-private:
-    PageRange();
-    virtual ~PageRange();
-
-public:
-    static bool isSeparator(char c);
-    static PageRangeVector parse(const char* str, int pageCount);
-};
+namespace PageRange {
+bool isSeparator(char c);
+PageRangeVector parse(std::string_view str, size_t pageCount);
+};  // namespace PageRange

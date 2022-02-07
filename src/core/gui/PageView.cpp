@@ -54,18 +54,14 @@
 
 using std::string;
 
-XojPageView::XojPageView(XournalView* xournal, const PageRef& page) {
-    this->page = page;
+XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
+        page(page),
+        xournal(xournal),
+        settings(xournal->getControl()->getSettings()),
+        eraser(new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(),
+                                this->page, xournal->getControl()->getToolHandler(), this)),
+        oldtext(nullptr) {
     this->registerListener(this->page);
-    this->xournal = xournal;
-    this->settings = xournal->getControl()->getSettings();
-
-    // this does not have to be deleted afterwards:
-    // (we need it for undo commands)
-    this->oldtext = nullptr;
-
-    this->eraser = new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(),
-                                    this->page, xournal->getControl()->getToolHandler(), this);
 }
 
 XojPageView::~XojPageView() {
@@ -157,7 +153,7 @@ void XojPageView::endText() {
     // Text deleted
     if (txt->getText().empty()) {
         // old element
-        int pos = layer->indexOf(txt);
+        auto pos = layer->indexOf(txt);
         if (pos != -1) {
             auto eraseDeleteUndoAction = std::make_unique<DeleteUndoAction>(page, true);
             layer->removeElement(txt, false);

@@ -29,9 +29,9 @@ auto exportImg(Document* doc, const char* output, const char* range, int pngDpi,
 
     PageRangeVector exportRange;
     if (range) {
-        exportRange = PageRange::parse(range, int(doc->getPageCount()));
+        exportRange = PageRange::parse(range, doc->getPageCount());
     } else {
-        exportRange.push_back(new PageRangeEntry(0, int(doc->getPageCount() - 1)));
+        exportRange.emplace_back(0, doc->getPageCount() - 1);
     }
 
     DummyProgressListener progress;
@@ -50,7 +50,6 @@ auto exportImg(Document* doc, const char* output, const char* range, int pngDpi,
 
     imgExport.exportGraphics(&progress);
 
-    for (PageRangeEntry* e: exportRange) { delete e; }
     exportRange.clear();
 
     std::string errorMsg = imgExport.getLastErrorMsg();
@@ -86,7 +85,7 @@ auto exportPdf(Document* doc, const char* output, const char* range, ExportBackg
     g_free(cpath);
     g_object_unref(file);
 
-    bool exportSuccess;  // Return of the export job
+    bool exportSuccess = 0;  // Return of the export job
 
     if (range) {
         // Parse the range
@@ -94,7 +93,6 @@ auto exportPdf(Document* doc, const char* output, const char* range, ExportBackg
         // Do the export
         exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
         // Clean up
-        for (PageRangeEntry* e: exportRange) { delete e; }
         exportRange.clear();
     } else {
         exportSuccess = pdfe->createPdf(path, progressiveMode);

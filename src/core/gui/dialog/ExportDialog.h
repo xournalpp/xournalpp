@@ -19,11 +19,10 @@
 class ExportDialog: public GladeGui {
 public:
     ExportDialog(GladeSearchpath* gladeSearchPath);
-    virtual ~ExportDialog();
 
 public:
-    virtual void show(GtkWindow* parent);
-    void initPages(int current, int count);
+    void show(GtkWindow* parent) override;
+    void initPages(size_t current, size_t count);
     bool isConfirmed() const;
     PageRangeVector getRange();
     bool progressiveMode();
@@ -53,8 +52,8 @@ public:
     static void selectQualityCriterion(GtkComboBox* comboBox, ExportDialog* self);
 
 private:
-    int currentPage = 0;
-    int pageCount = 0;
+    size_t currentPage = 0;
+    size_t pageCount = 0;
 
     bool confirmed = false;
 };

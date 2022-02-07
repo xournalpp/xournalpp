@@ -110,7 +110,7 @@ void XojCairoPdfExport::exportPage(size_t page) {
 
     cairo_save(this->cr);
     if (p->getBackgroundType().isPdfPage() && (exportBackground >= EXPORT_BACKGROUND_UNRULED)) {
-        int pgNo = p->getPdfPageNr();
+        auto pgNo = p->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
         popplerPage->render(cr, true);
@@ -160,16 +160,18 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, PageRangeVector& range, 
     }
 
     int count = 0;
-    for (PageRangeEntry* e: range) { count += e->getLast() - e->getFirst() + 1; }
+    for (auto const& e: range) {
+        count += e.getLast() - e.getFirst() + 1;
+    }
 
     if (this->progressListener) {
         this->progressListener->setMaximumState(count);
     }
 
     int c = 0;
-    for (PageRangeEntry* e: range) {
-        for (int i = e->getFirst(); i <= e->getLast(); i++) {
-            if (i < 0 || i >= static_cast<int>(doc->getPageCount())) {
+    for (auto const& e: range) {
+        for (size_t i = e.getFirst(); i <= e.getLast(); i++) {
+            if (i >= doc->getPageCount()) {
                 continue;
             }
 
@@ -202,12 +204,12 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) ->
         return false;
     }
 
-    int count = doc->getPageCount();
+    auto count = doc->getPageCount();
     if (this->progressListener) {
         this->progressListener->setMaximumState(count);
     }
 
-    for (int i = 0; i < count; i++) {
+    for (decltype(count) i = 0; i < count; i++) {
 
         if (progressiveMode) {
             exportPageLayers(i);
