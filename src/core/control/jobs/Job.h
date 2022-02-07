@@ -11,15 +11,24 @@
 
 #pragma once
 
-#include <mutex>
-#include <string>
-#include <vector>
+#include <atomic>
 
 enum JobType { JOB_TYPE_BLOCKING, JOB_TYPE_PREVIEW, JOB_TYPE_RENDER, JOB_TYPE_AUTOSAVE };
 
+/**
+ * A manually ref-counted class representing an asynchronous job to be used with
+ * the Xournal++ scheduler.
+ *
+ * Instances of Job (and its subclasses) should be constructed exclusively using
+ * the `new` keyword.
+ */
 class Job {
 public:
     Job();
+    Job(const Job&) = delete;
+    Job& operator=(const Job&) = delete;
+    Job(Job&&) = delete;
+    Job& operator=(Job&&) = delete;
 
 protected:
     virtual ~Job();
@@ -78,11 +87,13 @@ protected:
     virtual void onDelete();
 
 private:
+    /**
+     * Internal callback sent to the GLib main loop which invokes `afterRun`.
+     */
     static bool callAfterCallback(Job* job);
 
 private:
-    int afterRunId = 0;
+    unsigned int afterRunId = 0;
 
-    int refCount = 1;
-    std::mutex refMutex;
+    std::atomic<unsigned int> refCount;
 };
