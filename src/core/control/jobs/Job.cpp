@@ -1,30 +1,19 @@
 #include "Job.h"
 
-#include <mutex>
+#include <gdk/gdk.h>
 
-#include <glib.h>
-#include <gtk/gtk.h>
-
-Job::Job() {}
+Job::Job(): refCount(1) {}
 
 Job::~Job() = default;
 
 void Job::unref() {
-    this->refMutex.lock();
-    this->refCount--;
-
-    if (this->refCount == 0) {
-        this->refMutex.unlock();
+    if (refCount.fetch_sub(1, std::memory_order_acq_rel) == 1) {
         delete this;
-    } else {
-        this->refMutex.unlock();
     }
 }
 
 void Job::ref() {
-    this->refMutex.lock();
-    this->refCount++;
-    this->refMutex.unlock();
+    refCount.fetch_add(1, std::memory_order_relaxed);
 }
 
 void Job::deleteJob() {
@@ -56,13 +45,7 @@ void Job::callAfterRun() {
     }
 
     this->ref();
-
     this->afterRunId = gdk_threads_add_idle(reinterpret_cast<GSourceFunc>(Job::callAfterCallback), this);
 }
 
-/**
- * After run will be called from UI Thread after the Job is finished
- *
- * All UI Stuff should happen here
- */
 void Job::afterRun() {}
