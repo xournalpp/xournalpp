@@ -27,9 +27,6 @@ CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Cu
 }
 
 CustomExportJob::~CustomExportJob() {
-    for (PageRangeEntry* e: exportRange) { delete e; }
-    exportRange.clear();
-
     for (auto& filter: filters) { delete filter.second; }
 }
 

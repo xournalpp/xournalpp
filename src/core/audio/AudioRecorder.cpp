@@ -12,14 +12,9 @@ auto AudioRecorder::start(fs::path const& file) -> bool {
 }
 
 void AudioRecorder::stop() {
-    // Stop recording audio
     this->portAudioProducer->stopRecording();
-
-    // Wait for libsox to write all the data
-    this->vorbisConsumer->join();
-
-    // Reset the queue for the next recording
-    this->audioQueue->reset();
+    this->vorbisConsumer->join();  // libsox must write all the data before we can continue
+    this->audioQueue->reset();     // next recording requires empty queue
 }
 
 auto AudioRecorder::isRecording() const -> bool { return this->portAudioProducer->isRecording(); }

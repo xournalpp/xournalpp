@@ -6,9 +6,8 @@
 #include "util/i18n.h"
 
 
-DeleteUndoAction::DeleteUndoAction(const PageRef& page, bool eraser): UndoAction("DeleteUndoAction") {
+DeleteUndoAction::DeleteUndoAction(const PageRef& page, bool eraser): UndoAction("DeleteUndoAction"), eraser(eraser) {
     this->page = page;
-    this->eraser = eraser;
 }
 
 void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos) { elements.emplace(layer, e, pos); }

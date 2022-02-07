@@ -16,7 +16,7 @@ auto VorbisConsumer::start(fs::path const& file) -> bool {
     }
 
     SF_INFO sfInfo;
-    sfInfo.channels = channels;
+    sfInfo.channels = int(channels);
     sfInfo.format = SF_FORMAT_OGG | SF_FORMAT_VORBIS;
     sfInfo.samplerate = static_cast<int>(this->settings.getAudioSampleRate());
 
@@ -29,7 +29,7 @@ auto VorbisConsumer::start(fs::path const& file) -> bool {
 
     this->consumerThread = std::thread([this, sfFile = std::move(sfFile), channels = channels] {
         auto lock{audioQueue.acquire_lock()};
-        auto buffer_size{static_cast<size_t>(std::max(0, 64 * channels))};
+        auto buffer_size{size_t(64 * channels)};
         std::vector<float> buffer;
         buffer.reserve(buffer_size);  // efficiency
         double audioGain = this->settings.getAudioGain();
@@ -43,7 +43,8 @@ auto VorbisConsumer::start(fs::path const& file) -> bool {
                 if (audioGain != 1.0) {
                     std::for_each(begin(buffer), end(buffer), [audioGain](auto& val) { val *= audioGain; });
                 }
-                sf_writef_float(sfFile.get(), buffer.data(), std::min<size_t>(buffer.size() / channels, 64));
+                sf_writef_float(sfFile.get(), buffer.data(),
+                                std::min<sf_count_t>(sf_count_t(buffer.size()) / channels, 64));
             }
         }
     });
