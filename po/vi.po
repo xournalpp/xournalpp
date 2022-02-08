@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-08 15:36+0000\n"
-"PO-Revision-Date: 2022-02-08 15:41\n"
+"POT-Creation-Date: 2022-02-08 16:21+0000\n"
+"PO-Revision-Date: 2022-02-08 16:37\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -34,11 +34,11 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " của {1}"
 
-#: ../src/core/control/settings/Settings.cpp:122
+#: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
 msgstr "%F-Ghi chú-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:149
+#: ../src/core/gui/dialog/SettingsDialog.cpp:151
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b> Không có thiết bị nào được tìm thấy. Điều này có vẻ không ổn - có lẽ nên gửi tin báo cáo lỗi? </b>"
 
@@ -115,11 +115,10 @@ msgstr "Thuộc tính \"{1}\" không thể phân tích được thành kiểu d�
 msgid "Attribute color not set!"
 msgstr "Thuộc tính màu chưa cài đặt!"
 
-#: ../src/core/control/AudioController.cpp:97
-msgid "Audio folder not set! Recording won't work!\n"
+#: ../src/core/control/AudioController.cpp:99
+msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "Thư mục âm thanh chưa được cài đặt! Chức năng ghi âm sẽ không hoạt động!\n"
-"Vui lòng cài đặt thư mục ghi âm trong \"Tùy chọn> Ghi âm\""
+msgstr ""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -458,7 +457,7 @@ msgstr "Chỉnh sửa văn bản"
 msgid "Emergency saved document"
 msgstr "Tệp tin đã được sao lưu khẩn cấp"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Bật lực nhạy hoặc hệ quả của lực để thay đổi cài đặt này!"
 
@@ -613,7 +612,7 @@ msgstr "Không thể mở tệp. Bạn phải làm điều đó theo cách thủ
 msgid "Fill"
 msgstr "Lấp"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Lọc lực nén đầu vào. Nhân lực nén với nhân tử áp suất. Nếu nhỏ hơn mức tối thiểu, sử dụng lực nén tối thiểu."
 
@@ -700,7 +699,7 @@ msgstr "Bút dạ quang"
 msgid "Image"
 msgstr "Hình ảnh"
 
-#: ../src/core/control/ExportHelper.cpp:61
+#: ../src/core/control/ExportHelper.cpp:64
 msgid "Image file successfully created"
 msgstr "Tệp ảnh đã tạo thành công"
 
@@ -881,7 +880,7 @@ msgstr "Trang PDF {1}"
 msgid "PDF background missing"
 msgstr "Nền PDF đang thiếu"
 
-#: ../src/core/control/ExportHelper.cpp:107
+#: ../src/core/control/ExportHelper.cpp:108
 msgid "PDF file successfully created"
 msgstr "Tệp PDF đã được tạo thành công"
 
