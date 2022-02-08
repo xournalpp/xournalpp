@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-08 16:21+0000\n"
-"PO-Revision-Date: 2022-02-08 16:38\n"
+"POT-Creation-Date: 2022-02-08 17:11+0000\n"
+"PO-Revision-Date: 2022-02-08 17:34\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -330,7 +330,7 @@ msgid "Default Tool"
 msgstr "Outil par défaut"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
-#: ../src/core/undo/DeleteUndoAction.cpp:56
+#: ../src/core/undo/DeleteUndoAction.cpp:55
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -462,7 +462,7 @@ msgid "Enable pressure sensitivity or pressure inference to change this setting!
 msgstr "Activer la sensibilité de pression ou l'inférence de pression pour changer ce paramètre !"
 
 #: ../src/core/undo/AddUndoAction.cpp:55
-#: ../src/core/undo/DeleteUndoAction.cpp:53
+#: ../src/core/undo/DeleteUndoAction.cpp:52
 #: ../src/core/undo/EraseUndoAction.cpp:52
 msgid "Erase stroke"
 msgstr "Effacer le trait"
@@ -584,7 +584,7 @@ msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Impossible de trouver le programme de génération LaTeX dans le CHEMIN : {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Échec de l'initialisation de la surface PDF Cairo"
 
@@ -699,7 +699,7 @@ msgstr "Surligneur"
 msgid "Image"
 msgstr "Image"
 
-#: ../src/core/control/ExportHelper.cpp:64
+#: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
 msgstr "Fichier image créé avec succès"
 
@@ -772,7 +772,7 @@ msgstr "Calque {1}"
 msgid "Layerstack Preview"
 msgstr "Aperçu de la pile de calques"
 
-#: ../src/core/gui/PageView.cpp:764
+#: ../src/core/gui/PageView.cpp:760
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -823,7 +823,7 @@ msgid "No device"
 msgstr "Aucun appareil"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:151
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:194
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
 msgid "No pages to export!"
 msgstr "Aucune page à exporter !"
 
@@ -880,7 +880,7 @@ msgstr "Page PDF {1}"
 msgid "PDF background missing"
 msgstr "Fond PDF manquant"
 
-#: ../src/core/control/ExportHelper.cpp:108
+#: ../src/core/control/ExportHelper.cpp:106
 msgid "PDF file successfully created"
 msgstr "Fichier PDF créé avec succès"
 
@@ -1049,7 +1049,7 @@ msgstr "Enregistrer sous..."
 msgid "Save File"
 msgstr "Enregistrer le fichier"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:127
+#: ../src/core/control/jobs/CustomExportJob.cpp:124
 #: ../src/core/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
 msgstr "Erreur d'enregistrement du fichier : {1}"
@@ -1390,7 +1390,7 @@ msgstr "Essai de sauvegarde d'urgence du document actuellement ouvert…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Impossible d'ouvrir le fichier de modèle global à {1}. Existe-t-il ?"
 
-#: ../src/core/gui/PageView.cpp:371
+#: ../src/core/gui/PageView.cpp:367
 msgid "Unable to play audio recording {1}"
 msgstr "Impossible de lire l'enregistrement audio {1}"
 
@@ -1591,7 +1591,7 @@ msgid "dotted"
 msgstr "pointillé"
 
 #: ../src/core/undo/AddUndoAction.cpp:65
-#: ../src/core/undo/DeleteUndoAction.cpp:64
+#: ../src/core/undo/DeleteUndoAction.cpp:63
 msgid "elements"
 msgstr "éléments"
 
@@ -1604,7 +1604,7 @@ msgid "file: {1}"
 msgstr "fichier : {1}"
 
 #: ../src/core/undo/AddUndoAction.cpp:76
-#: ../src/core/undo/DeleteUndoAction.cpp:75
+#: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "image"
 msgstr "image"
 
@@ -1613,7 +1613,7 @@ msgid "keyboard"
 msgstr "clavier"
 
 #: ../src/core/undo/AddUndoAction.cpp:79
-#: ../src/core/undo/DeleteUndoAction.cpp:78
+#: ../src/core/undo/DeleteUndoAction.cpp:77
 msgid "latex"
 msgstr "latex"
 
@@ -1635,7 +1635,7 @@ msgid "standard"
 msgstr "standard"
 
 #: ../src/core/undo/AddUndoAction.cpp:73
-#: ../src/core/undo/DeleteUndoAction.cpp:72
+#: ../src/core/undo/DeleteUndoAction.cpp:71
 msgid "stroke"
 msgstr "trait"
 
@@ -1644,7 +1644,7 @@ msgid "tablet pad"
 msgstr "boutons de tablette"
 
 #: ../src/core/undo/AddUndoAction.cpp:82
-#: ../src/core/undo/DeleteUndoAction.cpp:81
+#: ../src/core/undo/DeleteUndoAction.cpp:80
 msgid "text"
 msgstr "texte"
 
