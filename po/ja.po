@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-08 15:36+0000\n"
-"PO-Revision-Date: 2022-02-08 15:41\n"
+"POT-Creation-Date: 2022-02-08 16:21+0000\n"
+"PO-Revision-Date: 2022-02-08 16:37\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -34,11 +34,11 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr ""
 
-#: ../src/core/control/settings/Settings.cpp:122
+#: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
 msgstr "%F-注-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:149
+#: ../src/core/gui/dialog/SettingsDialog.cpp:151
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>デバイスが見つかりませんでした。間違っているようです。バグレポートを提出してください。</b>"
 
@@ -115,11 +115,10 @@ msgstr "属性\"{1}\"は size_t に解析しない、値が nullptr"
 msgid "Attribute color not set!"
 msgstr "属性の色が設定しません!"
 
-#: ../src/core/control/AudioController.cpp:97
-msgid "Audio folder not set! Recording won't work!\n"
+#: ../src/core/control/AudioController.cpp:99
+msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "オーディオのフォルダが設定しません！録音が効きません！\n"
-"\"環境設定 > 録音\"でオーディオのフォルダを設定してください"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -332,7 +331,7 @@ msgstr "削除"
 
 #: ../src/core/control/XournalMain.cpp:157
 msgid "Delete Logfile"
-msgstr ""
+msgstr "ログファイルを削除"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
 msgid "Delete current page"
@@ -340,19 +339,19 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:199
 msgid "Delete file"
-msgstr ""
+msgstr "ファイルを削除"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
-msgstr ""
+msgstr "レイヤーを削除"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
 msgid "Delete this layer"
-msgstr ""
+msgstr "このレイヤーを削除"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
-msgstr ""
+msgstr "このページを削除"
 
 #: ../src/core/control/Control.cpp:2485
 msgid "Discard"
@@ -451,7 +450,7 @@ msgstr "テキストを編集"
 msgid "Emergency saved document"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr ""
 
@@ -593,7 +592,7 @@ msgstr ""
 msgid "Fill"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
@@ -680,7 +679,7 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: ../src/core/control/ExportHelper.cpp:61
+#: ../src/core/control/ExportHelper.cpp:64
 msgid "Image file successfully created"
 msgstr ""
 
@@ -765,7 +764,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Medium"
-msgstr ""
+msgstr "中"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -828,7 +827,7 @@ msgstr ""
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
-msgstr ""
+msgstr "画像を開く"
 
 #: ../src/core/control/XournalMain.cpp:155
 msgid "Open Logfile"
@@ -841,7 +840,7 @@ msgstr ""
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Open file"
-msgstr ""
+msgstr "ファイルを開く"
 
 #: ../src/core/control/RecentManager.cpp:183
 msgctxt "{1} is a URI"
@@ -860,7 +859,7 @@ msgstr ""
 msgid "PDF background missing"
 msgstr ""
 
-#: ../src/core/control/ExportHelper.cpp:107
+#: ../src/core/control/ExportHelper.cpp:108
 msgid "PDF file successfully created"
 msgstr ""
 
@@ -872,7 +871,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:45
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "PNG graphics"
@@ -880,7 +879,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:86
 msgid "Page"
-msgstr ""
+msgstr "ページ"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:73
 msgid "Page Preview"
