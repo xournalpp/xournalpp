@@ -1,12 +1,30 @@
 #include "console.h"
 
+#include <cstdio>
+
 #include <windows.h>
+//
+// #include <wchar.h>
+// #include <wincon.h>
+
 
 void attachConsole() {
     if (GetConsoleWindow() != NULL) {
         // Console is already attached.
         return;
     }
+    // https://www.tillett.info/2013/05/13/how-to-create-a-windows-program-that-works-as-both-as-a-gui-and-console-application/
+    if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+        if (GetStdHandle(STD_OUTPUT_HANDLE) != INVALID_HANDLE_VALUE &&
+            GetStdHandle(STD_ERROR_HANDLE) != INVALID_HANDLE_VALUE) {
+            // Redirect stdout and stderr to the console.
+            freopen("CONOUT$", "w", stdout);
+            freopen("CONOUT$", "w", stderr);
+            return;
+        }
+    }
+
+    // Connection failed, create a new console.
 
     // Make sure the console starts hidden.
     STARTUPINFOW startupInfo = {0};
