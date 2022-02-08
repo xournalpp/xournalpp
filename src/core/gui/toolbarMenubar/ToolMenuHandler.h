@@ -24,6 +24,7 @@
 #include "enums/ActionType.enum.h"   // for ActionType
 #include "gui/IconNameHelper.h"      // for IconNameHelper
 #include "util/Color.h"              // for Color
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 
 class AbstractToolItem;
 class FontButton;

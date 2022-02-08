@@ -20,6 +20,7 @@
 
 #include "audio/DeviceInfo.h"                    // for DeviceInfo
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
+#include "filesystem.h"                          // for path
 #include "gui/GladeGui.h"                        // for GladeGui
 
 #include "LatexSettingsPanel.h"  // for LatexSettingsPanel
@@ -76,6 +77,7 @@ private:
 
     void showStabilizerAvMethodOptions(StrokeStabilizer::AveragingMethod method);
     void showStabilizerPreprocessorOptions(StrokeStabilizer::Preprocessor preprocessor);
+    std::vector<fs::path> concatenated(std::vector<fs::path> p1, std::vector<fs::path> p2);
 
 private:
     Settings* settings = nullptr;

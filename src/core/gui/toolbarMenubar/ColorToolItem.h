@@ -24,6 +24,7 @@
 #include "util/NamedColor.h"         // for NamedColor
 
 #include "AbstractToolItem.h"  // for AbstractToolItem
+#include "gui/toolbarMenubar/model/ColorPalette.h"
 
 class ColorSelectImage;
 class ToolHandler;

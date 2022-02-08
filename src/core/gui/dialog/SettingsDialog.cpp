@@ -8,23 +8,25 @@
 #include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
 #include <glib-object.h>  // for G_CALLBACK, g_signal...
 
-#include "control/AudioController.h"             // for AudioController
-#include "control/Control.h"                     // for Control
-#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
-#include "control/settings/Settings.h"           // for Settings, SElement
-#include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
-#include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
-#include "gui/MainWindow.h"                      // for MainWindow
-#include "gui/XournalView.h"                     // for XournalView
-#include "gui/dialog/DeviceClassConfigGui.h"     // for DeviceClassConfigGui
-#include "gui/dialog/LanguageConfigGui.h"        // for LanguageConfigGui
-#include "gui/dialog/LatexSettingsPanel.h"       // for LatexSettingsPanel
-#include "gui/widgets/ZoomCallib.h"              // for zoomcallib_new, zoom...
-#include "util/Color.h"                          // for GdkRGBA_to_argb, rgb...
-#include "util/PathUtil.h"                       // for fromGFile, toGFilename
-#include "util/StringUtils.h"                    // for StringUtils
-#include "util/Util.h"                           // for systemWithMessage
-#include "util/i18n.h"                           // for _
+#include "control/AudioController.h"                // for AudioController
+#include "control/Control.h"                        // for Control
+#include "control/DeviceListHelper.h"               // for getDeviceList, Input...
+#include "control/settings/Settings.h"              // for Settings, SElement
+#include "control/settings/SettingsEnums.h"         // for STYLUS_CURSOR_ARROW
+#include "control/tools/StrokeStabilizerEnum.h"     // for AveragingMethod, Pre...
+#include "gui/MainWindow.h"                         // for MainWindow
+#include "gui/XournalView.h"                        // for XournalView
+#include "gui/dialog/DeviceClassConfigGui.h"        // for DeviceClassConfigGui
+#include "gui/dialog/LanguageConfigGui.h"           // for LanguageConfigGui
+#include "gui/dialog/LatexSettingsPanel.h"          // for LatexSettingsPanel
+#include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette methods
+#include "gui/toolbarMenubar/ToolMenuHandler.h"     // for ToolMenuHandler methods
+#include "gui/widgets/ZoomCallib.h"                 // for zoomcallib_new, zoom...
+#include "util/Color.h"                             // for GdkRGBA_to_argb, rgb...
+#include "util/PathUtil.h"                          // for fromGFile, toGFilename
+#include "util/StringUtils.h"                       // for StringUtils
+#include "util/Util.h"                              // for systemWithMessage
+#include "util/i18n.h"                              // for _
 
 #include "ButtonConfigGui.h"  // for ButtonConfigGui
 #include "filesystem.h"       // for is_directory
@@ -622,17 +624,12 @@ void SettingsDialog::load() {
     }
 
     {
-        auto userPalettes = Util::getConfigFile("palettes");
-        auto xPalettes = Util::getPalettePath();
-        std::vector<fs::path> paletteFilePaths{};
-        for (const fs::directory_entry& p: fs::directory_iterator(userPalettes)) {
-            paletteFilePaths.push_back(p.path());
-        }
-        for (const fs::directory_entry& p: fs::directory_iterator(xPalettes)) { paletteFilePaths.push_back(p.path()); }
-        std::sort(paletteFilePaths.begin(), paletteFilePaths.end());
+        std::vector<fs::path> xPaletteFilePaths = Util::listFilesSorted(Util::getPalettePath());
+        std::vector<fs::path> userPaletteFilePaths = Util::listFilesSorted(Util::getConfigFile("palettes"));
+        std::vector<fs::path> allPaletteFilePaths = this->concatenated(xPaletteFilePaths, userPaletteFilePaths);
 
         int i = 0;
-        for (const fs::path& p: paletteFilePaths) {
+        for (const fs::path& p: allPaletteFilePaths) {
             gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(get("cbColorPalette")), "", p.u8string().c_str());
             if (p == settings->getColorPalette().getFilePath())
                 gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbColorPalette")), i);
@@ -989,4 +986,11 @@ void SettingsDialog::save() {
 
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();
+}
+
+auto SettingsDialog::concatenated(std::vector<fs::path> p1, std::vector<fs::path> p2) -> std::vector<fs::path> {
+    std::vector<fs::path> result{};
+    result.insert(result.end(), p1.begin(), p1.end());
+    result.insert(result.end(), p2.begin(), p2.end());
+    return result;
 }
