@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-06 19:52+0000\n"
-"PO-Revision-Date: 2022-02-06 20:49\n"
+"POT-Creation-Date: 2022-02-08 15:36+0000\n"
+"PO-Revision-Date: 2022-02-08 15:41\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -76,7 +76,7 @@ msgstr "Εφαρμογή σε όλες τις σελίδες"
 msgid "Apply to current page"
 msgstr "Εφαρμογή στην τρέχουσα σελίδα"
 
-#: ../src/core/control/tools/EditSelection.cpp:352
+#: ../src/core/control/tools/EditSelection.cpp:353
 msgid "Arrange"
 msgstr ""
 
@@ -143,11 +143,11 @@ msgstr "Πίσω"
 msgid "Background"
 msgstr "Φόντο"
 
-#: ../src/core/control/tools/EditSelection.cpp:369
+#: ../src/core/control/tools/EditSelection.cpp:370
 msgid "Bring forward"
 msgstr "Στο προσκήνιο"
 
-#: ../src/core/control/tools/EditSelection.cpp:359
+#: ../src/core/control/tools/EditSelection.cpp:360
 msgid "Bring to front"
 msgstr "Φέρτε μπροστά"
 
@@ -156,15 +156,15 @@ msgstr "Φέρτε μπροστά"
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: ../src/core/undo/ColorUndoAction.cpp:82
+#: ../src/core/undo/ColorUndoAction.cpp:84
 msgid "Change color"
 msgstr "Αλλαγή χρώματος"
 
-#: ../src/core/undo/FontUndoAction.cpp:102
+#: ../src/core/undo/FontUndoAction.cpp:104
 msgid "Change font"
 msgstr "Αλλαγή γραμματοσειράς"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:70
+#: ../src/core/undo/LineStyleUndoAction.cpp:72
 msgid "Change line style"
 msgstr "Αλλαγή στυλ γραμμής"
 
@@ -449,7 +449,7 @@ msgstr "Τύπος σχεδιασμού - καμία αλλαγή"
 msgid "Drawing Type Combo"
 msgstr ""
 
-#: ../src/core/undo/TextBoxUndoAction.cpp:35
+#: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
 msgstr "Επεξεργασία κειμένου"
 
@@ -762,7 +762,7 @@ msgstr "Στρώση {1}"
 msgid "Layerstack Preview"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:763
+#: ../src/core/gui/PageView.cpp:764
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -1144,11 +1144,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr "Στείλε Αναφορά Σφάλματος"
 
-#: ../src/core/control/tools/EditSelection.cpp:380
+#: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
 msgstr "Αποστολή στο παρασκήνιο"
 
-#: ../src/core/control/tools/EditSelection.cpp:388
+#: ../src/core/control/tools/EditSelection.cpp:389
 msgid "Send to back"
 msgstr "Αποστολή πίσω"
 
@@ -1253,7 +1253,7 @@ msgstr "Κείμενο"
 msgid "Text %i times found on this page"
 msgstr "Κείμενο βρέθηκε %i σε αυτή την σελίδα"
 
-#: ../src/core/undo/TextUndoAction.cpp:29
+#: ../src/core/undo/TextUndoAction.cpp:31
 msgid "Text changes"
 msgstr "Αλλαγές σε κείμενο"
 
@@ -1372,7 +1372,7 @@ msgstr "Προσπάθεια έκτακτης αποθήκευσης του αν
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:370
+#: ../src/core/gui/PageView.cpp:371
 msgid "Unable to play audio recording {1}"
 msgstr "Αδυναμία αναπαραγωγής ηχητικής εγγραφής {1}"
 
