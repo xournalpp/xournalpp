@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-08 15:36+0000\n"
-"PO-Revision-Date: 2022-02-08 15:41\n"
+"POT-Creation-Date: 2022-02-08 16:21+0000\n"
+"PO-Revision-Date: 2022-02-08 16:38\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -34,11 +34,11 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " van {1}"
 
-#: ../src/core/control/settings/Settings.cpp:122
+#: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
 msgstr "%F-Nota-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:149
+#: ../src/core/gui/dialog/SettingsDialog.cpp:151
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Geen toestelle was gevind nie. Hierdie lyk verkeerd - dalk wil U 'n fout rapporteer?</b>"
 
@@ -114,11 +114,10 @@ msgstr "Kenmerk \"{1}\" kon nie verwerk word as size_t nie, die waarde is nullpt
 msgid "Attribute color not set!"
 msgstr "Kenmerk kleur is nie gestel nie!"
 
-#: ../src/core/control/AudioController.cpp:97
-msgid "Audio folder not set! Recording won't work!\n"
+#: ../src/core/control/AudioController.cpp:99
+msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "Oudio lêer is nie gestel nie! Opname sal nie werk nie!\n"
-"Stel asseblief die opname lêer onder \"Voorkeure > Oudio opname\""
+msgstr ""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -457,7 +456,7 @@ msgstr "Redigeer teks"
 msgid "Emergency saved document"
 msgstr "Noot-red dokument"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Aktiveer druk sensitiwiteit of druk steuring om hierdie instelling te verander!"
 
@@ -612,7 +611,7 @@ msgstr "Lêer kon nie oopgemaak word nie. Jy sal dit handmatig moet doen:\n"
 msgid "Fill"
 msgstr "Vul"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filter inset druk. Maal die druk met die druk vermenigvuldiger. Indien dit minder as die minimum is, gebruik die minimum druk."
 
@@ -699,7 +698,7 @@ msgstr "Ligstreper"
 msgid "Image"
 msgstr "Foto"
 
-#: ../src/core/control/ExportHelper.cpp:61
+#: ../src/core/control/ExportHelper.cpp:64
 msgid "Image file successfully created"
 msgstr "Foto lêer suksesvol geskep"
 
@@ -880,7 +879,7 @@ msgstr "PDF Bladsy {1}"
 msgid "PDF background missing"
 msgstr "PDF agtergrond nie beskikbaar nie"
 
-#: ../src/core/control/ExportHelper.cpp:107
+#: ../src/core/control/ExportHelper.cpp:108
 msgid "PDF file successfully created"
 msgstr "PDF lêer suksesvol geskep"
 
