@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-06 19:52+0000\n"
-"PO-Revision-Date: 2022-02-06 20:49\n"
+"POT-Creation-Date: 2022-02-08 15:36+0000\n"
+"PO-Revision-Date: 2022-02-08 15:40\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -76,7 +76,7 @@ msgstr "Применить ко всем страницам"
 msgid "Apply to current page"
 msgstr "Применить к текущей странице"
 
-#: ../src/core/control/tools/EditSelection.cpp:352
+#: ../src/core/control/tools/EditSelection.cpp:353
 msgid "Arrange"
 msgstr "Расположить"
 
@@ -143,11 +143,11 @@ msgstr "Назад"
 msgid "Background"
 msgstr "Фон"
 
-#: ../src/core/control/tools/EditSelection.cpp:369
+#: ../src/core/control/tools/EditSelection.cpp:370
 msgid "Bring forward"
 msgstr "Переместить вперед"
 
-#: ../src/core/control/tools/EditSelection.cpp:359
+#: ../src/core/control/tools/EditSelection.cpp:360
 msgid "Bring to front"
 msgstr "На передний план"
 
@@ -156,15 +156,15 @@ msgstr "На передний план"
 msgid "Cancel"
 msgstr "Отмена"
 
-#: ../src/core/undo/ColorUndoAction.cpp:82
+#: ../src/core/undo/ColorUndoAction.cpp:84
 msgid "Change color"
 msgstr "Изменить цвет"
 
-#: ../src/core/undo/FontUndoAction.cpp:102
+#: ../src/core/undo/FontUndoAction.cpp:104
 msgid "Change font"
 msgstr "Изменить шрифт"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:70
+#: ../src/core/undo/LineStyleUndoAction.cpp:72
 msgid "Change line style"
 msgstr "Изменить стиль линии"
 
@@ -450,7 +450,7 @@ msgstr "Тип рисунка - не изменять"
 msgid "Drawing Type Combo"
 msgstr ""
 
-#: ../src/core/undo/TextBoxUndoAction.cpp:35
+#: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
 msgstr "Редактировать текст"
 
@@ -767,7 +767,7 @@ msgstr "Слой {1}"
 msgid "Layerstack Preview"
 msgstr "Предпросмотр стопки слоёв"
 
-#: ../src/core/gui/PageView.cpp:763
+#: ../src/core/gui/PageView.cpp:764
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -1150,11 +1150,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr "Отправить отчёт об ошибке"
 
-#: ../src/core/control/tools/EditSelection.cpp:380
+#: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
 msgstr "Переместить назад"
 
-#: ../src/core/control/tools/EditSelection.cpp:388
+#: ../src/core/control/tools/EditSelection.cpp:389
 msgid "Send to back"
 msgstr "На задний план"
 
@@ -1264,7 +1264,7 @@ msgstr "Текст"
 msgid "Text %i times found on this page"
 msgstr "Текст найден %i раз(а) на этой странице"
 
-#: ../src/core/undo/TextUndoAction.cpp:29
+#: ../src/core/undo/TextUndoAction.cpp:31
 msgid "Text changes"
 msgstr "Изменения текста"
 
@@ -1383,7 +1383,7 @@ msgstr "Попытка аварийного сохранения текущег�
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Не удается открыть глобальный файл шаблона из {1}. Существует ли он?"
 
-#: ../src/core/gui/PageView.cpp:370
+#: ../src/core/gui/PageView.cpp:371
 msgid "Unable to play audio recording {1}"
 msgstr "Не удалось воспроизвести аудиозапись {1}"
 
