@@ -319,8 +319,10 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
         g_assert_null(this->verticalSpace);
         auto* window = gtk_widget_get_window(xournal->getWidget());
+        auto* zoomControl = this->getXournal()->getControl()->getZoomControl();
         this->verticalSpace =
-                new VerticalToolHandler(this, this->page, this->settings, y, pos.isControlDown(), zoom, window);
+                new VerticalToolHandler(this, this->page, this->settings, y, pos.isControlDown(), zoomControl, window);
+        zoomControl->addZoomListener(this->verticalSpace);
     } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
                h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
                h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {
@@ -587,6 +589,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
 
     if (this->verticalSpace) {
         control->getUndoRedoHandler()->addUndoAction(this->verticalSpace->finalize());
+        this->getXournal()->getControl()->getZoomControl()->removeZoomListener(this->verticalSpace);
         delete this->verticalSpace;
         this->verticalSpace = nullptr;
     }

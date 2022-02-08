@@ -16,6 +16,7 @@
 
 #include <cairo.h>
 
+#include "control/zoom/ZoomListener.h"
 #include "gui/Redrawable.h"
 #include "model/PageRef.h"
 #include "undo/MoveUndoAction.h"
@@ -23,15 +24,19 @@
 
 #include "SnapToGridInputHandler.h"
 
+class ZoomControl;
 
-class VerticalToolHandler: public ElementContainer {
+/**
+ * Handler class for the Vertical Spacing tool.
+ */
+class VerticalToolHandler: public ElementContainer, public ZoomListener {
 public:
     /**
      * @param initiallyReverse Set this to true if the user has the reverse mode
      * button (e.g., Ctrl) held down when a vertical selection is started.
      */
     VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y, bool initiallyReverse,
-                        double zoom, GdkWindow* window);
+                        ZoomControl* zoomControl, GdkWindow* window);
     ~VerticalToolHandler() override;
     VerticalToolHandler(VerticalToolHandler&) = delete;
     VerticalToolHandler& operator=(VerticalToolHandler&) = delete;
@@ -49,6 +54,8 @@ public:
     std::unique_ptr<MoveUndoAction> finalize();
 
     std::vector<Element*>* getElements() override;
+
+    void zoomChanged() override;
 
 private:
     enum class Side {
@@ -76,9 +83,9 @@ private:
     void redrawBuffer();
 
     GdkWindow* window;
-    Redrawable* view = nullptr;
+    Redrawable* view;
     PageRef page;
-    Layer* layer = nullptr;
+    Layer* layer;
     std::vector<Element*> elements;
 
     /**
@@ -88,18 +95,19 @@ private:
      */
     cairo_surface_t* crBuffer = nullptr;
 
-    double startY = 0;
-    double endY = 0;
+    double startY;
+    double endY;
 
     /**
-     * Indicates whether to move elements above (negative) or below (positive) the anchor line.
+     * Indicates whether to move elements above or below the anchor line.
      */
     Side spacingSide;
 
     /**
      * Current zoom level.
      */
-    double zoom;  // TODO: listen to zoom change in case zoom is changed during spacing
+    double zoom;
+    ZoomControl* zoomControl;
 
     /**
      * The handler for snapping points

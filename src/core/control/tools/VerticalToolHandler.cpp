@@ -5,32 +5,26 @@
 
 #include <cairo.h>
 
+#include "control/zoom/ZoomControl.h"
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
 #include "view/DocumentView.h"
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y,
-                                         bool initiallyReverse, double zoom, GdkWindow* window):
+                                         bool initiallyReverse, ZoomControl* zoomControl, GdkWindow* window):
+        window(window),
         view(view),
         page(page),
         layer(this->page->getSelectedLayer()),
         spacingSide(initiallyReverse ? Side::Above : Side::Below),
+        zoom(0),
+        zoomControl(zoomControl),
         snappingHandler(settings) {
     double ySnapped = snappingHandler.snapVertically(y, false);
     this->startY = ySnapped;
     this->endY = ySnapped;
-    this->zoom = zoom;
 
-    const int bufWidth = static_cast<int>(this->page->getWidth() * this->zoom);
-    const int bufHeight = static_cast<int>(std::max(this->startY, this->page->getHeight() - this->startY) * this->zoom);
-
-    if (window) {
-        const int scale = gdk_window_get_scale_factor(window);
-        this->crBuffer = gdk_window_create_similar_image_surface(window, CAIRO_FORMAT_ARGB32, bufWidth * scale,
-                                                                 bufHeight * scale, scale);
-    } else {
-        this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, bufWidth, bufHeight);
-    }
+    this->updateZoom(zoomControl->getZoom());
 
     this->adoptElements(this->spacingSide);
 
@@ -62,6 +56,14 @@ void VerticalToolHandler::adoptElements(const Side side) {
     }
 
     for (Element* e: this->elements) { this->layer->removeElement(e, false); }
+
+    if (this->crBuffer) {
+        redrawBuffer();
+    }
+}
+
+void VerticalToolHandler::redrawBuffer() {
+    g_assert_nonnull(this->crBuffer);
 
     cairo_t* cr = cairo_create(this->crBuffer);
     cairo_scale(cr, this->zoom, this->zoom);
@@ -171,3 +173,35 @@ auto VerticalToolHandler::finalize() -> std::unique_ptr<MoveUndoAction> {
 
     return undo;
 }
+
+void VerticalToolHandler::zoomChanged() {
+    updateZoom(this->zoomControl->getZoom());
+    redrawBuffer();
+    this->view->rerenderPage();
+}
+
+void VerticalToolHandler::updateZoom(const double newZoom) {
+    const auto oldZoom = this->zoom;
+    this->zoom = newZoom;
+
+    // The buffer only needs to be recreated if the zoom has increased.
+    if (newZoom < oldZoom) {
+        return;
+    }
+
+    const int bufWidth = static_cast<int>(this->page->getWidth() * this->zoom);
+    const int bufHeight = static_cast<int>(std::max(this->startY, this->page->getHeight() - this->startY) * this->zoom);
+
+    if (this->crBuffer) {
+        cairo_surface_destroy(this->crBuffer);
+        this->crBuffer = nullptr;
+    }
+
+    if (this->window) {
+        const int scale = gdk_window_get_scale_factor(this->window);
+        this->crBuffer = gdk_window_create_similar_image_surface(this->window, CAIRO_FORMAT_ARGB32, bufWidth * scale,
+                                                                 bufHeight * scale, scale);
+    } else {
+        this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, bufWidth, bufHeight);
+    }
+};
