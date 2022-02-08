@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-06 19:52+0000\n"
-"PO-Revision-Date: 2022-02-06 20:49\n"
+"PO-Revision-Date: 2022-02-08 10:25\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -3137,7 +3137,7 @@ msgstr "Essayez d'abord de sélectionner l'objet ; si rien n'est sélectionné, 
 
 #: ../ui/main.glade:2699
 msgid "Underline selected text"
-msgstr ""
+msgstr "Souligner le texte sélectionné"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
