@@ -41,16 +41,16 @@ class XournalView;
 class XojPageView: public Redrawable, public PageListener {
 public:
     XojPageView(XournalView* xournal, const PageRef& page);
-    virtual ~XojPageView();
+    ~XojPageView() override;
 
 public:
     void updatePageSize(double width, double height);
 
-    virtual void rerenderPage();
-    virtual void rerenderRect(double x, double y, double width, double height);
+    void rerenderPage() override;
+    void rerenderRect(double x, double y, double width, double height) override;
 
-    virtual void repaintPage();
-    virtual void repaintArea(double x1, double y1, double x2, double y2);
+    void repaintPage() override;
+    void repaintArea(double x1, double y1, double x2, double y2) override;
 
     void setSelected(bool selected);
 
@@ -71,7 +71,7 @@ public:
 
     bool actionDelete();
 
-    void deleteViewBuffer();
+    void deleteViewBuffer() override;
 
     /**
      * Returns whether this PageView contains the
@@ -135,13 +135,13 @@ public:
      * Returns the x coordinate of this XojPageView with
      * respect to the display
      */
-    int getX() const;
+    int getX() const override;
 
     /**
      * Returns the y coordinate of this XojPageView with
      * respect to the display
      */
-    int getY() const;
+    int getY() const override;
 
     TexImage* getSelectedTex();
     Text* getSelectedText();
@@ -174,10 +174,10 @@ public:  // event handler
     void paintPageSync(cairo_t* cr, GdkRectangle* rect);
 
 public:  // listener
-    void rectChanged(xoj::util::Rectangle<double>& rect);
-    void rangeChanged(Range& range);
-    void pageChanged();
-    void elementChanged(Element* elem);
+    void rectChanged(xoj::util::Rectangle<double>& rect) override;
+    void rangeChanged(Range& range) override;
+    void pageChanged() override;
+    void elementChanged(Element* elem) override;
 
 private:
     void handleScrollEvent(GdkEventButton* event);

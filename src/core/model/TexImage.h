@@ -27,7 +27,7 @@ public:
     TexImage& operator=(const TexImage&) = delete;
     TexImage(const TexImage&&) = delete;
     TexImage&& operator=(const TexImage&&) = delete;
-    virtual ~TexImage();
+    ~TexImage() override;
 
 public:
     void setWidth(double width);
@@ -50,14 +50,14 @@ public:
      */
     PopplerDocument* getPdf() const;
 
-    virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth);
-    virtual void rotate(double x0, double y0, double th);
+    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
+    void rotate(double x0, double y0, double th) override;
 
     // text tag to alow latex
     void setText(std::string text);
     std::string getText() const;
 
-    virtual Element* clone();
+    Element* clone() override;
 
     /**
      * @return true if the binary data (PNG or PDF) was loaded successfully.

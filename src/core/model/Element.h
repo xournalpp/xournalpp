@@ -71,8 +71,8 @@ public:
      */
     virtual Element* clone() = 0;
 
-    void serialize(ObjectOutputStream& out) const;
-    void readSerialized(ObjectInputStream& in);
+    void serialize(ObjectOutputStream& out) const override;
+    void readSerialized(ObjectInputStream& in) override;
 
 private:
 protected:

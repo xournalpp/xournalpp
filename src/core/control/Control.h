@@ -63,7 +63,11 @@ class Control:
         public ProgressListener {
 public:
     Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath);
-    virtual ~Control();
+    Control(Control const&) = delete;
+    Control(Control&&) = delete;
+    auto operator=(Control const&) -> Control& = delete;
+    auto operator=(Control&&) -> Control& = delete;
+    ~Control() override;
 
     void initWindow(MainWindow* win);
 
@@ -113,31 +117,31 @@ public:
     // Menu Help
     void showAbout();
 
-    virtual void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
-                                 GtkToolButton* toolbutton, bool enabled);
+    void actionPerformed(ActionType type, ActionGroup group, GdkEvent* event, GtkMenuItem* menuitem,
+                         GtkToolButton* toolbutton, bool enabled) override;
 
     /**
      * @brief Update the Cursor and the Toolbar based on the active color
      *
      */
-    virtual void toolColorChanged();
+    void toolColorChanged() override;
     /**
      * @brief Change the color of the current selection based on the active Tool
      *
      */
-    virtual void changeColorOfSelection();
-    virtual void setCustomColorSelected();
-    virtual void toolChanged();
-    virtual void toolSizeChanged();
-    virtual void toolFillChanged();
-    virtual void toolLineStyleChanged();
+    void changeColorOfSelection() override;
+    void setCustomColorSelected() override;
+    void toolChanged() override;
+    void toolSizeChanged() override;
+    void toolFillChanged() override;
+    void toolLineStyleChanged() override;
 
     void selectTool(ToolType type);
     void selectDefaultTool();
 
     void updatePageNumbers(size_t page, size_t pdfPage);
 
-    virtual void fileOpened(fs::path const& path);
+    void fileOpened(fs::path const& path) override;
 
     /**
      * Save current state (selected tool etc.)
@@ -266,22 +270,22 @@ public:
 
 public:
     // UndoRedoListener interface
-    void undoRedoChanged();
-    void undoRedoPageChanged(PageRef page);
+    void undoRedoChanged() override;
+    void undoRedoPageChanged(PageRef page) override;
 
 public:
     // ProgressListener interface
-    void setMaximumState(int max);
-    void setCurrentState(int state);
+    void setMaximumState(int max) override;
+    void setCurrentState(int state) override;
 
 public:
     // ClipboardListener interface
-    virtual void clipboardCutCopyEnabled(bool enabled);
-    virtual void clipboardPasteEnabled(bool enabled);
-    virtual void clipboardPasteText(std::string text);
-    virtual void clipboardPasteImage(GdkPixbuf* img);
-    virtual void clipboardPasteXournal(ObjectInputStream& in);
-    virtual void deleteSelection();
+    void clipboardCutCopyEnabled(bool enabled) override;
+    void clipboardPasteEnabled(bool enabled) override;
+    void clipboardPasteText(std::string text) override;
+    void clipboardPasteImage(GdkPixbuf* img) override;
+    void clipboardPasteXournal(ObjectInputStream& in) override;
+    void deleteSelection() override;
 
     void clipboardPaste(Element* e);
 

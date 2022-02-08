@@ -22,7 +22,7 @@
 class XojFont: public Serializable {
 public:
     XojFont();
-    virtual ~XojFont();
+    ~XojFont() override;
 
 public:
     std::string getName() const;
@@ -35,8 +35,8 @@ public:
 
 public:
     // Serialize interface
-    void serialize(ObjectOutputStream& out) const;
-    void readSerialized(ObjectInputStream& in);
+    void serialize(ObjectOutputStream& out) const override;
+    void readSerialized(ObjectInputStream& in) override;
 
 private:
     void updateFontDesc();

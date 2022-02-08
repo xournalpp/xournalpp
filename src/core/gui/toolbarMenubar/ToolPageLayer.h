@@ -26,15 +26,15 @@ class ToolPageLayer: public AbstractToolItem, public LayerCtrlListener {
 public:
     ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, std::string id, ActionType type,
                   IconNameHelper iconNameHelper);
-    virtual ~ToolPageLayer();
+    ~ToolPageLayer() override;
 
 public:
-    virtual std::string getToolDisplayName() const;
+    std::string getToolDisplayName() const override;
 
     // LayerCtrlListener
 public:
-    virtual void rebuildLayerMenu();
-    virtual void layerVisibilityChanged();
+    void rebuildLayerMenu() override;
+    void layerVisibilityChanged() override;
 
 protected:
     GtkWidget* createSpecialMenuEntry(const std::string& name);
@@ -55,9 +55,9 @@ protected:
      */
     void updateLayerData();
 
-    virtual GtkToolItem* newItem();
-    virtual GtkWidget* getNewToolIcon() const;
-    virtual GdkPixbuf* getNewToolPixbuf() const;
+    GtkToolItem* newItem() override;
+    GtkWidget* getNewToolIcon() const override;
+    GdkPixbuf* getNewToolPixbuf() const override;
 
 private:
     void createLayerMenuItem(const std::string& text, int layerId);

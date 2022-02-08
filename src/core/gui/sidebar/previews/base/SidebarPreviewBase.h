@@ -28,11 +28,11 @@ class SidebarToolbar;
 class SidebarPreviewBase: public AbstractSidebarPage {
 public:
     SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar);
-    virtual ~SidebarPreviewBase();
+    ~SidebarPreviewBase() override;
 
 public:
-    virtual void enableSidebar();
-    virtual void disableSidebar();
+    void enableSidebar() override;
+    void disableSidebar() override;
 
     /**
      * Layout the pages to the current size of the sidebar
@@ -47,12 +47,12 @@ public:
     /**
      * @overwrite
      */
-    virtual bool hasData();
+    bool hasData() override;
 
     /**
      * @overwrite
      */
-    virtual GtkWidget* getWidget();
+    GtkWidget* getWidget() override;
 
     /**
      * Gets the zoom factor for the previews
@@ -66,9 +66,9 @@ public:
 
 public:
     // DocumentListener interface (only the part handled by SidebarPreviewBase)
-    virtual void documentChanged(DocumentChangeType type);
-    virtual void pageInserted(size_t page);
-    virtual void pageDeleted(size_t page);
+    void documentChanged(DocumentChangeType type) override;
+    void pageInserted(size_t page) override;
+    void pageDeleted(size_t page) override;
 
 protected:
     /**

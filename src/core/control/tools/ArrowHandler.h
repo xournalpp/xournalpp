@@ -16,10 +16,10 @@
 class ArrowHandler: public BaseStrokeHandler {
 public:
     ArrowHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
-    virtual ~ArrowHandler();
+    ~ArrowHandler() override;
 
 private:
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    void drawShape(Point& currentPoint, const PositionInputData& pos) override;
 
 private:
 };

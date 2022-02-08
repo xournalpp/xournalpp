@@ -24,12 +24,12 @@ public:
     PopplerGlibPage& operator=(const PopplerGlibPage& other);
 
 public:
-    virtual double getWidth();
-    virtual double getHeight();
+    double getWidth() override;
+    double getHeight() override;
 
-    virtual void render(cairo_t* cr, bool forPrinting = false);  // NOLINT(google-default-arguments)
+    void render(cairo_t* cr, bool forPrinting = false) override;  // NOLINT(google-default-arguments)
 
-    virtual std::vector<XojPdfRectangle> findText(std::string& text);
+    std::vector<XojPdfRectangle> findText(std::string& text) override;
 
     std::string selectText(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) override;
 
@@ -38,7 +38,7 @@ public:
     TextSelection selectTextLines(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) override;
 
 
-    virtual int getPageId();
+    int getPageId() override;
 
 private:
     PopplerPage* page;

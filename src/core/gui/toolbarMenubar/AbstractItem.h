@@ -22,17 +22,17 @@
 class AbstractItem: public ActionEnabledListener, public ActionSelectionListener {
 public:
     AbstractItem(std::string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem = nullptr);
-    virtual ~AbstractItem();
+    ~AbstractItem() override;
 
 public:
-    virtual void actionSelected(ActionGroup group, ActionType action);
+    void actionSelected(ActionGroup group, ActionType action) override;
 
     /**
      * Override this method
      */
     virtual void selected(ActionGroup group, ActionType action);
 
-    virtual void actionEnabledAction(ActionType action, bool enabled);
+    void actionEnabledAction(ActionType action, bool enabled) override;
     virtual void activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolButton* toolbutton);
 
     virtual std::string getId() const;

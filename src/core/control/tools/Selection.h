@@ -23,7 +23,7 @@
 class Selection: public ShapeContainer {
 public:
     Selection(Redrawable* view);
-    virtual ~Selection();
+    ~Selection() override;
 
 public:
     virtual bool finalize(PageRef page) = 0;
@@ -48,14 +48,14 @@ protected:
 class RectSelection: public Selection {
 public:
     RectSelection(double x, double y, Redrawable* view);
-    virtual ~RectSelection();
+    ~RectSelection() override;
 
 public:
-    virtual bool finalize(PageRef page);
-    virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
-    virtual void currentPos(double x, double y);
-    virtual bool contains(double x, double y);
-    virtual bool userTapped(double zoom);
+    bool finalize(PageRef page) override;
+    void paint(cairo_t* cr, GdkRectangle* rect, double zoom) override;
+    void currentPos(double x, double y) override;
+    bool contains(double x, double y) override;
+    bool userTapped(double zoom) override;
 
 private:
     double sx;

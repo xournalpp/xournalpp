@@ -21,14 +21,14 @@ class LineStyle: public Serializable {
 public:
     LineStyle();
     LineStyle(const LineStyle& other);
-    virtual ~LineStyle();
+    ~LineStyle() override;
 
     void operator=(const LineStyle& other);
 
 public:
     // Serialize interface
-    void serialize(ObjectOutputStream& out) const;
-    void readSerialized(ObjectInputStream& in);
+    void serialize(ObjectOutputStream& out) const override;
+    void readSerialized(ObjectInputStream& in) override;
 
 public:
     /**

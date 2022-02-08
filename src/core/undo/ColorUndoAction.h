@@ -25,12 +25,12 @@ class Redrawable;
 class ColorUndoAction: public UndoAction {
 public:
     ColorUndoAction(const PageRef& page, Layer* layer);
-    virtual ~ColorUndoAction();
+    ~ColorUndoAction() override;
 
 public:
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
-    virtual std::string getText();
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
+    std::string getText() override;
 
     void addStroke(Element* e, Color originalColor, Color newColor);
 

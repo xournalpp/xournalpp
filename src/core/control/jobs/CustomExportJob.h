@@ -26,18 +26,18 @@ public:
     CustomExportJob(Control* control);
 
 protected:
-    virtual ~CustomExportJob();
+    ~CustomExportJob() override;
 
 public:
-    void run();
+    void run() override;
 
 public:
-    virtual bool showFilechooser();
+    bool showFilechooser() override;
 
 protected:
-    virtual void afterRun();
+    void afterRun() override;
 
-    virtual void addFilterToDialog();
+    void addFilterToDialog() override;
 
     /**
      * Create one Graphics file per page

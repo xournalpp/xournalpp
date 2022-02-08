@@ -20,7 +20,7 @@
 class Image: public Element {
 public:
     Image();
-    virtual ~Image();
+    ~Image() override;
 
 public:
     void setWidth(double width);
@@ -31,13 +31,13 @@ public:
     void setImage(GdkPixbuf* img);
     cairo_surface_t* getImage() const;
 
-    virtual void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth);
-    virtual void rotate(double x0, double y0, double th);
+    void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
+    void rotate(double x0, double y0, double th) override;
 
     /**
      * @overwrite
      */
-    virtual Element* clone();
+    Element* clone() override;
 
 public:
     // Serialize interface

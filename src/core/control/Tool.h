@@ -34,7 +34,7 @@ public:
      * @param t tool to use as basis for new copy.
      */
     Tool(const Tool& t);
-    virtual ~Tool();
+    ~Tool() override;
 
 public:
     std::string getName() const;

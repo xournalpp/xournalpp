@@ -22,28 +22,28 @@
 class ImageElementView: public BaseElementView {
 public:
     ImageElementView(int id, BackgroundSelectDialogBase* dlg);
-    ~ImageElementView();
+    ~ImageElementView() override;
 
 protected:
     /**
      * Paint the contents (without border / selection)
      */
-    virtual void paintContents(cairo_t* cr);
+    void paintContents(cairo_t* cr) override;
 
     /**
      * Get the width in pixel, without shadow / border
      */
-    virtual int getContentWidth();
+    int getContentWidth() override;
 
     /**
      * Get the height in pixel, without shadow / border
      */
-    virtual int getContentHeight();
+    int getContentHeight() override;
 
     /**
      * Will be called before getContentWidth() / getContentHeight(), can be overwritten
      */
-    virtual void calcSize();
+    void calcSize() override;
 
 private:
     double zoom = 1;

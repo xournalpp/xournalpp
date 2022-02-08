@@ -28,14 +28,14 @@ public:
     RenderJob(XojPageView* view);
 
 protected:
-    virtual ~RenderJob() = default;
+    ~RenderJob() override = default;
 
 public:
-    virtual JobType getType();
+    JobType getType() override;
 
-    void* getSource();
+    void* getSource() override;
 
-    void run();
+    void run() override;
 
 private:
     /**

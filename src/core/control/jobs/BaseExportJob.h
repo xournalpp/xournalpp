@@ -33,10 +33,10 @@ public:
     BaseExportJob(Control* control, const std::string& name);
 
 protected:
-    virtual ~BaseExportJob();
+    ~BaseExportJob() override;
 
 public:
-    virtual void afterRun();
+    void afterRun() override;
 
 public:
     virtual bool showFilechooser();

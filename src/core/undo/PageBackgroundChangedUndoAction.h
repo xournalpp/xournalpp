@@ -21,13 +21,13 @@ class PageBackgroundChangedUndoAction: public UndoAction {
 public:
     PageBackgroundChangedUndoAction(const PageRef& page, const PageType& origType, int origPdfPage,
                                     BackgroundImage origBackgroundImage, double origW, double origH);
-    virtual ~PageBackgroundChangedUndoAction();
+    ~PageBackgroundChangedUndoAction() override;
 
 public:
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
 
-    virtual std::string getText();
+    std::string getText() override;
 
 private:
     PageType origType;

@@ -22,13 +22,13 @@ public:
     LatexDialog(const LatexDialog& other) = delete;
     LatexDialog& operator=(const LatexDialog& other) = delete;
     LatexDialog(GladeSearchpath* gladeSearchPath);
-    virtual ~LatexDialog();
+    ~LatexDialog() override;
 
 public:
     /**
      * Show the dialog.
      */
-    virtual void show(GtkWindow* parent);
+    void show(GtkWindow* parent) override;
 
     /**
      * Show the dialog, optionally selecting the text field contents by default.

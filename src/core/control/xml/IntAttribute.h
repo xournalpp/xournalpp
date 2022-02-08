@@ -16,10 +16,10 @@
 class IntAttribute: public XMLAttribute {
 public:
     IntAttribute(const char* name, int value);
-    virtual ~IntAttribute();
+    ~IntAttribute() override;
 
 public:
-    virtual void writeOut(OutputStream* out);
+    void writeOut(OutputStream* out) override;
 
 private:
     int value;

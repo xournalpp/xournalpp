@@ -21,10 +21,10 @@
 class PdfPagesDialog: public BackgroundSelectDialogBase {
 public:
     PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings);
-    virtual ~PdfPagesDialog();
+    ~PdfPagesDialog() override;
 
 public:
-    virtual void show(GtkWindow* parent);
+    void show(GtkWindow* parent) override;
     void updateOkButton();
     static double getZoom();
     int getSelectedPage();

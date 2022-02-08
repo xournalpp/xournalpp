@@ -23,7 +23,7 @@ public:
     LatexSettingsPanel& operator=(const LatexSettingsPanel&) = delete;
     LatexSettingsPanel(const LatexSettingsPanel&&) = delete;
     LatexSettingsPanel& operator=(const LatexSettingsPanel&&) = delete;
-    virtual ~LatexSettingsPanel();
+    ~LatexSettingsPanel() override;
 
     void show(GtkWindow* parent) override;
 

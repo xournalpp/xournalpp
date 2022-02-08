@@ -30,10 +30,10 @@ struct _ColorToolItemDragData;
 class ToolbarCustomizeDialog: public GladeGui {
 public:
     ToolbarCustomizeDialog(GladeSearchpath* gladeSearchPath, MainWindow* win, ToolbarDragDropHandler* handler);
-    virtual ~ToolbarCustomizeDialog();
+    ~ToolbarCustomizeDialog() override;
 
 public:
-    virtual void show(GtkWindow* parent);
+    void show(GtkWindow* parent) override;
 
     void rebuildIconview();
     void rebuildColorIcons();

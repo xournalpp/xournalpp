@@ -19,10 +19,10 @@ class ToolbarModel;
 class ToolbarManageDialog: public GladeGui {
 public:
     ToolbarManageDialog(GladeSearchpath* gladeSearchPath, ToolbarModel* model);
-    virtual ~ToolbarManageDialog();
+    ~ToolbarManageDialog() override;
 
 public:
-    virtual void show(GtkWindow* parent);
+    void show(GtkWindow* parent) override;
 
 private:
     static void treeSelectionChangedCallback(GtkTreeSelection* selection, ToolbarManageDialog* dlg);

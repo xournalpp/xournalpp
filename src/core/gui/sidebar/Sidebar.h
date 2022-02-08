@@ -27,7 +27,7 @@ class SidebarPageButton;
 class Sidebar: public DocumentListener, public SidebarToolbarActionListener {
 public:
     Sidebar(GladeGui* gui, Control* control);
-    virtual ~Sidebar();
+    ~Sidebar() override;
 
 private:
     void initPages(GtkWidget* sidebarContents, GladeGui* gui);
@@ -38,7 +38,7 @@ public:
     /**
      * Called when an action is performed
      */
-    virtual void actionPerformed(SidebarActions action);
+    void actionPerformed(SidebarActions action) override;
 
 public:
     /**
@@ -75,7 +75,7 @@ public:
 
 public:
     // DocumentListener interface
-    virtual void documentChanged(DocumentChangeType type);
+    void documentChanged(DocumentChangeType type) override;
 
 private:
     /**

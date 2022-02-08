@@ -35,7 +35,7 @@ class DocumentListener;
 class ZoomControl: public DocumentListener {
 public:
     ZoomControl() = default;
-    virtual ~ZoomControl() = default;
+    ~ZoomControl() override = default;
 
     /**
      * Zoom one step
@@ -166,8 +166,8 @@ protected:
     void fireZoomChanged();
     void fireZoomRangeValueChanged();
 
-    void pageSizeChanged(size_t page);
-    void pageSelected(size_t page);
+    void pageSizeChanged(size_t page) override;
+    void pageSelected(size_t page) override;
 
 private:
     void zoomFit();

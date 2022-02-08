@@ -25,13 +25,13 @@ class ToolDrawType;
 class ToolDrawCombocontrol: public ToolButton {
 public:
     ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, ActionHandler* handler, std::string id);
-    virtual ~ToolDrawCombocontrol();
+    ~ToolDrawCombocontrol() override;
 
 public:
-    virtual void selected(ActionGroup group, ActionType action);
+    void selected(ActionGroup group, ActionType action) override;
 
 protected:
-    virtual GtkToolItem* newItem();
+    GtkToolItem* newItem() override;
     void createMenuItem(const std::string& name, const std::string& icon, ActionType type);
 
 private:

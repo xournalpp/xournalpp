@@ -21,12 +21,12 @@ class Stroke;
 class FillUndoAction: public UndoAction {
 public:
     FillUndoAction(const PageRef& page, Layer* layer);
-    virtual ~FillUndoAction();
+    ~FillUndoAction() override;
 
 public:
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
-    virtual std::string getText();
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
+    std::string getText() override;
 
     void addStroke(Stroke* s, int originalFill, int newFill);
 

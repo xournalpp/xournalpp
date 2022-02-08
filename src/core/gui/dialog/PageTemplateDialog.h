@@ -28,17 +28,17 @@ public:
     PageTemplateDialog(PageTemplateDialog&&) = delete;
     PageTemplateDialog& operator=(PageTemplateDialog&) = delete;
     PageTemplateDialog&& operator=(PageTemplateDialog&&) = delete;
-    virtual ~PageTemplateDialog();
+    ~PageTemplateDialog() override;
 
 public:
-    virtual void show(GtkWindow* parent);
+    void show(GtkWindow* parent) override;
 
     /**
      * The dialog was confirmed / saved
      */
     bool isSaved() const;
 
-    void changeCurrentPageBackground(PageTypeInfo* info);
+    void changeCurrentPageBackground(PageTypeInfo* info) override;
 
 private:
     void showPageSizeDialog();

@@ -20,15 +20,15 @@ class Stroke;
 class RecognizerUndoAction: public UndoAction {
 public:
     RecognizerUndoAction(const PageRef& page, Layer* layer, Stroke* original, Stroke* recognized);
-    virtual ~RecognizerUndoAction();
+    ~RecognizerUndoAction() override;
 
 public:
     void addSourceElement(Stroke* s);
 
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
 
-    virtual std::string getText();
+    std::string getText() override;
 
 private:
     Layer* layer;
