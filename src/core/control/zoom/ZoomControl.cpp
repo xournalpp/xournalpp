@@ -1,5 +1,6 @@
 #include "ZoomControl.h"
 
+#include <algorithm>
 #include <cmath>
 
 #include "control/Control.h"
@@ -205,6 +206,12 @@ auto ZoomControl::getScrollPositionAfterZoom() const -> utl::Point<double> {
 
 
 void ZoomControl::addZoomListener(ZoomListener* l) { this->listener.emplace_back(l); }
+
+void ZoomControl::removeZoomListener(ZoomListener* l) {
+    if (auto it = std::find(this->listener.begin(), this->listener.end(), l); it != this->listener.end()) {
+        this->listener.erase(it);
+    }
+}
 
 void ZoomControl::initZoomHandler(GtkWidget* window, GtkWidget* widget, XournalView* v, Control* c) {
     this->control = c;
