@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-08 15:36+0000\n"
-"PO-Revision-Date: 2022-02-08 15:40\n"
+"POT-Creation-Date: 2022-02-08 16:21+0000\n"
+"PO-Revision-Date: 2022-02-08 16:37\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -33,11 +33,11 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr ""
 
-#: ../src/core/control/settings/Settings.cpp:122
+#: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
 msgstr "%F-筆記-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:149
+#: ../src/core/gui/dialog/SettingsDialog.cpp:151
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>沒有找到任何裝置。可能出錯了 - 要回報錯誤嗎？</b>"
 
@@ -114,11 +114,10 @@ msgstr "變數\"{1}\"不能為 size_t，其值為 nullptr"
 msgid "Attribute color not set!"
 msgstr "顏色未設置"
 
-#: ../src/core/control/AudioController.cpp:97
-msgid "Audio folder not set! Recording won't work!\n"
+#: ../src/core/control/AudioController.cpp:99
+msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "音效資料夾未設置！錄音無法使用！\n"
-"請於 \"偏好設定 > 錄製音效\" 下設定錄音資料夾"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -456,7 +455,7 @@ msgstr "編輯文本"
 msgid "Emergency saved document"
 msgstr "緊急儲存文件"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr ""
 
@@ -601,7 +600,7 @@ msgstr "未能打開檔案，請手動操作：\n"
 msgid "Fill"
 msgstr "填滿"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
@@ -688,7 +687,7 @@ msgstr "熒光筆"
 msgid "Image"
 msgstr "圖片"
 
-#: ../src/core/control/ExportHelper.cpp:61
+#: ../src/core/control/ExportHelper.cpp:64
 msgid "Image file successfully created"
 msgstr "圖片檔案成功建立"
 
@@ -868,7 +867,7 @@ msgstr "PDF頁碼{1}"
 msgid "PDF background missing"
 msgstr "PDF背景丟失"
 
-#: ../src/core/control/ExportHelper.cpp:107
+#: ../src/core/control/ExportHelper.cpp:108
 msgid "PDF file successfully created"
 msgstr "PDF檔案成功建立"
 
