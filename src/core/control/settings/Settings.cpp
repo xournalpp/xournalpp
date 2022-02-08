@@ -26,6 +26,7 @@
 
 #include "ButtonConfig.h"  // for ButtonConfig
 #include "config-dev.h"    // for PALETTE_FILE
+#include "config-dev.h"
 #include "filesystem.h"    // for path, u8path, exists
 
 
@@ -227,6 +228,7 @@ void Settings::loadDefault() {
     this->stabilizerMass = 5.0;
     this->stabilizerFinalizeStroke = true;
     /**/
+    this->colorPaletteSetting = Util::getPalettePath() / DEFAULT_PALETTE_FILE;
 }
 
 auto Settings::loadViewMode(ViewModeId mode) -> bool {
