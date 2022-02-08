@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-08 15:36+0000\n"
-"PO-Revision-Date: 2022-02-08 15:41\n"
+"POT-Creation-Date: 2022-02-08 16:21+0000\n"
+"PO-Revision-Date: 2022-02-08 16:38\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -34,11 +34,11 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " من {1}"
 
-#: ../src/core/control/settings/Settings.cpp:122
+#: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
 msgstr "%F-ملاحظة-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:149
+#: ../src/core/gui/dialog/SettingsDialog.cpp:151
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>لم يتم العثور على أجهزة. لا يبدو هذا صائبًا- ربما تودُّ إرسال بلاغٍ عن العطل؟</b>"
 
@@ -115,11 +115,10 @@ msgstr "السمة \"{1}\" لا يمكن تحليلها كحجم size_t، الق
 msgid "Attribute color not set!"
 msgstr "لم يتم تعيين لون السمة!"
 
-#: ../src/core/control/AudioController.cpp:97
-msgid "Audio folder not set! Recording won't work!\n"
+#: ../src/core/control/AudioController.cpp:99
+msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "لم يتم تحديد مجلد الصوتيات؛ لا يمكن التسجيل!\n"
-"الرجاء تحديد مجلد التسجيل في «التفضيلات > تسجيل الصوتيات»"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -458,7 +457,7 @@ msgstr "تحرير النص"
 msgid "Emergency saved document"
 msgstr "المستند المحفوظ اضطراريا"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "قم بتفعيل الإحساس بالضغط أو استنتاج الضغط لتغيير هذا الإعداد!"
 
@@ -613,7 +612,7 @@ msgstr "تعذر فتح الملف. عليك فعل ذلك يدويا:\n"
 msgid "Fill"
 msgstr "تعبئة"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "ترشيح ضغط الإدخال. اضرب الضغط في قيمة «مضاعف الضغط». وإذا كان أقل من الحد الأدنى، استخدم «الحد الأدنى للضغط»."
 
@@ -700,7 +699,7 @@ msgstr "قلم تظليل"
 msgid "Image"
 msgstr "صورة"
 
-#: ../src/core/control/ExportHelper.cpp:61
+#: ../src/core/control/ExportHelper.cpp:64
 msgid "Image file successfully created"
 msgstr "تم إنشاء ملف الصورة بنجاح"
 
@@ -881,7 +880,7 @@ msgstr "صفحة PDF رقم {1}"
 msgid "PDF background missing"
 msgstr "خلفية PDF مفقودة"
 
-#: ../src/core/control/ExportHelper.cpp:107
+#: ../src/core/control/ExportHelper.cpp:108
 msgid "PDF file successfully created"
 msgstr "تم إنشاء ملف الـPDF بنجاح"
 
