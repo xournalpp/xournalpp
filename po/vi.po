@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-08 16:21+0000\n"
-"PO-Revision-Date: 2022-02-08 16:37\n"
+"POT-Creation-Date: 2022-02-08 17:11+0000\n"
+"PO-Revision-Date: 2022-02-08 17:34\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -330,7 +330,7 @@ msgid "Default Tool"
 msgstr "Công cụ Mặc định"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
-#: ../src/core/undo/DeleteUndoAction.cpp:56
+#: ../src/core/undo/DeleteUndoAction.cpp:55
 msgid "Delete"
 msgstr "Xóa"
 
@@ -462,7 +462,7 @@ msgid "Enable pressure sensitivity or pressure inference to change this setting!
 msgstr "Bật lực nhạy hoặc hệ quả của lực để thay đổi cài đặt này!"
 
 #: ../src/core/undo/AddUndoAction.cpp:55
-#: ../src/core/undo/DeleteUndoAction.cpp:53
+#: ../src/core/undo/DeleteUndoAction.cpp:52
 #: ../src/core/undo/EraseUndoAction.cpp:52
 msgid "Erase stroke"
 msgstr "Xóa nét"
@@ -584,7 +584,7 @@ msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Không tìm thấy chương trình tạo LaTeX trong ĐƯỜNG DẪN: {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Không thể khởi chạy bề mặt PDF Cairo"
 
@@ -699,7 +699,7 @@ msgstr "Bút dạ quang"
 msgid "Image"
 msgstr "Hình ảnh"
 
-#: ../src/core/control/ExportHelper.cpp:64
+#: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
 msgstr "Tệp ảnh đã tạo thành công"
 
@@ -772,7 +772,7 @@ msgstr "Lớp {1}"
 msgid "Layerstack Preview"
 msgstr "Xem trước Chồng lớp"
 
-#: ../src/core/gui/PageView.cpp:764
+#: ../src/core/gui/PageView.cpp:760
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -823,7 +823,7 @@ msgid "No device"
 msgstr "Không có thiết bị"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:151
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:194
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
 msgid "No pages to export!"
 msgstr "Không có trang nào để xuất!"
 
@@ -880,7 +880,7 @@ msgstr "Trang PDF {1}"
 msgid "PDF background missing"
 msgstr "Nền PDF đang thiếu"
 
-#: ../src/core/control/ExportHelper.cpp:108
+#: ../src/core/control/ExportHelper.cpp:106
 msgid "PDF file successfully created"
 msgstr "Tệp PDF đã được tạo thành công"
 
@@ -1049,7 +1049,7 @@ msgstr "Lưu dưới dạng..."
 msgid "Save File"
 msgstr "Lưu Tệp tin"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:127
+#: ../src/core/control/jobs/CustomExportJob.cpp:124
 #: ../src/core/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
 msgstr "Lỗi lưu tệp tin: {1}"
@@ -1382,7 +1382,7 @@ msgstr "Thử lưu khẩn cấp tập tin đang mở…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:371
+#: ../src/core/gui/PageView.cpp:367
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
@@ -1580,7 +1580,7 @@ msgid "dotted"
 msgstr "nhiều chấm"
 
 #: ../src/core/undo/AddUndoAction.cpp:65
-#: ../src/core/undo/DeleteUndoAction.cpp:64
+#: ../src/core/undo/DeleteUndoAction.cpp:63
 msgid "elements"
 msgstr ""
 
@@ -1593,7 +1593,7 @@ msgid "file: {1}"
 msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:76
-#: ../src/core/undo/DeleteUndoAction.cpp:75
+#: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "image"
 msgstr "ảnh"
 
@@ -1602,7 +1602,7 @@ msgid "keyboard"
 msgstr "bàn phím"
 
 #: ../src/core/undo/AddUndoAction.cpp:79
-#: ../src/core/undo/DeleteUndoAction.cpp:78
+#: ../src/core/undo/DeleteUndoAction.cpp:77
 msgid "latex"
 msgstr "latex"
 
@@ -1624,7 +1624,7 @@ msgid "standard"
 msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:73
-#: ../src/core/undo/DeleteUndoAction.cpp:72
+#: ../src/core/undo/DeleteUndoAction.cpp:71
 msgid "stroke"
 msgstr ""
 
@@ -1633,7 +1633,7 @@ msgid "tablet pad"
 msgstr ""
 
 #: ../src/core/undo/AddUndoAction.cpp:82
-#: ../src/core/undo/DeleteUndoAction.cpp:81
+#: ../src/core/undo/DeleteUndoAction.cpp:80
 msgid "text"
 msgstr "văn bản"
 
