@@ -317,6 +317,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         this->eraser->erase(x, y);
         this->inEraser = true;
     } else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
+        g_assert_null(this->verticalSpace);
         this->verticalSpace = new VerticalToolHandler(this, this->page, this->settings, y, zoom);
     } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
                h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||

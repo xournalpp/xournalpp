@@ -21,11 +21,7 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, 
 
     for (Element* e: this->elements) {
         this->layer->removeElement(e, false);
-
-        this->jumpY = std::max(this->jumpY, e->getY() + e->getElementHeight());
     }
-
-    this->jumpY = this->page->getHeight() - this->jumpY;
 
     this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->page->getWidth() * zoom,
                                                 (this->page->getHeight() - y) * zoom);
@@ -57,16 +53,8 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
 
     gdk_cairo_set_source_rgba(cr, &selectionColor);
 
-    double y = NAN;
-    double height = NAN;
-
-    if (this->startY < this->endY) {
-        y = this->startY;
-        height = this->endY - this->startY;
-    } else {
-        y = this->endY;
-        height = this->startY - this->endY;
-    }
+    const double y = std::min(this->startY, this->endY);
+    const double height = std::abs(this->startY - this->endY);
 
     cairo_rectangle(cr, 0, y * zoom, this->page->getWidth() * zoom, height * zoom);
 
