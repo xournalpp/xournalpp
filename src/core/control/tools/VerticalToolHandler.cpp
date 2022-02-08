@@ -10,7 +10,7 @@
 #include "view/DocumentView.h"
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y,
-                                         bool initiallyReverse, double zoom):
+                                         bool initiallyReverse, double zoom, GdkWindow* window):
         view(view),
         page(page),
         layer(this->page->getSelectedLayer()),
@@ -20,9 +20,17 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, 
     this->startY = ySnapped;
     this->endY = ySnapped;
     this->zoom = zoom;
-    this->crBuffer = cairo_image_surface_create(
-            CAIRO_FORMAT_ARGB32, static_cast<int>(this->page->getWidth() * this->zoom),
-            static_cast<int>(std::max(this->startY, this->page->getHeight() - this->startY) * this->zoom));
+
+    const int bufWidth = static_cast<int>(this->page->getWidth() * this->zoom);
+    const int bufHeight = static_cast<int>(std::max(this->startY, this->page->getHeight() - this->startY) * this->zoom);
+
+    if (window) {
+        const int scale = gdk_window_get_scale_factor(window);
+        this->crBuffer = gdk_window_create_similar_image_surface(window, CAIRO_FORMAT_ARGB32, bufWidth * scale,
+                                                                 bufHeight * scale, scale);
+    } else {
+        this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, bufWidth, bufHeight);
+    }
 
     this->adoptElements(this->spacingSide);
 
