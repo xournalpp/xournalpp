@@ -112,19 +112,19 @@ protected:
 class Active: public Base {
 public:
     Active(bool finalize): finalize(finalize) {}
-    virtual ~Active() = default;
+    ~Active() override = default;
 
     /**
      * @brief Fill the possible gap between the last painted point and the last event received by the stabilizer.
      * It does so by creating a quadraticSplineTo the last event's coordinates
      */
-    virtual void finalizeStroke() override;
+    void finalizeStroke() override;
 
     /**
      * @brief Compute stabilized coordinates for the event and paints the obtained point
      * @param pos The MotionNotify event information
      */
-    virtual void processEvent(const PositionInputData& pos) override {
+    void processEvent(const PositionInputData& pos) override {
         Event ev(pos);
         averageAndPaint(ev, pos.timestamp);
     }
@@ -204,15 +204,15 @@ class Deadzone: virtual public Active {
 public:
     Deadzone(bool finalize, double dzRadius, bool cuspDetection):
             Active(finalize), deadzoneRadius(dzRadius), cuspDetection(cuspDetection) {}
-    virtual ~Deadzone() = default;
+    ~Deadzone() override = default;
 
     /**
      * @brief Compute stabilized coordinates for the event and paints the obtained point
      * @param pos The MotionNotify event information
      */
-    virtual void processEvent(const PositionInputData& pos) override;
+    void processEvent(const PositionInputData& pos) override;
 
-    [[maybe_unused]] virtual auto getInfo() -> std::string override {
+    [[maybe_unused]] auto getInfo() -> std::string override {
         return "Deadzone stabilizer with deadzoneRadius = " + std::to_string(deadzoneRadius) +
                ", cusp detection = " + (cuspDetection ? "on" : "off");
     }
@@ -222,19 +222,19 @@ protected:
      * @brief Upon initialization, record the first event for the stabilizer's benefits.
      * @param pos The first event
      */
-    virtual void recordFirstEvent(const PositionInputData& pos) override;
+    void recordFirstEvent(const PositionInputData& pos) override;
 
     /**
      * @brief Record the event corresponding to last painted point
      * @param ev The event corresponding to last painted point
      */
-    virtual inline void setLastPaintedEvent(const Event& ev) override { lastPaintedEvent = ev; }
+    inline void setLastPaintedEvent(const Event& ev) override { lastPaintedEvent = ev; }
 
     /**
      * @brief Get the last event received by the stabilizer
      * @return The last event
      */
-    virtual inline Event getLastEvent() override { return lastEvent; }
+    inline Event getLastEvent() override { return lastEvent; }
 
 private:
     /**
@@ -270,7 +270,7 @@ private:
     /**
      * @brief Tweak the stroke's pressure values upon finalizing the stroke
      */
-    virtual void rebalanceStrokePressures() override;
+    void rebalanceStrokePressures() override;
 };
 
 /**
@@ -285,15 +285,15 @@ class Inertia: virtual public Active {
 public:
     Inertia(bool finalize, double drag, double mass):
             Active(finalize), mass(mass), oneMinusDrag(1 - drag), speed{0.0, 0.0} {}
-    virtual ~Inertia() = default;
+    ~Inertia() override = default;
 
     /**
      * @brief Compute stabilized coordinates for the event and paints the obtained point
      * @param pos The MotionNotify event information
      */
-    virtual void processEvent(const PositionInputData& pos) override;
+    void processEvent(const PositionInputData& pos) override;
 
-    [[maybe_unused]] virtual auto getInfo() -> std::string override {
+    [[maybe_unused]] auto getInfo() -> std::string override {
         return "Inertia stabilizer with mass = " + std::to_string(mass) +
                ", drag = " + std::to_string(1 - oneMinusDrag);
     }
@@ -303,19 +303,19 @@ protected:
      * @brief Upon initialization, record the first event for the stabilizer's benefits.
      * @param pos The first event
      */
-    virtual void recordFirstEvent(const PositionInputData& pos) override;
+    void recordFirstEvent(const PositionInputData& pos) override;
 
     /**
      * @brief Record the event corresponding to last painted point
      * @param ev The event corresponding to last painted point
      */
-    virtual inline void setLastPaintedEvent(const Event& ev) override { lastPaintedEvent = ev; }
+    inline void setLastPaintedEvent(const Event& ev) override { lastPaintedEvent = ev; }
 
     /**
      * @brief Get the last event received by the stabilizer
      * @return The last event
      */
-    virtual inline Event getLastEvent() override { return lastEvent; }
+    inline Event getLastEvent() override { return lastEvent; }
 
 private:
     /**
@@ -346,7 +346,7 @@ private:
     /**
      * @brief Tweak the stroke's pressure values upon finalizing the stroke
      */
-    virtual void rebalanceStrokePressures() override;
+    void rebalanceStrokePressures() override;
 };
 
 
@@ -360,9 +360,9 @@ private:
 class VelocityGaussian: virtual public Active {
 public:
     VelocityGaussian(bool finalize, double sigma): Active(finalize), twoSigmaSquared(2 * sigma * sigma) {}
-    virtual ~VelocityGaussian() = default;
+    ~VelocityGaussian() override = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> std::string override {
+    [[maybe_unused]] auto getInfo() -> std::string override {
         return "Velocity-based gaussian weight stabilizer with "
                "2σ² = " +
                std::to_string(twoSigmaSquared);
@@ -373,7 +373,7 @@ protected:
      * @brief Upon initialization, record the first event for the stabilizer's benefits.
      * @param pos The first event
      */
-    virtual void recordFirstEvent(const PositionInputData& pos) override;
+    void recordFirstEvent(const PositionInputData& pos) override;
 
     /**
      * @brief Use the buffer to average the input's position and paint the resulting point
@@ -387,7 +387,7 @@ protected:
      * @param ev New event to push to the buffer
      * @param timestamp The timestamp of that event
      */
-    virtual void resetBuffer(Event& ev, guint32 timestamp) override;
+    void resetBuffer(Event& ev, guint32 timestamp) override;
 
     /**
      * @brief Structure containing the event's information relevant to the VelocityGaussian stabilizer
@@ -413,7 +413,7 @@ private:
      * @brief Get the last event received by the stabilizer
      * @return The last event
      */
-    virtual Event getLastEvent() override;
+    Event getLastEvent() override;
 
     /**
      * @brief The Gaussian parameter
@@ -429,9 +429,9 @@ private:
 class Arithmetic: virtual public Active {
 public:
     Arithmetic(bool finalize, size_t buffersize): Active(finalize), bufferLength(buffersize), eventBuffer(buffersize) {}
-    virtual ~Arithmetic() = default;
+    ~Arithmetic() override = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> std::string override {
+    [[maybe_unused]] auto getInfo() -> std::string override {
         return "Arithmetic stabilizer with bufferLength " + std::to_string(bufferLength);
     }
 
@@ -440,7 +440,7 @@ protected:
      * @brief Upon initialization, record the first event for the stabilizer's benefits.
      * @param pos The first event
      */
-    virtual void recordFirstEvent(const PositionInputData& pos) override;
+    void recordFirstEvent(const PositionInputData& pos) override;
 
     /**
      * @brief Use the buffer to average the input's position and paint the resulting point
@@ -454,7 +454,7 @@ protected:
      * @param ev New event to push to the buffer
      * @param timestamp The timestamp of that event
      */
-    virtual void resetBuffer(Event& ev, guint32 timestamp) override;
+    void resetBuffer(Event& ev, guint32 timestamp) override;
 
     /**
      * @brief The maximal length of the buffer
@@ -473,7 +473,7 @@ private:
      * @brief Get the last event received by the stabilizer
      * @return The last event received
      */
-    virtual Event getLastEvent() override;
+    Event getLastEvent() override;
 };
 
 
@@ -485,9 +485,9 @@ class ArithmeticDeadzone: public Arithmetic, public Deadzone {
 public:
     ArithmeticDeadzone(bool finalize, size_t buffersize, double dzRadius, bool cuspDetection):
             Active(finalize), Arithmetic(finalize, buffersize), Deadzone(finalize, dzRadius, cuspDetection) {}
-    virtual ~ArithmeticDeadzone() = default;
+    ~ArithmeticDeadzone() override = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> std::string override {
+    [[maybe_unused]] auto getInfo() -> std::string override {
         return "Hybrid stabilizer:\n   * " + Arithmetic::getInfo() + "\n   * " + Deadzone::getInfo();
     }
 
@@ -496,7 +496,7 @@ private:
      * @brief Upon initialization, record the first event for the stabilizer's benefits.
      * @param pos The first event
      */
-    virtual inline void recordFirstEvent(const PositionInputData& pos) override {
+    inline void recordFirstEvent(const PositionInputData& pos) override {
         Arithmetic::recordFirstEvent(pos);
         Deadzone::recordFirstEvent(pos);
     }
@@ -511,9 +511,9 @@ class ArithmeticInertia: public Arithmetic, public Inertia {
 public:
     ArithmeticInertia(bool finalize, size_t buffersize, double drag, double mass):
             Active(finalize), Arithmetic(finalize, buffersize), Inertia(finalize, drag, mass) {}
-    virtual ~ArithmeticInertia() = default;
+    ~ArithmeticInertia() override = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> std::string override {
+    [[maybe_unused]] auto getInfo() -> std::string override {
         return "Hybrid stabilizer:\n   * " + Arithmetic::getInfo() + "\n   * " + Inertia::getInfo();
     }
 
@@ -522,7 +522,7 @@ private:
      * @brief Upon initialization, record the first event for the stabilizer's benefits.
      * @param pos The first event
      */
-    virtual inline void recordFirstEvent(const PositionInputData& pos) override {
+    inline void recordFirstEvent(const PositionInputData& pos) override {
         Arithmetic::recordFirstEvent(pos);
         Inertia::recordFirstEvent(pos);
     }
@@ -537,9 +537,9 @@ class VelocityGaussianDeadzone: public VelocityGaussian, public Deadzone {
 public:
     VelocityGaussianDeadzone(bool finalize, double sigma, double dzRadius, bool cuspDetection):
             Active(finalize), VelocityGaussian(finalize, sigma), Deadzone(finalize, dzRadius, cuspDetection) {}
-    virtual ~VelocityGaussianDeadzone() = default;
+    ~VelocityGaussianDeadzone() override = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> std::string override {
+    [[maybe_unused]] auto getInfo() -> std::string override {
         return "Hybrid stabilizer:\n   * " + VelocityGaussian::getInfo() + "\n   * " + Deadzone::getInfo();
     }
 
@@ -548,7 +548,7 @@ private:
      * @brief Upon initialization, record the first event for the stabilizer's benefits.
      * @param pos The first event
      */
-    virtual inline void recordFirstEvent(const PositionInputData& pos) override {
+    inline void recordFirstEvent(const PositionInputData& pos) override {
         VelocityGaussian::recordFirstEvent(pos);
         Deadzone::recordFirstEvent(pos);
     }
@@ -563,9 +563,9 @@ class VelocityGaussianInertia: public VelocityGaussian, public Inertia {
 public:
     VelocityGaussianInertia(bool finalize, double sigma, double drag, double mass):
             Active(finalize), VelocityGaussian(finalize, sigma), Inertia(finalize, drag, mass) {}
-    virtual ~VelocityGaussianInertia() = default;
+    ~VelocityGaussianInertia() override = default;
 
-    [[maybe_unused]] virtual auto getInfo() -> std::string override {
+    [[maybe_unused]] auto getInfo() -> std::string override {
         return "Hybrid stabilizer:\n   * " + VelocityGaussian::getInfo() + "\n   * " + Inertia::getInfo();
     }
 
@@ -574,7 +574,7 @@ private:
      * @brief Upon initialization, record the first event for the stabilizer's benefits.
      * @param pos The first event
      */
-    virtual inline void recordFirstEvent(const PositionInputData& pos) override {
+    inline void recordFirstEvent(const PositionInputData& pos) override {
         VelocityGaussian::recordFirstEvent(pos);
         Inertia::recordFirstEvent(pos);
     }

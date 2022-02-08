@@ -18,13 +18,13 @@ public:
     PdfExportJob(Control* control);
 
 protected:
-    virtual ~PdfExportJob();
+    ~PdfExportJob() override;
 
 public:
-    void run();
+    void run() override;
 
 protected:
-    virtual void addFilterToDialog();
+    void addFilterToDialog() override;
     bool testAndSetFilepath(fs::path file) override;
 
 private:

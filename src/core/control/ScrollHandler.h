@@ -26,7 +26,7 @@ class Control;
 class ScrollHandler: public SpinPageListener {
 public:
     ScrollHandler(Control* control);
-    virtual ~ScrollHandler();
+    ~ScrollHandler() override;
 
 public:
     void goToPreviousPage();
@@ -43,7 +43,7 @@ public:
     bool isPageVisible(size_t page, int* visibleHeight = nullptr);
 
 public:
-    virtual void pageChanged(size_t page);
+    void pageChanged(size_t page) override;
 
 private:
     void scrollToSpinPage();

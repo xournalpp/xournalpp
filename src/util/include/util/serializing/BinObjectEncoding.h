@@ -16,10 +16,10 @@
 class BinObjectEncoding: public ObjectEncoding {
 public:
     BinObjectEncoding();
-    virtual ~BinObjectEncoding();
+    ~BinObjectEncoding() override;
 
 public:
-    virtual void addData(const void* data, int len);
+    void addData(const void* data, int len) override;
 
 private:
 };

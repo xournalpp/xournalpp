@@ -25,16 +25,16 @@ public:
     BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
                       bool flipControl = false);
 
-    virtual ~BaseStrokeHandler();
+    ~BaseStrokeHandler() override;
 
-    void draw(cairo_t* cr);
+    void draw(cairo_t* cr) override;
 
-    void onMotionCancelEvent();
-    bool onMotionNotifyEvent(const PositionInputData& pos);
-    void onButtonReleaseEvent(const PositionInputData& pos);
-    void onButtonPressEvent(const PositionInputData& pos);
-    void onButtonDoublePressEvent(const PositionInputData& pos);
-    virtual bool onKeyEvent(GdkEventKey* event);
+    void onMotionCancelEvent() override;
+    bool onMotionNotifyEvent(const PositionInputData& pos) override;
+    void onButtonReleaseEvent(const PositionInputData& pos) override;
+    void onButtonPressEvent(const PositionInputData& pos) override;
+    void onButtonDoublePressEvent(const PositionInputData& pos) override;
+    bool onKeyEvent(GdkEventKey* event) override;
 
 private:
     virtual void drawShape(Point& currentPoint, const PositionInputData& pos) = 0;

@@ -17,10 +17,10 @@ class RectangleHandler: public BaseStrokeHandler {
 public:
     RectangleHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
                      bool flipControl = false);
-    virtual ~RectangleHandler();
+    ~RectangleHandler() override;
 
 private:
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    void drawShape(Point& currentPoint, const PositionInputData& pos) override;
 
 private:
     Point startPoint;

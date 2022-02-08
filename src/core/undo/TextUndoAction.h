@@ -21,13 +21,13 @@ class TextEditor;
 class TextUndoAction: public UndoAction {
 public:
     TextUndoAction(const PageRef& page, Layer* layer, Text* text, std::string lastText, TextEditor* textEditor);
-    virtual ~TextUndoAction();
+    ~TextUndoAction() override;
 
 public:
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
 
-    virtual std::string getText();
+    std::string getText() override;
 
     std::string getUndoText();
 

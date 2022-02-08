@@ -20,10 +20,10 @@
 class DoubleArrayAttribute: public XMLAttribute {
 public:
     DoubleArrayAttribute(const char* name, std::vector<double>&& values);
-    virtual ~DoubleArrayAttribute();
+    ~DoubleArrayAttribute() override;
 
 public:
-    virtual void writeOut(OutputStream* out);
+    void writeOut(OutputStream* out) override;
 
 private:
     std::vector<double> values;

@@ -17,10 +17,10 @@ class EllipseHandler: public BaseStrokeHandler {
 public:
     EllipseHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
                    bool flipControl = false);
-    virtual ~EllipseHandler();
+    ~EllipseHandler() override;
 
 private:
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    void drawShape(Point& currentPoint, const PositionInputData& pos) override;
 
 private:
     Point startPoint;

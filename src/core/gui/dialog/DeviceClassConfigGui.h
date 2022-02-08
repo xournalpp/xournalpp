@@ -23,14 +23,14 @@ class SettingsDialog;
 class DeviceClassConfigGui: public GladeGui {
 public:
     DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings, const InputDevice& device);
-    virtual ~DeviceClassConfigGui();
+    ~DeviceClassConfigGui() override;
 
 public:
     void loadSettings();
     void saveSettings();
 
     // Not implemented! This is not a dialog!
-    virtual void show(GtkWindow* parent);
+    void show(GtkWindow* parent) override;
 
 private:
     static void cbSelectCallback(GtkComboBox* widget, DeviceClassConfigGui* gui);

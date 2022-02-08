@@ -26,12 +26,12 @@ public:
     BlockingJob(Control* control, const std::string& name);
 
 protected:
-    virtual ~BlockingJob();
+    ~BlockingJob() override;
 
 public:
-    void execute();
+    void execute() override;
 
-    virtual JobType getType();
+    JobType getType() override;
 
 protected:
     static bool finished(Control* control);

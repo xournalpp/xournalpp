@@ -30,15 +30,15 @@ public:
     PreviewJob(SidebarPreviewBaseEntry* sidebar);
 
 protected:
-    virtual void onDelete() override;
-    virtual ~PreviewJob();
+    void onDelete() override;
+    ~PreviewJob() override;
 
 public:
-    virtual void* getSource();
+    void* getSource() override;
 
-    virtual void run();
+    void run() override;
 
-    virtual JobType getType();
+    JobType getType() override;
 
 private:
     void initGraphics();

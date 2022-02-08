@@ -20,23 +20,23 @@ class SidebarPreviewLayerEntry: public SidebarPreviewBaseEntry {
 public:
     SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer, const std::string& layerName,
                              size_t index, bool stacked);
-    virtual ~SidebarPreviewLayerEntry();
+    ~SidebarPreviewLayerEntry() override;
 
 public:
-    virtual int getHeight();
+    int getHeight() override;
 
     /**
      * @return What should be rendered
      * @override
      */
-    virtual PreviewRenderType getRenderType();
+    PreviewRenderType getRenderType() override;
 
     /**
      * @return The layer to be rendered
      */
     int getLayer() const;
 
-    virtual GtkWidget* getWidget();
+    GtkWidget* getWidget() override;
 
     /**
      * Set the value of the visible checkbox
@@ -44,7 +44,7 @@ public:
     void setVisibleCheckbox(bool enabled);
 
 protected:
-    virtual void mouseButtonPressCallback();
+    void mouseButtonPressCallback() override;
     void checkboxToggled();
 
 private:

@@ -23,7 +23,7 @@ public:
 public:
     void setWidth(double width, const double* widths, int widthsLength);
 
-    virtual void writeOut(OutputStream* out);
+    void writeOut(OutputStream* out) override;
 
 private:
     Point* points;

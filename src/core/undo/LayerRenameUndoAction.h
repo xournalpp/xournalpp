@@ -24,7 +24,7 @@ class LayerRenameUndoAction: public UndoAction {
 public:
     LayerRenameUndoAction(LayerController* layerController, Layer* layer, const std::string& newName,
                           const std::string& oldName);
-    virtual ~LayerRenameUndoAction();
+    ~LayerRenameUndoAction() override;
 
 public:
     std::string getText() override;

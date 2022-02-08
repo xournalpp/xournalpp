@@ -25,36 +25,36 @@ class Control;
 class SidebarIndexPage: public AbstractSidebarPage {
 public:
     SidebarIndexPage(Control* control, SidebarToolbar* toolbar);
-    virtual ~SidebarIndexPage();
+    ~SidebarIndexPage() override;
 
 public:
-    virtual void enableSidebar();
-    virtual void disableSidebar();
+    void enableSidebar() override;
+    void disableSidebar() override;
 
     /**
      * @overwrite
      */
-    virtual std::string getName();
+    std::string getName() override;
 
     /**
      * @overwrite
      */
-    virtual std::string getIconName();
+    std::string getIconName() override;
 
     /**
      * @overwrite
      */
-    virtual bool hasData();
+    bool hasData() override;
 
     /**
      * @overwrite
      */
-    virtual GtkWidget* getWidget();
+    GtkWidget* getWidget() override;
 
     /**
      * @overwrite
      */
-    virtual void selectPageNr(size_t page, size_t pdfPage);
+    void selectPageNr(size_t page, size_t pdfPage) override;
 
     /**
      * Select page in the tree
@@ -64,7 +64,7 @@ public:
     /**
      * @overwrite
      */
-    virtual void documentChanged(DocumentChangeType type);
+    void documentChanged(DocumentChangeType type) override;
 
 private:
     /**

@@ -22,35 +22,35 @@
 class SidebarPreviewLayers: public SidebarPreviewBase, public LayerCtrlListener {
 public:
     SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar, bool stacked);
-    virtual ~SidebarPreviewLayers();
+    ~SidebarPreviewLayers() override;
 
 public:
-    virtual void rebuildLayerMenu();
-    virtual void layerVisibilityChanged();
+    void rebuildLayerMenu() override;
+    void layerVisibilityChanged() override;
 
 public:
     /**
      * Called when an action is performed
      */
-    void actionPerformed(SidebarActions action);
+    void actionPerformed(SidebarActions action) override;
 
-    void enableSidebar();
-
-    /**
-     * @overwrite
-     */
-    virtual std::string getName();
+    void enableSidebar() override;
 
     /**
      * @overwrite
      */
-    virtual std::string getIconName();
+    std::string getName() override;
+
+    /**
+     * @overwrite
+     */
+    std::string getIconName() override;
 
     /**
      * Update the preview images
      * @overwrite
      */
-    virtual void updatePreviews();
+    void updatePreviews() override;
 
     /**
      * Select a layer
@@ -67,8 +67,8 @@ protected:
 
 public:
     // DocumentListener interface (only the part which is not handled by SidebarPreviewBase)
-    virtual void pageSizeChanged(size_t page);
-    virtual void pageChanged(size_t page);
+    void pageSizeChanged(size_t page) override;
+    void pageChanged(size_t page) override;
 
 private:
     /**

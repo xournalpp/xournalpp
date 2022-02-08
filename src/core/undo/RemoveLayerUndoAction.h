@@ -19,13 +19,13 @@ class LayerController;
 class RemoveLayerUndoAction: public UndoAction {
 public:
     RemoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, int layerPos);
-    virtual ~RemoveLayerUndoAction();
+    ~RemoveLayerUndoAction() override;
 
 public:
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
 
-    virtual std::string getText();
+    std::string getText() override;
 
 private:
     LayerController* layerController;

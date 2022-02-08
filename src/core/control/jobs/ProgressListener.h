@@ -21,8 +21,8 @@ public:
 
 class DummyProgressListener: public ProgressListener {
 public:
-    virtual void setMaximumState(int max){};
-    virtual void setCurrentState(int state){};
+    void setMaximumState(int max) override{};
+    void setCurrentState(int state) override{};
 
-    virtual ~DummyProgressListener(){};
+    ~DummyProgressListener() override{};
 };

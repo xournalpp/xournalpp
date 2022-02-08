@@ -21,12 +21,12 @@ class Stroke;
 class SizeUndoAction: public UndoAction {
 public:
     SizeUndoAction(const PageRef& page, Layer* layer);
-    virtual ~SizeUndoAction();
+    ~SizeUndoAction() override;
 
 public:
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
-    virtual std::string getText();
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
+    std::string getText() override;
 
     void addStroke(Stroke* s, double originalWidth, double newWidth, std::vector<double> originalPressure,
                    std::vector<double> newPressure, int pressureCount);

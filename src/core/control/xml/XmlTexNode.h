@@ -19,7 +19,7 @@ public:
     virtual ~XmlTexNode();
 
 public:
-    virtual void writeOut(OutputStream* out);
+    void writeOut(OutputStream* out) override;
 
 private:
     /**

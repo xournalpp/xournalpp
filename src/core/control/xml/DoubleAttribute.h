@@ -20,10 +20,10 @@
 class DoubleAttribute: public XMLAttribute {
 public:
     DoubleAttribute(const char* name, double value);
-    virtual ~DoubleAttribute();
+    ~DoubleAttribute() override;
 
 public:
-    virtual void writeOut(OutputStream* out);
+    void writeOut(OutputStream* out) override;
 
 private:
     double value;

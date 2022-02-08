@@ -26,11 +26,11 @@ class LinkDestination;
 class PopplerGlibAction: public XojPdfAction {
 public:
     PopplerGlibAction(PopplerAction* action, PopplerDocument* document);
-    virtual ~PopplerGlibAction();
+    ~PopplerGlibAction() override;
 
 public:
-    virtual XojLinkDest* getDestination();
-    virtual std::string getTitle();
+    XojLinkDest* getDestination() override;
+    std::string getTitle() override;
 
 private:
     void linkFromDest(LinkDestination* link, PopplerDest* pDest);

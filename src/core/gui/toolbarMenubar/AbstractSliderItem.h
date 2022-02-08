@@ -39,10 +39,10 @@ public:
      * @param range The minimum/maximum/step in internal units. {@see #scaleFunc}.
      */
     AbstractSliderItem(std::string id, ActionHandler* handler, ActionType type, SliderRange range);
-    virtual ~AbstractSliderItem();
+    ~AbstractSliderItem() override;
 
-    virtual GtkToolItem* createItem(bool horizontal) override;
-    virtual GtkToolItem* createTmpItem(bool horizontal) override;
+    GtkToolItem* createItem(bool horizontal) override;
+    GtkToolItem* createTmpItem(bool horizontal) override;
 
 protected:
     GtkToolItem* newItem() override;
@@ -90,7 +90,7 @@ protected:
     /**
      * @param enabled `true` iff the slider should respond to user input.
      */
-    virtual void enable(bool enabled) override;
+    void enable(bool enabled) override;
 
     /**
      * @param x Actual value of the slider.

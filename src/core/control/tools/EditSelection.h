@@ -41,7 +41,7 @@ public:
     EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view);
     EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, const PageRef& page);
     EditSelection(UndoRedoHandler* undo, const std::vector<Element*>& elements, XojPageView* view, const PageRef& page);
-    virtual ~EditSelection();
+    ~EditSelection() override;
 
 private:
     /**
@@ -164,7 +164,7 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    std::vector<Element*>* getElements();
+    std::vector<Element*>* getElements() override;
     const std::vector<Element*>* getElements() const;
 
     /**
@@ -240,8 +240,8 @@ public:
 
 public:
     // Serialize interface
-    void serialize(ObjectOutputStream& out) const;
-    void readSerialized(ObjectInputStream& in);
+    void serialize(ObjectOutputStream& out) const override;
+    void readSerialized(ObjectInputStream& in) override;
 
 private:
     /**

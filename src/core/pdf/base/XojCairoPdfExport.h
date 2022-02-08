@@ -21,17 +21,17 @@
 class XojCairoPdfExport: public XojPdfExport {
 public:
     XojCairoPdfExport(Document* doc, ProgressListener* progressListener);
-    virtual ~XojCairoPdfExport();
+    ~XojCairoPdfExport() override;
 
 public:
-    virtual bool createPdf(fs::path const& file, bool progressiveMode);
-    virtual bool createPdf(fs::path const& file, PageRangeVector& range, bool progressiveMode);
-    virtual std::string getLastError();
+    bool createPdf(fs::path const& file, bool progressiveMode) override;
+    bool createPdf(fs::path const& file, PageRangeVector& range, bool progressiveMode) override;
+    std::string getLastError() override;
 
     /**
      * Export without background
      */
-    virtual void setExportBackground(ExportBackgroundType exportBackground);
+    void setExportBackground(ExportBackgroundType exportBackground) override;
 
 private:
     bool startPdf(const fs::path& file);

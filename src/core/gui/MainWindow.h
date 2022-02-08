@@ -35,16 +35,16 @@ class PdfFloatingToolbox;
 class MainWindow: public GladeGui, public LayerCtrlListener {
 public:
     MainWindow(GladeSearchpath* gladeSearchPath, Control* control);
-    virtual ~MainWindow();
+    ~MainWindow() override;
 
     // LayerCtrlListener
 public:
-    virtual void rebuildLayerMenu();
-    virtual void layerVisibilityChanged();
+    void rebuildLayerMenu() override;
+    void layerVisibilityChanged() override;
 
     FloatingToolbox* floatingToolbox;
 public:
-    virtual void show(GtkWindow* parent);
+    void show(GtkWindow* parent) override;
 
     void setRecentMenu(GtkWidget* submenu);
     void toolbarSelected(ToolbarData* d);

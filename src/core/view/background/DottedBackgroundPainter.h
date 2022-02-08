@@ -20,16 +20,16 @@
 class DottedBackgroundPainter: public BaseBackgroundPainter {
 public:
     DottedBackgroundPainter();
-    virtual ~DottedBackgroundPainter();
+    ~DottedBackgroundPainter() override;
 
 public:
-    virtual void paint();
+    void paint() override;
     void paintBackgroundDotted();
 
     /**
      * Reset all used configuration values
      */
-    virtual void resetConfig();
+    void resetConfig() override;
 
 private:
 };

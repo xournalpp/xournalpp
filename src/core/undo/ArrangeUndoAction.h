@@ -22,12 +22,12 @@ public:
     using InsertOrder = std::deque<std::pair<Element*, Layer::ElementIndex>>;
 
     ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertOrder oldOrder, InsertOrder newOrder);
-    virtual ~ArrangeUndoAction() override;
+    ~ArrangeUndoAction() override;
 
 public:
-    virtual bool undo(Control* control) override;
-    virtual bool redo(Control* control) override;
-    virtual std::string getText() override;
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
+    std::string getText() override;
 
 private:
     void applyRearrange();

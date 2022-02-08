@@ -37,7 +37,7 @@ class EditSelectionContents: public ElementContainer, public Serializable {
 public:
     EditSelectionContents(xoj::util::Rectangle<double> bounds, xoj::util::Rectangle<double> snappedBounds,
                           const PageRef& sourcePage, Layer* sourceLayer, XojPageView* sourceView);
-    virtual ~EditSelectionContents();
+    ~EditSelectionContents() override;
 
 public:
     /**
@@ -88,7 +88,7 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    std::vector<Element*>* getElements();
+    std::vector<Element*>* getElements() override;
     const std::vector<Element*>* getElements() const;
 
     /**

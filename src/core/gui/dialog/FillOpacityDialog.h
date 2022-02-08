@@ -16,10 +16,10 @@
 class FillOpacityDialog: public GladeGui {
 public:
     FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen);
-    virtual ~FillOpacityDialog();
+    ~FillOpacityDialog() override;
 
 public:
-    virtual void show(GtkWindow* parent);
+    void show(GtkWindow* parent) override;
 
     int getResultAlpha() const;
 

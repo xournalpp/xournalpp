@@ -24,13 +24,13 @@ public:
     AutosaveJob(Control* control);
 
 protected:
-    virtual ~AutosaveJob();
+    ~AutosaveJob() override;
 
 public:
-    virtual void run();
-    void afterRun();
+    void run() override;
+    void afterRun() override;
 
-    virtual JobType getType();
+    JobType getType() override;
 
 private:
     Control* control = nullptr;

@@ -20,15 +20,15 @@
 class IsometricBackgroundPainter: public BaseBackgroundPainter {
 public:
     IsometricBackgroundPainter(bool drawLines);
-    virtual ~IsometricBackgroundPainter() override;
+    ~IsometricBackgroundPainter() override;
 
 public:
-    virtual void paint() override;
+    void paint() override;
 
     /**
      * Reset all used configuration values
      */
-    virtual void resetConfig() override;
+    void resetConfig() override;
 
 private:
     bool drawLines;

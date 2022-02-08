@@ -20,14 +20,14 @@
 class GraphBackgroundPainter: public BaseBackgroundPainter {
 public:
     GraphBackgroundPainter();
-    virtual ~GraphBackgroundPainter();
+    ~GraphBackgroundPainter() override;
 
 public:
-    virtual void paint();
+    void paint() override;
     void paintBackgroundGraph();
 
     /**
      * Reset all used configuration values
      */
-    virtual void resetConfig();
+    void resetConfig() override;
 };
