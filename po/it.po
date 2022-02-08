@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-06 19:52+0000\n"
-"PO-Revision-Date: 2022-02-06 20:49\n"
+"POT-Creation-Date: 2022-02-08 15:36+0000\n"
+"PO-Revision-Date: 2022-02-08 15:40\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -76,7 +76,7 @@ msgstr "Applica a tutte le pagine"
 msgid "Apply to current page"
 msgstr "Applica alla pagina corrente"
 
-#: ../src/core/control/tools/EditSelection.cpp:352
+#: ../src/core/control/tools/EditSelection.cpp:353
 msgid "Arrange"
 msgstr "Disporre"
 
@@ -143,11 +143,11 @@ msgstr "Indietro"
 msgid "Background"
 msgstr "Sfondo"
 
-#: ../src/core/control/tools/EditSelection.cpp:369
+#: ../src/core/control/tools/EditSelection.cpp:370
 msgid "Bring forward"
 msgstr "Porta avanti"
 
-#: ../src/core/control/tools/EditSelection.cpp:359
+#: ../src/core/control/tools/EditSelection.cpp:360
 msgid "Bring to front"
 msgstr "Porta in primo piano"
 
@@ -156,15 +156,15 @@ msgstr "Porta in primo piano"
 msgid "Cancel"
 msgstr "Annulla"
 
-#: ../src/core/undo/ColorUndoAction.cpp:82
+#: ../src/core/undo/ColorUndoAction.cpp:84
 msgid "Change color"
 msgstr "Cambia colore"
 
-#: ../src/core/undo/FontUndoAction.cpp:102
+#: ../src/core/undo/FontUndoAction.cpp:104
 msgid "Change font"
 msgstr "Cambia font"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:70
+#: ../src/core/undo/LineStyleUndoAction.cpp:72
 msgid "Change line style"
 msgstr "Cambia stile linea"
 
@@ -450,7 +450,7 @@ msgstr "Stile Disegno - non cambiare"
 msgid "Drawing Type Combo"
 msgstr ""
 
-#: ../src/core/undo/TextBoxUndoAction.cpp:35
+#: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
 msgstr "Modifica testo"
 
@@ -773,7 +773,7 @@ msgstr "Livello {1}"
 msgid "Layerstack Preview"
 msgstr "Anteprima Layerstack"
 
-#: ../src/core/gui/PageView.cpp:763
+#: ../src/core/gui/PageView.cpp:764
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -1156,11 +1156,11 @@ msgstr "Combina selezione"
 msgid "Send Bugreport"
 msgstr "Invia Bugreport"
 
-#: ../src/core/control/tools/EditSelection.cpp:380
+#: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
 msgstr "Invia indietro"
 
-#: ../src/core/control/tools/EditSelection.cpp:388
+#: ../src/core/control/tools/EditSelection.cpp:389
 msgid "Send to back"
 msgstr "Invia in fondo"
 
@@ -1270,7 +1270,7 @@ msgstr "Testo"
 msgid "Text %i times found on this page"
 msgstr "Testo %i volte trovato in questa pagina"
 
-#: ../src/core/undo/TextUndoAction.cpp:29
+#: ../src/core/undo/TextUndoAction.cpp:31
 msgid "Text changes"
 msgstr "Modifiche al Testo"
 
@@ -1391,7 +1391,7 @@ msgstr "Tentativo di salvataggio d'emergenza per il documento corrente…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Impossibile aprire il modello globale in {1}. Esiste un modello?"
 
-#: ../src/core/gui/PageView.cpp:370
+#: ../src/core/gui/PageView.cpp:371
 msgid "Unable to play audio recording {1}"
 msgstr "Impossibile riprodurre la registrazione audio {1}"
 
