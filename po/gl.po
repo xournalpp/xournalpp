@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-08 15:36+0000\n"
-"PO-Revision-Date: 2022-02-08 15:40\n"
+"POT-Creation-Date: 2022-02-08 16:21+0000\n"
+"PO-Revision-Date: 2022-02-08 16:37\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -34,11 +34,11 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr ""
 
-#: ../src/core/control/settings/Settings.cpp:122
+#: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
 msgstr "%F-Nota-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:149
+#: ../src/core/gui/dialog/SettingsDialog.cpp:151
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Non se atoparon dispositivos. Parece que vai mal - Enviar un informe de erro?</b>"
 
@@ -115,11 +115,10 @@ msgstr "O atributo «{1}» non se puido analizar como «size_t», o valor é «n
 msgid "Attribute color not set!"
 msgstr "Atributo de cor non definido!"
 
-#: ../src/core/control/AudioController.cpp:97
-msgid "Audio folder not set! Recording won't work!\n"
+#: ../src/core/control/AudioController.cpp:99
+msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "O cartafol de son non está configurado! A gravación non funcionará!\n"
-"Configure o cartafol de gravación en «Preferencias > Gravación de son»"
+msgstr ""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -456,7 +455,7 @@ msgstr "Editar o texto"
 msgid "Emergency saved document"
 msgstr "Documento de emerxencia gardado"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:277
+#: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Activar sensibilidade á presión ou inferencia de presión para cambiar este axuste!"
 
@@ -611,7 +610,7 @@ msgstr "O ficheiro non se puido abrir. Terá que facelo manualmente:\n"
 msgid "Fill"
 msgstr "Encher"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:281
+#: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Presión do filtro de entrada. Multiplica a presión mediante o multiplicador de presión. Se é menor ao mínimo, utiliza a presión mínima."
 
@@ -698,7 +697,7 @@ msgstr "Realzador"
 msgid "Image"
 msgstr "Imaxe"
 
-#: ../src/core/control/ExportHelper.cpp:61
+#: ../src/core/control/ExportHelper.cpp:64
 msgid "Image file successfully created"
 msgstr "O ficheiro de imaxe creouse correctamente"
 
@@ -879,7 +878,7 @@ msgstr "Páxina de PDF {1}"
 msgid "PDF background missing"
 msgstr "Falta o fondo do PDF"
 
-#: ../src/core/control/ExportHelper.cpp:107
+#: ../src/core/control/ExportHelper.cpp:108
 msgid "PDF file successfully created"
 msgstr "Creouse o PDF correctamente"
 
