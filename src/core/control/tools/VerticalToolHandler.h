@@ -28,6 +28,10 @@ class VerticalToolHandler: public ElementContainer {
 public:
     VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y, double zoom);
     ~VerticalToolHandler() override;
+    VerticalToolHandler(VerticalToolHandler&) = delete;
+    VerticalToolHandler& operator=(VerticalToolHandler&) = delete;
+    VerticalToolHandler(VerticalToolHandler&&) = delete;
+    VerticalToolHandler&& operator=(VerticalToolHandler&&) = delete;
 
     void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
     void currentPos(double x, double y);
@@ -46,11 +50,6 @@ private:
 
     double startY = 0;
     double endY = 0;
-
-    /**
-     * When we create a new page
-     */
-    double jumpY = 0;
 
     /**
      * The handler for snapping points

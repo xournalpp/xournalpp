@@ -235,7 +235,7 @@ private:
     /**
      * Vertical Space
      */
-    VerticalToolHandler* verticalSpace = nullptr;
+    VerticalToolHandler* verticalSpace{};
 
     /**
      * Search handling
