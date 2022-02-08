@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-06 19:52+0000\n"
-"PO-Revision-Date: 2022-02-06 20:49\n"
+"POT-Creation-Date: 2022-02-08 15:36+0000\n"
+"PO-Revision-Date: 2022-02-08 15:41\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -76,7 +76,7 @@ msgstr "Áp dụng cho mọi trang"
 msgid "Apply to current page"
 msgstr "Áp dụng cho trang hiện tại"
 
-#: ../src/core/control/tools/EditSelection.cpp:352
+#: ../src/core/control/tools/EditSelection.cpp:353
 msgid "Arrange"
 msgstr "Sắp xếp"
 
@@ -143,11 +143,11 @@ msgstr "Quay lại"
 msgid "Background"
 msgstr "Nền"
 
-#: ../src/core/control/tools/EditSelection.cpp:369
+#: ../src/core/control/tools/EditSelection.cpp:370
 msgid "Bring forward"
 msgstr "Đưa ra trước"
 
-#: ../src/core/control/tools/EditSelection.cpp:359
+#: ../src/core/control/tools/EditSelection.cpp:360
 msgid "Bring to front"
 msgstr "Đưa ra phía trước"
 
@@ -156,15 +156,15 @@ msgstr "Đưa ra phía trước"
 msgid "Cancel"
 msgstr "Huỷ"
 
-#: ../src/core/undo/ColorUndoAction.cpp:82
+#: ../src/core/undo/ColorUndoAction.cpp:84
 msgid "Change color"
 msgstr "Đổi màu"
 
-#: ../src/core/undo/FontUndoAction.cpp:102
+#: ../src/core/undo/FontUndoAction.cpp:104
 msgid "Change font"
 msgstr "Đổi phông chữ"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:70
+#: ../src/core/undo/LineStyleUndoAction.cpp:72
 msgid "Change line style"
 msgstr "Đổi kiểu đường vẽ"
 
@@ -450,7 +450,7 @@ msgstr "Kiểu Bản vẽ - không thay đổi"
 msgid "Drawing Type Combo"
 msgstr "Kết hợp Kiểu Bản vẽ"
 
-#: ../src/core/undo/TextBoxUndoAction.cpp:35
+#: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
 msgstr "Chỉnh sửa văn bản"
 
@@ -773,7 +773,7 @@ msgstr "Lớp {1}"
 msgid "Layerstack Preview"
 msgstr "Xem trước Chồng lớp"
 
-#: ../src/core/gui/PageView.cpp:763
+#: ../src/core/gui/PageView.cpp:764
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -1156,11 +1156,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr "Gửi báo cáo lỗi"
 
-#: ../src/core/control/tools/EditSelection.cpp:380
+#: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:388
+#: ../src/core/control/tools/EditSelection.cpp:389
 msgid "Send to back"
 msgstr ""
 
@@ -1264,7 +1264,7 @@ msgstr "Văn bản"
 msgid "Text %i times found on this page"
 msgstr ""
 
-#: ../src/core/undo/TextUndoAction.cpp:29
+#: ../src/core/undo/TextUndoAction.cpp:31
 msgid "Text changes"
 msgstr ""
 
@@ -1383,7 +1383,7 @@ msgstr "Thử lưu khẩn cấp tập tin đang mở…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:370
+#: ../src/core/gui/PageView.cpp:371
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
