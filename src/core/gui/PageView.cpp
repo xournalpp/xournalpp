@@ -318,7 +318,9 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         this->inEraser = true;
     } else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
         g_assert_null(this->verticalSpace);
-        this->verticalSpace = new VerticalToolHandler(this, this->page, this->settings, y, pos.isControlDown(), zoom);
+        auto* window = gtk_widget_get_window(xournal->getWidget());
+        this->verticalSpace =
+                new VerticalToolHandler(this, this->page, this->settings, y, pos.isControlDown(), zoom, window);
     } else if (h->getToolType() == TOOL_SELECT_RECT || h->getToolType() == TOOL_SELECT_REGION ||
                h->getToolType() == TOOL_PLAY_OBJECT || h->getToolType() == TOOL_SELECT_OBJECT ||
                h->getToolType() == TOOL_SELECT_PDF_TEXT_LINEAR || h->getToolType() == TOOL_SELECT_PDF_TEXT_RECT) {

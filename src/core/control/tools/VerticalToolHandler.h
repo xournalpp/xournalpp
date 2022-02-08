@@ -31,7 +31,7 @@ public:
      * button (e.g., Ctrl) held down when a vertical selection is started.
      */
     VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y, bool initiallyReverse,
-                        double zoom);
+                        double zoom, GdkWindow* window);
     ~VerticalToolHandler() override;
     VerticalToolHandler(VerticalToolHandler&) = delete;
     VerticalToolHandler& operator=(VerticalToolHandler&) = delete;
