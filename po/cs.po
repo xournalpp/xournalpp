@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-06 19:52+0000\n"
-"PO-Revision-Date: 2022-02-06 20:49\n"
+"POT-Creation-Date: 2022-02-08 15:36+0000\n"
+"PO-Revision-Date: 2022-02-08 15:41\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -76,7 +76,7 @@ msgstr "Použít na všechny stránky"
 msgid "Apply to current page"
 msgstr "Použít na aktuální stránku"
 
-#: ../src/core/control/tools/EditSelection.cpp:352
+#: ../src/core/control/tools/EditSelection.cpp:353
 msgid "Arrange"
 msgstr "Uspořádat"
 
@@ -143,11 +143,11 @@ msgstr "Zpět"
 msgid "Background"
 msgstr "Pozadí"
 
-#: ../src/core/control/tools/EditSelection.cpp:369
+#: ../src/core/control/tools/EditSelection.cpp:370
 msgid "Bring forward"
 msgstr "Přenést blíž"
 
-#: ../src/core/control/tools/EditSelection.cpp:359
+#: ../src/core/control/tools/EditSelection.cpp:360
 msgid "Bring to front"
 msgstr "Přenést do popředí"
 
@@ -156,15 +156,15 @@ msgstr "Přenést do popředí"
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: ../src/core/undo/ColorUndoAction.cpp:82
+#: ../src/core/undo/ColorUndoAction.cpp:84
 msgid "Change color"
 msgstr "Změnit barvu"
 
-#: ../src/core/undo/FontUndoAction.cpp:102
+#: ../src/core/undo/FontUndoAction.cpp:104
 msgid "Change font"
 msgstr "Změnit písmo"
 
-#: ../src/core/undo/LineStyleUndoAction.cpp:70
+#: ../src/core/undo/LineStyleUndoAction.cpp:72
 msgid "Change line style"
 msgstr "Změnit styl linky"
 
@@ -450,7 +450,7 @@ msgstr "Typ kreslení - Neměň typ výkresu"
 msgid "Drawing Type Combo"
 msgstr "Kombinace typu kresby"
 
-#: ../src/core/undo/TextBoxUndoAction.cpp:35
+#: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
 msgstr "Upravit text"
 
@@ -773,7 +773,7 @@ msgstr "Vrstva {1}"
 msgid "Layerstack Preview"
 msgstr "Náhled balíčku vrstev"
 
-#: ../src/core/gui/PageView.cpp:763
+#: ../src/core/gui/PageView.cpp:764
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -1156,11 +1156,11 @@ msgstr "Kombinace výběru"
 msgid "Send Bugreport"
 msgstr "Zaslat hlášení o chybě"
 
-#: ../src/core/control/tools/EditSelection.cpp:380
+#: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
 msgstr "Odsunout dozadu"
 
-#: ../src/core/control/tools/EditSelection.cpp:388
+#: ../src/core/control/tools/EditSelection.cpp:389
 msgid "Send to back"
 msgstr "Odsunout do pozadí"
 
@@ -1270,7 +1270,7 @@ msgstr "Text"
 msgid "Text %i times found on this page"
 msgstr "Text %ikrát nalezen na této stránce"
 
-#: ../src/core/undo/TextUndoAction.cpp:29
+#: ../src/core/undo/TextUndoAction.cpp:31
 msgid "Text changes"
 msgstr "Úpravy textu"
 
@@ -1391,7 +1391,7 @@ msgstr "Pokus o nouzové uložení aktuálně otevřeného dokumentu…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Nepodařilo se otevřít soubor globální šablony {1}. Existuje?"
 
-#: ../src/core/gui/PageView.cpp:370
+#: ../src/core/gui/PageView.cpp:371
 msgid "Unable to play audio recording {1}"
 msgstr "Nebylo možno přehrát zvukovou nahrávku {1}"
 
