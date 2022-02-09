@@ -81,6 +81,12 @@ public:
      */
     UndoAction* setFill(int alphaPen, int alphaHighligther);
 
+	/**
+     * Computes the reflection with respect to either the horizontal or vertical axis.
+     * 
+     */
+	UndoAction* reflectSelection(Rectangle<double> bounds, bool x_axis);
+
 public:
     /**
      * Add an element to the this selection

@@ -587,6 +587,9 @@ void ToolMenuHandler::initToolItems() {
      */
     addToolItem(new ColorToolItem(listener, toolHandler, this->parent, NamedColor{}, true));
 
+	addCustomItem("ACTION_X_REFLECTION", ACTION_X_REFLECTION, "x-reflect", _("x-reflection"));
+	addCustomItem("ACTION_Y_REFLECTION", ACTION_Y_REFLECTION, "y-reflect", _("y-reflection"));
+
     addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT"));
     addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
     addToolItem(new ToolPdfCombocontrol(this, listener, "PDF_TOOL"));

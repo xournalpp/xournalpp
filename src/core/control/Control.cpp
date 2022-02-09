@@ -864,6 +864,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GtkToolButton*
         case ACTION_TEX:
             runLatex();
             break;
+			// Axis reflections
+		case ACTION_X_REFLECTION:
+			reflectAxisOfSelection(true);
+			break;
+		case ACTION_Y_REFLECTION:
+			reflectAxisOfSelection(false);
+			break;
 
             // Menu View
         case ACTION_ZOOM_100:
@@ -2170,6 +2177,19 @@ auto Control::getLineStyleToSelect() -> std::optional<string> const {
 void Control::toolColorChanged() {
     fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
     getCursor()->updateCursor();
+}
+
+void Control::reflectAxisOfSelection(bool x_axis) {
+    if (this->win) {
+        EditSelection* sel = this->win->getXournal()->getSelection();
+        if (sel) {
+            UndoAction* undo = sel->reflectSelection(x_axis);
+            // move into selection
+            undoRedo->addUndoAction(UndoActionPtr(undo));
+        }
+	//TODO: add text
+
+    }
 }
 
 void Control::changeColorOfSelection() {

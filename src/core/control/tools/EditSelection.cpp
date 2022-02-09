@@ -360,6 +360,16 @@ auto EditSelection::setFont(XojFont& font) -> UndoAction* { return this->content
 void EditSelection::fillUndoItem(DeleteUndoAction* undo) { this->contents->fillUndoItem(undo); }
 
 /**
+* Computes the reflection with respect to either the horizontal or vertical axis.
+* 
+*/
+auto EditSelection::reflectSelection(bool x_axis) -> UndoAction* 
+	{
+		finalizeSelection();
+		return this->contents->reflectSelection(this->getRect(), x_axis); 
+	}
+
+/**
  * Add an element to this selection
  *
  */
