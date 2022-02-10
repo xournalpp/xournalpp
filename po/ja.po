@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-08 17:11+0000\n"
-"PO-Revision-Date: 2022-02-09 17:04\n"
+"PO-Revision-Date: 2022-02-10 14:43\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -792,7 +792,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Next"
-msgstr ""
+msgstr "次へ"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
 msgid "Next annotated page"
@@ -917,7 +917,7 @@ msgstr ""
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:257
 msgid "Pen"
-msgstr ""
+msgstr "ぺン"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
@@ -943,7 +943,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Print"
-msgstr ""
+msgstr "印刷"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Record Audio / Stop Recording"
