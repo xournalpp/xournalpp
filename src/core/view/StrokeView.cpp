@@ -128,7 +128,7 @@ void StrokeView::paint(bool dontRenderEditingStroke, bool markAudioStroke, bool 
         default:
             capType = CAIRO_LINE_CAP_ROUND;
     }
-    cairo_set_line_cap(cr, capType);
+    cairo_set_line_cap(crEffective, capType);
 
     if (auto fill = s->getFill(); fill != -1) {
         /**
