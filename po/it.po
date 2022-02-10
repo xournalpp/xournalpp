@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-08 17:11+0000\n"
-"PO-Revision-Date: 2022-02-08 17:34\n"
+"PO-Revision-Date: 2022-02-10 16:37\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -118,7 +118,8 @@ msgstr "Colore non impostato!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Cartella Audio non impostata o invalida! Le registrazioni non funzioneranno!\n"
+"Per favore, imposta la cartella Audio in \"Preferenze > Registrazione Audio\""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -586,7 +587,7 @@ msgstr "Impossibile trovare il programma generatore di LaTeX: {1}"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Impossibile inizializzare la superficie Cairo PDF"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -1068,7 +1069,7 @@ msgstr "Vedi l'elenco completo dei contributori"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Seleziona l'area di testo dal PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Select Font"
@@ -1855,7 +1856,8 @@ msgstr "<b>Impostazioni di esportazione documento</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Barra degli strumenti vuota</b>\n"
+"<i>Menu: Vista/Barra degli strumenti</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -2175,7 +2177,7 @@ msgstr "Copia la dimensione della pagina corrente invece"
 
 #: ../ui/main.glade:2657
 msgid "Copy selected text"
-msgstr ""
+msgstr "Copia il testo selezionato"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -3041,7 +3043,7 @@ msgstr "Seleziona Cartella"
 
 #: ../ui/main.glade:2719
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Barra testo selezionato"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3143,7 +3145,7 @@ msgstr "Tentare di selezionare prima l'oggetto; se non viene selezionato nulla, 
 
 #: ../ui/main.glade:2699
 msgid "Underline selected text"
-msgstr ""
+msgstr "Sottolinea il testo selezionato"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
