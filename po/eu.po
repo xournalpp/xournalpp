@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-08 17:11+0000\n"
-"PO-Revision-Date: 2022-02-10 19:07\n"
+"PO-Revision-Date: 2022-02-10 20:03\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -3113,7 +3113,7 @@ msgstr "Denbora-muga"
 
 #: ../ui/main.glade:2739
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Aldatu testuaren hautapena estandarra / laukizuzena"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
@@ -3138,7 +3138,7 @@ msgstr "Saiatu lehenengo objektua hautatzen; ezer hautatuta ez badago, erakutsi 
 
 #: ../ui/main.glade:2699
 msgid "Underline selected text"
-msgstr ""
+msgstr "Azpimarratu hautatutako testua"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
