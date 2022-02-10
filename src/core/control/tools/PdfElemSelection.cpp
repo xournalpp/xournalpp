@@ -45,12 +45,6 @@ void PdfElemSelection::triplePress() { this->finalizeSelectionAndRepaint(XojPdfP
 bool PdfElemSelection::finalizeSelection(XojPdfPageSelectionStyle style) {
     this->finalized = true;
 
-    // normalize the rectangle so that x1 < x2 and y1 < y2
-    if (this->bounds.x1 > this->bounds.x2)
-        std::swap(this->bounds.x1, this->bounds.x2);
-    if (this->bounds.y1 > this->bounds.y2)
-        std::swap(this->bounds.y1, this->bounds.y2);
-
     if (this->selectedTextRegion) {
         cairo_region_destroy(this->selectedTextRegion);
     }
