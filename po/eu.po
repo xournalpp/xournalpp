@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-08 17:11+0000\n"
-"PO-Revision-Date: 2022-02-08 17:34\n"
+"PO-Revision-Date: 2022-02-10 19:07\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -118,7 +118,8 @@ msgstr "Ez da ezarri atributuaren kolorea!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Audio karpeta ez dago ezarrita edo baliogabea da! Grabaketak ez du funtzionatuko!\n"
+"Ezarri grabaketa karpeta \"Hobespenak > Audio-grabazioa\" atalean"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -1068,7 +1069,7 @@ msgstr "Ikusi laguntzaileen zerrenda osoa"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Hautatu eremuko testua pdf-an"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Select Font"
@@ -1078,7 +1079,7 @@ msgstr "Hautatu letra-tipoa"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Hautatu pdf testua lerrotan"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1088,23 +1089,23 @@ msgstr "Hautatu objektua"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Hautatu PDF eremuko testua"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Hautatu PDF testua"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Hautatu PDF testua laukizuzenean"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Hautatu PDF testua laukizuzenean"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Hautatu Pdf testua"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1121,7 +1122,7 @@ msgstr "Hautatu area"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Hautatu testua pdf-an"
 
 #: ../src/core/control/Control.cpp:2035
 msgid "Select another PDF"
@@ -1437,7 +1438,7 @@ msgstr "Pixmap::domain mota ezezaguna: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Trazu mota ezezaguna: \"{1}\", biribila suposatzen da"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1855,7 +1856,8 @@ msgstr "<b>Dokumentua esportatzeko ezarpenak</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Tresna-kutxa hutsa</b>\n"
+"            <i>Menua: Ikusi/Tresna-barrak</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -2168,7 +2170,7 @@ msgstr "Kopiatu haren ordez uneko orriaren tamaina"
 
 #: ../ui/main.glade:2657
 msgid "Copy selected text"
-msgstr ""
+msgstr "Kopiatu hautatutako testua"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2505,7 +2507,7 @@ msgstr "Nabarmendu kurtsorearen kokapena"
 
 #: ../ui/main.glade:2679
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Nabarmendu hautatutako testua"
 
 #: ../ui/main.glade:1834
 msgid "Highlighter Opti_ons"
@@ -2923,7 +2925,7 @@ msgstr "Hautatu irudia"
 
 #: ../ui/main.glade:1341
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Hautatu testu lerroetan"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2931,7 +2933,7 @@ msgstr "Hautatu PDF orria"
 
 #: ../ui/main.glade:1353
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Hautatu testua laukizuzenean"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3034,7 +3036,7 @@ msgstr "Biltegiratzeko karpeta"
 
 #: ../ui/main.glade:2719
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Marratu hautatutako testua"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
