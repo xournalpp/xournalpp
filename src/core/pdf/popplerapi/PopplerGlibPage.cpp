@@ -172,12 +172,20 @@ cairo_rectangle_int_t cairoRectFromDouble(double x1, double y1, double width, do
 }
 }  // namespace
 
-auto PopplerGlibPage::selectTextLines(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) -> TextSelection {
+auto PopplerGlibPage::selectTextLines(const XojPdfRectangle& selectRect, XojPdfPageSelectionStyle style)
+        -> TextSelection {
     std::vector<XojPdfRectangle> textRects;
+
+    // The selection rectangle may be "improper" by having x2 <= x1 or y1 <= y2 (e.g., if user
+    // selects from right to left or from bottom to top). This is incompatible with cairo, so
+    // construct a proper rectangle satisfying x1 <= x2 and y1 <= y2.
+    PopplerRectangle rect{std::min(selectRect.x1, selectRect.x2), std::min(selectRect.y1, selectRect.y2),
+                          std::max(selectRect.x1, selectRect.x2), std::max(selectRect.y1, selectRect.y2)};
 
     PopplerRectangle* rectArray = nullptr;
     guint numRects = 0;
     if (style == XojPdfPageSelectionStyle::Area) {
+        // We always want to select in the "proper" rectangle.
         PopplerRectangle area{rect.x1, rect.y1, rect.x2, rect.y2};
         if (!poppler_page_get_text_layout_for_area(this->page, &area, &rectArray, &numRects)) {
             return {.region = cairo_region_create(), .rects = textRects};
@@ -192,7 +200,8 @@ auto PopplerGlibPage::selectTextLines(const XojPdfRectangle& rect, XojPdfPageSel
     // for other selection styles
     cairo_region_t* region = nullptr;
     if (style != XojPdfPageSelectionStyle::Area) {
-        region = selectTextRegion(rect, style);
+        // do not use the "proper" rectangle here as it may be different from the actual selection.
+        region = selectTextRegion(selectRect, style);
     }
 
     const auto isSameLine = [&](const auto& r1, const auto& r2) {
