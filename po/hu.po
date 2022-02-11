@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-08 17:11+0000\n"
-"PO-Revision-Date: 2022-02-08 17:34\n"
+"POT-Creation-Date: 2022-02-11 05:50+0000\n"
+"PO-Revision-Date: 2022-02-11 05:58\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -771,7 +771,7 @@ msgstr "Réteg {1}"
 msgid "Layerstack Preview"
 msgstr "Egymásra helyezett rétegek előnézete"
 
-#: ../src/core/gui/PageView.cpp:760
+#: ../src/core/gui/PageView.cpp:774
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -1389,7 +1389,7 @@ msgstr "Megkíséreljük menteni az éppen megnyitott dokumentumot…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Nem lehet megnyitni a globális sablonfájlt itt: {1}. Létezik?"
 
-#: ../src/core/gui/PageView.cpp:367
+#: ../src/core/gui/PageView.cpp:372
 msgid "Unable to play audio recording {1}"
 msgstr "Nem sikerült a hangfelvétel lejátszása: {1}"
 
