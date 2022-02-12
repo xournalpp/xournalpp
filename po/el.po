@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-11 05:50+0000\n"
-"PO-Revision-Date: 2022-02-11 05:58\n"
+"POT-Creation-Date: 2022-02-12 20:16+0000\n"
+"PO-Revision-Date: 2022-02-12 20:24\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -761,7 +761,7 @@ msgstr "Στρώση {1}"
 msgid "Layerstack Preview"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:774
+#: ../src/core/gui/PageView.cpp:772
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
