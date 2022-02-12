@@ -136,7 +136,7 @@ Try these out and give us some feedback.
 
 Here are a few under development that you can play with now:
 
-- <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++ Screenshot"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor. You can also modify what is in the toolbox through the usual View → Toolbars → Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** ( or selected a toolbar configuration that uses it).
+- <img src="readme/floatingtoolboxmbmenu.png"  title="Xournal++ Screenshot"/> Assign a mouse button or stylus button to bring up a toolbox of toolbars right under the cursor. You can also modify what is in the toolbox through the usual View → Toolbars → Customize although **it won't appear unless you've assigned a button in preferences: mouse or stylus** (or selected a toolbar configuration that uses it).
 
   - This is an experimental feature because not everything you can put in the toolbox behaves. So be aware.
 
