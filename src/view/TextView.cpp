@@ -114,6 +114,6 @@ void TextView::calcSize(const Text* t, double& width, double& height) {
     height = (static_cast<double>(h)) / PANGO_SCALE;
     g_object_unref(layout);
 
-    cairo_surface_destroy(surface);
     cairo_destroy(cr);
+    cairo_surface_destroy(surface);
 }
