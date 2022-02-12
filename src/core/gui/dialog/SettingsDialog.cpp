@@ -272,16 +272,22 @@ void SettingsDialog::disableWithCheckbox(const string& checkboxId, const string&
 
 void SettingsDialog::updatePressureSensitivityOptions() {
     GtkWidget* sensitivityOptionsFrame = get("framePressureSensitivityScale");
+    GtkWidget* pressureCurveSlider = get("scalePressureCurve");
     bool havePressureInput = getCheckbox("cbSettingPresureSensitivity") || getCheckbox("cbEnablePressureInference");
 
     if (!havePressureInput) {
         gtk_widget_set_tooltip_text(sensitivityOptionsFrame,
                                     _("Enable pressure sensitivity or pressure inference to change this setting!"));
+        gtk_widget_set_tooltip_text(pressureCurveSlider, (""));
     } else {
 
         gtk_widget_set_tooltip_text(sensitivityOptionsFrame,
                                     _("Filter input pressure. Multiply the pressure by the pressure multiplier."
                                       " If less than the minimum, use the minimum pressure."));
+        gtk_widget_set_tooltip_text(pressureCurveSlider,
+                                    _("Adjust the pressure curve. Positive values increase the softness by amplifying"
+                                      " low pressure levels. Negative values attenuate low pressure levels and"
+                                      " zero leaves the pressure unaltered."));
     }
     gtk_widget_set_sensitive(sensitivityOptionsFrame, havePressureInput);
 }
@@ -459,6 +465,8 @@ void SettingsDialog::load() {
     loadSlider("zoomCallibSlider", dpi);
     loadSlider("scaleMinimumPressure", settings->getMinimumPressure());
     loadSlider("scalePressureMultiplier", settings->getPressureMultiplier());
+    loadSlider("scalePressureCurve", settings->getPressureCurve());
+
 
     GdkRGBA color = Util::rgb_to_GdkRGBA(settings->getBorderColor());
     gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(get("colorBorder")), &color);
@@ -668,6 +676,7 @@ void SettingsDialog::save() {
     settings->setPressureSensitivity(getCheckbox("cbSettingPresureSensitivity"));
     settings->setMinimumPressure(getSlider("scaleMinimumPressure"));
     settings->setPressureMultiplier(getSlider("scalePressureMultiplier"));
+    settings->setPressureCurve(getSlider("scalePressureCurve"));
     settings->setZoomGesturesEnabled(getCheckbox("cbEnableZoomGestures"));
     settings->setSidebarOnRight(getCheckbox("cbShowSidebarRight"));
     settings->setScrollbarOnLeft(getCheckbox("cbShowScrollbarLeft"));

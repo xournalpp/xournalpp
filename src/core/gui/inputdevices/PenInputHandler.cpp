@@ -182,9 +182,52 @@ double PenInputHandler::filterPressure(PositionInputData const& pos, XojPageView
     if (filteredPressure != Point::NO_PRESSURE) {
         filteredPressure *= settings->getPressureMultiplier();
         filteredPressure = std::max(settings->getMinimumPressure(), filteredPressure);
+        filteredPressure = applyPressureCurve(settings->getPressureCurve(), filteredPressure);
     }
 
     return filteredPressure;
+}
+
+auto PenInputHandler::applyPressureCurve(double curveParameter, double pressure) -> double {
+    /*
+     * Applies a static transfer function to the pressure level. The function is
+     * derived from the equation
+     * 
+     *     |x|^c + |y|^c = 1.
+     * 
+     * - For c = 1 this defines a square with side length sqrt(2) rotated by 45°.
+     * - For c = 2 this defines a unit circle.
+     * - For c --> inf it defines a square with side length 2.
+     * 
+     * The solution for the top left quadrant (x<0, y>0) is given with
+     * 
+     *     y = (1 - (-x)^c)^(1/c).
+     * 
+     * In our case we the center point is given with [pressure, pressure_mod] = [1, 0] 
+     * which leads to [x, y] = [in_pressure + 1, out_pressure] and results in
+     * 
+     *     pressure_mod = (1 - (pressure - 1)^c)^(1/c).
+     *
+     * Notes:
+     * 
+     * - For curveParameter != 0 we need to clip pressure at maxval=1, otherwise our math does not work out.
+     * - For curveParameter < 0, the transfer function is mirrored w.r.t the straight line y = x.
+     * - For convenience, we define c as a power of 2: c = 2 ^ curveParameter:
+     *     - Example 1: 2 ^ 0 = 1  --> straight line (pressure_mod = pressure)
+     *     - Example 2: 2 ^ 1      --> top left of a circle with origin [1, 0]
+     *     - Example 3: 2 ^ |-1|   --> bottom right of a circle with origin [0, 1]
+     */
+        if (curveParameter != 0)
+        {
+            pressure = std::min(1.0, pressure);
+            double exponent = std::pow(2.0, std::abs(curveParameter));
+            if (curveParameter >= 0)
+                pressure = std::pow(1.0 - std::pow(1 - pressure, exponent), 1.0 / exponent);
+            else
+                pressure = 1 - std::pow(1 - std::pow(pressure, exponent), 1.0 / exponent);
+        }
+        return pressure;
+        
 }
 
 auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {

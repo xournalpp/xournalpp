@@ -142,4 +142,13 @@ protected:
      * @return The filtered pressure.
      */
     double filterPressure(PositionInputData const& pos, XojPageView* page);
+
+    /**
+     * @brief Apply a pressure transfer function to pressure.
+     *
+     * @param curveParameter Defines the curve shape.
+     * @param pressure Input pressure
+     * @return The filtered pressure.
+     */
+    double applyPressureCurve(double curveParameter, double pressure);
 };

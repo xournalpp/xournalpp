@@ -125,6 +125,8 @@ public:
     double getPressureMultiplier() const;
     void setPressureMultiplier(double multiplier);
 
+    double getPressureCurve() const;
+    void setPressureCurve(double pressureCurve);
     /**
      * Getter, enable/disable
      */
@@ -562,6 +564,7 @@ private:
      */
     double minimumPressure{};
     double pressureMultiplier{};
+    double pressureCurve{};
 
     /**
      * If the touch zoom gestures are enabled
