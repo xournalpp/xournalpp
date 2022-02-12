@@ -178,8 +178,8 @@ function bump_version() {
     fi
 
     # Update MacOS Info.plist
-    sed -i "s/<string>${prior_version}</string>/<string>$(current_version)</string>/g" "${SCRIPT_PATH}/../mac-setup/Info.plist"
-    sed -i "s/<string>${prior_version}.0</string>/<string>$(current_version).0</string>/g" "${SCRIPT_PATH}/../mac-setup/Info.plist"
+    sed -i "s/<string>${prior_version}<\/string>/<string>$(current_version)<\/string>/g" "${SCRIPT_PATH}/../mac-setup/Info.plist"
+    sed -i "s/<string>${prior_version}.0<\/string>/<string>$(current_version).0<\/string>/g" "${SCRIPT_PATH}/../mac-setup/Info.plist"
 
     # Update Fedora xournalpp.spec
     sed -i "s/%global	version_string ${prior_version}/%global	version_string $(current_version)/g" "${SCRIPT_PATH}/../rpm/fedora/xournalpp.spec"
