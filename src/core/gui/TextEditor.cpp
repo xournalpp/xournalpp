@@ -906,7 +906,10 @@ auto TextEditor::blinkCallback(TextEditor* te) -> gint {
     return false;
 }
 
-void TextEditor::repaintEditor() { this->gui->repaintPage(); }
+void TextEditor::repaintEditor() {
+    auto rect = text->boundingRect();
+    this->gui->repaintRect(rect.x, rect.y, rect.width, rect.height);
+}
 
 /**
  * Calculate the UTF-8 Char offset into a byte offset.
