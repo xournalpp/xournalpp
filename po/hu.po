@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-11 05:50+0000\n"
-"PO-Revision-Date: 2022-02-11 05:58\n"
+"PO-Revision-Date: 2022-02-12 09:15\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -118,7 +118,8 @@ msgstr "A tulajdonság színe nincs beállítva!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "A hangmappa nincs beállítva vagy érvénytelen! A felvétel nem fog működni!\n"
+"Kérjük, állítsa be a felvétel mappáját a „Beállítások > Hangfelvétel” menüpontban"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
