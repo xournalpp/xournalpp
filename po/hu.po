@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-11 05:50+0000\n"
-"PO-Revision-Date: 2022-02-12 09:15\n"
+"POT-Creation-Date: 2022-02-12 20:16+0000\n"
+"PO-Revision-Date: 2022-02-12 20:24\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -87,29 +87,29 @@ msgstr "Fájl csatolása a naplóhoz"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:114
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "A(z) \"{1}\" tulajdonság nem olvasható be double számként, az értéke \"{2}\""
+msgstr "A(z) „{1}” tulajdonság nem olvasható be double számként, az értéke „{2}”"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:107
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr "A(z) \"{1}\" tulajdonság nem olvasható be double számként, az értéke nullptr"
+msgstr "A(z) „{1}” tulajdonság nem olvasható be double számként, az értéke nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:131
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "A(z) \"{1}\" tulajdonság nem olvasható be egész számként, az értéke \"{2}\""
+msgstr "A(z) „{1}” tulajdonság nem olvasható be egész számként, az értéke „{2}”"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:124
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr "A(z) \"{1}\" tulajdonság nem olvasható be egész számként, az értéke nullptr"
+msgstr "A(z) „{1}” tulajdonság nem olvasható be egész számként, az értéke nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "A(z) \"{1}\" tulajdonság nem olvasható be size_t számként, az értéke \"{2}\""
+msgstr "A(z) „{1}” tulajdonság nem olvasható be size_t számként, az értéke „{2}”"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:162
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr "A(z) \"{1}\" tulajdonság nem olvasható be size_t számként, az értéke nullptr"
+msgstr "A(z) „{1}” tulajdonság nem olvasható be size_t számként, az értéke nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
@@ -178,7 +178,7 @@ msgstr "Vonalvastagság megváltoztatása"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "A \"{1}\" szín ismeretlen (nincs definiálva az alapértelmezett színlistában)!"
+msgstr "A(z) „{1}” szín ismeretlen (nincs definiálva az alapértelmezett színlistában)!"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:226
 msgid "Contents"
@@ -239,7 +239,7 @@ msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open file: \"{1}\""
-msgstr "Nem sikerült megnyitni a \"{1}\" fájlt"
+msgstr "Nem sikerült megnyitni a(z) „{1}” fájlt"
 
 #: ../src/core/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
@@ -265,7 +265,7 @@ msgstr "A klónozott háttérkép {1} oldalszámának olvasása sikertelen."
 #: ../src/core/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "Az előrelépés nem sikerült \"{1}\"\n"
+msgstr "Az előrelépés nem sikerült „{1}”\n"
 "Valami nem sikerült… Kérem írjon hibajelentést…"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
@@ -274,11 +274,11 @@ msgstr "Nem sikerült eltávolítani az eszközt az {1} eszköztár {2} pozíci�
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:163
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr "Nem sikerült eltávolítani a(z) {1} eszközt az {2} eszköztár {3} pozíciójáról"
+msgstr "Nem sikerült eltávolítani a(z) {1} eszközt a(z) {2} eszköztár {3} pozíciójáról"
 
 #: ../src/core/control/Control.cpp:201
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr "Nem sikerült átnevezni az automatikusan mentett fájlt erről: \"{1}\" erre: \"{2}\": {3}"
+msgstr "Nem sikerült átnevezni az automatikusan mentett fájlt erről: „{1}” erre: „{2}”: {3}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Could not save .tex file: {1}"
@@ -291,12 +291,12 @@ msgstr "A(z) {1} elindítása sikertelen: {2} (kilépési kód: {3})"
 #: ../src/core/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "A visszalépés nem sikerült \"{1}\"\n"
+msgstr "A visszalépés nem sikerült „{1}”\n"
 "Valami nem sikerült… Kérem írjon hibajelentést…"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:230
 msgid "Could not write background \"{1}\", {2}"
-msgstr "A(z) \"{1}\" háttér nem írható, {2}"
+msgstr "A(z) „{1}” háttér nem írható, {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:326
 msgid "Could not write background \"{1}\". Continuing anyway."
@@ -481,15 +481,15 @@ msgstr "Hiba történt a(z) „{1}” PDF-fájl megjegyzése közben\n"
 
 #: ../src/core/gui/GladeGui.cpp:23
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr "Hiba a glade fájl \"{1}\" betöltése közben (próbálja meg betölteni a \"{2}\" fájlt)"
+msgstr "Hiba a(z) „{1}” glade-fájl betöltése közben (próbálja meg betölteni a(z) „{2}” fájlt)"
 
 #: ../src/core/control/Control.cpp:2059
 msgid "Error opening file \"{1}\""
-msgstr "Hiba a fájl megnyitása során: \"{1}\""
+msgstr "Hiba a fájl megnyitása során: {1}"
 
 #: ../src/util/OutputStream.cpp:23
 msgid "Error opening file: \"{1}\""
-msgstr "Hiba a fájl megnyitása során: {1}"
+msgstr "Hiba a fájl megnyitása során: „{1}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:445
 #: ../src/core/control/xojfile/LoadHandler.cpp:465
@@ -772,7 +772,7 @@ msgstr "Réteg {1}"
 msgid "Layerstack Preview"
 msgstr "Egymásra helyezett rétegek előnézete"
 
-#: ../src/core/gui/PageView.cpp:774
+#: ../src/core/gui/PageView.cpp:772
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
