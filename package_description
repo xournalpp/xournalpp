@@ -6,7 +6,7 @@ Supports pen input from devices such as Wacom Tablets.
 .
 Xournal++ features:
 .
- - Supports pressure-senstive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
+ - Supports pressure-sensitive styluses and digital pen tables (e.g. Wacom, Huion, XP Pen, etc. tablets)
  - Paper backgrounds for note-taking, scratch paper, or whiteboarding
  - Annotate on top of PDFs
  - Export to a variety of formats including SVG, PNG and PDF, both from the GUI and command line
