@@ -104,7 +104,7 @@ public:
      * Returns a reference to the XojPage belonging to
      * this PageView
      */
-    PageRef getPage();
+    const PageRef getPage();
 
     XournalView* getXournal();
 
