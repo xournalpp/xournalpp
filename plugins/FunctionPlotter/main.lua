@@ -47,12 +47,21 @@ function showDialog()
     local cx, cy = 300, 200
     local xppWidth = width*factor
     local xppHeight = height*factor
+    local strokes = {}
     for i = 0, samples-1 do
       local t = tMin + i/(samples-1)*(tMax-tMin)
-      table.insert(xcoord, fitX(xMin, xMax, xppWidth, cx, eval("x", t)))
-      table.insert(ycoord, fitY(yMin, yMax, xppHeight, cy, eval("y", t)))
+      local xt = eval("x", t) 
+      local yt = eval("y", t)
+      if (xt~=nil and xt>=xMin and xt<=xMax and yt~=nil and yt>=yMin and yt<=yMax) then
+        table.insert(xcoord, fitX(xMin, xMax, xppWidth, cx, xt))
+        table.insert(ycoord, fitY(yMin, yMax, xppHeight, cy, yt))
+      else 
+        appendStroke(strokes, xcoord, ycoord)
+        xcoord = {}; ycoord = {}
+      end
     end
-    local graph = {x = xcoord, y = ycoord}
+    appendStroke(strokes, xcoord, ycoord)
+
     local mx = fitX(xMin, xMax, xppWidth, cx, xMin)
     local Mx = fitX(xMin, xMax, xppWidth, cx, xMax)
     local x0 = fitX(xMin, xMax, xppWidth, cx, 0)
@@ -61,7 +70,8 @@ function showDialog()
     local y0 = fitY(yMin, yMax, xppHeight, cy, 0)
     local xAxis = {x = {mx,Mx}, y={y0, y0}, color=0x000000, width=1}
     local yAxis = {x = {x0, x0}, y={my, My}, color=0x000000, width=1}
-    local strokes = {graph, xAxis, yAxis}
+    table.insert(strokes, xAxis)
+    table.insert(strokes, yAxis)
 
     local tickHeight = 4.0
     local xticks = { strokes = {}}
@@ -82,6 +92,12 @@ function showDialog()
     app.refreshPage()
   end
 
+  function appendStroke(strokes, xcoord, ycoord)
+    if #xcoord > 0 then
+      table.insert(strokes, {x=xcoord, y=ycoord})
+    end
+  end
+
   function eval(f, t)
     if f~="x" and f~="y" then
       print("invalid function argument")
@@ -99,7 +115,7 @@ function showDialog()
       print("Evaluation failed: " .. rerr.message)
     else
       if luaxp.isNull(resultValue) then
-        return 0
+        return nil
       else
         return resultValue
       end
