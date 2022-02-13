@@ -85,6 +85,11 @@ public:
     void deleteSelection(EditSelection* sel = nullptr);
     void repaintSelection(bool evenWithoutSelection = false);
 
+    void setSetsquareView(std::unique_ptr<SetsquareView> setsquareView);
+    void resetSetsquareView();
+    SetsquareView* getSetsquareView();
+    void repaintSetsquare(bool evenWithoutSetsquare = false);
+
     TextEditor* getTextEditor();
     std::vector<XojPageView*> const& getViewPages() const;
 
