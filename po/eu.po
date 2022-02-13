@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-12 20:16+0000\n"
-"PO-Revision-Date: 2022-02-12 20:24\n"
+"POT-Creation-Date: 2022-02-13 19:49+0000\n"
+"PO-Revision-Date: 2022-02-13 20:04\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>UI fitxategia falta da:\n"
 msgid "Add/Edit TeX"
 msgstr "Gehitu/Editatu Tex"
 
-#: ../src/core/control/XournalMain.cpp:582
+#: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
 msgstr "Esportatzeko aukera aurreratuak"
 
@@ -363,7 +363,7 @@ msgstr "Ezabatu orri hau"
 msgid "Discard"
 msgstr "Baztertu"
 
-#: ../src/core/control/XournalMain.cpp:583
+#: ../src/core/control/XournalMain.cpp:586
 msgid "Display advanced export options"
 msgstr "Erakutsi esportatzeko aukera aurreratuak"
 
@@ -534,11 +534,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "Errore erregistroa ezin izan da ezabatu. Eskuz egin behar duzu.\n"
 "Logfile: {1}"
 
-#: ../src/core/control/XournalMain.cpp:540
+#: ../src/core/control/XournalMain.cpp:543
 msgid "Export FILE as PDF"
 msgstr "Esportatu fitxategia PDF gisa"
 
-#: ../src/core/control/XournalMain.cpp:542
+#: ../src/core/control/XournalMain.cpp:545
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -554,7 +554,7 @@ msgstr "Esportatu PDF gisa"
 msgid "Export as PDF"
 msgstr "Esportatu PDF gisa"
 
-#: ../src/core/control/XournalMain.cpp:556
+#: ../src/core/control/XournalMain.cpp:559
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -566,7 +566,7 @@ msgstr "Esportatu geruzak pixkanaka\n"
 "                                 geruza pila pixkanaka osatzen.\n"
 "                                 Sortuko den PDF fitxategia aurkezpen gisa erabili daiteke.\n"
 
-#: ../src/core/control/XournalMain.cpp:547
+#: ../src/core/control/XournalMain.cpp:550
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -574,7 +574,7 @@ msgstr "Esportatu atzeko planorik gabe\n"
 "                                 Esportatutako fitxategiak atzeko plano gardena edo zuria du,\n"
 "                                 formatuak onartzen duenaren arabera\n"
 
-#: ../src/core/control/XournalMain.cpp:552
+#: ../src/core/control/XournalMain.cpp:555
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Esportatu saretarik gabe\n"
@@ -637,7 +637,7 @@ msgstr "Aurrera"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 edo berriagoa"
 
-#: ../src/core/control/XournalMain.cpp:531
+#: ../src/core/control/XournalMain.cpp:534
 msgid "Get version of xournalpp"
 msgstr "Eskuratu xournalpp-ren bertsioa"
 
@@ -745,7 +745,7 @@ msgstr "Puntu-sareta isometrikoa"
 msgid "Isometric Graph"
 msgstr "Grafo isometrikoa"
 
-#: ../src/core/control/XournalMain.cpp:527
+#: ../src/core/control/XournalMain.cpp:530
 msgid "Jump to Page (first Page: 1)"
 msgstr "Joan orrialde honetara (lehenengo orrialdea: 1)"
 
@@ -841,7 +841,7 @@ msgstr "Marrazketa arrunta"
 msgid "OK"
 msgstr "Ados"
 
-#: ../src/core/control/XournalMain.cpp:563
+#: ../src/core/control/XournalMain.cpp:566
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Esportatu bakarrik errangoan zehaztutako orriak (adib. \"2-3,5,7-\")\n"
@@ -864,7 +864,7 @@ msgstr "Ireki erregistro-fitxategien direktorioa"
 msgid "Open file"
 msgstr "Ireki fitxategia"
 
-#: ../src/core/control/RecentManager.cpp:183
+#: ../src/core/control/RecentManager.cpp:186
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Ireki {1}"
@@ -1168,13 +1168,13 @@ msgstr "Eraman atzera"
 msgid "Separator"
 msgstr "Bereizlea"
 
-#: ../src/core/control/XournalMain.cpp:567
+#: ../src/core/control/XournalMain.cpp:570
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Ezarri PNG esportazioaren DPI. Lehenetsia 300 da.\n"
 "                                 Ez dauka eraginik -i/--sortu-irudia=foo.png gabe"
 
-#: ../src/core/control/XournalMain.cpp:577
+#: ../src/core/control/XournalMain.cpp:580
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1182,7 +1182,7 @@ msgstr "Ezarri PNG esportazioen orriaren altuera\n"
 "                                 Ez dauka eragina -i/--create-img=foo.png gabe\n"
 "                                 Ez ikusia egiten du baldin --export-png-dpi edo --export-png-width erabiltzen badira"
 
-#: ../src/core/control/XournalMain.cpp:571
+#: ../src/core/control/XournalMain.cpp:574
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
