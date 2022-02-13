@@ -12,6 +12,7 @@
 #pragma once
 
 
+#include <memory>
 #include <set>
 #include <string>
 #include <vector>
@@ -29,14 +30,15 @@
 #include "HandRecognition.h"
 #include "KeyboardInputHandler.h"
 #include "MouseInputHandler.h"
+#include "SetsquareInputHandler.h"
 #include "StylusInputHandler.h"
 #include "TouchDrawingInputHandler.h"
 #include "TouchInputHandler.h"
 #include "config-debug.h"
-
 class InputContext {
 
 private:
+    std::unique_ptr<SetsquareInputHandler> setsquareHandler;
     StylusInputHandler* stylusHandler;
     MouseInputHandler* mouseHandler;
     TouchDrawingInputHandler* touchDrawingHandler;
