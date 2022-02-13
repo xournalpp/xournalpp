@@ -970,7 +970,11 @@ void SettingsDialog::save() {
     settings->setDefaultSeekTime(
             static_cast<unsigned int>(gtk_spin_button_get_value(GTK_SPIN_BUTTON(get("spDefaultSeekTime")))));
 
-    settings->setColorPalette(fs::path{gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(get("cbColorPalette")))});
+    gchar* selected_colorPalette = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(get("cbColorPalette")));
+    if (selected_colorPalette) {
+        settings->setColorPalette(fs::path{selected_colorPalette});
+    }
+    g_free(selected_colorPalette);
 
     for (auto& deviceClassConfigGui: this->deviceClassConfigs) {
         deviceClassConfigGui->saveSettings();
