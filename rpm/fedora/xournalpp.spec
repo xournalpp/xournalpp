@@ -6,7 +6,7 @@
 #This spec file is intended for daily development snapshot release
 %global	build_repo https://github.com/xournalpp/xournalpp/
 %global	build_branch master
-%global	version_string 1.1.0
+%global	version_string 1.1.1
 %define	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-41)
 %define	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
 %global	build_timestamp %(date +"%Y%m%d")
@@ -114,9 +114,5 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/%{name}/ui
 
 %changelog
-* Sat Feb 20 2021 Luya Tshimbalanga <luya@fedoraproject.org>
-- Add librsvg2 dependencies
-- Add notice about daily git snapshot
-
-* Mon Dec 16 2019 Luya Tshimbalanga <luya@fedoraproject.org>
-- Implement some version autodetection to reduce maintenance work.
+* Thu Oct 20 2021 Ulrich Huber <ulrich@huberulrich.de>
+- See https://github.com/%{name}/%{name}/CHANGELOG.md

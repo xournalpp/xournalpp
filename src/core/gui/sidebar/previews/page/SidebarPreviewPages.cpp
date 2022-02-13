@@ -183,13 +183,12 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
 }
 
 void SidebarPreviewPages::updatePreviews() {
-    Document* doc = this->getControl()->getDocument();
-    doc->lock();
-    size_t len = doc->getPageCount();
-
     for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
     this->previews.clear();
 
+    Document* doc = this->getControl()->getDocument();
+    doc->lock();
+    size_t len = doc->getPageCount();
     for (size_t i = 0; i < len; i++) {
         SidebarPreviewBaseEntry* p = new SidebarPreviewPageEntry(this, doc->getPage(i));
         this->previews.push_back(p);

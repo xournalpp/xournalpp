@@ -477,7 +477,9 @@ Justus Rossmeier
 Fabian Keßler
 Julius Lehmann
 Tobias Hermann
-Roland Lötscher</property>
+Roland Lötscher
+Benjamin Hennion
+Henry Heino</property>
                     <property name="use-markup">True</property>
                     <property name="justify">center</property>
                   </object>

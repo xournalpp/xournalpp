@@ -5,15 +5,15 @@ SCRIPT_PATH=$(dirname "$(realpath -s "$0")")
 
 # Parse current version string
 function current_major_version() {
-    sed -n 's/^set (CPACK_PACKAGE_VERSION_MAJOR "\([0-9]\+\)")/\1/p' "${SCRIPT_PATH}/../CMakeLists.txt"
+    sed -n 's/^        VERSION \([0-9]\+\).\([0-9]\+\).\([0-9]\+\)$/\1/p' "${SCRIPT_PATH}/../CMakeLists.txt"
 }
 
 function current_minor_version() {
-    sed -n 's/^set (CPACK_PACKAGE_VERSION_MINOR "\([0-9]\+\)")/\1/p' "${SCRIPT_PATH}/../CMakeLists.txt"
+    sed -n 's/^        VERSION \([0-9]\+\).\([0-9]\+\).\([0-9]\+\)$/\2/p' "${SCRIPT_PATH}/../CMakeLists.txt"
 }
 
 function current_patch_version() {
-    sed -n 's/^set (CPACK_PACKAGE_VERSION_PATCH "\([0-9]\+\)")/\1/p' "${SCRIPT_PATH}/../CMakeLists.txt"
+    sed -n 's/^        VERSION \([0-9]\+\).\([0-9]\+\).\([0-9]\+\)$/\3/p' "${SCRIPT_PATH}/../CMakeLists.txt"
 }
 
 function current_suffix_version() {
@@ -176,6 +176,13 @@ function bump_version() {
     else
         sed -i "s/\ \ \ \ <release date=\".*\" version=\"${prior_version}\" \/>/\ \ \ \ <release date=\"$date\" version=\"$(current_version)\" \/>/g" "${SCRIPT_PATH}/../desktop/com.github.xournalpp.xournalpp.appdata.xml"
     fi
+
+    # Update MacOS Info.plist
+    sed -i "s/<string>${prior_version}<\/string>/<string>$(current_version)<\/string>/g" "${SCRIPT_PATH}/../mac-setup/Info.plist"
+    sed -i "s/<string>${prior_version}.0<\/string>/<string>$(current_version).0<\/string>/g" "${SCRIPT_PATH}/../mac-setup/Info.plist"
+
+    # Update Fedora xournalpp.spec
+    sed -i "s/%global	version_string ${prior_version}/%global	version_string $(current_version)/g" "${SCRIPT_PATH}/../rpm/fedora/xournalpp.spec"
 }
 
 # Prepares a new version
@@ -411,7 +418,7 @@ fi
 bump_version "${release_version}+dev" 0
 
 # Amend the previous commit to include the version change
-git add CMakeLists.txt CHANGELOG.md debian/changelog desktop/com.github.xournalpp.xournalpp.appdata.xml
+git add CMakeLists.txt CHANGELOG.md debian/changelog desktop/com.github.xournalpp.xournalpp.appdata.xml rpm/fedora/xournalpp.spec mac-setup/Info.plist
 
 # Wait for merge to finish and then amend the commit (This hack is needed since git does not allow amendments in hooks)
 bash -c "git merge HEAD &> /dev/null; while [ $? -ne 0 ]; do sleep 1; git merge HEAD &> /dev/null; done; git commit --amend -C HEAD --no-verify" &

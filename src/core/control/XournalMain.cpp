@@ -458,8 +458,11 @@ void on_startup(GApplication* application, XMPtr app_data) {
             opened = app_data->control->newFile("", p);
         }
     } else if (app_data->control->getSettings()->isAutoloadMostRecent()) {
-        if (auto p = Util::fromUri(gtk_recent_info_get_uri(app_data->control->getRecentManager()->getMostRecent()))) {
-            opened = app_data->control->openFile(*p);
+        auto most_recent = app_data->control->getRecentManager()->getMostRecent();
+        if (most_recent != nullptr) {
+            if (auto p = Util::fromUri(gtk_recent_info_get_uri(most_recent))) {
+                opened = app_data->control->openFile(*p);
+            }
         }
     }
 

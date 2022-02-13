@@ -2,88 +2,67 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>CFBundleDevelopmentRegion</key>
-    <string>English</string>
-    <key>CFBundleDocumentTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleTypeExtensions</key>
-        <array>
-          <string>xopp</string>
-          <string>XOPP</string>
-          <string>xopt</string>
-          <string>XOPT</string>
-          <string>xoj</string>
-          <string>XOJ</string>
-        </array>
-        <key>CFBundleTypeIconFile</key>
-        <string>xournalpp.icns</string>
-        <key>CFBundleTypeMIMETypes</key>
-        <array>
-          <string>application/xopp</string>
-        </array>
-        <key>CFBundleTypeName</key>
-        <string>Xournal++ Document</string>
-        <key>CFBundleTypeOSTypes</key>
-        <array>
-          <string>XOPP </string>
-        </array>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>LSIsAppleDefaultForType</key>
-        <true/>
-        <key>LSItemContentTypes</key>
-        <array>
-          <string>com.github.xournalpp.xopp</string>
-        </array>
-      </dict>
-      <dict>
-        <key>CFBundleTypeExtensions</key>
-        <array>
-          <string>pdf</string>
-          <string>PDF</string>
-        </array>
-        <key>CFBundleTypeMIMETypes</key>
-        <array>
-          <string>application/pdf</string>
-        </array>
-        <key>CFBundleTypeName</key>
-        <string>NSPDFPboardType</string>
-        <key>CFBundleTypeOSTypes</key>
-        <array>
-          <string>PDF </string>
-        </array>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>LSIsAppleDefaultForType</key>
-        <true/>
-        <key>LSItemContentTypes</key>
-        <array>
-          <string>com.adobe.pdf</string>
-        </array>
-        <key>NSDocumentClass</key>
-        <string>PVPDFDocument</string>
-      </dict>
-    </array>
-    <key>CFBundleExecutable</key>
-    <string>xournalpp</string>
-    <key>CFBundleGetInfoString</key>
-    <string>Tablet Notetaking Application</string>
-    <key>CFBundleIconFile</key>
-    <string>xournalpp.icns</string>
-    <key>CFBundleIdentifier</key>
-    <string>com.github.xournalpp</string>
-    <key>CFBundleInfoDictionaryVersion</key>
-    <string>6.0</string>
-    <key>CFBundleName</key>
-    <string>Xournal++</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>
     <string>Xournal++</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.business</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.github.xournalpp</string>
+    <key>CFBundleName</key>
+    <string>Xournal++</string>
+    <key>CFBundleDisplayName</key>
+    <string>Xournal++</string>
+
+    <key>CFBundleShortVersionString</key>
+    <string>1.1.1</string>
+    <key>CFBundleVersion</key>
+    <string>1.1.1.0</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>GPL-2.0 or newer</string>
+
+    <key>LSMinimumSystemVersion</key>
+    <string>10.15</string>
+
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en-US</string>
+
+    <key>CFBundleIconFile</key>
+    <string>xournalpp.icns</string>
     <key>NSHighResolutionCapable</key>
-    <true/>
+    <true />
+
+    <key>CFBundleExecutable</key>
+    <string>xournalpp</string>
+    <key>LSArchitecturePriority</key>
+    <array>
+      <string>x86_64</string>
+    </array>
+    <key>NSSupportsSuddenTermination</key>
+    <false />
+
+    <key>NSDesktopFolderUsageDescription</key>
+    <string>Required to enable the internal file chooser to choose files from the desktop folder.</string>
+    <key>NSDocumentsFolderUsageDescription</key>
+    <string>Required to enable the internal file chooser to choose files from the documents folder.</string>
+    <key>NSDownloadsFolderUsageDescription</key>
+    <string>Required to enable the internal file chooser to choose files from the downloads folder.</string>
+    <key>NSNetworkVolumesUsageDescription</key>
+    <string>Required to enable the internal file chooser to choose files from network volumes.</string>
+    <key>NSRemovableVolumesUsageDescription</key>
+    <string>Required to enable the internal file chooser to choose files from removable devices.</string>
+
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true />
+    <key>NSDownloadsUbiquitousContents</key>
+    <true />
+
+    <key>NSHighResolutionCapable</key>
+    <true />
     <key>NSRequiresAquaSystemAppearance</key>
-    <true/>
+    <true />
   </dict>
 </plist>
