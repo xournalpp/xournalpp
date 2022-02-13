@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include <gtk/gtk.h>
 
 #include "util/Rectangle.h"
@@ -22,6 +24,7 @@ G_BEGIN_DECLS
 #define GTK_IS_XOURNAL(obj) G_TYPE_CHECK_INSTANCE_TYPE(obj, gtk_xournal_get_type())
 
 class EditSelection;
+class SetsquareView;
 class Layout;
 class XojPageView;
 class ScrollHandling;
@@ -58,6 +61,11 @@ struct _GtkXournal {
      * Selected content, if any
      */
     EditSelection* selection;
+
+    /**
+     * Setsquare, if active
+     */
+    std::unique_ptr<SetsquareView> setsquareView;
 
     /**
      * Input handling
