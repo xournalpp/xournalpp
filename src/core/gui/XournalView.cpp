@@ -18,6 +18,7 @@
 #include "undo/DeleteUndoAction.h"
 #include "util/Rectangle.h"
 #include "util/Util.h"
+#include "view/SetsquareView.h"
 
 #include "Layout.h"
 #include "PageView.h"
@@ -638,6 +639,27 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
 
     // repaint always the whole widget
     gtk_widget_queue_draw(this->widget);
+}
+
+void XournalView::setSetsquareView(std::unique_ptr<SetsquareView> setsquareView) {
+    GTK_XOURNAL(this->widget)->setsquareView = std::move(setsquareView);
+}
+
+void XournalView::resetSetsquareView() { GTK_XOURNAL(this->widget)->setsquareView.reset(); }
+
+auto XournalView::getSetsquareView() -> SetsquareView* {
+    g_return_val_if_fail(this->widget != nullptr, nullptr);
+    g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), nullptr);
+
+    return GTK_XOURNAL(this->widget)->setsquareView.get();
+}
+
+void XournalView::repaintSetsquare(bool evenWithoutSetsquare) {
+    if (getSetsquareView() || evenWithoutSetsquare) {
+        // repaint always the whole widget
+        gtk_widget_queue_draw(this->widget);
+    }
+    return;
 }
 
 void XournalView::layoutPages() {
