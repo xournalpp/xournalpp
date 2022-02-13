@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.1~dev (Unreleased)
+## 1.1.1
 
 Bugfixes from various community contributors.
 
