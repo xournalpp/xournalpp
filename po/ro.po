@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-12 20:16+0000\n"
-"PO-Revision-Date: 2022-02-12 20:24\n"
+"POT-Creation-Date: 2022-02-13 19:49+0000\n"
+"PO-Revision-Date: 2022-02-13 20:03\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Lipsește fișierul necesar UI:\n"
 msgid "Add/Edit TeX"
 msgstr "Adăugare/Editare conținut TeX"
 
-#: ../src/core/control/XournalMain.cpp:582
+#: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
 msgstr "Opțiuni avansate de export"
 
@@ -362,7 +362,7 @@ msgstr "Ștergeți această pagină"
 msgid "Discard"
 msgstr "Renunțați"
 
-#: ../src/core/control/XournalMain.cpp:583
+#: ../src/core/control/XournalMain.cpp:586
 msgid "Display advanced export options"
 msgstr "Afișează opțiuni avansate de export"
 
@@ -533,11 +533,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "Eroarea nu poate fi ștearsă. Trebuie să o faceți manual.\n"
 "Jurnal: {1}"
 
-#: ../src/core/control/XournalMain.cpp:540
+#: ../src/core/control/XournalMain.cpp:543
 msgid "Export FILE as PDF"
 msgstr "Exportă FIȘIERUL ca PDF"
 
-#: ../src/core/control/XournalMain.cpp:542
+#: ../src/core/control/XournalMain.cpp:545
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -553,7 +553,7 @@ msgstr "Exportă ca PDF"
 msgid "Export as PDF"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:556
+#: ../src/core/control/XournalMain.cpp:559
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -561,7 +561,7 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:547
+#: ../src/core/control/XournalMain.cpp:550
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -569,7 +569,7 @@ msgstr "Exportă fără fundal\n"
 "                                 Fișierul exportat are un fundal transparent sau alb,\n"
 "                                 în funcție de formatul suportat de acesta\n"
 
-#: ../src/core/control/XournalMain.cpp:552
+#: ../src/core/control/XournalMain.cpp:555
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
@@ -630,7 +630,7 @@ msgstr "Mergi înainte"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 sau o versiune ulterioară"
 
-#: ../src/core/control/XournalMain.cpp:531
+#: ../src/core/control/XournalMain.cpp:534
 msgid "Get version of xournalpp"
 msgstr "Obține versiunea xournalpp"
 
@@ -738,7 +738,7 @@ msgstr "Punctat Izometric"
 msgid "Isometric Graph"
 msgstr "Grafic izometric"
 
-#: ../src/core/control/XournalMain.cpp:527
+#: ../src/core/control/XournalMain.cpp:530
 msgid "Jump to Page (first Page: 1)"
 msgstr "Salt la pagina (prima pagină: 1)"
 
@@ -834,7 +834,7 @@ msgstr "Desen normal"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/core/control/XournalMain.cpp:563
+#: ../src/core/control/XournalMain.cpp:566
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
@@ -856,7 +856,7 @@ msgstr "Deschide dosarul cu jurnale"
 msgid "Open file"
 msgstr "Deschide fișier"
 
-#: ../src/core/control/RecentManager.cpp:183
+#: ../src/core/control/RecentManager.cpp:186
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Deschide {1}"
@@ -1160,13 +1160,13 @@ msgstr "Trimite în ultimul plan"
 msgid "Separator"
 msgstr "Separator"
 
-#: ../src/core/control/XournalMain.cpp:567
+#: ../src/core/control/XournalMain.cpp:570
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Alege DPI-ul pentru exporturile PNG. Valoarea implicită este de 300\n"
 "                                 Niciun efect fără -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:577
+#: ../src/core/control/XournalMain.cpp:580
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1174,7 +1174,7 @@ msgstr "Setează înălțimea paginii pentru exporturile PNG\n"
 "                                 Niciun efect fără -i/--create-img=foo.png\n"
 "                                 Ignorat dacă --export-png-dpi sau --export-png-width este folosit"
 
-#: ../src/core/control/XournalMain.cpp:571
+#: ../src/core/control/XournalMain.cpp:574
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
