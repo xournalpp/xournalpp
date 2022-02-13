@@ -57,4 +57,29 @@ namespace Snapping {
  * @param tolerance the tolerance as a fraction of M_PI/8 (assumed to be between 0 and 1)
  */
 [[nodiscard]] Point snapRotation(Point const& pos, Point const& center, double tolerance);
+
+/**
+ * @brief For a given point computes the nearest point on a straight line specified by two points lying on it
+ * @param pos the given point
+ * @param first the first point of the straight line
+ * @param second the second point of the straight line
+ */
+[[nodiscard]] Point projToLine(Point const& pos, Point const& first, Point const& second);
+
+/**
+ * @brief Computes the distance from a given point to a line sgement specified by its end points
+ * @param pos the given point
+ * @param first the first end point of the line segment
+ * @param second the second end point of the line segment
+ */
+[[nodiscard]] double distanceLine(Point const& pos, Point const& first, Point const& second);
+
+/**
+ * @brief Snaps a given point to the closest point on a line segment specified by its end points
+ * @param pos the given point
+ * @param first the first end point of the line segement
+ * @param second the second end point of the line segment
+ * @param tolerance the tolerance (in pt)
+ */
+[[nodiscard]] Point snapToLine(Point const& pos, Point const& first, Point const& second, double tolerance);
 }  // namespace Snapping
