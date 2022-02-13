@@ -17,6 +17,7 @@ InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling) {
     this->touchDrawingHandler = new TouchDrawingInputHandler(this);
     this->mouseHandler = new MouseInputHandler(this);
     this->keyboardHandler = new KeyboardInputHandler(this);
+    this->setsquareHandler = std::make_unique<SetsquareInputHandler>(this);
 
     for (const InputDevice& savedDevices: this->view->getControl()->getSettings()->getKnownInputDevices()) {
         this->knownDevices.insert(savedDevices.getName());
@@ -101,6 +102,11 @@ auto InputContext::handle(GdkEvent* sourceEvent) -> bool {
     this->modifierState = event.state;
 
     // separate events to appropriate handlers
+    // handle setsquare
+    if (this->setsquareHandler->handle(event)) {
+        return true;
+    }
+
     // handle tablet stylus
     if (event.deviceClass == INPUT_DEVICE_PEN || event.deviceClass == INPUT_DEVICE_ERASER) {
         return this->stylusHandler->handle(event);
@@ -164,6 +170,7 @@ void InputContext::focusWidget() {
 }
 
 void InputContext::blockDevice(InputContext::DeviceType deviceType) {
+    this->setsquareHandler->block(true);
     switch (deviceType) {
         case MOUSE:
             this->mouseHandler->block(true);
@@ -179,6 +186,7 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType) {
 }
 
 void InputContext::unblockDevice(InputContext::DeviceType deviceType) {
+    this->setsquareHandler->block(false);
     switch (deviceType) {
         case MOUSE:
             this->mouseHandler->block(false);
