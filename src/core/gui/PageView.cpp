@@ -854,12 +854,16 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect) {
     }
 
     if (this->textEditor) {
+        cairo_save(cr);
         cairo_scale(cr, zoom, zoom);
         this->textEditor->paint(cr, rect, zoom);
+        cairo_restore(cr);
     }
     if (this->selection) {
+        cairo_save(cr);
         cairo_scale(cr, zoom, zoom);
         this->selection->paint(cr, rect, zoom);
+        cairo_restore(cr);
     }
 
     auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
@@ -876,9 +880,11 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect) {
     }
 
     if (this->inputHandler) {
+        cairo_save(cr);
         int dpiScaleFactor = xournal->getDpiScaleFactor();
         cairo_scale(cr, 1.0 / dpiScaleFactor, 1.0 / dpiScaleFactor);
         this->inputHandler->draw(cr);
+        cairo_restore(cr);
     }
 }
 
@@ -928,7 +934,7 @@ auto XojPageView::getMappedRow() const -> int { return this->mappedRow; }
 auto XojPageView::getMappedCol() const -> int { return this->mappedCol; }
 
 
-auto XojPageView::getPage() -> PageRef { return page; }
+auto XojPageView::getPage() -> const PageRef { return page; }
 
 auto XojPageView::getXournal() -> XournalView* { return this->xournal; }
 
