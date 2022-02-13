@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-12 20:16+0000\n"
-"PO-Revision-Date: 2022-02-12 20:24\n"
+"POT-Creation-Date: 2022-02-13 19:49+0000\n"
+"PO-Revision-Date: 2022-02-13 20:04\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Het benodigde UI-bestand ontbreekt
 msgid "Add/Edit TeX"
 msgstr "TeX toevoegen/bewerken"
 
-#: ../src/core/control/XournalMain.cpp:582
+#: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
 msgstr "Geavanceerde exportopties"
 
@@ -362,7 +362,7 @@ msgstr "Huidige pagina verwijderen"
 msgid "Discard"
 msgstr "Verwerpen"
 
-#: ../src/core/control/XournalMain.cpp:583
+#: ../src/core/control/XournalMain.cpp:586
 msgid "Display advanced export options"
 msgstr "Toon geavanceerde exportopties"
 
@@ -533,11 +533,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "Het foutlog kan niet worden verwijderd; doe dit handmatig.\n"
 "Logbestand: {1}"
 
-#: ../src/core/control/XournalMain.cpp:540
+#: ../src/core/control/XournalMain.cpp:543
 msgid "Export FILE as PDF"
 msgstr "Exporteer bestand als PDF"
 
-#: ../src/core/control/XournalMain.cpp:542
+#: ../src/core/control/XournalMain.cpp:545
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -553,7 +553,7 @@ msgstr "PDF-bestand exporteren"
 msgid "Export as PDF"
 msgstr "Exporteer als PDF"
 
-#: ../src/core/control/XournalMain.cpp:556
+#: ../src/core/control/XournalMain.cpp:559
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -565,7 +565,7 @@ msgstr "Exporteer lagen progressief\n"
 "                                 bouw de laagstack progressief op.\n"
 "                                 Het resulterende PDF-bestand kan gebruikt worden voor een presentatie.\n"
 
-#: ../src/core/control/XournalMain.cpp:547
+#: ../src/core/control/XournalMain.cpp:550
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -573,7 +573,7 @@ msgstr "Exporteren zonder achtergrond\n"
 "                                 Het geëxporteerde bestand heeft een transparante of witte achtergrond,\n"
 "                                 afhankelijk van wat het formaat ondersteunt\n"
 
-#: ../src/core/control/XournalMain.cpp:552
+#: ../src/core/control/XournalMain.cpp:555
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Exporteren zonder regels\n"
@@ -636,7 +636,7 @@ msgstr "Doorsturen"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 of hoger"
 
-#: ../src/core/control/XournalMain.cpp:531
+#: ../src/core/control/XournalMain.cpp:534
 msgid "Get version of xournalpp"
 msgstr "Versie van xournalpp ophalen"
 
@@ -744,7 +744,7 @@ msgstr "Isometrisch gestippeld"
 msgid "Isometric Graph"
 msgstr "Isometrische Grafiek"
 
-#: ../src/core/control/XournalMain.cpp:527
+#: ../src/core/control/XournalMain.cpp:530
 msgid "Jump to Page (first Page: 1)"
 msgstr "Ga naar pagina (eerste pagina: 1)"
 
@@ -840,7 +840,7 @@ msgstr "Normaal tekenen"
 msgid "OK"
 msgstr "Oké"
 
-#: ../src/core/control/XournalMain.cpp:563
+#: ../src/core/control/XournalMain.cpp:566
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
@@ -862,7 +862,7 @@ msgstr "Logboekmap openen"
 msgid "Open file"
 msgstr "Bestand openen"
 
-#: ../src/core/control/RecentManager.cpp:183
+#: ../src/core/control/RecentManager.cpp:186
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "{1} openen"
@@ -1166,13 +1166,13 @@ msgstr "Naar achtergrond sturen"
 msgid "Separator"
 msgstr "Scheidingsteken"
 
-#: ../src/core/control/XournalMain.cpp:567
+#: ../src/core/control/XournalMain.cpp:570
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Stel DPI in voor PNG exports. Standaard is 300\n"
 "                                 Geen effect zonder -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:577
+#: ../src/core/control/XournalMain.cpp:580
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1180,7 +1180,7 @@ msgstr "Stel paginahoogte in voor PNG-exportering\n"
 "                                 Geen effect zonder -i/--create-img=foo.png\n"
 "                                 Genegeerd als --export-png-dpi of --export-png-breedte wordt gebruikt"
 
-#: ../src/core/control/XournalMain.cpp:571
+#: ../src/core/control/XournalMain.cpp:574
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
