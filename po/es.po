@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-13 20:03\n"
+"PO-Revision-Date: 2022-02-14 13:06\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -118,7 +118,8 @@ msgstr "No se definió el color del atributo."
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "¡No se definió la carpeta de audio o es inválida! ¡No funcionará la grabación!\n"
+"Establezca la carpeta de grabaciones en Preferencias > Grabación de audio"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
