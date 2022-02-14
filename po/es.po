@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-14 13:06\n"
+"PO-Revision-Date: 2022-02-14 14:07\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -119,7 +119,7 @@ msgstr "No se definió el color del atributo."
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr "¡No se definió la carpeta de audio o es inválida! ¡No funcionará la grabación!\n"
-"Establezca la carpeta de grabaciones en Preferencias > Grabación de audio"
+"Establezca la carpeta de grabaciones en \"Preferencias > Grabación de audio\""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -1069,7 +1069,7 @@ msgstr "Ver la lista completa de colaboradores"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Seleccionar el área de texto desde el PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Select Font"
