@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-15 18:40\n"
+"PO-Revision-Date: 2022-02-15 19:37\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -1233,7 +1233,7 @@ msgstr "Streep herkenner"
 
 #: ../src/core/control/CrashHandler.cpp:40
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "Dokument suksesvol gestoor na \"{1}\""
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
@@ -1295,17 +1295,19 @@ msgstr "Teks nie gevind nie, gesoek op alle blaaie"
 
 #: ../src/core/control/Control.cpp:1092
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "Die Nutsbalk-konfigurasie \"{1}\" is voorafgekies, wil jy 'n afskrif maak om te verander?"
 
 #: ../src/core/control/Control.cpp:2024
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "Die bygevoegde agtergrond lêer {1} kon nie gevind word nie. Dit mag dalk geskuif, hernoem of delete wees.\n"
+"Dit was laas gesien by: {2}"
 
 #: ../src/core/control/Control.cpp:2028
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "Die bygevoegde agtergrond lêer {1} kon nie gevind word nie. Dit mag dalk geskuif, hernoem of delete wees.\n"
+"Dit was laas gesien by: {2}"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
