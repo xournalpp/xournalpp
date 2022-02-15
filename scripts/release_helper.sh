@@ -17,7 +17,7 @@ function current_patch_version() {
 }
 
 function current_suffix_version() {
-    sed -n 's/^set (VERSION_SUFFIX "\([+~][^\"]*\)")/\1/p' "${SCRIPT_PATH}/../CMakeLists.txt"
+    sed -n 's/^set\s*(VERSION_SUFFIX "\([+~][^\"]*\)")/\1/p' "${SCRIPT_PATH}/../CMakeLists.txt"
 }
 
 function current_version() {
@@ -125,10 +125,8 @@ function bump_version() {
     fi
 
     # Update version in the CMakeLists.txt
-    sed -i "s/set (CPACK_PACKAGE_VERSION_MAJOR \"[0-9]\+\")/set (CPACK_PACKAGE_VERSION_MAJOR \"$(parse_major_version $1)\")/g" "${SCRIPT_PATH}/../CMakeLists.txt"
-    sed -i "s/set (CPACK_PACKAGE_VERSION_MINOR \"[0-9]\+\")/set (CPACK_PACKAGE_VERSION_MINOR \"$(parse_minor_version $1)\")/g" "${SCRIPT_PATH}/../CMakeLists.txt"
-    sed -i "s/set (CPACK_PACKAGE_VERSION_PATCH \"[0-9]\+\")/set (CPACK_PACKAGE_VERSION_PATCH \"$(parse_patch_version $1)\")/g" "${SCRIPT_PATH}/../CMakeLists.txt"
-    sed -i "s/set (VERSION_SUFFIX \"[^\"]*\")/set (VERSION_SUFFIX \"$(parse_suffix_version $1)\")/g" "${SCRIPT_PATH}/../CMakeLists.txt"
+    sed -i "s/^        VERSION $(current_major_version).$(current_minor_version).$(current_patch_version)/        VERSION $(parse_major_version "$1").$(parse_minor_version "$1").$(parse_patch_version "$1")/" "${SCRIPT_PATH}"/../CMakeLists.txt
+    sed -i "s/set\s*(VERSION_SUFFIX \"[^\"]*\")/set(VERSION_SUFFIX \"$(parse_suffix_version $1)\")/g" "${SCRIPT_PATH}/../CMakeLists.txt"
 
     # From now on current_*_version functions return the new version
 
