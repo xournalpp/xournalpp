@@ -90,7 +90,6 @@ if (WIN32)
 	find_package(ImageMagick REQUIRED COMPONENTS convert)
 else ()
 	find_package(Backtrace REQUIRED)
-	add_includes_ldflags("${Backtrace_LIBRARIES}" "${Backtrace_INCLUDE_DIRS}")
 endif ()
 
 # GLIB
