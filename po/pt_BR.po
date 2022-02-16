@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-16 17:17\n"
+"PO-Revision-Date: 2022-02-16 18:24\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -1904,7 +1904,8 @@ msgstr "<i>Exemplo:</i> 1-3 ou 1,3,5-7 etc."
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Se o documento já foi salvo, você pode encontrá-lo na mesma pasta com a extensão .autosave.xoj\n"
+"Se o arquivo ainda não foi salvo, você pode encontrá-lo em ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4139
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2169,7 +2170,7 @@ msgstr "Copiar tamanho da página atual ao invés de"
 
 #: ../ui/main.glade:2657
 msgid "Copy selected text"
-msgstr ""
+msgstr "Copiar o texto selecionado"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2506,7 +2507,7 @@ msgstr "Destacar posição do cursor"
 
 #: ../ui/main.glade:2679
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Realçar o texto selecionado"
 
 #: ../ui/main.glade:1834
 msgid "Highlighter Opti_ons"
@@ -2924,7 +2925,7 @@ msgstr "Selecionar Imagem"
 
 #: ../ui/main.glade:1341
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Selecionar Texto em Linha"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2932,7 +2933,7 @@ msgstr "Selecionar Página de PDF"
 
 #: ../ui/main.glade:1353
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Selecionar Texto Em Retângulo"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3035,7 +3036,7 @@ msgstr "Pasta de armazenamento"
 
 #: ../ui/main.glade:2719
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Adicionar taxado ao texto selecionado"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3052,7 +3053,7 @@ msgstr "Sucessivo (ms)"
 #: ../ui/settings.glade:3002
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "Cursor do sistema"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
@@ -3112,7 +3113,7 @@ msgstr "Tempo limite"
 
 #: ../ui/main.glade:2739
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Alternar seleção de texto padrão / região"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
@@ -3137,7 +3138,7 @@ msgstr "Tente selecionar o objeto primeiro; se nada for selecionado, então most
 
 #: ../ui/main.glade:2699
 msgid "Underline selected text"
-msgstr ""
+msgstr "Sublinhar o texto selecionado"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
