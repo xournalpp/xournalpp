@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-15 19:37\n"
+"PO-Revision-Date: 2022-02-16 09:12\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -1311,72 +1311,72 @@ msgstr "Die bygevoegde agtergrond lêer {1} kon nie gevind word nie. Dit mag dal
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "Die kontrole vir die oorskryf van die agtergrond het misluk met:\n"
 
 #: ../src/core/control/Control.cpp:2067
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "Die lêer wat gelaai word het 'n lêer formaat wat nuwer is as die een tans ondersteun deur hierdie weergawe van Xournal++, so dit mag dalk nie reg laai nie. Maak in elk geval oop?"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:119
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "Die lêer is nie 'n geldige .xopp lêer nie (Mimetype missing): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:127
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "Die lêer is nie 'n geldige .xopp lêer nie (Mimetype wrong): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:136
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "Die lêer is nie 'n geldige .xopp lêer nie (Version missing): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:149
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "Die lêer is nie 'n geldige .xopp lêer nie (Version string corrputed): \"{1}\""
 
 #: ../src/core/control/LatexController.cpp:240
 msgid "The formula is empty when rendered or invalid."
-msgstr ""
+msgstr "Die formule is leeg wanneer gelewer word of is ongeldig."
 
 #: ../src/core/control/XournalMain.cpp:149
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "Die langste log lêer naam: {1}"
 
 #: ../src/core/control/XournalMain.cpp:144
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Daar is foutloglêers van Xournal++. Stuur asb 'n foutverslag, so dat die fout reggemaak dan word."
 
 #: ../src/core/control/XournalMain.cpp:143
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Daar is foutloglêers van Xournal++. Stuur asb 'n foutverslag, so dat die fout reggemaak dan word."
 
 #: ../src/util/XojMsgBox.cpp:95
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "Daar was 'n fout met die vertoning van hulp: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
 msgid "Thick"
-msgstr ""
+msgstr "Dik"
 
 #: ../src/core/control/Control.cpp:2479
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "Hierdie dokument is nog nie gestoor nie."
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:144
 #: ../src/core/control/tools/ImageHandler.cpp:43
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Hierdie beeld kon nie gelaai word nie. Foutboodskap: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Toggle fullscreen"
-msgstr ""
+msgstr "Wissel volskerm"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 msgid "Tool - don't change"
-msgstr ""
+msgstr "Tool - moet nie verander nie"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:102
 msgid "Toolbar found: {1}"
-msgstr ""
+msgstr "Nutsbalk gevind: {1}"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:44
 msgid "Toolbars"
@@ -1384,19 +1384,19 @@ msgstr "Taakbalke"
 
 #: ../src/core/control/CrashHandler.cpp:29
 msgid "Trying to emergency save the current open document…"
-msgstr ""
+msgstr "Probeer nood om die huidige oop dokument te stoor…"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Kan nie globale templaat by {1} oop maak nie. Bestaan dit?"
 
 #: ../src/core/gui/PageView.cpp:372
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "Kan nie oudio opname speel nie {1}"
 
 #: ../src/core/control/Control.cpp:1305
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Kan nie pdf bladsy haal nie."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/core/undo/UndoRedoHandler.cpp:203
@@ -1409,23 +1409,23 @@ msgstr "Ontdoen: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:288
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Onverwagte root merker: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:309
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Onverwagte merker in dokument: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:498
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Onbekende agtergrond tiepe: {1}"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Onbekende kleur waarde \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:452
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "Onbekende domein tiepe: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:228
 msgid "Unknown parser error"
