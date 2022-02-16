@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-13 20:04\n"
+"PO-Revision-Date: 2022-02-16 17:17\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -118,7 +118,8 @@ msgstr "Cor do atributo não definida!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Pasta de áudio não definida ou inválida! A gravação não funcionará!\n"
+"Por favor, defina a pasta de gravação em \"Preferências > Gravação de áudio\""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -586,7 +587,7 @@ msgstr "Falha ao encontrar o programa gerador de LaTeX no PATH: {1}"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Falha ao inicializar PDF Cairo surface"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -1068,7 +1069,7 @@ msgstr "Veja a lista completa de recursos dos colaboradores"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Selecionar Área de Texto do PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Select Font"
@@ -1078,7 +1079,7 @@ msgstr "Selecionar Fonte"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Selecionar Texto do PDF em Linha"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1088,23 +1089,23 @@ msgstr "Selecionar Objeto"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Selecionar Área de Texto do PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Selecionar Texto do PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Selecionar Texto do PDF Em Retângulo"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Selecionar Texto do PDF Em Retângulo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Selecionar Texto do PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1121,7 +1122,7 @@ msgstr "Selecionar região"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Selecionar Texto do PDF"
 
 #: ../src/core/control/Control.cpp:2035
 msgid "Select another PDF"
@@ -1437,7 +1438,7 @@ msgstr "Pixmap::tipo de domínio desconhecido: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Traçado desconhecido: \"{1}\", assumindo caneta"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1855,7 +1856,8 @@ msgstr "<b>Configurações de exportação de documentos</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Ferramentas vazias</b>\n"
+"            <i>Menu: Visualizar/Ferramentas</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
