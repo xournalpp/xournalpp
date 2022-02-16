@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-13 20:03\n"
+"PO-Revision-Date: 2022-02-16 15:31\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -118,7 +118,8 @@ msgstr "Attribut de couleur non défini !"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Dossier audio non défini ou invalide ! L'enregistrement ne fonctionnera pas !\n"
+"Veuillez définir le dossier d'enregistrement sous \"Préférences > Enregistrement audio\""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -1068,7 +1069,7 @@ msgstr "Voir la liste complète des contributeurs"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Sélectionner une Zone de Texte à partir d'un pdf"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Select Font"
@@ -1855,7 +1856,8 @@ msgstr "<b>Paramètres d'exportation de document</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Boite à outils vide</b>\n"
+"<i>Menu : Affichage/Barres d'outils</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -2168,7 +2170,7 @@ msgstr "Copier la taille de la page actuelle à la place"
 
 #: ../ui/main.glade:2657
 msgid "Copy selected text"
-msgstr ""
+msgstr "Copier le texte sélectionné"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2505,7 +2507,7 @@ msgstr "Surligner la position du curseur"
 
 #: ../ui/main.glade:2679
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Surligner le texte sélectionné"
 
 #: ../ui/main.glade:1834
 msgid "Highlighter Opti_ons"
@@ -3034,7 +3036,7 @@ msgstr "Dossier de stockage"
 
 #: ../ui/main.glade:2719
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Rayer le texte sélectionné"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
