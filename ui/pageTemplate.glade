@@ -37,7 +37,7 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btSave">
-                <property name="label" translatable="yes">save to file</property>
+                <property name="label" translatable="yes">Save to file</property>
                 <property name="name">btSave</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -51,7 +51,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btLoad">
-                <property name="label" translatable="yes">load from file</property>
+                <property name="label" translatable="yes">Load from file</property>
                 <property name="name">btLoad</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -157,7 +157,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="btChangePaperSize">
-                    <property name="label" translatable="yes">change</property>
+                    <property name="label" translatable="yes">Change</property>
                     <property name="name">btChangePaperSize</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
