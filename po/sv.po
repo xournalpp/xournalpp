@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-13 20:03\n"
+"POT-Creation-Date: 2022-02-17 03:50+0000\n"
+"PO-Revision-Date: 2022-02-17 03:51\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -2068,6 +2068,10 @@ msgstr ""
 msgid "Button 2"
 msgstr ""
 
+#: ../ui/pageTemplate.glade:160
+msgid "Change"
+msgstr ""
+
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
 msgstr ""
@@ -2565,6 +2569,10 @@ msgstr "Läs in / Spara"
 msgid "Load file"
 msgstr "Läs in fil"
 
+#: ../ui/pageTemplate.glade:54
+msgid "Load from file"
+msgstr ""
+
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "Hantera verktygsfält"
@@ -2827,6 +2835,10 @@ msgstr ""
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
+msgstr ""
+
+#: ../ui/pageTemplate.glade:40
+msgid "Save to file"
 msgstr ""
 
 #: ../ui/settings.glade:3395
@@ -3399,10 +3411,6 @@ msgstr ""
 msgid "_whiteout"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:160
-msgid "change"
-msgstr ""
-
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
 msgstr ""
@@ -3419,10 +3427,6 @@ msgstr ""
 msgid "every"
 msgstr ""
 
-#: ../ui/pageTemplate.glade:54
-msgid "load from file"
-msgstr ""
-
 #: ../ui/settings.glade:426
 msgid "minutes"
 msgstr ""
@@ -3435,10 +3439,6 @@ msgstr ""
 
 #: ../ui/settings.glade:2187
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr ""
-
-#: ../ui/pageTemplate.glade:40
-msgid "save to file"
 msgstr ""
 
 #: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
