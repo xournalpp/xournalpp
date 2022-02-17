@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-13 20:03\n"
+"POT-Creation-Date: 2022-02-17 03:50+0000\n"
+"PO-Revision-Date: 2022-02-17 03:51\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2120,6 +2120,10 @@ msgstr "Кнопка 1"
 msgid "Button 2"
 msgstr "Кнопка 2"
 
+#: ../ui/pageTemplate.glade:160
+msgid "Change"
+msgstr ""
+
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
 msgstr "Выберите глобальный шаблон LaTeX"
@@ -2622,6 +2626,10 @@ msgstr "Загрузка / сохранение"
 msgid "Load file"
 msgstr "Загрузить файл"
 
+#: ../ui/pageTemplate.glade:54
+msgid "Load from file"
+msgstr ""
+
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "Управление панелями инструментов"
@@ -2886,6 +2894,10 @@ msgstr "Частота дискретизации"
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
 msgstr "Имя образца слоя"
+
+#: ../ui/pageTemplate.glade:40
+msgid "Save to file"
+msgstr ""
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -3459,10 +3471,6 @@ msgstr "_очень тонкий"
 msgid "_whiteout"
 msgstr "_забеливание"
 
-#: ../ui/pageTemplate.glade:160
-msgid "change"
-msgstr "Изменить"
-
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
 msgstr "dpi"
@@ -3479,10 +3487,6 @@ msgstr "событий(я)"
 msgid "every"
 msgstr "каждые"
 
-#: ../ui/pageTemplate.glade:54
-msgid "load from file"
-msgstr "Загрузить из файла"
-
 #: ../ui/settings.glade:426
 msgid "minutes"
 msgstr "минут(ы)"
@@ -3496,10 +3500,6 @@ msgstr "пикс."
 #: ../ui/settings.glade:2187
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "с <i>(после чего сенсорный экран будет снова активирован)</i>"
-
-#: ../ui/pageTemplate.glade:40
-msgid "save to file"
-msgstr "Сохранить в файл"
 
 #: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
 msgid "ver_y thick"
