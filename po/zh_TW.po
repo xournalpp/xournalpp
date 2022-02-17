@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-13 20:04\n"
+"POT-Creation-Date: 2022-02-17 03:50+0000\n"
+"PO-Revision-Date: 2022-02-17 03:51\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -2086,6 +2086,10 @@ msgstr "按鈕 1"
 msgid "Button 2"
 msgstr "按鈕 2"
 
+#: ../ui/pageTemplate.glade:160
+msgid "Change"
+msgstr ""
+
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
 msgstr ""
@@ -2583,6 +2587,10 @@ msgstr "加載/保存"
 msgid "Load file"
 msgstr "加載檔案"
 
+#: ../ui/pageTemplate.glade:54
+msgid "Load from file"
+msgstr ""
+
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "定製工具條"
@@ -2845,6 +2853,10 @@ msgstr ""
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
+msgstr ""
+
+#: ../ui/pageTemplate.glade:40
+msgid "Save to file"
 msgstr ""
 
 #: ../ui/settings.glade:3395
@@ -3417,10 +3429,6 @@ msgstr "極細(_v)"
 msgid "_whiteout"
 msgstr "涂白(_w)"
 
-#: ../ui/pageTemplate.glade:160
-msgid "change"
-msgstr "變更"
-
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
 msgstr "DPI"
@@ -3437,10 +3445,6 @@ msgstr "事件"
 msgid "every"
 msgstr "每"
 
-#: ../ui/pageTemplate.glade:54
-msgid "load from file"
-msgstr "從檔案載入"
-
 #: ../ui/settings.glade:426
 msgid "minutes"
 msgstr "分鐘"
@@ -3454,10 +3458,6 @@ msgstr "畫素"
 #: ../ui/settings.glade:2187
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr ""
-
-#: ../ui/pageTemplate.glade:40
-msgid "save to file"
-msgstr "儲存到檔案"
 
 #: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
 msgid "ver_y thick"
