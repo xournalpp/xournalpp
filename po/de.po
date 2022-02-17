@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-13 19:49+0000\n"
-"PO-Revision-Date: 2022-02-13 20:04\n"
+"POT-Creation-Date: 2022-02-17 03:50+0000\n"
+"PO-Revision-Date: 2022-02-17 03:51\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2129,6 +2129,10 @@ msgstr "Taste 1"
 msgid "Button 2"
 msgstr "Taste 2"
 
+#: ../ui/pageTemplate.glade:160
+msgid "Change"
+msgstr ""
+
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
 msgstr "Wählen Sie eine globale LaTeX-Vorlagen-Datei"
@@ -2634,6 +2638,10 @@ msgstr "Laden / Speichern"
 msgid "Load file"
 msgstr "Datei laden"
 
+#: ../ui/pageTemplate.glade:54
+msgid "Load from file"
+msgstr ""
+
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
 msgstr "Werkzeugleisten verwalten"
@@ -2899,6 +2907,10 @@ msgstr "Abtastrate"
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
 msgstr "Bespielname für Ebenen"
+
+#: ../ui/pageTemplate.glade:40
+msgid "Save to file"
+msgstr ""
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -3473,10 +3485,6 @@ msgstr "_sehr dünn"
 msgid "_whiteout"
 msgstr "_weiß übermalen"
 
-#: ../ui/pageTemplate.glade:160
-msgid "change"
-msgstr "ändern"
-
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
 msgstr "dpi"
@@ -3493,10 +3501,6 @@ msgstr "Ereignisse ignorieren"
 msgid "every"
 msgstr "alle"
 
-#: ../ui/pageTemplate.glade:54
-msgid "load from file"
-msgstr "Von Datei laden"
-
 #: ../ui/settings.glade:426
 msgid "minutes"
 msgstr "Minuten"
@@ -3510,10 +3514,6 @@ msgstr "Pixeln hinzu"
 #: ../ui/settings.glade:2187
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(nach denen der Touchscreen reaktiviert wird)</i>"
-
-#: ../ui/pageTemplate.glade:40
-msgid "save to file"
-msgstr "Speichere in Datei"
 
 #: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
 msgid "ver_y thick"
