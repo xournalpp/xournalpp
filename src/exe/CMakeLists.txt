@@ -1,37 +1,52 @@
-# Generate icons
 if (WIN32)
-  # generate .ico from .png
-  find_package(ImageMagick REQUIRED COMPONENTS convert)
-  set (ICON_SIZES 16 32 48 256)
-  foreach (SIZE IN LISTS ICON_SIZES)
-    set (RESIZED_ICON ${PROJECT_BINARY_DIR}/xournalpp-icon-${SIZE}.png)
-    add_custom_command (
-                OUTPUT ${RESIZED_ICON}
-                COMMAND rsvg-convert ${PROJECT_SOURCE_DIR}/ui/pixmaps/com.github.xournalpp.xournalpp.svg --width=${SIZE} --height=${SIZE} -o ${RESIZED_ICON}
-	)
-  set (ICON_DEPS ${ICON_DEPS} ${RESIZED_ICON})
-  unset (RESIZED_ICON)
-  endforeach()
-  add_custom_command (
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
-                COMMAND convert ${ICON_DEPS} ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico
-                DEPENDS ${ICON_DEPS}
-  )
-  unset(ICON_SIZES)
-  unset(ICON_DEPS)
-  add_custom_target(xournalpp_icon DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico)
-  add_dependencies(xournalpp xournalpp_icon)
-  
-  # windows specific source files
-  file (GLOB win32_SOURCES win32/*.cpp win32/*.h)
-  target_sources(xournalpp PRIVATE ${win32_SOURCES})
-  target_include_directories(xournalpp PRIVATE .)
 
-  # windows specific appinfo
-  set(CMAKE_RC_COMPILER_INIT windres)
-  enable_language(RC)
-  set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
+    function(configure_icon_generation icon_ico_var)
+        find_package(ImageMagick REQUIRED COMPONENTS convert)
+        set(ICON_SVG ${PROJECT_SOURCE_DIR}/ui/pixmaps/com.github.xournalpp.xournalpp.svg)
+        set(ICON_ICO ${CMAKE_CURRENT_BINARY_DIR}/win32/xournalpp.ico)
+        set(ICON_SIZES 16 32 48 256)
 
-  configure_file(win32/xpp.rc.in ${CMAKE_CURRENT_BINARY_DIR}/win32/xpp.rc)
-  target_sources(xournalpp PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/win32/xpp.rc)
-endif ()
+        foreach(SIZE IN LISTS ICON_SIZES)
+            set(RESIZED_ICON ${PROJECT_BINARY_DIR}/xournalpp-icon-${SIZE}.png)
+            add_custom_command(
+                    OUTPUT ${RESIZED_ICON}
+                    COMMAND rsvg-convert ${ICON_SVG} --width=${SIZE} --height=${SIZE} -o ${RESIZED_ICON}
+                    DEPENDS ${ICON_SVG})
+            set(ICON_DEPS ${ICON_DEPS} ${RESIZED_ICON})
+        endforeach()
+
+        add_custom_command(
+                OUTPUT ${ICON_ICO}
+                COMMAND convert ${ICON_DEPS} ${ICON_ICO} &&
+                    ${CMAKE_COMMAND} -E touch_nocreate ${CMAKE_CURRENT_SOURCE_DIR}/Xournalpp.cpp  # trigger relink if icon changed
+                DEPENDS ${ICON_DEPS})
+
+        # Return path to icon
+        set(${icon_ico_var} ${ICON_ICO} PARENT_SCOPE)
+    endfunction()
+
+    function(configure_exe_rc rc_file_var)
+        set(RC_FILE ${CMAKE_CURRENT_BINARY_DIR}/win32/xpp.rc)
+
+        set(CMAKE_RC_COMPILER_INIT windres)
+        enable_language(RC)
+        set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
+
+        configure_file(win32/xpp.rc.in ${RC_FILE})
+
+        # Return path to resource file
+        set(${rc_file_var} ${RC_FILE} PARENT_SCOPE)
+    endfunction()
+
+    configure_icon_generation(ICON_ICO)
+    add_custom_target(xournalpp_icon DEPENDS ${ICON_ICO})
+    
+    configure_exe_rc(RC_FILE)
+    
+    # Windows specific source files and dependencies
+    file(GLOB win32_SOURCES win32/*.cpp win32/*.h)
+    target_sources(xournalpp PRIVATE ${win32_SOURCES} ${RC_FILE})
+    target_include_directories(xournalpp PRIVATE .)
+    add_dependencies(xournalpp xournalpp_icon)
+
+endif()
