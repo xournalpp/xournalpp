@@ -13,7 +13,7 @@ target_compile_options(defaults INTERFACE -Wall -Wreturn-type -Wuninitialized -W
 target_include_directories(defaults INTERFACE ${PROJECT_BINARY_DIR}/src)
 add_library(xoj::defaults ALIAS defaults)
 if (MSVC)
-  target_compile_definitions(defaults INTERFACE PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN)
+  target_compile_definitions(defaults INTERFACE NOMINMAX WIN32_LEAN_AND_MEAN)
 endif ()
 # Todo (support-v3.10): guard this variable with cmake_dependent_option for CMake 3.10, and NOT(GCC)
 # then downgrade cmake_minimum_required to CMake 3.10
