@@ -5,6 +5,24 @@ completely by volunteers in their spare time, so any contribution--no matter how
 small--is greatly appreciated. In this file, we'll outline how you can
 contribute to the project.
 
+## Overview
+
+Several of the main ways that you can contribute to the project include:
+
+* Updating [the website](https://github.com/xournalpp/xournalpp.github.io)
+  with additional information.
+* Submitting translation improvements via crowdin (see below).
+* Contributing code changes with pull requests (PRs).
+
+## Contributing translations
+
+If you would like to contribute translations, you can submit improvements to
+[our project on Crowdin](https://crowdin.com/project/xournalpp).
+Those are then merged from time to time.
+So they wont appear directly after your contribution.
+
+## Contributing code changes with pull requests (PRs)
+
 Xournal++ development primarily occurs on [GitHub at the xournalpp/xournalpp
 repository](https://github.com/xournalpp/xournalpp). As a contributor, you
 probably have a particular bug or feature that you are interested in working on.
@@ -16,14 +34,16 @@ get feedback and ensure that you do not end up duplicating work. You can obtain
 additional help by contacting community members through one of our [official
 communication channels](https://xournalpp.github.io/community/help/).
 
-## Contributing translations
+The process for contributing code changes works as follows:
 
-If you would like to contribute translations, you can submit improvements to
-[our project on Crowdin](https://crowdin.com/project/xournalpp).
-Those are then merged from time to time.
-So they wont appear directly after your contribution.
+1. Fork the main xournalpp repository and create commits on your own feature
+   branch.
+2. Submit a pull request (PR).
+3. Wait for maintainers to review the PR and address the relevant feedback.
+4. After receiving maintainer approval, the PR is merged after a short grace
+   period.
 
-## Contributing code changes with pull requests (PRs)
+### Creating a fork
 
 To make a code change, you'll need to first fork the repository on GitHub, if
 you haven't already. To do so, click the "Fork" button in the top right corner
@@ -42,44 +62,93 @@ be ready to make code changes.
 
 ### Code conventions and guidelines
 
-Here is a quick list of guidelines that we follow when working on the Xournal++
-codebase.
+Here are some of the _guidelines_ that we follow when working on the Xournal++
+codebase. We emphasize _guidelines_ because these are ideal points that we'd
+like to see in contributions, but we understand that perfectly following all
+points is very difficult in practice.
+
+General contribution guidelines:
+
+* **The code should be developed on a Linux distribution (of your choosing)**.
+  The project is set up to _build_ on MacOS or Windows but is not ideal for
+  development there.
+* **Please accompany your code changes with documentation**. Because many
+  contributors come and go, it is important to communicate the context of your
+  contributions (e.g., issues being solved, why designed in a particular way,
+  etc.) to future contributors. Documentation includes in-code doc comments, git
+  commit messages, or detailed PR descriptions.
+* Pull requests should be broken up into a series of small, "atomic" commits.
+  Larger contributions should be broken up into multiple pull requests. This
+  should be done to the extent that it makes it easier for maintainers to review
+  contributions and keep track of changes.
+  * By "atomic" commits, we mean self-contained commits that compile
+    independently. For example, if a commit fixes a bug and _also_ incidentally
+    refactors the surrounding logic without changing behavior, it should first
+    be broken up into a refactor followed by a bugfix. If the refactor is
+    _necessary_ for the bugfix, then the necessary parts should be extracted
+    into a separate commit.
+  * Pull requests should target a single concern, e.g. "Fix text rendering bug"
+    or "Implement PDF text selection". If a PR involves several unrelated
+    changes, then it should probably be broken up.
+  * Note that these are guidelines--there is no hard or fast rule that
+    determines how commits or pull requests should be broken up.
+
+Mechanical issues:
 
 * Xournal++ is a mixture of C++ and C code. This is unavoidable because we rely on
   many C libraries (e.g. GTK). Prefer C++ when possible, however.
 * Although we do not have a strong opinion on code style, we use `clang-format`
   to enforce a _consistent_ code style. Feel free to write your code in whatever
   style you prefer, as long as you run `clang-format` to format your code
-  afterwards.
-  This reduces the number of changed lines due to different code styles.
-  Therefore we have fewer merge conflicts and the code is also easier to read and
-  review.
-* Please accompany your code changes with documentation.
+  afterwards. 
+  * The code style will be automatically checked by the CI system. PRs that are
+    not formatted correctly will fail to build; to remedy this, the "Clang
+    Format Applied" check will also provide a patch that can be applied to fix
+    the formatting.
+  * This reduces the number of changed lines due to different code styles.
+    Therefore we have fewer merge conflicts and the code is also easier to read
+    and review.
+* **Optimize your code for clarity and readability, but do not be overly
+  verbose**.
+  * Use meaningful variable names whenever possible, e.g. use `centerX =
+    (posRect.x2 - postRect.x1) / 2` instead of `a = (r.x2 - r.x1) / 2`.
+  * However, if it is clear from the context what the meaning of a variable is,
+    prefer using short name, e.g. `cx = (pos.x2 - pos.x1) / 2`.
+  * If the type of a variable in a variable declaration is clear from the
+    context, use `auto`:
+    `auto foo = createFoo();`
 * Follow modern C++ best practices as listed in the [C++ Core
-  Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines). In
-  particular, make variables `const` by default, always use smart pointers
-  instead of new/delete, and prefer `std::optional` over null pointers.
-  A useful tool to help you to fulfill those rules is clang-tidy. It can be included in nearly every modern IDE.
+  Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines).
+  * In particular, make variables `const` by default, always use smart pointers
+    instead of `new`/`delete`, and prefer `std::optional` over null pointers.
+  * A useful tool to help you to fulfill those rules is `clang-tidy`. It can be
+    found on almost all distro package managers.
 * When working with code that interfaces with C libraries (GLib and GTK in
   particular), you should be extra careful with reference counting and memory
   management.
-  It might be helpful, to create your own memory managing RAII structures. This will also reduce the time others must spend to verify your code because it is correct by design.
-* TODO, etc.
+  * If you see a frequently occurring ref counting pattern, it might be helpful
+    to create your own memory managing RAII ref count wrapper. This will also
+    reduce the time others must spend to verify your code because it is correct
+    by design.
 
 ### Sending your contributions for review
 
 When you feel like you are ready to submit your code changes to be integrated
-into the main Xournal++ repository or require some feedback on your work, you will want to submit a pull request (PR).
-To do so, push your changes on to a branch of your fork in GitHub, and then hit
-the "New pull request" button on the [main repository's PR
-tracker](https://github.com/xournalpp/xournalpp/pulls). Select the branch you
-want to contribute, and then press "Create pull request." If you feel like your
-work isn't quite ready, feel free to submit your PR as a draft.
+into the main Xournal++ repository or require some feedback on your work, you
+will want to submit a pull request (PR). The steps to do so are outlined below.
 
-In your description, please include any relevant issue numbers that your PR will
-fix, as well as a short description of what your changes are and why you are
-making them. Feel free to also include questions or comments about code snippets
-you may be unsure about.
+1. Push your changes on to a branch of your fork in GitHub.
+2. Hit the "New pull request" button on the
+   [main repository's PR tracker](https://github.com/xournalpp/xournalpp/pulls).
+   Select the branch you want to contribute, and then press "Create pull
+   request." If you feel like your work isn't quite ready, feel free to submit
+   your PR as a draft.
+3. Write a short description of what your changes are and why you are making
+   them. Please include any relevant issue numbers that your PR will fix, as
+   well as a short description of what your changes are and why you are making
+   them. Feel free to also include questions or comments about code snippets you
+   may be unsure about. For examples of PR descriptions, take a look at some of
+   the past PRs listed in the PR tracker.
 
 ### The review process
 
