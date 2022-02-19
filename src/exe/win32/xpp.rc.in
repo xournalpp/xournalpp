@@ -22,7 +22,7 @@ BEGIN
 			VALUE "InternalName", "xournalpp\0"
 			VALUE "LegalCopyright", "\0"
 			VALUE "LegalTrademarks", "\0"
-			VALUE "Comments", "\0"
+			VALUE "Comments", "${WIN32_EXE_COMMENTS}\0"
 		END
 	END
 

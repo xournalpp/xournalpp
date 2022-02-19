@@ -57,3 +57,12 @@
  * Show eraser logging info when we get an inconsistent result
  */
 #cmakedefine ENABLE_ERASER_DEBUG
+
+#ifdef __clang__
+
+/**
+ * Generate PDB symbols when building with Clang (enables native windows stacktrace)
+ */
+#cmakedefine DEBUG_CLANG_USE_PDB
+
+#endif  // __clang__

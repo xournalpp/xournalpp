@@ -32,6 +32,13 @@ if (WIN32)
         enable_language(RC)
         set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
 
+        function(generate_win32_exe_comments var)
+            string(APPEND COMMENTS "Build configuration: ${CMAKE_BUILD_TYPE}\\r\\n")
+            string(APPEND COMMENTS "Compiler: ${CMAKE_CXX_COMPILER_ID}")
+            set(${var} ${COMMENTS} PARENT_SCOPE)
+        endfunction()
+
+        generate_win32_exe_comments(WIN32_EXE_COMMENTS)
         configure_file(win32/xpp.rc.in ${RC_FILE})
 
         # Return path to resource file

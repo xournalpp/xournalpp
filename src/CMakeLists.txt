@@ -15,6 +15,14 @@ add_library(xoj::defaults ALIAS defaults)
 if (MSVC)
   target_compile_definitions(defaults INTERFACE NOMINMAX WIN32_LEAN_AND_MEAN)
 endif ()
+if(WIN32)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND DEBUG_CLANG_USE_PDB)
+        target_compile_options(defaults INTERFACE -g -gcodeview)
+        target_link_options(defaults INTERFACE -Wl,-pdb=) #cmake v3.13
+    elseif(MSVC)
+        target_link_options(defaults INTERFACE /link /pdb:) #cmake v3.13
+    endif()
+endif()
 # Todo (support-v3.10): guard this variable with cmake_dependent_option for CMake 3.10, and NOT(GCC)
 # then downgrade cmake_minimum_required to CMake 3.10
 if (DEV_ENABLE_GCOV)
