@@ -5,17 +5,21 @@
 #include <utility>
 
 #include <glib.h>
+
+#include "util/safe_casts.h"
+
+
 using std::string;
 using std::vector;
 
 auto StringUtils::toLowerCase(const string& input) -> string {
-    char* lower = g_utf8_strdown(input.c_str(), input.size());
+    char* lower = g_utf8_strdown(input.c_str(), strict_cast<gssize>(input.size()));
     string lowerStr = lower;
     g_free(lower);
     return lowerStr;
 }
 
-void StringUtils::replaceAllChars(string& input, const std::vector<replace_pair>& replaces) {
+void StringUtils::replaceAllChars(string& input, const vector<replace_pair>& replaces) {
     string out;
     bool found = false;
     for (char c: input) {
@@ -38,9 +42,7 @@ auto StringUtils::split(const string& input, char delimiter) -> vector<string> {
     vector<string> tokens;
     string token;
     std::istringstream tokenStream(input);
-    while (std::getline(tokenStream, token, delimiter)) {
-        tokens.push_back(token);
-    }
+    while (std::getline(tokenStream, token, delimiter)) { tokens.push_back(token); }
     return tokens;
 }
 
@@ -56,23 +58,23 @@ auto StringUtils::endsWith(const string& str, const string& end) -> bool {
     return str.compare(str.length() - end.length(), end.length(), end) == 0;
 }
 
-const std::string TRIM_CHARS = "\t\n\v\f\r ";
+const string TRIM_CHARS = "\t\n\v\f\r ";
 
-auto StringUtils::ltrim(std::string str) -> std::string {
+auto StringUtils::ltrim(string str) -> string {
     str.erase(0, str.find_first_not_of(TRIM_CHARS));
     return str;
 }
 
-auto StringUtils::rtrim(std::string str) -> std::string {
+auto StringUtils::rtrim(string str) -> string {
     str.erase(str.find_last_not_of(TRIM_CHARS) + 1);
     return str;
 }
 
-auto StringUtils::trim(std::string str) -> std::string { return ltrim(rtrim(std::move(str))); }
+auto StringUtils::trim(string str) -> string { return ltrim(rtrim(std::move(str))); }
 
 auto StringUtils::iequals(const string& a, const string& b) -> bool {
-    gchar* ca = g_utf8_casefold(a.c_str(), a.size());
-    gchar* cb = g_utf8_casefold(b.c_str(), b.size());
+    gchar* ca = g_utf8_casefold(a.c_str(), strict_cast<gssize>(a.size()));
+    gchar* cb = g_utf8_casefold(b.c_str(), strict_cast<gssize>(b.size()));
     int result = strcmp(ca, cb);
     g_free(ca);
     g_free(cb);
