@@ -97,11 +97,22 @@ stages:
               MSYSTEM: MINGW64
               CHERE_INVOKING: yes
             displayName: 'Create Setup'
+          - task: CopyFiles@2
+            inputs:
+              sourceFolder: './windows-setup/dist'
+              contents: '**'
+              targetFolder: '$(Build.ArtifactStagingDirectory)/portable'
+            displayName: 'Generate portable version'
           - task: PublishPipelineArtifact@0
             inputs:
               artifactName: 'windows'
               targetPath: './windows-setup/xournalpp-setup.exe'
             displayName: 'Publish Windows Setup'
+          - task: PublishPipelineArtifact@1
+            inputs:
+              artifactName: 'windows-portable'
+              targetPath: '$(Build.ArtifactStagingDirectory)/portable'
+            displayName: 'Publish portable version for Windows'
 
       - job: macOS
         pool:
