@@ -10,6 +10,9 @@ add_dependencies(util std::filesystem)
 target_link_libraries(util
         PUBLIC xoj::defaults xoj::external_modules std::filesystem cxx17
         )
+if(WIN32 AND ((CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND DEBUG_CLANG_USE_PDB) OR MSVC))
+    target_link_libraries(util PRIVATE dbghelp)
+endif()
 target_compile_features(util PUBLIC ${PROJECT_CXX_FEATURES})
 target_include_directories(util PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 add_library(xoj::util ALIAS util)
