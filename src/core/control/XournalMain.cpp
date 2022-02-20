@@ -303,7 +303,7 @@ void ensure_input_model_compatibility() {
     const char* imModule = g_getenv("GTK_IM_MODULE");
     if (imModule != nullptr) {
         std::string imModuleString{imModule};
-        if (imModuleString == "xim" || imModuleString == "gcin") {
+        if (imModuleString == "xim") {
             g_warning("Unsupported input method: %s", imModule);
         }
     }
