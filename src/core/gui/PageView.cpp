@@ -624,6 +624,20 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
 }
 
 auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
+    if (this->textEditor) {
+        if (this->textEditor->onKeyPressEvent(event)) {
+            return true;
+        }
+    } else if (this->inputHandler) {
+        if (this->inputHandler->onKeyEvent(event)) {
+            return true;
+        }
+    } else if (this->verticalSpace) {
+        if (this->verticalSpace->onKeyPressEvent(event)) {
+            return true;
+        }
+    }
+
     // Esc leaves text edition
     if (event->keyval == GDK_KEY_Escape) {
         if (this->textEditor) {
@@ -637,20 +651,6 @@ auto XojPageView::onKeyPressEvent(GdkEventKey* event) -> bool {
 
         return false;
     }
-
-    if (this->textEditor) {
-        return this->textEditor->onKeyPressEvent(event);
-    }
-
-
-    if (this->inputHandler) {
-        return this->inputHandler->onKeyEvent(event);
-    }
-
-    if (this->verticalSpace) {
-        return this->verticalSpace->onKeyPressEvent(event);
-    }
-
 
     return false;
 }
