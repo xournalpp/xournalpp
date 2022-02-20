@@ -18,7 +18,6 @@
 #include "undo/DeleteUndoAction.h"
 #include "util/Rectangle.h"
 #include "util/Util.h"
-#include "view/SetsquareView.h"
 
 #include "Layout.h"
 #include "PageView.h"
@@ -645,7 +644,10 @@ void XournalView::setSetsquareView(std::unique_ptr<SetsquareView> setsquareView)
     GTK_XOURNAL(this->widget)->setsquareView = std::move(setsquareView);
 }
 
-void XournalView::resetSetsquareView() { GTK_XOURNAL(this->widget)->setsquareView.reset(); }
+void XournalView::resetSetsquareView() {
+    GTK_XOURNAL(this->widget)->setsquareView.reset();
+    this->control->fireActionSelected(GROUP_SETSQUARE, ACTION_NONE);
+}
 
 auto XournalView::getSetsquareView() -> SetsquareView* {
     g_return_val_if_fail(this->widget != nullptr, nullptr);
