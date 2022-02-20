@@ -2,10 +2,23 @@ function initUi()
   app.registerUi({["menu"] = "Import .note file", ["callback"] = "import"});
 end
 
-function getValue(keySeq)
-  local id = 1   -- Lua list index is always one bigger, since list indices start from 1
+function getValue(keySeq, startIndex)
+  local id = startIndex == nil and 1 or startIndex  -- Lua list index is always one bigger, since list indices start from 1
   for i=1, #keySeq do
-    id = parsedContents["$objects"][id+1][keySeq[i]]["CF$UID"]
+    local key = keySeq[i]
+    if type(key) == "string" then
+      id = parsedContents["$objects"][id+1][key]["CF$UID"]
+    elseif type(key) == "number" then
+      tmp = parsedContents["$objects"][id+1]["NS.objects"][key]
+      if tmp ~= nil then
+        id = tmp["CF$UID"]
+      else 
+        return nil
+      end
+    else 
+      print("type of key " .. key .. " is not number and not string")
+      return nil -- not supported
+    end
   end
   return parsedContents["$objects"][id+1]
 end
@@ -60,7 +73,11 @@ function import()
     if math.floor(styles[i]) == 3 then
       styles[i] = "solid"
     elseif math.floor(styles[i]) == 4 then
-      styles[i] = "cust: " .. 2*widths[i] .. " "  .. 2*widths[i] 
+      if widths[i] ~= nil then 
+        styles[i] = "cust: " .. 2*widths[i] .. " "  .. 2*widths[i]
+      else 
+        styles[i] = "cust: 20 20"   -- TODO: Fix this (rolandlo)
+      end
     else
       styles[i] = "solid"  -- don't know that style, so choose "solid" for now
     end
@@ -95,7 +112,6 @@ function import()
       table.insert(pressure, pressures[pi]*widths[s])
     end
 
-
     stroke = {x=x, y=y, width = widths[s], pressure = pressure, color = math.floor(cols[s]), lineStyle = styles[s], tool = tools[s]}
     table.insert(strokes, stroke)
   end
@@ -104,7 +120,8 @@ function import()
   app.refreshPage()
 
   print("Text in document: ")
-  local indRawText = getValue({"richText", "attributedString"})["NS.objects"][1]["CF$UID"]
-  local rawText = parsedContents["$objects"][indRawText+1]
+  local rawText = getValue({"richText", "attributedString", 1})
   print(rawText)
+  local pdfFileName = getValue({"richText", "pdfFiles", 1, "pdfFileName"})
+  print(pdfFileName)
 end
