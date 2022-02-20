@@ -26,6 +26,8 @@
 #include "model/Document.h"
 #include "undo/UndoRedoHandler.h"
 #include "util/PathUtil.h"
+#include "view/SetsquareView.h"
+#include "zoom/ZoomControl.h"
 
 #include "Actions.h"
 #include "AudioController.h"

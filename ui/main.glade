@@ -1577,6 +1577,16 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkCheckMenuItem" id="menuSetsquare">
+                            <property name="use-action-appearance">False</property>
+                            <property name="name">menuSetsquare</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Setsquare</property>
+                            <signal name="toggled" handler="ACTION_SETSQUARE" swapped="no" />
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem14">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>

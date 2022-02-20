@@ -56,6 +56,8 @@ enum ActionGroup {
 
     GROUP_HIGHLIGHT_POSITION,
 
+    GROUP_SETSQUARE,
+
     GROUP_FILL,
 
     GROUP_FIXED_ROW_OR_COLS,
