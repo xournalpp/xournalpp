@@ -11,15 +11,15 @@ Several of the main ways that you can contribute to the project include:
 
 * Updating [the website](https://github.com/xournalpp/xournalpp.github.io)
   with additional information.
-* Submitting translation improvements via crowdin (see below).
+* Submitting translation improvements via Crowdin (see below).
 * Contributing code changes with pull requests (PRs).
 
 ## Contributing translations
 
 If you would like to contribute translations, you can submit improvements to
-[our project on Crowdin](https://crowdin.com/project/xournalpp).
-Those are then merged from time to time.
-So they wont appear directly after your contribution.
+[our project on Crowdin](https://crowdin.com/project/xournalpp). The Crowdin
+translations are merged back into the main code periodically, after which they
+become available available in the nightly builds.
 
 ## Contributing code changes with pull requests (PRs)
 
@@ -76,7 +76,7 @@ General contribution guidelines:
   contributors come and go, it is important to communicate the context of your
   contributions (e.g., issues being solved, why designed in a particular way,
   etc.) to future contributors. Documentation includes in-code doc comments, git
-  commit messages, or detailed PR descriptions.
+  commit messages, and/or detailed PR descriptions.
 * Pull requests should be broken up into a series of small, "atomic" commits.
   Larger contributions should be broken up into multiple pull requests. This
   should be done to the extent that it makes it easier for maintainers to review
@@ -85,10 +85,11 @@ General contribution guidelines:
     independently. For example, if a commit fixes a bug and _also_ incidentally
     refactors the surrounding logic without changing behavior, it should first
     be broken up into a refactor followed by a bugfix. If the refactor is
-    _necessary_ for the bugfix, then the necessary parts should be extracted
-    into a separate commit.
+    _necessary_ for the bugfix, then the necessary parts should be kept together
+    in the same commit, and the other parts should be extracted into a separate
+    commit (but kept in the same PR).
   * Pull requests should target a single concern, e.g. "Fix text rendering bug"
-    or "Implement PDF text selection". If a PR involves several unrelated
+    or "Implement PDF text selection". If a PR involves several large, unrelated
     changes, then it should probably be broken up.
   * Note that these are guidelines--there is no hard or fast rule that
     determines how commits or pull requests should be broken up.
@@ -111,9 +112,9 @@ Mechanical issues:
 * **Optimize your code for clarity and readability, but do not be overly
   verbose**.
   * Use meaningful variable names whenever possible, e.g. use `centerX =
-    (posRect.x2 - postRect.x1) / 2` instead of `a = (r.x2 - r.x1) / 2`.
+    (posRect.x2 - posRect.x1) / 2` instead of `a = (r.x2 - r.x1) / 2`.
   * However, if it is clear from the context what the meaning of a variable is,
-    prefer using short name, e.g. `cx = (pos.x2 - pos.x1) / 2`.
+    prefer using a short name, e.g. `cx = (pos.x2 - pos.x1) / 2`.
   * If the type of a variable in a variable declaration is clear from the
     context, use `auto`:
     `auto foo = createFoo();`
@@ -163,9 +164,9 @@ following requirements before it is merged.
   you can copy and paste the required changes from the Azure Pipelines page that
   has details on how the check failed.
 * Before the PR is merged, a grace period of at least 24 hours has passed since
-the last maintainer has approved the PR. This allows time for objections or
-last-minute feedback. Larger or more complicated PRs may take a longer grace
-period.
+  the last maintainer has approved the PR. This allows time for objections or
+  last-minute feedback. Larger or more complicated PRs may take a longer grace
+  period.
 
 Once a PR is ready to merge, we typically ask submitters to rebase or squash
 their commits in order to keep the change history cleaner. If you do not know
