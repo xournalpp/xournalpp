@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-19 20:33+0000\n"
-"PO-Revision-Date: 2022-02-19 20:45\n"
+"PO-Revision-Date: 2022-02-20 07:52\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1093,19 +1093,19 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Seleziona Testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Selezione rettangolare testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Selezione rettangolare testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Seleziona Testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -2141,7 +2141,7 @@ msgstr "Pulsante 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Cambia"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2518,7 +2518,7 @@ msgstr "Evidenzia la posizione del cursore"
 
 #: ../ui/main.glade:2679
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Evidenzia il testo selezionato"
 
 #: ../ui/main.glade:1834
 msgid "Highlighter Opti_ons"
@@ -2650,7 +2650,7 @@ msgstr "Carica file"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Carica da file"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2920,7 +2920,7 @@ msgstr "Nome livello campione"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Salva su file"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -2944,7 +2944,7 @@ msgstr "Seleziona Immagine"
 
 #: ../ui/main.glade:1341
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Seleziona Testo Lineare"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2952,7 +2952,7 @@ msgstr "Seleziona Pagina PDF"
 
 #: ../ui/main.glade:1353
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Seleziona Testo Nel Rettangolo"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3132,7 +3132,7 @@ msgstr "Timeout"
 
 #: ../ui/main.glade:2739
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Cambia modalità selezione testo"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
