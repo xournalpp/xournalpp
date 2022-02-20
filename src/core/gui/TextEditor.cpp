@@ -253,10 +253,6 @@ auto TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
 }
 
 auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
-    if (gtk_bindings_activate_event(G_OBJECT(this->textWidget), event)) {
-        return true;
-    }
-
     bool retval = false;
     bool obscure = false;
 
@@ -265,6 +261,8 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
     GtkTextMark* insert = gtk_text_buffer_get_insert(this->buffer);
     gtk_text_buffer_get_iter_at_mark(this->buffer, &iter, insert);
     bool canInsert = gtk_text_iter_can_insert(&iter, true);
+
+    // IME needs to handle the input first so the candidate window works correctly
     if (gtk_im_context_filter_keypress(this->imContext, event)) {
         this->needImReset = true;
         if (!canInsert) {
@@ -272,6 +270,8 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
         }
         obscure = canInsert;
         retval = true;
+    } else if (gtk_bindings_activate_event(G_OBJECT(this->textWidget), event)) {
+        return true;
     } else if ((event->state & modifiers) == GDK_CONTROL_MASK) {
         // Bold text
         if (event->keyval == GDK_KEY_b || event->keyval == GDK_KEY_B) {
