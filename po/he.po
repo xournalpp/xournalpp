@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-19 20:33+0000\n"
-"PO-Revision-Date: 2022-02-19 20:46\n"
+"PO-Revision-Date: 2022-02-21 07:45\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -58,7 +58,7 @@ msgstr "<span foreground='red' size='x-large'> </span>קובץ ה-UI הבא לא
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "הוספת/עריכת TeX"
 
 #: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
