@@ -32,27 +32,27 @@ end
 
 function extract()
   local notePath = app.getFilePath({'*.note'})
+  notePath = "'" .. notePath .. "'" -- take care of spaces in file name
   print(notePath)
 
   local f = assert(io.popen("unzip -Z -1 " .. notePath .. " | head -1 | cut -d'/' -f1"))
   local dirname = assert(f:read('*a'))
-  dirname = dirname:gsub('%\n', '')  --remove newline
   f:close()
-
-  os.execute("unzip -o " .. notePath)
-
+  dirname = dirname:gsub('%\n', '')  --remove newline
   local plistPath = "'" .. dirname .. "/Session.plist'"
+  print(plistPath)
 
-  os.execute("plistutil -i " .. plistPath .. " -o /tmp/Session.xml")
+  local runCommand = assert(io.popen("unzip -p " .. notePath .. " " .. plistPath .. " | plistutil"))
+  local result = runCommand:read('*all')
+  runCommand:close()
+  return result
 end
 
 function import()
-  extract()
   require("plist")     -- for reading the plist in xml format to a Lua table
   require("base64")    -- for base64 decription
 
-  local file = io.open("/tmp/Session.xml")
-  local contents = file:read("*all")
+  local contents = extract()
   parsedContents = plistParse(contents)
 
   local numpoints = getData("curvesnumpoints", "u")
