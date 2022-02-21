@@ -37,7 +37,10 @@
 #include "util/PlaceholderString.h"            // for PlaceholderString
 #include "util/i18n.h"                         // for FS, _F
 
+#include "FormatConstants.h"
 #include "config.h"  // for FILE_FORMAT_VERSION
+
+using namespace Format;
 
 SaveHandler::SaveHandler() {
     this->firstPdfPageVisited = false;
@@ -99,8 +102,6 @@ void SaveHandler::writeTimestamp(XmlAudioNode* xmlAudioNode, const AudioElement*
 void SaveHandler::visitStroke(XmlPointNode* stroke, const Stroke* s) {
     StrokeTool t = s->getToolType();
 
-    const Path& path = s->getPath();
-
     unsigned char alpha = 0xff;
 
     if (t == StrokeTool::PEN) {
@@ -117,6 +118,18 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, const Stroke* s) {
     }
 
     stroke->setAttrib("color", getColorStr(s->getColor(), alpha).c_str());
+
+    const Path& path = s->getPath();
+    switch (path.getType()) {
+        case Path::SPLINE:
+            stroke->setAttrib(PATH::ATTRIBUTE_NAME, PATH::TYPE_SPLINE);
+            break;
+        case Path::PIECEWISE_LINEAR:
+            stroke->setAttrib(PATH::ATTRIBUTE_NAME, PATH::TYPE_PL);
+            break;
+        default:
+            g_warning("Unknown path type: %i", path.getType());
+    }
 
     const std::vector<Point>& pathData = path.getData();
 
