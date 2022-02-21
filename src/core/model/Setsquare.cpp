@@ -309,7 +309,7 @@ void Setsquare::showTextCenteredAndRotated(cairo_t* cr, std::string text, double
 
     cairo_rotate(cr, rad(angle));
     cairo_rel_move_to(cr, -dx, -dy);
-    cairo_show_text(cr, text.c_str());
+    cairo_text_path(cr, text.c_str());
 
     cairo_restore(cr);
 }
