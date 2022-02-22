@@ -69,9 +69,14 @@ points is very difficult in practice.
 
 General contribution guidelines:
 
-* **The code should be developed on a Linux distribution (of your choosing)**.
-  The project is set up to _build_ on MacOS or Windows but is not ideal for
-  development there.
+* **The code is best developed on Linux, followed by Windows, followed by
+  MacOS**. Most contributors are using some Linux distribution, so the support
+  and tooling on Linux is the most mature. Windows is also supported as a
+  development environment via MSYS2, but the setup is less documented and
+  potentially more complicated than on Linux. The project is set up to _build_
+  on MacOS, but there is no documentation regarding development on there.
+  Contributions to the tooling, development setup, and documentation are
+  welcome!
 * **Please accompany your code changes with documentation**. Because many
   contributors come and go, it is important to communicate the context of your
   contributions (e.g., issues being solved, why designed in a particular way,
