@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-19 20:33+0000\n"
-"PO-Revision-Date: 2022-02-19 20:46\n"
+"POT-Creation-Date: 2022-02-22 03:30+0000\n"
+"PO-Revision-Date: 2022-02-22 03:45\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -350,7 +350,7 @@ msgstr "حذف الملف"
 msgid "Delete layer"
 msgstr "حذف الطبقة"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Delete this layer"
 msgstr "حذف هذه الطبقة"
 
@@ -707,7 +707,7 @@ msgstr "تم إنشاء ملف الصورة بنجاح"
 msgid "Images"
 msgstr "صور"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Insert a copy of the current layer below"
 msgstr "إدراج نسخة من الطبقة الحالية أدناه"
 
@@ -760,20 +760,20 @@ msgstr "طبقة"
 msgid "Layer Combo"
 msgstr "قائمة الطبقات"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layer Preview"
 msgstr "معاينة الطبقة"
 
-#: ../src/core/control/layer/LayerController.cpp:319
+#: ../src/core/control/layer/LayerController.cpp:369
 msgid "Layer {1}"
 msgstr "الطبقة {1}"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
 msgstr "معاينة كومة الطبقات"
 
 #: ../src/core/gui/PageView.cpp:772
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
 msgstr "يجري التحميل..."
@@ -785,6 +785,10 @@ msgstr "إدارة أشرطة الأدوات"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Medium"
 msgstr "متوسط"
+
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
+msgid "Merge layer down"
+msgstr ""
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1239,11 +1243,11 @@ msgstr "تم حفظ المستند بنجاح إلى «{1}»"
 msgid "Supported files"
 msgstr "الملفات المدعومة"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
 msgstr "تبديل الطبقة الحالية مع الطبقة أعلاه"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
 msgstr "تبديل الطبقة الحالية مع الطبقة أدناه"
 
@@ -2172,7 +2176,7 @@ msgstr "نسخ خلفية الصفحة الحالية بدلا من ذلك"
 msgid "Copy current page size instead"
 msgstr "نسخ حجم الصفحة الحالية بدلا من ذلك"
 
-#: ../ui/main.glade:2657
+#: ../ui/main.glade:2668
 msgid "Copy selected text"
 msgstr ""
 
@@ -2304,11 +2308,11 @@ msgstr "اسحب وأفلت المكونات من هذه النافذة إلى �
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "السحب: إذا كانت القيمة صغيرة جدا، فقد تظهر اهتزازات غير مرغوبة. وإذا كانت كبيرة جدا، فقد لا يحدث أي تثبيت."
 
-#: ../ui/main.glade:1462
+#: ../ui/main.glade:1473
 msgid "Draw Coordinate System"
 msgstr "رسم نظام إحداثيات"
 
-#: ../ui/main.glade:1473
+#: ../ui/main.glade:1484
 msgid "Draw _Line"
 msgstr "رسم _خط"
 
@@ -2324,11 +2328,11 @@ msgstr "منطقة الرسم"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "أدوات الرسم - تفعيل زر Shift أو Ctrl حسب اتجاه الرسم (تجريبي)"
 
-#: ../ui/main.glade:2783
+#: ../ui/main.glade:2802 ../ui/main.glade:2839
 msgid "Duplicate"
 msgstr "تكرار"
 
-#: ../ui/main.glade:2820
+#: ../ui/main.glade:2876
 msgid "Edit (not implemented yet)"
 msgstr "تحرير (لم تتم برمجته بعد)"
 
@@ -2384,7 +2388,7 @@ msgstr "تفعيل إيماءات التكبير (يحتاج إعادة التش
 msgid "Enter / edit LaTeX Text"
 msgstr "إدخال / تحرير نص LaTeX"
 
-#: ../ui/main.glade:1725
+#: ../ui/main.glade:1736
 msgid "Eraser Optio_ns"
 msgstr "خ_يارات الممحاة"
 
@@ -2409,11 +2413,11 @@ msgstr "تصدير الطبقات تدريجيا"
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr "تصدير المستند بدون أي خلفية (لا شيء) أو مع خلفيات PDF والصور فقط (بدون تسطير) أو مع جميع أنواع الخلفيات (الكل)."
 
-#: ../ui/main.glade:1701 ../ui/main.glade:1906
+#: ../ui/main.glade:1712 ../ui/main.glade:1917
 msgid "Fi_ll"
 msgstr "م_لء"
 
-#: ../ui/main.glade:1711 ../ui/main.glade:1916
+#: ../ui/main.glade:1722 ../ui/main.glade:1927
 msgid "Fill opacity"
 msgstr "عتامة التعبئة"
 
@@ -2421,11 +2425,11 @@ msgstr "عتامة التعبئة"
 msgid "Finalize the stroke"
 msgstr "إنهاء الخطوط"
 
-#: ../ui/main.glade:2455
+#: ../ui/main.glade:2466
 msgid "Find next occurrence of the search string"
 msgstr "العثور على التواجد التالي لنَص البحث"
 
-#: ../ui/main.glade:2433
+#: ../ui/main.glade:2444
 msgid "Find previous occurrence of the search string"
 msgstr "العثور على التواجد السابق لنَص البحث"
 
@@ -2473,7 +2477,7 @@ msgstr "حجم الشبكة"
 msgid "Grid snapping tolerance"
 msgstr "تسامح اجتذاب الشبكة"
 
-#: ../ui/main.glade:1561
+#: ../ui/main.glade:1572
 msgid "H_and Tool"
 msgstr "أداة ال_يد"
 
@@ -2509,11 +2513,11 @@ msgstr "إخفاء شريط التمرير الرأسي"
 msgid "Highlight cursor position"
 msgstr "تسليط الضوء على موضع المؤشر"
 
-#: ../ui/main.glade:2679
+#: ../ui/main.glade:2690
 msgid "Highlight selected text"
 msgstr ""
 
-#: ../ui/main.glade:1834
+#: ../ui/main.glade:1845
 msgid "Highlighter Opti_ons"
 msgstr "خيارات قلم التظليل"
 
@@ -2593,11 +2597,11 @@ msgstr "قد يتسبب تثبيت الإدخال في صنع فجوة في نه
 msgid "Insert Latex"
 msgstr "إدراج LaTeX"
 
-#: ../ui/main.glade:2775
+#: ../ui/main.glade:2831
 msgid "Insert Page After"
 msgstr "إدراج صفحة بعد"
 
-#: ../ui/main.glade:2767
+#: ../ui/main.glade:2823
 msgid "Insert Page Before"
 msgstr "إدراج صفحة قبل"
 
@@ -2665,6 +2669,14 @@ msgstr "أقصى طول (مللي متر)"
 msgid "Max multiplier"
 msgstr "المضاعف الأقصى"
 
+#: ../ui/main.glade:2794
+msgid "Merge Down"
+msgstr ""
+
+#: ../ui/main.glade:1256
+msgid "Merge Layer Down"
+msgstr ""
+
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
@@ -2691,11 +2703,11 @@ msgstr "أزرار الفأرة"
 msgid "Mouse+Keyboard Combo"
 msgstr "فأرة ولوحة مفاتيح مندمجين"
 
-#: ../ui/main.glade:2805
+#: ../ui/main.glade:2786 ../ui/main.glade:2861
 msgid "Move Down"
 msgstr "تحريك لأسفل"
 
-#: ../ui/main.glade:2797
+#: ../ui/main.glade:2778 ../ui/main.glade:2853
 msgid "Move Up"
 msgstr "تحريك لأعلى"
 
@@ -2769,7 +2781,7 @@ msgstr "صفحات:"
 msgid "Paired Pages"
 msgstr "الصفحات المزدوجة"
 
-#: ../ui/main.glade:1293
+#: ../ui/main.glade:1304
 msgid "Paper B_ackground"
 msgstr "_خلفية الورق"
 
@@ -2777,11 +2789,11 @@ msgstr "_خلفية الورق"
 msgid "Paper Format"
 msgstr "نوع الورق"
 
-#: ../ui/main.glade:1283
+#: ../ui/main.glade:1294
 msgid "Paper _Color"
 msgstr "_لون الورق"
 
-#: ../ui/main.glade:1273
+#: ../ui/main.glade:1284
 msgid "Paper _Format"
 msgstr "_نوع الورق"
 
@@ -2791,11 +2803,11 @@ msgid "Partially based on Xournal\n"
 msgstr "مبني جزئيا على Xournal\n"
 "من Denis Auroux"
 
-#: ../ui/main.glade:1952
+#: ../ui/main.glade:1963
 msgid "Pause"
 msgstr "إيقاف مؤقت"
 
-#: ../ui/main.glade:1579
+#: ../ui/main.glade:1590
 msgid "Pen _Options"
 msgstr "_خيارات القلم"
 
@@ -2811,7 +2823,7 @@ msgstr "إعدادات التشغيل"
 msgid "Plugin Manager"
 msgstr "مدير الإضافات"
 
-#: ../ui/main.glade:2017
+#: ../ui/main.glade:2028
 msgid "Plugin _Manager"
 msgstr "_مدير الإضافات"
 
@@ -2871,7 +2883,7 @@ msgstr "إعادة الرسم عندما يتغيّر تكبير الصفحة ب
 msgid "Recent _Documents"
 msgstr "ال_مستندات الحديثة"
 
-#: ../ui/main.glade:1942
+#: ../ui/main.glade:1953
 msgid "Record / Stop"
 msgstr "تسجيل / إنهاء"
 
@@ -2879,7 +2891,7 @@ msgstr "تسجيل / إنهاء"
 msgid "Recording Quality"
 msgstr "جودة التسجيل"
 
-#: ../ui/main.glade:1256
+#: ../ui/main.glade:1267
 msgid "Rename Layer"
 msgstr "إعادة تسمية الطبقة"
 
@@ -2935,7 +2947,7 @@ msgstr "تحديد المجلد"
 msgid "Select Image"
 msgstr "تحديد صورة"
 
-#: ../ui/main.glade:1341
+#: ../ui/main.glade:1352
 msgid "Select Linear Text"
 msgstr ""
 
@@ -2943,7 +2955,7 @@ msgstr ""
 msgid "Select PDF Page"
 msgstr "اختيار صفحة PDF"
 
-#: ../ui/main.glade:1353
+#: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
 msgstr ""
 
@@ -3046,7 +3058,7 @@ msgstr "بدء التكبير بعد مسافة "
 msgid "Storage Folder"
 msgstr "مجلد التخزين"
 
-#: ../ui/main.glade:2719
+#: ../ui/main.glade:2730
 msgid "Strikethrough selected text"
 msgstr ""
 
@@ -3091,7 +3103,7 @@ msgstr "اختبار الإعدادات"
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "اختبار إذا كانت الإعدادات الحالية صالحة، بتشغيل أمر توليد LaTeX على ملف القالب العام مع صيغة اختبارية."
 
-#: ../ui/main.glade:1930
+#: ../ui/main.glade:1941
 msgid "Text Font..."
 msgstr "خط النص..."
 
@@ -3123,7 +3135,7 @@ msgstr "سيتم استخدام هذه الإعدادات للصفحات الج�
 msgid "Timeout"
 msgstr "المهلة"
 
-#: ../ui/main.glade:2739
+#: ../ui/main.glade:2750
 msgid "Toggle standard / region text selection"
 msgstr ""
 
@@ -3148,7 +3160,7 @@ msgstr "حاول تحديد كائن أولا."
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "حاول تحديد كائن أولا؛ إذا لم يكن شيء محددا فأظهر صندوق الأدوات العائم إن كان مفعلا."
 
-#: ../ui/main.glade:2699
+#: ../ui/main.glade:2710
 msgid "Underline selected text"
 msgstr ""
 
@@ -3324,7 +3336,7 @@ msgstr "أ_عمدة/صفوف"
 msgid "_Customize"
 msgstr "تخصيص"
 
-#: ../ui/main.glade:1401
+#: ../ui/main.glade:1412
 msgid "_Default Tools"
 msgstr "الأ_داة المبدئية"
 
@@ -3336,7 +3348,7 @@ msgstr "_حذف الصفحة"
 msgid "_Edit"
 msgstr "ت_حرير"
 
-#: ../ui/main.glade:1329
+#: ../ui/main.glade:1340
 msgid "_Eraser"
 msgstr "_ممحاة"
 
@@ -3356,11 +3368,11 @@ msgstr "الصفحة الأ_ولى"
 msgid "_Goto Page"
 msgstr "ا_نتقال إلى صفحة"
 
-#: ../ui/main.glade:2031
+#: ../ui/main.glade:2042
 msgid "_Help"
 msgstr "م_ساعدة"
 
-#: ../ui/main.glade:1365
+#: ../ui/main.glade:1376
 msgid "_Highlighter"
 msgstr "قلم _تظليل"
 
@@ -3368,7 +3380,7 @@ msgstr "قلم _تظليل"
 msgid "_Horizontal"
 msgstr "أ_فقي"
 
-#: ../ui/main.glade:1389
+#: ../ui/main.glade:1400
 msgid "_Image"
 msgstr "_صورة"
 
@@ -3404,11 +3416,11 @@ msgstr "الصفحة ال_تالية"
 msgid "_Pair Pages"
 msgstr "اجعل الصفحات م_زدوجة"
 
-#: ../ui/main.glade:1317
+#: ../ui/main.glade:1328
 msgid "_Pen"
 msgstr "_قلم"
 
-#: ../ui/main.glade:2006
+#: ../ui/main.glade:2017
 msgid "_Plugin"
 msgstr "إ_ضافة"
 
@@ -3428,15 +3440,15 @@ msgstr "الصفحة ال_سابقة"
 msgid "_Right to Left"
 msgstr "من الي_مين إلى اليسار"
 
-#: ../ui/main.glade:1418
+#: ../ui/main.glade:1429
 msgid "_Shape Recognizer"
 msgstr "متعرف الأ_شكال"
 
-#: ../ui/main.glade:1377
+#: ../ui/main.glade:1388
 msgid "_Text"
 msgstr "_نص"
 
-#: ../ui/main.glade:1306
+#: ../ui/main.glade:1317
 msgid "_Tools"
 msgstr "أ_دوات"
 
@@ -3452,7 +3464,7 @@ msgstr "من الأ_على إلى الأسفل"
 msgid "_Vertical"
 msgstr "_رأسي"
 
-#: ../ui/main.glade:1537
+#: ../ui/main.glade:1548
 msgid "_Vertical Space"
 msgstr "مسافة _رأسية"
 
@@ -3460,31 +3472,31 @@ msgstr "مسافة _رأسية"
 msgid "_View"
 msgstr "_عرض"
 
-#: ../ui/main.glade:1819
+#: ../ui/main.glade:1830
 msgid "_delete strokes"
 msgstr "_حذف خط أو شكل"
 
-#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
+#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
 msgid "_fine"
 msgstr "_رفيع"
 
-#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
+#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
 msgid "_medium"
 msgstr "_متوسط"
 
-#: ../ui/main.glade:1797
+#: ../ui/main.glade:1808
 msgid "_standard"
 msgstr "_عادي"
 
-#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
+#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
 msgid "_thick"
 msgstr "_عريض"
 
-#: ../ui/main.glade:1590 ../ui/main.glade:1736 ../ui/main.glade:1845
+#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
 msgid "_very fine"
 msgstr "ر_فيع جدا"
 
-#: ../ui/main.glade:1808
+#: ../ui/main.glade:1819
 msgid "_whiteout"
 msgstr "_تبييض"
 
@@ -3518,7 +3530,7 @@ msgstr "بكسل"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "ثوانٍ <i>(والتي بعدها سيتم تفعيل شاشة اللمس مرة أخرى)</i>"
 
-#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
+#: ../ui/main.glade:1645 ../ui/main.glade:1791 ../ui/main.glade:1900
 msgid "ver_y thick"
 msgstr "عري_ض جدا"
 
