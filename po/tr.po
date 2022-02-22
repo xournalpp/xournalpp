@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-22 03:30+0000\n"
-"PO-Revision-Date: 2022-02-22 03:44\n"
+"PO-Revision-Date: 2022-02-22 13:17\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -118,7 +118,8 @@ msgstr "Öznitelik rengi ayarlanmadı!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Ses klasörü ayarlanmadı veya geçerli değil! Kayıt çalışmaz!\n"
+"Lütfen kayıt klasörünü \"Tercihler> Ses kaydı\" altında ayarlayın"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -788,7 +789,7 @@ msgstr "Orta"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Altındaki Katmanla Birleştir"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1072,7 +1073,7 @@ msgstr "Katkı sağlayanların tam listesine bakın"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "PDF'den Metin Alanını Seç"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 msgid "Select Font"
@@ -1100,15 +1101,15 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Dikdörgendeki PDF Metnini Seç"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Dikdörgendeki PDF Metnini Seç"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "PDF Metnini Seç"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -2136,7 +2137,7 @@ msgstr "Düğme 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Değiştir"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2176,7 +2177,7 @@ msgstr "Bunun yerine geçerli sayfa boyutunu kopyala"
 
 #: ../ui/main.glade:2668
 msgid "Copy selected text"
-msgstr ""
+msgstr "Seçili Metni Kopyala"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2513,7 +2514,7 @@ msgstr "İmleç konumunu vurgula"
 
 #: ../ui/main.glade:2690
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Seçili metni vurgula"
 
 #: ../ui/main.glade:1845
 msgid "Highlighter Opti_ons"
@@ -2645,7 +2646,7 @@ msgstr "Dosya yükle"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Dosyadan yükle"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2669,11 +2670,11 @@ msgstr "En fazla çarpan"
 
 #: ../ui/main.glade:2794
 msgid "Merge Down"
-msgstr ""
+msgstr "Aşağı Birleştir"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Altındaki Katmanla Birleştir"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2923,7 +2924,7 @@ msgstr "Örnek katman ismi"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Dosyaya kaydet"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -3058,7 +3059,7 @@ msgstr "Depolama Klasörü"
 
 #: ../ui/main.glade:2730
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Seçili metnin üstünü çiz"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3160,7 +3161,7 @@ msgstr "Önce nesneyi seçmeyi deneyin; seçili bir şey yoksa, etkinse kayan ar
 
 #: ../ui/main.glade:2710
 msgid "Underline selected text"
-msgstr ""
+msgstr "Seçili metnin altını çiz"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
