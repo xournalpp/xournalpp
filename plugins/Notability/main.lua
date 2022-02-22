@@ -44,7 +44,7 @@ end
 
 function extract(notePath, filename)
   local f = assert(io.popen("unzip -Z -1 " .. notePath .. " | head -1 | cut -d'/' -f1"))
-  local dirname = assert(f:read('*a'))
+  dirname = assert(f:read('*a'))
   f:close()
   dirname = dirname:gsub('%\n', '')  --remove newline
   local plistPath = "'" .. dirname .. "/" .. filename .. "'"
@@ -62,7 +62,7 @@ function import()
   require("plist")     -- for reading the plist in xml format to a Lua table
   require("base64")    -- for base64 decription
 
-  local notePath = app.getFilePath({'*.note'})
+  notePath = app.getFilePath({'*.note'})
   notePath = "'" .. notePath .. "'" -- take care of spaces in file name
   print(notePath)
 
@@ -183,7 +183,19 @@ function import()
   print(rawText)
   local pdfFileName = getValue({"richText", "pdfFiles", 1, "pdfFileName"})
   print(pdfFileName)
-  if pdfFileName then 
-    pdfFilePath = app.saveAs(pdfFileName)
+  if pdfFileName then
+    ans = app.msgbox("There is a PDF background in the .note-file. Do you want to save and use it?", {[1]="Yes", [2]="No"}) 
+    if ans == 1 then
+      pdfFilePath = app.saveAs(pdfFileName)
+      print(pdfFilePath)
+      local originalPdfPath = "'" .. dirname .. "/PDFs/" .. pdfFileName .. "'"
+      print(originalPdfPath)
+      local runCommand = assert(io.popen("unzip -p " .. notePath .. " " .. originalPdfPath .. " > " .. pdfFilePath))
+      local res = runCommand:read("*all")
+      print(res)
+      runCommand:close()
+    else 
+      print("Dismissing PDF background from .note file")
+    end
   end
 end
