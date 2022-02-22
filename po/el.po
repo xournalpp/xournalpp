@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-19 20:33+0000\n"
-"PO-Revision-Date: 2022-02-19 20:46\n"
+"POT-Creation-Date: 2022-02-22 03:30+0000\n"
+"PO-Revision-Date: 2022-02-22 03:45\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -349,7 +349,7 @@ msgstr "Διαγραφή αρχείου"
 msgid "Delete layer"
 msgstr "Διαγραφή στρώσης"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Delete this layer"
 msgstr "Διαγραφή επιπέδου"
 
@@ -696,7 +696,7 @@ msgstr "Το αρχείο εικόνας δημιουργήθηκε επιτυχ
 msgid "Images"
 msgstr "Εικόνες"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Insert a copy of the current layer below"
 msgstr "Εισαγάγετε ένα αντίγραφο του τρέχοντος στρώματος παρακάτω"
 
@@ -749,20 +749,20 @@ msgstr "Στρώση"
 msgid "Layer Combo"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layer Preview"
 msgstr "Προεπισκόπηση Στρώσης"
 
-#: ../src/core/control/layer/LayerController.cpp:319
+#: ../src/core/control/layer/LayerController.cpp:369
 msgid "Layer {1}"
 msgstr "Στρώση {1}"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
 msgstr ""
 
 #: ../src/core/gui/PageView.cpp:772
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
 msgstr "Φόρτωση..."
@@ -774,6 +774,10 @@ msgstr "Διαχείριση γραμμής εργαλείων"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Medium"
 msgstr "Μεσαίο"
+
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
+msgid "Merge layer down"
+msgstr ""
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1222,11 +1226,11 @@ msgstr "Το έγγραφο αποθηκεύτηκε επιτυχώς στη θ�
 msgid "Supported files"
 msgstr "Υποστηριζόμενα αρχεία"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
 msgstr ""
 
@@ -2124,7 +2128,7 @@ msgstr ""
 msgid "Copy current page size instead"
 msgstr ""
 
-#: ../ui/main.glade:2657
+#: ../ui/main.glade:2668
 msgid "Copy selected text"
 msgstr ""
 
@@ -2253,11 +2257,11 @@ msgstr "Σύρεται αντικείμενα από και προς τις γρ
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
-#: ../ui/main.glade:1462
+#: ../ui/main.glade:1473
 msgid "Draw Coordinate System"
 msgstr ""
 
-#: ../ui/main.glade:1473
+#: ../ui/main.glade:1484
 msgid "Draw _Line"
 msgstr "Σχεδίασε _Γραμμή"
 
@@ -2273,11 +2277,11 @@ msgstr "Περιοχή Σχεδιασμού"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Εργαλεία Σχεδιασμού - Ορισμός Χαρακτηριστικών μέσω της Κατεύθυνσης Σχεδιασμού (Πειραματικό)"
 
-#: ../ui/main.glade:2783
+#: ../ui/main.glade:2802 ../ui/main.glade:2839
 msgid "Duplicate"
 msgstr "Δημιουργία διπλοτύπου / αντιγράφου"
 
-#: ../ui/main.glade:2820
+#: ../ui/main.glade:2876
 msgid "Edit (not implemented yet)"
 msgstr "Επεξεργασία (μη υλοποιημένο)"
 
@@ -2333,7 +2337,7 @@ msgstr "Ενεργοποίηση χειρονομιών μεγέθυνσης (Α
 msgid "Enter / edit LaTeX Text"
 msgstr "Προσθήκη / επεξεργασία κειμένου LaTeX"
 
-#: ../ui/main.glade:1725
+#: ../ui/main.glade:1736
 msgid "Eraser Optio_ns"
 msgstr "Ρυθ_μίσεις Γόμας"
 
@@ -2358,11 +2362,11 @@ msgstr ""
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr ""
 
-#: ../ui/main.glade:1701 ../ui/main.glade:1906
+#: ../ui/main.glade:1712 ../ui/main.glade:1917
 msgid "Fi_ll"
 msgstr "Γε_μισμα"
 
-#: ../ui/main.glade:1711 ../ui/main.glade:1916
+#: ../ui/main.glade:1722 ../ui/main.glade:1927
 msgid "Fill opacity"
 msgstr ""
 
@@ -2370,11 +2374,11 @@ msgstr ""
 msgid "Finalize the stroke"
 msgstr ""
 
-#: ../ui/main.glade:2455
+#: ../ui/main.glade:2466
 msgid "Find next occurrence of the search string"
 msgstr "Βρες την επόμενη εμφάνιση της αναζητούμενης συμβολοσειράς"
 
-#: ../ui/main.glade:2433
+#: ../ui/main.glade:2444
 msgid "Find previous occurrence of the search string"
 msgstr "Βρες την προηγούμενη εμφάνιση της αναζητούμενης συμβολοσειράς"
 
@@ -2422,7 +2426,7 @@ msgstr ""
 msgid "Grid snapping tolerance"
 msgstr "Ευαισθησία προσκόλλησης στον καμβά"
 
-#: ../ui/main.glade:1561
+#: ../ui/main.glade:1572
 msgid "H_and Tool"
 msgstr "Εργαλείο Χ_εριού"
 
@@ -2458,11 +2462,11 @@ msgstr "Απόκρυψη της κατακόρυφης μπάρας κύλιση
 msgid "Highlight cursor position"
 msgstr "Έμφαση στην θέση του κέρσορα"
 
-#: ../ui/main.glade:2679
+#: ../ui/main.glade:2690
 msgid "Highlight selected text"
 msgstr ""
 
-#: ../ui/main.glade:1834
+#: ../ui/main.glade:1845
 msgid "Highlighter Opti_ons"
 msgstr "Επι_λογές Υπογραμμισμού"
 
@@ -2542,11 +2546,11 @@ msgstr ""
 msgid "Insert Latex"
 msgstr "Εισαγωγή Latex"
 
-#: ../ui/main.glade:2775
+#: ../ui/main.glade:2831
 msgid "Insert Page After"
 msgstr "Εισαγωγή Σελίδας Μετά"
 
-#: ../ui/main.glade:2767
+#: ../ui/main.glade:2823
 msgid "Insert Page Before"
 msgstr "Εισαγωγή Σελίδας Πριν"
 
@@ -2614,6 +2618,14 @@ msgstr "Μέγιστο μήκος (μμ)"
 msgid "Max multiplier"
 msgstr ""
 
+#: ../ui/main.glade:2794
+msgid "Merge Down"
+msgstr ""
+
+#: ../ui/main.glade:1256
+msgid "Merge Layer Down"
+msgstr ""
+
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
@@ -2639,11 +2651,11 @@ msgstr "Πλήκτρα Ποντικιού"
 msgid "Mouse+Keyboard Combo"
 msgstr "Ποντίκι+Πληκτρολόγιο combo"
 
-#: ../ui/main.glade:2805
+#: ../ui/main.glade:2786 ../ui/main.glade:2861
 msgid "Move Down"
 msgstr "Μετακίνηση προς τα Κάτω"
 
-#: ../ui/main.glade:2797
+#: ../ui/main.glade:2778 ../ui/main.glade:2853
 msgid "Move Up"
 msgstr "Μετακίνηση προς τα Επάνω"
 
@@ -2717,7 +2729,7 @@ msgstr "Σελίδες:"
 msgid "Paired Pages"
 msgstr "Διπλές σελίδες"
 
-#: ../ui/main.glade:1293
+#: ../ui/main.glade:1304
 msgid "Paper B_ackground"
 msgstr ""
 
@@ -2725,11 +2737,11 @@ msgstr ""
 msgid "Paper Format"
 msgstr "Σχήμα και διάταξη Χαρτιού"
 
-#: ../ui/main.glade:1283
+#: ../ui/main.glade:1294
 msgid "Paper _Color"
 msgstr "Χρώμα _Χαρτιού"
 
-#: ../ui/main.glade:1273
+#: ../ui/main.glade:1284
 msgid "Paper _Format"
 msgstr "Σχήμα και _Διάταξη Χαρτιού"
 
@@ -2739,11 +2751,11 @@ msgid "Partially based on Xournal\n"
 msgstr "Μερικός βασισμένο στο Xournal\n"
 "από τον Denis Auroux"
 
-#: ../ui/main.glade:1952
+#: ../ui/main.glade:1963
 msgid "Pause"
 msgstr "Παύση"
 
-#: ../ui/main.glade:1579
+#: ../ui/main.glade:1590
 msgid "Pen _Options"
 msgstr "Επιλογές _Στυλό"
 
@@ -2759,7 +2771,7 @@ msgstr "Ρυθμίσεις αναπαραγωγής"
 msgid "Plugin Manager"
 msgstr "Διαχείριση Προσθέτων"
 
-#: ../ui/main.glade:2017
+#: ../ui/main.glade:2028
 msgid "Plugin _Manager"
 msgstr "Διαχείριση _Προσθέτων"
 
@@ -2819,7 +2831,7 @@ msgstr ""
 msgid "Recent _Documents"
 msgstr "Πρόσφατα _Έγγραφα"
 
-#: ../ui/main.glade:1942
+#: ../ui/main.glade:1953
 msgid "Record / Stop"
 msgstr "Έναρξη / Διακοπή Εγγραφής"
 
@@ -2827,7 +2839,7 @@ msgstr "Έναρξη / Διακοπή Εγγραφής"
 msgid "Recording Quality"
 msgstr "Ποιότητα Εγγραφής"
 
-#: ../ui/main.glade:1256
+#: ../ui/main.glade:1267
 msgid "Rename Layer"
 msgstr ""
 
@@ -2883,7 +2895,7 @@ msgstr "Επιλογή Φακέλου"
 msgid "Select Image"
 msgstr "Επιλογή Εικόνας"
 
-#: ../ui/main.glade:1341
+#: ../ui/main.glade:1352
 msgid "Select Linear Text"
 msgstr ""
 
@@ -2891,7 +2903,7 @@ msgstr ""
 msgid "Select PDF Page"
 msgstr "Επιλογή Σελίδας PDF"
 
-#: ../ui/main.glade:1353
+#: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
 msgstr ""
 
@@ -2993,7 +3005,7 @@ msgstr ""
 msgid "Storage Folder"
 msgstr "Φάκελος Αποθήκευσης"
 
-#: ../ui/main.glade:2719
+#: ../ui/main.glade:2730
 msgid "Strikethrough selected text"
 msgstr ""
 
@@ -3038,7 +3050,7 @@ msgstr ""
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr ""
 
-#: ../ui/main.glade:1930
+#: ../ui/main.glade:1941
 msgid "Text Font..."
 msgstr "Γραμματοσειρά κειμένου..."
 
@@ -3070,7 +3082,7 @@ msgstr ""
 msgid "Timeout"
 msgstr "Χρονικό όριο"
 
-#: ../ui/main.glade:2739
+#: ../ui/main.glade:2750
 msgid "Toggle standard / region text selection"
 msgstr ""
 
@@ -3095,7 +3107,7 @@ msgstr "Προσπαθήστε να επιλέξετε αντικείμενο π
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Να δοκιμαστεί η επιλογή αντικειμένου πρώτα, αν δεν έχει επιλεγεί τίποτε τότε να εμφανιστεί το αιωρούμενο κουτί εργαλείων."
 
-#: ../ui/main.glade:2699
+#: ../ui/main.glade:2710
 msgid "Underline selected text"
 msgstr ""
 
@@ -3269,7 +3281,7 @@ msgstr "_Στήλες/Γραμμές"
 msgid "_Customize"
 msgstr "_Προσωποποίηση"
 
-#: ../ui/main.glade:1401
+#: ../ui/main.glade:1412
 msgid "_Default Tools"
 msgstr "_Προεπιλεγμένα Εργαλεία"
 
@@ -3281,7 +3293,7 @@ msgstr "_Διαγραφή Σελίδας"
 msgid "_Edit"
 msgstr "_Επεξεργασία"
 
-#: ../ui/main.glade:1329
+#: ../ui/main.glade:1340
 msgid "_Eraser"
 msgstr "_Γόμα"
 
@@ -3301,11 +3313,11 @@ msgstr "_Πρώτη σελίδα"
 msgid "_Goto Page"
 msgstr "_Μετάβαση σε σελίδα"
 
-#: ../ui/main.glade:2031
+#: ../ui/main.glade:2042
 msgid "_Help"
 msgstr "_Βοήθεια"
 
-#: ../ui/main.glade:1365
+#: ../ui/main.glade:1376
 msgid "_Highlighter"
 msgstr "_Υπογραμμιστής"
 
@@ -3313,7 +3325,7 @@ msgstr "_Υπογραμμιστής"
 msgid "_Horizontal"
 msgstr "_Οριζόντιο"
 
-#: ../ui/main.glade:1389
+#: ../ui/main.glade:1400
 msgid "_Image"
 msgstr "_Εικόνα"
 
@@ -3349,11 +3361,11 @@ msgstr "_Επόμενη Σελίδα"
 msgid "_Pair Pages"
 msgstr "_Διπλές σελίδες"
 
-#: ../ui/main.glade:1317
+#: ../ui/main.glade:1328
 msgid "_Pen"
 msgstr "_Στυλό"
 
-#: ../ui/main.glade:2006
+#: ../ui/main.glade:2017
 msgid "_Plugin"
 msgstr "_Πρόσθετο"
 
@@ -3373,15 +3385,15 @@ msgstr "_Προηγούμενη Σελίδα"
 msgid "_Right to Left"
 msgstr ""
 
-#: ../ui/main.glade:1418
+#: ../ui/main.glade:1429
 msgid "_Shape Recognizer"
 msgstr "_Αναγνώριση Σχημάτων"
 
-#: ../ui/main.glade:1377
+#: ../ui/main.glade:1388
 msgid "_Text"
 msgstr "_Κείμενο"
 
-#: ../ui/main.glade:1306
+#: ../ui/main.glade:1317
 msgid "_Tools"
 msgstr "_Εργαλεία"
 
@@ -3397,7 +3409,7 @@ msgstr "_Πάνω προς τα Κάτω"
 msgid "_Vertical"
 msgstr "Κατακόρυφο"
 
-#: ../ui/main.glade:1537
+#: ../ui/main.glade:1548
 msgid "_Vertical Space"
 msgstr "_Κατακόρυφος Χώρος"
 
@@ -3405,31 +3417,31 @@ msgstr "_Κατακόρυφος Χώρος"
 msgid "_View"
 msgstr "_Προβολή"
 
-#: ../ui/main.glade:1819
+#: ../ui/main.glade:1830
 msgid "_delete strokes"
 msgstr "_διαγραφή μολυβιών"
 
-#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
+#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
 msgid "_fine"
 msgstr "_λεπτό"
 
-#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
+#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
 msgid "_medium"
 msgstr "_μεσαίο"
 
-#: ../ui/main.glade:1797
+#: ../ui/main.glade:1808
 msgid "_standard"
 msgstr "_τυπικό"
 
-#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
+#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
 msgid "_thick"
 msgstr "_παχύ"
 
-#: ../ui/main.glade:1590 ../ui/main.glade:1736 ../ui/main.glade:1845
+#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
 msgid "_very fine"
 msgstr "_πολύ λεπτό"
 
-#: ../ui/main.glade:1808
+#: ../ui/main.glade:1819
 msgid "_whiteout"
 msgstr "_διορθωτικό υγρό"
 
@@ -3463,7 +3475,7 @@ msgstr "pixels"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(μετά από το οποίο θα ενεργοποιηθεί ξανά η οθόνη αφής)</i>"
 
-#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
+#: ../ui/main.glade:1645 ../ui/main.glade:1791 ../ui/main.glade:1900
 msgid "ver_y thick"
 msgstr "πολ_ύ παχύ"
 
