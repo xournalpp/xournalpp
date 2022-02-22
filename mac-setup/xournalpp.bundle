@@ -83,6 +83,10 @@
     ${prefix}/share/icons
   </data>
 
+  <data>
+    ${prefix}/share/gtksourceview-4
+  </data>
+
   <data dest="${bundle}/Contents/Resources/plugins">
     ${prefix}/share/xournalpp/plugins
   </data>
