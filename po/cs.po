@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-19 20:33+0000\n"
-"PO-Revision-Date: 2022-02-19 20:46\n"
+"POT-Creation-Date: 2022-02-22 03:30+0000\n"
+"PO-Revision-Date: 2022-02-22 03:45\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -350,7 +350,7 @@ msgstr "Smazat soubor"
 msgid "Delete layer"
 msgstr "Smazat vrstvu"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Delete this layer"
 msgstr "Smazat tuto vrstvu"
 
@@ -707,7 +707,7 @@ msgstr "Obrázek úspěšně vytvořen"
 msgid "Images"
 msgstr "Obrázky"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Insert a copy of the current layer below"
 msgstr "Vložit kopii aktuální vrstvy níže"
 
@@ -760,20 +760,20 @@ msgstr "Vrstva"
 msgid "Layer Combo"
 msgstr "Kombinace vrstvy"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layer Preview"
 msgstr "Náhled vrstvy"
 
-#: ../src/core/control/layer/LayerController.cpp:319
+#: ../src/core/control/layer/LayerController.cpp:369
 msgid "Layer {1}"
 msgstr "Vrstva {1}"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
 msgstr "Náhled balíčku vrstev"
 
 #: ../src/core/gui/PageView.cpp:772
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
 msgstr "Načítání..."
@@ -785,6 +785,10 @@ msgstr "Spravovat lištu nástrojů"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Medium"
 msgstr "Střední"
+
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
+msgid "Merge layer down"
+msgstr ""
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1239,11 +1243,11 @@ msgstr "Dokument úspěšně uložen do \"\""
 msgid "Supported files"
 msgstr "Podporované soubory"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
 msgstr "Prohodit aktuální vrstvu s výše uvedenou"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
 msgstr "Prohodit aktuální vrstvu s níže uvedenou"
 
@@ -2168,7 +2172,7 @@ msgstr "Kopírovat místo toho pozadí aktuální stránky"
 msgid "Copy current page size instead"
 msgstr "Kopírovat místo toho velikost aktuální stránky"
 
-#: ../ui/main.glade:2657
+#: ../ui/main.glade:2668
 msgid "Copy selected text"
 msgstr ""
 
@@ -2300,11 +2304,11 @@ msgstr "Přetáhněte komponenty odsud do nástrojové lišty a zpět."
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "Drag: Pokud je hodnota malá, mohou se objevit nechtěné oscilace. Pokud je hodnota vysoká, nedojde ke stabilizaci."
 
-#: ../ui/main.glade:1462
+#: ../ui/main.glade:1473
 msgid "Draw Coordinate System"
 msgstr "Nakreslit soustavu souřadnic"
 
-#: ../ui/main.glade:1473
+#: ../ui/main.glade:1484
 msgid "Draw _Line"
 msgstr "Nakreslit _čáru"
 
@@ -2320,11 +2324,11 @@ msgstr "Oblast kreslení"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Nástroje kreslení - nastavit modifikátory podle směru kreslení (experimentální)"
 
-#: ../ui/main.glade:2783
+#: ../ui/main.glade:2802 ../ui/main.glade:2839
 msgid "Duplicate"
 msgstr "Duplikovat"
 
-#: ../ui/main.glade:2820
+#: ../ui/main.glade:2876
 msgid "Edit (not implemented yet)"
 msgstr "Upravit (zatím neimplementováno)"
 
@@ -2380,7 +2384,7 @@ msgstr "Zapnout gesta přiblížení (vyžaduje restart)"
 msgid "Enter / edit LaTeX Text"
 msgstr "Zadejte/upravte LaTeX Text"
 
-#: ../ui/main.glade:1725
+#: ../ui/main.glade:1736
 msgid "Eraser Optio_ns"
 msgstr "_Nastavení gumy"
 
@@ -2405,11 +2409,11 @@ msgstr "Exportovat vrstvy postupně"
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr "Exportovat dokument bez jakéhokoli pozadí (žádné) nebo pouze PDF a obrázkem (bez měřítek) nebo se všemi typy pozadí (vše)."
 
-#: ../ui/main.glade:1701 ../ui/main.glade:1906
+#: ../ui/main.glade:1712 ../ui/main.glade:1917
 msgid "Fi_ll"
 msgstr "Fi_ll"
 
-#: ../ui/main.glade:1711 ../ui/main.glade:1916
+#: ../ui/main.glade:1722 ../ui/main.glade:1927
 msgid "Fill opacity"
 msgstr "Průhlednost vyplně"
 
@@ -2417,11 +2421,11 @@ msgstr "Průhlednost vyplně"
 msgid "Finalize the stroke"
 msgstr "Dokončit čáru"
 
-#: ../ui/main.glade:2455
+#: ../ui/main.glade:2466
 msgid "Find next occurrence of the search string"
 msgstr "Najít další výskyt vyhledávacího řetězce"
 
-#: ../ui/main.glade:2433
+#: ../ui/main.glade:2444
 msgid "Find previous occurrence of the search string"
 msgstr "Najít předchozí výskyt vyhledávacího řetězce"
 
@@ -2469,7 +2473,7 @@ msgstr "Velikost mřížky"
 msgid "Grid snapping tolerance"
 msgstr "Tolerance přichytávání na mřížku"
 
-#: ../ui/main.glade:1561
+#: ../ui/main.glade:1572
 msgid "H_and Tool"
 msgstr "_Nástroj prohlížení"
 
@@ -2505,11 +2509,11 @@ msgstr "Skrýt vertikální posuvník"
 msgid "Highlight cursor position"
 msgstr "Zvýraznit pozici kurzoru"
 
-#: ../ui/main.glade:2679
+#: ../ui/main.glade:2690
 msgid "Highlight selected text"
 msgstr ""
 
-#: ../ui/main.glade:1834
+#: ../ui/main.glade:1845
 msgid "Highlighter Opti_ons"
 msgstr "Zvýraznit Opti_ons"
 
@@ -2589,11 +2593,11 @@ msgstr "Stabilizace vstupu může na konci tahu vytvořit mezeru. Pokud je povol
 msgid "Insert Latex"
 msgstr "Vložit LaTeX"
 
-#: ../ui/main.glade:2775
+#: ../ui/main.glade:2831
 msgid "Insert Page After"
 msgstr "Vložit stránku za"
 
-#: ../ui/main.glade:2767
+#: ../ui/main.glade:2823
 msgid "Insert Page Before"
 msgstr "Vložit stránku před"
 
@@ -2661,6 +2665,14 @@ msgstr "Maximální délka (mm)"
 msgid "Max multiplier"
 msgstr "Maximální multiplikátor"
 
+#: ../ui/main.glade:2794
+msgid "Merge Down"
+msgstr ""
+
+#: ../ui/main.glade:1256
+msgid "Merge Layer Down"
+msgstr ""
+
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
@@ -2687,11 +2699,11 @@ msgstr "Tlačítko myši"
 msgid "Mouse+Keyboard Combo"
 msgstr "Kombo myš+klávesnice"
 
-#: ../ui/main.glade:2805
+#: ../ui/main.glade:2786 ../ui/main.glade:2861
 msgid "Move Down"
 msgstr "Posunout dolů"
 
-#: ../ui/main.glade:2797
+#: ../ui/main.glade:2778 ../ui/main.glade:2853
 msgid "Move Up"
 msgstr "Posunout nahoru"
 
@@ -2765,7 +2777,7 @@ msgstr "Stránky:"
 msgid "Paired Pages"
 msgstr "Spárované stránky"
 
-#: ../ui/main.glade:1293
+#: ../ui/main.glade:1304
 msgid "Paper B_ackground"
 msgstr "Pozadí _papíru"
 
@@ -2773,11 +2785,11 @@ msgstr "Pozadí _papíru"
 msgid "Paper Format"
 msgstr "Formát papíru"
 
-#: ../ui/main.glade:1283
+#: ../ui/main.glade:1294
 msgid "Paper _Color"
 msgstr "_Barva papíru"
 
-#: ../ui/main.glade:1273
+#: ../ui/main.glade:1284
 msgid "Paper _Format"
 msgstr "_Formát papíru"
 
@@ -2787,11 +2799,11 @@ msgid "Partially based on Xournal\n"
 msgstr "Částečně založeno na Xournal\n"
 "od Denis Auroux"
 
-#: ../ui/main.glade:1952
+#: ../ui/main.glade:1963
 msgid "Pause"
 msgstr "Pozastavit"
 
-#: ../ui/main.glade:1579
+#: ../ui/main.glade:1590
 msgid "Pen _Options"
 msgstr "N_astavení pera"
 
@@ -2807,7 +2819,7 @@ msgstr "Nastavení přehrávání"
 msgid "Plugin Manager"
 msgstr "Správce doplňků"
 
-#: ../ui/main.glade:2017
+#: ../ui/main.glade:2028
 msgid "Plugin _Manager"
 msgstr "_Správce doplňků"
 
@@ -2867,7 +2879,7 @@ msgstr "Vykresklit znovu pokud se zvětšení stránky změní o více než "
 msgid "Recent _Documents"
 msgstr "Nedávné _dokumenty"
 
-#: ../ui/main.glade:1942
+#: ../ui/main.glade:1953
 msgid "Record / Stop"
 msgstr "Nahrávat / Zastavit"
 
@@ -2875,7 +2887,7 @@ msgstr "Nahrávat / Zastavit"
 msgid "Recording Quality"
 msgstr "Nahrávací kvalita"
 
-#: ../ui/main.glade:1256
+#: ../ui/main.glade:1267
 msgid "Rename Layer"
 msgstr "Přejmenovat vrstvu"
 
@@ -2931,7 +2943,7 @@ msgstr "Vybrat složku"
 msgid "Select Image"
 msgstr "Výběr obrázku"
 
-#: ../ui/main.glade:1341
+#: ../ui/main.glade:1352
 msgid "Select Linear Text"
 msgstr ""
 
@@ -2939,7 +2951,7 @@ msgstr ""
 msgid "Select PDF Page"
 msgstr "Výběr PDF stránky"
 
-#: ../ui/main.glade:1353
+#: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
 msgstr ""
 
@@ -3042,7 +3054,7 @@ msgstr "Začít zoomování po vzdálenosti "
 msgid "Storage Folder"
 msgstr "Složka úložiště"
 
-#: ../ui/main.glade:2719
+#: ../ui/main.glade:2730
 msgid "Strikethrough selected text"
 msgstr ""
 
@@ -3087,7 +3099,7 @@ msgstr "Test konfigurace"
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Vyzkoušejte, zda je aktuální konfigurace platná tak, že spustíte příkaz generování LaTeX se souborem globální šablony se zkušebním vzorcem."
 
-#: ../ui/main.glade:1930
+#: ../ui/main.glade:1941
 msgid "Text Font..."
 msgstr "Písmo textu..."
 
@@ -3119,7 +3131,7 @@ msgstr "Tato nastavení budou použita pro nové stránky"
 msgid "Timeout"
 msgstr "Časový limit"
 
-#: ../ui/main.glade:2739
+#: ../ui/main.glade:2750
 msgid "Toggle standard / region text selection"
 msgstr ""
 
@@ -3144,7 +3156,7 @@ msgstr "Pokuste se nejdříve vybrat objekt."
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Pokus se nejdříve vybrat objekt; pokud není nic vybráno, zobrazí se plovoucí panel nástrojů, pokud je povolen."
 
-#: ../ui/main.glade:2699
+#: ../ui/main.glade:2710
 msgid "Underline selected text"
 msgstr ""
 
@@ -3320,7 +3332,7 @@ msgstr "_Sloupce/Řádky"
 msgid "_Customize"
 msgstr "_Přizpůsobit"
 
-#: ../ui/main.glade:1401
+#: ../ui/main.glade:1412
 msgid "_Default Tools"
 msgstr "_Výchozí nástroje"
 
@@ -3332,7 +3344,7 @@ msgstr "_Smazat stránku"
 msgid "_Edit"
 msgstr "Ú_pravy"
 
-#: ../ui/main.glade:1329
+#: ../ui/main.glade:1340
 msgid "_Eraser"
 msgstr "_Guma"
 
@@ -3352,11 +3364,11 @@ msgstr "_První stránka"
 msgid "_Goto Page"
 msgstr "_Přejít na stránku"
 
-#: ../ui/main.glade:2031
+#: ../ui/main.glade:2042
 msgid "_Help"
 msgstr "_Nápověda"
 
-#: ../ui/main.glade:1365
+#: ../ui/main.glade:1376
 msgid "_Highlighter"
 msgstr "_Zvýrazňovač"
 
@@ -3364,7 +3376,7 @@ msgstr "_Zvýrazňovač"
 msgid "_Horizontal"
 msgstr "_Horizontální"
 
-#: ../ui/main.glade:1389
+#: ../ui/main.glade:1400
 msgid "_Image"
 msgstr "_Obrázek"
 
@@ -3400,11 +3412,11 @@ msgstr "_Další stránka"
 msgid "_Pair Pages"
 msgstr "_Spárovat stránky"
 
-#: ../ui/main.glade:1317
+#: ../ui/main.glade:1328
 msgid "_Pen"
 msgstr "_Pero"
 
-#: ../ui/main.glade:2006
+#: ../ui/main.glade:2017
 msgid "_Plugin"
 msgstr "_Zásuvný modul"
 
@@ -3424,15 +3436,15 @@ msgstr "_Předchozí stránka"
 msgid "_Right to Left"
 msgstr "_Zprava do leva"
 
-#: ../ui/main.glade:1418
+#: ../ui/main.glade:1429
 msgid "_Shape Recognizer"
 msgstr "_Rozpoznávání tvarů"
 
-#: ../ui/main.glade:1377
+#: ../ui/main.glade:1388
 msgid "_Text"
 msgstr "_Text"
 
-#: ../ui/main.glade:1306
+#: ../ui/main.glade:1317
 msgid "_Tools"
 msgstr "_Nástroje"
 
@@ -3448,7 +3460,7 @@ msgstr "_Shora Dolů"
 msgid "_Vertical"
 msgstr "_Svisle"
 
-#: ../ui/main.glade:1537
+#: ../ui/main.glade:1548
 msgid "_Vertical Space"
 msgstr "_Vertikální místo"
 
@@ -3456,31 +3468,31 @@ msgstr "_Vertikální místo"
 msgid "_View"
 msgstr "_Zobrazení"
 
-#: ../ui/main.glade:1819
+#: ../ui/main.glade:1830
 msgid "_delete strokes"
 msgstr "_smazat čáry"
 
-#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
+#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
 msgid "_fine"
 msgstr "_tenká"
 
-#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
+#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
 msgid "_medium"
 msgstr "_střední"
 
-#: ../ui/main.glade:1797
+#: ../ui/main.glade:1808
 msgid "_standard"
 msgstr "_výchozí"
 
-#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
+#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
 msgid "_thick"
 msgstr "_tlustá"
 
-#: ../ui/main.glade:1590 ../ui/main.glade:1736 ../ui/main.glade:1845
+#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
 msgid "_very fine"
 msgstr "_velmi tenká"
 
-#: ../ui/main.glade:1808
+#: ../ui/main.glade:1819
 msgid "_whiteout"
 msgstr "_bělení"
 
@@ -3514,7 +3526,7 @@ msgstr "pixely"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(poté bude dotyková obrazovka znovu aktivována)</i>"
 
-#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
+#: ../ui/main.glade:1645 ../ui/main.glade:1791 ../ui/main.glade:1900
 msgid "ver_y thick"
 msgstr "vel_mi tlustá"
 
