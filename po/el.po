@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-22 03:30+0000\n"
-"PO-Revision-Date: 2022-02-22 03:45\n"
+"PO-Revision-Date: 2022-02-22 11:20\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -58,7 +58,7 @@ msgstr "<span foreground='red' size='x-large'>Το απαιτούμενο αρχ
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Προσθήκη/επεξεργασία TeX"
 
 #: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
@@ -284,7 +284,7 @@ msgstr "Αδυναμία αποθήκευσης .tex αρχείου: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:88
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "Αδυναμία εκκίνησης {1}: {2} (κωδικός εξόδου: {3})"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
