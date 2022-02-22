@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-19 20:33+0000\n"
-"PO-Revision-Date: 2022-02-19 20:45\n"
+"POT-Creation-Date: 2022-02-22 03:30+0000\n"
+"PO-Revision-Date: 2022-02-22 03:44\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -350,7 +350,7 @@ msgstr "Dosyayı sil"
 msgid "Delete layer"
 msgstr "Katmanı sil"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Delete this layer"
 msgstr "Bu katmanı sil"
 
@@ -707,7 +707,7 @@ msgstr "Resim dosyası başarıyla oluşturuldu"
 msgid "Images"
 msgstr "Resimler"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Insert a copy of the current layer below"
 msgstr "Geçerli katmanın bir kopyasını aşağıya ekle"
 
@@ -760,20 +760,20 @@ msgstr "Katman"
 msgid "Layer Combo"
 msgstr "Katman birleşimi"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layer Preview"
 msgstr "Katman Önizlemesi"
 
-#: ../src/core/control/layer/LayerController.cpp:319
+#: ../src/core/control/layer/LayerController.cpp:369
 msgid "Layer {1}"
 msgstr "Katman {1}"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
 msgstr "Katman Birleşimi Önizlemesi"
 
 #: ../src/core/gui/PageView.cpp:772
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
 msgstr "Yükleniyor..."
@@ -785,6 +785,10 @@ msgstr "Araç Çubuklarını Yönet"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Medium"
 msgstr "Orta"
+
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
+msgid "Merge layer down"
+msgstr ""
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1239,11 +1243,11 @@ msgstr "Belge \"{1}\" klasörüne başarıyla kaydedildi"
 msgid "Supported files"
 msgstr "Desteklenen dosyalar"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
 msgstr "Mevcut katmanı bir yukarıdaki ile yer değiştir"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
 msgstr "Mevcut katmanı aşağıdaki ile yer değiştir"
 
@@ -2170,7 +2174,7 @@ msgstr "Bunun yerine geçerli sayfa arka planını kopyala"
 msgid "Copy current page size instead"
 msgstr "Bunun yerine geçerli sayfa boyutunu kopyala"
 
-#: ../ui/main.glade:2657
+#: ../ui/main.glade:2668
 msgid "Copy selected text"
 msgstr ""
 
@@ -2302,11 +2306,11 @@ msgstr "Bileşenleri buradan araç çubuklarına sürükleyip bırakın."
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "Sürüklenme: Bu değer çok küçükse istenmeyen titremeler görünebilir. Değer çok yüksekse, dengeleme olmayacaktır."
 
-#: ../ui/main.glade:1462
+#: ../ui/main.glade:1473
 msgid "Draw Coordinate System"
 msgstr "Koordinat sistemi çiz"
 
-#: ../ui/main.glade:1473
+#: ../ui/main.glade:1484
 msgid "Draw _Line"
 msgstr "Çi_zgi Çiz"
 
@@ -2322,11 +2326,11 @@ msgstr "Çizim Alanı"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Çizim Araçları - Değiştiricileri Çizim Yönüne Göre Ayarla (Deneysel)"
 
-#: ../ui/main.glade:2783
+#: ../ui/main.glade:2802 ../ui/main.glade:2839
 msgid "Duplicate"
 msgstr "Çoğalt"
 
-#: ../ui/main.glade:2820
+#: ../ui/main.glade:2876
 msgid "Edit (not implemented yet)"
 msgstr "Düzenle (henüz uygulanmadı)"
 
@@ -2382,7 +2386,7 @@ msgstr "Yakınlaştırma hareketlerini etkinleştir (yeniden başlatma gerekir)"
 msgid "Enter / edit LaTeX Text"
 msgstr "LaTeX Metnini girin / düzenleyin"
 
-#: ../ui/main.glade:1725
+#: ../ui/main.glade:1736
 msgid "Eraser Optio_ns"
 msgstr "Silgi _Seçenekleri"
 
@@ -2407,11 +2411,11 @@ msgstr "Katmanları aşamalı olarak dışa aktar"
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr "Belgeyi arka plan olmadan (Yok) veya yalnızca PDF ve görüntü arka planıyla (Ölçekleme olmadan) veya tüm arka plan türleriyle (Tümü) dışa aktarın."
 
-#: ../ui/main.glade:1701 ../ui/main.glade:1906
+#: ../ui/main.glade:1712 ../ui/main.glade:1917
 msgid "Fi_ll"
 msgstr "Do_ldur"
 
-#: ../ui/main.glade:1711 ../ui/main.glade:1916
+#: ../ui/main.glade:1722 ../ui/main.glade:1927
 msgid "Fill opacity"
 msgstr "Dolgu Opaklığı"
 
@@ -2419,11 +2423,11 @@ msgstr "Dolgu Opaklığı"
 msgid "Finalize the stroke"
 msgstr "Vuruşları tamamla"
 
-#: ../ui/main.glade:2455
+#: ../ui/main.glade:2466
 msgid "Find next occurrence of the search string"
 msgstr "Arama dizesinin bir sonraki tekrarlamasını bul"
 
-#: ../ui/main.glade:2433
+#: ../ui/main.glade:2444
 msgid "Find previous occurrence of the search string"
 msgstr "Arama dizesinin bir önceki tekrarlamasını bul"
 
@@ -2471,7 +2475,7 @@ msgstr "Izgara boyutu"
 msgid "Grid snapping tolerance"
 msgstr "Izgara yapıştırma toleransı"
 
-#: ../ui/main.glade:1561
+#: ../ui/main.glade:1572
 msgid "H_and Tool"
 msgstr "El _Aracı"
 
@@ -2507,11 +2511,11 @@ msgstr "Dikey kaydırma çubuğunu gizle"
 msgid "Highlight cursor position"
 msgstr "İmleç konumunu vurgula"
 
-#: ../ui/main.glade:2679
+#: ../ui/main.glade:2690
 msgid "Highlight selected text"
 msgstr ""
 
-#: ../ui/main.glade:1834
+#: ../ui/main.glade:1845
 msgid "Highlighter Opti_ons"
 msgstr "Vurgulayıcı Seçenek_leri"
 
@@ -2591,11 +2595,11 @@ msgstr "Giriş stabilizasyonu, vuruşunuzun sonunda bir boşluk oluşturabilir. 
 msgid "Insert Latex"
 msgstr "Lateks Ekle"
 
-#: ../ui/main.glade:2775
+#: ../ui/main.glade:2831
 msgid "Insert Page After"
 msgstr "Sonra Sayfa Ekle"
 
-#: ../ui/main.glade:2767
+#: ../ui/main.glade:2823
 msgid "Insert Page Before"
 msgstr "Önce Sayfa Ekle"
 
@@ -2663,6 +2667,14 @@ msgstr "En fazla Uzunluk (mm)"
 msgid "Max multiplier"
 msgstr "En fazla çarpan"
 
+#: ../ui/main.glade:2794
+msgid "Merge Down"
+msgstr ""
+
+#: ../ui/main.glade:1256
+msgid "Merge Layer Down"
+msgstr ""
+
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
@@ -2689,11 +2701,11 @@ msgstr "Fare Düğmeleri"
 msgid "Mouse+Keyboard Combo"
 msgstr "Fare + Klavye Kombinasyonu"
 
-#: ../ui/main.glade:2805
+#: ../ui/main.glade:2786 ../ui/main.glade:2861
 msgid "Move Down"
 msgstr "Aşağı Taşı"
 
-#: ../ui/main.glade:2797
+#: ../ui/main.glade:2778 ../ui/main.glade:2853
 msgid "Move Up"
 msgstr "Yukarı Taşı"
 
@@ -2767,7 +2779,7 @@ msgstr "Sayfalar:"
 msgid "Paired Pages"
 msgstr "Eşlenmiş Sayfalar"
 
-#: ../ui/main.glade:1293
+#: ../ui/main.glade:1304
 msgid "Paper B_ackground"
 msgstr "Kağıt Ark_a planı"
 
@@ -2775,11 +2787,11 @@ msgstr "Kağıt Ark_a planı"
 msgid "Paper Format"
 msgstr "Kağıt Biçimi"
 
-#: ../ui/main.glade:1283
+#: ../ui/main.glade:1294
 msgid "Paper _Color"
 msgstr "Kağıt _Rengi"
 
-#: ../ui/main.glade:1273
+#: ../ui/main.glade:1284
 msgid "Paper _Format"
 msgstr "Kağıt _Biçimi"
 
@@ -2789,11 +2801,11 @@ msgid "Partially based on Xournal\n"
 msgstr "Kısmen Denis Auroux tarafından\n"
 "Xournal'e dayanıyor"
 
-#: ../ui/main.glade:1952
+#: ../ui/main.glade:1963
 msgid "Pause"
 msgstr "Duraklat"
 
-#: ../ui/main.glade:1579
+#: ../ui/main.glade:1590
 msgid "Pen _Options"
 msgstr "Kalem _Seçenekleri"
 
@@ -2809,7 +2821,7 @@ msgstr "Oynatma Ayarları"
 msgid "Plugin Manager"
 msgstr "Eklenti Yöneticisi"
 
-#: ../ui/main.glade:2017
+#: ../ui/main.glade:2028
 msgid "Plugin _Manager"
 msgstr "Eklenti Yö_neticisi"
 
@@ -2869,7 +2881,7 @@ msgstr "Sayfanın yakınlaştırması belirtilenden fazla değişirse sayfayı y
 msgid "Recent _Documents"
 msgstr "Son Çalışılan _Belgeler"
 
-#: ../ui/main.glade:1942
+#: ../ui/main.glade:1953
 msgid "Record / Stop"
 msgstr "Kayıt / Dur"
 
@@ -2877,7 +2889,7 @@ msgstr "Kayıt / Dur"
 msgid "Recording Quality"
 msgstr "Kayıt Kalitesi"
 
-#: ../ui/main.glade:1256
+#: ../ui/main.glade:1267
 msgid "Rename Layer"
 msgstr "Katmanı yeniden adlandır"
 
@@ -2933,7 +2945,7 @@ msgstr "Klasör Seç"
 msgid "Select Image"
 msgstr "Resim Seç"
 
-#: ../ui/main.glade:1341
+#: ../ui/main.glade:1352
 msgid "Select Linear Text"
 msgstr ""
 
@@ -2941,7 +2953,7 @@ msgstr ""
 msgid "Select PDF Page"
 msgstr "PDF Sayfası Seç"
 
-#: ../ui/main.glade:1353
+#: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
 msgstr ""
 
@@ -3044,7 +3056,7 @@ msgstr "Bir mesafeden sonra yakınlaştırmaya başlayın "
 msgid "Storage Folder"
 msgstr "Depolama Klasörü"
 
-#: ../ui/main.glade:2719
+#: ../ui/main.glade:2730
 msgid "Strikethrough selected text"
 msgstr ""
 
@@ -3089,7 +3101,7 @@ msgstr "Yapılandırmayı test edin"
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Genel şablon dosyasında bir formül girerek LaTeX oluşturma komutunun düzgün çalıştığını test edin."
 
-#: ../ui/main.glade:1930
+#: ../ui/main.glade:1941
 msgid "Text Font..."
 msgstr "Metin Yazı Tipi..."
 
@@ -3121,7 +3133,7 @@ msgstr "Bu ayarlar yeni sayfalar için kullanılacak"
 msgid "Timeout"
 msgstr "Zaman aşımı"
 
-#: ../ui/main.glade:2739
+#: ../ui/main.glade:2750
 msgid "Toggle standard / region text selection"
 msgstr ""
 
@@ -3146,7 +3158,7 @@ msgstr "Önce nesneyi seçmeyi deneyin."
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Önce nesneyi seçmeyi deneyin; seçili bir şey yoksa, etkinse kayan araç kutusunu gösterir."
 
-#: ../ui/main.glade:2699
+#: ../ui/main.glade:2710
 msgid "Underline selected text"
 msgstr ""
 
@@ -3322,7 +3334,7 @@ msgstr "_Sütunlar/Satırlar"
 msgid "_Customize"
 msgstr "_Özelleştir"
 
-#: ../ui/main.glade:1401
+#: ../ui/main.glade:1412
 msgid "_Default Tools"
 msgstr "_Varsayılan Araçlar"
 
@@ -3334,7 +3346,7 @@ msgstr "Sayfayı _Sil"
 msgid "_Edit"
 msgstr "Düz_enle"
 
-#: ../ui/main.glade:1329
+#: ../ui/main.glade:1340
 msgid "_Eraser"
 msgstr "_Silgi"
 
@@ -3354,11 +3366,11 @@ msgstr "İl_k Sayfa"
 msgid "_Goto Page"
 msgstr "Sayfaya _Git"
 
-#: ../ui/main.glade:2031
+#: ../ui/main.glade:2042
 msgid "_Help"
 msgstr "_Yardım"
 
-#: ../ui/main.glade:1365
+#: ../ui/main.glade:1376
 msgid "_Highlighter"
 msgstr "_Vurgulayıcı"
 
@@ -3366,7 +3378,7 @@ msgstr "_Vurgulayıcı"
 msgid "_Horizontal"
 msgstr "_Yatay"
 
-#: ../ui/main.glade:1389
+#: ../ui/main.glade:1400
 msgid "_Image"
 msgstr "Res_im"
 
@@ -3402,11 +3414,11 @@ msgstr "So_nraki Sayfa"
 msgid "_Pair Pages"
 msgstr "Sayfaları _Eşle"
 
-#: ../ui/main.glade:1317
+#: ../ui/main.glade:1328
 msgid "_Pen"
 msgstr "_Kalem"
 
-#: ../ui/main.glade:2006
+#: ../ui/main.glade:2017
 msgid "_Plugin"
 msgstr "E_klenti"
 
@@ -3426,15 +3438,15 @@ msgstr "_Önceki Sayfa"
 msgid "_Right to Left"
 msgstr "_Sağdan Sola"
 
-#: ../ui/main.glade:1418
+#: ../ui/main.glade:1429
 msgid "_Shape Recognizer"
 msgstr "_Şekil Tanıyıcı"
 
-#: ../ui/main.glade:1377
+#: ../ui/main.glade:1388
 msgid "_Text"
 msgstr "_Metin"
 
-#: ../ui/main.glade:1306
+#: ../ui/main.glade:1317
 msgid "_Tools"
 msgstr "_Araçlar"
 
@@ -3450,7 +3462,7 @@ msgstr "_Üstten Alta"
 msgid "_Vertical"
 msgstr "_Dikey"
 
-#: ../ui/main.glade:1537
+#: ../ui/main.glade:1548
 msgid "_Vertical Space"
 msgstr "_Dikey Alan Aç"
 
@@ -3458,31 +3470,31 @@ msgstr "_Dikey Alan Aç"
 msgid "_View"
 msgstr "_Görünüm"
 
-#: ../ui/main.glade:1819
+#: ../ui/main.glade:1830
 msgid "_delete strokes"
 msgstr "_Çizgiyi sil"
 
-#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
+#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
 msgid "_fine"
 msgstr "_İnce"
 
-#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
+#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
 msgid "_medium"
 msgstr "_Orta"
 
-#: ../ui/main.glade:1797
+#: ../ui/main.glade:1808
 msgid "_standard"
 msgstr "_Standart"
 
-#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
+#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
 msgid "_thick"
 msgstr "_Kalın"
 
-#: ../ui/main.glade:1590 ../ui/main.glade:1736 ../ui/main.glade:1845
+#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
 msgid "_very fine"
 msgstr "_Çok ince"
 
-#: ../ui/main.glade:1808
+#: ../ui/main.glade:1819
 msgid "_whiteout"
 msgstr "_Ağartarak"
 
@@ -3516,7 +3528,7 @@ msgstr "piksel"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(bundan sonra dokunmatik ekran tekrar etkinleştirilecek)</i>"
 
-#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
+#: ../ui/main.glade:1645 ../ui/main.glade:1791 ../ui/main.glade:1900
 msgid "ver_y thick"
 msgstr "_çok kalın"
 
