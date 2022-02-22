@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-19 20:33+0000\n"
-"PO-Revision-Date: 2022-02-21 07:45\n"
+"POT-Creation-Date: 2022-02-22 03:30+0000\n"
+"PO-Revision-Date: 2022-02-22 03:45\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -347,7 +347,7 @@ msgstr "מחק קובץ"
 msgid "Delete layer"
 msgstr "מחק שכבה"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Delete this layer"
 msgstr "מחק שכבה זו"
 
@@ -689,7 +689,7 @@ msgstr "קובץ תמונה נוצר בהצלחה"
 msgid "Images"
 msgstr "תמונות"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:56
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Insert a copy of the current layer below"
 msgstr "הוספת עותק של השכבה הנוכחית מתחת"
 
@@ -742,20 +742,20 @@ msgstr "שכבה"
 msgid "Layer Combo"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layer Preview"
 msgstr "תצוגה מקדימה של שכבה"
 
-#: ../src/core/control/layer/LayerController.cpp:319
+#: ../src/core/control/layer/LayerController.cpp:369
 msgid "Layer {1}"
 msgstr "שכבה {1}"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:60
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
 msgstr ""
 
 #: ../src/core/gui/PageView.cpp:772
-#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:74
+#: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
 msgstr "טוען..."
@@ -766,6 +766,10 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Medium"
+msgstr ""
+
+#: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
+msgid "Merge layer down"
 msgstr ""
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
@@ -1213,11 +1217,11 @@ msgstr "מסמך נשמר בהצלחה ל- {1}"
 msgid "Supported files"
 msgstr "קבצים נתמכים"
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:54
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
 msgstr ""
 
-#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:55
+#: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
 msgstr ""
 
@@ -2109,7 +2113,7 @@ msgstr "העתק את רקע הדף הנוכחי במקום"
 msgid "Copy current page size instead"
 msgstr "העתק את גודל הדף הנוכחי במקום"
 
-#: ../ui/main.glade:2657
+#: ../ui/main.glade:2668
 msgid "Copy selected text"
 msgstr ""
 
@@ -2235,11 +2239,11 @@ msgstr ""
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr ""
 
-#: ../ui/main.glade:1462
+#: ../ui/main.glade:1473
 msgid "Draw Coordinate System"
 msgstr ""
 
-#: ../ui/main.glade:1473
+#: ../ui/main.glade:1484
 msgid "Draw _Line"
 msgstr ""
 
@@ -2255,11 +2259,11 @@ msgstr ""
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/main.glade:2783
+#: ../ui/main.glade:2802 ../ui/main.glade:2839
 msgid "Duplicate"
 msgstr "שכפול"
 
-#: ../ui/main.glade:2820
+#: ../ui/main.glade:2876
 msgid "Edit (not implemented yet)"
 msgstr "עריכה (לא מיושם עדיין)"
 
@@ -2315,7 +2319,7 @@ msgstr ""
 msgid "Enter / edit LaTeX Text"
 msgstr ""
 
-#: ../ui/main.glade:1725
+#: ../ui/main.glade:1736
 msgid "Eraser Optio_ns"
 msgstr ""
 
@@ -2340,11 +2344,11 @@ msgstr ""
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr ""
 
-#: ../ui/main.glade:1701 ../ui/main.glade:1906
+#: ../ui/main.glade:1712 ../ui/main.glade:1917
 msgid "Fi_ll"
 msgstr ""
 
-#: ../ui/main.glade:1711 ../ui/main.glade:1916
+#: ../ui/main.glade:1722 ../ui/main.glade:1927
 msgid "Fill opacity"
 msgstr "אטימות המילוי"
 
@@ -2352,11 +2356,11 @@ msgstr "אטימות המילוי"
 msgid "Finalize the stroke"
 msgstr ""
 
-#: ../ui/main.glade:2455
+#: ../ui/main.glade:2466
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:2433
+#: ../ui/main.glade:2444
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -2404,7 +2408,7 @@ msgstr "גודל רשת"
 msgid "Grid snapping tolerance"
 msgstr ""
 
-#: ../ui/main.glade:1561
+#: ../ui/main.glade:1572
 msgid "H_and Tool"
 msgstr "כלי _יד"
 
@@ -2440,11 +2444,11 @@ msgstr "הסתר סרגל גלילה אנכי"
 msgid "Highlight cursor position"
 msgstr "הדגש מיקום סמן"
 
-#: ../ui/main.glade:2679
+#: ../ui/main.glade:2690
 msgid "Highlight selected text"
 msgstr ""
 
-#: ../ui/main.glade:1834
+#: ../ui/main.glade:1845
 msgid "Highlighter Opti_ons"
 msgstr "אפשרויות מ_דגיש"
 
@@ -2522,11 +2526,11 @@ msgstr ""
 msgid "Insert Latex"
 msgstr ""
 
-#: ../ui/main.glade:2775
+#: ../ui/main.glade:2831
 msgid "Insert Page After"
 msgstr "הכנס דף אחרי"
 
-#: ../ui/main.glade:2767
+#: ../ui/main.glade:2823
 msgid "Insert Page Before"
 msgstr "הכנס דף לפני"
 
@@ -2594,6 +2598,14 @@ msgstr "אורך מקסימלי (מילימטרים)"
 msgid "Max multiplier"
 msgstr "מכפיל מרבי"
 
+#: ../ui/main.glade:2794
+msgid "Merge Down"
+msgstr ""
+
+#: ../ui/main.glade:1256
+msgid "Merge Layer Down"
+msgstr ""
+
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
@@ -2619,11 +2631,11 @@ msgstr "לחצני עכבר"
 msgid "Mouse+Keyboard Combo"
 msgstr "שילוב עכבר+מקלדת"
 
-#: ../ui/main.glade:2805
+#: ../ui/main.glade:2786 ../ui/main.glade:2861
 msgid "Move Down"
 msgstr "לרדת"
 
-#: ../ui/main.glade:2797
+#: ../ui/main.glade:2778 ../ui/main.glade:2853
 msgid "Move Up"
 msgstr "לעלות"
 
@@ -2697,7 +2709,7 @@ msgstr "דפים:"
 msgid "Paired Pages"
 msgstr "דפים צמודים"
 
-#: ../ui/main.glade:1293
+#: ../ui/main.glade:1304
 msgid "Paper B_ackground"
 msgstr ""
 
@@ -2705,11 +2717,11 @@ msgstr ""
 msgid "Paper Format"
 msgstr "סוג הנייר"
 
-#: ../ui/main.glade:1283
+#: ../ui/main.glade:1294
 msgid "Paper _Color"
 msgstr "_צבע הדף"
 
-#: ../ui/main.glade:1273
+#: ../ui/main.glade:1284
 msgid "Paper _Format"
 msgstr ""
 
@@ -2718,11 +2730,11 @@ msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
 
-#: ../ui/main.glade:1952
+#: ../ui/main.glade:1963
 msgid "Pause"
 msgstr ""
 
-#: ../ui/main.glade:1579
+#: ../ui/main.glade:1590
 msgid "Pen _Options"
 msgstr "_אפשרויות עט"
 
@@ -2738,7 +2750,7 @@ msgstr "הגדרות ניגון"
 msgid "Plugin Manager"
 msgstr "מנהל תוספים"
 
-#: ../ui/main.glade:2017
+#: ../ui/main.glade:2028
 msgid "Plugin _Manager"
 msgstr "מ_נהל תוספים"
 
@@ -2798,7 +2810,7 @@ msgstr ""
 msgid "Recent _Documents"
 msgstr ""
 
-#: ../ui/main.glade:1942
+#: ../ui/main.glade:1953
 msgid "Record / Stop"
 msgstr ""
 
@@ -2806,7 +2818,7 @@ msgstr ""
 msgid "Recording Quality"
 msgstr ""
 
-#: ../ui/main.glade:1256
+#: ../ui/main.glade:1267
 msgid "Rename Layer"
 msgstr ""
 
@@ -2862,7 +2874,7 @@ msgstr "בחירת תיקייה"
 msgid "Select Image"
 msgstr "בחירת תמונה"
 
-#: ../ui/main.glade:1341
+#: ../ui/main.glade:1352
 msgid "Select Linear Text"
 msgstr ""
 
@@ -2870,7 +2882,7 @@ msgstr ""
 msgid "Select PDF Page"
 msgstr "בחירת דף PDF"
 
-#: ../ui/main.glade:1353
+#: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
 msgstr ""
 
@@ -2972,7 +2984,7 @@ msgstr ""
 msgid "Storage Folder"
 msgstr "תיקיית אחסון"
 
-#: ../ui/main.glade:2719
+#: ../ui/main.glade:2730
 msgid "Strikethrough selected text"
 msgstr ""
 
@@ -3017,7 +3029,7 @@ msgstr ""
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr ""
 
-#: ../ui/main.glade:1930
+#: ../ui/main.glade:1941
 msgid "Text Font..."
 msgstr "גופן טקסט…"
 
@@ -3049,7 +3061,7 @@ msgstr "יהיה שימוש בהגדרות אלה רק בשביל דפים חד�
 msgid "Timeout"
 msgstr ""
 
-#: ../ui/main.glade:2739
+#: ../ui/main.glade:2750
 msgid "Toggle standard / region text selection"
 msgstr ""
 
@@ -3074,7 +3086,7 @@ msgstr "נסה לבחור אובייקט קודם."
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr ""
 
-#: ../ui/main.glade:2699
+#: ../ui/main.glade:2710
 msgid "Underline selected text"
 msgstr ""
 
@@ -3248,7 +3260,7 @@ msgstr "_עמודות/שורות"
 msgid "_Customize"
 msgstr "ה_תאמה אישית"
 
-#: ../ui/main.glade:1401
+#: ../ui/main.glade:1412
 msgid "_Default Tools"
 msgstr "_כלי ברירת מחדל"
 
@@ -3260,7 +3272,7 @@ msgstr "מ_חיקת דף"
 msgid "_Edit"
 msgstr "_עריכה"
 
-#: ../ui/main.glade:1329
+#: ../ui/main.glade:1340
 msgid "_Eraser"
 msgstr "מ_חק"
 
@@ -3280,11 +3292,11 @@ msgstr "דף _ראשון"
 msgid "_Goto Page"
 msgstr "מ_עבר לדף"
 
-#: ../ui/main.glade:2031
+#: ../ui/main.glade:2042
 msgid "_Help"
 msgstr "ע_זרה"
 
-#: ../ui/main.glade:1365
+#: ../ui/main.glade:1376
 msgid "_Highlighter"
 msgstr "מ_דגיש"
 
@@ -3292,7 +3304,7 @@ msgstr "מ_דגיש"
 msgid "_Horizontal"
 msgstr "_אופקי"
 
-#: ../ui/main.glade:1389
+#: ../ui/main.glade:1400
 msgid "_Image"
 msgstr "_תמונה"
 
@@ -3328,11 +3340,11 @@ msgstr "הדף ה_בא"
 msgid "_Pair Pages"
 msgstr ""
 
-#: ../ui/main.glade:1317
+#: ../ui/main.glade:1328
 msgid "_Pen"
 msgstr "_עט"
 
-#: ../ui/main.glade:2006
+#: ../ui/main.glade:2017
 msgid "_Plugin"
 msgstr "_תוסף"
 
@@ -3352,15 +3364,15 @@ msgstr "הדף ה_קודם"
 msgid "_Right to Left"
 msgstr "מ_ימין לשמאל"
 
-#: ../ui/main.glade:1418
+#: ../ui/main.glade:1429
 msgid "_Shape Recognizer"
 msgstr "מ_זהה צורות"
 
-#: ../ui/main.glade:1377
+#: ../ui/main.glade:1388
 msgid "_Text"
 msgstr "_טקסט"
 
-#: ../ui/main.glade:1306
+#: ../ui/main.glade:1317
 msgid "_Tools"
 msgstr "_כלים"
 
@@ -3376,7 +3388,7 @@ msgstr "מלמ_עלה למטה"
 msgid "_Vertical"
 msgstr "א_נכי"
 
-#: ../ui/main.glade:1537
+#: ../ui/main.glade:1548
 msgid "_Vertical Space"
 msgstr "רווח _אנכי"
 
@@ -3384,31 +3396,31 @@ msgstr "רווח _אנכי"
 msgid "_View"
 msgstr "_תצוגה"
 
-#: ../ui/main.glade:1819
+#: ../ui/main.glade:1830
 msgid "_delete strokes"
 msgstr ""
 
-#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
+#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
 msgid "_fine"
 msgstr ""
 
-#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
+#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
 msgid "_medium"
 msgstr "_בינוני"
 
-#: ../ui/main.glade:1797
+#: ../ui/main.glade:1808
 msgid "_standard"
 msgstr "_סטנדרטי"
 
-#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
+#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
 msgid "_thick"
 msgstr "_עבה"
 
-#: ../ui/main.glade:1590 ../ui/main.glade:1736 ../ui/main.glade:1845
+#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
 msgid "_very fine"
 msgstr ""
 
-#: ../ui/main.glade:1808
+#: ../ui/main.glade:1819
 msgid "_whiteout"
 msgstr ""
 
@@ -3442,7 +3454,7 @@ msgstr "פיקסלים"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr ""
 
-#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
+#: ../ui/main.glade:1645 ../ui/main.glade:1791 ../ui/main.glade:1900
 msgid "ver_y thick"
 msgstr "עבה _מאוד"
 
