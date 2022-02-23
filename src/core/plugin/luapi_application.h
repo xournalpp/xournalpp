@@ -1941,6 +1941,37 @@ static int applib_export(lua_State* L) {
     return 1;
 }
 
+/**
+ * Opens a file and by default asks the user what to do with the old document.
+ * Returns true when successful, false otherwise.
+ *
+ * Example 1: local success = app.openFile("home/username/bg.pdf")
+ *            asks what to do with the old document and loads the file afterwards, scrolls to top
+ *
+ * Example 2: local sucess = app.openFile("home/username/paintings.xopp", 3, true)
+ *            opens the file, scrolls to the 3rd page and does not ask to save the old document
+ */
+
+static int applib_openFile(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    Control* control = plugin->getControl();
+
+    const char* filename = luaL_checkstring(L, 1);
+
+    int scrollToPage = 0;  // by default scroll to the same page like last time
+    if (lua_isinteger(L, 2)) {
+        scrollToPage = lua_tointeger(L, 2);
+    }
+
+    bool forceOpen = false;  // by default asks the user
+    if (lua_isboolean(L, 3)) {
+        forceOpen = lua_toboolean(L, 3);
+    }
+
+    const bool success = control->openFile(fs::path(filename), scrollToPage - 1, forceOpen);
+    lua_pushboolean(L, success);
+    return 1;
+}
 
 /*
  * The full Lua Plugin API.
@@ -1975,6 +2006,7 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"getFilePath", applib_getFilePath},
                                   {"refreshPage", applib_refreshPage},
                                   {"getStrokes", applib_getStrokes},
+                                  {"openFile", applib_openFile},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
 
