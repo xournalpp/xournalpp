@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-22 03:30+0000\n"
-"PO-Revision-Date: 2022-02-22 03:45\n"
+"POT-Creation-Date: 2022-02-23 18:27+0000\n"
+"PO-Revision-Date: 2022-02-23 18:28\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -56,7 +56,7 @@ msgstr "<span foreground='red' size='x-large'> </span>קובץ ה-UI הבא לא
 "בנתיב העבודה. \n"
 "לא ב{2}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Add/Edit TeX"
 msgstr "הוספת/עריכת TeX"
 
@@ -132,8 +132,8 @@ msgstr "שמירה אוטומטית החליפה שם מ- {1} ל- {2}"
 msgid "Autosaving to {1}"
 msgstr "שומר אוטומטית ל- {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
 msgid "Back"
 msgstr "חזרה"
 
@@ -150,7 +150,7 @@ msgstr "הבא שכבה קדימה"
 msgid "Bring to front"
 msgstr "העבר לחזית"
 
-#: ../src/core/control/Control.cpp:2040 ../src/core/control/Control.cpp:2491
+#: ../src/core/control/Control.cpp:2064 ../src/core/control/Control.cpp:2515
 #: ../src/core/control/XournalMain.cpp:158
 msgid "Cancel"
 msgstr "ביטול"
@@ -310,7 +310,7 @@ msgstr "מותאם אישית"
 msgid "Custom Export"
 msgstr "ייצוא מותאם אישית"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Customize Toolbars"
 msgstr ""
 
@@ -322,7 +322,7 @@ msgstr "הותאם אישית"
 msgid "Cut"
 msgstr "חתוך"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Default Tool"
 msgstr "כלי ברירת מחדל"
 
@@ -335,7 +335,7 @@ msgstr "מחק"
 msgid "Delete Logfile"
 msgstr "מחק קובץ לוג"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:443
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Delete current page"
 msgstr "מחק דף נוכחי"
 
@@ -355,7 +355,7 @@ msgstr "מחק שכבה זו"
 msgid "Delete this page"
 msgstr "מחיקת דף נוכחי"
 
-#: ../src/core/control/Control.cpp:2488
+#: ../src/core/control/Control.cpp:2512
 msgid "Discard"
 msgstr "השלך"
 
@@ -363,7 +363,7 @@ msgstr "השלך"
 msgid "Display advanced export options"
 msgstr "הצג הגדרות יצוא מתקדמות"
 
-#: ../src/core/control/Control.cpp:1985
+#: ../src/core/control/Control.cpp:2009
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -373,7 +373,7 @@ msgstr ""
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2482
+#: ../src/core/control/Control.cpp:2506
 msgid "Document file was removed."
 msgstr "קובץ המסמך הוסר."
 
@@ -396,19 +396,19 @@ msgstr "מנוקד"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:470
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Draw Arrow"
 msgstr "צייר חץ"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:470
 msgid "Draw Ellipse"
 msgstr "ציור אליפסה"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:474
 msgid "Draw Line"
 msgstr "צייר קו"
 
@@ -416,19 +416,19 @@ msgstr "צייר קו"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:95
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:98
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Draw Rectangle"
 msgstr "צייר מלבן"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:474
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:475
 msgid "Draw Spline"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:472
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw coordinate system"
 msgstr "ציור מערכת צירים"
 
@@ -467,7 +467,7 @@ msgstr "מחיקת מתאר"
 msgid "Eraser"
 msgstr "מחק"
 
-#: ../src/core/control/Control.cpp:2239
+#: ../src/core/control/Control.cpp:2263
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr ""
@@ -476,7 +476,7 @@ msgstr ""
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2062
+#: ../src/core/control/Control.cpp:2086
 msgid "Error opening file \"{1}\""
 msgstr "שגיאה בפתיחת קובץ \"{1}\""
 
@@ -590,7 +590,7 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:526
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:527
 msgid "Fill"
 msgstr "מילוי"
 
@@ -598,7 +598,7 @@ msgstr "מילוי"
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:546
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Fine"
 msgstr ""
 
@@ -610,7 +610,7 @@ msgstr ""
 msgid "Font"
 msgstr "גופן"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
 msgid "Forward"
 msgstr "קדימה"
 
@@ -630,27 +630,27 @@ msgstr ""
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:421
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Go to first page"
 msgstr "עבור לדף הראשון"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Go to last page"
 msgstr "עבור לדף האחרון"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Go to next layer"
 msgstr "עבור לשכבה הבאה"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Go to page"
 msgstr "עבור לדף"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Go to previous layer"
 msgstr "עבור לשכבה הקודמת"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Go to top layer"
 msgstr "עבור לשכבה העליונה"
 
@@ -663,7 +663,7 @@ msgid "Grid Snapping"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Hand"
 msgstr "יד"
 
@@ -672,12 +672,12 @@ msgid "Hide all"
 msgstr "הסתר הכל"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:456
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Highlighter"
 msgstr "מדגיש"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
 msgid "Image"
 msgstr "תמונה"
 
@@ -714,7 +714,7 @@ msgstr "הוספת latex"
 msgid "Insert layer"
 msgstr "הכנס שכבה"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:439
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Insert page"
 msgstr "הכנס דף"
 
@@ -760,11 +760,11 @@ msgstr ""
 msgid "Loading..."
 msgstr "טוען..."
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:408
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Manage Toolbars"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
 msgid "Medium"
 msgstr ""
 
@@ -796,11 +796,11 @@ msgstr "חדש"
 msgid "New Xournal"
 msgstr "Xournal חדש"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Next"
 msgstr "הבא"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:432
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Next annotated page"
 msgstr ""
 
@@ -813,7 +813,7 @@ msgstr "אין התקן"
 msgid "No pages to export!"
 msgstr "אין דפים לייצוא!"
 
-#: ../src/core/control/Control.cpp:1294
+#: ../src/core/control/Control.cpp:1318
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr ""
 
@@ -907,7 +907,7 @@ msgstr "דף הוכנס"
 msgid "Page number"
 msgstr "מספר דף"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:403
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
 msgstr ""
 
@@ -916,7 +916,7 @@ msgstr ""
 msgid "Paste"
 msgstr "הדבק"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Pause / Play"
 msgstr "השהה / נגן"
 
@@ -929,7 +929,7 @@ msgstr "עט"
 msgid "Plain"
 msgstr "פשוט"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
 msgid "Play Object"
@@ -939,7 +939,7 @@ msgstr ""
 msgid "Predefined"
 msgstr "מוגדר מראש"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:405
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Presentation mode"
 msgstr "מצב תצוגה"
 
@@ -951,11 +951,11 @@ msgstr ""
 msgid "Print"
 msgstr "הדפסה"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Record Audio / Stop Recording"
 msgstr "הקלט שמע / עצור הקלטה"
 
-#: ../src/core/control/Control.cpp:904
+#: ../src/core/control/Control.cpp:922
 msgid "Recorder could not be started."
 msgstr "לא ניתן להתחיל הקלטה."
 
@@ -968,7 +968,7 @@ msgstr "בצע מחדש"
 msgid "Redo: "
 msgstr "בצע מחדש: "
 
-#: ../src/core/control/Control.cpp:2039
+#: ../src/core/control/Control.cpp:2063
 msgid "Remove PDF Background"
 msgstr "הסר רקע מ-PDF"
 
@@ -1020,16 +1020,16 @@ msgstr ""
 msgid "Sample LaTeX file generated successfully."
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2483 ../src/core/control/jobs/SaveJob.cpp:15
+#: ../src/core/control/Control.cpp:2507 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Save"
 msgstr "שמור"
 
-#: ../src/core/control/Control.cpp:2483
+#: ../src/core/control/Control.cpp:2507
 msgid "Save As..."
 msgstr "שמירה בשם..."
 
-#: ../src/core/control/Control.cpp:2328
+#: ../src/core/control/Control.cpp:2352
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "שמור קובץ"
@@ -1055,17 +1055,17 @@ msgstr ""
 msgid "Select Area Text from pdf"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Select Font"
 msgstr "בחר גופן"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:465
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Select Object"
@@ -1083,7 +1083,7 @@ msgstr ""
 msgid "Select PDF Text In Rectangle"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:467
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Select PDF Text in Rectangle"
 msgstr ""
 
@@ -1091,14 +1091,14 @@ msgstr ""
 msgid "Select Pdf Text"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
 msgstr "בחר מלבן"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:476
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:65
 msgid "Select Region"
@@ -1108,7 +1108,7 @@ msgstr "בחר אזור"
 msgid "Select Text from pdf"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2038
+#: ../src/core/control/Control.cpp:2062
 msgid "Select another PDF"
 msgstr "בחר קובץ PDF נוסף"
 
@@ -1169,7 +1169,11 @@ msgid "Set page width for PNG exports\n"
 "                                 Ignored if --export-png-dpi is used"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:463
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
+msgid "Setsquare"
+msgstr ""
+
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
 msgstr "מזהה צורות"
 
@@ -1199,7 +1203,7 @@ msgstr ""
 msgid "Staves"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Stop"
 msgstr "עצור"
 
@@ -1238,7 +1242,7 @@ msgid "System Default"
 msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:458
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Text"
 msgstr "טקסט"
 
@@ -1271,16 +1275,16 @@ msgstr "טקסט לא נמצא"
 msgid "Text not found, searched on all pages"
 msgstr "טקסט לא נמצא, כל הדפים עברו חיפוש"
 
-#: ../src/core/control/Control.cpp:1095
+#: ../src/core/control/Control.cpp:1113
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2027
+#: ../src/core/control/Control.cpp:2051
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2031
+#: ../src/core/control/Control.cpp:2055
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr ""
@@ -1289,7 +1293,7 @@ msgstr ""
 msgid "The check for overwriting the background failed with:\n"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2070
+#: ../src/core/control/Control.cpp:2094
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr ""
 
@@ -1329,11 +1333,11 @@ msgstr ""
 msgid "There was an error displaying help: {1}"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Thick"
 msgstr "עבה"
 
-#: ../src/core/control/Control.cpp:2482
+#: ../src/core/control/Control.cpp:2506
 msgid "This document is not saved yet."
 msgstr "מסמך זה עדיין לא נשמר."
 
@@ -1342,7 +1346,7 @@ msgstr "מסמך זה עדיין לא נשמר."
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "תמונה זו לא יכלה להיטען. הודעת שגיאה: {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Toggle fullscreen"
 msgstr "עבור למסך מלא"
 
@@ -1370,7 +1374,7 @@ msgstr ""
 msgid "Unable to play audio recording {1}"
 msgstr "לא ניתן לנגן את הקלטת השמע {1}"
 
-#: ../src/core/control/Control.cpp:1308
+#: ../src/core/control/Control.cpp:1332
 msgid "Unable to retrieve pdf page."
 msgstr ""
 
@@ -1419,11 +1423,11 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2385
+#: ../src/core/control/Control.cpp:2409
 msgid "Unsaved Document"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 msgid "Vertical Space"
 msgstr ""
 
@@ -1431,11 +1435,11 @@ msgstr ""
 msgid "Vertical space"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:545
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:546
 msgid "Very Fine"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:550
 msgid "Very Thick"
 msgstr ""
 
@@ -1471,7 +1475,7 @@ msgstr ""
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2334
+#: ../src/core/control/Control.cpp:2358
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr ""
@@ -1500,23 +1504,23 @@ msgstr ""
 msgid "Zoom Slider"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Zoom fit to screen"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Zoom in"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:411
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Zoom out"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Zoom to 100%"
 msgstr "תקריב 100%‏"
 
-#: ../src/core/control/Control.cpp:2328
+#: ../src/core/control/Control.cpp:2352
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
@@ -1529,7 +1533,7 @@ msgstr "_ביטול"
 msgid "_Open"
 msgstr "_פתח"
 
-#: ../src/core/control/Control.cpp:2329
+#: ../src/core/control/Control.cpp:2353
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
@@ -1572,7 +1576,7 @@ msgstr "אלמנטים"
 msgid "eraser"
 msgstr "מחק"
 
-#: ../src/core/control/Control.cpp:1999
+#: ../src/core/control/Control.cpp:2023
 msgid "file: {1}"
 msgstr ""
 
@@ -2113,7 +2117,7 @@ msgstr "העתק את רקע הדף הנוכחי במקום"
 msgid "Copy current page size instead"
 msgstr "העתק את גודל הדף הנוכחי במקום"
 
-#: ../ui/main.glade:2668
+#: ../ui/main.glade:2678
 msgid "Copy selected text"
 msgstr ""
 
@@ -2259,11 +2263,11 @@ msgstr ""
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr ""
 
-#: ../ui/main.glade:2802 ../ui/main.glade:2839
+#: ../ui/main.glade:2812 ../ui/main.glade:2849
 msgid "Duplicate"
 msgstr "שכפול"
 
-#: ../ui/main.glade:2876
+#: ../ui/main.glade:2886
 msgid "Edit (not implemented yet)"
 msgstr "עריכה (לא מיושם עדיין)"
 
@@ -2319,7 +2323,7 @@ msgstr ""
 msgid "Enter / edit LaTeX Text"
 msgstr ""
 
-#: ../ui/main.glade:1736
+#: ../ui/main.glade:1746
 msgid "Eraser Optio_ns"
 msgstr ""
 
@@ -2344,11 +2348,11 @@ msgstr ""
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr ""
 
-#: ../ui/main.glade:1712 ../ui/main.glade:1917
+#: ../ui/main.glade:1722 ../ui/main.glade:1927
 msgid "Fi_ll"
 msgstr ""
 
-#: ../ui/main.glade:1722 ../ui/main.glade:1927
+#: ../ui/main.glade:1732 ../ui/main.glade:1937
 msgid "Fill opacity"
 msgstr "אטימות המילוי"
 
@@ -2356,11 +2360,11 @@ msgstr "אטימות המילוי"
 msgid "Finalize the stroke"
 msgstr ""
 
-#: ../ui/main.glade:2466
+#: ../ui/main.glade:2476
 msgid "Find next occurrence of the search string"
 msgstr ""
 
-#: ../ui/main.glade:2444
+#: ../ui/main.glade:2454
 msgid "Find previous occurrence of the search string"
 msgstr ""
 
@@ -2444,11 +2448,11 @@ msgstr "הסתר סרגל גלילה אנכי"
 msgid "Highlight cursor position"
 msgstr "הדגש מיקום סמן"
 
-#: ../ui/main.glade:2690
+#: ../ui/main.glade:2700
 msgid "Highlight selected text"
 msgstr ""
 
-#: ../ui/main.glade:1845
+#: ../ui/main.glade:1855
 msgid "Highlighter Opti_ons"
 msgstr "אפשרויות מ_דגיש"
 
@@ -2526,11 +2530,11 @@ msgstr ""
 msgid "Insert Latex"
 msgstr ""
 
-#: ../ui/main.glade:2831
+#: ../ui/main.glade:2841
 msgid "Insert Page After"
 msgstr "הכנס דף אחרי"
 
-#: ../ui/main.glade:2823
+#: ../ui/main.glade:2833
 msgid "Insert Page Before"
 msgstr "הכנס דף לפני"
 
@@ -2598,7 +2602,7 @@ msgstr "אורך מקסימלי (מילימטרים)"
 msgid "Max multiplier"
 msgstr "מכפיל מרבי"
 
-#: ../ui/main.glade:2794
+#: ../ui/main.glade:2804
 msgid "Merge Down"
 msgstr ""
 
@@ -2631,11 +2635,11 @@ msgstr "לחצני עכבר"
 msgid "Mouse+Keyboard Combo"
 msgstr "שילוב עכבר+מקלדת"
 
-#: ../ui/main.glade:2786 ../ui/main.glade:2861
+#: ../ui/main.glade:2796 ../ui/main.glade:2871
 msgid "Move Down"
 msgstr "לרדת"
 
-#: ../ui/main.glade:2778 ../ui/main.glade:2853
+#: ../ui/main.glade:2788 ../ui/main.glade:2863
 msgid "Move Up"
 msgstr "לעלות"
 
@@ -2730,11 +2734,11 @@ msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
 
-#: ../ui/main.glade:1963
+#: ../ui/main.glade:1973
 msgid "Pause"
 msgstr ""
 
-#: ../ui/main.glade:1590
+#: ../ui/main.glade:1600
 msgid "Pen _Options"
 msgstr "_אפשרויות עט"
 
@@ -2750,7 +2754,7 @@ msgstr "הגדרות ניגון"
 msgid "Plugin Manager"
 msgstr "מנהל תוספים"
 
-#: ../ui/main.glade:2028
+#: ../ui/main.glade:2038
 msgid "Plugin _Manager"
 msgstr "מ_נהל תוספים"
 
@@ -2810,7 +2814,7 @@ msgstr ""
 msgid "Recent _Documents"
 msgstr ""
 
-#: ../ui/main.glade:1953
+#: ../ui/main.glade:1963
 msgid "Record / Stop"
 msgstr ""
 
@@ -2984,7 +2988,7 @@ msgstr ""
 msgid "Storage Folder"
 msgstr "תיקיית אחסון"
 
-#: ../ui/main.glade:2730
+#: ../ui/main.glade:2740
 msgid "Strikethrough selected text"
 msgstr ""
 
@@ -3029,7 +3033,7 @@ msgstr ""
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr ""
 
-#: ../ui/main.glade:1941
+#: ../ui/main.glade:1951
 msgid "Text Font..."
 msgstr "גופן טקסט…"
 
@@ -3061,7 +3065,7 @@ msgstr "יהיה שימוש בהגדרות אלה רק בשביל דפים חד�
 msgid "Timeout"
 msgstr ""
 
-#: ../ui/main.glade:2750
+#: ../ui/main.glade:2760
 msgid "Toggle standard / region text selection"
 msgstr ""
 
@@ -3086,7 +3090,7 @@ msgstr "נסה לבחור אובייקט קודם."
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr ""
 
-#: ../ui/main.glade:2710
+#: ../ui/main.glade:2720
 msgid "Underline selected text"
 msgstr ""
 
@@ -3292,7 +3296,7 @@ msgstr "דף _ראשון"
 msgid "_Goto Page"
 msgstr "מ_עבר לדף"
 
-#: ../ui/main.glade:2042
+#: ../ui/main.glade:2052
 msgid "_Help"
 msgstr "ע_זרה"
 
@@ -3344,7 +3348,7 @@ msgstr ""
 msgid "_Pen"
 msgstr "_עט"
 
-#: ../ui/main.glade:2017
+#: ../ui/main.glade:2027
 msgid "_Plugin"
 msgstr "_תוסף"
 
@@ -3396,31 +3400,31 @@ msgstr "רווח _אנכי"
 msgid "_View"
 msgstr "_תצוגה"
 
-#: ../ui/main.glade:1830
+#: ../ui/main.glade:1840
 msgid "_delete strokes"
 msgstr ""
 
-#: ../ui/main.glade:1612 ../ui/main.glade:1758 ../ui/main.glade:1867
+#: ../ui/main.glade:1622 ../ui/main.glade:1768 ../ui/main.glade:1877
 msgid "_fine"
 msgstr ""
 
-#: ../ui/main.glade:1623 ../ui/main.glade:1769 ../ui/main.glade:1878
+#: ../ui/main.glade:1633 ../ui/main.glade:1779 ../ui/main.glade:1888
 msgid "_medium"
 msgstr "_בינוני"
 
-#: ../ui/main.glade:1808
+#: ../ui/main.glade:1818
 msgid "_standard"
 msgstr "_סטנדרטי"
 
-#: ../ui/main.glade:1634 ../ui/main.glade:1780 ../ui/main.glade:1889
+#: ../ui/main.glade:1644 ../ui/main.glade:1790 ../ui/main.glade:1899
 msgid "_thick"
 msgstr "_עבה"
 
-#: ../ui/main.glade:1601 ../ui/main.glade:1747 ../ui/main.glade:1856
+#: ../ui/main.glade:1611 ../ui/main.glade:1757 ../ui/main.glade:1866
 msgid "_very fine"
 msgstr ""
 
-#: ../ui/main.glade:1819
+#: ../ui/main.glade:1829
 msgid "_whiteout"
 msgstr ""
 
@@ -3454,7 +3458,7 @@ msgstr "פיקסלים"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr ""
 
-#: ../ui/main.glade:1645 ../ui/main.glade:1791 ../ui/main.glade:1900
+#: ../ui/main.glade:1655 ../ui/main.glade:1801 ../ui/main.glade:1910
 msgid "ver_y thick"
 msgstr "עבה _מאוד"
 
