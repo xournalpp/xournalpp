@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-24 00:41\n"
+"PO-Revision-Date: 2022-02-24 15:42\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -34,7 +34,7 @@ msgstr ""
 
 #: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
-msgstr ""
+msgstr "%F-Noto-%H-%M"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:151
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
@@ -59,7 +59,7 @@ msgstr ""
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
-msgstr ""
+msgstr "Ĉiuj dosieroj"
 
 #: ../src/core/control/pagetype/PageTypeMenu.cpp:191
 msgid "Apply to all pages"
@@ -174,13 +174,13 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:226
 msgid "Contents"
-msgstr ""
+msgstr "Enhavoj"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:81
 msgid "Copy"
-msgstr ""
+msgstr "Kopii"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Copy current"
@@ -188,7 +188,7 @@ msgstr ""
 
 #: ../src/core/undo/CopyUndoAction.cpp:59
 msgid "Copy page"
-msgstr ""
+msgstr "Kopii paĝon"
 
 #: ../src/util/PathUtil.cpp:257
 msgid "Could not create folder: {1}\n"
@@ -291,7 +291,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:78
 msgid "Create new layer"
-msgstr ""
+msgstr "Krei novan tavolon"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:64
 msgid "Custom"
