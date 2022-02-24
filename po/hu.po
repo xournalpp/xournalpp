@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-24 07:32\n"
+"PO-Revision-Date: 2022-02-24 08:29\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -485,11 +485,11 @@ msgstr "Hiba a(z) „{1}” glade-fájl betöltése közben (próbálja meg bet�
 
 #: ../src/core/control/Control.cpp:2086
 msgid "Error opening file \"{1}\""
-msgstr "Hiba a fájl megnyitása során: {1}"
+msgstr "Hiba történt a fájl megnyitása közben: {1}"
 
 #: ../src/util/OutputStream.cpp:23
 msgid "Error opening file: \"{1}\""
-msgstr "Hiba a fájl megnyitása során: „{1}”"
+msgstr "Hiba történt a fájl megnyitása közben: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:445
 #: ../src/core/control/xojfile/LoadHandler.cpp:465
@@ -498,15 +498,15 @@ msgstr "Hiba történt a PDF-fájl olvasásakor: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:522
 msgid "Error reading width of a stroke: {1}"
-msgstr "Hiba a vonalvastagság olvasása során: {1}"
+msgstr "Hiba történt a vonalvastagság olvasása során: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
-msgstr "Hiba a kép mentése közben! #1"
+msgstr "Hiba történt a kép mentése közben! #1"
 
 #: ../src/core/control/jobs/ImageExport.cpp:161
 msgid "Error save image #2"
-msgstr "Hiba a kép mentése közben! #2"
+msgstr "Hiba történt a kép mentése közben! #2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
@@ -762,7 +762,7 @@ msgstr "Rétegkombináció"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layer Preview"
-msgstr "Réteg előnézet"
+msgstr "Réteg előnézete"
 
 #: ../src/core/control/layer/LayerController.cpp:369
 msgid "Layer {1}"
@@ -776,7 +776,7 @@ msgstr "Egymásra helyezett rétegek előnézete"
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
-msgstr "Betöltés..."
+msgstr "Betöltés…"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Manage Toolbars"
@@ -908,7 +908,7 @@ msgstr "Oldal"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:73
 msgid "Page Preview"
-msgstr "Oldal előnézet"
+msgstr "Oldal előnézete"
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:80
 msgid "Page background changed"
@@ -1437,7 +1437,7 @@ msgstr "Ismeretlen tartománytípus: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:228
 msgid "Unknown parser error"
-msgstr "Ismeretlen értelmező hiba történt"
+msgstr "Ismeretlen értelmezőhiba történt"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:399
 msgid "Unknown pixmap::domain type: {1}"
@@ -1489,7 +1489,7 @@ msgstr "Rossz számú pont, {1} kapott, várható: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:225
 msgid "XML Parser error: {1}"
-msgstr "XML-elemző hiba: {1}"
+msgstr "XML-elemzőhiba történt: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:26
 msgid "Xournal (Compatibility)"
@@ -3449,7 +3449,7 @@ msgstr "_Alakzatfelismerő"
 
 #: ../ui/main.glade:1388
 msgid "_Text"
-msgstr "S&zöveg"
+msgstr "S_zöveg"
 
 #: ../ui/main.glade:1317
 msgid "_Tools"
