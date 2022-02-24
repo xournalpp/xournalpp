@@ -36,6 +36,8 @@ auto SetsquareInputHandler::handleImpl(InputEvent const& event) -> bool {
         case INPUT_DEVICE_PEN:
         case INPUT_DEVICE_MOUSE:
             return this->handlePointer(event);
+        case INPUT_DEVICE_MOUSE_KEYBOARD_COMBO:
+            return this->handlePointer(event) || this->handleKeyboard(event);
         default:
             g_warning("Device class %d not handled by setsquare", event.deviceClass);
             return false;
