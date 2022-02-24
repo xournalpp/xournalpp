@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:27\n"
+"PO-Revision-Date: 2022-02-24 04:22\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -789,7 +789,7 @@ msgstr "Médio"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Mesclar camada para abaixo"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -2142,7 +2142,7 @@ msgstr "Botão 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Alterar"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2651,7 +2651,7 @@ msgstr "Carregar arquivo"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Carregar do arquivo"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2675,11 +2675,11 @@ msgstr "Multiplicador máximo"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "Mesclar para Baixo"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Mesclar camada para abaixo"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2929,7 +2929,7 @@ msgstr "Amostra de nome de camada"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Salvar em Arquivo"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
