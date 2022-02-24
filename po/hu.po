@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-24 05:31\n"
+"PO-Revision-Date: 2022-02-24 06:36\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -361,7 +361,7 @@ msgstr "Oldal törlése"
 
 #: ../src/core/control/Control.cpp:2512
 msgid "Discard"
-msgstr "Elvetés"
+msgstr "Módosítások elvetése"
 
 #: ../src/core/control/XournalMain.cpp:586
 msgid "Display advanced export options"
@@ -2141,7 +2141,7 @@ msgstr "2. gomb"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Módosítás"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2650,7 +2650,7 @@ msgstr "Fájl betöltése"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Betöltés fájlból"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2674,7 +2674,7 @@ msgstr "Legfeljebb szorzó"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "Egyesítése lefelé"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
@@ -3501,7 +3501,7 @@ msgstr "_nagyon finom"
 
 #: ../ui/main.glade:1829
 msgid "_whiteout"
-msgstr "Ki_fehéredés"
+msgstr "ki_fehéredés"
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
