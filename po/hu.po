@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:28\n"
+"PO-Revision-Date: 2022-02-24 05:31\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -788,7 +788,7 @@ msgstr "Közepes"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Rétegek egyesítése lefelé"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -933,7 +933,7 @@ msgstr "Oldalak párosítása"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 #: ../src/core/undo/AddUndoAction.cpp:57
 msgid "Paste"
-msgstr "Beilleszt"
+msgstr "Beillesztés"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Pause / Play"
@@ -1195,7 +1195,7 @@ msgstr "Oldalszélesség beállítása PNG exportokhoz\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "Háromszögű vonalzó"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
@@ -1231,7 +1231,7 @@ msgstr "Kottavonalas"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Stop"
-msgstr "Állj"
+msgstr "Leállítás"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
@@ -1670,7 +1670,7 @@ msgstr "trackpoint"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:279
 msgid "whiteout"
-msgstr "fehér kitöltés"
+msgstr "kifehéredés"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:936
 msgid "xoj-File: {1}"
@@ -2678,7 +2678,7 @@ msgstr ""
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Rétegek egyesítése lefelé"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2928,7 +2928,7 @@ msgstr "Minta rétegnév"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Mentés fájlba"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -3225,7 +3225,7 @@ msgstr "Ha nagy felbontású PDF-re nagyít, minden újrarenderelés hosszú ide
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr "Fehér kitöltés"
+msgstr "Kifehéredés"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
@@ -3501,7 +3501,7 @@ msgstr "_nagyon finom"
 
 #: ../ui/main.glade:1829
 msgid "_whiteout"
-msgstr "_fehér kitöltés"
+msgstr "Ki_fehéredés"
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
