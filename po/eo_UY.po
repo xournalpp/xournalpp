@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-24 16:39\n"
+"PO-Revision-Date: 2022-02-24 17:36\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1029,7 +1029,7 @@ msgstr "Konservi dosieron"
 #: ../src/core/control/jobs/CustomExportJob.cpp:124
 #: ../src/core/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "Eraro konservante dosieron: {1}"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:55
 msgid "Scale"
@@ -1073,22 +1073,22 @@ msgstr "Elekti PDF-tekston"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Elekti PDF-tekston en ortangulo"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Elekti PDF-tekston en ortangulo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Elekti PDF-tekston"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
-msgstr ""
+msgstr "Elekti ortangulon"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
@@ -1130,7 +1130,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:154
 msgid "Send Bugreport"
-msgstr ""
+msgstr "Sendi raporton pri cimo"
 
 #: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
@@ -1231,7 +1231,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
-msgstr ""
+msgstr "Sistema implicito"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
@@ -1344,7 +1344,7 @@ msgstr "Baskuligi plenekranan reĝimon"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 msgid "Tool - don't change"
-msgstr ""
+msgstr "Ilo – ne ŝanĝu"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:102
 msgid "Toolbar found: {1}"
@@ -1393,7 +1393,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
 msgid "Unknown color value \"{1}\""
-msgstr ""
+msgstr "Nekonata kolora valoro «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:452
 msgid "Unknown domain type: {1}"
@@ -1437,7 +1437,7 @@ msgstr "Dikega"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "With PDF background"
-msgstr ""
+msgstr "Kun PDF-fono"
 
 #: ../src/core/undo/InsertUndoAction.cpp:31
 msgid "Write text"
@@ -1453,7 +1453,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:225
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "XML-sintaksa eraro: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:26
 msgid "Xournal (Compatibility)"
@@ -1606,7 +1606,7 @@ msgstr "norma"
 #: ../src/core/undo/AddUndoAction.cpp:73
 #: ../src/core/undo/DeleteUndoAction.cpp:71
 msgid "stroke"
-msgstr ""
+msgstr "streko"
 
 #: ../src/core/control/DeviceListHelper.cpp:124
 msgid "tablet pad"
@@ -1974,7 +1974,7 @@ msgstr ""
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
-msgstr ""
+msgstr "Aritmetika meznombro"
 
 #: ../ui/settings.glade:1774
 msgid "Artifact workaround"
@@ -2059,7 +2059,7 @@ msgstr ""
 
 #: ../ui/about.glade:99
 msgid "Built on"
-msgstr ""
+msgstr "Surbaze de"
 
 #: ../ui/settings.glade:1845
 msgid "Button 1"
@@ -2083,7 +2083,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3063
 msgid "Circle Color"
-msgstr ""
+msgstr "Koloro de cirklo"
 
 #: ../ui/settings.glade:3730
 msgid "Clear cached paged while scrolling"
@@ -2111,7 +2111,7 @@ msgstr ""
 
 #: ../ui/main.glade:2678
 msgid "Copy selected text"
-msgstr ""
+msgstr "Kopii elektitan tekston"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2609,11 +2609,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1367
 msgid "Middle Mouse Button"
-msgstr ""
+msgstr "Meza musbutono"
 
 #: ../ui/settings.glade:1577
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Minimuma premo:"
 
 #: ../ui/settings.glade:1454 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2691,7 +2691,7 @@ msgstr "Eliga aparato"
 
 #: ../ui/settings.glade:5020
 msgid "PDF Cache"
-msgstr ""
+msgstr "PDF-kaŝmemoro"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
@@ -2707,11 +2707,11 @@ msgstr ""
 
 #: ../ui/main.glade:1304
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "Papera _fono"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr ""
+msgstr "Formato"
 
 #: ../ui/main.glade:1294
 msgid "Paper _Color"
@@ -2719,7 +2719,7 @@ msgstr "Papera _koloro"
 
 #: ../ui/main.glade:1284
 msgid "Paper _Format"
-msgstr ""
+msgstr "_Formato"
 
 #: ../ui/about.glade:296
 msgid "Partially based on Xournal\n"
@@ -2736,7 +2736,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3759
 msgid "Performance"
-msgstr ""
+msgstr "Rendimento"
 
 #: ../ui/settings.glade:5651
 msgid "Playback Settings"
@@ -2804,7 +2804,7 @@ msgstr ""
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr ""
+msgstr "Lastaj _dokumentoj"
 
 #: ../ui/main.glade:1963
 msgid "Record / Stop"
@@ -2852,7 +2852,7 @@ msgstr "Konservi sur dosieron"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
-msgstr ""
+msgstr "Rulumskaloj"
 
 #: ../ui/settings.glade:4273
 msgid "Scrolling outside the page"
@@ -3314,7 +3314,7 @@ msgstr "_Lasta paĝo"
 
 #: ../ui/main.glade:616
 msgid "_Left to Right"
-msgstr ""
+msgstr "De ma_ldekstro dekstren"
 
 #: ../ui/main.glade:921
 msgid "_Manage"
@@ -3358,7 +3358,7 @@ msgstr "_Antaŭa paĝo"
 
 #: ../ui/main.glade:627
 msgid "_Right to Left"
-msgstr ""
+msgstr "De dekst_ro maldekstren"
 
 #: ../ui/main.glade:1429
 msgid "_Shape Recognizer"
@@ -3378,7 +3378,7 @@ msgstr "_Supra tavolo"
 
 #: ../ui/main.glade:645
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "De _supro malsupren"
 
 #: ../ui/main.glade:598
 msgid "_Vertical"
@@ -3394,7 +3394,7 @@ msgstr "_Vidi"
 
 #: ../ui/main.glade:1840
 msgid "_delete strokes"
-msgstr ""
+msgstr "_forviŝi strekojn"
 
 #: ../ui/main.glade:1622 ../ui/main.glade:1768 ../ui/main.glade:1877
 msgid "_fine"
