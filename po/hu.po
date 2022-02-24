@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-24 06:36\n"
+"PO-Revision-Date: 2022-02-24 07:32\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -522,11 +522,11 @@ msgstr "Hiba: {1}"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr "Hiba: A(z) {1} fájl nem szabályos. Ellenőrizze a LaTeX sablonfájl beállításait. "
+msgstr "Hiba történt: A(z) {1} fájl nem szabályos. Ellenőrizze a LaTeX sablonfájl beállításait."
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr "Hiba: {1}. Ellenőrizze a(z) {2} tartalmát"
+msgstr "Hiba történt: {1}. Ellenőrizze a(z) {2} tartalmát"
 
 #: ../src/core/control/XournalMain.cpp:177
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -1056,7 +1056,7 @@ msgstr "Fájl mentése"
 #: ../src/core/control/jobs/CustomExportJob.cpp:124
 #: ../src/core/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
-msgstr "Hiba a fájl mentése közben: {1}"
+msgstr "Hiba történt a fájl mentése közben: {1}"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:55
 msgid "Scale"
@@ -1437,7 +1437,7 @@ msgstr "Ismeretlen tartománytípus: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:228
 msgid "Unknown parser error"
-msgstr "Ismeretlen elemzőhiba"
+msgstr "Ismeretlen értelmező hiba történt"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:399
 msgid "Unknown pixmap::domain type: {1}"
@@ -1562,13 +1562,13 @@ msgstr "_Mégse"
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:13
 msgid "_Open"
-msgstr "_Megnyitás"
+msgstr "_Megnyitás…"
 
 #: ../src/core/control/Control.cpp:2353
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
-msgstr "_Mentés"
+msgstr "M_entés"
 
 #: ../src/core/control/DeviceListHelper.cpp:112
 msgid "cursor"
@@ -2642,7 +2642,7 @@ msgstr "Licenc"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
-msgstr "Betöltés / Mentés"
+msgstr "Betöltés/Mentés"
 
 #: ../ui/images.glade:73
 msgid "Load file"
@@ -3357,7 +3357,7 @@ msgstr "_Radír"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr "_Exportálás PDF-fájlként"
+msgstr "_Exportálás PDF-fájlként…"
 
 #: ../ui/main.glade:152
 msgid "_File"
