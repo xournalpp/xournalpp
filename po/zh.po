@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-25 17:27\n"
+"PO-Revision-Date: 2022-02-25 18:26\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -3063,7 +3063,7 @@ msgstr "保存位置"
 
 #: ../ui/main.glade:2740
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "为选中文本添加删除线"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3140,7 +3140,7 @@ msgstr "超时"
 
 #: ../ui/main.glade:2760
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "切换标准/区域文本选择"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
@@ -3165,7 +3165,7 @@ msgstr "请先选择对象；如果没有选中，则显示浮动工具箱（需
 
 #: ../ui/main.glade:2720
 msgid "Underline selected text"
-msgstr "将选中文本下划线"
+msgstr "为选中文本添加下划线"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
