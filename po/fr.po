@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:28\n"
+"PO-Revision-Date: 2022-02-25 18:26\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -789,7 +789,7 @@ msgstr "Moyen"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Fusionner avec le calque inférieur"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
