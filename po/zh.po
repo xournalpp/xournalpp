@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-25 16:32\n"
+"PO-Revision-Date: 2022-02-25 17:27\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1196,7 +1196,7 @@ msgstr "设置PNG导出页面的宽度\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "三角板"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
@@ -1446,7 +1446,7 @@ msgstr "未知的 pixmap::domain 类型: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "未知笔划端点类型：“{1}“，将假设为圆形"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1864,7 +1864,8 @@ msgstr "<b>文档导出设置</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>空工具箱</b>\n"
+"            <i>菜单：查看/工具栏</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -2141,7 +2142,7 @@ msgstr "按钮 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "更改"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2181,7 +2182,7 @@ msgstr "复制当前页面尺寸"
 
 #: ../ui/main.glade:2678
 msgid "Copy selected text"
-msgstr ""
+msgstr "复制选定文本"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2518,7 +2519,7 @@ msgstr "高亮光标位置"
 
 #: ../ui/main.glade:2700
 msgid "Highlight selected text"
-msgstr ""
+msgstr "高亮选中的文本"
 
 #: ../ui/main.glade:1855
 msgid "Highlighter Opti_ons"
@@ -2959,7 +2960,7 @@ msgstr "选择PDF页面"
 
 #: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "在矩形中选择文本"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3164,7 +3165,7 @@ msgstr "请先选择对象；如果没有选中，则显示浮动工具箱（需
 
 #: ../ui/main.glade:2720
 msgid "Underline selected text"
-msgstr ""
+msgstr "将选中文本下划线"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
