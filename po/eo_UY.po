@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-26 15:36\n"
+"PO-Revision-Date: 2022-02-26 16:38\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -198,11 +198,11 @@ msgstr ""
 
 #: ../src/core/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "Ne eblis ŝargi la LaTeX-PDF-dosieron"
 
 #: ../src/core/control/LatexController.cpp:267
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "Ne eblis ŝargi la LaTeX-PDF-dosieron: {1}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:16
 msgid "Could not load pagetemplates.ini file"
@@ -231,7 +231,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "Ne eblis malfermi dosieron: «{1}»"
 
 #: ../src/core/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
@@ -271,11 +271,11 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "Ne eblis konservi .tex-dosieron: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:88
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "Ne eblis lanĉi {1}: {2} (elirkodo: {3})"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
@@ -422,11 +422,11 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw coordinate system"
-msgstr ""
+msgstr "Desegni koordinataron"
 
 #: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Draw stroke"
-msgstr ""
+msgstr "Desegni strekon"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Drawing Type - don't change"
@@ -608,7 +608,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:42
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPL versio 2 aŭ pli nova"
 
 #: ../src/core/control/XournalMain.cpp:534
 msgid "Get version of xournalpp"
@@ -915,7 +915,7 @@ msgstr ""
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:257
 msgid "Pen"
-msgstr "Skribilo"
+msgstr "Plumo"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
@@ -925,7 +925,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
 msgid "Play Object"
-msgstr ""
+msgstr "Ludi objekton"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:16
 msgid "Predefined"
@@ -933,7 +933,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Presentation mode"
-msgstr ""
+msgstr "Prezentoreĝimo"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
@@ -962,7 +962,7 @@ msgstr "Refari: "
 
 #: ../src/core/control/Control.cpp:2063
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "Forviŝi PDF-fonon"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
 msgid "Removed tool item from Toolbar {1} ID {2}"
@@ -1041,7 +1041,7 @@ msgstr "Serĉi"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:35
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Vidi la plenan liston de kontribuintoj"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
@@ -1197,13 +1197,13 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Stop"
-msgstr ""
+msgstr "Ĉesigi"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
 #: ../src/core/undo/RecognizerUndoAction.cpp:69
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "Streko-rekonilo"
 
 #: ../src/core/control/CrashHandler.cpp:40
 msgid "Successfully saved document to \"{1}\""
@@ -1592,7 +1592,7 @@ msgstr "muso"
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "pen"
-msgstr ""
+msgstr "plumo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
 msgid "show"
@@ -1610,7 +1610,7 @@ msgstr "streko"
 
 #: ../src/core/control/DeviceListHelper.cpp:124
 msgid "tablet pad"
-msgstr ""
+msgstr "desegna tabuleto"
 
 #: ../src/core/undo/AddUndoAction.cpp:82
 #: ../src/core/undo/DeleteUndoAction.cpp:80
@@ -1770,7 +1770,7 @@ msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr ""
+msgstr "<b>... aŭ elektu jam uzatan bildon:</b>"
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
@@ -1875,7 +1875,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5774
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>Elekti lingvon (postulas relanĉon)</i>"
 
 #: ../ui/settings.glade:5102
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -1929,7 +1929,8 @@ msgstr ""
 #: ../ui/about.glade:203
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>La sekva generacio</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
@@ -2027,7 +2028,7 @@ msgstr "Baza rapido"
 #: ../ui/settings.glade:3001
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Granda pluma piktogramo"
 
 #: ../ui/settings.glade:3206
 msgid "Border Color"
@@ -2127,7 +2128,7 @@ msgstr "Kursoro"
 
 #: ../ui/settings.glade:2983
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Kursora piktogramo de plumo"
 
 #: ../ui/settings.glade:1205
 msgid "Cusp detection"
@@ -2237,7 +2238,7 @@ msgstr "Malhelpo: Se la valoro estas tro malgranda, nedezirata oscilado eble oka
 
 #: ../ui/main.glade:1473
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Desegni koordinataron"
 
 #: ../ui/main.glade:1484
 msgid "Draw _Line"
@@ -2249,7 +2250,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5051
 msgid "Drawing Area"
-msgstr ""
+msgstr "Desegnareo"
 
 #: ../ui/settings.glade:4463
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
@@ -2382,7 +2383,7 @@ msgstr ""
 
 #: ../ui/about.glade:114
 msgid "Git commit"
-msgstr ""
+msgstr "Git-enmeto"
 
 #: ../ui/settings.glade:2946
 msgid "Global"
@@ -2410,7 +2411,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2378
 msgid "Hand Recognition"
-msgstr ""
+msgstr "Manrekonado"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
@@ -2430,11 +2431,11 @@ msgstr "Kaŝi flankpanelon"
 
 #: ../ui/settings.glade:3345
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "Kaŝi la horizontalan rulumskalon"
 
 #: ../ui/settings.glade:3360
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "Kaŝi la vertikalan rulumskalon"
 
 #: ../ui/settings.glade:3026
 msgid "Highlight cursor position"
@@ -2460,7 +2461,7 @@ msgstr ""
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr ""
+msgstr "Piktogramdezajnistoj"
 
 #: ../ui/settings.glade:4678
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2488,7 +2489,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1716
 msgid "Ignore the first"
-msgstr ""
+msgstr "Ignori la unuan"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
@@ -2536,11 +2537,11 @@ msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Agordoj pri LaTeX-programo"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Komando por farado de LaTeX"
 
 #: ../ui/settings.glade:5811 ../ui/settings.glade:5859
 msgid "Language"
@@ -2572,7 +2573,7 @@ msgstr "Ŝargi dosieron"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Ŝargi el dosiero"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2592,7 +2593,7 @@ msgstr "Maksimuma longo (mm)"
 
 #: ../ui/settings.glade:3467
 msgid "Max multiplier"
-msgstr ""
+msgstr "Maksimuma multiplikanto"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
@@ -2724,7 +2725,8 @@ msgstr "_Formato"
 #: ../ui/about.glade:296
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Parte surbaze de Xournal\n"
+"far Denis Auroux"
 
 #: ../ui/main.glade:1973
 msgid "Pause"
@@ -2732,7 +2734,7 @@ msgstr "Paŭzigi"
 
 #: ../ui/main.glade:1600
 msgid "Pen _Options"
-msgstr ""
+msgstr "_Opcioj pri plumo"
 
 #: ../ui/settings.glade:3759
 msgid "Performance"
@@ -2780,7 +2782,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Premmultiplikanto: "
 
 #: ../ui/settings.glade:1667
 msgid "Pressure Sensitivity"
@@ -2788,7 +2790,7 @@ msgstr ""
 
 #: ../ui/about.glade:129
 msgid "RELEASE_IDENTIFIER"
-msgstr ""
+msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/settings.glade:3115
 msgid "Radius"
@@ -2844,7 +2846,7 @@ msgstr ""
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "Ekzempla nomo de tavolo"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
@@ -2860,7 +2862,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr ""
+msgstr "Elekti fonan koloron"
 
 #: ../ui/settings.glade:5284
 msgid "Select Folder"
@@ -2872,15 +2874,15 @@ msgstr "Elekti bildon"
 
 #: ../ui/main.glade:1352
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Elekti linian tekston"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "Elekti PDF-paĝon"
 
 #: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Elekti tekston en ortangulo"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3076,7 +3078,7 @@ msgstr "Tuŝekrano"
 
 #: ../ui/settings.glade:4836
 msgid "Try to select object first."
-msgstr ""
+msgstr "Provu elekti la objekton unue."
 
 #: ../ui/settings.glade:4841 ../ui/settings.glade:4873
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
@@ -3154,7 +3156,7 @@ msgstr "Larĝo:"
 
 #: ../ui/about.glade:393
 msgid "With help from the community"
-msgstr ""
+msgstr "Helpataj de la komunumo"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
@@ -3338,7 +3340,7 @@ msgstr ""
 
 #: ../ui/main.glade:1328
 msgid "_Pen"
-msgstr ""
+msgstr "_Plumo"
 
 #: ../ui/main.glade:2027
 msgid "_Plugin"
@@ -3346,7 +3348,7 @@ msgstr "Krom_programo"
 
 #: ../ui/main.glade:522
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Prezentoreĝimo"
 
 #: ../ui/main.glade:1091
 msgid "_Previous Layer"
