@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-26 16:38\n"
+"PO-Revision-Date: 2022-02-27 12:37\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -430,7 +430,7 @@ msgstr "Desegni strekon"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "Tipo de desegnaĵo – ne ŝanĝu"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
@@ -452,12 +452,12 @@ msgstr ""
 #: ../src/core/undo/DeleteUndoAction.cpp:52
 #: ../src/core/undo/EraseUndoAction.cpp:52
 msgid "Erase stroke"
-msgstr ""
+msgstr "Forskrapi strekon"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:276
 msgid "Eraser"
-msgstr ""
+msgstr "Skrapgumo"
 
 #: ../src/core/control/Control.cpp:2263
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -520,7 +520,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:543
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Elporti dosieron kiel PDF"
 
 #: ../src/core/control/XournalMain.cpp:545
 msgid "Export FILE as image files (one per page)\n"
@@ -859,7 +859,7 @@ msgstr ""
 
 #: ../src/core/control/ExportHelper.cpp:106
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "PDF-dosiero sukcese kreiĝis"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:23
 #: ../src/core/control/jobs/PdfExportJob.cpp:12
@@ -1566,7 +1566,7 @@ msgstr "elementoj"
 
 #: ../src/core/control/DeviceListHelper.cpp:110
 msgid "eraser"
-msgstr ""
+msgstr "skrapgumo"
 
 #: ../src/core/control/Control.cpp:2023
 msgid "file: {1}"
@@ -2318,11 +2318,11 @@ msgstr "Tajpi / modifi LaTeX-tekston"
 
 #: ../ui/main.glade:1746
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Opcioj pri _Skrapgumo"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "Tipo de skrapgumo – ne ŝanĝu"
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
@@ -3009,7 +3009,7 @@ msgstr "Ilobre_toj"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "Agordoj pri ŝablona dosiero"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -3272,7 +3272,7 @@ msgstr "R_edakti"
 
 #: ../ui/main.glade:1340
 msgid "_Eraser"
-msgstr ""
+msgstr "_Skrapgumo"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
