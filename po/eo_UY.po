@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-27 12:37\n"
+"PO-Revision-Date: 2022-02-27 13:35\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -56,7 +56,7 @@ msgstr "Enmeti/modifi TeX"
 
 #: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
-msgstr ""
+msgstr "Altnivelaj opcioj pri elportado"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -116,7 +116,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Aŭtomata konservado malsukcesis pro la jena eraro: {1}"
 
 #: ../src/core/control/Control.cpp:190
 msgid "Autosave renamed from {1} to {2}"
@@ -124,7 +124,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "Aŭtomate konservante al {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
@@ -138,11 +138,11 @@ msgstr "Fono"
 
 #: ../src/core/control/tools/EditSelection.cpp:370
 msgid "Bring forward"
-msgstr ""
+msgstr "Porti antaŭen"
 
 #: ../src/core/control/tools/EditSelection.cpp:360
 msgid "Bring to front"
-msgstr ""
+msgstr "Porti malfonen"
 
 #: ../src/core/control/Control.cpp:2064 ../src/core/control/Control.cpp:2515
 #: ../src/core/control/XournalMain.cpp:158
@@ -296,19 +296,19 @@ msgstr "Krei novan tavolon"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:64
 msgid "Custom"
-msgstr ""
+msgstr "Adaptite"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:21
 msgid "Custom Export"
-msgstr ""
+msgstr "Adaptite elporti"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "Adapti ilobretojn"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:28
 msgid "Customized"
-msgstr ""
+msgstr "Adaptita"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Cut"
@@ -495,7 +495,7 @@ msgstr "Eraro konservante bildon 2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "Eraro dum aŭtomata konservado: {1}"
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -604,7 +604,7 @@ msgstr "Tiparo"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
 msgid "Forward"
-msgstr ""
+msgstr "Antaŭen"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:42
 msgid "GNU GPLv2 or later"
@@ -675,7 +675,7 @@ msgstr "Bildo"
 
 #: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
-msgstr ""
+msgstr "Bildodosiero sukcese kreiĝis"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:17
 msgid "Images"
@@ -720,7 +720,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:530
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "Salti al paĝo (unua paĝo: 1)"
 
 #: ../src/core/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -803,11 +803,11 @@ msgstr "Neniu aparato"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:151
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
 msgid "No pages to export!"
-msgstr ""
+msgstr "Neniu elportota paĝo!"
 
 #: ../src/core/control/Control.cpp:1318
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Neniu postgluebla PDF-paĝo. Eble necesas remalfermi la dokumenton."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
@@ -847,7 +847,7 @@ msgstr "Malfermi {1}"
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:8
 msgid "PDF Export"
-msgstr ""
+msgstr "Elporto kiel PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:39
 msgid "PDF Page {1}"
@@ -855,7 +855,7 @@ msgstr "PDF-paĝo {1}"
 
 #: ../src/core/view/PdfView.cpp:31
 msgid "PDF background missing"
-msgstr ""
+msgstr "PDF-fono mankas"
 
 #: ../src/core/control/ExportHelper.cpp:106
 msgid "PDF file successfully created"
@@ -910,7 +910,7 @@ msgstr "Alglui"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Pause / Play"
-msgstr ""
+msgstr "Paŭzigi / ludi"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:257
@@ -945,7 +945,7 @@ msgstr "Presi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "Ekregistri sonon / ĉesigi registradon"
 
 #: ../src/core/control/Control.cpp:922
 msgid "Recorder could not be started."
@@ -1045,7 +1045,7 @@ msgstr "Vidi la plenan liston de kontribuintoj"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Elekti arean tekston el PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Select Font"
@@ -1065,7 +1065,7 @@ msgstr "Elekti objekton"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Elekti PDF-arean tekston"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
@@ -1134,11 +1134,11 @@ msgstr "Sendi raporton pri cimo"
 
 #: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
-msgstr ""
+msgstr "Porti malantaŭen"
 
 #: ../src/core/control/tools/EditSelection.cpp:389
 msgid "Send to back"
-msgstr ""
+msgstr "Porti fonen"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Separator"
@@ -1167,7 +1167,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "Formo-rekonilo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:67
 msgid "Show all"
@@ -1331,7 +1331,7 @@ msgstr "Dika"
 
 #: ../src/core/control/Control.cpp:2506
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "Ĉi tiu dokumento estas ankoraŭ ne konservita."
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:144
 #: ../src/core/control/tools/ImageHandler.cpp:43
@@ -1445,7 +1445,7 @@ msgstr "Skribi tekston"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:927
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "Malĝusta nombro de punktoj ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:937
 msgid "Wrong number of points, got {1}, expected {2}"
@@ -1675,7 +1675,7 @@ msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = Flosanta ilobreto (eksperimenta) ="
 
 #: ../ui/settings.glade:3899 ../ui/settings.glade:3910
 msgid "%"
@@ -1721,7 +1721,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\tMallongigita nomo de tago en semajno (ekz. dim)\n"
+"%A\t\tPlena nomo de tago en semajno (ekz. dimanĉo)\n"
+"%b\t\tMallongigita nomo de monato (ekz. Feb)\n"
+"%B\t\tPlena nomo de monato (ekz. Februaro)\n"
+"%c\t\tPrezento de dato kaj tempo (ekz. dim 27 Feb 2022 13:00:00)\n"
+"%d\t\tTago en monato (01–31)\n"
+"%F\t\tISO-prezento de dato (ekz. 2001-08-23)\n"
+"%H\t\tHoro en 24-hora formo (00–23)\n"
+"%I\t\tHoro en 12-hora formo (01–12)\n"
+"%j\t\tNumero de tago en jaro (001–366)\n"
+"%m\t\tNumero de monato (01–12)\n"
+"%M\t\tMinuto (00–59)\n"
+"%p\t\tAntaŭtagmezo aŭ posttagmezo (ekz. ptm)\n"
+"%S\t\tSekundo (00–61)\n"
+"%U\t\tNumero de semajno, tiel ke la unua dimanĉo de la jaro apartenas al semajno unu (00–53)\n"
+"%w\t\tNumero de tago en semajno, tiel ke dimanĉo estas 0 (0–6)\n"
+"%W\t\tNumero de semajno, tiel ke la unua lundo de la jaro apartenas al semajno unu (00–53)\n"
+"%x\t\tPrezento de dato laŭ lokaĵaro (ekz. 2001-08-23)\n"
+"%X\t\tPrezento de tempo (ekz. 14:55:02)\n"
+"%y\t\tLastaj du ciferoj de jaro (00–99)\n"
+"%Y\t\tJaro (ekz. 2001)\n"
+"%Z\t\tNomo aŭ mallongigo de horzono (ekz. GMT)\n"
+"%%\t\tProcento-signo (%)"
 
 #: ../ui/settings.glade:4819
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1971,7 +1993,7 @@ msgstr ""
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Postglui novajn PDF-paĝojn"
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
@@ -2015,11 +2037,11 @@ msgstr ""
 
 #: ../ui/settings.glade:967
 msgid "Averaging method"
-msgstr ""
+msgstr "Metodo de mezumado"
 
 #: ../ui/settings.glade:2818
 msgid "Background color between pages"
-msgstr ""
+msgstr "Fona koloro inter paĝoj"
 
 #: ../ui/settings.glade:3454
 msgid "Base speed"
@@ -2048,15 +2070,15 @@ msgstr ""
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Porti antaŭen"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "Porti malfonen"
 
 #: ../ui/settings.glade:1017
 msgid "Buffersize"
-msgstr ""
+msgstr "Grando de bufro"
 
 #: ../ui/about.glade:99
 msgid "Built on"
@@ -2076,7 +2098,7 @@ msgstr "Ŝanĝi"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Elektu mallokan LaTeX-ŝablonan dosieron"
 
 #: ../ui/settings.glade:3049 ../ui/settings.glade:3192
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2096,11 +2118,11 @@ msgstr "Koloroj"
 
 #: ../ui/main.glade:1207
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Agordi paĝan ŝablonon"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr ""
+msgstr "Agordi novan paĝan ŝablonon"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
@@ -2278,7 +2300,7 @@ msgstr ""
 
 #: ../ui/settings.glade:375
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "Ŝalti aŭtomatan konservadon"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
@@ -2680,7 +2702,7 @@ msgstr ""
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "Agordoj pri opakeco"
 
 #: ../ui/settings.glade:933
 msgid "Options"
@@ -2810,7 +2832,7 @@ msgstr "Lastaj _dokumentoj"
 
 #: ../ui/main.glade:1963
 msgid "Record / Stop"
-msgstr ""
+msgstr "Ekregistri / ĉesigi"
 
 #: ../ui/settings.glade:5564
 msgid "Recording Quality"
@@ -2834,7 +2856,7 @@ msgstr "Distingivo"
 
 #: ../ui/settings.glade:1405
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "Dekstra musbutono"
 
 #: ../ui/settings.glade:4577
 msgid "Rotation snapping tolerance"
@@ -2898,15 +2920,15 @@ msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Porti malantaŭen"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "Porti fonen"
 
 #: ../ui/settings.glade:1649
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Skalo de sentemo"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
@@ -3049,7 +3071,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4034
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "La mezurunuo de la mezurilo estas la centimetro"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
@@ -3086,7 +3108,7 @@ msgstr ""
 
 #: ../ui/main.glade:2720
 msgid "Underline selected text"
-msgstr ""
+msgstr "Substreki elektitan tekston"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
@@ -3260,7 +3282,7 @@ msgstr ""
 
 #: ../ui/main.glade:1412
 msgid "_Default Tools"
-msgstr ""
+msgstr "_Implicitaj iloj"
 
 #: ../ui/main.glade:1217
 msgid "_Delete Page"
@@ -3276,7 +3298,7 @@ msgstr "_Skrapgumo"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Elporti kiel PDF"
 
 #: ../ui/main.glade:152
 msgid "_File"
@@ -3308,7 +3330,7 @@ msgstr "B_ildo"
 
 #: ../ui/main.glade:1155
 msgid "_Journal"
-msgstr ""
+msgstr "Ĵ_urnalo"
 
 #: ../ui/main.glade:1074
 msgid "_Last Page"
@@ -3336,7 +3358,7 @@ msgstr "_Sekva paĝo"
 
 #: ../ui/main.glade:512
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Parigi paĝojn"
 
 #: ../ui/main.glade:1328
 msgid "_Pen"
@@ -3364,7 +3386,7 @@ msgstr "De dekst_ro maldekstren"
 
 #: ../ui/main.glade:1429
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Formo-rekonilo"
 
 #: ../ui/main.glade:1388
 msgid "_Text"
