@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-25 18:26\n"
+"PO-Revision-Date: 2022-02-27 16:36\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -2746,7 +2746,7 @@ msgstr "Aucune icône"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr "Pas de règles"
+msgstr "Sans les lignes"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:217
 #: ../ui/settings.glade:234
