@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-28 08:10\n"
+"PO-Revision-Date: 2022-02-28 09:35\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2884,7 +2884,7 @@ msgstr "Újra megjelenítés, ha az oldal nagyítása változik több mint: "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr "Legutóbbi _Dokumentumok"
+msgstr "Legutóbbi _dokumentumok"
 
 #: ../ui/main.glade:1963
 msgid "Record / Stop"
