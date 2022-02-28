@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-28 21:27\n"
+"PO-Revision-Date: 2022-02-28 22:23\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -867,13 +867,13 @@ msgstr "PDF 백그라운드 누락됨"
 
 #: ../src/core/control/ExportHelper.cpp:106
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "PDF 파일이 성공적으로 생성되었습니다."
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:23
 #: ../src/core/control/jobs/PdfExportJob.cpp:12
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
-msgstr ""
+msgstr "PDF 파일"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:45
 msgid "PDF {1}"
@@ -885,27 +885,27 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:86
 msgid "Page"
-msgstr ""
+msgstr "페이지"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:73
 msgid "Page Preview"
-msgstr ""
+msgstr "페이지 미리보기"
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:80
 msgid "Page background changed"
-msgstr ""
+msgstr "페이지 백그라운드 변경됨"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:97
 msgid "Page deleted"
-msgstr ""
+msgstr "페이지 삭제됨"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:93
 msgid "Page inserted"
-msgstr ""
+msgstr "페이지 삽입됨"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:59
 msgid "Page number"
-msgstr ""
+msgstr "페이지 번호"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
@@ -914,7 +914,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 #: ../src/core/undo/AddUndoAction.cpp:57
 msgid "Paste"
-msgstr ""
+msgstr "붙여넣기"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Pause / Play"
@@ -923,7 +923,7 @@ msgstr ""
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:257
 msgid "Pen"
-msgstr ""
+msgstr "펜"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
@@ -949,7 +949,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Print"
-msgstr ""
+msgstr "인쇄"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Record Audio / Stop Recording"
@@ -970,7 +970,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2063
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "PDF 백그라운드 제거"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
 msgid "Removed tool item from Toolbar {1} ID {2}"
@@ -1023,16 +1023,16 @@ msgstr ""
 #: ../src/core/control/Control.cpp:2507 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 #: ../src/core/control/Control.cpp:2507
 msgid "Save As..."
-msgstr ""
+msgstr "다른 이름으로 저장..."
 
 #: ../src/core/control/Control.cpp:2352
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
-msgstr ""
+msgstr "파일 저장"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:124
 #: ../src/core/control/jobs/SaveJob.cpp:114
@@ -1045,7 +1045,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
 msgid "Search"
-msgstr ""
+msgstr "검색"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:35
 msgid "See the full list of contributors"
@@ -1057,7 +1057,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Select Font"
-msgstr ""
+msgstr "글꼴 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
@@ -1069,7 +1069,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Select Object"
-msgstr ""
+msgstr "오브젝트 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
@@ -1077,7 +1077,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "PDF 텍스트 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
@@ -1089,60 +1089,60 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "PDF 텍스트 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
-msgstr ""
+msgstr "직사각형 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:65
 msgid "Select Region"
-msgstr ""
+msgstr "영역 선택"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "PDF에서 텍스트 선택"
 
 #: ../src/core/control/Control.cpp:2062
 msgid "Select another PDF"
-msgstr ""
+msgstr "다른 PDF 선택"
 
 #: ../src/util/XojMsgBox.cpp:76
 msgid "Select another name"
-msgstr ""
+msgstr "다른 이름 선택"
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:101
 msgid "Select background color"
-msgstr ""
+msgstr "다른 백그라운드 색 선택"
 
 #: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:82
 msgid "Select color"
-msgstr ""
+msgstr "색 선택"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Select rectangle"
-msgstr ""
+msgstr "직사각형 선택"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select region"
-msgstr ""
+msgstr "영역 선택"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
-msgstr ""
+msgstr "조합 선택"
 
 #: ../src/core/control/XournalMain.cpp:154
 msgid "Send Bugreport"
-msgstr ""
+msgstr "버그 신고 보내기"
 
 #: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
-msgstr ""
+msgstr "뒤로 보내기"
 
 #: ../src/core/control/tools/EditSelection.cpp:389
 msgid "Send to back"
@@ -1179,7 +1179,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:67
 msgid "Show all"
-msgstr ""
+msgstr "모두 보이기"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
@@ -1244,7 +1244,7 @@ msgstr ""
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
 msgid "Text"
-msgstr ""
+msgstr "텍스트"
 
 #: ../src/core/gui/SearchBar.cpp:66
 #, c-format
