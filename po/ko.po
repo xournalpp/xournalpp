@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:27\n"
+"PO-Revision-Date: 2022-02-28 21:27\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/core/control/jobs/BaseExportJob.cpp:47
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+" 계속하시겠습니까?"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:35
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -57,7 +58,7 @@ msgstr "<span foreground='red' size='x-large'>다음 필수 UI 파일이 존재�
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Tex 추가/편집"
 
 #: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
@@ -319,48 +320,48 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Cut"
-msgstr ""
+msgstr "잘라내기"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Default Tool"
-msgstr ""
+msgstr "기본 도구:"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 #: ../src/core/undo/DeleteUndoAction.cpp:55
 msgid "Delete"
-msgstr ""
+msgstr "삭제"
 
 #: ../src/core/control/XournalMain.cpp:157
 msgid "Delete Logfile"
-msgstr ""
+msgstr "로그 파일 삭제"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Delete current page"
-msgstr ""
+msgstr "현재 페이지 삭제"
 
 #: ../src/core/control/XournalMain.cpp:199
 msgid "Delete file"
-msgstr ""
+msgstr "파일 삭제"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:27
 msgid "Delete layer"
-msgstr ""
+msgstr "레이어 삭제"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Delete this layer"
-msgstr ""
+msgstr "이 레이어 삭제"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
-msgstr ""
+msgstr "이 페이지 삭제"
 
 #: ../src/core/control/Control.cpp:2512
 msgid "Discard"
-msgstr ""
+msgstr "버리기"
 
 #: ../src/core/control/XournalMain.cpp:586
 msgid "Display advanced export options"
-msgstr ""
+msgstr "고급 내보내기 옵션 표시"
 
 #: ../src/core/control/Control.cpp:2009
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -370,11 +371,11 @@ msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "백그라운드 PDF를 덮어쓰지 마세요! 에러를 발생시킬 것입니다!"
 
 #: ../src/core/control/Control.cpp:2506
 msgid "Document file was removed."
-msgstr ""
+msgstr "문서 파일 삭제됨."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:243
 msgid "Document is corrupted (no pages found in file)"
@@ -464,7 +465,7 @@ msgstr ""
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:276
 msgid "Eraser"
-msgstr ""
+msgstr "지우개"
 
 #: ../src/core/control/Control.cpp:2263
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -527,7 +528,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:543
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "파일을 PDF로 내보내기"
 
 #: ../src/core/control/XournalMain.cpp:545
 msgid "Export FILE as image files (one per page)\n"
@@ -537,11 +538,11 @@ msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:17
 msgid "Export PDF"
-msgstr ""
+msgstr "PDF 내보내기"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Export as PDF"
-msgstr ""
+msgstr "PDF로 내보내기"
 
 #: ../src/core/control/XournalMain.cpp:559
 msgid "Export layers progressively\n"
@@ -591,7 +592,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:527
 msgid "Fill"
-msgstr ""
+msgstr "채우기"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:283
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
@@ -599,7 +600,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
 msgid "Fine"
-msgstr ""
+msgstr "부드럽게"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
@@ -607,11 +608,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
-msgstr ""
+msgstr "글꼴"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
 msgid "Forward"
-msgstr ""
+msgstr "앞으로"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:42
 msgid "GNU GPLv2 or later"
@@ -619,7 +620,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:534
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "xournalpp 버전 가져오기"
 
 #: ../src/core/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
@@ -631,49 +632,49 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Go to first page"
-msgstr ""
+msgstr "첫 페이지로 이동"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Go to last page"
-msgstr ""
+msgstr "마지막 페이지로 이동"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Go to next layer"
-msgstr ""
+msgstr "다음 레이어로 이동"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Go to page"
-msgstr ""
+msgstr "페이지로 이동"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 msgid "Go to previous layer"
-msgstr ""
+msgstr "이전 레이어로 이동"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Go to top layer"
-msgstr ""
+msgstr "최상위 레이어로 이동"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:24
 msgid "Graph"
-msgstr ""
+msgstr "그래프"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Grid Snapping"
-msgstr ""
+msgstr "그리드 맞추기"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Hand"
-msgstr ""
+msgstr "핸드"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:72
 msgid "Hide all"
-msgstr ""
+msgstr "모두 숨기기"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Highlighter"
-msgstr ""
+msgstr "형광펜"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
@@ -761,7 +762,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Manage Toolbars"
-msgstr ""
+msgstr "도구 모음 관리"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
 msgid "Medium"
@@ -773,19 +774,19 @@ msgstr ""
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
-msgstr ""
+msgstr "이동"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:26
 msgid "Move layer"
-msgstr ""
+msgstr "레이어 이동"
 
 #: ../src/core/undo/SwapUndoAction.cpp:62
 msgid "Move page downwards"
-msgstr ""
+msgstr "페이지를 아래로 이동"
 
 #: ../src/core/undo/SwapUndoAction.cpp:62
 msgid "Move page upwards"
-msgstr ""
+msgstr "페이지를 위로 이동"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:69
 msgid "New"
@@ -797,7 +798,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Next"
-msgstr ""
+msgstr "다음"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Next annotated page"
@@ -805,12 +806,12 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
-msgstr ""
+msgstr "장치 없음"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:151
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
 msgid "No pages to export!"
-msgstr ""
+msgstr "내보내기할 페이지가 없습니다!"
 
 #: ../src/core/control/Control.cpp:1318
 msgid "No pdf pages available to append. You may need to reopen the document first."
@@ -823,7 +824,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
 msgid "OK"
-msgstr ""
+msgstr "확인"
 
 #: ../src/core/control/XournalMain.cpp:566
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -832,29 +833,29 @@ msgstr ""
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
-msgstr ""
+msgstr "이미지 열기"
 
 #: ../src/core/control/XournalMain.cpp:155
 msgid "Open Logfile"
-msgstr ""
+msgstr "로그 파일 열기"
 
 #: ../src/core/control/XournalMain.cpp:156
 msgid "Open Logfile directory"
-msgstr ""
+msgstr "로그 파일 디렉토리 열기"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Open file"
-msgstr ""
+msgstr "파일 열기"
 
 #: ../src/core/control/RecentManager.cpp:186
 msgctxt "{1} is a URI"
 msgid "Open {1}"
-msgstr ""
+msgstr "{1} 열기"
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:8
 msgid "PDF Export"
-msgstr ""
+msgstr "PDF 내보내기"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:39
 msgid "PDF Page {1}"
@@ -862,7 +863,7 @@ msgstr ""
 
 #: ../src/core/view/PdfView.cpp:31
 msgid "PDF background missing"
-msgstr ""
+msgstr "PDF 백그라운드 누락됨"
 
 #: ../src/core/control/ExportHelper.cpp:106
 msgid "PDF file successfully created"
