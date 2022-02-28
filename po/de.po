@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:28\n"
+"PO-Revision-Date: 2022-02-28 23:20\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -2179,7 +2179,7 @@ msgstr "Stattdessen aktuelle Seitengröße kopieren"
 
 #: ../ui/main.glade:2678
 msgid "Copy selected text"
-msgstr ""
+msgstr "Ausgewählten Text kopieren"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
