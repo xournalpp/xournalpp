@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-24 08:29\n"
+"PO-Revision-Date: 2022-02-28 08:10\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -766,7 +766,7 @@ msgstr "Réteg előnézete"
 
 #: ../src/core/control/layer/LayerController.cpp:369
 msgid "Layer {1}"
-msgstr "Réteg {1}"
+msgstr "{1}. réteg"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
