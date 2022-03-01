@@ -5,8 +5,6 @@
 #include "model/Snapping.h"
 #include "view/SetsquareView.h"
 
-#include "InputContext.h"
-
 constexpr double MOVE_AMOUNT = HALF_CM / 2.0;
 constexpr double MOVE_AMOUNT_SMALL = HALF_CM / 20.0;
 constexpr double ROTATE_AMOUNT = M_PI * 5.0 / 180.0;
@@ -19,16 +17,21 @@ constexpr double SNAPPING_DISTANCE_TOLERANCE = 5.0;                 // pt
 constexpr double SNAPPING_ROTATION_TOLERANCE = 3.0 * M_PI / 180.0;  // rad
 constexpr double ZOOM_DISTANCE_MIN = 0.01;
 
-SetsquareInputHandler::SetsquareInputHandler(InputContext* inputContext): AbstractInputHandler(inputContext) {}
+SetsquareInputHandler::SetsquareInputHandler(InputContext* inputContext): inputContext(inputContext) {}
 
-auto SetsquareInputHandler::handleImpl(InputEvent const& event) -> bool {
+auto SetsquareInputHandler::handle(InputEvent const& event) -> bool {
     if (!inputContext->getView()->getSetsquareView() || inputContext->getXournal()->selection ||
         inputContext->getView()->getControl()->getTextEditor()) {
         return false;
     }
+    const auto device = event.deviceClass;
+    if ((device == INPUT_DEVICE_MOUSE && isBlocked[InputContext::DeviceType::MOUSE]) ||
+        (device == INPUT_DEVICE_PEN && isBlocked[InputContext::DeviceType::STYLUS]) ||
+        (device == INPUT_DEVICE_TOUCHSCREEN && isBlocked[InputContext::DeviceType::TOUCHSCREEN])) {
+        return false;  // don't intervene
+    }
 
-    // handle keyboard
-    switch (event.deviceClass) {
+    switch (device) {
         case INPUT_DEVICE_KEYBOARD:
             return this->handleKeyboard(event);
         case INPUT_DEVICE_TOUCHSCREEN:
@@ -392,21 +395,6 @@ void SetsquareInputHandler::zoomMotion(InputEvent const& event) {
     this->lastDist = dist;
 }
 
-void SetsquareInputHandler::onUnblock() {
-    this->primarySequence = nullptr;
-    this->secondarySequence = nullptr;
-
-    this->startZoomDistance = 0.0;
-    this->lastZoomScrollCenter = {};
-    this->lastAngle = 0;
-
-    this->priLastAbs = {-1.0, -1.0};
-    this->secLastAbs = {-1.0, -1.0};
-    this->priLastRel = {-1.0, -1.0};
-    this->secLastRel = {-1.0, -1.0};
-    this->lines.clear();
-}
-
 auto SetsquareInputHandler::getCoords(double xCoord, double yCoord) -> utl::Point<double> {
     const auto view = inputContext->getView();
     const auto setsquareView = view->getSetsquareView();
@@ -421,3 +409,7 @@ auto SetsquareInputHandler::getCoords(double xCoord, double yCoord) -> utl::Poin
 auto SetsquareInputHandler::getCoords(InputEvent const& event) -> utl::Point<double> {
     return getCoords(event.relativeX, event.relativeY);
 }
+
+void SetsquareInputHandler::blockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = true; }
+
+void SetsquareInputHandler::unblockDevice(InputContext::DeviceType deviceType) { isBlocked[deviceType] = false; }

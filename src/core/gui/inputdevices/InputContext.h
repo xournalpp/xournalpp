@@ -30,11 +30,13 @@
 #include "HandRecognition.h"
 #include "KeyboardInputHandler.h"
 #include "MouseInputHandler.h"
-#include "SetsquareInputHandler.h"
 #include "StylusInputHandler.h"
 #include "TouchDrawingInputHandler.h"
 #include "TouchInputHandler.h"
 #include "config-debug.h"
+
+class SetsquareInputHandler;
+
 class InputContext {
 
 private:
