@@ -17,7 +17,7 @@
 
 #include "util/Point.h"
 
-#include "AbstractInputHandler.h"
+#include "InputContext.h"
 
 class InputContext;
 
@@ -29,8 +29,20 @@ class InputContext;
  *
  * The touch handling part is adopted from the TouchInputHandler class
  */
-class SetsquareInputHandler: public AbstractInputHandler {
+class SetsquareInputHandler {
+
 private:
+    /**
+     * @brief the input context attached to this handler
+     */
+    InputContext* inputContext;
+
+    /**
+     * @brief saves which devices are blocked, so they don't need to be handled
+     *        This is currently used for the automatic hand recognition, that can be turned on in the settings
+     */
+    std::map<InputContext::DeviceType, bool> isBlocked{};
+
     /**
      * @brief the touch event sequence corresponding to the first finger touching the screen
      */
@@ -139,8 +151,9 @@ private:
 
 public:
     explicit SetsquareInputHandler(InputContext* inputContext);
-    ~SetsquareInputHandler() override = default;
+    ~SetsquareInputHandler() = default;
 
-    bool handleImpl(InputEvent const& event) override;
-    void onUnblock() override;
+    bool handle(InputEvent const& event);
+    void blockDevice(InputContext::DeviceType deviceType);
+    void unblockDevice(InputContext::DeviceType deviceType);
 };

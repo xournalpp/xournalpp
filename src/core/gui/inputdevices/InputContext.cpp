@@ -7,6 +7,7 @@
 #include "control/DeviceListHelper.h"
 
 #include "InputEvents.h"
+#include "SetsquareInputHandler.h"
 
 InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling) {
     this->view = view;
@@ -170,7 +171,7 @@ void InputContext::focusWidget() {
 }
 
 void InputContext::blockDevice(InputContext::DeviceType deviceType) {
-    this->setsquareHandler->block(true);
+    this->setsquareHandler->blockDevice(deviceType);
     switch (deviceType) {
         case MOUSE:
             this->mouseHandler->block(true);
@@ -186,7 +187,7 @@ void InputContext::blockDevice(InputContext::DeviceType deviceType) {
 }
 
 void InputContext::unblockDevice(InputContext::DeviceType deviceType) {
-    this->setsquareHandler->block(false);
+    this->setsquareHandler->unblockDevice(deviceType);
     switch (deviceType) {
         case MOUSE:
             this->mouseHandler->block(false);
