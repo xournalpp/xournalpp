@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-02 22:20\n"
+"PO-Revision-Date: 2022-03-02 23:20\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -562,7 +562,7 @@ msgstr ""
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Malsukcesis praŝargi Cairo-surfacon por PDF"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -580,7 +580,8 @@ msgstr ""
 #: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "La dosiero ne estis malfermebla. Vi malfermu ĝin permane:\n"
+"Adreso: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:527
 msgid "Fill"
@@ -596,7 +597,7 @@ msgstr "Maldika"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "Flosanta ilobreto (eksperimenta)"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
@@ -919,7 +920,7 @@ msgstr "Plumo"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
-msgstr ""
+msgstr "Ordinara"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
@@ -929,7 +930,7 @@ msgstr "Ludi objekton"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:16
 msgid "Predefined"
-msgstr ""
+msgstr "Antaŭdifinita"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Presentation mode"
@@ -1207,7 +1208,7 @@ msgstr "Streko-rekonilo"
 
 #: ../src/core/control/CrashHandler.cpp:40
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "Dokumento sukcese konserviĝis al «{1}»"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
@@ -1311,7 +1312,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:149
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "La nomo de la lasta protokoldosiero: {1}"
 
 #: ../src/core/control/XournalMain.cpp:144
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
@@ -1336,7 +1337,7 @@ msgstr "Ĉi tiu dokumento estas ankoraŭ ne konservita."
 #: ../src/core/control/PageBackgroundChangeController.cpp:144
 #: ../src/core/control/tools/ImageHandler.cpp:43
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Ĉi tiu bildo ne estas ŝargebla. Erarmesaĝo: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Toggle fullscreen"
@@ -1364,11 +1365,11 @@ msgstr ""
 
 #: ../src/core/gui/PageView.cpp:372
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "Ne eblas ludi sonregistraĵon {1}"
 
 #: ../src/core/control/Control.cpp:1332
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Ne eblas akiri PDF-paĝon."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/core/undo/UndoRedoHandler.cpp:203
@@ -1385,7 +1386,7 @@ msgstr "Neatendata radika elemento: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:309
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Neatendata elemento en dokumento: «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:498
 msgid "Unknown background type: {1}"
@@ -1449,7 +1450,7 @@ msgstr "Malĝusta nombro de punktoj ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:937
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr ""
+msgstr "Malĝusta nombro de punktoj: ricevis {1}, sed atendis {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:225
 msgid "XML Parser error: {1}"
@@ -1752,15 +1753,15 @@ msgstr ""
 
 #: ../ui/settings.glade:1090
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1142
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4963
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1735
 msgid "1"
@@ -1776,7 +1777,7 @@ msgstr "1,30"
 
 #: ../ui/settings.glade:2458
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:1029
 msgid "20"
@@ -2284,7 +2285,7 @@ msgstr ""
 
 #: ../ui/main.glade:2886
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Redakti (tio ankoraŭ ne funkcias)"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
@@ -2369,11 +2370,11 @@ msgstr "P_lenigi"
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1937
 msgid "Fill opacity"
-msgstr ""
+msgstr "Opakeco de plenigaĵo"
 
 #: ../ui/settings.glade:1222
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Fini la strekon"
 
 #: ../ui/main.glade:2476
 msgid "Find next occurrence of the search string"
@@ -2429,7 +2430,7 @@ msgstr ""
 
 #: ../ui/main.glade:1572
 msgid "H_and Tool"
-msgstr ""
+msgstr "_Manforma ilo"
 
 #: ../ui/settings.glade:2378
 msgid "Hand Recognition"
@@ -2535,7 +2536,7 @@ msgstr "Enigsistemo"
 
 #: ../ui/settings.glade:1247
 msgid "Input stabilization"
-msgstr ""
+msgstr "Stabiligo de enigo"
 
 #: ../ui/settings.glade:1227
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
@@ -2726,7 +2727,7 @@ msgstr "Paĝoj:"
 
 #: ../ui/settings.glade:4360
 msgid "Paired Pages"
-msgstr ""
+msgstr "Parigitaj paĝoj"
 
 #: ../ui/main.glade:1304
 msgid "Paper B_ackground"
@@ -2800,7 +2801,7 @@ msgstr "Prezentoreĝimo"
 
 #: ../ui/settings.glade:4490
 msgid "Preserve line width"
-msgstr ""
+msgstr "Konservi larĝon de linio"
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
@@ -2808,7 +2809,7 @@ msgstr "Premmultiplikanto: "
 
 #: ../ui/settings.glade:1667
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "Premsentemo"
 
 #: ../ui/about.glade:129
 msgid "RELEASE_IDENTIFIER"
@@ -2820,7 +2821,7 @@ msgstr "Radiuso"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
-msgstr ""
+msgstr "Gamo"
 
 #: ../ui/settings.glade:4950
 msgid "Re-render when the page's zoom changes by more than "
@@ -2848,7 +2849,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4537
 msgid "Resizing"
-msgstr ""
+msgstr "Ŝanĝado de grando"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -2932,11 +2933,11 @@ msgstr "Skalo de sentemo"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
-msgstr ""
+msgstr "Agordi kolumnojn"
 
 #: ../ui/main.glade:789
 msgid "Set Rows"
-msgstr ""
+msgstr "Agordi vicojn"
 
 #: ../ui/settings.glade:4859
 msgid "Settings:"
@@ -2944,7 +2945,7 @@ msgstr "Agordoj:"
 
 #: ../ui/settings.glade:4868
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "Montri flosantan ilobreton"
 
 #: ../ui/settings.glade:2734
 msgid "Show Menubar on Startup"
@@ -3132,7 +3133,7 @@ msgstr "Ordinare 0 aŭ 1"
 
 #: ../ui/settings.glade:223
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Rapido laŭ Gaŭsaj pondoj"
 
 #: ../ui/about.glade:181
 msgid "Version"
@@ -3446,11 +3447,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
-msgstr ""
+msgstr "punktoj en colo"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
-msgstr ""
+msgstr "ŝaltita,"
 
 #: ../ui/settings.glade:1751
 msgid "events"
@@ -3458,11 +3459,11 @@ msgstr "eventoj"
 
 #: ../ui/settings.glade:399
 msgid "every"
-msgstr ""
+msgstr "ĉiu"
 
 #: ../ui/settings.glade:426
 msgid "minutes"
-msgstr ""
+msgstr "minutoj"
 
 #: ../ui/settings.glade:3087 ../ui/settings.glade:3138
 #: ../ui/settings.glade:4231 ../ui/settings.glade:4242
