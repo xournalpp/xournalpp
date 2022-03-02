@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-02 16:41\n"
+"PO-Revision-Date: 2022-03-02 18:00\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -118,7 +118,8 @@ msgstr "Attribut Farbe ist nicht gesetzt!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Audio-Ordner nicht definiert oder ungültig! Die Aufzeichnung wird nicht funktionieren!\n"
+"Bitte legen Sie einen Aufnahme-Ordner unter \"Einstellungen > Audio-Aufzeichnung\" fest"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -1902,7 +1903,7 @@ msgstr "<i>Wählen Sie welches Werkzeug ausgewählt wird, wenn Sie eine Maustast
 
 #: ../ui/settings.glade:2612
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr ""
+msgstr "<i>Das Deaktivieren des Scrollens über den Touchscreen mit GTK kann Fehler auf einigen Plattformen vermeiden. Ändern Sie diese Einstellung, wenn Sie Sprünge oder plötzliche Änderungen in der Scroll-Position bemerken, wenn Sie mit dem Souchscreen scrollen.</i>"
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -1911,7 +1912,8 @@ msgstr "<i>Beispiel:</i> 1-3 oder 1,3,5-7 etc."
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Wenn das Dokument bereits gespeichert wurde, finden Sie die Datei im selben Ordner mit der Endung .autosave.xoj\n"
+"Wenn die Datei noch nicht gespeichert wurde, finden Sie das Dokument unter ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4139
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2951,7 +2953,7 @@ msgstr "Bild auswählen"
 
 #: ../ui/main.glade:1352
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Text aus Zeile in PDF auswählen"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2959,7 +2961,7 @@ msgstr "PDF-Seite auswählen"
 
 #: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Text aus Rechteck in PDF auswählen"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
