@@ -176,11 +176,23 @@ of some popular Linux distros and platforms.
 
 ### Debian
 
-There are [Stable releases](https://github.com/xournalpp/xournalpp/releases) and
-_unstable_ [automated nightly releases](https://github.com/xournalpp/xournalpp/releases/tag/nightly)
-for Debian.
+On Debian bookworm and Debian sid the `xournalpp` package (stable version) is contained in the official repositories. Simply install via
+
+```bash
+sudo apt install xournalpp```
+```
+
+There are also the official [Stable releases](https://github.com/xournalpp/xournalpp/releases) and
+_unstable_ [automated nightly releases](https://github.com/xournalpp/xournalpp/releases/tag/nightly).
 
 ### Ubuntu and derivatives
+
+On distros based on Ubuntu 22.04 Jammy Jellyfish (and later) the `xournalpp` package (stable version) is contained in the official repositories.
+Simply install via 
+
+```bash
+sudo apt install xournalpp```
+```
 
 #### Stable PPA
 The latest stable version is available via the following [_unofficial_ PPA](https://github.com/xournalpp/xournalpp/issues/1013#issuecomment-692656810):
