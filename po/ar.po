@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:28\n"
+"PO-Revision-Date: 2022-03-03 19:05\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -2675,11 +2675,11 @@ msgstr "المضاعف الأقصى"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "دمج مع الأسفل"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "دمج الطبقة مع الأسفل"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2929,7 +2929,7 @@ msgstr "اسم عينة للطبقة"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "حفظ إلى ملف"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -2953,7 +2953,7 @@ msgstr "تحديد صورة"
 
 #: ../ui/main.glade:1352
 msgid "Select Linear Text"
-msgstr ""
+msgstr "تحديد النص خطيًّا"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2961,7 +2961,7 @@ msgstr "اختيار صفحة PDF"
 
 #: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "تحديد النص في المستطيل"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3064,7 +3064,7 @@ msgstr "مجلد التخزين"
 
 #: ../ui/main.glade:2740
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "شطب النص المحدد"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3166,7 +3166,7 @@ msgstr "حاول تحديد كائن أولا؛ إذا لم يكن شيء محد
 
 #: ../ui/main.glade:2720
 msgid "Underline selected text"
-msgstr ""
+msgstr "تسطير النص المحدد"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
