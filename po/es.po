@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:28\n"
+"PO-Revision-Date: 2022-03-04 23:39\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -789,7 +789,7 @@ msgstr "Medio"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Combinar capa hacia abajo"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1083,7 +1083,7 @@ msgstr "Seleccionar tipo de letra"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Seleccionar líneas de texto PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1093,23 +1093,23 @@ msgstr "Seleccionar objeto"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Seleccionar región de texto PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Seleccionar el texto del PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Seleccionar texto PDF en el rectángulo"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Seleccionar texto PDF en el rectángulo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Seleccionar el texto del PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1126,7 +1126,7 @@ msgstr "Seleccionar región"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Seleccionar texto del PDF"
 
 #: ../src/core/control/Control.cpp:2062
 msgid "Select another PDF"
@@ -1195,7 +1195,7 @@ msgstr "Establece la anchura de la página para exportaciones PNG\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "Escuadra"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
@@ -1863,7 +1863,8 @@ msgstr "<b>Parámetros de exportación del documento</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Caja de herramientas vacía</b>\n"
+"            <i>Menú: Ver/Barra de herramientas</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -2140,7 +2141,7 @@ msgstr "Botón 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Cambiar"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2180,7 +2181,7 @@ msgstr "Copiar el tamaño de la página actual en su lugar"
 
 #: ../ui/main.glade:2678
 msgid "Copy selected text"
-msgstr ""
+msgstr "Copiar el texto seleccionado"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2517,7 +2518,7 @@ msgstr "Resaltar posición del cursor"
 
 #: ../ui/main.glade:2700
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Resaltar el texto seleccionado"
 
 #: ../ui/main.glade:1855
 msgid "Highlighter Opti_ons"
@@ -2649,7 +2650,7 @@ msgstr "Cargar archivo"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Cargar desde un archivo"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2673,11 +2674,11 @@ msgstr "Multiplicador máximo"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "Combinar hacia abajo"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Combinar capa hacia abajo"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2927,7 +2928,7 @@ msgstr "Nombre de la capa de muestra"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Guardar en un archivo"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -2959,7 +2960,7 @@ msgstr "Seleccionar página de PDF"
 
 #: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Seleccionar texto en rectángulo"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3062,7 +3063,7 @@ msgstr "Carpeta de almacenamiento"
 
 #: ../ui/main.glade:2740
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Tachar el texto seleccionado"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3139,7 +3140,7 @@ msgstr "Límite de tiempo"
 
 #: ../ui/main.glade:2760
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Alternar el modo de selección de texto: estándar / región"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
@@ -3164,7 +3165,7 @@ msgstr "Intentar seleccionar un archivo primero; si no se selecciona nada, mostr
 
 #: ../ui/main.glade:2720
 msgid "Underline selected text"
-msgstr ""
+msgstr "Subrayar el texto seleccionado"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
