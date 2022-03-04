@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:28\n"
+"PO-Revision-Date: 2022-03-04 21:30\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -789,7 +789,7 @@ msgstr "Ertaina"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Batu beheko geruzarekin"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
