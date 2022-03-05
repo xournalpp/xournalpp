@@ -346,8 +346,10 @@ void Stroke::axis_reflect(double x0, double y0, bool x_axis){
 	} else
 		cairo_matrix_init(&reflection, -1, 0, 0, 1, 2*x0, 0);
 
-    for (auto&& p: points) { cairo_matrix_transform_point(&reflection, &p.x, &p.y); }
-    this->sizeCalculated = false;
+    for (auto&& p: points) { 
+		cairo_matrix_transform_point(&reflection, &p.x, &p.y); 
+	}
+    this->sizeCalculated = true;
 
 }
 

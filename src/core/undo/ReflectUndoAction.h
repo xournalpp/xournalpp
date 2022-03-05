@@ -19,9 +19,9 @@ public:
     virtual ~ReflectUndoAction();
 
 public:
-    virtual bool undo(Control* control);
-    virtual bool redo(Control* control);
-    virtual std::string getText();
+    bool undo(Control* control) override;
+    bool redo(Control* control) override;
+    std::string getText() override;
 
 private:
     void applyReflection(double x0, double y0, bool x_axis);

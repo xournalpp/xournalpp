@@ -307,10 +307,10 @@ auto EditSelectionContents::setColor(Color color) -> UndoAction* {
 }
 
 /**
- * Computes the reflection with respect to either the horizontal or vertical axis.
+ * Computes the reflection with respect to either the horizontal or vertical axis of the selected region.
  * 
  */
-auto EditSelectionContents::reflectSelection(Rectangle<double> bounds, bool x_axis) -> UndoAction* {
+auto EditSelectionContents::reflectSelection(xoj::util::Rectangle<double> bounds, bool x_axis) -> UndoAction* {
 	auto undo = new ReflectUndoAction(
                 this->sourcePage, &this->selected, lastSnappedBounds.x + lastSnappedBounds.width / 2,
                 lastSnappedBounds.y + lastSnappedBounds.height / 2, x_axis);
