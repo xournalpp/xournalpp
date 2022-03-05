@@ -120,11 +120,11 @@ function import()
   local opacity = {} 
   local tools = {}
   for i = 1, #cols do
-     opacity = rsh(cols[i], 24)
+     opacity = (cols[i] >> 24) % 256
      tools[i] = opacity < 128 and "highlighter" or "pen"
-     r =  rsh(cols[i], 16)
-     g = rsh(cols[i], 8)
-     b = rsh(cols[i], 0)
+     r =  (cols[i] >> 16) % 256
+     g = (cols[i] >> 8) % 256
+     b = cols[i] % 256
      cols[i] = r + g*256 + b*256^2
   end
 
@@ -174,7 +174,6 @@ function import()
   pageOffset = {}
   for i=1, #strokes do
     pageOffset[i] = math.floor(strokes[i]["y"][1] // paperHeight)
-    print("Page offset of stroke " .. i .. " is " .. pageOffset[i])
   end
   if #pageOffset>0 then
     maxOffset = math.max(table.unpack(pageOffset))
@@ -188,7 +187,6 @@ function import()
             newStroke["y"][l] = newStroke["y"][l] - pageOffset[k]*paperHeight
           end
           table.insert(strokesOfCurrentPage, newStroke)
-          print("Adding new stroke to page with offset " .. j)
         end
       end
       if #strokesOfCurrentPage > 0 then
@@ -198,7 +196,7 @@ function import()
       if j < maxOffset then app.uiAction({action = "ACTION_NEW_PAGE_AFTER"}) end
     end
   end
-
+  
   print("Text in document: ")
   local rawText = getValue({"richText", "attributedString", 1})
   print(rawText)
