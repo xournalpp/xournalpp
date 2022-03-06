@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:27\n"
+"PO-Revision-Date: 2022-03-06 20:38\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -448,7 +448,7 @@ msgstr "Stile Disegno - non cambiare"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Combinazione di tipi di disegno"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
@@ -789,7 +789,7 @@ msgstr "Medio"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Unisci livello sottostante"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1083,7 +1083,7 @@ msgstr "Seleziona Font"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Selezionare linee di testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1093,7 +1093,7 @@ msgstr "Seleziona Oggetto"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Selezionare area di testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
@@ -1196,7 +1196,7 @@ msgstr "Imposta la larghezza della pagina per le esportazioni PNG\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "Quadrato"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
@@ -1446,7 +1446,7 @@ msgstr "Tipo di pixmap::domain sconosciuto: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Tipo di fine tratto sconosciuto: \"{1}\", trattato come tondo"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -2682,11 +2682,11 @@ msgstr "Moltiplicatore massimo"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "Sposta giù"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Unisci livello sottostante"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2980,7 +2980,7 @@ msgstr "Colore della Selezione (Testo, Selezione Tratto, ecc.)"
 
 #: ../ui/settings.glade:3482
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Selezione del bordo di spostamento"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
