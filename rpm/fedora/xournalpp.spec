@@ -115,6 +115,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/thumbnailers/com.github.%{name}.%{name}.thumbnailer
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/resources/{default,legacy}_template.tex
+%{_mandir}/man1/%{name}*.gz
 %{_metainfodir}/com.github.%{name}.%{name}.appdata.xml
 
 %files plugins
