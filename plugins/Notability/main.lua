@@ -90,20 +90,14 @@ function import()
     end
   end
 
-  local numpoints = getData("curvesnumpoints", "u")
+  local numpoints = getData("curvesnumpoints", "I")
   local coords = getData("curvespoints", "f")
   local widths = getData("curveswidth", "f")
   local pressures = getData("curvesfractionalwidths", "f")
-  local styles = getData("curvesstyles", "b") -- can be {}
-  local cols = getData("curvescolors", "u")
+  local styles = getData("curvesstyles", "H") -- can be {}
+  local cols = getData("curvescolors", "I")
 
-  -- post-process styles and cols
-  for i = 1, #styles, 2 do
-    tmp = styles[i]
-    styles[i] = styles[i+1]
-    styles[i+1] = tmp
-  end
-
+  -- post-process styles
   for i = 1, #styles do
     if math.floor(styles[i]) == 3 then
       styles[i] = "solid"
@@ -114,7 +108,8 @@ function import()
         styles[i] = "cust: 20 20"   -- TODO: Fix this (rolandlo)
       end
     else
-      styles[i] = "solid"  -- don't know that style, so choose "solid" for now
+      styles[i] = "solid" 
+      print("Unsupported style, choosing 'solid'")
     end
   end
   local opacity = {} 
