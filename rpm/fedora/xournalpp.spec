@@ -8,7 +8,7 @@
 %define	build_commit %(git ls-remote %{build_repo} | grep "refs/heads/%{build_branch}" | cut -c1-41)
 %define	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
 %global	build_timestamp %(date +"%Y%m%d")
-%global	rel_build %{build_timestamp}git%{build_shortcommit}%{?dist}
+%global	rel_build %{build_timestamp}git%{build_shortcommit}
 %global _gtest 0
 
 
@@ -124,15 +124,15 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/%{name}/ui
 
 %changelog
-* Sat Feb 20 2021 Luya Tshimbalanga <luya@fedoraproject.org>
+* Sun Mar 6 2022 Luya Tshimbalanga <luya@fedoraproject.org>
 - Port enhanced spec file from Michael J Gruber version
+
+* Thu Oct 20 2021 Ulrich Huber <ulrich@huberulrich.de>
+- See https://github.com/%{name}/%{name}/CHANGELOG.md
 
 * Sat Feb 20 2021 Luya Tshimbalanga <luya@fedoraproject.org>
 - Add librsvg2 dependencies
 - Add notice about daily git snapshot
-
-* Thu Oct 20 2021 Ulrich Huber <ulrich@huberulrich.de>
-- See https://github.com/%{name}/%{name}/CHANGELOG.md
 
 * Mon Dec 16 2019 Luya Tshimbalanga <luya@fedoraproject.org>
 - Implement some version autodetection to reduce maintenance work.
