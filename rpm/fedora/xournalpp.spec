@@ -1,3 +1,6 @@
+# Force out of source build
+%global         __cmake_in_source_build 0
+
 #This spec file is intended for daily development snapshot release
 %global	build_repo https://github.com/xournalpp/xournalpp/
 %global	build_branch master
@@ -40,7 +43,7 @@ BuildRequires:  pkgconfig(lua) >= 5.3
 BuildRequires:  pkgconfig(poppler-glib) >= 0.41.0
 BuildRequires:  pkgconfig(portaudiocpp) >= 12
 BuildRequires:  pkgconfig(sndfile) >= 1.0.25
-BuildRequires:	pkgconfig(zlib)
+BuildRequires:  pkgconfig(zlib)
 Recommends:     texlive-scheme-basic
 Recommends:     texlive-dvipng
 Recommends:     texlive-standalone
