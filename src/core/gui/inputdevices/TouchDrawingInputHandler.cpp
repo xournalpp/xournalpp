@@ -32,7 +32,7 @@ auto TouchDrawingInputHandler::handleImpl(InputEvent const& event) -> bool {
 
     // Do we need to end the touch sequence?
     bool mustEnd = event.type == BUTTON_RELEASE_EVENT;
-    mustEnd = mustEnd || event.type == GRAB_BROKEN_EVENT && this->deviceClassPressed;
+    mustEnd = mustEnd || (event.type == GRAB_BROKEN_EVENT && this->deviceClassPressed);
 
     // Notify if finger enters/leaves widget
     // Note: Drawing outside window doesn't seem to work

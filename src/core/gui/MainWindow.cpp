@@ -562,7 +562,7 @@ void MainWindow::setToolbarVisible(bool visible) {
     settings->setToolbarVisible(visible);
     for (int i = 0; i < TOOLBAR_DEFINITIONS_LEN; i++) {
         auto widget = this->toolbarWidgets[i];
-        if (!visible || GTK_IS_CONTAINER(widget) && gtk_container_get_children(GTK_CONTAINER(widget))) {
+        if (!visible || (GTK_IS_CONTAINER(widget) && gtk_container_get_children(GTK_CONTAINER(widget)))) {
             gtk_widget_set_visible(widget, visible);
         }
     }
