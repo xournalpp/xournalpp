@@ -105,8 +105,8 @@ constexpr double MIN_TANGENT_LENGTH = 1.0;
 
 auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
     if (!stroke ||
-        event->type != GDK_KEY_PRESS && event->keyval != GDK_KEY_Escape) {  // except for escape key only act on key
-                                                                            // press event, not on key release event
+        (event->type != GDK_KEY_PRESS && event->keyval != GDK_KEY_Escape)) {  // except for escape key only act on key
+                                                                              // press event, not on key release event
         return false;
     }
 
