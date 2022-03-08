@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-02 23:20\n"
+"PO-Revision-Date: 2022-03-08 02:21\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1185,12 +1185,14 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:439
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "Bedaŭrinde, Xournal++ povas malfermi nur unu dosieron samtempe.\n"
+"Aliaj estas ignorataj."
 
 #: ../src/core/control/XournalMain.cpp:454
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "Bedaŭrinde, Xournal++ ankoraŭ ne povas malfermi foran dosieron.\n"
+"Vi devas kopii la dosieron en lokan dosierujon."
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
@@ -2580,7 +2582,7 @@ msgstr "Aranĝo"
 
 #: ../ui/settings.glade:3316
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "Maldekstramana / dekstramana"
 
 #: ../ui/about.glade:421
 msgid "License"
@@ -2608,7 +2610,7 @@ msgstr "Maso"
 
 #: ../ui/settings.glade:1108 ../ui/settings.glade:1120
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Maso: ju pli da la maso, des pli da inercio kaj stabiligo"
 
 #: ../ui/settings.glade:4796
 msgid "Max Length (mm)"
@@ -2975,7 +2977,7 @@ msgstr ""
 #: ../ui/settings.glade:3000
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Piktogramo de malgranda punkto"
 
 #: ../ui/settings.glade:4696
 msgid "Snapping"
@@ -3275,7 +3277,7 @@ msgstr ""
 
 #: ../ui/main.glade:671
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Kolumnoj/vicoj"
 
 #: ../ui/main.glade:931
 msgid "_Customize"
