@@ -182,3 +182,19 @@ cmake .. -DCMAKE_INSTALL_PREFIX=/usr
 sudo cmake --build . --target install
 ./cmake/postinst configure
 ```
+
+## Running tests
+
+The unit tests can be enabled by setting `-DENABLE_GTEST=on` when running the
+CMake command. This requires having `googletest` available, either through your
+system's package manager or by setting `-DDOWNLOAD_GTEST=on` to automatically
+download and build `googletest`.
+
+The tests can be run as follows:
+```
+# build unit test executables
+cmake --build . --target test-units
+
+# run unit tests
+cmake --build . --target test
+```
