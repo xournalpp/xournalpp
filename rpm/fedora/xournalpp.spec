@@ -11,7 +11,6 @@
 %global	rel_build %{build_timestamp}git%{build_shortcommit}
 %global _gtest 0
 
-
 Name:           xournalpp
 # See https://docs.fedoraproject.org/en-US/packaging-guidelines/Versioning/#_examples
 Version:        %{version_string}^%{rel_build}
