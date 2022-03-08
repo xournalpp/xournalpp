@@ -18,14 +18,6 @@ if(MACOSX)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
 endif()
 
-# Download and Build GoogleTest
-include(FetchContent)
-FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
-)
-# Prevent reloading if already downloaed
-set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
@@ -33,7 +25,34 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 # This is not strictly necessary as add_subdirectory is called on ./test with
 # EXCLUDE_FROM_ALL, but better safe than sorry
 option(INSTALL_GTEST "Enable installation of googletest." OFF)
-FetchContent_MakeAvailable(googletest)
+
+# Explicit flag to enable gtest download
+option(DOWNLOAD_GTEST "Force download of googletest." OFF)
+
+if (${DOWNLOAD_GTEST})
+  message(STATUS "Downloading gtest...")
+  # Download and build GoogleTest
+  include(FetchContent)
+  FetchContent_Declare(
+      googletest
+      URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+  )
+  # Prevent reloading if already downloaed
+  set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+  FetchContent_MakeAvailable(googletest)
+else ()
+  # Use system GoogleTest
+  find_package(GTest)
+  if (NOT ${GTEST_FOUND})
+    message(FATAL_ERROR
+      "googletest not found. If you would like to download it automatically, add\n"
+      "    -DDOWNLOAD_GTEST=on\n"
+      "to the cmake command."
+    )
+  endif ()
+
+  add_library(gtest_main ALIAS GTest::Main)
+endif ()
 
 # Load configure file including constants and helper Macros
 configure_file (
