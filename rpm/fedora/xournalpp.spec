@@ -9,7 +9,7 @@
 %define	build_shortcommit %(c=%{build_commit}; echo ${c:0:7})
 %global	build_timestamp %(date +"%Y%m%d")
 %global	rel_build %{build_timestamp}git%{build_shortcommit}
-%global _gtest 0
+%global _gtest 1
 
 Name:           xournalpp
 # See https://docs.fedoraproject.org/en-US/packaging-guidelines/Versioning/#_examples
