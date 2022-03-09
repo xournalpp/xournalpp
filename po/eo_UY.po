@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-09 03:39\n"
+"PO-Revision-Date: 2022-03-09 17:52\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1233,7 +1233,7 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:68
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Interŝanĝi la aktualan paĝon kaj la suban paĝon"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
@@ -1637,7 +1637,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:279
 msgid "whiteout"
-msgstr ""
+msgstr "blanka korektilo"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:936
 msgid "xoj-File: {1}"
@@ -3172,7 +3172,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr ""
+msgstr "Blanka korektilo"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
@@ -3448,7 +3448,7 @@ msgstr "maldik_ega"
 
 #: ../ui/main.glade:1829
 msgid "_whiteout"
-msgstr ""
+msgstr "_blanka korektilo"
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
