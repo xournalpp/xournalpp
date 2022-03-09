@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-09 17:52\n"
+"PO-Revision-Date: 2022-03-09 18:51\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -195,7 +195,8 @@ msgstr "Kopii paĝon"
 #: ../src/util/PathUtil.cpp:257
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Ne eblis krei dosierujon: {1}\n"
+"Malsukcesis pro la jena eraro: {2}"
 
 #: ../src/core/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
@@ -207,7 +208,7 @@ msgstr "Ne eblis ŝargi la LaTeX-PDF-dosieron: {1}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:16
 msgid "Could not load pagetemplates.ini file"
-msgstr ""
+msgstr "Ne eblis ŝargi la dosieron «pagetemplates.ini»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:803
 msgid "Could not open attachment: {1}. Error message: Could not read file"
@@ -247,7 +248,8 @@ msgstr ""
 #: ../src/core/control/xojfile/LoadHandler.cpp:357
 #: ../src/core/control/xojfile/LoadHandler.cpp:381
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "Malsukcesis legi bildon: {1}.\n"
+"Erarmesaĝo: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:391
 msgid "Could not read page number for cloned background image: {1}."
@@ -670,7 +672,7 @@ msgstr "Kaŝi ĉion"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Highlighter"
-msgstr ""
+msgstr "Emfazilo"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
@@ -2108,7 +2110,7 @@ msgstr "Elektu mallokan LaTeX-ŝablonan dosieron"
 
 #: ../ui/settings.glade:3049 ../ui/settings.glade:3192
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "Elekti la koloron por emfazi la pozicion de la kursoro"
 
 #: ../ui/settings.glade:3063
 msgid "Circle Color"
@@ -2314,7 +2316,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Ŝalti premsentemon"
 
 #: ../ui/settings.glade:4726
 msgid "Enable Tap action"
@@ -2467,15 +2469,15 @@ msgstr "Kaŝi la vertikalan rulumskalon"
 
 #: ../ui/settings.glade:3026
 msgid "Highlight cursor position"
-msgstr ""
+msgstr "Emfazi la pozicion de la kursoro"
 
 #: ../ui/main.glade:2700
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Emfazi elektitan tekston"
 
 #: ../ui/main.glade:1855
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "_Opcioj pri emfazilo"
 
 #: ../ui/settings.glade:4776
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2695,7 +2697,7 @@ msgstr "Neniu piktogramo"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "Neliniite"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:217
 #: ../ui/settings.glade:234
@@ -3276,7 +3278,7 @@ msgstr "_Prinoti PDF"
 
 #: ../ui/main.glade:656
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "De _malsupro supren"
 
 #: ../ui/main.glade:671
 msgid "_Cols/Rows"
@@ -3324,7 +3326,7 @@ msgstr "_Helpo"
 
 #: ../ui/main.glade:1376
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Emfazilo"
 
 #: ../ui/main.glade:587
 msgid "_Horizontal"
