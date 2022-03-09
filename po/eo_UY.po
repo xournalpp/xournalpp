@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-08 14:03\n"
+"PO-Revision-Date: 2022-03-09 02:32\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -951,7 +951,7 @@ msgstr "Ekregistri sonon / ĉesigi registradon"
 
 #: ../src/core/control/Control.cpp:922
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "Malsukcesis ekfunkciigi la registrilon."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 #: ../src/core/undo/UndoRedoHandler.cpp:215
@@ -968,11 +968,11 @@ msgstr "Forviŝi PDF-fonon"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "Forigis ilon el Ilobreto {1} numero {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "Forigis ilon {1} el Ilobreto {2} numero {3}"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
@@ -3087,7 +3087,7 @@ msgstr ""
 
 #: ../ui/main.glade:2760
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Baskuligi inter norma kaj regiona tekstelektadoj"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
@@ -3282,7 +3282,7 @@ msgstr "_Kolumnoj/vicoj"
 
 #: ../ui/main.glade:931
 msgid "_Customize"
-msgstr ""
+msgstr "_Adapti"
 
 #: ../ui/main.glade:1412
 msgid "_Default Tools"
