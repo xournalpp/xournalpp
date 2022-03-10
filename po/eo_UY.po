@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-10 22:16\n"
+"PO-Revision-Date: 2022-03-10 23:31\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -49,7 +49,12 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>Mankas la necesa fasada dosiero:\n"
+"<b>{1}</b></span>\n"
+"Ĝi troviĝas nenie ajn.\n"
+"  Ne relative\n"
+"  Ne en «PATH»\n"
+"  Ne en {2}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Add/Edit TeX"
@@ -212,24 +217,24 @@ msgstr "Ne eblis ŝargi la dosieron «pagetemplates.ini»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:803
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr ""
+msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: ne eblas legi dosieron"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:813
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: ne eblas skribi sur dosieron"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:783
 #: ../src/core/control/xojfile/LoadHandler.cpp:1036
 #: ../src/core/control/xojfile/LoadHandler.cpp:1055
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: valida grando de dosiero ne estas provizita"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:774
 #: ../src/core/control/xojfile/LoadHandler.cpp:790
 #: ../src/core/control/xojfile/LoadHandler.cpp:1027
 #: ../src/core/control/xojfile/LoadHandler.cpp:1043
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open file: \"{1}\""
@@ -238,12 +243,14 @@ msgstr "Ne eblis malfermi dosieron: «{1}»"
 #: ../src/core/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "Ne eblas analizi la propran dosieron «toolbar.ini»: {1}\n"
+"Ilobretoj ne estos haveblaj"
 
 #: ../src/core/gui/MainWindow.cpp:85
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "Ne eblas analizi la ĝeneralan dosieron «toolbar.ini»: {1}\n"
+"Ilobretoj ne estos haveblaj"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:357
 #: ../src/core/control/xojfile/LoadHandler.cpp:381
@@ -258,15 +265,16 @@ msgstr ""
 #: ../src/core/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Refarado de «{1}» ne eblas.\n"
+"Io fiaskis; bonvolu raporti la cimon."
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "Malsukcesis forigi ilon el la ilobreto {1} ĉe la pozicio {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:163
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "Malsukcesis forigi la ilon {1} el la ilobreto {2} ĉe la pozicio {3}"
 
 #: ../src/core/control/Control.cpp:201
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
@@ -357,7 +365,7 @@ msgstr "Forĵeti"
 
 #: ../src/core/control/XournalMain.cpp:586
 msgid "Display advanced export options"
-msgstr ""
+msgstr "Montri komplikajn opciojn pri elportado"
 
 #: ../src/core/control/Control.cpp:2009
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -562,7 +570,7 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:63
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Malsukcesis trovi la programon LaTeX en «PATH»: {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
@@ -571,7 +579,7 @@ msgstr "Malsukcesis praŝargi Cairo-surfacon por PDF"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Malsukcesis analizi la komandon LaTeX: {1}"
 
 #: ../src/core/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
@@ -658,7 +666,7 @@ msgstr "Grafa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Grid Snapping"
-msgstr ""
+msgstr "Alkradigado"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
@@ -1223,15 +1231,15 @@ msgstr "Subtenataj dosieroj"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Interŝanĝi la aktualan tavolon kaj la superan tavolon"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Interŝanĝi la aktualan tavolon kaj la suban tavolon"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Interŝanĝi la aktualan paĝon kaj la superan paĝon"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:68
 msgid "Swap the current page with the one below"
@@ -1323,11 +1331,11 @@ msgstr "La nomo de la lasta protokoldosiero: {1}"
 
 #: ../src/core/control/XournalMain.cpp:144
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Ekzistas erarprotokoloj de Xournal++. Bonvolu sendi raporton pri la cimo, por ke la cimo estos riparita."
 
 #: ../src/core/control/XournalMain.cpp:143
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Ekzistas erarprotokolo de Xournal++. Bonvolu sendi raporton pri la cimo, por ke la cimo estos riparita."
 
 #: ../src/util/XojMsgBox.cpp:95
 msgid "There was an error displaying help: {1}"
@@ -1405,7 +1413,7 @@ msgstr "Nekonata kolora valoro «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:452
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "Nekonata tipo de adreso: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:228
 msgid "Unknown parser error"
@@ -1417,7 +1425,7 @@ msgstr "Nekonata tipo de «pixmap::domain»: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Nekonata strekopinta tipo: «{1}», supozante «ronda»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1492,7 +1500,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:146
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Vi uzas la branĉon «{1}/{2}». «Sendi raporton pri cimo» sendos vin al la cimspurilo de tiu kododeponejo."
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1635,7 +1643,7 @@ msgstr "tuŝekrano"
 
 #: ../src/core/control/DeviceListHelper.cpp:122
 msgid "trackpoint"
-msgstr ""
+msgstr "stirstangeto"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:279
 msgid "whiteout"
@@ -1647,7 +1655,7 @@ msgstr "xoj-Dosiero: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:113
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: rulsintakso estas «ENIGO.xoj ELIGO.png»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:177
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
@@ -1655,27 +1663,27 @@ msgstr "xoj-preview-extractor: ne eblis trovi la piktogramon «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: antaŭrigardo mankas en la dosiero «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:126
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: la dosiero «{1}» ne estas .xoj-dosiero"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:139
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "xoj-preview-extractor: troviĝas nek antaŭrigardo nek paĝo; eble nevalida dosiero?"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:130
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: malsukcesis malfermado de la eniga dosiero «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:194
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: malsukcesis malfermado de la eliga dosiero «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:201
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "xoj-preview-extractor: sukcese eltirita"
 
 #: ../src/util/PathUtil.cpp:247
 msgid "xournalpp-{1}"
@@ -1825,12 +1833,14 @@ msgstr "<b>Implicito</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Agordoj pri elportado de dokumento</b>\n"
+"Agordu parametrojn pri elportado"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Malplena ilobreto</b>\n"
+"            <i>Menuo: Vidi/Ilobretoj</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -1888,7 +1898,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1000
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Elektu enigo-stabiligan algoritmon kaj ĝiajn parametrojn</i>"
 
 #: ../ui/settings.glade:1505
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -2174,11 +2184,11 @@ msgstr "Malhela etoso (postulas relanĉon)"
 
 #: ../ui/settings.glade:237
 msgid "Deadzone"
-msgstr ""
+msgstr "Nesentiva disko"
 
 #: ../ui/settings.glade:1046
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Radiuso de nesentiva disko"
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
@@ -2288,7 +2298,7 @@ msgstr ""
 
 #: ../ui/main.glade:2812 ../ui/main.glade:2849
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplikatigi"
 
 #: ../ui/main.glade:2886
 msgid "Edit (not implemented yet)"
@@ -2405,7 +2415,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1140 ../ui/settings.glade:1160
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Gaŭsa parametro: ju pli granda, des pli stabila kaj des pli da atendodaŭro inter via kursoro kaj la desegpinto."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
@@ -2429,11 +2439,11 @@ msgstr "Iri al paĝo"
 
 #: ../ui/settings.glade:4633
 msgid "Grid size"
-msgstr ""
+msgstr "Grando de krado"
 
 #: ../ui/settings.glade:4590
 msgid "Grid snapping tolerance"
-msgstr ""
+msgstr "Tolero pri alkradigado"
 
 #: ../ui/main.glade:1572
 msgid "H_and Tool"
@@ -3014,7 +3024,7 @@ msgstr "Dosierujo de konservado"
 
 #: ../ui/main.glade:2740
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Trastreki elektitan tekston"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3063,11 +3073,11 @@ msgstr "Teksta tiparo..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "La LaTeX-dosiero uzota kiel ŝablono de la LaTeX-ilo."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "La deksesuma ruĝa-verda-blua kodo de la aktuala koloro de la ilo «Teksto»."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
@@ -3128,7 +3138,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "Uzi la formaton de la aktuala paĝo anstastaŭ la formato de la supera paĝo."
 
 #: ../ui/settings.glade:2563 ../ui/settings.glade:2631
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
