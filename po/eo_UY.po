@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-09 18:51\n"
+"PO-Revision-Date: 2022-03-10 22:16\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -2162,7 +2162,7 @@ msgstr "Kursora piktogramo de plumo"
 
 #: ../ui/settings.glade:1205
 msgid "Cusp detection"
-msgstr ""
+msgstr "Pintorekonado"
 
 #: ../ui/settings.glade:2353
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2772,7 +2772,7 @@ msgstr "Rendimento"
 
 #: ../ui/settings.glade:5651
 msgid "Playback Settings"
-msgstr ""
+msgstr "Agordoj pri ludado"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -3087,7 +3087,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2143
 msgid "Timeout"
-msgstr ""
+msgstr "Tempolimo"
 
 #: ../ui/main.glade:2760
 msgid "Toggle standard / region text selection"
