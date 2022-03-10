@@ -51,6 +51,8 @@ function dec(data,fmt)
 			table.insert(converted, byte(cs:sub(2,2)))
 			table.insert(converted, byte(cs:sub(1,1)))
 		end)
+	elseif fmt == "s" then
+		converted = result
 	else
 	  print("not handled (yet)!")
 	end

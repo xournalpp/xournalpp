@@ -123,13 +123,13 @@ function import()
      cols[i] = r + g*256 + b*256^2
   end
 
-  strokes = {}
-  pi = 0
+  local strokes = {}
+  local pi = 0
   local numCurves = getValue({"richText", "Handwriting Overlay", "SpatialHash", "numcurves"})
   print("Number of curves in document: " .. numCurves)
   for s = 1, numCurves do
-    x = {}; y = {}; pressure = {}
-    a = 1; b = numpoints[1]
+    local x = {}; y = {}; pressure = {}
+    local a = 1; b = numpoints[1]
     for i=1, s-1 do
       a=a+numpoints[i]
       b=b+numpoints[i+1]
@@ -146,11 +146,69 @@ function import()
     table.insert(strokes, stroke)
   end
 
+  local shapesBinary = getValue({"richText", "Handwriting Overlay", "SpatialHash", "shapes"})
+  if shapesBinary then
+    shapesBinary = shapesBinary:gsub("[\n\t ]", "") -- remove line breaks, tabs and spaces
+    local cmd = "echo '" .. shapesBinary .. "' | base64 -d | plistutil"
+    local runCommand = assert(io.popen(cmd))
+    local result = runCommand:read('*all')
+    local shapes = plistParse(result)
+    local numShapes = #shapes["kinds"]
+    for i = 1, numShapes do
+      handle = true
+      x = {}; y = {}
+      local kind = shapes["kinds"][i]
+      local shape = shapes["shapes"][i]
+      if kind == "line" then
+        x = {shape["startPt"][1], shape["endPt"][1]}
+        y = {shape["startPt"][2], shape["endPt"][2]}
+      elseif kind == "circle" then
+        print("circle")
+        local rx = shape["rect"][2][1]/2
+        local ry = shape["rect"][2][2]/2
+        local cx = shape["rect"][1][1] + rx
+        local cy = shape["rect"][1][2] + ry
+        local npts = math.floor(math.max(24, 2*rx, 2*ry))
+        for k = 0, npts do
+          table.insert(x, cx+rx*math.cos(2*math.pi*k/npts))
+          table.insert(y, cy+ry*math.sin(2*math.pi*k/npts))
+        end
+      elseif kind == "square" or kind == "polygon" then
+        local points = shape["points"]
+        local numVertices = #points
+        print("polygon with " .. numVertices .. " vertices")
+        for j = 1, numVertices do
+          table.insert(x, points[j][1])
+          table.insert(y, points[j][2])
+        end
+        if shape["isClosed"] then
+          table.insert(x, x[1])
+          table.insert(y, y[1])
+        end
+      elseif kind == "partialshape" then
+        print("Partial shape")
+        -- ['rect', 'appearance', 'rotatedRect', 'extremePoints', 'outlinePath', 'strokePath']
+        handle = false
+      else
+        print("Unknown kind: " .. kind)
+        handle = false
+      end
+      if handle then
+        local r,g,b,a = table.unpack (shape["appearance"]["strokeColor"]["rgba"])
+        local tool = a < 0.5 and "highlighter" or "pen"
+        local style = shape["appearance"]["style"]
+        local width = shape["appearance"]["strokeWidth"]
+        local stroke = {x=x, y=y, width = width, color = math.floor(b*255 + g*256*255 + r*256^2*255), tool=tool}
+        table.insert(strokes, stroke)
+      end
+    end
+  end
+
   local docStructure = app.getDocumentStructure()
-  local currentPage = docStructure["currentPage"]  
+  local currentPage = docStructure["currentPage"]
   local isAnnotated = docStructure["pages"][currentPage]["isAnnotated"]
   local bgCurrentPage = docStructure["pages"][currentPage]["pageTypeFormat"]
-  local hasPdfBackground = (bgNextPage == ":pdf") 
+  local hasPdfBackground = (bgNextPage == ":pdf")
 
   if isAnnotated or hasPdfBackground then
     app.uiAction({action = "ACTION_NEW_PAGE_AFTER"})
@@ -191,7 +249,7 @@ function import()
       if j < maxOffset then app.uiAction({action = "ACTION_NEW_PAGE_AFTER"}) end
     end
   end
-  
+
   print("Text in document: ")
   local rawText = getValue({"richText", "attributedString", 1})
   print(rawText)
