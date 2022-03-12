@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:27\n"
+"PO-Revision-Date: 2022-03-07 17:14\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -448,7 +448,7 @@ msgstr "Stile Disegno - non cambiare"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Combinazione di tipi di disegno"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
@@ -623,7 +623,7 @@ msgstr "Fine"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
-msgstr "Barra degli strumenti fluttuante (sperimentale)"
+msgstr "Barra degli strumenti mobile (sperimentale)"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
@@ -789,7 +789,7 @@ msgstr "Medio"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Unisci livello sottostante"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1083,7 +1083,7 @@ msgstr "Seleziona Font"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Selezionare linee di testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1093,7 +1093,7 @@ msgstr "Seleziona Oggetto"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Selezionare area di testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
@@ -1196,7 +1196,7 @@ msgstr "Imposta la larghezza della pagina per le esportazioni PNG\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "Quadrato"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
@@ -1446,7 +1446,7 @@ msgstr "Tipo di pixmap::domain sconosciuto: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Tipo di fine tratto sconosciuto: \"{1}\", trattato come tondo"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1887,7 +1887,7 @@ msgstr "<b>Separatore</b>"
 
 #: ../ui/settings.glade:777
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr "<i>Assegna classi di dispositivo ad ogni dispositivo di input del sistema. Cambia questi valori solo se i tuoi dispositivi non sono correttamente abbinati. (ad esempio la penna viene mostrata come touchscreen)</i>"
+msgstr "<i>Assegna classi di dispositivo ad ogni dispositivo di input del sistema. Cambia questi valori solo se i tuoi dispositivi non sono correttamente abbinati. (ad esempio se la penna viene mostrata come touchscreen)</i>"
 
 #: ../ui/settings.glade:5247
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
@@ -2056,7 +2056,7 @@ msgstr "Media aritmetica"
 
 #: ../ui/settings.glade:1774
 msgid "Artifact workaround"
-msgstr "Soluzione artefatti"
+msgstr "Rimozione artefatti"
 
 #: ../ui/settings.glade:5454
 msgid "Audio Devices"
@@ -2317,7 +2317,7 @@ msgstr "Trascina e rilascia i Componenti da qui alla Barra degli Strumenti e vic
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr "Trascina: Se il valore è troppo piccolo, potrebbero comparire oscillazioni indesiderate. Se il valore è troppo alto, non ci sarà stabilizzazione."
+msgstr "Trascina: Se il valore è troppo piccolo potrebbero comparire oscillazioni indesiderate. Se il valore è troppo alto non ci sarà stabilizzazione."
 
 #: ../ui/main.glade:1473
 msgid "Draw Coordinate System"
@@ -2554,7 +2554,7 @@ msgstr "Se attivata, le forme che sono state riconosciute dallo strumento \"Rico
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr "Se abilitato, Xournal++ aprirà automaticamente il documento più recente che potrai continuare a modificare a tuo piacimento."
+msgstr "Se abilitato, Xournal++ aprirà automaticamente il documento più recente che così potrai continuare a modificare a tuo piacimento."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
@@ -2590,7 +2590,7 @@ msgstr "Dispositivo di Input"
 
 #: ../ui/settings.glade:813
 msgid "Input Devices"
-msgstr "Dispositivo di immisione"
+msgstr "Dispositivo di ingresso"
 
 #: ../ui/settings.glade:1278
 msgid "Input System"
@@ -2682,11 +2682,11 @@ msgstr "Moltiplicatore massimo"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "Sposta giù"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Unisci livello sottostante"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2980,7 +2980,7 @@ msgstr "Colore della Selezione (Testo, Selezione Tratto, ecc.)"
 
 #: ../ui/settings.glade:3482
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Selezione del bordo di spostamento"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"

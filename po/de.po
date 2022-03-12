@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:28\n"
+"PO-Revision-Date: 2022-03-02 18:00\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -118,7 +118,8 @@ msgstr "Attribut Farbe ist nicht gesetzt!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Audio-Ordner nicht definiert oder ungültig! Die Aufzeichnung wird nicht funktionieren!\n"
+"Bitte legen Sie einen Aufnahme-Ordner unter \"Einstellungen > Audio-Aufzeichnung\" fest"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -788,7 +789,7 @@ msgstr "Mittel"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Ebene nach unten zusammenführen"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1072,7 +1073,7 @@ msgstr "Vollständige Liste der Mitwirkenden"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Text aus Fläche in PDF auswählen"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Select Font"
@@ -1082,7 +1083,7 @@ msgstr "Schriftart auswählen"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Text aus Zeile in PDF auswählen"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1092,23 +1093,23 @@ msgstr "Objekt auswählen"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Text von Fläche in PDF auswählen"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Text aus PDF auswählen"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Text aus Rechteck in PDF auswählen"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Text aus Rechteck in PDF auswählen"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Text aus PDF auswählen"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1125,7 +1126,7 @@ msgstr "Bereich auswählen"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Text aus PDF auswählen"
 
 #: ../src/core/control/Control.cpp:2062
 msgid "Select another PDF"
@@ -1195,7 +1196,7 @@ msgstr "Seitenbreite für den Export von PNG-Dateien festlegen\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "Geodreieck"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
@@ -1445,7 +1446,7 @@ msgstr "Unbekannter pixmap::domain Typ: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Unbekannter Linientyp: \"{1}\", verwende Stift"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1863,7 +1864,8 @@ msgstr "<b>Exportierungseinstellungen für Dokumente</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Leerer Werkzeugkasten</b>\n"
+"<i>Menü: Ansicht → Werkzeugleiste</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -1901,7 +1903,7 @@ msgstr "<i>Wählen Sie welches Werkzeug ausgewählt wird, wenn Sie eine Maustast
 
 #: ../ui/settings.glade:2612
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
-msgstr ""
+msgstr "<i>Das Deaktivieren des Scrollens über den Touchscreen mit GTK kann Fehler auf einigen Plattformen vermeiden. Ändern Sie diese Einstellung, wenn Sie Sprünge oder plötzliche Änderungen in der Scroll-Position bemerken, wenn Sie mit dem Souchscreen scrollen.</i>"
 
 #: ../ui/exportSettings.glade:240
 msgid "<i>Example:</i> 1-3 or 1,3,5-7 etc."
@@ -1910,7 +1912,8 @@ msgstr "<i>Beispiel:</i> 1-3 oder 1,3,5-7 etc."
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Wenn das Dokument bereits gespeichert wurde, finden Sie die Datei im selben Ordner mit der Endung .autosave.xoj\n"
+"Wenn die Datei noch nicht gespeichert wurde, finden Sie das Dokument unter ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4139
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2139,7 +2142,7 @@ msgstr "Taste 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Ändern"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2179,7 +2182,7 @@ msgstr "Stattdessen aktuelle Seitengröße kopieren"
 
 #: ../ui/main.glade:2678
 msgid "Copy selected text"
-msgstr ""
+msgstr "Ausgewählten Text kopieren"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2516,7 +2519,7 @@ msgstr "Position des Mauszeigers hervorheben"
 
 #: ../ui/main.glade:2700
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Ausgewählten Text hervorheben"
 
 #: ../ui/main.glade:1855
 msgid "Highlighter Opti_ons"
@@ -2648,7 +2651,7 @@ msgstr "Datei laden"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Aus Datei laden"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2672,11 +2675,11 @@ msgstr "Max. Multiplikator"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "Nach unten zusammenführen"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Ebene nach unten zusammenführen"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2926,7 +2929,7 @@ msgstr "Bespielname für Ebenen"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Speichern unter"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -2950,7 +2953,7 @@ msgstr "Bild auswählen"
 
 #: ../ui/main.glade:1352
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Text aus Zeile in PDF auswählen"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2958,7 +2961,7 @@ msgstr "PDF-Seite auswählen"
 
 #: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Text aus Rechteck in PDF auswählen"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3061,7 +3064,7 @@ msgstr "Speicherplatz"
 
 #: ../ui/main.glade:2740
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Ausgewählten Text durchstreichen"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3078,7 +3081,7 @@ msgstr "Aufeinander folgend (ms)"
 #: ../ui/settings.glade:3002
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "System-Cursor"
 
 #: ../ui/main.glade:903
 msgid "T_oolbars"
@@ -3138,7 +3141,7 @@ msgstr "Wartezeit"
 
 #: ../ui/main.glade:2760
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Standard- / Bereichstext-Auswahl umschalten"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
@@ -3163,7 +3166,7 @@ msgstr "Versuche Objekt als erstes auszuwählen; Wenn nichts ausgewählt wurde, 
 
 #: ../ui/main.glade:2720
 msgid "Underline selected text"
-msgstr ""
+msgstr "Ausgewählten Text unterstreichen"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"

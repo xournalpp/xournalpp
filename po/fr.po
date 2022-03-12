@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-25 18:26\n"
+"PO-Revision-Date: 2022-02-27 17:49\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1083,7 +1083,7 @@ msgstr "Sélectionner la police"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Sélectionner des lignes de texte PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1093,7 +1093,7 @@ msgstr "Sélectionner un objet"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Sélectionner une région de texte PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
@@ -1105,11 +1105,11 @@ msgstr "Sélectionner le texte PDF dans un Rectangle"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Sélectionner un rectangle de texte PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Sélectionner le texte du PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1126,7 +1126,7 @@ msgstr "Sélectionner une région"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Sélectionner le texte du PDF"
 
 #: ../src/core/control/Control.cpp:2062
 msgid "Select another PDF"
@@ -1196,7 +1196,7 @@ msgstr "Définir la largeur de page pour les exports PNG\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "Équerre"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
@@ -1446,7 +1446,7 @@ msgstr "Type de domaine inconnu : {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Type de terminaison de traits inconnu : \"{1}\". Utilisation de terminaisons rondes"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -2142,7 +2142,7 @@ msgstr "Bouton 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Modifier"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2651,7 +2651,7 @@ msgstr "Charger un fichier"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Charger depuis le fichier"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2675,11 +2675,11 @@ msgstr "Multiplicateur maximal"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "Descendre"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Fusionner avec le calque inférieur"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2746,7 +2746,7 @@ msgstr "Aucune icône"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr "Pas de règles"
+msgstr "Sans les lignes"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:217
 #: ../ui/settings.glade:234
@@ -2929,7 +2929,7 @@ msgstr "Nom du calque d'échantillon"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Enregistrer dans un fichier"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -2953,7 +2953,7 @@ msgstr "Sélectionner une image"
 
 #: ../ui/main.glade:1352
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Sélectionner des lignes de texte PDF"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2961,7 +2961,7 @@ msgstr "Sélectionner la page PDF"
 
 #: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Sélectionner un rectangle de texte PDF"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3141,7 +3141,7 @@ msgstr "Expiré"
 
 #: ../ui/main.glade:2760
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Basculer le mode de sélection de texte : standard / région"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"

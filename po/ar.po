@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:28\n"
+"PO-Revision-Date: 2022-03-04 14:11\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -118,7 +118,8 @@ msgstr "لم يتم تعيين لون السمة!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "مجلد الصوتيات غير معين أو غير صالح! لا يمكن التسجيل!\n"
+"برجاء تعيين مجلد التسجيل في «التفضيلات > تسجيل الصوتيات»"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -788,7 +789,7 @@ msgstr "متوسط"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "دمج الطبقة لأسفل"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1072,7 +1073,7 @@ msgstr "انظر القائمة الكاملة للمساهمين"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "تحديد منطقة نص من PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Select Font"
@@ -1082,7 +1083,7 @@ msgstr "تحديد الخط"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "تحديد نص PDF خطيًّا"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1092,23 +1093,23 @@ msgstr "تحديد كائن"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "تحديد منطقة نص PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "تحديد نص PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "تحديد نص PDF في المستطيل"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "تحديد نص PDF في المستطيل"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "تحديد نص PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1125,7 +1126,7 @@ msgstr "تحديد منطقة"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "تحديد نص من PDF"
 
 #: ../src/core/control/Control.cpp:2062
 msgid "Select another PDF"
@@ -1195,7 +1196,7 @@ msgstr "تعيين عرض الصفحة عند التصدير إلى PNG\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "مثلث أرسطو"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
@@ -1445,7 +1446,7 @@ msgstr "نوع pixmap::domain مجهول: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "نوع نهاية خط مجهول: «{1}»، سأفترض أنه مدوّر"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1865,7 +1866,8 @@ msgstr "<b>إعدادات تصدير المستند</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>صندوق أدوات فارغ</b>\n"
+"            <i>القائمة: عرض &gt; أشرطة الأدوات</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -2142,7 +2144,7 @@ msgstr "الزر الثاني"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "تغيير"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2182,7 +2184,7 @@ msgstr "نسخ حجم الصفحة الحالية بدلا من ذلك"
 
 #: ../ui/main.glade:2678
 msgid "Copy selected text"
-msgstr ""
+msgstr "نسخ النص المحدد"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2519,7 +2521,7 @@ msgstr "تسليط الضوء على موضع المؤشر"
 
 #: ../ui/main.glade:2700
 msgid "Highlight selected text"
-msgstr ""
+msgstr "تظليل النص المحدد"
 
 #: ../ui/main.glade:1855
 msgid "Highlighter Opti_ons"
@@ -2651,7 +2653,7 @@ msgstr "تحميل ملف"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "تحميل من ملف"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2675,11 +2677,11 @@ msgstr "المضاعف الأقصى"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "دمج للأسفل"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "دمج الطبقة للأسفل"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2929,7 +2931,7 @@ msgstr "اسم عينة للطبقة"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "حفظ إلى ملف"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -2953,7 +2955,7 @@ msgstr "تحديد صورة"
 
 #: ../ui/main.glade:1352
 msgid "Select Linear Text"
-msgstr ""
+msgstr "تحديد النص خطيًّا"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -2961,7 +2963,7 @@ msgstr "اختيار صفحة PDF"
 
 #: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "تحديد النص في المستطيل"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -3064,7 +3066,7 @@ msgstr "مجلد التخزين"
 
 #: ../ui/main.glade:2740
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "شطب النص المحدد"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3141,7 +3143,7 @@ msgstr "المهلة"
 
 #: ../ui/main.glade:2760
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "تبديل وضع تحديد النص بين التحديد المعتاد وتحديد المنطقة"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
@@ -3166,7 +3168,7 @@ msgstr "حاول تحديد كائن أولا؛ إذا لم يكن شيء محد
 
 #: ../ui/main.glade:2720
 msgid "Underline selected text"
-msgstr ""
+msgstr "تسطير النص المحدد"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
