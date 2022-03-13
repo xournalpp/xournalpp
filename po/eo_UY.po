@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-13 19:44\n"
+"PO-Revision-Date: 2022-03-13 20:44\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -308,7 +308,7 @@ msgstr "Krei novan tavolon"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:64
 msgid "Custom"
-msgstr "Adaptite"
+msgstr "Propra"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:21
 msgid "Custom Export"
@@ -375,7 +375,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr ""
+msgstr "Ne superskribu la fonan PDF! Tio kaŭzus erarojn!"
 
 #: ../src/core/control/Control.cpp:2506
 msgid "Document file was removed."
@@ -446,7 +446,7 @@ msgstr "Tipo de desegnaĵo – ne ŝanĝu"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Kombinaĵo de tipoj de desegnaĵo"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
@@ -539,7 +539,9 @@ msgstr "Elporti dosieron kiel PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "Elporti FILE kiel bildojn (po unu por ĉiu paĝo)\n"
+"                                 Determini la dosierformon laŭ la dosiersufikso de IMGFILE\n"
+"                                 Subtenataj dosierformoj: .png, .svg"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:17
 msgid "Export PDF"
@@ -583,7 +585,7 @@ msgstr "Malsukcesis analizi la komandon LaTeX: {1}"
 
 #: ../src/core/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
-msgstr ""
+msgstr "Ne eblas legi la ĉiean ŝablonan dosieron. Bonvolu kontroli viajn agordojn."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:102
 msgid "Failed to resolve path with the following error:\n"
@@ -630,11 +632,11 @@ msgstr "Havigi version de xournalpp"
 
 #: ../src/core/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Ĉiea ŝablona dosiero ne ekzistas. Bonvolu kontroli viajn agordojn."
 
 #: ../src/core/control/LatexController.cpp:64
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Ĉiea ŝablona dosiero ne estas ordinara dosiero. Bonvolu kontroli viajn agordojn. "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Go to first page"
@@ -1024,7 +1026,7 @@ msgstr "SVG-bildoj"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "Ekzempla LaTeX-dosiero estis farita sukcese."
 
 #: ../src/core/control/Control.cpp:2507 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
@@ -1140,7 +1142,7 @@ msgstr "Elekti regionon"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
-msgstr ""
+msgstr "Kombinaĵo de elektitaĵoj"
 
 #: ../src/core/control/XournalMain.cpp:154
 msgid "Send Bugreport"
@@ -1189,11 +1191,11 @@ msgstr "Montri ĉion"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
-msgstr ""
+msgstr "Montri nur neuzitajn paĝojn (unu neuzitan paĝon)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:89
 msgid "Show only not used pages ({1} unused pages)"
-msgstr ""
+msgstr "Montri nur neuzitajn paĝojn ({1} neuzitajn paĝojn)"
 
 #: ../src/core/control/XournalMain.cpp:439
 msgid "Sorry, Xournal++ can only open one file at once.\n"
@@ -1376,7 +1378,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr ""
+msgstr "Ne eblas malfermi la ĉiean ŝablonan dosieron ĉe {1}. Ĉu ĝi ekzistas?"
 
 #: ../src/core/gui/PageView.cpp:372
 msgid "Unable to play audio recording {1}"
@@ -1906,7 +1908,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3986
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr ""
+msgstr "<i>Metu mezurilon sur la ekrano, kaj movu la ŝovbutonon ĝis la du mezuriloj kongruos.</i>"
 
 #: ../ui/settings.glade:4922
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
@@ -1948,7 +1950,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2753
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
+msgstr "<i>Baskuligi la videblecon de la menubreto per la klavo F10</i>"
 
 #: ../ui/settings.glade:2409
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
@@ -2176,7 +2178,7 @@ msgstr "Pintorekonado"
 
 #: ../ui/settings.glade:2353
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr ""
+msgstr "Propraj komandoj (por la metodo «Propra»)"
 
 #: ../ui/settings.glade:2866
 msgid "Dark Theme (requires restart)"
@@ -2232,7 +2234,7 @@ msgstr "Malŝalti desegnadon per ĉi tiu aparato"
 
 #: ../ui/settings.glade:3375
 msgid "Disable scrollbar fade out"
-msgstr ""
+msgstr "Malŝalti malaperiĝon de la rulumskalo"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
@@ -2244,7 +2246,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4057
 msgid "Display DPI Calibration"
-msgstr ""
+msgstr "Mezurado de la denso de la bilderoj en la ekrano"
 
 #: ../ui/settings.glade:4731
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
@@ -2310,7 +2312,7 @@ msgstr "Ŝalti"
 
 #: ../ui/settings.glade:4390
 msgid "Enable  with determination radius of "
-msgstr ""
+msgstr "Ŝalti laŭ la determina radiuso de "
 
 #: ../ui/settings.glade:659
 msgid "Enable Autoloading of Journals"
@@ -2374,7 +2376,7 @@ msgstr "Elporti kiel..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Elporti tavolojn progrese"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
@@ -2395,11 +2397,11 @@ msgstr "Fini la strekon"
 
 #: ../ui/main.glade:2476
 msgid "Find next occurrence of the search string"
-msgstr ""
+msgstr "Trovi la sekvan aperon de la serĉataĵo"
 
 #: ../ui/main.glade:2454
 msgid "Find previous occurrence of the search string"
-msgstr ""
+msgstr "Trovi la antaŭan aperon de la serĉataĵo"
 
 #: ../ui/settings.glade:4307
 msgid "First Page Offset "
@@ -2411,7 +2413,7 @@ msgstr "Plenekrana reĝimo"
 
 #: ../ui/settings.glade:5499
 msgid "Gain"
-msgstr ""
+msgstr "Multiplikanto"
 
 #: ../ui/settings.glade:1140 ../ui/settings.glade:1160
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
@@ -2427,11 +2429,11 @@ msgstr "Git-enmeto"
 
 #: ../ui/settings.glade:2946
 msgid "Global"
-msgstr ""
+msgstr "Ĉiea"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "Loko de la ĉiea ŝablona dosiero"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -3093,7 +3095,7 @@ msgstr "La mezurunuo de la mezurilo estas la centimetro"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "Jen agordoj por novaj paĝoj"
 
 #: ../ui/settings.glade:2143
 msgid "Timeout"
