@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-10 23:31\n"
+"PO-Revision-Date: 2022-03-13 19:44\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -260,7 +260,7 @@ msgstr "Malsukcesis legi bildon: {1}.\n"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:391
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Ne eblis legi la paĝan numeron de la klonita fona bildo: {1}."
 
 #: ../src/core/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -278,7 +278,7 @@ msgstr "Malsukcesis forigi la ilon {1} el la ilobreto {2} ĉe la pozicio {3}"
 
 #: ../src/core/control/Control.cpp:201
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr ""
+msgstr "Ne eblas ŝanĝi la nomon de la aŭtomate konservita dosiero de «{1}» al «{2}»: {3}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Could not save .tex file: {1}"
@@ -1008,7 +1008,7 @@ msgstr "Turnado"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "Rotacia kaptado"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
@@ -1982,11 +1982,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4192
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "Enmeti kroman horizontalan spacon de"
 
 #: ../ui/settings.glade:4170
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "Enmeti kroman vertikalan spacon de"
 
 #: ../ui/settings.glade:4495
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2224,7 +2224,7 @@ msgstr "Malŝalti"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "Malŝalti la integritan funkcion de inercia rulumado en GTK (postulas relanĉon)."
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -2878,7 +2878,7 @@ msgstr "Dekstra musbutono"
 
 #: ../ui/settings.glade:4577
 msgid "Rotation snapping tolerance"
-msgstr ""
+msgstr "Tolero pri rotacia kaptado"
 
 #: ../ui/settings.glade:5487
 msgid "Sample Rate"
@@ -2996,7 +2996,7 @@ msgstr "Piktogramo de malgranda punkto"
 
 #: ../ui/settings.glade:4696
 msgid "Snapping"
-msgstr ""
+msgstr "Alkradigo"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
@@ -3134,7 +3134,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4674
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Alkradigi rekonatajn formojn"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
