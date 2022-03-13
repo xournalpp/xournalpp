@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:27\n"
+"PO-Revision-Date: 2022-03-13 05:53\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -58,7 +58,7 @@ msgstr "<span foreground='red' size='x-large'>遺失必須的使用者界面檔�
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "插入/編輯TeX"
 
 #: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
@@ -118,7 +118,7 @@ msgstr "顏色未設置"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "未設置音訊存放目錄或目錄位置不合法, 無法錄製聲音, 請到\"偏好設置 > 音訊錄製\"設定音訊存放目錄"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -786,7 +786,7 @@ msgstr "中"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "向下合併圖層"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -2011,7 +2011,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5697
 msgid "Audio Recording"
-msgstr ""
+msgstr "音訊錄製"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
