@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-24 17:36\n"
+"PO-Revision-Date: 2022-03-10 23:31\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -20,7 +20,8 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:369
 msgid "\n\n"
 "Will now attempt to run without this file."
-msgstr ""
+msgstr "\n\n"
+"Nun provos ruliĝi sen ĉi tiu dosiero."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:47
 msgid "\n"
@@ -39,7 +40,7 @@ msgstr "%F-Noto-%H-%M"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:151
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
-msgstr ""
+msgstr "<b>Neniu aparato troviĝis. Tio ŝajnas malĝusta – eble raportu cimon?</b>"
 
 #: ../src/core/control/XournalMain.cpp:364
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
@@ -48,7 +49,12 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr ""
+msgstr "<span foreground='red' size='x-large'>Mankas la necesa fasada dosiero:\n"
+"<b>{1}</b></span>\n"
+"Ĝi troviĝas nenie ajn.\n"
+"  Ne relative\n"
+"  Ne en «PATH»\n"
+"  Ne en {2}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Add/Edit TeX"
@@ -56,7 +62,7 @@ msgstr "Enmeti/modifi TeX"
 
 #: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
-msgstr ""
+msgstr "Altnivelaj opcioj pri elportado"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -64,11 +70,11 @@ msgstr "Ĉiuj dosieroj"
 
 #: ../src/core/control/pagetype/PageTypeMenu.cpp:191
 msgid "Apply to all pages"
-msgstr ""
+msgstr "Efektivigi sur ĉiuj paĝoj"
 
 #: ../src/core/control/pagetype/PageTypeMenu.cpp:182
 msgid "Apply to current page"
-msgstr ""
+msgstr "Efektivigi sur la aktuala paĝo"
 
 #: ../src/core/control/tools/EditSelection.cpp:353
 msgid "Arrange"
@@ -77,37 +83,37 @@ msgstr "Aranĝi"
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:28
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:112
 msgid "Attach file to the journal"
-msgstr ""
+msgstr "Alkroĉi dosieron al la ĵurnalo"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:114
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr ""
+msgstr "La atributo «{1}» ne estas analizebla kiel «double»; la valoro estas «{2}»"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:107
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr ""
+msgstr "La atributo «{1}» ne estas analizebla kiel «double»; la valoro estas «nullptr»"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:131
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr ""
+msgstr "La atributo «{1}» ne estas analizebla kiel «int»; la valoro estas «{2}»"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:124
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr ""
+msgstr "La atributo «{1}» ne estas analizebla kiel «int»; la valoro estas «nullptr»"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr ""
+msgstr "La atributo «{1}» ne estas analizebla kiel «size_t»; la valoro estas «{2}»"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:162
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr ""
+msgstr "La atributo «{1}» ne estas analizebla kiel «size_t»; la valoro estas «nullptr»"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
-msgstr ""
+msgstr "Koloro-atributo ne estas agordita!"
 
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
@@ -116,15 +122,15 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
-msgstr ""
+msgstr "Aŭtomata konservado malsukcesis pro la jena eraro: {1}"
 
 #: ../src/core/control/Control.cpp:190
 msgid "Autosave renamed from {1} to {2}"
-msgstr ""
+msgstr "Nomo de aŭtomata konservaĵo estas ŝanĝita de {1} al {2}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr ""
+msgstr "Aŭtomate konservante al {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
@@ -138,11 +144,11 @@ msgstr "Fono"
 
 #: ../src/core/control/tools/EditSelection.cpp:370
 msgid "Bring forward"
-msgstr ""
+msgstr "Porti antaŭen"
 
 #: ../src/core/control/tools/EditSelection.cpp:360
 msgid "Bring to front"
-msgstr ""
+msgstr "Porti malfonen"
 
 #: ../src/core/control/Control.cpp:2064 ../src/core/control/Control.cpp:2515
 #: ../src/core/control/XournalMain.cpp:158
@@ -163,15 +169,15 @@ msgstr "Ŝanĝi stilon de linio"
 
 #: ../src/core/undo/FillUndoAction.cpp:76
 msgid "Change stroke fill"
-msgstr ""
+msgstr "Ŝanĝi la plenigon de streko"
 
 #: ../src/core/undo/SizeUndoAction.cpp:101
 msgid "Change stroke width"
-msgstr ""
+msgstr "Ŝanĝi la larĝon de streko"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr ""
+msgstr "La koloro «{1}» estas nekonata (ne difinita en la implicita listo de koloroj)!"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:226
 msgid "Contents"
@@ -194,59 +200,63 @@ msgstr "Kopii paĝon"
 #: ../src/util/PathUtil.cpp:257
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Ne eblis krei dosierujon: {1}\n"
+"Malsukcesis pro la jena eraro: {2}"
 
 #: ../src/core/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "Ne eblis ŝargi la LaTeX-PDF-dosieron"
 
 #: ../src/core/control/LatexController.cpp:267
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "Ne eblis ŝargi la LaTeX-PDF-dosieron: {1}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:16
 msgid "Could not load pagetemplates.ini file"
-msgstr ""
+msgstr "Ne eblis ŝargi la dosieron «pagetemplates.ini»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:803
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr ""
+msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: ne eblas legi dosieron"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:813
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr ""
+msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: ne eblas skribi sur dosieron"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:783
 #: ../src/core/control/xojfile/LoadHandler.cpp:1036
 #: ../src/core/control/xojfile/LoadHandler.cpp:1055
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr ""
+msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: valida grando de dosiero ne estas provizita"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:774
 #: ../src/core/control/xojfile/LoadHandler.cpp:790
 #: ../src/core/control/xojfile/LoadHandler.cpp:1027
 #: ../src/core/control/xojfile/LoadHandler.cpp:1043
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr ""
+msgstr "Malsukcesis malfermi alkroĉaĵon: {1}. Erarmesaĝo: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:161
 msgid "Could not open file: \"{1}\""
-msgstr ""
+msgstr "Ne eblis malfermi dosieron: «{1}»"
 
 #: ../src/core/gui/MainWindow.cpp:94
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "Ne eblas analizi la propran dosieron «toolbar.ini»: {1}\n"
+"Ilobretoj ne estos haveblaj"
 
 #: ../src/core/gui/MainWindow.cpp:85
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "Ne eblas analizi la ĝeneralan dosieron «toolbar.ini»: {1}\n"
+"Ilobretoj ne estos haveblaj"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:357
 #: ../src/core/control/xojfile/LoadHandler.cpp:381
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "Malsukcesis legi bildon: {1}.\n"
+"Erarmesaĝo: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:391
 msgid "Could not read page number for cloned background image: {1}."
@@ -255,15 +265,16 @@ msgstr ""
 #: ../src/core/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Refarado de «{1}» ne eblas.\n"
+"Io fiaskis; bonvolu raporti la cimon."
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr ""
+msgstr "Malsukcesis forigi ilon el la ilobreto {1} ĉe la pozicio {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:163
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr ""
+msgstr "Malsukcesis forigi la ilon {1} el la ilobreto {2} ĉe la pozicio {3}"
 
 #: ../src/core/control/Control.cpp:201
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
@@ -271,24 +282,25 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr "Ne eblis konservi .tex-dosieron: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:88
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "Ne eblis lanĉi {1}: {2} (elirkodo: {3})"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr ""
+msgstr "Malfarado de «{1}» ne eblas.\n"
+"Io fiaskis; bonvolu raporti la cimon."
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:230
 msgid "Could not write background \"{1}\", {2}"
-msgstr ""
+msgstr "Ne eblis skribi fonon «{1}», {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:326
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr ""
+msgstr "Ne eblis skribi fonon «{1}». Daŭrigante malgraŭ tio."
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:78
 msgid "Create new layer"
@@ -296,19 +308,19 @@ msgstr "Krei novan tavolon"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:64
 msgid "Custom"
-msgstr ""
+msgstr "Adaptite"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:21
 msgid "Custom Export"
-msgstr ""
+msgstr "Adaptite elporti"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "Adapti ilobretojn"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:28
 msgid "Customized"
-msgstr ""
+msgstr "Adaptita"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Cut"
@@ -353,7 +365,7 @@ msgstr "Forĵeti"
 
 #: ../src/core/control/XournalMain.cpp:586
 msgid "Display advanced export options"
-msgstr ""
+msgstr "Montri komplikajn opciojn pri elportado"
 
 #: ../src/core/control/Control.cpp:2009
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -367,24 +379,24 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2506
 msgid "Document file was removed."
-msgstr ""
+msgstr "Dokumenta dosiero estis forigita."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:243
 msgid "Document is corrupted (no pages found in file)"
-msgstr ""
+msgstr "Dokumento estas koruptita (neniu paĝo troviĝas en la dosiero)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:239
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr ""
+msgstr "Dokumento estas ne kompleta (ĉu la fino estas fortranĉita?)"
 
 #: ../src/core/model/Document.cpp:291 ../src/core/model/Document.cpp:300
 #: ../src/core/model/Document.cpp:303
 msgid "Document not loaded! ({1}), {2}"
-msgstr ""
+msgstr "Dokumento ne estas ŝargita! ({1}), {2}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:25
 msgid "Dotted"
-msgstr ""
+msgstr "Punktita"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -410,27 +422,27 @@ msgstr "Desegni linion"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:98
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Draw Rectangle"
-msgstr ""
+msgstr "Desegni ortangulon"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:475
 msgid "Draw Spline"
-msgstr ""
+msgstr "Desegni interpolantan kurbon"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw coordinate system"
-msgstr ""
+msgstr "Desegni koordinataron"
 
 #: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Draw stroke"
-msgstr ""
+msgstr "Desegni strekon"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Drawing Type - don't change"
-msgstr ""
+msgstr "Tipo de desegnaĵo – ne ŝanĝu"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
@@ -442,7 +454,7 @@ msgstr "Redakti tekston"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
-msgstr ""
+msgstr "Krize konservita dokumento"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:279
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
@@ -452,21 +464,22 @@ msgstr ""
 #: ../src/core/undo/DeleteUndoAction.cpp:52
 #: ../src/core/undo/EraseUndoAction.cpp:52
 msgid "Erase stroke"
-msgstr ""
+msgstr "Forskrapi strekon"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:276
 msgid "Eraser"
-msgstr ""
+msgstr "Skrapgumo"
 
 #: ../src/core/control/Control.cpp:2263
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr ""
+msgstr "Eraro prinotante PDF-dosieron «{1}»\n"
+"{2}"
 
 #: ../src/core/gui/GladeGui.cpp:23
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr ""
+msgstr "Eraro ŝargante Glade-dosieron «{1}» (provante ŝargi «{2}»)"
 
 #: ../src/core/control/Control.cpp:2086
 msgid "Error opening file \"{1}\""
@@ -483,7 +496,7 @@ msgstr "Eraro legante dosieron: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:522
 msgid "Error reading width of a stroke: {1}"
-msgstr ""
+msgstr "Eraro legante la larĝon de streko: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
@@ -495,11 +508,11 @@ msgstr "Eraro konservante bildon 2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "Eraro dum aŭtomata konservado: {1}"
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "Eraro {1} rulante sisteman komandon: {2}"
 
 #: ../src/core/control/CrashHandler.cpp:38
 msgid "Error: {1}"
@@ -507,11 +520,11 @@ msgstr "Eraro: {1}"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr ""
+msgstr "Eraro: {1} ne estas ordinara dosiero. Bonvolu kontroli la agordojn pri viaj LaTeX-ŝablonoj. "
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
-msgstr ""
+msgstr "Eraro: {1}. Bonvolu kontroli la enhavon de {2}"
 
 #: ../src/core/control/XournalMain.cpp:177
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
@@ -520,7 +533,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:543
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "Elporti dosieron kiel PDF"
 
 #: ../src/core/control/XournalMain.cpp:545
 msgid "Export FILE as image files (one per page)\n"
@@ -557,16 +570,16 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:63
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Malsukcesis trovi la programon LaTeX en «PATH»: {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Malsukcesis praŝargi Cairo-surfacon por PDF"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Malsukcesis analizi la komandon LaTeX: {1}"
 
 #: ../src/core/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
@@ -580,7 +593,8 @@ msgstr ""
 #: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr ""
+msgstr "La dosiero ne estis malfermebla. Vi malfermu ĝin permane:\n"
+"Adreso: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:527
 msgid "Fill"
@@ -596,7 +610,7 @@ msgstr "Maldika"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "Flosanta ilobreto (eksperimenta)"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
@@ -604,11 +618,11 @@ msgstr "Tiparo"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
 msgid "Forward"
-msgstr ""
+msgstr "Antaŭen"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:42
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPL versio 2 aŭ pli nova"
 
 #: ../src/core/control/XournalMain.cpp:534
 msgid "Get version of xournalpp"
@@ -648,11 +662,11 @@ msgstr "Iri al supra tavolo"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:24
 msgid "Graph"
-msgstr "Grafo"
+msgstr "Grafa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Grid Snapping"
-msgstr ""
+msgstr "Alkradigado"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
@@ -666,7 +680,7 @@ msgstr "Kaŝi ĉion"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Highlighter"
-msgstr ""
+msgstr "Emfazilo"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
@@ -675,7 +689,7 @@ msgstr "Bildo"
 
 #: ../src/core/control/ExportHelper.cpp:63
 msgid "Image file successfully created"
-msgstr ""
+msgstr "Bildodosiero sukcese kreiĝis"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:17
 msgid "Images"
@@ -683,11 +697,11 @@ msgstr "Bildoj"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Enmeti kopion de la aktuala tavolo suben"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
-msgstr ""
+msgstr "Enmeti kopion de la aktuala paĝo suben"
 
 #: ../src/core/undo/InsertUndoAction.cpp:78
 msgid "Insert elements"
@@ -712,15 +726,15 @@ msgstr "Enmeti paĝon"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
-msgstr ""
+msgstr "Izometre punktita"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Graph"
-msgstr ""
+msgstr "Izometre grafa"
 
 #: ../src/core/control/XournalMain.cpp:530
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "Salti al paĝo (unua paĝo: 1)"
 
 #: ../src/core/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -732,11 +746,11 @@ msgstr "Tavolo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
 msgid "Layer Combo"
-msgstr ""
+msgstr "Tavola kombinaĵo"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layer Preview"
-msgstr ""
+msgstr "Antaŭrigardo de tavolo"
 
 #: ../src/core/control/layer/LayerController.cpp:369
 msgid "Layer {1}"
@@ -744,7 +758,7 @@ msgstr "Tavolo {1}"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Antaŭrigardo de tavolaro"
 
 #: ../src/core/gui/PageView.cpp:772
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
@@ -762,7 +776,7 @@ msgstr "Meza"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Kunfandi tavolon malsupren"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -774,11 +788,11 @@ msgstr "Movi tavolon"
 
 #: ../src/core/undo/SwapUndoAction.cpp:62
 msgid "Move page downwards"
-msgstr ""
+msgstr "Movi paĝon malsupren"
 
 #: ../src/core/undo/SwapUndoAction.cpp:62
 msgid "Move page upwards"
-msgstr ""
+msgstr "Movi paĝon supren"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:69
 msgid "New"
@@ -794,7 +808,7 @@ msgstr "Sekva"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Next annotated page"
-msgstr ""
+msgstr "Sekva prinotita paĝo"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
@@ -803,15 +817,15 @@ msgstr "Neniu aparato"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:151
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
 msgid "No pages to export!"
-msgstr ""
+msgstr "Neniu elportota paĝo!"
 
 #: ../src/core/control/Control.cpp:1318
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Neniu postgluebla PDF-paĝo. Eble necesas remalfermi la dokumenton."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
-msgstr ""
+msgstr "Ordinara desegnado"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
@@ -847,7 +861,7 @@ msgstr "Malfermi {1}"
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:8
 msgid "PDF Export"
-msgstr ""
+msgstr "Elporto kiel PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:39
 msgid "PDF Page {1}"
@@ -855,11 +869,11 @@ msgstr "PDF-paĝo {1}"
 
 #: ../src/core/view/PdfView.cpp:31
 msgid "PDF background missing"
-msgstr ""
+msgstr "PDF-fono mankas"
 
 #: ../src/core/control/ExportHelper.cpp:106
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "PDF-dosiero sukcese kreiĝis"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:23
 #: ../src/core/control/jobs/PdfExportJob.cpp:12
@@ -881,19 +895,19 @@ msgstr "Paĝo"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:73
 msgid "Page Preview"
-msgstr ""
+msgstr "Antaŭrigardo de paĝo"
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:80
 msgid "Page background changed"
-msgstr ""
+msgstr "Fono de paĝo ŝanĝiĝis"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:97
 msgid "Page deleted"
-msgstr ""
+msgstr "Paĝo forigita"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:93
 msgid "Page inserted"
-msgstr ""
+msgstr "Paĝo enmetita"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:59
 msgid "Page number"
@@ -901,7 +915,7 @@ msgstr "Numero de paĝo"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
-msgstr ""
+msgstr "Parigitaj paĝoj"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 #: ../src/core/undo/AddUndoAction.cpp:57
@@ -910,30 +924,30 @@ msgstr "Alglui"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Pause / Play"
-msgstr ""
+msgstr "Paŭzigi / ludi"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:257
 msgid "Pen"
-msgstr "Skribilo"
+msgstr "Plumo"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
-msgstr ""
+msgstr "Ordinara"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
 msgid "Play Object"
-msgstr ""
+msgstr "Ludi objekton"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:16
 msgid "Predefined"
-msgstr ""
+msgstr "Antaŭdifinita"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Presentation mode"
-msgstr ""
+msgstr "Prezentoreĝimo"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
@@ -945,11 +959,11 @@ msgstr "Presi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "Ekregistri sonon / ĉesigi registradon"
 
 #: ../src/core/control/Control.cpp:922
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "Malsukcesis ekfunkciigi la registrilon."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 #: ../src/core/undo/UndoRedoHandler.cpp:215
@@ -962,15 +976,15 @@ msgstr "Refari: "
 
 #: ../src/core/control/Control.cpp:2063
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "Forviŝi PDF-fonon"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "Forigis ilon el Ilobreto {1} numero {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "Forigis ilon {1} el Ilobreto {2} numero {3}"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
@@ -998,11 +1012,11 @@ msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
-msgstr ""
+msgstr "Liniita"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "Vertikale liniita"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:25
 msgid "SVG graphics"
@@ -1041,11 +1055,11 @@ msgstr "Serĉi"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:35
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Vidi la plenan liston de kontribuintoj"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Elekti arean tekston el PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Select Font"
@@ -1055,7 +1069,7 @@ msgstr "Elekti tiparon"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Elekti linian PDF-tekston"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1065,7 +1079,7 @@ msgstr "Elekti objekton"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Elekti PDF-arean tekston"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
@@ -1134,11 +1148,11 @@ msgstr "Sendi raporton pri cimo"
 
 #: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
-msgstr ""
+msgstr "Porti malantaŭen"
 
 #: ../src/core/control/tools/EditSelection.cpp:389
 msgid "Send to back"
-msgstr ""
+msgstr "Porti fonen"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Separator"
@@ -1163,11 +1177,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "Angulilo"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
-msgstr ""
+msgstr "Formo-rekonilo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:67
 msgid "Show all"
@@ -1184,50 +1198,52 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:439
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "Bedaŭrinde, Xournal++ povas malfermi nur unu dosieron samtempe.\n"
+"Aliaj estas ignorataj."
 
 #: ../src/core/control/XournalMain.cpp:454
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "Bedaŭrinde, Xournal++ ankoraŭ ne povas malfermi foran dosieron.\n"
+"Vi devas kopii la dosieron en lokan dosierujon."
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
-msgstr ""
+msgstr "Muzika liniaro"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
 msgid "Stop"
-msgstr ""
+msgstr "Ĉesigi"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
 #: ../src/core/undo/RecognizerUndoAction.cpp:69
 msgid "Stroke recognizer"
-msgstr ""
+msgstr "Streko-rekonilo"
 
 #: ../src/core/control/CrashHandler.cpp:40
 msgid "Successfully saved document to \"{1}\""
-msgstr ""
+msgstr "Dokumento sukcese konserviĝis al «{1}»"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
-msgstr ""
+msgstr "Subtenataj dosieroj"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "Interŝanĝi la aktualan tavolon kaj la superan tavolon"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "Interŝanĝi la aktualan tavolon kaj la suban tavolon"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "Interŝanĝi la aktualan paĝon kaj la superan paĝon"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:68
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "Interŝanĝi la aktualan paĝon kaj la suban paĝon"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
@@ -1241,7 +1257,7 @@ msgstr "Teksto"
 #: ../src/core/gui/SearchBar.cpp:66
 #, c-format
 msgid "Text %i times found on this page"
-msgstr ""
+msgstr "Teksto troviĝis %i fojojn sur ĉi tiu paĝo"
 
 #: ../src/core/undo/TextUndoAction.cpp:31
 msgid "Text changes"
@@ -1249,15 +1265,15 @@ msgstr "Tekstaj ŝanĝoj"
 
 #: ../src/core/gui/SearchBar.cpp:64
 msgid "Text found on this page"
-msgstr ""
+msgstr "Teksto trovita sur ĉi tiu paĝo"
 
 #: ../src/core/gui/SearchBar.cpp:122 ../src/core/gui/SearchBar.cpp:166
 msgid "Text found once on page {1}"
-msgstr ""
+msgstr "Teksto troviĝis unu fojon sur paĝo {1}"
 
 #: ../src/core/gui/SearchBar.cpp:123 ../src/core/gui/SearchBar.cpp:167
 msgid "Text found {1} times on page {2}"
-msgstr ""
+msgstr "Teksto troviĝis {1} fojojn sur paĝo {2}"
 
 #: ../src/core/gui/SearchBar.cpp:71
 msgid "Text not found"
@@ -1265,11 +1281,11 @@ msgstr "Teksto ne troviĝis"
 
 #: ../src/core/gui/SearchBar.cpp:133 ../src/core/gui/SearchBar.cpp:177
 msgid "Text not found, searched on all pages"
-msgstr ""
+msgstr "Teksto ne troviĝis sur ajna paĝo"
 
 #: ../src/core/control/Control.cpp:1113
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr ""
+msgstr "La ilobreta agordo «{1}» estas antaŭdifinita; ĉu krei kopion modifotan?"
 
 #: ../src/core/control/Control.cpp:2051
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
@@ -1291,19 +1307,19 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:119
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "La dosiero ne estas valida .xopp-dosiero (MIME-tipo mankas): «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:127
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "La dosiero ne estas valida .xopp-dosiero (MIME-tipo malĝusta): «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:136
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
-msgstr ""
+msgstr "La dosiero ne estas valida .xopp-dosiero (la versio mankas): «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:149
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
-msgstr ""
+msgstr "La dosiero ne estas valida .xopp-dosiero (versio-teksto estas difektita): «{1}»"
 
 #: ../src/core/control/LatexController.cpp:240
 msgid "The formula is empty when rendered or invalid."
@@ -1311,19 +1327,19 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:149
 msgid "The most recent log file name: {1}"
-msgstr ""
+msgstr "La nomo de la lasta protokoldosiero: {1}"
 
 #: ../src/core/control/XournalMain.cpp:144
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Ekzistas erarprotokoloj de Xournal++. Bonvolu sendi raporton pri la cimo, por ke la cimo estos riparita."
 
 #: ../src/core/control/XournalMain.cpp:143
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Ekzistas erarprotokolo de Xournal++. Bonvolu sendi raporton pri la cimo, por ke la cimo estos riparita."
 
 #: ../src/util/XojMsgBox.cpp:95
 msgid "There was an error displaying help: {1}"
-msgstr ""
+msgstr "Okazis eraro montrante helpon: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Thick"
@@ -1331,12 +1347,12 @@ msgstr "Dika"
 
 #: ../src/core/control/Control.cpp:2506
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "Ĉi tiu dokumento estas ankoraŭ ne konservita."
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:144
 #: ../src/core/control/tools/ImageHandler.cpp:43
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "Ĉi tiu bildo ne estas ŝargebla. Erarmesaĝo: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Toggle fullscreen"
@@ -1364,11 +1380,11 @@ msgstr ""
 
 #: ../src/core/gui/PageView.cpp:372
 msgid "Unable to play audio recording {1}"
-msgstr ""
+msgstr "Ne eblas ludi sonregistraĵon {1}"
 
 #: ../src/core/control/Control.cpp:1332
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "Ne eblas akiri PDF-paĝon."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/core/undo/UndoRedoHandler.cpp:203
@@ -1381,15 +1397,15 @@ msgstr "Malfari: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:288
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "Neatendata radika elemento: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:309
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "Neatendata elemento en dokumento: «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:498
 msgid "Unknown background type: {1}"
-msgstr ""
+msgstr "Nekonata speco de fono: {1}"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
 msgid "Unknown color value \"{1}\""
@@ -1397,23 +1413,23 @@ msgstr "Nekonata kolora valoro «{1}»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:452
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "Nekonata tipo de adreso: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:228
 msgid "Unknown parser error"
-msgstr ""
+msgstr "Nekonata sintakseraro"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:399
 msgid "Unknown pixmap::domain type: {1}"
-msgstr ""
+msgstr "Nekonata tipo de «pixmap::domain»: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Nekonata strekopinta tipo: «{1}», supozante «ronda»"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr ""
+msgstr "Nekonata tipo de streko: «{1}», supozante plumon"
 
 #: ../src/core/control/Control.cpp:2409
 msgid "Unsaved Document"
@@ -1445,11 +1461,11 @@ msgstr "Skribi tekston"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:927
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "Malĝusta nombro de punktoj ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:937
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr ""
+msgstr "Malĝusta nombro de punktoj: ricevis {1}, sed atendis {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:225
 msgid "XML Parser error: {1}"
@@ -1457,7 +1473,7 @@ msgstr "XML-sintaksa eraro: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:26
 msgid "Xournal (Compatibility)"
-msgstr ""
+msgstr "Xournal (kongruige)"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:51
 msgid "Xournal files"
@@ -1484,7 +1500,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:146
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Vi uzas la branĉon «{1}/{2}». «Sendi raporton pri cimo» sendos vin al la cimspurilo de tiu kododeponejo."
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1494,23 +1510,23 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:131
 msgid "Zoom Slider"
-msgstr ""
+msgstr "Zombreto"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Zoom fit to screen"
-msgstr ""
+msgstr "Adapti zomon al ekrano"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Zoom in"
-msgstr ""
+msgstr "Pligrandigi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Zoom out"
-msgstr ""
+msgstr "Malpligrandigi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Zoom to 100%"
-msgstr ""
+msgstr "Ŝanĝi zomon al 100%"
 
 #: ../src/core/control/Control.cpp:2352
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
@@ -1537,27 +1553,27 @@ msgstr "Kursoro"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:265
 msgid "dash-/ dotted"
-msgstr ""
+msgstr "streketita / punktita"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:262
 msgid "dashed"
-msgstr ""
+msgstr "streketita"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
 msgid "default disabled"
-msgstr ""
+msgstr "Implicite malŝaltita"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
 msgid "default enabled"
-msgstr ""
+msgstr "Implicite ŝaltita"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
 msgid "delete stroke"
-msgstr ""
+msgstr "forviŝi strekon"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:268
 msgid "dotted"
-msgstr ""
+msgstr "punktita"
 
 #: ../src/core/undo/AddUndoAction.cpp:65
 #: ../src/core/undo/DeleteUndoAction.cpp:63
@@ -1566,7 +1582,7 @@ msgstr "elementoj"
 
 #: ../src/core/control/DeviceListHelper.cpp:110
 msgid "eraser"
-msgstr ""
+msgstr "skrapgumo"
 
 #: ../src/core/control/Control.cpp:2023
 msgid "file: {1}"
@@ -1592,7 +1608,7 @@ msgstr "muso"
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "pen"
-msgstr ""
+msgstr "plumo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
 msgid "show"
@@ -1610,7 +1626,7 @@ msgstr "streko"
 
 #: ../src/core/control/DeviceListHelper.cpp:124
 msgid "tablet pad"
-msgstr ""
+msgstr "desegna tabuleto"
 
 #: ../src/core/undo/AddUndoAction.cpp:82
 #: ../src/core/undo/DeleteUndoAction.cpp:80
@@ -1619,19 +1635,19 @@ msgstr "teksto"
 
 #: ../src/core/control/DeviceListHelper.cpp:119
 msgid "touchpad"
-msgstr ""
+msgstr "tuŝplato"
 
 #: ../src/core/control/DeviceListHelper.cpp:117
 msgid "touchscreen"
-msgstr ""
+msgstr "tuŝekrano"
 
 #: ../src/core/control/DeviceListHelper.cpp:122
 msgid "trackpoint"
-msgstr ""
+msgstr "stirstangeto"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:279
 msgid "whiteout"
-msgstr ""
+msgstr "blanka korektilo"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:936
 msgid "xoj-File: {1}"
@@ -1639,35 +1655,35 @@ msgstr "xoj-Dosiero: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:113
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr ""
+msgstr "xoj-preview-extractor: rulsintakso estas «ENIGO.xoj ELIGO.png»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:177
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "xoj-preview-extractor: ne eblis trovi la piktogramon «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr ""
+msgstr "xoj-preview-extractor: antaŭrigardo mankas en la dosiero «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:126
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr ""
+msgstr "xoj-preview-extractor: la dosiero «{1}» ne estas .xoj-dosiero"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:139
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr ""
+msgstr "xoj-preview-extractor: troviĝas nek antaŭrigardo nek paĝo; eble nevalida dosiero?"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:130
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: malsukcesis malfermado de la eniga dosiero «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:194
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr ""
+msgstr "xoj-preview-extractor: malsukcesis malfermado de la eliga dosiero «{1}»"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:201
 msgid "xoj-preview-extractor: successfully extracted"
-msgstr ""
+msgstr "xoj-preview-extractor: sukcese eltirita"
 
 #: ../src/util/PathUtil.cpp:247
 msgid "xournalpp-{1}"
@@ -1675,7 +1691,7 @@ msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr ""
+msgstr " = Flosanta ilobreto (eksperimenta) ="
 
 #: ../ui/settings.glade:3899 ../ui/settings.glade:3910
 msgid "%"
@@ -1721,7 +1737,29 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\tMallongigita nomo de tago en semajno (ekz. dim)\n"
+"%A\t\tPlena nomo de tago en semajno (ekz. dimanĉo)\n"
+"%b\t\tMallongigita nomo de monato (ekz. Feb)\n"
+"%B\t\tPlena nomo de monato (ekz. Februaro)\n"
+"%c\t\tPrezento de dato kaj tempo (ekz. dim 27 Feb 2022 13:00:00)\n"
+"%d\t\tTago en monato (01–31)\n"
+"%F\t\tISO-prezento de dato (ekz. 2001-08-23)\n"
+"%H\t\tHoro en 24-hora formo (00–23)\n"
+"%I\t\tHoro en 12-hora formo (01–12)\n"
+"%j\t\tNumero de tago en jaro (001–366)\n"
+"%m\t\tNumero de monato (01–12)\n"
+"%M\t\tMinuto (00–59)\n"
+"%p\t\tAntaŭtagmezo aŭ posttagmezo (ekz. ptm)\n"
+"%S\t\tSekundo (00–61)\n"
+"%U\t\tNumero de semajno, tiel ke la unua dimanĉo de la jaro apartenas al semajno unu (00–53)\n"
+"%w\t\tNumero de tago en semajno, tiel ke dimanĉo estas 0 (0–6)\n"
+"%W\t\tNumero de semajno, tiel ke la unua lundo de la jaro apartenas al semajno unu (00–53)\n"
+"%x\t\tPrezento de dato laŭ lokaĵaro (ekz. 2001-08-23)\n"
+"%X\t\tPrezento de tempo (ekz. 14:55:02)\n"
+"%y\t\tLastaj du ciferoj de jaro (00–99)\n"
+"%Y\t\tJaro (ekz. 2001)\n"
+"%Z\t\tNomo aŭ mallongigo de horzono (ekz. GMT)\n"
+"%%\t\tProcento-signo (%)"
 
 #: ../ui/settings.glade:4819
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1730,15 +1768,15 @@ msgstr ""
 
 #: ../ui/settings.glade:1090
 msgid "0,4"
-msgstr ""
+msgstr "0,4"
 
 #: ../ui/settings.glade:1142
 msgid "0,50"
-msgstr ""
+msgstr "0,50"
 
 #: ../ui/settings.glade:4963
 msgid "0.00"
-msgstr ""
+msgstr "0.00"
 
 #: ../ui/settings.glade:1735
 msgid "1"
@@ -1754,7 +1792,7 @@ msgstr "1,30"
 
 #: ../ui/settings.glade:2458
 msgid "1.0"
-msgstr ""
+msgstr "1.0"
 
 #: ../ui/settings.glade:1029
 msgid "20"
@@ -1770,7 +1808,7 @@ msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr ""
+msgstr "<b>... aŭ elektu jam uzatan bildon:</b>"
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
@@ -1795,12 +1833,14 @@ msgstr "<b>Implicito</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Agordoj pri elportado de dokumento</b>\n"
+"Agordu parametrojn pri elportado"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Malplena ilobreto</b>\n"
+"            <i>Menuo: Vidi/Ilobretoj</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -1817,7 +1857,7 @@ msgstr "<b>Formato</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
-msgstr ""
+msgstr "<b>Apartigilo</b>"
 
 #: ../ui/settings.glade:777
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -1858,7 +1898,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1000
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Elektu enigo-stabiligan algoritmon kaj ĝiajn parametrojn</i>"
 
 #: ../ui/settings.glade:1505
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -1875,7 +1915,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5774
 msgid "<i>Select language (requires restart)</i>"
-msgstr ""
+msgstr "<i>Elekti lingvon (postulas relanĉon)</i>"
 
 #: ../ui/settings.glade:5102
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -1900,7 +1940,7 @@ msgstr ""
 
 #: ../ui/settings.glade:486
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr ""
+msgstr "<i>Jen nomo proponota por nove konservotaj dokumentoj.</i>"
 
 #: ../ui/settings.glade:3965
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
@@ -1929,7 +1969,8 @@ msgstr ""
 #: ../ui/about.glade:203
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
-msgstr ""
+msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
+"<i>La sekva generacio</i>"
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
@@ -1970,7 +2011,7 @@ msgstr ""
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Postglui novajn PDF-paĝojn"
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
@@ -1982,11 +2023,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5454
 msgid "Audio Devices"
-msgstr ""
+msgstr "Sonaparatoj"
 
 #: ../ui/settings.glade:5697
 msgid "Audio Recording"
-msgstr ""
+msgstr "Sonregistrado"
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
@@ -2002,32 +2043,32 @@ msgstr "Aŭtomate trovi"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
-msgstr ""
+msgstr "Aŭtomata ŝargado"
 
 #: ../ui/settings.glade:456
 msgid "Autosaving"
-msgstr ""
+msgstr "Aŭtomata konservado"
 
 #: ../ui/settings.glade:604
 msgid "Available Placeholders"
-msgstr ""
+msgstr "Haveblaj lokokupiloj"
 
 #: ../ui/settings.glade:967
 msgid "Averaging method"
-msgstr ""
+msgstr "Metodo de mezumado"
 
 #: ../ui/settings.glade:2818
 msgid "Background color between pages"
-msgstr ""
+msgstr "Fona koloro inter paĝoj"
 
 #: ../ui/settings.glade:3454
 msgid "Base speed"
-msgstr ""
+msgstr "Baza rapido"
 
 #: ../ui/settings.glade:3001
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr ""
+msgstr "Granda pluma piktogramo"
 
 #: ../ui/settings.glade:3206
 msgid "Border Color"
@@ -2043,19 +2084,19 @@ msgstr "Bordera koloro"
 
 #: ../ui/settings.glade:2792
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "La bordera koloro por la aktuala paĝo kaj aliaj elektitaĵoj"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
-msgstr ""
+msgstr "Porti antaŭen"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr ""
+msgstr "Porti malfonen"
 
 #: ../ui/settings.glade:1017
 msgid "Buffersize"
-msgstr ""
+msgstr "Grando de bufro"
 
 #: ../ui/about.glade:99
 msgid "Built on"
@@ -2075,11 +2116,11 @@ msgstr "Ŝanĝi"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr ""
+msgstr "Elektu mallokan LaTeX-ŝablonan dosieron"
 
 #: ../ui/settings.glade:3049 ../ui/settings.glade:3192
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "Elekti la koloron por emfazi la pozicion de la kursoro"
 
 #: ../ui/settings.glade:3063
 msgid "Circle Color"
@@ -2095,19 +2136,19 @@ msgstr "Koloroj"
 
 #: ../ui/main.glade:1207
 msgid "Configure Page Template"
-msgstr ""
+msgstr "Agordi paĝan ŝablonon"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr ""
+msgstr "Agordi novan paĝan ŝablonon"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "Kopii la aktualan paĝan fonon anstataŭe"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "Kopii la aktualan paĝan formaton anstataŭe"
 
 #: ../ui/main.glade:2678
 msgid "Copy selected text"
@@ -2127,11 +2168,11 @@ msgstr "Kursoro"
 
 #: ../ui/settings.glade:2983
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Kursora piktogramo de plumo"
 
 #: ../ui/settings.glade:1205
 msgid "Cusp detection"
-msgstr ""
+msgstr "Pintorekonado"
 
 #: ../ui/settings.glade:2353
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2143,15 +2184,15 @@ msgstr "Malhela etoso (postulas relanĉon)"
 
 #: ../ui/settings.glade:237
 msgid "Deadzone"
-msgstr ""
+msgstr "Nesentiva disko"
 
 #: ../ui/settings.glade:1046
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Radiuso de nesentiva disko"
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
-msgstr ""
+msgstr "Implicita nomo por konservado"
 
 #: ../ui/settings.glade:5597
 msgid "Default Seek Time (in seconds)"
@@ -2187,7 +2228,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr ""
+msgstr "Malŝalti desegnadon per ĉi tiu aparato"
 
 #: ../ui/settings.glade:3375
 msgid "Disable scrollbar fade out"
@@ -2211,7 +2252,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1077
 msgid "Drag"
-msgstr ""
+msgstr "Malhelpo"
 
 #: ../ui/settings.glade:871
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2233,11 +2274,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Malhelpo: Se la valoro estas tro malgranda, nedezirata oscilado eble okazos. Se la valoro estas tro granda, stabilado ne okazos."
 
 #: ../ui/main.glade:1473
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Desegni koordinataron"
 
 #: ../ui/main.glade:1484
 msgid "Draw _Line"
@@ -2249,7 +2290,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5051
 msgid "Drawing Area"
-msgstr ""
+msgstr "Desegnareo"
 
 #: ../ui/settings.glade:4463
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
@@ -2257,11 +2298,11 @@ msgstr ""
 
 #: ../ui/main.glade:2812 ../ui/main.glade:2849
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplikatigi"
 
 #: ../ui/main.glade:2886
 msgid "Edit (not implemented yet)"
-msgstr ""
+msgstr "Redakti (tio ankoraŭ ne funkcias)"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
@@ -2273,11 +2314,11 @@ msgstr ""
 
 #: ../ui/settings.glade:659
 msgid "Enable Autoloading of Journals"
-msgstr ""
+msgstr "Ŝalti aŭtomatan ŝargadon de ĵurnaloj"
 
 #: ../ui/settings.glade:375
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "Ŝalti aŭtomatan konservadon"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
@@ -2285,7 +2326,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Ŝalti premsentemon"
 
 #: ../ui/settings.glade:4726
 msgid "Enable Tap action"
@@ -2301,27 +2342,27 @@ msgstr ""
 
 #: ../ui/settings.glade:2101
 msgid "Enable internal Hand Recognition"
-msgstr ""
+msgstr "Ŝalti internan manrekonadon"
 
 #: ../ui/settings.glade:2558
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Ŝalti tuŝdesegnadon"
 
 #: ../ui/settings.glade:2421
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "Ŝalti zomgestojn (postulas relanĉon)"
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "Tajpi / modifi LaTeX-tekston"
 
 #: ../ui/main.glade:1746
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Opcioj pri _Skrapgumo"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "Tipo de skrapgumo – ne ŝanĝu"
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
@@ -2346,11 +2387,11 @@ msgstr "P_lenigi"
 
 #: ../ui/main.glade:1732 ../ui/main.glade:1937
 msgid "Fill opacity"
-msgstr ""
+msgstr "Opakeco de plenigaĵo"
 
 #: ../ui/settings.glade:1222
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Fini la strekon"
 
 #: ../ui/main.glade:2476
 msgid "Find next occurrence of the search string"
@@ -2374,15 +2415,15 @@ msgstr ""
 
 #: ../ui/settings.glade:1140 ../ui/settings.glade:1160
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Gaŭsa parametro: ju pli granda, des pli stabila kaj des pli da atendodaŭro inter via kursoro kaj la desegpinto."
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Ĝeneralaj agordoj pri la ilo LaTeX"
 
 #: ../ui/about.glade:114
 msgid "Git commit"
-msgstr ""
+msgstr "Git-enmeto"
 
 #: ../ui/settings.glade:2946
 msgid "Global"
@@ -2398,19 +2439,19 @@ msgstr "Iri al paĝo"
 
 #: ../ui/settings.glade:4633
 msgid "Grid size"
-msgstr ""
+msgstr "Grando de krado"
 
 #: ../ui/settings.glade:4590
 msgid "Grid snapping tolerance"
-msgstr ""
+msgstr "Tolero pri alkradigado"
 
 #: ../ui/main.glade:1572
 msgid "H_and Tool"
-msgstr ""
+msgstr "_Manforma ilo"
 
 #: ../ui/settings.glade:2378
 msgid "Hand Recognition"
-msgstr ""
+msgstr "Manrekonado"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
@@ -2430,23 +2471,23 @@ msgstr "Kaŝi flankpanelon"
 
 #: ../ui/settings.glade:3345
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "Kaŝi la horizontalan rulumskalon"
 
 #: ../ui/settings.glade:3360
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "Kaŝi la vertikalan rulumskalon"
 
 #: ../ui/settings.glade:3026
 msgid "Highlight cursor position"
-msgstr ""
+msgstr "Emfazi la pozicion de la kursoro"
 
 #: ../ui/main.glade:2700
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Emfazi elektitan tekston"
 
 #: ../ui/main.glade:1855
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "_Opcioj pri emfazilo"
 
 #: ../ui/settings.glade:4776
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2460,7 +2501,7 @@ msgstr ""
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr ""
+msgstr "Piktogramdezajnistoj"
 
 #: ../ui/settings.glade:4678
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2484,11 +2525,11 @@ msgstr ""
 
 #: ../ui/settings.glade:4744
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "Daŭro de ignorado (ms)"
 
 #: ../ui/settings.glade:1716
 msgid "Ignore the first"
-msgstr ""
+msgstr "Ignori la unuan"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
@@ -2512,7 +2553,7 @@ msgstr "Enigsistemo"
 
 #: ../ui/settings.glade:1247
 msgid "Input stabilization"
-msgstr ""
+msgstr "Stabiligo de enigo"
 
 #: ../ui/settings.glade:1227
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
@@ -2536,11 +2577,11 @@ msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Agordoj pri LaTeX-programo"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Komando por farado de LaTeX"
 
 #: ../ui/settings.glade:5811 ../ui/settings.glade:5859
 msgid "Language"
@@ -2556,7 +2597,7 @@ msgstr "Aranĝo"
 
 #: ../ui/settings.glade:3316
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "Maldekstramana / dekstramana"
 
 #: ../ui/about.glade:421
 msgid "License"
@@ -2572,7 +2613,7 @@ msgstr "Ŝargi dosieron"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Ŝargi el dosiero"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2584,7 +2625,7 @@ msgstr "Maso"
 
 #: ../ui/settings.glade:1108 ../ui/settings.glade:1120
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Maso: ju pli da la maso, des pli da inercio kaj stabiligo"
 
 #: ../ui/settings.glade:4796
 msgid "Max Length (mm)"
@@ -2592,15 +2633,15 @@ msgstr "Maksimuma longo (mm)"
 
 #: ../ui/settings.glade:3467
 msgid "Max multiplier"
-msgstr ""
+msgstr "Maksimuma multiplikanto"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "Kunfandi malsupren"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Kunfandi tavolon malsupren"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2625,7 +2666,7 @@ msgstr "Musbutonoj"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr ""
+msgstr "Musa-klava kombinaĵo"
 
 #: ../ui/main.glade:2796 ../ui/main.glade:2871
 msgid "Move Down"
@@ -2641,7 +2682,7 @@ msgstr ""
 
 #: ../ui/main.glade:1129
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "S_ekva prinotita paĝo"
 
 #: ../ui/main.glade:1176
 msgid "New Page _After"
@@ -2666,7 +2707,7 @@ msgstr "Neniu piktogramo"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "Neliniite"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:217
 #: ../ui/settings.glade:234
@@ -2679,7 +2720,7 @@ msgstr ""
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "Agordoj pri opakeco"
 
 #: ../ui/settings.glade:933
 msgid "Options"
@@ -2695,7 +2736,7 @@ msgstr "PDF-kaŝmemoro"
 
 #: ../ui/main.glade:1140
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "_Antaŭa prinotita paĝo"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2703,7 +2744,7 @@ msgstr "Paĝoj:"
 
 #: ../ui/settings.glade:4360
 msgid "Paired Pages"
-msgstr ""
+msgstr "Parigitaj paĝoj"
 
 #: ../ui/main.glade:1304
 msgid "Paper B_ackground"
@@ -2724,7 +2765,8 @@ msgstr "_Formato"
 #: ../ui/about.glade:296
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Parte surbaze de Xournal\n"
+"far Denis Auroux"
 
 #: ../ui/main.glade:1973
 msgid "Pause"
@@ -2732,7 +2774,7 @@ msgstr "Paŭzigi"
 
 #: ../ui/main.glade:1600
 msgid "Pen _Options"
-msgstr ""
+msgstr "_Opcioj pri plumo"
 
 #: ../ui/settings.glade:3759
 msgid "Performance"
@@ -2740,15 +2782,15 @@ msgstr "Rendimento"
 
 #: ../ui/settings.glade:5651
 msgid "Playback Settings"
-msgstr ""
+msgstr "Agordoj pri ludado"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "Kromprogramadministrilo"
 
 #: ../ui/main.glade:2038
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "Kro_mprogramadministrilo"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -2756,11 +2798,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3693
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Antaŭŝargi paĝojn antaŭ"
 
 #: ../ui/settings.glade:3681
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Antaŭŝargi paĝojn post"
 
 #: ../ui/main.glade:487
 msgid "Preferences"
@@ -2768,27 +2810,27 @@ msgstr "Agordoj"
 
 #: ../ui/settings.glade:1174
 msgid "Preprocessor"
-msgstr ""
+msgstr "Antaŭtraktilo"
 
 #: ../ui/settings.glade:3650
 msgid "Presentation Mode"
-msgstr ""
+msgstr "Prezentoreĝimo"
 
 #: ../ui/settings.glade:4490
 msgid "Preserve line width"
-msgstr ""
+msgstr "Konservi larĝon de linio"
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Premmultiplikanto: "
 
 #: ../ui/settings.glade:1667
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "Premsentemo"
 
 #: ../ui/about.glade:129
 msgid "RELEASE_IDENTIFIER"
-msgstr ""
+msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/settings.glade:3115
 msgid "Radius"
@@ -2796,7 +2838,7 @@ msgstr "Radiuso"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
-msgstr ""
+msgstr "Gamo"
 
 #: ../ui/settings.glade:4950
 msgid "Re-render when the page's zoom changes by more than "
@@ -2808,11 +2850,11 @@ msgstr "Lastaj _dokumentoj"
 
 #: ../ui/main.glade:1963
 msgid "Record / Stop"
-msgstr ""
+msgstr "Ekregistri / ĉesigi"
 
 #: ../ui/settings.glade:5564
 msgid "Recording Quality"
-msgstr ""
+msgstr "Kvalito de registrado"
 
 #: ../ui/main.glade:1267
 msgid "Rename Layer"
@@ -2820,19 +2862,19 @@ msgstr "Ŝanĝi nomon de tavolo"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Ŝanĝi la nomon de la elektita tavolo"
 
 #: ../ui/settings.glade:4537
 msgid "Resizing"
-msgstr ""
+msgstr "Ŝanĝado de grando"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
-msgstr ""
+msgstr "Distingivo"
 
 #: ../ui/settings.glade:1405
 msgid "Right Mouse Button"
-msgstr ""
+msgstr "Dekstra musbutono"
 
 #: ../ui/settings.glade:4577
 msgid "Rotation snapping tolerance"
@@ -2844,7 +2886,7 @@ msgstr ""
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "Ekzempla nomo de tavolo"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
@@ -2856,11 +2898,11 @@ msgstr "Rulumskaloj"
 
 #: ../ui/settings.glade:4273
 msgid "Scrolling outside the page"
-msgstr ""
+msgstr "Rulumado ekster la paĝo"
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr ""
+msgstr "Elekti fonan koloron"
 
 #: ../ui/settings.glade:5284
 msgid "Select Folder"
@@ -2872,15 +2914,15 @@ msgstr "Elekti bildon"
 
 #: ../ui/main.glade:1352
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Elekti linian tekston"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr ""
+msgstr "Elekti PDF-paĝon"
 
 #: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Elekti tekston en ortangulo"
 
 #: ../ui/settings.glade:3615
 msgid "Select toolbar:"
@@ -2888,7 +2930,7 @@ msgstr "Elektu ilobreton:"
 
 #: ../ui/settings.glade:2843
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "Koloro de elektitaĵo (teksto, streko ktp.)"
 
 #: ../ui/settings.glade:3482
 msgid "Selection Edge Panning"
@@ -2896,23 +2938,23 @@ msgstr ""
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Porti malantaŭen"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "Porti fonen"
 
 #: ../ui/settings.glade:1649
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Skalo de sentemo"
 
 #: ../ui/main.glade:684
 msgid "Set Columns"
-msgstr ""
+msgstr "Agordi kolumnojn"
 
 #: ../ui/main.glade:789
 msgid "Set Rows"
-msgstr ""
+msgstr "Agordi vicojn"
 
 #: ../ui/settings.glade:4859
 msgid "Settings:"
@@ -2920,11 +2962,11 @@ msgstr "Agordoj:"
 
 #: ../ui/settings.glade:4868
 msgid "Show Floating Toolbox"
-msgstr ""
+msgstr "Montri flosantan ilobreton"
 
 #: ../ui/settings.glade:2734
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "Montri la menubreton post lanĉo"
 
 #: ../ui/main.glade:543
 msgid "Show Sidebar"
@@ -2936,11 +2978,11 @@ msgstr "Montri ilobretojn"
 
 #: ../ui/settings.glade:3278
 msgid "Show sidebar on the right side"
-msgstr ""
+msgstr "Montri la flankpanelon ĉe la dekstro"
 
 #: ../ui/settings.glade:3294
 msgid "Show vertical scrollbar on the left side"
-msgstr ""
+msgstr "Montri la vertikalan rulumskalon ĉe la maldekstro"
 
 #: ../ui/settings.glade:903
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
@@ -2950,7 +2992,7 @@ msgstr ""
 #: ../ui/settings.glade:3000
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Piktogramo de malgranda punkto"
 
 #: ../ui/settings.glade:4696
 msgid "Snapping"
@@ -2958,11 +3000,11 @@ msgstr ""
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Fontkodo / cimspurilo"
 
 #: ../ui/settings.glade:3843
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Rapido de stirklavo + rulumado"
 
 #: ../ui/settings.glade:3871
 msgid "Speed for a Zoomstep"
@@ -2974,23 +3016,23 @@ msgstr "Norma"
 
 #: ../ui/settings.glade:2446
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "Ekzomi post distanco "
 
 #: ../ui/settings.glade:5269 ../ui/settings.glade:5327
 msgid "Storage Folder"
-msgstr ""
+msgstr "Dosierujo de konservado"
 
 #: ../ui/main.glade:2740
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Trastreki elektitan tekston"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
-msgstr ""
+msgstr "Grifelo"
 
 #: ../ui/settings.glade:1939
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "Grifelaj butonoj"
 
 #: ../ui/settings.glade:4807
 msgid "Successive (ms)"
@@ -3007,7 +3049,7 @@ msgstr "Ilobre_toj"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "Agordoj pri ŝablona dosiero"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -3015,11 +3057,11 @@ msgstr "Ŝablono:"
 
 #: ../ui/settings.glade:2305 ../ui/settings.glade:2318
 msgid "Test"
-msgstr ""
+msgstr "Testi"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "Testi agordojn"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
@@ -3031,11 +3073,11 @@ msgstr "Teksta tiparo..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "La LaTeX-dosiero uzota kiel ŝablono de la LaTeX-ilo."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "La deksesuma ruĝa-verda-blua kodo de la aktuala koloro de la ilo «Teksto»."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
@@ -3043,11 +3085,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "La matematiko-reĝima formulo tajpita per la LaTeX-ilo."
 
 #: ../ui/settings.glade:4034
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "La mezurunuo de la mezurilo estas la centimetro"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
@@ -3055,28 +3097,28 @@ msgstr ""
 
 #: ../ui/settings.glade:2143
 msgid "Timeout"
-msgstr ""
+msgstr "Tempolimo"
 
 #: ../ui/main.glade:2760
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Baskuligi inter norma kaj regiona tekstelektadoj"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Tuŝdesegnado"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Tuŝrulumado"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
-msgstr ""
+msgstr "Tuŝekrano"
 
 #: ../ui/settings.glade:4836
 msgid "Try to select object first."
-msgstr ""
+msgstr "Provu elekti la objekton unue."
 
 #: ../ui/settings.glade:4841 ../ui/settings.glade:4873
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
@@ -3084,7 +3126,7 @@ msgstr ""
 
 #: ../ui/main.glade:2720
 msgid "Underline selected text"
-msgstr ""
+msgstr "Substreki elektitan tekston"
 
 #: ../ui/settings.glade:2882
 msgid "Use  available Stock Icons (requires restart)"
@@ -3096,7 +3138,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "Uzi la formaton de la aktuala paĝo anstastaŭ la formato de la supera paĝo."
 
 #: ../ui/settings.glade:2563 ../ui/settings.glade:2631
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
@@ -3108,7 +3150,7 @@ msgstr "Ordinare 0 aŭ 1"
 
 #: ../ui/settings.glade:223
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Rapido laŭ Gaŭsaj pondoj"
 
 #: ../ui/about.glade:181
 msgid "Version"
@@ -3142,7 +3184,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr ""
+msgstr "Blanka korektilo"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
@@ -3154,7 +3196,7 @@ msgstr "Larĝo:"
 
 #: ../ui/about.glade:393
 msgid "With help from the community"
-msgstr ""
+msgstr "Helpataj de la komunumo"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
@@ -3162,19 +3204,19 @@ msgstr "X.X.X"
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
-msgstr ""
+msgstr "Agordoj pri Xournal++"
 
 #: ../ui/settings.glade:4088
 msgid "Zoom"
-msgstr ""
+msgstr "Zomo"
 
 #: ../ui/settings.glade:2513
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "Zomgestoj"
 
 #: ../ui/settings.glade:3934
 msgid "Zoom Speed"
-msgstr ""
+msgstr "Zomrapido"
 
 #: ../ui/main.glade:696
 msgid "_1 Column"
@@ -3242,23 +3284,23 @@ msgstr "_8 vicoj"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_Prinoti PDF"
 
 #: ../ui/main.glade:656
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "De _malsupro supren"
 
 #: ../ui/main.glade:671
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Kolumnoj/vicoj"
 
 #: ../ui/main.glade:931
 msgid "_Customize"
-msgstr ""
+msgstr "_Adapti"
 
 #: ../ui/main.glade:1412
 msgid "_Default Tools"
-msgstr ""
+msgstr "_Implicitaj iloj"
 
 #: ../ui/main.glade:1217
 msgid "_Delete Page"
@@ -3270,11 +3312,11 @@ msgstr "R_edakti"
 
 #: ../ui/main.glade:1340
 msgid "_Eraser"
-msgstr ""
+msgstr "_Skrapgumo"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Elporti kiel PDF"
 
 #: ../ui/main.glade:152
 msgid "_File"
@@ -3294,7 +3336,7 @@ msgstr "_Helpo"
 
 #: ../ui/main.glade:1376
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Emfazilo"
 
 #: ../ui/main.glade:587
 msgid "_Horizontal"
@@ -3306,7 +3348,7 @@ msgstr "B_ildo"
 
 #: ../ui/main.glade:1155
 msgid "_Journal"
-msgstr ""
+msgstr "Ĵ_urnalo"
 
 #: ../ui/main.glade:1074
 msgid "_Last Page"
@@ -3334,11 +3376,11 @@ msgstr "_Sekva paĝo"
 
 #: ../ui/main.glade:512
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Parigi paĝojn"
 
 #: ../ui/main.glade:1328
 msgid "_Pen"
-msgstr ""
+msgstr "_Plumo"
 
 #: ../ui/main.glade:2027
 msgid "_Plugin"
@@ -3346,7 +3388,7 @@ msgstr "Krom_programo"
 
 #: ../ui/main.glade:522
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Prezentoreĝimo"
 
 #: ../ui/main.glade:1091
 msgid "_Previous Layer"
@@ -3362,7 +3404,7 @@ msgstr "De dekst_ro maldekstren"
 
 #: ../ui/main.glade:1429
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Formo-rekonilo"
 
 #: ../ui/main.glade:1388
 msgid "_Text"
@@ -3418,15 +3460,15 @@ msgstr "maldik_ega"
 
 #: ../ui/main.glade:1829
 msgid "_whiteout"
-msgstr ""
+msgstr "_blanka korektilo"
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
-msgstr ""
+msgstr "punktoj en colo"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
-msgstr ""
+msgstr "ŝaltita,"
 
 #: ../ui/settings.glade:1751
 msgid "events"
@@ -3434,11 +3476,11 @@ msgstr "eventoj"
 
 #: ../ui/settings.glade:399
 msgid "every"
-msgstr ""
+msgstr "ĉiu"
 
 #: ../ui/settings.glade:426
 msgid "minutes"
-msgstr ""
+msgstr "minutoj"
 
 #: ../ui/settings.glade:3087 ../ui/settings.glade:3138
 #: ../ui/settings.glade:4231 ../ui/settings.glade:4242
