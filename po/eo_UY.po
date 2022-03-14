@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-13 20:44\n"
+"PO-Revision-Date: 2022-03-14 21:50\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -2336,7 +2336,7 @@ msgstr ""
 
 #: ../ui/settings.glade:676
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "Aŭtomate ŝargi la lastan dosieron post lanĉo de la programo"
 
 #: ../ui/settings.glade:852
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
