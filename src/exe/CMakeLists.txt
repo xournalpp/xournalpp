@@ -56,4 +56,8 @@ if (WIN32)
     target_include_directories(xournalpp PRIVATE .)
     add_dependencies(xournalpp xournalpp_icon)
 
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR MSVC)
+        install(FILES "$<TARGET_FILE_BASE_NAME:xournalpp>.pdb" DESTINATION bin)
+    endif()
+
 endif()
