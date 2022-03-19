@@ -142,5 +142,12 @@ auto system_single_byte_filename(const fs::path& path) -> std::string;
 [[maybe_unused]] [[nodiscard]] fs::path getLocalePath();
 fs::path getPalettePath();
 
+/**
+ * List all files in a directory sorted alphabetically
+ *
+ * If the directory does not exist it returns an empty list.
+ * @param directory to search
+ * @return files in directory
+ */
 std::vector<fs::path> listFilesSorted(fs::path directory);
 }  // namespace Util
