@@ -1103,5 +1103,5 @@ private:
      */
     std::unique_ptr<Palette> palette;
 
-    std::string colorPaletteSetting;
+    fs::path colorPaletteSetting;
 };
