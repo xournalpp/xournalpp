@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-14 22:51\n"
+"PO-Revision-Date: 2022-03-20 01:03\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1295,12 +1295,14 @@ msgstr "La ilobreta agordo «{1}» estas antaŭdifinita; ĉu krei kopion modifot
 #: ../src/core/control/Control.cpp:2051
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "La alkroĉita fona dosiero {1} ne troviĝis. Eble ĝi estas movita, alinomita aŭ forviŝita.\n"
+"Ĝi estis laste trovita ĉe: {2}"
 
 #: ../src/core/control/Control.cpp:2055
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "La fona dosiero {1} ne troviĝis. Eble ĝi estas movita, alinomita aŭ forviŝita.\n"
+"Ĝi estis laste trovita ĉe: {2}"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
