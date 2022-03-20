@@ -41,7 +41,8 @@ pacman -S mingw-w64-x86_64-poppler \
           mingw-w64-x86_64-gtk3 \
           mingw-w64-x86_64-libsndfile \
           mingw-w64-x86_64-libzip \
-          mingw-w64-x86_64-lua
+          mingw-w64-x86_64-lua \
+          mingw-w64-x86_64-portaudio
 ```
 -> press enter multiple times / confirm all default values
 
@@ -50,13 +51,6 @@ pacman -S mingw-w64-x86_64-poppler \
 ```bash
 git clone https://github.com/xournalpp/xournalpp.git
 cd xournalpp/
-```
-
-## Install sndfile / PortAudio
-
-Build/Install portaudio with
-```bash
-windows-setup/build-portaudio.sh
 ```
 
 ## Build Xournal++
