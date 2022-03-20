@@ -36,7 +36,9 @@ public:
     void writeString(const std::string& s);
 
     void writeData(const void* data, int len, int width);
-    void writeImage(cairo_surface_t* img);
+
+    /// Writes the raw image data to the output stream.
+    void writeImage(const std::string_view& imgData);
 
     GString* getStr();
 

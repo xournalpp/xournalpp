@@ -38,7 +38,9 @@ public:
     std::string readString();
 
     void readData(void** data, int* len);
-    cairo_surface_t* readImage();
+
+    /// Reads raw image data from the stream.
+    std::string readImage();
 
 private:
     void checkType(char type);

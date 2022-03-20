@@ -24,35 +24,42 @@ auto ImageHandler::insertImage(double x, double y) -> bool {
     if (file == nullptr) {
         return false;
     }
-    return insertImage(file, x, y);
+    bool result = insertImage(file, x, y);
+    g_object_unref(file);
+    return result;
 }
 
 auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
-    GError* err = nullptr;
-    GFileInputStream* in = g_file_read(file, nullptr, &err);
+    Image* img = nullptr;
+    {
+        // Load the image data from disk
+        GError* err = nullptr;
+        gchar* contents{};
+        gsize length{};
+        if (!g_file_load_contents(file, nullptr, &contents, &length, nullptr, &err)) {
+            g_error_free(err);
+            return false;
+        }
 
-    g_object_unref(file);
-
-    GdkPixbuf* pixbuf = nullptr;
-
-    if (!err) {
-        pixbuf = gdk_pixbuf_new_from_stream(G_INPUT_STREAM(in), nullptr, &err);
-        g_input_stream_close(G_INPUT_STREAM(in), nullptr, nullptr);
-    } else {
-        XojMsgBox::showErrorToUser(control->getGtkWindow(),
-                                   FS(_F("This image could not be loaded. Error message: {1}") % err->message));
-        g_error_free(err);
-        return false;
+        img = new Image();
+        img->setX(x);
+        img->setY(y);
+        img->setImage(std::string(contents, length));
+        g_free(contents);
     }
 
-    auto* img = new Image();
-    img->setX(x);
-    img->setY(y);
-    img->setImage(pixbuf);
+    // Render the image.
+    // FIXME: this is horrible. We need an ImageView class...
+    (void)img->getImage();
 
-    int width = gdk_pixbuf_get_width(pixbuf);
-    int height = gdk_pixbuf_get_height(pixbuf);
-    g_object_unref(pixbuf);
+    const auto imgSize = img->getImageSize();
+    auto [width, height] = imgSize;
+    if (imgSize == Image::NOSIZE) {
+        delete img;
+        XojMsgBox::showErrorToUser(this->control->getGtkWindow(),
+                                   _("Failed to load image, could not determine image size!"));
+        return false;
+    }
 
     double zoom = 1;
 
@@ -61,12 +68,7 @@ auto ImageHandler::insertImage(GFile* file, double x, double y) -> bool {
     if (x + width > page->getWidth() || y + height > page->getHeight()) {
         double maxZoomX = (page->getWidth() - x) / width;
         double maxZoomY = (page->getHeight() - y) / height;
-
-        if (maxZoomX < maxZoomY) {
-            zoom = maxZoomX;
-        } else {
-            zoom = maxZoomY;
-        }
+        zoom = std::min(maxZoomX, maxZoomY);
     }
 
     img->setWidth(width * zoom);
