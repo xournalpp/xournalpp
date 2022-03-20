@@ -714,7 +714,7 @@ void LoadHandler::parseAttachment() {
 
     switch (this->pos) {
         case PARSER_POS_IN_IMAGE: {
-            this->image->setImage(imgData);
+            this->image->setImage(std::move(imgData));
             break;
         }
         case PARSER_POS_IN_TEXIMAGE: {

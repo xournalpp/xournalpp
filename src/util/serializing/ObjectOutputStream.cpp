@@ -63,17 +63,11 @@ static auto cairoWriteFunction(GString* string, const unsigned char* data, unsig
     return CAIRO_STATUS_SUCCESS;
 }
 
-void ObjectOutputStream::writeImage(cairo_surface_t* img) {
-    GString* imgStr = g_string_sized_new(102400);
-
-    cairo_surface_write_to_png_stream(img, reinterpret_cast<cairo_write_func_t>(&cairoWriteFunction), imgStr);
-
+void ObjectOutputStream::writeImage(const std::string_view& imgData) {
     this->encoder->addStr("_m");
-    this->encoder->addData(&imgStr->len, sizeof(gsize));
-
-    this->encoder->addData(imgStr->str, imgStr->len);
-
-    g_string_free(imgStr, true);
+    size_t len = imgData.length();
+    this->encoder->addData(&len, sizeof(size_t));
+    this->encoder->addData(imgData.data(), static_cast<int>(len));
 }
 
 auto ObjectOutputStream::getStr() -> GString* { return this->encoder->getData(); }

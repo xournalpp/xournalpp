@@ -10,6 +10,7 @@
  */
 
 #include <cmath>
+#include <filesystem>
 #include <iostream>
 
 #include <config-test.h>
@@ -337,6 +338,68 @@ TEST(ControlLoadHandler, testImageZipped) {
 
     Image* img = dynamic_cast<Image*>(layer->getElements()[0]);
     EXPECT_TRUE(img);
+}
+
+namespace {
+void checkImageFormat(Image* img, const char* formatName) {
+    GdkPixbufLoader* imgLoader = gdk_pixbuf_loader_new();
+    ASSERT_TRUE(gdk_pixbuf_loader_write(imgLoader, img->getRawData(), img->getRawDataLength(), nullptr));
+    ASSERT_TRUE(gdk_pixbuf_loader_close(imgLoader, nullptr));
+    GdkPixbufFormat* format = gdk_pixbuf_loader_get_format(imgLoader);
+    ASSERT_TRUE(format) << "could not determine image format";
+    EXPECT_STREQ(gdk_pixbuf_format_get_name(format), formatName);
+}
+}  // namespace
+
+TEST(ControlLoadHandler, imageLoadJpeg) {
+    // check loading of arbitrary image format (up to whatever is supported by GdkPixbuf)
+    LoadHandler handler;
+    Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
+    ASSERT_TRUE(doc) << "doc should not be null";
+    ASSERT_EQ(1U, doc->getPageCount());
+    PageRef page = doc->getPage(0);
+    ASSERT_EQ(1U, page->getLayerCount());
+    Layer* layer = (*page->getLayers())[0];
+    ASSERT_EQ(layer->getElements().size(), 1);
+
+    Image* img = dynamic_cast<Image*>(layer->getElements()[0]);
+    ASSERT_TRUE(img) << "element should be an image";
+
+    checkImageFormat(img, "jpeg");
+}
+
+// FIXME: create a SaveHandlerTest.cpp and move this test here
+TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
+    // File format version <= 4 requires images to be encoded as PNG in base64, but the version has not been bumped yet.
+    // For backward compatibility, check that loaded JPEG images are saved in PNG format.
+
+    // FIXME: use a path in CMAKE_BINARY_DIR or CMAKE_CURRENT_BINARY_DIR
+    const fs::path outPath = fs::temp_directory_path() / "xournalpp-test-units_ControlLoaderHandler_imageLoadJpeg.xopp";
+
+    // save journal containing JPEG image
+    {
+        LoadHandler handler;
+        Document* doc = handler.loadDocument(GET_TESTFILE("packaged_xopp/imgAttachment/doc_with_jpg.xopp"));
+        ASSERT_TRUE(doc) << "doc with jpeg should not be null";
+
+        SaveHandler saver;
+        saver.prepareSave(doc);
+        saver.saveTo(outPath);
+    }
+
+    // check that the image is saved as PNG
+    LoadHandler handler;
+    Document* doc = handler.loadDocument(outPath);
+    ASSERT_TRUE(doc) << "saved doc should not be null";
+    ASSERT_EQ(1U, doc->getPageCount());
+    PageRef page = doc->getPage(0);
+    ASSERT_EQ(1U, page->getLayerCount());
+    Layer* layer = (*page->getLayers())[0];
+    ASSERT_EQ(layer->getElements().size(), 1);
+
+    Image* img = dynamic_cast<Image*>(layer->getElements()[0]);
+    ASSERT_TRUE(img) << "element should be an image";
+    checkImageFormat(img, "png");
 }
 
 TEST(ControlLoadHandler, testLoadStoreLoadDefault) { testLoadStoreLoad(); }
