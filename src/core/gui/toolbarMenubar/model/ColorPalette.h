@@ -129,6 +129,8 @@ struct Palette {
 
     fs::path getFilePath() const;
 
+    std::basic_string<char> getHeader(const std::string& attr);
+
 
 private:
     /**

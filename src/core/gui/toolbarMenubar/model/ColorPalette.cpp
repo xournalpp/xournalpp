@@ -55,6 +55,12 @@ auto Palette::load_default() -> void {
     while (getline(defaultFile, line)) { parseHeaderLine(line) || parseColorLine(line); }
 }
 
+auto Palette::getHeader(const std::string& attr) -> std::string {
+    if(header.find(attr) == header.end())
+        return std::string{};
+    return header.at(attr);
+}
+
 auto Palette::parseFirstGimpPaletteLine(const std::string& line) const -> bool {
     if (StringUtils::trim(line) != "GIMP Palette") {
         throw std::invalid_argument(".gpl file needs to start with \"GIMP Palette\" in the "

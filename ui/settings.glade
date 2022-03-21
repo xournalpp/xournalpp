@@ -6488,7 +6488,6 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                   <object class="GtkScrolledWindow">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="shadow-type">in</property>
                     <property name="min-content-width">500</property>
                     <property name="min-content-height">450</property>
                     <child>
@@ -6502,51 +6501,64 @@ If available select &lt;small&gt;&lt;tt&gt;pulse&lt;/tt&gt;&lt;/small&gt; as inp
                             <property name="can-focus">False</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkFrame">
+                              <object class="GtkAlignment">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label-xalign">0</property>
+                                <property name="bottom-padding">8</property>
+                                <property name="left-padding">12</property>
+                                <property name="right-padding">12</property>
                                 <child>
-                                  <object class="GtkAlignment">
+                                  <object class="GtkFrame" id="frame1">
                                     <property name="visible">True</property>
                                     <property name="can-focus">False</property>
-                                    <property name="left-padding">12</property>
+                                    <property name="label-xalign">0.009999999776482582</property>
                                     <child>
-                                      <!-- n-columns=2 n-rows=1 -->
-                                      <object class="GtkGrid">
+                                      <object class="GtkAlignment">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="column-homogeneous">True</property>
+                                        <property name="bottom-padding">8</property>
+                                        <property name="left-padding">12</property>
+                                        <property name="right-padding">12</property>
                                         <child>
-                                          <object class="GtkComboBoxText" id="cbColorPalette">
+                                          <object class="GtkBox">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
+                                            <property name="orientation">vertical</property>
+                                            <child>
+                                              <object class="GtkLabel" id="colorPaletteExplainLabel">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="halign">start</property>
+                                                <property name="use-markup">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkListBox" id="paletteListBox">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
                                           </object>
-                                          <packing>
-                                            <property name="left-attach">1</property>
-                                            <property name="top-attach">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkLabel">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">Palette File Name</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">0</property>
-                                            <property name="top-attach">0</property>
-                                          </packing>
                                         </child>
                                       </object>
                                     </child>
-                                  </object>
-                                </child>
-                                <child type="label">
-                                  <object class="GtkLabel">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">False</property>
-                                    <property name="label" translatable="yes">Color Palette</property>
+                                    <child type="label">
+                                      <object class="GtkLabel">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="label" translatable="yes">Color Palettes</property>
+                                      </object>
+                                    </child>
                                   </object>
                                 </child>
                               </object>
