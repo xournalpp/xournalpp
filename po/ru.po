@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:27\n"
+"PO-Revision-Date: 2022-03-21 16:23\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -58,7 +58,7 @@ msgstr "<span foreground='red' size='x-large'>Отсутствует необх�
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Добавить/редактировать Tex"
 
 #: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
@@ -118,7 +118,8 @@ msgstr "Цвет атрибута не установлен!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Папка для аудио не установлена! Записи не будут сохранены!\n"
+"Пожалуйста, задайте папку для аудиозаписей в разделе «Настройки > Запись аудио»"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -259,7 +260,7 @@ msgstr "Не удалось прочитать изображение: {1}. Со
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:391
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Не удалось прочитать номер страницы для клонированного фонового изображения: {1}."
 
 #: ../src/core/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -541,7 +542,9 @@ msgstr "Экспорт файла в PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "Экспортировать ФАЙЛ как файлы изображений (по одному на странице)\n"
+"                                 Прочитать выходной формат из расширения IMGFILE\n"
+"                                 Поддерживаемые форматы: .png, .svg"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:17
 msgid "Export PDF"
@@ -549,7 +552,7 @@ msgstr "Экспорт PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Export as PDF"
-msgstr ""
+msgstr "Экспортировать в PDF"
 
 #: ../src/core/control/XournalMain.cpp:559
 msgid "Export layers progressively\n"
@@ -557,7 +560,11 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Экспортировать слои последовательно\n"
+"                                 в PDF, последовательно визуализировать слои по одному.\n"
+"                                 Это приводит к N экспорту страниц на странице с N слоёв,\n"
+"                                 прогрессивное создание стека слоя.\n"
+"                                 Полученный PDF файл может быть использован для презентации.\n"
 
 #: ../src/core/control/XournalMain.cpp:550
 msgid "Export without background\n"
@@ -580,7 +587,7 @@ msgstr "Не удалось найти программу генератора L
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Не удалось инициализировать поверхность PDF Каира"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -752,7 +759,7 @@ msgstr "Слой"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
 msgid "Layer Combo"
-msgstr ""
+msgstr "Комбо слоя"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layer Preview"
@@ -782,7 +789,7 @@ msgstr "Средний"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Объединенить со следующим слоем"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
