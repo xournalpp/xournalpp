@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:28\n"
+"PO-Revision-Date: 2022-03-23 11:49\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -118,7 +118,8 @@ msgstr "Atrybut koloru nie został ustawiony!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Nie ustawiono folderu pliku dźwiękowego! Nagrywanie nie będzie działać!\n"
+"Ustaw proszę folder do nagrań pod \"Preferencje > Nagrywanie dźwięku\""
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -787,7 +788,7 @@ msgstr "Średnia"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Scal warstwę w dół"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -1071,7 +1072,7 @@ msgstr "Zobacz pełną listę współtwórców"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Wybierz obszar tekstu z PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Select Font"
@@ -1081,7 +1082,7 @@ msgstr "Wybierz czcionkę"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Wybierz tekst z PDF liniowo"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1091,7 +1092,7 @@ msgstr "Wybierz objekt"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Wybierz tekst PDF obszarowo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
@@ -1444,7 +1445,7 @@ msgstr "Nieznany typ pixmap::domain: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:590
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Nieznany rodzaj kreski: \"{1}\", zakładam, że to chodziło o okrągłą"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:608
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -2139,7 +2140,7 @@ msgstr "Przycisk 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Zmiana"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2648,7 +2649,7 @@ msgstr "Wczytaj plik"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Wczytaj z pliku"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2672,11 +2673,11 @@ msgstr "Maks. mnożnik"
 
 #: ../ui/main.glade:2804
 msgid "Merge Down"
-msgstr ""
+msgstr "Scal w dół"
 
 #: ../ui/main.glade:1256
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Scal warstwę w dół"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2925,7 +2926,7 @@ msgstr "Przykładowa nazwa warstwy"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Zapisz do pliku"
 
 #: ../ui/settings.glade:3395
 msgid "Scrollbars"
@@ -2949,7 +2950,7 @@ msgstr "Wybierz obrazek"
 
 #: ../ui/main.glade:1352
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Wybierz tekst liniowo"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -3137,7 +3138,7 @@ msgstr "Limit czasu"
 
 #: ../ui/main.glade:2760
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Przełącz standardowy / obszarowy wybór tekstu"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
