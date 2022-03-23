@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-23 11:49\n"
+"PO-Revision-Date: 2022-03-23 12:47\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -770,7 +770,7 @@ msgstr "Warstwa {1}"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
-msgstr "Podgląd warstw"
+msgstr "Podgląd stosu warstwy"
 
 #: ../src/core/gui/PageView.cpp:772
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
@@ -1161,27 +1161,27 @@ msgstr "Wyślij raport błędu"
 
 #: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
-msgstr "Przenieś warstwę niżej"
+msgstr "Przenieś w tył"
 
 #: ../src/core/control/tools/EditSelection.cpp:389
 msgid "Send to back"
-msgstr "Przenieś na tył warstw"
+msgstr "Przenieś na tył"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Separator"
-msgstr "Separator"
+msgstr "Odstęp"
 
 #: ../src/core/control/XournalMain.cpp:570
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr "Ustaw DPI dla eksportu PNG. Domyślnie jest to 300\n"
+msgstr "Ustaw DPI eksportu PNG. Domyślnie: 300\n"
 "                                 Działa jedynie z -i/--create-img=foo.png"
 
 #: ../src/core/control/XournalMain.cpp:580
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr "Ustaw wysokość strony dla eksportu PNG\n"
+msgstr "Ustaw wysokość strony eksportu PNG\n"
 "                                 Działa jedynie z -i/--create-img=foo.png\n"
 "                                 Ignorowane dla --export-png-dpi lub --export-png-width"
 
@@ -1189,7 +1189,7 @@ msgstr "Ustaw wysokość strony dla eksportu PNG\n"
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr "Ustaw szerokość strony dla eksportu PNG\n"
+msgstr "Ustaw szerokość strony eksportu PNG\n"
 "                                 Działa jedynie z -i/--create-img=foo.png\n"
 "                                 Ignorowane dla --export-png-dpi"
 
@@ -1217,12 +1217,12 @@ msgstr "Pokaż tylko nieużywane strony ({1} nieużywanych stron)"
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Przepraszamy, Xournal++ może mieć otwarty tylko jeden plik na raz.\n"
-"Inne pliki są pomijane."
+"Pozostałe są pominijane."
 
 #: ../src/core/control/XournalMain.cpp:454
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr "Przepraszamy, Xournal++ nie otwiera plików zdalnych.\n"
+msgstr "Przepraszamy, póki co Xournal++ nie może otworzyć plików zdalnych.\n"
 "Aby otworzyć plik, skopiuj go do lokalnego katalogu."
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
@@ -1249,11 +1249,11 @@ msgstr "Wspierane pliki"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
-msgstr "Zamień bieżącą warstwę na powyższą"
+msgstr "Zamień bieżącą warstwę z powyższą"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
-msgstr "Zamień bieżącą warstwę na poniższą"
+msgstr "Zamień bieżącą warstwę z poniższą"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
@@ -1863,7 +1863,8 @@ msgstr "<b>Ustawienia eksportu dokumentu</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Pusty Przybornik</b>\n"
+"<i>Menu: Widok/Przyborniki</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
