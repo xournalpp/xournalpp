@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-25 18:15\n"
+"PO-Revision-Date: 2022-03-25 19:10\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -118,7 +118,8 @@ msgstr "Koloro-atributo ne estas agordita!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "La sondosierujo estas ne agordita aŭ ne valida! Registrado ne funkcios!\n"
+"Bonvolu agordi la sondosierujon ĉe «Agordoj > Sonregistrado»"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -1876,7 +1877,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5247
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr ""
+msgstr "<i>Sonregistraĵoj estas aktuale konservataj en aparta dosierujo kaj referencataj de la ĵurnalo.</i>"
 
 #: ../ui/settings.glade:5665
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
@@ -1943,7 +1944,8 @@ msgstr ""
 #: ../ui/settings.glade:5358
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>Specifu la sonaparatojn por registrado kaj ludado de sonaj alkroĉaĵoj.\n"
+"Se <small><tt>pulse</tt></small> estas havebla, bonvolu elekti ĝin kiel la eniga/eliga aparatoj.</i>"
 
 #: ../ui/settings.glade:1805
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
