@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-04 22:27\n"
+"PO-Revision-Date: 2022-03-25 10:18\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -2599,7 +2599,7 @@ msgstr "Sarreraren egonkortzeak zure trazuaren amaieran hutsune bat sor dezake. 
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr "Txertatu latex"
+msgstr "Txertatu Latex"
 
 #: ../ui/main.glade:2841
 msgid "Insert Page After"
