@@ -165,7 +165,7 @@ enum ActionType {
     // Used for all colors
     ACTION_SELECT_COLOR,
     ACTION_SELECT_COLOR_CUSTOM,
-    
+
     ACTION_X_REFLECTION,
     ACTION_Y_REFLECTION,
 

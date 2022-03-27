@@ -6,7 +6,7 @@
 #include "util/i18n.h"
 
 ReflectUndoAction::ReflectUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0,
-                                   bool x_axis):
+                                     bool x_axis):
         UndoAction("ReflectUndoAction") {
     this->page = page;
     this->elements = *elements;
