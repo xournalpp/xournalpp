@@ -19,7 +19,7 @@ export LIBRARY_PATH="$HOME/gtk/inst/lib:$LIBRARY_PATH"
 jhbuild build freetype fontconfig
 jhbuild buildone -acf cairo
 
-curl https://poppler.freedesktop.org/poppler-22.01.0.tar.xz -o poppler.tar.xz
+curl https://poppler.freedesktop.org/poppler-22.03.0.tar.xz -o poppler.tar.xz
 tar xf poppler.tar.xz
 cd poppler-* || exit
 mkdir build
