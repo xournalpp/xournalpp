@@ -1115,9 +1115,7 @@ void Settings::setMenubarVisible(bool visible) {
     save();
 }
 
-const bool Settings::isFilepathInTitlebarShown() const {
-    return this->filepathShownInTitlebar;
-}
+const bool Settings::isFilepathInTitlebarShown() const { return this->filepathShownInTitlebar; }
 
 void Settings::setFilepathInTitlebarShown(const bool shown) {
     if (this->filepathShownInTitlebar == shown) {
@@ -1125,7 +1123,7 @@ void Settings::setFilepathInTitlebarShown(const bool shown) {
     }
 
     this->filepathShownInTitlebar = shown;
-    
+
     save();
 }
 
