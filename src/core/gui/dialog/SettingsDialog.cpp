@@ -362,7 +362,6 @@ void SettingsDialog::load() {
     loadCheckbox("cbInputSystemTPCButton", settings->getInputSystemTPCButtonEnabled());
     loadCheckbox("cbInputSystemDrawOutsideWindow", settings->getInputSystemDrawOutsideWindowEnabled());
 
-
     /**
      * Stabilizer related settings
      */
@@ -521,6 +520,7 @@ void SettingsDialog::load() {
     loadCheckbox("cbHidePresentationMenubar", hidePresentationMenubar);
     loadCheckbox("cbHidePresentationSidebar", hidePresentationSidebar);
     loadCheckbox("cbHideMenubarStartup", settings->isMenubarVisible());
+    loadCheckbox("cbShowFilepathInTitlebar", settings->isFilepathInTitlebarShown());
 
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(get("preloadPagesBefore")),
                               static_cast<double>(settings->getPreloadPagesBefore()));
@@ -762,6 +762,7 @@ void SettingsDialog::save() {
                                                            hidePresentationMenubar, hidePresentationSidebar));
 
     settings->setMenubarVisible(getCheckbox("cbHideMenubarStartup"));
+    settings->setFilepathInTitlebarShown(getCheckbox("cbShowFilepathInTitlebar"));
 
     constexpr auto spinAsUint = [&](GtkSpinButton* btn) {
         int v = gtk_spin_button_get_value_as_int(btn);

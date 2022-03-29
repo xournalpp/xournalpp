@@ -1115,6 +1115,20 @@ void Settings::setMenubarVisible(bool visible) {
     save();
 }
 
+const bool Settings::isFilepathInTitlebarShown() const {
+    return this->filepathShownInTitlebar;
+}
+
+void Settings::setFilepathInTitlebarShown(const bool shown) {
+    if (this->filepathShownInTitlebar == shown) {
+        return;
+    }
+
+    this->filepathShownInTitlebar = shown;
+    
+    save();
+}
+
 auto Settings::getAutosaveTimeout() const -> int { return this->autosaveTimeout; }
 
 void Settings::setAutosaveTimeout(int autosave) {
