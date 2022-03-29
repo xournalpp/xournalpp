@@ -1961,6 +1961,7 @@ void Control::showSettings() {
     }
 
     win->updateScrollbarSidebarPosition();
+    this->updateWindowTitle();
 
     enableAutosave(settings->isAutosaveEnabled());
 
@@ -2411,14 +2412,23 @@ void Control::updateWindowTitle() {
             if (undoRedo->isChanged()) {
                 title += "*";
             }
-            title += doc->getPdfFilepath().filename().u8string();
+
+            if (settings->isFilepathInTitlebarShown()) {
+                title += doc->getPdfFilepath().u8string();
+            } else {
+                title += doc->getPdfFilepath().filename().u8string();
+            }
         }
     } else {
         if (undoRedo->isChanged()) {
             title += "*";
         }
 
-        title += doc->getFilepath().filename().u8string();
+        if (settings->isFilepathInTitlebarShown()) {
+            title += doc->getFilepath().u8string();
+        } else {
+            title += doc->getFilepath().filename().u8string();
+        }
     }
     this->doc->unlock();
 
