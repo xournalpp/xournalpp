@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-25 19:10\n"
+"PO-Revision-Date: 2022-03-30 18:52\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1169,19 +1169,24 @@ msgstr "Apartigilo"
 #: ../src/core/control/XournalMain.cpp:570
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "Agordi la bilderdenson (bilderojn en colo) por elporti kiel PNG-bildon. Implicite 300\n"
+"                                 Senefika sen «-i»/«--create-img=foo.png»"
 
 #: ../src/core/control/XournalMain.cpp:580
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "Agordi la alton de bildo por elporti kiel PNG-bildon\n"
+"                                 Senefika sen «-i»/«--create-img=foo.png»\n"
+"                                 Ignorota se «--export-png-dpi» aŭ «--export-png-width» estas uzata"
 
 #: ../src/core/control/XournalMain.cpp:574
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "Agordi la larĝon de bildo por elporti kiel PNG-bildon\n"
+"                                 Senefika sen «-i»/«--create-img=foo.png»\n"
+"                                 Ignorota se «--export-png-dpi» estas uzata"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
@@ -1491,7 +1496,7 @@ msgstr "Xournal-dosieroj"
 
 #: ../src/core/control/XournalMain.cpp:194
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++ kolapsis lastatempe. Ĉu restaŭri la laste redaktitan dosieron?"
 
 #: ../src/core/control/Control.cpp:2358
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
@@ -2020,7 +2025,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Ĉiam kontroli LaTeX-dependaĵojn antaŭ rulado"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
@@ -3023,7 +3028,7 @@ msgstr "Rapido de stirklavo + rulumado"
 
 #: ../ui/settings.glade:3871
 msgid "Speed for a Zoomstep"
-msgstr ""
+msgstr "Rapido de zompaŝoj"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
