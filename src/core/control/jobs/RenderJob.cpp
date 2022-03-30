@@ -26,10 +26,15 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     double pageHeight = view->page->getHeight();
     doc->unlock();
 
-    auto x = int(std::lround(rect.x * zoom));
-    auto y = int(std::lround(rect.y * zoom));
-    auto width = int(std::lround(rect.width * zoom));
-    auto height = int(std::lround(rect.height * zoom));
+    /**
+     * Make sure the mask is big enough
+     * The +1 covers examples like rect.x = 0.4, rect.width = 1 and zoom = 1
+     * We need a mask of width 2 pixels for that...
+     **/
+    auto x = int(std::floor(rect.x * zoom));
+    auto y = int(std::floor(rect.y * zoom));
+    auto width = int(std::ceil(rect.width * zoom)) + 1;
+    auto height = int(std::ceil(rect.height * zoom)) + 1;
 
     cairo_surface_t* rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
     cairo_t* crRect = cairo_create(rectBuffer);
