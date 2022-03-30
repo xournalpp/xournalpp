@@ -6,6 +6,7 @@
 #include "model/eraser/ErasableStroke.h"
 #include "view/background/MainBackgroundPainter.h"
 
+#include "ImageBackgroundView.h"
 #include "LayerView.h"
 #include "StrokeView.h"
 
@@ -22,27 +23,6 @@ DocumentView::~DocumentView() {
  * Mark stroke with Audio
  */
 void DocumentView::setMarkAudioStroke(bool markAudioStroke) { this->markAudioStroke = markAudioStroke; }
-
-void DocumentView::paintBackgroundImage() {
-    GdkPixbuf* pixbuff = page->getBackgroundImage().getPixbuf();
-    if (pixbuff) {
-        cairo_matrix_t matrix = {0};
-        cairo_get_matrix(cr, &matrix);
-
-        int width = gdk_pixbuf_get_width(pixbuff);
-        int height = gdk_pixbuf_get_height(pixbuff);
-
-        double sx = page->getWidth() / width;
-        double sy = page->getHeight() / height;
-
-        cairo_scale(cr, sx, sy);
-
-        gdk_cairo_set_source_pixbuf(cr, pixbuff, 0, 0);
-        cairo_paint(cr);
-
-        cairo_set_matrix(cr, &matrix);
-    }
-}
 
 void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container) {
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
@@ -107,7 +87,8 @@ void DocumentView::drawBackground(bool hidePdfBackground, bool hideImageBackgrou
     if (pt.isPdfPage()) {
         // Handled in PdfView
     } else if (pt.isImagePage() && !hideImageBackground) {
-        paintBackgroundImage();
+        xoj::view::ImageBackgroundView bgView(page->getBackgroundImage(), page->getWidth(), page->getHeight());
+        bgView.draw(cr);
     } else if (!hideRulingBackground) {
         backgroundPainter->paint(pt, cr, page);
     }
