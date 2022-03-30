@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-30 18:52\n"
+"PO-Revision-Date: 2022-03-30 19:50\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1521,7 +1521,9 @@ msgstr "Vi uzas la branĉon «{1}/{2}». «Sendi raporton pri cimo» sendos vin 
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "En via aktuala dokumento mankas la PDF-paĝo n-ro {1}.\n"
+"Ĉu enmeti tiun?\n\n"
+"Konsileto: Vi povas enmeti PDF-paĝon per Ĵurnalo → Papera fono → PDF-fono."
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:131
 msgid "Zoom Slider"
@@ -2174,7 +2176,7 @@ msgstr "Kopii elektitan tekston"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr ""
+msgstr "Kopii la fonon de la aktuala paĝo anstataŭ la ĉi-supre agordita fono."
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
