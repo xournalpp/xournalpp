@@ -83,9 +83,6 @@ public:
     void finializeDrawing();
 
 private:
-    void paintBackgroundImage();
-
-private:
     cairo_t* cr = nullptr;
     PageRef page = nullptr;
     double width = 0;

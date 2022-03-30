@@ -47,6 +47,8 @@ class StrokeView;
 class TextView;
 
 class LayerView;
+class BackgroundView;
+class ImageBackgroundView;
 
 constexpr double OPACITY_NO_AUDIO = 0.3;
 };  // namespace view
