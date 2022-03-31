@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-31 01:11\n"
+"PO-Revision-Date: 2022-03-31 02:12\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1315,7 +1315,7 @@ msgstr "La fona dosiero {1} ne troviĝis. Eble ĝi estas movita, alinomita aŭ f
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "La kontrolo por superskribi la fonon malsukcesis pro la jeno:\n"
 
 #: ../src/core/control/Control.cpp:2094
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -1999,7 +1999,7 @@ msgstr "Pri Xournal++"
 
 #: ../ui/settings.glade:4891
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "Ago por tuŝeto de ilo"
 
 #: ../ui/settings.glade:4192
 msgid "Add additional horizontal space of"
