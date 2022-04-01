@@ -127,7 +127,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 * Sun Mar 6 2022 Luya Tshimbalanga <luya@fedoraproject.org>
 - Port enhanced spec file from Michael J Gruber version
 
-* Thu Oct 20 2021 Ulrich Huber <ulrich@huberulrich.de>
+* Thu Oct 21 2021 Ulrich Huber <ulrich@huberulrich.de>
 - See https://github.com/%{name}/%{name}/CHANGELOG.md
 
 * Sat Feb 20 2021 Luya Tshimbalanga <luya@fedoraproject.org>
