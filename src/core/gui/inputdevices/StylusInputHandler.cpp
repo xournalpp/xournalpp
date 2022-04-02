@@ -71,7 +71,11 @@ auto StylusInputHandler::handleImpl(InputEvent const& event) -> bool {
             this->actionMotion(event);
         }
         XournalppCursor* cursor = xournal->view->getCursor();
-        cursor->setInvisible(false);
+        if (inputContext->getSettings()->getStylusCursorType() == STYLUS_CURSOR_NONE && !this->deviceClassPressed) {
+            cursor->setInvisible(true);
+        } else {
+            cursor->setInvisible(false);
+        }
         cursor->updateCursor();
     }
 

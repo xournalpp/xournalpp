@@ -273,7 +273,12 @@ void XournalppCursor::updateCursor() {
                 }
             }
         } else if (type == TOOL_ERASER) {
-            cursor = getEraserCursor();
+            if (this->invisible) {
+                setCursor(CRSR_BLANK_CURSOR);
+                cursor = nullptr;
+            } else {
+                cursor = getEraserCursor();
+            }
         }
 
         else if (type == TOOL_TEXT) {
