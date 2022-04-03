@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 
+#include "util/Rectangle.h"
 
 /**
  * @class Point
@@ -59,11 +60,26 @@ public:
     Point lineTo(const Point& p, double length) const;
 
     /**
+     * @brief Compute new Point in the direction from this to another Point.
+     * @param p The other Point.
+     * @param ratio The line length over the distance between this and the other Point p
+     * @return The new Point.
+     */
+    Point relativeLineTo(const Point& p, double ratio) const;
+
+    /**
      * @brief Compare if this Point has the same position as another Point.
      * @param p The other Point.
      * @return True if the coordinates are equal. False otherwise.
      */
     bool equalsPos(const Point& p) const;
+
+    /**
+     * @brief Test if the point lies (strictly) inside a given rectangle
+     * @param rect The rectangle
+     * @return True if the point is in rectangle, false otherwise
+     */
+    bool isInside(const xoj::util::Rectangle<double>& rect) const;
 
 public:
     /**

@@ -118,10 +118,8 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     /**
      * The quadratic control point is converted into two cubic control points
      */
-    // Equivalent to fp = B.lineTo(Q, 2/3*distance), but avoids recomputing the norms
-    Point fp((Q.x - B.x) * 2 / 3 + B.x, (Q.y - B.y) * 2 / 3 + B.y);
-    // Equivalent to sp = C.lineTo(Q, 2/3*distance), but avoids recomputing the norms
-    Point sp((Q.x - C.x) * 2 / 3 + C.x, (Q.y - C.y) * 2 / 3 + C.y);
+    Point fp = B.relativeLineTo(Q, 2.0 / 3.0);
+    Point sp = C.relativeLineTo(Q, 2.0 / 3.0);
 
     /**
      * Set the pressure values. We assume the tool is pressure sensitive:
