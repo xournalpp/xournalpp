@@ -42,7 +42,7 @@ Stroke::Stroke(): AudioElement(ELEMENT_STROKE) {}
 Stroke::~Stroke() = default;
 
 /**
- * Clone style attributes, but not the data (position, width etc.)
+ * Clone style attributes, but not the data (position, pressure etc.)
  */
 void Stroke::applyStyleFrom(const Stroke* other) {
     setColor(other->getColor());
@@ -61,12 +61,10 @@ auto Stroke::cloneStroke() const -> Stroke* {
     s->points = this->points;
     s->x = this->x;
     s->y = this->y;
-    s->width = this->width;  // stroke width, not bounding box width
     s->Element::width = this->Element::width;
     s->Element::height = this->Element::height;
     s->snappedBounds = this->snappedBounds;
     s->sizeCalculated = this->sizeCalculated;
-    s->capStyle = this->capStyle;
     return s;
 }
 
@@ -432,10 +430,10 @@ auto Stroke::getStrokeCapStyle() const -> StrokeCapStyle { return this->capStyle
 
 void Stroke::setStrokeCapStyle(const StrokeCapStyle capStyle) { this->capStyle = capStyle; }
 
-void Stroke::debugPrint() {
+void Stroke::debugPrint() const {
     g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t)this % this->hasPressure()));
 
-    for (auto&& p: points) { g_message("%lf / %lf", p.x, p.y); }
+    for (auto&& p: points) { g_message("%lf / %lf / %lf", p.x, p.y, p.z); }
 
     g_message("\n");
 }
