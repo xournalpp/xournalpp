@@ -104,7 +104,7 @@ public:
     StrokeCapStyle getStrokeCapStyle() const;
     void setStrokeCapStyle(const StrokeCapStyle capStyle);
 
-    [[maybe_unused]] void debugPrint();
+    [[maybe_unused]] void debugPrint() const;
 
 public:
     // Serialize interface
