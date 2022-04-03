@@ -28,7 +28,7 @@ public:
     bool undo(Control*) override;
     bool redo(Control*) override;
 
-    void addElement(Layer* layer, Element* e, int pos);
+    void addElement(Layer* layer, Element* e, size_t pos);  // should be ElementIndex but we don't have that in scope
 
     std::string getText() override;
 

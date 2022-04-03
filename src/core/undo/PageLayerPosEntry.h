@@ -11,16 +11,18 @@
 
 #pragma once
 
+#include <cstdint>
+
 class Layer;
 
 template <class T>
 struct PageLayerPosEntry {
     // TODO: constructor could be removed with C++20
-    PageLayerPosEntry<T>(Layer* layer, T* element, int pos): layer(layer), element(element), pos(pos) {}
+    PageLayerPosEntry<T>(Layer* layer, T* element, size_t pos): layer(layer), element(element), pos(pos) {}
 
     Layer* layer;
     T* element;
-    int pos;
+    size_t pos;
 };
 
 template <typename T>
