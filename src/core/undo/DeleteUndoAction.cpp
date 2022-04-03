@@ -10,7 +10,7 @@ DeleteUndoAction::DeleteUndoAction(const PageRef& page, bool eraser): UndoAction
     this->page = page;
 }
 
-void DeleteUndoAction::addElement(Layer* layer, Element* e, int pos) { elements.emplace(layer, e, pos); }
+void DeleteUndoAction::addElement(Layer* layer, Element* e, size_t pos) { elements.emplace(layer, e, pos); }
 
 auto DeleteUndoAction::undo(Control*) -> bool {
     if (elements.empty()) {
