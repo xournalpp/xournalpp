@@ -16,6 +16,16 @@ if(MACOSX)
     # could also be used instead of the following lines.
     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
     set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
+    # The default GDK pixbuf loaders locations may be using relative paths.
+    # These paths are wrong when running tests, so override them.
+    set (TEST_GDK_PIXBUF_LOADER_CACHE "${CMAKE_CURRENT_BINARY_DIR}/loaders.cache")
+    set (TEST_ENV_VARS "${TEST_ENV_VARS}" GDK_PIXBUF_MODULE_FILE="${TEST_GDK_PIXBUF_LOADER_CACHE}")
+    add_custom_target (test-create-gdk-pixbuf-loader-cache
+      COMMAND "${PROJECT_SOURCE_DIR}/mac-setup/setup-gdk-pixbuf.sh" "${TEST_GDK_PIXBUF_LOADER_CACHE}"
+      BYPRODUCTS "${TEST_GDK_PIXBUF_LOADER_CACHE}"
+      COMMENT "Create gdk-pixbuf loader cache for testing")
+    add_test(create-gdk-pixbuf-loader-cache
+      "${CMAKE_COMMAND}" --build "${CMAKE_BINARY_DIR}" --target test-create-gdk-pixbuf-loader-cache)
 endif()
 
 # For Windows: Prevent overriding the parent project's compiler/linker settings
@@ -81,4 +91,10 @@ target_include_directories(test-units PRIVATE "${PROJECT_BINARY_DIR}/test")
 # MacOs needs a bit longer to find the tests on azure
 # Hence, set the timeout to 30s (default 5s)
 include(GoogleTest)
-gtest_discover_tests(test-units DISCOVERY_TIMEOUT 30)
+gtest_discover_tests(test-units
+  DISCOVERY_TIMEOUT 30
+  PROPERTIES
+    ENVIRONMENT "${TEST_ENV_VARS}"
+  $<$<NOT:$<STREQUAL:${TEST_GDK_PIXBUF_LOADER_CACHE},"">>:
+    DEPENDS create-gdk-pixbuf-loader-cache>
+)
