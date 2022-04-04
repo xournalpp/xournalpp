@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-05 00:39\n"
+"PO-Revision-Date: 2022-04-04 22:26\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -58,7 +58,7 @@ msgstr "<span foreground='red' size='x-large'>Falta el archivo de IU necesario:\
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Add/Edit TeX"
-msgstr "Añadir/editar Tex"
+msgstr "Añadir/editar TeX"
 
 #: ../src/core/control/XournalMain.cpp:585
 msgid "Advanced export options"
@@ -100,7 +100,7 @@ msgstr "No se pudo procesar el atributo «{1}» como «int»; el valor es «{2}�
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:124
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr "El atributo \"{1}\" no se pudo analizar como int, el valor es nullptr"
+msgstr "El atributo «{1}» no se pudo procesar como «int», el valor es «nullptr»"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
@@ -109,7 +109,7 @@ msgstr "No se pudo procesar el atributo «{1}» como «size_t»; el valor es «{
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:162
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr "El atributo \"{1}\" no se pudo analizar como size_t, el valor es nullptr"
+msgstr "El atributo «{1}» no se pudo procesar como «size_t», el valor es «nullptr»"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
@@ -118,8 +118,8 @@ msgstr "No se definió el color del atributo."
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr "¡No se definió la carpeta de audio o es inválida! ¡No funcionará la grabación!\n"
-"Establezca la carpeta de grabaciones en \"Preferencias > Grabación de audio\""
+msgstr "¡Carpeta de audio no definida o inválida! ¡No funcionará la grabación!\n"
+"Establezca la carpeta de grabaciones en «Preferencias > Grabación de audio»"
 
 #: ../src/core/control/Control.cpp:210
 msgid "Autosave failed with an error: {1}"
@@ -410,7 +410,7 @@ msgstr "Dibujar flecha"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:470
 msgid "Draw Ellipse"
-msgstr "Dibujar elipse"
+msgstr "Dibujar Elipse"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -430,7 +430,7 @@ msgstr "Dibujar rectángulo"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:475
 msgid "Draw Spline"
-msgstr "Dibujar curva spline"
+msgstr "Dibujar Spline"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
