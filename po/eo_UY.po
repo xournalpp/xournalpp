@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-31 02:12\n"
+"PO-Revision-Date: 2022-04-05 17:05\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1319,7 +1319,7 @@ msgstr "La kontrolo por superskribi la fonon malsukcesis pro la jeno:\n"
 
 #: ../src/core/control/Control.cpp:2094
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "La versio de la ŝargata dosiero estas pli nova ol tiuj, kiuj estas subtenataj de ĉi tiu versio de Xournal++; tial, la dosiero eble misŝargiĝos. Ĉu malfermi malgraŭ tio?"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:119
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -3104,7 +3104,7 @@ msgstr "La deksesuma ruĝa-verda-blua kodo de la aktuala koloro de la ilo «Teks
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "La jenaj signoĉenoj estos anstataŭigitaj en la ĉiea ŝablondosiero dum rulado de la ilo LaTeX:"
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
