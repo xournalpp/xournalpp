@@ -59,6 +59,16 @@ auto exportImg(const char* input, const char* output, const char* range, int png
 
 void initResourcePath(GladeSearchpath* gladePath, const gchar* relativePathAndFile, bool failIfNotFound = true);
 
+void initCAndCoutLocales() {
+    /**
+     * Force numbers to be printed out and parsed by C libraries (cairo) in the "classic" locale.
+     * This avoids issue with tags when exporting to PDF, see #3551
+     */
+    setlocale(LC_NUMERIC, "C");
+
+    std::cout.imbue(std::locale());
+}
+
 void initLocalisation() {
 #ifdef ENABLE_NLS
     fs::path localeDir = Util::getGettextFilepath(Util::getLocalePath().u8string().c_str());
@@ -80,13 +90,8 @@ void initLocalisation() {
                   "xournalpp with msvc",
                   e.what());
     }
-    /**
-     * Force numbers to be printed out and parsed by C libraries (cairo) in the "classic" locale.
-     * This avoids issue with tags when exporting to PDF, see #3551
-     */
-    setlocale(LC_NUMERIC, "C");
 
-    std::cout.imbue(std::locale());
+    initCAndCoutLocales();
 }
 
 auto migrateSettings() -> MigrateResult {
@@ -560,6 +565,7 @@ void on_startup(GApplication* application, XMPtr app_data) {
 }
 
 auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gint {
+    initCAndCoutLocales();
     if (app_data->showVersion) {
         std::cout << PROJECT_NAME << " " << PROJECT_VERSION << std::endl;
         std::cout << "└──libgtk: " << gtk_get_major_version() << "."  //
