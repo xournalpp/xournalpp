@@ -15,11 +15,12 @@
 
 class ArrowHandler: public BaseStrokeHandler {
 public:
-    ArrowHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
+    ArrowHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool doubleEnded);
     ~ArrowHandler() override;
 
 private:
     void drawShape(Point& currentPoint, const PositionInputData& pos) override;
+    bool doubleEnded = false;
 
 private:
 };

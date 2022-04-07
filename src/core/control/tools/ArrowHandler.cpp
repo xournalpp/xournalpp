@@ -6,8 +6,8 @@
 #include "gui/XournalView.h"
 #include "undo/InsertUndoAction.h"
 
-ArrowHandler::ArrowHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
-        BaseStrokeHandler(xournal, redrawable, page) {}
+ArrowHandler::ArrowHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool doubleEnded):
+        BaseStrokeHandler(xournal, redrawable, page), doubleEnded(doubleEnded) {}
 
 ArrowHandler::~ArrowHandler() = default;
 
@@ -30,6 +30,13 @@ void ArrowHandler::drawShape(Point& c, const PositionInputData& pos) {
         // disable this to see such a cool "serrate brush" effect
         if (count > 4) {
             // remove previous points
+            if (doubleEnded) {
+
+            }
+            stroke->deletePoint(8);
+            stroke->deletePoint(7);
+            stroke->deletePoint(6);
+            stroke->deletePoint(5);
             stroke->deletePoint(4);
             stroke->deletePoint(3);
             stroke->deletePoint(2);
@@ -47,9 +54,25 @@ void ArrowHandler::drawShape(Point& c, const PositionInputData& pos) {
         // an appropriate delta is Pi/3 radians for an arrow shape
         double delta = M_PI / 6.0;
         double angle = atan2(c.y - firstPoint.y, c.x - firstPoint.x);
+
+        if (doubleEnded) {
+            stroke->addPoint(Point(
+                firstPoint.x + arrowDist * cos(angle + delta),
+                firstPoint.y + arrowDist * sin(angle + delta))
+            );
+            stroke->addPoint(firstPoint);
+            stroke->addPoint(Point(
+                firstPoint.x + arrowDist * cos(angle - delta),
+                firstPoint.y + arrowDist * sin(angle - delta))
+            );
+            stroke->addPoint(firstPoint);
+        }
+
         stroke->addPoint(c);
         stroke->addPoint(Point(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta)));
         stroke->addPoint(c);
         stroke->addPoint(Point(c.x - arrowDist * cos(angle - delta), c.y - arrowDist * sin(angle - delta)));
+
+        
     }
 }
