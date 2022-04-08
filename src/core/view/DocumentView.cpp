@@ -1,21 +1,22 @@
 #include "DocumentView.h"
 
+#include "model/BackgroundConfig.h"
 #include "model/Layer.h"
 #include "model/eraser/ErasableStroke.h"
+#include "view/background/DottedBackgroundView.h"
+#include "view/background/GraphBackgroundView.h"
 #include "view/background/ImageBackgroundView.h"
-#include "view/oldbackground/MainBackgroundPainter.h"
+#include "view/background/IsoDottedBackgroundView.h"
+#include "view/background/IsoGraphBackgroundView.h"
+#include "view/background/LinedBackgroundView.h"
+#include "view/background/RuledBackgroundView.h"
+#include "view/background/StavesBackgroundView.h"
+#include "view/background/TransparentCheckerboardBackgroundView.h"
 
 #include "LayerView.h"
 #include "StrokeView.h"
 
 using xoj::util::Rectangle;
-
-DocumentView::DocumentView() { this->backgroundPainter = new MainBackgroundPainter(); }
-
-DocumentView::~DocumentView() {
-    delete this->backgroundPainter;
-    this->backgroundPainter = nullptr;
-}
 
 /**
  * Mark stroke with Audio
@@ -79,27 +80,9 @@ void DocumentView::drawBackground(bool hidePdfBackground, bool hideImageBackgrou
         xoj::view::ImageBackgroundView bgView(page->getBackgroundImage(), page->getWidth(), page->getHeight());
         bgView.draw(cr);
     } else if (!hideRulingBackground) {
-        backgroundPainter->paint(pt, cr, page);
-    }
-}
-
-/**
- * Draw background if there is no background shown, like in GIMP etc.
- */
-void DocumentView::drawTransparentBackgroundPattern() {
-    Util::cairo_set_source_rgbi(cr, Color(0x666666U));
-    cairo_rectangle(cr, 0, 0, width, height);
-    cairo_fill(cr);
-
-    Util::cairo_set_source_rgbi(cr, Color(0x999999U));
-
-    bool second = false;
-    for (int y = 0; y < height; y += 8) {
-        second = !second;
-        for (int x = second ? 8 : 0; x < width; x += 16) {
-            cairo_rectangle(cr, x, y, 8, 8);
-            cairo_fill(cr);
-        }
+        auto bgView =
+                xoj::view::BackgroundView::create(page->getWidth(), page->getHeight(), page->getBackgroundColor(), pt);
+        bgView->draw(cr);
     }
 }
 
@@ -121,7 +104,8 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
     }
 
     if (!backgroundVisible) {
-        drawTransparentBackgroundPattern();
+        xoj::view::TransparentCheckerboardBackgroundView bgView(page->getWidth(), page->getHeight());
+        bgView.draw(cr);
     }
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,

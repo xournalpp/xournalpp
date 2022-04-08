@@ -4,8 +4,9 @@
 
 #include "control/settings/PageTemplateSettings.h"
 #include "control/settings/Settings.h"
+#include "model/BackgroundConfig.h"
 #include "util/i18n.h"
-#include "view/oldbackground/MainBackgroundPainter.h"
+#include "view/background/BackgroundView.h"
 
 #include "PageTypeHandler.h"
 
@@ -21,12 +22,12 @@ PageTypeMenu::PageTypeMenu(PageTypeHandler* types, Settings* settings, bool show
         types(types),
         settings(settings),
         ignoreEvents(false),
+        pageTypeSource(ApplyPageTypeSource::SELECTED),
         listener(nullptr),
         menuX(0),
         menuY(0),
         showPreview(showPreview),
-        pageTypeApplyListener(nullptr),
-        pageTypeSource(ApplyPageTypeSource::SELECTED) {
+        pageTypeApplyListener(nullptr) {
     initDefaultMenu();
     loadDefaultPage();
 }
@@ -37,18 +38,18 @@ void PageTypeMenu::loadDefaultPage() {
     setSelected(model.getPageInsertType());
 }
 
-auto PageTypeMenu::createPreviewImage(MainBackgroundPainter* bgPainter, const PageType& pt) -> cairo_surface_t* {
-    int previewWidth = 100;
-    int previewHeight = 141;
-    double zoom = 0.5;
-
-    auto page = std::make_shared<XojPage>(previewWidth / zoom, previewHeight / zoom);
+auto PageTypeMenu::createPreviewImage(const PageType& pt) -> cairo_surface_t* {
+    const int previewWidth = 100;
+    const int previewHeight = 141;
+    const double zoom = 0.5;
 
     cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, previewWidth, previewHeight);
     cairo_t* cr = cairo_create(surface);
     cairo_scale(cr, zoom, zoom);
 
-    bgPainter->paint(pt, cr, std::move(page));
+    auto bgView =
+            xoj::view::BackgroundView::create(previewWidth / zoom, previewHeight / zoom, Color(0xffffffU), pt, 2.0);
+    bgView->draw(cr);
 
     cairo_identity_matrix(cr);
 
@@ -65,13 +66,13 @@ auto PageTypeMenu::createPreviewImage(MainBackgroundPainter* bgPainter, const Pa
     return surface;
 }
 
-void PageTypeMenu::addMenuEntry(MainBackgroundPainter* bgPainter, PageTypeInfo* t) {
+void PageTypeMenu::addMenuEntry(PageTypeInfo* t) {
     bool special = t->page.isSpecial();
     bool showImg = !special && showPreview;
 
     GtkWidget* entry = nullptr;
     if (showImg) {
-        cairo_surface_t* img = createPreviewImage(bgPainter, t->page);
+        cairo_surface_t* img = createPreviewImage(t->page);
         GtkWidget* preview = gtk_image_new_from_surface(img);
         entry = gtk_check_menu_item_new();
 
@@ -206,9 +207,6 @@ auto PageTypeMenu::createApplyMenuItem(const char* text) -> GtkWidget* {
 }
 
 void PageTypeMenu::initDefaultMenu() {
-    auto bgPainter = std::make_unique<MainBackgroundPainter>();
-    bgPainter->setLineWidthFactor(2);
-
     bool special = false;
     for (PageTypeInfo* t: this->types->getPageTypes()) {
         if (!showSpecial && t->page.isSpecial()) {
@@ -232,7 +230,7 @@ void PageTypeMenu::initDefaultMenu() {
                 gtk_container_add(GTK_CONTAINER(menu), separator);
             }
         }
-        addMenuEntry(bgPainter.get(), t);
+        addMenuEntry(t);
     }
 }
 

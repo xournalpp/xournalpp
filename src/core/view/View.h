@@ -49,7 +49,6 @@ class TextView;
 class LayerView;
 class SelectionView;
 class BackgroundView;
-class ImageBackgroundView;
 
 constexpr double OPACITY_NO_AUDIO = 0.3;
 };  // namespace view
