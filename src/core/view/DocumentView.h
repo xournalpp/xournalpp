@@ -24,12 +24,10 @@
 #include "model/TexImage.h"
 #include "model/Text.h"
 
-class MainBackgroundPainter;
-
 class DocumentView {
 public:
-    DocumentView();
-    virtual ~DocumentView();
+    DocumentView() = default;
+    virtual ~DocumentView() = default;
 
 public:
     /**
@@ -89,6 +87,4 @@ private:
     double lY = -1;
     double lWidth = -1;
     double lHeight = -1;
-
-    MainBackgroundPainter* backgroundPainter;
 };

@@ -23,7 +23,6 @@ class PageTypeHandler;
 class PageTypeHandler;
 class PageTypeInfo;
 class Settings;
-class MainBackgroundPainter;
 
 typedef struct {
     GtkWidget* entry;
@@ -70,9 +69,9 @@ public:
 private:
     static GtkWidget* createApplyMenuItem(const char* text);
     void initDefaultMenu();
-    void addMenuEntry(MainBackgroundPainter* bgPainter, PageTypeInfo* t);
+    void addMenuEntry(PageTypeInfo* t);
     void entrySelected(PageTypeInfo* t);
-    cairo_surface_t* createPreviewImage(MainBackgroundPainter* bgPainter, const PageType& pt);
+    cairo_surface_t* createPreviewImage(const PageType& pt);
 
 private:
     bool showSpecial;

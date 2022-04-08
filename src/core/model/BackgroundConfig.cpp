@@ -34,7 +34,8 @@ auto BackgroundConfig::loadValue(const string& key, string& value) const -> bool
 auto BackgroundConfig::loadValue(const string& key, int& value) const -> bool {
     string str;
     if (loadValue(key, str)) {
-        value = std::stoul(str, nullptr, 10);
+        auto valueStream = serdes_stream<std::istringstream>(str);
+        valueStream >> value;
         return true;
     }
 
@@ -52,20 +53,11 @@ auto BackgroundConfig::loadValue(const string& key, double& value) const -> bool
     return false;
 }
 
-auto BackgroundConfig::loadValueHex(const string& key, int& value) const -> bool {
-    string str;
-    if (loadValue(key, str)) {
-        value = std::stoul(str, nullptr, 16);
-        return true;
-    }
-
-    return false;
-}
-
 auto BackgroundConfig::loadValueHex(const string& key, uint32_t& value) const -> bool {
     string str;
     if (loadValue(key, str)) {
-        value = std::stoul(str, nullptr, 16);
+        auto valueStream = serdes_stream<std::istringstream>(str);
+        valueStream >> std::hex >> value;
         return true;
     }
 
