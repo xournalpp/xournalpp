@@ -4,7 +4,8 @@
 
 #include <string>
 
-#include "enums/ActionType.enum.h"
+#include "../ActionType.enum.h"
+
 using std::string;
 #include <glib.h>
 
@@ -219,14 +220,6 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_SELECT_REGION;
     }
 
-    if (value == "ACTION_TOOL_SELECT_PDF_TEXT_LINEAR") {
-        return ACTION_TOOL_SELECT_PDF_TEXT_LINEAR;
-    }
-
-    if (value == "ACTION_TOOL_SELECT_PDF_TEXT_RECT") {
-        return ACTION_TOOL_SELECT_PDF_TEXT_RECT;
-    }
-
     if (value == "ACTION_TOOL_SELECT_OBJECT") {
         return ACTION_TOOL_SELECT_OBJECT;
     }
@@ -263,8 +256,20 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_DRAW_ARROW;
     }
 
+    if (value == "ACTION_TOOL_DRAW_DOUBLE_ARROW") {
+        return ACTION_TOOL_DRAW_DOUBLE_ARROW;
+    }
+
     if (value == "ACTION_TOOL_DRAW_COORDINATE_SYSTEM") {
         return ACTION_TOOL_DRAW_COORDINATE_SYSTEM;
+    }
+
+    if (value == "ACTION_TOOL_SELECT_PDF_TEXT_LINEAR") {
+        return ACTION_TOOL_SELECT_PDF_TEXT_LINEAR;
+    }
+
+    if (value == "ACTION_TOOL_SELECT_PDF_TEXT_RECT") {
+        return ACTION_TOOL_SELECT_PDF_TEXT_RECT;
     }
 
     if (value == "ACTION_RULER") {
@@ -837,14 +842,6 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_TOOL_SELECT_REGION";
     }
 
-    if (value == ACTION_TOOL_SELECT_PDF_TEXT_LINEAR) {
-        return "ACTION_TOOL_SELECT_PDF_TEXT_LINEAR";
-    }
-
-    if (value == ACTION_TOOL_SELECT_PDF_TEXT_RECT) {
-        return "ACTION_TOOL_SELECT_PDF_TEXT_RECT";
-    }
-
     if (value == ACTION_TOOL_SELECT_OBJECT) {
         return "ACTION_TOOL_SELECT_OBJECT";
     }
@@ -881,8 +878,20 @@ auto ActionType_toString(ActionType value) -> string {
         return "ACTION_TOOL_DRAW_ARROW";
     }
 
+    if (value == ACTION_TOOL_DRAW_DOUBLE_ARROW) {
+        return "ACTION_TOOL_DRAW_DOUBLE_ARROW";
+    }
+
     if (value == ACTION_TOOL_DRAW_COORDINATE_SYSTEM) {
         return "ACTION_TOOL_DRAW_COORDINATE_SYSTEM";
+    }
+
+    if (value == ACTION_TOOL_SELECT_PDF_TEXT_LINEAR) {
+        return "ACTION_TOOL_SELECT_PDF_TEXT_LINEAR";
+    }
+
+    if (value == ACTION_TOOL_SELECT_PDF_TEXT_RECT) {
+        return "ACTION_TOOL_SELECT_PDF_TEXT_RECT";
     }
 
     if (value == ACTION_RULER) {

@@ -1466,6 +1466,17 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkCheckMenuItem" id="menuToolsDrawDoubleArrow">
+                            <property name="name">menuToolsDrawDoubleArrow</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Draw Double Arrow</property>
+                            <property name="use-underline">True</property>
+                            <signal name="toggled" handler="ACTION_TOOL_DRAW_DOUBLE_ARROW" swapped="no"/>
+                            <accelerator key="5" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkCheckMenuItem" id="menuToolsDrawCoordinateSystem">
                             <property name="name">menuToolsDrawCoordinateSystem</property>
                             <property name="visible">True</property>
@@ -1473,7 +1484,7 @@
                             <property name="label" translatable="yes">Draw Coordinate System</property>
                             <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_DRAW_COORDINATE_SYSTEM" swapped="no"/>
-                            <accelerator key="5" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="6" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1484,7 +1495,7 @@
                             <property name="label" translatable="yes">Draw _Line</property>
                             <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_RULER" swapped="no"/>
-                            <accelerator key="6" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="7" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>
@@ -1495,7 +1506,7 @@
                             <property name="label" translatable="yes">Draw Spline</property>
                             <property name="use-underline">True</property>
                             <signal name="toggled" handler="ACTION_TOOL_DRAW_SPLINE" swapped="no"/>
-                            <accelerator key="7" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                            <accelerator key="8" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                           </object>
                         </child>
                         <child>

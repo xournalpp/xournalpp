@@ -31,12 +31,11 @@ void ArrowHandler::drawShape(Point& c, const PositionInputData& pos) {
         if (count > 4) {
             // remove previous points
             if (doubleEnded) {
-
+                stroke->deletePoint(8);
+                stroke->deletePoint(7);
+                stroke->deletePoint(6);
+                stroke->deletePoint(5);
             }
-            stroke->deletePoint(8);
-            stroke->deletePoint(7);
-            stroke->deletePoint(6);
-            stroke->deletePoint(5);
             stroke->deletePoint(4);
             stroke->deletePoint(3);
             stroke->deletePoint(2);

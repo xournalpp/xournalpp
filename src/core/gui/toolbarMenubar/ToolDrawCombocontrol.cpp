@@ -33,6 +33,9 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
             new ToolDrawType(_("Draw Ellipse"), toolMenuHandler->iconName("draw-ellipse"), ACTION_TOOL_DRAW_ELLIPSE));
     drawTypes.push_back(
             new ToolDrawType(_("Draw Arrow"), toolMenuHandler->iconName("draw-arrow"), ACTION_TOOL_DRAW_ARROW));
+    drawTypes.push_back(
+            new ToolDrawType(_("Draw Double Arrow"), toolMenuHandler->iconName("draw-double-arrow"),
+                             ACTION_TOOL_DRAW_DOUBLE_ARROW));
     drawTypes.push_back(new ToolDrawType(_("Draw Line"), toolMenuHandler->iconName("draw-line"), ACTION_RULER));
     drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),
                                          toolMenuHandler->iconName("draw-coordinate-system"),
