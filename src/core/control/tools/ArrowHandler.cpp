@@ -55,15 +55,11 @@ void ArrowHandler::drawShape(Point& c, const PositionInputData& pos) {
         double angle = atan2(c.y - firstPoint.y, c.x - firstPoint.x);
 
         if (doubleEnded) {
-            stroke->addPoint(Point(
-                firstPoint.x + arrowDist * cos(angle + delta),
-                firstPoint.y + arrowDist * sin(angle + delta))
-            );
+            stroke->addPoint(Point(firstPoint.x + arrowDist * cos(angle + delta),
+                                   firstPoint.y + arrowDist * sin(angle + delta)));
             stroke->addPoint(firstPoint);
-            stroke->addPoint(Point(
-                firstPoint.x + arrowDist * cos(angle - delta),
-                firstPoint.y + arrowDist * sin(angle - delta))
-            );
+            stroke->addPoint(Point(firstPoint.x + arrowDist * cos(angle - delta),
+                                   firstPoint.y + arrowDist * sin(angle - delta)));
             stroke->addPoint(firstPoint);
         }
 
@@ -71,7 +67,5 @@ void ArrowHandler::drawShape(Point& c, const PositionInputData& pos) {
         stroke->addPoint(Point(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta)));
         stroke->addPoint(c);
         stroke->addPoint(Point(c.x - arrowDist * cos(angle - delta), c.y - arrowDist * sin(angle - delta)));
-
-        
     }
 }
