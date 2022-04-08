@@ -34,7 +34,7 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
     drawTypes.push_back(
             new ToolDrawType(_("Draw Arrow"), toolMenuHandler->iconName("draw-arrow"), ACTION_TOOL_DRAW_ARROW));
     drawTypes.push_back(
-            new ToolDrawType(_("Draw Double Arrow"), toolMenuHandler->iconName("draw-double-arrow"),
+            new ToolDrawType(_("Draw Double Arrow"), toolMenuHandler->iconName("draw-arrow"),
                              ACTION_TOOL_DRAW_DOUBLE_ARROW));
     drawTypes.push_back(new ToolDrawType(_("Draw Line"), toolMenuHandler->iconName("draw-line"), ACTION_RULER));
     drawTypes.push_back(new ToolDrawType(_("Draw coordinate system"),
