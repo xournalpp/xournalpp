@@ -63,6 +63,8 @@ struct ColorU8 {
         rhs = val;
         return is;
     };
+
+    constexpr auto isLight() const -> bool { return uint32_t(red) + uint32_t(green) + uint32_t(blue) > 0x180U; }
 };
 
 static_assert(sizeof(ColorU8) == sizeof(uint32_t), "Color is not 32 bit");
