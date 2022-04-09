@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-02-23 18:27\n"
+"POT-Creation-Date: 2022-04-09 19:06+0000\n"
+"PO-Revision-Date: 2022-04-09 19:09\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/core/control/XournalMain.cpp:369
+#: ../src/core/control/XournalMain.cpp:374
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -42,7 +42,7 @@ msgstr "लेख"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>कोई डिवाइस नहीं मिले। कुछ तो गड़बड़ है — कृपया एक बग रिपोर्ट फाइल कीजिए </b>"
 
-#: ../src/core/control/XournalMain.cpp:364
+#: ../src/core/control/XournalMain.cpp:369
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>ui  की एक महेत्�
 msgid "Add/Edit TeX"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:585
+#: ../src/core/control/XournalMain.cpp:591
 msgid "Advanced export options"
 msgstr "उन्नत निर्यात विकल्प"
 
@@ -151,7 +151,7 @@ msgid "Bring to front"
 msgstr "सबके सामने लाएँ"
 
 #: ../src/core/control/Control.cpp:2064 ../src/core/control/Control.cpp:2515
-#: ../src/core/control/XournalMain.cpp:158
+#: ../src/core/control/XournalMain.cpp:163
 msgid "Cancel"
 msgstr "रद्द करें"
 
@@ -333,7 +333,7 @@ msgstr "साधारण उपकरण:"
 msgid "Delete"
 msgstr "मिटाए"
 
-#: ../src/core/control/XournalMain.cpp:157
+#: ../src/core/control/XournalMain.cpp:162
 msgid "Delete Logfile"
 msgstr "Log फ़ाइल हटाएँ"
 
@@ -341,7 +341,7 @@ msgstr "Log फ़ाइल हटाएँ"
 msgid "Delete current page"
 msgstr "वर्तमान पृष्ठ हटाएँ"
 
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/XournalMain.cpp:204
 msgid "Delete file"
 msgstr "फ़ाइल हटाएँ"
 
@@ -361,7 +361,7 @@ msgstr "यह पृष्ठ मिटाएँ"
 msgid "Discard"
 msgstr "रद्द करें"
 
-#: ../src/core/control/XournalMain.cpp:586
+#: ../src/core/control/XournalMain.cpp:592
 msgid "Display advanced export options"
 msgstr "उन्नत निर्यात विकल्प प्रदर्शित करें"
 
@@ -525,16 +525,16 @@ msgstr ""
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:177
+#: ../src/core/control/XournalMain.cpp:182
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:543
+#: ../src/core/control/XournalMain.cpp:549
 msgid "Export FILE as PDF"
 msgstr "वहनीय दस्तावेज़ फ़ाइल के रूप में फ़ाइल निर्यात करें"
 
-#: ../src/core/control/XournalMain.cpp:545
+#: ../src/core/control/XournalMain.cpp:551
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -548,7 +548,7 @@ msgstr "वहनीय दस्तावेज़ फ़ाइल निर्
 msgid "Export as PDF"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:559
+#: ../src/core/control/XournalMain.cpp:565
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -556,13 +556,13 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:550
+#: ../src/core/control/XournalMain.cpp:556
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:555
+#: ../src/core/control/XournalMain.cpp:561
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
@@ -622,7 +622,7 @@ msgstr "आगे बढें।"
 msgid "GNU GPLv2 or later"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:534
+#: ../src/core/control/XournalMain.cpp:540
 msgid "Get version of xournalpp"
 msgstr "xournalpp का संस्करण प्राप्त करें"
 
@@ -730,7 +730,7 @@ msgstr "Isometric Dotted"
 msgid "Isometric Graph"
 msgstr "सममितीय ग्राफ़"
 
-#: ../src/core/control/XournalMain.cpp:530
+#: ../src/core/control/XournalMain.cpp:536
 msgid "Jump to Page (first Page: 1)"
 msgstr "पृष्ठ पर कूदो (पहली पृष्ठ: 1)"
 
@@ -830,7 +830,7 @@ msgstr "सामान्य चित्रकारी"
 msgid "OK"
 msgstr "ठीक है"
 
-#: ../src/core/control/XournalMain.cpp:566
+#: ../src/core/control/XournalMain.cpp:572
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
@@ -839,11 +839,11 @@ msgstr ""
 msgid "Open Image"
 msgstr "छवि खोले"
 
-#: ../src/core/control/XournalMain.cpp:155
+#: ../src/core/control/XournalMain.cpp:160
 msgid "Open Logfile"
 msgstr "घटनाओं की सूची खोलें"
 
-#: ../src/core/control/XournalMain.cpp:156
+#: ../src/core/control/XournalMain.cpp:161
 msgid "Open Logfile directory"
 msgstr "घटनाओं की नस्ती"
 
@@ -996,7 +996,7 @@ msgstr ""
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "अनुरोधित अस्थायी फ़ाइल संलग्नक के लिए नहीं मिली थी {1}"
 
-#: ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/XournalMain.cpp:205
 msgid "Restore file"
 msgstr "फाइल से रीस्टोर"
 
@@ -1140,7 +1140,7 @@ msgstr "क्षेत्र चुनें"
 msgid "Selection Combo"
 msgstr "चयन कॉम्बो"
 
-#: ../src/core/control/XournalMain.cpp:154
+#: ../src/core/control/XournalMain.cpp:159
 msgid "Send Bugreport"
 msgstr "Bugreport भेजें"
 
@@ -1156,13 +1156,13 @@ msgstr "पीछे भेजें"
 msgid "Separator"
 msgstr "विभाजक"
 
-#: ../src/core/control/XournalMain.cpp:570
+#: ../src/core/control/XournalMain.cpp:576
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "PNG निर्यात के लिए DPI सेट करें। डिफ़ॉल्ट है 300\n"
 "                                 -i/--create-img=foo.png के बिना कोई प्रभाव नहीं"
 
-#: ../src/core/control/XournalMain.cpp:580
+#: ../src/core/control/XournalMain.cpp:586
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1170,7 +1170,7 @@ msgstr "PNG निर्यात के लिए पृष्ठ ऊंचा�
 "                                 --i/--create-img=foo.png के बिना कोई प्रभाव नहीं\n"
 "                                 यदि --export-png-dpi या --export-png-width का उपयोग किया जाता है, तो ज्ञात है"
 
-#: ../src/core/control/XournalMain.cpp:574
+#: ../src/core/control/XournalMain.cpp:580
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1198,13 +1198,13 @@ msgstr "केवल इस्तेमाल किए जाने वाल�
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "केवल इस्तेमाल किए जाने वाले पृष्ठों ({1} अप्रयुक्त पृष्ठ) को दिखाएं"
 
-#: ../src/core/control/XournalMain.cpp:439
+#: ../src/core/control/XournalMain.cpp:444
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Sorry, Xournal++ केवल एक ही बार में एक फ़ाइल खोल सकते हैं।\n"
 "अन्य लोगों को नजरअंदाज कर दिया जाता है।"
 
-#: ../src/core/control/XournalMain.cpp:454
+#: ../src/core/control/XournalMain.cpp:459
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "Sorry, Xournal++ क्षण में दूरस्थ फ़ाइलों को खोल नहीं सकता है।\n"
@@ -1328,15 +1328,15 @@ msgstr ""
 msgid "The formula is empty when rendered or invalid."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:149
+#: ../src/core/control/XournalMain.cpp:154
 msgid "The most recent log file name: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:144
+#: ../src/core/control/XournalMain.cpp:149
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:143
+#: ../src/core/control/XournalMain.cpp:148
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr ""
 
@@ -1482,7 +1482,7 @@ msgstr "Xournal (संगतता)"
 msgid "Xournal files"
 msgstr "Xournal फ़ाइलें"
 
-#: ../src/core/control/XournalMain.cpp:194
+#: ../src/core/control/XournalMain.cpp:199
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "पिछले समय Xournal++ दुर्घटनाग्रस्त हो गया। क्या आप पिछले संपादित फ़ाइल को पुनर्स्थापित करना चाहते हैं?"
 
@@ -1502,7 +1502,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "आपके पास चुनने के लिए कोई PDF पेज नहीं है। रद्द करना\n"
 "कृपया एक अन्य पृष्ठभूमि प्रकार का चयन करें: मेनू \"Journal\" → \"पृष्ठ टेम्पलेट को कॉन्फ़िगर करें\"।"
 
-#: ../src/core/control/XournalMain.cpp:146
+#: ../src/core/control/XournalMain.cpp:151
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr "आप {1}/{2} शाखा का उपयोग कर रहे हैं। Bugreport आपको इस रेपो के मुद्दे ट्रैकर को निर्देशित करेगा।"
 
