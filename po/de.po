@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-03-02 18:00\n"
+"PO-Revision-Date: 2022-04-09 12:42\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -1534,7 +1534,7 @@ msgstr "Ihr aktuelles Dokument beinhaltet die PDF Seite {1} nicht\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:131
 msgid "Zoom Slider"
-msgstr "Zoom-Regler"
+msgstr "Vergrösserung"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Zoom fit to screen"
@@ -2973,7 +2973,7 @@ msgstr "Auswahlfarbe (Text-, Figuren Selektion etc.)"
 
 #: ../ui/settings.glade:3482
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Ansicht verschieben"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3210,7 +3210,7 @@ msgstr "Webseite"
 
 #: ../ui/settings.glade:3452
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Wenn ein Element ausserhalb des dargestellten Bereichs verschoben wird, verschiebe die Ansicht um diesen Prozentsatz. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
