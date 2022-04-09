@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 18:27+0000\n"
-"PO-Revision-Date: 2022-04-02 10:55\n"
+"POT-Creation-Date: 2022-04-09 19:06+0000\n"
+"PO-Revision-Date: 2022-04-09 19:09\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/core/control/XournalMain.cpp:369
+#: ../src/core/control/XournalMain.cpp:374
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -42,7 +42,7 @@ msgstr "%F-Catatan-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Tidak ada perangkat yang ditemukan. Jika ini tidak seharusnya terjadi, mungkin perlu melaporkan kutu?</b>"
 
-#: ../src/core/control/XournalMain.cpp:364
+#: ../src/core/control/XournalMain.cpp:369
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Berkas UI yang diperlukan tidak di
 msgid "Add/Edit TeX"
 msgstr "Tambah/Sunting TeX"
 
-#: ../src/core/control/XournalMain.cpp:585
+#: ../src/core/control/XournalMain.cpp:591
 msgid "Advanced export options"
 msgstr "Opsi ekspor lanjutan"
 
@@ -152,7 +152,7 @@ msgid "Bring to front"
 msgstr "Bawa ke depan"
 
 #: ../src/core/control/Control.cpp:2064 ../src/core/control/Control.cpp:2515
-#: ../src/core/control/XournalMain.cpp:158
+#: ../src/core/control/XournalMain.cpp:163
 msgid "Cancel"
 msgstr "Batal"
 
@@ -335,7 +335,7 @@ msgstr "Alat Bawaan"
 msgid "Delete"
 msgstr "Hapus"
 
-#: ../src/core/control/XournalMain.cpp:157
+#: ../src/core/control/XournalMain.cpp:162
 msgid "Delete Logfile"
 msgstr "Hapus Berkas Log"
 
@@ -343,7 +343,7 @@ msgstr "Hapus Berkas Log"
 msgid "Delete current page"
 msgstr "Hapus halaman ini"
 
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/XournalMain.cpp:204
 msgid "Delete file"
 msgstr "Hapus berkas"
 
@@ -363,7 +363,7 @@ msgstr "Hapus halaman ini"
 msgid "Discard"
 msgstr "Buang"
 
-#: ../src/core/control/XournalMain.cpp:586
+#: ../src/core/control/XournalMain.cpp:592
 msgid "Display advanced export options"
 msgstr "Tampilkan opsi ekspor lanjutan"
 
@@ -528,17 +528,17 @@ msgstr "Kesalahan: {1} bukanlah berkas biasa. Silahkan cek pengaturan berkas tem
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Kesalahan {1}. Silahkan cek isi konten dari {2}"
 
-#: ../src/core/control/XournalMain.cpp:177
+#: ../src/core/control/XournalMain.cpp:182
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr "Log kesalahan tidak dapat dihapus. Anda harus melakukannya secara manual.\n"
 "Berkas log: {1}"
 
-#: ../src/core/control/XournalMain.cpp:543
+#: ../src/core/control/XournalMain.cpp:549
 msgid "Export FILE as PDF"
 msgstr "Ekspor FILE ke PDF"
 
-#: ../src/core/control/XournalMain.cpp:545
+#: ../src/core/control/XournalMain.cpp:551
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -554,7 +554,7 @@ msgstr "Ekspor PDF"
 msgid "Export as PDF"
 msgstr "Ekspor ke PDF"
 
-#: ../src/core/control/XournalMain.cpp:559
+#: ../src/core/control/XournalMain.cpp:565
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -566,7 +566,7 @@ msgstr "Mengekspor lapisan secara progresif\n"
 "                                 membangun tumpukan lapisan secara progresif.\n"
 "                                 Menghasilkan berkas PDF dan dapat digunakan untuk presentasi.\n"
 
-#: ../src/core/control/XournalMain.cpp:550
+#: ../src/core/control/XournalMain.cpp:556
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -574,7 +574,7 @@ msgstr "Mengekspor tanpa latar belakang\n"
 "                                 Berkas yang diekspor terdapat latar belakang lejas atau putih,\n"
 "                                 tergantung apa yang didukung format\n"
 
-#: ../src/core/control/XournalMain.cpp:555
+#: ../src/core/control/XournalMain.cpp:561
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
@@ -635,7 +635,7 @@ msgstr "Maju"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 atau setelahnya"
 
-#: ../src/core/control/XournalMain.cpp:534
+#: ../src/core/control/XournalMain.cpp:540
 msgid "Get version of xournalpp"
 msgstr "Dapatkan versi xournalpp"
 
@@ -743,7 +743,7 @@ msgstr ""
 msgid "Isometric Graph"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:530
+#: ../src/core/control/XournalMain.cpp:536
 msgid "Jump to Page (first Page: 1)"
 msgstr "Lompat ke Halaman (halaman pertama: 1)"
 
@@ -843,7 +843,7 @@ msgstr "Gambar normal"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/core/control/XournalMain.cpp:566
+#: ../src/core/control/XournalMain.cpp:572
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Hanya ekspor halaman yang spesifik dengan RANGE (mis. \"2-3,5,7-\")\n"
@@ -853,11 +853,11 @@ msgstr "Hanya ekspor halaman yang spesifik dengan RANGE (mis. \"2-3,5,7-\")\n"
 msgid "Open Image"
 msgstr "Buka Gambar"
 
-#: ../src/core/control/XournalMain.cpp:155
+#: ../src/core/control/XournalMain.cpp:160
 msgid "Open Logfile"
 msgstr "Buka Berkas Log"
 
-#: ../src/core/control/XournalMain.cpp:156
+#: ../src/core/control/XournalMain.cpp:161
 msgid "Open Logfile directory"
 msgstr "Buka direktori Berkas Log"
 
@@ -1010,7 +1010,7 @@ msgstr "Ganti"
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Berkas sementara yang diminta tidak ditemukan untuk lampiran {1}"
 
-#: ../src/core/control/XournalMain.cpp:200
+#: ../src/core/control/XournalMain.cpp:205
 msgid "Restore file"
 msgstr "Pulihkan berkas"
 
@@ -1154,7 +1154,7 @@ msgstr "Pilih bidang"
 msgid "Selection Combo"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:154
+#: ../src/core/control/XournalMain.cpp:159
 msgid "Send Bugreport"
 msgstr "Kirim Laporan Kutu"
 
@@ -1170,18 +1170,18 @@ msgstr ""
 msgid "Separator"
 msgstr "Pemisah"
 
-#: ../src/core/control/XournalMain.cpp:570
+#: ../src/core/control/XournalMain.cpp:576
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:580
+#: ../src/core/control/XournalMain.cpp:586
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:574
+#: ../src/core/control/XournalMain.cpp:580
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1207,13 +1207,13 @@ msgstr "Tampilkan hanya halaman yang tidak digunakan (satu halaman tak digunakan
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Tampilkan hanya halaman yang tidak digunakan ({1} halaman tak digunakan)"
 
-#: ../src/core/control/XournalMain.cpp:439
+#: ../src/core/control/XournalMain.cpp:444
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Maaf, Xournal++ hanya dapat membuka satu berkas dalam satu waktu.\n"
 "Berkas lain diabaikan."
 
-#: ../src/core/control/XournalMain.cpp:454
+#: ../src/core/control/XournalMain.cpp:459
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "Maaf, Xournal++ saat ini tidak dapat membuka berkas remote.\n"
@@ -1337,15 +1337,15 @@ msgstr "Bukan berkas .xopp yang valid (String versi rusak): \"{1}\""
 msgid "The formula is empty when rendered or invalid."
 msgstr "Rumus kosong saat dirender atau tidak valid."
 
-#: ../src/core/control/XournalMain.cpp:149
+#: ../src/core/control/XournalMain.cpp:154
 msgid "The most recent log file name: {1}"
 msgstr "Nama berkas log terkini: {1}"
 
-#: ../src/core/control/XournalMain.cpp:144
+#: ../src/core/control/XournalMain.cpp:149
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Terdapat berkas log kesalahan dari Xournal++. Silakan mengirim laporan kutu, agar kami dapat memperbaikinya."
 
-#: ../src/core/control/XournalMain.cpp:143
+#: ../src/core/control/XournalMain.cpp:148
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "Terdapat berkas log kesalahan dari Xournal++. Silakan mengirim laporan kutu, agar kami dapat memperbaikinya."
 
@@ -1491,7 +1491,7 @@ msgstr "Xournal (Kompatibilitas)"
 msgid "Xournal files"
 msgstr "Berkas Xournal"
 
-#: ../src/core/control/XournalMain.cpp:194
+#: ../src/core/control/XournalMain.cpp:199
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ telah mengalami crash. Apakah Anda ingin mengembalikan berkas yang terakhir diedit?"
 
@@ -1511,7 +1511,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "Anda tidak memiliki halaman PDF yang dapat dipilih. Batalkan operasi.\n"
 "Silakan pilih tipe latar belakang yang lain: Menu \"Jurnal\" → \"Konfigurasi Templat Halaman\"."
 
-#: ../src/core/control/XournalMain.cpp:146
+#: ../src/core/control/XournalMain.cpp:151
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr ""
 
