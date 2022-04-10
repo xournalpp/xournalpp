@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-09 19:06+0000\n"
-"PO-Revision-Date: 2022-04-09 19:09\n"
+"POT-Creation-Date: 2022-04-10 08:59+0000\n"
+"PO-Revision-Date: 2022-04-10 09:03\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -216,28 +216,28 @@ msgstr "Nie udało się wgrać pliku LaTeX PDF: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Nie udało się wgrać pliku pagetemplates.ini"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:803
+#: ../src/core/control/xojfile/LoadHandler.cpp:806
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Nie udało się otworzyć załącznika: {1}. Komunikat błędu: Nie można odczytać pliku"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:813
+#: ../src/core/control/xojfile/LoadHandler.cpp:816
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Nie udało się otworzyć załącznika: {1}. Komunikat błędu: Nie można zapisać pliku"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:783
-#: ../src/core/control/xojfile/LoadHandler.cpp:1036
+#: ../src/core/control/xojfile/LoadHandler.cpp:786
+#: ../src/core/control/xojfile/LoadHandler.cpp:1037
 #: ../src/core/control/xojfile/LoadHandler.cpp:1055
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Nie udało się otworzyć załącznika: {1}. Komunikat błędu: Poprawny rozmiar pliku niedostępny"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:774
-#: ../src/core/control/xojfile/LoadHandler.cpp:790
-#: ../src/core/control/xojfile/LoadHandler.cpp:1027
-#: ../src/core/control/xojfile/LoadHandler.cpp:1043
+#: ../src/core/control/xojfile/LoadHandler.cpp:777
+#: ../src/core/control/xojfile/LoadHandler.cpp:793
+#: ../src/core/control/xojfile/LoadHandler.cpp:1030
+#: ../src/core/control/xojfile/LoadHandler.cpp:1044
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Nie można odczytać załącznika {1}. Komunikat błędu: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:161
+#: ../src/core/control/xojfile/LoadHandler.cpp:166
 msgid "Could not open file: \"{1}\""
 msgstr "Nie można otworzyć pliku: \"{1}\""
 
@@ -253,12 +253,12 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Nie można sparsować głównego pliku toolbar.ini: {1}\n"
 "Żadne paski narzędzi nie będą dostępne."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:357
-#: ../src/core/control/xojfile/LoadHandler.cpp:381
+#: ../src/core/control/xojfile/LoadHandler.cpp:364
+#: ../src/core/control/xojfile/LoadHandler.cpp:387
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Nie można odczytać obrazu: {1}. Treść błędu: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:391
+#: ../src/core/control/xojfile/LoadHandler.cpp:397
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Nie można odczytać numeru strony dla sklonowanego obrazu tła: {1}."
 
@@ -383,11 +383,11 @@ msgstr "Nie nadpisuj pliku kanwy PDF! To może spowodować błędy!"
 msgid "Document file was removed."
 msgstr "Dokument został usunięty."
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:243
+#: ../src/core/control/xojfile/LoadHandler.cpp:250
 msgid "Document is corrupted (no pages found in file)"
 msgstr "Dokument jest uszkodzony (nie znaleziono stron w pliku)"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:239
+#: ../src/core/control/xojfile/LoadHandler.cpp:246
 msgid "Document is not complete (maybe the end is cut off?)"
 msgstr "Dokument jest uszkodzony (możliwe, że jest obcięty)"
 
@@ -491,12 +491,12 @@ msgstr "Błąd przy otwieraniu pliku \"{1}\""
 msgid "Error opening file: \"{1}\""
 msgstr "Błąd przy otwieraniu pliku \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:445
-#: ../src/core/control/xojfile/LoadHandler.cpp:465
+#: ../src/core/control/xojfile/LoadHandler.cpp:449
+#: ../src/core/control/xojfile/LoadHandler.cpp:469
 msgid "Error reading PDF: {1}"
 msgstr "Błąd przy odczytywaniu pliku PDF: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:522
+#: ../src/core/control/xojfile/LoadHandler.cpp:524
 msgid "Error reading width of a stroke: {1}"
 msgstr "Błędna grubość kreski: {1}"
 
@@ -588,6 +588,14 @@ msgstr "Nie znaleziono programu generatora LaTeX w zmiennej środowiskowej PATH:
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Nie udało się zainicjować powierzchni PDF Cairo"
+
+#: ../src/core/control/tools/ImageHandler.cpp:60
+msgid "Failed to load image, could not determine image size!"
+msgstr ""
+
+#: ../src/core/control/xojfile/LoadHandler.cpp:158
+msgid "Failed to open content.xml in zip archive: \"{1}\""
+msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -1370,7 +1378,6 @@ msgid "This document is not saved yet."
 msgstr "Dokument nie został jeszcze zapisany."
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:144
-#: ../src/core/control/tools/ImageHandler.cpp:43
 msgid "This image could not be loaded. Error message: {1}"
 msgstr "Nie można otworzyć obrazu. Wiadomość błędu: {1}"
 
@@ -1415,15 +1422,15 @@ msgstr "Cofnij"
 msgid "Undo: "
 msgstr "Cofnij: "
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:288
+#: ../src/core/control/xojfile/LoadHandler.cpp:295
 msgid "Unexpected root tag: {1}"
 msgstr "Niespodziewany tag w korzeniu: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:309
+#: ../src/core/control/xojfile/LoadHandler.cpp:316
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Niespodziewany tag w dokumencie: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:498
+#: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Unknown background type: {1}"
 msgstr "Nieznany rodzaj tła: {1}"
 
@@ -1431,23 +1438,23 @@ msgstr "Nieznany rodzaj tła: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Nieznany kolor \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:452
+#: ../src/core/control/xojfile/LoadHandler.cpp:456
 msgid "Unknown domain type: {1}"
 msgstr "Nieznany rodzaj domeny: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:228
+#: ../src/core/control/xojfile/LoadHandler.cpp:235
 msgid "Unknown parser error"
 msgstr "Nieznany błąd parsera"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:399
+#: ../src/core/control/xojfile/LoadHandler.cpp:405
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Nieznany typ pixmap::domain: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:590
+#: ../src/core/control/xojfile/LoadHandler.cpp:592
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Nieznany rodzaj kreski: \"{1}\", zakładam, że to chodziło o okrągłą"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:608
+#: ../src/core/control/xojfile/LoadHandler.cpp:610
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Nieznany rodzaj kreski: \"{1}\", zakładam, że to pióro"
 
@@ -1479,15 +1486,15 @@ msgstr "Z PDF w tle"
 msgid "Write text"
 msgstr "Wpisz tekst"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:927
+#: ../src/core/control/xojfile/LoadHandler.cpp:931
 msgid "Wrong count of points ({1})"
 msgstr "Nieprawidłowa liczba punktów ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:937
+#: ../src/core/control/xojfile/LoadHandler.cpp:941
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Nieprawidłowa liczba punktów: {1}, spodziewane {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:225
+#: ../src/core/control/xojfile/LoadHandler.cpp:232
 msgid "XML Parser error: {1}"
 msgstr "Błąd parsera XML: {1}"
 
@@ -1672,7 +1679,7 @@ msgstr "trackpoint"
 msgid "whiteout"
 msgstr "wybielanie"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:936
+#: ../src/core/control/xojfile/LoadHandler.cpp:940
 msgid "xoj-File: {1}"
 msgstr "Plik xoj: {1}"
 
