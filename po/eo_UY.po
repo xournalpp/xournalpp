@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-10 08:59+0000\n"
-"PO-Revision-Date: 2022-04-10 09:02\n"
+"PO-Revision-Date: 2022-04-11 23:57\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -586,11 +586,11 @@ msgstr "Malsukcesis praŝargi Cairo-surfacon por PDF"
 
 #: ../src/core/control/tools/ImageHandler.cpp:60
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Malsukcesis ŝargi bildon, kaj tial ne eblas determini ĝian grandon!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Malsukcesis malfermi «content.xml» en densigita arkivo: «{1}»"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -2824,7 +2824,7 @@ msgstr "Kro_mprogramadministrilo"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Ŝanĝoj pri kromprogramoj nur efektiviĝos post relanĉo de Xournal++"
 
 #: ../ui/settings.glade:3693
 msgid "Pre-load pages after"
@@ -2912,7 +2912,7 @@ msgstr "Tolero pri rotacia kaptado"
 
 #: ../ui/settings.glade:5487
 msgid "Sample Rate"
-msgstr ""
+msgstr "Rapido de muestrado"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
@@ -3172,7 +3172,7 @@ msgstr "Uzi la formaton de la aktuala paĝo anstastaŭ la formato de la supera p
 
 #: ../ui/settings.glade:2563 ../ui/settings.glade:2631
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr ""
+msgstr "Uzu du fingrojn por movi/zomi kaj unu fingron por uzi la elektitan ilon."
 
 #: ../ui/settings.glade:4319
 msgid "Usually 0 or 1"
