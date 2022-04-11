@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-10 08:59+0000\n"
-"PO-Revision-Date: 2022-04-11 08:58\n"
+"PO-Revision-Date: 2022-04-11 09:57\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -853,7 +853,8 @@ msgstr "確定"
 #: ../src/core/control/XournalMain.cpp:572
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr "只從範圍輸出特定頁面(e.g. \"2-3,5,7-\")，若無-p/--create-pdf 或 -i/--create-img參數則無效。"
+msgstr "只從範圍輸出特定頁面(e.g. \"2-3,5,7-\")\n"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
@@ -1073,11 +1074,11 @@ msgstr "搜索"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:35
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "查看完整的貢獻者列表"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "從PDF中選取區域的文字"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Select Font"
@@ -1087,7 +1088,7 @@ msgstr "選擇字型"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "從 PDF 中的行中選擇文本"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1097,23 +1098,23 @@ msgstr "選擇對象"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "從PDF區域中選擇文本"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "選擇PDF文本"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "選擇矩形中的 PDF 文本"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "選擇矩形中的 PDF 文本"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "選擇PDF文本"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1130,7 +1131,7 @@ msgstr "選擇區域"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "從PDF中選擇文字"
 
 #: ../src/core/control/Control.cpp:2062
 msgid "Select another PDF"
@@ -1138,11 +1139,11 @@ msgstr "選擇其他PDF"
 
 #: ../src/util/XojMsgBox.cpp:76
 msgid "Select another name"
-msgstr ""
+msgstr "選擇另一個名稱"
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:101
 msgid "Select background color"
-msgstr ""
+msgstr "選擇背景顏色"
 
 #: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:82
 msgid "Select color"
@@ -1158,7 +1159,7 @@ msgstr "選擇區域"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
-msgstr ""
+msgstr "選擇工具組"
 
 #: ../src/core/control/XournalMain.cpp:159
 msgid "Send Bugreport"
@@ -1166,11 +1167,11 @@ msgstr "選擇錯誤報告"
 
 #: ../src/core/control/tools/EditSelection.cpp:381
 msgid "Send backward"
-msgstr ""
+msgstr "下移一層"
 
 #: ../src/core/control/tools/EditSelection.cpp:389
 msgid "Send to back"
-msgstr ""
+msgstr "置於底層"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
 msgid "Separator"
@@ -1179,23 +1180,28 @@ msgstr "分割線"
 #: ../src/core/control/XournalMain.cpp:576
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr ""
+msgstr "設定PNG輸出的DPI. 預設值是300\n"
+"                                 No effect without -i/--create-img=foo.pn"
 
 #: ../src/core/control/XournalMain.cpp:586
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr ""
+msgstr "設定PNG輸出頁面的高度\n"
+"                                 No effect without -i/--create-img=foo.png\n"
+"                                 Ignored if --export-png-dpi or --export-png-width is used"
 
 #: ../src/core/control/XournalMain.cpp:580
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr ""
+msgstr "設定PNG導出頁面的寬度\n"
+"                                 No effect without -i/--create-img=foo.png\n"
+"                                 Ignored if --export-png-dpi is used"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "三角板"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
@@ -1216,12 +1222,14 @@ msgstr "只顯示未使用頁面({1}個未使用頁面)"
 #: ../src/core/control/XournalMain.cpp:444
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "抱歉，Xournal++ 一次只能開啟一個檔案。\n"
+"其餘已被忽略。"
 
 #: ../src/core/control/XournalMain.cpp:459
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "抱歉，Xournal++ 目前無法打開遠端檔案。\n"
+"您必須把檔案複製到本地資料夾。"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
@@ -1247,19 +1255,19 @@ msgstr "支撐檔案"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
-msgstr ""
+msgstr "將目前圖層與上層圖層切換"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
-msgstr ""
+msgstr "將此圖層與下層圖層交換"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
-msgstr ""
+msgstr "將此頁面與上頁交換"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:68
 msgid "Swap the current page with the one below"
-msgstr ""
+msgstr "將此頁面與下頁交換"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
@@ -1306,28 +1314,30 @@ msgstr "工具條配置\"{1}\"是預置的，要產生一個拷貝到編輯?"
 #: ../src/core/control/Control.cpp:2051
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "找不到附加的背景檔案 {1} 。 可能已經被移動、刪除或重新命名。\n"
+"最後一次出現在: {2}"
 
 #: ../src/core/control/Control.cpp:2055
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr ""
+msgstr "找不到背景檔案 {1} 。 可能已經被移動、刪除或重新命名。\n"
+"最後一次出現在: {2}"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
-msgstr ""
+msgstr "覆蓋背景失敗：\n"
 
 #: ../src/core/control/Control.cpp:2094
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr ""
+msgstr "正在開啟的檔案格式版本筆目前Xournal++支持的文件格式版本更新， 可能無法正確開啟，仍要開啟？"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:119
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr ""
+msgstr "文件不是有效的 .xopp 文件 (Mimetype missing): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:127
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr ""
+msgstr "文件不是有效的 .xopp 文件 (Mimetype wrong): \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:136
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
@@ -1714,15 +1724,15 @@ msgstr "%"
 
 #: ../ui/settings.glade:2473
 msgid "% greater than the initial distance between the two touches."
-msgstr ""
+msgstr "%兩次觸碰大於初始距離。"
 
 #: ../ui/latexSettings.glade:188
 msgid "%%XPP_TEXT_COLOR%%"
-msgstr ""
+msgstr "%%XPP_TEXT_COLOR%%"
 
 #: ../ui/latexSettings.glade:127
 msgid "%%XPP_TOOL_INPUT%%"
-msgstr ""
+msgstr "%%XPP_TOOL_INPUT%%"
 
 #: ../ui/settings.glade:4979
 msgid "%."
