@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-10 08:59+0000\n"
-"PO-Revision-Date: 2022-04-11 09:57\n"
+"PO-Revision-Date: 2022-04-11 10:57\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -32,7 +32,7 @@ msgstr "\n"
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:35
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr " 頁，共 {1} 頁"
+msgstr " 頁，共{1} 頁"
 
 #: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
@@ -1377,7 +1377,7 @@ msgstr ""
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:144
 msgid "This image could not be loaded. Error message: {1}"
-msgstr ""
+msgstr "無法加載此圖像。錯誤訊息: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Toggle fullscreen"
@@ -1385,7 +1385,7 @@ msgstr "全屏"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 msgid "Tool - don't change"
-msgstr ""
+msgstr "工具 - 請勿更改"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:102
 msgid "Toolbar found: {1}"
@@ -1409,7 +1409,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:1332
 msgid "Unable to retrieve pdf page."
-msgstr ""
+msgstr "無法獲取PDF頁面。"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/core/undo/UndoRedoHandler.cpp:203
@@ -1422,11 +1422,11 @@ msgstr "撤銷："
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:295
 msgid "Unexpected root tag: {1}"
-msgstr ""
+msgstr "意外的根標籤: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:316
 msgid "Unexpected tag in document: \"{1}\""
-msgstr ""
+msgstr "文件中中意外的標籤: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Unknown background type: {1}"
@@ -1438,11 +1438,11 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:456
 msgid "Unknown domain type: {1}"
-msgstr ""
+msgstr "未知domain類型: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:235
 msgid "Unknown parser error"
-msgstr ""
+msgstr "未知解析器的錯誤"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:405
 msgid "Unknown pixmap::domain type: {1}"
@@ -1470,7 +1470,7 @@ msgstr "垂直間距"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:546
 msgid "Very Fine"
-msgstr ""
+msgstr "極細"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:550
 msgid "Very Thick"
@@ -1486,11 +1486,11 @@ msgstr "寫文本"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:931
 msgid "Wrong count of points ({1})"
-msgstr ""
+msgstr "點數錯誤 ({1})"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:941
 msgid "Wrong number of points, got {1}, expected {2}"
-msgstr ""
+msgstr "點數錯誤，讀到 {1}，預期 {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:232
 msgid "XML Parser error: {1}"
@@ -1506,7 +1506,7 @@ msgstr "Xournal檔案"
 
 #: ../src/core/control/XournalMain.cpp:199
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "Xournal++ 上次崩溃了。您想恢復最後一個编辑的文件？"
 
 #: ../src/core/control/Control.cpp:2358
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
@@ -1521,21 +1521,24 @@ msgstr "Xournal++ 樣本"
 #: ../src/core/control/PageBackgroundChangeController.cpp:179
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "您没有任何可以選擇的 PDF 頁面。操作取消。\n"
+"請選擇另一個背景類型：點擊“日记”菜單 → “配置頁面模板”。"
 
 #: ../src/core/control/XournalMain.cpp:151
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "您正在使用 {1}/{2} 分支，發送錯誤報告將轉向這個專案的問題追蹤器。"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr ""
+msgstr "您目前的文件不包含此 PDF 頁面號碼 {1}\n"
+"您想插入此頁面吗？\n\n"
+"提示：您可以選擇日记 → 紙張背景 -> PDF 背景插入一个PDF頁面。"
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:131
 msgid "Zoom Slider"
-msgstr ""
+msgstr "縮放游標"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Zoom fit to screen"
@@ -1582,7 +1585,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:262
 msgid "dashed"
-msgstr ""
+msgstr "橫虛線"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
 msgid "default disabled"
@@ -1598,7 +1601,7 @@ msgstr "刪除筆劃"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:268
 msgid "dotted"
-msgstr ""
+msgstr "虛線"
 
 #: ../src/core/undo/AddUndoAction.cpp:65
 #: ../src/core/undo/DeleteUndoAction.cpp:63
@@ -1611,7 +1614,7 @@ msgstr "橡皮"
 
 #: ../src/core/control/Control.cpp:2023
 msgid "file: {1}"
-msgstr ""
+msgstr "檔案: {1}"
 
 #: ../src/core/undo/AddUndoAction.cpp:76
 #: ../src/core/undo/DeleteUndoAction.cpp:74
@@ -1647,7 +1650,7 @@ msgstr "標準"
 #: ../src/core/undo/AddUndoAction.cpp:73
 #: ../src/core/undo/DeleteUndoAction.cpp:71
 msgid "stroke"
-msgstr ""
+msgstr "筆劃"
 
 #: ../src/core/control/DeviceListHelper.cpp:124
 msgid "tablet pad"
@@ -1668,7 +1671,7 @@ msgstr "觸控螢幕"
 
 #: ../src/core/control/DeviceListHelper.cpp:122
 msgid "trackpoint"
-msgstr ""
+msgstr "追蹤點"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:279
 msgid "whiteout"
@@ -1676,7 +1679,7 @@ msgstr "涂白"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:940
 msgid "xoj-File: {1}"
-msgstr ""
+msgstr "xoj-File: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:113
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -1712,7 +1715,7 @@ msgstr ""
 
 #: ../src/util/PathUtil.cpp:247
 msgid "xournalpp-{1}"
-msgstr ""
+msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
@@ -1762,12 +1765,35 @@ msgid "%a\t\tAbbreviated weekday name (e.g. Thu)\n"
 "%Y\t\tYear (e.g. 2001)\n"
 "%Z\t\tTimezone name or abbreviation (e.g. CDT)\n"
 "%%\t\tA % sign"
-msgstr ""
+msgstr "%a\t\t星期幾的缩寫 (e.g. Thu)\n"
+"%A\t\t星期幾 (e.g. Thursday)\n"
+"%b\t\t月份缩寫 (e.g. Aug)\n"
+"%B\t\t月份 (e.g. August)\n"
+"%c\t\t日期與時間的表達方式 (e.g. Thu Aug 23 14:55:02 2001)\n"
+"%d\t\t每個月的第幾天 (e.g. 01-31)\n"
+"%F\t\t日期表示方式 (e.g. 2001-08-23)\n"
+"%H\t\t24小時表示的時間 (e.g. 00-23)\n"
+"%I\t\t12小時表示的時間 (e.g. 01-12)\n"
+"%j\t\t一年中第幾天 (e.g. 001-366)\n"
+"%m\t\t月份 (e.g. 01-12)\n"
+"%M\t\t分 (e.g. 00-59)\n"
+"%p\t\t上下午 (e.g. 如PM)\n"
+"%S\t\t秒 (e.g. 00-61)\n"
+"%U\t\t第幾周 (按第一个周日是第一周的第一天计算） (e.g. 00-53)\n"
+"%w\t\t週幾（按周日为0计算) (e.g. 0-6)\n"
+"%W\t\t第幾週（按第一个周一是第一周的第一天计算） (e.g. 00-53)\n"
+"%x\t\t日期表示方式 (e.g. 08/23/01)\n"
+"%X\t\t時間表示方式 (e.g. 14:55:02)\n"
+"%y\t\t年份最後兩位 (e.g. 00-99)\n"
+"%Y\t\t年份 (e.g. 2001)\n"
+"%Z\t\t時區的縮寫 (e.g. CDT)\n"
+"%%\t A % 符号"
 
 #: ../ui/settings.glade:4819
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr ""
+msgstr "... 以及自上次繪畫以來必須經過多少時間。\n\n"
+"<i>推薦值：500ms</i>"
 
 #: ../ui/settings.glade:1090
 msgid "0,4"
@@ -1836,7 +1862,8 @@ msgstr "<b>預設</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>文件輸出設定</b>\n"
+"設定輸出參數"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
