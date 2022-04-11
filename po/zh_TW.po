@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-10 08:59+0000\n"
-"PO-Revision-Date: 2022-04-10 09:03\n"
+"PO-Revision-Date: 2022-04-11 08:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -585,15 +585,15 @@ msgstr "無法從 PATH: {1} 中找到 LaTeX 產生格式"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "初始化 PDF Cairo surface 失敗"
 
 #: ../src/core/control/tools/ImageHandler.cpp:60
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "讀取圖像失敗，無法定義圖像大小！"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "從壓縮檔開啟 content.xml 失敗: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -839,11 +839,11 @@ msgstr "沒有頁面可以匯出！"
 
 #: ../src/core/control/Control.cpp:1318
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "沒有可以添加的PDF頁面。您可能需要重新開啟文件檔。"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
-msgstr ""
+msgstr "正常繪圖"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
@@ -853,7 +853,7 @@ msgstr "確定"
 #: ../src/core/control/XournalMain.cpp:572
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "只從範圍輸出特定頁面(e.g. \"2-3,5,7-\")，若無-p/--create-pdf 或 -i/--create-img參數則無效。"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
@@ -901,11 +901,11 @@ msgstr "PDF檔案"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:45
 msgid "PDF {1}"
-msgstr ""
+msgstr "PDF {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "PNG graphics"
-msgstr ""
+msgstr "PNG圖檔"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:86
 msgid "Page"
@@ -933,7 +933,7 @@ msgstr "頁碼"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
-msgstr ""
+msgstr "已配對頁面"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 #: ../src/core/undo/AddUndoAction.cpp:57
@@ -957,7 +957,7 @@ msgstr "空白"
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
 msgid "Play Object"
-msgstr ""
+msgstr "Play 物件"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:16
 msgid "Predefined"
@@ -969,7 +969,7 @@ msgstr "演講模式"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
-msgstr ""
+msgstr "以前選擇的語言不再可用！"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Print"
@@ -977,11 +977,11 @@ msgstr "列印"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "錄製音訊 / 停止錄製音訊"
 
 #: ../src/core/control/Control.cpp:922
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "錄製程式無法啟動。"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 #: ../src/core/undo/UndoRedoHandler.cpp:215
@@ -998,11 +998,11 @@ msgstr "去掉PDF背景"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr ""
+msgstr "從工具列移除工具 {1} ID {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr ""
+msgstr "從工具列 {2} ID {3} 移除工具 {1}"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
@@ -1014,7 +1014,7 @@ msgstr "替換"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1074
 msgid "Requested temporary file was not found for attachment {1}"
-msgstr ""
+msgstr "找不到附件所需的暫存檔{1}"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Restore file"
@@ -1026,7 +1026,7 @@ msgstr "旋轉"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Rotation Snapping"
-msgstr ""
+msgstr "旋轉選取區域"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
@@ -1034,7 +1034,7 @@ msgstr "定標"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "橫紋信紙"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:25
 msgid "SVG graphics"
@@ -1042,7 +1042,7 @@ msgstr "svg圖形"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
 msgid "Sample LaTeX file generated successfully."
-msgstr ""
+msgstr "產生範例 LaTeX file 成功。"
 
 #: ../src/core/control/Control.cpp:2507 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
@@ -1061,7 +1061,7 @@ msgstr "保存檔案"
 #: ../src/core/control/jobs/CustomExportJob.cpp:124
 #: ../src/core/control/jobs/SaveJob.cpp:114
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "保存文件錯誤: {1}"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:55
 msgid "Scale"
