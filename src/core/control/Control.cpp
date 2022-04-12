@@ -2414,7 +2414,8 @@ void Control::updateWindowTitle() {
             }
 
             if (settings->isFilepathInTitlebarShown()) {
-                title += doc->getPdfFilepath().u8string();
+                title += ("[" + doc->getPdfFilepath().parent_path().u8string() + "] - " +
+                          doc->getPdfFilepath().filename().u8string());
             } else {
                 title += doc->getPdfFilepath().filename().u8string();
             }
@@ -2425,7 +2426,8 @@ void Control::updateWindowTitle() {
         }
 
         if (settings->isFilepathInTitlebarShown()) {
-            title += doc->getFilepath().u8string();
+            title += ("[" + doc->getFilepath().parent_path().u8string() + "] - " +
+                      doc->getFilepath().filename().u8string());
         } else {
             title += doc->getFilepath().filename().u8string();
         }
