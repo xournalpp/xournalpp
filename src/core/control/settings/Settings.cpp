@@ -360,6 +360,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->maximized = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showToolbar")) == 0) {
         this->showToolbar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("filepathShownInTitlebar")) == 0) {
+        this->filepathShownInTitlebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("showSidebar")) == 0) {
         this->showSidebar = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("sidebarWidth")) == 0) {
@@ -852,6 +854,7 @@ void Settings::save() {
     SAVE_BOOL_PROP(sidebarOnRight);
     SAVE_BOOL_PROP(scrollbarOnLeft);
     SAVE_BOOL_PROP(menubarVisible);
+    SAVE_BOOL_PROP(filepathShownInTitlebar);
     SAVE_INT_PROP(numColumns);
     SAVE_INT_PROP(numRows);
     SAVE_BOOL_PROP(viewFixedRows);
