@@ -130,8 +130,8 @@ auto Image::getImage() const -> cairo_surface_t* {
         this->imageSize = {gdk_pixbuf_get_width(pixbuf), gdk_pixbuf_get_height(pixbuf)};
 
         // TODO: pass in window once this code is refactored into ImageView
-        this->image = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, gdk_pixbuf_get_height(pixbuf),
-                                                 gdk_pixbuf_get_width(pixbuf));
+        this->image = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, gdk_pixbuf_get_width(pixbuf),
+                                                 gdk_pixbuf_get_height(pixbuf));
         g_assert(this->image != nullptr);
 
         // Paint the pixbuf on to the surface
