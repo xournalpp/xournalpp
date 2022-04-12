@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-10 08:59+0000\n"
-"PO-Revision-Date: 2022-04-11 23:57\n"
+"PO-Revision-Date: 2022-04-12 00:53\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1984,7 +1984,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2544
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>Uzi la tuŝekranon kiel plurtuŝeblan grifelon.</i>"
 
 #: ../ui/settings.glade:1698
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
