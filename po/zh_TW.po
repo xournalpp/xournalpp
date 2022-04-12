@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-10 08:59+0000\n"
-"PO-Revision-Date: 2022-04-12 03:51\n"
+"PO-Revision-Date: 2022-04-12 04:53\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -2808,7 +2808,8 @@ msgstr "紙張樣式(_F)"
 #: ../ui/about.glade:296
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "部分基於 Xournal\n"
+"by Denis Auroux"
 
 #: ../ui/main.glade:1973
 msgid "Pause"
@@ -3116,19 +3117,19 @@ msgstr "文本字型..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "LaTeX 文件用作 LaTeX 工具的模板。"
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "當前文字工具的顏色格式為16進制。"
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "運行 LaTeX 工具時，將在全局模板文件中替換以下字符串："
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "在 LaTeX 工具中鍵入的數學模式公式。"
 
 #: ../ui/settings.glade:4034
 msgid "The unit of the ruler is cm"
