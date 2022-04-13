@@ -1660,6 +1660,10 @@ void Control::selectTool(ToolType type) {
 void Control::selectDefaultTool() {
     ButtonConfig* cfg = settings->getButtonConfig(Button::BUTTON_DEFAULT);
     cfg->applyConfigToToolbarTool(toolHandler);
+
+    if (toolHandler->getToolType() != TOOL_NONE) {
+        selectTool(toolHandler->getToolType());
+    }
 }
 
 void Control::toolChanged() {
