@@ -6,81 +6,95 @@ StrokeStyle::StrokeStyle() = default;
 
 StrokeStyle::~StrokeStyle() = default;
 
-const double dashLinePattern[] = {6, 3};
-const double dashDotLinePattern[] = {6, 3, 0.5, 3};
-const double dotLinePattern[] = {0.5, 3};
+const LineStyle dashLinePattern({6, 3}, 1.0);
+const LineStyle dashDotLinePattern({6, 3, 0.5, 3}, 1.0);
+const LineStyle dotLinePattern({0.5, 3}, 1.0);
+const LineStyle heavyDownstrokePattern({}, 0.2);
 
-#define PARSE_STYLE(name, def)                                \
-    if (strcmp(style, name) == 0) {                           \
-        LineStyle style;                                      \
-        style.setDashes(def, sizeof(def) / sizeof((def)[0])); \
-        return style;                                         \
+#define PARSE_STYLE(name, def)      \
+    if (strcmp(style, name) == 0) { \
+        return def;                 \
     }
 
 auto StrokeStyle::parseStyle(const char* style) -> LineStyle {
     PARSE_STYLE("dash", dashLinePattern);
     PARSE_STYLE("dashdot", dashDotLinePattern);
     PARSE_STYLE("dot", dotLinePattern);
-
+    PARSE_STYLE("heavyDownstroke", heavyDownstrokePattern);
 
     if (strncmp("cust: ", style, 6) != 0) {
         return LineStyle();
     }
 
-    std::vector<double> dash;
+    std::vector<double> dashes;
 
-    const char* widths = style + 6;
-    while (*widths != 0) {
-        char* tmpptr = nullptr;
-        double val = g_ascii_strtod(widths, &tmpptr);
-        if (tmpptr == widths) {
+    const char* curr = style + 6;
+    while (*curr != '\0') {
+        char* endptr = nullptr;
+        double val = g_ascii_strtod(curr, &endptr);
+        if (endptr == curr) {
             break;
         }
-        widths = tmpptr;
-        dash.push_back(val);
+        curr = endptr;
+        dashes.push_back(val);
     }
 
-    if (dash.empty()) {
+    if (dashes.empty()) {
         return LineStyle();
     }
 
-    auto* dashesArr = new double[dash.size()];
-    for (int i = 0; i < static_cast<int>(dash.size()); i++) { dashesArr[i] = dash[i]; }
+    double heavy_downstroke_ratio = 1.0;
 
-    LineStyle ls;
-    ls.setDashes(dashesArr, static_cast<int>(dash.size()));
-    delete[] dashesArr;
+    while (isspace(*curr)) { curr++; }
+    if (*curr != '\0') {
+        if (strncmp(curr, "hd_ratio(", 9) == 0) {
+            curr += 9;
+            char* endptr = nullptr;
+            double val = g_ascii_strtod(curr, &endptr);
+            if (endptr != curr) {
+                heavy_downstroke_ratio = val;
+            }
+            curr = endptr;
+        }
+    }
+
+    LineStyle ls(dashes, heavy_downstroke_ratio);
 
     return ls;
 }
 
-#define FORMAT_STYLE(name, def)                                                                            \
-    if (count == (sizeof(def) / sizeof((def)[0])) && memcmp(dashes, def, count * sizeof((def)[0])) == 0) { \
-        return name;                                                                                       \
+#define FORMAT_STYLE(name, def) \
+    if (style == def) {         \
+        return name;            \
     }
 
-auto StrokeStyle::formatStyle(const double* dashes, int count) -> std::string {
+auto StrokeStyle::formatStyle(const LineStyle& style) -> std::string {
     FORMAT_STYLE("dash", dashLinePattern);
     FORMAT_STYLE("dashdot", dashDotLinePattern);
     FORMAT_STYLE("dot", dotLinePattern);
+    FORMAT_STYLE("heavyDownstroke", heavyDownstrokePattern);
 
-    std::string custom = "cust:";
-
-    for (int i = 0; i < count; i++) {
-        custom += " ";
-        char* str = g_strdup_printf("%0.2lf", dashes[i]);
-        custom += str;
-        g_free(str);
-    }
-
-    return custom;
-}
-
-auto StrokeStyle::formatStyle(const LineStyle& style) -> std::string {
     const double* dashes = nullptr;
     int dashCount = 0;
     if (style.getDashes(dashes, dashCount)) {
-        return StrokeStyle::formatStyle(dashes, dashCount);
+        std::string custom = "cust:";
+
+        for (int i = 0; i < dashCount; i++) {
+            custom += " ";
+            char* str = g_strdup_printf("%0.2lf", dashes[i]);
+            custom += str;
+            g_free(str);
+        }
+
+        if (style.hasHeavyDownstroke()) {
+            custom += "hd_ratio(";
+            char* str = g_strdup_printf("%0.2lf", style.getHeavyDownstrokeRatio());
+            custom += str;
+            custom += ")";
+            g_free(str);
+        }
+
+        return custom;
     }
 
     // Should not be returned, in this case the attribute is not written

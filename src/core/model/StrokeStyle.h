@@ -25,7 +25,6 @@ private:
 
 public:
     static LineStyle parseStyle(const char* style);
-    static std::string formatStyle(const double* dashes, int count);
     static std::string formatStyle(const LineStyle& style);
 
 public:

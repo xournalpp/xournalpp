@@ -20,10 +20,15 @@
 class LineStyle: public Serializable {
 public:
     LineStyle();
+    LineStyle(std::vector<double> dashes, double heavyDownStrokeRatio);
+    LineStyle(std::initializer_list<double> dashes, double heavyDownStrokeRatio);
     LineStyle(const LineStyle& other);
     ~LineStyle() override;
 
-    void operator=(const LineStyle& other);
+    LineStyle& operator=(const LineStyle& other);
+
+    bool operator==(const LineStyle& other) const;
+    bool operator!=(const LineStyle& other) const;
 
 public:
     // Serialize interface
@@ -31,6 +36,11 @@ public:
     void readSerialized(ObjectInputStream& in) override;
 
 public:
+    /**
+     * @return Returns true, when any effect is active, that distinglishes this style from the plain (or trivial) style.
+     */
+    bool isNontrivial() const;
+
     /**
      * Get dash array and count
      *
@@ -51,6 +61,27 @@ public:
      */
     void setDashes(const double* dashes, int dashCount);
 
+    /**
+     * @brief If this is active, the stroke is rendered with a heavier stroke
+     * when heading downwards supposed to upwards.
+     *
+     * @return true, when this option is active for this line style.
+     */
+    bool hasHeavyDownstroke() const;
+
+    /**
+     * @return The ratio between the upward and downward weight.
+     */
+    double getHeavyDownstrokeRatio() const;
+
+    /**
+     * @brief Set the ratio between the upward and downward weight.
+     *
+     * @param ratio The ratio. The special value 1.0 deactivates this option
+     * completely.
+     */
+    void setHeavyDownstrokeRatio(double ratio);
+
 private:
     /**
      * Dash definition (nullptr for no Dash)
@@ -61,4 +92,11 @@ private:
      * Dash count (0 for no dash)
      */
     int dashCount = 0;
+
+    /**
+     * Ratio between the upward and downward weight. Should be between 0.0 and 1.0.
+     *
+     * A value of 1.0 represents this feature beeing completely deactivated.
+     */
+    double heavyDownstrokeRatio = 1.0;
 };

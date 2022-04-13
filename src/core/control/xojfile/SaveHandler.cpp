@@ -134,7 +134,7 @@ void SaveHandler::visitStrokeExtended(XmlPointNode* stroke, Stroke* s) {
         stroke->setAttrib("capStyle", "round");
     }
 
-    if (s->getLineStyle().hasDashes()) {
+    if (s->getLineStyle().isNontrivial()) {
         stroke->setAttrib("style", StrokeStyle::formatStyle(s->getLineStyle()));
     }
 }

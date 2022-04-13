@@ -295,6 +295,10 @@ auto ActionType_fromString(const string& value) -> ActionType {
         return ACTION_TOOL_LINE_STYLE_DOT;
     }
 
+    if (value == "ACTION_TOOL_LINE_STYLE_HEAVY_DOWNSTROKE") {
+        return ACTION_TOOL_LINE_STYLE_HEAVY_DOWNSTROKE;
+    }
+
     if (value == "ACTION_SIZE_VERY_FINE") {
         return ACTION_SIZE_VERY_FINE;
     }
@@ -911,6 +915,10 @@ auto ActionType_toString(ActionType value) -> string {
 
     if (value == ACTION_TOOL_LINE_STYLE_DOT) {
         return "ACTION_TOOL_LINE_STYLE_DOT";
+    }
+
+    if (value == ACTION_TOOL_LINE_STYLE_HEAVY_DOWNSTROKE) {
+        return "ACTION_TOOL_LINE_STYLE_HEAVY_DOWNSTROKE";
     }
 
     if (value == ACTION_SIZE_VERY_FINE) {

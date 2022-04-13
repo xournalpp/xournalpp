@@ -268,6 +268,9 @@ void ToolMenuHandler::initPenToolItem() {
     registerMenupoint(tbPen->registerPopupMenuEntry(_("dotted"), iconName("line-style-dot")),
                       ACTION_TOOL_LINE_STYLE_DOT, GROUP_LINE_STYLE);
 
+    registerMenupoint(tbPen->registerPopupMenuEntry(_("heavy downstroke"), iconName("line-style-heavy-downstroke")),
+                      ACTION_TOOL_LINE_STYLE_HEAVY_DOWNSTROKE, GROUP_LINE_STYLE);
+
     addToolItem(tbPen);
 }
 
