@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-10 08:59+0000\n"
-"PO-Revision-Date: 2022-04-12 00:53\n"
+"PO-Revision-Date: 2022-04-14 00:57\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -372,7 +372,9 @@ msgstr "Montri komplikajn opciojn pri elportado"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr ""
+msgstr "Ne malfermu aŭtomate konservitajn dosierojn. Ili estas superskribotaj!\n"
+"Kopiu la dosierojn en alian dosierujon.\n"
+"Dosieroj en la dosierujo {1} estas nemalfermendaj."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
@@ -3066,7 +3068,7 @@ msgstr "Grifelaj butonoj"
 
 #: ../ui/settings.glade:4807
 msgid "Successive (ms)"
-msgstr ""
+msgstr "Sinsekva (ms)"
 
 #: ../ui/settings.glade:3002
 msgctxt "stylus cursor uses system cursor"
