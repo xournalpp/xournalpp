@@ -11,12 +11,10 @@
 
 #pragma once
 
-#include "model/Element.h"
-
 class Element;
 
 class ElementContainer {
 public:
-    virtual std::vector<Element*>* getElements() = 0;
+    virtual const std::vector<Element*>& getElements() const = 0;
     virtual ~ElementContainer() {}
 };

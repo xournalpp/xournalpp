@@ -24,8 +24,8 @@ public:
     PopplerGlibPage& operator=(const PopplerGlibPage& other);
 
 public:
-    double getWidth() override;
-    double getHeight() override;
+    double getWidth() const override;
+    double getHeight() const override;
 
     void render(cairo_t* cr, bool forPrinting = false) override;  // NOLINT(google-default-arguments)
 
@@ -38,7 +38,7 @@ public:
     TextSelection selectTextLines(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) override;
 
 
-    int getPageId() override;
+    int getPageId() const override;
 
 private:
     PopplerPage* page;

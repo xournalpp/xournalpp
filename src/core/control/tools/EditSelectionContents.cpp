@@ -75,8 +75,7 @@ void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, La
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelectionContents::getElements() -> vector<Element*>* { return &this->selected; }
-auto EditSelectionContents::getElements() const -> const vector<Element*>* { return &this->selected; }
+auto EditSelectionContents::getElements() const -> const vector<Element*>& { return this->selected; }
 
 /**
  * Returns the insert order of this selection
@@ -536,7 +535,7 @@ auto EditSelectionContents::copySelection(PageRef page, XojPageView* view, doubl
 
     vector<Element*> new_elems;
 
-    for (Element* e: *getElements()) {
+    for (Element* e: getElements()) {
         Element* ec = e->clone();
 
         ec->move(x - this->originalBounds.x, y - this->originalBounds.y);

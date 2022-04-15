@@ -18,9 +18,9 @@
 
 #include "control/zoom/ZoomListener.h"
 #include "gui/Redrawable.h"
+#include "model/ElementContainer.h"
 #include "model/PageRef.h"
 #include "undo/MoveUndoAction.h"
-#include "view/ElementContainer.h"
 
 #include "SnapToGridInputHandler.h"
 
@@ -53,7 +53,7 @@ public:
 
     std::unique_ptr<MoveUndoAction> finalize();
 
-    std::vector<Element*>* getElements() override;
+    const std::vector<Element*>& getElements() const override;
 
     void zoomChanged() override;
 

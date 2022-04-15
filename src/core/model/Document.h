@@ -39,16 +39,16 @@ public:
     bool readPdf(const fs::path& filename, bool initPages, bool attachToDocument, gpointer data = nullptr,
                  gsize length = 0);
 
-    size_t getPageCount();
-    size_t getPdfPageCount();
-    XojPdfPageSPtr getPdfPage(size_t page);
-    XojPdfDocument& getPdfDocument();
+    size_t getPageCount() const;
+    size_t getPdfPageCount() const;
+    XojPdfPageSPtr getPdfPage(size_t page) const;
+    const XojPdfDocument& getPdfDocument() const;
 
     void insertPage(const PageRef& p, size_t position);
     void addPage(const PageRef& p);
     template <class InputIter>
     void addPages(InputIter first, InputIter last);
-    PageRef getPage(size_t page);
+    PageRef getPage(size_t page) const;
     void deletePage(size_t pNr);
 
     static void setPageSize(PageRef p, double width, double height);
@@ -60,21 +60,21 @@ public:
     /**
      * @return The last error message to show to the user
      */
-    std::string getLastErrorMsg();
+    std::string getLastErrorMsg() const;
 
     size_t findPdfPage(size_t pdfPage);
 
     Document& operator=(const Document& doc);
 
     void setFilepath(fs::path filepath);
-    fs::path getFilepath();
-    fs::path getPdfFilepath();
+    fs::path getFilepath() const;
+    fs::path getPdfFilepath() const;
     fs::path createSaveFolder(fs::path lastSavePath);
     fs::path createSaveFilename(DocumentType type, const std::string& defaultSaveName);
 
-    fs::path getEvMetadataFilename();
+    fs::path getEvMetadataFilename() const;
 
-    GtkTreeModel* getContentsModel();
+    GtkTreeModel* getContentsModel() const;
 
     void setCreateBackupOnSave(bool backup);
     bool shouldCreateBackupOnSave() const;
@@ -83,7 +83,7 @@ public:
 
     bool isAttachPdf() const;
 
-    cairo_surface_t* getPreview();
+    cairo_surface_t* getPreview() const;
     void setPreview(cairo_surface_t* preview);
 
     void lock();

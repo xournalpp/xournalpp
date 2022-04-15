@@ -17,10 +17,10 @@
 
 #include "control/Tool.h"
 #include "model/Element.h"
+#include "model/ElementContainer.h"
 #include "model/Font.h"
 #include "model/PageRef.h"
 #include "undo/UndoAction.h"
-#include "view/ElementContainer.h"
 
 #include "CursorSelectionType.h"
 
@@ -88,8 +88,7 @@ public:
     /**
      * Returns all containing elements of this selection
      */
-    std::vector<Element*>* getElements() override;
-    const std::vector<Element*>* getElements() const;
+    const std::vector<Element*>& getElements() const override;
 
     /**
      * Returns the insert order of this selection

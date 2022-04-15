@@ -48,8 +48,8 @@ public:
         std::vector<XojPdfRectangle> rects;
     };
 
-    virtual double getWidth() = 0;
-    virtual double getHeight() = 0;
+    virtual double getWidth() const = 0;
+    virtual double getHeight() const = 0;
 
     virtual void render(cairo_t* cr, bool forPrinting = false) = 0;
 
@@ -76,7 +76,7 @@ public:
     /// @return The rectangles that cover the text that would be selected.
     virtual TextSelection selectTextLines(const XojPdfRectangle& rect, XojPdfPageSelectionStyle style) = 0;
 
-    virtual int getPageId() = 0;
+    virtual int getPageId() const = 0;
 
 private:
 };

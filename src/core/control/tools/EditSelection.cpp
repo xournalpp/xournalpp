@@ -336,8 +336,7 @@ void EditSelection::addElement(Element* e, Layer::ElementIndex order) {
 /**
  * Returns all containing elements of this selection
  */
-auto EditSelection::getElements() -> vector<Element*>* { return this->contents->getElements(); }
-auto EditSelection::getElements() const -> const vector<Element*>* { return this->contents->getElements(); }
+auto EditSelection::getElements() const -> const vector<Element*>& { return this->contents->getElements(); }
 
 /**
  * Returns the insert order of this selection
@@ -684,7 +683,7 @@ void EditSelection::copySelection() {
     // add undo action
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
-    undo->addUndoAction(std::unique_ptr<UndoAction>(new InsertsUndoAction(page, layer, *getElements())));
+    undo->addUndoAction(std::make_unique<InsertsUndoAction>(page, layer, getElements()));
 }
 
 /**
@@ -1058,8 +1057,8 @@ void EditSelection::serialize(ObjectOutputStream& out) const {
     this->contents->serialize(out);
     out.endObject();
 
-    out.writeInt(static_cast<int>(this->getElements()->size()));
-    for (Element* e: *this->getElements()) { e->serialize(out); }
+    out.writeInt(static_cast<int>(this->getElements().size()));
+    for (Element* e: this->getElements()) { e->serialize(out); }
 }
 
 void EditSelection::readSerialized(ObjectInputStream& in) {

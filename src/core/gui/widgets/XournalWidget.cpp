@@ -179,7 +179,6 @@ static void gtk_xournal_size_allocate(GtkWidget* widget, GtkAllocation* allocati
 
 static void gtk_xournal_realize(GtkWidget* widget) {
     GdkWindowAttr attributes;
-    guint attributes_mask = 0;
 
     g_return_if_fail(widget != nullptr);
     g_return_if_fail(GTK_IS_XOURNAL(widget));
@@ -200,7 +199,7 @@ static void gtk_xournal_realize(GtkWidget* widget) {
     attributes.wclass = GDK_INPUT_OUTPUT;
     attributes.event_mask = gtk_widget_get_events(widget) | GDK_EXPOSURE_MASK;
 
-    attributes_mask = GDK_WA_X | GDK_WA_Y;
+    gint attributes_mask = GDK_WA_X | GDK_WA_Y;
 
     gtk_widget_set_window(widget, gdk_window_new(gtk_widget_get_parent_window(widget), &attributes, attributes_mask));
     gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
@@ -216,15 +215,10 @@ static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, 
         // Draw border
         Util::cairo_set_source_rgbi(cr, settings->getBorderColor());
         cairo_set_line_width(cr, 4.0);
-        cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT);
-        cairo_set_line_join(cr, CAIRO_LINE_JOIN_BEVEL);
+        cairo_set_line_cap(cr, CAIRO_LINE_CAP_SQUARE);
+        cairo_set_line_join(cr, CAIRO_LINE_JOIN_MITER);
 
-        cairo_move_to(cr, left, top);
-        cairo_line_to(cr, left, top + height);
-        cairo_line_to(cr, left + width, top + height);
-        cairo_line_to(cr, left + width, top);
-        cairo_close_path(cr);
-
+        cairo_rectangle(cr, left, top, width, height);
         cairo_stroke(cr);
     } else {
         Shadow::drawShadow(cr, left, top, width, height);
@@ -262,9 +256,9 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
     // Draw background
     Settings* settings = xournal->view->getControl()->getSettings();
     Util::cairo_set_source_rgbi(cr, settings->getBackgroundColor());
-    cairo_rectangle(cr, x1, y1, x2 - x1, y2 - y1);
-    cairo_fill(cr);
+    cairo_paint(cr);
 
+    // Add a padding for the shadow of the pages
     Rectangle clippingRect(x1 - 10, y1 - 10, x2 - x1 + 20, y2 - y1 + 20);
 
     for (auto&& pv: xournal->view->getViewPages()) {

@@ -1,6 +1,7 @@
 #include "PdfCache.h"
 
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <utility>
 
@@ -34,7 +35,7 @@ public:
     cairo_surface_t* rendered;
 };
 
-PdfCache::PdfCache(int size) { this->size = size; }
+PdfCache::PdfCache(size_t size) { this->size = size; }
 
 PdfCache::~PdfCache() {
     clearCache();
@@ -88,17 +89,18 @@ void PdfCache::render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoo
 
         // If we do have a cached result, is its rendering quality
         // acceptable for our current zoom?
-        needsRefresh = this->zoom > 1.0 && percentZoomChange > this->zoomRefreshThreshold
+        needsRefresh = (this->zoom > 1.0 && percentZoomChange > this->zoomRefreshThreshold)
 
                        // Has the user requested that we **always** clear the cache on zoom?
-                       || this->zoomClearsCache && this->zoom != cacheResult->zoom;
+                       || (this->zoomClearsCache && this->zoom != cacheResult->zoom);
     }
 
     if (needsRefresh) {
         double renderZoom = std::max(zoom, 1.0);
 
-        auto* img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, popplerPage->getWidth() * renderZoom,
-                                               popplerPage->getHeight() * renderZoom);
+        auto* img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+                                               static_cast<int>(std::ceil(popplerPage->getWidth() * renderZoom)),
+                                               static_cast<int>(std::ceil(popplerPage->getHeight() * renderZoom)));
         cairo_t* cr2 = cairo_create(img);
 
         cairo_scale(cr2, renderZoom, renderZoom);

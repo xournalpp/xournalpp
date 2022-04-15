@@ -101,15 +101,15 @@ void Document::clearDocument(bool destroy) {
 /**
  * Returns the pageCount, this call don't need to be synchronized (if it's not critical, you may get wrong data)
  */
-auto Document::getPageCount() -> size_t { return this->pages.size(); }
+auto Document::getPageCount() const -> size_t { return this->pages.size(); }
 
-auto Document::getPdfPageCount() -> size_t { return pdfDocument.getPageCount(); }
+auto Document::getPdfPageCount() const -> size_t { return pdfDocument.getPageCount(); }
 
 void Document::setFilepath(fs::path filepath) { this->filepath = std::move(filepath); }
 
-auto Document::getFilepath() -> fs::path { return filepath; }
+auto Document::getFilepath() const -> fs::path { return filepath; }
 
-auto Document::getPdfFilepath() -> fs::path { return pdfFilepath; }
+auto Document::getPdfFilepath() const -> fs::path { return pdfFilepath; }
 
 auto Document::createSaveFolder(fs::path lastSavePath) -> fs::path {
     if (!filepath.empty()) {
@@ -152,7 +152,7 @@ auto Document::createSaveFilename(DocumentType type, const std::string& defaultS
 }
 
 
-auto Document::getPreview() -> cairo_surface_t* { return this->preview; }
+auto Document::getPreview() const -> cairo_surface_t* { return this->preview; }
 
 void Document::setPreview(cairo_surface_t* preview) {
     if (this->preview) {
@@ -165,7 +165,7 @@ void Document::setPreview(cairo_surface_t* preview) {
     }
 }
 
-auto Document::getEvMetadataFilename() -> fs::path {
+auto Document::getEvMetadataFilename() const -> fs::path {
     if (!this->filepath.empty()) {
         return this->filepath;
     }
@@ -251,7 +251,7 @@ void Document::buildContentsModel() {
     delete iter;
 }
 
-auto Document::getContentsModel() -> GtkTreeModel* { return this->contentsModel; }
+auto Document::getContentsModel() const -> GtkTreeModel* { return this->contentsModel; }
 
 auto Document::fillPageLabels(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, Document* doc) -> bool {
     XojLinkDest* link = nullptr;
@@ -344,7 +344,7 @@ auto Document::getPageHeight(PageRef p) -> double { return p->getHeight(); }
 /**
  * @return The last error message to show to the user
  */
-auto Document::getLastErrorMsg() -> std::string { return lastError; }
+auto Document::getLastErrorMsg() const -> std::string { return lastError; }
 
 void Document::deletePage(size_t pNr) {
     auto it = this->pages.begin() + pNr;
@@ -382,7 +382,7 @@ auto Document::indexOf(const PageRef& page) -> size_t {
     return npos;
 }
 
-auto Document::getPage(size_t page) -> PageRef {
+auto Document::getPage(size_t page) const -> PageRef {
     if (getPageCount() <= page) {
         return nullptr;
     }
@@ -393,9 +393,9 @@ auto Document::getPage(size_t page) -> PageRef {
     return this->pages[page];
 }
 
-auto Document::getPdfPage(size_t page) -> XojPdfPageSPtr { return this->pdfDocument.getPage(page); }
+auto Document::getPdfPage(size_t page) const -> XojPdfPageSPtr { return this->pdfDocument.getPage(page); }
 
-auto Document::getPdfDocument() -> XojPdfDocument& { return this->pdfDocument; }
+auto Document::getPdfDocument() const -> const XojPdfDocument& { return this->pdfDocument; }
 
 auto Document::operator=(const Document& doc) -> Document& {
     clearDocument();
