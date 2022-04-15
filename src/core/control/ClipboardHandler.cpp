@@ -142,7 +142,7 @@ auto ClipboardHandler::copy() -> bool {
 
     std::multiset<Text*, decltype(&ElementCompareFunc)> textElements(ElementCompareFunc);
 
-    for (Element* e: *this->selection->getElements()) {
+    for (Element* e: this->selection->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
             textElements.insert(dynamic_cast<Text*>(e));
         }

@@ -46,14 +46,14 @@ PopplerGlibPage& PopplerGlibPage::operator=(const PopplerGlibPage& other) {
     return *this;
 }
 
-auto PopplerGlibPage::getWidth() -> double {
+auto PopplerGlibPage::getWidth() const -> double {
     double width = 0;
     poppler_page_get_size(page, &width, nullptr);
 
     return width;
 }
 
-auto PopplerGlibPage::getHeight() -> double {
+auto PopplerGlibPage::getHeight() const -> double {
     double height = 0;
     poppler_page_get_size(page, nullptr, &height);
 
@@ -69,7 +69,7 @@ void PopplerGlibPage::render(cairo_t* cr, bool forPrinting)  // NOLINT(google-de
     }
 }
 
-auto PopplerGlibPage::getPageId() -> int { return poppler_page_get_index(page); }
+auto PopplerGlibPage::getPageId() const -> int { return poppler_page_get_index(page); }
 
 auto PopplerGlibPage::findText(std::string& text) -> std::vector<XojPdfRectangle> {
     std::vector<XojPdfRectangle> findings;

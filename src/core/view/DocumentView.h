@@ -17,13 +17,12 @@
 #include <gtk/gtk.h>
 
 #include "model/Element.h"
+#include "model/ElementContainer.h"
 #include "model/Image.h"
 #include "model/PageRef.h"
 #include "model/Stroke.h"
 #include "model/TexImage.h"
 #include "model/Text.h"
-
-#include "ElementContainer.h"
 
 
 class EditSelection;

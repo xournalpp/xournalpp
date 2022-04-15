@@ -25,17 +25,17 @@ public:
 
 public:
     void assign(XojPdfDocumentInterface* doc) override;
-    bool equals(XojPdfDocumentInterface* doc) override;
+    bool equals(XojPdfDocumentInterface* doc) const override;
 
 public:
-    bool save(fs::path const& filepath, GError** error) override;
+    bool save(fs::path const& filepath, GError** error) const override;
     bool load(fs::path const& filepath, std::string password, GError** error) override;
     bool load(gpointer data, gsize length, std::string password, GError** error) override;
-    bool isLoaded() override;
+    bool isLoaded() const override;
 
-    XojPdfPageSPtr getPage(size_t page) override;
-    size_t getPageCount() override;
-    XojPdfBookmarkIterator* getContentsIter() override;
+    XojPdfPageSPtr getPage(size_t page) const override;
+    size_t getPageCount() const override;
+    XojPdfBookmarkIterator* getContentsIter() const override;
 
 private:
     PopplerDocument* document = nullptr;

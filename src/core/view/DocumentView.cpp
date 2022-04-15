@@ -27,7 +27,7 @@ void DocumentView::setMarkAudioStroke(bool markAudioStroke) { this->markAudioStr
 void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container) {
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
-    for (Element* e: *container->getElements()) {
+    for (Element* e: container->getElements()) {
         auto elementView = xoj::view::ElementView::createFromElement(e);
         elementView->draw(context);
     }

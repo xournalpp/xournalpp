@@ -155,7 +155,7 @@ bool VerticalToolHandler::onKeyReleaseEvent(GdkEventKey* event) {
     return false;
 }
 
-auto VerticalToolHandler::getElements() -> std::vector<Element*>* { return &this->elements; }
+auto VerticalToolHandler::getElements() const -> const std::vector<Element*>& { return this->elements; }
 
 auto VerticalToolHandler::finalize() -> std::unique_ptr<MoveUndoAction> {
     double dY = this->endY - this->startY;
