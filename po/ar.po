@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-10 08:59+0000\n"
-"PO-Revision-Date: 2022-04-10 09:03\n"
+"POT-Creation-Date: 2022-04-15 13:30+0000\n"
+"PO-Revision-Date: 2022-04-15 14:23\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -121,11 +121,11 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 msgstr "مجلد الصوتيات غير معين أو غير صالح! لا يمكن التسجيل!\n"
 "برجاء تعيين مجلد التسجيل في «التفضيلات > تسجيل الصوتيات»"
 
-#: ../src/core/control/Control.cpp:210
+#: ../src/core/control/Control.cpp:208
 msgid "Autosave failed with an error: {1}"
 msgstr "فشل الحفظ التلقائي بخطأ مفاده: {1}"
 
-#: ../src/core/control/Control.cpp:190
+#: ../src/core/control/Control.cpp:188
 msgid "Autosave renamed from {1} to {2}"
 msgstr "تم تغيير اسم الملف المحفوظ تلقائيًّا من {1} إلى {2}"
 
@@ -151,7 +151,7 @@ msgstr "خطوة إلى الأمام"
 msgid "Bring to front"
 msgstr "اجلب للمقدمة"
 
-#: ../src/core/control/Control.cpp:2064 ../src/core/control/Control.cpp:2515
+#: ../src/core/control/Control.cpp:2060 ../src/core/control/Control.cpp:2511
 #: ../src/core/control/XournalMain.cpp:163
 msgid "Cancel"
 msgstr "إلغاء"
@@ -276,7 +276,7 @@ msgstr "تعذرت إزالة عنصر الأداة من شريط الأدوات
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "تعذرت إزالة عنصر الأداة {1} من شريط الأدوات {2} في الموضع {3}"
 
-#: ../src/core/control/Control.cpp:201
+#: ../src/core/control/Control.cpp:199
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "تعذرت إعادة تسمية الملف المحفوظ تلقائيًّا من \"{1}\" إلى \"{2}\": {3}"
 
@@ -359,7 +359,7 @@ msgstr "حذف هذه الطبقة"
 msgid "Delete this page"
 msgstr "حذف هذه الصفحة"
 
-#: ../src/core/control/Control.cpp:2512
+#: ../src/core/control/Control.cpp:2508
 msgid "Discard"
 msgstr "إغلاق بدون حفظ"
 
@@ -367,7 +367,7 @@ msgstr "إغلاق بدون حفظ"
 msgid "Display advanced export options"
 msgstr "إظهار خيارات التصدير المتقدمة"
 
-#: ../src/core/control/Control.cpp:2009
+#: ../src/core/control/Control.cpp:2005
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -379,7 +379,7 @@ msgstr "لا تفتح الملفات المحفوظة تلقائيا؛ قد يت
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "لا تستبدل خلفية الـPDF؛ سيتسبب هذا في أخطاء!"
 
-#: ../src/core/control/Control.cpp:2506
+#: ../src/core/control/Control.cpp:2502
 msgid "Document file was removed."
 msgstr "تمت إزالة ملف المستند."
 
@@ -473,7 +473,7 @@ msgstr "محو خط أو شكل"
 msgid "Eraser"
 msgstr "ممحاة"
 
-#: ../src/core/control/Control.cpp:2263
+#: ../src/core/control/Control.cpp:2259
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "خطأ في التعليق على ملف الـPDF المسمى «{1}»\n"
@@ -483,7 +483,7 @@ msgstr "خطأ في التعليق على ملف الـPDF المسمى «{1}»\
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "تعذر تحميل ملف glade المسمى «{1}» (حاول تحميل «{2}»)"
 
-#: ../src/core/control/Control.cpp:2086
+#: ../src/core/control/Control.cpp:2082
 msgid "Error opening file \"{1}\""
 msgstr "خطأ في فتح الملف \"{1}\""
 
@@ -840,7 +840,7 @@ msgstr "لا يوجد جهاز"
 msgid "No pages to export!"
 msgstr "لا توجد صفحات للتصدير!"
 
-#: ../src/core/control/Control.cpp:1318
+#: ../src/core/control/Control.cpp:1316
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "لا توجد صفحات PDF متاحة لإضافتها. قد تحتاج إلى إعادة فتح المسند أولا."
 
@@ -983,7 +983,7 @@ msgstr "طباعة"
 msgid "Record Audio / Stop Recording"
 msgstr "تسجيل صوت / إيقاف التسجيل"
 
-#: ../src/core/control/Control.cpp:922
+#: ../src/core/control/Control.cpp:920
 msgid "Recorder could not be started."
 msgstr "تعذر بدء التسجيل."
 
@@ -996,7 +996,7 @@ msgstr "إعادة"
 msgid "Redo: "
 msgstr "إعادة: "
 
-#: ../src/core/control/Control.cpp:2063
+#: ../src/core/control/Control.cpp:2059
 msgid "Remove PDF Background"
 msgstr "إزالة خلفية PDF"
 
@@ -1048,16 +1048,16 @@ msgstr "رسومات SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "تم توليد ملف عينة LaTeX بنجاح."
 
-#: ../src/core/control/Control.cpp:2507 ../src/core/control/jobs/SaveJob.cpp:15
+#: ../src/core/control/Control.cpp:2503 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Save"
 msgstr "حفظ"
 
-#: ../src/core/control/Control.cpp:2507
+#: ../src/core/control/Control.cpp:2503
 msgid "Save As..."
 msgstr "حفظ كـ..."
 
-#: ../src/core/control/Control.cpp:2352
+#: ../src/core/control/Control.cpp:2348
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "حفظ الملف"
@@ -1136,7 +1136,7 @@ msgstr "تحديد منطقة"
 msgid "Select Text from pdf"
 msgstr "تحديد نص من PDF"
 
-#: ../src/core/control/Control.cpp:2062
+#: ../src/core/control/Control.cpp:2058
 msgid "Select another PDF"
 msgstr "اختيار ملف PDF آخر"
 
@@ -1310,17 +1310,17 @@ msgstr "لم يتم العثور على النص"
 msgid "Text not found, searched on all pages"
 msgstr "لم يتم العثور على النص، تم البحث عنه في جميع الصفحات"
 
-#: ../src/core/control/Control.cpp:1113
+#: ../src/core/control/Control.cpp:1111
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "مجموعة أشرطة الأدوات «{1}» هي مسبقة التعريف، هل تحب إنشاء نسخة للتعديل؟"
 
-#: ../src/core/control/Control.cpp:2051
+#: ../src/core/control/Control.cpp:2047
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "ملف الخلفية المرفق {1} تعذر العثور عليه. ربما تم نقله أو إعادة تسميته أو حذفه.\n"
 "آخر مرة شوهد في: {2}"
 
-#: ../src/core/control/Control.cpp:2055
+#: ../src/core/control/Control.cpp:2051
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "ملف الخلفية {1} تعذر العثور عليه. ربما تم نقله أو إعادة تسميته أو حذفه.\n"
@@ -1330,7 +1330,7 @@ msgstr "ملف الخلفية {1} تعذر العثور عليه. ربما تم 
 msgid "The check for overwriting the background failed with:\n"
 msgstr "فشل فحص استبدال الخلفية بالخطأ:\n"
 
-#: ../src/core/control/Control.cpp:2094
+#: ../src/core/control/Control.cpp:2090
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "الملف الذي يتم تحميله يستخدم نسخة صيغة ملفات أحدث من التي يدعمها هذا الإصدار من Xournal++‎، لذلك قد لا يتم تحميله بشكل صحيح. فتح على أيّة حال؟"
 
@@ -1374,7 +1374,7 @@ msgstr "خطأ في عرض المساعدة: {1}"
 msgid "Thick"
 msgstr "عريض"
 
-#: ../src/core/control/Control.cpp:2506
+#: ../src/core/control/Control.cpp:2502
 msgid "This document is not saved yet."
 msgstr "لم يتم حفظ هذا المستند بعد."
 
@@ -1410,7 +1410,7 @@ msgstr "تعذر فتح ملف القالب العام في {1}. هل هو مو�
 msgid "Unable to play audio recording {1}"
 msgstr "تعذر تشغيل التسجيل الصوتي {1}"
 
-#: ../src/core/control/Control.cpp:1332
+#: ../src/core/control/Control.cpp:1330
 msgid "Unable to retrieve pdf page."
 msgstr "تعذر الحصول على صفحة الـPDF."
 
@@ -1459,7 +1459,7 @@ msgstr "نوع نهاية خط مجهول: «{1}»، سأفترض أنه مدو�
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "نوع خط رسم مجهول: «{1}»، سأفترض أنه قلم"
 
-#: ../src/core/control/Control.cpp:2409
+#: ../src/core/control/Control.cpp:2405
 msgid "Unsaved Document"
 msgstr "مستند غير محفوظ"
 
@@ -1511,7 +1511,7 @@ msgstr "ملفات Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "لقد انهار Xournal++‎ المرة السابقة. هل تريد استعادة الملف المحرر أخيرا؟"
 
-#: ../src/core/control/Control.cpp:2358
+#: ../src/core/control/Control.cpp:2354
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "ملفات Xournal++‎"
@@ -1559,7 +1559,7 @@ msgstr "تصغير"
 msgid "Zoom to 100%"
 msgstr "عرض بالحجم الأصلي"
 
-#: ../src/core/control/Control.cpp:2352
+#: ../src/core/control/Control.cpp:2348
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
@@ -1572,7 +1572,7 @@ msgstr "إل_غاء"
 msgid "_Open"
 msgstr "_فتح"
 
-#: ../src/core/control/Control.cpp:2353
+#: ../src/core/control/Control.cpp:2349
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
@@ -1615,7 +1615,7 @@ msgstr "عناصر"
 msgid "eraser"
 msgstr "ممحاة"
 
-#: ../src/core/control/Control.cpp:2023
+#: ../src/core/control/Control.cpp:2019
 msgid "file: {1}"
 msgstr "ملف: {1}"
 
