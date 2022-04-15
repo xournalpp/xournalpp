@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-10 08:59+0000\n"
-"PO-Revision-Date: 2022-04-14 23:14\n"
+"PO-Revision-Date: 2022-04-15 00:17\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -166,7 +166,7 @@ msgstr "Cambiar tipo de letra"
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:72
 msgid "Change line style"
-msgstr "Cambiar el estilo de línea"
+msgstr "Cambiar estilo de línea"
 
 #: ../src/core/undo/FillUndoAction.cpp:76
 msgid "Change stroke fill"
@@ -591,7 +591,7 @@ msgstr "Error al inicializar PDF Cairo surface"
 
 #: ../src/core/control/tools/ImageHandler.cpp:60
 msgid "Failed to load image, could not determine image size!"
-msgstr "Error al cargar la imagen, no se pudo determinar el tamaño de la imagen!"
+msgstr "¡Error al cargar la imagen, no se pudo determinar el tamaño de la imagen!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
