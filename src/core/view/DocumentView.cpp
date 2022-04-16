@@ -26,7 +26,7 @@ void DocumentView::setMarkAudioStroke(bool markAudioStroke) { this->markAudioStr
 
 void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container) {
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
-                               (xoj::view::EditionTreatment)this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
+                               (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
     for (Element* e: *container->getElements()) {
         auto elementView = xoj::view::ElementView::createFromElement(e);
         elementView->draw(context);
@@ -136,7 +136,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
     }
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
-                               (xoj::view::EditionTreatment)this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
+                               (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
     const Rectangle<double> drawArea{this->lX, this->lY, this->lWidth, this->lHeight};
     for (Layer* layer: *page->getLayers()) {
         if (page->isLayerVisible(layer)) {
