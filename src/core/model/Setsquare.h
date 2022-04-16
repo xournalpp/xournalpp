@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include <string>
-
 #include <gtk/gtk.h>
 
 constexpr static double HALF_CM = 14.17;
@@ -41,12 +39,6 @@ public:
 
     virtual ~Setsquare();
 
-    /**
-     * @brief paints the setsquare to a cairo context
-     * @param cr the cairo context
-     */
-    void paint(cairo_t* cr);
-
     void setHeight(double height);
     double getHeight() const;
     void setRotation(double rotation);
@@ -55,32 +47,7 @@ public:
     double getTranslationX() const;
     void setTranslationY(double y);
     double getTranslationY() const;
-    double getRadius() const;
 
-    /**
-     * @brief translates the setsquare
-     * @param x the amount of translation in x-direction
-     * @param y the amount of translation in y-direction
-     */
-    void move(double x, double y);
-
-    /**
-     * @brief rotates the setsquare around the mid point of its longest side
-     * @param da the angle increase (in radian)
-     */
-    void rotate(double da);
-
-    /**
-     * @brief central scaling of the setsquare with center equal to the mid point of its longest side
-     * @param f the scaling factor
-     */
-    void scale(double f);
-
-    /**
-     * @brief returns the matrix which translates from user coordinates (in which the setsquare
-     * has its longest side on the x-axis with its mid point equal to the origin) to document coordinates
-     * @param matrix the matrix into which the result gets stored
-     */
     void getMatrix(cairo_matrix_t& matrix) const;
 
 private:
@@ -103,63 +70,4 @@ private:
      * @brief the y-coordinate (in pt) of the mid point of the longest side of the setsquare (by default 7.5 cm)
      */
     double translationY = 15 * HALF_CM;
-
-    /**
-     * @brief the radius of the semi-circle for the angular marks
-     */
-    double radius = 4.5;
-
-    /**
-     * @brief the distance of the circle containing the rotation angle display from the mid point of the longest side of
-     * the setsquare
-     */
-    double circlePos = 6.0;
-
-    /**
-     * @brief the distance (in cm) of the vertical marks from the symmetry axis of the setsquare
-     */
-    double horPosVmarks = 2.5;
-
-    /**
-     * @brief the index of the first vertical mark which should be drawn (which should not overlap with the measuring
-     * marks)
-     */
-    int minVmark = 3;
-
-    /**
-     * @brief the index of the last vertical mark to be drawn
-     */
-    int maxVmark = 35;
-
-    /**
-     * @brief the number of angular marks that are left away on both ends (in order not to overlap with the measuring
-     * marks)
-     */
-    int offset = 4;
-
-    /**
-     * @brief the index of the last horizontal mark to be drawn
-     */
-    int maxHmark = 70;
-
-    void drawVerticalMarks(cairo_t* cr) const;
-    void drawHorizontalMarks(cairo_t* cr) const;
-    void drawAngularMarks(cairo_t* cr) const;
-    void drawOutline(cairo_t* cr) const;
-    void drawRotation(cairo_t* cr) const;
-    void clipVerticalStripes(cairo_t* cr) const;
-    void clipHorizontalStripes(cairo_t* cr) const;
-
-    /**
-     * @brief updates the values radius, horPosVmarks, minVmark, maxVmark computed from the height of the setsquare
-     */
-    void updateValues();
-
-    /**
-     * @brief renders text centered and possibly rotated at the current position on a cairo context
-     * @param cr the cairo context
-     * @param text the text string
-     * @param angle the rotation angle
-     */
-    void showTextCenteredAndRotated(cairo_t* cr, std::string text, double angle) const;
 };

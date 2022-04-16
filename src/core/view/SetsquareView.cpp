@@ -1,6 +1,9 @@
 #include "SetsquareView.h"
 
 #include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
 
 #include "control/Control.h"
 #include "control/layer/LayerController.h"
@@ -13,15 +16,57 @@
 
 using xoj::util::Rectangle;
 
+constexpr double LINE_WIDTH = .02;
+constexpr double FONT_SIZE = .2;
+constexpr double CIRCLE_RAD = .3;
+constexpr double TICK_SMALL = .1;
+constexpr double TICK_LARGE = .2;
+constexpr double DISTANCE_SEMICIRCLE_FROM_LEGS = 1.15;
+constexpr double MAX_HOR_POS_VMARKS = 2.5;
+constexpr int MIN_OFFSET_ANG_MARKS = 2;
+constexpr double RELATIVE_CIRCLE_POS = .75;
+constexpr double RELATIVE_MAX_HOR_POS_VMARKS = .6;
+constexpr double HMARK_POS = 2.;
+constexpr double MIN_DIST_FROM_HMARK = .2;
+constexpr int MIN_VMARK_SMALL = 3;
+constexpr int MIN_VMARK_LARGE = 5;
+constexpr int OFFSET_FROM_SEMICIRCLE = 2.;
+constexpr double ZERO_MARK_TICK = .5;
+constexpr int SKIPPED_HMARKS = 8;
+
+constexpr double rad(double n) { return n * M_PI / 180.; }
+constexpr double rad(int n) { return rad(static_cast<double>(n)); }
+constexpr double deg(double a) { return a * 180.0 / M_PI; }
+inline double cathete(double h, double o) { return std::sqrt(std::pow(h, 2) - std::pow(o, 2)); }
+
+
 SetsquareView::SetsquareView(XojPageView* view, std::unique_ptr<Setsquare>& s): view(view), s(std::move(s)) {}
 
 void SetsquareView::paint(cairo_t* cr) {
     const auto zoom = view->getXournal()->getZoom();
     cairo_save(cr);
     cairo_scale(cr, zoom, zoom);
-    this->s->paint(cr);
+    this->drawSetsquare(cr);
     this->drawTemporaryStroke(cr);
     cairo_restore(cr);
+}
+
+void SetsquareView::updateValues() {
+    radius = s->getHeight() / std::sqrt(2.) - DISTANCE_SEMICIRCLE_FROM_LEGS;
+    circlePos = s->getHeight() * RELATIVE_CIRCLE_POS;
+    horPosVmarks = std::min(MAX_HOR_POS_VMARKS, radius * RELATIVE_MAX_HOR_POS_VMARKS);
+    minVmark = (std::abs(horPosVmarks - HMARK_POS - TICK_SMALL / 2.) < MIN_DIST_FROM_HMARK - TICK_SMALL / 2.) ?
+                       MIN_VMARK_LARGE :
+                       MIN_VMARK_SMALL;
+    maxVmark = static_cast<int>(std::floor(cathete(radius, horPosVmarks) * 10.0)) - OFFSET_FROM_SEMICIRCLE;
+
+    // The following computation of the angular marks offset is based on experimentation.
+    offset = std::max(MIN_OFFSET_ANG_MARKS,
+                      static_cast<int>(256.0 / std::pow(s->getHeight(), 2)));  // larger offset for small height
+    if (std ::abs(radius - std::round(radius)) < .2) {  // larger offset when semicircle comes close to big hmarks
+        offset = std::max(offset, static_cast<int>(24.0 / radius));
+    }
+    maxHmark = static_cast<int>(std::floor(s->getHeight() * 10.0)) - SKIPPED_HMARKS;
 }
 
 void SetsquareView::drawTemporaryStroke(cairo_t* cr) {
@@ -32,173 +77,254 @@ void SetsquareView::drawTemporaryStroke(cairo_t* cr) {
     }
 }
 
-void SetsquareView::move(double x, double y) { s->move(x, y); }
+void SetsquareView::drawSetsquare(cairo_t* cr) {
+    cairo_save(cr);
 
-void SetsquareView::rotate(double da, double cx, double cy) {
-    s->rotate(da);
-    const auto tx = getTranslationX();
-    const auto ty = getTranslationY();
-    const auto offsetX = tx - cx;
-    const auto offsetY = ty - cy;
-    const auto mx = offsetX * cos(da) - offsetY * sin(da);
-    const auto my = offsetX * sin(da) + offsetY * cos(da);
-    s->move(cx + mx - tx, cy + my - ty);
+    cairo_matrix_t matrix{};
+    s->getMatrix(matrix);
+    cairo_transform(cr, &matrix);
+    cairo_set_line_width(cr, LINE_WIDTH);
+    cairo_set_fill_rule(cr, CAIRO_FILL_RULE_EVEN_ODD);
+    cairo_select_font_face(cr, "Arial", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+    cairo_set_font_size(cr, FONT_SIZE);
+
+    updateValues();
+
+    // clip to slightly enlarged setsquare for performance reasons
+    const double enlargedHeight = s->getHeight() + LINE_WIDTH;
+    cairo_move_to(cr, enlargedHeight, -LINE_WIDTH);
+    cairo_line_to(cr, -enlargedHeight, -LINE_WIDTH);
+    cairo_line_to(cr, .0, enlargedHeight);
+    cairo_close_path(cr);
+    cairo_clip(cr);
+
+    cairo_set_source_rgb(cr, 1., .0, .0);  // red
+    drawOutline(cr);
+
+    cairo_set_source_rgb(cr, .0, .0, 1.);  // blue
+    drawHorizontalMarks(cr);
+
+    cairo_set_source_rgb(cr, .0, .5, .0);  // green
+    drawVerticalMarks(cr);
+
+    cairo_set_source_rgb(cr, .5, .0, .5);  // violet
+    drawAngularMarks(cr);
+
+    cairo_set_source_rgb(cr, .0, .5, .5);  // turquoise
+    drawRotation(cr);
+
+    cairo_restore(cr);
 }
 
-void SetsquareView::scale(double f, double cx, double cy) {
-    s->scale(f);
-    const auto tx = getTranslationX();
-    const auto ty = getTranslationY();
-    const auto offsetX = tx - cx;
-    const auto offsetY = ty - cy;
-    const auto mx = offsetX * f;
-    const auto my = offsetY * f;
-    s->move(cx + mx - tx, cy + my - ty);
+void SetsquareView::drawOutline(cairo_t* cr) const {
+    cairo_save(cr);
+
+    cairo_move_to(cr, s->getHeight(), .0);
+    cairo_line_to(cr, -s->getHeight(), .0);
+    cairo_line_to(cr, .0, s->getHeight());
+    cairo_close_path(cr);
+    cairo_stroke_preserve(cr);
+
+    cairo_set_source_rgba(cr, .2, .2, .2, .1);  // transparent gray
+    cairo_fill(cr);
+
+    cairo_restore(cr);
 }
 
-auto SetsquareView::getHeight() const -> double { return s->getHeight(); }
+void SetsquareView::drawRotation(cairo_t* cr) const {
+    cairo_save(cr);
 
-auto SetsquareView::getRotation() const -> double { return s->getRotation(); }
+    // write the angle between hypotenuse and horizontal axis within a small circle
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(1) << std::abs(std::remainder(deg(s->getRotation()), 180.));
+    cairo_move_to(cr, .0, this->circlePos);
+    showTextCenteredAndRotated(cr, ss.str(), -deg(s->getRotation()));
 
-auto SetsquareView::getTranslationX() const -> double { return s->getTranslationX(); }
+    cairo_move_to(cr, .0, this->circlePos);
+    cairo_new_sub_path(cr);
+    cairo_arc(cr, .0, this->circlePos, CIRCLE_RAD, .0, 2. * M_PI);
+    cairo_stroke(cr);
 
-auto SetsquareView::getTranslationY() const -> double { return s->getTranslationY(); }
+    cairo_restore(cr);
+}
+
+void SetsquareView::drawAngularMarks(cairo_t* cr) const {
+    cairo_save(cr);
+
+    // BEGIN: 45 degree marks
+    clipHorizontalStripes(cr);
+    clipVerticalStripes(cr);
+
+    for (int i: {45, 135}) {
+        const double cs = std::cos(rad(i));
+        const double si = std::sin(rad(i));
+
+        // inside semicircle
+        const double radInsideUpper = this->radius - .3;  // 4.2
+        cairo_move_to(cr, cs, si);
+        cairo_line_to(cr, radInsideUpper * cs, radInsideUpper * si);
+
+        // outside semicircle
+        const double radOutsideLower = this->radius + .3;                    // 4.8
+        const double radOutsideUpper = s->getHeight() / std::sqrt(2.) - .3;  // 5.4
+        cairo_move_to(cr, radOutsideLower * cs, radOutsideLower * si);
+        cairo_line_to(cr, radOutsideUpper * cs, radOutsideUpper * si);
+    }
+    cairo_stroke(cr);
+    cairo_reset_clip(cr);
+    // END: 45 degree marks
+
+    // BEGIN: marks and numbers around semicircle
+    for (int i = 1; i < 180; i++) {
+        // the radius corresponding to the point with angle i on one of the short sides of the setsquare
+        // it is computed using the law of sines
+        const double radCath = s->getHeight() * std::sin(rad(45)) / std::sin(rad(i > 90 ? i - 45 : 135 - i));
+        const double cs = std::cos(rad(i));
+        const double si = std::sin(rad(i));
+        const double tick = (i % 5 == 0) ? TICK_LARGE : TICK_SMALL;
+        cairo_move_to(cr, radCath * cs, radCath * si);  // move to one of the short sides of the set square
+        if (i % 10 == 0 && i > this->offset && i < 180 - this->offset) {
+            // large tick near short side of set square
+            const double radTickEnd = (i == 90) ? (this->circlePos + .5) : (this->radius + .8);
+            cairo_line_to(cr, radTickEnd * cs, radTickEnd * si);
+
+            // show increasing numbers near semi-circle
+            const double radInc = this->radius + 0.3;
+            cairo_move_to(cr, radInc * cs, radInc * si);
+            showTextCenteredAndRotated(cr, std::to_string(i), i + 270);
+
+            // show decreasing numbers a bit further from semi-circle
+            if (i != 90) {
+                const double radDec = this->radius + 0.6;
+                cairo_move_to(cr, radDec * cs, radDec * si);
+                showTextCenteredAndRotated(cr, std::to_string(180 - i), i + 270);
+            }
+        } else {
+            cairo_rel_line_to(cr, -tick * cs, -tick * si);  // just a tick near short side of set square
+        }
+
+        if (i > this->offset && i < 180 - this->offset) {
+            // tick near semi-circle
+            cairo_move_to(cr, this->radius * cs, this->radius * si);
+            cairo_rel_line_to(cr, tick * cs, tick * si);
+        }
+    }
+    cairo_stroke(cr);
+    // END: marks and numbers around semicircle
+
+    cairo_restore(cr);
+}
+
+void SetsquareView::drawVerticalMarks(cairo_t* cr) const {
+    cairo_save(cr);
+
+    const auto max = this->maxVmark / 10;  // number of full centimeters
+
+    // BEGIN: VERTICAL marks within semicircle
+    clipVerticalStripes(cr);
+
+    // draw vertical marks
+    for (double i = .5; i <= max; i += .5) {
+        const double x = cathete(this->radius - .25, i);
+        cairo_move_to(cr, -x, i);
+        cairo_line_to(cr, x, i);
+        cairo_stroke(cr);
+    }
+    cairo_reset_clip(cr);
+    // END: VERTICAL marks within circle
+
+
+    // BEGIN: vertical measuring marks with numbers
+    for (int i = this->minVmark; i <= this->maxVmark; i++) {
+        const double y = static_cast<double>(i) / 10.;
+        const double tick = (i % 5 == 0) ? TICK_LARGE : TICK_SMALL;
+
+        // marks and numbers (left and right)
+        for (const double sign: {-1., 1.}) {
+            cairo_move_to(cr, sign * this->horPosVmarks, y);
+            cairo_rel_line_to(cr, -sign * tick, .0);
+            if (i % 10 == 0) {
+                const auto text = std::to_string(i / 10);
+                cairo_rel_move_to(cr, -sign * TICK_SMALL, .0);
+                showTextCenteredAndRotated(cr, text, .0);
+            };
+        }
+    }
+    cairo_stroke(cr);
+    // END: vertical measuring marks with numbers
+
+    cairo_restore(cr);
+}
+
+void SetsquareView::drawHorizontalMarks(cairo_t* cr) const {
+    cairo_save(cr);
+
+    const auto max = this->maxVmark / 10;  // number of full centimeters
+
+    // BEGIN: line indicating horizontal 0
+    for (auto i = 1; i <= max; i++) {
+        cairo_move_to(cr, .0, static_cast<double>(i) - ZERO_MARK_TICK / 2.);
+        cairo_rel_line_to(cr, .0, ZERO_MARK_TICK);
+    }
+    cairo_stroke(cr);
+    // END: line indicating horizontal 0
+
+    // BEGIN: measuring marks on top
+    for (int i = -this->maxHmark; i <= this->maxHmark; i++) {
+        const double tick = (i % 5 == 0) ? TICK_LARGE : TICK_SMALL;
+        // draw marks
+        cairo_move_to(cr, static_cast<double>(i) / 10., .0);
+        cairo_rel_line_to(cr, .0, tick);
+        if (i % 10 == 0) {
+            // draw numbers
+            cairo_rel_move_to(cr, .0, FONT_SIZE / 2.);
+            const auto text = std::to_string(std::abs(i / 10));
+            showTextCenteredAndRotated(cr, text.c_str(), .0);
+        }
+    }
+    cairo_stroke(cr);
+    // END: measuring marks on top
+
+    cairo_restore(cr);
+}
+
+void SetsquareView::showTextCenteredAndRotated(cairo_t* cr, std::string text, double angle) const {
+    cairo_save(cr);
+
+    cairo_text_extents_t te;
+    cairo_text_extents(cr, text.c_str(), &te);
+    const double dx = te.x_bearing + te.width / 2.0;
+    const double dy = te.y_bearing + te.height / 2.0;
+
+    cairo_rotate(cr, rad(angle));
+    cairo_rel_move_to(cr, -dx, -dy);
+    cairo_text_path(cr, text.c_str());
+
+    cairo_restore(cr);
+}
+
+void SetsquareView::clipVerticalStripes(cairo_t* cr) const {
+    // y-coordinate of the highest vertical mark
+    const auto y = static_cast<double>(this->maxVmark) / 10.;
+
+    cairo_rectangle(cr, -this->horPosVmarks - .25, .0, .75, y + .5);                // left stripe
+    cairo_rectangle(cr, this->horPosVmarks - .5, .0, .75, y + .5);                  // right stripe
+    cairo_rectangle(cr, -.25, .0, .5, y + .5);                                      // middle stripe
+    cairo_rectangle(cr, -s->getHeight(), .0, 2. * s->getHeight(), s->getHeight());  // clip to the outside
+    cairo_clip(cr);
+}
+
+void SetsquareView::clipHorizontalStripes(cairo_t* cr) const {
+    for (auto i = .5; i <= static_cast<double>(this->maxVmark) / 10.0; i += .5) {
+        double x = cathete(this->radius - .25, i);
+        cairo_rectangle(cr, -x, i - .15, 2. * x, .3);
+    }
+    cairo_rectangle(cr, -s->getHeight(), .0, 2. * s->getHeight(), s->getHeight());  // clip to the outside
+    cairo_clip(cr);
+}
 
 auto SetsquareView::getView() const -> XojPageView* { return view; }
 
 auto SetsquareView::getPage() const -> PageRef { return view->getPage(); }
 
-auto SetsquareView::posRelToSide(Leg leg, double x, double y) const -> utl::Point<double> {
-    cairo_matrix_t matrix{};
-    s->getMatrix(matrix);
-    cairo_matrix_invert(&matrix);
-    cairo_matrix_transform_point(&matrix, &x, &y);
-    switch (leg) {
-        case HYPOTENUSE:
-            return utl::Point<double>(x, -y);
-        case LEFT_LEG:
-            return utl::Point<double>((y + x) / sqrt(2.), (y - x - getHeight()) / sqrt(2.));
-        case RIGHT_LEG:
-            return utl::Point<double>((y - x) / sqrt(2.), (y + x - getHeight()) / sqrt(2.));
-        default:
-            g_error("Invalid enum value: %d", leg);
-    }
-}
-
-auto SetsquareView::isInsideSetsquare(double x, double y, double border) const -> bool {
-    return posRelToSide(HYPOTENUSE, x, y).y < border && posRelToSide(LEFT_LEG, x, y).y < border &&
-           posRelToSide(RIGHT_LEG, x, y).y < border;
-}
-
-auto SetsquareView::getPointForPos(double xCoord) const -> utl::Point<double> {
-    cairo_matrix_t matrix{};
-    double x = xCoord;
-    double y = 0.0;
-    s->getMatrix(matrix);
-    cairo_matrix_transform_point(&matrix, &x, &y);
-
-    return utl::Point<double>(x, y);
-}
-
-void SetsquareView::createStroke(double x) {
-    if (!std::isnan(x)) {
-        hypotenuseMax = x;
-        hypotenuseMin = x;
-
-        const auto p = this->getPointForPos(x);
-        initializeStroke();
-        stroke->addPoint(Point(p.x, p.y));
-        stroke->addPoint(Point(p.x, p.y));  // doubled point
-
-    } else {
-        g_warning("No valid stroke from setsquare!");
-    }
-}
-
-void SetsquareView::createRadius(double x, double y) {
-    const auto p = posRelToSide(HYPOTENUSE, x, y);
-    this->strokeAngle = std::atan2(p.y, p.x);
-    initializeStroke();
-    updateRadius(x, y);
-}
-
-void SetsquareView::updateStroke(double x) {
-    hypotenuseMax = std::max(this->hypotenuseMax, x);
-    hypotenuseMin = std::min(this->hypotenuseMin, x);
-    stroke->deletePointsFrom(0);
-    const auto p1 = getPointForPos(hypotenuseMin);
-    const auto p2 = getPointForPos(hypotenuseMax);
-
-    stroke->addPoint(Point(p1.x, p1.y));
-    stroke->addPoint(Point(p2.x, p2.y));
-    const Rectangle<double> rect{stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()};
-    this->getView()->rerenderRect(rect.x, rect.y, rect.width, rect.height);
-}
-
-void SetsquareView::updateRadius(double x, double y) {
-    stroke->deletePointsFrom(0);
-    const auto c = getPointForPos(0);
-    stroke->addPoint(Point(c.x, c.y));
-
-    const auto p = posRelToSide(HYPOTENUSE, x, y);
-    const auto rad = std::hypot(p.x, p.y);
-
-    if (rad >= s->getRadius()) {
-        this->strokeAngle = std::atan2(p.y, p.x);
-        stroke->addPoint(Point(x, y));
-    } else {
-        cairo_matrix_t matrix{};
-        auto qx = rad * std::cos(this->strokeAngle);
-        auto qy = -rad * std::sin(this->strokeAngle);
-        s->getMatrix(matrix);
-        cairo_matrix_transform_point(&matrix, &qx, &qy);
-
-        stroke->addPoint(Point(qx, qy));
-    }
-
-    const Rectangle<double> rect{stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()};
-    this->getView()->rerenderRect(rect.x, rect.y, rect.width, rect.height);
-}
-
-void SetsquareView::finalizeStroke() {
-    hypotenuseMax = NAN;
-    hypotenuseMin = NAN;
-    addStrokeToLayer();
-}
-
-void SetsquareView::finalizeRadius() {
-    strokeAngle = NAN;
-    addStrokeToLayer();
-}
-
-auto SetsquareView::existsStroke() -> bool { return !std::isnan(hypotenuseMax) && !std::isnan(hypotenuseMin); }
-
-auto SetsquareView::existsRadius() -> bool { return !std::isnan(strokeAngle); }
-
-void SetsquareView::addStrokeToLayer() {
-    const auto xournal = this->getView()->getXournal();
-    const auto control = xournal->getControl();
-    const auto page = getPage();
-    control->getLayerController()->ensureLayerExists(page);
-    const auto layer = page->getSelectedLayer();
-
-    const auto undo = control->getUndoRedoHandler();
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
-
-    layer->addElement(stroke);
-
-    const Rectangle<double> rect{stroke->getX(), stroke->getY(), stroke->getElementWidth(), stroke->getElementHeight()};
-    this->getView()->rerenderRect(rect.x, rect.y, rect.width, rect.height);
-    stroke = nullptr;
-    xournal->getCursor()->updateCursor();
-}
-
-void SetsquareView::initializeStroke() {
-    const auto control = this->getView()->getXournal()->getControl();
-    const auto h = control->getToolHandler();
-    stroke = new Stroke();
-    stroke->setWidth(h->getThickness());
-    stroke->setColor(h->getColor());
-    stroke->setFill(h->getFill());
-    stroke->setLineStyle(h->getLineStyle());
-}
+auto SetsquareView::getRadius() const -> double { return this->radius; }
