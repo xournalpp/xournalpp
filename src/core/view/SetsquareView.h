@@ -46,6 +46,8 @@ public:
      */
     double getRadius() const;
 
+    void setStroke(Stroke* stroke);
+
 private:
     /**
      * @brief draws the setsquare to a cairo context

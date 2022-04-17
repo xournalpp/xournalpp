@@ -177,6 +177,7 @@ void SetsquareController::initializeStroke() {
     const auto control = view->getXournal()->getControl();
     const auto h = control->getToolHandler();
     stroke = new Stroke();
+    setsquareView->setStroke(stroke);
     stroke->setWidth(h->getThickness());
     stroke->setColor(h->getColor());
     stroke->setFill(h->getFill());

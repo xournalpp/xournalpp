@@ -328,3 +328,5 @@ auto SetsquareView::getView() const -> XojPageView* { return view; }
 auto SetsquareView::getPage() const -> PageRef { return view->getPage(); }
 
 auto SetsquareView::getRadius() const -> double { return this->radius; }
+
+void SetsquareView::setStroke(Stroke* stroke) { this->stroke = stroke; }
