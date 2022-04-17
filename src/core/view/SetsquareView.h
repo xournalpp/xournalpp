@@ -19,6 +19,16 @@
 
 class Setsquare;
 
+/**
+ * @brief A class that renders a setsquare
+ *
+ * The setsquare has vertical, horizontal and angular marks.
+ * The intersection angle with the x-axis is displayed as well.
+ * A temporary stroke is displayed when it is created near the
+ * longest side of the setsquare or from a point to the mid point
+ * of the longest side of the setsquare.
+ */
+
 class SetsquareView {
 public:
     SetsquareView(XojPageView* view, Setsquare* s);

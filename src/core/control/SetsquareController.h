@@ -19,6 +19,16 @@
 
 enum Leg { HYPOTENUSE, LEFT_LEG, RIGHT_LEG };
 
+/**
+ * @brief A class that controls a setsquare
+
+ * The setsquare can be moved, rotated and scaled
+ * There are methods for translating coordinates
+ * and methods to deal with the temporary stroke
+ * that is displayed near the longest side or
+ * the midpoint to the longest side of the setsquare.
+ */
+
 class SetsquareController {
 public:
     SetsquareController(std::unique_ptr<SetsquareView>& setsquareView, std::unique_ptr<Setsquare>& s);

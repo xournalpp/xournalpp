@@ -17,11 +17,10 @@ constexpr static double HALF_CM = 14.17;
 constexpr static double CM = 2. * HALF_CM;
 
 /**
- * @brief A class that models a setsquare, including method to paint the setsquare to a cairo context
+ * @brief A class that models a setsquare
  *
  * The setsquare has the shape of a right-angled isosceles triangle and has a certain height, may be rotated and
- * translated. User coordinates are specified in cm. The setsquare has vertical, horizontal and angular marks.
- * The intersection angle with the x-axis is displayed as well
+ * translated. User coordinates are specified in cm.
  */
 
 class Setsquare {
@@ -69,5 +68,5 @@ private:
     /**
      * @brief the y-coordinate (in pt) of the mid point of the longest side of the setsquare (by default 7.5 cm)
      */
-    double translationY = 15 * HALF_CM;
+    double translationY = 15. * HALF_CM;
 };
