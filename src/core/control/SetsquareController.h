@@ -173,7 +173,8 @@ private:
     std::unique_ptr<Setsquare> s;
 
     /**
-     * @brief The stroke drawn aligned to the longest side of the setsquare
+     * @brief The stroke drawn aligned to the longest side of the setsquare or ending at the midpoint of the longest
+     * side of the setsquare
      */
     Stroke* stroke = nullptr;
 
@@ -186,7 +187,7 @@ private:
     double hypotenuseMin = NAN;
 
     /**
-     * @brief
+     * @brief the current angle at which the temporary radius is drawn
      */
     double strokeAngle = NAN;
 };

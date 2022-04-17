@@ -131,20 +131,8 @@ private:
     Setsquare* s;
 
     /**
-     * @brief The stroke drawn aligned to the longest side of the setsquare
+     * @brief The stroke drawn aligned to the longest side of the setsquare or ending at the midpoint of the longest
+     * side of the setsquare
      */
     Stroke* stroke = nullptr;
-
-    /**
-     * @brief when a stroke aligned to the longest side (hypotenuse) of the setsquare is drawn, the minimal and maximal
-     * x-coordinates of the point to be drawn (with respect to an unrotated, and untranslated coordinate system) are
-     * saved in the variables hypotenuseMin and hypotenuseMax
-     */
-    double hypotenuseMax = NAN;
-    double hypotenuseMin = NAN;
-
-    /**
-     * @brief
-     */
-    double strokeAngle = NAN;
 };
