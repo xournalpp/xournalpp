@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * A setsquare, model and paiting to a cairo context
+ * A setsquare model
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp

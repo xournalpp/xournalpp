@@ -8,8 +8,9 @@
 
 
 using xoj::util::Rectangle;
-SetsquareController::SetsquareController(std::unique_ptr<SetsquareView>& setsquareView, std::unique_ptr<Setsquare>& s):
-        view(setsquareView->getView()), setsquareView(std::move(setsquareView)), s(std::move(s)) {}
+SetsquareController::SetsquareController(XojPageView* view, std::unique_ptr<SetsquareView>& setsquareView,
+                                         std::unique_ptr<Setsquare>& s):
+        view(view), setsquareView(std::move(setsquareView)), s(std::move(s)) {}
 
 auto SetsquareController::getHeight() const -> double { return s->getHeight(); }
 
@@ -184,8 +185,14 @@ void SetsquareController::initializeStroke() {
     stroke->setLineStyle(h->getLineStyle());
 }
 
-auto SetsquareController::getPage() const -> PageRef { return setsquareView->getPage(); }
+auto SetsquareController::getPage() const -> PageRef { return view->getPage(); }
 
-auto SetsquareController::getView() const -> XojPageView* { return setsquareView->getView(); }
+auto SetsquareController::getView() const -> XojPageView* { return view; }
 
-void SetsquareController::paint(cairo_t* cr) { setsquareView->paint(cr); }
+void SetsquareController::paint(cairo_t* cr) {
+    const auto zoom = view->getXournal()->getZoom();
+    cairo_save(cr);
+    cairo_scale(cr, zoom, zoom);
+    setsquareView->paint(cr);
+    cairo_restore(cr);
+}

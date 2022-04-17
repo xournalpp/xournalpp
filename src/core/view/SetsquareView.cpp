@@ -40,12 +40,10 @@ constexpr double deg(double a) { return a * 180.0 / M_PI; }
 inline double cathete(double h, double o) { return std::sqrt(std::pow(h, 2) - std::pow(o, 2)); }
 
 
-SetsquareView::SetsquareView(XojPageView* view, Setsquare* s): view(view), s(s) {}
+SetsquareView::SetsquareView(Setsquare* s): s(s) {}
 
 void SetsquareView::paint(cairo_t* cr) {
-    const auto zoom = view->getXournal()->getZoom();
     cairo_save(cr);
-    cairo_scale(cr, zoom, zoom);
     this->drawSetsquare(cr);
     this->drawTemporaryStroke(cr);
     cairo_restore(cr);
@@ -322,10 +320,6 @@ void SetsquareView::clipHorizontalStripes(cairo_t* cr) const {
     cairo_rectangle(cr, -s->getHeight(), .0, 2. * s->getHeight(), s->getHeight());  // clip to the outside
     cairo_clip(cr);
 }
-
-auto SetsquareView::getView() const -> XojPageView* { return view; }
-
-auto SetsquareView::getPage() const -> PageRef { return view->getPage(); }
 
 auto SetsquareView::getRadius() const -> double { return this->radius; }
 

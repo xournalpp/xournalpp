@@ -589,13 +589,13 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             if (!this->win->getXournal()->getSetsquareController()) {
                 // bring up setsquare in page center
                 auto setsquare = std::make_unique<Setsquare>();
+                auto setsquareView = std::make_unique<SetsquareView>(setsquare.get());
                 auto view = win->getXournal()->getViewFor(getCurrentPageNo());
-                auto setsquareView = std::make_unique<SetsquareView>(view, setsquare.get());
-                if (!view) {
-                    setsquareView.reset(nullptr);
-                }
-                auto setsquareController = std::make_unique<SetsquareController>(setsquareView, setsquare);
+                auto setsquareController = std::make_unique<SetsquareController>(view, setsquareView, setsquare);
                 this->win->getXournal()->setSetsquareController(std::move(setsquareController));
+                if (!view) {
+                    setsquareController.reset(nullptr);
+                }
                 fireActionSelected(GROUP_SETSQUARE, ACTION_SETSQUARE);
             } else {
                 // hide setsquare

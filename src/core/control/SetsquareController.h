@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Controller for setsquare
+ * A setsquare controller
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -31,7 +31,8 @@ enum Leg { HYPOTENUSE, LEFT_LEG, RIGHT_LEG };
 
 class SetsquareController {
 public:
-    SetsquareController(std::unique_ptr<SetsquareView>& setsquareView, std::unique_ptr<Setsquare>& s);
+    SetsquareController(XojPageView* view, std::unique_ptr<SetsquareView>& setsquareView,
+                        std::unique_ptr<Setsquare>& s);
     ~SetsquareController() = default;
 
 public:
@@ -145,8 +146,20 @@ public:
      */
     bool existsRadius();
 
-    PageRef getPage() const;
+    /**
+     * @brief the page view of the page with respect to which the setsquare is initialized
+     */
     XojPageView* getView() const;
+
+    /**
+     * @brief the page with respect to which the setsquare is initialized
+     */
+    PageRef getPage() const;
+
+    /**
+     * @brief paints the setsquare and temporary stroke to a cairo context, after scaling it by the zoom factor
+     * @param cr the cairo context
+     */
     void paint(cairo_t* cr);
 
 private:

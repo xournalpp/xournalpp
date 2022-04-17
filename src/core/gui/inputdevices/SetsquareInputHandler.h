@@ -23,6 +23,7 @@ class InputContext;
 
 /**
  * @brief Input handler for the setsquare
+ *
  * The setsquare is designed to be used with touch/keyboard with one hand and mouse/stylus with the other hand
  * Keyboard and Touch are used to move the setsquare (and the page), to rotate it and change its size, whereas
  * Stylus/Mouse are used to draw/annotate and in particular to draw lines at the longest side of the setsquare.

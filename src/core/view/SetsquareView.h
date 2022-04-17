@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Draw setsquare
+ * A setsquare view
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
@@ -24,6 +24,10 @@ class Setsquare;
  *
  * The setsquare has vertical, horizontal and angular marks.
  * The intersection angle with the x-axis is displayed as well.
+ *
+ * See the file development/documentation/Setsquare_Readme.md for
+ * details how the setsquare is rendered.
+ *
  * A temporary stroke is displayed when it is created near the
  * longest side of the setsquare or from a point to the mid point
  * of the longest side of the setsquare.
@@ -31,25 +35,15 @@ class Setsquare;
 
 class SetsquareView {
 public:
-    SetsquareView(XojPageView* view, Setsquare* s);
+    SetsquareView(Setsquare* s);
     ~SetsquareView() = default;
 
 public:
     /**
-     * @brief paints the setsquare and temporary stroke to a cairo context, after scaling it by the zoom factor
+     * @brief paints the setsquare and temporary stroke to a cairo context
      * @param cr the cairo context
      */
     void paint(cairo_t* cr);
-
-    /**
-     * @brief the page view of the page with respect to which the setsquare is initialized
-     */
-    XojPageView* getView() const;
-
-    /**
-     * @brief the page with respect to which the setsquare is initialized
-     */
-    PageRef getPage() const;
 
     /**
      * @brief the radius of the semicircle displayed on the setsquare
@@ -131,8 +125,6 @@ private:
     void showTextCenteredAndRotated(cairo_t* cr, std::string text, double angle) const;
 
 private:
-    XojPageView* view;
-
     /**
      * @brief the underlying setsquare
      */
