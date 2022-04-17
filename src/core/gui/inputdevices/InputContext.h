@@ -35,12 +35,12 @@
 #include "TouchInputHandler.h"
 #include "config-debug.h"
 
-// class SetsquareInputHandler;
+class SetsquareInputHandler;
 
 class InputContext {
 
 private:
-    // std::unique_ptr<SetsquareInputHandler> setsquareHandler;
+    std::unique_ptr<SetsquareInputHandler> setsquareHandler;
     StylusInputHandler* stylusHandler;
     MouseInputHandler* mouseHandler;
     TouchDrawingInputHandler* touchDrawingHandler;
