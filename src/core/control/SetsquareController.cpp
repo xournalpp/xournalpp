@@ -19,6 +19,35 @@ auto SetsquareController::getTranslationX() const -> double { return s->getTrans
 
 auto SetsquareController::getTranslationY() const -> double { return s->getTranslationY(); }
 
+void SetsquareController::move(double x, double y) {
+    s->setTranslationX(s->getTranslationX() + x);
+    s->setTranslationY(s->getTranslationY() + y);
+}
+
+void SetsquareController::rotate(double da, double cx, double cy) {
+    s->setRotation(s->getRotation() + da);
+    const auto tx = getTranslationX();
+    const auto ty = getTranslationY();
+    const auto offsetX = tx - cx;
+    const auto offsetY = ty - cy;
+    const auto mx = offsetX * cos(da) - offsetY * sin(da);
+    const auto my = offsetX * sin(da) + offsetY * cos(da);
+    s->setTranslationX(cx + mx);
+    s->setTranslationY(cy + my);
+}
+
+void SetsquareController::scale(double f, double cx, double cy) {
+    s->setHeight(s->getHeight() * f);
+    const auto tx = getTranslationX();
+    const auto ty = getTranslationY();
+    const auto offsetX = tx - cx;
+    const auto offsetY = ty - cy;
+    const auto mx = offsetX * f;
+    const auto my = offsetY * f;
+    s->setTranslationX(cx + mx);
+    s->setTranslationY(cy + my);
+}
+
 auto SetsquareController::posRelToSide(Leg leg, double x, double y) const -> utl::Point<double> {
     cairo_matrix_t matrix{};
     s->getMatrix(matrix);
