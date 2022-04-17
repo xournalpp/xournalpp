@@ -85,9 +85,9 @@ public:
     void deleteSelection(EditSelection* sel = nullptr);
     void repaintSelection(bool evenWithoutSelection = false);
 
-    void setSetsquareView(std::unique_ptr<SetsquareView> setsquareView);
-    void resetSetsquareView();
-    SetsquareView* getSetsquareView();
+    void setSetsquareController(std::unique_ptr<SetsquareController> setsquareController);
+    void resetSetsquareController();
+    SetsquareController* getSetsquareController();
     void repaintSetsquare(bool evenWithoutSetsquare = false);
 
     TextEditor* getTextEditor();

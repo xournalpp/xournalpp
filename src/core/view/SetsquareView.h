@@ -21,7 +21,7 @@ class Setsquare;
 
 class SetsquareView {
 public:
-    SetsquareView(XojPageView* view, std::unique_ptr<Setsquare>& s);
+    SetsquareView(XojPageView* view, Setsquare* s);
     ~SetsquareView() = default;
 
 public:
@@ -124,7 +124,7 @@ private:
     /**
      * @brief the underlying setsquare
      */
-    std::unique_ptr<Setsquare> s;
+    Setsquare* s;
 
     /**
      * @brief The stroke drawn aligned to the longest side of the setsquare

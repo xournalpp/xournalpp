@@ -7,6 +7,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "control/Control.h"
+#include "control/SetsquareController.h"
 #include "control/settings/Settings.h"
 #include "control/tools/EditSelection.h"
 #include "gui/Layout.h"
@@ -16,7 +17,6 @@
 #include "gui/scroll/ScrollHandling.h"
 #include "util/Rectangle.h"
 #include "util/Util.h"
-#include "view/SetsquareView.h"
 
 
 using xoj::util::Rectangle;
@@ -69,7 +69,7 @@ auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget
     xoj->y = 0;
     xoj->layout = new Layout(view, inputContext->getScrollHandling());
     xoj->selection = nullptr;
-    xoj->setsquareView = nullptr;
+    xoj->setsquareController = nullptr;
 
     xoj->input = inputContext;
 
@@ -306,15 +306,15 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
         cairo_restore(cr);
     }
 
-    if (xournal->setsquareView) {
-        auto&& pv = xournal->setsquareView->getView();
+    if (xournal->setsquareController) {
+        auto&& pv = xournal->setsquareController->getView();
         int px = pv->getX();
         int py = pv->getY();
 
         if (clippingRect.intersects(pv->getRect())) {
             cairo_save(cr);
             cairo_translate(cr, px, py);
-            xournal->setsquareView->paint(cr);
+            xournal->setsquareController->paint(cr);
             cairo_restore(cr);
         }
     }
@@ -330,8 +330,6 @@ static void gtk_xournal_destroy(GtkWidget* object) {
 
     delete xournal->selection;
     xournal->selection = nullptr;
-
-    xournal->setsquareView = nullptr;
 
     delete xournal->layout;
     xournal->layout = nullptr;

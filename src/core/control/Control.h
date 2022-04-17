@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 
+#include "control/SetsquareController.h"
 #include "control/jobs/ProgressListener.h"
 #include "control/jobs/XournalScheduler.h"
 #include "control/settings/MetadataManager.h"

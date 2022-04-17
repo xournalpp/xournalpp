@@ -640,24 +640,24 @@ void XournalView::repaintSelection(bool evenWithoutSelection) {
     gtk_widget_queue_draw(this->widget);
 }
 
-void XournalView::setSetsquareView(std::unique_ptr<SetsquareView> setsquareView) {
-    GTK_XOURNAL(this->widget)->setsquareView = std::move(setsquareView);
+void XournalView::setSetsquareController(std::unique_ptr<SetsquareController> setsquareController) {
+    GTK_XOURNAL(this->widget)->setsquareController = std::move(setsquareController);
 }
 
-void XournalView::resetSetsquareView() {
-    GTK_XOURNAL(this->widget)->setsquareView.reset();
+void XournalView::resetSetsquareController() {
+    GTK_XOURNAL(this->widget)->setsquareController.reset();
     this->control->fireActionSelected(GROUP_SETSQUARE, ACTION_NONE);
 }
 
-auto XournalView::getSetsquareView() -> SetsquareView* {
+auto XournalView::getSetsquareController() -> SetsquareController* {
     g_return_val_if_fail(this->widget != nullptr, nullptr);
     g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), nullptr);
 
-    return GTK_XOURNAL(this->widget)->setsquareView.get();
+    return GTK_XOURNAL(this->widget)->setsquareController.get();
 }
 
 void XournalView::repaintSetsquare(bool evenWithoutSetsquare) {
-    if (getSetsquareView() || evenWithoutSetsquare) {
+    if (getSetsquareController() || evenWithoutSetsquare) {
         // repaint always the whole widget
         gtk_widget_queue_draw(this->widget);
     }

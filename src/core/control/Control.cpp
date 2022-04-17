@@ -586,19 +586,20 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             }
             break;
         case ACTION_SETSQUARE:
-            if (!this->win->getXournal()->getSetsquareView()) {
+            if (!this->win->getXournal()->getSetsquareController()) {
                 // bring up setsquare in page center
                 auto setsquare = std::make_unique<Setsquare>();
                 auto view = win->getXournal()->getViewFor(getCurrentPageNo());
-                std::unique_ptr<SetsquareView> setsquareView = std::make_unique<SetsquareView>(view, setsquare);
+                auto setsquareView = std::make_unique<SetsquareView>(view, setsquare.get());
                 if (!view) {
                     setsquareView.reset(nullptr);
                 }
-                this->win->getXournal()->setSetsquareView(std::move(setsquareView));
+                auto setsquareController = std::make_unique<SetsquareController>(setsquareView, setsquare);
+                this->win->getXournal()->setSetsquareController(std::move(setsquareController));
                 fireActionSelected(GROUP_SETSQUARE, ACTION_SETSQUARE);
             } else {
                 // hide setsquare
-                this->win->getXournal()->resetSetsquareView();
+                this->win->getXournal()->resetSetsquareController();
             }
             win->getXournal()->repaintSetsquare(true);
             break;
@@ -1258,9 +1259,9 @@ void Control::deletePage() {
 
     // if the current page contains the Setsquare, reset it
     size_t pNr = getCurrentPageNo();
-    auto setsquareView = win->getXournal()->getSetsquareView();
-    if (setsquareView && doc->indexOf(setsquareView->getPage()) == pNr) {
-        win->getXournal()->resetSetsquareView();
+    auto setsquareController = win->getXournal()->getSetsquareController();
+    if (setsquareController && doc->indexOf(setsquareController->getPage()) == pNr) {
+        win->getXournal()->resetSetsquareController();
     }
     // don't allow delete pages if we have less than 2 pages,
     // so we can be (more or less) sure there is at least one page.
@@ -2535,7 +2536,7 @@ auto Control::close(const bool allowDestroy, const bool allowCancel) -> bool {
     if (allowDestroy && discard) {
         this->closeDocument();
     }
-    win->getXournal()->resetSetsquareView();
+    win->getXournal()->resetSetsquareController();
     return true;
 }
 

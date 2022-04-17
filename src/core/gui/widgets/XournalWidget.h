@@ -25,6 +25,7 @@ G_BEGIN_DECLS
 
 class EditSelection;
 class SetsquareView;
+class SetsquareController;
 class Layout;
 class XojPageView;
 class ScrollHandling;
@@ -65,7 +66,7 @@ struct _GtkXournal {
     /**
      * Setsquare, if active
      */
-    std::unique_ptr<SetsquareView> setsquareView;
+    std::unique_ptr<SetsquareController> setsquareController;
 
     /**
      * Input handling

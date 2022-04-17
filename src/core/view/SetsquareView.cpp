@@ -40,7 +40,7 @@ constexpr double deg(double a) { return a * 180.0 / M_PI; }
 inline double cathete(double h, double o) { return std::sqrt(std::pow(h, 2) - std::pow(o, 2)); }
 
 
-SetsquareView::SetsquareView(XojPageView* view, std::unique_ptr<Setsquare>& s): view(view), s(std::move(s)) {}
+SetsquareView::SetsquareView(XojPageView* view, Setsquare* s): view(view), s(s) {}
 
 void SetsquareView::paint(cairo_t* cr) {
     const auto zoom = view->getXournal()->getZoom();
