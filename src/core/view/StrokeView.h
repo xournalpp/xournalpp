@@ -34,7 +34,6 @@ public:
 
 private:
     inline void pathToCairo(cairo_t* cr) const;
-    static void drawErasableStroke(cairo_t* cr, const Stroke* s);
 
     /**
      * No pressure sensitivity, one line is drawn
@@ -53,4 +52,8 @@ private:
 public:
     static constexpr double OPACITY_HIGHLIGHTER = 0.47;
     static constexpr double MINIMAL_ALPHA = 0.04;
+
+    //  Must match the enum StrokeCapStyle in Stroke.h
+    static constexpr cairo_line_cap_t CAIRO_LINE_CAP[] = {CAIRO_LINE_CAP_ROUND, CAIRO_LINE_CAP_BUTT,
+                                                          CAIRO_LINE_CAP_SQUARE};
 };

@@ -47,3 +47,13 @@
  * Draw the mask in StrokeView
  */
 #cmakedefine DEBUG_SHOW_MASK
+
+/**
+ * Show repainted areas when erasing an highlighter stroke
+ */
+#cmakedefine DEBUG_ERASABLE_STROKE_BOXES
+
+/**
+ * Show eraser logging info when we get an inconsistent result
+ */
+#cmakedefine ENABLE_ERASER_DEBUG

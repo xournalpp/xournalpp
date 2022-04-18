@@ -37,7 +37,7 @@ public:
     void finalize();
 
 private:
-    void eraseStroke(Layer* l, Stroke* s, double x, double y, Range* range);
+    void eraseStroke(Layer* l, Stroke* s, double x, double y, Range& range);
 
 private:
     PageRef page;
@@ -50,4 +50,12 @@ private:
     EraseUndoAction* eraseUndoAction;
 
     double halfEraserSize;
+
+private:
+    /**
+     * Coefficient for adding padding to the erased sections of strokes.
+     * It depends on the stroke cap style ROUND, BUTT or SQUARE.
+     * The order must match the enum StrokeCapStyle in Stroke.h
+     */
+    static constexpr double PADDING_COEFFICIENT_CAP[] = {0.4, 0.01, 0.5};
 };
