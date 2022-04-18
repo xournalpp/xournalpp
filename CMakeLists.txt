@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12...${CMAKE_VERSION})
+cmake_minimum_required(VERSION 3.12)
 cmake_policy(VERSION ${CMAKE_VERSION})
 
 ## Project related Variables
@@ -108,6 +108,14 @@ if (#[[${CMAKE_VERSION} VERSION_LESS "3.18" AND]] ${CMAKE_SYSTEM_NAME} MATCHES "
     string(REPLACE "-framework;" "-framework " libs "${libs}")
     message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES fixed: ${libs}")
     set_target_properties(PkgConfig::ExternalModules PROPERTIES INTERFACE_LINK_LIBRARIES "${libs}")
+
+
+    if (${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.13")
+        # fix broken framework flags from pkgconfig
+        get_target_property(opts PkgConfig::ExternalModules INTERFACE_LINK_OPTIONS)
+        string(REPLACE "-framework;" "SHELL:-framework " opts "${opts}")
+        set_target_properties(PkgConfig::ExternalModules PROPERTIES INTERFACE_LINK_OPTIONS "${opts}")
+    endif ()
 endif ()
 
 find_package(ZLIB REQUIRED)
