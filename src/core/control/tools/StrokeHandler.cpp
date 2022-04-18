@@ -22,48 +22,43 @@ using namespace xoj::util;
 
 guint32 StrokeHandler::lastStrokeTime;  // persist for next stroke
 
-
 StrokeHandler::StrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
         InputHandler(xournal, redrawable, page),
         snappingHandler(xournal->getControl()->getSettings()),
         stabilizer(StrokeStabilizer::get(xournal->getControl()->getSettings())) {}
 
-StrokeHandler::~StrokeHandler() {
-    destroySurface();
-}
-
 void StrokeHandler::draw(cairo_t* cr) {
-    if (!stroke) {
-        return;
-    }
+    assert(stroke && stroke->getPointCount() > 0);
 
-    if (this->fullRedraw) {
-        /**
-         * Erase the mask entirely in this case
-         */
-        cairo_set_operator(crMask, CAIRO_OPERATOR_CLEAR);
-        cairo_paint(crMask);
-
-        auto context = xoj::view::Context::createColorBlind(crMask);
-        strokeView->draw(context);
-    }
-
-    // set the stroke color and blend mode
-    if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
-        if (auto fill = stroke->getFill(); fill != -1) {
-            Util::cairo_set_source_rgbi(cr, stroke->getColor(), static_cast<double>(fill) / 255.0);
+    auto setColorAndBlendMode = [stroke = this->stroke, cr]() {
+        if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+            if (auto fill = stroke->getFill(); fill != -1) {
+                Util::cairo_set_source_rgbi(cr, stroke->getColor(), static_cast<double>(fill) / 255.0);
+            } else {
+                Util::cairo_set_source_rgbi(cr, stroke->getColor(), xoj::view::StrokeView::OPACITY_HIGHLIGHTER);
+            }
+            cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
         } else {
-            Util::cairo_set_source_rgbi(cr, stroke->getColor(), xoj::view::StrokeView::OPACITY_HIGHLIGHTER);
+            Util::cairo_set_source_rgbi(cr, stroke->getColor());
+            cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
         }
-        cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
+    };
+
+    if (this->mask) {
+        setColorAndBlendMode();
+        cairo_mask_surface(cr, mask->surf, 0, 0);
     } else {
-        Util::cairo_set_source_rgbi(cr, stroke->getColor());
-        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+        if (this->stroke->getPointCount() == 1) {
+            // drawStroke does not handle single dots
+            const Point& pt = this->stroke->getPoint(0);
+            double width = this->stroke->getWidth() * (this->hasPressure ? pt.z : 1.0);
+            setColorAndBlendMode();
+            this->paintDot(cr, pt.x, pt.y, width);
+        } else {
+            strokeView->draw(xoj::view::Context::createDefault(cr));
+        }
     }
-
-    cairo_mask_surface(cr, surfMask, 0, 0);
 }
-
 
 auto StrokeHandler::onKeyEvent(GdkEventKey* event) -> bool { return false; }
 
@@ -99,8 +94,12 @@ void StrokeHandler::paintTo(const Point& point) {
                 this->stroke->setLastPressure(point.z);
                 this->firstPointPressureChange = true;
 
-                // Paint the dot for the user to see
-                this->paintDot(endPoint.x, endPoint.y, this->stroke->getWidth() * point.z);
+                double width = this->stroke->getWidth() * point.z;
+                if (mask) {
+                    this->paintDot(mask->cr, endPoint.x, endPoint.y, width);
+                }
+                // Trigger a call to `draw`. If mask == nullopt, the `paintDot` is called in `draw`
+                this->redrawable->repaintRect(endPoint.x - 0.5 * width, endPoint.y - 0.5 * width, width, width);
             }
             return;
         }
@@ -161,20 +160,21 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
          */
         const Point& firstPoint = stroke->getPointVector().front();
         rg.addPoint(firstPoint.x, firstPoint.y);
-    } else if (!this->fullRedraw) {
+    } else if (mask) {
         Stroke lastSegment;
 
         lastSegment.addPoint(prevPoint);
         lastSegment.addPoint(point);
         lastSegment.setWidth(width);
 
-        auto context = xoj::view::Context::createColorBlind(crMask);
+        auto context = xoj::view::Context::createColorBlind(mask->cr);
         xoj::view::StrokeView sView(&lastSegment);
         sView.draw(context);
     }
 
     width = prevPoint.z != Point::NO_PRESSURE ? prevPoint.z : width;
 
+    // Trigger a call to `draw`. If mask == nullopt, the stroke is drawn in `draw`
     this->redrawable->repaintRect(rg.getX() - 0.5 * width, rg.getY() - 0.5 * width, rg.getWidth() + width,
                                   rg.getHeight() + width);
 }
@@ -326,8 +326,6 @@ void StrokeHandler::strokeRecognizerDetected(Stroke* recognized, Layer* layer) {
 }
 
 void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
-    destroySurface();
-
     const double zoom = xournal->getZoom();
 
     if (!stroke) {
@@ -337,38 +335,22 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
         createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pos.pressure));
 
         this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
-        this->fullRedraw = this->stroke->getFill() != -1 || stroke->getLineStyle().hasDashes();
-
-        if (this->fullRedraw) {
-            strokeView.emplace(stroke);
-        }
 
         stabilizer->initialize(this, zoom, pos);
     }
 
-    {  // Initialize the mask
-        const double ratio = zoom * static_cast<double>(xournal->getDpiScaleFactor());
+    double width = this->hasPressure ? this->stroke->getWidth() * pos.pressure : this->stroke->getWidth();
 
-        std::unique_ptr<Rectangle<double>> visibleRect(xournal->getVisibleRect(redrawable));
-
-        // We add a padding to limit graphical bugs when scrolling right after completing a stroke
-        const double strokeWidth = this->stroke->getWidth();
-        const int width = static_cast<int>(std::ceil((visibleRect->width + strokeWidth) * ratio));
-        const int height = static_cast<int>(std::ceil((visibleRect->height + strokeWidth) * ratio));
-
-        surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
-
-        cairo_surface_set_device_offset(surfMask, (0.5 * strokeWidth - visibleRect->x) * ratio,
-                                        (0.5 * strokeWidth - visibleRect->y) * ratio);
-        cairo_surface_set_device_scale(surfMask, ratio, ratio);
-
-        crMask = cairo_create(surfMask);
-
-
-        // Paint the starting point
-        this->paintDot(this->buttonDownPoint.x, this->buttonDownPoint.y,
-                       this->hasPressure ? this->stroke->getWidth() * pos.pressure : this->stroke->getWidth());
+    bool needAMask = this->stroke->getFill() == -1 && !stroke->getLineStyle().hasDashes();
+    if (needAMask) {
+        // Strokes that require a full redraw don't use a mask
+        this->createMask();
+        this->paintDot(mask->cr, this->buttonDownPoint.x, this->buttonDownPoint.y, width);
+    } else {
+        strokeView.emplace(stroke);
     }
+    this->redrawable->repaintRect(this->buttonDownPoint.x - 0.5 * width, this->buttonDownPoint.y - 0.5 * width, width,
+                                  width);
 
     this->startStrokeTime = pos.timestamp;
 }
@@ -377,22 +359,39 @@ void StrokeHandler::onButtonDoublePressEvent(const PositionInputData& pos) {
     // nothing to do
 }
 
-void StrokeHandler::destroySurface() {
-    if (surfMask || crMask) {
-        cairo_destroy(crMask);
-        cairo_surface_destroy(surfMask);
-        surfMask = nullptr;
-        crMask = nullptr;
-    }
+void StrokeHandler::paintDot(cairo_t* cr, const double x, const double y, const double width) const {
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP_ROUND);
+    cairo_set_line_width(cr, width);
+    cairo_move_to(cr, x, y);
+    cairo_line_to(cr, x, y);
+    cairo_stroke(cr);
 }
 
-void StrokeHandler::paintDot(const double x, const double y, const double width) const {
-    cairo_set_line_cap(crMask, CAIRO_LINE_CAP_ROUND);
-    cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
-    cairo_set_source_rgba(crMask, 1, 1, 1, 1);
-    cairo_set_line_width(crMask, width);
-    cairo_move_to(crMask, x, y);
-    cairo_line_to(crMask, x, y);
-    cairo_stroke(crMask);
-    this->redrawable->repaintRect(x - 0.5 * width, y - 0.5 * width, width, width);
+StrokeHandler::Mask::Mask(int width, int height) {
+    surf = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
+    cr = cairo_create(surf);
+    cairo_set_source_rgba(cr, 1, 1, 1, 1);
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+}
+
+StrokeHandler::Mask::~Mask() noexcept {
+    cairo_destroy(cr);
+    cairo_surface_destroy(surf);
+}
+
+void StrokeHandler::createMask() {
+    const double ratio = xournal->getZoom() * static_cast<double>(xournal->getDpiScaleFactor());
+
+    std::unique_ptr<Rectangle<double>> visibleRect(xournal->getVisibleRect(redrawable));
+
+    // We add a padding to limit graphical bugs when scrolling right after completing a stroke
+    const double strokeWidth = this->stroke->getWidth();
+    const int width = static_cast<int>(std::ceil((visibleRect->width + strokeWidth) * ratio));
+    const int height = static_cast<int>(std::ceil((visibleRect->height + strokeWidth) * ratio));
+
+    mask.emplace(width, height);
+
+    cairo_surface_set_device_offset(mask->surf, (0.5 * strokeWidth - visibleRect->x) * ratio,
+                                    (0.5 * strokeWidth - visibleRect->y) * ratio);
+    cairo_surface_set_device_scale(mask->surf, ratio, ratio);
 }
