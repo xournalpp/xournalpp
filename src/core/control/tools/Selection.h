@@ -27,7 +27,7 @@ public:
 
 public:
     virtual bool finalize(PageRef page) = 0;
-    virtual void paint(cairo_t* cr, GdkRectangle* rect, double zoom) = 0;
+    virtual void paint(cairo_t* cr, double zoom) = 0;
     virtual void currentPos(double x, double y) = 0;
     virtual bool userTapped(double zoom) = 0;
 
@@ -52,7 +52,7 @@ public:
 
 public:
     bool finalize(PageRef page) override;
-    void paint(cairo_t* cr, GdkRectangle* rect, double zoom) override;
+    void paint(cairo_t* cr, double zoom) override;
     void currentPos(double x, double y) override;
     bool contains(double x, double y) override;
     bool userTapped(double zoom) override;
@@ -81,7 +81,7 @@ public:
 
 public:
     bool finalize(PageRef page) override;
-    void paint(cairo_t* cr, GdkRectangle* rect, double zoom) override;
+    void paint(cairo_t* cr, double zoom) override;
     void currentPos(double x, double y) override;
     bool contains(double x, double y) override;
     bool userTapped(double zoom) override;

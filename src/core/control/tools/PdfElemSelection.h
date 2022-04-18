@@ -39,7 +39,7 @@ public:
     bool finalizeSelection(XojPdfPageSelectionStyle style);
 
     /// Render the selection visuals with the given style
-    void paint(cairo_t* cr, GdkRectangle* rect, double zoom, XojPdfPageSelectionStyle style);
+    void paint(cairo_t* cr, XojPdfPageSelectionStyle style);
 
     /// Update the (unfinalized) selection bounds with the given
     /// style.

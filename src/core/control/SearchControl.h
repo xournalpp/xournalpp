@@ -20,7 +20,7 @@ public:
     virtual ~SearchControl();
 
     bool search(std::string text, int* occures, double* top);
-    void paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GdkRGBA& color);
+    void paint(cairo_t* cr, double zoom, const GdkRGBA& color);
 
 private:
     void freeSearchResults();

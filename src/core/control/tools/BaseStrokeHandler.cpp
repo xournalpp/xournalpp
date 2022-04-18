@@ -29,11 +29,6 @@ void BaseStrokeHandler::draw(cairo_t* cr) {
         return;
     }
 
-    double zoom = xournal->getZoom();
-    int dpiScaleFactor = xournal->getDpiScaleFactor();
-
-    cairo_scale(cr, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
-
     auto context = xoj::view::Context::createDefault(cr);
     strokeView->draw(context);
 }

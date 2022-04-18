@@ -360,10 +360,10 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
 
         cairo_surface_set_device_offset(surfMask, (0.5 * strokeWidth - visibleRect->x) * ratio,
                                         (0.5 * strokeWidth - visibleRect->y) * ratio);
+        cairo_surface_set_device_scale(surfMask, ratio, ratio);
 
         crMask = cairo_create(surfMask);
 
-        cairo_scale(crMask, ratio, ratio);
 
         // Paint the starting point
         this->paintDot(this->buttonDownPoint.x, this->buttonDownPoint.y,

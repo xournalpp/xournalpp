@@ -66,12 +66,10 @@ void VerticalToolHandler::redrawBuffer() {
     g_assert_nonnull(this->crBuffer);
 
     cairo_t* cr = cairo_create(this->crBuffer);
-    cairo_scale(cr, this->zoom, this->zoom);
 
     // Clear the buffer first
     cairo_save(cr);
-    cairo_set_source_rgba(cr, 0, 0, 0, 0);
-    cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+    cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
     cairo_paint(cr);
     cairo_restore(cr);
 
@@ -88,7 +86,7 @@ void VerticalToolHandler::redrawBuffer() {
     cairo_destroy(cr);
 }
 
-void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
+void VerticalToolHandler::paint(cairo_t* cr) {
     GdkRGBA selectionColor = view->getSelectionColor();
 
     cairo_set_line_width(cr, 1);
@@ -98,7 +96,7 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
     const double y = std::min(this->startY, this->endY);
     const double dy = this->endY - this->startY;
 
-    cairo_rectangle(cr, 0, y * zoom, this->page->getWidth() * zoom, std::abs(dy) * zoom);
+    cairo_rectangle(cr, 0, y, this->page->getWidth(), std::abs(dy));
 
     cairo_stroke_preserve(cr);
     auto applied = GdkRGBA{selectionColor.red, selectionColor.green, selectionColor.blue, 0.3};
@@ -106,7 +104,7 @@ void VerticalToolHandler::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
     cairo_fill(cr);
 
 
-    const double elemY = (this->spacingSide == Side::Below ? this->endY : dy) * zoom;
+    const double elemY = (this->spacingSide == Side::Below ? this->endY : dy);
     cairo_set_source_surface(cr, this->crBuffer, 0, elemY);
     cairo_paint(cr);
 
@@ -186,6 +184,8 @@ void VerticalToolHandler::updateZoom(const double newZoom) {
 
     // The buffer only needs to be recreated if the zoom has increased.
     if (newZoom < oldZoom) {
+        assert(this->crBuffer);
+        cairo_surface_set_device_scale(this->crBuffer, newZoom, newZoom);
         return;
     }
 
@@ -204,4 +204,5 @@ void VerticalToolHandler::updateZoom(const double newZoom) {
     } else {
         this->crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, bufWidth, bufHeight);
     }
+    cairo_surface_set_device_scale(this->crBuffer, newZoom, newZoom);
 };

@@ -17,7 +17,7 @@ SearchControl::~SearchControl() { freeSearchResults(); }
 
 void SearchControl::freeSearchResults() { this->results.clear(); }
 
-void SearchControl::paint(cairo_t* cr, GdkRectangle* rect, double zoom, const GdkRGBA& color) {
+void SearchControl::paint(cairo_t* cr, double zoom, const GdkRGBA& color) {
     // set the line always the same size on display
     cairo_set_line_width(cr, 1 / zoom);
 
