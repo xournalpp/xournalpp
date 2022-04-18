@@ -33,7 +33,7 @@ class Active;
 class StrokeHandler: public InputHandler {
 public:
     StrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
-    ~StrokeHandler() override;
+    ~StrokeHandler() override = default;
 
     void draw(cairo_t* cr) override;
 
@@ -54,7 +54,7 @@ public:
     /**
      * @brief paints a single dot
      */
-    void paintDot(const double x, const double y, const double width) const;
+    void paintDot(cairo_t* cr, const double x, const double y, const double width) const;
 
 protected:
     /**
@@ -65,7 +65,6 @@ protected:
     void drawSegmentTo(const Point& point);
 
     void strokeRecognizerDetected(Stroke* recognized, Layer* layer);
-    void destroySurface();
 
 protected:
     Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.
@@ -73,14 +72,42 @@ protected:
 
 private:
     /**
-     * The masking surface
+     * @brief Create and initialize the mask
+     * The mask is used for strokes that do not require a full redraw at each input event.
+     * For those strokes, whenever a new input event is received, the new segment is simply added to the mask.
+     * The mask is then blitted upon a call to `draw`.
+     *
+     * A stroke requires a full redraw if
+     *      * it has a filling (the filling can not be computed simply from just the last segment)
+     *      * or it has dashes (to get the dash offset right)
+     *
+     * Nb: the dashed exception could be avoided if we recorded the dash offset (= the stroke's length so far)
      */
-    cairo_surface_t* surfMask = nullptr;
+    void createMask();
 
-    /**
-     * And the corresponding cairo_t*
-     */
-    cairo_t* crMask = nullptr;
+    // Helper class to safely handle cairo surface and context
+    class Mask {
+    public:
+        Mask() = delete;
+        Mask(const Mask&) = delete;
+        Mask(Mask&&) = delete;
+        Mask& operator=(const Mask&) = delete;
+        Mask& operator=(Mask&&) = delete;
+
+        Mask(int width, int height);
+        ~Mask() noexcept;
+
+        /**
+         * The masking surface
+         */
+        cairo_surface_t* surf = nullptr;
+
+        /**
+         * And the corresponding cairo_t*
+         */
+        cairo_t* cr = nullptr;
+    };
+    std::optional<Mask> mask;
 
     // to filter out short strokes (usually the user tapping on the page to select it)
     guint32 startStrokeTime{};
@@ -93,8 +120,6 @@ private:
 
     bool hasPressure;
     bool firstPointPressureChange = false;
-
-    bool fullRedraw;
 
     friend class StrokeStabilizer::Active;
 
