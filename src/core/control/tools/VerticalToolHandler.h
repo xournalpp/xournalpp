@@ -43,7 +43,7 @@ public:
     VerticalToolHandler(VerticalToolHandler&&) = delete;
     VerticalToolHandler&& operator=(VerticalToolHandler&&) = delete;
 
-    void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
+    void paint(cairo_t* cr);
 
     /** Update the tool state with the new spacing position */
     void currentPos(double x, double y);

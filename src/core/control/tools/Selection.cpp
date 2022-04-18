@@ -89,7 +89,7 @@ void RectSelection::currentPos(double x, double y) {
 
 auto RectSelection::userTapped(double zoom) -> bool { return this->maxDist < 10 / zoom; }
 
-void RectSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
+void RectSelection::paint(cairo_t* cr, double zoom) {
     GdkRGBA selectionColor = view->getSelectionColor();
 
     // set the line always the same size on display
@@ -129,7 +129,7 @@ public:
 
 RegionSelect::RegionSelect(double x, double y, Redrawable* view): Selection(view) { currentPos(x, y); }
 
-void RegionSelect::paint(cairo_t* cr, GdkRectangle* rect, double zoom) {
+void RegionSelect::paint(cairo_t* cr, double zoom) {
     // at least three points needed
     if (points.size() >= 3) {
         GdkRGBA selectionColor = view->getSelectionColor();

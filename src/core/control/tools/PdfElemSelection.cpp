@@ -56,7 +56,7 @@ bool PdfElemSelection::finalizeSelection(XojPdfPageSelectionStyle style) {
     return !this->selectedTextRects.empty();
 }
 
-void PdfElemSelection::paint(cairo_t* cr, GdkRectangle* rect, double zoom, XojPdfPageSelectionStyle style) {
+void PdfElemSelection::paint(cairo_t* cr, XojPdfPageSelectionStyle style) {
     if (!this->pdf)
         return;
 

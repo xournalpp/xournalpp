@@ -29,7 +29,7 @@ public:
     /** Represents the different kinds of text selection */
     enum class SelectType { word, paragraph, all };
 
-    void paint(cairo_t* cr, GdkRectangle* rect, double zoom);
+    void paint(cairo_t* cr, double zoom);
 
     bool onKeyPressEvent(GdkEventKey* event);
     bool onKeyReleaseEvent(GdkEventKey* event);

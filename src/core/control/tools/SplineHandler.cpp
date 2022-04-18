@@ -28,8 +28,6 @@ void SplineHandler::draw(cairo_t* cr) {
         return;
     }
 
-    double zoom = xournal->getZoom();
-    double radius = RADIUS_WITHOUT_ZOOM / zoom;
     if (xournal->getControl()->getToolHandler()->getDrawingType() != DRAWING_TYPE_SPLINE) {
         g_warning("Drawing type is not spline any longer");
         this->finalizeSpline();
@@ -38,10 +36,10 @@ void SplineHandler::draw(cairo_t* cr) {
         return;
     }
 
-    int dpiScaleFactor = xournal->getDpiScaleFactor();
-    cairo_scale(cr, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
-
+    double zoom = xournal->getZoom();
+    double radius = RADIUS_WITHOUT_ZOOM / zoom;
     double lineWidth = LINE_WIDTH_WITHOUT_ZOOM / zoom;
+
     cairo_set_line_width(cr, lineWidth);
     const Point& firstKnot = this->knots.front();
     const Point& lastKnot = this->knots.back();

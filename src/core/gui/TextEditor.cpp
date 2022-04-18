@@ -951,7 +951,7 @@ void TextEditor::drawCursor(cairo_t* cr, double x, double y, double height, doub
     Util::cairo_set_source_rgbi(cr, this->text->getColor());
 }
 
-void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
+void TextEditor::paint(cairo_t* cr, double zoom) {
     GdkRGBA selectionColor = this->gui->getSelectionColor();
 
     cairo_save(cr);

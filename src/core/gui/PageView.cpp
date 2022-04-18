@@ -848,41 +848,44 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect) {
 
     cairo_restore(cr);
 
-    // don't paint this with scale, because it needs a 1:1 zoom
+    cairo_scale(cr, zoom, zoom);
+
+    /**
+     * All the tool painters below follow the assumption:
+     *  * The given cairo context is in page coordinates: no further scaling/offset is ever required.
+     *
+     * To anyone adding another painter here: please keep this assumption true
+     */
+
     if (this->verticalSpace) {
-        this->verticalSpace->paint(cr, rect, zoom);
+        this->verticalSpace->paint(cr);
     }
 
     if (this->textEditor) {
         cairo_save(cr);
-        cairo_scale(cr, zoom, zoom);
-        this->textEditor->paint(cr, rect, zoom);
+        this->textEditor->paint(cr, zoom);
         cairo_restore(cr);
     }
+
     if (this->selection) {
         cairo_save(cr);
-        cairo_scale(cr, zoom, zoom);
-        this->selection->paint(cr, rect, zoom);
+        this->selection->paint(cr, zoom);
         cairo_restore(cr);
     }
 
     auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
     if (auto* selection = pdfToolbox->getSelection(); selection) {
-        cairo_scale(cr, zoom, zoom);
-        selection->paint(cr, rect, zoom, pdfToolbox->selectionStyle);
+        selection->paint(cr, pdfToolbox->selectionStyle);
     }
 
     if (this->search) {
         cairo_save(cr);
-        cairo_scale(cr, zoom, zoom);
-        this->search->paint(cr, rect, zoom, getSelectionColor());
+        this->search->paint(cr, zoom, getSelectionColor());
         cairo_restore(cr);
     }
 
     if (this->inputHandler) {
         cairo_save(cr);
-        int dpiScaleFactor = xournal->getDpiScaleFactor();
-        cairo_scale(cr, 1.0 / dpiScaleFactor, 1.0 / dpiScaleFactor);
         this->inputHandler->draw(cr);
         cairo_restore(cr);
     }
@@ -999,6 +1002,8 @@ void XojPageView::elementChanged(Element* elem) {
         this->drawingMutex.lock();
 
         cairo_t* cr = cairo_create(this->crBuffer);
+        double ratio = this->xournal->getZoom();
+        cairo_scale(cr, ratio, ratio);
 
         this->inputHandler->draw(cr);
 
