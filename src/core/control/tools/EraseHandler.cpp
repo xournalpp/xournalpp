@@ -11,25 +11,24 @@
 #include "model/Layer.h"
 #include "model/Stroke.h"
 #include "model/eraser/ErasableStroke.h"
+#include "model/eraser/PaddedBox.h"
 #include "undo/DeleteUndoAction.h"
 #include "undo/EraseUndoAction.h"
 #include "undo/UndoRedoHandler.h"
 #include "util/Range.h"
 #include "util/Rectangle.h"
+#include "util/SmallVector.h"
 
 EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler,
-                           Redrawable* view) {
-    this->page = page;
-    this->handler = handler;
-    this->view = view;
-    this->doc = doc;
-
-    this->eraseDeleteUndoAction = nullptr;
-    this->eraseUndoAction = nullptr;
-    this->undo = undo;
-
-    this->halfEraserSize = 0;
-}
+                           Redrawable* view):
+        page(page),
+        handler(handler),
+        view(view),
+        doc(doc),
+        undo(undo),
+        eraseDeleteUndoAction(nullptr),
+        eraseUndoAction(nullptr),
+        halfEraserSize(0) {}
 
 EraseHandler::~EraseHandler() {
     if (this->eraseDeleteUndoAction) {
@@ -45,7 +44,7 @@ void EraseHandler::erase(double x, double y) {
     GdkRectangle eraserRect = {gint(x - halfEraserSize), gint(y - halfEraserSize), gint(halfEraserSize * 2),
                                gint(halfEraserSize * 2)};
 
-    auto* range = new Range(x, y);
+    Range range(x, y);
 
     Layer* l = page->getSelectedLayer();
 
@@ -55,63 +54,81 @@ void EraseHandler::erase(double x, double y) {
         }
     }
 
-    this->view->rerenderRange(*range);
-    delete range;
+    this->view->rerenderRange(range);
 }
 
-void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range* range) {
-    if (!s->intersects(x, y, halfEraserSize)) {
-        return;
-    }
+void EraseHandler::eraseStroke(Layer* l, Stroke* s, double x, double y, Range& range) {
+    ErasableStroke* erasable = s->getErasable();
+    if (!erasable) {
+        if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
+            if (!s->intersects(x, y, halfEraserSize)) {
+                // The stroke does not intersect the eraser square
+                return;
+            }
 
-    // delete complete element
-    if (this->handler->getEraserType() == ERASER_TYPE_DELETE_STROKE) {
-        this->doc->lock();
-        int pos = l->removeElement(s, false);
-        this->doc->unlock();
+            // delete the entire stroke
+            this->doc->lock();
+            auto pos = l->removeElement(s, false);
+            this->doc->unlock();
 
-        if (pos == -1) {
-            return;
-        }
-        range->addPoint(s->getX(), s->getY());
-        range->addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
+            if (pos == -1) {
+                return;
+            }
+            range.addPoint(s->getX(), s->getY());
+            range.addPoint(s->getX() + s->getElementWidth(), s->getY() + s->getElementHeight());
 
-        // removed the if statement - this prevents us from putting multiple elements into a
-        // stroke erase operation, but it also prevents the crashing and layer issues!
-        if (!this->eraseDeleteUndoAction) {
-            auto eraseDel = std::make_unique<DeleteUndoAction>(this->page, true);
-            // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
-            this->eraseDeleteUndoAction = eraseDel.get();
-            this->undo->addUndoAction(std::move(eraseDel));
-        }
+            // removed the if statement - this prevents us from putting multiple elements into a
+            // stroke erase operation, but it also prevents the crashing and layer issues!
+            if (!this->eraseDeleteUndoAction) {
+                auto eraseDel = std::make_unique<DeleteUndoAction>(this->page, true);
+                // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
+                this->eraseDeleteUndoAction = eraseDel.get();
+                this->undo->addUndoAction(std::move(eraseDel));
+            }
 
-        this->eraseDeleteUndoAction->addElement(l, s, pos);
-    } else  // Default eraser
-    {
-        int pos = l->indexOf(s);
-        if (pos == -1) {
-            return;
-        }
+            this->eraseDeleteUndoAction->addElement(l, s, pos);
+        } else {  // Default eraser
+            auto pos = l->indexOf(s);
+            if (pos == -1) {
+                return;
+            }
 
-        if (this->eraseUndoAction == nullptr) {
-            auto eraseUndo = std::make_unique<EraseUndoAction>(this->page);
-            // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
-            this->eraseUndoAction = eraseUndo.get();
-            this->undo->addUndoAction(std::move(eraseUndo));
-        }
+            const double paddingCoeff = PADDING_COEFFICIENT_CAP[s->getStrokeCapStyle()];
+            const PaddedBox paddedEraserBox{{x, y}, halfEraserSize, halfEraserSize + paddingCoeff * s->getWidth()};
+            auto intersectionParameters = s->intersectWithPaddedBox(paddedEraserBox);
 
-        ErasableStroke* eraseable = nullptr;
-        if (s->getErasable() == nullptr) {
+            if (intersectionParameters.empty()) {
+                // The stroke does not intersect the eraser square
+                return;
+            }
+
+            if (this->eraseUndoAction == nullptr) {
+                auto eraseUndo = std::make_unique<EraseUndoAction>(this->page);
+                // Todo check dangerous: this->eraseDeleteUndoAction could be a dangling reference
+                this->eraseUndoAction = eraseUndo.get();
+                this->undo->addUndoAction(std::move(eraseUndo));
+            }
+
             doc->lock();
-            eraseable = new ErasableStroke(s);
-            s->setErasable(eraseable);
+            erasable = new ErasableStroke(*s);
+            s->setErasable(erasable);
             doc->unlock();
             this->eraseUndoAction->addOriginal(l, s, pos);
-        } else {
-            eraseable = s->getErasable();
+            erasable->beginErasure(intersectionParameters, range);
+            paddedEraserBox.addToRange(range);
         }
-
-        eraseable->erase(x, y, halfEraserSize, range);
+    } else {
+        /**
+         * This stroke has already been touched by the eraser
+         * (Necessarily the default eraser)
+         */
+        auto pos = l->indexOf(s);
+        if (pos == -1) {
+            return;
+        }
+        const double paddingCoeff = PADDING_COEFFICIENT_CAP[s->getStrokeCapStyle()];
+        const PaddedBox paddedEraserBox{{x, y}, halfEraserSize, halfEraserSize + paddingCoeff * s->getWidth()};
+        erasable->erase(paddedEraserBox, range);
     }
 }
 

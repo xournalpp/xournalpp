@@ -7,6 +7,7 @@
 #include "util/LoopUtil.h"
 
 #include "DocumentView.h"
+#include "ErasableStrokeView.h"
 
 using xoj::util::Rectangle;
 using namespace xoj::view;
@@ -17,11 +18,6 @@ void StrokeView::pathToCairo(cairo_t* cr) const {
     for_first_then_each(
             s->getPointVector(), [cr](auto const& first) { cairo_move_to(cr, first.x, first.y); },
             [cr](auto const& other) { cairo_line_to(cr, other.x, other.y); });
-}
-
-void StrokeView::drawErasableStroke(cairo_t* cr, const Stroke* s) {
-    ErasableStroke* e = s->getErasable();
-    e->draw(cr);
 }
 
 /**
@@ -72,15 +68,22 @@ void StrokeView::draw(const Context& ctx) const {
         return;
     }
 
-    cairo_save(ctx.cr);
-
     const bool highlighter = s->getToolType() == STROKE_TOOL_HIGHLIGHTER;
     const bool filledHighlighter = highlighter && s->getFill() != -1;
     const bool drawTranslucent = ctx.fadeOutNonAudio && s->getAudioFilename().empty();
     const bool useMask = (!ctx.noColor && filledHighlighter) || drawTranslucent;
 
+    if (ctx.showCurrentEdition && filledHighlighter && s->getErasable() != nullptr) {
+        // Currently being erased filled highlighter strokes need a special treatment
+        ErasableStrokeView erasableStrokeView(*s->getErasable());
+        erasableStrokeView.paintFilledHighlighter(ctx.cr);
+        return;
+    }
+
     // The mask will be colorblind
     const bool noColor = ctx.noColor || useMask;
+
+    cairo_save(ctx.cr);
 
     cairo_surface_t* surfMask = nullptr;
 
@@ -126,19 +129,7 @@ void StrokeView::draw(const Context& ctx) const {
     }
 
     cairo_set_line_join(cr, CAIRO_LINE_JOIN_ROUND);
-
-    cairo_line_cap_t capType;
-    switch (s->getStrokeCapStyle()) {
-        case StrokeCapStyle::BUTT:
-            capType = CAIRO_LINE_CAP_BUTT;
-            break;
-        case StrokeCapStyle::SQUARE:
-            capType = CAIRO_LINE_CAP_SQUARE;
-            break;
-        default:
-            capType = CAIRO_LINE_CAP_ROUND;
-    }
-    cairo_set_line_cap(cr, capType);
+    cairo_set_line_cap(cr, CAIRO_LINE_CAP[s->getStrokeCapStyle()]);
 
     if (auto fill = s->getFill(); fill != -1) {
         /**
@@ -155,9 +146,15 @@ void StrokeView::draw(const Context& ctx) const {
             Util::cairo_set_source_rgbi(cr, s->getColor(), static_cast<double>(fill) / 255.0);
         }
         cairo_set_operator(cr, useMask ? CAIRO_OPERATOR_SOURCE : CAIRO_OPERATOR_OVER);
-        pathToCairo(cr);
 
-        cairo_fill(cr);
+        if (ErasableStroke* erasable = s->getErasable(); erasable != nullptr && ctx.showCurrentEdition) {
+            // don't render erasable for previews
+            ErasableStrokeView erasableStrokeView(*erasable);
+            erasableStrokeView.drawFilling(cr);
+        } else {
+            pathToCairo(cr);
+            cairo_fill(cr);
+        }
     }
 
     /**
@@ -183,9 +180,10 @@ void StrokeView::draw(const Context& ctx) const {
         cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
     }
 
-    if (s->getErasable() && ctx.showCurrentEdition) {
+    if (ErasableStroke* erasable = s->getErasable(); erasable != nullptr && ctx.showCurrentEdition) {
         // don't render erasable for previews
-        drawErasableStroke(cr, s);
+        ErasableStrokeView erasableStrokeView(*erasable);
+        erasableStrokeView.draw(cr);
     } else if (s->hasPressure() && !highlighter) {
         drawWithPressure(cr);
     } else {

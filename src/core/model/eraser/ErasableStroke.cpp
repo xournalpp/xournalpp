@@ -4,300 +4,380 @@
 
 #include "model/Stroke.h"
 #include "util/Range.h"
+#include "util/SmallVector.h"
+#include "util/UnionOfIntervals.h"
 
-#include "ErasableStrokePart.h"
+#include "ErasableStrokeOverlapTree.h"
+#include "PaddedBox.h"
 
-ErasableStroke::ErasableStroke(Stroke* stroke): stroke(stroke) {
+using xoj::util::Rectangle;
 
-    for (int i = 1; i < stroke->getPointCount(); i++) {
-        parts.emplace_back(stroke->getPoint(i - 1), stroke->getPoint(i));
-    }
+ErasableStroke::ErasableStroke(const Stroke& stroke): stroke(stroke) {
+    const auto& pts = this->stroke.getPointVector();
+    closedStroke = pts.size() >= 3 && pts.front().lineLengthTo(pts.back()) < CLOSED_STROKE_DISTANCE;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// This is done in a Thread, every thing else in the main loop /////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-void ErasableStroke::draw(cairo_t* cr) {
-    this->partLock.lock();
-    PartList tmpCopy = parts;
-    this->partLock.unlock();
-
-    double w = this->stroke->getWidth();
-
-    for (ErasableStrokePart& part: tmpCopy) {
-        if (part.getWidth() == Point::NO_PRESSURE) {
-            cairo_set_line_width(cr, w);
-        } else {
-            cairo_set_line_width(cr, part.getWidth());
-        }
-
-        std::vector<Point> const& pl = part.getPoints();
-        cairo_move_to(cr, pl[0].x, pl[0].y);
-
-        for (auto pointIter = pl.begin() + 1; pointIter != pl.end(); ++pointIter) {
-            cairo_line_to(cr, pointIter->x, pointIter->y);
-        }
-        cairo_stroke(cr);
+#ifdef DEBUG_ERASABLE_STROKE_BOXES
+ErasableStroke::~ErasableStroke() {
+    if (this->surfDebug) {
+        cairo_surface_destroy(this->surfDebug);
+        this->surfDebug = nullptr;
+    }
+    if (this->crDebug) {
+        cairo_destroy(this->crDebug);
+        this->crDebug = nullptr;
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
+#else
+ErasableStroke::~ErasableStroke() = default;
+#endif
 
 /**
- * The only public method
+ * Erasure works as follows:
+ *  * Two squares: * the visible eraser square
+ *                 * the same square with a padding depending on the stroke's width (see #997)
+ *
+ *  We erase every section of the stroke that comes in the box with its padding, provided it hits the box itself at
+ *  some point.
+ *  This means we erase a little outside the visible box, but only when the stroke enters or leaves the visible box.
  */
-auto ErasableStroke::erase(double x, double y, double halfEraserSize, Range* range) -> Range* {
-    this->repaintRect = range;
+void ErasableStroke::beginErasure(const IntersectionParametersContainer& paddedIntersections, Range& range) {
+    size_t n = this->stroke.getPointCount();
+    if (n < 2) {
+        return;
+    }
 
-    this->partLock.lock();
-    PartList tmpCopy = parts;
-    this->partLock.unlock();
+    assert(paddedIntersections.size() % 2 == 0);
 
-    for (auto partIter = tmpCopy.begin(); partIter != tmpCopy.end();) {
-        if (!erase(x, y, halfEraserSize, partIter, tmpCopy)) {
-            ++partIter;
+    UnionOfIntervals<PathParameter> erasedSections;
+    erasedSections.appendData(paddedIntersections);
+
+    // Now remaining sections
+    erasedSections.complement({0, 0.0}, {n - 2, 1.0});
+
+    const bool highlighter = this->stroke.getToolType() == STROKE_TOOL_HIGHLIGHTER;
+    const bool filled = this->stroke.getFill() != -1;
+    if (highlighter || filled) {
+        auto subsections = erasedSections.cloneToIntervalVector();
+        if (filled) {
+            if (subsections.size() == 1) {
+                // We erased the stroke from its ends
+                const auto& subsection = subsections.back();
+                const Point& p1 = this->stroke.getPointVector().front();
+                range.addPoint(p1.x, p1.y);
+                const Point& p2 = this->stroke.getPointVector().back();
+                range.addPoint(p2.x, p2.y);
+                Point p = this->stroke.getPoint(subsection.min);
+                range.addPoint(p.x, p.y);
+                p = this->stroke.getPoint(subsection.max);
+                range.addPoint(p.x, p.y);
+            } else {
+                // The stroke was split in two or more (and possibly shrank). Need to rerender its entire box.
+                range.addPoint(this->stroke.getX(), this->stroke.getY());
+                range.addPoint(this->stroke.getX() + this->stroke.getElementWidth(),
+                               this->stroke.getY() + this->stroke.getElementHeight());
+            }
+        } else if (subsections.size() > 1) {
+            /**
+             * Highlighter and the stroke has been split in two or more subsections.
+             * Rerender wherever those subsections overlap
+             */
+            addOverlapsToRange(subsections, range);
         }
     }
 
-    this->partLock.lock();
-    parts = tmpCopy;
-    this->partLock.unlock();
-
-    return this->repaintRect;
+    {  // lock_guard range
+        std::lock_guard<std::mutex> lock(this->sectionsMutex);
+        this->remainingSections.swap(erasedSections);
+    }  // release the mutex
 }
 
-void ErasableStroke::addRepaintRect(double x, double y, double width, double height) {
-    if (this->repaintRect) {
-        this->repaintRect->addPoint(x, y);
+void ErasableStroke::erase(const PaddedBox& box, Range& range) {
+    size_t n = (size_t)this->stroke.getPointCount();
+    if (n < 2) {
+        g_warning("Erasing empty stroke");
+        return;
+    }
+
+    std::vector<SubSection> sections = this->getRemainingSubSectionsVector();
+
+    if (sections.empty()) {
+        /** Nothing left to erase! **/
+        std::lock_guard<std::mutex> lock(this->boxesMutex);
+        boundingBoxes.clear();
+        return;
+    }
+
+    if (changesAtLastIteration) {
+        // Remove the boxes of the cache corresponding to sections that no longer exist
+        std::lock_guard<std::mutex> lock(this->boxesMutex);
+        auto it = boundingBoxes.begin();
+        for (auto itSection = sections.cbegin(), itSectionEnd = sections.cend();
+             it != boundingBoxes.end() && itSection != itSectionEnd;) {
+            if (*itSection < it->first) {
+                ++itSection;
+            } else if (*itSection > it->first) {
+                it = boundingBoxes.erase(it);
+            } else {
+                ++it;
+            }
+        }
+        boundingBoxes.erase(it, boundingBoxes.end());
+    }
+
+    /**
+     * Determine which (intervals of) segments are still (partially) visible and have their bounding box intersecting
+     * the eraser square
+     *
+     * This avoids computing a segment's intersections with the eraser box twice
+     */
+    std::vector<Interval<size_t>> indexIntervals;
+
+    for (const SubSection& section: sections) {
+        if (getSubSectionBoundingBox(section).intersects(box.getInnerRectangle())) {
+            if (indexIntervals.empty()) {
+                indexIntervals.emplace_back(section.min.index, section.max.index);
+            } else {
+                if (indexIntervals.back().max + 1 >= section.min.index) {
+                    // Merge together two sections if the first ends in the segment in which the second begins
+                    indexIntervals.back().envelop(section.max.index);
+                } else {
+                    indexIntervals.emplace_back(section.min.index, section.max.index);
+                }
+            }
+        }
+    }
+
+    UnionOfIntervals<PathParameter> newErasedSections;
+
+    for (auto& i: indexIntervals) {
+        newErasedSections.appendData(this->stroke.intersectWithPaddedBox(box, i.min, i.max));
+    }
+
+    changesAtLastIteration = !newErasedSections.empty();
+    if (changesAtLastIteration) {
+        const bool highlighter = this->stroke.getToolType() == STROKE_TOOL_HIGHLIGHTER;
+        const bool filled = this->stroke.getFill() != -1;
+        if (highlighter || filled) {
+            /**
+             * Detect if a section has been modified. If so, rerender whatever needs rerendering.
+             */
+
+            std::vector<SubSection> newRemainingSections;
+            // Update the remaining sections
+            newErasedSections.complement({0, 0.0}, {n - 2, 1.0});
+            {  // lock_guard scope
+                std::lock_guard<std::mutex> lock(sectionsMutex);
+                remainingSections.intersect(newErasedSections.getData());
+                newRemainingSections = remainingSections.cloneToIntervalVector();
+            }  // Release the mutex
+
+            auto itNewSection = newRemainingSections.begin();
+            auto itNewSectionEnd = newRemainingSections.end();
+            for (auto& section: sections) {
+                // Find out which new sections belonged to the same section before
+                std::vector<SubSection> subsections;
+                while (itNewSection != itNewSectionEnd && itNewSection->max <= section.max) {
+                    subsections.emplace_back(*itNewSection);
+                    ++itNewSection;
+                }
+                if (subsections.empty()) {
+                    // The section was entirely erased. No need for special rerendering.
+                    continue;
+                }
+                if (filled) {
+                    if (subsections.size() == 1) {
+                        const auto& subsection = subsections.back();
+                        if (subsection.min == section.min && subsection.max == section.max) {
+                            // No modification
+                            continue;
+                        }
+                        // The section shrank.
+                        Point p = this->stroke.getPoint(section.min);
+                        range.addPoint(p.x, p.y);
+                        p = this->stroke.getPoint(section.max);
+                        range.addPoint(p.x, p.y);
+                        p = this->stroke.getPoint(subsection.min);
+                        range.addPoint(p.x, p.y);
+                        p = this->stroke.getPoint(subsection.max);
+                        range.addPoint(p.x, p.y);
+                        continue;
+                    }
+                    // The section was split in two or more (and possibly shrank). Need to rerender its entire box.
+                    auto rect = this->getSubSectionBoundingBox(section);
+                    range.addPoint(rect.x, rect.y);
+                    range.addPoint(rect.x + rect.width, rect.y + rect.height);
+                    break;
+                }
+                // Necessarily highlighter and not filled
+                if (subsections.size() > 1) {
+                    /**
+                     * The section has been split in two (or more).
+                     * Rerender wherever those subsections overlap.
+                     */
+                    addOverlapsToRange(subsections, range);
+                }
+            }
+        } else {
+            // Update the remaining sections
+            newErasedSections.complement({0, 0.0}, {n - 2, 1.0});
+            {  // lock_guard scope
+                std::lock_guard<std::mutex> lock(sectionsMutex);
+                remainingSections.intersect(newErasedSections.getData());
+            }  // Release the mutex
+        }
+        box.addToRange(range);
+    }
+}
+
+auto ErasableStroke::getStrokes() const -> std::vector<std::unique_ptr<Stroke>> {
+    std::vector<SubSection> sections = this->getRemainingSubSectionsVector();
+
+    std::vector<std::unique_ptr<Stroke>> strokes;
+    strokes.reserve(sections.size());
+
+    bool mergeFirstAndLast = this->closedStroke && sections.size() >= 2 &&
+                             sections.front().min == PathParameter(0, 0.0) &&
+                             sections.back().max == PathParameter(this->stroke.getPointCount() - 2, 1.0);
+
+    auto sectionIt = sections.cbegin();
+    auto sectionEndIt = sections.cend();
+
+    if (mergeFirstAndLast) {
+        /**
+         * Clone the first and last sections as a single stroke
+         */
+        strokes.push_back(this->stroke.cloneCircularSectionOfClosedStroke(sections.back().min, sections.front().max));
+
+        // Avoid cloning those sections again
+        ++sectionIt;
+        --sectionEndIt;
+    }
+
+    for (; sectionIt != sectionEndIt; ++sectionIt) {
+        strokes.push_back(this->stroke.cloneSection(sectionIt->min, sectionIt->max));
+    }
+
+    return strokes;
+}
+
+std::vector<ErasableStroke::SubSection> ErasableStroke::getRemainingSubSectionsVector() const {
+    std::lock_guard<std::mutex> lock(this->sectionsMutex);
+    return this->remainingSections.cloneToIntervalVector();
+}
+
+bool ErasableStroke::isClosedStroke() const { return this->closedStroke; }
+
+Rectangle<double> ErasableStroke::getSubSectionBoundingBox(const ErasableStroke::SubSection& section) const {
+
+    std::lock_guard<std::mutex> lock(this->boxesMutex);
+
+    //  First look for the box in the cache
+    auto it = std::lower_bound(boundingBoxes.begin(), boundingBoxes.end(), section,
+                               [](const std::pair<SubSection, Rectangle<double>>& cacheData,
+                                  const SubSection& section) { return cacheData.first < section; });
+    if (it != boundingBoxes.end() && section == it->first) {
+        // There was already a box computed for this section
+        return it->second;
+    }
+
+    // Need to compute the bounding box
+    Point p = this->stroke.getPoint(section.min);
+    double minX = p.x;
+    double maxX = p.x;
+    double minY = p.y;
+    double maxY = p.y;
+
+    auto data = this->stroke.getPointVector();
+    auto endIt = std::next(data.cbegin(), (std::ptrdiff_t)section.max.index + 1);
+    for (auto ptIt = std::next(data.cbegin(), (std::ptrdiff_t)section.min.index + 1); ptIt != endIt; ++ptIt) {
+        minX = std::min(minX, ptIt->x);
+        maxX = std::max(maxX, ptIt->x);
+        minY = std::min(minY, ptIt->y);
+        maxY = std::max(maxY, ptIt->y);
+    }
+
+    Point q = this->stroke.getPoint(section.max);
+    minX = std::min(minX, q.x);
+    maxX = std::max(maxX, q.x);
+    minY = std::min(minY, q.y);
+    maxY = std::max(maxY, q.y);
+
+    /**
+     * Add the stroke width
+     * This is not quite accurate for stroke with pressure values
+     */
+    const double strokeWidth = this->stroke.getWidth();
+    const double width = maxX - minX + strokeWidth;
+    const double height = maxY - minY + strokeWidth;
+    minX -= 0.5 * strokeWidth;
+    minY -= 0.5 * strokeWidth;
+
+    // Assign the computed rectangle to the cache
+    it = boundingBoxes.emplace(it, std::piecewise_construct, std::forward_as_tuple(section),
+                               std::forward_as_tuple(minX, minY, width, height));
+
+    return it->second;
+}
+
+void ErasableStroke::addOverlapsToRange(const std::vector<SubSection>& subsections, Range& range) {
+
+    // Will contain the intersection trees of the subsections
+    std::vector<OverlapTree> overlapTrees(subsections.size());
+    /**
+     * For each given subsection, we compute a binary tree whose leaves correspond to individual segments in the
+     * subsection and contain the thin bounding box of the segments.
+     * The nodes contain the union of the bounding boxes of their children, so that the root itself contains the
+     * bounding box of the subsection.
+     *
+     * To compute the overlaps between two subsections, we intersect the bounding boxes in their trees, until we reach
+     * intersecting leaves.
+     * See ErasableStroke::OverlapTree for the details.
+     */
+
+    const double halfWidth = 0.5 * this->stroke.getWidth();
+    size_t i = 0;
+    size_t j = 0;
+    for (auto it1 = subsections.cbegin(), itEnd = subsections.cend(); it1 != itEnd; ++it1, ++i) {
+        j = i + 1;
+        for (auto it2 = std::next(it1); it2 != itEnd; ++it2, ++j) {
+            if (getSubSectionBoundingBox(*it1).intersects(getSubSectionBoundingBox(*it2))) {
+                // Compute the intersections trees if they have not yet been computed
+                if (!overlapTrees[i].isPopulated()) {
+                    overlapTrees[i].populate(*it1, this->stroke);
+                }
+                if (!overlapTrees[j].isPopulated()) {
+                    overlapTrees[j].populate(*it2, this->stroke);
+                }
+#ifdef DEBUG_ERASABLE_STROKE_BOXES
+                overlapTrees[i].addOverlapsToRange(overlapTrees[j], halfWidth, range, crDebug);
+#else
+                overlapTrees[i].addOverlapsToRange(overlapTrees[j], halfWidth, range);
+#endif
+            }
+        }
+    }
+}
+
+#ifdef DEBUG_ERASABLE_STROKE_BOXES
+void ErasableStroke::paintDebugRect(const Rectangle<double>& rect, char color, cairo_t* cr) {
+    if (cr == nullptr) {
+        return;
+    }
+    if (color == 'r') {
+        cairo_set_source_rgba(cr, 1, 0, 0, 0.8);
+    } else if (color == 'g') {
+        cairo_set_source_rgba(cr, 0, 1, 0, 0.8);
+    } else if (color == 'b') {
+        cairo_set_source_rgba(cr, 0, 0, 1, 0.8);
     } else {
-        this->repaintRect = new Range(x, y);
+        cairo_set_source_rgba(cr, 0.5, 0.5, 0.5, 0.8);
     }
-
-    this->repaintRect->addPoint(x + width, y + height);
+    cairo_move_to(cr, rect.x, rect.y);
+    cairo_line_to(cr, rect.x + rect.width, rect.y);
+    cairo_line_to(cr, rect.x + rect.width, rect.y + rect.height);
+    cairo_line_to(cr, rect.x, rect.y + rect.height);
+    cairo_line_to(cr, rect.x, rect.y);
+    cairo_stroke(cr);
 }
-
-bool ErasableStroke::erase(double x, double y, double halfEraserSize, PartList::iterator& partIter, PartList& list) {
-    if (partIter->getPoints().size() < 2) {
-        return false;
-    }
-
-    Point eraser(x, y);
-
-    Point a = partIter->getPoints().front();
-    Point b = partIter->getPoints().back();
-
-    if (eraser.lineLengthTo(a) < halfEraserSize * 1.2 && eraser.lineLengthTo(b) < halfEraserSize * 1.2) {
-        addRepaintRect(partIter->getX(), partIter->getY(), partIter->getElementWidth(), partIter->getElementHeight());
-        partIter = list.erase(partIter);
-
-        return true;
-    }
-
-    double x1 = x - halfEraserSize;
-    double x2 = x + halfEraserSize;
-    double y1 = y - halfEraserSize;
-    double y2 = y + halfEraserSize;
-
-    double aX = a.x;
-    double aY = a.y;
-    double bX = b.x;
-    double bY = b.y;
-
-    // check first point
-    if (aX >= x1 && aY >= y1 && aX <= x2 && aY <= y2) {
-        bool deleteAfter = false;
-
-        if (erasePart(x, y, halfEraserSize, partIter, list, &deleteAfter)) {
-            addRepaintRect(partIter->getX(), partIter->getY(), partIter->getElementWidth(),
-                           partIter->getElementHeight());
-            partIter->calcSize();
-        }
-
-        if (deleteAfter) {
-            partIter = list.erase(partIter);
-            return true;
-        }
-
-        return false;
-    }
-
-    // check last point
-    if (bX >= x1 && bY >= y1 && bX <= x2 && bY <= y2) {
-        bool deleteAfter = false;
-
-        if (erasePart(x, y, halfEraserSize, partIter, list, &deleteAfter)) {
-            addRepaintRect(partIter->getX(), partIter->getY(), partIter->getElementWidth(),
-                           partIter->getElementHeight());
-            partIter->calcSize();
-        }
-
-        if (deleteAfter) {
-            partIter = list.erase(partIter);
-            return true;
-        }
-
-        return false;
-    }
-
-    double len = hypot(bX - aX, bY - aY);
-    /**
-     * The distance of the center of the eraser box to the line passing through (aX, aY) and (bX, bY)
-     */
-    double p = std::abs((x - aX) * (aY - bY) + (y - aY) * (bX - aX)) / len;
-
-    // If the distance p of the center of the eraser box to the (full) line is in the range,
-    // we check whether the eraser box is not too far from the line segment through the two points.
-
-    if (p <= halfEraserSize) {
-        double centerX = (aX + bX) / 2;
-        double centerY = (aY + bY) / 2;
-        double distance = hypot(x - centerX, y - centerY);
-
-        // For the above check we imagine a circle whose center is the mid point of the two points of the stroke
-        // and whose radius is half the length of the line segment plus half the diameter of the eraser box
-        // plus some small padding
-        // If the center of the eraser box lies within that circle then we consider it to be close enough
-
-        distance -= halfEraserSize * std::sqrt(2);
-
-        constexpr double PADDING = 0.1;
-
-        if (distance <= len / 2 + PADDING) {
-            bool deleteAfter = false;
-
-            if (erasePart(x, y, halfEraserSize, partIter, list, &deleteAfter)) {
-                addRepaintRect(partIter->getX(), partIter->getY(), partIter->getElementWidth(),
-                               partIter->getElementHeight());
-                partIter->calcSize();
-            }
-
-            if (deleteAfter) {
-                partIter = list.erase(partIter);
-                return true;
-            }
-
-            return false;
-        }
-    }
-
-    return false;
-}
-
-auto ErasableStroke::erasePart(double x, double y, double halfEraserSize, PartList::iterator& partIter, PartList& list,
-                               bool* deleteStrokeAfter) -> bool {
-    bool changed = false;
-
-    partIter->splitFor(halfEraserSize);
-
-    double x1 = x - halfEraserSize;
-    double x2 = x + halfEraserSize;
-    double y1 = y - halfEraserSize;
-    double y2 = y + halfEraserSize;
-
-    /**
-     * erase the beginning
-     */
-
-    std::vector<Point>& points = partIter->getPoints();
-
-    for (auto pointIter = points.begin(); pointIter != points.end();) {
-        if (pointIter->x >= x1 && pointIter->y >= y1 && pointIter->x <= x2 && pointIter->y <= y2) {
-            pointIter = points.erase(pointIter);
-            changed = true;
-        } else {
-            // only the beginning is handled here
-            break;
-        }
-    }
-
-    /**
-     * erase the end
-     */
-    // ugly loop avoiding reverse_iterators
-    for (auto pointIter = points.end() - 1; pointIter-- != points.begin();) {
-        if (pointIter->x >= x1 && pointIter->y >= y1 && pointIter->x <= x2 && pointIter->y <= y2) {
-            points.erase(pointIter);
-            changed = true;
-        } else {
-            // only the end is handled here
-            break;
-        }
-    }
-
-    /**
-     * handle the rest
-     */
-
-    std::vector<std::vector<Point>> splitPoints{{}};
-
-    for (auto pointIter = points.begin(); pointIter != points.end(); ++pointIter) {
-        if (pointIter->x >= x1 && pointIter->y >= y1 && pointIter->x <= x2 && pointIter->y <= y2) {
-            if (!splitPoints.back().empty()) {
-                splitPoints.push_back({});
-            }
-            changed = true;
-        } else {
-            splitPoints.back().push_back(*pointIter);
-        }
-    }
-    if (splitPoints.back().empty()) {
-        splitPoints.pop_back();
-    }
-
-    points.clear();
-    if (!splitPoints.empty()) {
-        // Replace the points of the current part with this first subpart
-        points = std::move(splitPoints.front());
-
-        PartList::iterator insertPos = std::next(partIter);
-
-        // create data structure for all new (splitted) parts
-        for (auto it = splitPoints.begin() + 1; it != splitPoints.end(); ++it) {
-            // Push the other subparts
-            PartList::iterator newPart = list.emplace(insertPos, partIter->getWidth());
-            newPart->getPoints() = std::move(*it);
-        }
-    } else {
-        // no parts, all deleted
-        *deleteStrokeAfter = true;
-    }
-
-    return changed;
-}
-
-auto ErasableStroke::getStroke(Stroke* original) -> std::vector<std::unique_ptr<Stroke>> {
-    std::vector<std::unique_ptr<Stroke>> strokeList;
-
-    Point lastPoint(NAN, NAN);
-    for (ErasableStrokePart& part: parts) {
-        std::vector<Point> const& points = part.getPoints();
-        if (points.size() < 2) {
-            continue;
-        }
-
-        Point a = points.front();
-        Point b = points.back();
-        a.z = part.getWidth();
-
-        if (!lastPoint.equalsPos(a) || strokeList.empty()) {
-            if (!strokeList.empty()) {
-                strokeList.back()->addPoint(lastPoint);
-            }
-            auto& newStroke = strokeList.emplace_back(std::make_unique<Stroke>());
-            newStroke->setColor(original->getColor());
-            newStroke->setToolType(original->getToolType());
-            newStroke->setLineStyle(original->getLineStyle());
-            newStroke->setWidth(original->getWidth());
-        }
-        strokeList.back()->addPoint(a);
-        lastPoint = b;
-    }
-    if (!strokeList.empty()) {
-        strokeList.back()->addPoint(lastPoint);
-    }
-
-    return strokeList;
-}
+#endif
