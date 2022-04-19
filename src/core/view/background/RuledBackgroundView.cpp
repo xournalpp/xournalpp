@@ -11,7 +11,9 @@ using namespace xoj::view;
 RuledBackgroundView::RuledBackgroundView(double pageWidth, double pageHeight, Color backgroundColor,
                                          const BackgroundConfig& config):
         OneColorBackgroundView(pageWidth, pageHeight, backgroundColor, config, DEFAULT_LINE_WIDTH, DEFAULT_H_LINE_COLOR,
-                               ALT_DEFAULT_H_LINE_COLOR) {}
+                               ALT_DEFAULT_H_LINE_COLOR) {
+    config.loadValue(CFG_RASTER, lineSpacing);
+}
 
 void RuledBackgroundView::draw(cairo_t* cr) const {
     // Paint the background color
@@ -27,12 +29,12 @@ void RuledBackgroundView::draw(cairo_t* cr) const {
     //  Add a 0.5 * lineWidth padding in case the line is just outside the mask but its thickness still makes it
     //  (partially) visible
     auto [indexMinY, indexMaxY] =
-            getIndexBounds(minY - HEADER_SIZE - 0.5 * lineWidth, maxY - HEADER_SIZE + 0.5 * lineWidth, LINE_SPACING,
-                           0.0, pageHeight - HEADER_SIZE - FOOTER_SIZE);
+            getIndexBounds(minY - HEADER_SIZE - 0.5 * lineWidth, maxY - HEADER_SIZE + 0.5 * lineWidth, lineSpacing, 0.0,
+                           pageHeight - HEADER_SIZE - FOOTER_SIZE);
 
     for (int i = indexMinY; i <= indexMaxY; ++i) {
-        cairo_move_to(cr, minX, HEADER_SIZE + i * LINE_SPACING);
-        cairo_line_to(cr, maxX, HEADER_SIZE + i * LINE_SPACING);
+        cairo_move_to(cr, minX, HEADER_SIZE + i * lineSpacing);
+        cairo_line_to(cr, maxX, HEADER_SIZE + i * lineSpacing);
     }
 
     cairo_save(cr);
