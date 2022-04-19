@@ -48,11 +48,6 @@ struct _GtkXournal {
      */
     ScrollHandling* scrollHandling;
 
-    /**
-     * Visible area
-     */
-    int x;
-    int y;
 
     Layout* layout;
 

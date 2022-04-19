@@ -65,8 +65,6 @@ auto gtk_xournal_new(XournalView* view, InputContext* inputContext) -> GtkWidget
     GtkXournal* xoj = GTK_XOURNAL(g_object_new(gtk_xournal_get_type(), nullptr));
     xoj->view = view;
     xoj->scrollHandling = inputContext->getScrollHandling();
-    xoj->x = 0;
-    xoj->y = 0;
     xoj->layout = new Layout(view, inputContext->getScrollHandling());
     xoj->selection = nullptr;
     xoj->setsquareView = nullptr;
@@ -236,13 +234,6 @@ static void gtk_xournal_draw_shadow(GtkXournal* xournal, cairo_t* cr, int left, 
 void gtk_xournal_repaint_area(GtkWidget* widget, int x1, int y1, int x2, int y2) {
     g_return_if_fail(widget != nullptr);
     g_return_if_fail(GTK_IS_XOURNAL(widget));
-
-    GtkXournal* xournal = GTK_XOURNAL(widget);
-
-    x1 -= xournal->x;
-    x2 -= xournal->x;
-    y1 -= xournal->y;
-    y2 -= xournal->y;
 
     if (x2 < 0 || y2 < 0) {
         return;  // outside visible area

@@ -41,13 +41,10 @@ auto AbstractInputHandler::getPageAtCurrentPosition(InputEvent const& event) -> 
         return nullptr;
     }
 
-    gdouble eventX = event.relativeX;
-    gdouble eventY = event.relativeY;
-
     GtkXournal* xournal = this->inputContext->getXournal();
 
-    double x = eventX + xournal->x;
-    double y = eventY + xournal->y;
+    int x = static_cast<int>(std::round(event.relativeX));
+    int y = static_cast<int>(std::round(event.relativeY));
 
     return xournal->layout->getPageViewAt(x, y);
 }
@@ -64,8 +61,8 @@ auto AbstractInputHandler::getInputDataRelativeToCurrentPage(XojPageView* page, 
     gdouble eventY = event.relativeY;
 
     PositionInputData pos = {};
-    pos.x = eventX - page->getX() - xournal->x;
-    pos.y = eventY - page->getY() - xournal->y;
+    pos.x = eventX - static_cast<double>(page->getX());
+    pos.y = eventY - static_cast<double>(page->getY());
     pos.pressure = Point::NO_PRESSURE;
 
     if (this->inputContext->getSettings()->isPressureSensitivity()) {

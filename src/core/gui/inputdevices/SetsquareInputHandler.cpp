@@ -401,8 +401,8 @@ auto SetsquareInputHandler::getCoords(double xCoord, double yCoord) -> utl::Poin
     const auto zoom = view->getZoom();
     const auto xournal = inputContext->getXournal();
     const auto page = setsquareView->getView();
-    const auto posX = xCoord - static_cast<double>(page->getX() + xournal->x);
-    const auto posY = yCoord - static_cast<double>(page->getY() + xournal->y);
+    const auto posX = xCoord - static_cast<double>(page->getX());
+    const auto posY = yCoord - static_cast<double>(page->getY());
     return utl::Point<double>(posX / zoom, posY / zoom);
 }
 
