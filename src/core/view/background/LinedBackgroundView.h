@@ -22,9 +22,8 @@ public:
 
 protected:
     Color vLineColor;
+    double margin = 72.0;  // default = 1 inch. Negative values put the margin on the right hand side.
 
     constexpr static Color DEFAULT_V_LINE_COLOR = Color(0xFF0080U);
     constexpr static Color ALT_DEFAULT_V_LINE_COLOR = Color(0x220080U);
-
-    constexpr static double MARGIN_SIZE = 72.0;
 };
