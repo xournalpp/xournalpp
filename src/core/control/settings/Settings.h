@@ -215,6 +215,9 @@ public:
     bool isMenubarVisible() const;
     void setMenubarVisible(bool visible);
 
+    const bool isFilepathInTitlebarShown() const;
+    void setFilepathInTitlebarShown(const bool shown);
+
     void setShowPairedPages(bool showPairedPages);
     bool isShowPairedPages() const;
 
@@ -634,6 +637,11 @@ private:
      * If the menu bar is visible on startup
      */
     bool menubarVisible{};
+
+    /**
+     * If the filepath is shown in titlebar
+     */
+    bool filepathShownInTitlebar{};
 
     /**
      *  Hide the scrollbar
