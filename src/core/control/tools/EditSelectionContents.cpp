@@ -24,7 +24,7 @@
 #include "undo/UndoRedoHandler.h"
 #include "util/serializing/ObjectInputStream.h"
 #include "util/serializing/ObjectOutputStream.h"
-#include "view/DocumentView.h"
+#include "view/SelectionView.h"
 
 #include "Selection.h"
 
@@ -497,8 +497,9 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
         cairo_scale(cr2, fx, fy);
         cairo_translate(cr2, -dx, -dy);
         cairo_scale(cr2, zoom, zoom);
-        DocumentView view;
-        view.drawSelection(cr2, this);
+
+        xoj::view::SelectionView view(this);
+        view.draw(xoj::view::Context::createDefault(cr2));
 
         cairo_destroy(cr2);
     }

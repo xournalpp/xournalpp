@@ -8,7 +8,7 @@
 #include "control/zoom/ZoomControl.h"
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
-#include "view/DocumentView.h"
+#include "view/SelectionView.h"
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y,
                                          bool initiallyReverse, ZoomControl* zoomControl, GdkWindow* window):
@@ -80,8 +80,8 @@ void VerticalToolHandler::redrawBuffer() {
     } else {
         g_assert(this->spacingSide == Side::Above);
     }
-    DocumentView v;
-    v.drawSelection(cr, this);
+    xoj::view::SelectionView v(this);
+    v.draw(xoj::view::Context::createDefault(cr));
 
     cairo_destroy(cr);
 }

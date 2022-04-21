@@ -6,12 +6,13 @@
 #include <cairo-svg.h>
 #include <config.h>
 
+#include "model/Text.h"
 #include "util/Util.h"
 #include "util/pixbuf-utils.h"
 #include "util/serializing/BinObjectEncoding.h"
 #include "util/serializing/ObjectInputStream.h"
 #include "util/serializing/ObjectOutputStream.h"
-#include "view/DocumentView.h"
+#include "view/SelectionView.h"
 
 #include "Control.h"
 
@@ -160,8 +161,6 @@ auto ClipboardHandler::copy() -> bool {
     // prepare image contents: PNG
     /////////////////////////////////////////////////////////////////
 
-    DocumentView view;
-
     double dpiFactor = 1.0 / Util::DPI_NORMALIZATION_FACTOR * 300.0;
 
     int width = static_cast<int>(selection->getWidth() * dpiFactor);
@@ -171,7 +170,9 @@ auto ClipboardHandler::copy() -> bool {
     cairo_scale(crPng, dpiFactor, dpiFactor);
 
     cairo_translate(crPng, -selection->getXOnView(), -selection->getYOnView());
-    view.drawSelection(crPng, this->selection);
+
+    xoj::view::SelectionView view(this->selection);
+    view.draw(xoj::view::Context::createDefault(crPng));
 
     cairo_destroy(crPng);
 
@@ -190,7 +191,7 @@ auto ClipboardHandler::copy() -> bool {
                                                 selection->getWidth(), selection->getHeight());
     cairo_t* crSVG = cairo_create(surfaceSVG);
 
-    view.drawSelection(crSVG, this->selection);
+    view.draw(xoj::view::Context::createDefault(crSVG));
 
     cairo_surface_destroy(surfaceSVG);
     cairo_destroy(crSVG);
