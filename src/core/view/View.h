@@ -47,6 +47,7 @@ class StrokeView;
 class TextView;
 
 class LayerView;
+class SelectionView;
 class BackgroundView;
 class ImageBackgroundView;
 

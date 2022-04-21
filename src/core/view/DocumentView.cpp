@@ -1,7 +1,5 @@
 #include "DocumentView.h"
 
-#include "control/tools/EditSelection.h"
-#include "control/tools/Selection.h"
 #include "model/Layer.h"
 #include "model/eraser/ErasableStroke.h"
 #include "view/background/MainBackgroundPainter.h"
@@ -23,15 +21,6 @@ DocumentView::~DocumentView() {
  * Mark stroke with Audio
  */
 void DocumentView::setMarkAudioStroke(bool markAudioStroke) { this->markAudioStroke = markAudioStroke; }
-
-void DocumentView::drawSelection(cairo_t* cr, ElementContainer* container) {
-    xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
-                               (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
-    for (Element* e: container->getElements()) {
-        auto elementView = xoj::view::ElementView::createFromElement(e);
-        elementView->draw(context);
-    }
-}
 
 void DocumentView::limitArea(double x, double y, double width, double height) {
     this->lX = x;

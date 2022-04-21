@@ -24,8 +24,6 @@
 #include "model/TexImage.h"
 #include "model/Text.h"
 
-
-class EditSelection;
 class MainBackgroundPainter;
 
 class DocumentView {
@@ -47,8 +45,6 @@ public:
                   bool hideImageBackground = false, bool hideRulingBackground = false);
 
     void limitArea(double x, double y, double width, double height);
-
-    void drawSelection(cairo_t* cr, ElementContainer* container);
 
     /**
      * Mark stroke with Audio
