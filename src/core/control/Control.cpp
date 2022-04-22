@@ -2398,7 +2398,7 @@ auto Control::showSaveDialog() -> bool {
 }
 
 void Control::updateWindowTitle() {
-    string title{};
+string title{};
 
     this->doc->lock();
     if (doc->getFilepath().empty()) {
@@ -2408,25 +2408,14 @@ void Control::updateWindowTitle() {
             if (undoRedo->isChanged()) {
                 title += "*";
             }
-
-            if (settings->isFilepathInTitlebarShown()) {
-                title += ("[" + doc->getPdfFilepath().parent_path().u8string() + "] - " +
-                          doc->getPdfFilepath().filename().u8string());
-            } else {
-                title += doc->getPdfFilepath().filename().u8string();
-            }
+            title += doc->getPdfFilepath().u8string();
         }
     } else {
         if (undoRedo->isChanged()) {
             title += "*";
         }
 
-        if (settings->isFilepathInTitlebarShown()) {
-            title += ("[" + doc->getFilepath().parent_path().u8string() + "] - " +
-                      doc->getFilepath().filename().u8string());
-        } else {
-            title += doc->getFilepath().filename().u8string();
-        }
+        title += doc->getFilepath().u8string();
     }
     this->doc->unlock();
 
