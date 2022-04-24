@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 11:32+0000\n"
-"PO-Revision-Date: 2022-04-20 11:38\n"
+"POT-Creation-Date: 2022-04-24 17:06+0000\n"
+"PO-Revision-Date: 2022-04-24 17:08\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -76,7 +76,7 @@ msgstr "Efektivigi sur ĉiuj paĝoj"
 msgid "Apply to current page"
 msgstr "Efektivigi sur la aktuala paĝo"
 
-#: ../src/core/control/tools/EditSelection.cpp:353
+#: ../src/core/control/tools/EditSelection.cpp:352
 msgid "Arrange"
 msgstr "Aranĝi"
 
@@ -143,11 +143,11 @@ msgstr "Reen"
 msgid "Background"
 msgstr "Fono"
 
-#: ../src/core/control/tools/EditSelection.cpp:370
+#: ../src/core/control/tools/EditSelection.cpp:369
 msgid "Bring forward"
 msgstr "Porti antaŭen"
 
-#: ../src/core/control/tools/EditSelection.cpp:360
+#: ../src/core/control/tools/EditSelection.cpp:359
 msgid "Bring to front"
 msgstr "Porti malfonen"
 
@@ -1165,11 +1165,11 @@ msgstr "Kombinaĵo de elektitaĵoj"
 msgid "Send Bugreport"
 msgstr "Sendi raporton pri cimo"
 
-#: ../src/core/control/tools/EditSelection.cpp:381
+#: ../src/core/control/tools/EditSelection.cpp:380
 msgid "Send backward"
 msgstr "Porti malantaŭen"
 
-#: ../src/core/control/tools/EditSelection.cpp:389
+#: ../src/core/control/tools/EditSelection.cpp:388
 msgid "Send to back"
 msgstr "Porti fonen"
 
