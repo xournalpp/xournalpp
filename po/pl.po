@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 11:32+0000\n"
-"PO-Revision-Date: 2022-04-20 11:38\n"
+"POT-Creation-Date: 2022-04-24 17:06+0000\n"
+"PO-Revision-Date: 2022-04-24 17:08\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -76,7 +76,7 @@ msgstr "Zastosuj do wszystkich stron"
 msgid "Apply to current page"
 msgstr "Zastosuj do bieżącej strony"
 
-#: ../src/core/control/tools/EditSelection.cpp:353
+#: ../src/core/control/tools/EditSelection.cpp:352
 msgid "Arrange"
 msgstr "Ułóż"
 
@@ -143,11 +143,11 @@ msgstr "Wstecz"
 msgid "Background"
 msgstr "Tło"
 
-#: ../src/core/control/tools/EditSelection.cpp:370
+#: ../src/core/control/tools/EditSelection.cpp:369
 msgid "Bring forward"
 msgstr "Przesuń warstwę wyżej"
 
-#: ../src/core/control/tools/EditSelection.cpp:360
+#: ../src/core/control/tools/EditSelection.cpp:359
 msgid "Bring to front"
 msgstr "Przenieś przed inne warstwy"
 
@@ -1167,11 +1167,11 @@ msgstr "Kombinacja wyboru"
 msgid "Send Bugreport"
 msgstr "Wyślij raport błędu"
 
-#: ../src/core/control/tools/EditSelection.cpp:381
+#: ../src/core/control/tools/EditSelection.cpp:380
 msgid "Send backward"
 msgstr "Przenieś w tył"
 
-#: ../src/core/control/tools/EditSelection.cpp:389
+#: ../src/core/control/tools/EditSelection.cpp:388
 msgid "Send to back"
 msgstr "Przenieś na tył"
 
