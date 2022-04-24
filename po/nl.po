@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 11:32+0000\n"
-"PO-Revision-Date: 2022-04-20 11:38\n"
+"POT-Creation-Date: 2022-04-24 17:06+0000\n"
+"PO-Revision-Date: 2022-04-24 17:08\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -76,7 +76,7 @@ msgstr "Toepassen op alle pagina's"
 msgid "Apply to current page"
 msgstr "Toepassen op huidige pagina"
 
-#: ../src/core/control/tools/EditSelection.cpp:353
+#: ../src/core/control/tools/EditSelection.cpp:352
 msgid "Arrange"
 msgstr "Ordenen"
 
@@ -142,11 +142,11 @@ msgstr "Terug"
 msgid "Background"
 msgstr "Achtergrond"
 
-#: ../src/core/control/tools/EditSelection.cpp:370
+#: ../src/core/control/tools/EditSelection.cpp:369
 msgid "Bring forward"
 msgstr "Naar voren brengen"
 
-#: ../src/core/control/tools/EditSelection.cpp:360
+#: ../src/core/control/tools/EditSelection.cpp:359
 msgid "Bring to front"
 msgstr "Naar voorgrond brengen"
 
@@ -1166,11 +1166,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr "Bugmelding versturen"
 
-#: ../src/core/control/tools/EditSelection.cpp:381
+#: ../src/core/control/tools/EditSelection.cpp:380
 msgid "Send backward"
 msgstr "Naar achter sturen"
 
-#: ../src/core/control/tools/EditSelection.cpp:389
+#: ../src/core/control/tools/EditSelection.cpp:388
 msgid "Send to back"
 msgstr "Naar achtergrond sturen"
 
