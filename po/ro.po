@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-24 17:06+0000\n"
-"PO-Revision-Date: 2022-04-24 17:08\n"
+"POT-Creation-Date: 2022-04-25 15:26+0000\n"
+"PO-Revision-Date: 2022-04-25 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -240,13 +240,13 @@ msgstr "Atașarea nu a putut fi deschisă: {1}. Mesaj de eroare: {2}"
 msgid "Could not open file: \"{1}\""
 msgstr "Nu s-a putut deschide fișierul: \"{1}\""
 
-#: ../src/core/gui/MainWindow.cpp:94
+#: ../src/core/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Nu s-a putut analiza fișierul personalizat toolbar.ini: {1}\n"
 "Barele de instrumente nu vor fi disponibile"
 
-#: ../src/core/gui/MainWindow.cpp:85
+#: ../src/core/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Nu s-a putut analiza fișierul general toolbar.ini: {1}\n"
@@ -305,7 +305,7 @@ msgstr "Nu s-a putut scrie fundalul \"{1}\". Continuând mai departe."
 msgid "Create new layer"
 msgstr "Creare strat nou"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:64
+#: ../src/core/gui/dialog/FormatDialog.cpp:65
 msgid "Custom"
 msgstr "Personalizat"
 
@@ -868,7 +868,7 @@ msgstr "Deschide dosarul cu jurnale"
 msgid "Open file"
 msgstr "Deschide fișier"
 
-#: ../src/core/control/RecentManager.cpp:186
+#: ../src/core/control/RecentManager.cpp:178
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Deschide {1}"
@@ -1168,7 +1168,7 @@ msgstr "Trimite mai departe"
 msgid "Send to back"
 msgstr "Trimite în ultimul plan"
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:63
 msgid "Separator"
 msgstr "Separator"
 
@@ -1570,7 +1570,7 @@ msgstr "Deschide"
 msgid "_Save"
 msgstr "Salvează"
 
-#: ../src/core/control/DeviceListHelper.cpp:112
+#: ../src/core/control/DeviceListHelper.cpp:98
 msgid "cursor"
 msgstr "Cursor"
 
@@ -1603,7 +1603,7 @@ msgstr "Punctată"
 msgid "elements"
 msgstr "elemente"
 
-#: ../src/core/control/DeviceListHelper.cpp:110
+#: ../src/core/control/DeviceListHelper.cpp:96
 msgid "eraser"
 msgstr "Radieră"
 
@@ -1616,7 +1616,7 @@ msgstr "fișier: {1}"
 msgid "image"
 msgstr "imagine"
 
-#: ../src/core/control/DeviceListHelper.cpp:115
+#: ../src/core/control/DeviceListHelper.cpp:101
 msgid "keyboard"
 msgstr "tastatură"
 
@@ -1625,11 +1625,11 @@ msgstr "tastatură"
 msgid "latex"
 msgstr "latex"
 
-#: ../src/core/control/DeviceListHelper.cpp:106
+#: ../src/core/control/DeviceListHelper.cpp:92
 msgid "mouse"
 msgstr "mouse"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
+#: ../src/core/control/DeviceListHelper.cpp:94
 msgid "pen"
 msgstr "stilou"
 
@@ -1647,7 +1647,7 @@ msgstr "Standard"
 msgid "stroke"
 msgstr "Linii"
 
-#: ../src/core/control/DeviceListHelper.cpp:124
+#: ../src/core/control/DeviceListHelper.cpp:110
 msgid "tablet pad"
 msgstr "padul tabletei"
 
@@ -1656,15 +1656,15 @@ msgstr "padul tabletei"
 msgid "text"
 msgstr "text"
 
-#: ../src/core/control/DeviceListHelper.cpp:119
+#: ../src/core/control/DeviceListHelper.cpp:105
 msgid "touchpad"
 msgstr "touchpad"
 
-#: ../src/core/control/DeviceListHelper.cpp:117
+#: ../src/core/control/DeviceListHelper.cpp:103
 msgid "touchscreen"
 msgstr "touchscreen"
 
-#: ../src/core/control/DeviceListHelper.cpp:122
+#: ../src/core/control/DeviceListHelper.cpp:108
 msgid "trackpoint"
 msgstr "Punct pe traseu"
 
