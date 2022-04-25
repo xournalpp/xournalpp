@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-24 17:06+0000\n"
-"PO-Revision-Date: 2022-04-24 17:08\n"
+"POT-Creation-Date: 2022-04-25 15:26+0000\n"
+"PO-Revision-Date: 2022-04-25 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -240,13 +240,13 @@ msgstr "Não foi possível abrir o anexo: {1}. Mensagem de erro: {2}"
 msgid "Could not open file: \"{1}\""
 msgstr "Não foi possível abrir o ficheiro: \"{1}\""
 
-#: ../src/core/gui/MainWindow.cpp:94
+#: ../src/core/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Não foi possível processar o ficheiro personalizado toolbar.ini: {1}\n"
 "As barras de ferramentas não estarão disponíveis"
 
-#: ../src/core/gui/MainWindow.cpp:85
+#: ../src/core/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Não foi possível processar o ficheiro toolbar.ini: {1}\n"
@@ -305,7 +305,7 @@ msgstr "Não foi possível escrever o fundo \"{1}\". Continuando mesmo assim."
 msgid "Create new layer"
 msgstr "Criar nova camada"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:64
+#: ../src/core/gui/dialog/FormatDialog.cpp:65
 msgid "Custom"
 msgstr "Personalizado"
 
@@ -864,7 +864,7 @@ msgstr "Abrir diretório do ficheiro de registo"
 msgid "Open file"
 msgstr "Abrir ficheiro"
 
-#: ../src/core/control/RecentManager.cpp:186
+#: ../src/core/control/RecentManager.cpp:178
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Abrir {1}"
@@ -1164,7 +1164,7 @@ msgstr ""
 msgid "Send to back"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:63
 msgid "Separator"
 msgstr "Separador"
 
@@ -1556,7 +1556,7 @@ msgstr "_Abrir"
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../src/core/control/DeviceListHelper.cpp:112
+#: ../src/core/control/DeviceListHelper.cpp:98
 msgid "cursor"
 msgstr "cursor"
 
@@ -1589,7 +1589,7 @@ msgstr "pontilhado"
 msgid "elements"
 msgstr "elementos"
 
-#: ../src/core/control/DeviceListHelper.cpp:110
+#: ../src/core/control/DeviceListHelper.cpp:96
 msgid "eraser"
 msgstr "borracha"
 
@@ -1602,7 +1602,7 @@ msgstr ""
 msgid "image"
 msgstr "imagem"
 
-#: ../src/core/control/DeviceListHelper.cpp:115
+#: ../src/core/control/DeviceListHelper.cpp:101
 msgid "keyboard"
 msgstr "teclado"
 
@@ -1611,11 +1611,11 @@ msgstr "teclado"
 msgid "latex"
 msgstr "latex"
 
-#: ../src/core/control/DeviceListHelper.cpp:106
+#: ../src/core/control/DeviceListHelper.cpp:92
 msgid "mouse"
 msgstr "rato"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
+#: ../src/core/control/DeviceListHelper.cpp:94
 msgid "pen"
 msgstr "caneta"
 
@@ -1633,7 +1633,7 @@ msgstr "padrão"
 msgid "stroke"
 msgstr "traço"
 
-#: ../src/core/control/DeviceListHelper.cpp:124
+#: ../src/core/control/DeviceListHelper.cpp:110
 msgid "tablet pad"
 msgstr ""
 
@@ -1642,15 +1642,15 @@ msgstr ""
 msgid "text"
 msgstr "texto"
 
-#: ../src/core/control/DeviceListHelper.cpp:119
+#: ../src/core/control/DeviceListHelper.cpp:105
 msgid "touchpad"
 msgstr ""
 
-#: ../src/core/control/DeviceListHelper.cpp:117
+#: ../src/core/control/DeviceListHelper.cpp:103
 msgid "touchscreen"
 msgstr "ecrã tátil"
 
-#: ../src/core/control/DeviceListHelper.cpp:122
+#: ../src/core/control/DeviceListHelper.cpp:108
 msgid "trackpoint"
 msgstr ""
 
