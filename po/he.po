@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-24 17:06+0000\n"
-"PO-Revision-Date: 2022-04-24 17:09\n"
+"POT-Creation-Date: 2022-04-25 15:26+0000\n"
+"PO-Revision-Date: 2022-04-25 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -240,12 +240,12 @@ msgstr "לא ניתן לפתוח את הקובץ המצורף: {1}. שגיאה: 
 msgid "Could not open file: \"{1}\""
 msgstr "קובץ \"{1}\" לא ניתן לפתיחה"
 
-#: ../src/core/gui/MainWindow.cpp:94
+#: ../src/core/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr ""
 
-#: ../src/core/gui/MainWindow.cpp:85
+#: ../src/core/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr ""
@@ -302,7 +302,7 @@ msgstr ""
 msgid "Create new layer"
 msgstr "צור שכבה חדשה"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:64
+#: ../src/core/gui/dialog/FormatDialog.cpp:65
 msgid "Custom"
 msgstr "מותאם אישית"
 
@@ -856,7 +856,7 @@ msgstr "פתח תיקייה של קובץ לוג"
 msgid "Open file"
 msgstr "פתח קובץ"
 
-#: ../src/core/control/RecentManager.cpp:186
+#: ../src/core/control/RecentManager.cpp:178
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "פתח {1}"
@@ -1156,7 +1156,7 @@ msgstr ""
 msgid "Send to back"
 msgstr ""
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:63
 msgid "Separator"
 msgstr "מפריד"
 
@@ -1546,7 +1546,7 @@ msgstr "_פתח"
 msgid "_Save"
 msgstr "_שמור"
 
-#: ../src/core/control/DeviceListHelper.cpp:112
+#: ../src/core/control/DeviceListHelper.cpp:98
 msgid "cursor"
 msgstr "סמן"
 
@@ -1579,7 +1579,7 @@ msgstr ""
 msgid "elements"
 msgstr "אלמנטים"
 
-#: ../src/core/control/DeviceListHelper.cpp:110
+#: ../src/core/control/DeviceListHelper.cpp:96
 msgid "eraser"
 msgstr "מחק"
 
@@ -1592,7 +1592,7 @@ msgstr ""
 msgid "image"
 msgstr "תמונה"
 
-#: ../src/core/control/DeviceListHelper.cpp:115
+#: ../src/core/control/DeviceListHelper.cpp:101
 msgid "keyboard"
 msgstr "מקלדת"
 
@@ -1601,11 +1601,11 @@ msgstr "מקלדת"
 msgid "latex"
 msgstr "לייטקס"
 
-#: ../src/core/control/DeviceListHelper.cpp:106
+#: ../src/core/control/DeviceListHelper.cpp:92
 msgid "mouse"
 msgstr "עכבר"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
+#: ../src/core/control/DeviceListHelper.cpp:94
 msgid "pen"
 msgstr "עט"
 
@@ -1623,7 +1623,7 @@ msgstr "סטנדרטי"
 msgid "stroke"
 msgstr ""
 
-#: ../src/core/control/DeviceListHelper.cpp:124
+#: ../src/core/control/DeviceListHelper.cpp:110
 msgid "tablet pad"
 msgstr "לוח טאבלט"
 
@@ -1632,15 +1632,15 @@ msgstr "לוח טאבלט"
 msgid "text"
 msgstr "טקסט"
 
-#: ../src/core/control/DeviceListHelper.cpp:119
+#: ../src/core/control/DeviceListHelper.cpp:105
 msgid "touchpad"
 msgstr "משטח מגע"
 
-#: ../src/core/control/DeviceListHelper.cpp:117
+#: ../src/core/control/DeviceListHelper.cpp:103
 msgid "touchscreen"
 msgstr "מסך מגע"
 
-#: ../src/core/control/DeviceListHelper.cpp:122
+#: ../src/core/control/DeviceListHelper.cpp:108
 msgid "trackpoint"
 msgstr "טראקפוינט"
 
