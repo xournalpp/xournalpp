@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-24 17:06+0000\n"
-"PO-Revision-Date: 2022-04-24 17:08\n"
+"POT-Creation-Date: 2022-04-25 15:26+0000\n"
+"PO-Revision-Date: 2022-04-25 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -241,13 +241,13 @@ msgstr "Ek açılamadı: {1}. Hata mesajı: {2}"
 msgid "Could not open file: \"{1}\""
 msgstr "Dosya açılamadı: \"{1}\""
 
-#: ../src/core/gui/MainWindow.cpp:94
+#: ../src/core/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Özel toolbar.ini dosyası ayrıştırılamadı: {1}\n"
 "Araç çubukları kullanılamayacak"
 
-#: ../src/core/gui/MainWindow.cpp:85
+#: ../src/core/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Genel toolbar.ini dosyası ayrıştırılamadı: {1}\n"
@@ -306,7 +306,7 @@ msgstr "Arka plan \"{1}\" yazılamadı. Yine de devam ediliyor."
 msgid "Create new layer"
 msgstr "Yeni katman oluştur"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:64
+#: ../src/core/gui/dialog/FormatDialog.cpp:65
 msgid "Custom"
 msgstr "Özel"
 
@@ -876,7 +876,7 @@ msgstr "Günlük dosyası dizinini aç"
 msgid "Open file"
 msgstr "Dosya aç"
 
-#: ../src/core/control/RecentManager.cpp:186
+#: ../src/core/control/RecentManager.cpp:178
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "{1} Aç"
@@ -1176,7 +1176,7 @@ msgstr "Geriye gönder"
 msgid "Send to back"
 msgstr "En arkaya gönder"
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:63
 msgid "Separator"
 msgstr "Ayırıcı"
 
@@ -1578,7 +1578,7 @@ msgstr "_Aç"
 msgid "_Save"
 msgstr "_Kaydet"
 
-#: ../src/core/control/DeviceListHelper.cpp:112
+#: ../src/core/control/DeviceListHelper.cpp:98
 msgid "cursor"
 msgstr "imleç"
 
@@ -1611,7 +1611,7 @@ msgstr "noktalı"
 msgid "elements"
 msgstr "öğeler"
 
-#: ../src/core/control/DeviceListHelper.cpp:110
+#: ../src/core/control/DeviceListHelper.cpp:96
 msgid "eraser"
 msgstr "silgi"
 
@@ -1624,7 +1624,7 @@ msgstr "dosya: {1}"
 msgid "image"
 msgstr "resim"
 
-#: ../src/core/control/DeviceListHelper.cpp:115
+#: ../src/core/control/DeviceListHelper.cpp:101
 msgid "keyboard"
 msgstr "klavye"
 
@@ -1633,11 +1633,11 @@ msgstr "klavye"
 msgid "latex"
 msgstr "latex"
 
-#: ../src/core/control/DeviceListHelper.cpp:106
+#: ../src/core/control/DeviceListHelper.cpp:92
 msgid "mouse"
 msgstr "fare"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
+#: ../src/core/control/DeviceListHelper.cpp:94
 msgid "pen"
 msgstr "kalem"
 
@@ -1655,7 +1655,7 @@ msgstr "standart"
 msgid "stroke"
 msgstr "vuruş"
 
-#: ../src/core/control/DeviceListHelper.cpp:124
+#: ../src/core/control/DeviceListHelper.cpp:110
 msgid "tablet pad"
 msgstr "tablet ped"
 
@@ -1664,15 +1664,15 @@ msgstr "tablet ped"
 msgid "text"
 msgstr "metin"
 
-#: ../src/core/control/DeviceListHelper.cpp:119
+#: ../src/core/control/DeviceListHelper.cpp:105
 msgid "touchpad"
 msgstr "dokunmatik fare"
 
-#: ../src/core/control/DeviceListHelper.cpp:117
+#: ../src/core/control/DeviceListHelper.cpp:103
 msgid "touchscreen"
 msgstr "dokunmatik ekran"
 
-#: ../src/core/control/DeviceListHelper.cpp:122
+#: ../src/core/control/DeviceListHelper.cpp:108
 msgid "trackpoint"
 msgstr "parça noktası"
 
