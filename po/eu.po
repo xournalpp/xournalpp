@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-24 17:06+0000\n"
-"PO-Revision-Date: 2022-04-24 17:09\n"
+"POT-Creation-Date: 2022-04-25 15:26+0000\n"
+"PO-Revision-Date: 2022-04-25 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -241,13 +241,13 @@ msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: {2}"
 msgid "Could not open file: \"{1}\""
 msgstr "Ezin da {1} fitxategia ireki"
 
-#: ../src/core/gui/MainWindow.cpp:94
+#: ../src/core/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Ezin izan da toolbar.ini fitxategi pertsonalizatua analizatu: {1}\n"
 "Tresna-barrak ez dira erabilgarri egongo"
 
-#: ../src/core/gui/MainWindow.cpp:85
+#: ../src/core/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Ezin izan da toolbar.ini fitxategi orokorra analizatu: {1}\n"
@@ -306,7 +306,7 @@ msgstr "Ezin izan da \"{1}\" atzeko planoa idatzi. Jarraitu hala ere."
 msgid "Create new layer"
 msgstr "Sortu geruza berria"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:64
+#: ../src/core/gui/dialog/FormatDialog.cpp:65
 msgid "Custom"
 msgstr "Pertsonalizatu"
 
@@ -876,7 +876,7 @@ msgstr "Ireki erregistro-fitxategien direktorioa"
 msgid "Open file"
 msgstr "Ireki fitxategia"
 
-#: ../src/core/control/RecentManager.cpp:186
+#: ../src/core/control/RecentManager.cpp:178
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Ireki {1}"
@@ -1176,7 +1176,7 @@ msgstr "Eraman atzerago"
 msgid "Send to back"
 msgstr "Eraman atzera"
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:63
 msgid "Separator"
 msgstr "Bereizlea"
 
@@ -1578,7 +1578,7 @@ msgstr "_Ireki"
 msgid "_Save"
 msgstr "_Gorde"
 
-#: ../src/core/control/DeviceListHelper.cpp:112
+#: ../src/core/control/DeviceListHelper.cpp:98
 msgid "cursor"
 msgstr "kurtsorea"
 
@@ -1611,7 +1611,7 @@ msgstr "puntuak"
 msgid "elements"
 msgstr "elementuak"
 
-#: ../src/core/control/DeviceListHelper.cpp:110
+#: ../src/core/control/DeviceListHelper.cpp:96
 msgid "eraser"
 msgstr "borragoma"
 
@@ -1624,7 +1624,7 @@ msgstr "fitxategia: {1}"
 msgid "image"
 msgstr "irudia"
 
-#: ../src/core/control/DeviceListHelper.cpp:115
+#: ../src/core/control/DeviceListHelper.cpp:101
 msgid "keyboard"
 msgstr "teklatua"
 
@@ -1633,11 +1633,11 @@ msgstr "teklatua"
 msgid "latex"
 msgstr "latex"
 
-#: ../src/core/control/DeviceListHelper.cpp:106
+#: ../src/core/control/DeviceListHelper.cpp:92
 msgid "mouse"
 msgstr "sagua"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
+#: ../src/core/control/DeviceListHelper.cpp:94
 msgid "pen"
 msgstr "arkatza"
 
@@ -1655,7 +1655,7 @@ msgstr "estandarra"
 msgid "stroke"
 msgstr "trazua"
 
-#: ../src/core/control/DeviceListHelper.cpp:124
+#: ../src/core/control/DeviceListHelper.cpp:110
 msgid "tablet pad"
 msgstr "tabletaren teklatua"
 
@@ -1664,15 +1664,15 @@ msgstr "tabletaren teklatua"
 msgid "text"
 msgstr "testua"
 
-#: ../src/core/control/DeviceListHelper.cpp:119
+#: ../src/core/control/DeviceListHelper.cpp:105
 msgid "touchpad"
 msgstr "ukipen-panela"
 
-#: ../src/core/control/DeviceListHelper.cpp:117
+#: ../src/core/control/DeviceListHelper.cpp:103
 msgid "touchscreen"
 msgstr "ukipen-pantaila"
 
-#: ../src/core/control/DeviceListHelper.cpp:122
+#: ../src/core/control/DeviceListHelper.cpp:108
 msgid "trackpoint"
 msgstr "trackpoint"
 
