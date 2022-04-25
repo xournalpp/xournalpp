@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-24 17:06+0000\n"
-"PO-Revision-Date: 2022-04-24 17:08\n"
+"POT-Creation-Date: 2022-04-25 15:26+0000\n"
+"PO-Revision-Date: 2022-04-25 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -241,13 +241,13 @@ msgstr "Не удалось открыть вложение: {1}. Сообщен
 msgid "Could not open file: \"{1}\""
 msgstr "Не удалось открыть файл: «{1}»"
 
-#: ../src/core/gui/MainWindow.cpp:94
+#: ../src/core/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Не удалось разобрать пользовательский файл toolbar.ini: {1}\n"
 "Панели инструментов не будут доступны"
 
-#: ../src/core/gui/MainWindow.cpp:85
+#: ../src/core/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Не удалось разобрать файл toolbar.ini: {1}\n"
@@ -306,7 +306,7 @@ msgstr "Не удалось записать фон «{1}». Тем не мен�
 msgid "Create new layer"
 msgstr "Создать новый слой"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:64
+#: ../src/core/gui/dialog/FormatDialog.cpp:65
 msgid "Custom"
 msgstr "Пользовательский"
 
@@ -876,7 +876,7 @@ msgstr "Открыть папку с лог-файлами"
 msgid "Open file"
 msgstr "Открыть файл"
 
-#: ../src/core/control/RecentManager.cpp:186
+#: ../src/core/control/RecentManager.cpp:178
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Открыть {1}"
@@ -1176,7 +1176,7 @@ msgstr "Переместить назад"
 msgid "Send to back"
 msgstr "На задний план"
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:63
 msgid "Separator"
 msgstr "Разделитель"
 
@@ -1576,7 +1576,7 @@ msgstr "_Открыть"
 msgid "_Save"
 msgstr "_Сохранить"
 
-#: ../src/core/control/DeviceListHelper.cpp:112
+#: ../src/core/control/DeviceListHelper.cpp:98
 msgid "cursor"
 msgstr "курсор"
 
@@ -1609,7 +1609,7 @@ msgstr "точечный пунктир"
 msgid "elements"
 msgstr "элементы"
 
-#: ../src/core/control/DeviceListHelper.cpp:110
+#: ../src/core/control/DeviceListHelper.cpp:96
 msgid "eraser"
 msgstr "ластик"
 
@@ -1622,7 +1622,7 @@ msgstr "файл: {1}"
 msgid "image"
 msgstr "изображение"
 
-#: ../src/core/control/DeviceListHelper.cpp:115
+#: ../src/core/control/DeviceListHelper.cpp:101
 msgid "keyboard"
 msgstr "клавиатура"
 
@@ -1631,11 +1631,11 @@ msgstr "клавиатура"
 msgid "latex"
 msgstr "latex"
 
-#: ../src/core/control/DeviceListHelper.cpp:106
+#: ../src/core/control/DeviceListHelper.cpp:92
 msgid "mouse"
 msgstr "мышь"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
+#: ../src/core/control/DeviceListHelper.cpp:94
 msgid "pen"
 msgstr "перо"
 
@@ -1653,7 +1653,7 @@ msgstr "стандартный"
 msgid "stroke"
 msgstr "черта"
 
-#: ../src/core/control/DeviceListHelper.cpp:124
+#: ../src/core/control/DeviceListHelper.cpp:110
 msgid "tablet pad"
 msgstr "планшет"
 
@@ -1662,15 +1662,15 @@ msgstr "планшет"
 msgid "text"
 msgstr "текст"
 
-#: ../src/core/control/DeviceListHelper.cpp:119
+#: ../src/core/control/DeviceListHelper.cpp:105
 msgid "touchpad"
 msgstr "touchpad"
 
-#: ../src/core/control/DeviceListHelper.cpp:117
+#: ../src/core/control/DeviceListHelper.cpp:103
 msgid "touchscreen"
 msgstr "сенсорный экран"
 
-#: ../src/core/control/DeviceListHelper.cpp:122
+#: ../src/core/control/DeviceListHelper.cpp:108
 msgid "trackpoint"
 msgstr "trackpoint"
 
