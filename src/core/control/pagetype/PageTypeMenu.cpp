@@ -1,5 +1,7 @@
 #include "PageTypeMenu.h"
 
+#include <util/gtk4_helper.h>
+
 #include "control/settings/PageTemplateSettings.h"
 #include "control/settings/Settings.h"
 #include "util/i18n.h"
@@ -74,9 +76,8 @@ void PageTypeMenu::addMenuEntry(MainBackgroundPainter* bgPainter, PageTypeInfo* 
         entry = gtk_check_menu_item_new();
 
         GtkWidget* box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
-
-        gtk_container_add(GTK_CONTAINER(box), preview);
-        gtk_container_add(GTK_CONTAINER(box), gtk_label_new(t->name.c_str()));
+        gtk_box_append(GTK_BOX(box), preview);
+        gtk_box_append(GTK_BOX(box), gtk_label_new(t->name.c_str()));
 
         gtk_container_add(GTK_CONTAINER(entry), box);
         gtk_widget_show_all(entry);
