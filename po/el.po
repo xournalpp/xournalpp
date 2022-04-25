@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-24 17:06+0000\n"
-"PO-Revision-Date: 2022-04-24 17:08\n"
+"POT-Creation-Date: 2022-04-25 15:26+0000\n"
+"PO-Revision-Date: 2022-04-25 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -239,13 +239,13 @@ msgstr "Απέτυχε το άνοιγμα του συνημμένου: {1}. Μ�
 msgid "Could not open file: \"{1}\""
 msgstr "Δεν ήταν δυνατό το άνοιγμα αρχείου: \"{1}\""
 
-#: ../src/core/gui/MainWindow.cpp:94
+#: ../src/core/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Αδύνατη προσπέλαση προσαρμοσμένου αρχείου toolbar.ini: {1}\n"
 "Οι γραμμές εργαλείων δεν θα είναι διαθέσιμες"
 
-#: ../src/core/gui/MainWindow.cpp:85
+#: ../src/core/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Αδύνατη προσπέλαση γενικού αρχείου toolbar.ini: {1}\n"
@@ -304,7 +304,7 @@ msgstr "Αδυναμία εγγραφής φόντου \"{1}\". Συνέχεια
 msgid "Create new layer"
 msgstr "Δημιουργία νέας στρώσης"
 
-#: ../src/core/gui/dialog/FormatDialog.cpp:64
+#: ../src/core/gui/dialog/FormatDialog.cpp:65
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
@@ -863,7 +863,7 @@ msgstr "Άνοιγμα φακέλου αρχείου καταγραφής"
 msgid "Open file"
 msgstr "Άνοιγμα αρχείου"
 
-#: ../src/core/control/RecentManager.cpp:186
+#: ../src/core/control/RecentManager.cpp:178
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Άνοιγμα {1}"
@@ -1163,7 +1163,7 @@ msgstr "Αποστολή στο παρασκήνιο"
 msgid "Send to back"
 msgstr "Αποστολή πίσω"
 
-#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:62
+#: ../src/core/gui/dialog/toolbarCustomize/ToolbarCustomizeDialog.cpp:63
 msgid "Separator"
 msgstr "Διαχωριστικό"
 
@@ -1558,7 +1558,7 @@ msgstr "_Άνοιγμα"
 msgid "_Save"
 msgstr "_Αποθήκευση"
 
-#: ../src/core/control/DeviceListHelper.cpp:112
+#: ../src/core/control/DeviceListHelper.cpp:98
 msgid "cursor"
 msgstr "κέρσορας"
 
@@ -1591,7 +1591,7 @@ msgstr "τελείες"
 msgid "elements"
 msgstr "στοιχεία"
 
-#: ../src/core/control/DeviceListHelper.cpp:110
+#: ../src/core/control/DeviceListHelper.cpp:96
 msgid "eraser"
 msgstr "γόμα"
 
@@ -1604,7 +1604,7 @@ msgstr ""
 msgid "image"
 msgstr "εικόνα"
 
-#: ../src/core/control/DeviceListHelper.cpp:115
+#: ../src/core/control/DeviceListHelper.cpp:101
 msgid "keyboard"
 msgstr "πληκτρολόγιο"
 
@@ -1613,11 +1613,11 @@ msgstr "πληκτρολόγιο"
 msgid "latex"
 msgstr "latex"
 
-#: ../src/core/control/DeviceListHelper.cpp:106
+#: ../src/core/control/DeviceListHelper.cpp:92
 msgid "mouse"
 msgstr "ποντίκι"
 
-#: ../src/core/control/DeviceListHelper.cpp:108
+#: ../src/core/control/DeviceListHelper.cpp:94
 msgid "pen"
 msgstr "στυλό"
 
@@ -1635,7 +1635,7 @@ msgstr "κανονικό"
 msgid "stroke"
 msgstr "μολυβιά"
 
-#: ../src/core/control/DeviceListHelper.cpp:124
+#: ../src/core/control/DeviceListHelper.cpp:110
 msgid "tablet pad"
 msgstr "γραφίδα σχεδίασης"
 
@@ -1644,15 +1644,15 @@ msgstr "γραφίδα σχεδίασης"
 msgid "text"
 msgstr "κείμενο"
 
-#: ../src/core/control/DeviceListHelper.cpp:119
+#: ../src/core/control/DeviceListHelper.cpp:105
 msgid "touchpad"
 msgstr "touchpad"
 
-#: ../src/core/control/DeviceListHelper.cpp:117
+#: ../src/core/control/DeviceListHelper.cpp:103
 msgid "touchscreen"
 msgstr "οθόνη αφής"
 
-#: ../src/core/control/DeviceListHelper.cpp:122
+#: ../src/core/control/DeviceListHelper.cpp:108
 msgid "trackpoint"
 msgstr "trackpoint"
 
