@@ -317,7 +317,11 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         this->eraser->erase(x, y);
         this->inEraser = true;
     } else if (h->getToolType() == TOOL_VERTICAL_SPACE) {
-        g_assert_null(this->verticalSpace);
+        if (this->verticalSpace) {
+            control->getUndoRedoHandler()->addUndoAction(this->verticalSpace->finalize());
+            this->getXournal()->getControl()->getZoomControl()->removeZoomListener(this->verticalSpace);
+            delete this->verticalSpace;
+        }
         auto* window = gtk_widget_get_window(xournal->getWidget());
         auto* zoomControl = this->getXournal()->getControl()->getZoomControl();
         this->verticalSpace =
