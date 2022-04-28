@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-25 15:26+0000\n"
-"PO-Revision-Date: 2022-04-25 15:58\n"
+"POT-Creation-Date: 2022-04-28 07:32+0000\n"
+"PO-Revision-Date: 2022-04-28 07:39\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/core/control/XournalMain.cpp:374
+#: ../src/core/control/XournalMain.cpp:375
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -42,7 +42,7 @@ msgstr "%F-筆記-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>沒有找到任何裝置。這可能是錯的 - 要回報錯誤嗎？</b>"
 
-#: ../src/core/control/XournalMain.cpp:369
+#: ../src/core/control/XournalMain.cpp:370
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>遺失必須的使用者界面檔�
 msgid "Add/Edit TeX"
 msgstr "插入/編輯TeX"
 
-#: ../src/core/control/XournalMain.cpp:591
+#: ../src/core/control/XournalMain.cpp:622
 msgid "Advanced export options"
 msgstr "進階輸出選項"
 
@@ -151,7 +151,7 @@ msgid "Bring to front"
 msgstr "移到上層"
 
 #: ../src/core/control/Control.cpp:2061 ../src/core/control/Control.cpp:2523
-#: ../src/core/control/XournalMain.cpp:163
+#: ../src/core/control/XournalMain.cpp:164
 msgid "Cancel"
 msgstr "取消"
 
@@ -333,7 +333,7 @@ msgstr "預設工具"
 msgid "Delete"
 msgstr "刪除"
 
-#: ../src/core/control/XournalMain.cpp:162
+#: ../src/core/control/XournalMain.cpp:163
 msgid "Delete Logfile"
 msgstr "刪除日誌檔案"
 
@@ -341,7 +341,7 @@ msgstr "刪除日誌檔案"
 msgid "Delete current page"
 msgstr "刪除當前頁"
 
-#: ../src/core/control/XournalMain.cpp:204
+#: ../src/core/control/XournalMain.cpp:205
 msgid "Delete file"
 msgstr "刪除檔案"
 
@@ -361,7 +361,7 @@ msgstr "刪除此頁面"
 msgid "Discard"
 msgstr "丟棄"
 
-#: ../src/core/control/XournalMain.cpp:592
+#: ../src/core/control/XournalMain.cpp:623
 msgid "Display advanced export options"
 msgstr "顯示進階輸出選項"
 
@@ -498,11 +498,11 @@ msgstr "讀入PDF出錯：{1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "讀入筆劃粗細出錯：{1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:145
+#: ../src/core/control/jobs/ImageExport.cpp:146
 msgid "Error save image #1"
 msgstr "保存圖片錯誤 #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:161
+#: ../src/core/control/jobs/ImageExport.cpp:162
 msgid "Error save image #2"
 msgstr "保存圖片錯誤 #2"
 
@@ -526,17 +526,17 @@ msgstr "錯誤:{1} 並不是正規檔案. 請檢查LaTex範本檔案之設定 "
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "錯誤:{1}, 請檢查{2} 的內容"
 
-#: ../src/core/control/XournalMain.cpp:182
+#: ../src/core/control/XournalMain.cpp:183
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr "錯誤日誌未能刪除，請手工處理。\n"
 "日誌檔案: {1}"
 
-#: ../src/core/control/XournalMain.cpp:549
+#: ../src/core/control/XournalMain.cpp:580
 msgid "Export FILE as PDF"
 msgstr "匯出為 PDF 檔"
 
-#: ../src/core/control/XournalMain.cpp:551
+#: ../src/core/control/XournalMain.cpp:582
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -552,7 +552,7 @@ msgstr "輸出為PDF"
 msgid "Export as PDF"
 msgstr "匯出成 PDF"
 
-#: ../src/core/control/XournalMain.cpp:565
+#: ../src/core/control/XournalMain.cpp:596
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -564,7 +564,7 @@ msgstr "漸進式輸出圖層\n"
 "                                 並且將圖層疊漸進式堆疊。\n"
 "                                 最後輸出的 PDF 檔成品可用於現場簡報。\n"
 
-#: ../src/core/control/XournalMain.cpp:556
+#: ../src/core/control/XournalMain.cpp:587
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -572,7 +572,7 @@ msgstr "無背景輸出\n"
 "                                 取決於所支援的檔案格式，\n"
 "                                 輸出的檔案將會有透明或全白背景。\n"
 
-#: ../src/core/control/XournalMain.cpp:561
+#: ../src/core/control/XournalMain.cpp:592
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "無格線輸出\n"
@@ -582,8 +582,8 @@ msgstr "無格線輸出\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "無法從 PATH: {1} 中找到 LaTeX 產生格式"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:156
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:201
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:157
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "初始化 PDF Cairo surface 失敗"
 
@@ -642,7 +642,7 @@ msgstr "下一頁"
 msgid "GNU GPLv2 or later"
 msgstr "GNU 公用授權條款第 2 版或較後版本"
 
-#: ../src/core/control/XournalMain.cpp:540
+#: ../src/core/control/XournalMain.cpp:571
 msgid "Get version of xournalpp"
 msgstr "獲取 xournalpp 版本資訊"
 
@@ -705,7 +705,7 @@ msgstr "高亮"
 msgid "Image"
 msgstr "圖片"
 
-#: ../src/core/control/ExportHelper.cpp:63
+#: ../src/core/control/ExportHelper.cpp:61
 msgid "Image file successfully created"
 msgstr "圖片檔案成功建立"
 
@@ -750,7 +750,7 @@ msgstr "等距點陣"
 msgid "Isometric Graph"
 msgstr "等距圖表"
 
-#: ../src/core/control/XournalMain.cpp:536
+#: ../src/core/control/XournalMain.cpp:567
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到頁面(第一頁:1)"
 
@@ -832,8 +832,8 @@ msgstr "下一個標註頁面"
 msgid "No device"
 msgstr "沒有設備"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:151
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:196
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:152
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:192
 msgid "No pages to export!"
 msgstr "沒有頁面可以匯出！"
 
@@ -850,7 +850,7 @@ msgstr "正常繪圖"
 msgid "OK"
 msgstr "確定"
 
-#: ../src/core/control/XournalMain.cpp:572
+#: ../src/core/control/XournalMain.cpp:603
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "只從範圍輸出特定頁面(e.g. \"2-3,5,7-\")\n"
@@ -860,11 +860,11 @@ msgstr "只從範圍輸出特定頁面(e.g. \"2-3,5,7-\")\n"
 msgid "Open Image"
 msgstr "打開圖片"
 
-#: ../src/core/control/XournalMain.cpp:160
+#: ../src/core/control/XournalMain.cpp:161
 msgid "Open Logfile"
 msgstr "打開日誌檔案"
 
-#: ../src/core/control/XournalMain.cpp:161
+#: ../src/core/control/XournalMain.cpp:162
 msgid "Open Logfile directory"
 msgstr "打開日誌檔案目錄"
 
@@ -890,7 +890,7 @@ msgstr "PDF頁碼{1}"
 msgid "PDF background missing"
 msgstr "PDF背景丟失"
 
-#: ../src/core/control/ExportHelper.cpp:106
+#: ../src/core/control/ExportHelper.cpp:102
 msgid "PDF file successfully created"
 msgstr "PDF檔案成功建立"
 
@@ -931,6 +931,22 @@ msgstr "頁面插入"
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:59
 msgid "Page number"
 msgstr "頁碼"
+
+#: ../src/util/PageRange.cpp:96
+msgid "PageRange::parse(): given page number is larger than maximum count."
+msgstr ""
+
+#: ../src/util/PageRange.cpp:99
+msgid "PageRange::parse(): interval bounds must be in increasing order."
+msgstr ""
+
+#: ../src/util/PageRange.cpp:92
+msgid "PageRange::parse(): invalid page range."
+msgstr ""
+
+#: ../src/util/PageRange.cpp:102
+msgid "PageRange::parse(): page numbers start with 1"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
@@ -1017,7 +1033,7 @@ msgstr "替換"
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "找不到附件所需的暫存檔{1}"
 
-#: ../src/core/control/XournalMain.cpp:205
+#: ../src/core/control/XournalMain.cpp:206
 msgid "Restore file"
 msgstr "還原檔案"
 
@@ -1161,7 +1177,7 @@ msgstr "選擇區域"
 msgid "Selection Combo"
 msgstr "選擇工具組"
 
-#: ../src/core/control/XournalMain.cpp:159
+#: ../src/core/control/XournalMain.cpp:160
 msgid "Send Bugreport"
 msgstr "選擇錯誤報告"
 
@@ -1177,13 +1193,13 @@ msgstr "置於底層"
 msgid "Separator"
 msgstr "分割線"
 
-#: ../src/core/control/XournalMain.cpp:576
+#: ../src/core/control/XournalMain.cpp:607
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "設定PNG輸出的DPI. 預設值是300\n"
 "                                 No effect without -i/--create-img=foo.pn"
 
-#: ../src/core/control/XournalMain.cpp:586
+#: ../src/core/control/XournalMain.cpp:617
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1191,7 +1207,7 @@ msgstr "設定PNG輸出頁面的高度\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 
-#: ../src/core/control/XournalMain.cpp:580
+#: ../src/core/control/XournalMain.cpp:611
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1219,13 +1235,13 @@ msgstr "只顯示未使用頁面(一個未使用頁面)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "只顯示未使用頁面({1}個未使用頁面)"
 
-#: ../src/core/control/XournalMain.cpp:444
+#: ../src/core/control/XournalMain.cpp:445
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "抱歉，Xournal++ 一次只能開啟一個檔案。\n"
 "其餘已被忽略。"
 
-#: ../src/core/control/XournalMain.cpp:459
+#: ../src/core/control/XournalMain.cpp:460
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "抱歉，Xournal++ 目前無法打開遠端檔案。\n"
@@ -1351,15 +1367,15 @@ msgstr "文件不是有效的 .xopp 文件 (Version string corrupted): \"{1}\""
 msgid "The formula is empty when rendered or invalid."
 msgstr "公式渲染後為空值或無效。"
 
-#: ../src/core/control/XournalMain.cpp:154
+#: ../src/core/control/XournalMain.cpp:155
 msgid "The most recent log file name: {1}"
 msgstr "最近的日誌檔案名：{1}"
 
-#: ../src/core/control/XournalMain.cpp:149
+#: ../src/core/control/XournalMain.cpp:150
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "發現Xournal++的錯誤日誌檔案，請發送一個錯誤報告，將會被修正。"
 
-#: ../src/core/control/XournalMain.cpp:148
+#: ../src/core/control/XournalMain.cpp:149
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
 msgstr "發現Xournal++的錯誤日誌檔案，請發送一個錯誤報告，將會被修正。"
 
@@ -1504,7 +1520,7 @@ msgstr "Xournal (兼容)"
 msgid "Xournal files"
 msgstr "Xournal檔案"
 
-#: ../src/core/control/XournalMain.cpp:199
+#: ../src/core/control/XournalMain.cpp:200
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ 上次崩溃了。您想恢復最後一個编辑的文件？"
 
@@ -1524,7 +1540,7 @@ msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 msgstr "您没有任何可以選擇的 PDF 頁面。操作取消。\n"
 "請選擇另一個背景類型：點擊“日记”菜單 → “配置頁面模板”。"
 
-#: ../src/core/control/XournalMain.cpp:151
+#: ../src/core/control/XournalMain.cpp:152
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
 msgstr "您正在使用 {1}/{2} 分支，發送錯誤報告將轉向這個專案的問題追蹤器。"
 
