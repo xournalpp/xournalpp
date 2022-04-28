@@ -48,6 +48,7 @@ class DottedBackgroundView;
 class BaseIsometricBackgroundView;
 class IsoGraphBackgroundView;
 class IsoDottedBackgroundView;
+class PdfBackgroundView;
 class TransparentCheckerboardBackgroundView;
 };  // namespace view
 };  // namespace xoj

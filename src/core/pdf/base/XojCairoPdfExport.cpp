@@ -111,6 +111,7 @@ void XojCairoPdfExport::exportPage(size_t page) {
 
     cairo_save(this->cr);
 
+    // For a better pdf quality, we use a dedicated pdf rendering
     if (p->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
         auto pgNo = p->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);

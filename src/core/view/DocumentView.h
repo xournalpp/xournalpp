@@ -24,6 +24,9 @@
 #include "model/TexImage.h"
 #include "model/Text.h"
 
+class Document;
+class PdfCache;
+
 class DocumentView {
 public:
     DocumentView() = default;
@@ -51,6 +54,8 @@ public:
 
     // API for special drawing, usually you won't call this methods
 public:
+    void setPdfCache(PdfCache* cache);
+
     /**
      * Drawing first step
      * @param page The page to draw
@@ -78,6 +83,7 @@ public:
 private:
     cairo_t* cr = nullptr;
     PageRef page = nullptr;
+    PdfCache* pdfCache = nullptr;
     double width = 0;
     double height = 0;
     bool dontRenderEditingStroke = false;

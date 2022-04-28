@@ -1,6 +1,8 @@
 #include "DocumentView.h"
 
+#include "control/PdfCache.h"  // TODO: remove to cleanup MVC scheme
 #include "model/BackgroundConfig.h"
+#include "model/Document.h"
 #include "model/Layer.h"
 #include "model/eraser/ErasableStroke.h"
 #include "view/background/DottedBackgroundView.h"
@@ -9,6 +11,7 @@
 #include "view/background/IsoDottedBackgroundView.h"
 #include "view/background/IsoGraphBackgroundView.h"
 #include "view/background/LinedBackgroundView.h"
+#include "view/background/PdfBackgroundView.h"
 #include "view/background/RuledBackgroundView.h"
 #include "view/background/StavesBackgroundView.h"
 #include "view/background/TransparentCheckerboardBackgroundView.h"
@@ -29,6 +32,8 @@ void DocumentView::limitArea(double x, double y, double width, double height) {
     this->lWidth = width;
     this->lHeight = height;
 }
+
+void DocumentView::setPdfCache(PdfCache* cache) { pdfCache = cache; }
 
 /**
  * Drawing first step
@@ -75,10 +80,16 @@ void DocumentView::finializeDrawing() {
 void DocumentView::drawBackground(bool hidePdfBackground, bool hideImageBackground, bool hideRulingBackground) {
     PageType pt = page->getBackgroundType();
     if (pt.isPdfPage()) {
-        // Handled in PdfView
-    } else if (pt.isImagePage() && !hideImageBackground) {
-        xoj::view::ImageBackgroundView bgView(page->getBackgroundImage(), page->getWidth(), page->getHeight());
-        bgView.draw(cr);
+        if (!hidePdfBackground) {
+            auto pgNo = page->getPdfPageNr();
+            xoj::view::PdfBackgroundView bgView(page->getWidth(), page->getHeight(), pgNo, pdfCache);
+            bgView.draw(cr);
+        }
+    } else if (pt.isImagePage()) {
+        if (!hideImageBackground) {
+            xoj::view::ImageBackgroundView bgView(page->getBackgroundImage(), page->getWidth(), page->getHeight());
+            bgView.draw(cr);
+        }
     } else if (!hideRulingBackground) {
         auto bgView =
                 xoj::view::BackgroundView::create(page->getWidth(), page->getHeight(), page->getBackgroundColor(), pt);

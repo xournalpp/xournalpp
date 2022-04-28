@@ -147,6 +147,7 @@ void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, Ex
     }
 
     if (page->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
+        // Handle the pdf page separately, to call renderForPrinting for better quality.
         auto pgNo = page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
         if (!popplerPage) {
