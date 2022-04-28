@@ -104,7 +104,7 @@ void PdfCache::render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoo
         cairo_t* cr2 = cairo_create(img);
 
         cairo_scale(cr2, renderZoom, renderZoom);
-        popplerPage->render(cr2, false);
+        popplerPage->render(cr2);
         cairo_destroy(cr2);
 
         cacheResult = cache(popplerPage, img, renderZoom);
