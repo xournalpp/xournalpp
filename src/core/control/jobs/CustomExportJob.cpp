@@ -12,7 +12,6 @@
 #include "util/PathUtil.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
-#include "view/PdfView.h"
 
 #include "ImageExport.h"
 #include "SaveJob.h"

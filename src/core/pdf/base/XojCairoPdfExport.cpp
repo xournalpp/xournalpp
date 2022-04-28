@@ -110,14 +110,15 @@ void XojCairoPdfExport::exportPage(size_t page) {
     DocumentView view;
 
     cairo_save(this->cr);
-    if (p->getBackgroundType().isPdfPage() && (exportBackground >= EXPORT_BACKGROUND_UNRULED)) {
+
+    if (p->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
         auto pgNo = p->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
 
-        popplerPage->render(cr, true);
+        popplerPage->renderForPrinting(cr);
     }
 
-    view.drawPage(p, this->cr, true /* dont render eraseable */, exportBackground == EXPORT_BACKGROUND_NONE,
+    view.drawPage(p, this->cr, true /* dont render eraseable */, true /* don't rerender the pdf background */,
                   exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
 
     // next page

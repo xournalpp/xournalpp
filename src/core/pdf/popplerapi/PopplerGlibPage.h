@@ -27,7 +27,8 @@ public:
     double getWidth() const override;
     double getHeight() const override;
 
-    void render(cairo_t* cr, bool forPrinting = false) override;  // NOLINT(google-default-arguments)
+    void render(cairo_t* cr) const override;
+    void renderForPrinting(cairo_t* cr) const override;
 
     std::vector<XojPdfRectangle> findText(std::string& text) override;
 

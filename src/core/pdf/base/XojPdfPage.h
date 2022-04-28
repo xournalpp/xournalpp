@@ -51,7 +51,16 @@ public:
     virtual double getWidth() const = 0;
     virtual double getHeight() const = 0;
 
-    virtual void render(cairo_t* cr, bool forPrinting = false) = 0;
+    /**
+     * Renders the page to the given cairo context.
+     * Use render() for rendering to a screen (or a raster image format),
+     * Use renderForPrinting() for exports to vector formats (not sure it will be vectorial, but the quality is better)
+     *
+     * See https://poppler.freedesktop.org/api/glib/poppler-Poppler-Page.html#poppler-page-render-for-printing
+     * for actual differences between the two functions in the poppler based implementation.
+     */
+    virtual void render(cairo_t* cr) const = 0;
+    virtual void renderForPrinting(cairo_t* cr) const = 0;
 
     virtual std::vector<XojPdfRectangle> findText(std::string& text) = 0;
 

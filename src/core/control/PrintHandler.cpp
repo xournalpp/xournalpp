@@ -31,12 +31,12 @@ void drawPage(GtkPrintOperation* /*operation*/, GtkPrintContext* context, int pa
     if (page->getBackgroundType().isPdfPage()) {
         XojPdfPageSPtr popplerPage = doc->getPdfPage(page->getPdfPageNr());
         if (popplerPage) {
-            popplerPage->render(cr, true);
+            popplerPage->renderForPrinting(cr);
         }
     }
 
     DocumentView view;
-    view.drawPage(page, cr, true /* dont render eraseable */);
+    view.drawPage(page, cr, true /* dont render eraseable */, true /* dont show pdf background*/);
 }
 
 void requestPageSetup(GtkPrintOperation* /*op*/, GtkPrintContext* /*ctx*/, int pageNr, GtkPageSetup* setup,

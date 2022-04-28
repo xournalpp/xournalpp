@@ -55,7 +55,8 @@ void SaveJob::updatePreview(Control* control) {
         width *= zoom;
         height *= zoom;
 
-        cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+        cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(std::ceil(width)),
+                                                               static_cast<int>(std::ceil(height)));
 
         cairo_t* cr = cairo_create(crBuffer);
         cairo_scale(cr, zoom, zoom);
@@ -64,7 +65,7 @@ void SaveJob::updatePreview(Control* control) {
             auto pgNo = page->getPdfPageNr();
             XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
             if (popplerPage) {
-                popplerPage->render(cr, false);
+                popplerPage->render(cr);
             }
         }
 
