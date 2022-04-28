@@ -10,11 +10,9 @@
 #include "util/i18n.h"
 #include "util/safe_casts.h"
 
-#define MIME "application/x-xoj"
-#define MIME_PDF "application/x-pdf"
-#define GROUP "xournal++"
-
-using std::string;
+constexpr auto const* MIME = "application/x-xoj";
+constexpr auto const* MIME_PDF = "application/x-pdf";
+constexpr auto const* GROUP = "xournal++";
 
 namespace {
 
@@ -40,8 +38,8 @@ void recentManagerChangedCallback(GtkRecentManager* /*manager*/, RecentManager* 
     recentManager->updateMenu();
 }
 
-void recentsMenuActivateCallback(GtkAction* action, RecentManager* recentManager) {
-    auto* info = static_cast<GtkRecentInfo*>(g_object_get_data(G_OBJECT(action), "gtk-recent-info"));
+void recentsMenuActivateCallback(GtkMenuItem* self, RecentManager* recentManager) {
+    auto* info = static_cast<GtkRecentInfo*>(g_object_get_data(G_OBJECT(self), "gtk-recent-info"));
     g_return_if_fail(info != nullptr);
 
     auto p = Util::fromUri(gtk_recent_info_get_uri(info));
@@ -51,7 +49,6 @@ void recentsMenuActivateCallback(GtkAction* action, RecentManager* recentManager
 }
 
 }  // namespace
-
 
 RecentManagerListener::~RecentManagerListener() = default;
 
