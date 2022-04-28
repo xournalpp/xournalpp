@@ -61,6 +61,8 @@ void SaveJob::updatePreview(Control* control) {
         cairo_t* cr = cairo_create(crBuffer);
         cairo_scale(cr, zoom, zoom);
 
+        // We don't have access to a PdfCache on which DocumentView relies for PDF backgrounds.
+        // We thus print the PDF background by hand.
         if (page->getBackgroundType().isPdfPage()) {
             auto pgNo = page->getPdfPageNr();
             XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
@@ -70,7 +72,7 @@ void SaveJob::updatePreview(Control* control) {
         }
 
         DocumentView view;
-        view.drawPage(page, cr, true);
+        view.drawPage(page, cr, true /* don't render erasable */, true /* Don't rerender the pdf background */);
         cairo_destroy(cr);
         doc->setPreview(crBuffer);
         cairo_surface_destroy(crBuffer);

@@ -28,6 +28,7 @@ void drawPage(GtkPrintOperation* /*operation*/, GtkPrintContext* context, int pa
         cairo_translate(cr, 0, -height);
     }
 
+    // For better quality printing, we use a dedicated pdf-renderer in this case
     if (page->getBackgroundType().isPdfPage()) {
         XojPdfPageSPtr popplerPage = doc->getPdfPage(page->getPdfPageNr());
         if (popplerPage) {

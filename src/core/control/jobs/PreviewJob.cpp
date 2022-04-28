@@ -8,7 +8,6 @@
 #include "model/Document.h"
 #include "view/DocumentView.h"
 #include "view/LayerView.h"
-#include "view/PdfView.h"
 
 PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar): sidebarPreview(sidebar) {}
 
@@ -54,17 +53,11 @@ void PreviewJob::finishPaint() {
     this->sidebarPreview->drawingMutex.unlock();
 }
 
-void PreviewJob::drawBackgroundPdf(Document* doc) {
-    auto pgNo = this->sidebarPreview->page->getPdfPageNr();
-
-    PdfView::drawPage(this->sidebarPreview->sidebar->getCache(), pgNo, cr2, zoom,
-                      this->sidebarPreview->page->getWidth(), this->sidebarPreview->page->getHeight());
-}
-
 void PreviewJob::drawPage() {
-    DocumentView view;
     PageRef page = this->sidebarPreview->page;
     Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
+    DocumentView view;
+    view.setPdfCache(this->sidebarPreview->sidebar->getCache());
     PreviewRenderType type = this->sidebarPreview->getRenderType();
     Layer::Index layer = 0;
 
@@ -73,27 +66,6 @@ void PreviewJob::drawPage() {
     // getLayer is not defined for page preview
     if (type != RENDER_TYPE_PAGE_PREVIEW) {
         layer = (dynamic_cast<SidebarPreviewLayerEntry*>(this->sidebarPreview))->getLayer();
-    }
-
-    // Pdf::drawPage needs to go before DocumentView::initDrawing until DocumentView learns to do it and the first
-    // switch block can go away and the layer assignment into the remaining switch block.
-    switch (type) {
-        case RENDER_TYPE_PAGE_LAYER:
-            if (layer != 0) {
-                break;  // out
-            }
-            [[fallthrough]];
-
-        case RENDER_TYPE_PAGE_LAYERSTACK:
-        case RENDER_TYPE_PAGE_PREVIEW:
-            if (page->getBackgroundType().isPdfPage()) {
-                drawBackgroundPdf(doc);
-            }
-            break;
-
-        default:
-            // unknown type
-            break;
     }
 
     auto context = xoj::view::Context::createDefault(cr2);

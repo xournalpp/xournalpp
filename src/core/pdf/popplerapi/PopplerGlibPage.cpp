@@ -60,7 +60,13 @@ auto PopplerGlibPage::getHeight() const -> double {
     return height;
 }
 
-void PopplerGlibPage::render(cairo_t* cr) const { poppler_page_render(page, cr); }
+void PopplerGlibPage::render(cairo_t* cr) const {
+    cairo_save(cr);
+    cairo_set_source_rgb(cr, 1., 1., 1.);
+    cairo_paint(cr);
+    poppler_page_render(page, cr);
+    cairo_restore(cr);
+}
 
 void PopplerGlibPage::renderForPrinting(cairo_t* cr) const { poppler_page_render_for_printing(page, cr); }
 

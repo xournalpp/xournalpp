@@ -10,7 +10,6 @@
 #include "util/Rectangle.h"
 #include "util/Util.h"
 #include "view/DocumentView.h"
-#include "view/PdfView.h"
 
 using xoj::util::Rectangle;
 
@@ -21,10 +20,6 @@ auto RenderJob::getSource() -> void* { return this->view; }
 void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     double zoom = view->xournal->getZoom();
     Document* doc = view->xournal->getDocument();
-    doc->lock();
-    double pageWidth = view->page->getWidth();
-    double pageHeight = view->page->getHeight();
-    doc->unlock();
 
     /**
      * Make sure the mask is big enough
@@ -45,13 +40,7 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     Control* control = view->getXournal()->getControl();
     v.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
     v.limitArea(rect.x, rect.y, rect.width, rect.height);
-
-    bool backgroundVisible = view->page->isLayerVisible(0);
-    if (backgroundVisible && view->page->getBackgroundType().isPdfPage()) {
-        auto pgNo = view->page->getPdfPageNr();
-        PdfCache* cache = view->xournal->getCache();
-        PdfView::drawPage(cache, pgNo, crRect, zoom, pageWidth, pageHeight);
-    }
+    v.setPdfCache(view->xournal->getCache());
 
     doc->lock();
     v.drawPage(view->page, crRect, false);
@@ -110,14 +99,7 @@ void RenderJob::run() {
         Control* control = view->getXournal()->getControl();
         DocumentView localView;
         localView.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
-        auto width = this->view->page->getWidth();
-        auto height = this->view->page->getHeight();
-
-        bool backgroundVisible = this->view->page->isLayerVisible(0);
-        if (backgroundVisible && this->view->page->getBackgroundType().isPdfPage()) {
-            auto pgNo = this->view->page->getPdfPageNr();
-            PdfView::drawPage(this->view->xournal->getCache(), pgNo, cr2, zoom, width, height);
-        }
+        localView.setPdfCache(this->view->xournal->getCache());
         localView.drawPage(this->view->page, cr2, false);
 
         cairo_destroy(cr2);
