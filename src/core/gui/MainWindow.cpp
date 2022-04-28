@@ -157,7 +157,7 @@ void MainWindow::rebindAcceleratorsMenuItem(GtkWidget* widget, gpointer user_dat
             gtk_accel_group_connect(newAccelGroup, key->accel_key, key->accel_mods, GtkAccelFlags(0),
                                     g_cclosure_new_swap(G_CALLBACK(MainWindow::invokeMenu), widget, nullptr));
         }
-        g_list_free_full(menuAccelClosures, GDestroyNotify(g_closure_unref));
+        g_list_free(menuAccelClosures);
         MainWindow::rebindAcceleratorsSubMenu(widget, newAccelGroup);
     }
 }
