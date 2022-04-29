@@ -19,7 +19,7 @@
 #include "BackgroundSelectDialogBase.h"
 
 
-class BackgroundImage;
+struct BackgroundImage;
 
 class ImagesDialog: public BackgroundSelectDialogBase {
 public:

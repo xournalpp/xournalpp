@@ -90,7 +90,6 @@ private:
     void addRecentMenu(GtkRecentInfo* info, int i);
 
 private:
-    int maxRecent = 10;
     gulong recentHandlerId{};
 
     std::vector<RecentManagerListener*> listener;
