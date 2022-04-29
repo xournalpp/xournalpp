@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-28 07:32+0000\n"
-"PO-Revision-Date: 2022-04-28 07:38\n"
+"POT-Creation-Date: 2022-04-29 06:32+0000\n"
+"PO-Revision-Date: 2022-04-29 07:28\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -778,7 +778,7 @@ msgstr "Tavolo {1}"
 msgid "Layerstack Preview"
 msgstr "Antaŭrigardo de tavolaro"
 
-#: ../src/core/gui/PageView.cpp:772
+#: ../src/core/gui/PageView.cpp:776
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -1419,7 +1419,7 @@ msgstr "Provante krize konservi la aktualan malfermitan dokumenton…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Ne eblas malfermi la ĉiean ŝablonan dosieron ĉe {1}. Ĉu ĝi ekzistas?"
 
-#: ../src/core/gui/PageView.cpp:372
+#: ../src/core/gui/PageView.cpp:376
 msgid "Unable to play audio recording {1}"
 msgstr "Ne eblas ludi sonregistraĵon {1}"
 
