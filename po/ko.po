@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 06:32+0000\n"
-"PO-Revision-Date: 2022-04-29 07:28\n"
+"POT-Creation-Date: 2022-04-29 17:28+0000\n"
+"PO-Revision-Date: 2022-04-29 17:28\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -68,11 +68,11 @@ msgstr "고급 내보내기 옵션"
 msgid "All files"
 msgstr "모든 파일"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:191
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
 msgid "Apply to all pages"
 msgstr "모든 페이지에 적용"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:182
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
 msgid "Apply to current page"
 msgstr "현재 페이지에 적용"
 
@@ -856,7 +856,7 @@ msgstr "로그 파일 디렉토리 열기"
 msgid "Open file"
 msgstr "파일 열기"
 
-#: ../src/core/control/RecentManager.cpp:178
+#: ../src/core/control/RecentManager.cpp:175
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "{1} 열기"
