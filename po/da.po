@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 06:32+0000\n"
-"PO-Revision-Date: 2022-04-29 07:29\n"
+"POT-Creation-Date: 2022-04-29 17:28+0000\n"
+"PO-Revision-Date: 2022-04-29 17:29\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -68,11 +68,11 @@ msgstr "Avancerede eksportindstillinger"
 msgid "All files"
 msgstr "Alle filer"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:191
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
 msgid "Apply to all pages"
 msgstr "Anvend på alle sider"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:182
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
 msgid "Apply to current page"
 msgstr "Anvend på aktuel side"
 
@@ -854,7 +854,7 @@ msgstr ""
 msgid "Open file"
 msgstr ""
 
-#: ../src/core/control/RecentManager.cpp:178
+#: ../src/core/control/RecentManager.cpp:175
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr ""
