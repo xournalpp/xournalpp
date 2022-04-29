@@ -20,43 +20,60 @@ template <typename T>
 
 struct GListView {
     struct GListViewIter {
-        auto operator++() -> GListViewIter& {
+        constexpr auto operator++() -> GListViewIter& {
             this->list = list->next;
             return *this;
         }
 
-        auto operator++(int) -> GListViewIter {
+        constexpr auto operator++(int) -> GListViewIter {
             GListViewIter ret = *this;
             ++(*this);
             return ret;
         }
 
-        friend auto operator==(GListViewIter const& lhs, GListViewIter const& rhs) -> bool {
-            auto tier = [](GList const& list) { std::tie(list.data, list.next, list.prev); };
-            return lhs.list == rhs.list || tier(lhs) == tier(rhs);
+        constexpr friend auto operator==(GListViewIter const& lhs, GListViewIter const& rhs) -> bool {
+            auto tier = [](GList const& list) { return std::tie(list.data, list.next, list.prev); };
+            return (lhs.list == rhs.list) ||
+                   (lhs.list != nullptr && rhs.list != nullptr && tier(*lhs.list) == tier(*rhs.list));
         }
 
-        friend auto operator!=(GListViewIter const& lhs, GListViewIter const& rhs) -> bool { return !(lhs == rhs); }
+        constexpr friend auto operator!=(GListViewIter const& lhs, GListViewIter const& rhs) -> bool {
+            return !(lhs == rhs);
+        }
 
-        T& operator*() { return *static_cast<T*>(list->data); }
+        constexpr T& operator*() { return *static_cast<T*>(list->data); }
 
-        T* operator->() { return static_cast<T*>(list->data); }
+        constexpr T* operator->() { return static_cast<T*>(list->data); }
 
         GList* list{};
     };
 
     struct GListViewSentinel {
-        friend bool operator==(GListViewIter const& iter, GListViewSentinel const&) { return iter.list == nullptr; }
-        friend bool operator==(GListViewSentinel const&, GListViewIter const& iter) { return iter.list == nullptr; }
-        friend bool operator!=(GListViewIter const& iter, GListViewSentinel const&) { return iter.list != nullptr; }
-        friend bool operator!=(GListViewSentinel const&, GListViewIter const& iter) { return iter.list != nullptr; }
+        constexpr friend bool operator==(GListViewIter const& iter, GListViewSentinel const&) {
+            return iter.list == nullptr;
+        }
+        constexpr friend bool operator==(GListViewSentinel const&, GListViewIter const& iter) {
+            return iter.list == nullptr;
+        }
+        constexpr friend bool operator!=(GListViewIter const& iter, GListViewSentinel const&) {
+            return iter.list != nullptr;
+        }
+        constexpr friend bool operator!=(GListViewSentinel const&, GListViewIter const& iter) {
+            return iter.list != nullptr;
+        }
     };
 
-    GListView(GList* list): list(list) {}
+    constexpr GListView(GList* list): list(list) {}
 
-    auto begin() -> GListViewIter { return {list}; }
+    constexpr auto begin() -> GListViewIter { return {list}; }
+    // /// Slow, iterates over all elements to find the end
+    // Todo(if required): constexpr auto rbegin() -> GListViewRevIter { return {g_list_last(list)}; }
 
-    auto end() -> GListViewSentinel { return {}; }
+    constexpr auto end() -> GListViewSentinel { return {}; }
+    // Todo(if required): constexpr auto rend() -> GListViewSentinel { return {}; }
+
+    /// Convenient way to iterate over a GListView, DO NOT REVERSE IT
+    constexpr auto end_iter() -> GListViewIter { return nullptr; }
 
 private:
     GList* list;
