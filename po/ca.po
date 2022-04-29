@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 06:32+0000\n"
-"PO-Revision-Date: 2022-04-29 07:29\n"
+"POT-Creation-Date: 2022-04-29 17:28+0000\n"
+"PO-Revision-Date: 2022-04-29 17:28\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -67,11 +67,11 @@ msgstr "Opcions avançades d'exportació"
 msgid "All files"
 msgstr "Tots els arxius"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:191
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
 msgid "Apply to all pages"
 msgstr "Aplicar a totes les pàgines"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:182
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
 msgid "Apply to current page"
 msgstr "Aplicar a la pàgina actual"
 
@@ -872,7 +872,7 @@ msgstr "Obrir directori d'arxius de registre"
 msgid "Open file"
 msgstr "Obrir fitxer"
 
-#: ../src/core/control/RecentManager.cpp:178
+#: ../src/core/control/RecentManager.cpp:175
 msgctxt "{1} is a URI"
 msgid "Open {1}"
 msgstr "Obrir {1}"
