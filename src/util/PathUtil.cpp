@@ -76,7 +76,7 @@ auto Util::hasXournalFileExt(const fs::path& path) -> bool {
 }
 
 auto Util::hasPdfFileExt(const fs::path& path) -> bool {
-    return StringUtils::toLowerCase(path.extension().u8string()) == ".pdf";
+    return StringUtils::toLowerCase(path.extension().native()) == ".pdf";
 }
 
 auto Util::clearExtensions(fs::path& path, const std::string& ext) -> void {
