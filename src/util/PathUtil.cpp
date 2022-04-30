@@ -81,7 +81,7 @@ auto Util::hasPdfFileExt(const fs::path& path) -> bool {
 
 auto Util::clearExtensions(fs::path& path, const std::string& ext) -> void {
     auto rm_ext = [&path](const std::string ext) {
-        if (StringUtils::toLowerCase(path.extension().u8string()) == StringUtils::toLowerCase(ext)) {
+        if (StringUtils::toLowerCase(path.extension().native()) == StringUtils::toLowerCase(ext)) {
             path.replace_extension("");
         }
     };
