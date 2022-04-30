@@ -71,7 +71,7 @@ auto Util::getEscapedPath(const fs::path& path) -> std::string {
 }
 
 auto Util::hasXournalFileExt(const fs::path& path) -> bool {
-    auto extension = StringUtils::toLowerCase(path.extension().u8string());
+    auto extension = StringUtils::toLowerCase(path.extension().native());
     return extension == ".xoj" || extension == ".xopp";
 }
 
