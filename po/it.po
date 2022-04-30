@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-29 17:28+0000\n"
-"PO-Revision-Date: 2022-04-29 17:29\n"
+"PO-Revision-Date: 2022-04-30 13:57\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -591,11 +591,11 @@ msgstr "Impossibile inizializzare la superficie Cairo PDF"
 
 #: ../src/core/control/tools/ImageHandler.cpp:60
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Impossibile caricare l'immagine, non è possibile determinare la dimensione dell'immagine!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Apertura di content.xml nell'archivio zip non riuscita: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -937,19 +937,19 @@ msgstr "Numero di Pagina"
 
 #: ../src/util/PageRange.cpp:96
 msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr ""
+msgstr "PageRange::parse(): il numero di pagine dato è più grande del numero massimo."
 
 #: ../src/util/PageRange.cpp:99
 msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "PageRange::parse(): i limiti dell'intervallo devono essere in ordine crescente."
 
 #: ../src/util/PageRange.cpp:92
 msgid "PageRange::parse(): invalid page range."
-msgstr ""
+msgstr "PageRange::parse(): intervallo di pagine non valido."
 
 #: ../src/util/PageRange.cpp:102
 msgid "PageRange::parse(): page numbers start with 1"
-msgstr ""
+msgstr "PageRange::parse(): i numeri delle pagine iniziano con 1"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
