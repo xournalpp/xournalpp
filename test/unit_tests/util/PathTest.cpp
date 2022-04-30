@@ -67,7 +67,7 @@ TEST(UtilPath, testClearExtensions) {
     // The following tests use the generic separator which works on all systems
     auto b = fs::path("/test/asdf.TXT");
     Util::clearExtensions(b);
-    EXPECT_EQ(string("/test/asdf.TXT"), b.u8string());
+    EXPECT_EQ(string(u8"/test/asdf.TXT"), b.u8string());
     Util::clearExtensions(b, ".txt");
     EXPECT_EQ(string("/test/asdf"), b.u8string());
 
