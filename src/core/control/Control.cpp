@@ -177,7 +177,7 @@ void Control::renameLastAutosaveFile() {
     auto const& filename = this->lastAutosaveFilename;
     auto renamed = Util::getAutosaveFilepath();
     Util::clearExtensions(renamed);
-    if (!filename.empty() && filename.u8string().front() != '.') {
+    if (!filename.empty() && filename.native().front() != '.') {
         // This file must be a fresh, unsaved document. Since this file is
         // already in the autosave directory, we need to change the renamed filename.
         renamed += ".old.autosave.xopp";
