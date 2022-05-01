@@ -44,8 +44,7 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 
     InputContext* inputContext = new InputContext(this, scrollHandling);
     this->widget = gtk_xournal_new(this, inputContext);
-    // we need to refer widget here, because we unref it somewhere twice!?
-    g_object_ref(this->widget);
+    g_object_ref_sink(this->widget);  // take ownership without increasing the ref count
 
     gtk_container_add(GTK_CONTAINER(parent), this->widget);
     gtk_widget_show(this->widget);

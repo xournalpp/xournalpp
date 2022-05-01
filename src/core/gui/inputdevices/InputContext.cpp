@@ -26,6 +26,9 @@ InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling) {
 }
 
 InputContext::~InputContext() {
+    // Destructor is called in xournal_widget_dispose, so it can still accept events
+    g_signal_handler_disconnect(this->widget, signal_id);
+
     delete this->stylusHandler;
     this->stylusHandler = nullptr;
 
@@ -43,6 +46,7 @@ InputContext::~InputContext() {
 }
 
 void InputContext::connect(GtkWidget* pWidget) {
+    assert(!this->widget);
     this->widget = pWidget;
     gtk_widget_set_support_multidevice(widget, true);
 
@@ -60,7 +64,7 @@ void InputContext::connect(GtkWidget* pWidget) {
 
     gtk_widget_add_events(pWidget, mask);
 
-    g_signal_connect(pWidget, "event", G_CALLBACK(eventCallback), this);
+    signal_id = g_signal_connect(pWidget, "event", G_CALLBACK(eventCallback), this);
 }
 
 auto InputContext::eventCallback(GtkWidget* widget, GdkEvent* event, InputContext* self) -> bool {
