@@ -40,6 +40,7 @@ class SetsquareInputHandler;
 class InputContext {
 
 private:
+    gulong signal_id{0};
     std::unique_ptr<SetsquareInputHandler> setsquareHandler;
     StylusInputHandler* stylusHandler;
     MouseInputHandler* mouseHandler;
