@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-30 17:45+0000\n"
-"PO-Revision-Date: 2022-05-01 06:34\n"
+"PO-Revision-Date: 2022-05-01 07:33\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -940,15 +940,15 @@ msgstr "PageRange::parse(): egy adott oldalszám nagyobb, mint a legfeljebb olda
 
 #: ../src/util/PageRange.cpp:99
 msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "PageRange::parse(): az oldal tartományának növekvő sorrendben kell lennie."
 
 #: ../src/util/PageRange.cpp:92
 msgid "PageRange::parse(): invalid page range."
-msgstr ""
+msgstr "PageRange::parse(): érvénytelen oldaltartomány."
 
 #: ../src/util/PageRange.cpp:102
 msgid "PageRange::parse(): page numbers start with 1"
-msgstr ""
+msgstr "PageRange::parse(): az oldalszámok 1-gyel kezdődnek"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
