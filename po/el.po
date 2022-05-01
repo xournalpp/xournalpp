@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-30 17:45+0000\n"
-"PO-Revision-Date: 2022-04-30 18:44\n"
+"PO-Revision-Date: 2022-05-01 08:49\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -32,7 +32,7 @@ msgstr "\n"
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:35
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " από {1}"
 
 #: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
@@ -78,7 +78,7 @@ msgstr "Εφαρμογή στην τρέχουσα σελίδα"
 
 #: ../src/core/control/tools/EditSelection.cpp:352
 msgid "Arrange"
-msgstr ""
+msgstr "Τακτοποίηση"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:28
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:112
@@ -118,7 +118,8 @@ msgstr "Το χαρακτηριστικό \"χρώμα\" δεν έχει ορι�
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Ο φάκελος ήχου δεν έχει οριστεί ή δεν είναι έγκυρος! Η εγγραφή δεν λειτουργεί!\n"
+"Παρακαλώ ορίστε το φάκελο εγγραφής στο πεδίο \"Προτιμήσεις > Εγγραφή ήχου\""
 
 #: ../src/core/control/Control.cpp:208
 msgid "Autosave failed with an error: {1}"
@@ -200,7 +201,8 @@ msgstr "Αντιγραφή σελίδας"
 #: ../src/util/PathUtil.cpp:257
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "Αδυναμία δημιουργίας φακέλου: {1}\n"
+"Αποτυχία με σφάλμα: {2}"
 
 #: ../src/core/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
@@ -258,7 +260,7 @@ msgstr "Απέτυχε η ανάγνωση της εικόνας: {1}. Μήνυ�
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:397
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "Δεν ήταν δυνατή η ανάγνωση αριθμού σελίδας για κλωνοποιημένη εικόνα φόντου: {1}."
 
 #: ../src/core/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -446,7 +448,7 @@ msgstr "Τύπος σχεδιασμού - καμία αλλαγή"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Τύπος Σχεδίασης Combo"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
