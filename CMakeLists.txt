@@ -187,8 +187,9 @@ mark_as_advanced(FORCE
 
 if (WIN32)
     option(DEBUG_CLANG_USE_PDB "Generate PDB symbols when building with clang. Enables native windows stacktrace." ON)
+    option(DEBUG_CONSOLE "Console debugging features, e.g. additional messages from console process, additional menu items to deliberately crash Xournal++ etc." OFF)
     mark_as_advanced(FORCE
-            DEBUG_CLANG_USE_PDB)
+            DEBUG_CLANG_USE_PDB DEBUG_CONSOLE)
 endif()
 
 # Advanced development config

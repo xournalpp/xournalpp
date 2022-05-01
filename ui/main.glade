@@ -2067,6 +2067,15 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkImageMenuItem" id="menuHelpDebug">
+                            <property name="label">_Debug</property>
+                            <property name="name">menuHelpDebug</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkImageMenuItem" id="menuHelpAbout">
                             <property name="label">gtk-about</property>
                             <property name="name">menuHelpAbout</property>

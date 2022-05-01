@@ -56,8 +56,17 @@ if (WIN32)
     target_include_directories(xournalpp PRIVATE .)
     add_dependencies(xournalpp xournalpp_icon)
 
+    # Windows console helper
+    add_executable(console-helper win32console/consolehelper.cpp ${RC_FILE})
+    set_target_properties(console-helper PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+    target_link_libraries(console-helper INTERFACE defaults)
+    target_link_libraries(console-helper PRIVATE xoj::util)
+    add_dependencies(console-helper xournalpp_icon)
+    install(TARGETS console-helper)
+
     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR MSVC)
         install(FILES "$<TARGET_FILE_BASE_NAME:xournalpp>.pdb" DESTINATION bin)
+        install(FILES "$<TARGET_FILE_BASE_NAME:console-helper>.pdb" DESTINATION bin)
     endif()
 
 endif()

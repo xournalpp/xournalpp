@@ -66,3 +66,8 @@
 #cmakedefine DEBUG_CLANG_USE_PDB
 
 #endif  // __clang__
+
+/**
+ * Print additional messages from console helper process
+ */
+#cmakedefine DEBUG_CONSOLE

@@ -47,6 +47,7 @@ public:
     void show(GtkWindow* parent) override;
 
     void setRecentMenu(GtkWidget* submenu);
+    void setDebugMenu(GtkWidget* submenu);
     void toolbarSelected(ToolbarData* d);
     ToolbarData* getSelectedToolbar();
     [[maybe_unused]] void reloadToolbars();

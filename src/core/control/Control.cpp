@@ -1,5 +1,6 @@
 #include "Control.h"
 
+#include <algorithm>
 #include <ctime>
 #include <memory>
 #include <numeric>
@@ -45,16 +46,97 @@
 #include "util/serializing/ObjectInputStream.h"
 #include "view/TextView.h"
 
+#include "Console.h"
 #include "CrashHandler.h"
 #include "FullscreenHandler.h"
 #include "LatexController.h"
 #include "PageBackgroundChangeController.h"
 #include "PrintHandler.h"
 #include "UndoRedoController.h"
+#include "config-debug.h"
 #include "config-dev.h"
 #include "config.h"
 
 using std::string;
+
+namespace {
+
+#ifdef DEBUG_CONSOLE
+void crashSig() {
+    int* crash = nullptr;
+    *crash = 0;
+}
+
+void crashCppException() { throw std::runtime_error("Runtime error in callback: This was supposed to happen"); }
+#endif  // DEBUG_CONSOLE
+
+auto initDebugSubmenu(Control* control) -> GtkWidget* {
+    std::vector<GtkWidget*> debugMenuItems;
+
+#ifdef _WIN32  // No console implementation yet for non-Windows systems
+    {
+        GtkWidget* miShowConsole = gtk_menu_item_new_with_mnemonic("Show _console");
+        gtk_widget_set_sensitive(miShowConsole, control->getConsole()->hasPlatformConsole());
+        debugMenuItems.push_back(miShowConsole);
+        g_signal_connect(miShowConsole, "activate", G_CALLBACK(+[](GtkMenuItem*, Control* control) {
+                             control->getConsole()->showUnconditionally(false);
+                         }),
+                         control);
+
+        GtkWidget* miHideConsole = gtk_menu_item_new_with_mnemonic("_Hide console");
+        gtk_widget_set_sensitive(miHideConsole, control->getConsole()->hasPlatformConsole());
+        debugMenuItems.push_back(miHideConsole);
+        g_signal_connect(miHideConsole, "activate",
+                         G_CALLBACK(+[](GtkMenuItem*, Control* control) { control->getConsole()->hide(); }), control);
+    }
+#endif  // _WIN32
+
+#ifdef DEBUG_CONSOLE
+    {
+        GtkStyleContext* styleContext = nullptr;
+
+        GtkWidget* miTriggerSignal = gtk_menu_item_new_with_mnemonic("Crash Xournal++ with _signal");
+        gtk_widget_set_tooltip_text(
+                miTriggerSignal,
+                "Causes an access violation that should be caught by the crash handler. This will crash Xournal++!");
+        styleContext = gtk_widget_get_style_context(miTriggerSignal);
+        gtk_style_context_add_class(styleContext, "dangerousMenuItem");
+        debugMenuItems.push_back(miTriggerSignal);
+        g_signal_connect(miTriggerSignal, "activate", G_CALLBACK(+[](GtkCheckMenuItem*, gpointer) { crashSig(); }),
+                         nullptr);
+
+        GtkWidget* miTriggerCppException = gtk_menu_item_new_with_mnemonic("Crash Xournal++ with C++ _exception");
+        gtk_widget_set_tooltip_text(
+                miTriggerCppException,
+                "Throws a std::runtime_error that should be caught by the crash handler. This will crash Xournal++!");
+        styleContext = gtk_widget_get_style_context(miTriggerCppException);
+        gtk_style_context_add_class(styleContext, "dangerousMenuItem");
+        debugMenuItems.push_back(miTriggerCppException);
+        g_signal_connect(miTriggerCppException, "activate",
+                         G_CALLBACK(+[](GtkCheckMenuItem*, gpointer) { crashCppException(); }), nullptr);
+    }
+#endif  // DEBUG_CONSOLE
+
+    GtkWidget* miToggleInspector = gtk_menu_item_new_with_mnemonic("Show GTK _inspector");
+    debugMenuItems.push_back(miToggleInspector);
+    g_signal_connect(miToggleInspector, "activate",
+                     G_CALLBACK(+[](GtkCheckMenuItem*, gpointer) { gtk_window_set_interactive_debugging(true); }),
+                     nullptr);
+
+    if (!debugMenuItems.empty()) {
+        GtkWidget* mDebug = gtk_menu_new();
+        std::for_each(debugMenuItems.begin(), debugMenuItems.end(),
+                      [=](GtkWidget* mi) { gtk_menu_shell_append(GTK_MENU_SHELL(mDebug), mi); });
+
+        gtk_widget_show_all(mDebug);
+
+        return mDebug;
+    }
+
+    return nullptr;
+}
+
+}  // namespace
 
 Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp(gtkApp) {
     this->recent = new RecentManager();
@@ -75,6 +157,8 @@ Control::Control(GApplication* gtkApp, GladeSearchpath* gladeSearchPath): gtkApp
     auto name = Util::getConfigFile(SETTINGS_XML_FILE);
     this->settings = new Settings(std::move(name));
     this->settings->load();
+
+    this->console = std::make_unique<ConsoleCtl>();
 
     this->applyPreferredLanguage();
 
@@ -253,6 +337,8 @@ void Control::saveSettings() {
 
 void Control::initWindow(MainWindow* win) {
     win->setRecentMenu(recent->getMenu());
+    win->setDebugMenu(initDebugSubmenu(this));
+
     selectTool(toolHandler->getToolType());
     this->win = win;
     this->sidebar = new Sidebar(win, this);
@@ -2890,6 +2976,8 @@ auto Control::getScheduler() -> XournalScheduler* { return this->scheduler; }
 auto Control::getWindow() -> MainWindow* { return this->win; }
 
 auto Control::getGtkWindow() const -> GtkWindow* { return GTK_WINDOW(this->win->getWindow()); }
+
+auto Control::getConsole() -> ConsoleCtl* { return this->console.get(); }
 
 auto Control::isFullscreen() -> bool { return this->fullscreenHandler->isFullscreen(); }
 
