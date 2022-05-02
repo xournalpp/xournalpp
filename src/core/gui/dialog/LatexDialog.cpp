@@ -16,7 +16,9 @@
 #include <sstream>
 #include <utility>
 
+#ifdef USE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>
+#endif
 
 #include "control/settings/Settings.h"
 #include "util/StringUtils.h"
@@ -38,8 +40,12 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
         GladeGui(gladeSearchPath, "texdialog.glade", "texDialog"), previewBackgroundColor{DEFAULT_PREVIEW_BACKGROUND} {
     GtkContainer* texBoxContainer = GTK_CONTAINER(get("texBoxContainer"));
 
-    this->texBox = gtk_source_view_new();
     this->cssProvider = gtk_css_provider_new();
+#ifdef USE_GTK_SOURCEVIEW
+    this->texBox = gtk_source_view_new();
+#else
+    this->texBox = gtk_text_view_new();
+#endif
 
     gtk_widget_set_name(this->texBox, "texBox");
     gtk_container_add(texBoxContainer, this->texBox);
@@ -50,6 +56,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
     this->texTempRender = get("texImage");
     gtk_widget_set_name(GTK_WIDGET(this->texTempRender), "texImage");
 
+#ifdef USE_GTK_SOURCEVIEW
     // We own neither the languageManager, the styleSchemeManager, nor the sourceLanguage.
     // Do not attempt to free them.
     GtkSourceStyleSchemeManager* styleSchemeManager = gtk_source_style_scheme_manager_get_default();
@@ -73,6 +80,7 @@ LatexDialog::LatexDialog(GladeSearchpath* gladeSearchPath, const LatexSettings& 
     if (styleScheme) {
         gtk_source_buffer_set_style_scheme(GTK_SOURCE_BUFFER(this->textBuffer), styleScheme);
     }
+#endif
 
     // Enable/disable word-wrap.
     GtkWrapMode texBoxWrapMode = GTK_WRAP_NONE;

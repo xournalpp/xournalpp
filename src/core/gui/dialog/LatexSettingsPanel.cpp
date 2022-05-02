@@ -3,7 +3,9 @@
 #include <fstream>
 #include <variant>
 
+#ifdef USE_GTK_SOURCEVIEW
 #include <gtksourceview/gtksource.h>
+#endif
 
 #include "control/latex/LatexGenerator.h"
 #include "control/settings/Settings.h"
@@ -27,10 +29,20 @@ LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
                      G_CALLBACK(+[](GtkWidget*, LatexSettingsPanel* self) { self->updateWidgetSensitivity(); }), this);
 
     GtkContainer* themeSelectionBoxContainer = GTK_CONTAINER(this->get("bxThemeSelectionContainer"));
-    gtk_label_set_text(GTK_LABEL(this->get("lbSourceviewSettingsDescription")), _("LaTeX editor theme:"));
-    this->sourceViewThemeSelector = gtk_source_style_scheme_chooser_button_new();
 
+#ifdef USE_GTK_SOURCEVIEW
+    this->sourceViewThemeSelector = gtk_source_style_scheme_chooser_button_new();
     gtk_container_add(themeSelectionBoxContainer, sourceViewThemeSelector);
+
+    gtk_label_set_text(GTK_LABEL(this->get("lbSourceviewSettingsDescription")), _("LaTeX editor theme:"));
+#else
+    this->sourceViewThemeSelector = nullptr;
+
+    gtk_label_set_text(GTK_LABEL(this->get("lbSourceviewSettingsDescription")),
+                       _("GtkSourceView was disabled when building Xournal++! "
+                         "Some options will not be available."));
+#endif
+
     gtk_widget_show_all(GTK_WIDGET(themeSelectionBoxContainer));
     gtk_widget_show(this->get("bxGtkSourceviewMainSettings"));
 }
@@ -50,6 +62,8 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_entry_set_text(GTK_ENTRY(this->get("latexSettingsGenCmd")), settings.genCmd.c_str());
 
     std::string themeId = settings.sourceViewThemeId;
+
+#ifdef USE_GTK_SOURCEVIEW
     GtkSourceStyleSchemeManager* themeManager = gtk_source_style_scheme_manager_get_default();
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_manager_get_scheme(themeManager, themeId.c_str());
 
@@ -57,6 +71,7 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
         gtk_source_style_scheme_chooser_set_style_scheme(GTK_SOURCE_STYLE_SCHEME_CHOOSER(this->sourceViewThemeSelector),
                                                          theme);
     }
+#endif
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbShowLineNumbers")), settings.sourceViewShowLineNumbers);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->get("cbAutoIndent")), settings.sourceViewAutoIndent);
@@ -80,9 +95,11 @@ void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.globalTemplatePath = Util::fromGFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
     settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
 
+#ifdef USE_GTK_SOURCEVIEW
     GtkSourceStyleScheme* theme = gtk_source_style_scheme_chooser_get_style_scheme(
             GTK_SOURCE_STYLE_SCHEME_CHOOSER(this->sourceViewThemeSelector));
     settings.sourceViewThemeId = gtk_source_style_scheme_get_id(theme);
+#endif
 
     settings.sourceViewShowLineNumbers =
             gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(this->get("cbShowLineNumbers")));
@@ -145,4 +162,8 @@ void LatexSettingsPanel::updateWidgetSensitivity() {
 
     // Only select a custom font if we're not using the system's.
     gtk_widget_set_sensitive(this->get("boxCustomFontOptions"), !useSystemFont);
+
+#ifndef USE_GTK_SOURCEVIEW
+    gtk_widget_set_sensitive(this->get("bxGtkSourceviewSettings"), false);
+#endif
 }

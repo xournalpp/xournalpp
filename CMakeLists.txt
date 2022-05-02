@@ -92,7 +92,13 @@ list(APPEND pkg-module-spec "libzip >= 1.0.1")
 list(APPEND pkg-module-spec "portaudiocpp >= 12")
 list(APPEND pkg-module-spec "sndfile >= 1.0.25")
 list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
-list(APPEND pkg-module-spec "gtksourceview-4 >= 4.0.0")
+
+# Ubuntu 18.04 does not package gtksourceview-4
+option (USE_GTK_SOURCEVIEW "Link with gtksourceview-4 (for TeX syntax highlighting)" ON)
+if (USE_GTK_SOURCEVIEW)
+  list(APPEND pkg-module-spec "gtksourceview-4 >= 4.0.0")
+  add_compile_definitions(USE_GTK_SOURCEVIEW)
+endif(USE_GTK_SOURCEVIEW)
 
 # Profiling
 option (ENABLE_PROFILING "Link with gperftools" OFF)
