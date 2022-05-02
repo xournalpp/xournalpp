@@ -29,7 +29,7 @@ public:
 
     /**
      * LaTeX editor theme. Only used if linked with the GtkSourceView
-     * libaray.
+     * library.
      */
     std::string sourceViewThemeId{};
     bool sourceViewAutoIndent{true};
