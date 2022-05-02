@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 17:45+0000\n"
-"PO-Revision-Date: 2022-04-30 18:44\n"
+"POT-Creation-Date: 2022-05-02 10:45+0000\n"
+"PO-Revision-Date: 2022-05-02 11:02\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -310,7 +310,7 @@ msgstr "Sortu geruza berria"
 msgid "Custom"
 msgstr "Pertsonalizatu"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:21
+#: ../src/core/control/jobs/CustomExportJob.cpp:20
 msgid "Custom Export"
 msgstr "Esportazio pertsonalizatua"
 
@@ -584,8 +584,8 @@ msgstr "Esportatu saretarik gabe\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Huts egin du LaTex programa sortzailea aurkitzen bidean: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:157
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Akats bat gertatu da Cairo PDF orriaren azalera abiaraztean"
 
@@ -835,8 +835,8 @@ msgstr "Hurrengo ohar-orria"
 msgid "No device"
 msgstr "Ez dago gailurik"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:152
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:192
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:153
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
 msgid "No pages to export!"
 msgstr "Ez dago orririk esportatzeko!"
 
@@ -889,7 +889,7 @@ msgstr "PDF esportatzea"
 msgid "PDF Page {1}"
 msgstr "PDF orria {1}"
 
-#: ../src/core/view/PdfView.cpp:31
+#: ../src/core/view/PdfView.cpp:29
 msgid "PDF background missing"
 msgstr "Atzeko planoko PDFa falta da"
 
@@ -897,7 +897,7 @@ msgstr "Atzeko planoko PDFa falta da"
 msgid "PDF file successfully created"
 msgstr "PDF fitxategia behar bezala sortu da"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:23
+#: ../src/core/control/jobs/CustomExportJob.cpp:22
 #: ../src/core/control/jobs/PdfExportJob.cpp:12
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
@@ -907,7 +907,7 @@ msgstr "PDF fitxategiak"
 msgid "PDF {1}"
 msgstr "PDF {1}"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:24
+#: ../src/core/control/jobs/CustomExportJob.cpp:23
 msgid "PNG graphics"
 msgstr "SVG irudiak"
 
@@ -1056,7 +1056,7 @@ msgstr "Lerroduna"
 msgid "Ruled with vertical line"
 msgstr "Lerroduna marra bertikalarekin"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:25
+#: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "SVG graphics"
 msgstr "SVG irudiak"
 
@@ -1078,8 +1078,8 @@ msgstr "Gorde honela..."
 msgid "Save File"
 msgstr "Gorde fitxategia"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:124
-#: ../src/core/control/jobs/SaveJob.cpp:114
+#: ../src/core/control/jobs/CustomExportJob.cpp:123
+#: ../src/core/control/jobs/SaveJob.cpp:115
 msgid "Save file error: {1}"
 msgstr "Errorea fitxategia gordetzean: {1}"
 
@@ -1515,7 +1515,7 @@ msgstr "Puntuen zenbaketa okerra, eskuratua {1}, espero zen {2}"
 msgid "XML Parser error: {1}"
 msgstr "XML analizatzailearen errorea: {1}"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:26
+#: ../src/core/control/jobs/CustomExportJob.cpp:25
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (bateragarritasuna)"
 
