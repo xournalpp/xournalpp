@@ -92,8 +92,6 @@ void RenderJob::run() {
         cairo_t* cr2 = cairo_create(crBuffer);
         cairo_scale(cr2, zoom, zoom);
 
-        XojPdfPageSPtr popplerPage;
-
         doc->lock();
 
         Control* control = view->getXournal()->getControl();

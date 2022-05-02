@@ -34,6 +34,19 @@ struct Context {
     static Context createColorBlind(cairo_t* cr) { return {cr, NORMAL_NON_AUDIO, HIDE_CURRENT_EDITING, COLORBLIND}; }
 };
 
+enum PDFBackgroundTreatment : bool { SHOW_PDF_BACKGROUND = true, HIDE_PDF_BACKGROUND = false };
+enum ImageBackgroundTreatment : bool { SHOW_IMAGE_BACKGROUND = true, HIDE_IMAGE_BACKGROUND = false };
+enum RulingBackgroundTreatment : bool { SHOW_RULING_BACKGROUND = true, HIDE_RULING_BACKGROUND = false };
+
+struct BackgroundFlags {
+    PDFBackgroundTreatment showPDF;
+    ImageBackgroundTreatment showImage;
+    RulingBackgroundTreatment showRuling;
+};
+
+static constexpr BackgroundFlags BACKGROUND_SHOW_ALL = {SHOW_PDF_BACKGROUND, SHOW_IMAGE_BACKGROUND,
+                                                        SHOW_RULING_BACKGROUND};
+
 class ElementView {
 public:
     virtual ~ElementView() = default;

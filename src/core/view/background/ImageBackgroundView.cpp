@@ -4,7 +4,7 @@
 
 using namespace xoj::view;
 
-ImageBackgroundView::ImageBackgroundView(const BackgroundImage& image, double pageWidth, double pageHeight):
+ImageBackgroundView::ImageBackgroundView(double pageWidth, double pageHeight, const BackgroundImage& image):
         BackgroundView(pageWidth, pageHeight), image(image) {}
 
 void ImageBackgroundView::draw(cairo_t* cr) const {

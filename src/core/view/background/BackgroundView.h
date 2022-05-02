@@ -15,6 +15,8 @@
 #include "view/View.h"
 
 class BackgroundConfig;
+class Document;
+class PdfCache;
 
 namespace xoj {
 namespace view {
@@ -26,11 +28,16 @@ public:
 
     /**
      * @brief Draws the background on the entire mask represented by the cairo context cr
+     *
+     * Does nothing in the base class - used when the background drawing is suppressed.
      */
-    virtual void draw(cairo_t* cr) const = 0;
+    virtual void draw(cairo_t* cr) const {}
 
-    static std::unique_ptr<BackgroundView> create(double width, double height, Color backgroundColor,
-                                                  const PageType& pt, double lineWidthFactor = 1.0);
+    [[nodiscard]] static std::unique_ptr<BackgroundView> createRuled(double width, double height, Color backgroundColor,
+                                                                     const PageType& pt, double lineWidthFactor = 1.0);
+
+    [[nodiscard]] static std::unique_ptr<BackgroundView> createForPage(PageRef page, xoj::view::BackgroundFlags bgFlags,
+                                                                       PdfCache* pdfCache = nullptr);
 
 protected:
     double pageWidth;
