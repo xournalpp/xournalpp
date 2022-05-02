@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 17:45+0000\n"
-"PO-Revision-Date: 2022-04-30 18:44\n"
+"POT-Creation-Date: 2022-05-02 10:45+0000\n"
+"PO-Revision-Date: 2022-05-02 11:01\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -309,7 +309,7 @@ msgstr "Nieuwe laag creëren"
 msgid "Custom"
 msgstr "Aangepast"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:21
+#: ../src/core/control/jobs/CustomExportJob.cpp:20
 msgid "Custom Export"
 msgstr "Aangepaste export"
 
@@ -583,8 +583,8 @@ msgstr "Exporteren zonder regels\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Kan LaTeX generator programma niet vinden in PATH: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:157
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Kan PDF Cairo oppervlak niet initialiseren"
 
@@ -834,8 +834,8 @@ msgstr "Volgende pagina met aantekeningen"
 msgid "No device"
 msgstr "Geen apparaat"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:152
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:192
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:153
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
 msgid "No pages to export!"
 msgstr "Geen te exporteren pagina's!"
 
@@ -887,7 +887,7 @@ msgstr "PDF-bestand exporteren"
 msgid "PDF Page {1}"
 msgstr "PDF-pagina {1}"
 
-#: ../src/core/view/PdfView.cpp:31
+#: ../src/core/view/PdfView.cpp:29
 msgid "PDF background missing"
 msgstr "PDF-achtergrond ontbreekt"
 
@@ -895,7 +895,7 @@ msgstr "PDF-achtergrond ontbreekt"
 msgid "PDF file successfully created"
 msgstr "Het PDF-bestand is gecreëerd"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:23
+#: ../src/core/control/jobs/CustomExportJob.cpp:22
 #: ../src/core/control/jobs/PdfExportJob.cpp:12
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
@@ -905,7 +905,7 @@ msgstr "PDF-bestanden"
 msgid "PDF {1}"
 msgstr "PDF {1}"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:24
+#: ../src/core/control/jobs/CustomExportJob.cpp:23
 msgid "PNG graphics"
 msgstr "PNG-afbeeldingen"
 
@@ -1054,7 +1054,7 @@ msgstr "Met gemeten afstand"
 msgid "Ruled with vertical line"
 msgstr "Verticaal gelijnd"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:25
+#: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "SVG graphics"
 msgstr "SVG-afbeeldingen"
 
@@ -1076,8 +1076,8 @@ msgstr "Opslaan als..."
 msgid "Save File"
 msgstr "Bestand opslaan"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:124
-#: ../src/core/control/jobs/SaveJob.cpp:114
+#: ../src/core/control/jobs/CustomExportJob.cpp:123
+#: ../src/core/control/jobs/SaveJob.cpp:115
 msgid "Save file error: {1}"
 msgstr "Fout tijdens opslaan: {1}"
 
@@ -1509,7 +1509,7 @@ msgstr "Onjuist aantal punten - verkregen: {1}, verwacht: {2}"
 msgid "XML Parser error: {1}"
 msgstr "XML-verwerkfout: {1}"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:26
+#: ../src/core/control/jobs/CustomExportJob.cpp:25
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (comptabiliteit)"
 
