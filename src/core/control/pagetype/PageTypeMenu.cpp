@@ -5,7 +5,7 @@
 #include "control/settings/PageTemplateSettings.h"
 #include "control/settings/Settings.h"
 #include "util/i18n.h"
-#include "view/background/MainBackgroundPainter.h"
+#include "view/oldbackground/MainBackgroundPainter.h"
 
 #include "PageTypeHandler.h"
 
