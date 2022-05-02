@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 17:45+0000\n"
-"PO-Revision-Date: 2022-05-01 08:49\n"
+"POT-Creation-Date: 2022-05-02 10:45+0000\n"
+"PO-Revision-Date: 2022-05-02 11:02\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -310,7 +310,7 @@ msgstr "Δημιουργία νέας στρώσης"
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:21
+#: ../src/core/control/jobs/CustomExportJob.cpp:20
 msgid "Custom Export"
 msgstr "Προσαρμοσμένη εξαγωγή"
 
@@ -575,8 +575,8 @@ msgstr ""
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:157
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
 msgid "Failed to initialize PDF Cairo surface"
 msgstr ""
 
@@ -825,8 +825,8 @@ msgstr "Επόμενη σημειωμένη σελίδα"
 msgid "No device"
 msgstr "Καμία συσκευή"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:152
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:192
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:153
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
 msgid "No pages to export!"
 msgstr "Δεν υπάρχουν σελίδες για εξαγωγή!"
 
@@ -878,7 +878,7 @@ msgstr "Εξαγωγή σε PDF"
 msgid "PDF Page {1}"
 msgstr "PDF σελίδα {1}"
 
-#: ../src/core/view/PdfView.cpp:31
+#: ../src/core/view/PdfView.cpp:29
 msgid "PDF background missing"
 msgstr "Φόντο PDF λείπει"
 
@@ -886,7 +886,7 @@ msgstr "Φόντο PDF λείπει"
 msgid "PDF file successfully created"
 msgstr "Το αρχείο PDF δημιουργήθηκε με επιτυχία"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:23
+#: ../src/core/control/jobs/CustomExportJob.cpp:22
 #: ../src/core/control/jobs/PdfExportJob.cpp:12
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
@@ -896,7 +896,7 @@ msgstr "Αρχεία PDF"
 msgid "PDF {1}"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:24
+#: ../src/core/control/jobs/CustomExportJob.cpp:23
 msgid "PNG graphics"
 msgstr "PNG γραφικά"
 
@@ -1045,7 +1045,7 @@ msgstr "Ριγέ"
 msgid "Ruled with vertical line"
 msgstr "Ριγέ με κάθετη"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:25
+#: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "SVG graphics"
 msgstr "SVG γραφικά"
 
@@ -1067,8 +1067,8 @@ msgstr "Αποθήκευση Ως..."
 msgid "Save File"
 msgstr "Αποθήκευση Αρχείου"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:124
-#: ../src/core/control/jobs/SaveJob.cpp:114
+#: ../src/core/control/jobs/CustomExportJob.cpp:123
+#: ../src/core/control/jobs/SaveJob.cpp:115
 msgid "Save file error: {1}"
 msgstr "Σφάλμα αποθήκευσης αρχείου: {1}"
 
@@ -1497,7 +1497,7 @@ msgstr "Λάθος αριθμός σημείων, βρέθηκαν {1}, περι
 msgid "XML Parser error: {1}"
 msgstr "Σφάλμα αναλυτή XML: {1}"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:26
+#: ../src/core/control/jobs/CustomExportJob.cpp:25
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (Συμβατότητα)"
 
