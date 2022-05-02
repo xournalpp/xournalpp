@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 17:45+0000\n"
-"PO-Revision-Date: 2022-04-30 18:44\n"
+"POT-Creation-Date: 2022-05-02 10:45+0000\n"
+"PO-Revision-Date: 2022-05-02 11:01\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -309,7 +309,7 @@ msgstr "Criar nova camada"
 msgid "Custom"
 msgstr "Personalizado"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:21
+#: ../src/core/control/jobs/CustomExportJob.cpp:20
 msgid "Custom Export"
 msgstr "Exportação Personalizada"
 
@@ -574,8 +574,8 @@ msgstr ""
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:157
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:197
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
 msgid "Failed to initialize PDF Cairo surface"
 msgstr ""
 
@@ -824,8 +824,8 @@ msgstr "Próxima página anotada"
 msgid "No device"
 msgstr "Nenhum dispositivo"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:152
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:192
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:153
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
 msgid "No pages to export!"
 msgstr "Nenhuma página para exportar!"
 
@@ -877,7 +877,7 @@ msgstr "Exportar para PDF"
 msgid "PDF Page {1}"
 msgstr "Página do PDF {1}"
 
-#: ../src/core/view/PdfView.cpp:31
+#: ../src/core/view/PdfView.cpp:29
 msgid "PDF background missing"
 msgstr "Fundo em PDF em falta"
 
@@ -885,7 +885,7 @@ msgstr "Fundo em PDF em falta"
 msgid "PDF file successfully created"
 msgstr "Ficheiro PDF criado com sucesso"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:23
+#: ../src/core/control/jobs/CustomExportJob.cpp:22
 #: ../src/core/control/jobs/PdfExportJob.cpp:12
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:43
 msgid "PDF files"
@@ -895,7 +895,7 @@ msgstr "Ficheiros PDF"
 msgid "PDF {1}"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:24
+#: ../src/core/control/jobs/CustomExportJob.cpp:23
 msgid "PNG graphics"
 msgstr "Gráficos PNG"
 
@@ -1044,7 +1044,7 @@ msgstr ""
 msgid "Ruled with vertical line"
 msgstr ""
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:25
+#: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "SVG graphics"
 msgstr "Gráficos SVG"
 
@@ -1066,8 +1066,8 @@ msgstr "Guardar como..."
 msgid "Save File"
 msgstr "Guardar Ficheiro"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:124
-#: ../src/core/control/jobs/SaveJob.cpp:114
+#: ../src/core/control/jobs/CustomExportJob.cpp:123
+#: ../src/core/control/jobs/SaveJob.cpp:115
 msgid "Save file error: {1}"
 msgstr "Erro ao guardar ficheiro: {1}"
 
@@ -1496,7 +1496,7 @@ msgstr "Número errado de pontos, obtido {1}, esperado {2}"
 msgid "XML Parser error: {1}"
 msgstr "Erro do analisador de XML: {1}"
 
-#: ../src/core/control/jobs/CustomExportJob.cpp:26
+#: ../src/core/control/jobs/CustomExportJob.cpp:25
 msgid "Xournal (Compatibility)"
 msgstr "Xournal (Compatibilidade)"
 
