@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "View.h"
+#include "view/View.h"
 
 class xoj::view::BackgroundView {
 public:

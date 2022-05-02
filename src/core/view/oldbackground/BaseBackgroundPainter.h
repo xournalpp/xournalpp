@@ -13,10 +13,9 @@
 
 #include <gtk/gtk.h>
 
+#include "model/BackgroundConfig.h"
 #include "model/PageRef.h"
 #include "util/Color.h"
-
-#include "BackgroundConfig.h"
 
 class BaseBackgroundPainter {
 public:

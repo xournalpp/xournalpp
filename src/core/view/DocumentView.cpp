@@ -2,9 +2,9 @@
 
 #include "model/Layer.h"
 #include "model/eraser/ErasableStroke.h"
-#include "view/background/MainBackgroundPainter.h"
+#include "view/background/ImageBackgroundView.h"
+#include "view/oldbackground/MainBackgroundPainter.h"
 
-#include "ImageBackgroundView.h"
 #include "LayerView.h"
 #include "StrokeView.h"
 

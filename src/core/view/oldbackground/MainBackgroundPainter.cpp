@@ -1,6 +1,7 @@
 #include "MainBackgroundPainter.h"
 
-#include "BackgroundConfig.h"
+#include "model/BackgroundConfig.h"
+
 #include "BaseBackgroundPainter.h"
 #include "DottedBackgroundPainter.h"
 #include "GraphBackgroundPainter.h"
