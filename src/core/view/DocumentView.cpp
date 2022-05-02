@@ -5,16 +5,7 @@
 #include "model/Document.h"
 #include "model/Layer.h"
 #include "model/eraser/ErasableStroke.h"
-#include "view/background/DottedBackgroundView.h"
-#include "view/background/GraphBackgroundView.h"
-#include "view/background/ImageBackgroundView.h"
-#include "view/background/IsoDottedBackgroundView.h"
-#include "view/background/IsoGraphBackgroundView.h"
-#include "view/background/LinedBackgroundView.h"
-#include "view/background/PdfBackgroundView.h"
-#include "view/background/RuledBackgroundView.h"
-#include "view/background/StavesBackgroundView.h"
-#include "view/background/TransparentCheckerboardBackgroundView.h"
+#include "view/background/BackgroundView.h"
 
 #include "LayerView.h"
 #include "StrokeView.h"
@@ -77,24 +68,9 @@ void DocumentView::finializeDrawing() {
 /**
  * Draw the background
  */
-void DocumentView::drawBackground(bool hidePdfBackground, bool hideImageBackground, bool hideRulingBackground) {
-    PageType pt = page->getBackgroundType();
-    if (pt.isPdfPage()) {
-        if (!hidePdfBackground) {
-            auto pgNo = page->getPdfPageNr();
-            xoj::view::PdfBackgroundView bgView(page->getWidth(), page->getHeight(), pgNo, pdfCache);
-            bgView.draw(cr);
-        }
-    } else if (pt.isImagePage()) {
-        if (!hideImageBackground) {
-            xoj::view::ImageBackgroundView bgView(page->getBackgroundImage(), page->getWidth(), page->getHeight());
-            bgView.draw(cr);
-        }
-    } else if (!hideRulingBackground) {
-        auto bgView =
-                xoj::view::BackgroundView::create(page->getWidth(), page->getHeight(), page->getBackgroundColor(), pt);
-        bgView->draw(cr);
-    }
+void DocumentView::drawBackground(xoj::view::BackgroundFlags bgFlags) const {
+    auto bgView = xoj::view::BackgroundView::createForPage(page, bgFlags, pdfCache);
+    bgView->draw(cr);
 }
 
 /**
@@ -108,15 +84,12 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
                             bool hideImageBackground, bool hideRulingBackground) {
     initDrawing(page, cr, dontRenderEditingStroke);
 
-    bool backgroundVisible = page->isLayerVisible(0);
-
-    if (backgroundVisible) {
-        drawBackground(hidePdfBackground, hideImageBackground, hideRulingBackground);
-    }
-
-    if (!backgroundVisible) {
-        xoj::view::TransparentCheckerboardBackgroundView bgView(page->getWidth(), page->getHeight());
-        bgView.draw(cr);
+    {  // Draw background
+        xoj::view::BackgroundFlags bgFlags;
+        bgFlags.showImage = (xoj::view::ImageBackgroundTreatment)!hideImageBackground;
+        bgFlags.showPDF = (xoj::view::PDFBackgroundTreatment)!hidePdfBackground;
+        bgFlags.showRuling = (xoj::view::RulingBackgroundTreatment)!hideRulingBackground;
+        drawBackground(bgFlags);
     }
 
     xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,

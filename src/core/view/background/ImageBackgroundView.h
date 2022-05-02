@@ -17,7 +17,7 @@ struct BackgroundImage;
 
 class xoj::view::ImageBackgroundView: public BackgroundView {
 public:
-    ImageBackgroundView(const BackgroundImage& image, double pageWidth, double pageHeight);
+    ImageBackgroundView(double pageWidth, double pageHeight, const BackgroundImage& image);
 
     /**
      * @brief Draws the background on the entire mask represented by the cairo context ctx.cr

@@ -80,7 +80,7 @@ void PreviewJob::drawPage() {
             // render single layer
             view.initDrawing(page, cr2, true);
             if (layer == 0) {
-                view.drawBackground();
+                view.drawBackground(xoj::view::BACKGROUND_SHOW_ALL);
             } else {
                 Layer* drawLayer = (*page->getLayers())[layer - 1];
                 xoj::view::LayerView layerView(drawLayer);
@@ -92,7 +92,7 @@ void PreviewJob::drawPage() {
         case RENDER_TYPE_PAGE_LAYERSTACK:
             // render all layers up to layer
             view.initDrawing(page, cr2, true);
-            view.drawBackground();
+            view.drawBackground(xoj::view::BACKGROUND_SHOW_ALL);
             for (Layer::Index i = 0; i < layer; i++) {
                 Layer* drawLayer = (*page->getLayers())[i];
                 xoj::view::LayerView layerView(drawLayer);

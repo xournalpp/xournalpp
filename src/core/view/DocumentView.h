@@ -26,6 +26,9 @@
 
 class Document;
 class PdfCache;
+namespace xoj::view {
+struct BackgroundFlags;
+};
 
 class DocumentView {
 public:
@@ -67,8 +70,7 @@ public:
     /**
      * Draw the background
      */
-    void drawBackground(bool hidePdfBackground = false, bool hideImageBackground = false,
-                        bool hideRulingBackground = false);
+    void drawBackground(xoj::view::BackgroundFlags bgFlags) const;
 
     /**
      * Draw background if there is no background shown, like in GIMP etc.
