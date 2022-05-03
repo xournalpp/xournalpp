@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -101,7 +102,7 @@ private:
     /**
      * For preview rendering
      */
-    PdfCache* cache = nullptr;
+    std::unique_ptr<PdfCache> cache;
 
     /**
      * The layouting class for the prviews

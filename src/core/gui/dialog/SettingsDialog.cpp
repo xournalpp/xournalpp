@@ -7,6 +7,7 @@
 
 #include "control/DeviceListHelper.h"
 #include "control/tools/StrokeStabilizerEnum.h"
+#include "gui/XournalView.h"
 #include "gui/widgets/ZoomCallib.h"
 #include "util/PathUtil.h"
 #include "util/StringUtils.h"
@@ -914,4 +915,5 @@ void SettingsDialog::save() {
 
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
     this->control->initButtonTool();
+    this->control->getWindow()->getXournal()->onSettingsChanged();
 }
