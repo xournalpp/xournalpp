@@ -8,7 +8,9 @@
 
 XojPdfDocument::XojPdfDocument(): doc(new PopplerGlibDocument()) {}
 
-XojPdfDocument::XojPdfDocument(const XojPdfDocument& doc): doc(new PopplerGlibDocument()) {}
+XojPdfDocument::XojPdfDocument(const XojPdfDocument& doc): doc(new PopplerGlibDocument()) {
+    this->doc->assign(doc.doc);
+}
 
 XojPdfDocument::~XojPdfDocument() {
     delete doc;
