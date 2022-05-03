@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-02 10:45+0000\n"
-"PO-Revision-Date: 2022-05-03 11:07\n"
+"PO-Revision-Date: 2022-05-03 12:28\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -3040,7 +3040,7 @@ msgstr "Werkzeugleisten anzeigen"
 
 #: ../ui/settings.glade:2772
 msgid "Show filepath in title bar"
-msgstr ""
+msgstr "Dateipfad in der Titelleiste anzeigen"
 
 #: ../ui/settings.glade:3302
 msgid "Show sidebar on the right side"
