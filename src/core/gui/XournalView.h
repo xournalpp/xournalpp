@@ -140,6 +140,8 @@ public:
 
     static void onRealized(GtkWidget* widget, XournalView* view);
 
+    void onSettingsChanged();
+
 private:
     void fireZoomChanged();
 
@@ -169,7 +171,7 @@ private:
     size_t currentPage = 0;
     size_t lastSelectedPage = -1;
 
-    PdfCache* cache = nullptr;
+    std::unique_ptr<PdfCache> cache;
 
     /**
      * Handler for rerendering pages / repainting pages

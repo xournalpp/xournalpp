@@ -49,9 +49,8 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     bool backgroundVisible = view->page->isLayerVisible(0);
     if (backgroundVisible && view->page->getBackgroundType().isPdfPage()) {
         auto pgNo = view->page->getPdfPageNr();
-        XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
         PdfCache* cache = view->xournal->getCache();
-        PdfView::drawPage(cache, popplerPage, crRect, zoom, pageWidth, pageHeight);
+        PdfView::drawPage(cache, pgNo, crRect, zoom, pageWidth, pageHeight);
     }
 
     doc->lock();
@@ -108,11 +107,6 @@ void RenderJob::run() {
 
         doc->lock();
 
-        if (this->view->page->getBackgroundType().isPdfPage()) {
-            auto pgNo = this->view->page->getPdfPageNr();
-            popplerPage = doc->getPdfPage(pgNo);
-        }
-
         Control* control = view->getXournal()->getControl();
         DocumentView localView;
         localView.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
@@ -121,7 +115,8 @@ void RenderJob::run() {
 
         bool backgroundVisible = this->view->page->isLayerVisible(0);
         if (backgroundVisible && this->view->page->getBackgroundType().isPdfPage()) {
-            PdfView::drawPage(this->view->xournal->getCache(), popplerPage, cr2, zoom, width, height);
+            auto pgNo = this->view->page->getPdfPageNr();
+            PdfView::drawPage(this->view->xournal->getCache(), pgNo, cr2, zoom, width, height);
         }
         localView.drawPage(this->view->page, cr2, false);
 

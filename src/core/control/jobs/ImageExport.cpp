@@ -9,7 +9,6 @@
 #include "model/Document.h"
 #include "util/Util.h"
 #include "util/i18n.h"
-#include "view/PdfView.h"
 
 #include "ProgressListener.h"
 
@@ -83,7 +82,7 @@ auto ImageExport::createSurface(double width, double height, size_t id, double z
             this->cr = cairo_create(this->surface);
             break;
         default:
-            g_error("Unsupported graphics format: %i", this->format);
+            this->lastError = _("Unsupported graphics format: ") + std::to_string(this->format);
     }
     return 0.0;
 }
@@ -147,14 +146,18 @@ void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, Ex
         return;
     }
 
-    if (page->getBackgroundType().isPdfPage() && (exportBackground >= EXPORT_BACKGROUND_UNRULED)) {
+    if (page->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
         auto pgNo = page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
-
-        PdfView::drawPage(nullptr, popplerPage, cr, zoomRatio, page->getWidth(), page->getHeight());
+        if (!popplerPage) {
+            this->lastError = _("Error while exporting the pdf background: I cannot find the pdf page number ");
+            this->lastError += std::to_string(pgNo);
+        } else {
+            popplerPage->renderForPrinting(cr);
+        }
     }
 
-    view.drawPage(page, this->cr, true, exportBackground == EXPORT_BACKGROUND_NONE,
+    view.drawPage(page, this->cr, true /* dont render eraseable */, true /* don't rerender the pdf background */,
                   exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
 
     if (!freeSurface(id)) {

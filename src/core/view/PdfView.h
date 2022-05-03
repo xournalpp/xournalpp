@@ -22,6 +22,5 @@ private:
     virtual ~PdfView();
 
 public:
-    static void drawPage(PdfCache* cache, const XojPdfPageSPtr& popplerPage, cairo_t* cr, double zoom, double width,
-                         double height);
+    static void drawPage(PdfCache* cache, size_t pageNo, cairo_t* cr, double zoom, double width, double height);
 };

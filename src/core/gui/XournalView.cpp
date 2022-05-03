@@ -38,7 +38,12 @@ std::pair<size_t, size_t> XournalView::preloadPageBounds(size_t page, size_t max
 
 XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling):
         scrollHandling(scrollHandling), control(control) {
-    this->cache = new PdfCache(control->getSettings()->getPdfPageCacheSize());
+    Document* doc = control->getDocument();
+    doc->lock();
+    if (doc->getPdfPageCount() != 0) {
+        this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
+    }
+    doc->unlock();
 
     registerListener(control);
 
@@ -70,8 +75,6 @@ XournalView::~XournalView() {
     for (auto&& page: viewPages) { delete page; }
     viewPages.clear();
 
-    delete this->cache;
-    this->cache = nullptr;
     delete this->repaintHandler;
     this->repaintHandler = nullptr;
 
@@ -292,6 +295,12 @@ void XournalView::onRealized(GtkWidget* widget, XournalView* view) {
     }
 }
 
+void XournalView::onSettingsChanged() {
+    if (this->cache) {
+        this->cache->updateSettings(control->getSettings());
+    }
+}
+
 // send the focus back to the appropriate widget
 void XournalView::requestFocus() { gtk_widget_grab_focus(this->widget); }
 
@@ -474,8 +483,6 @@ void XournalView::zoomChanged() {
     XojPageView* view = getViewFor(currentPage);
 
     ZoomControl* zoom = control->getZoomControl();
-    this->cache->setAnyZoomChangeCausesRecache(false);  // We're zooming -- no need for repeated re-renders.
-    this->cache->setRefreshThreshold(control->getSettings()->getPDFPageRerenderThreshold());
 
     if (!view) {
         return;
@@ -543,7 +550,7 @@ auto XournalView::getTextEditor() -> TextEditor* {
     return nullptr;
 }
 
-auto XournalView::getCache() -> PdfCache* { return this->cache; }
+auto XournalView::getCache() -> PdfCache* { return this->cache.get(); }
 
 void XournalView::pageInserted(size_t page) {
     Document* doc = control->getDocument();
@@ -717,10 +724,13 @@ void XournalView::documentChanged(DocumentChangeType type) {
     for (auto&& page: viewPages) { delete page; }
     viewPages.clear();
 
-    this->cache->clearCache();
+    this->cache.reset();
 
     Document* doc = control->getDocument();
     doc->lock();
+    if (doc->getPdfPageCount() != 0) {
+        this->cache = std::make_unique<PdfCache>(doc->getPdfDocument(), control->getSettings());
+    }
 
     size_t pagecount = doc->getPageCount();
     viewPages.reserve(pagecount);

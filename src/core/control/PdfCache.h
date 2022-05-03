@@ -19,14 +19,16 @@
 #include <cairo.h>
 #include <glib.h>
 
+#include "pdf/base/XojPdfDocument.h"
 #include "pdf/base/XojPdfPage.h"
 
 
 class PdfCacheEntry;
+class Settings;
 
 class PdfCache {
 public:
-    PdfCache(size_t size);
+    PdfCache(const XojPdfDocument& doc, Settings* settings);
     virtual ~PdfCache();
 
 private:
@@ -34,15 +36,20 @@ private:
     void operator=(const PdfCache& cache);
 
 public:
-    void render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoom);
+    /**
+     * @brief Render the page with number pdfPageNo of the pdf document to the cairo context
+     * @param cr the cairo context
+     * @param pdfPageNo The page number (in the pdf document)
+     * @param zoom The current zoom level
+     * @param pageWidth/pageHeight Xournal++ page dimensions
+     */
+    void render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWidth, double pageHeight);
+    /**
+     * @brief Empty the cache
+     */
     void clearCache();
 
 public:
-    /**
-     * @param b true iff any change in the view's zoom as compared to when a page
-     *  was cached forces a re-render.
-     */
-    void setAnyZoomChangeCausesRecache(bool b);
 
     /**
      * @brief Set the maximum tolerable zoom difference, as a percentage.
@@ -53,18 +60,32 @@ public:
      */
     void setRefreshThreshold(double percentDifference);
 
+    void setMaxSize(size_t newSize);
+
+    void updateSettings(Settings* settings);
+
+    /**
+     * @brief Renders an error background, for when the pdf page cannot be rendered
+     */
+    static void renderMissingPdfPage(cairo_t* cr, double pageWidth, double pageHeight);
+
 private:
-    void setZoom(double zoom);
-    PdfCacheEntry* lookup(const XojPdfPageSPtr& popplerPage);
+    /**
+     * @brief Look up for a cache entry for the page with number pdfPgeNo in the PDF.
+     */
+    PdfCacheEntry* lookup(size_t pdfPageNo) const;
+    /**
+     * @brief Push a cache entry
+     */
     PdfCacheEntry* cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img, double zoom);
 
 private:
+    XojPdfDocument pdfDocument;
+
     std::mutex renderMutex;
 
     std::list<PdfCacheEntry*> data;
     std::list<PdfCacheEntry*>::size_type size = 0;
 
-    double zoom = -1;
     double zoomRefreshThreshold;
-    bool zoomClearsCache = true;
 };

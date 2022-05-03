@@ -5,6 +5,10 @@
 #include <cstdio>
 #include <utility>
 
+#include "control/settings/Settings.h"
+#include "pdf/base/XojPdfDocument.h"
+#include "util/i18n.h"
+
 class PdfCacheEntry {
 public:
     /**
@@ -35,27 +39,38 @@ public:
     cairo_surface_t* rendered;
 };
 
-PdfCache::PdfCache(size_t size) { this->size = size; }
+PdfCache::PdfCache(const XojPdfDocument& doc, Settings* settings): pdfDocument(doc) { updateSettings(settings); }
 
 PdfCache::~PdfCache() {
     clearCache();
     this->size = 0;
 }
 
-void PdfCache::setZoom(double zoom) { this->zoom = zoom; }
-
 void PdfCache::setRefreshThreshold(double threshold) { this->zoomRefreshThreshold = threshold; }
 
-void PdfCache::setAnyZoomChangeCausesRecache(bool b) { this->zoomClearsCache = b; }
+void PdfCache::setMaxSize(size_t newSize) {
+    this->size = newSize;
+    while (this->data.size() > this->size) {
+        delete this->data.back();
+        this->data.pop_back();
+    }
+}
+
+void PdfCache::updateSettings(Settings* settings) {
+    if (settings) {
+        setMaxSize(settings->getPdfPageCacheSize());
+        setRefreshThreshold(settings->getPDFPageRerenderThreshold());
+    }
+}
 
 void PdfCache::clearCache() {
     for (PdfCacheEntry* e: this->data) { delete e; }
     this->data.clear();
 }
 
-auto PdfCache::lookup(const XojPdfPageSPtr& popplerPage) -> PdfCacheEntry* {
+auto PdfCache::lookup(size_t pdfPageNo) const -> PdfCacheEntry* {
     for (PdfCacheEntry* e: this->data) {
-        if (e->popplerPage->getPageId() == popplerPage->getPageId()) {
+        if (static_cast<size_t>(e->popplerPage->getPageId()) == pdfPageNo) {
             return e;
         }
     }
@@ -75,53 +90,59 @@ PdfCacheEntry* PdfCache::cache(XojPdfPageSPtr popplerPage, cairo_surface_t* img,
     return ne;
 }
 
-void PdfCache::render(cairo_t* cr, const XojPdfPageSPtr& popplerPage, double zoom) {
-    this->renderMutex.lock();
+void PdfCache::render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWidth, double pageHeight) {
+    std::lock_guard<std::mutex> lock(this->renderMutex);
 
-    this->setZoom(zoom);
+    PdfCacheEntry* cacheResult = lookup(pdfPageNo);
 
-    PdfCacheEntry* cacheResult = lookup(popplerPage);
-    bool needsRefresh{cacheResult == nullptr};
+    bool needsRefresh = cacheResult == nullptr;
 
-    if (cacheResult != nullptr) {
-        double averagedZoom = (this->zoom + cacheResult->zoom) / 2.0;
-        double percentZoomChange = std::abs(cacheResult->zoom - this->zoom) * 100.0 / averagedZoom;
+    if (!needsRefresh) {
+        double averagedZoom = (zoom + cacheResult->zoom) / 2.0;
+        double percentZoomChange = std::abs(cacheResult->zoom - zoom) * 100.0 / averagedZoom;
 
         // If we do have a cached result, is its rendering quality
         // acceptable for our current zoom?
-        needsRefresh = (this->zoom > 1.0 && percentZoomChange > this->zoomRefreshThreshold)
-
-                       // Has the user requested that we **always** clear the cache on zoom?
-                       || (this->zoomClearsCache && this->zoom != cacheResult->zoom);
+        needsRefresh = (zoom > 1.0 && percentZoomChange > this->zoomRefreshThreshold);
     }
 
     if (needsRefresh) {
         double renderZoom = std::max(zoom, 1.0);
 
+        auto popplerPage = cacheResult ? cacheResult->popplerPage : pdfDocument.getPage(pdfPageNo);
+
+        if (!popplerPage) {
+            g_warning("PdfCache::render Could not get the pdf page %zu from the document", pdfPageNo);
+            renderMissingPdfPage(cr, pageWidth, pageHeight);
+            return;
+        }
+
         auto* img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
                                                static_cast<int>(std::ceil(popplerPage->getWidth() * renderZoom)),
                                                static_cast<int>(std::ceil(popplerPage->getHeight() * renderZoom)));
-        cairo_t* cr2 = cairo_create(img);
+        cairo_surface_set_device_scale(img, renderZoom, renderZoom);
 
-        cairo_scale(cr2, renderZoom, renderZoom);
+        cairo_t* cr2 = cairo_create(img);
         popplerPage->render(cr2);
         cairo_destroy(cr2);
 
         cacheResult = cache(popplerPage, img, renderZoom);
     }
 
-    cairo_matrix_t mOriginal;
-    cairo_matrix_t mScaled;
-    cairo_get_matrix(cr, &mOriginal);
-    cairo_get_matrix(cr, &mScaled);
-    mScaled.xx = this->zoom / cacheResult->zoom;
-    mScaled.yy = this->zoom / cacheResult->zoom;
-    mScaled.xy = 0;
-    mScaled.yx = 0;
-    cairo_set_matrix(cr, &mScaled);
     cairo_set_source_surface(cr, cacheResult->rendered, 0, 0);
     cairo_paint(cr);
-    cairo_set_matrix(cr, &mOriginal);
+}
 
-    this->renderMutex.unlock();
+void PdfCache::renderMissingPdfPage(cairo_t* cr, double pageWidth, double pageHeight) {
+    cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+    cairo_set_font_size(cr, 26);
+
+    cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
+
+    cairo_text_extents_t extents = {0};
+    std::string strMissing = _("PDF background missing");
+
+    cairo_text_extents(cr, strMissing.c_str(), &extents);
+    cairo_move_to(cr, pageWidth / 2 - extents.width / 2, pageHeight / 2 - extents.height / 2);
+    cairo_show_text(cr, strMissing.c_str());
 }
