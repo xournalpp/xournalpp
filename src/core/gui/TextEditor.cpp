@@ -907,7 +907,7 @@ auto TextEditor::blinkCallback(TextEditor* te) -> gint {
 
 void TextEditor::repaintEditor() {
     auto rect = text->boundingRect();
-    this->gui->repaintRect(rect.x, rect.y, rect.width, rect.height);
+    this->gui->rerenderRect(rect.x, rect.y, rect.width, rect.height);
 }
 
 /**
