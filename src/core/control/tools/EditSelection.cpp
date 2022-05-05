@@ -1044,6 +1044,9 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
     }
 }
 
+/**
+ * draws an indicator where you can rotate the selection
+ */
 void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom) {
     GdkRGBA selectionColor = view->getSelectionColor();
     gdk_cairo_set_source_rgba(cr, &selectionColor);
@@ -1055,7 +1058,7 @@ void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double z
 }
 
 /**
- * draws an idicator where you can scale the selection
+ * draws an indicator where you can scale the selection
  */
 void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom) {
     GdkRGBA selectionColor = view->getSelectionColor();
@@ -1067,9 +1070,8 @@ void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom)
     cairo_fill(cr);
 }
 
-
 /**
- * draws an idicator where you can delete the selection
+ * draws an indicator where you can delete the selection
  */
 void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom) const {
     cairo_set_source_rgb(cr, 0, 0, 0);
