@@ -273,6 +273,8 @@ void XournalppCursor::updateCursor() {
                     break;
                 case CURSOR_SELECTION_COPY:
                     [[fallthrough]];
+                case CURSOR_SELECTION_PASTE:
+                    [[fallthrough]];
                 case CURSOR_SELECTION_DUPLICATE:
                     setCursor(CRSR_TCROSS);
                     break;

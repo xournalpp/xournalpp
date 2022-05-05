@@ -297,6 +297,11 @@ private:
     void drawAnchorCopy(cairo_t* cr, double x, double y, double zoom) const;
 
     /**
+     * Draws an indicator where you can paste a selection
+     */
+    void drawAnchorPaste(cairo_t* cr, double x, double y, double zoom) const;
+
+    /**
      * Draws an indicator where you can duplicate the selection
      */
     void drawAnchorDuplicate(cairo_t* cr, double x, double y, double zoom) const;
