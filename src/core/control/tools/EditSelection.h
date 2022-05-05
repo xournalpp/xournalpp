@@ -292,6 +292,11 @@ private:
     void drawAnchorCut(cairo_t* cr, double x, double y, double zoom) const;
 
     /**
+     * Draws an indicator where you can copy the selection
+     */
+    void drawAnchorCopy(cairo_t* cr, double x, double y, double zoom) const;
+
+    /**
      * Finishes all pending changes, move the elements, scale the elements and add
      * them to new layer if any or to the old if no new layer
      */

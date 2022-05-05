@@ -452,6 +452,9 @@ void EditSelection::mouseUp() {
     } else if (this->mouseDownType == CURSOR_SELECTION_CUT) {
         this->view->getXournal()->getControl()->cut();
         return;
+    } else if (this->mouseDownType == CURSOR_SELECTION_COPY) {
+        this->view->getXournal()->getControl()->copy();
+        return;
     }
 
 
@@ -933,6 +936,13 @@ auto EditSelection::getSelectionTypeForPos(double x, double y, double zoom) -> C
         return CURSOR_SELECTION_CUT;
     }
 
+    if (xmin - (DELETE_PADDING + this->btnWidth) - BORDER_PADDING <= x &&
+        x <= xmin - (DELETE_PADDING + this->btnWidth) + BORDER_PADDING &&
+        y2 - BORDER_PADDING <= y &&
+        y <= y2 + BORDER_PADDING) {
+        return CURSOR_SELECTION_COPY;
+    }
+
     if (supportRotation && xmax - BORDER_PADDING + ROTATE_PADDING + this->btnWidth <= x &&
         x <= xmax + BORDER_PADDING + ROTATE_PADDING + this->btnWidth && (y2 + y1) / 2 - 4 - BORDER_PADDING <= y &&
         (y2 + y1) / 2 + 4 + BORDER_PADDING >= y) {
@@ -1051,6 +1061,7 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
 
         drawAnchorDelete(cr, std::min(x, x + width) - (DELETE_PADDING + this->btnWidth) / zoom, y, zoom);
         drawAnchorCut(cr, std::min(x, x + width) - (DELETE_PADDING + this->btnWidth) / zoom, y + height / 2, zoom);
+        drawAnchorCopy(cr, std::min(x, x + width) - (DELETE_PADDING + this->btnWidth) / zoom, y + height, zoom);
     }
 }
 
@@ -1109,6 +1120,23 @@ void EditSelection::drawAnchorCut(cairo_t* cr, double x, double y, double zoom) 
     cairo_move_to(cr, x * zoom - (this->btnWidth / 2), y * zoom - (this->btnWidth / 2));
     cairo_rel_move_to(cr, 0, this->btnWidth / 2);
     cairo_rel_line_to(cr, this->btnWidth, 0);
+    cairo_stroke(cr);
+}
+
+/**
+ * draws an indicator where you can copy the selection
+ */
+void EditSelection::drawAnchorCopy(cairo_t* cr, double x, double y, double zoom) const {
+    cairo_set_source_rgb(cr, 0, 0, 0);
+    cairo_rectangle(cr, x * zoom - (this->btnWidth / 2), y * zoom - (this->btnWidth / 2), this->btnWidth,
+                    this->btnWidth);
+    cairo_stroke(cr);
+    cairo_set_source_rgb(cr, 1, 0, 0);
+    cairo_move_to(cr, x * zoom - (this->btnWidth / 2), y * zoom - (this->btnWidth / 2));
+    cairo_rel_move_to(cr, 0, this->btnWidth / 2);
+    cairo_rel_line_to(cr, this->btnWidth, 0);
+    cairo_rel_move_to(cr, -this->btnWidth / 2, -this->btnWidth / 2);
+    cairo_rel_line_to(cr, 0, this->btnWidth);
     cairo_stroke(cr);
 }
 
