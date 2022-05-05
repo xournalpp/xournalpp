@@ -281,11 +281,10 @@ private:
      */
     void drawAnchorRotation(cairo_t* cr, double x, double y, double zoom);
 
-
     /**
      * Draws an indicator where you can delete the selection
      */
-    void drawDeleteRect(cairo_t* cr, double x, double y, double zoom) const;
+    void drawAnchorDelete(cairo_t* cr, double x, double y, double zoom) const;
 
 
     /**

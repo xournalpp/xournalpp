@@ -1040,7 +1040,7 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
         // bottom right
         drawAnchorRect(cr, x + width, y + height, zoom);
 
-        drawDeleteRect(cr, std::min(x, x + width) - (DELETE_PADDING + this->btnWidth) / zoom, y, zoom);
+        drawAnchorDelete(cr, std::min(x, x + width) - (DELETE_PADDING + this->btnWidth) / zoom, y, zoom);
     }
 }
 
@@ -1073,7 +1073,7 @@ void EditSelection::drawAnchorRect(cairo_t* cr, double x, double y, double zoom)
 /**
  * draws an indicator where you can delete the selection
  */
-void EditSelection::drawDeleteRect(cairo_t* cr, double x, double y, double zoom) const {
+void EditSelection::drawAnchorDelete(cairo_t* cr, double x, double y, double zoom) const {
     cairo_set_source_rgb(cr, 0, 0, 0);
     cairo_rectangle(cr, x * zoom - (this->btnWidth / 2), y * zoom - (this->btnWidth / 2), this->btnWidth,
                     this->btnWidth);
