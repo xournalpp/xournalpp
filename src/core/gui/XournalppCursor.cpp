@@ -272,6 +272,8 @@ void XournalppCursor::updateCursor() {
                     setCursor(CRSR_PIRATE);
                     break;
                 case CURSOR_SELECTION_COPY:
+                    [[fallthrough]];
+                case CURSOR_SELECTION_DUPLICATE:
                     setCursor(CRSR_TCROSS);
                     break;
                 default:
