@@ -57,7 +57,7 @@ public:
     void setText(std::string text);
     std::string getText() const;
 
-    Element* clone() override;
+    Element* clone() const override;
 
     /**
      * @return true if the binary data (PNG or PDF) was loaded successfully.

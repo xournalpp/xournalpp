@@ -45,10 +45,10 @@ public:
     /**
      * @overwrite
      */
-    Element* clone() override;
+    Element* clone() const override;
 
-    bool intersects(double x, double y, double halfEraserSize) override;
-    bool intersects(double x, double y, double halfEraserSize, double* gap) override;
+    bool intersects(double x, double y, double halfEraserSize) const override;
+    bool intersects(double x, double y, double halfEraserSize, double* gap) const override;
 
 public:
     // Serialize interface

@@ -16,7 +16,7 @@ Text::Text(): AudioElement(ELEMENT_TEXT) {
 
 Text::~Text() = default;
 
-auto Text::clone() -> Element* {
+auto Text::clone() const -> Element* {
     Text* text = new Text();
     text->font = this->font;
     text->text = this->text;
@@ -93,11 +93,11 @@ auto Text::isInEditing() const -> bool { return this->inEditing; }
 
 auto Text::rescaleOnlyAspectRatio() -> bool { return true; }
 
-auto Text::intersects(double x, double y, double halfEraserSize) -> bool {
+auto Text::intersects(double x, double y, double halfEraserSize) const -> bool {
     return intersects(x, y, halfEraserSize, nullptr);
 }
 
-auto Text::intersects(double x, double y, double halfEraserSize, double* gap) -> bool {
+auto Text::intersects(double x, double y, double halfEraserSize, double* gap) const -> bool {
     double x1 = this->x - halfEraserSize;
     double x2 = this->x + this->getElementWidth() + halfEraserSize;
     double y1 = this->y - halfEraserSize;

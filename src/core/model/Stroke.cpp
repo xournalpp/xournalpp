@@ -87,7 +87,7 @@ auto Stroke::cloneStroke() const -> Stroke* {
     return s;
 }
 
-auto Stroke::clone() -> Element* { return this->cloneStroke(); }
+auto Stroke::clone() const -> Element* { return this->cloneStroke(); }
 
 std::unique_ptr<Stroke> Stroke::cloneSection(const PathParameter& lowerBound, const PathParameter& upperBound) const {
     assert(lowerBound.isValid() && upperBound.isValid());
@@ -209,7 +209,7 @@ auto Stroke::getWidth() const -> double { return this->width; }
 
 auto Stroke::rescaleWithMirror() -> bool { return true; }
 
-auto Stroke::isInSelection(ShapeContainer* container) -> bool {
+auto Stroke::isInSelection(ShapeContainer* container) const -> bool {
     for (auto&& p: this->points) {
         double px = p.x;
         double py = p.y;
@@ -389,14 +389,14 @@ void Stroke::setPressure(const std::vector<double>& pressure) {
 /**
  * checks if the stroke is intersected by the eraser rectangle
  */
-auto Stroke::intersects(double x, double y, double halfEraserSize) -> bool {
+auto Stroke::intersects(double x, double y, double halfEraserSize) const -> bool {
     return intersects(x, y, halfEraserSize, nullptr);
 }
 
 /**
  * checks if the stroke is intersected by the eraser rectangle
  */
-auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) -> bool {
+auto Stroke::intersects(double x, double y, double halfEraserSize, double* gap) const -> bool {
     if (this->points.empty()) {
         return false;
     }

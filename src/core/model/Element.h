@@ -58,10 +58,10 @@ public:
 
     xoj::util::Rectangle<double> boundingRect() const;
 
-    virtual bool intersectsArea(const GdkRectangle* src);
-    virtual bool intersectsArea(double x, double y, double width, double height);
+    virtual bool intersectsArea(const GdkRectangle* src) const;
+    virtual bool intersectsArea(double x, double y, double width, double height) const;
 
-    virtual bool isInSelection(ShapeContainer* container);
+    virtual bool isInSelection(ShapeContainer* container) const;
 
     virtual bool rescaleOnlyAspectRatio();
     virtual bool rescaleWithMirror();
@@ -69,7 +69,7 @@ public:
     /**
      * Take 1:1 copy of this element
      */
-    virtual Element* clone() = 0;
+    virtual Element* clone() const = 0;
 
     void serialize(ObjectOutputStream& out) const override;
     void readSerialized(ObjectInputStream& in) override;

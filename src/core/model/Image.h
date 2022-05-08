@@ -51,7 +51,7 @@ public:
     void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
     void rotate(double x0, double y0, double th) override;
 
-    Element* clone() override;
+    Element* clone() const override;
 
     bool hasData() const;
 
