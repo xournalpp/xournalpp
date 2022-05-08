@@ -24,7 +24,7 @@ Image::~Image() {
     }
 }
 
-auto Image::clone() -> Element* {
+auto Image::clone() const -> Element* {
     auto* img = new Image();
 
     img->x = this->x;

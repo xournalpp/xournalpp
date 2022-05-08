@@ -76,7 +76,7 @@ void Element::setColor(Color color) { this->color = color; }
 
 auto Element::getColor() const -> Color { return this->color; }
 
-auto Element::intersectsArea(const GdkRectangle* src) -> bool {
+auto Element::intersectsArea(const GdkRectangle* src) const -> bool {
     // compute the smallest rectangle with integer coordinates containing the bounding box and having width, height > 0
     auto x = getX();
     auto y = getY();
@@ -89,7 +89,7 @@ auto Element::intersectsArea(const GdkRectangle* src) -> bool {
     return gdk_rectangle_intersect(src, &rect, nullptr);
 }
 
-auto Element::intersectsArea(double x, double y, double width, double height) -> bool {
+auto Element::intersectsArea(double x, double y, double width, double height) const -> bool {
     double dest_x = NAN, dest_y = NAN;
     double dest_w = NAN, dest_h = NAN;
 
@@ -101,7 +101,7 @@ auto Element::intersectsArea(double x, double y, double width, double height) ->
     return (dest_w > 0 && dest_h > 0);
 }
 
-auto Element::isInSelection(ShapeContainer* container) -> bool {
+auto Element::isInSelection(ShapeContainer* container) const -> bool {
     if (!container->contains(getX(), getY())) {
         return false;
     }

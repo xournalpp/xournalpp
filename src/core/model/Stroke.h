@@ -52,7 +52,7 @@ public:
 
 public:
     Stroke* cloneStroke() const;
-    Element* clone() override;
+    Element* clone() const override;
 
     /**
      * @brief Create a partial clone whose points are those of parameters between lowerBound and upperBound
@@ -114,8 +114,8 @@ public:
     const LineStyle& getLineStyle() const;
     void setLineStyle(const LineStyle& style);
 
-    bool intersects(double x, double y, double halfEraserSize) override;
-    bool intersects(double x, double y, double halfEraserSize, double* gap) override;
+    bool intersects(double x, double y, double halfEraserSize) const override;
+    bool intersects(double x, double y, double halfEraserSize, double* gap) const override;
 
     /**
      * @brief Find the parameters within a certain interval corresponding to the points where the stroke crosses in
@@ -147,7 +147,7 @@ public:
     void scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) override;
     void rotate(double x0, double y0, double th) override;
 
-    bool isInSelection(ShapeContainer* container) override;
+    bool isInSelection(ShapeContainer* container) const override;
 
     ErasableStroke* getErasable() const;
     void setErasable(ErasableStroke* erasable);
