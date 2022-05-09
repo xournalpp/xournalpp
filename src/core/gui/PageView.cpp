@@ -1006,7 +1006,7 @@ void XojPageView::elementChanged(Element* elem) {
         this->drawingMutex.lock();
 
         cairo_t* cr = cairo_create(this->crBuffer);
-        double ratio = this->xournal->getZoom();
+        const double ratio = xournal->getZoom() * static_cast<double>(xournal->getDpiScaleFactor());
         cairo_scale(cr, ratio, ratio);
 
         this->inputHandler->draw(cr);
