@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-05 02:12+0000\n"
-"PO-Revision-Date: 2022-05-05 03:17\n"
+"PO-Revision-Date: 2022-05-09 17:09\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -591,7 +591,7 @@ msgstr "تعذر تهيئة PDF Cairo surface"
 
 #: ../src/core/control/tools/ImageHandler.cpp:60
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "فشل تحميل الصورة ، لا يمكن تحديد حجم الصورة!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
