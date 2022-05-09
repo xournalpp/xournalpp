@@ -75,17 +75,23 @@ void Image::setImage(std::string&& data) {
             break;
         remaining -= readLen;
 
+        // Try to determine the format early, if possible
         this->format = gdk_pixbuf_loader_get_format(loader);
         if (this->format) {
-            // the format is owned by the pixbuf, so create a copy
-            this->format = gdk_pixbuf_format_copy(this->format);
             break;
         }
     }
     gdk_pixbuf_loader_close(loader, nullptr);
-    g_object_unref(loader);
-
+    // if the format was not determined early, it can probably be determined now
+    if (!this->format) {
+        this->format = gdk_pixbuf_loader_get_format(loader);
+    }
     g_assert(this->format != nullptr && "could not parse the image format!");
+
+    // the format is owned by the pixbuf, so create a copy
+    this->format = gdk_pixbuf_format_copy(this->format);
+
+    g_object_unref(loader);
 }
 
 void Image::setImage(GdkPixbuf* img) {
