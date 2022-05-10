@@ -14,8 +14,9 @@
 #include <string>
 #include <vector>
 
-#include "BaseBackgroundPainter.h"
 #include "model/PageType.h"
+
+#include "BaseBackgroundPainter.h"
 
 
 class LineBackgroundPainter: public BaseBackgroundPainter {
