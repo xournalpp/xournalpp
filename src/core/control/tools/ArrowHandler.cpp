@@ -29,17 +29,7 @@ void ArrowHandler::drawShape(Point& c, const PositionInputData& pos) {
     } else {
         // disable this to see such a cool "serrate brush" effect
         if (count > 4) {
-            // remove previous points
-            if (doubleEnded) {
-                stroke->deletePoint(8);
-                stroke->deletePoint(7);
-                stroke->deletePoint(6);
-                stroke->deletePoint(5);
-            }
-            stroke->deletePoint(4);
-            stroke->deletePoint(3);
-            stroke->deletePoint(2);
-            stroke->deletePoint(1);
+            stroke->deletePointsFrom(1);
         }
 
         c = snappingHandler.snap(c, firstPoint, altDown);
