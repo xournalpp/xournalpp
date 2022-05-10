@@ -15,7 +15,7 @@
 #include <vector>
 
 
-enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, IsoDotted, IsoGraph, Pdf, Image, Copy };
+enum class PageTypeFormat { Plain, Ruled, Lined, Staves, Graph, Dotted, IsoDotted, IsoGraph, Pdf, Image, Copy, LinedRight };
 
 class PageType {
 public:

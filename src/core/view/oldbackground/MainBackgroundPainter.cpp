@@ -12,8 +12,9 @@
 MainBackgroundPainter::MainBackgroundPainter() {
     defaultPainter = new BaseBackgroundPainter();
 
-    painter[PageTypeFormat::Ruled] = new LineBackgroundPainter(false);
-    painter[PageTypeFormat::Lined] = new LineBackgroundPainter(true);
+    painter[PageTypeFormat::Ruled] = new LineBackgroundPainter(PageTypeFormat::Ruled);
+    painter[PageTypeFormat::Lined] = new LineBackgroundPainter(PageTypeFormat::Lined);
+    painter[PageTypeFormat::LinedRight] = new LineBackgroundPainter(PageTypeFormat::LinedRight);
     painter[PageTypeFormat::Staves] = new StavesBackgroundPainter();
     painter[PageTypeFormat::Graph] = new GraphBackgroundPainter();
     painter[PageTypeFormat::Dotted] = new DottedBackgroundPainter();

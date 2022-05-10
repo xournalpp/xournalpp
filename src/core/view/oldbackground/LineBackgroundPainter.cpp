@@ -2,7 +2,7 @@
 
 #include "util/Util.h"
 
-LineBackgroundPainter::LineBackgroundPainter(bool verticalLine): verticalLine(verticalLine) {}
+LineBackgroundPainter::LineBackgroundPainter(const PageTypeFormat format): format(format) {}
 
 LineBackgroundPainter::~LineBackgroundPainter() = default;
 
@@ -19,7 +19,7 @@ void LineBackgroundPainter::paint() {
 
     paintBackgroundRuled();
 
-    if (verticalLine) {
+    if (format == PageTypeFormat::Lined || format == PageTypeFormat::LinedRight) {
         paintBackgroundVerticalLine();
     }
 }
@@ -50,7 +50,9 @@ void LineBackgroundPainter::paintBackgroundVerticalLine() {
     Util::cairo_set_source_rgbi(cr, this->foregroundColor2);
     cairo_set_line_width(cr, lineWidth * lineWidthFactor);
 
-    cairo_move_to(cr, 72, 0);
-    cairo_line_to(cr, 72, height);
+    double x = format == PageTypeFormat::LinedRight ? width - 72 : 72;
+
+    cairo_move_to(cr, x, 0);
+    cairo_line_to(cr, x, height);
     cairo_stroke(cr);
 }

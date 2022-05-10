@@ -15,11 +15,12 @@
 #include <vector>
 
 #include "BaseBackgroundPainter.h"
+#include "model/PageType.h"
 
 
 class LineBackgroundPainter: public BaseBackgroundPainter {
 public:
-    LineBackgroundPainter(bool verticalLine);
+    LineBackgroundPainter(const PageTypeFormat format);
     ~LineBackgroundPainter() override;
 
 public:
@@ -35,5 +36,5 @@ public:
     void paintBackgroundVerticalLine();
 
 private:
-    bool verticalLine;
+    PageTypeFormat format;
 };

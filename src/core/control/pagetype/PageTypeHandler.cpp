@@ -20,6 +20,7 @@ PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath) {
         addPageTypeInfo(_("Plain"), PageTypeFormat::Plain, "");
         addPageTypeInfo(_("Ruled"), PageTypeFormat::Ruled, "");
         addPageTypeInfo(_("Ruled with vertical line"), PageTypeFormat::Lined, "");
+        addPageTypeInfo(_("Ruled with vertical line (right)"), PageTypeFormat::LinedRight, "");
         addPageTypeInfo(_("Staves"), PageTypeFormat::Staves, "");
         addPageTypeInfo(_("Graph"), PageTypeFormat::Graph, "");
         addPageTypeInfo(_("Dotted"), PageTypeFormat::Dotted, "");
@@ -126,6 +127,9 @@ auto PageTypeHandler::getPageTypeFormatForString(const string& format) -> PageTy
     if (format == ":copy") {
         return PageTypeFormat::Copy;
     }
+    if (format == "linedright") {
+        return PageTypeFormat::LinedRight;
+    }
     return PageTypeFormat::Ruled;
 }
 
@@ -153,6 +157,8 @@ auto PageTypeHandler::getStringForPageTypeFormat(const PageTypeFormat& format) -
             return ":image";
         case PageTypeFormat::Copy:
             return ":copy";
+        case PageTypeFormat::LinedRight:
+            return "linedright";
     }
     return "ruled";
 }
