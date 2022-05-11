@@ -22,8 +22,8 @@ class LayerController;
 
 class MoveLayerUndoAction: public UndoAction {
 public:
-    MoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, int oldLayerPos,
-                        int newLayerPos);
+    MoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, Layer::Index oldLayerPos,
+                        Layer::Index newLayerPos);
     ~MoveLayerUndoAction() override;
 
 public:
@@ -33,8 +33,8 @@ public:
     std::string getText() override;
 
 private:
-    int oldLayerPos;
-    int newLayerPos;
+    Layer::Index oldLayerPos;
+    Layer::Index newLayerPos;
     LayerController* layerController;
     Layer* layer;
 };

@@ -19,6 +19,7 @@
 #include "gui/IconNameHelper.h"
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 #include "gui/sidebar/previews/layer/SidebarLayersContextMenu.h"
+#include "model/Layer.h"
 
 
 class SidebarPreviewLayers: public SidebarPreviewBase, public LayerCtrlListener {
@@ -59,12 +60,12 @@ public:
     /**
      * Select a layer
      */
-    void layerSelected(size_t layerIndex);
+    void layerSelected(Layer::Index layerIndex);
 
     /**
      * A layer was hidden / showed
      */
-    void layerVisibilityChanged(int layerIndex, bool enabled);
+    void layerVisibilityChanged(Layer::Index layerIndex, bool enabled);
 
     /**
      * Opens the layer preview context menu, at the current cursor position, for
@@ -84,7 +85,7 @@ private:
     /**
      * @return things that can reasonably be done to a given layer (e.g. merge down, copy, delete, etc.)
      */
-    [[nodiscard]] static auto getViableActions(size_t layerIndex, size_t layerCount) -> SidebarActions;
+    [[nodiscard]] static auto getViableActions(Layer::Index layerIndex, Layer::Index layerCount) -> SidebarActions;
 
     /**
      * Layer Controller

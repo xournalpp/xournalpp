@@ -18,7 +18,7 @@ class LayerController;
 
 class RemoveLayerUndoAction: public UndoAction {
 public:
-    RemoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, int layerPos);
+    RemoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, Layer::Index layerPos);
     ~RemoveLayerUndoAction() override;
 
 public:
@@ -30,5 +30,5 @@ public:
 private:
     LayerController* layerController;
     Layer* layer;
-    int layerPos;
+    Layer::Index layerPos;
 };

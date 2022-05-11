@@ -9,11 +9,9 @@
 #include "util/i18n.h"
 
 RemoveLayerUndoAction::RemoveLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer,
-                                             int layerPos):
-        UndoAction("RemoveLayerUndoAction"), layerController(layerController) {
+                                             Layer::Index layerPos):
+        UndoAction("RemoveLayerUndoAction"), layerController(layerController), layer(layer), layerPos(layerPos) {
     this->page = page;
-    this->layer = layer;
-    this->layerPos = layerPos;
 }
 
 RemoveLayerUndoAction::~RemoveLayerUndoAction() {

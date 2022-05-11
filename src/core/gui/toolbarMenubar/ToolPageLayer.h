@@ -15,6 +15,7 @@
 
 #include "control/layer/LayerCtrlListener.h"
 #include "gui/IconNameHelper.h"
+#include "model/Layer.h"
 
 #include "AbstractToolItem.h"
 
@@ -60,12 +61,12 @@ protected:
     GdkPixbuf* getNewToolPixbuf() const override;
 
 private:
-    void createLayerMenuItem(const std::string& text, int layerId);
+    void createLayerMenuItem(const std::string& text, Layer::Index layerId);
     void layerMenuClicked(GtkWidget* menu);
-    void createLayerMenuItemShow(int layerId);
+    void createLayerMenuItemShow(Layer::Index layerId);
     void layerMenuShowClicked(GtkWidget* menu);
 
-    void selectLayer(int layerId);
+    void selectLayer(Layer::Index layerId);
 
 private:
     LayerController* lc = nullptr;
@@ -75,11 +76,12 @@ private:
     GtkWidget* layerButton = nullptr;
     GtkWidget* menu = nullptr;
 
-    std::map<int, GtkWidget*> layerItems;
-    std::map<int, GtkWidget*> showLayerItems;
+    // Widget for the layer menu. Index = 0 is for background.
+    std::vector<GtkWidget*> layerItems;
+    std::vector<GtkWidget*> showLayerItems;
 
     PopupMenuButton* popupMenuButton = nullptr;
-    int menuY = 0;
+    unsigned int menuY = 0;
 
     /**
      * Menu is currently updating - ignore events

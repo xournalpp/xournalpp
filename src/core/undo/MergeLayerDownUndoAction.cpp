@@ -9,7 +9,7 @@
 #include "util/i18n.h"
 
 MergeLayerDownUndoAction::MergeLayerDownUndoAction(LayerController* layerController, const PageRef& page,
-                                                   Layer* upperLayer, Layer* lowerLayer, int upperLayerPos,
+                                                   Layer* upperLayer, Layer* lowerLayer, Layer::Index upperLayerPos,
                                                    size_t selectedPage):
         UndoAction("MergeLayerDownUndoAction"),
         upperLayerPos(upperLayerPos),

@@ -66,7 +66,7 @@ void PreviewJob::drawPage() {
     PageRef page = this->sidebarPreview->page;
     Document* doc = this->sidebarPreview->sidebar->getControl()->getDocument();
     PreviewRenderType type = this->sidebarPreview->getRenderType();
-    int layer;
+    Layer::Index layer = 0;
 
     doc->lock();
 
@@ -79,7 +79,7 @@ void PreviewJob::drawPage() {
     // switch block can go away and the layer assignment into the remaining switch block.
     switch (type) {
         case RENDER_TYPE_PAGE_LAYER:
-            if (layer != -1) {
+            if (layer != 0) {
                 break;  // out
             }
             [[fallthrough]];
@@ -107,10 +107,10 @@ void PreviewJob::drawPage() {
         case RENDER_TYPE_PAGE_LAYER:
             // render single layer
             view.initDrawing(page, cr2, true);
-            if (layer == -1) {
+            if (layer == 0) {
                 view.drawBackground();
             } else {
-                Layer* drawLayer = (*page->getLayers())[layer];
+                Layer* drawLayer = (*page->getLayers())[layer - 1];
                 xoj::view::LayerView layerView(drawLayer);
                 layerView.draw(context);
             }
@@ -121,7 +121,7 @@ void PreviewJob::drawPage() {
             // render all layers up to layer
             view.initDrawing(page, cr2, true);
             view.drawBackground();
-            for (int i = 0; i <= layer; i++) {
+            for (Layer::Index i = 0; i < layer; i++) {
                 Layer* drawLayer = (*page->getLayers())[i];
                 xoj::view::LayerView layerView(drawLayer);
                 layerView.draw(context);

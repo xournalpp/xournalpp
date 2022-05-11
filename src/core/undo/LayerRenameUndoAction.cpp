@@ -5,8 +5,8 @@
 LayerRenameUndoAction::LayerRenameUndoAction(LayerController* layerController, Layer* layer, const std::string& newName,
                                              const std::string& oldName):
         UndoAction("LayerUndoAction"),
-        layerController(layerController),
         layer(layer),
+        layerController(layerController),
         newName(newName),
         oldName(oldName) {}
 

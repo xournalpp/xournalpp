@@ -6,14 +6,15 @@
 #include "SidebarPreviewLayers.h"
 
 
-SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar, const PageRef& page, int layer,
-                                                   const std::string& layerName, size_t index, bool stacked):
+SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar, const PageRef& page,
+                                                   Layer::Index layerId, const std::string& layerName, size_t index,
+                                                   bool stacked):
         SidebarPreviewBaseEntry(sidebar, page),
-        index(index),
-        layer(layer),
         sidebar(sidebar),
-        stacked(stacked),
-        box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2)) {
+        index(index),
+        layerId(layerId),
+        box(gtk_box_new(GTK_ORIENTATION_VERTICAL, 2)),
+        stacked(stacked) {
 
     const auto clickCallback = G_CALLBACK(+[](GtkWidget* widget, GdkEvent* event, SidebarPreviewLayerEntry* self) {
         // Open context menu on right mouse click
@@ -66,7 +67,7 @@ void SidebarPreviewLayerEntry::checkboxToggled() {
     }
 
     bool check = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cbVisible));
-    (dynamic_cast<SidebarPreviewLayers*>(sidebar))->layerVisibilityChanged(layer + 1, check);
+    (dynamic_cast<SidebarPreviewLayers*>(sidebar))->layerVisibilityChanged(layerId, check);
 }
 
 void SidebarPreviewLayerEntry::mouseButtonPressCallback() {
@@ -79,7 +80,7 @@ auto SidebarPreviewLayerEntry::getRenderType() -> PreviewRenderType {
 
 auto SidebarPreviewLayerEntry::getHeight() -> int { return getWidgetHeight() + toolbarHeight; }
 
-auto SidebarPreviewLayerEntry::getLayer() const -> int { return layer; }
+auto SidebarPreviewLayerEntry::getLayer() const -> Layer::Index { return layerId; }
 
 auto SidebarPreviewLayerEntry::getWidget() -> GtkWidget* { return this->box; }
 

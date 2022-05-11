@@ -22,7 +22,7 @@ class LayerController;
 class MergeLayerDownUndoAction: public UndoAction {
 public:
     MergeLayerDownUndoAction(LayerController* layerController, const PageRef& page, Layer* upperLayer,
-                             Layer* lowerLayer, int upperLayerPos, size_t selectedPage);
+                             Layer* lowerLayer, Layer::Index upperLayerPos, size_t selectedPage);
 
 public:
     bool undo(Control* control) override;
@@ -33,11 +33,11 @@ public:
 private:
     void triggerUIUpdate(Control* control);
 
-    const int upperLayerPos;
+    const Layer::Index upperLayerPos;
     LayerController* layerController;
     Layer* upperLayer;
     Layer* lowerLayer;
-    const int upperLayerID;
-    const int lowerLayerID;
+    const Layer::Index upperLayerID;
+    const Layer::Index lowerLayerID;
     const size_t selectedPage;
 };

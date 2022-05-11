@@ -24,6 +24,8 @@ public:
     Layer();
     virtual ~Layer();
 
+    using Index = size_t;
+
     using ElementIndex = std::ptrdiff_t;
     static constexpr auto InvalidElementIndex = static_cast<ElementIndex>(-1);
 

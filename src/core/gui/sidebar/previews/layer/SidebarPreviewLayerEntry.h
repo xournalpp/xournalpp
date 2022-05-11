@@ -20,7 +20,7 @@ class SidebarPreviewBase;
 
 class SidebarPreviewLayerEntry: public SidebarPreviewBaseEntry {
 public:
-    SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar, const PageRef& page, int layer,
+    SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar, const PageRef& page, Layer::Index layerId,
                              const std::string& layerName, size_t index, bool stacked);
     ~SidebarPreviewLayerEntry() override;
 
@@ -36,7 +36,7 @@ public:
     /**
      * @return The layer to be rendered
      */
-    int getLayer() const;
+    Layer::Index getLayer() const;
 
     GtkWidget* getWidget() override;
 
@@ -60,7 +60,7 @@ private:
     /**
      * Layer to render
      */
-    int layer;
+    Layer::Index layerId;
 
     /**
      * Toolbar with controls
