@@ -128,7 +128,7 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
                                (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
     const Rectangle<double> drawArea{this->lX, this->lY, this->lWidth, this->lHeight};
     for (Layer* layer: *page->getLayers()) {
-        if (page->isLayerVisible(layer)) {
+        if (layer->isVisible()) {
             xoj::view::LayerView layerView(layer);
             if (this->lX == -1) {
                 layerView.draw(context);

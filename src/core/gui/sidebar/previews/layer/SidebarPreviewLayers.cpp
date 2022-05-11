@@ -19,7 +19,7 @@ SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, Side
     this->toolbar->setButtonEnabled(SIDEBAR_ACTION_NONE);
 
     // initialize the context menu action sensitivity
-    size_t layerIndex = this->lc->getLayerCount() - this->lc->getCurrentLayerId();
+    Layer::Index layerIndex = this->lc->getLayerCount() - this->lc->getCurrentLayerId();
     SidebarActions actions = SidebarPreviewLayers::getViableActions(layerIndex, this->lc->getLayerCount());
     this->contextMenu->setActionsSensitivity(actions);
 }
@@ -107,12 +107,13 @@ void SidebarPreviewLayers::updatePreviews() {
         return;
     }
 
-    int layerCount = page->getLayerCount();
+    auto layerCount = page->getLayerCount();
 
     size_t index = 0;
-    for (int i = layerCount; i >= 0; i--) {
+    for (auto i = layerCount + 1; i != 0;) {
+        --i;
         std::string name = lc->getLayerNameById(i);
-        SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i - 1, name, index++, this->stacked);
+        SidebarPreviewBaseEntry* p = new SidebarPreviewLayerEntry(this, page, i, name, index++, this->stacked);
         this->previews.push_back(p);
         gtk_layout_put(GTK_LAYOUT(this->iconViewPreview), p->getWidget(), 0, 0);
     }
@@ -136,17 +137,18 @@ void SidebarPreviewLayers::layerVisibilityChanged() {
         return;
     }
 
-    for (int i = 0; i < static_cast<int>(this->previews.size()); i++) {
-        auto* sp = dynamic_cast<SidebarPreviewLayerEntry*>(this->previews[this->previews.size() - i - 1]);
-        sp->setVisibleCheckbox(p->isLayerVisible(i));
+    Layer::Index i = p->getLayerCount();
+    for (SidebarPreviewBaseEntry* e: this->previews) {
+        dynamic_cast<SidebarPreviewLayerEntry*>(e)->setVisibleCheckbox(p->isLayerVisible(i--));
     }
+    updateSelectedLayer();
 }
 
 void SidebarPreviewLayers::updateSelectedLayer() {
     // Layers are in reverse order (top index: 0, but bottom preview is 0)
-    size_t layerIndex = this->previews.size() - lc->getCurrentLayerId() - 1;
+    size_t entryIndex = this->previews.size() - lc->getCurrentLayerId() - 1;
 
-    if (this->selectedEntry == layerIndex) {
+    if (this->selectedEntry == entryIndex) {
         return;
     }
 
@@ -154,7 +156,7 @@ void SidebarPreviewLayers::updateSelectedLayer() {
         this->previews[this->selectedEntry]->setSelected(false);
     }
 
-    this->selectedEntry = layerIndex;
+    this->selectedEntry = entryIndex;
     if (this->selectedEntry != npos && this->selectedEntry < this->previews.size()) {
         SidebarPreviewBaseEntry* p = this->previews[this->selectedEntry];
         p->setSelected(true);
@@ -186,16 +188,16 @@ void SidebarPreviewLayers::updateSelectedLayer() {
     this->toolbar->setButtonEnabled(static_cast<SidebarActions>(actions));
 }
 
-void SidebarPreviewLayers::layerSelected(size_t layerIndex) {
+void SidebarPreviewLayers::layerSelected(Layer::Index layerIndex) {
     // Layers are in reverse order (top index: 0, but bottom preview is 0)
-    lc->switchToLay(this->previews.size() - layerIndex - 1);
+    lc->switchToLay(lc->getLayerCount() - layerIndex);
     updateSelectedLayer();
 
     auto actions = SidebarPreviewLayers::getViableActions(layerIndex, this->lc->getLayerCount());
     this->contextMenu->setActionsSensitivity(SidebarActions(actions));
 }
 
-auto SidebarPreviewLayers::getViableActions(size_t layerIndex, size_t layerCount) -> SidebarActions {
+auto SidebarPreviewLayers::getViableActions(Layer::Index layerIndex, Layer::Index layerCount) -> SidebarActions {
     /*
      * If we have no layers (in which case  in the UI an empty background layer
      * is still shown)
@@ -240,7 +242,7 @@ auto SidebarPreviewLayers::getViableActions(size_t layerIndex, size_t layerCount
 /**
  * A layer was hidden / showed
  */
-void SidebarPreviewLayers::layerVisibilityChanged(int layerIndex, bool enabled) {
+void SidebarPreviewLayers::layerVisibilityChanged(Layer::Index layerIndex, bool enabled) {
     lc->setLayerVisible(layerIndex, enabled);
 }
 

@@ -43,7 +43,7 @@ auto SearchControl::search(std::string text, int* occures, double* top) -> bool 
     }
 
     for (Layer* l: *this->page->getLayers()) {
-        if (!this->page->isLayerVisible(l)) {
+        if (!l->isVisible()) {
             continue;
         }
 

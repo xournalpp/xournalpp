@@ -14,15 +14,16 @@
 #include <string>
 #include <vector>
 
+#include "model/Layer.h"
+
 #include "UndoAction.h"
 
-
-class Layer;
 class LayerController;
 
 class InsertLayerUndoAction: public UndoAction {
 public:
-    InsertLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer, int layerPosition);
+    InsertLayerUndoAction(LayerController* layerController, const PageRef& page, Layer* layer,
+                          Layer::Index layerPosition);
     ~InsertLayerUndoAction() override;
 
 public:
@@ -32,7 +33,7 @@ public:
     std::string getText() override;
 
 private:
-    int layerPosition;
+    Layer::Index layerPosition;
     LayerController* layerController;
     Layer* layer;
 };

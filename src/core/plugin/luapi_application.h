@@ -8,6 +8,7 @@
  *
  * @license GNU GPLv2 or later
  */
+#pragma once
 
 #include <cstring>
 #include <map>
@@ -941,7 +942,7 @@ static int applib_changeBackgroundPdfPageNr(lua_State* L) {
             luaL_error(L, "Current page has no pdf background, cannot use relative mode!");
         }
     }
-    if (selected >= 0 && selected < static_cast<int>(doc->getPdfPageCount())) {
+    if (selected < doc->getPdfPageCount()) {
         // no need to set a type, if we set the page number the type is also set
         page->setBackgroundPdfPageNr(selected);
 
@@ -1319,7 +1320,7 @@ static int applib_getDocumentStructure(lua_State* L) {
         lua_newtable(L);  // beginning of table for background layer
 
         lua_pushliteral(L, "isVisible");
-        lua_pushboolean(L, page->isLayerVisible(0));
+        lua_pushboolean(L, page->isLayerVisible(0U));
         lua_settable(L, -3);
 
         lua_pushliteral(L, "name");
@@ -1519,7 +1520,7 @@ static int applib_setCurrentLayer(lua_State* L) {
     size_t layerCount = page->getLayerCount();
     size_t layerId = luaL_checkinteger(L, 1);
 
-    if (layerId < 0 || layerId > layerCount) {
+    if (layerId > layerCount) {
         luaL_error(L, "No layer with layer ID %d", layerId);
     }
 
@@ -1548,7 +1549,7 @@ static int applib_setLayerVisibility(lua_State* L) {
         enabled = lua_toboolean(L, 1);
     }
 
-    int layerId = control->getCurrentPage()->getSelectedLayerId();
+    auto layerId = control->getCurrentPage()->getSelectedLayerId();
     control->getLayerController()->setLayerVisible(layerId, enabled);
     return 1;
 }
