@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-05 02:12+0000\n"
-"PO-Revision-Date: 2022-05-05 03:17\n"
+"PO-Revision-Date: 2022-05-12 14:32\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -78,7 +78,7 @@ msgstr "Aplică la pagina curentă"
 
 #: ../src/core/control/tools/EditSelection.cpp:352
 msgid "Arrange"
-msgstr ""
+msgstr "Aranjare"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:28
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:112
