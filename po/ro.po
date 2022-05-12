@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-05 02:12+0000\n"
-"PO-Revision-Date: 2022-05-12 14:32\n"
+"PO-Revision-Date: 2022-05-12 15:41\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -118,7 +118,8 @@ msgstr "Culoarea atributului nu a fost stabilită!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Dosarul audio nu este stabilit sau e greșit! Înregistrarea nu va funcționa!\n"
+"Stabilește dosarul de înregistrare în „Preferințe > Înregistrare audio”"
 
 #: ../src/core/control/Control.cpp:208
 msgid "Autosave failed with an error: {1}"
@@ -447,7 +448,7 @@ msgstr "Tipul de desenare - nu se modifică"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Tipuri de desenare"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
@@ -551,7 +552,7 @@ msgstr "Exportă ca PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exportă ca PDF"
 
 #: ../src/core/control/XournalMain.cpp:596
 msgid "Export layers progressively\n"
@@ -760,7 +761,7 @@ msgstr "Strat"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
 msgid "Layer Combo"
-msgstr ""
+msgstr "Integrare straturi"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layer Preview"
@@ -1099,7 +1100,7 @@ msgstr "Selectează Fontul"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Alege text PDF liniar"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1109,23 +1110,23 @@ msgstr "Selectează un obiect"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Alege o zonă de text PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Alege text PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Alege textul PDF din dreptunghi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Alege textul PDF din dreptunghi"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Alege text PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -2707,7 +2708,7 @@ msgstr "Butoanele mouse-ului"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr "Mouse+Combo tastatură"
+msgstr "Mouse+Tastatură împreună"
 
 #: ../ui/main.glade:2796 ../ui/main.glade:2871
 msgid "Move Down"
