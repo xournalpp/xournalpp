@@ -1048,12 +1048,12 @@ void Control::clearSelectionEndText() {
     }
 }
 
-void Control::selectAllOnPage(){
+void Control::selectAllOnPage() {
     auto pageNr = getCurrentPageNo();
     if (pageNr == npos) {
         return;
     }
-    
+
     XojPageView* view = win->getXournal()->getViewFor(pageNr);
     if (view == nullptr) {
         return;
@@ -1063,13 +1063,11 @@ void Control::selectAllOnPage(){
     Layer* layer = page->getSelectedLayer();
 
     win->getXournal()->clearSelection();
-    
-    std::vector<Element*> elements;
-    for (Element* e: layer->getElements()) {
-        elements.push_back(e);
-    }
 
-    if (elements.size() == 0){
+    std::vector<Element*> elements;
+    for (Element* e: layer->getElements()) { elements.push_back(e); }
+
+    if (elements.size() == 0) {
         return;
     }
 
@@ -1079,7 +1077,6 @@ void Control::selectAllOnPage(){
     selection->rearrangeInsertOrder(EditSelection::OrderChange::SendBackward);
 
     win->getXournal()->setSelection(selection);
-
 }
 
 void Control::reorderSelection(const ActionType type) {

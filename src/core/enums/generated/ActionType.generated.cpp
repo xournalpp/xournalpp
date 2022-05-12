@@ -700,7 +700,7 @@ auto ActionType_toString(ActionType value) -> string {
     if (value == ACTION_SEARCH) {
         return "ACTION_SEARCH";
     }
-    
+
     if (value == ACTION_SELECT_ALL) {
         return "ACTION_SELECT_ALL";
     }
