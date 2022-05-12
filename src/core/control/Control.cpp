@@ -425,6 +425,10 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             clearSelectionEndText();
             searchBar->showSearchBar(true);
             break;
+        case ACTION_SELECT_ALL:
+            selectAllOnPage();
+            // Stub
+            break;
         case ACTION_DELETE:
             if (!win->getXournal()->actionDelete()) {
                 deleteSelection();
@@ -1043,6 +1047,32 @@ void Control::clearSelectionEndText() {
     if (win) {
         win->getXournal()->endTextAllPages();
     }
+}
+
+void Control::selectAllOnPage(){
+    auto pageNr = getCurrentPageNo();
+    if (pageNr == npos) {
+        return;
+    }
+    
+    XojPageView* view = win->getXournal()->getViewFor(pageNr);
+    if (view == nullptr) {
+        return;
+    }
+
+    PageRef page = this->doc->getPage(pageNr);
+    Layer* layer = page->getSelectedLayer();
+
+    win->getXournal()->clearSelection();
+    
+    std::vector<Element*> elements;
+    for (Element* e: layer->getElements()) {
+        elements.push_back(e);
+    }
+    EditSelection* selection = new EditSelection(this->undoRedo, elements, view, page);
+
+    win->getXournal()->setSelection(selection);
+
 }
 
 void Control::reorderSelection(const ActionType type) {

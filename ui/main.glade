@@ -430,6 +430,18 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkImageMenuItem" id="menuEditSelectAllOnPage">
+                            <property name="label">gtk-select-all</property>
+                            <property name="name">menuEditSelectAllOnPage</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="use-underline">True</property>
+                            <property name="use-stock">True</property>
+                            <signal name="activate" handler="ACTION_SELECT_ALL" swapped="no"/>
+                            <accelerator key="a" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkSeparatorMenuItem" id="separatormenuitem6">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
