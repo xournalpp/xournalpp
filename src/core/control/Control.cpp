@@ -427,7 +427,6 @@ void Control::actionPerformed(ActionType type, ActionGroup group, GdkEvent* even
             break;
         case ACTION_SELECT_ALL:
             selectAllOnPage();
-            // Stub
             break;
         case ACTION_DELETE:
             if (!win->getXournal()->actionDelete()) {
