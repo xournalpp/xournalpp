@@ -1068,11 +1068,12 @@ void Control::selectAllOnPage(){
     for (Element* e: layer->getElements()) {
         elements.push_back(e);
     }
-    EditSelection* selection = new EditSelection(this->undoRedo, elements, view, page);
 
-    if (selection->getElements().size() == 0){
+    if (elements.size() == 0){
         return;
     }
+
+    EditSelection* selection = new EditSelection(this->undoRedo, elements, view, page);
 
     // Prevents bug where select all reverses the z-order of elements.
     selection->rearrangeInsertOrder(EditSelection::OrderChange::SendBackward);
