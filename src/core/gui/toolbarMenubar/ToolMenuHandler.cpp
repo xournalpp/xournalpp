@@ -469,7 +469,7 @@ void ToolMenuHandler::initToolItems() {
     addCustomItemTgl("DRAW_RECTANGLE", ACTION_TOOL_DRAW_RECT, GROUP_RULER, false, "draw-rect", _("Draw Rectangle"));
     addCustomItemTgl("DRAW_ELLIPSE", ACTION_TOOL_DRAW_ELLIPSE, GROUP_RULER, false, "draw-ellipse", _("Draw Ellipse"));
     addCustomItemTgl("DRAW_ARROW", ACTION_TOOL_DRAW_ARROW, GROUP_RULER, false, "draw-arrow", _("Draw Arrow"));
-    addCustomItemTgl("DRAW_DOUBLE_ARROW", ACTION_TOOL_DRAW_DOUBLE_ARROW, GROUP_RULER, false, "draw-arrow",
+    addCustomItemTgl("DRAW_DOUBLE_ARROW", ACTION_TOOL_DRAW_DOUBLE_ARROW, GROUP_RULER, false, "draw-double-arrow",
                      _("Draw Double Arrow"));
     addCustomItemTgl("DRAW_COORDINATE_SYSTEM", ACTION_TOOL_DRAW_COORDINATE_SYSTEM, GROUP_RULER, false,
                      "draw-coordinate-system", _("Draw coordinate system"));
