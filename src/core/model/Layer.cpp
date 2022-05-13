@@ -98,9 +98,7 @@ void Layer::clear(bool free) {
     this->elements.clear();
 
     if (free) {
-        for (Element *e : this->elements) {
-                delete e;
-        }
+        for (Element *e : this->elements) { delete e; }
     }
 }
 
