@@ -1073,6 +1073,7 @@ void Control::selectAllOnPage() {
     }
 
     EditSelection* selection = new EditSelection(this->undoRedo, elements, view, page);
+    this->doc->unlock();
 
     // Prevents bug where select all reverses the z-order of elements.
     selection->rearrangeInsertOrder(EditSelection::OrderChange::SendBackward);
