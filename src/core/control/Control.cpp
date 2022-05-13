@@ -1069,6 +1069,7 @@ void Control::selectAllOnPage() {
     for (Element* e: layer->getElements()) { elements.push_back(e); }
 
     if (elements.empty()) {
+        this->doc->unlock();
         return;
     }
 
