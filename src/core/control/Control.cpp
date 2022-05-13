@@ -1059,6 +1059,7 @@ void Control::selectAllOnPage() {
         return;
     }
 
+    this->doc->lock();
     PageRef page = this->doc->getPage(pageNr);
     Layer* layer = page->getSelectedLayer();
 
