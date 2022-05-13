@@ -111,7 +111,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, const vector<Element*>& elem
         i++;
     }
 
-    layer->clear(false);
+    layer->clear();
 
     view->rerenderPage();
 }
