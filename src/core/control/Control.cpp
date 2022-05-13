@@ -1067,7 +1067,7 @@ void Control::selectAllOnPage() {
     std::vector<Element*> elements;
     for (Element* e: layer->getElements()) { elements.push_back(e); }
 
-    if (elements.size() == 0) {
+    if (elements.empty()) {
         return;
     }
 
