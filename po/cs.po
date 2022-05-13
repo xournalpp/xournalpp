@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-05 02:12+0000\n"
-"PO-Revision-Date: 2022-05-05 03:17\n"
+"PO-Revision-Date: 2022-05-13 08:50\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -118,7 +118,7 @@ msgstr "Atribut color není nastaven!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "Audio složka nenastavena, nebo neplatná! Nahrávání nebude fungovat! Prosím nastavte složku pro nahrávání v „Preference > Nahrávání zvuku\""
 
 #: ../src/core/control/Control.cpp:208
 msgid "Autosave failed with an error: {1}"
@@ -551,7 +551,7 @@ msgstr "Export do PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exportovat do PDF"
 
 #: ../src/core/control/XournalMain.cpp:596
 msgid "Export layers progressively\n"
@@ -586,15 +586,15 @@ msgstr "Nepodařilo se najít program na generování LaTeX v PATH: {1}"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Selhala inicializace PDF Cairo"
 
 #: ../src/core/control/tools/ImageHandler.cpp:60
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Selhalo načtení obrázku, nepovedlo se určit jeho velikost!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Nepovedlo se otevřít context.xml v zip archivu: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -796,7 +796,7 @@ msgstr "Střední"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Připojit vrstvu dolů"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -936,19 +936,19 @@ msgstr "Číslo stránky"
 
 #: ../src/util/PageRange.cpp:96
 msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr ""
+msgstr "PageRange::parse(): daný počet stran je větší mež maximální počet."
 
 #: ../src/util/PageRange.cpp:99
 msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "PageRange::parse(): krajní body intervalu musí být ve stoupajícím pořadí."
 
 #: ../src/util/PageRange.cpp:92
 msgid "PageRange::parse(): invalid page range."
-msgstr ""
+msgstr "PageRange::parse(): neplatné rozmezí stránek."
 
 #: ../src/util/PageRange.cpp:102
 msgid "PageRange::parse(): page numbers start with 1"
-msgstr ""
+msgstr "PageRange::parse(): čísla stran začínají od 1"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
@@ -1096,7 +1096,7 @@ msgstr "Zobrazit úplný seznam přispěvatelů"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Vybrat oblast textu z pdf"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Select Font"
@@ -1106,7 +1106,7 @@ msgstr "Výběr písma"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Vybrat PDF text v řádku"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1116,23 +1116,23 @@ msgstr "Výběr objektu"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Vybrat PDF text v ploše"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Vybrat PDF text"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Vybrat PDF text v obdélníku"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Vybrat PDF text v obdélníku"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Vybrat PDF text"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1149,7 +1149,7 @@ msgstr "Výběr oblasti"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Vybrat text z PDF"
 
 #: ../src/core/control/Control.cpp:2063
 msgid "Select another PDF"
