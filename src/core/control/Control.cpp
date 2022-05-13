@@ -1065,19 +1065,13 @@ void Control::selectAllOnPage() {
 
     win->getXournal()->clearSelection();
 
-    std::vector<Element*> elements;
-    for (Element* e: layer->getElements()) { elements.push_back(e); }
-
-    if (elements.empty()) {
+    if (layer->getElements().empty()) {
         this->doc->unlock();
         return;
     }
 
-    EditSelection* selection = new EditSelection(this->undoRedo, elements, view, page);
+    EditSelection* selection = new EditSelection(this->undoRedo, layer->getElements(), view, page, layer);
     this->doc->unlock();
-
-    // Prevents bug where select all reverses the z-order of elements.
-    selection->rearrangeInsertOrder(EditSelection::OrderChange::SendBackward);
 
     win->getXournal()->setSelection(selection);
 }

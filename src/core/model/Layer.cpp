@@ -94,6 +94,16 @@ auto Layer::removeElement(Element* e, bool free) -> ElementIndex {
     return InvalidElementIndex;
 }
 
+void Layer::clear(bool free) {
+    this->elements.clear();
+
+    if (free) {
+        for (Element *e : this->elements) {
+                delete e;
+        }
+    }
+}
+
 auto Layer::isAnnotated() const -> bool { return !this->elements.empty(); }
 
 /**

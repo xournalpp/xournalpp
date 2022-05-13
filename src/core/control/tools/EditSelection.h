@@ -41,6 +41,7 @@ public:
     EditSelection(UndoRedoHandler* undo, Selection* selection, XojPageView* view);
     EditSelection(UndoRedoHandler* undo, Element* e, XojPageView* view, const PageRef& page);
     EditSelection(UndoRedoHandler* undo, const std::vector<Element*>& elements, XojPageView* view, const PageRef& page);
+    EditSelection(UndoRedoHandler* undo, const std::vector<Element*>& elements, XojPageView* view, const PageRef& page, Layer* layer);
     ~EditSelection() override;
 
 private:
