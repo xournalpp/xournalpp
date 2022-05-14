@@ -1054,12 +1054,13 @@ void Control::selectAllOnPage() {
         return;
     }
 
+    this->doc->lock();
     XojPageView* view = win->getXournal()->getViewFor(pageNr);
     if (view == nullptr) {
+        this->doc->unlock();
         return;
     }
 
-    this->doc->lock();
     PageRef page = this->doc->getPage(pageNr);
     Layer* layer = page->getSelectedLayer();
 
