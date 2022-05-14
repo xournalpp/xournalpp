@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 18:45\n"
+"PO-Revision-Date: 2022-05-14 19:50\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -83,7 +83,7 @@ msgstr "Aranjare"
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:28
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:112
 msgid "Attach file to the journal"
-msgstr "Ataşează fişierul la jurnal"
+msgstr "Atașează fișierul la document"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:114
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
@@ -578,7 +578,8 @@ msgstr "Exportă fără fundal\n"
 #: ../src/core/control/XournalMain.cpp:592
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
-msgstr ""
+msgstr "Exportă fără liniere\n"
+"                                 Fișierul exportat nu are hârtia liniată\n"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:63
 msgid "Failed to find LaTeX generator program in PATH: {1}"
@@ -1539,7 +1540,7 @@ msgstr "Model Xournal++"
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
 msgstr "Nu ai nicio pagină PDF de ales. Anulează operațiunea.\n"
-"Alege un alt tip de fond: „Jurnal” → „Configurează modelul de pagină”."
+"Alege un alt tip de fond: „Document” → „Configurează modelul de pagină”."
 
 #: ../src/core/control/XournalMain.cpp:152
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
@@ -1897,7 +1898,7 @@ msgstr "<b>Dimensiuni pagină</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
-msgstr "<b>Dimensiune pagină</b>"
+msgstr "<b>Dimensiuni pagină</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
@@ -2103,7 +2104,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2842
 msgid "Background color between pages"
-msgstr ""
+msgstr "Culoarea fondului între pagini"
 
 #: ../ui/settings.glade:3478
 msgid "Base speed"
@@ -2192,7 +2193,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
-msgstr ""
+msgstr "Copiază în schimb dimensiunile paginii actuale"
 
 #: ../ui/main.glade:2689
 msgid "Copy selected text"
@@ -2200,7 +2201,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
-msgstr ""
+msgstr "Copiază fondul paginii actuale în loc de fondul stabilit mai sus."
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
@@ -2361,7 +2362,7 @@ msgstr "Activează cu raza de determinare a "
 
 #: ../ui/settings.glade:659
 msgid "Enable Autoloading of Journals"
-msgstr "Activează încărcarea automată a jurnalelor"
+msgstr "Activează încărcarea automată a documentelor"
 
 #: ../ui/settings.glade:375
 msgid "Enable Autosaving"
@@ -2506,7 +2507,7 @@ msgstr ""
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
-msgstr ""
+msgstr "Înălțime:"
 
 #: ../ui/main.glade:951 ../ui/settings.glade:3535 ../ui/settings.glade:3602
 msgid "Hide Menubar"
@@ -2660,7 +2661,7 @@ msgstr "Încarcă fişier"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Încarcă un fișier"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2795,19 +2796,19 @@ msgstr ""
 
 #: ../ui/main.glade:1304
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "Fondul _hârtiei"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
-msgstr "Format hârtie"
+msgstr "Formatul hârtiei"
 
 #: ../ui/main.glade:1294
 msgid "Paper _Color"
-msgstr "Culoare de hârtie"
+msgstr "Culoare hârtiei"
 
 #: ../ui/main.glade:1284
 msgid "Paper _Format"
-msgstr ""
+msgstr "_Formatul hârtiei"
 
 #: ../ui/about.glade:296
 msgid "Partially based on Xournal\n"
@@ -2936,7 +2937,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Salvează"
 
 #: ../ui/settings.glade:3419
 msgid "Scrollbars"
@@ -3143,7 +3144,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "Aceste reglări vor fi utilizate pentru paginile noi"
 
 #: ../ui/settings.glade:2143
 msgid "Timeout"
@@ -3188,7 +3189,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
-msgstr ""
+msgstr "Folosește dimensiunile actuale ale paginii în loc de dimensiunile de mai sus."
 
 #: ../ui/settings.glade:2563 ../ui/settings.glade:2631
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
@@ -3398,7 +3399,7 @@ msgstr ""
 
 #: ../ui/main.glade:1155
 msgid "_Journal"
-msgstr ""
+msgstr "_Document"
 
 #: ../ui/main.glade:1074
 msgid "_Last Page"
