@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 15:39\n"
+"PO-Revision-Date: 2022-05-14 16:37\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -404,24 +404,24 @@ msgstr "Punctată"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 msgid "Draw Arrow"
-msgstr "Desenează o săgeată"
+msgstr "Desenează săgeți"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Desenează săgeți duble"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:470
 msgid "Draw Ellipse"
-msgstr "Desenează o elipsă"
+msgstr "Desenează elipse"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 msgid "Draw Line"
-msgstr "Desenează o linie"
+msgstr "Desenează linii"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -429,7 +429,7 @@ msgstr "Desenează o linie"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:100
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Draw Rectangle"
-msgstr "Desenează un dreptunghi"
+msgstr "Desenează dreptunghiuri"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:43
@@ -2329,7 +2329,7 @@ msgstr ""
 
 #: ../ui/main.glade:1495
 msgid "Draw _Line"
-msgstr "Deseneaza linie"
+msgstr "Desenează _linii"
 
 #: ../ui/settings.glade:3055
 msgid "Draw a transparent circle around the cursor"
