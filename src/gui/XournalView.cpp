@@ -334,6 +334,8 @@ void XournalView::pageSelected(size_t page) {
         this->viewPages[this->lastSelectedPage]->setSelected(false);
     }
 
+    endTextAllPages();
+
     this->currentPage = page;
 
     size_t pdfPage = npos;
