@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 16:37\n"
+"PO-Revision-Date: 2022-05-14 17:33\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -328,7 +328,7 @@ msgstr "Taie"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Default Tool"
-msgstr "Unealta Implicită"
+msgstr "Unelte prestabilite"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 #: ../src/core/undo/DeleteUndoAction.cpp:55
@@ -850,7 +850,7 @@ msgstr "Desen normal"
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
 #: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
 msgid "OK"
-msgstr "OK"
+msgstr "Bine"
 
 #: ../src/core/control/XournalMain.cpp:603
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1197,7 +1197,7 @@ msgstr "Separator"
 #: ../src/core/control/XournalMain.cpp:607
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
-msgstr "Alege DPI-ul pentru exporturile PNG. Valoarea implicită este de 300\n"
+msgstr "Alege DPI-ul pentru exportările în PNG. Prestabilit este 300\n"
 "                                 Niciun efect fără -i/--create-img=foo.png"
 
 #: ../src/core/control/XournalMain.cpp:617
@@ -1288,7 +1288,7 @@ msgstr "Schimbă poziția paginii actuale cu cea a paginii de dedesubt"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
-msgstr "Setarea de sistem implicită"
+msgstr "Prestabilit de sistem"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:86
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:459
@@ -1606,11 +1606,11 @@ msgstr "Linie întreruptă"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
 msgid "default disabled"
-msgstr "Implicit dezactivată"
+msgstr "dezactivat în mod prestabilit"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
 msgid "default enabled"
-msgstr "Implicit activat"
+msgstr "activat în mod prestabilit"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
 msgid "delete stroke"
@@ -2832,15 +2832,15 @@ msgstr "Setările de redare"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr "Manager plugin-uri"
+msgstr "Gestionare Module"
 
 #: ../ui/main.glade:2049
 msgid "Plugin _Manager"
-msgstr "Manager plugin-uri"
+msgstr "_Gestionare Module"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Modificările modulelor se aplică după ce Xournal++ a fost repornit"
 
 #: ../ui/settings.glade:3717
 msgid "Pre-load pages after"
@@ -3350,7 +3350,7 @@ msgstr ""
 
 #: ../ui/main.glade:1412
 msgid "_Default Tools"
-msgstr ""
+msgstr "Unelte _prestabilite"
 
 #: ../ui/main.glade:1217
 msgid "_Delete Page"
@@ -3434,7 +3434,7 @@ msgstr ""
 
 #: ../ui/main.glade:2038
 msgid "_Plugin"
-msgstr "_Plugin"
+msgstr "_Module"
 
 #: ../ui/main.glade:522
 msgid "_Presentation Mode"
@@ -3518,7 +3518,7 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
-msgstr ""
+msgstr "activat,"
 
 #: ../ui/settings.glade:1751
 msgid "events"
