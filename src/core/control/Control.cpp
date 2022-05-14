@@ -1070,7 +1070,7 @@ void Control::selectAllOnPage() {
         return;
     }
 
-    EditSelection* selection = new EditSelection(this->undoRedo, layer->getElements(), view, page, layer);
+    EditSelection* selection = new EditSelection(this->undoRedo, view, page, layer);
     this->doc->unlock();
 
     win->getXournal()->setSelection(selection);
