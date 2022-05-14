@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 19:50\n"
+"PO-Revision-Date: 2022-05-14 20:46\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -141,7 +141,7 @@ msgstr "Înapoi"
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:198
 #: ../src/core/model/XojPage.cpp:173
 msgid "Background"
-msgstr "Fundal"
+msgstr "Fond"
 
 #: ../src/core/control/tools/EditSelection.cpp:369
 msgid "Bring forward"
@@ -377,7 +377,7 @@ msgstr "Nu deschide fişierele Salvare automată. Acestea pot fi suprascrise!\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
-msgstr "Nu suprascrieți fișierul PDF de fundal! Acest lucru va provoca erori!"
+msgstr "Nu suprascrie fondul PDF! Acest lucru va provoca erori!"
 
 #: ../src/core/control/Control.cpp:2527
 msgid "Document file was removed."
@@ -571,9 +571,9 @@ msgstr ""
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr "Exportă fără fundal\n"
-"                                 Fișierul exportat are un fundal transparent sau alb,\n"
-"                                 în funcție de formatul suportat de acesta\n"
+msgstr "Exportă fără fond\n"
+"                                 Fișierul exportat are un fond transparent sau alb,\n"
+"                                 în funcție de formatul compatibil cu acesta\n"
 
 #: ../src/core/control/XournalMain.cpp:592
 msgid "Export without ruling\n"
@@ -890,7 +890,7 @@ msgstr "Pagina PDF {1}"
 
 #: ../src/core/view/PdfView.cpp:29
 msgid "PDF background missing"
-msgstr "Fundal PDF lipsă"
+msgstr "Fond PDF lipsă"
 
 #: ../src/core/control/ExportHelper.cpp:102
 msgid "PDF file successfully created"
@@ -1013,7 +1013,7 @@ msgstr "Refacere: "
 
 #: ../src/core/control/Control.cpp:2073
 msgid "Remove PDF Background"
-msgstr "Elimină fundal PDF"
+msgstr "Elimină fondul PDF"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
 msgid "Removed tool item from Toolbar {1} ID {2}"
@@ -1496,7 +1496,7 @@ msgstr "Foarte gros"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "With PDF background"
-msgstr "Cu fundal PDF"
+msgstr "Cu fond PDF"
 
 #: ../src/core/undo/InsertUndoAction.cpp:31
 msgid "Write text"
@@ -2189,7 +2189,7 @@ msgstr "Configurează un nou model de pagină"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
-msgstr ""
+msgstr "Copiază în schimb fondul paginii actuale"
 
 #: ../ui/pageTemplate.glade:269
 msgid "Copy current page size instead"
