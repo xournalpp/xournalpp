@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 17:33\n"
+"PO-Revision-Date: 2022-05-14 18:45\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -178,7 +178,7 @@ msgstr "Schimbă grosimea liniei"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr "Culoare \"{1}\" necunoscută (nu este definită în lista de culori implicită)!"
+msgstr "Culoare necunoscută: „{1}” (nu este definită în lista de culori prestabilită)!"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:226
 msgid "Contents"
@@ -527,7 +527,7 @@ msgstr "Eroare: {1}"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:75
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr "Eroare: {1} nu este un fișier obișnuit. Vă rugăm să verificați setările șablonului LaTeX. "
+msgstr "Eroare: {1} nu este un fișier obișnuit. Controlează configurarea modelului tău LaTeX. "
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
 msgid "Error: {1}. Please check the contents of {2}"
@@ -603,7 +603,7 @@ msgstr ""
 
 #: ../src/core/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
-msgstr "Nu s-a putut citi șablonul global. Vă rugăm să verificați setările."
+msgstr "Nu s-a putut citi fișierul modelului global. Verifică reglările."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:102
 msgid "Failed to resolve path with the following error:\n"
@@ -919,7 +919,7 @@ msgstr "Previzualizare a paginei"
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:80
 msgid "Page background changed"
-msgstr "Pagina de fundal a fost modificată"
+msgstr "Fondul paginii a fost schimbat"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:97
 msgid "Page deleted"
@@ -987,7 +987,7 @@ msgstr "Mod de prezentare"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
-msgstr "Limba selectată anterior nu mai este valabilă!"
+msgstr "Limba aleasă anterior nu mai este valabilă!"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Print"
@@ -1160,7 +1160,7 @@ msgstr "Selectați un alt nume"
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:101
 msgid "Select background color"
-msgstr "Selectaţi culoarea de fundal"
+msgstr "Alege culoarea fondului"
 
 #: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:82
 msgid "Select color"
@@ -1418,7 +1418,7 @@ msgstr "Se încearcă salvarea de urgență a documentului deschis actual…"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
-msgstr "Fișierul de șablon global de la {1} nu poate fi deschis. Sigur există?"
+msgstr "Fișierul modelului global de la {1} nu poate fi deschis. Sigur există?"
 
 #: ../src/core/gui/PageView.cpp:378
 msgid "Unable to play audio recording {1}"
@@ -1533,13 +1533,13 @@ msgstr "Fișiere Xournal++"
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:65
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:83
 msgid "Xournal++ template"
-msgstr "Xournal++ șablon"
+msgstr "Model Xournal++"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:179
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr "Nu ai nicio pagină PDF de selectat. Anulează operațiunea.\n"
-"Selectează un alt tip de fundal: Meniul \"Jurnal\" → \"Configurează șablonul de pagină\"."
+msgstr "Nu ai nicio pagină PDF de ales. Anulează operațiunea.\n"
+"Alege un alt tip de fond: „Jurnal” → „Configurează modelul de pagină”."
 
 #: ../src/core/control/XournalMain.cpp:152
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
@@ -1579,7 +1579,7 @@ msgstr "Zoom până la 100%"
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Cancel"
-msgstr "Revocă"
+msgstr "_Renunță"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:13
@@ -1590,7 +1590,7 @@ msgstr "Deschide"
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
-msgstr "Salvează"
+msgstr "_Salvează"
 
 #: ../src/core/control/DeviceListHelper.cpp:98
 msgid "cursor"
@@ -1858,11 +1858,11 @@ msgstr "<b>... sau selectați imaginea deja folosită:</b>"
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
-msgstr "<b>Culoare de fundal</b>"
+msgstr "<b>Culoarea fondului</b>"
 
 #: ../ui/pageTemplate.glade:258
 msgid "<b>Background</b>"
-msgstr "<b>Fundal</b>"
+msgstr "<b>Fond</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:141
 msgid "<b>Color</b>"
@@ -1870,11 +1870,11 @@ msgstr "<b>Culoare</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr "<b>Instrumente implicite</b>"
+msgstr "<b>Unelte prestabilite</b>"
 
 #: ../ui/settings.glade:5180
 msgid "<b>Default</b>"
-msgstr "<b>(Implicit)</b>"
+msgstr "<b>Prestabilit</b>"
 
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
@@ -1893,7 +1893,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
-msgstr "<b>Dimensiune pagină</b>"
+msgstr "<b>Dimensiuni pagină</b>"
 
 #: ../ui/pagesize.glade:142
 msgid "<b>Pagesize</b>"
@@ -1959,7 +1959,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5798
 msgid "<i>Select language (requires restart)</i>"
-msgstr "<i>Alegeți limba (necesită repornirea programului)</i>"
+msgstr "<i>Alege limba (necesită repornirea programului)</i>"
 
 #: ../ui/settings.glade:5126
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -2160,7 +2160,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr "Alegeți un fișier de șablon global LaTeX"
+msgstr "Alegeți un fișier de model global LaTeX"
 
 #: ../ui/settings.glade:3073 ../ui/settings.glade:3216
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2180,11 +2180,11 @@ msgstr "Culori"
 
 #: ../ui/main.glade:1207
 msgid "Configure Page Template"
-msgstr "Configuraţi pagina șablon"
+msgstr "Configurează modelul de pagină"
 
 #: ../ui/pageTemplate.glade:18
 msgid "Configure new page template"
-msgstr ""
+msgstr "Configurează un nou model de pagină"
 
 #: ../ui/pageTemplate.glade:187
 msgid "Copy current page background instead"
@@ -2236,19 +2236,19 @@ msgstr ""
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
-msgstr "Denumire prestabilită de fișier"
+msgstr "Nume prestabilit al fișierului"
 
 #: ../ui/settings.glade:5621
 msgid "Default Seek Time (in seconds)"
-msgstr "Timpul implicit de căutare (în secunde)"
+msgstr "Timp de căutare prestabilit (în secunde)"
 
 #: ../ui/settings.glade:518
 msgid "Default name: "
-msgstr "Nume implicit: "
+msgstr "Nume prestabilit: "
 
 #: ../ui/settings.glade:5220
 msgid "Defaults"
-msgstr "(Implicit)"
+msgstr "Prestabilite"
 
 #: ../ui/main.glade:1245
 msgid "Delete Layer"
@@ -2632,11 +2632,11 @@ msgstr ""
 
 #: ../ui/settings.glade:5835 ../ui/settings.glade:5883
 msgid "Language"
-msgstr ""
+msgstr "Limba"
 
 #: ../ui/settings.glade:5853
 msgid "Language Settings"
-msgstr ""
+msgstr "Alege limba"
 
 #: ../ui/main.glade:575
 msgid "Layout"
@@ -2948,7 +2948,7 @@ msgstr "Derulare în afara paginii"
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
-msgstr "Selectaţi culoarea de fundal"
+msgstr "Alege culoarea fondului"
 
 #: ../ui/settings.glade:5308
 msgid "Select Folder"
@@ -3004,7 +3004,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4883
 msgid "Settings:"
-msgstr ""
+msgstr "Reglări:"
 
 #: ../ui/settings.glade:4892
 msgid "Show Floating Toolbox"
@@ -3099,11 +3099,11 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr ""
+msgstr "Reglări pentru modele"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
-msgstr ""
+msgstr "Model:"
 
 #: ../ui/settings.glade:2305 ../ui/settings.glade:2318
 msgid "Test"
