@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-05 02:12+0000\n"
-"PO-Revision-Date: 2022-05-05 03:17\n"
+"POT-Creation-Date: 2022-05-14 07:14+0000\n"
+"PO-Revision-Date: 2022-05-14 07:21\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -134,7 +134,7 @@ msgid "Autosaving to {1}"
 msgstr "Sauvegarde automatique vers {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:500
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
 msgid "Back"
 msgstr "Retour"
 
@@ -151,7 +151,7 @@ msgstr "Mettre en avant"
 msgid "Bring to front"
 msgstr "Mettre au premier plan"
 
-#: ../src/core/control/Control.cpp:2065 ../src/core/control/Control.cpp:2527
+#: ../src/core/control/Control.cpp:2074 ../src/core/control/Control.cpp:2536
 #: ../src/core/control/XournalMain.cpp:164
 msgid "Cancel"
 msgstr "Annuler"
@@ -359,7 +359,7 @@ msgstr "Supprimer ce calque"
 msgid "Delete this page"
 msgstr "Supprimer cette page"
 
-#: ../src/core/control/Control.cpp:2524
+#: ../src/core/control/Control.cpp:2533
 msgid "Discard"
 msgstr "Fermer sans enregistrer"
 
@@ -367,7 +367,7 @@ msgstr "Fermer sans enregistrer"
 msgid "Display advanced export options"
 msgstr "Afficher les options d'exportation avancées"
 
-#: ../src/core/control/Control.cpp:2010
+#: ../src/core/control/Control.cpp:2019
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -379,7 +379,7 @@ msgstr "Ne pas ouvrir les fichiers de sauvegarde automatique. Ils peuvent être 
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Ne pas écraser le PDF d'arrière-plan ! Cela causera des erreurs !"
 
-#: ../src/core/control/Control.cpp:2518
+#: ../src/core/control/Control.cpp:2527
 msgid "Document file was removed."
 msgstr "Le fichier du document a été supprimé."
 
@@ -406,6 +406,11 @@ msgstr "Pointillé"
 msgid "Draw Arrow"
 msgstr "Dessiner une flèche"
 
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
+msgid "Draw Double Arrow"
+msgstr ""
+
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:470
@@ -413,28 +418,28 @@ msgid "Draw Ellipse"
 msgstr "Dessiner une ellipse"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:123
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:474
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 msgid "Draw Line"
 msgstr "Tracer une ligne"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:95
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:98
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:97
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:100
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Draw Rectangle"
 msgstr "Dessiner un rectangle"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:475
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:43
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Draw Spline"
 msgstr "Tracer les splines"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:37
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:475
 msgid "Draw coordinate system"
 msgstr "Dessiner le système de coordonnées"
 
@@ -473,7 +478,7 @@ msgstr "Effacer le trait"
 msgid "Eraser"
 msgstr "Gomme"
 
-#: ../src/core/control/Control.cpp:2264
+#: ../src/core/control/Control.cpp:2273
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Erreur dans l'annotation du PDF \"{1}\"\n"
@@ -483,7 +488,7 @@ msgstr "Erreur dans l'annotation du PDF \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Erreur lors du chargement du fichier glade \"{1}\" (essayez de charger \"{2}\")"
 
-#: ../src/core/control/Control.cpp:2087
+#: ../src/core/control/Control.cpp:2096
 msgid "Error opening file \"{1}\""
 msgstr "Erreur lors de l'ouverture du fichier \"{1}\""
 
@@ -617,7 +622,7 @@ msgid "File couldn't be opened. You have to do it manually:\n"
 msgstr "Le fichier n'a pas pu être ouvert. Vous devez le faire manuellement :\n"
 "URL : {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:527
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
 msgid "Fill"
 msgstr "Remplir"
 
@@ -625,7 +630,7 @@ msgstr "Remplir"
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Filtrer la pression de la saisie. Multiplier la pression par le multiplicateur de pression. Si elle est inférieure au minimum, utiliser la pression minimale."
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:547
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Fine"
 msgstr "Fin"
 
@@ -637,7 +642,7 @@ msgstr "Boîte à outils flottante (expérimental)"
 msgid "Font"
 msgstr "Police"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:497
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Forward"
 msgstr "Avancer"
 
@@ -690,7 +695,7 @@ msgid "Grid Snapping"
 msgstr "Ancrage à la grille"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
 msgid "Hand"
 msgstr "Main"
 
@@ -781,7 +786,7 @@ msgstr "Calque {1}"
 msgid "Layerstack Preview"
 msgstr "Aperçu de la pile de calques"
 
-#: ../src/core/gui/PageView.cpp:776
+#: ../src/core/gui/PageView.cpp:778
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -791,7 +796,7 @@ msgstr "Chargement en cours..."
 msgid "Manage Toolbars"
 msgstr "Gérer les barres d'outils"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:550
 msgid "Medium"
 msgstr "Moyen"
 
@@ -840,7 +845,7 @@ msgstr "Aucun appareil"
 msgid "No pages to export!"
 msgstr "Aucune page à exporter !"
 
-#: ../src/core/control/Control.cpp:1316
+#: ../src/core/control/Control.cpp:1322
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Aucune page PDF de disponible à ajouter. Vous devrez peut-être rouvrir le document d'abord."
 
@@ -960,7 +965,7 @@ msgstr "Pages liées"
 msgid "Paste"
 msgstr "Coller"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Pause / Play"
 msgstr "Pause / Jouer"
 
@@ -973,7 +978,7 @@ msgstr "Stylo"
 msgid "Plain"
 msgstr "Plein"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:77
 msgid "Play Object"
@@ -995,11 +1000,11 @@ msgstr "La langue sélectionnée précédemment n'est plus disponible !"
 msgid "Print"
 msgstr "Imprimer"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Record Audio / Stop Recording"
 msgstr "Enregistrer audio / Arrêter l'enregistrement"
 
-#: ../src/core/control/Control.cpp:920
+#: ../src/core/control/Control.cpp:921
 msgid "Recorder could not be started."
 msgstr "L'enregistrement n'a pas pu être démarré."
 
@@ -1012,7 +1017,7 @@ msgstr "Refaire"
 msgid "Redo: "
 msgstr "Refaire : "
 
-#: ../src/core/control/Control.cpp:2064
+#: ../src/core/control/Control.cpp:2073
 msgid "Remove PDF Background"
 msgstr "Supprimer l'arrière-plan du PDF"
 
@@ -1064,16 +1069,16 @@ msgstr "Graphiques SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Fichier LaTeX d'exemple généré avec succès."
 
-#: ../src/core/control/Control.cpp:2519 ../src/core/control/jobs/SaveJob.cpp:15
+#: ../src/core/control/Control.cpp:2528 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: ../src/core/control/Control.cpp:2519
+#: ../src/core/control/Control.cpp:2528
 msgid "Save As..."
 msgstr "Enregistrer sous..."
 
-#: ../src/core/control/Control.cpp:2353
+#: ../src/core/control/Control.cpp:2362
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Enregistrer le fichier"
@@ -1099,7 +1104,7 @@ msgstr "Voir la liste complète des contributeurs"
 msgid "Select Area Text from pdf"
 msgstr "Sélectionner une Zone de Texte à partir d'un pdf"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Select Font"
 msgstr "Sélectionner la police"
 
@@ -1109,7 +1114,7 @@ msgstr "Sélectionner la police"
 msgid "Select Linear PDF Text"
 msgstr "Sélectionner des lignes de texte PDF"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:480
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Select Object"
@@ -1135,14 +1140,14 @@ msgstr "Sélectionner un rectangle de texte PDF"
 msgid "Select Pdf Text"
 msgstr "Sélectionner le texte du PDF"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
 msgstr "Sélectionner un rectangle"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:477
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:65
 msgid "Select Region"
@@ -1152,7 +1157,7 @@ msgstr "Sélectionner une région"
 msgid "Select Text from pdf"
 msgstr "Sélectionner le texte du PDF"
 
-#: ../src/core/control/Control.cpp:2063
+#: ../src/core/control/Control.cpp:2072
 msgid "Select another PDF"
 msgstr "Sélectionnez un autre PDF"
 
@@ -1254,12 +1259,12 @@ msgstr "Désolé, Xournal++ ne peut pas ouvrir des fichiers distants pour le mom
 msgid "Staves"
 msgstr "Portées"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:494
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
 msgid "Stop"
 msgstr "Arrêter"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:133
-#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
+#: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:44
 #: ../src/core/undo/RecognizerUndoAction.cpp:69
 msgid "Stroke recognizer"
 msgstr "Identificateur de trait"
@@ -1326,17 +1331,17 @@ msgstr "Texte introuvable"
 msgid "Text not found, searched on all pages"
 msgstr "Texte introuvable, recherché sur toutes les pages"
 
-#: ../src/core/control/Control.cpp:1111
+#: ../src/core/control/Control.cpp:1112
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "La configuration de l'outil \"{1}\" est prédéfinie, voulez-vous créer une copie à modifier ?"
 
-#: ../src/core/control/Control.cpp:2052
+#: ../src/core/control/Control.cpp:2061
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Le fichier d'arrière-plan joint {1} n'a pas pu être trouvé. Il a peut-être été déplacé, renommé ou supprimé.\n"
 "Il a été vu pour la dernière fois à : {2}"
 
-#: ../src/core/control/Control.cpp:2056
+#: ../src/core/control/Control.cpp:2065
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Le fichier d'arrière-plan {1} n'a pas pu être trouvé. Il a peut-être été déplacé, renommé ou supprimé.\n"
@@ -1346,7 +1351,7 @@ msgstr "Le fichier d'arrière-plan {1} n'a pas pu être trouvé. Il a peut-être
 msgid "The check for overwriting the background failed with:\n"
 msgstr "La vérification pour le remplacement de l'arrière-plan a échoué avec :\n"
 
-#: ../src/core/control/Control.cpp:2095
+#: ../src/core/control/Control.cpp:2104
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Le fichier en cours de chargement utilise une version du format de fichier plus récente que celle actuellement supportée par cette version de Xournal++, il pourrait par conséquent ne pas se charger correctement. L'ouvrir quand même ?"
 
@@ -1386,11 +1391,11 @@ msgstr "Il y a un fichier journal d'erreurs de Xournal++. Veuillez envoyer un ra
 msgid "There was an error displaying help: {1}"
 msgstr "Une erreur s'est produite lors de l'affichage de l'aide : {1}"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:551
 msgid "Thick"
 msgstr "Gras"
 
-#: ../src/core/control/Control.cpp:2518
+#: ../src/core/control/Control.cpp:2527
 msgid "This document is not saved yet."
 msgstr "Ce document n'est pas encore enregistré."
 
@@ -1422,11 +1427,11 @@ msgstr "Essai de sauvegarde d'urgence du document actuellement ouvert…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Impossible d'ouvrir le fichier de modèle global à {1}. Existe-t-il ?"
 
-#: ../src/core/gui/PageView.cpp:376
+#: ../src/core/gui/PageView.cpp:378
 msgid "Unable to play audio recording {1}"
 msgstr "Impossible de lire l'enregistrement audio {1}"
 
-#: ../src/core/control/Control.cpp:1330
+#: ../src/core/control/Control.cpp:1336
 msgid "Unable to retrieve pdf page."
 msgstr "Impossible de récupérer la page pdf."
 
@@ -1475,11 +1480,11 @@ msgstr "Type de terminaison de traits inconnu : \"{1}\". Utilisation de terminai
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Type de trait inconnu : \"{1}\", en supposant le stylo"
 
-#: ../src/core/control/Control.cpp:2410
+#: ../src/core/control/Control.cpp:2419
 msgid "Unsaved Document"
 msgstr "Document non enregistré"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
 msgstr "Espace vertical"
 
@@ -1487,11 +1492,11 @@ msgstr "Espace vertical"
 msgid "Vertical space"
 msgstr "Espace vertical"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:546
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
 msgid "Very Fine"
 msgstr "Très Fin"
 
-#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:550
+#: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:552
 msgid "Very Thick"
 msgstr "Très Épais"
 
@@ -1527,7 +1532,7 @@ msgstr "Fichiers Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ a échoué la dernière fois. Voulez-vous restaurer le dernier fichier modifié ?"
 
-#: ../src/core/control/Control.cpp:2359
+#: ../src/core/control/Control.cpp:2368
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Fichiers Xournal++"
@@ -1575,7 +1580,7 @@ msgstr "Dézoomer"
 msgid "Zoom to 100%"
 msgstr "Zoom à 100%"
 
-#: ../src/core/control/Control.cpp:2353
+#: ../src/core/control/Control.cpp:2362
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
@@ -1588,7 +1593,7 @@ msgstr "_Annuler"
 msgid "_Open"
 msgstr "_Ouvrir"
 
-#: ../src/core/control/Control.cpp:2354
+#: ../src/core/control/Control.cpp:2363
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
@@ -1631,7 +1636,7 @@ msgstr "éléments"
 msgid "eraser"
 msgstr "gomme"
 
-#: ../src/core/control/Control.cpp:2024
+#: ../src/core/control/Control.cpp:2033
 msgid "file: {1}"
 msgstr "fichier : {1}"
 
@@ -2203,7 +2208,7 @@ msgstr "Copier l'arrière-plan de la page actuelle à la place"
 msgid "Copy current page size instead"
 msgstr "Copier la taille de la page actuelle à la place"
 
-#: ../ui/main.glade:2678
+#: ../ui/main.glade:2689
 msgid "Copy selected text"
 msgstr "Copier le texte sélectionné"
 
@@ -2335,11 +2340,11 @@ msgstr "Glissez et déposez des composants d'ici vers les barres barres d'outils
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "Glisser: Si la valeur est trop petite, des oscillations indésirables peuvent apparaître. Si la valeur est trop élevée, il n'y aura pas de stabilisation."
 
-#: ../ui/main.glade:1473
+#: ../ui/main.glade:1484
 msgid "Draw Coordinate System"
 msgstr "Dessiner un système de coordonnées"
 
-#: ../ui/main.glade:1484
+#: ../ui/main.glade:1495
 msgid "Draw _Line"
 msgstr "Tracer une _ligne"
 
@@ -2355,11 +2360,11 @@ msgstr "Zone de Dessin"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Outils de dessin - Définir les modificateurs par la direction de dessin (Expérimental)"
 
-#: ../ui/main.glade:2812 ../ui/main.glade:2849
+#: ../ui/main.glade:2823 ../ui/main.glade:2860
 msgid "Duplicate"
 msgstr "Dupliquer"
 
-#: ../ui/main.glade:2886
+#: ../ui/main.glade:2897
 msgid "Edit (not implemented yet)"
 msgstr "Modifier (pas encore implémenté)"
 
@@ -2415,7 +2420,7 @@ msgstr "Activer les gestes de zoom (nécessite le redémarrage)"
 msgid "Enter / edit LaTeX Text"
 msgstr "Entrer / éditer le texte LaTeX"
 
-#: ../ui/main.glade:1746
+#: ../ui/main.glade:1757
 msgid "Eraser Optio_ns"
 msgstr "Effacer Optio_ns"
 
@@ -2440,11 +2445,11 @@ msgstr "Exporter progressivement les calques"
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr "Exporter le document sans fond (None) ou avec les fonds de PDF et d'image uniquement (sans règle) ou avec tous les types d'arrière-plan (tous)."
 
-#: ../ui/main.glade:1722 ../ui/main.glade:1927
+#: ../ui/main.glade:1733 ../ui/main.glade:1938
 msgid "Fi_ll"
 msgstr "Remp_lir"
 
-#: ../ui/main.glade:1732 ../ui/main.glade:1937
+#: ../ui/main.glade:1743 ../ui/main.glade:1948
 msgid "Fill opacity"
 msgstr "Opacité du remplissage"
 
@@ -2452,11 +2457,11 @@ msgstr "Opacité du remplissage"
 msgid "Finalize the stroke"
 msgstr "Terminer le tracé"
 
-#: ../ui/main.glade:2476
+#: ../ui/main.glade:2487
 msgid "Find next occurrence of the search string"
 msgstr "Trouver l'occurrence suivante de la chaîne de recherche"
 
-#: ../ui/main.glade:2454
+#: ../ui/main.glade:2465
 msgid "Find previous occurrence of the search string"
 msgstr "Trouver l'occurrence précédente de la chaîne de recherche"
 
@@ -2504,7 +2509,7 @@ msgstr "Taille de la grille"
 msgid "Grid snapping tolerance"
 msgstr "Tolérance de capture sur la grille"
 
-#: ../ui/main.glade:1572
+#: ../ui/main.glade:1583
 msgid "H_and Tool"
 msgstr "Outil"
 
@@ -2540,11 +2545,11 @@ msgstr "Masquer la barre de défilement verticale"
 msgid "Highlight cursor position"
 msgstr "Surligner la position du curseur"
 
-#: ../ui/main.glade:2700
+#: ../ui/main.glade:2711
 msgid "Highlight selected text"
 msgstr "Surligner le texte sélectionné"
 
-#: ../ui/main.glade:1855
+#: ../ui/main.glade:1866
 msgid "Highlighter Opti_ons"
 msgstr "Surligneur Opti_ons"
 
@@ -2624,11 +2629,11 @@ msgstr "La stabilisation du tracé peut générer un espace à la fin de votre t
 msgid "Insert Latex"
 msgstr "Insérer latex"
 
-#: ../ui/main.glade:2841
+#: ../ui/main.glade:2852
 msgid "Insert Page After"
 msgstr "Insérer une page après"
 
-#: ../ui/main.glade:2833
+#: ../ui/main.glade:2844
 msgid "Insert Page Before"
 msgstr "Insérer une page avant"
 
@@ -2696,7 +2701,7 @@ msgstr "Longueur maximale (mm)"
 msgid "Max multiplier"
 msgstr "Multiplicateur maximal"
 
-#: ../ui/main.glade:2804
+#: ../ui/main.glade:2815
 msgid "Merge Down"
 msgstr "Descendre"
 
@@ -2730,11 +2735,11 @@ msgstr "Bouton de souris"
 msgid "Mouse+Keyboard Combo"
 msgstr "Combinaison souris+clavier"
 
-#: ../ui/main.glade:2796 ../ui/main.glade:2871
+#: ../ui/main.glade:2807 ../ui/main.glade:2882
 msgid "Move Down"
 msgstr "Descendre"
 
-#: ../ui/main.glade:2788 ../ui/main.glade:2863
+#: ../ui/main.glade:2799 ../ui/main.glade:2874
 msgid "Move Up"
 msgstr "Monter"
 
@@ -2830,11 +2835,11 @@ msgid "Partially based on Xournal\n"
 msgstr "Partiellement basé sur Xournal\n"
 "par Denis Auroux"
 
-#: ../ui/main.glade:1973
+#: ../ui/main.glade:1984
 msgid "Pause"
 msgstr "Pause"
 
-#: ../ui/main.glade:1600
+#: ../ui/main.glade:1611
 msgid "Pen _Options"
 msgstr "_Option du stylo"
 
@@ -2850,7 +2855,7 @@ msgstr "Paramètres de lecture"
 msgid "Plugin Manager"
 msgstr "Gestionnaire de plugins"
 
-#: ../ui/main.glade:2038
+#: ../ui/main.glade:2049
 msgid "Plugin _Manager"
 msgstr "_Gestionnaire de greffons"
 
@@ -2910,7 +2915,7 @@ msgstr "Recalculer le rendu lorsque le zoom de la page change de plus de "
 msgid "Recent _Documents"
 msgstr "_Documents récents"
 
-#: ../ui/main.glade:1963
+#: ../ui/main.glade:1974
 msgid "Record / Stop"
 msgstr "Enregistrer / Arrêter"
 
@@ -3089,7 +3094,7 @@ msgstr "Commencez à zoomer après une certaine distance "
 msgid "Storage Folder"
 msgstr "Dossier de stockage"
 
-#: ../ui/main.glade:2740
+#: ../ui/main.glade:2751
 msgid "Strikethrough selected text"
 msgstr "Rayer le texte sélectionné"
 
@@ -3134,7 +3139,7 @@ msgstr "Tester la configuration"
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Teste si la configuration actuelle est valide en exécutant la commande de génération LaTeX sur le fichier de modèle global avec une formule de test."
 
-#: ../ui/main.glade:1951
+#: ../ui/main.glade:1962
 msgid "Text Font..."
 msgstr "Police du texte..."
 
@@ -3166,7 +3171,7 @@ msgstr "Ces paramètres seront utilisés pour les nouvelles pages"
 msgid "Timeout"
 msgstr "Expiré"
 
-#: ../ui/main.glade:2760
+#: ../ui/main.glade:2771
 msgid "Toggle standard / region text selection"
 msgstr "Basculer le mode de sélection de texte : standard / région"
 
@@ -3191,7 +3196,7 @@ msgstr "Essayez d'abord de sélectionner l'objet."
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Essayez d'abord de sélectionner l'objet ; si rien n'est sélectionné, alors affichez la boîte à outils flottante si activé."
 
-#: ../ui/main.glade:2720
+#: ../ui/main.glade:2731
 msgid "Underline selected text"
 msgstr "Souligner le texte sélectionné"
 
@@ -3399,7 +3404,7 @@ msgstr "_Première page"
 msgid "_Goto Page"
 msgstr "_Aller à la page"
 
-#: ../ui/main.glade:2052
+#: ../ui/main.glade:2063
 msgid "_Help"
 msgstr "_Aide"
 
@@ -3451,7 +3456,7 @@ msgstr "_Pages liées"
 msgid "_Pen"
 msgstr "_Stylo"
 
-#: ../ui/main.glade:2027
+#: ../ui/main.glade:2038
 msgid "_Plugin"
 msgstr "_Greffon"
 
@@ -3495,7 +3500,7 @@ msgstr "_Haut au bas"
 msgid "_Vertical"
 msgstr "_Vertical"
 
-#: ../ui/main.glade:1548
+#: ../ui/main.glade:1559
 msgid "_Vertical Space"
 msgstr "Espace _vertical"
 
@@ -3503,31 +3508,31 @@ msgstr "Espace _vertical"
 msgid "_View"
 msgstr "_Vue"
 
-#: ../ui/main.glade:1840
+#: ../ui/main.glade:1851
 msgid "_delete strokes"
 msgstr "_supprimer les traits"
 
-#: ../ui/main.glade:1622 ../ui/main.glade:1768 ../ui/main.glade:1877
+#: ../ui/main.glade:1633 ../ui/main.glade:1779 ../ui/main.glade:1888
 msgid "_fine"
 msgstr "_mince"
 
-#: ../ui/main.glade:1633 ../ui/main.glade:1779 ../ui/main.glade:1888
+#: ../ui/main.glade:1644 ../ui/main.glade:1790 ../ui/main.glade:1899
 msgid "_medium"
 msgstr "_moyen"
 
-#: ../ui/main.glade:1818
+#: ../ui/main.glade:1829
 msgid "_standard"
 msgstr "_standard"
 
-#: ../ui/main.glade:1644 ../ui/main.glade:1790 ../ui/main.glade:1899
+#: ../ui/main.glade:1655 ../ui/main.glade:1801 ../ui/main.glade:1910
 msgid "_thick"
 msgstr "_épais"
 
-#: ../ui/main.glade:1611 ../ui/main.glade:1757 ../ui/main.glade:1866
+#: ../ui/main.glade:1622 ../ui/main.glade:1768 ../ui/main.glade:1877
 msgid "_very fine"
 msgstr "_très fin"
 
-#: ../ui/main.glade:1829
+#: ../ui/main.glade:1840
 msgid "_whiteout"
 msgstr "_blanc"
 
@@ -3561,7 +3566,7 @@ msgstr "pixels"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(après quoi l'écran tactile sera réactivé)</i>"
 
-#: ../ui/main.glade:1655 ../ui/main.glade:1801 ../ui/main.glade:1910
+#: ../ui/main.glade:1666 ../ui/main.glade:1812 ../ui/main.glade:1921
 msgid "ver_y thick"
 msgstr "trè_s épais"
 
