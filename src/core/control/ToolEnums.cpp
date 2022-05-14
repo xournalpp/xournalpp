@@ -52,6 +52,8 @@ auto drawingTypeToString(DrawingType type) -> std::string {
             return "ellipse";
         case DRAWING_TYPE_ARROW:
             return "arrow";
+        case DRAWING_TYPE_DOUBLE_ARROW:
+            return "doubleArrow";
         case DRAWING_TYPE_STROKE_RECOGNIZER:
             return "strokeRecognizer";
         case DRAWING_TYPE_COORDINATE_SYSTEM:
@@ -78,6 +80,9 @@ auto drawingTypeFromString(const std::string& type) -> DrawingType {
     }
     if (type == "arrow") {
         return DRAWING_TYPE_ARROW;
+    }
+    if (type == "doubleArrow") {
+        return DRAWING_TYPE_DOUBLE_ARROW;
     }
     if (type == "strokeRecognizer") {
         return DRAWING_TYPE_STROKE_RECOGNIZER;
@@ -123,6 +128,8 @@ auto toolTypeToString(ToolType type) -> std::string {
             return "drawEllipse";
         case TOOL_DRAW_ARROW:
             return "drawArrow";
+        case TOOL_DRAW_DOUBLE_ARROW:
+            return "drawDoubleArrow";
         case TOOL_DRAW_COORDINATE_SYSTEM:
             return "drawCoordinateSystem";
         case TOOL_DRAW_SPLINE:
@@ -182,6 +189,9 @@ auto toolTypeFromString(const std::string& type) -> ToolType {
     }
     if (type == "drawArrow") {
         return TOOL_DRAW_ARROW;
+    }
+    if (type == "drawDoubleArrow") {
+        return TOOL_DRAW_DOUBLE_ARROW;
     }
     if (type == "drawCoordinateSystem") {
         return TOOL_DRAW_COORDINATE_SYSTEM;

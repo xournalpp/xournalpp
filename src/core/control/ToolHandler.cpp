@@ -33,7 +33,7 @@ void ToolHandler::initTools() {
     tools[TOOL_PEN - TOOL_PEN] = std::make_unique<Tool>(
             "pen", TOOL_PEN, Color{0x3333CCU},
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
-                    TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE,
+                    TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE,
             thickness);
 
     thickness[TOOL_SIZE_VERY_FINE] = 1;
@@ -53,7 +53,7 @@ void ToolHandler::initTools() {
     tools[TOOL_HIGHLIGHTER - TOOL_PEN] = std::make_unique<Tool>(
             "highlighter", TOOL_HIGHLIGHTER, Color{0xFFFF00U},
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
-                    TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
+                    TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL,
             thickness);
 
     tools[TOOL_TEXT - TOOL_PEN] =
@@ -88,6 +88,9 @@ void ToolHandler::initTools() {
 
     tools[TOOL_DRAW_ARROW - TOOL_PEN] =
             std::make_unique<Tool>("drawArrow", TOOL_DRAW_ARROW, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
+
+    tools[TOOL_DRAW_DOUBLE_ARROW - TOOL_PEN] = std::make_unique<Tool>("drawDoubleArrow", TOOL_DRAW_DOUBLE_ARROW,
+                                                                      Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
 
     tools[TOOL_DRAW_COORDINATE_SYSTEM - TOOL_PEN] = std::make_unique<Tool>(
             "drawCoordinateSystem", TOOL_DRAW_COORDINATE_SYSTEM, Color{0x000000U}, TOOL_CAP_NONE, std::nullopt);
@@ -544,7 +547,7 @@ auto ToolHandler::isSinglePageTool() -> bool {
            drawingType == DRAWING_TYPE_SPLINE || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT ||
            toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE ||
            toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
-           toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE ||
+           toolType == TOOL_DRAW_DOUBLE_ARROW || toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE ||
            toolType == TOOL_SELECT_PDF_TEXT_LINEAR || toolType == TOOL_SELECT_PDF_TEXT_RECT;
 }
 

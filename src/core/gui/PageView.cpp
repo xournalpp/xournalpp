@@ -299,7 +299,9 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         } else if (h->getDrawingType() == DRAWING_TYPE_ELLIPSE) {
             this->inputHandler = new EllipseHandler(this->xournal, this, getPage());
         } else if (h->getDrawingType() == DRAWING_TYPE_ARROW) {
-            this->inputHandler = new ArrowHandler(this->xournal, this, getPage());
+            this->inputHandler = new ArrowHandler(this->xournal, this, getPage(), false);
+        } else if (h->getDrawingType() == DRAWING_TYPE_DOUBLE_ARROW) {
+            this->inputHandler = new ArrowHandler(this->xournal, this, getPage(), true);
         } else if (h->getDrawingType() == DRAWING_TYPE_COORDINATE_SYSTEM) {
             this->inputHandler = new CoordinateSystemHandler(this->xournal, this, getPage());
         } else {
