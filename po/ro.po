@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 07:21\n"
+"PO-Revision-Date: 2022-05-14 15:39\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -435,7 +435,7 @@ msgstr "Desenează un dreptunghi"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:43
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:477
 msgid "Draw Spline"
-msgstr "Desenează o curbă"
+msgstr "Desenează curbe"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:131
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
