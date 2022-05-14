@@ -99,8 +99,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, const vector<Element*>& elem
     view->rerenderPage();
 }
 
-EditSelection::EditSelection(UndoRedoHandler* undo, XojPageView* view, const PageRef& page,
-                             Layer* layer):
+EditSelection::EditSelection(UndoRedoHandler* undo, XojPageView* view, const PageRef& page, Layer* layer):
         snappingHandler(view->getXournal()->getControl()->getSettings()) {
     const auto& elements = layer->getElements();
     calcSizeFromElements(elements);
