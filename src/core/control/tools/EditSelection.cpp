@@ -112,7 +112,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, XojPageView* view, const Pag
         i++;
     }
 
-    layer->clear();
+    layer->clearNoFree();
 
     view->rerenderPage();
 }

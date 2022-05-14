@@ -53,9 +53,9 @@ public:
     ElementIndex removeElement(Element* e, bool free);
 
     /**
-     * Removes all Element%s from the Layer
+     * Removes all Elements from the Layer *without freeing them*
      */
-    void clear();
+    void clearNoFree();
 
     /**
      * Returns an iterator over the Element%s contained in this Layer
