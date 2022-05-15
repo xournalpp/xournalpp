@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 07:21\n"
+"POT-Creation-Date: 2022-05-15 07:05+0000\n"
+"PO-Revision-Date: 2022-05-15 07:54\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -38,7 +38,7 @@ msgstr " dari {1}"
 msgid "%F-Note-%H-%M"
 msgstr "%F-Catatan-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:151
+#: ../src/core/gui/dialog/SettingsDialog.cpp:152
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Tidak ada perangkat yang ditemukan. Jika ini tidak seharusnya terjadi, mungkin perlu melaporkan kutu?</b>"
 
@@ -463,7 +463,7 @@ msgstr "Ubah teks"
 msgid "Emergency saved document"
 msgstr "Dokumen tersimpan darurat"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:279
+#: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Aktifkan sensitivitas tekanan atau sensitivitas inferensi untuk mengubah pengaturan ini!"
 
@@ -505,17 +505,21 @@ msgstr "Kesalahan saat membaca PDF: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "Kesalahan saat membaca lebar goresan: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:146
+#: ../src/core/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
 msgstr "Kesalahan saat menyimpan gambar #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:165
 msgid "Error save image #2"
 msgstr "Kesalahan saat menyimpan gambar #2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
 msgstr "Kesalahan saat menyimpan otomatis: {1}"
+
+#: ../src/core/control/jobs/ImageExport.cpp:153
+msgid "Error while exporting the pdf background: I cannot find the pdf page number "
+msgstr ""
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -624,7 +628,7 @@ msgstr "Berkas tidak dapat dibuka. Anda harus melakukannya secara manual:\n"
 msgid "Fill"
 msgstr "Isi"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
@@ -892,7 +896,7 @@ msgstr "Ekspor PDF"
 msgid "PDF Page {1}"
 msgstr "Halaman PDF {1}"
 
-#: ../src/core/view/PdfView.cpp:29
+#: ../src/core/control/PdfCache.cpp:143
 msgid "PDF background missing"
 msgstr "Latar belakang PDF tidak ada"
 
@@ -1474,6 +1478,10 @@ msgstr "Tipe goresan tidak diketahui: \"{1}\", diasumsikan pena"
 #: ../src/core/control/Control.cpp:2419
 msgid "Unsaved Document"
 msgstr "Dokumen Belum Disimpan"
+
+#: ../src/core/control/jobs/ImageExport.cpp:85
+msgid "Unsupported graphics format: "
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
