@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 18:05\n"
+"PO-Revision-Date: 2022-05-15 19:07\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -162,7 +162,7 @@ msgstr "Schimbă Culoarea"
 
 #: ../src/core/undo/FontUndoAction.cpp:104
 msgid "Change font"
-msgstr "Schimbă fontul"
+msgstr "Schimbă tipul de litere"
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:72
 msgid "Change line style"
@@ -245,13 +245,13 @@ msgstr "Nu s-a putut deschide fișierul: \"{1}\""
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
 msgstr "Nu s-a putut analiza fișierul personalizat toolbar.ini: {1}\n"
-"Barele de instrumente nu vor fi disponibile"
+"Benzile cu unelte nu vor fi disponibile"
 
 #: ../src/core/gui/MainWindow.cpp:86
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
 msgstr "Nu s-a putut analiza fișierul general toolbar.ini: {1}\n"
-"Barele de instrumente nu vor fi disponibile"
+"Benzile cu unelte nu vor fi disponibile"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:364
 #: ../src/core/control/xojfile/LoadHandler.cpp:387
@@ -270,11 +270,11 @@ msgstr "Nu s-a putut reface \"{1}\"\n"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:168
 msgid "Could not remove tool item from Toolbar {1} on position {2}"
-msgstr "Nu s-a putut elimina elementul din bara de instrumente {1} pe poziția {2}"
+msgstr "Nu s-a putut elimina unealta din banda cu unelte {1} poziția {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:163
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
-msgstr "Nu s-a putut elimina elementul {1} din bara de instrumente {2} pe poziția {3}"
+msgstr "Nu s-a putut elimina unealta {1} din banda cu unelte {2} poziția {3}"
 
 #: ../src/core/control/Control.cpp:199
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
@@ -316,7 +316,7 @@ msgstr "Export personalizat"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Customize Toolbars"
-msgstr "Personalizează Barele de Unelte"
+msgstr "Personalizează benzile cu unelte"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:28
 msgid "Customized"
@@ -639,7 +639,7 @@ msgstr "Instrumente plutitoare (experimental)"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
-msgstr "Fontul"
+msgstr "Tip de litere"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Forward"
@@ -793,7 +793,7 @@ msgstr "Încărcare..."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Manage Toolbars"
-msgstr "Gestionare bară cu instrumente"
+msgstr "Gestionare benzi cu unelte"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:550
 msgid "Medium"
@@ -1021,11 +1021,11 @@ msgstr "Elimină fondul PDF"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:159
 msgid "Removed tool item from Toolbar {1} ID {2}"
-msgstr "Elimină instrumentul din bara de instrumente {1} ID {2}"
+msgstr "A fost eliminată unealta din banda cu unelte {1} ID {2}"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:157
 msgid "Removed tool item {1} from Toolbar {2} ID {3}"
-msgstr "Elimină instrumentul din bara de instrumente {1} ID {2}"
+msgstr "Unealta {1} a fost eliminată din banda cu unelte {2} ID {3}"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
@@ -1104,7 +1104,7 @@ msgstr "Alege o zonă de text din PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 msgid "Select Font"
-msgstr "Selectează Fontul"
+msgstr "Alege tipul de litere"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
@@ -1157,11 +1157,11 @@ msgstr "Alege textul din PDF"
 
 #: ../src/core/control/Control.cpp:2072
 msgid "Select another PDF"
-msgstr "Selectaţi un alt PDF"
+msgstr "Alege un alt PDF"
 
 #: ../src/util/XojMsgBox.cpp:76
 msgid "Select another name"
-msgstr "Selectați un alt nume"
+msgstr "Alege un alt nume"
 
 #: ../src/core/gui/dialog/SelectBackgroundColorDialog.cpp:101
 msgid "Select background color"
@@ -1169,15 +1169,15 @@ msgstr "Alege culoarea fondului"
 
 #: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:82
 msgid "Select color"
-msgstr "Selectează culoarea"
+msgstr "Alege culoarea"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Select rectangle"
-msgstr "Selectaţi dreptunghiul"
+msgstr "Alege dreptunghiul"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select region"
-msgstr "Selectați regiunea"
+msgstr "Alege zona"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
@@ -1331,7 +1331,7 @@ msgstr "Textul nu a fost găsit, căutat pe toate paginile"
 
 #: ../src/core/control/Control.cpp:1112
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr "Configurarea barei de instrumente \"{1}\" este predefinită, ai crea o copie pentru a o edita?"
+msgstr "Configurarea benzii cu unelte „{1}” este prestabilită. Vrei să creezi o copie pe care să o modifici?"
 
 #: ../src/core/control/Control.cpp:2061
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
@@ -1411,11 +1411,11 @@ msgstr "Unelte - nu se schimbă"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:102
 msgid "Toolbar found: {1}"
-msgstr "Bară de instrumente găsită: {1}"
+msgstr "Bandă cu unelte găsită: {1}"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:44
 msgid "Toolbars"
-msgstr "Bare de instrumente"
+msgstr "Benzi cu unelte"
 
 #: ../src/core/control/CrashHandler.cpp:29
 msgid "Trying to emergency save the current open document…"
@@ -1863,7 +1863,7 @@ msgstr "5"
 
 #: ../ui/images.glade:88
 msgid "<b>... or select already used Image:</b>"
-msgstr "<b>... sau selectați imaginea deja folosită:</b>"
+msgstr "<b>... sau alege imaginea deja folosită:</b>"
 
 #: ../ui/pageTemplate.glade:245
 msgid "<b>Background Color</b>"
@@ -2331,7 +2331,7 @@ msgstr "Trageți STÂNGA de la punctul de pornire acțiuni ca și cum tasta de s
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr "Trageți și plasați fom componente aici în barele de unelte și înapoi."
+msgstr "Trage și așează componentele de aici în benzile cu unelte și înapoi."
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
@@ -2678,7 +2678,7 @@ msgstr "Încarcă un fișier"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
-msgstr "Gestionează bara de instrumente"
+msgstr "Gestionează banda cu unelte"
 
 #: ../ui/settings.glade:1109
 msgid "Mass"
@@ -2922,7 +2922,7 @@ msgstr ""
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
-msgstr ""
+msgstr "Redenumește stratul ales"
 
 #: ../ui/settings.glade:4561
 msgid "Resizing"
@@ -2970,23 +2970,23 @@ msgstr "Alege dosarul"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
-msgstr "Selectează o imagine"
+msgstr "Alege o imagine"
 
 #: ../ui/main.glade:1352
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Alege text liniar"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr "Selectaţi pagina PDF"
+msgstr "Alege pagina PDF"
 
 #: ../ui/main.glade:1364
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Alege textul din dreptunghi"
 
 #: ../ui/settings.glade:3639
 msgid "Select toolbar:"
-msgstr "Selectaţi bara de instrumente:"
+msgstr "Alege banda cu unelte:"
 
 #: ../ui/settings.glade:2867
 msgid "Selection Color (Text, Stroke Selection etc.)"
@@ -3034,7 +3034,7 @@ msgstr ""
 
 #: ../ui/main.glade:559
 msgid "Show Toolbars"
-msgstr ""
+msgstr "Arată benzile cu unelte"
 
 #: ../ui/settings.glade:2772
 msgid "Show filepath in title bar"
@@ -3133,7 +3133,7 @@ msgstr "Verifică dacă este valabilă configurația actuală, prin executarea c
 
 #: ../ui/main.glade:1962
 msgid "Text Font..."
-msgstr ""
+msgstr "Tipul de litere al textului..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
