@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 12:45\n"
+"PO-Revision-Date: 2022-05-15 13:47\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1888,7 +1888,8 @@ msgstr "<b>Prestabilit</b>"
 #: ../ui/exportSettings.glade:122
 msgid "<b>Document export settings</b>\n"
 "Set export parameters"
-msgstr ""
+msgstr "<b>Parametrii exportării documentelor</b>\n"
+"Stabilește parametrii exportării"
 
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
@@ -1898,7 +1899,8 @@ msgstr ""
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr ""
+msgstr "<b>Decide opacitatea umplerii</b>\n"
+"Alege opacitatea pentru culoarea de umplere"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
