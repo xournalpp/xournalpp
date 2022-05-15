@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 07:21\n"
+"POT-Creation-Date: 2022-05-15 07:05+0000\n"
+"PO-Revision-Date: 2022-05-15 07:54\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -38,7 +38,7 @@ msgstr " из {1}"
 msgid "%F-Note-%H-%M"
 msgstr "%F-Заметка-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:151
+#: ../src/core/gui/dialog/SettingsDialog.cpp:152
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Устройства не найдены. Должно быть что-то не так - может отправить отчёт об ошибке?</b>"
 
@@ -463,7 +463,7 @@ msgstr "Редактировать текст"
 msgid "Emergency saved document"
 msgstr "Экстренно сохраненный документ"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:279
+#: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Включите чувствительность к нажатию или оценку нажатия, чтобы изменить эту настройку!"
 
@@ -505,17 +505,21 @@ msgstr "Ошибка при чтении PDF: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "Ошибка чтения ширины черты: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:146
+#: ../src/core/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
 msgstr "Ошибка сохранения изображения #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:165
 msgid "Error save image #2"
 msgstr "Ошибка сохранения изображения #2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
 msgstr "Ошибка при автосохранении: {1}"
+
+#: ../src/core/control/jobs/ImageExport.cpp:153
+msgid "Error while exporting the pdf background: I cannot find the pdf page number "
+msgstr ""
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -626,7 +630,7 @@ msgstr "Файл не может быть открыт. Вы должны сде
 msgid "Fill"
 msgstr "Заливка"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Фильтровать силу нажатия. Умножить нажатие на мультипликатор силы нажатия. Если она меньше минимума, использовать минимальное значение."
 
@@ -894,7 +898,7 @@ msgstr "Экспорт в PDF"
 msgid "PDF Page {1}"
 msgstr "PDF страница {1}"
 
-#: ../src/core/view/PdfView.cpp:29
+#: ../src/core/control/PdfCache.cpp:143
 msgid "PDF background missing"
 msgstr "Отсутствует PDF фон"
 
@@ -1481,6 +1485,10 @@ msgstr "Неизвестный тип черты: \"{1}\", предполага�
 #: ../src/core/control/Control.cpp:2419
 msgid "Unsaved Document"
 msgstr "Несохранённый документ"
+
+#: ../src/core/control/jobs/ImageExport.cpp:85
+msgid "Unsupported graphics format: "
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
