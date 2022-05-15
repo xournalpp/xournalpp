@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 10:14\n"
+"PO-Revision-Date: 2022-05-15 11:15\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -3125,7 +3125,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "Verifică dacă configurația actuală este valabilă prin executarea comenzii de generare LaTeX pe fișierul modelului global cu o formulă de test."
 
 #: ../ui/main.glade:1962
 msgid "Text Font..."
@@ -3133,7 +3133,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "Fișierul LaTeX de folosit ca model pentru unealta LaTeX."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
@@ -3141,7 +3141,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr ""
+msgstr "Următoarele șiruri vor fi înlocuite în fișierul modelului global atunci când se pornește unealta LaTeX:"
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
@@ -3153,7 +3153,7 @@ msgstr ""
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr "Aceste reglări vor fi utilizate pentru paginile noi"
+msgstr "Aceste configurări vor fi folosite pentru paginile noi"
 
 #: ../ui/settings.glade:2143
 msgid "Timeout"
