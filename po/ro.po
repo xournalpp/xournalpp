@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 09:14\n"
+"PO-Revision-Date: 2022-05-15 10:14\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -608,7 +608,7 @@ msgstr ""
 
 #: ../src/core/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
-msgstr "Nu s-a putut citi fișierul modelului global. Verifică reglările."
+msgstr "Nu s-a putut citi fișierul modelului global. Controlează configurarea."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:102
 msgid "Failed to resolve path with the following error:\n"
@@ -655,11 +655,11 @@ msgstr "Obține versiunea xournalpp"
 
 #: ../src/core/control/LatexController.cpp:53
 msgid "Global template file does not exist. Please check your settings."
-msgstr ""
+msgstr "Fișierul modelului global nu există. Controlează configurarea."
 
 #: ../src/core/control/LatexController.cpp:64
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr ""
+msgstr "Fișierul modelului global nu este un fișier obișnuit. Controlează configurarea. "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Go to first page"
@@ -2166,7 +2166,7 @@ msgstr "Butonul 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Schimbă"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2488,7 +2488,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
-msgstr ""
+msgstr "Calea fișierului modelului global"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
@@ -3109,7 +3109,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
-msgstr "Reglări pentru modele"
+msgstr "Configurare a fișierului modelului"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
