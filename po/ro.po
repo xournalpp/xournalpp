@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 16:06\n"
+"PO-Revision-Date: 2022-05-15 17:05\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -278,7 +278,7 @@ msgstr "Nu s-a putut elimina elementul {1} din bara de instrumente {2} pe poziț
 
 #: ../src/core/control/Control.cpp:199
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr "Nu s-a putut redenumi fișierul autosave de la \"{1}\" la \"{2}\": {3}"
+msgstr "Nu s-a putut redenumi fișierul salvat automat de la \"{1}\" la \"{2}\": {3}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Could not save .tex file: {1}"
@@ -328,7 +328,7 @@ msgstr "Taie"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Default Tool"
-msgstr "Unelte prestabilite"
+msgstr "Unealtă prestabilită"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 #: ../src/core/undo/DeleteUndoAction.cpp:55
@@ -371,9 +371,9 @@ msgstr "Afișează opțiuni avansate de export"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr "Nu deschide fişierele Salvare automată. Acestea pot fi suprascrise!\n"
-"Copiază fişierele în alt folder.\n"
-"Fişierele din folderul {1} nu pot fi deschise."
+msgstr "Nu deschide fișierele salvate automat. Acestea pot fi suprascrise!\n"
+"Copiază fișierele în alt dosar.\n"
+"Fișierele din dosarul {1} nu pot fi deschise."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:40
 msgid "Do not overwrite the background PDF! This will cause errors!"
@@ -461,7 +461,7 @@ msgstr "Editare text"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
-msgstr "Document de urgenţă salvat"
+msgstr "Document salvat de urgență"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
@@ -604,7 +604,7 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Nu s-a reușit analizarea comenzii de generare LaTeX: {1}"
 
 #: ../src/core/control/LatexController.cpp:58
 msgid "Failed to read global template file. Please check your settings."
@@ -763,7 +763,7 @@ msgstr "Salt la pagina (prima pagină: 1)"
 
 #: ../src/core/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "S-a produs o eroare la generarea LaTeX: {1} (cod de ieșire: {2})"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:254
 msgid "Layer"
@@ -1084,7 +1084,7 @@ msgstr "Salvează fișierul"
 #: ../src/core/control/jobs/CustomExportJob.cpp:123
 #: ../src/core/control/jobs/SaveJob.cpp:115
 msgid "Save file error: {1}"
-msgstr "Eroare la salvarea fişierului: {1}"
+msgstr "Eroare la salvarea fișierului: {1}"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:55
 msgid "Scale"
@@ -1269,7 +1269,7 @@ msgstr "Recunoaște forma"
 
 #: ../src/core/control/CrashHandler.cpp:40
 msgid "Successfully saved document to \"{1}\""
-msgstr "Document salvat cu succes în \"{1}\""
+msgstr "Document salvat cu succes în „{1}”"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
@@ -1941,7 +1941,9 @@ msgstr "<i>Exemplu:</i> 1-3 sau 1,3,5-7 etc."
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Dacă documentul a fost deja salvat, îl poți găsi în același dosar cu extensia \n"
+".autosave.xoj\n"
+"Dacă fișierul nu a fost încă salvat, îl poți găsi în ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4163
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -1996,7 +1998,7 @@ msgstr ""
 
 #: ../ui/settings.glade:486
 msgid "<i>This name will be proposed if you save a new document.</i>"
-msgstr ""
+msgstr "<i>Acest nume va fi propus la salvarea unui nou document.</i>"
 
 #: ../ui/settings.glade:3989
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
@@ -2063,7 +2065,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
-msgstr ""
+msgstr "Verifică mereu dependențele LaTeX înainte de pornire"
 
 #: ../ui/main.glade:1197
 msgid "Append New PDF Pages"
@@ -2413,7 +2415,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr ""
+msgstr "Introdu / modifică textul LaTeX"
 
 #: ../ui/main.glade:1757
 msgid "Eraser Optio_ns"
@@ -2568,11 +2570,11 @@ msgstr ""
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "Dacă această opțiune este activată, Xournal++ va deschide automat cel mai recent document pentru a putea continua scrierea ultimului document salvat."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Dacă este activat, verifică dacă pachetele LaTeX necesare sunt instalate și comenzile LaTeX sunt disponibile înainte de a porni unealta LaTeX."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
@@ -2620,7 +2622,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr ""
+msgstr "Introdu LaTeX"
 
 #: ../ui/main.glade:2852
 msgid "Insert Page After"
@@ -2632,7 +2634,7 @@ msgstr "Inserare pagină înainte"
 
 #: ../ui/settings.glade:5746
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
@@ -2640,7 +2642,7 @@ msgstr "Reglări executabile LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
-msgstr ""
+msgstr "Comanda de generare LaTeX"
 
 #: ../ui/settings.glade:5835 ../ui/settings.glade:5883
 msgid "Language"
