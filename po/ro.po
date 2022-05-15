@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-15 06:42\n"
+"POT-Creation-Date: 2022-05-15 07:05+0000\n"
+"PO-Revision-Date: 2022-05-15 07:54\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -38,7 +38,7 @@ msgstr " din {1}"
 msgid "%F-Note-%H-%M"
 msgstr "%F-Notă-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:151
+#: ../src/core/gui/dialog/SettingsDialog.cpp:152
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Niciun dispozitiv nu a fost găsit. Poți să încarci un raport de eroare?</b>"
 
@@ -260,7 +260,7 @@ msgstr "Imaginea nu a putut fi citită: {1}. Mesaj de eroare: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:397
 msgid "Could not read page number for cloned background image: {1}."
-msgstr "Nu s-a putut citi numărul paginii pentru imaginea de fundal clonată: {1}."
+msgstr "Nu s-a putut citi numărul paginii pentru imaginea de fond clonată: {1}."
 
 #: ../src/core/undo/UndoRedoHandler.cpp:137
 msgid "Could not redo \"{1}\"\n"
@@ -296,11 +296,11 @@ msgstr "Nu s-a putut anula \"{1}\"\n"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:230
 msgid "Could not write background \"{1}\", {2}"
-msgstr "Nu s-a putut scrie fundalul \"{1}\", {2}"
+msgstr "Nu s-a putut scrie fondul \"{1}\", {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:326
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr "Nu s-a putut scrie fundalul \"{1}\". Continuând mai departe."
+msgstr "Nu s-a putut scrie fondul \"{1}\". Continuă oricum."
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:78
 msgid "Create new layer"
@@ -463,7 +463,7 @@ msgstr "Editare text"
 msgid "Emergency saved document"
 msgstr "Document de urgenţă salvat"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:279
+#: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Activează sensibilitatea la presiune sau deducerea nivelului de presiune pentru a schimba această setare!"
 
@@ -505,17 +505,21 @@ msgstr "Eroare la citirea PDF: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "Eroare la citirea grosimii liniei: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:146
+#: ../src/core/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
 msgstr "Eroare la salvarea imaginii #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:165
 msgid "Error save image #2"
 msgstr "Eroare la salvarea imaginii #2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
 msgstr "Eroare în timpul automatizării: {1}"
+
+#: ../src/core/control/jobs/ImageExport.cpp:153
+msgid "Error while exporting the pdf background: I cannot find the pdf page number "
+msgstr ""
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -621,7 +625,7 @@ msgstr "Fișierul nu a putut fi deschis. Trebuie să îl faceți manual:\n"
 msgid "Fill"
 msgstr "Umplere"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
@@ -888,7 +892,7 @@ msgstr "Export PDF"
 msgid "PDF Page {1}"
 msgstr "Pagina PDF {1}"
 
-#: ../src/core/view/PdfView.cpp:29
+#: ../src/core/control/PdfCache.cpp:143
 msgid "PDF background missing"
 msgstr "Fond PDF lipsă"
 
@@ -1332,18 +1336,18 @@ msgstr "Configurarea barei de instrumente \"{1}\" este predefinită, ai crea o c
 #: ../src/core/control/Control.cpp:2061
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr "Fișierul de fundal atașat {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau șters.\n"
+msgstr "Fișierul fondului atașat {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau șters.\n"
 "A fost văzut ultima dată în: {2}"
 
 #: ../src/core/control/Control.cpp:2065
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr "Fișierul de fundal {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau șters.\n"
+msgstr "Fișierul fondului {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau șters.\n"
 "A fost văzut ultima dată în: {2}"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "The check for overwriting the background failed with:\n"
-msgstr "Verificarea pentru suprascrierea fundalului a eșuat cu:\n"
+msgstr "Verificarea pentru suprascrierea fondului a eșuat cu:\n"
 
 #: ../src/core/control/Control.cpp:2104
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
@@ -1448,7 +1452,7 @@ msgstr "Etichetă neașteptată în document: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Unknown background type: {1}"
-msgstr "Tip de fundal necunoscut: {1}"
+msgstr "Tip de fond necunoscut: {1}"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
 msgid "Unknown color value \"{1}\""
@@ -1477,6 +1481,10 @@ msgstr "Tip de AVC necunoscut: \"{1}\", presupunând un stilou"
 #: ../src/core/control/Control.cpp:2419
 msgid "Unsaved Document"
 msgstr "Document nesalvat"
+
+#: ../src/core/control/jobs/ImageExport.cpp:85
+msgid "Unsupported graphics format: "
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
@@ -1550,9 +1558,9 @@ msgstr ""
 msgid "Your current document does not contain PDF Page no {1}\n"
 "Would you like to insert this page?\n\n"
 "Tip: You can select Journal → Paper Background → PDF Background to insert a PDF page."
-msgstr "Documentul dvs. nu conține pagina PDF nr. {1}\n"
-"Doriți să inserați această pagină?\n\n"
-"Sfat: Puteţi selecta Journal → Fundal Pagină → PDF Fundal pentru a insera o pagină PDF."
+msgstr "Documentul tău nu conține pagina PDF nr. {1}\n"
+"Vrei să introduci această pagină?\n\n"
+"Sfat: Poți alege Document → Fondul paginii → Fond PDF pentru a introduce o pagină PDF."
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:131
 msgid "Zoom Slider"
@@ -1956,7 +1964,8 @@ msgstr "<i>Pune o riglă pe ecran și mută glisorul până când ambele rulatoa
 #: ../ui/settings.glade:4946
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Încarcă mai des fondurile PDF în timp ce se face zoom pentru o calitate mai bună a redării. \n"
+"<b>Aviz:</b> Acest lucru nu ar trebui să afecteze calitatea tipăririi.</i>"
 
 #: ../ui/settings.glade:5798
 msgid "<i>Select language (requires restart)</i>"
@@ -1997,7 +2006,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2409
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
+msgstr "<i>Folosește gesturi cu degetele pentru a face zoom paginilor documentului.</i>"
 
 #: ../ui/settings.glade:2544
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
@@ -2427,7 +2436,7 @@ msgstr ""
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Exportă documentul fără niciun fond (Niciunul) sau numai cu fonduri PDF și de imagine (Nicio regulă) sau cu toate tipurile de fond (Toate)."
 
 #: ../ui/main.glade:1733 ../ui/main.glade:1938
 msgid "Fi_ll"
