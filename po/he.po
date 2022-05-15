@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 07:21\n"
+"POT-Creation-Date: 2022-05-15 07:05+0000\n"
+"PO-Revision-Date: 2022-05-15 07:54\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -38,7 +38,7 @@ msgstr " מתוך {1}"
 msgid "%F-Note-%H-%M"
 msgstr "%F-פתק-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:151
+#: ../src/core/gui/dialog/SettingsDialog.cpp:152
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>לא נמצא שום מכשיר. נראה שישנה בעיה - תרצה לדווח על באג?</b>"
 
@@ -457,7 +457,7 @@ msgstr "ערוך טקסט"
 msgid "Emergency saved document"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:279
+#: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr ""
 
@@ -498,17 +498,21 @@ msgstr "קריאת קובץ PDF נכשלה: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "שגיאה בקריאת עובי המתאר: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:146
+#: ../src/core/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
 msgstr "שגיאה בשמירת תמונה מס׳ 1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:165
 msgid "Error save image #2"
 msgstr "שגיאה בשמירת תמונה מס׳ 2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
 msgstr "שגיאה תוך כדי שמירה אוטומטית: {1}"
+
+#: ../src/core/control/jobs/ImageExport.cpp:153
+msgid "Error while exporting the pdf background: I cannot find the pdf page number "
+msgstr ""
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -607,7 +611,7 @@ msgstr ""
 msgid "Fill"
 msgstr "מילוי"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
@@ -874,7 +878,7 @@ msgstr "ייצוא PDF"
 msgid "PDF Page {1}"
 msgstr "דף PDF {1}"
 
-#: ../src/core/view/PdfView.cpp:29
+#: ../src/core/control/PdfCache.cpp:143
 msgid "PDF background missing"
 msgstr "רקע PDF לא נמצא"
 
@@ -1453,6 +1457,10 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2419
 msgid "Unsaved Document"
+msgstr ""
+
+#: ../src/core/control/jobs/ImageExport.cpp:85
+msgid "Unsupported graphics format: "
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
