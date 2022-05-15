@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 07:21\n"
+"POT-Creation-Date: 2022-05-15 07:05+0000\n"
+"PO-Revision-Date: 2022-05-15 07:54\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "%F-Note-%H-%M"
 msgstr "%F-Muistiinpano-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:151
+#: ../src/core/gui/dialog/SettingsDialog.cpp:152
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Laitteita ei löytynyt. Tämä vaikuttaa virheeltä - lähetä ehkä vikailmoitus?</b>"
 
@@ -450,7 +450,7 @@ msgstr "Muokkaa tekstiä"
 msgid "Emergency saved document"
 msgstr ""
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:279
+#: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr ""
 
@@ -491,16 +491,20 @@ msgstr "Virhe luettaessa PDF:tä: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr ""
 
-#: ../src/core/control/jobs/ImageExport.cpp:146
+#: ../src/core/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
 msgstr ""
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:165
 msgid "Error save image #2"
 msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
+msgstr ""
+
+#: ../src/core/control/jobs/ImageExport.cpp:153
+msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr ""
 
 #: ../src/util/Util.cpp:74
@@ -600,7 +604,7 @@ msgstr ""
 msgid "Fill"
 msgstr "Täyttö"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr ""
 
@@ -867,7 +871,7 @@ msgstr ""
 msgid "PDF Page {1}"
 msgstr "PDF-sivu {1}"
 
-#: ../src/core/view/PdfView.cpp:29
+#: ../src/core/control/PdfCache.cpp:143
 msgid "PDF background missing"
 msgstr ""
 
@@ -1447,6 +1451,10 @@ msgstr ""
 #: ../src/core/control/Control.cpp:2419
 msgid "Unsaved Document"
 msgstr "Tallentamaton asiakirja"
+
+#: ../src/core/control/jobs/ImageExport.cpp:85
+msgid "Unsupported graphics format: "
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
