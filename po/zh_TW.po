@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 07:21\n"
+"POT-Creation-Date: 2022-05-15 07:05+0000\n"
+"PO-Revision-Date: 2022-05-15 07:54\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -38,7 +38,7 @@ msgstr " 頁，共{1} 頁"
 msgid "%F-Note-%H-%M"
 msgstr "%F-筆記-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:151
+#: ../src/core/gui/dialog/SettingsDialog.cpp:152
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>沒有找到任何裝置。這可能是錯的 - 要回報錯誤嗎？</b>"
 
@@ -461,7 +461,7 @@ msgstr "編輯文本"
 msgid "Emergency saved document"
 msgstr "緊急保存檔案"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:279
+#: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "請先啟用筆觸壓力感測或壓力提示以修改此設定！"
 
@@ -503,17 +503,21 @@ msgstr "讀入PDF出錯：{1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "讀入筆劃粗細出錯：{1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:146
+#: ../src/core/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
 msgstr "保存圖片錯誤 #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:165
 msgid "Error save image #2"
 msgstr "保存圖片錯誤 #2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
 msgstr "自動儲存時發生錯誤：{1}"
+
+#: ../src/core/control/jobs/ImageExport.cpp:153
+msgid "Error while exporting the pdf background: I cannot find the pdf page number "
+msgstr ""
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -623,7 +627,7 @@ msgstr "未能打開檔案，請手動操作：\n"
 msgid "Fill"
 msgstr "填色"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "過濾壓力值輸入。將壓力值乘以壓力乘數。若小於最低值，則採用最低壓力值。"
 
@@ -891,7 +895,7 @@ msgstr "輸出為PDF"
 msgid "PDF Page {1}"
 msgstr "PDF頁碼{1}"
 
-#: ../src/core/view/PdfView.cpp:29
+#: ../src/core/control/PdfCache.cpp:143
 msgid "PDF background missing"
 msgstr "PDF背景丟失"
 
@@ -1480,6 +1484,10 @@ msgstr "未知的筆類別： \"{1}\"，假設爲畫筆"
 #: ../src/core/control/Control.cpp:2419
 msgid "Unsaved Document"
 msgstr "未保存文檔"
+
+#: ../src/core/control/jobs/ImageExport.cpp:85
+msgid "Unsupported graphics format: "
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
