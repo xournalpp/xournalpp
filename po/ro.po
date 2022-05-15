@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 07:54\n"
+"PO-Revision-Date: 2022-05-15 09:14\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -519,7 +519,7 @@ msgstr "Eroare în timpul automatizării: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:153
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Eroare la exportarea fondului PDF: Nu pot găsi numărul paginii PDF "
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -1235,7 +1235,7 @@ msgstr "Afișare totală"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
-msgstr "Arată doar paginile neutilizate (o pagină nefolosită)"
+msgstr "Arată doar paginile nefolosite (o pagină nefolosită)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:89
 msgid "Show only not used pages ({1} unused pages)"
@@ -1918,7 +1918,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5271
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
-msgstr ""
+msgstr "<i>În prezent, înregistrările audio sunt stocate într-un dosar separat și sunt menționate în document.</i>"
 
 #: ../ui/settings.glade:5689
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
