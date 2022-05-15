@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 17:05\n"
+"PO-Revision-Date: 2022-05-15 18:05\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -119,7 +119,7 @@ msgstr "Culoarea atributului nu a fost stabilită!"
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr "Dosarul audio nu este stabilit sau e greșit! Înregistrarea nu va funcționa!\n"
-"Stabilește dosarul de înregistrare în „Preferințe > Înregistrare audio”"
+"Alege dosarul de înregistrare în „Preferințe > Înregistrare audio”"
 
 #: ../src/core/control/Control.cpp:208
 msgid "Autosave failed with an error: {1}"
@@ -201,16 +201,16 @@ msgstr "Copiază pagina"
 #: ../src/util/PathUtil.cpp:257
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr "Nu s-a putut crea directorul: {1}\n"
-"Eșuat cu eroare: {2}"
+msgstr "Nu s-a putut crea dosarul: {1}\n"
+"Eroare: {2}"
 
 #: ../src/core/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
-msgstr "Nu s-a putut încărca fișierul LaTeX PDF"
+msgstr "Nu s-a putut încărca fișierul PDF LaTeX"
 
 #: ../src/core/control/LatexController.cpp:267
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr "Nu s-a putut încărca fișierul LaTeX PDF:{1}"
+msgstr "Nu s-a putut încărca fișierul PDF LaTeX:{1}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:16
 msgid "Could not load pagetemplates.ini file"
@@ -587,7 +587,7 @@ msgstr "Exportă fără liniere\n"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:63
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr "Nu s-a putut găsi programul de generare LaTeX în PATH: {1}"
+msgstr "Nu s-a putut găsi programul de generare LaTeX cu calea: {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
@@ -739,7 +739,7 @@ msgstr "Inserare imagine"
 
 #: ../src/core/undo/InsertUndoAction.cpp:35
 msgid "Insert latex"
-msgstr "Inserează latex"
+msgstr "Introdu LaTeX"
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:25
 msgid "Insert layer"
@@ -1654,7 +1654,7 @@ msgstr "tastatură"
 #: ../src/core/undo/AddUndoAction.cpp:79
 #: ../src/core/undo/DeleteUndoAction.cpp:77
 msgid "latex"
-msgstr "latex"
+msgstr "LaTeX"
 
 #: ../src/core/control/DeviceListHelper.cpp:92
 msgid "mouse"
@@ -2174,7 +2174,7 @@ msgstr "Schimbă"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
-msgstr "Alegeți un fișier de model global LaTeX"
+msgstr "Alege un fișier de model global LaTeX"
 
 #: ../ui/settings.glade:3073 ../ui/settings.glade:3216
 msgid "Choose the color to use for \"Highlight cursor position\""
@@ -2966,7 +2966,7 @@ msgstr "Alege culoarea fondului"
 
 #: ../ui/settings.glade:5308
 msgid "Select Folder"
-msgstr "Selectați dosarul"
+msgstr "Alege dosarul"
 
 #: ../ui/images.glade:8
 msgid "Select Image"
@@ -3084,7 +3084,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5293 ../ui/settings.glade:5351
 msgid "Storage Folder"
-msgstr ""
+msgstr "Alege dosarul"
 
 #: ../ui/main.glade:2751
 msgid "Strikethrough selected text"
@@ -3129,7 +3129,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr "Verifică dacă configurația actuală este valabilă prin executarea comenzii de generare LaTeX pe fișierul modelului global cu o formulă de test."
+msgstr "Verifică dacă este valabilă configurația actuală, prin executarea comenzii de generare LaTeX pe fișierul modelului global, cu o formulă de test."
 
 #: ../ui/main.glade:1962
 msgid "Text Font..."
@@ -3149,7 +3149,7 @@ msgstr "Următoarele șiruri vor fi înlocuite în fișierul modelului global at
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr ""
+msgstr "Formula matematică introdusă în unealta LaTeX."
 
 #: ../ui/settings.glade:4058
 msgid "The unit of the ruler is cm"
