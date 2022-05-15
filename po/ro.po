@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 14:59\n"
+"PO-Revision-Date: 2022-05-15 16:06\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -465,7 +465,7 @@ msgstr "Document de urgenţă salvat"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr "Activează sensibilitatea la presiune sau deducerea nivelului de presiune pentru a schimba această setare!"
+msgstr "Activează sensibilitatea la presiune sau deducerea nivelului de presiune pentru a schimba această valoare!"
 
 #: ../src/core/undo/AddUndoAction.cpp:55
 #: ../src/core/undo/DeleteUndoAction.cpp:52
@@ -1371,7 +1371,7 @@ msgstr "Fișierul nu este un fișier .xopp valid (Șirul Versiunii este corupt):
 
 #: ../src/core/control/LatexController.cpp:240
 msgid "The formula is empty when rendered or invalid."
-msgstr "Formula este goală la randare sau nevalidă."
+msgstr "Formula este goală sau greșită."
 
 #: ../src/core/control/XournalMain.cpp:155
 msgid "The most recent log file name: {1}"
@@ -1957,7 +1957,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1505
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr "<i>Sensibilitatea presiunii vă permite să desenați linii cu diferite lățime, în funcție de presiunea pe care o aplicați pe stiloul injector (pen). În cazul în care tableta dvs. nu acceptă această caracteristică, această setare nu are niciun efect</i>"
+msgstr "<i>Sensibilitatea la presiune permite trasarea de linii cu lățimi diferite în funcție de presiunea exercitată de creion. Dacă tableta nu acceptă această caracteristică, această reglare nu are niciun efect.</i>"
 
 #: ../ui/settings.glade:4010
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -1975,7 +1975,7 @@ msgstr "<i>Alege limba (necesită repornirea programului)</i>"
 
 #: ../ui/settings.glade:5126
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr "<i>Selectați unealta și setările dacă apăsați butonul Implicit.</i>"
+msgstr "<i>Alege unealta și reglările dacă se apasă butonul „Prestabilit”.</i>"
 
 #: ../ui/settings.glade:1554
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
@@ -2478,7 +2478,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Reglări generale ale uneltei LaTeX"
 
 #: ../ui/about.glade:114
 msgid "Git commit"
@@ -2636,7 +2636,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
-msgstr ""
+msgstr "Reglări executabile LaTeX"
 
 #: ../ui/latexSettings.glade:247
 msgid "LaTeX generation command"
@@ -2779,7 +2779,7 @@ msgstr ""
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
-msgstr ""
+msgstr "Reglări opacitate"
 
 #: ../ui/settings.glade:933
 msgid "Options"
@@ -2840,7 +2840,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5675
 msgid "Playback Settings"
-msgstr "Setările de redare"
+msgstr "Reglări de redare"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
@@ -3237,12 +3237,14 @@ msgstr ""
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Când desenezi cu ajutorul atingerii, gesturile cu două degete menite să mute vizualizarea pot provoca în schimb zoom, ceea ce provoacă probleme de performanță. \n"
+"Această opțiune poate facilita desenarea prin atingere. "
 
 #: ../ui/settings.glade:4971
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "Când se face zoom pe un PDF de înaltă rezoluție, fiecare încărcare poate dura mult timp. Stabilind aceasta la o valoare mare, aceste reîncărcări se întâmplă mai rar.\n\n"
+"Pune această valoare la 0% pentru a reîncărca mereu la zoom."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
