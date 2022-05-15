@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 11:15\n"
+"PO-Revision-Date: 2022-05-15 12:45\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1419,7 +1419,7 @@ msgstr "Bare de instrumente"
 
 #: ../src/core/control/CrashHandler.cpp:29
 msgid "Trying to emergency save the current open document…"
-msgstr "Se încearcă salvarea de urgență a documentului deschis actual…"
+msgstr "Se încearcă salvarea de urgență a documentului actual…"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "Unable to open global template file at {1}. Does it exist?"
@@ -2662,7 +2662,7 @@ msgstr "Licenţă"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
-msgstr "Încărcare / Salvare"
+msgstr "Încarcă / Salvează"
 
 #: ../ui/images.glade:73
 msgid "Load file"
