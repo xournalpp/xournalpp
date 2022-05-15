@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-14 07:14+0000\n"
-"PO-Revision-Date: 2022-05-14 07:21\n"
+"POT-Creation-Date: 2022-05-15 07:05+0000\n"
+"PO-Revision-Date: 2022-05-15 07:54\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "%F-Note-%H-%M"
 msgstr "%F-Nota-%H-%M"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:151
+#: ../src/core/gui/dialog/SettingsDialog.cpp:152
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Non se atoparon dispositivos. Parece que vai mal - Enviar un informe de erro?</b>"
 
@@ -460,7 +460,7 @@ msgstr "Editar o texto"
 msgid "Emergency saved document"
 msgstr "Documento de emerxencia gardado"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:279
+#: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
 msgstr "Activar sensibilidade á presión ou inferencia de presión para cambiar este axuste!"
 
@@ -502,17 +502,21 @@ msgstr "Erro ao ler o PDF: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "Erro ao ler a largura dun trazo: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:146
+#: ../src/core/control/jobs/ImageExport.cpp:145
 msgid "Error save image #1"
 msgstr "Erro ao gardar a imaxe #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:165
 msgid "Error save image #2"
 msgstr "Erro ao gardar a imaxe #2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
 msgstr "Erro ao gardar automaticamente: {1}"
+
+#: ../src/core/control/jobs/ImageExport.cpp:153
+msgid "Error while exporting the pdf background: I cannot find the pdf page number "
+msgstr ""
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -623,7 +627,7 @@ msgstr "O ficheiro non se puido abrir. Terá que facelo manualmente:\n"
 msgid "Fill"
 msgstr "Encher"
 
-#: ../src/core/gui/dialog/SettingsDialog.cpp:283
+#: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
 msgstr "Presión do filtro de entrada. Multiplica a presión mediante o multiplicador de presión. Se é menor ao mínimo, utiliza a presión mínima."
 
@@ -891,7 +895,7 @@ msgstr "Exportar como PDF"
 msgid "PDF Page {1}"
 msgstr "Páxina de PDF {1}"
 
-#: ../src/core/view/PdfView.cpp:29
+#: ../src/core/control/PdfCache.cpp:143
 msgid "PDF background missing"
 msgstr "Falta o fondo do PDF"
 
@@ -1478,6 +1482,10 @@ msgstr "Tipo de trazo descoñecido: «{1}», suponse de lapis"
 #: ../src/core/control/Control.cpp:2419
 msgid "Unsaved Document"
 msgstr "Documento non gardado"
+
+#: ../src/core/control/jobs/ImageExport.cpp:85
+msgid "Unsupported graphics format: "
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
