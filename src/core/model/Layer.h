@@ -53,6 +53,11 @@ public:
     ElementIndex removeElement(Element* e, bool free);
 
     /**
+     * Removes all Elements from the Layer *without freeing them*
+     */
+    void clearNoFree();
+
+    /**
      * Returns an iterator over the Element%s contained in this Layer
      */
     const std::vector<Element*>& getElements() const;
@@ -76,7 +81,6 @@ public:
      * Creates a deep copy of this Layer by copying all of the Element%s contained in it
      */
     Layer* clone() const;
-
 
     /**
      * @return true if layer has a name

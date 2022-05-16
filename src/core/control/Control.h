@@ -209,6 +209,8 @@ public:
 
     void clearSelectionEndText();
 
+    void selectAllOnPage();
+
     void reorderSelection(ActionType type);
 
     void setToolSize(ToolSize size);
