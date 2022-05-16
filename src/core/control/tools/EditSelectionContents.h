@@ -83,7 +83,7 @@ public:
      * @param orderInSourceLayer: specifies the index of the element from the source layer,
      * in case we want to replace it back where it came from.
      */
-    void addElement(Element* e, Layer::ElementIndex order);
+    void addElement(Element* e, Element::Index order);
 
     /**
      * Returns all containing elements of this selection
@@ -93,12 +93,12 @@ public:
     /**
      * Returns the insert order of this selection
      */
-    std::deque<std::pair<Element*, Layer::ElementIndex>> const& getInsertOrder() const;
+    std::deque<std::pair<Element*, Element::Index>> const& getInsertOrder() const;
 
     /** replaces all elements by a new vector of elements
      * @param newElements: the elements which should replace the old elements
      * */
-    void replaceInsertOrder(std::deque<std::pair<Element*, Layer::ElementIndex>> newInsertOrder);
+    void replaceInsertOrder(std::deque<std::pair<Element*, Element::Index>> newInsertOrder);
 
 public:
     /**
@@ -149,7 +149,7 @@ public:
     UndoAction* copySelection(PageRef page, XojPageView* view, double x, double y);
 
     const static struct {
-        bool operator()(std::pair<Element*, Layer::ElementIndex> p1, std::pair<Element*, Layer::ElementIndex> p2) {
+        bool operator()(std::pair<Element*, Element::Index> p1, std::pair<Element*, Element::Index> p2) {
             return p1.second < p2.second;
         }
     } insertOrderCmp;
@@ -196,7 +196,7 @@ private:
      *
      * Invariant: the insert order must be sorted by index in ascending order.
      */
-    std::deque<std::pair<Element*, Layer::ElementIndex>> insertOrder;
+    std::deque<std::pair<Element*, Element::Index>> insertOrder;
 
     /**
      * The rendered elements

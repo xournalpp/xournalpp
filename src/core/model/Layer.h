@@ -26,9 +26,6 @@ public:
 
     using Index = size_t;
 
-    using ElementIndex = std::ptrdiff_t;
-    static constexpr auto InvalidElementIndex = static_cast<ElementIndex>(-1);
-
 public:
     /**
      * Appends an Element to this Layer
@@ -42,17 +39,17 @@ public:
      *
      * @note Performs a check to determine whether the element is already contained in the Layer
      */
-    void insertElement(Element* e, ElementIndex pos);
+    void insertElement(Element* e, Element::Index pos);
 
     /**
      * Returns the index of the given Element with respect to the internal list
      */
-    ElementIndex indexOf(Element* e) const;
+    Element::Index indexOf(Element* e) const;
 
     /**
      * Removes an Element from the Layer and optionally deletes it
      */
-    ElementIndex removeElement(Element* e, bool free);
+    Element::Index removeElement(Element* e, bool free);
 
     /**
      * Returns an iterator over the Element%s contained in this Layer

@@ -17,9 +17,6 @@
 #include "PageLayerPosEntry.h"
 #include "UndoAction.h"
 
-
-class Element;
-
 class DeleteUndoAction: public UndoAction {
 public:
     DeleteUndoAction(const PageRef& page, bool eraser);
@@ -28,7 +25,7 @@ public:
     bool undo(Control*) override;
     bool redo(Control*) override;
 
-    void addElement(Layer* layer, Element* e, size_t pos);  // should be ElementIndex but we don't have that in scope
+    void addElement(Layer* layer, Element* e, Element::Index pos);
 
     std::string getText() override;
 
