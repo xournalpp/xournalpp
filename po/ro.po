@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 19:07\n"
+"PO-Revision-Date: 2022-05-16 15:43\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -569,7 +569,11 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Exportă straturile pe rând\n"
+"                                 La exportarea în PDF, exportă straturile unul câte unul.\n"
+"                                 Astfel rezultă N pagini exportate la fiecare pagină cu N straturi,\n"
+"                                 construind progresiv stiva de straturi.\n"
+"                                 Fișierul PDF rezultat poate fi utilizat pentru o prezentare.\n"
 
 #: ../src/core/control/XournalMain.cpp:587
 msgid "Export without background\n"
@@ -592,11 +596,11 @@ msgstr "Nu s-a putut găsi programul de generare LaTeX cu calea: {1}"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Nu s-a reușit inițializarea suprafeței PDF Cairo"
 
 #: ../src/core/control/tools/ImageHandler.cpp:60
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Nu s-a putut încărca imaginea, nu s-a putut stabili mărimea imaginii!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
