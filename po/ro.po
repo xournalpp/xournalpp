@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-16 16:40\n"
+"PO-Revision-Date: 2022-05-16 17:42\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -457,7 +457,7 @@ msgstr "Tipuri de desenare"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:37
 msgid "Edit text"
-msgstr "Editare text"
+msgstr "Modifică textul"
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:19
 msgid "Emergency saved document"
@@ -1193,7 +1193,7 @@ msgstr "Trimite eroarea"
 
 #: ../src/core/control/tools/EditSelection.cpp:380
 msgid "Send backward"
-msgstr "Trimite mai departe"
+msgstr "Trimite în plan secundar"
 
 #: ../src/core/control/tools/EditSelection.cpp:388
 msgid "Send to back"
@@ -1307,7 +1307,7 @@ msgstr "Text"
 #: ../src/core/gui/SearchBar.cpp:66
 #, c-format
 msgid "Text %i times found on this page"
-msgstr "Text %i ori găsit pe această pagină"
+msgstr "Text de %i ori găsit pe această pagină"
 
 #: ../src/core/undo/TextUndoAction.cpp:31
 msgid "Text changes"
@@ -1315,7 +1315,7 @@ msgstr "Modificări de text"
 
 #: ../src/core/gui/SearchBar.cpp:64
 msgid "Text found on this page"
-msgstr "Text ori găsit pe această pagină"
+msgstr "Text găsit pe această pagină"
 
 #: ../src/core/gui/SearchBar.cpp:122 ../src/core/gui/SearchBar.cpp:166
 msgid "Text found once on page {1}"
@@ -1536,12 +1536,12 @@ msgstr "Fișiere Xournal"
 
 #: ../src/core/control/XournalMain.cpp:200
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr "Xournal++ s-a prăbușit ultima dată. Doriți să restaurați ultimul fișier editat?"
+msgstr "Xournal++ s-a blocat ultima dată. Vrei să restaurezi ultimul fișier?"
 
 #: ../src/core/control/Control.cpp:2368
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
-msgstr "Fișiere Xournal++"
+msgstr "Fișier Xournal++"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:65
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:83
@@ -2215,7 +2215,7 @@ msgstr "Copiază în schimb dimensiunile paginii actuale"
 
 #: ../ui/main.glade:2689
 msgid "Copy selected text"
-msgstr ""
+msgstr "Copiază textul ales"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2368,7 +2368,7 @@ msgstr "Duplicat"
 
 #: ../ui/main.glade:2897
 msgid "Edit (not implemented yet)"
-msgstr "Editează (nu este implementat încă)"
+msgstr "Modifică (nu este implementat încă)"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
@@ -2420,7 +2420,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
-msgstr "Introdu / modifică textul LaTeX"
+msgstr "Introdu/modifică textul LaTeX"
 
 #: ../ui/main.glade:1757
 msgid "Eraser Optio_ns"
@@ -2549,7 +2549,7 @@ msgstr ""
 
 #: ../ui/main.glade:2711
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Evidențiază textul ales"
 
 #: ../ui/main.glade:1866
 msgid "Highlighter Opti_ons"
@@ -3195,7 +3195,7 @@ msgstr "Încearcă să selectezi obiectul mai întâi; dacă nimic selectat nu a
 
 #: ../ui/main.glade:2731
 msgid "Underline selected text"
-msgstr ""
+msgstr "Subliniază textul ales"
 
 #: ../ui/settings.glade:2906
 msgid "Use  available Stock Icons (requires restart)"
@@ -3275,7 +3275,7 @@ msgstr ""
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
-msgstr "Xournal++ Preferințe"
+msgstr "Preferințe Xournal++"
 
 #: ../ui/settings.glade:4112
 msgid "Zoom"
@@ -3379,7 +3379,7 @@ msgstr ""
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr "_Editare"
+msgstr "_Modifică"
 
 #: ../ui/main.glade:1340
 msgid "_Eraser"
@@ -3479,7 +3479,7 @@ msgstr ""
 
 #: ../ui/main.glade:1388
 msgid "_Text"
-msgstr ""
+msgstr "_Text"
 
 #: ../ui/main.glade:1317
 msgid "_Tools"
