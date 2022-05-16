@@ -38,7 +38,7 @@ void Layer::addElement(Element* e) {
     this->elements.push_back(e);
 }
 
-void Layer::insertElement(Element* e, ElementIndex pos) {
+void Layer::insertElement(Element* e, Element::Index pos) {
     if (e == nullptr) {
         g_warning("insertElement(nullptr)!");
         Stacktrace::printStracktrace();
@@ -67,17 +67,17 @@ void Layer::insertElement(Element* e, ElementIndex pos) {
     }
 }
 
-auto Layer::indexOf(Element* e) const -> ElementIndex {
+auto Layer::indexOf(Element* e) const -> Element::Index {
     for (unsigned int i = 0; i < this->elements.size(); i++) {
         if (this->elements[i] == e) {
             return i;
         }
     }
 
-    return InvalidElementIndex;
+    return Element::InvalidIndex;
 }
 
-auto Layer::removeElement(Element* e, bool free) -> ElementIndex {
+auto Layer::removeElement(Element* e, bool free) -> Element::Index {
     for (unsigned int i = 0; i < this->elements.size(); i++) {
         if (e == this->elements[i]) {
             this->elements.erase(this->elements.begin() + i);
@@ -91,7 +91,7 @@ auto Layer::removeElement(Element* e, bool free) -> ElementIndex {
 
     g_warning("Could not remove element from layer, it's not on the layer!");
     Stacktrace::printStracktrace();
-    return InvalidElementIndex;
+    return Element::InvalidIndex;
 }
 
 void Layer::clearNoFree() { this->elements.clear(); }

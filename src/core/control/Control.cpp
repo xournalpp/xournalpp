@@ -2789,7 +2789,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
 
             pasteAddUndoAction->addElement(layer, element.get(), layer->indexOf(element.get()));
             // Todo: unique_ptr
-            selection->addElement(element.release(), Layer::InvalidElementIndex);
+            selection->addElement(element.release(), Element::InvalidIndex);
         }
         undoRedo->addUndoAction(std::move(pasteAddUndoAction));
 

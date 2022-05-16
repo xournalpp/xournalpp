@@ -56,7 +56,7 @@ EditSelectionContents::~EditSelectionContents() {
 /**
  * Add an element to the this selection
  */
-void EditSelectionContents::addElement(Element* e, Layer::ElementIndex order) {
+void EditSelectionContents::addElement(Element* e, Element::Index order) {
     g_assert(this->selected.size() == this->insertOrder.size());
     this->selected.emplace_back(e);
     auto item = std::make_pair(e, order);
@@ -64,7 +64,7 @@ void EditSelectionContents::addElement(Element* e, Layer::ElementIndex order) {
                              item);
 }
 
-void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, Layer::ElementIndex>> newInsertOrder) {
+void EditSelectionContents::replaceInsertOrder(std::deque<std::pair<Element*, Element::Index>> newInsertOrder) {
     this->selected.clear();
     this->selected.reserve(newInsertOrder.size());
     std::transform(begin(newInsertOrder), end(newInsertOrder), std::back_inserter(this->selected),
@@ -80,7 +80,7 @@ auto EditSelectionContents::getElements() const -> const vector<Element*>& { ret
 /**
  * Returns the insert order of this selection
  */
-auto EditSelectionContents::getInsertOrder() const -> std::deque<std::pair<Element*, Layer::ElementIndex>> const& {
+auto EditSelectionContents::getInsertOrder() const -> std::deque<std::pair<Element*, Element::Index>> const& {
     return this->insertOrder;
 }
 
@@ -371,7 +371,7 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
             e->rotate(snappedBounds.x + this->lastSnappedBounds.width / 2,
                       snappedBounds.y + this->lastSnappedBounds.height / 2, this->rotation);
         }
-        if (index == Layer::InvalidElementIndex) {
+        if (index == Element::InvalidIndex) {
             // if the element didn't have a source layer (e.g, clipboard)
             layer->addElement(e);
         } else {

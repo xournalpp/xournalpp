@@ -60,7 +60,7 @@ EditSelection::EditSelection(UndoRedoHandler* undo, Selection* selection, XojPag
     construct(undo, view, view->getPage());
 
     // Construct the insert order
-    std::vector<std::pair<Element*, Layer::ElementIndex>> order;
+    std::vector<std::pair<Element*, Element::Index>> order;
     for (Element* e: selection->selectedElements) {
         auto i = std::make_pair(e, this->sourceLayer->indexOf(e));
         order.insert(std::upper_bound(order.begin(), order.end(), i, EditSelectionContents::insertOrderCmp), i);
@@ -333,7 +333,7 @@ void EditSelection::fillUndoItem(DeleteUndoAction* undo) { this->contents->fillU
  * Add an element to this selection
  *
  */
-void EditSelection::addElement(Element* e, Layer::ElementIndex order) {
+void EditSelection::addElement(Element* e, Element::Index order) {
     this->contents->addElement(e, order);
 
     if (e->rescaleOnlyAspectRatio()) {
@@ -358,21 +358,19 @@ auto EditSelection::getElements() const -> const vector<Element*>& { return this
 /**
  * Returns the insert order of this selection
  */
-auto EditSelection::getInsertOrder() const -> std::deque<std::pair<Element*, Layer::ElementIndex>> const& {
+auto EditSelection::getInsertOrder() const -> std::deque<std::pair<Element*, Element::Index>> const& {
     return this->contents->getInsertOrder();
 }
 
 auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoActionPtr {
-    using InsertOrder = std::deque<std::pair<Element*, Layer::ElementIndex>>;
+    using InsertOrder = std::deque<std::pair<Element*, Element::Index>>;
     const InsertOrder oldOrd = this->getInsertOrder();
     InsertOrder newOrd;
     std::string desc = _("Arrange");
     switch (change) {
         case OrderChange::BringToFront:
             // Set to largest positive signed integer
-            for (const auto& [e, _]: oldOrd) {
-                newOrd.emplace_back(e, std::numeric_limits<Layer::ElementIndex>::max());
-            }
+            for (const auto& [e, _]: oldOrd) { newOrd.emplace_back(e, std::numeric_limits<Element::Index>::max()); }
             desc = _("Bring to front");
             break;
         case OrderChange::BringForward:
@@ -380,7 +378,7 @@ auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoAction
             newOrd = oldOrd;
             std::stable_sort(newOrd.begin(), newOrd.end(), EditSelectionContents::insertOrderCmp);
             if (!newOrd.empty()) {
-                Layer::ElementIndex i = newOrd.back().second + 1;
+                Element::Index i = newOrd.back().second + 1;
                 for (auto& it: newOrd) { it.second = i++; }
             }
             desc = _("Bring forward");
@@ -390,14 +388,14 @@ auto EditSelection::rearrangeInsertOrder(const OrderChange change) -> UndoAction
             newOrd = oldOrd;
             std::stable_sort(newOrd.begin(), newOrd.end(), EditSelectionContents::insertOrderCmp);
             if (!newOrd.empty()) {
-                Layer::ElementIndex i = newOrd.front().second;
+                Element::Index i = newOrd.front().second;
                 i = i > 0 ? i - 1 : 0;
                 for (auto& it: newOrd) { it.second = i++; }
             }
             desc = _("Send backward");
             break;
         case OrderChange::SendToBack:
-            Layer::ElementIndex i = 0;
+            Element::Index i = 0;
             for (const auto& [e, _]: oldOrd) {
                 newOrd.emplace_back(e, i);
                 i++;
@@ -688,7 +686,7 @@ void EditSelection::translateToView(XojPageView* v) {
 
 void EditSelection::copySelection() {
     // clone elements in the insert order
-    std::deque<std::pair<Element*, Layer::ElementIndex>> clonedInsertOrder;
+    std::deque<std::pair<Element*, Element::Index>> clonedInsertOrder;
     for (auto [e, index]: getInsertOrder()) { clonedInsertOrder.emplace_back(e->clone(), index); }
 
     // apply transformations and add to layer

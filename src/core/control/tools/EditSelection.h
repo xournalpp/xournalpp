@@ -160,7 +160,7 @@ public:
      * in case we want to replace it back where it came from.
      * 'InvalidLayerIndex' is a special value that says it has no source layer index (e.g, from clipboard)
      */
-    void addElement(Element* e, Layer::ElementIndex order = Layer::InvalidElementIndex);
+    void addElement(Element* e, Element::Index order = Element::InvalidIndex);
 
     /**
      * Returns all containing elements of this selection
@@ -170,7 +170,7 @@ public:
     /**
      * Returns the insert order of this selection
      */
-    std::deque<std::pair<Element*, Layer::ElementIndex>> const& getInsertOrder() const;
+    std::deque<std::pair<Element*, Element::Index>> const& getInsertOrder() const;
 
     enum class OrderChange {
         BringToFront,

@@ -19,7 +19,7 @@
 
 class ArrangeUndoAction: public UndoAction {
 public:
-    using InsertOrder = std::deque<std::pair<Element*, Layer::ElementIndex>>;
+    using InsertOrder = std::deque<std::pair<Element*, Element::Index>>;
 
     ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertOrder oldOrder, InsertOrder newOrder);
     ~ArrangeUndoAction() override;
