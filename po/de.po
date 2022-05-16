@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-15 07:54\n"
+"POT-Creation-Date: 2022-05-16 18:05+0000\n"
+"PO-Revision-Date: 2022-05-16 18:42\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -76,7 +76,7 @@ msgstr "Auf alle Seiten anwenden"
 msgid "Apply to current page"
 msgstr "Auf aktuelle Seite anwenden"
 
-#: ../src/core/control/tools/EditSelection.cpp:352
+#: ../src/core/control/tools/EditSelection.cpp:369
 msgid "Arrange"
 msgstr "Anordnen"
 
@@ -143,15 +143,15 @@ msgstr "Zurück"
 msgid "Background"
 msgstr "Hintergrund"
 
-#: ../src/core/control/tools/EditSelection.cpp:369
+#: ../src/core/control/tools/EditSelection.cpp:386
 msgid "Bring forward"
 msgstr "Eine Ebene nach vorne"
 
-#: ../src/core/control/tools/EditSelection.cpp:359
+#: ../src/core/control/tools/EditSelection.cpp:376
 msgid "Bring to front"
 msgstr "In den Vordergrund"
 
-#: ../src/core/control/Control.cpp:2074 ../src/core/control/Control.cpp:2536
+#: ../src/core/control/Control.cpp:2106 ../src/core/control/Control.cpp:2568
 #: ../src/core/control/XournalMain.cpp:164
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -359,7 +359,7 @@ msgstr "Diese Ebene löschen"
 msgid "Delete this page"
 msgstr "Diese Seite löschen"
 
-#: ../src/core/control/Control.cpp:2533
+#: ../src/core/control/Control.cpp:2565
 msgid "Discard"
 msgstr "Verwerfen"
 
@@ -367,7 +367,7 @@ msgstr "Verwerfen"
 msgid "Display advanced export options"
 msgstr "Erweiterte Exportoptionen anzeigen"
 
-#: ../src/core/control/Control.cpp:2019
+#: ../src/core/control/Control.cpp:2051
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -379,7 +379,7 @@ msgstr "Öffnen sie keine automatisch gespeicherten Dateien. Diese werden ansons
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Das Hintergrund PDF darf nicht überschrieben werden! Dies verursacht Fehler!"
 
-#: ../src/core/control/Control.cpp:2527
+#: ../src/core/control/Control.cpp:2559
 msgid "Document file was removed."
 msgstr "Datei des Dokuments wurde entfernt."
 
@@ -478,7 +478,7 @@ msgstr "Linie löschen"
 msgid "Eraser"
 msgstr "Radierer"
 
-#: ../src/core/control/Control.cpp:2273
+#: ../src/core/control/Control.cpp:2305
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Fehler beim Öffnen des PDFs \"{1}\"\n"
@@ -488,7 +488,7 @@ msgstr "Fehler beim Öffnen des PDFs \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Fehler beim Laden der Glade-Datei \"{1}\" (Datei \"{2}\")"
 
-#: ../src/core/control/Control.cpp:2096
+#: ../src/core/control/Control.cpp:2128
 msgid "Error opening file \"{1}\""
 msgstr "Fehler beim Öffnen der Datei \"{1}\""
 
@@ -849,7 +849,7 @@ msgstr "Kein Gerät"
 msgid "No pages to export!"
 msgstr "Keine Seiten zu exportieren!"
 
-#: ../src/core/control/Control.cpp:1322
+#: ../src/core/control/Control.cpp:1354
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "Es stehen keine PDF-Seiten zum Anhängen zur Verfügung. Möglicherweise müssen Sie das Dokument erneut öffnen."
 
@@ -1008,7 +1008,7 @@ msgstr "Drucken"
 msgid "Record Audio / Stop Recording"
 msgstr "Aufzeichnung starten / stoppen"
 
-#: ../src/core/control/Control.cpp:921
+#: ../src/core/control/Control.cpp:924
 msgid "Recorder could not be started."
 msgstr "Aufzeichnung konnte nicht gestartet werden."
 
@@ -1021,7 +1021,7 @@ msgstr "Wiederherstellen"
 msgid "Redo: "
 msgstr "Wiederherstellen: "
 
-#: ../src/core/control/Control.cpp:2073
+#: ../src/core/control/Control.cpp:2105
 msgid "Remove PDF Background"
 msgstr "PDF-Hintergrund entfernen"
 
@@ -1073,16 +1073,16 @@ msgstr "SVG Bild"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Beispiel-LaTeX-Datei erfolgreich erzeugt."
 
-#: ../src/core/control/Control.cpp:2528 ../src/core/control/jobs/SaveJob.cpp:15
+#: ../src/core/control/Control.cpp:2560 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Save"
 msgstr "Speichern"
 
-#: ../src/core/control/Control.cpp:2528
+#: ../src/core/control/Control.cpp:2560
 msgid "Save As..."
 msgstr "Speichern unter..."
 
-#: ../src/core/control/Control.cpp:2362
+#: ../src/core/control/Control.cpp:2394
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "Speichere Datei"
@@ -1161,7 +1161,7 @@ msgstr "Bereich auswählen"
 msgid "Select Text from pdf"
 msgstr "Text aus PDF auswählen"
 
-#: ../src/core/control/Control.cpp:2072
+#: ../src/core/control/Control.cpp:2104
 msgid "Select another PDF"
 msgstr "Andere PDF-Datei auswählen"
 
@@ -1193,11 +1193,11 @@ msgstr "Auswahl-Combo"
 msgid "Send Bugreport"
 msgstr "Fehlerbericht senden"
 
-#: ../src/core/control/tools/EditSelection.cpp:380
+#: ../src/core/control/tools/EditSelection.cpp:397
 msgid "Send backward"
 msgstr "Eine Ebene nach hinten"
 
-#: ../src/core/control/tools/EditSelection.cpp:388
+#: ../src/core/control/tools/EditSelection.cpp:405
 msgid "Send to back"
 msgstr "In den Hintergrund"
 
@@ -1335,17 +1335,17 @@ msgstr "Text nicht gefunden"
 msgid "Text not found, searched on all pages"
 msgstr "Text nicht gefunden, auf allen Seiten gesucht"
 
-#: ../src/core/control/Control.cpp:1112
+#: ../src/core/control/Control.cpp:1144
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Die Werkzeugleistenkonfiguration \"{1}\" ist vordefiniert, möchten Sie eine Kopie erstellen?"
 
-#: ../src/core/control/Control.cpp:2061
+#: ../src/core/control/Control.cpp:2093
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Die angehängte Hintergrunddatei {1} konnte nicht gefunden werden. Sie wurde möglicherweise verschoben, umbenannt oder gelöscht.\n"
 "Sie wurde zuletzt hier gesehen: {2}"
 
-#: ../src/core/control/Control.cpp:2065
+#: ../src/core/control/Control.cpp:2097
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Die Hintergrunddatei {1} konnte nicht gefunden werden. Sie wurde möglicherweise verschoben, umbenannt oder gelöscht.\n"
@@ -1355,7 +1355,7 @@ msgstr "Die Hintergrunddatei {1} konnte nicht gefunden werden. Sie wurde möglic
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Die Überprüfung des Überschreibens des Hintergrundes ist fehlgeschlagen:\n"
 
-#: ../src/core/control/Control.cpp:2104
+#: ../src/core/control/Control.cpp:2136
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Die zu ladende Datei hat eine neuere Dateiformatversion als die, die derzeit von dieser Version von Xournal++ unterstützt wird. Die Datei wird eventuell nicht richtig geladen. Möchten Sie die Datei trotzdem öffnen?"
 
@@ -1399,7 +1399,7 @@ msgstr "Es ist ein Fehler aufgetreten beim Anzeigen der Hilfe: {1}"
 msgid "Thick"
 msgstr "Dick"
 
-#: ../src/core/control/Control.cpp:2527
+#: ../src/core/control/Control.cpp:2559
 msgid "This document is not saved yet."
 msgstr "Dieses Dokument wurde noch nicht gespeichert."
 
@@ -1435,7 +1435,7 @@ msgstr "Globale Vorlagen-Datei kann in {1} nicht geöffnet werden. Existiert sie
 msgid "Unable to play audio recording {1}"
 msgstr "Audioaufnahme {1} kann nicht abgespielt werden"
 
-#: ../src/core/control/Control.cpp:1336
+#: ../src/core/control/Control.cpp:1368
 msgid "Unable to retrieve pdf page."
 msgstr "PDF-Seite konnte nicht abgerufen werden."
 
@@ -1484,7 +1484,7 @@ msgstr "Unbekannter Linientyp: \"{1}\", verwende Stift"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Unbekannter Linientyp: \"{1}\", verwende Stift"
 
-#: ../src/core/control/Control.cpp:2419
+#: ../src/core/control/Control.cpp:2451
 msgid "Unsaved Document"
 msgstr "Ungespeichertes Dokument"
 
@@ -1540,7 +1540,7 @@ msgstr "Xournal Dateien"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ ist das letzte mal abgestürzt. Soll die Datei wiederhergestellt werden?"
 
-#: ../src/core/control/Control.cpp:2368
+#: ../src/core/control/Control.cpp:2400
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Xournal++ Dateien"
@@ -1588,7 +1588,7 @@ msgstr "Herauszoomen"
 msgid "Zoom to 100%"
 msgstr "Zoom auf 100%"
 
-#: ../src/core/control/Control.cpp:2362
+#: ../src/core/control/Control.cpp:2394
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
@@ -1601,7 +1601,7 @@ msgstr "_Abbrechen"
 msgid "_Open"
 msgstr "Ö_ffnen"
 
-#: ../src/core/control/Control.cpp:2363
+#: ../src/core/control/Control.cpp:2395
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
@@ -1644,7 +1644,7 @@ msgstr "Elemente"
 msgid "eraser"
 msgstr "Radierer"
 
-#: ../src/core/control/Control.cpp:2033
+#: ../src/core/control/Control.cpp:2065
 msgid "file: {1}"
 msgstr "Datei: {1}"
 
@@ -2075,7 +2075,7 @@ msgstr "Alle drei Bedingungen müssen erfüllt sein, bevor der Strich ignoriert 
 msgid "Always check LaTeX dependencies before running"
 msgstr "LaTeX-Abhängigkeiten vor dem Ausführen immer überprüfen"
 
-#: ../ui/main.glade:1197
+#: ../ui/main.glade:1215
 msgid "Append New PDF Pages"
 msgstr "Neue PDF-Seiten anhängen"
 
@@ -2200,7 +2200,7 @@ msgstr "Cache beim Scrollen leeren"
 msgid "Colors"
 msgstr "Farben"
 
-#: ../ui/main.glade:1207
+#: ../ui/main.glade:1225
 msgid "Configure Page Template"
 msgstr "Seitenvorlage konfigurieren"
 
@@ -2216,7 +2216,7 @@ msgstr "Stattdessen aktuellen Seitenhintergrund kopieren"
 msgid "Copy current page size instead"
 msgstr "Stattdessen aktuelle Seitengröße kopieren"
 
-#: ../ui/main.glade:2689
+#: ../ui/main.glade:2707
 msgid "Copy selected text"
 msgstr "Ausgewählten Text kopieren"
 
@@ -2272,7 +2272,7 @@ msgstr "Standard Name: "
 msgid "Defaults"
 msgstr "Standards"
 
-#: ../ui/main.glade:1245
+#: ../ui/main.glade:1263
 msgid "Delete Layer"
 msgstr "Ebene löschen"
 
@@ -2348,11 +2348,11 @@ msgstr "Ziehen Sie Objekte von hier in die Werkzeugleiste und zurück."
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "Ziehen: Wenn der Wert zu klein ist, kann es zu unerwünschten Schwingungen kommen. Wenn der Wert zu hoch ist, wird keine Stabilisierung angewendet."
 
-#: ../ui/main.glade:1484
+#: ../ui/main.glade:1502
 msgid "Draw Coordinate System"
 msgstr "Koordinatensystem zeichnen"
 
-#: ../ui/main.glade:1495
+#: ../ui/main.glade:1513
 msgid "Draw _Line"
 msgstr "Strecke _zeichnen"
 
@@ -2368,11 +2368,11 @@ msgstr "Zeichenbereich"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "Zeichenwerkzeuge - Setze Optionen via Zeichenrichtung (experimentell)"
 
-#: ../ui/main.glade:2823 ../ui/main.glade:2860
+#: ../ui/main.glade:2841 ../ui/main.glade:2878
 msgid "Duplicate"
 msgstr "Duplizieren"
 
-#: ../ui/main.glade:2897
+#: ../ui/main.glade:2915
 msgid "Edit (not implemented yet)"
 msgstr "Bearbeiten (noch nicht implementiert)"
 
@@ -2428,7 +2428,7 @@ msgstr "Zoom-Gesten aktivieren (erfordert Neustart)"
 msgid "Enter / edit LaTeX Text"
 msgstr "Bearbeite / Editiere LaTeX Text"
 
-#: ../ui/main.glade:1757
+#: ../ui/main.glade:1775
 msgid "Eraser Optio_ns"
 msgstr "Radierer Optio_nen"
 
@@ -2453,11 +2453,11 @@ msgstr "Ebenen schrittweise exportieren"
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr "Exportiere das Dokument ohne jeglichen Hintergrund (Keine). Alternativ nur mit PDF und Bildhintergründen (Keine Lineatur) oder mit allen HIntergrundtypen (Alle)."
 
-#: ../ui/main.glade:1733 ../ui/main.glade:1938
+#: ../ui/main.glade:1751 ../ui/main.glade:1956
 msgid "Fi_ll"
 msgstr "Ausfü_llen"
 
-#: ../ui/main.glade:1743 ../ui/main.glade:1948
+#: ../ui/main.glade:1761 ../ui/main.glade:1966
 msgid "Fill opacity"
 msgstr "Füll-Deckkraft"
 
@@ -2465,11 +2465,11 @@ msgstr "Füll-Deckkraft"
 msgid "Finalize the stroke"
 msgstr "Strich abschließen"
 
-#: ../ui/main.glade:2487
+#: ../ui/main.glade:2505
 msgid "Find next occurrence of the search string"
 msgstr "Nächstes Vorkommen des Textes suchen"
 
-#: ../ui/main.glade:2465
+#: ../ui/main.glade:2483
 msgid "Find previous occurrence of the search string"
 msgstr "Vorheriges Vorkommen des Textes suchen"
 
@@ -2477,7 +2477,7 @@ msgstr "Vorheriges Vorkommen des Textes suchen"
 msgid "First Page Offset "
 msgstr "Verschiebung der ersten Seite "
 
-#: ../ui/main.glade:532 ../ui/settings.glade:3573
+#: ../ui/main.glade:550 ../ui/settings.glade:3573
 msgid "Fullscreen"
 msgstr "Vollbild"
 
@@ -2517,7 +2517,7 @@ msgstr "Rastergröße"
 msgid "Grid snapping tolerance"
 msgstr "Toleranz um in Raster einzurasten"
 
-#: ../ui/main.glade:1583
+#: ../ui/main.glade:1601
 msgid "H_and Tool"
 msgstr "H_and-Werkzeug"
 
@@ -2533,7 +2533,7 @@ msgstr "Höhe"
 msgid "Height:"
 msgstr "Höhe:"
 
-#: ../ui/main.glade:951 ../ui/settings.glade:3535 ../ui/settings.glade:3602
+#: ../ui/main.glade:969 ../ui/settings.glade:3535 ../ui/settings.glade:3602
 msgid "Hide Menubar"
 msgstr "Menüleiste ausblenden"
 
@@ -2553,11 +2553,11 @@ msgstr "Vertikale Bildlaufleiste ausblenden"
 msgid "Highlight cursor position"
 msgstr "Position des Mauszeigers hervorheben"
 
-#: ../ui/main.glade:2711
+#: ../ui/main.glade:2729
 msgid "Highlight selected text"
 msgstr "Ausgewählten Text hervorheben"
 
-#: ../ui/main.glade:1866
+#: ../ui/main.glade:1884
 msgid "Highlighter Opti_ons"
 msgstr "Textmarker _Optionen"
 
@@ -2637,11 +2637,11 @@ msgstr "Die Eingabestabilisierung kann eine Lücke am Ende des Strichs erzeugen.
 msgid "Insert Latex"
 msgstr "LaTeX einfügen"
 
-#: ../ui/main.glade:2852
+#: ../ui/main.glade:2870
 msgid "Insert Page After"
 msgstr "Seite danach einfügen"
 
-#: ../ui/main.glade:2844
+#: ../ui/main.glade:2862
 msgid "Insert Page Before"
 msgstr "Seite davor einfügen"
 
@@ -2665,7 +2665,7 @@ msgstr "Sprache"
 msgid "Language Settings"
 msgstr "Spracheinstellungen"
 
-#: ../ui/main.glade:575
+#: ../ui/main.glade:593
 msgid "Layout"
 msgstr "Layout"
 
@@ -2709,11 +2709,11 @@ msgstr "Maximale Länge (mm)"
 msgid "Max multiplier"
 msgstr "Max. Multiplikator"
 
-#: ../ui/main.glade:2815
+#: ../ui/main.glade:2833
 msgid "Merge Down"
 msgstr "Nach unten zusammenführen"
 
-#: ../ui/main.glade:1256
+#: ../ui/main.glade:1274
 msgid "Merge Layer Down"
 msgstr "Ebene nach unten zusammenführen"
 
@@ -2743,11 +2743,11 @@ msgstr "Maustasten"
 msgid "Mouse+Keyboard Combo"
 msgstr "Maus+Tastatur Kombination"
 
-#: ../ui/main.glade:2807 ../ui/main.glade:2882
+#: ../ui/main.glade:2825 ../ui/main.glade:2900
 msgid "Move Down"
 msgstr "Nach hinten verschieben"
 
-#: ../ui/main.glade:2799 ../ui/main.glade:2874
+#: ../ui/main.glade:2817 ../ui/main.glade:2892
 msgid "Move Up"
 msgstr "Nach vorne verschieben"
 
@@ -2755,23 +2755,23 @@ msgstr "Nach vorne verschieben"
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr "Multiplizieren Sie die Schwenkgeschwindigkeit mit bis zu diesem Betrag, abhängig davon, wie viel des ausgewählten Elements nicht angezeigt wird."
 
-#: ../ui/main.glade:1129
+#: ../ui/main.glade:1147
 msgid "N_ext Annotated Page"
 msgstr "Nächste b_eschriftete Seite"
 
-#: ../ui/main.glade:1176
+#: ../ui/main.glade:1194
 msgid "New Page _After"
 msgstr "Neue Seite d_anach"
 
-#: ../ui/main.glade:1166
+#: ../ui/main.glade:1184
 msgid "New Page _Before"
 msgstr "Neue Seite _davor"
 
-#: ../ui/main.glade:1187
+#: ../ui/main.glade:1205
 msgid "New Page at _End"
 msgstr "Neue Seite am _Ende"
 
-#: ../ui/main.glade:1234
+#: ../ui/main.glade:1252
 msgid "New _Layer"
 msgstr "Neue Ebene"
 
@@ -2809,7 +2809,7 @@ msgstr "Ausgabegerät"
 msgid "PDF Cache"
 msgstr "PDF-Zwischenspeicher"
 
-#: ../ui/main.glade:1140
+#: ../ui/main.glade:1158
 msgid "P_revious Annotated Page"
 msgstr "Vorherige beschriftete Seite"
 
@@ -2821,7 +2821,7 @@ msgstr "Seiten:"
 msgid "Paired Pages"
 msgstr "Mehrseitiges Layout"
 
-#: ../ui/main.glade:1304
+#: ../ui/main.glade:1322
 msgid "Paper B_ackground"
 msgstr "Seitenhintergrund"
 
@@ -2829,11 +2829,11 @@ msgstr "Seitenhintergrund"
 msgid "Paper Format"
 msgstr "Seitenformat"
 
-#: ../ui/main.glade:1294
+#: ../ui/main.glade:1312
 msgid "Paper _Color"
 msgstr "Seite Hintergrundfarbe"
 
-#: ../ui/main.glade:1284
+#: ../ui/main.glade:1302
 msgid "Paper _Format"
 msgstr "Seitenformat"
 
@@ -2843,11 +2843,11 @@ msgid "Partially based on Xournal\n"
 msgstr "Teilweise basierend auf Xournal\n"
 "von Denis Auroux"
 
-#: ../ui/main.glade:1984
+#: ../ui/main.glade:2002
 msgid "Pause"
 msgstr "Pausieren"
 
-#: ../ui/main.glade:1611
+#: ../ui/main.glade:1629
 msgid "Pen _Options"
 msgstr "Stift Optionen"
 
@@ -2863,7 +2863,7 @@ msgstr "Wiedergabeeinstellungen"
 msgid "Plugin Manager"
 msgstr "Plugin-Manager"
 
-#: ../ui/main.glade:2049
+#: ../ui/main.glade:2067
 msgid "Plugin _Manager"
 msgstr "Plugin-Manager"
 
@@ -2879,7 +2879,7 @@ msgstr "Vorzuladende Seiten nach der aktuellen"
 msgid "Pre-load pages before"
 msgstr "Vorzuladende Seiten vor der aktuellen"
 
-#: ../ui/main.glade:487
+#: ../ui/main.glade:505
 msgid "Preferences"
 msgstr "Einstellungen"
 
@@ -2923,7 +2923,7 @@ msgstr "Neu rendern, wenn die Änderung des Zoomfaktors der Seite größer wird 
 msgid "Recent _Documents"
 msgstr "Zuletzt geöffnete _Dokumente"
 
-#: ../ui/main.glade:1974
+#: ../ui/main.glade:1992
 msgid "Record / Stop"
 msgstr "Aufnehmen / Stop"
 
@@ -2931,7 +2931,7 @@ msgstr "Aufnehmen / Stop"
 msgid "Recording Quality"
 msgstr "Aufnahmequalität"
 
-#: ../ui/main.glade:1267
+#: ../ui/main.glade:1285
 msgid "Rename Layer"
 msgstr "Ebene umbenennen"
 
@@ -2987,7 +2987,7 @@ msgstr "Ordner auswählen"
 msgid "Select Image"
 msgstr "Bild auswählen"
 
-#: ../ui/main.glade:1352
+#: ../ui/main.glade:1370
 msgid "Select Linear Text"
 msgstr "Text aus Zeile in PDF auswählen"
 
@@ -2995,7 +2995,7 @@ msgstr "Text aus Zeile in PDF auswählen"
 msgid "Select PDF Page"
 msgstr "PDF-Seite auswählen"
 
-#: ../ui/main.glade:1364
+#: ../ui/main.glade:1382
 msgid "Select Text In Rectangle"
 msgstr "Text aus Rechteck in PDF auswählen"
 
@@ -3023,11 +3023,11 @@ msgstr "In den Hintergrund"
 msgid "Sensitivity Scale"
 msgstr "Empfindlichkeitsskala"
 
-#: ../ui/main.glade:684
+#: ../ui/main.glade:702
 msgid "Set Columns"
 msgstr "Spalten setzen"
 
-#: ../ui/main.glade:789
+#: ../ui/main.glade:807
 msgid "Set Rows"
 msgstr "Zeilen setzen"
 
@@ -3043,11 +3043,11 @@ msgstr "Zeige schwebende Werkzeugbox"
 msgid "Show Menubar on Startup"
 msgstr "Menüleiste beim Start zeigen"
 
-#: ../ui/main.glade:543
+#: ../ui/main.glade:561
 msgid "Show Sidebar"
 msgstr "Seitenleiste anzeigen"
 
-#: ../ui/main.glade:559
+#: ../ui/main.glade:577
 msgid "Show Toolbars"
 msgstr "Werkzeugleisten anzeigen"
 
@@ -3102,7 +3102,7 @@ msgstr "Fange mit dem Zoomen an, wenn der Abstand "
 msgid "Storage Folder"
 msgstr "Speicherplatz"
 
-#: ../ui/main.glade:2751
+#: ../ui/main.glade:2769
 msgid "Strikethrough selected text"
 msgstr "Ausgewählten Text durchstreichen"
 
@@ -3123,7 +3123,7 @@ msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr "System-Cursor"
 
-#: ../ui/main.glade:903
+#: ../ui/main.glade:921
 msgid "T_oolbars"
 msgstr "Werkzeugleisten"
 
@@ -3147,7 +3147,7 @@ msgstr "Konfiguration testen"
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Testen Sie, ob die aktuelle Konfiguration gültig ist, indem Sie den LaTeX-Befehl (pdflatex) auf der globalen Vorlagen-Datei mit einer Test-Formel ausführen."
 
-#: ../ui/main.glade:1962
+#: ../ui/main.glade:1980
 msgid "Text Font..."
 msgstr "Schriftart..."
 
@@ -3179,7 +3179,7 @@ msgstr "Diese Einstellungen werden für neue Seiten verwendet"
 msgid "Timeout"
 msgstr "Wartezeit"
 
-#: ../ui/main.glade:2771
+#: ../ui/main.glade:2789
 msgid "Toggle standard / region text selection"
 msgstr "Standard- / Bereichstext-Auswahl umschalten"
 
@@ -3204,7 +3204,7 @@ msgstr "Versuche Objekt als erstes auszuwählen."
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "Versuche Objekt als erstes auszuwählen; Wenn nichts ausgewählt wurde, zeige die schwebende Werkzeugbox."
 
-#: ../ui/main.glade:2731
+#: ../ui/main.glade:2749
 msgid "Underline selected text"
 msgstr "Ausgewählten Text unterstreichen"
 
@@ -3300,67 +3300,67 @@ msgstr "Zoom-Gesten"
 msgid "Zoom Speed"
 msgstr "Zoomgeschwindigkeit"
 
-#: ../ui/main.glade:696
+#: ../ui/main.glade:714
 msgid "_1 Column"
 msgstr "_1 Spalte"
 
-#: ../ui/main.glade:801
+#: ../ui/main.glade:819
 msgid "_1 Row"
 msgstr "_1 Zeile"
 
-#: ../ui/main.glade:707
+#: ../ui/main.glade:725
 msgid "_2 Columns"
 msgstr "_2 Spalten"
 
-#: ../ui/main.glade:812
+#: ../ui/main.glade:830
 msgid "_2 Rows"
 msgstr "_2 Zeilen"
 
-#: ../ui/main.glade:718
+#: ../ui/main.glade:736
 msgid "_3 Columns"
 msgstr "_3 Spalten"
 
-#: ../ui/main.glade:823
+#: ../ui/main.glade:841
 msgid "_3 Rows"
 msgstr "_3 Zeilen"
 
-#: ../ui/main.glade:729
+#: ../ui/main.glade:747
 msgid "_4 Columns"
 msgstr "_4 Spalten"
 
-#: ../ui/main.glade:834
+#: ../ui/main.glade:852
 msgid "_4 Rows"
 msgstr "_4 Zeilen"
 
-#: ../ui/main.glade:740
+#: ../ui/main.glade:758
 msgid "_5 Columns"
 msgstr "_5 Spalten"
 
-#: ../ui/main.glade:845
+#: ../ui/main.glade:863
 msgid "_5 Rows"
 msgstr "_5 Zeilen"
 
-#: ../ui/main.glade:751
+#: ../ui/main.glade:769
 msgid "_6 Columns"
 msgstr "_6 Spalten"
 
-#: ../ui/main.glade:856
+#: ../ui/main.glade:874
 msgid "_6 Rows"
 msgstr "_6 Zeilen"
 
-#: ../ui/main.glade:762
+#: ../ui/main.glade:780
 msgid "_7 Columns"
 msgstr "_7 Spalten"
 
-#: ../ui/main.glade:867
+#: ../ui/main.glade:885
 msgid "_7 Rows"
 msgstr "_7 Zeilen"
 
-#: ../ui/main.glade:773
+#: ../ui/main.glade:791
 msgid "_8 Columns"
 msgstr "_8 Spalten"
 
-#: ../ui/main.glade:878
+#: ../ui/main.glade:896
 msgid "_8 Rows"
 msgstr "_8 Zeilen"
 
@@ -3368,23 +3368,23 @@ msgstr "_8 Zeilen"
 msgid "_Annotate PDF"
 msgstr "_PDF beschriften"
 
-#: ../ui/main.glade:656
+#: ../ui/main.glade:674
 msgid "_Bottom to Top"
 msgstr "_Unten nach Oben"
 
-#: ../ui/main.glade:671
+#: ../ui/main.glade:689
 msgid "_Cols/Rows"
 msgstr "_Spalten / Zeilen"
 
-#: ../ui/main.glade:931
+#: ../ui/main.glade:949
 msgid "_Customize"
 msgstr "_Anpassen"
 
-#: ../ui/main.glade:1412
+#: ../ui/main.glade:1430
 msgid "_Default Tools"
 msgstr "_Standard Werkzeuge"
 
-#: ../ui/main.glade:1217
+#: ../ui/main.glade:1235
 msgid "_Delete Page"
 msgstr "_Seite löschen"
 
@@ -3392,7 +3392,7 @@ msgstr "_Seite löschen"
 msgid "_Edit"
 msgstr "_Bearbeiten"
 
-#: ../ui/main.glade:1340
+#: ../ui/main.glade:1358
 msgid "_Eraser"
 msgstr "_Radierer"
 
@@ -3404,143 +3404,143 @@ msgstr "_Exportieren als PDF"
 msgid "_File"
 msgstr "_Datei"
 
-#: ../ui/main.glade:1030
+#: ../ui/main.glade:1048
 msgid "_First Page"
 msgstr "_Erste Seite"
 
-#: ../ui/main.glade:1052
+#: ../ui/main.glade:1070
 msgid "_Goto Page"
 msgstr "_Gehe zur Seite"
 
-#: ../ui/main.glade:2063
+#: ../ui/main.glade:2081
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: ../ui/main.glade:1376
+#: ../ui/main.glade:1394
 msgid "_Highlighter"
 msgstr "_Textmarker"
 
-#: ../ui/main.glade:587
+#: ../ui/main.glade:605
 msgid "_Horizontal"
 msgstr "_Horizontal"
 
-#: ../ui/main.glade:1400
+#: ../ui/main.glade:1418
 msgid "_Image"
 msgstr "_Bild"
 
-#: ../ui/main.glade:1155
+#: ../ui/main.glade:1173
 msgid "_Journal"
 msgstr "_Journal"
 
-#: ../ui/main.glade:1074
+#: ../ui/main.glade:1092
 msgid "_Last Page"
 msgstr "_Letzte Seite"
 
-#: ../ui/main.glade:616
+#: ../ui/main.glade:634
 msgid "_Left to Right"
 msgstr "_Links nach Rechts"
 
-#: ../ui/main.glade:921
+#: ../ui/main.glade:939
 msgid "_Manage"
 msgstr "_Werkzeugleisten verwalten"
 
-#: ../ui/main.glade:1019
+#: ../ui/main.glade:1037
 msgid "_Navigation"
 msgstr "_Navigation"
 
-#: ../ui/main.glade:1102
+#: ../ui/main.glade:1120
 msgid "_Next Layer"
 msgstr "_Nächste Ebene"
 
-#: ../ui/main.glade:1063
+#: ../ui/main.glade:1081
 msgid "_Next Page"
 msgstr "_Nächste Seite"
 
-#: ../ui/main.glade:512
+#: ../ui/main.glade:530
 msgid "_Pair Pages"
 msgstr "_Mehrseitiges Layout"
 
-#: ../ui/main.glade:1328
+#: ../ui/main.glade:1346
 msgid "_Pen"
 msgstr "_Stift"
 
-#: ../ui/main.glade:2038
+#: ../ui/main.glade:2056
 msgid "_Plugin"
 msgstr "_Plugin"
 
-#: ../ui/main.glade:522
+#: ../ui/main.glade:540
 msgid "_Presentation Mode"
 msgstr "_Präsentationsmodus"
 
-#: ../ui/main.glade:1091
+#: ../ui/main.glade:1109
 msgid "_Previous Layer"
 msgstr "_Vorherige Ebene"
 
-#: ../ui/main.glade:1041
+#: ../ui/main.glade:1059
 msgid "_Previous Page"
 msgstr "_Vorherige Seite"
 
-#: ../ui/main.glade:627
+#: ../ui/main.glade:645
 msgid "_Right to Left"
 msgstr "_Rechts nach Links"
 
-#: ../ui/main.glade:1429
+#: ../ui/main.glade:1447
 msgid "_Shape Recognizer"
 msgstr "_Figurenerkennung"
 
-#: ../ui/main.glade:1388
+#: ../ui/main.glade:1406
 msgid "_Text"
 msgstr "_Text"
 
-#: ../ui/main.glade:1317
+#: ../ui/main.glade:1335
 msgid "_Tools"
 msgstr "_Werkzeuge"
 
-#: ../ui/main.glade:1113
+#: ../ui/main.glade:1131
 msgid "_Top Layer"
 msgstr "_Oberste Ebene"
 
-#: ../ui/main.glade:645
+#: ../ui/main.glade:663
 msgid "_Top to Bottom"
 msgstr "_Oben nach Unten"
 
-#: ../ui/main.glade:598
+#: ../ui/main.glade:616
 msgid "_Vertical"
 msgstr "_Vertikal"
 
-#: ../ui/main.glade:1559
+#: ../ui/main.glade:1577
 msgid "_Vertical Space"
 msgstr "_Vertikaler Platz"
 
-#: ../ui/main.glade:501
+#: ../ui/main.glade:519
 msgid "_View"
 msgstr "_Ansicht"
 
-#: ../ui/main.glade:1851
+#: ../ui/main.glade:1869
 msgid "_delete strokes"
 msgstr "_Linien löschen"
 
-#: ../ui/main.glade:1633 ../ui/main.glade:1779 ../ui/main.glade:1888
+#: ../ui/main.glade:1651 ../ui/main.glade:1797 ../ui/main.glade:1906
 msgid "_fine"
 msgstr "_dünn"
 
-#: ../ui/main.glade:1644 ../ui/main.glade:1790 ../ui/main.glade:1899
+#: ../ui/main.glade:1662 ../ui/main.glade:1808 ../ui/main.glade:1917
 msgid "_medium"
 msgstr "_mittel"
 
-#: ../ui/main.glade:1829
+#: ../ui/main.glade:1847
 msgid "_standard"
 msgstr "_Standard"
 
-#: ../ui/main.glade:1655 ../ui/main.glade:1801 ../ui/main.glade:1910
+#: ../ui/main.glade:1673 ../ui/main.glade:1819 ../ui/main.glade:1928
 msgid "_thick"
 msgstr "_dick"
 
-#: ../ui/main.glade:1622 ../ui/main.glade:1768 ../ui/main.glade:1877
+#: ../ui/main.glade:1640 ../ui/main.glade:1786 ../ui/main.glade:1895
 msgid "_very fine"
 msgstr "_sehr dünn"
 
-#: ../ui/main.glade:1840
+#: ../ui/main.glade:1858
 msgid "_whiteout"
 msgstr "_weiß übermalen"
 
@@ -3574,7 +3574,7 @@ msgstr "Pixeln hinzu"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(nach denen der Touchscreen reaktiviert wird)</i>"
 
-#: ../ui/main.glade:1666 ../ui/main.glade:1812 ../ui/main.glade:1921
+#: ../ui/main.glade:1684 ../ui/main.glade:1830 ../ui/main.glade:1939
 msgid "ver_y thick"
 msgstr "sehr dick"
 
