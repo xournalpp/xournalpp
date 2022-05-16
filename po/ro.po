@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-16 20:52\n"
+"PO-Revision-Date: 2022-05-16 22:03\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -617,7 +617,8 @@ msgstr "Nu s-a putut citi fișierul modelului global. Controlează configurarea.
 #: ../src/core/control/jobs/BaseExportJob.cpp:102
 msgid "Failed to resolve path with the following error:\n"
 "{1}"
-msgstr ""
+msgstr "Calea nu a putut fi găsită cu următoarea eroare:\n"
+"{1}"
 
 #: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
 msgid "File couldn't be opened. You have to do it manually:\n"
@@ -631,7 +632,7 @@ msgstr "Umplere"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Filtrează forța de presare. Înmulțește forța de apăsare cu multiplicatorul forței de apăsare. Dacă este mai mică decât valoarea minimă, se utilizează valoarea minimă."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Fine"
@@ -726,7 +727,7 @@ msgstr "Imagini"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Insert a copy of the current layer below"
-msgstr ""
+msgstr "Introdu mai jos o copie a stratului actual"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
@@ -787,7 +788,7 @@ msgstr "Strat {1}"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Previzualizare strat"
 
 #: ../src/core/gui/PageView.cpp:778
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
@@ -805,7 +806,7 @@ msgstr "Mediu"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr ""
+msgstr "Unește cu stratul inferior"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -850,7 +851,7 @@ msgstr "Nicio pagină de exportat!"
 
 #: ../src/core/control/Control.cpp:1354
 msgid "No pdf pages available to append. You may need to reopen the document first."
-msgstr ""
+msgstr "Nu există pagini PDF disponibile pentru a fi adăugate. Poate că trebuie redeschis mai întâi documentul."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:121
 msgid "Normal drawing"
@@ -864,7 +865,8 @@ msgstr "Bine"
 #: ../src/core/control/XournalMain.cpp:603
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportă numai paginile indicate de interval (de ex. „2-3,5,7-”)\n"
+"                                 Niciun efect fără -p/--create-pdf or -i/--create-img"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
