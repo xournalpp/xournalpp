@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-15 07:05+0000\n"
-"PO-Revision-Date: 2022-05-16 11:16\n"
+"POT-Creation-Date: 2022-05-16 18:05+0000\n"
+"PO-Revision-Date: 2022-05-16 18:42\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -76,7 +76,7 @@ msgstr "应用到所有页面"
 msgid "Apply to current page"
 msgstr "应用到当前页面"
 
-#: ../src/core/control/tools/EditSelection.cpp:352
+#: ../src/core/control/tools/EditSelection.cpp:369
 msgid "Arrange"
 msgstr "排列"
 
@@ -143,15 +143,15 @@ msgstr "后退"
 msgid "Background"
 msgstr "背景"
 
-#: ../src/core/control/tools/EditSelection.cpp:369
+#: ../src/core/control/tools/EditSelection.cpp:386
 msgid "Bring forward"
 msgstr "上移一层"
 
-#: ../src/core/control/tools/EditSelection.cpp:359
+#: ../src/core/control/tools/EditSelection.cpp:376
 msgid "Bring to front"
 msgstr "置于顶层"
 
-#: ../src/core/control/Control.cpp:2074 ../src/core/control/Control.cpp:2536
+#: ../src/core/control/Control.cpp:2106 ../src/core/control/Control.cpp:2568
 #: ../src/core/control/XournalMain.cpp:164
 msgid "Cancel"
 msgstr "取消"
@@ -359,7 +359,7 @@ msgstr "删除此图层"
 msgid "Delete this page"
 msgstr "删除此页面"
 
-#: ../src/core/control/Control.cpp:2533
+#: ../src/core/control/Control.cpp:2565
 msgid "Discard"
 msgstr "丢弃"
 
@@ -367,7 +367,7 @@ msgstr "丢弃"
 msgid "Display advanced export options"
 msgstr "显示高级导出选项"
 
-#: ../src/core/control/Control.cpp:2019
+#: ../src/core/control/Control.cpp:2051
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -379,7 +379,7 @@ msgstr "请勿打开自动保存文件。它们可能会被覆盖！\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "请勿覆盖背景 PDF！这将造成故障！"
 
-#: ../src/core/control/Control.cpp:2527
+#: ../src/core/control/Control.cpp:2559
 msgid "Document file was removed."
 msgstr "文档已删除。"
 
@@ -478,7 +478,7 @@ msgstr "擦除笔划"
 msgid "Eraser"
 msgstr "橡皮"
 
-#: ../src/core/control/Control.cpp:2273
+#: ../src/core/control/Control.cpp:2305
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "PDF文件\"{1}\"标注出错\n"
@@ -488,7 +488,7 @@ msgstr "PDF文件\"{1}\"标注出错\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "加载glade文件\"{1}\"出错(尝试加载\"{2}\")"
 
-#: ../src/core/control/Control.cpp:2096
+#: ../src/core/control/Control.cpp:2128
 msgid "Error opening file \"{1}\""
 msgstr "打开文件\"{1}\"出错"
 
@@ -849,7 +849,7 @@ msgstr "没有设备"
 msgid "No pages to export!"
 msgstr "没有要导出的页面！"
 
-#: ../src/core/control/Control.cpp:1322
+#: ../src/core/control/Control.cpp:1354
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "没有可添加的pdf页面，你可能需要重新打开文档。"
 
@@ -1008,7 +1008,7 @@ msgstr "打印"
 msgid "Record Audio / Stop Recording"
 msgstr "录制音频/停止录制"
 
-#: ../src/core/control/Control.cpp:921
+#: ../src/core/control/Control.cpp:924
 msgid "Recorder could not be started."
 msgstr "无法启动录音器。"
 
@@ -1021,7 +1021,7 @@ msgstr "重复"
 msgid "Redo: "
 msgstr "重复："
 
-#: ../src/core/control/Control.cpp:2073
+#: ../src/core/control/Control.cpp:2105
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
@@ -1073,16 +1073,16 @@ msgstr "SVG图形"
 msgid "Sample LaTeX file generated successfully."
 msgstr "已成功生成示例 LaTeX 文件。"
 
-#: ../src/core/control/Control.cpp:2528 ../src/core/control/jobs/SaveJob.cpp:15
+#: ../src/core/control/Control.cpp:2560 ../src/core/control/jobs/SaveJob.cpp:15
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:369
 msgid "Save"
 msgstr "保存"
 
-#: ../src/core/control/Control.cpp:2528
+#: ../src/core/control/Control.cpp:2560
 msgid "Save As..."
 msgstr "另存为..."
 
-#: ../src/core/control/Control.cpp:2362
+#: ../src/core/control/Control.cpp:2394
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:77
 msgid "Save File"
 msgstr "保存文件"
@@ -1161,7 +1161,7 @@ msgstr "选择区域"
 msgid "Select Text from pdf"
 msgstr "从 PDF 选择文本"
 
-#: ../src/core/control/Control.cpp:2072
+#: ../src/core/control/Control.cpp:2104
 msgid "Select another PDF"
 msgstr "选择其他PDF"
 
@@ -1193,11 +1193,11 @@ msgstr "选择工具组"
 msgid "Send Bugreport"
 msgstr "选择错误报告"
 
-#: ../src/core/control/tools/EditSelection.cpp:380
+#: ../src/core/control/tools/EditSelection.cpp:397
 msgid "Send backward"
 msgstr "下移一层"
 
-#: ../src/core/control/tools/EditSelection.cpp:388
+#: ../src/core/control/tools/EditSelection.cpp:405
 msgid "Send to back"
 msgstr "置于底层"
 
@@ -1335,17 +1335,17 @@ msgstr "文本未找到"
 msgid "Text not found, searched on all pages"
 msgstr "找遍所有页面未找到文本"
 
-#: ../src/core/control/Control.cpp:1112
+#: ../src/core/control/Control.cpp:1144
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "工具条配置\"{1}\"是预置的，要产生一个拷贝到编辑?"
 
-#: ../src/core/control/Control.cpp:2061
+#: ../src/core/control/Control.cpp:2093
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "无法找到所附的背景文件{1}。它可能已被移动、重命名或删除。\n"
 "它最后一次出现是在：{2}"
 
-#: ../src/core/control/Control.cpp:2065
+#: ../src/core/control/Control.cpp:2097
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "无法找到背景文件{1}。它可能已被移动、重命名或删除。\n"
@@ -1355,7 +1355,7 @@ msgstr "无法找到背景文件{1}。它可能已被移动、重命名或删除
 msgid "The check for overwriting the background failed with:\n"
 msgstr "覆盖背景失败：\n"
 
-#: ../src/core/control/Control.cpp:2104
+#: ../src/core/control/Control.cpp:2136
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "正在加载的文件格式版本比当前版本Xournal++支持的文件格式版本更新， 可能无法正确加载，仍要打开？"
 
@@ -1399,7 +1399,7 @@ msgstr "显示帮助时出错: {1}"
 msgid "Thick"
 msgstr "粗"
 
-#: ../src/core/control/Control.cpp:2527
+#: ../src/core/control/Control.cpp:2559
 msgid "This document is not saved yet."
 msgstr "此文档尚未保存。"
 
@@ -1435,7 +1435,7 @@ msgstr "无法在 {1} 打开全局模板文件，它是否存在？"
 msgid "Unable to play audio recording {1}"
 msgstr "无法播放音频录音 {1}"
 
-#: ../src/core/control/Control.cpp:1336
+#: ../src/core/control/Control.cpp:1368
 msgid "Unable to retrieve pdf page."
 msgstr "无法获取 pdf 页面。"
 
@@ -1484,7 +1484,7 @@ msgstr "未知笔划端点类型：“{1}“，将假设为圆形"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "未知笔划类型: \"{1}\"，将假设为笔"
 
-#: ../src/core/control/Control.cpp:2419
+#: ../src/core/control/Control.cpp:2451
 msgid "Unsaved Document"
 msgstr "未保存文档"
 
@@ -1540,7 +1540,7 @@ msgstr "Xournal文件"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ 上次崩溃了。您想恢复最后一个编辑的文件？"
 
-#: ../src/core/control/Control.cpp:2368
+#: ../src/core/control/Control.cpp:2400
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:58
 msgid "Xournal++ files"
 msgstr "Xournal++ 文件"
@@ -1588,7 +1588,7 @@ msgstr "缩小"
 msgid "Zoom to 100%"
 msgstr "原始尺寸"
 
-#: ../src/core/control/Control.cpp:2362
+#: ../src/core/control/Control.cpp:2394
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
@@ -1601,7 +1601,7 @@ msgstr "取消 (_C)"
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: ../src/core/control/Control.cpp:2363
+#: ../src/core/control/Control.cpp:2395
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:78
 msgid "_Save"
@@ -1644,7 +1644,7 @@ msgstr "元素"
 msgid "eraser"
 msgstr "橡皮"
 
-#: ../src/core/control/Control.cpp:2033
+#: ../src/core/control/Control.cpp:2065
 msgid "file: {1}"
 msgstr "文件： {1}"
 
@@ -2075,7 +2075,7 @@ msgstr "在忽略笔划之前，必须满足所有三个条件。\n"
 msgid "Always check LaTeX dependencies before running"
 msgstr "运行前总是检查 LaTeX 依赖关系"
 
-#: ../ui/main.glade:1197
+#: ../ui/main.glade:1215
 msgid "Append New PDF Pages"
 msgstr "添加新的 PDF 页面"
 
@@ -2200,7 +2200,7 @@ msgstr "滚动时清除缓存的分页"
 msgid "Colors"
 msgstr "颜色"
 
-#: ../ui/main.glade:1207
+#: ../ui/main.glade:1225
 msgid "Configure Page Template"
 msgstr "配置页模板"
 
@@ -2216,7 +2216,7 @@ msgstr "复制当前页面背景"
 msgid "Copy current page size instead"
 msgstr "复制当前页面尺寸"
 
-#: ../ui/main.glade:2689
+#: ../ui/main.glade:2707
 msgid "Copy selected text"
 msgstr "复制选定文本"
 
@@ -2272,7 +2272,7 @@ msgstr "默认名称: "
 msgid "Defaults"
 msgstr "缺省"
 
-#: ../ui/main.glade:1245
+#: ../ui/main.glade:1263
 msgid "Delete Layer"
 msgstr "删除层"
 
@@ -2348,11 +2348,11 @@ msgstr "在这里和工具条之间可以来回拖动条目。"
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
 msgstr "拖动调节：如果值太小，可能会带来新的抖动。如果值太大，则不会进行防抖。"
 
-#: ../ui/main.glade:1484
+#: ../ui/main.glade:1502
 msgid "Draw Coordinate System"
 msgstr "绘制坐标系统"
 
-#: ../ui/main.glade:1495
+#: ../ui/main.glade:1513
 msgid "Draw _Line"
 msgstr "绘制直线"
 
@@ -2368,11 +2368,11 @@ msgstr "绘图区域"
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
 msgstr "绘图工具 - 依据笔划方向调整设置【实验性】"
 
-#: ../ui/main.glade:2823 ../ui/main.glade:2860
+#: ../ui/main.glade:2841 ../ui/main.glade:2878
 msgid "Duplicate"
 msgstr "重复"
 
-#: ../ui/main.glade:2897
+#: ../ui/main.glade:2915
 msgid "Edit (not implemented yet)"
 msgstr "编辑(尚未实现)"
 
@@ -2428,7 +2428,7 @@ msgstr "启用手势缩放(需要重启)"
 msgid "Enter / edit LaTeX Text"
 msgstr "输入/编辑 LaTeX 文本"
 
-#: ../ui/main.glade:1757
+#: ../ui/main.glade:1775
 msgid "Eraser Optio_ns"
 msgstr "橡皮选项(_n)"
 
@@ -2453,11 +2453,11 @@ msgstr "逐步导出图层"
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
 msgstr "导出文档时不带任何背景(无) 或者仅具有PDF和图像背景(无规则) 或具有所有背景类型(全部)。"
 
-#: ../ui/main.glade:1733 ../ui/main.glade:1938
+#: ../ui/main.glade:1751 ../ui/main.glade:1956
 msgid "Fi_ll"
 msgstr "填充(_l)"
 
-#: ../ui/main.glade:1743 ../ui/main.glade:1948
+#: ../ui/main.glade:1761 ../ui/main.glade:1966
 msgid "Fill opacity"
 msgstr "透明度填充"
 
@@ -2465,11 +2465,11 @@ msgstr "透明度填充"
 msgid "Finalize the stroke"
 msgstr "笔画补全"
 
-#: ../ui/main.glade:2487
+#: ../ui/main.glade:2505
 msgid "Find next occurrence of the search string"
 msgstr "向下查找搜索字符串"
 
-#: ../ui/main.glade:2465
+#: ../ui/main.glade:2483
 msgid "Find previous occurrence of the search string"
 msgstr "向上查找搜索字符串"
 
@@ -2477,7 +2477,7 @@ msgstr "向上查找搜索字符串"
 msgid "First Page Offset "
 msgstr "第一页偏移 "
 
-#: ../ui/main.glade:532 ../ui/settings.glade:3573
+#: ../ui/main.glade:550 ../ui/settings.glade:3573
 msgid "Fullscreen"
 msgstr "全屏"
 
@@ -2517,7 +2517,7 @@ msgstr "网格大小"
 msgid "Grid snapping tolerance"
 msgstr "网格吸附范围"
 
-#: ../ui/main.glade:1583
+#: ../ui/main.glade:1601
 msgid "H_and Tool"
 msgstr "手形工具(_a)"
 
@@ -2533,7 +2533,7 @@ msgstr "高度"
 msgid "Height:"
 msgstr "高度："
 
-#: ../ui/main.glade:951 ../ui/settings.glade:3535 ../ui/settings.glade:3602
+#: ../ui/main.glade:969 ../ui/settings.glade:3535 ../ui/settings.glade:3602
 msgid "Hide Menubar"
 msgstr "隐藏菜单条"
 
@@ -2553,11 +2553,11 @@ msgstr "隐藏垂直滚动条"
 msgid "Highlight cursor position"
 msgstr "高亮光标位置"
 
-#: ../ui/main.glade:2711
+#: ../ui/main.glade:2729
 msgid "Highlight selected text"
 msgstr "高亮选中的文本"
 
-#: ../ui/main.glade:1866
+#: ../ui/main.glade:1884
 msgid "Highlighter Opti_ons"
 msgstr "高亮选项(_o)"
 
@@ -2637,11 +2637,11 @@ msgstr "抖动处理会在笔画末端产生一个缺口。勾选此项可填补
 msgid "Insert Latex"
 msgstr "插入LaTeX"
 
-#: ../ui/main.glade:2852
+#: ../ui/main.glade:2870
 msgid "Insert Page After"
 msgstr "在此后插入页面"
 
-#: ../ui/main.glade:2844
+#: ../ui/main.glade:2862
 msgid "Insert Page Before"
 msgstr "在此前插入页面"
 
@@ -2665,7 +2665,7 @@ msgstr "语言"
 msgid "Language Settings"
 msgstr "语言设置"
 
-#: ../ui/main.glade:575
+#: ../ui/main.glade:593
 msgid "Layout"
 msgstr "布局"
 
@@ -2709,11 +2709,11 @@ msgstr "最大长度 (毫米)"
 msgid "Max multiplier"
 msgstr "最大倍数"
 
-#: ../ui/main.glade:2815
+#: ../ui/main.glade:2833
 msgid "Merge Down"
 msgstr "向下合并"
 
-#: ../ui/main.glade:1256
+#: ../ui/main.glade:1274
 msgid "Merge Layer Down"
 msgstr "向下合并图层"
 
@@ -2743,11 +2743,11 @@ msgstr "鼠标按钮"
 msgid "Mouse+Keyboard Combo"
 msgstr "鼠标+键盘结合"
 
-#: ../ui/main.glade:2807 ../ui/main.glade:2882
+#: ../ui/main.glade:2825 ../ui/main.glade:2900
 msgid "Move Down"
 msgstr "向下移动"
 
-#: ../ui/main.glade:2799 ../ui/main.glade:2874
+#: ../ui/main.glade:2817 ../ui/main.glade:2892
 msgid "Move Up"
 msgstr "向上移动"
 
@@ -2755,23 +2755,23 @@ msgstr "向上移动"
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
 msgstr "根据当前视图外被选中的元素数量将滚动速度翻倍，并以此数值为上限。"
 
-#: ../ui/main.glade:1129
+#: ../ui/main.glade:1147
 msgid "N_ext Annotated Page"
 msgstr "下一个标注页(_e)"
 
-#: ../ui/main.glade:1176
+#: ../ui/main.glade:1194
 msgid "New Page _After"
 msgstr "新建后页(_A)"
 
-#: ../ui/main.glade:1166
+#: ../ui/main.glade:1184
 msgid "New Page _Before"
 msgstr "新建前页(_B)"
 
-#: ../ui/main.glade:1187
+#: ../ui/main.glade:1205
 msgid "New Page at _End"
 msgstr "新建尾页(_E)"
 
-#: ../ui/main.glade:1234
+#: ../ui/main.glade:1252
 msgid "New _Layer"
 msgstr "新建图层(_L)"
 
@@ -2809,7 +2809,7 @@ msgstr "输出设备"
 msgid "PDF Cache"
 msgstr "PDF 缓存"
 
-#: ../ui/main.glade:1140
+#: ../ui/main.glade:1158
 msgid "P_revious Annotated Page"
 msgstr "上一注释页(_r)"
 
@@ -2821,7 +2821,7 @@ msgstr "页码："
 msgid "Paired Pages"
 msgstr "双页模式"
 
-#: ../ui/main.glade:1304
+#: ../ui/main.glade:1322
 msgid "Paper B_ackground"
 msgstr "纸张背景(_a)"
 
@@ -2829,11 +2829,11 @@ msgstr "纸张背景(_a)"
 msgid "Paper Format"
 msgstr "纸张样式"
 
-#: ../ui/main.glade:1294
+#: ../ui/main.glade:1312
 msgid "Paper _Color"
 msgstr "纸张颜色(_C)"
 
-#: ../ui/main.glade:1284
+#: ../ui/main.glade:1302
 msgid "Paper _Format"
 msgstr "纸张样式(_F)"
 
@@ -2842,11 +2842,11 @@ msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "部分基于 Denis Auroux 的 Xournal 软件"
 
-#: ../ui/main.glade:1984
+#: ../ui/main.glade:2002
 msgid "Pause"
 msgstr "暂停"
 
-#: ../ui/main.glade:1611
+#: ../ui/main.glade:1629
 msgid "Pen _Options"
 msgstr "画笔选项(_O)"
 
@@ -2862,7 +2862,7 @@ msgstr "播放设置"
 msgid "Plugin Manager"
 msgstr "插件管理器"
 
-#: ../ui/main.glade:2049
+#: ../ui/main.glade:2067
 msgid "Plugin _Manager"
 msgstr "插件管理器(_M)"
 
@@ -2878,7 +2878,7 @@ msgstr "预加载页面后"
 msgid "Pre-load pages before"
 msgstr "预加载页面前"
 
-#: ../ui/main.glade:487
+#: ../ui/main.glade:505
 msgid "Preferences"
 msgstr "偏好设置"
 
@@ -2922,7 +2922,7 @@ msgstr "重新渲染每当页面缩放变化大于 "
 msgid "Recent _Documents"
 msgstr "最近文档(_D)"
 
-#: ../ui/main.glade:1974
+#: ../ui/main.glade:1992
 msgid "Record / Stop"
 msgstr "录制/停止"
 
@@ -2930,7 +2930,7 @@ msgstr "录制/停止"
 msgid "Recording Quality"
 msgstr "录制质量"
 
-#: ../ui/main.glade:1267
+#: ../ui/main.glade:1285
 msgid "Rename Layer"
 msgstr "重命名图层"
 
@@ -2986,7 +2986,7 @@ msgstr "选择文件夹"
 msgid "Select Image"
 msgstr "选择图片"
 
-#: ../ui/main.glade:1352
+#: ../ui/main.glade:1370
 msgid "Select Linear Text"
 msgstr "选择线性文本"
 
@@ -2994,7 +2994,7 @@ msgstr "选择线性文本"
 msgid "Select PDF Page"
 msgstr "选择PDF页面"
 
-#: ../ui/main.glade:1364
+#: ../ui/main.glade:1382
 msgid "Select Text In Rectangle"
 msgstr "在矩形中选择文本"
 
@@ -3022,11 +3022,11 @@ msgstr "移到最后"
 msgid "Sensitivity Scale"
 msgstr "压感设置"
 
-#: ../ui/main.glade:684
+#: ../ui/main.glade:702
 msgid "Set Columns"
 msgstr "设置列"
 
-#: ../ui/main.glade:789
+#: ../ui/main.glade:807
 msgid "Set Rows"
 msgstr "设置行"
 
@@ -3042,11 +3042,11 @@ msgstr "显示浮动工具箱"
 msgid "Show Menubar on Startup"
 msgstr "启动时显示菜单栏"
 
-#: ../ui/main.glade:543
+#: ../ui/main.glade:561
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: ../ui/main.glade:559
+#: ../ui/main.glade:577
 msgid "Show Toolbars"
 msgstr "显示工具栏"
 
@@ -3101,7 +3101,7 @@ msgstr "开始缩放当距离为 "
 msgid "Storage Folder"
 msgstr "保存位置"
 
-#: ../ui/main.glade:2751
+#: ../ui/main.glade:2769
 msgid "Strikethrough selected text"
 msgstr "为选中文本添加删除线"
 
@@ -3122,7 +3122,7 @@ msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
 msgstr "系统光标"
 
-#: ../ui/main.glade:903
+#: ../ui/main.glade:921
 msgid "T_oolbars"
 msgstr "工具条(_o)"
 
@@ -3146,7 +3146,7 @@ msgstr "测试配置"
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "通过使用测试公式在全局模板文件上运行LaTeX生成命令，以测试当前配置是否有效。"
 
-#: ../ui/main.glade:1962
+#: ../ui/main.glade:1980
 msgid "Text Font..."
 msgstr "文本字体..."
 
@@ -3178,7 +3178,7 @@ msgstr "这些设置将用于新页面"
 msgid "Timeout"
 msgstr "超时"
 
-#: ../ui/main.glade:2771
+#: ../ui/main.glade:2789
 msgid "Toggle standard / region text selection"
 msgstr "切换标准/区域文本选择"
 
@@ -3203,7 +3203,7 @@ msgstr "请先选择对象。"
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
 msgstr "请先选择对象；如果没有选中，则显示浮动工具箱（需要启用）。"
 
-#: ../ui/main.glade:2731
+#: ../ui/main.glade:2749
 msgid "Underline selected text"
 msgstr "为选中文本添加下划线"
 
@@ -3298,67 +3298,67 @@ msgstr "缩放手势"
 msgid "Zoom Speed"
 msgstr "缩放速度"
 
-#: ../ui/main.glade:696
+#: ../ui/main.glade:714
 msgid "_1 Column"
 msgstr "_1列"
 
-#: ../ui/main.glade:801
+#: ../ui/main.glade:819
 msgid "_1 Row"
 msgstr "_1行"
 
-#: ../ui/main.glade:707
+#: ../ui/main.glade:725
 msgid "_2 Columns"
 msgstr "_2列"
 
-#: ../ui/main.glade:812
+#: ../ui/main.glade:830
 msgid "_2 Rows"
 msgstr "_2行"
 
-#: ../ui/main.glade:718
+#: ../ui/main.glade:736
 msgid "_3 Columns"
 msgstr "_3列"
 
-#: ../ui/main.glade:823
+#: ../ui/main.glade:841
 msgid "_3 Rows"
 msgstr "_3行"
 
-#: ../ui/main.glade:729
+#: ../ui/main.glade:747
 msgid "_4 Columns"
 msgstr "_4列"
 
-#: ../ui/main.glade:834
+#: ../ui/main.glade:852
 msgid "_4 Rows"
 msgstr "_4行"
 
-#: ../ui/main.glade:740
+#: ../ui/main.glade:758
 msgid "_5 Columns"
 msgstr "_5列"
 
-#: ../ui/main.glade:845
+#: ../ui/main.glade:863
 msgid "_5 Rows"
 msgstr "_5行"
 
-#: ../ui/main.glade:751
+#: ../ui/main.glade:769
 msgid "_6 Columns"
 msgstr "_6列"
 
-#: ../ui/main.glade:856
+#: ../ui/main.glade:874
 msgid "_6 Rows"
 msgstr "_6行"
 
-#: ../ui/main.glade:762
+#: ../ui/main.glade:780
 msgid "_7 Columns"
 msgstr "_7列"
 
-#: ../ui/main.glade:867
+#: ../ui/main.glade:885
 msgid "_7 Rows"
 msgstr "_7行"
 
-#: ../ui/main.glade:773
+#: ../ui/main.glade:791
 msgid "_8 Columns"
 msgstr "_8列"
 
-#: ../ui/main.glade:878
+#: ../ui/main.glade:896
 msgid "_8 Rows"
 msgstr "_8行"
 
@@ -3366,23 +3366,23 @@ msgstr "_8行"
 msgid "_Annotate PDF"
 msgstr "标注PDF(_A)"
 
-#: ../ui/main.glade:656
+#: ../ui/main.glade:674
 msgid "_Bottom to Top"
 msgstr "从下到上"
 
-#: ../ui/main.glade:671
+#: ../ui/main.glade:689
 msgid "_Cols/Rows"
 msgstr "列/行(_C)"
 
-#: ../ui/main.glade:931
+#: ../ui/main.glade:949
 msgid "_Customize"
 msgstr "设置(_C)"
 
-#: ../ui/main.glade:1412
+#: ../ui/main.glade:1430
 msgid "_Default Tools"
 msgstr "默认工具(_D)"
 
-#: ../ui/main.glade:1217
+#: ../ui/main.glade:1235
 msgid "_Delete Page"
 msgstr "删除页面(_D)"
 
@@ -3390,7 +3390,7 @@ msgstr "删除页面(_D)"
 msgid "_Edit"
 msgstr "编辑(_E)"
 
-#: ../ui/main.glade:1340
+#: ../ui/main.glade:1358
 msgid "_Eraser"
 msgstr "橡皮(_E)"
 
@@ -3402,143 +3402,143 @@ msgstr "输出为PDF(_E)"
 msgid "_File"
 msgstr "文件(_F)"
 
-#: ../ui/main.glade:1030
+#: ../ui/main.glade:1048
 msgid "_First Page"
 msgstr "首页(_F)"
 
-#: ../ui/main.glade:1052
+#: ../ui/main.glade:1070
 msgid "_Goto Page"
 msgstr "转到页面(_G)"
 
-#: ../ui/main.glade:2063
+#: ../ui/main.glade:2081
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: ../ui/main.glade:1376
+#: ../ui/main.glade:1394
 msgid "_Highlighter"
 msgstr "高亮(_H)"
 
-#: ../ui/main.glade:587
+#: ../ui/main.glade:605
 msgid "_Horizontal"
 msgstr "水平"
 
-#: ../ui/main.glade:1400
+#: ../ui/main.glade:1418
 msgid "_Image"
 msgstr "图片(_I)"
 
-#: ../ui/main.glade:1155
+#: ../ui/main.glade:1173
 msgid "_Journal"
 msgstr "日志(_J)"
 
-#: ../ui/main.glade:1074
+#: ../ui/main.glade:1092
 msgid "_Last Page"
 msgstr "末页(_L)"
 
-#: ../ui/main.glade:616
+#: ../ui/main.glade:634
 msgid "_Left to Right"
 msgstr "从左到右(_L)"
 
-#: ../ui/main.glade:921
+#: ../ui/main.glade:939
 msgid "_Manage"
 msgstr "管理(_M)"
 
-#: ../ui/main.glade:1019
+#: ../ui/main.glade:1037
 msgid "_Navigation"
 msgstr "导航(_N)"
 
-#: ../ui/main.glade:1102
+#: ../ui/main.glade:1120
 msgid "_Next Layer"
 msgstr "下一层(_N)"
 
-#: ../ui/main.glade:1063
+#: ../ui/main.glade:1081
 msgid "_Next Page"
 msgstr "下一页(_N)"
 
-#: ../ui/main.glade:512
+#: ../ui/main.glade:530
 msgid "_Pair Pages"
 msgstr "双页模式(_P)"
 
-#: ../ui/main.glade:1328
+#: ../ui/main.glade:1346
 msgid "_Pen"
 msgstr "画笔(_P)"
 
-#: ../ui/main.glade:2038
+#: ../ui/main.glade:2056
 msgid "_Plugin"
 msgstr "插件(_P)"
 
-#: ../ui/main.glade:522
+#: ../ui/main.glade:540
 msgid "_Presentation Mode"
 msgstr "演讲模式(_P)"
 
-#: ../ui/main.glade:1091
+#: ../ui/main.glade:1109
 msgid "_Previous Layer"
 msgstr "上一图层(_P)"
 
-#: ../ui/main.glade:1041
+#: ../ui/main.glade:1059
 msgid "_Previous Page"
 msgstr "前一页(_P)"
 
-#: ../ui/main.glade:627
+#: ../ui/main.glade:645
 msgid "_Right to Left"
 msgstr "从右向左(_R)"
 
-#: ../ui/main.glade:1429
+#: ../ui/main.glade:1447
 msgid "_Shape Recognizer"
 msgstr "形状识别(_S)"
 
-#: ../ui/main.glade:1388
+#: ../ui/main.glade:1406
 msgid "_Text"
 msgstr "文本(_T)"
 
-#: ../ui/main.glade:1317
+#: ../ui/main.glade:1335
 msgid "_Tools"
 msgstr "工具(_T)"
 
-#: ../ui/main.glade:1113
+#: ../ui/main.glade:1131
 msgid "_Top Layer"
 msgstr "顶层(_T)"
 
-#: ../ui/main.glade:645
+#: ../ui/main.glade:663
 msgid "_Top to Bottom"
 msgstr "从上到下"
 
-#: ../ui/main.glade:598
+#: ../ui/main.glade:616
 msgid "_Vertical"
 msgstr "垂直(_V)"
 
-#: ../ui/main.glade:1559
+#: ../ui/main.glade:1577
 msgid "_Vertical Space"
 msgstr "垂直间距(_V)"
 
-#: ../ui/main.glade:501
+#: ../ui/main.glade:519
 msgid "_View"
 msgstr "视图(_V)"
 
-#: ../ui/main.glade:1851
+#: ../ui/main.glade:1869
 msgid "_delete strokes"
 msgstr "删除笔划(_d)"
 
-#: ../ui/main.glade:1633 ../ui/main.glade:1779 ../ui/main.glade:1888
+#: ../ui/main.glade:1651 ../ui/main.glade:1797 ../ui/main.glade:1906
 msgid "_fine"
 msgstr "细(_f)"
 
-#: ../ui/main.glade:1644 ../ui/main.glade:1790 ../ui/main.glade:1899
+#: ../ui/main.glade:1662 ../ui/main.glade:1808 ../ui/main.glade:1917
 msgid "_medium"
 msgstr "中(_m)"
 
-#: ../ui/main.glade:1829
+#: ../ui/main.glade:1847
 msgid "_standard"
 msgstr "标准(_s)"
 
-#: ../ui/main.glade:1655 ../ui/main.glade:1801 ../ui/main.glade:1910
+#: ../ui/main.glade:1673 ../ui/main.glade:1819 ../ui/main.glade:1928
 msgid "_thick"
 msgstr "粗(_t)"
 
-#: ../ui/main.glade:1622 ../ui/main.glade:1768 ../ui/main.glade:1877
+#: ../ui/main.glade:1640 ../ui/main.glade:1786 ../ui/main.glade:1895
 msgid "_very fine"
 msgstr "极细(_v)"
 
-#: ../ui/main.glade:1840
+#: ../ui/main.glade:1858
 msgid "_whiteout"
 msgstr "涂白(_w)"
 
@@ -3572,7 +3572,7 @@ msgstr "像素"
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
 msgstr "s <i>(在此之后触摸屏将被重新激活)</i>"
 
-#: ../ui/main.glade:1666 ../ui/main.glade:1812 ../ui/main.glade:1921
+#: ../ui/main.glade:1684 ../ui/main.glade:1830 ../ui/main.glade:1939
 msgid "ver_y thick"
 msgstr "极粗(_y)"
 
