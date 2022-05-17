@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-17 14:36\n"
+"PO-Revision-Date: 2022-05-17 15:46\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -696,7 +696,7 @@ msgstr "Grafic"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Grid Snapping"
-msgstr "Ancorare la grilă"
+msgstr "Fixare la grilă"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
@@ -1279,7 +1279,7 @@ msgstr "Document salvat cu succes în „{1}”"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:93
 msgid "Supported files"
-msgstr "Toate tipurile de fișiere suportate"
+msgstr "Fișiere acceptate"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
@@ -1923,7 +1923,7 @@ msgstr "<b>Separator</b>"
 
 #: ../ui/settings.glade:777
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Atribuie o categorie fiecărui dispozitiv conectat la sistem. Schimbă aceste valori numai dacă dispozitivele tale nu sunt identificate corect. (de exemplu: creionul tău apare ca ecran tactil)</i>"
 
 #: ../ui/settings.glade:5271
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
@@ -1958,7 +1958,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2087
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
-msgstr ""
+msgstr "<i>Dacă aparatul este incompatibil cu recunoașterea mâinii, Xournal++ poate dezactiva ecranul tactil atunci când creionul se află lângă ecran.</i>"
 
 #: ../ui/settings.glade:1000
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
@@ -2021,11 +2021,11 @@ msgstr "<i>Folosește gesturi cu degetele pentru a face zoom paginilor documentu
 
 #: ../ui/settings.glade:2544
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr ""
+msgstr "<i>Folosește ecranul tactil ca pe un creion electronic</i>"
 
 #: ../ui/settings.glade:1698
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr ""
+msgstr "<i>Cu anumite reglări, unele creioane lasă inexactități la începutul scrierii. Acest lucru poate fi evitat prin ignorarea primelor semne atunci când creionul începe să scrie.</i>"
 
 #: ../ui/settings.glade:2021
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -2249,11 +2249,11 @@ msgstr "Temă întunecată (necesită repornire)"
 
 #: ../ui/settings.glade:237
 msgid "Deadzone"
-msgstr ""
+msgstr "Zonă moartă"
 
 #: ../ui/settings.glade:1046
 msgid "Deadzone radius"
-msgstr ""
+msgstr "Raza zonei moarte"
 
 #: ../ui/settings.glade:630
 msgid "Default Save Name"
@@ -2317,7 +2317,7 @@ msgstr "Nu desena pentru timp scurt și lungime decât dacă vine într-o succes
 
 #: ../ui/settings.glade:1077
 msgid "Drag"
-msgstr ""
+msgstr "Trage"
 
 #: ../ui/settings.glade:871
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2495,7 +2495,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2970
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: ../ui/latexSettings.glade:101
 msgid "Global template file path"
@@ -2503,7 +2503,7 @@ msgstr "Calea fișierului modelului global"
 
 #: ../ui/goto.glade:14
 msgid "Go to Page"
-msgstr ""
+msgstr "Du-te la pagina"
 
 #: ../ui/settings.glade:4657
 msgid "Grid size"
@@ -2589,7 +2589,7 @@ msgstr ""
 
 #: ../ui/settings.glade:664
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "Dacă deschizi un PDF și există un fișier Xournal cu același nume, se va deschide fișierul xoj."
 
 #: ../ui/settings.glade:4768
 msgid "Ignore Time (ms)"
