@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-17 13:31\n"
+"PO-Revision-Date: 2022-05-17 14:36\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -870,7 +870,7 @@ msgstr "Exportă numai paginile indicate de interval (de ex. „2-3,5,7-”)\n"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:11
 msgid "Open Image"
-msgstr "Deschide imaginea"
+msgstr "Deschide o imagine"
 
 #: ../src/core/control/XournalMain.cpp:161
 msgid "Open Logfile"
@@ -1482,7 +1482,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:610
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr "Tip necunoscut de linie: „{1}}”, se presupune a fi un creion"
+msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi un creion"
 
 #: ../src/core/control/Control.cpp:2451
 msgid "Unsaved Document"
@@ -1735,11 +1735,11 @@ msgstr "xoj-preview-extractor: nici o previzualizare și pagină găsite, poate 
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:130
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
-msgstr "xoj-preview-extractor: deschiderea fișierului de intrare \"{1}\" a eșuat"
+msgstr "xoj-preview-extractor: deschiderea fișierului de intrare „{1}” a eșuat"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:194
 msgid "xoj-preview-extractor: opening output file \"{1}\" failed"
-msgstr "xoj-preview-extractor: deschiderea fișierului de intrare \"{1}\" a eșuat"
+msgstr "xoj-preview-extractor: deschiderea fișierului de ieșire „{1}” a eșuat"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:201
 msgid "xoj-preview-extractor: successfully extracted"
