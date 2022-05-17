@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-16 22:03\n"
+"PO-Revision-Date: 2022-05-17 12:35\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1490,7 +1490,7 @@ msgstr "Document nesalvat"
 
 #: ../src/core/control/jobs/ImageExport.cpp:85
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "Format grafic neacceptat: "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
@@ -2043,7 +2043,7 @@ msgstr "Despre Xournal++"
 
 #: ../ui/settings.glade:4915
 msgid "Action on Tool Tap"
-msgstr ""
+msgstr "Acțiune la atingerea uneltei"
 
 #: ../ui/settings.glade:4216
 msgid "Add additional horizontal space of"
