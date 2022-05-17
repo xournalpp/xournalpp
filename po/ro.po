@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-17 15:46\n"
+"PO-Revision-Date: 2022-05-17 16:42\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -696,7 +696,7 @@ msgstr "Grafic"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Grid Snapping"
-msgstr "Fixare la grilă"
+msgstr "Ancorare la grilă"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
@@ -1055,7 +1055,7 @@ msgstr "Rotaţie"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Rotation Snapping"
-msgstr "Rotire Snapping"
+msgstr "Rotire forțată"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
@@ -2507,11 +2507,11 @@ msgstr "Du-te la pagina"
 
 #: ../ui/settings.glade:4657
 msgid "Grid size"
-msgstr ""
+msgstr "Mărimea grilei"
 
 #: ../ui/settings.glade:4614
 msgid "Grid snapping tolerance"
-msgstr ""
+msgstr "Toleranță de ancorare la grilă"
 
 #: ../ui/main.glade:1601
 msgid "H_and Tool"
@@ -3067,7 +3067,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4720
 msgid "Snapping"
-msgstr ""
+msgstr "Ancorare"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
@@ -3205,7 +3205,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4698
 msgid "Use snapping for recognized shapes"
-msgstr ""
+msgstr "Folosește ancorarea pentru formele recunoscute"
 
 #: ../ui/pageTemplate.glade:274
 msgid "Use the current page size instead of the page size above."
@@ -3477,7 +3477,7 @@ msgstr ""
 
 #: ../ui/main.glade:1447
 msgid "_Shape Recognizer"
-msgstr ""
+msgstr "_Recunoaștere Formă"
 
 #: ../ui/main.glade:1406
 msgid "_Text"
