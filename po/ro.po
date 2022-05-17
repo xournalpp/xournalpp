@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-17 12:35\n"
+"PO-Revision-Date: 2022-05-17 13:31\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -218,28 +218,28 @@ msgstr "Nu s-a putut încărca fișierul pagetemplates.ini"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:806
 msgid "Could not open attachment: {1}. Error message: Could not read file"
-msgstr "Atașamentul nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut citi fișierul"
+msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut citi fișierul"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:816
 msgid "Could not open attachment: {1}. Error message: Could not write file"
-msgstr "Atașamentul nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut scrie fișierul"
+msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut scrie fișierul"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:786
 #: ../src/core/control/xojfile/LoadHandler.cpp:1037
 #: ../src/core/control/xojfile/LoadHandler.cpp:1055
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
-msgstr "Atașarea nu a putut fi deschisă: {1}. Mesaj de eroare: Nicio dimensiune validă a fișierului furnizată"
+msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nicio dimensiune validă a fișierului furnizată"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:777
 #: ../src/core/control/xojfile/LoadHandler.cpp:793
 #: ../src/core/control/xojfile/LoadHandler.cpp:1030
 #: ../src/core/control/xojfile/LoadHandler.cpp:1044
 msgid "Could not open attachment: {1}. Error message: {2}"
-msgstr "Atașarea nu a putut fi deschisă: {1}. Mesaj de eroare: {2}"
+msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:166
 msgid "Could not open file: \"{1}\""
-msgstr "Nu s-a putut deschide fișierul: \"{1}\""
+msgstr "Nu s-a putut deschide fișierul: „{1}”"
 
 #: ../src/core/gui/MainWindow.cpp:95
 msgid "Could not parse custom toolbar.ini file: {1}\n"
@@ -490,11 +490,11 @@ msgstr "Eroare la încărcarea fișierului glade \"{1}\" (încercați să încă
 
 #: ../src/core/control/Control.cpp:2128
 msgid "Error opening file \"{1}\""
-msgstr "Eroare de deschidere fişier \"{1}\""
+msgstr "Eroare la deschiderea fișierului „{1}”"
 
 #: ../src/util/OutputStream.cpp:23
 msgid "Error opening file: \"{1}\""
-msgstr "Eroare de deschidere fişier \"{1}\""
+msgstr "Eroare la deschiderea fișierului „{1}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:449
 #: ../src/core/control/xojfile/LoadHandler.cpp:469
@@ -623,7 +623,7 @@ msgstr "Calea nu a putut fi găsită cu următoarea eroare:\n"
 #: ../src/util/PathUtil.cpp:158 ../src/util/PathUtil.cpp:175
 msgid "File couldn't be opened. You have to do it manually:\n"
 "URL: {1}"
-msgstr "Fișierul nu a putut fi deschis. Trebuie să îl faceți manual:\n"
+msgstr "Fișierul nu a putut fi deschis. Trebuie deschis manual:\n"
 "URL: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
@@ -874,7 +874,7 @@ msgstr "Deschide imaginea"
 
 #: ../src/core/control/XournalMain.cpp:161
 msgid "Open Logfile"
-msgstr "Deschide jurnal"
+msgstr "Deschide jurnalul"
 
 #: ../src/core/control/XournalMain.cpp:162
 msgid "Open Logfile directory"
@@ -883,7 +883,7 @@ msgstr "Deschide dosarul cu jurnale"
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
 msgid "Open file"
-msgstr "Deschide fișier"
+msgstr "Deschide un fișier"
 
 #: ../src/core/control/RecentManager.cpp:193
 msgctxt "{1} is a URI"
@@ -976,7 +976,7 @@ msgstr "Pauză / Rulează"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:257
 msgid "Pen"
-msgstr "Stilou"
+msgstr "Creion"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
@@ -1256,8 +1256,8 @@ msgstr "Ne pare rău, Xournal++ poate deschide doar un singur fișier simultan.\
 #: ../src/core/control/XournalMain.cpp:460
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr "Ne pare rău, Xournal++ nu poate deschide fișiere la distanță momentan.\n"
-"Trebuie să copiați fișierul într-un director local."
+msgstr "Momentan, Xournal++ nu poate deschide fișiere de la distanță.\n"
+"Trebuie copiat fișierul într-un dosar local."
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
@@ -1357,7 +1357,7 @@ msgstr "Verificarea pentru suprascrierea fondului a eșuat cu:\n"
 
 #: ../src/core/control/Control.cpp:2136
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
-msgstr "Fişierul în curs de încărcare are o versiune mai nouă decât cea acceptată în prezent de această versiune de Xournal++, deci este posibil să nu se încarce în mod corespunzător. Deschideți oricum?"
+msgstr "Fișierul în curs de încărcare are o versiune de format mai nouă decât cea acceptată în prezent de această versiune de Xournal++, deci este posibil să nu se încarce în mod corespunzător. Deschizi oricum?"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:119
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
@@ -1482,7 +1482,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:610
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr "Tip de AVC necunoscut: \"{1}\", presupunând un stilou"
+msgstr "Tip necunoscut de linie: „{1}}”, se presupune a fi un creion"
 
 #: ../src/core/control/Control.cpp:2451
 msgid "Unsaved Document"
@@ -1599,7 +1599,7 @@ msgstr "_Renunță"
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:12
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:13
 msgid "_Open"
-msgstr "Deschide"
+msgstr "_Deschide"
 
 #: ../src/core/control/Control.cpp:2395
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
@@ -1668,7 +1668,7 @@ msgstr "mouse"
 
 #: ../src/core/control/DeviceListHelper.cpp:94
 msgid "pen"
-msgstr "stilou"
+msgstr "creion"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
 msgid "show"
@@ -2047,11 +2047,11 @@ msgstr "Acțiune la atingerea uneltei"
 
 #: ../ui/settings.glade:4216
 msgid "Add additional horizontal space of"
-msgstr ""
+msgstr "Adaugă un spațiu orizontal suplimentar de"
 
 #: ../ui/settings.glade:4194
 msgid "Add additional vertical space of"
-msgstr ""
+msgstr "Adaugă un spațiu vertical suplimentar de"
 
 #: ../ui/settings.glade:4519
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
@@ -2133,7 +2133,7 @@ msgstr "Viteză de pornire"
 #: ../ui/settings.glade:3025
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr "Pictogramă stilou mare"
+msgstr "Simbol creion mare"
 
 #: ../ui/settings.glade:3230
 msgid "Border Color"
@@ -2233,7 +2233,7 @@ msgstr "Cursor"
 
 #: ../ui/settings.glade:3007
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Simbolul cursorului pentru creion"
 
 #: ../ui/settings.glade:1205
 msgid "Cusp detection"
@@ -2841,7 +2841,7 @@ msgstr "Pauză"
 
 #: ../ui/main.glade:1629
 msgid "Pen _Options"
-msgstr "Opțiuni Stilou"
+msgstr "_Opțiuni Creion"
 
 #: ../ui/settings.glade:3783
 msgid "Performance"
@@ -3453,7 +3453,7 @@ msgstr ""
 
 #: ../ui/main.glade:1346
 msgid "_Pen"
-msgstr ""
+msgstr "_Creion"
 
 #: ../ui/main.glade:2056
 msgid "_Plugin"
