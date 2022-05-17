@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-17 16:42\n"
+"PO-Revision-Date: 2022-05-17 17:44\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1233,7 +1233,7 @@ msgstr "Echer"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
-msgstr "Recunoaștere Formă"
+msgstr "Recunoaște forma"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:67
 msgid "Show all"
@@ -2511,7 +2511,7 @@ msgstr "Mărimea grilei"
 
 #: ../ui/settings.glade:4614
 msgid "Grid snapping tolerance"
-msgstr "Toleranță de ancorare la grilă"
+msgstr "Toleranța ancorării la grilă"
 
 #: ../ui/main.glade:1601
 msgid "H_and Tool"
@@ -2573,7 +2573,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4702
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr ""
+msgstr "Dacă este activată, formele care au fost recunoscute de unealta „Recunoaște forma” vor fi ancorate automat la grilă. Acest lucru poate duce la rezultate neașteptate dacă ai activat unealta „Recunoaște forma” în timpul scrierii."
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
@@ -2945,7 +2945,7 @@ msgstr "Buton drept maus"
 
 #: ../ui/settings.glade:4601
 msgid "Rotation snapping tolerance"
-msgstr "Toleranţă la ancorare rotaţie"
+msgstr "Toleranța rotirii forțate"
 
 #: ../ui/settings.glade:5511
 msgid "Sample Rate"
@@ -3477,7 +3477,7 @@ msgstr ""
 
 #: ../ui/main.glade:1447
 msgid "_Shape Recognizer"
-msgstr "_Recunoaștere Formă"
+msgstr "_Recunoaște forma"
 
 #: ../ui/main.glade:1406
 msgid "_Text"
