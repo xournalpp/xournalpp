@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-18 12:42\n"
+"PO-Revision-Date: 2022-05-18 13:45\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -105,11 +105,11 @@ msgstr "Atributul \"{1}\" nu a putut fi analizat ca int, valoarea este de nullpt
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "Atributul \"{1}\" nu a putut fi analizat ca size_t, valoarea este \"{2}\""
+msgstr "Valoarea „{1}” nu a putut fi analizată ca size_t, valoarea este „{2}”"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:162
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is nullptr"
-msgstr "Atributul \"{1}\" nu a putut fi analizat ca size_t, valoarea este de nullptr"
+msgstr "Valoarea „{1}” nu a putut fi analizată ca size_t, valoarea este nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
@@ -316,7 +316,7 @@ msgstr "Export personalizat"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Customize Toolbars"
-msgstr "Personalizează benzile cu unelte"
+msgstr "Personalizare benzi cu unelte"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:28
 msgid "Customized"
@@ -2535,7 +2535,7 @@ msgstr "Ascunde opțiunile"
 
 #: ../ui/settings.glade:3551 ../ui/settings.glade:3618
 msgid "Hide Sidebar"
-msgstr ""
+msgstr "Ascunde bara laterală"
 
 #: ../ui/settings.glade:3369
 msgid "Hide the horizontal scrollbar"
@@ -3037,7 +3037,7 @@ msgstr "Arată opțiunile la pornire"
 
 #: ../ui/main.glade:561
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Arată bara laterală"
 
 #: ../ui/main.glade:577
 msgid "Show Toolbars"
@@ -3045,11 +3045,11 @@ msgstr "Arată benzile cu unelte"
 
 #: ../ui/settings.glade:2772
 msgid "Show filepath in title bar"
-msgstr ""
+msgstr "Arată calea fișierului în titlu"
 
 #: ../ui/settings.glade:3302
 msgid "Show sidebar on the right side"
-msgstr ""
+msgstr "Arată bara laterală în dreaptă"
 
 #: ../ui/settings.glade:3318
 msgid "Show vertical scrollbar on the left side"
@@ -3116,7 +3116,7 @@ msgstr ""
 
 #: ../ui/main.glade:921
 msgid "T_oolbars"
-msgstr ""
+msgstr "B_enzi cu unelte"
 
 #: ../ui/latexSettings.glade:215
 msgid "Template file settings"
