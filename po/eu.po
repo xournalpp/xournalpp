@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-16 18:42\n"
+"POT-Creation-Date: 2022-05-18 20:16+0000\n"
+"PO-Revision-Date: 2022-05-18 20:28\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -68,11 +68,11 @@ msgstr "Esportatzeko aukera aurreratuak"
 msgid "All files"
 msgstr "Fitxategi guztiak"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:193
 msgid "Apply to all pages"
 msgstr "Aplikatu orri guztiei"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:184
 msgid "Apply to current page"
 msgstr "Aplikatu uneko orriari"
 
@@ -138,16 +138,16 @@ msgstr "Automatikoki gorde da hemen: {1}"
 msgid "Back"
 msgstr "Aurrekoa"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:198
-#: ../src/core/model/XojPage.cpp:173
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:187
+#: ../src/core/model/XojPage.cpp:160
 msgid "Background"
 msgstr "Atzeko planoa"
 
-#: ../src/core/control/tools/EditSelection.cpp:386
+#: ../src/core/control/tools/EditSelection.cpp:384
 msgid "Bring forward"
 msgstr "Ekarri aurrerago"
 
-#: ../src/core/control/tools/EditSelection.cpp:376
+#: ../src/core/control/tools/EditSelection.cpp:374
 msgid "Bring to front"
 msgstr "Ekarri aurrera"
 
@@ -347,7 +347,7 @@ msgstr "Ezabatu uneko orria"
 msgid "Delete file"
 msgstr "Ezabatu fitxategia"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:25
 msgid "Delete layer"
 msgstr "Ezabatu geruza"
 
@@ -746,7 +746,7 @@ msgstr "Txertatu irudia"
 msgid "Insert latex"
 msgstr "Txertatu latex"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:25
+#: ../src/core/undo/InsertLayerUndoAction.cpp:27
 msgid "Insert layer"
 msgstr "Txertatu geruza"
 
@@ -770,11 +770,11 @@ msgstr "Joan orrialde honetara (lehenengo orrialdea: 1)"
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Latexa sortzean errore bat aurkitu da: {1} (irteera kodea: {2})"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:254
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer"
 msgstr "Geruza"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Layer Combo"
 msgstr "Konbinatua geruza"
 
@@ -782,7 +782,7 @@ msgstr "Konbinatua geruza"
 msgid "Layer Preview"
 msgstr "Geruzaren aurrebista"
 
-#: ../src/core/control/layer/LayerController.cpp:369
+#: ../src/core/control/layer/LayerController.cpp:364
 msgid "Layer {1}"
 msgstr "Geruza {1}"
 
@@ -1193,11 +1193,11 @@ msgstr "Konbinatua hautapena"
 msgid "Send Bugreport"
 msgstr "Bidali akats-txostena"
 
-#: ../src/core/control/tools/EditSelection.cpp:397
+#: ../src/core/control/tools/EditSelection.cpp:395
 msgid "Send backward"
 msgstr "Eraman atzerago"
 
-#: ../src/core/control/tools/EditSelection.cpp:405
+#: ../src/core/control/tools/EditSelection.cpp:403
 msgid "Send to back"
 msgstr "Eraman atzera"
 
@@ -1670,7 +1670,7 @@ msgstr "sagua"
 msgid "pen"
 msgstr "arkatza"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:144
 msgid "show"
 msgstr "Erakutsi"
 
