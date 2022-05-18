@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-16 18:42\n"
+"POT-Creation-Date: 2022-05-18 20:16+0000\n"
+"PO-Revision-Date: 2022-05-18 20:27\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -68,11 +68,11 @@ msgstr "進階輸出選項"
 msgid "All files"
 msgstr "所有檔案"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:193
 msgid "Apply to all pages"
 msgstr "套用到所有頁面"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:184
 msgid "Apply to current page"
 msgstr "套用到目前的頁面"
 
@@ -137,16 +137,16 @@ msgstr "自動儲存到 {1}"
 msgid "Back"
 msgstr "後退"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:198
-#: ../src/core/model/XojPage.cpp:173
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:187
+#: ../src/core/model/XojPage.cpp:160
 msgid "Background"
 msgstr "背景"
 
-#: ../src/core/control/tools/EditSelection.cpp:386
+#: ../src/core/control/tools/EditSelection.cpp:384
 msgid "Bring forward"
 msgstr "往前移動"
 
-#: ../src/core/control/tools/EditSelection.cpp:376
+#: ../src/core/control/tools/EditSelection.cpp:374
 msgid "Bring to front"
 msgstr "移到上層"
 
@@ -345,7 +345,7 @@ msgstr "刪除當前頁"
 msgid "Delete file"
 msgstr "刪除檔案"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:25
 msgid "Delete layer"
 msgstr "刪除層"
 
@@ -743,7 +743,7 @@ msgstr "插入圖片"
 msgid "Insert latex"
 msgstr "插入LaTeX"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:25
+#: ../src/core/undo/InsertLayerUndoAction.cpp:27
 msgid "Insert layer"
 msgstr "插入層"
 
@@ -767,11 +767,11 @@ msgstr "跳到頁面(第一頁:1)"
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "LaTeX 產生遇到錯誤: {1} (退出代碼: {2})"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:254
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer"
 msgstr "圖層"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Layer Combo"
 msgstr "圖層組合"
 
@@ -779,7 +779,7 @@ msgstr "圖層組合"
 msgid "Layer Preview"
 msgstr "圖層預覽"
 
-#: ../src/core/control/layer/LayerController.cpp:369
+#: ../src/core/control/layer/LayerController.cpp:364
 msgid "Layer {1}"
 msgstr "{1}圖層"
 
@@ -1190,11 +1190,11 @@ msgstr "選擇工具組"
 msgid "Send Bugreport"
 msgstr "選擇錯誤報告"
 
-#: ../src/core/control/tools/EditSelection.cpp:397
+#: ../src/core/control/tools/EditSelection.cpp:395
 msgid "Send backward"
 msgstr "下移一層"
 
-#: ../src/core/control/tools/EditSelection.cpp:405
+#: ../src/core/control/tools/EditSelection.cpp:403
 msgid "Send to back"
 msgstr "置於底層"
 
@@ -1667,7 +1667,7 @@ msgstr "滑鼠"
 msgid "pen"
 msgstr "畫筆"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:144
 msgid "show"
 msgstr "顯示"
 
