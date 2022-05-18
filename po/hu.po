@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-18 06:27\n"
+"POT-Creation-Date: 2022-05-18 20:16+0000\n"
+"PO-Revision-Date: 2022-05-18 20:28\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -68,11 +68,11 @@ msgstr "Haladó exportálási lehetőségek"
 msgid "All files"
 msgstr "Minden fájl"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:193
 msgid "Apply to all pages"
 msgstr "Alkalmazás az összes oldalra"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:184
 msgid "Apply to current page"
 msgstr "Alkalmazás a jelenlegi oldalra"
 
@@ -138,16 +138,16 @@ msgstr "Automatikus mentés ide: {1}"
 msgid "Back"
 msgstr "Vissza"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:198
-#: ../src/core/model/XojPage.cpp:173
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:187
+#: ../src/core/model/XojPage.cpp:160
 msgid "Background"
 msgstr "Háttér"
 
-#: ../src/core/control/tools/EditSelection.cpp:386
+#: ../src/core/control/tools/EditSelection.cpp:384
 msgid "Bring forward"
 msgstr "Előbbre hozás"
 
-#: ../src/core/control/tools/EditSelection.cpp:376
+#: ../src/core/control/tools/EditSelection.cpp:374
 msgid "Bring to front"
 msgstr "Előrehozás"
 
@@ -347,7 +347,7 @@ msgstr "Jelenlegi oldal törlése"
 msgid "Delete file"
 msgstr "Fájl törlése"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:25
 msgid "Delete layer"
 msgstr "Réteg törlése"
 
@@ -745,7 +745,7 @@ msgstr "Kép beszúrása"
 msgid "Insert latex"
 msgstr "LaTeX beszúrása"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:25
+#: ../src/core/undo/InsertLayerUndoAction.cpp:27
 msgid "Insert layer"
 msgstr "Réteg beszúrása"
 
@@ -769,11 +769,11 @@ msgstr "Ugrás adott oldalra (első oldal: 1)"
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "A LaTeX létrehozási közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:254
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer"
 msgstr "Réteg"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Layer Combo"
 msgstr "Rétegkombináció"
 
@@ -781,7 +781,7 @@ msgstr "Rétegkombináció"
 msgid "Layer Preview"
 msgstr "Réteg előnézete"
 
-#: ../src/core/control/layer/LayerController.cpp:369
+#: ../src/core/control/layer/LayerController.cpp:364
 msgid "Layer {1}"
 msgstr "{1}. réteg"
 
@@ -1192,11 +1192,11 @@ msgstr "Kombinált kijelölés"
 msgid "Send Bugreport"
 msgstr "Hibabejelentés"
 
-#: ../src/core/control/tools/EditSelection.cpp:397
+#: ../src/core/control/tools/EditSelection.cpp:395
 msgid "Send backward"
 msgstr "Hátrébb küldés"
 
-#: ../src/core/control/tools/EditSelection.cpp:405
+#: ../src/core/control/tools/EditSelection.cpp:403
 msgid "Send to back"
 msgstr "Hátraküldés"
 
@@ -1669,7 +1669,7 @@ msgstr "egér"
 msgid "pen"
 msgstr "toll"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:144
 msgid "show"
 msgstr "megjelenítés"
 
