@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-16 18:42\n"
+"POT-Creation-Date: 2022-05-18 20:16+0000\n"
+"PO-Revision-Date: 2022-05-18 20:27\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -68,11 +68,11 @@ msgstr "Gelişmiş dışa aktarma seçenekleri"
 msgid "All files"
 msgstr "Tüm dosyalar"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:193
 msgid "Apply to all pages"
 msgstr "Tüm sayfalara uygula"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:184
 msgid "Apply to current page"
 msgstr "Geçerli sayfaya uygula"
 
@@ -138,16 +138,16 @@ msgstr "{1} 'e otomatik kaydediliyor"
 msgid "Back"
 msgstr "Geri"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:198
-#: ../src/core/model/XojPage.cpp:173
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:187
+#: ../src/core/model/XojPage.cpp:160
 msgid "Background"
 msgstr "Arka plan"
 
-#: ../src/core/control/tools/EditSelection.cpp:386
+#: ../src/core/control/tools/EditSelection.cpp:384
 msgid "Bring forward"
 msgstr "Öne getir"
 
-#: ../src/core/control/tools/EditSelection.cpp:376
+#: ../src/core/control/tools/EditSelection.cpp:374
 msgid "Bring to front"
 msgstr "En öne getir"
 
@@ -347,7 +347,7 @@ msgstr "Geçerli sayfayı sil"
 msgid "Delete file"
 msgstr "Dosyayı sil"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:25
 msgid "Delete layer"
 msgstr "Katmanı sil"
 
@@ -746,7 +746,7 @@ msgstr "Resim ekle"
 msgid "Insert latex"
 msgstr "Lateks ekle"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:25
+#: ../src/core/undo/InsertLayerUndoAction.cpp:27
 msgid "Insert layer"
 msgstr "Katman ekle"
 
@@ -770,11 +770,11 @@ msgstr "Sayfaya Git (ilk Sayfa: 1)"
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Latex oluşturulurken bir hatayla karşılaştı: {1} (çıkış kodu: {2})"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:254
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer"
 msgstr "Katman"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Layer Combo"
 msgstr "Katman birleşimi"
 
@@ -782,7 +782,7 @@ msgstr "Katman birleşimi"
 msgid "Layer Preview"
 msgstr "Katman Önizlemesi"
 
-#: ../src/core/control/layer/LayerController.cpp:369
+#: ../src/core/control/layer/LayerController.cpp:364
 msgid "Layer {1}"
 msgstr "Katman {1}"
 
@@ -1193,11 +1193,11 @@ msgstr "Kombinasyonu seç"
 msgid "Send Bugreport"
 msgstr "Hata Raporu Gönder"
 
-#: ../src/core/control/tools/EditSelection.cpp:397
+#: ../src/core/control/tools/EditSelection.cpp:395
 msgid "Send backward"
 msgstr "Geriye gönder"
 
-#: ../src/core/control/tools/EditSelection.cpp:405
+#: ../src/core/control/tools/EditSelection.cpp:403
 msgid "Send to back"
 msgstr "En arkaya gönder"
 
@@ -1670,7 +1670,7 @@ msgstr "fare"
 msgid "pen"
 msgstr "kalem"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:144
 msgid "show"
 msgstr "göster"
 
