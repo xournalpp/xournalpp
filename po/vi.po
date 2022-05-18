@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-16 18:42\n"
+"POT-Creation-Date: 2022-05-18 20:16+0000\n"
+"PO-Revision-Date: 2022-05-18 20:27\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -68,11 +68,11 @@ msgstr "Các tùy chọn xuất nâng cao"
 msgid "All files"
 msgstr "Tất cả các tệp tin"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:193
 msgid "Apply to all pages"
 msgstr "Áp dụng cho mọi trang"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:184
 msgid "Apply to current page"
 msgstr "Áp dụng cho trang hiện tại"
 
@@ -137,16 +137,16 @@ msgstr "Đang lưu tự động vào {1}"
 msgid "Back"
 msgstr "Quay lại"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:198
-#: ../src/core/model/XojPage.cpp:173
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:187
+#: ../src/core/model/XojPage.cpp:160
 msgid "Background"
 msgstr "Nền"
 
-#: ../src/core/control/tools/EditSelection.cpp:386
+#: ../src/core/control/tools/EditSelection.cpp:384
 msgid "Bring forward"
 msgstr "Đưa ra trước"
 
-#: ../src/core/control/tools/EditSelection.cpp:376
+#: ../src/core/control/tools/EditSelection.cpp:374
 msgid "Bring to front"
 msgstr "Đưa ra phía trước"
 
@@ -346,7 +346,7 @@ msgstr "Xóa trang hiện tại"
 msgid "Delete file"
 msgstr "Xóa tệp tin"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:25
 msgid "Delete layer"
 msgstr "Xóa lớp"
 
@@ -745,7 +745,7 @@ msgstr "Chèn ảnh"
 msgid "Insert latex"
 msgstr "Chèn latex"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:25
+#: ../src/core/undo/InsertLayerUndoAction.cpp:27
 msgid "Insert layer"
 msgstr "Chèn lớp"
 
@@ -769,11 +769,11 @@ msgstr "Nhảy đến Trang (Trang đầu tiên: 1)"
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Việc tạo latex gặp lỗi: {1} (mã lỗi: {2})"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:254
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer"
 msgstr "Lớp"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Layer Combo"
 msgstr "Tổ hợp Lớp"
 
@@ -781,7 +781,7 @@ msgstr "Tổ hợp Lớp"
 msgid "Layer Preview"
 msgstr "Xem trước Lớp"
 
-#: ../src/core/control/layer/LayerController.cpp:369
+#: ../src/core/control/layer/LayerController.cpp:364
 msgid "Layer {1}"
 msgstr "Lớp {1}"
 
@@ -1192,11 +1192,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr "Gửi báo cáo lỗi"
 
-#: ../src/core/control/tools/EditSelection.cpp:397
+#: ../src/core/control/tools/EditSelection.cpp:395
 msgid "Send backward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:405
+#: ../src/core/control/tools/EditSelection.cpp:403
 msgid "Send to back"
 msgstr ""
 
@@ -1658,7 +1658,7 @@ msgstr "chuột"
 msgid "pen"
 msgstr "bút"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:144
 msgid "show"
 msgstr "hiện"
 
