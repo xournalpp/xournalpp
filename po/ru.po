@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-16 18:42\n"
+"POT-Creation-Date: 2022-05-18 20:16+0000\n"
+"PO-Revision-Date: 2022-05-18 20:27\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -68,11 +68,11 @@ msgstr "Расширенные параметры экспорта"
 msgid "All files"
 msgstr "Все файлы"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:193
 msgid "Apply to all pages"
 msgstr "Применить ко всем страницам"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:184
 msgid "Apply to current page"
 msgstr "Применить к текущей странице"
 
@@ -138,16 +138,16 @@ msgstr "Автосохранение в {1}"
 msgid "Back"
 msgstr "Назад"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:198
-#: ../src/core/model/XojPage.cpp:173
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:187
+#: ../src/core/model/XojPage.cpp:160
 msgid "Background"
 msgstr "Фон"
 
-#: ../src/core/control/tools/EditSelection.cpp:386
+#: ../src/core/control/tools/EditSelection.cpp:384
 msgid "Bring forward"
 msgstr "Переместить вперед"
 
-#: ../src/core/control/tools/EditSelection.cpp:376
+#: ../src/core/control/tools/EditSelection.cpp:374
 msgid "Bring to front"
 msgstr "На передний план"
 
@@ -347,7 +347,7 @@ msgstr "Удалить текущую страницу"
 msgid "Delete file"
 msgstr "Удалить файл"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:25
 msgid "Delete layer"
 msgstr "Удалить слой"
 
@@ -746,7 +746,7 @@ msgstr "Вставка изображения"
 msgid "Insert latex"
 msgstr "Вставить latex"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:25
+#: ../src/core/undo/InsertLayerUndoAction.cpp:27
 msgid "Insert layer"
 msgstr "Вставить слой"
 
@@ -770,11 +770,11 @@ msgstr "Перейти на страницу (первая страница: 1)"
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Ошибка генерации LaTeX: {1} (код выхода: {2})"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:254
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer"
 msgstr "Слой"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Layer Combo"
 msgstr "Комбо слоя"
 
@@ -782,7 +782,7 @@ msgstr "Комбо слоя"
 msgid "Layer Preview"
 msgstr "Предпросмотр слоя"
 
-#: ../src/core/control/layer/LayerController.cpp:369
+#: ../src/core/control/layer/LayerController.cpp:364
 msgid "Layer {1}"
 msgstr "Слой {1}"
 
@@ -1193,11 +1193,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr "Отправить отчёт об ошибке"
 
-#: ../src/core/control/tools/EditSelection.cpp:397
+#: ../src/core/control/tools/EditSelection.cpp:395
 msgid "Send backward"
 msgstr "Переместить назад"
 
-#: ../src/core/control/tools/EditSelection.cpp:405
+#: ../src/core/control/tools/EditSelection.cpp:403
 msgid "Send to back"
 msgstr "На задний план"
 
@@ -1668,7 +1668,7 @@ msgstr "мышь"
 msgid "pen"
 msgstr "перо"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:144
 msgid "show"
 msgstr "показать"
 
