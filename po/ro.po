@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-18 10:07\n"
+"PO-Revision-Date: 2022-05-18 11:40\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2193,7 +2193,7 @@ msgstr "Culoarea cercului"
 
 #: ../ui/settings.glade:3754
 msgid "Clear cached paged while scrolling"
-msgstr ""
+msgstr "Șterge memoria cache în timpul răsfoirii"
 
 #: ../ui/settings.glade:2952
 msgid "Colors"
@@ -2297,7 +2297,7 @@ msgstr "Dezactivează desenul pentru acest dispozitiv"
 
 #: ../ui/settings.glade:3399
 msgid "Disable scrollbar fade out"
-msgstr "Dezactivează eliminarea barei de derulare"
+msgstr "Dezactivează dispariția barei de răsfoire"
 
 #: ../ui/settingsDeviceClassConfig.glade:41
 msgid "Disabled"
@@ -2965,7 +2965,7 @@ msgstr "Bare de răsfoire"
 
 #: ../ui/settings.glade:4297
 msgid "Scrolling outside the page"
-msgstr "Derulare în afara paginii"
+msgstr "Deplasare în afara paginii"
 
 #: ../ui/pageTemplate.glade:177
 msgid "Select Background Color"
@@ -3053,7 +3053,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3318
 msgid "Show vertical scrollbar on the left side"
-msgstr ""
+msgstr "Arată bara verticală de răsfoire în stânga"
 
 #: ../ui/settings.glade:903
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
@@ -3075,7 +3075,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3867
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Viteza pentru Ctrl + Răsfoire"
 
 #: ../ui/settings.glade:3895
 msgid "Speed for a Zoomstep"
@@ -3180,7 +3180,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Răsfoire la atingere"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
