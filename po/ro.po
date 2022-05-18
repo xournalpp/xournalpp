@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-18 21:45\n"
+"PO-Revision-Date: 2022-05-18 22:43\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -62,11 +62,11 @@ msgstr "Adaugă/Modifică TeX"
 
 #: ../src/core/control/XournalMain.cpp:622
 msgid "Advanced export options"
-msgstr "Opțiuni avansate de export"
+msgstr "Opțiuni avansate de exportare"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
-msgstr "Toate fişierele"
+msgstr "Toate fișierele"
 
 #: ../src/core/control/pagetype/PageTypeMenu.cpp:193
 msgid "Apply to all pages"
@@ -74,7 +74,7 @@ msgstr "Aplică la toate paginile"
 
 #: ../src/core/control/pagetype/PageTypeMenu.cpp:184
 msgid "Apply to current page"
-msgstr "Aplică la pagina curentă"
+msgstr "Aplică la pagina actuală"
 
 #: ../src/core/control/tools/EditSelection.cpp:369
 msgid "Arrange"
@@ -131,7 +131,7 @@ msgstr "Salvare automată redenumită de la {1} la {2}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
-msgstr "Salvare automată la {1}"
+msgstr "Salvare automată în {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:423
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:502
@@ -158,7 +158,7 @@ msgstr "Anulează"
 
 #: ../src/core/undo/ColorUndoAction.cpp:84
 msgid "Change color"
-msgstr "Schimbă Culoarea"
+msgstr "Schimbă culoarea"
 
 #: ../src/core/undo/FontUndoAction.cpp:104
 msgid "Change font"
@@ -166,7 +166,7 @@ msgstr "Schimbă tipul de litere"
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:72
 msgid "Change line style"
-msgstr "Schimbă stilul de linie"
+msgstr "Schimbă stilul liniei"
 
 #: ../src/core/undo/FillUndoAction.cpp:76
 msgid "Change stroke fill"
@@ -182,7 +182,7 @@ msgstr "Culoare necunoscută: „{1}” (nu este definită în lista de culori p
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:226
 msgid "Contents"
-msgstr "Conţinut"
+msgstr "Conținut"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 #: ../src/core/gui/toolbarMenubar/model/ToolbarModel.cpp:75
@@ -304,7 +304,7 @@ msgstr "Nu s-a putut scrie fondul \"{1}\". Continuă oricum."
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:78
 msgid "Create new layer"
-msgstr "Creare strat nou"
+msgstr "Creează un strat nou"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:65
 msgid "Custom"
@@ -2362,7 +2362,7 @@ msgstr "Zona de desenare"
 
 #: ../ui/settings.glade:4487
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr "Instrumente de desenare - Setează modificări după direcția desenată (experimental)"
+msgstr "Instrumente de desenare - Stabilește modificări în funcție de direcția de desenare (Experimental)"
 
 #: ../ui/main.glade:2841 ../ui/main.glade:2878
 msgid "Duplicate"
@@ -2487,7 +2487,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:66
 msgid "General LaTeX tool settings"
-msgstr "Reglări generale ale uneltei LaTeX"
+msgstr "Reglări generale pentru LaTeX"
 
 #: ../ui/about.glade:114
 msgid "Git commit"
@@ -2581,7 +2581,7 @@ msgstr "Dacă această opțiune este activată, Xournal++ va deschide automat ce
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr "Dacă este activat, verifică dacă pachetele LaTeX necesare sunt instalate și comenzile LaTeX sunt disponibile înainte de a porni unealta LaTeX."
+msgstr "Dacă este activat, verifică dacă pachetele LaTeX necesare sunt instalate și comenzile LaTeX sunt disponibile înainte de a porni instrumentul LaTeX."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
@@ -2993,7 +2993,7 @@ msgstr "Alege textul din dreptunghi"
 
 #: ../ui/settings.glade:3639
 msgid "Select toolbar:"
-msgstr "Alege banda cu unelte:"
+msgstr "Alege banda cu instrumente:"
 
 #: ../ui/settings.glade:2867
 msgid "Selection Color (Text, Stroke Selection etc.)"
@@ -3041,7 +3041,7 @@ msgstr "Arată bara laterală"
 
 #: ../ui/main.glade:577
 msgid "Show Toolbars"
-msgstr "Arată benzile cu unelte"
+msgstr "Arată benzile cu instrumente"
 
 #: ../ui/settings.glade:2772
 msgid "Show filepath in title bar"
@@ -3144,7 +3144,7 @@ msgstr "Tipul de litere al textului..."
 
 #: ../ui/latexSettings.glade:99
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr "Fișierul LaTeX de folosit ca model pentru unealta LaTeX."
+msgstr "Fișierul LaTeX de folosit ca model pentru instrumentul LaTeX."
 
 #: ../ui/latexSettings.glade:200
 msgid "The current color of the Text Tool, in hex RGB format."
@@ -3152,11 +3152,11 @@ msgstr "Culoarea actuală a instrumentului de text în format hexazecimal RGB."
 
 #: ../ui/latexSettings.glade:114
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
-msgstr "Următoarele șiruri vor fi înlocuite în fișierul modelului global atunci când se pornește unealta LaTeX:"
+msgstr "Următoarele șiruri vor fi înlocuite în fișierul modelului global atunci când se pornește instrumentul LaTeX:"
 
 #: ../ui/latexSettings.glade:139
 msgid "The math mode formula typed in the LaTeX tool."
-msgstr "Formula matematică introdusă în unealta LaTeX."
+msgstr "Formula matematică introdusă în instrumentul LaTeX."
 
 #: ../ui/settings.glade:4058
 msgid "The unit of the ruler is cm"
@@ -3373,7 +3373,7 @@ msgstr ""
 
 #: ../ui/main.glade:1430
 msgid "_Default Tools"
-msgstr "Unelte _prestabilite"
+msgstr "Instrumente _prestabilite"
 
 #: ../ui/main.glade:1235
 msgid "_Delete Page"
@@ -3485,7 +3485,7 @@ msgstr "_Text"
 
 #: ../ui/main.glade:1335
 msgid "_Tools"
-msgstr "_Unelte"
+msgstr "_Instrumente"
 
 #: ../ui/main.glade:1131
 msgid "_Top Layer"
