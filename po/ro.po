@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-18 11:40\n"
+"PO-Revision-Date: 2022-05-18 12:42\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2289,7 +2289,7 @@ msgstr "Dezactivare"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr ""
+msgstr "Dezactivează caracteristica de răsfoire inerțială integrată în GTK (necesită repornire)."
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -2539,11 +2539,11 @@ msgstr ""
 
 #: ../ui/settings.glade:3369
 msgid "Hide the horizontal scrollbar"
-msgstr ""
+msgstr "Ascunde bara orizontală de răsfoire"
 
 #: ../ui/settings.glade:3384
 msgid "Hide the vertical scrollbar"
-msgstr ""
+msgstr "Ascunde bara verticală de răsfoire"
 
 #: ../ui/settings.glade:3050
 msgid "Highlight cursor position"
