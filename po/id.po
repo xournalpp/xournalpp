@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-16 18:42\n"
+"POT-Creation-Date: 2022-05-18 20:16+0000\n"
+"PO-Revision-Date: 2022-05-18 20:28\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -68,11 +68,11 @@ msgstr "Opsi ekspor lanjutan"
 msgid "All files"
 msgstr "Semua berkas"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:193
 msgid "Apply to all pages"
 msgstr "Terapkan ke semua halaman"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:184
 msgid "Apply to current page"
 msgstr "Terapkan ke halaman ini"
 
@@ -138,16 +138,16 @@ msgstr "Menyimpan otomatis ke {1}"
 msgid "Back"
 msgstr "Kembali"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:198
-#: ../src/core/model/XojPage.cpp:173
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:187
+#: ../src/core/model/XojPage.cpp:160
 msgid "Background"
 msgstr "Latar belakang"
 
-#: ../src/core/control/tools/EditSelection.cpp:386
+#: ../src/core/control/tools/EditSelection.cpp:384
 msgid "Bring forward"
 msgstr "Bawa maju"
 
-#: ../src/core/control/tools/EditSelection.cpp:376
+#: ../src/core/control/tools/EditSelection.cpp:374
 msgid "Bring to front"
 msgstr "Bawa ke depan"
 
@@ -347,7 +347,7 @@ msgstr "Hapus halaman ini"
 msgid "Delete file"
 msgstr "Hapus berkas"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:25
 msgid "Delete layer"
 msgstr "Hapus lapisan"
 
@@ -744,7 +744,7 @@ msgstr "Sisipkan gambar"
 msgid "Insert latex"
 msgstr "Sisipkan latex"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:25
+#: ../src/core/undo/InsertLayerUndoAction.cpp:27
 msgid "Insert layer"
 msgstr "Sisipkan lapisan"
 
@@ -768,11 +768,11 @@ msgstr "Lompat ke Halaman (halaman pertama: 1)"
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr ""
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:254
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer"
 msgstr "Lapisan"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Layer Combo"
 msgstr "Kombinasi Lapisan"
 
@@ -780,7 +780,7 @@ msgstr "Kombinasi Lapisan"
 msgid "Layer Preview"
 msgstr "Pratinjau Lapisan"
 
-#: ../src/core/control/layer/LayerController.cpp:369
+#: ../src/core/control/layer/LayerController.cpp:364
 msgid "Layer {1}"
 msgstr "Lapisan {1}"
 
@@ -1191,11 +1191,11 @@ msgstr ""
 msgid "Send Bugreport"
 msgstr "Kirim Laporan Kutu"
 
-#: ../src/core/control/tools/EditSelection.cpp:397
+#: ../src/core/control/tools/EditSelection.cpp:395
 msgid "Send backward"
 msgstr ""
 
-#: ../src/core/control/tools/EditSelection.cpp:405
+#: ../src/core/control/tools/EditSelection.cpp:403
 msgid "Send to back"
 msgstr ""
 
@@ -1661,7 +1661,7 @@ msgstr "tetikus"
 msgid "pen"
 msgstr "pena"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:144
 msgid "show"
 msgstr "tampilkan"
 
