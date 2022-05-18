@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-16 18:42\n"
+"POT-Creation-Date: 2022-05-18 20:16+0000\n"
+"PO-Revision-Date: 2022-05-18 20:28\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -68,11 +68,11 @@ msgstr "Pokročilé možnosti exportu"
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:192
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:193
 msgid "Apply to all pages"
 msgstr "Použít na všechny stránky"
 
-#: ../src/core/control/pagetype/PageTypeMenu.cpp:183
+#: ../src/core/control/pagetype/PageTypeMenu.cpp:184
 msgid "Apply to current page"
 msgstr "Použít na aktuální stránku"
 
@@ -137,16 +137,16 @@ msgstr "Automaticky ukládám do {1}"
 msgid "Back"
 msgstr "Zpět"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:198
-#: ../src/core/model/XojPage.cpp:173
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:187
+#: ../src/core/model/XojPage.cpp:160
 msgid "Background"
 msgstr "Pozadí"
 
-#: ../src/core/control/tools/EditSelection.cpp:386
+#: ../src/core/control/tools/EditSelection.cpp:384
 msgid "Bring forward"
 msgstr "Přenést blíž"
 
-#: ../src/core/control/tools/EditSelection.cpp:376
+#: ../src/core/control/tools/EditSelection.cpp:374
 msgid "Bring to front"
 msgstr "Přenést do popředí"
 
@@ -346,7 +346,7 @@ msgstr "Smazat aktuální stránku"
 msgid "Delete file"
 msgstr "Smazat soubor"
 
-#: ../src/core/undo/RemoveLayerUndoAction.cpp:27
+#: ../src/core/undo/RemoveLayerUndoAction.cpp:25
 msgid "Delete layer"
 msgstr "Smazat vrstvu"
 
@@ -745,7 +745,7 @@ msgstr "Vložit obrázek"
 msgid "Insert latex"
 msgstr "Vložit LaTeX"
 
-#: ../src/core/undo/InsertLayerUndoAction.cpp:25
+#: ../src/core/undo/InsertLayerUndoAction.cpp:27
 msgid "Insert layer"
 msgstr "Vložit vrstvu"
 
@@ -769,11 +769,11 @@ msgstr "Přejít na stránku (první stránka: 1)"
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Generování Latex narazilo na chybu: {1} (exit kód: {2})"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:254
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer"
 msgstr "Vrstva"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:240
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Layer Combo"
 msgstr "Kombinace vrstvy"
 
@@ -781,7 +781,7 @@ msgstr "Kombinace vrstvy"
 msgid "Layer Preview"
 msgstr "Náhled vrstvy"
 
-#: ../src/core/control/layer/LayerController.cpp:369
+#: ../src/core/control/layer/LayerController.cpp:364
 msgid "Layer {1}"
 msgstr "Vrstva {1}"
 
@@ -1192,11 +1192,11 @@ msgstr "Kombinace výběru"
 msgid "Send Bugreport"
 msgstr "Zaslat hlášení o chybě"
 
-#: ../src/core/control/tools/EditSelection.cpp:397
+#: ../src/core/control/tools/EditSelection.cpp:395
 msgid "Send backward"
 msgstr "Odsunout dozadu"
 
-#: ../src/core/control/tools/EditSelection.cpp:405
+#: ../src/core/control/tools/EditSelection.cpp:403
 msgid "Send to back"
 msgstr "Odsunout do pozadí"
 
@@ -1669,7 +1669,7 @@ msgstr "myš"
 msgid "pen"
 msgstr "pero"
 
-#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:157
+#: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:144
 msgid "show"
 msgstr "zobrazit"
 
