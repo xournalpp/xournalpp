@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-16 18:05+0000\n"
-"PO-Revision-Date: 2022-05-18 13:45\n"
+"PO-Revision-Date: 2022-05-18 18:29\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1421,7 +1421,7 @@ msgstr "Bandă cu unelte găsită: {1}"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:44
 msgid "Toolbars"
-msgstr "Benzi cu unelte"
+msgstr "Benzi cu instrumente"
 
 #: ../src/core/control/CrashHandler.cpp:29
 msgid "Trying to emergency save the current open document…"
@@ -1885,7 +1885,7 @@ msgstr "<b>Culoare</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr "<b>Unelte prestabilite</b>"
+msgstr "<b>Instrumente prestabilite</b>"
 
 #: ../ui/settings.glade:5180
 msgid "<b>Default</b>"
