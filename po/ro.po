@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-19 15:22\n"
+"PO-Revision-Date: 2022-05-19 16:18\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -170,7 +170,7 @@ msgstr "Schimbă tipul liniei"
 
 #: ../src/core/undo/FillUndoAction.cpp:76
 msgid "Change stroke fill"
-msgstr "Schimbă umplerea liniei"
+msgstr "Schimbă umplerea formei"
 
 #: ../src/core/undo/SizeUndoAction.cpp:101
 msgid "Change stroke width"
@@ -445,7 +445,7 @@ msgstr "Desenează sistemul de coordonate"
 
 #: ../src/core/undo/InsertUndoAction.cpp:29
 msgid "Draw stroke"
-msgstr "Desenează linie"
+msgstr "Desenează o linie"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Drawing Type - don't change"
@@ -471,17 +471,17 @@ msgstr "Activează sensibilitatea la presiune sau deducerea nivelului de presiun
 #: ../src/core/undo/DeleteUndoAction.cpp:52
 #: ../src/core/undo/EraseUndoAction.cpp:52
 msgid "Erase stroke"
-msgstr "Șterge linie"
+msgstr "Șterge linia"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:276
 msgid "Eraser"
-msgstr "Radieră"
+msgstr "Gumă"
 
 #: ../src/core/control/Control.cpp:2305
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
-msgstr "Eroare adnotare fisier PDF \"{1}\"\n"
+msgstr "Eroare la însemnarea fișierului PDF „{1}”\n"
 "{2}"
 
 #: ../src/core/gui/GladeGui.cpp:23
@@ -1629,7 +1629,7 @@ msgstr "activat în mod prestabilit"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:280
 msgid "delete stroke"
-msgstr "şterge linie"
+msgstr "elimină linia"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:268
 msgid "dotted"
@@ -1824,7 +1824,7 @@ msgstr "%a\t\tNumele abreviat al zilei din săptămână (de exemplu „mie”)\
 #: ../ui/settings.glade:4843
 msgid "... AND How much time must have passed since last stroke.\n\n"
 "<i>Recommended: 500ms</i>"
-msgstr "... ȘI Cât timp trebuie să fi trecut de la ultima linie creată.\n\n"
+msgstr "... ȘI cât timp trebuie să fi trecut de la ultima linie creată.\n\n"
 "<i>Recomandat: 500ms</i>"
 
 #: ../ui/settings.glade:1090
@@ -2277,7 +2277,7 @@ msgstr "Șterge strat"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
-msgstr "Şterge linie"
+msgstr "Elimină linia"
 
 #: ../ui/settingsButtonConfig.glade:25
 msgid "Device"
@@ -3509,7 +3509,7 @@ msgstr "_Vizualizare"
 
 #: ../ui/main.glade:1869
 msgid "_delete strokes"
-msgstr ""
+msgstr "_elimină linii"
 
 #: ../ui/main.glade:1651 ../ui/main.glade:1797 ../ui/main.glade:1906
 msgid "_fine"
