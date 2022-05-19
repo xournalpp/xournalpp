@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-19 13:54\n"
+"PO-Revision-Date: 2022-05-19 15:22\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -49,12 +49,12 @@ msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "  Not relative\n"
 "  Not in the Working Path\n"
 "  Not in {2}"
-msgstr "<span foreground='red' size='x-large'>Lipsește fișierul necesar UI:\n"
+msgstr "<span foreground='red' size='x-large'>Lipsește fișierul UI necesar:\n"
 "<b>{1}</b></span>\n"
-"Nu l-au găsit în nicio locație.\n"
-"  Nu este relativ\n"
-"  Nu se afla in calea de lucru\n"
-"  Nu in {2}"
+"Nu l-am putut găsi nicăieri.\n"
+"  Nu în calea relativă\n"
+"  Nu în calea de lucru\n"
+"  Nu în {2}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Add/Edit TeX"
@@ -87,20 +87,20 @@ msgstr "Atașează fișierul la document"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:114
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "Atributul \"{1}\" nu a putut fi analizat ca dublu, valoarea este \"{2}\""
+msgstr "Valoarea „{1}” nu a putut fi analizată ca „double”, valoarea este „{2}”"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:107
 msgid "Attribute \"{1}\" could not be parsed as double, the value is nullptr"
-msgstr "Atributul \"{1}\" nu a putut fi analizat ca dublu, valoarea este nullptr"
+msgstr "Valoarea „{1}” nu a putut fi analizată ca „double”, valoarea este nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:131
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:150
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "Atributul \"{1}\" nu a putut fi analizat ca int, valoarea este \"{2}\""
+msgstr "Valoarea „{1}” nu a putut fi analizată ca „int”, valoarea este „{2}”"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:124
 msgid "Attribute \"{1}\" could not be parsed as int, the value is nullptr"
-msgstr "Atributul \"{1}\" nu a putut fi analizat ca int, valoarea este de nullptr"
+msgstr "Valoarea „{1}” nu a putut fi analizată ca „int”, valoarea este de nullptr"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:169
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:189
@@ -113,7 +113,7 @@ msgstr "Valoarea „{1}” nu a putut fi analizată ca size_t, valoarea este nul
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:56
 msgid "Attribute color not set!"
-msgstr "Culoarea atributului nu a fost stabilită!"
+msgstr "Culoarea nu a fost stabilită!"
 
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
@@ -127,7 +127,7 @@ msgstr "Salvarea automată a eșuat cu o eroare: {1}"
 
 #: ../src/core/control/Control.cpp:188
 msgid "Autosave renamed from {1} to {2}"
-msgstr "Salvare automată redenumită de la {1} la {2}"
+msgstr "Salvare automată redenumită din {1} în {2}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:42
 msgid "Autosaving to {1}"
@@ -154,7 +154,7 @@ msgstr "Adu în prim plan"
 #: ../src/core/control/Control.cpp:2106 ../src/core/control/Control.cpp:2568
 #: ../src/core/control/XournalMain.cpp:164
 msgid "Cancel"
-msgstr "Anulează"
+msgstr "Renunță"
 
 #: ../src/core/undo/ColorUndoAction.cpp:84
 msgid "Change color"
@@ -166,7 +166,7 @@ msgstr "Schimbă tipul de litere"
 
 #: ../src/core/undo/LineStyleUndoAction.cpp:72
 msgid "Change line style"
-msgstr "Schimbă stilul liniei"
+msgstr "Schimbă tipul liniei"
 
 #: ../src/core/undo/FillUndoAction.cpp:76
 msgid "Change stroke fill"
@@ -192,7 +192,7 @@ msgstr "Copiază"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Copy current"
-msgstr "Copiază curent"
+msgstr "Copiază elementul actual"
 
 #: ../src/core/undo/CopyUndoAction.cpp:59
 msgid "Copy page"
@@ -278,7 +278,7 @@ msgstr "Nu s-a putut elimina instrumentul {1} din banda cu instrumente {2} pozi�
 
 #: ../src/core/control/Control.cpp:199
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
-msgstr "Nu s-a putut redenumi fișierul salvat automat de la \"{1}\" la \"{2}\": {3}"
+msgstr "Nu s-a putut redenumi fișierul salvat automat din „{1}” în „{2}”: {3}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:72
 msgid "Could not save .tex file: {1}"
@@ -286,21 +286,21 @@ msgstr "Nu s-a putut salva fișierul .tex: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:88
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr "Nu s-a putut porni {1}: {2} (cod de ieşire: {3})"
+msgstr "Nu s-a putut porni {1}: {2} (eroare: {3})"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:108
 msgid "Could not undo \"{1}\"\n"
 "Something went wrong… Please write a bug report…"
-msgstr "Nu s-a putut anula \"{1}\"\n"
+msgstr "Nu s-a putut anula „{1}”\n"
 "Ceva nu a mers bine… Te rugăm să scrii un raport de eroare…"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:230
 msgid "Could not write background \"{1}\", {2}"
-msgstr "Nu s-a putut scrie fondul \"{1}\", {2}"
+msgstr "Nu s-a putut scrie fondul „{1}”, {2}"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:326
 msgid "Could not write background \"{1}\". Continuing anyway."
-msgstr "Nu s-a putut scrie fondul \"{1}\". Continuă oricum."
+msgstr "Nu s-a putut scrie fondul „{1}”. Continuă oricum."
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:78
 msgid "Create new layer"
@@ -312,7 +312,7 @@ msgstr "Personalizat"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:20
 msgid "Custom Export"
-msgstr "Export personalizat"
+msgstr "Exportare personalizată"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:410
 msgid "Customize Toolbars"
@@ -333,23 +333,23 @@ msgstr "Instrument prestabilit"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 #: ../src/core/undo/DeleteUndoAction.cpp:55
 msgid "Delete"
-msgstr "Ștergere"
+msgstr "Șterge"
 
 #: ../src/core/control/XournalMain.cpp:163
 msgid "Delete Logfile"
-msgstr "Ștergere jurnal"
+msgstr "Șterge jurnal"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Delete current page"
-msgstr "Ştergeți pagina curentă"
+msgstr "Șterge pagina actuală"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Delete file"
-msgstr "Ştergeţi fişierul"
+msgstr "Șterge fișierul"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:25
 msgid "Delete layer"
-msgstr "Ştergeţi stratul"
+msgstr "Șterge stratul"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Delete this layer"
@@ -357,15 +357,15 @@ msgstr "Șterge acest strat"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
-msgstr "Ștergeți această pagină"
+msgstr "Șterge această pagină"
 
 #: ../src/core/control/Control.cpp:2565
 msgid "Discard"
-msgstr "Renunțați"
+msgstr "Nu salva"
 
 #: ../src/core/control/XournalMain.cpp:623
 msgid "Display advanced export options"
-msgstr "Afișează opțiuni avansate de export"
+msgstr "Arată opțiuni avansate de exportare"
 
 #: ../src/core/control/Control.cpp:2051
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -385,11 +385,11 @@ msgstr "Fișierul documentului a fost șters."
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:250
 msgid "Document is corrupted (no pages found in file)"
-msgstr "Documentul este corupt (nu s-au găsit pagini în fișier)"
+msgstr "Documentul este deteriorat (nu s-au găsit pagini în fișier)"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:246
 msgid "Document is not complete (maybe the end is cut off?)"
-msgstr "Documentul nu este complet (poate finalul este întrerupt?)"
+msgstr "Documentul nu este complet (poate finalul este tăiat)"
 
 #: ../src/core/model/Document.cpp:291 ../src/core/model/Document.cpp:300
 #: ../src/core/model/Document.cpp:303
@@ -421,7 +421,7 @@ msgstr "Desenează elipse"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 msgid "Draw Line"
-msgstr "Desenează linii"
+msgstr "Desenează linii drepte"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
