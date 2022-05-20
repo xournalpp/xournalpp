@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-18 20:28\n"
+"PO-Revision-Date: 2022-05-20 17:33\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2727,8 +2727,8 @@ msgstr "Unisci livello sottostante"
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr "Unisci gli eventi del pulsante con gli eventi di punta dello stilo\n"
-"\t    <i>(Controlla questo se</i> \"<tt>xsetwacom ottieni *deviceId* TabletPCButton</tt>\" <i>restituisce</i> \"<tt>su</tt>\"<i>)</i>"
+msgstr "Unisci gli eventi dei pulsanti con quelli della punta della penna\n"
+"\t    <i>(Seleziona la casella se</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>restituisce</i> \"<tt>on</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:1367
 msgid "Middle Mouse Button"
@@ -3079,7 +3079,7 @@ msgstr "Ai tratti più lenti viene assegnata una pressione maggiore rispetto ai 
 #: ../ui/settings.glade:3024
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr "Icona punto piccola"
+msgstr "Icona punto piccolo"
 
 #: ../ui/settings.glade:4720
 msgid "Snapping"
