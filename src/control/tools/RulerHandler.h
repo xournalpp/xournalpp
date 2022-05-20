@@ -19,7 +19,8 @@ public:
     virtual ~RulerHandler();
 
 private:
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    void drawShape(Point& currentPoint, const PositionInputData& pos,
+                   const std::lock_guard<std::recursive_mutex>&) override;
 
 private:
 };

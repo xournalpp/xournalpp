@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -92,9 +93,9 @@ public:
     virtual void onMotionCancelEvent() = 0;
 
     /**
-     * @return Current editing stroke
+     * @return Current editing stroke and a lock_guard protecting the stroke
      */
-    Stroke* getStroke();
+    std::pair<Stroke*, std::lock_guard<std::recursive_mutex>> getLockedStroke();
 
     /**
      * Reset the shape recognizer, only implemented by drawing instances,
@@ -110,7 +111,8 @@ public:
 protected:
     static bool validMotion(Point p, Point q);
 
-    void createStroke(Point p);
+    // The guard_lock must own this->strokeMutex
+    void createStroke(Point p, const std::lock_guard<std::recursive_mutex>&);
 
     static constexpr double PIXEL_MOTION_THRESHOLD = 0.3;
 
@@ -119,6 +121,7 @@ protected:
     XojPageView* redrawable;
     PageRef page;
     Stroke* stroke;
+    std::recursive_mutex strokeMutex;
 
 private:
 };

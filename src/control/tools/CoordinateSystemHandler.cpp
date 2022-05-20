@@ -19,7 +19,8 @@ CoordinateSystemHandler::~CoordinateSystemHandler() = default;
  * @param shiftDown Boolean to indicate if "shift" is currently pressed.
  *                  It is currently not used.
  */
-void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos) {
+void CoordinateSystemHandler::drawShape(Point& c, const PositionInputData& pos,
+                                        const std::lock_guard<std::recursive_mutex>&) {
     /**
      * Snap point to grid (if enabled)
      */

@@ -515,7 +515,8 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
 
         ToolHandler* h = control->getToolHandler();
         bool isDrawingTypeSpline = h->getDrawingType() == DRAWING_TYPE_SPLINE;
-        if (!isDrawingTypeSpline || !this->inputHandler->getStroke()) {  // The Spline Tool finalizes drawing manually
+        if (!isDrawingTypeSpline ||
+            !this->inputHandler->getLockedStroke().first) {  // The Spline Tool finalizes drawing manually
             delete this->inputHandler;
             this->inputHandler = nullptr;
         }
@@ -910,7 +911,7 @@ void XojPageView::rangeChanged(Range& range) { rerenderRange(range); }
 void XojPageView::pageChanged() { rerenderPage(); }
 
 void XojPageView::elementChanged(Element* elem) {
-    if (this->inputHandler && elem == this->inputHandler->getStroke()) {
+    if (this->inputHandler && elem == this->inputHandler->getLockedStroke().first) {
         this->drawingMutex.lock();
 
         cairo_t* cr = cairo_create(this->crBuffer);

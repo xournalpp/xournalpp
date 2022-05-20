@@ -14,7 +14,8 @@ EllipseHandler::EllipseHandler(XournalView* xournal, XojPageView* redrawable, co
 EllipseHandler::~EllipseHandler() = default;
 
 
-void EllipseHandler::drawShape(Point& c, const PositionInputData& pos) {
+void EllipseHandler::drawShape(Point& c, const PositionInputData& pos,
+                               const std::lock_guard<std::recursive_mutex>& lock) {
     this->currPoint = c;
 
     /**

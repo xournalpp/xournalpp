@@ -11,7 +11,8 @@ RulerHandler::RulerHandler(XournalView* xournal, XojPageView* redrawable, const 
 
 RulerHandler::~RulerHandler() = default;
 
-void RulerHandler::drawShape(Point& currentPoint, const PositionInputData& pos) {
+void RulerHandler::drawShape(Point& currentPoint, const PositionInputData& pos,
+                             const std::lock_guard<std::recursive_mutex>&) {
     this->currPoint = currentPoint;  // in case redrawn by keypress event in base class.
 
     /**

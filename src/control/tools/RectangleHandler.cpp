@@ -12,7 +12,7 @@ RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable
 
 RectangleHandler::~RectangleHandler() = default;
 
-void RectangleHandler::drawShape(Point& c, const PositionInputData& pos) {
+void RectangleHandler::drawShape(Point& c, const PositionInputData& pos, const std::lock_guard<std::recursive_mutex>&) {
     this->currPoint = c;
 
     /**

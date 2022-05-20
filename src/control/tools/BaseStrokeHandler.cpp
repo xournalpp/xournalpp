@@ -16,13 +16,15 @@ guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
 BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
                                      bool flipControl):
         InputHandler(xournal, redrawable, page),
-        snappingHandler(xournal->getControl()->getSettings()),
         flipShift(flipShift),
-        flipControl(flipControl) {}
+        flipControl(flipControl),
+        snappingHandler(xournal->getControl()->getSettings()) {}
 
 BaseStrokeHandler::~BaseStrokeHandler() = default;
 
 void BaseStrokeHandler::draw(cairo_t* cr) {
+    std::lock_guard lock(this->strokeMutex);
+
     if (!stroke) {
         return;
     }
@@ -36,8 +38,6 @@ void BaseStrokeHandler::draw(cairo_t* cr) {
 
 auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
     if (event->is_modifier) {
-        Rectangle<double> rect = stroke->boundingRect();
-
         PositionInputData pos{};
         pos.x = pos.y = pos.pressure = 0;  // not used in redraw
         if (event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R) {
@@ -52,18 +52,18 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
             return false;
         }
 
-        this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
-                                      stroke->getElementHeight());
+        Rectangle<double> rect;
+        {  // lock_guard scope
+            std::lock_guard lock(this->strokeMutex);
 
+            rect = stroke->boundingRect();
 
-        Point malleablePoint = this->currPoint;  // make a copy as it might get snapped to grid.
-        this->drawShape(malleablePoint, pos);
+            Point malleablePoint = this->currPoint;  // make a copy as it might get snapped to grid.
+            this->drawShape(malleablePoint, pos, lock);
 
-
-        rect.unite(stroke->boundingRect());
-
-        double w = stroke->getWidth();
-        redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
+            rect.unite(stroke->boundingRect());
+        }
+        redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
 
         return true;
     }
@@ -71,38 +71,41 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
 }
 
 auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
-    if (!stroke) {
-        return false;
-    }
 
     double zoom = xournal->getZoom();
     double x = pos.x / zoom;
     double y = pos.y / zoom;
-    int pointCount = stroke->getPointCount();
 
     Point currentPoint(x, y);
-    Rectangle<double> rect = stroke->boundingRect();
+    Rectangle<double> rect;
 
-    if (pointCount > 0) {
-        if (!validMotion(currentPoint, stroke->getPoint(pointCount - 1))) {
-            return true;
+    {  // lock_guard scope
+        std::lock_guard lock(this->strokeMutex);
+
+        if (!stroke) {
+            return false;
         }
+
+        if (int pointCount = stroke->getPointCount(); pointCount > 0) {
+            if (!validMotion(currentPoint, stroke->getPoint(pointCount - 1))) {
+                return true;
+            }
+        }
+
+        rect = stroke->boundingRect();
+
+        drawShape(currentPoint, pos, lock);
+
+        rect.unite(stroke->boundingRect());
     }
 
-    this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
-                                  stroke->getElementHeight());
-
-    drawShape(currentPoint, pos);
-
-    rect.unite(stroke->boundingRect());
-    double w = stroke->getWidth();
-
-    redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
+    redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
 
     return true;
 }
 
 void BaseStrokeHandler::onMotionCancelEvent() {
+    std::lock_guard lock(this->strokeMutex);
     delete stroke;
     stroke = nullptr;
 }
@@ -110,10 +113,11 @@ void BaseStrokeHandler::onMotionCancelEvent() {
 void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     xournal->getCursor()->activateDrawDirCursor(false);  // in case released within  fixate_Dir_Mods_Dist
 
+    std::lock_guard lock(this->strokeMutex);
+
     if (stroke == nullptr) {
         return;
     }
-
 
     Control* control = xournal->getControl();
     Settings* settings = control->getSettings();
@@ -150,7 +154,6 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         BaseStrokeHandler::lastStrokeTime = pos.timestamp;
     }
 
-
     // This is not a valid stroke
     if (stroke->getPointCount() < 2) {
         g_warning("Stroke incomplete!");
@@ -183,8 +186,9 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
 
-    if (!stroke) {
-        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
+
+    if (std::lock_guard lock(this->strokeMutex); !stroke) {
+        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y), lock);
     }
 
     this->startStrokeTime = pos.timestamp;

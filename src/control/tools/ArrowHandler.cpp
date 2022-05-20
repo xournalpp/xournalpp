@@ -11,7 +11,7 @@ ArrowHandler::ArrowHandler(XournalView* xournal, XojPageView* redrawable, const 
 
 ArrowHandler::~ArrowHandler() = default;
 
-void ArrowHandler::drawShape(Point& c, const PositionInputData& pos) {
+void ArrowHandler::drawShape(Point& c, const PositionInputData& pos, const std::lock_guard<std::recursive_mutex>&) {
     this->currPoint = c;  // in case redrawn by keypress event in base class.
 
     /**

@@ -20,7 +20,8 @@ public:
     virtual ~EllipseHandler();
 
 private:
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos);
+    void drawShape(Point& currentPoint, const PositionInputData& pos,
+                   const std::lock_guard<std::recursive_mutex>& lock) override;
 
 private:
     Point startPoint;

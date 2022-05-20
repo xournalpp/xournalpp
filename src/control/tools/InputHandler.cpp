@@ -19,10 +19,9 @@ InputHandler::InputHandler(XournalView* xournal, XojPageView* redrawable, const 
 
 InputHandler::~InputHandler() = default;
 
-/**
- * @return Current editing stroke
- */
-auto InputHandler::getStroke() -> Stroke* { return stroke; }
+auto InputHandler::getLockedStroke() -> std::pair<Stroke*, std::lock_guard<std::recursive_mutex>> {
+    return std::pair<Stroke*, std::lock_guard<std::recursive_mutex>>(stroke, strokeMutex);
+}
 
 /**
  * Reset the shape recognizer, only implemented by drawing instances,
@@ -32,7 +31,7 @@ void InputHandler::resetShapeRecognizer() {
     // Does nothing here. Implemented in the extending classes
 }
 
-void InputHandler::createStroke(Point p) {
+void InputHandler::createStroke(Point p, const std::lock_guard<std::recursive_mutex>&) {
     ToolHandler* h = xournal->getControl()->getToolHandler();
 
     stroke = new Stroke();

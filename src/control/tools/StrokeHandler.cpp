@@ -32,6 +32,7 @@ StrokeHandler::~StrokeHandler() {
 }
 
 void StrokeHandler::draw(cairo_t* cr) {
+    std::lock_guard lock(strokeMutex);
     if (!stroke) {
         return;
     }
@@ -177,6 +178,7 @@ void StrokeHandler::onMotionCancelEvent() {
 }
 
 void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
+    std::lock_guard lock(strokeMutex);
     if (!stroke) {
         return;
     }
@@ -365,11 +367,11 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
 
     cairo_scale(crMask, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
 
-    if (!stroke) {
+    if (std::lock_guard lock(strokeMutex); !stroke) {
         this->buttonDownPoint.x = pos.x / zoom;
         this->buttonDownPoint.y = pos.y / zoom;
 
-        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pos.pressure));
+        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pos.pressure), lock);
 
         this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
 

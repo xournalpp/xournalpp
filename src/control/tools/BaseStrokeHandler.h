@@ -38,7 +38,10 @@ public:
     virtual bool onKeyEvent(GdkEventKey* event);
 
 private:
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos) = 0;
+    // The lock_guard must be a lock of InputHandler::strokeMutex
+    virtual void drawShape(Point& currentPoint, const PositionInputData& pos,
+                           const std::lock_guard<std::recursive_mutex>& lock) = 0;
+
     DIRSET_MODIFIERS drawModifierFixed = NONE;
     int lastCursor = -1;  // avoid same setCursor
     bool flipShift =
