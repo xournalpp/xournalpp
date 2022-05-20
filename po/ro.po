@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-20 17:33\n"
+"PO-Revision-Date: 2022-05-20 18:31\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1215,7 +1215,7 @@ msgstr "Alege DPI-ul pentru exportările în PNG. Prestabilit este 300\n"
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
-msgstr "Setează înălțimea paginii pentru exporturile PNG\n"
+msgstr "Alege înălțimea paginii pentru exportările PNG\n"
 "                                 Niciun efect fără -i/--create-img=foo.png\n"
 "                                 Ignorat dacă --export-png-dpi sau --export-png-width este folosit"
 
@@ -1223,7 +1223,7 @@ msgstr "Setează înălțimea paginii pentru exporturile PNG\n"
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
-msgstr "Alege lățimea paginii pentru exporturile PNG\n"
+msgstr "Alege lățimea paginii pentru exportările PNG\n"
 "                                 Niciun efect fără -i/--create-img=foo.png\n"
 "                                 Ignorat dacă --export-png-dpi este folosit"
 
@@ -1250,7 +1250,7 @@ msgstr "Arată numai paginile nefolosite ({1} pagini nefolosite)"
 #: ../src/core/control/XournalMain.cpp:445
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr "Ne pare rău, Xournal++ poate deschide doar un singur fișier simultan.\n"
+msgstr "Xournal++ poate deschide doar un singur fișier pe rând.\n"
 "Altele sunt ignorate."
 
 #: ../src/core/control/XournalMain.cpp:460
@@ -2068,7 +2068,8 @@ msgstr "Toate paginile"
 #: ../ui/settings.glade:4880
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "Toate cele trei condiții trebuie îndeplinite înainte ca semnele să fie ignorate.\n"
+"Trebuie să fie scurt ca timp și lungime și nu trebuie să fi ignorat recent un alt semn."
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
@@ -2233,7 +2234,7 @@ msgstr "Cursor"
 
 #: ../ui/settings.glade:3007
 msgid "Cursor icon for pen"
-msgstr "Simbolul cursorului pentru creion"
+msgstr "Simbolul cursorului creionului"
 
 #: ../ui/settings.glade:1205
 msgid "Cusp detection"
@@ -2593,11 +2594,11 @@ msgstr "Dacă deschizi un PDF și există un fișier Xournal cu același nume, s
 
 #: ../ui/settings.glade:4768
 msgid "Ignore Time (ms)"
-msgstr ""
+msgstr "Timp de ignorare (ms)"
 
 #: ../ui/settings.glade:1716
 msgid "Ignore the first"
-msgstr ""
+msgstr "Ignoră primele"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
@@ -3546,7 +3547,7 @@ msgstr "activat,"
 
 #: ../ui/settings.glade:1751
 msgid "events"
-msgstr ""
+msgstr "semne"
 
 #: ../ui/settings.glade:399
 msgid "every"
