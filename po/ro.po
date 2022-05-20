@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-19 16:18\n"
+"PO-Revision-Date: 2022-05-20 17:33\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1719,7 +1719,7 @@ msgstr "xoj-preview-extractor: apelare cu INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:177
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr "xoj-preview-extractor: nu a putut găsi pictograma \"{1}\""
+msgstr "xoj-preview-extractor: nu s-a putut găsi simbolul „{1}”"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
@@ -2133,7 +2133,7 @@ msgstr "Viteză de pornire"
 #: ../ui/settings.glade:3025
 msgctxt "stylus cursor uses a big pen icon"
 msgid "Big pen icon"
-msgstr "Simbol creion mare"
+msgstr "Creion mare"
 
 #: ../ui/settings.glade:3230
 msgid "Border Color"
@@ -2569,7 +2569,7 @@ msgstr ""
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
-msgstr ""
+msgstr "Creatori de simboluri"
 
 #: ../ui/settings.glade:4702
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2714,7 +2714,8 @@ msgstr ""
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Unește evenimentele butoanelor cu cele ale vârfului creionului electronic\n"
+"\t    <i>(Bifează aici dacă</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>restituie</i> \"<tt>on</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:1367
 msgid "Middle Mouse Button"
@@ -2771,7 +2772,7 @@ msgstr ""
 #: ../ui/settings.glade:3023
 msgctxt "stylus cursor uses no icon"
 msgid "No icon"
-msgstr ""
+msgstr "Niciun simbol"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
@@ -3063,7 +3064,7 @@ msgstr ""
 #: ../ui/settings.glade:3024
 msgctxt "stylus cursor uses a small dot"
 msgid "Small dot icon"
-msgstr ""
+msgstr "Punct mic"
 
 #: ../ui/settings.glade:4720
 msgid "Snapping"
@@ -3099,11 +3100,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
-msgstr ""
+msgstr "Creion electronic"
 
 #: ../ui/settings.glade:1939
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "Butoanele creionului electronic"
 
 #: ../ui/settings.glade:4831
 msgid "Successive (ms)"
@@ -3112,7 +3113,7 @@ msgstr ""
 #: ../ui/settings.glade:3026
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "Cursorul sistemului"
 
 #: ../ui/main.glade:921
 msgid "T_oolbars"
@@ -3201,7 +3202,7 @@ msgstr "Subliniază textul ales"
 
 #: ../ui/settings.glade:2906
 msgid "Use  available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Folosește simbolurile Stock disponibile (necesită repornire)"
 
 #: ../ui/settings.glade:4698
 msgid "Use snapping for recognized shapes"
