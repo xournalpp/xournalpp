@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-20 21:13\n"
+"PO-Revision-Date: 2022-05-20 22:12\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -838,7 +838,7 @@ msgstr "Următoarea"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Next annotated page"
-msgstr "Pagina următoare adnotată"
+msgstr "Pagina următoare cu însemnări"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:63
 msgid "No device"
@@ -1458,23 +1458,23 @@ msgstr "Etichetă neașteptată în document: \"{1}\""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Unknown background type: {1}"
-msgstr "Tip de fond necunoscut: {1}"
+msgstr "Tip necunoscut de fond: {1}"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:64
 msgid "Unknown color value \"{1}\""
-msgstr "Valoare necunoscută a culorii \"{1}\""
+msgstr "Valoare necunoscută a culorii „{1}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:456
 msgid "Unknown domain type: {1}"
-msgstr "Tip domeniu necunoscut: {1}"
+msgstr "Tip de domeniu necunoscut: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:235
 msgid "Unknown parser error"
-msgstr "Eroare necunoscută a parser-ului"
+msgstr "Eroare necunoscută de analizare"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:405
 msgid "Unknown pixmap::domain type: {1}"
-msgstr "Tip domeniu necunoscut: {1}"
+msgstr "Tip de pixmap::domain necunoscut: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:592
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
@@ -2752,7 +2752,7 @@ msgstr ""
 
 #: ../ui/main.glade:1147
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Pagina următoar_e cu însemnări"
 
 #: ../ui/main.glade:1194
 msgid "New Page _After"
@@ -2806,7 +2806,7 @@ msgstr ""
 
 #: ../ui/main.glade:1158
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Pagina p_recedentă cu însemnări"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -3359,7 +3359,7 @@ msgstr "_8 Rânduri"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr "_Adnotați PDF"
+msgstr "_Adaugă însemnări în PDF"
 
 #: ../ui/main.glade:674
 msgid "_Bottom to Top"
