@@ -13,8 +13,11 @@ AbstractInputHandler::AbstractInputHandler(InputContext* inputContext) { this->i
 AbstractInputHandler::~AbstractInputHandler() = default;
 
 void AbstractInputHandler::block(bool block) {
+    if (block == this->blocked) {
+        return;
+    }
     this->blocked = block;
-    if (!block) {
+    if (!this->blocked) {
         this->onUnblock();
     } else {
         this->onBlock();
