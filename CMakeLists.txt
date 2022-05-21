@@ -146,6 +146,7 @@ target_link_libraries(external_modules INTERFACE
 target_compile_definitions(external_modules INTERFACE
         GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32
         GDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_18
+        $<$<TARGET_EXISTS:X11::X11>:X11_ENABLED>
         )
 target_link_options(external_modules INTERFACE
         $<$<AND:$<NOT:$<PLATFORM_ID:Windows>>,$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>>:-rdynamic>

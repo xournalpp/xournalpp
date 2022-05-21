@@ -111,7 +111,7 @@ auto HandRecognition::enableTimeout(HandRecognition* self) -> bool {
         return false;
     }
 
-    int nextTime = now - self->lastPenAction + self->disableTimeout;
+    auto nextTime = now - self->lastPenAction + self->disableTimeout;
 
     g_timeout_add(nextTime, reinterpret_cast<GSourceFunc>(enableTimeout), self);
 
@@ -163,7 +163,6 @@ void HandRecognition::disableTouch() {
  */
 void HandRecognition::event(GdkDevice* device) {
     GdkInputSource dev = gdk_device_get_source(device);
-
     if (dev == GDK_SOURCE_PEN || dev == GDK_SOURCE_ERASER) {
         penEvent();
     }
