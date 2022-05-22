@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-22 11:37\n"
+"PO-Revision-Date: 2022-05-22 12:52\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -954,11 +954,11 @@ msgstr "PageRange::parse(): limitele intervalului trebuie să fie în ordine cre
 
 #: ../src/util/PageRange.cpp:92
 msgid "PageRange::parse(): invalid page range."
-msgstr ""
+msgstr "PageRange::parse(): interval de pagini incorect."
 
 #: ../src/util/PageRange.cpp:102
 msgid "PageRange::parse(): page numbers start with 1"
-msgstr ""
+msgstr "PageRange::parse(): numerele paginilor încep cu 1"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
@@ -1478,7 +1478,7 @@ msgstr "Tip de pixmap::domain necunoscut: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:592
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi un cerc"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:610
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1558,7 +1558,7 @@ msgstr "Nu ai nicio pagină PDF de ales. Anulează operațiunea.\n"
 
 #: ../src/core/control/XournalMain.cpp:152
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
-msgstr ""
+msgstr "Folosești ramura „{1}/{2}”. Trimiterea raportului de eroare te va direcționa către urmăritorul de probleme al acestui depozit."
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:77
 msgid "Your current document does not contain PDF Page no {1}\n"
@@ -1931,7 +1931,7 @@ msgstr "<i>În prezent, înregistrările audio sunt stocate într-un dosar separ
 
 #: ../ui/settings.glade:5689
 msgid "<i>Changes take only effect on new recordings and playbacks.</i>"
-msgstr ""
+msgstr "<i>Modificările au efect numai asupra noilor înregistrări și redări.</i>"
 
 #: ../ui/settings.glade:1327
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
