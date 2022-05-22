@@ -7,11 +7,11 @@
 #include <config.h>
 
 #include "control/ToolEnums.h"
+#include "control/ToolHandler.h"
 #include "gui/toolbarMenubar/icon/ColorSelectImage.h"
 #include "util/StringUtils.h"
 #include "util/Util.h"
 #include "util/i18n.h"
-#include "control/ToolHandler.h"
 
 bool ColorToolItem::inUpdate = false;
 
@@ -28,9 +28,7 @@ ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, G
 /**
  * Free the allocated icons
  */
-void ColorToolItem::freeIcons() {
-    this->icon.reset();
-}
+void ColorToolItem::freeIcons() { this->icon.reset(); }
 
 auto ColorToolItem::isSelector() const -> bool { return this->action == ACTION_SELECT_COLOR_CUSTOM; }
 

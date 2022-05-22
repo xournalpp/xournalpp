@@ -9,7 +9,8 @@
 
 class MenuSelectToolbarData {
 public:
-    MenuSelectToolbarData(MainWindowToolbarMenu* tbm, GtkWidget* item, ToolbarData* d, int index) : tbm(tbm), item(item), d(d), index(index) {}
+    MenuSelectToolbarData(MainWindowToolbarMenu* tbm, GtkWidget* item, ToolbarData* d, int index):
+            tbm(tbm), item(item), d(d), index(index) {}
 
     MainWindowToolbarMenu* tbm;
     GtkWidget* item;
