@@ -70,7 +70,7 @@ private:
     /**
      * Icon to display
      */
-    std::unique_ptr<ColorSelectImage> icon{};
+    std::unique_ptr<ColorSelectImage> icon;
 
     GtkWindow* parent = nullptr;
     ToolHandler* toolHandler = nullptr;
