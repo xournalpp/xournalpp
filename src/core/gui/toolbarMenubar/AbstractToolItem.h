@@ -17,6 +17,11 @@ class AbstractToolItem: public AbstractItem {
 public:
     AbstractToolItem(std::string id, ActionHandler* handler, ActionType type, GtkWidget* menuitem = nullptr);
     ~AbstractToolItem() override;
+    
+    AbstractToolItem(AbstractToolItem const&) = delete;
+    auto operator=(AbstractToolItem const&) -> AbstractToolItem& = delete;
+    AbstractToolItem(AbstractToolItem &&) = delete; // Implement if desired
+    auto operator=(AbstractToolItem &&) -> AbstractToolItem& = delete; // Implement if desired
 
 public:
     void selected(ActionGroup group, ActionType action) override;

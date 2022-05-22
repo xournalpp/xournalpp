@@ -1,5 +1,6 @@
 #include "MainWindowToolbarMenu.h"
 
+#include "control/settings/Settings.h"
 #include "gui/toolbarMenubar/ToolMenuHandler.h"
 #include "gui/toolbarMenubar/model/ToolbarData.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
@@ -8,12 +9,7 @@
 
 class MenuSelectToolbarData {
 public:
-    MenuSelectToolbarData(MainWindowToolbarMenu* tbm, GtkWidget* item, ToolbarData* d, int index) {
-        this->tbm = tbm;
-        this->item = item;
-        this->d = d;
-        this->index = index;
-    }
+    MenuSelectToolbarData(MainWindowToolbarMenu* tbm, GtkWidget* item, ToolbarData* d, int index) : tbm(tbm), item(item), d(d), index(index) {}
 
     MainWindowToolbarMenu* tbm;
     GtkWidget* item;
