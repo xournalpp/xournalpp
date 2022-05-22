@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-22 09:14\n"
+"PO-Revision-Date: 2022-05-22 10:09\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1488,7 +1488,7 @@ msgstr "Несохранённый документ"
 
 #: ../src/core/control/jobs/ImageExport.cpp:85
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "Неподдерживаемый графический формат: "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
@@ -1944,7 +1944,8 @@ msgstr "<i>Пример:</i> 1-3 или 1,3,5-7 и т. д."
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Если документ уже был сохранен, вы можете найти его в той же папке с расширением .autosave. oj\n"
+"Если файл еще не сохранен, вы можете найти его в ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4163
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2072,7 +2073,7 @@ msgstr "Всегда проверять зависимости LaTeX перед 
 
 #: ../ui/main.glade:1215
 msgid "Append New PDF Pages"
-msgstr ""
+msgstr "Добавить новые PDF страницы"
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
@@ -2124,7 +2125,7 @@ msgstr "Цвет фона между страницами"
 
 #: ../ui/settings.glade:3478
 msgid "Base speed"
-msgstr ""
+msgstr "Обычная скорость"
 
 #: ../ui/settings.glade:3025
 msgctxt "stylus cursor uses a big pen icon"
@@ -2213,7 +2214,7 @@ msgstr "Скопировать текущий размер страницы"
 
 #: ../ui/main.glade:2707
 msgid "Copy selected text"
-msgstr ""
+msgstr "Копировать выделенный текст"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2679,7 +2680,7 @@ msgstr "Загрузить файл"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Загрузить из файла"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
