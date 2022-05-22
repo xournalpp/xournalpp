@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 17:04\n"
+"PO-Revision-Date: 2022-05-22 18:04\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2086,7 +2086,7 @@ msgstr "Media aritmetică"
 
 #: ../ui/settings.glade:1774
 msgid "Artifact workaround"
-msgstr ""
+msgstr "Eliminare inexactități"
 
 #: ../ui/settings.glade:5478
 msgid "Audio Devices"
