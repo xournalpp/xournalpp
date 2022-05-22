@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-18 20:28\n"
+"PO-Revision-Date: 2022-05-22 10:09\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -346,7 +346,7 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
-msgstr ""
+msgstr "Poista tämä sivu"
 
 #: ../src/core/control/Control.cpp:2565
 msgid "Discard"
@@ -544,7 +544,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Export as PDF"
-msgstr ""
+msgstr "Vie PDF:nä"
 
 #: ../src/core/control/XournalMain.cpp:596
 msgid "Export layers progressively\n"
@@ -975,7 +975,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Print"
-msgstr ""
+msgstr "Tulosta"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Record Audio / Stop Recording"
