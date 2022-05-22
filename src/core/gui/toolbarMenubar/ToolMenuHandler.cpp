@@ -530,6 +530,9 @@ void ToolMenuHandler::initToolItems() {
     addCustomItemTgl("HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand", _("Hand"));
     addCustomItemTgl("SETSQUARE", ACTION_SETSQUARE, GROUP_GEOMETRY_TOOL, false, "setsquare", _("Setsquare"));
     addCustomItemTgl("COMPASS", ACTION_COMPASS, GROUP_GEOMETRY_TOOL, false, "compass", _("Compass"));
+    addCustomItem("ACTION_X_REFLECTION", ACTION_X_REFLECTION, "x-reflect", _("x-reflection"));
+    addCustomItem("ACTION_Y_REFLECTION", ACTION_Y_REFLECTION, "y-reflect", _("y-reflection"));
+
 
     fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));
     addToolItem(fontButton);
@@ -586,9 +589,6 @@ void ToolMenuHandler::initToolItems() {
      * aka. COLOR_SELECT
      */
     addToolItem(new ColorToolItem(listener, toolHandler, this->parent, NamedColor{}, true));
-
-	addCustomItem("ACTION_X_REFLECTION", ACTION_X_REFLECTION, "x-reflect", _("x-reflection"));
-	addCustomItem("ACTION_Y_REFLECTION", ACTION_Y_REFLECTION, "y-reflect", _("y-reflection"));
 
     addToolItem(new ToolSelectCombocontrol(this, listener, "SELECT"));
     addToolItem(new ToolDrawCombocontrol(this, listener, "DRAW"));
