@@ -22,7 +22,7 @@
 #include "model/PageRef.h"
 #include "model/Stroke.h"
 
-
+class Control;
 class DocumentView;
 class XournalView;
 class XojPageView;
@@ -93,9 +93,9 @@ public:
     virtual void onMotionCancelEvent() = 0;
 
     /**
-     * @return Current editing stroke and a lock_guard protecting the stroke
+     * @return Current editing stroke
      */
-    std::pair<Stroke*, std::lock_guard<std::recursive_mutex>> getLockedStroke();
+    Stroke* getStroke();
 
     /**
      * Reset the shape recognizer, only implemented by drawing instances,
@@ -111,8 +111,7 @@ public:
 protected:
     static bool validMotion(Point p, Point q);
 
-    // The guard_lock must own this->strokeMutex
-    void createStroke(Point p, const std::lock_guard<std::recursive_mutex>&);
+    [[nodiscard]] static std::unique_ptr<Stroke> createStroke(Point p, Control* control);
 
     static constexpr double PIXEL_MOTION_THRESHOLD = 0.3;
 
@@ -120,8 +119,7 @@ protected:
     XournalView* xournal;
     XojPageView* redrawable;
     PageRef page;
-    Stroke* stroke;
-    std::recursive_mutex strokeMutex;
+    std::unique_ptr<Stroke> stroke;
 
 private:
 };

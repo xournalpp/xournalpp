@@ -38,9 +38,8 @@ public:
     virtual bool onKeyEvent(GdkEventKey* event);
 
 private:
-    // The lock_guard must be a lock of InputHandler::strokeMutex
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos,
-                           const std::lock_guard<std::recursive_mutex>& lock) = 0;
+    virtual std::vector<Point> createShape(const PositionInputData& pos) = 0;
+    void updateStroke(const PositionInputData& pos);
 
     DIRSET_MODIFIERS drawModifierFixed = NONE;
     int lastCursor = -1;  // avoid same setCursor
@@ -62,8 +61,11 @@ protected:
 protected:
     DocumentView view;
     Point currPoint;
-    Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid. See startPoint defined in
-                            // derived classes such as CircleHandler.
+    Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.
+    Point startPoint;       // May be snapped to grid
+
+    std::mutex strokeMutex;  // protects InputHandler::stroke
+
     bool modShift = false;
     bool modControl = false;
     SnapToGridInputHandler snappingHandler;

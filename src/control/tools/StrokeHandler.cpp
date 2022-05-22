@@ -32,19 +32,11 @@ StrokeHandler::~StrokeHandler() {
 }
 
 void StrokeHandler::draw(cairo_t* cr) {
-    std::lock_guard lock(strokeMutex);
-    if (!stroke) {
-        return;
-    }
+    DocumentView::applyColor(cr, strokeColor, alpha);
+    cairo_set_operator(cr, cairoOp);
 
-    DocumentView::applyColor(cr, stroke);
 
-    if (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
-        cairo_set_operator(cr, CAIRO_OPERATOR_MULTIPLY);
-    } else {
-        cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
-    }
-
+    std::lock_guard lock(maskMutex);
     cairo_mask_surface(cr, surfMask, 0, 0);
 }
 
@@ -142,14 +134,17 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
         !(stroke->getFill() != -1 && stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER)) {
         // Clear surface
 
-        // for debugging purposes
-        // cairo_set_source_rgba(crMask, 1, 0, 0, 1);
-        cairo_set_source_rgba(crMask, 0, 0, 0, 0);
-        cairo_rectangle(crMask, 0, 0, cairo_image_surface_get_width(surfMask),
-                        cairo_image_surface_get_height(surfMask));
-        cairo_fill(crMask);
+        {
+            std::lock_guard lock(maskMutex);
+            // for debugging purposes
+            // cairo_set_source_rgba(crMask, 1, 0, 0, 1);
+            cairo_set_source_rgba(crMask, 0, 0, 0, 0);
+            cairo_rectangle(crMask, 0, 0, cairo_image_surface_get_width(surfMask),
+                            cairo_image_surface_get_height(surfMask));
+            cairo_fill(crMask);
 
-        view.drawStroke(crMask, stroke, 0, 1, true, true);
+            view.drawStroke(crMask, stroke.get(), 0, 1, true, true);
+        }
 
         const Point& firstPoint = stroke->getPointVector().front();
         rg.addPoint(firstPoint.x, firstPoint.y);
@@ -160,6 +155,7 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
         lastSegment.addPoint(point);
         lastSegment.setWidth(width);
 
+        std::lock_guard lock(maskMutex);
         cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
         cairo_set_source_rgba(crMask, 1, 1, 1, 1);
 
@@ -172,13 +168,9 @@ void StrokeHandler::drawSegmentTo(const Point& point) {
                                   rg.getHeight() + width);
 }
 
-void StrokeHandler::onMotionCancelEvent() {
-    delete stroke;
-    stroke = nullptr;
-}
+void StrokeHandler::onMotionCancelEvent() { stroke.reset(); }
 
 void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
-    std::lock_guard lock(strokeMutex);
     if (!stroke) {
         return;
     }
@@ -216,8 +208,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
                 this->redrawable->rerenderRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
                                                stroke->getElementHeight());  // clear onMotionNotifyEvent drawing //!
 
-                delete stroke;
-                stroke = nullptr;
+                stroke.reset();
                 this->userTapped = true;
 
                 StrokeHandler::lastStrokeTime = pos.timestamp;
@@ -248,7 +239,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 
     ToolHandler* h = control->getToolHandler();
 
@@ -257,7 +248,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
             reco = new ShapeRecognizer();
         }
 
-        ShapeRecognizerResult* result = reco->recognizePatterns(stroke);
+        ShapeRecognizerResult* result = reco->recognizePatterns(stroke.get());
 
         if (result) {
             strokeRecognizerDetected(result, layer);
@@ -275,18 +266,17 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         // If the stroke has fill values, it needs to be re-rendered
         // else the fill will not be visible.
 
-        view.drawStroke(crMask, stroke, 0, 1, true, true);
+        view.drawStroke(crMask, stroke.get(), 0, 1, true, true);
     }
 
-    layer->addElement(stroke);
-    page->fireElementChanged(stroke);
+    Stroke* s = stroke.release();
+    layer->addElement(s);
+    page->fireElementChanged(s);
 
     // Manually force the rendering of the stroke, if no motion event occurred between, that would rerender the page.
-    if (stroke->getPointCount() == 2 || (stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER && stroke->getFill() != -1)) {
-        this->redrawable->rerenderElement(stroke);
+    if (s->getPointCount() == 2 || (s->getToolType() == STROKE_TOOL_HIGHLIGHTER && s->getFill() != -1)) {
+        this->redrawable->rerenderElement(s);
     }
-
-    stroke = nullptr;
 }
 
 void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Layer* layer) {
@@ -314,7 +304,7 @@ void StrokeHandler::strokeRecognizerDetected(ShapeRecognizerResult* result, Laye
         snappedStroke->scale(topLeftSnapped.x, topLeftSnapped.y, fx, fy, 0, false);
     }
 
-    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke, snappedStroke);
+    auto recognizerUndo = std::make_unique<RecognizerUndoAction>(page, layer, stroke.get(), snappedStroke);
     auto& locRecUndo = *recognizerUndo;
 
     UndoRedoHandler* undo = xournal->getControl()->getUndoRedoHandler();
@@ -354,24 +344,38 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
     double width = page->getWidth() * zoom * dpiScaleFactor;
     double height = page->getHeight() * zoom * dpiScaleFactor;
 
-    surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
+    {
+        std::lock_guard lock(maskMutex);
+        surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
 
-    crMask = cairo_create(surfMask);
+        crMask = cairo_create(surfMask);
 
-    // for debugging purposes
-    // cairo_set_source_rgba(crMask, 0, 0, 0, 1);
-    cairo_set_source_rgba(crMask, 0, 0, 0, 0);
-    cairo_rectangle(crMask, 0, 0, width, height);
+        // for debugging purposes
+        // cairo_set_source_rgba(crMask, 0, 0, 0, 1);
+        cairo_set_source_rgba(crMask, 0, 0, 0, 0);
+        cairo_rectangle(crMask, 0, 0, width, height);
 
-    cairo_fill(crMask);
+        cairo_fill(crMask);
 
-    cairo_scale(crMask, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
+        cairo_scale(crMask, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
+    }
 
-    if (std::lock_guard lock(strokeMutex); !stroke) {
+    if (!stroke) {
         this->buttonDownPoint.x = pos.x / zoom;
         this->buttonDownPoint.y = pos.y / zoom;
 
-        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pos.pressure), lock);
+        stroke = createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, pos.pressure),
+                              this->xournal->getControl());
+
+        this->strokeColor = stroke->getColor();
+        if (this->stroke->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+            cairoOp = CAIRO_OPERATOR_MULTIPLY;
+            if (this->stroke->getFill() != -1) {
+                this->alpha = static_cast<uint8_t>(this->stroke->getFill());
+            } else {
+                this->alpha = DocumentView::HIGHLIGHTER_DEFAULT_ALPHA;
+            }
+        }
 
         this->hasPressure = this->stroke->getToolType() == STROKE_TOOL_PEN && pos.pressure != Point::NO_PRESSURE;
 
@@ -390,6 +394,7 @@ void StrokeHandler::onButtonDoublePressEvent(const PositionInputData& pos) {
 }
 
 void StrokeHandler::destroySurface() {
+    std::lock_guard lock(maskMutex);
     if (surfMask || crMask) {
         cairo_destroy(crMask);
         cairo_surface_destroy(surfMask);
@@ -405,13 +410,16 @@ void StrokeHandler::resetShapeRecognizer() {
     }
 }
 
-void StrokeHandler::paintDot(const double x, const double y, const double width) const {
-    cairo_set_line_cap(crMask, CAIRO_LINE_CAP_ROUND);
-    cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
-    cairo_set_source_rgba(crMask, 1, 1, 1, 1);
-    cairo_set_line_width(crMask, width);
-    cairo_move_to(crMask, x, y);
-    cairo_line_to(crMask, x, y);
-    cairo_stroke(crMask);
+void StrokeHandler::paintDot(const double x, const double y, const double width) {
+    {
+        std::lock_guard lock(maskMutex);
+        cairo_set_line_cap(crMask, CAIRO_LINE_CAP_ROUND);
+        cairo_set_operator(crMask, CAIRO_OPERATOR_OVER);
+        cairo_set_source_rgba(crMask, 1, 1, 1, 1);
+        cairo_set_line_width(crMask, width);
+        cairo_move_to(crMask, x, y);
+        cairo_line_to(crMask, x, y);
+        cairo_stroke(crMask);
+    }
     this->redrawable->repaintRect(x - 0.5 * width, y - 0.5 * width, width, width);
 }

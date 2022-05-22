@@ -20,10 +20,7 @@ public:
     virtual ~EllipseHandler();
 
 private:
-    void drawShape(Point& currentPoint, const PositionInputData& pos,
-                   const std::lock_guard<std::recursive_mutex>& lock) override;
+    std::vector<Point> createShape(const PositionInputData& pos) override;
 
 private:
-    Point startPoint;
-    bool started = false;
 };

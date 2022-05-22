@@ -61,7 +61,7 @@ public:
     /**
      * @brief paints a single dot
      */
-    void paintDot(const double x, const double y, const double width) const;
+    void paintDot(const double x, const double y, const double width);
 
 protected:
     /**
@@ -83,13 +83,14 @@ private:
      * The masking surface
      */
     cairo_surface_t* surfMask = nullptr;
-
-    /**
-     * And the corresponding cairo_t*
-     */
     cairo_t* crMask = nullptr;
+    // both protected by the mutex
+    std::mutex maskMutex;
 
     DocumentView view;
+    Color strokeColor;
+    uint8_t alpha = 0xff;
+    cairo_operator_t cairoOp = CAIRO_OPERATOR_OVER;
 
     ShapeRecognizer* reco = nullptr;
 

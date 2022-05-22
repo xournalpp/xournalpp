@@ -97,6 +97,8 @@ public:
      */
     void finializeDrawing();
 
+    static constexpr uint8_t HIGHLIGHTER_DEFAULT_ALPHA = 120;
+
 private:
     static void drawText(cairo_t* cr, Text* t);
     static void drawImage(cairo_t* cr, Image* i);

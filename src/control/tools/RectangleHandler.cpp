@@ -12,32 +12,24 @@ RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable
 
 RectangleHandler::~RectangleHandler() = default;
 
-void RectangleHandler::drawShape(Point& c, const PositionInputData& pos, const std::lock_guard<std::recursive_mutex>&) {
-    this->currPoint = c;
-
+auto RectangleHandler::createShape(const PositionInputData& pos) -> std::vector<Point> {
     /**
      * Snap point to grid (if enabled)
      */
-    c = snappingHandler.snapToGrid(c, pos.isAltDown());
+    Point c = snappingHandler.snapToGrid(this->currPoint, pos.isAltDown());
 
-    if (!this->started)  // initialize first point
+    double width = c.x - this->startPoint.x;
+    double height = c.y - this->startPoint.y;
+
+
+    this->modShift = pos.isShiftDown();
+    this->modControl = pos.isControlDown();
+
+    Settings* settings = xournal->getControl()->getSettings();
+    if (settings->getDrawDirModsEnabled())  // change modifiers based on draw dir
     {
-        this->startPoint = c;
-        this->started = true;
-        stroke->addPoint(c);  // avoid complaints about <2 points.
-    } else {
-        double width = c.x - this->startPoint.x;
-        double height = c.y - this->startPoint.y;
-
-
-        this->modShift = pos.isShiftDown();
-        this->modControl = pos.isControlDown();
-
-        Settings* settings = xournal->getControl()->getSettings();
-        if (settings->getDrawDirModsEnabled())  // change modifiers based on draw dir
-        {
-            this->modifyModifiersByDrawDir(width, height, true);
-        }
+        this->modifyModifiersByDrawDir(width, height, true);
+    }
 
         if (this->modShift)  // make square
         {
@@ -58,12 +50,12 @@ void RectangleHandler::drawShape(Point& c, const PositionInputData& pos, const s
 
         Point p2 = Point(this->startPoint.x + width, this->startPoint.y + height);
 
-        stroke->deletePointsFrom(0);  // delete previous points
-
-        stroke->addPoint(p1);
-        stroke->addPoint(Point(p1.x, p2.y));
-        stroke->addPoint(p2);
-        stroke->addPoint(Point(p2.x, p1.y));
-        stroke->addPoint(p1);
-    }
+        std::vector<Point> shape;
+        shape.reserve(5);
+        shape.emplace_back(p1);
+        shape.emplace_back(p1.x, p2.y);
+        shape.emplace_back(p2);
+        shape.emplace_back(p2.x, p1.y);
+        shape.emplace_back(p1);
+        return shape;
 }

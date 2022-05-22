@@ -20,7 +20,7 @@ constexpr double RADIUS_WITHOUT_ZOOM = 10.0;
 constexpr double LINE_WIDTH_WITHOUT_ZOOM = 2.0;
 
 void SplineHandler::draw(cairo_t* cr) {
-    std::lock_guard lock(strokeMutex);
+    std::lock_guard lock(dataMutex);
     if (!stroke || this->knots.empty()) {
         return;
     }
@@ -29,7 +29,7 @@ void SplineHandler::draw(cairo_t* cr) {
     double radius = RADIUS_WITHOUT_ZOOM / zoom;
     if (xournal->getControl()->getToolHandler()->getDrawingType() != DRAWING_TYPE_SPLINE) {
         g_warning("Drawing type is not spline any longer");
-        this->finalizeSpline(lock);
+        this->finalizeSpline();
         this->knots.clear();
         this->tangents.clear();
         return;
@@ -56,7 +56,7 @@ void SplineHandler::draw(cairo_t* cr) {
     cairo_set_source_rgb(cr, 1, 0, 0);                             // use red color for first knot
     cairo_move_to(cr, firstKnot.x + radius, firstKnot.y);          // move to start point of circle arc;
     cairo_arc(cr, firstKnot.x, firstKnot.y, radius, 0, 2 * M_PI);  // draw circle
-    if (dist<radius&& this->getKnotCount(lock)> 1) {  // current point lies within the circle around the first knot
+    if (dist<radius&& this->getKnotCount()> 1) {  // current point lies within the circle around the first knot
         cairo_fill(cr);
     } else {
         cairo_stroke(cr);
@@ -65,10 +65,10 @@ void SplineHandler::draw(cairo_t* cr) {
     // draw dynamically changing segment
     cairo_set_source_rgb(cr, 0.3, 0.3, 0.3);  // use gray color
     const Point& cp1 = Point(lastKnot.x + lastTangent.x, lastKnot.y + lastTangent.y);
-    const Point& cp2 = (dist<radius&& this->getKnotCount(lock)> 1) ?
+    const Point& cp2 = (dist<radius&& this->getKnotCount()> 1) ?
                                Point(firstKnot.x - firstTangent.x, firstKnot.y - firstTangent.y) :
                                this->currPoint;
-    const Point& otherKnot = (dist<radius&& this->getKnotCount(lock)> 1) ? this->buttonDownPoint : this->currPoint;
+    const Point& otherKnot = (dist<radius&& this->getKnotCount()> 1) ? this->buttonDownPoint : this->currPoint;
     SplineSegment changingSegment = SplineSegment(lastKnot, cp1, cp2, otherKnot);
     changingSegment.draw(cr);
 
@@ -81,7 +81,7 @@ void SplineHandler::draw(cairo_t* cr) {
 
     // draw other tangents
     cairo_set_source_rgb(cr, 0, 1, 0);
-    for (size_t i = 0; i < this->getKnotCount(lock); i++) {
+    for (size_t i = 0; i < this->getKnotCount(); i++) {
         cairo_move_to(cr, this->knots[i].x - this->tangents[i].x,
                       this->knots[i].y - this->tangents[i].y);  // draw dynamically changing segment
         cairo_line_to(cr, this->knots[i].x + this->tangents[i].x, this->knots[i].y + this->tangents[i].y);
@@ -89,9 +89,9 @@ void SplineHandler::draw(cairo_t* cr) {
     cairo_stroke(cr);
 
     // create stroke and draw spline
-    this->updateStroke(lock);
-    if (this->getKnotCount(lock) > 1) {
-        view.drawStroke(cr, stroke, 0);
+    this->updateStroke();
+    if (this->getKnotCount() > 1) {
+        view.drawStroke(cr, stroke.get(), 0);
     }
 }
 
@@ -102,46 +102,46 @@ constexpr double MAX_TANGENT_LENGTH = 2000.0;
 constexpr double MIN_TANGENT_LENGTH = 1.0;
 
 auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
-    std::lock_guard lock(strokeMutex);
+    std::lock_guard lock(dataMutex);
     if (!stroke ||
         (event->type != GDK_KEY_PRESS && event->keyval != GDK_KEY_Escape)) {  // except for escape key only act on key
                                                                               // press event, not on key release event
         return false;
     }
 
-    Rectangle<double> rect = this->computeRepaintRectangle(lock);
+    Rectangle<double> rect = this->computeRepaintRectangle();
 
     switch (event->keyval) {
         case GDK_KEY_Escape: {
             this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
-            this->finalizeSpline(lock);
+            this->finalizeSpline();
             return true;
         }
         case GDK_KEY_BackSpace: {
             if (!knots.empty()) {
-                this->deleteLastKnotWithTangent(lock);
+                this->deleteLastKnotWithTangent();
                 this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
                 return true;
             }
             break;
         }
         case GDK_KEY_Right: {
-            this->movePoint(SHIFT_AMOUNT, 0, lock);
+            this->movePoint(SHIFT_AMOUNT, 0);
             this->redrawable->repaintRect(rect.x, rect.y, rect.width + SHIFT_AMOUNT, rect.height);
             return true;
         }
         case GDK_KEY_Left: {
-            this->movePoint(-SHIFT_AMOUNT, 0, lock);
+            this->movePoint(-SHIFT_AMOUNT, 0);
             this->redrawable->repaintRect(rect.x - SHIFT_AMOUNT, rect.y, rect.width, rect.height);
             return true;
         }
         case GDK_KEY_Up: {
-            this->movePoint(0, -SHIFT_AMOUNT, lock);
+            this->movePoint(0, -SHIFT_AMOUNT);
             this->redrawable->repaintRect(rect.x, rect.y - SHIFT_AMOUNT, rect.width, rect.height + SHIFT_AMOUNT);
             return true;
         }
         case GDK_KEY_Down: {
-            this->movePoint(0, SHIFT_AMOUNT, lock);
+            this->movePoint(0, SHIFT_AMOUNT);
             this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height + SHIFT_AMOUNT);
             return true;
         }
@@ -152,7 +152,7 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
             double yOld = this->tangents.back().y;
             double xNew = cos(angle * M_PI / 180) * xOld + sin(angle * M_PI / 180) * yOld;
             double yNew = -sin(angle * M_PI / 180) * xOld + cos(angle * M_PI / 180) * yOld;
-            this->modifyLastTangent(Point(xNew, yNew), lock);
+            this->modifyLastTangent(Point(xNew, yNew));
             this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
             return true;
         }
@@ -169,7 +169,7 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
             }
             double xNew = xOld * factor;
             double yNew = yOld * factor;
-            this->modifyLastTangent(Point(xNew, yNew), lock);
+            this->modifyLastTangent(Point(xNew, yNew));
             this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
             return true;
         }
@@ -178,37 +178,36 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
 }
 
 auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
-    std::lock_guard lock(strokeMutex);
+    std::lock_guard lock(dataMutex);
     if (!stroke || this->knots.empty()) {
         return false;
     }
 
     double zoom = xournal->getZoom();
-    Rectangle<double> rect = this->computeRepaintRectangle(lock);
+    Rectangle<double> rect = this->computeRepaintRectangle();
     if (this->isButtonPressed) {
         Point newTangent = Point(pos.x / zoom - this->currPoint.x, pos.y / zoom - this->currPoint.y);
         if (validMotion(newTangent, this->tangents.back())) {
-            this->modifyLastTangent(newTangent, lock);
+            this->modifyLastTangent(newTangent);
         }
     } else {
         this->buttonDownPoint = Point(pos.x / zoom, pos.y / zoom);
         this->currPoint = snappingHandler.snap(this->buttonDownPoint, knots.back(), pos.isAltDown());
     }
 
-    rect.unite(this->computeRepaintRectangle(lock));
+    rect.unite(this->computeRepaintRectangle());
     this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
 
     return true;
 }
 
 void SplineHandler::onMotionCancelEvent() {
-    std::lock_guard lock(strokeMutex);
-    delete stroke;
-    stroke = nullptr;
+    std::lock_guard lock(dataMutex);
+    stroke.reset();
 }
 
 void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos) {
-    std::lock_guard lock(strokeMutex);
+    std::lock_guard lock(dataMutex);
     isButtonPressed = false;
 
     if (!stroke) {
@@ -218,8 +217,7 @@ void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     Control* control = xournal->getControl();
     Settings* settings = control->getSettings();
 
-    if (settings->getStrokeFilterEnabled() &&
-        this->getKnotCount(lock) < 2)  // Note: Mostly same as in BaseStrokeHandler
+    if (settings->getStrokeFilterEnabled() && this->getKnotCount() < 2)  // Note: Mostly same as in BaseStrokeHandler
     {
         int strokeFilterIgnoreTime = 0, strokeFilterSuccessiveTime = 0;
         double strokeFilterIgnoreLength = NAN;
@@ -236,7 +234,7 @@ void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos) {
             pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) {
             if (pos.timestamp - SplineHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
                 // spline not being added to layer... delete here.
-                this->finalizeSpline(lock);
+                this->finalizeSpline();
                 this->knots.clear();
                 this->tangents.clear();
                 this->userTapped = true;
@@ -253,7 +251,7 @@ void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos) {
 }
 
 void SplineHandler::onButtonPressEvent(const PositionInputData& pos) {
-    std::lock_guard lock(strokeMutex);
+    std::lock_guard lock(dataMutex);
     isButtonPressed = true;
     double zoom = xournal->getZoom();
     double radius = RADIUS_WITHOUT_ZOOM / zoom;
@@ -267,16 +265,16 @@ void SplineHandler::onButtonPressEvent(const PositionInputData& pos) {
     }
 
     if (!stroke) {
-        createStroke(this->currPoint, lock);
-        this->addKnot(this->currPoint, lock);
+        stroke = createStroke(this->currPoint, this->xournal->getControl());
+        this->addKnot(this->currPoint);
         this->redrawable->rerenderRect(this->currPoint.x - radius, this->currPoint.y - radius, 2 * radius, 2 * radius);
     } else {
         double dist = this->buttonDownPoint.lineLengthTo(this->knots.front());
         if (dist < radius && !this->knots.empty()) {  // now the spline is closed and finalized
-            this->addKnotWithTangent(this->knots.front(), this->tangents.front(), lock);
-            this->finalizeSpline(lock);
+            this->addKnotWithTangent(this->knots.front(), this->tangents.front());
+            this->finalizeSpline();
         } else if (validMotion(currPoint, this->knots.back())) {
-            this->addKnot(this->currPoint, lock);
+            this->addKnot(this->currPoint);
             this->redrawable->rerenderRect(this->currPoint.x - radius, this->currPoint.y - radius, 2 * radius,
                                            2 * radius);
         }
@@ -284,9 +282,12 @@ void SplineHandler::onButtonPressEvent(const PositionInputData& pos) {
     this->startStrokeTime = pos.timestamp;
 }
 
-void SplineHandler::onButtonDoublePressEvent(const PositionInputData&) { finalizeSpline(std::lock_guard(strokeMutex)); }
+void SplineHandler::onButtonDoublePressEvent(const PositionInputData&) {
+    std::lock_guard lock(dataMutex);
+    finalizeSpline();
+}
 
-void SplineHandler::movePoint(double dx, double dy, const std::lock_guard<std::recursive_mutex>&) {
+void SplineHandler::movePoint(double dx, double dy) {
     // move last non dynamically changing point
     if (!this->knots.empty()) {
         this->knots.back().x += dx;
@@ -294,21 +295,21 @@ void SplineHandler::movePoint(double dx, double dy, const std::lock_guard<std::r
     }
 }
 
-void SplineHandler::finalizeSpline(const std::lock_guard<std::recursive_mutex>& lock) {
+void SplineHandler::finalizeSpline() {
     if (!stroke) {
         return;
     }
 
-    if (this->getKnotCount(lock) < 2) {  // This is not a valid spline
-        Rectangle<double> rect = this->computeRepaintRectangle(lock);
-        delete stroke;
-        stroke = nullptr;
+    if (this->getKnotCount() < 2) {  // This is not a valid spline
+        Rectangle<double> rect = this->computeRepaintRectangle();
+        stroke.reset();
         this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
 
         return;
     }
 
-    this->updateStroke(lock);
+    this->updateStroke();
+    Rectangle<double> rect = this->computeRepaintRectangle();
 
     stroke->freeUnusedPointItems();
     Control* control = xournal->getControl();
@@ -317,53 +318,46 @@ void SplineHandler::finalizeSpline(const std::lock_guard<std::recursive_mutex>& 
     Layer* layer = page->getSelectedLayer();
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 
-    layer->addElement(stroke);
+    layer->addElement(stroke.release());
 
-    Rectangle<double> rect = this->computeRepaintRectangle(lock);
     this->redrawable->rerenderRect(rect.x, rect.y, rect.width, rect.height);
-
-    stroke = nullptr;
 
     xournal->getCursor()->updateCursor();
 }
 
-void SplineHandler::addKnot(const Point& p, const std::lock_guard<std::recursive_mutex>& lock) {
-    addKnotWithTangent(p, Point(0, 0), lock);
-}
+void SplineHandler::addKnot(const Point& p) { addKnotWithTangent(p, Point(0, 0)); }
 
-void SplineHandler::addKnotWithTangent(const Point& p, const Point& t, const std::lock_guard<std::recursive_mutex>&) {
+void SplineHandler::addKnotWithTangent(const Point& p, const Point& t) {
     this->knots.push_back(p);
     this->tangents.push_back(t);
 }
 
-void SplineHandler::modifyLastTangent(const Point& t, const std::lock_guard<std::recursive_mutex>&) {
-    this->tangents.back() = t;
-}
+void SplineHandler::modifyLastTangent(const Point& t) { this->tangents.back() = t; }
 
-void SplineHandler::deleteLastKnotWithTangent(const std::lock_guard<std::recursive_mutex>& lock) {
-    if (this->getKnotCount(lock) > 1) {
+void SplineHandler::deleteLastKnotWithTangent() {
+    if (this->getKnotCount() > 1) {
         this->knots.pop_back();
         this->tangents.pop_back();
     }
 }
 
-auto SplineHandler::getKnotCount(const std::lock_guard<std::recursive_mutex>&) const -> size_t {
+auto SplineHandler::getKnotCount() const -> size_t {
     if (this->knots.size() != this->tangents.size()) {
         g_warning("number of knots and tangents differ");
     }
     return this->knots.size();
 }
 
-void SplineHandler::updateStroke(const std::lock_guard<std::recursive_mutex>& lock) {
+void SplineHandler::updateStroke() {
     if (!stroke) {
         return;
     }
     // create spline segments
     std::vector<SplineSegment> segments = {};
     Point cp1, cp2;
-    for (size_t i = 0; i < this->getKnotCount(lock) - 1; i++) {
+    for (size_t i = 0; i < this->getKnotCount() - 1; i++) {
         cp1 = Point(this->knots[i].x + this->tangents[i].x, this->knots[i].y + this->tangents[i].y);
         cp2 = Point(this->knots[i + 1].x - this->tangents[i + 1].x, this->knots[i + 1].y - this->tangents[i + 1].y);
         segments.push_back(SplineSegment(this->knots[i], cp1, cp2, this->knots[i + 1]));
@@ -381,8 +375,7 @@ void SplineHandler::updateStroke(const std::lock_guard<std::recursive_mutex>& lo
     }
 }
 
-auto SplineHandler::computeRepaintRectangle(const std::lock_guard<std::recursive_mutex>& lock) const
-        -> Rectangle<double> {
+auto SplineHandler::computeRepaintRectangle() const -> Rectangle<double> {
     double zoom = xournal->getZoom();
     double radius = RADIUS_WITHOUT_ZOOM / zoom;
     std::vector<double> xCoords = {};
@@ -391,7 +384,7 @@ auto SplineHandler::computeRepaintRectangle(const std::lock_guard<std::recursive
         xCoords.push_back(p.x);
         yCoords.push_back(p.y);
     }
-    for (size_t i = 0; i < this->getKnotCount(lock); i++) {
+    for (size_t i = 0; i < this->getKnotCount(); i++) {
         xCoords.push_back(this->knots[i].x + this->tangents[i].x);
         xCoords.push_back(this->knots[i].x - this->tangents[i].x);
         yCoords.push_back(this->knots[i].y + this->tangents[i].y);

@@ -23,17 +23,35 @@ BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawab
 BaseStrokeHandler::~BaseStrokeHandler() = default;
 
 void BaseStrokeHandler::draw(cairo_t* cr) {
-    std::lock_guard lock(this->strokeMutex);
-
-    if (!stroke) {
-        return;
-    }
-
     double zoom = xournal->getZoom();
     int dpiScaleFactor = xournal->getDpiScaleFactor();
 
     cairo_scale(cr, zoom * dpiScaleFactor, zoom * dpiScaleFactor);
-    view.drawStroke(cr, stroke, 0);
+
+    std::lock_guard lock(this->strokeMutex);
+    if (!stroke) {
+        return;
+    }
+
+    view.drawStroke(cr, stroke.get(), 0);
+}
+
+void BaseStrokeHandler::updateStroke(const PositionInputData& pos) {
+    Rectangle<double> rect;
+    {
+        std::lock_guard lock(this->strokeMutex);
+        if (!stroke) {
+            return;
+        }
+        rect = stroke->boundingRect();
+    }
+    auto shape = this->createShape(pos);
+    {
+        std::lock_guard lock(this->strokeMutex);
+        stroke->swapPointVector(shape);
+        rect.unite(stroke->boundingRect());
+    }
+    redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
 }
 
 auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
@@ -52,18 +70,7 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
             return false;
         }
 
-        Rectangle<double> rect;
-        {  // lock_guard scope
-            std::lock_guard lock(this->strokeMutex);
-
-            rect = stroke->boundingRect();
-
-            Point malleablePoint = this->currPoint;  // make a copy as it might get snapped to grid.
-            this->drawShape(malleablePoint, pos, lock);
-
-            rect.unite(stroke->boundingRect());
-        }
-        redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
+        this->updateStroke(pos);
 
         return true;
     }
@@ -76,48 +83,24 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
     double x = pos.x / zoom;
     double y = pos.y / zoom;
 
-    Point currentPoint(x, y);
-    Rectangle<double> rect;
-
-    {  // lock_guard scope
-        std::lock_guard lock(this->strokeMutex);
-
-        if (!stroke) {
-            return false;
-        }
-
-        if (int pointCount = stroke->getPointCount(); pointCount > 0) {
-            if (!validMotion(currentPoint, stroke->getPoint(pointCount - 1))) {
-                return true;
-            }
-        }
-
-        rect = stroke->boundingRect();
-
-        drawShape(currentPoint, pos, lock);
-
-        rect.unite(stroke->boundingRect());
+    Point newPoint(x, y);
+    if (!validMotion(newPoint, this->currPoint)) {
+        return true;
     }
+    this->currPoint = newPoint;
 
-    redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
+    this->updateStroke(pos);
 
     return true;
 }
 
 void BaseStrokeHandler::onMotionCancelEvent() {
     std::lock_guard lock(this->strokeMutex);
-    delete stroke;
-    stroke = nullptr;
+    stroke.reset();
 }
 
 void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     xournal->getCursor()->activateDrawDirCursor(false);  // in case released within  fixate_Dir_Mods_Dist
-
-    std::lock_guard lock(this->strokeMutex);
-
-    if (stroke == nullptr) {
-        return;
-    }
 
     Control* control = xournal->getControl();
     Settings* settings = control->getSettings();
@@ -140,8 +123,10 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
             pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) {
             if (pos.timestamp - BaseStrokeHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
                 // stroke not being added to layer... delete here.
-                delete stroke;
-                stroke = nullptr;
+                {
+                    std::lock_guard lock(strokeMutex);
+                    stroke.reset();
+                }
                 this->userTapped = true;
 
                 BaseStrokeHandler::lastStrokeTime = pos.timestamp;
@@ -154,29 +139,31 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         BaseStrokeHandler::lastStrokeTime = pos.timestamp;
     }
 
-    // This is not a valid stroke
-    if (stroke->getPointCount() < 2) {
-        g_warning("Stroke incomplete!");
-        delete stroke;
-        stroke = nullptr;
-        return;
-    }
-
-    stroke->freeUnusedPointItems();
-
-
     control->getLayerController()->ensureLayerExists(page);
 
     Layer* layer = page->getSelectedLayer();
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
+    Stroke* s;
+    {
+        std::lock_guard lock(strokeMutex);
+        s = stroke.release();
+    }
 
-    layer->addElement(stroke);
-    page->fireElementChanged(stroke);
+    // This is not a valid stroke
+    if (!s || s->getPointCount() < 2) {
+        g_warning("BaseStrokeHandler::Stroke incomplete!");
+        delete s;
+        return;
+    }
 
-    stroke = nullptr;
+    s->freeUnusedPointItems();
+
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, s));
+
+    layer->addElement(s);
+    page->fireElementChanged(s);
 
     xournal->getCursor()->updateCursor();
 }
@@ -185,13 +172,14 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
     double zoom = xournal->getZoom();
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
-
-
-    if (std::lock_guard lock(this->strokeMutex); !stroke) {
-        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y), lock);
-    }
-
     this->startStrokeTime = pos.timestamp;
+    this->startPoint = snappingHandler.snapToGrid(this->buttonDownPoint, pos.isAltDown());
+
+    auto s = createStroke(startPoint, this->xournal->getControl());
+    s->addPoint(startPoint);  // Second copy of the point, for rendering
+
+    std::lock_guard lock(strokeMutex);
+    std::swap(stroke, s);
 }
 
 void BaseStrokeHandler::onButtonDoublePressEvent(const PositionInputData& pos) {

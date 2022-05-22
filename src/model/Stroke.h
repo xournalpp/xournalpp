@@ -70,6 +70,8 @@ public:
     Point getPoint(int index) const;
     const Point* getPoints() const;
 
+    void swapPointVector(std::vector<Point>& other);
+
     void deletePoint(int index);
     void deletePointsFrom(int index);
 

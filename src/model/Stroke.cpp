@@ -193,6 +193,11 @@ auto Stroke::getPoint(int index) const -> Point {
 
 auto Stroke::getPoints() const -> const Point* { return this->points.data(); }
 
+void Stroke::swapPointVector(std::vector<Point>& other) {
+    this->points.swap(other);
+    this->sizeCalculated = false;
+}
+
 void Stroke::freeUnusedPointItems() { this->points = {begin(this->points), end(this->points)}; }
 
 void Stroke::setToolType(StrokeTool type) { this->toolType = type; }

@@ -27,7 +27,7 @@ void DocumentView::applyColor(cairo_t* cr, Stroke* s) {
         if (s->getFill() != -1) {
             applyColor(cr, s, s->getFill());
         } else {
-            applyColor(cr, s, 120);
+            applyColor(cr, s, HIGHLIGHTER_DEFAULT_ALPHA);
         }
     } else {
         applyColor(cr, static_cast<Element*>(s));

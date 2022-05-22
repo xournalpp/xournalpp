@@ -79,56 +79,38 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     /**
      * Using the last two points of the stroke, draw a spline quadratic segment to the coordinates of ev.
      */
-    Point A;
-    Point B;
-    Point C;
-    double distance;
+    Stroke* stroke = strokeHandler->getStroke();
+    int pointCount = stroke->getPointCount();
+    if (pointCount <= 0) {
+        return;
+    }
 
-    {  // scope owning the mutex strokeHandler->strokeMutex
-        auto [stroke, lock] = strokeHandler->getLockedStroke();
-        int pointCount = stroke->getPointCount();
-        if (pointCount <= 0) {
-            return;
-        }
-
-        if (pointCount == 1) {
-            /**
-             * Draw a line segment
-             */
-            drawEvent(ev);
-            return;
-        }
-
+    if (pointCount == 1) {
         /**
-         * Draw a quadratic spline segment, with first tangent vector parallel to AB
+         * Draw a line segment
          */
-        B = stroke->getPoint(pointCount - 1);
-        A = stroke->getPoint(pointCount - 2);
-        C = Point(ev.x / zoom, ev.y / zoom);
+        drawEvent(ev);
+        return;
+    }
 
-        MathVect vAB = {B.x - A.x, B.y - A.y};
-        MathVect vBC = {C.x - B.x, C.y - B.y};
-        const double squaredNormBC = vBC.dx * vBC.dx + vBC.dy * vBC.dy;
-        const double normBC = std::sqrt(squaredNormBC);
-        const double normAB = vAB.norm();
+    /**
+     * Draw a quadratic spline segment, with first tangent vector parallel to AB
+     */
+    Point B = stroke->getPoint(pointCount - 1);
+    Point A = stroke->getPoint(pointCount - 2);
+    Point C(ev.x / zoom, ev.y / zoom);
 
-        /**
-         * The first argument of std::min would give a symmetric quadratic spline segment.
-         * The std::min and its second argument ensure the spline segment stays reasonably close to its nodes
-         */
-        distance = std::min(std::abs(squaredNormBC * normAB / (2 * MathVect::scalarProduct(vAB, vBC))), normBC);
+    MathVect vAB = {B.x - A.x, B.y - A.y};
+    MathVect vBC = {C.x - B.x, C.y - B.y};
+    const double squaredNormBC = vBC.dx * vBC.dx + vBC.dy * vBC.dy;
+    const double normBC = std::sqrt(squaredNormBC);
+    const double normAB = vAB.norm();
 
-        /**
-         * Set the pressure values. We assume the tool is pressure sensitive:
-         *      stroke->getToolType() == STROKE_TOOL_PEN
-         */
-        if (ev.pressure != Point::NO_PRESSURE) {
-            C.z = ev.pressure * stroke->getWidth();
-            double coeff = normBC / 2 + distance;  // Very rough estimation of the spline's length
-            B.z = (coeff * A.z + normAB * C.z) / (normAB + coeff);
-            stroke->setLastPressure(B.z);
-        }
-    }  // Release the mutex strokeHandler->strokeMutex
+    /**
+     * The first argument of std::min would give a symmetric quadratic spline segment.
+     * The std::min and its second argument ensure the spline segment stays reasonably close to its nodes
+     */
+    double distance = std::min(std::abs(squaredNormBC * normAB / (2 * MathVect::scalarProduct(vAB, vBC))), normBC);
 
     // Quadratic control point
     Point Q = B.lineTo(A, -distance);
@@ -141,11 +123,23 @@ void StrokeStabilizer::Active::quadraticSplineTo(const Event& ev) {
     // Equivalent to sp = C.lineTo(Q, 2/3*distance), but avoids recomputing the norms
     Point sp((Q.x - C.x) * 2 / 3 + C.x, (Q.y - C.y) * 2 / 3 + C.y);
 
+    /**
+     * Set the pressure values. We assume the tool is pressure sensitive:
+     *      stroke->getToolType() == STROKE_TOOL_PEN
+     */
+    bool usePressure = ev.pressure != Point::NO_PRESSURE;
+    if (usePressure) {
+        C.z = ev.pressure * stroke->getWidth();
+        double coeff = normBC / 2 + distance;  // Very rough estimation of the spline's length
+        B.z = (coeff * A.z + normAB * C.z) / (normAB + coeff);
+        stroke->setLastPressure(B.z);
+    }
+
     SplineSegment spline(B, fp, sp, C);
     /**
      * TODO Add support for spline segments in Stroke and replace this point sequence by a single spline segment
      */
-    std::list<Point> pointsToPaint = spline.toPointSequence(ev.pressure != Point::NO_PRESSURE);
+    std::list<Point> pointsToPaint = spline.toPointSequence(usePressure);
 
     pointsToPaint.pop_front();  // Point B has already been painted
 
@@ -231,7 +225,7 @@ void StrokeStabilizer::Deadzone::processEvent(const PositionInputData& pos) {
 }
 
 void StrokeStabilizer::Deadzone::rebalanceStrokePressures() {
-    auto [stroke, lock] = strokeHandler->getLockedStroke();
+    Stroke* stroke = strokeHandler->getStroke();
     int pointCount = stroke->getPointCount();
     if (pointCount >= 3) {
         /**
@@ -272,7 +266,7 @@ void StrokeStabilizer::Inertia::processEvent(const PositionInputData& pos) {
 }
 
 void StrokeStabilizer::Inertia::rebalanceStrokePressures() {
-    auto [stroke, lock] = strokeHandler->getLockedStroke();
+    Stroke* stroke = strokeHandler->getStroke();
     int pointCount = stroke->getPointCount();
     if (pointCount >= 3) {
         /**

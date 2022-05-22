@@ -48,10 +48,10 @@ public:
     virtual bool onKeyEvent(GdkEventKey* event);
 
 private:
-    void finalizeSpline(const std::lock_guard<std::recursive_mutex>&);
-    void movePoint(double dx, double dy, const std::lock_guard<std::recursive_mutex>&);
-    void updateStroke(const std::lock_guard<std::recursive_mutex>&);
-    Rectangle<double> computeRepaintRectangle(const std::lock_guard<std::recursive_mutex>&) const;
+    void finalizeSpline();
+    void movePoint(double dx, double dy);
+    void updateStroke();
+    Rectangle<double> computeRepaintRectangle() const;
 
     // to filter out short strokes (usually the user tapping on the page to select it)
     guint32 startStrokeTime{};
@@ -61,15 +61,16 @@ private:
 private:
     std::vector<Point> knots{};
     std::vector<Point> tangents{};
+    std::recursive_mutex dataMutex;
     bool isButtonPressed = false;
     SnapToGridInputHandler snappingHandler;
 
 private:
-    void addKnot(const Point& p, const std::lock_guard<std::recursive_mutex>&);
-    void addKnotWithTangent(const Point& p, const Point& t, const std::lock_guard<std::recursive_mutex>&);
-    void modifyLastTangent(const Point& t, const std::lock_guard<std::recursive_mutex>&);
-    void deleteLastKnotWithTangent(const std::lock_guard<std::recursive_mutex>&);
-    size_t getKnotCount(const std::lock_guard<std::recursive_mutex>&) const;
+    void addKnot(const Point& p);
+    void addKnotWithTangent(const Point& p, const Point& t);
+    void modifyLastTangent(const Point& t);
+    void deleteLastKnotWithTangent();
+    size_t getKnotCount() const;
 
 protected:
     DocumentView view;

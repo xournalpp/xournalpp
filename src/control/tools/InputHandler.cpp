@@ -19,9 +19,7 @@ InputHandler::InputHandler(XournalView* xournal, XojPageView* redrawable, const 
 
 InputHandler::~InputHandler() = default;
 
-auto InputHandler::getLockedStroke() -> std::pair<Stroke*, std::lock_guard<std::recursive_mutex>> {
-    return std::pair<Stroke*, std::lock_guard<std::recursive_mutex>>(stroke, strokeMutex);
-}
+auto InputHandler::getStroke() -> Stroke* { return stroke.get(); }
 
 /**
  * Reset the shape recognizer, only implemented by drawing instances,
@@ -31,35 +29,36 @@ void InputHandler::resetShapeRecognizer() {
     // Does nothing here. Implemented in the extending classes
 }
 
-void InputHandler::createStroke(Point p, const std::lock_guard<std::recursive_mutex>&) {
-    ToolHandler* h = xournal->getControl()->getToolHandler();
+auto InputHandler::createStroke(Point p, Control* control) -> std::unique_ptr<Stroke> {
+    ToolHandler* h = control->getToolHandler();
 
-    stroke = new Stroke();
-    stroke->setWidth(h->getThickness());
-    stroke->setColor(h->getColor());
-    stroke->setFill(h->getFill());
-    stroke->setLineStyle(h->getLineStyle());
+    auto s = std::make_unique<Stroke>();
+    s->setWidth(h->getThickness());
+    s->setColor(h->getColor());
+    s->setFill(h->getFill());
+    s->setLineStyle(h->getLineStyle());
 
     if (h->getToolType() == TOOL_PEN) {
-        stroke->setToolType(STROKE_TOOL_PEN);
+        s->setToolType(STROKE_TOOL_PEN);
 
-        if (xournal->getControl()->getAudioController()->isRecording()) {
-            std::string audioFilename = xournal->getControl()->getAudioController()->getAudioFilename();
-            size_t sttime = xournal->getControl()->getAudioController()->getStartTime();
+        if (control->getAudioController()->isRecording()) {
+            std::string audioFilename = control->getAudioController()->getAudioFilename();
+            size_t sttime = control->getAudioController()->getStartTime();
             size_t milliseconds = ((g_get_monotonic_time() / 1000) - sttime);
-            stroke->setTimestamp(milliseconds);
-            stroke->setAudioFilename(audioFilename);
+            s->setTimestamp(milliseconds);
+            s->setAudioFilename(audioFilename);
         }
     } else if (h->getToolType() == TOOL_HIGHLIGHTER) {
-        stroke->setToolType(STROKE_TOOL_HIGHLIGHTER);
+        s->setToolType(STROKE_TOOL_HIGHLIGHTER);
         p.z = Point::NO_PRESSURE;
     } else if (h->getToolType() == TOOL_ERASER) {
-        stroke->setToolType(STROKE_TOOL_ERASER);
-        stroke->setColor(0xffffffU);
+        s->setToolType(STROKE_TOOL_ERASER);
+        s->setColor(0xffffffU);
         p.z = Point::NO_PRESSURE;
     }
 
-    stroke->addPoint(p);
+    s->addPoint(p);
+    return s;
 }
 
 auto InputHandler::validMotion(Point p, Point q) -> bool {

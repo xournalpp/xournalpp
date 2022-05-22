@@ -11,45 +11,27 @@ ArrowHandler::ArrowHandler(XournalView* xournal, XojPageView* redrawable, const 
 
 ArrowHandler::~ArrowHandler() = default;
 
-void ArrowHandler::drawShape(Point& c, const PositionInputData& pos, const std::lock_guard<std::recursive_mutex>&) {
-    this->currPoint = c;  // in case redrawn by keypress event in base class.
+auto ArrowHandler::createShape(const PositionInputData& pos) -> std::vector<Point> {
+    Point c = snappingHandler.snap(this->currPoint, this->startPoint, pos.isAltDown());
 
-    /**
-     * Snap first point to grid (if enabled)
-     */
-    bool altDown = pos.isAltDown();
+    // We've now computed the line points for the arrow
+    // so we just have to build the head
 
-    Point firstPoint = snappingHandler.snapToGrid(stroke->getPoint(0), altDown);
-    stroke->setFirstPoint(firstPoint.x, firstPoint.y);
+    // set up the size of the arrowhead to be 7x the thickness of the line
+    double arrowDist = xournal->getControl()->getToolHandler()->getThickness() * 7.0;
 
+    // an appropriate delta is Pi/3 radians for an arrow shape
+    double delta = M_PI / 6.0;
+    double angle = atan2(c.y - this->startPoint.y, c.x - this->startPoint.x);
 
-    int count = stroke->getPointCount();
-    if (count < 1) {
-        stroke->addPoint(c);
-    } else {
-        // disable this to see such a cool "serrate brush" effect
-        if (count > 4) {
-            // remove previous points
-            stroke->deletePoint(4);
-            stroke->deletePoint(3);
-            stroke->deletePoint(2);
-            stroke->deletePoint(1);
-        }
+    std::vector<Point> shape;
+    shape.reserve(5);
 
-        c = snappingHandler.snap(c, firstPoint, altDown);
+    shape.emplace_back(this->startPoint);
 
-        // We've now computed the line points for the arrow
-        // so we just have to build the head
-
-        // set up the size of the arrowhead to be 7x the thickness of the line
-        double arrowDist = xournal->getControl()->getToolHandler()->getThickness() * 7.0;
-
-        // an appropriate delta is Pi/3 radians for an arrow shape
-        double delta = M_PI / 6.0;
-        double angle = atan2(c.y - firstPoint.y, c.x - firstPoint.x);
-        stroke->addPoint(c);
-        stroke->addPoint(Point(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta)));
-        stroke->addPoint(c);
-        stroke->addPoint(Point(c.x - arrowDist * cos(angle - delta), c.y - arrowDist * sin(angle - delta)));
-    }
+    shape.emplace_back(c);
+    shape.emplace_back(Point(c.x - arrowDist * cos(angle + delta), c.y - arrowDist * sin(angle + delta)));
+    shape.emplace_back(c);
+    shape.emplace_back(Point(c.x - arrowDist * cos(angle - delta), c.y - arrowDist * sin(angle - delta)));
+    return shape;
 }

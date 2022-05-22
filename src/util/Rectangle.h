@@ -72,13 +72,6 @@ public:
         return *this;
     }
 
-    void addPadding(T padding) {
-        x -= padding;
-        y -= padding;
-        width += 2 * padding;
-        height += 2 * padding;
-    }
-
     /**
      * Calculates the area
      */
