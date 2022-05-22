@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 18:04\n"
+"PO-Revision-Date: 2022-05-22 21:21\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2026,7 +2026,7 @@ msgstr "<i>Folosește ecranul tactil ca pe un creion electronic</i>"
 
 #: ../ui/settings.glade:1698
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr "<i>Cu anumite reglări, unele creioane lasă inexactități la începutul scrierii. Acest lucru poate fi evitat prin ignorarea primelor semne atunci când creionul începe să scrie.</i>"
+msgstr "<i>Cu anumite reglări, unele creioane lasă imprecizii la începutul scrierii. Acest lucru poate fi evitat prin ignorarea primelor semne atunci când creionul începe să scrie.</i>"
 
 #: ../ui/settings.glade:2021
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -2086,7 +2086,7 @@ msgstr "Media aritmetică"
 
 #: ../ui/settings.glade:1774
 msgid "Artifact workaround"
-msgstr "Eliminare inexactități"
+msgstr "Eliminare imprecizii"
 
 #: ../ui/settings.glade:5478
 msgid "Audio Devices"
