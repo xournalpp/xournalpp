@@ -11,21 +11,26 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
-#include "control/ToolHandler.h"
-
+#include "util/NamedColor.h"
 #include "AbstractToolItem.h"
 
-
 class ColorSelectImage;
+class ToolHandler;
 
 class ColorToolItem: public AbstractToolItem {
 public:
     ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, NamedColor namedColor,
                   bool selektor = false);
+    ColorToolItem(ColorToolItem const&) = delete;
+    ColorToolItem(ColorToolItem &&) noexcept = delete;
+    auto operator=(ColorToolItem const&) -> ColorToolItem& = delete;
+    auto operator=(ColorToolItem &&) noexcept -> ColorToolItem&  = delete;
     ~ColorToolItem() override;
+
 
 public:
     void actionSelected(ActionGroup group, ActionType action) override;
@@ -65,7 +70,7 @@ private:
     /**
      * Icon to display
      */
-    ColorSelectImage* icon = nullptr;
+    std::unique_ptr<ColorSelectImage> icon{};
 
     GtkWindow* parent = nullptr;
     ToolHandler* toolHandler = nullptr;

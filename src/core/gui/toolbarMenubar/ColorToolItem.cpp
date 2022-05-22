@@ -1,6 +1,8 @@
 #include "ColorToolItem.h"
 
+#include <array>
 #include <cinttypes>
+#include <memory>
 
 #include <config.h>
 
@@ -9,25 +11,25 @@
 #include "util/StringUtils.h"
 #include "util/Util.h"
 #include "util/i18n.h"
+#include "control/ToolHandler.h"
 
 bool ColorToolItem::inUpdate = false;
+
+ColorToolItem::~ColorToolItem() = default;
 
 ColorToolItem::ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, NamedColor namedColor,
                              bool selektor):
         AbstractToolItem("", handler, selektor ? ACTION_SELECT_COLOR_CUSTOM : ACTION_SELECT_COLOR),
-        toolHandler(toolHandler),
-        namedColor{std::move(namedColor)} {
+        namedColor{std::move(namedColor)},
+        toolHandler(toolHandler) {
     this->group = GROUP_COLOR;
 }
-
-ColorToolItem::~ColorToolItem() { freeIcons(); }
 
 /**
  * Free the allocated icons
  */
 void ColorToolItem::freeIcons() {
-    delete this->icon;
-    this->icon = nullptr;
+    this->icon.reset();
 }
 
 auto ColorToolItem::isSelector() const -> bool { return this->action == ACTION_SELECT_COLOR_CUSTOM; }
@@ -68,9 +70,10 @@ auto ColorToolItem::getId() const -> std::string {
         return "COLOR_SELECT";
     }
 
-    char buffer[64];
-    snprintf(buffer, sizeof(buffer), "COLOR(%zu)", this->namedColor.getIndex());
-    std::string id = buffer;
+    // Todo (modernize, cpp20): use std::format or fmtlibs fmt::format
+    std::array<char, 64> buffer{'\0'};
+    auto size = snprintf(buffer.data(), buffer.size(), "COLOR(%zu)", this->namedColor.getIndex());
+    std::string id = {buffer.data(), static_cast<size_t>(size)};
 
     return id;
 }
@@ -135,7 +138,7 @@ void ColorToolItem::activated(GdkEvent* event, GtkMenuItem* menuitem, GtkToolBut
 }
 
 auto ColorToolItem::newItem() -> GtkToolItem* {
-    this->icon = new ColorSelectImage(this->namedColor.getColor(), !isSelector());
+    this->icon = std::make_unique<ColorSelectImage>(this->namedColor.getColor(), !isSelector());
 
     GtkToolItem* it = gtk_toggle_tool_button_new();
 

@@ -10,14 +10,14 @@
 NamedColor::NamedColor():
         paletteIndex{0}, name{"Custom Color"}, colorU16{ColorU16{}}, color{Color(0u)}, isPaletteColor{false} {}
 
-NamedColor::NamedColor(const size_t& paletteIndex):
+NamedColor::NamedColor(size_t paletteIndex):
         paletteIndex{paletteIndex},
         name{"Fallback Color"},
         colorU16{ColorU16{}},
         color{Color(0u)},
         isPaletteColor{true} {}
 
-NamedColor::NamedColor(const Color& color):
+NamedColor::NamedColor(Color color):
         paletteIndex{0},
         name{"Custom Color"},
         colorU16(Util::argb_to_ColorU16(color)),
@@ -59,4 +59,4 @@ auto NamedColor::getColor() const -> Color { return color; }
 
 auto NamedColor::getIndex() const -> size_t { return paletteIndex; };
 
-auto NamedColor::getName() const -> std::string { return name; };
+auto NamedColor::getName() const -> std::string const& { return name; };

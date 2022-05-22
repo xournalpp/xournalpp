@@ -24,6 +24,11 @@ public:
     AbstractItem(std::string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem = nullptr);
     ~AbstractItem() override;
 
+    AbstractItem(AbstractItem const&) = delete;
+    auto operator=(AbstractItem const&) -> AbstractItem& = delete;
+    AbstractItem(AbstractItem &&) = delete; // Implement if desired
+    auto operator=(AbstractItem &&) -> AbstractItem& = delete; // Implement if desired
+
 public:
     void actionSelected(ActionGroup group, ActionType action) override;
 
