@@ -26,8 +26,8 @@ public:
 
     AbstractItem(AbstractItem const&) = delete;
     auto operator=(AbstractItem const&) -> AbstractItem& = delete;
-    AbstractItem(AbstractItem &&) = delete; // Implement if desired
-    auto operator=(AbstractItem &&) -> AbstractItem& = delete; // Implement if desired
+    AbstractItem(AbstractItem&&) = delete;                     // Implement if desired
+    auto operator=(AbstractItem&&) -> AbstractItem& = delete;  // Implement if desired
 
 public:
     void actionSelected(ActionGroup group, ActionType action) override;

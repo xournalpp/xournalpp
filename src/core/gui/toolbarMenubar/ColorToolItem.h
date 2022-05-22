@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "util/NamedColor.h"
+
 #include "AbstractToolItem.h"
 
 class ColorSelectImage;
@@ -26,9 +27,9 @@ public:
     ColorToolItem(ActionHandler* handler, ToolHandler* toolHandler, GtkWindow* parent, NamedColor namedColor,
                   bool selektor = false);
     ColorToolItem(ColorToolItem const&) = delete;
-    ColorToolItem(ColorToolItem &&) noexcept = delete;
+    ColorToolItem(ColorToolItem&&) noexcept = delete;
     auto operator=(ColorToolItem const&) -> ColorToolItem& = delete;
-    auto operator=(ColorToolItem &&) noexcept -> ColorToolItem&  = delete;
+    auto operator=(ColorToolItem&&) noexcept -> ColorToolItem& = delete;
     ~ColorToolItem() override;
 
 
