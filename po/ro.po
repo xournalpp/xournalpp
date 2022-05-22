@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 15:53\n"
+"PO-Revision-Date: 2022-05-22 17:04\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1715,7 +1715,7 @@ msgstr "Xoj-Fișier: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:113
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
-msgstr "xoj-preview-extractor: apelare cu INPUT.xoj OUTPUT.png"
+msgstr "xoj-preview-extractor: activat cu INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:177
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
@@ -2010,7 +2010,7 @@ msgstr "<i>Acest nume va fi propus la salvarea unui nou document.</i>"
 
 #: ../ui/settings.glade:3989
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr ""
+msgstr "<i>Pentru a garanta că mărimea elementelor este naturală la un zoom de 100%. (necesită repornire)</i>"
 
 #: ../ui/settings.glade:2759
 msgid "<i>Toggle visibility of menubar with F10</i>"
@@ -2030,7 +2030,7 @@ msgstr "<i>Cu anumite reglări, unele creioane lasă inexactități la începutu
 
 #: ../ui/settings.glade:2021
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
+msgstr "<i>Poți configura dispozitivele neidentificate de GTK ca fiind ecran tactil, pentru a se comporta ca și cum ar fi.</i>"
 
 #: ../ui/about.glade:203
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2056,7 +2056,7 @@ msgstr "Adaugă un spațiu vertical suplimentar de"
 
 #: ../ui/settings.glade:4519
 msgid "After resizing a selection, the line width of all strokes will be the same as before the resizing operation. "
-msgstr ""
+msgstr "După redimensionarea unei selecții, lățimea tuturor liniilor va fi aceeași ca înainte de redimensionare. "
 
 #: ../ui/exportSettings.glade:49
 msgid "All"
@@ -2348,7 +2348,7 @@ msgstr ""
 
 #: ../ui/main.glade:1502
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Desenează sistemul de coordonate"
 
 #: ../ui/main.glade:1513
 msgid "Draw _Line"
@@ -2356,7 +2356,7 @@ msgstr "Desenează _linii"
 
 #: ../ui/settings.glade:3055
 msgid "Draw a transparent circle around the cursor"
-msgstr ""
+msgstr "Desenează un cerc transparent în jurul cursorului"
 
 #: ../ui/settings.glade:5075
 msgid "Drawing Area"
