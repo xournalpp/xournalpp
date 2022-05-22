@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-22 13:54\n"
+"POT-Creation-Date: 2022-05-22 14:04+0000\n"
+"PO-Revision-Date: 2022-05-22 14:53\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -632,7 +632,7 @@ msgstr "Umplere"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr "Filtrează forța de presare. Înmulțește forța de apăsare cu multiplicatorul forței de apăsare. Dacă este mai mică decât valoarea minimă, se utilizează valoarea minimă."
+msgstr "Filtrează forța de apăsare. Înmulțește forța de apăsare cu multiplicatorul forței de apăsare. Dacă este mai mică decât valoarea minimă, se utilizează valoarea minimă."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Fine"
@@ -1173,7 +1173,7 @@ msgstr "Alege un alt nume"
 msgid "Select background color"
 msgstr "Alege culoarea fondului"
 
-#: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:82
+#: ../src/core/gui/toolbarMenubar/ColorToolItem.cpp:83
 msgid "Select color"
 msgstr "Alege culoarea"
 
@@ -1962,7 +1962,7 @@ msgstr "<i>Dacă aparatul este incompatibil cu recunoașterea mâinii, Xournal++
 
 #: ../ui/settings.glade:1000
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
-msgstr ""
+msgstr "<i>Alege un algoritm de stabilizare și parametrii acestuia</i>"
 
 #: ../ui/settings.glade:1505
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
@@ -1997,7 +1997,8 @@ msgstr ""
 #: ../ui/settings.glade:5382
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
-msgstr ""
+msgstr "<i>Specifică dispozitivele audio utilizate pentru înregistrarea și redarea fișierelor audio.\n"
+"Dacă este disponibil, alege <small><tt>pulse</tt></small> ca dispozitiv de intrare/ieșire.</i>"
 
 #: ../ui/settings.glade:1805
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -2610,23 +2611,23 @@ msgstr ""
 
 #: ../ui/settings.glade:5406
 msgid "Input Device"
-msgstr ""
+msgstr "Dispozitiv de intrare"
 
 #: ../ui/settings.glade:813
 msgid "Input Devices"
-msgstr ""
+msgstr "Dispozitive de intrare"
 
 #: ../ui/settings.glade:1278
 msgid "Input System"
-msgstr ""
+msgstr "Sistem de intrare"
 
 #: ../ui/settings.glade:1247
 msgid "Input stabilization"
-msgstr ""
+msgstr "Stabilizare"
 
 #: ../ui/settings.glade:1227
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "Stabilizarea poate crea un gol la sfârșitul liniei trasate. Dacă bifezi aici, acest gol este umplut."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
