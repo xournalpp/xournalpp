@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 14:53\n"
+"PO-Revision-Date: 2022-05-22 15:53\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1992,7 +1992,7 @@ msgstr "<i>Unele aparate raportează presiuni neașteptat de mici sau mari. Aces
 
 #: ../ui/settings.glade:2237
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr ""
+msgstr "<i>Stabilește comenzile care vor fi executate atunci când este activată recunoașterea mâinii. Comenzile vor fi executate în interfața grafică. Asigură-te că nu sunt blocate!</i>"
 
 #: ../ui/settings.glade:5382
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
