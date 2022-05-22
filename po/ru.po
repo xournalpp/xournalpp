@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 20:16+0000\n"
-"PO-Revision-Date: 2022-05-18 20:27\n"
+"PO-Revision-Date: 2022-05-22 09:14\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -600,11 +600,11 @@ msgstr "Не удалось инициализировать поверхнос�
 
 #: ../src/core/control/tools/ImageHandler.cpp:60
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Не удалось загрузить изображение, невозможно определить размер изображения!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Не удалось открыть content.xml в zip-архиве: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -954,11 +954,11 @@ msgstr ""
 
 #: ../src/util/PageRange.cpp:92
 msgid "PageRange::parse(): invalid page range."
-msgstr ""
+msgstr "PageRange::parse(): неверный диапазон страниц."
 
 #: ../src/util/PageRange.cpp:102
 msgid "PageRange::parse(): page numbers start with 1"
-msgstr ""
+msgstr "PageRange::parse(): номера страниц начинаются с 1"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
@@ -1102,7 +1102,7 @@ msgstr "Поиск"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:35
 msgid "See the full list of contributors"
-msgstr ""
+msgstr "Полный список участников"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:94
 msgid "Select Area Text from pdf"
@@ -2956,7 +2956,7 @@ msgstr "Имя образца слоя"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Сохранить в файл"
 
 #: ../ui/settings.glade:3419
 msgid "Scrollbars"
@@ -3112,7 +3112,7 @@ msgstr "Последовательно (мс)"
 #: ../ui/settings.glade:3026
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "Системный курсор"
 
 #: ../ui/main.glade:921
 msgid "T_oolbars"
