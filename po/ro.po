@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-23 21:32\n"
+"PO-Revision-Date: 2022-05-23 22:37\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2022,7 +2022,7 @@ msgstr "<i>Folosește gesturi cu degetele pentru a face zoom paginilor documentu
 
 #: ../ui/settings.glade:2544
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr "<i>Folosește ecranul tactil ca pe un creion electronic</i>"
+msgstr "<i>Folosește ecranul tactil ca și cum ai avea un creion electronic.</i>"
 
 #: ../ui/settings.glade:1698
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -2416,7 +2416,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2558
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Activează desenarea prin atingere"
 
 #: ../ui/settings.glade:2421
 msgid "Enable zoom gestures (requires restart)"
@@ -3180,11 +3180,11 @@ msgstr ""
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Desenare prin atingere"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr "Răsfoire la atingere"
+msgstr "Răsfoire prin atingere"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
