@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-23 17:57\n"
+"PO-Revision-Date: 2022-05-23 18:56\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -3061,7 +3061,8 @@ msgstr "Arată bara verticală de răsfoire în stânga"
 #: ../ui/settings.glade:903
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "Dacă nu există informații privind apăsarea, se atribuie o apăsare mai puternică mișcărilor mai lente decât mișcărilor mai rapide.\n\n"
+"<i>Această caracteristică poate fi utilă pentru dispozitivele care nu au sensibilitate la apăsare. De exemplu, un mouse sau un ecran tactil.</i>"
 
 #: ../ui/settings.glade:3024
 msgctxt "stylus cursor uses a small dot"
