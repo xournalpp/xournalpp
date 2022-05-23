@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-23 18:56\n"
+"PO-Revision-Date: 2022-05-23 20:09\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -308,7 +308,7 @@ msgstr "Creează un strat nou"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:65
 msgid "Custom"
-msgstr "Personalizat"
+msgstr "Personalizată"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:20
 msgid "Custom Export"
@@ -2243,7 +2243,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2353
 msgid "Custom Commands (for Method \"Custom\")"
-msgstr "Comenzi personalizate (pentru metoda \"Personalizare\")"
+msgstr "Comenzi personalizate (pentru metoda „Personalizată”)"
 
 #: ../ui/settings.glade:2890
 msgid "Dark Theme (requires restart)"
