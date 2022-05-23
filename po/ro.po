@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-23 20:09\n"
+"PO-Revision-Date: 2022-05-23 21:32\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -918,7 +918,7 @@ msgstr "PDF {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:23
 msgid "PNG graphics"
-msgstr "Grafice PNG"
+msgstr "Grafică PNG"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:86
 msgid "Page"
@@ -1695,7 +1695,7 @@ msgstr "text"
 
 #: ../src/core/control/DeviceListHelper.cpp:105
 msgid "touchpad"
-msgstr "touchpad"
+msgstr "panou tactil"
 
 #: ../src/core/control/DeviceListHelper.cpp:103
 msgid "touchscreen"
@@ -2122,7 +2122,7 @@ msgstr "Înlocuitori disponibili"
 
 #: ../ui/settings.glade:967
 msgid "Averaging method"
-msgstr ""
+msgstr "Metoda mediei"
 
 #: ../ui/settings.glade:2842
 msgid "Background color between pages"
@@ -3373,7 +3373,7 @@ msgstr ""
 
 #: ../ui/main.glade:949
 msgid "_Customize"
-msgstr ""
+msgstr "_Personalizează"
 
 #: ../ui/main.glade:1430
 msgid "_Default Tools"
