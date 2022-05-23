@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-23 14:51\n"
+"PO-Revision-Date: 2022-05-23 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -3052,7 +3052,7 @@ msgstr "Araç Çubuğunu Göster"
 
 #: ../ui/settings.glade:2772
 msgid "Show filepath in title bar"
-msgstr ""
+msgstr "Başlık çubuğunda dosyanın yolunu görüntüle"
 
 #: ../ui/settings.glade:3302
 msgid "Show sidebar on the right side"
