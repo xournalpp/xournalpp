@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-23 21:32\n"
+"PO-Revision-Date: 2022-05-23 22:37\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2028,7 +2028,7 @@ msgstr "<i>Usa le gestures per zoommare le pagine</i>"
 
 #: ../ui/settings.glade:2544
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
-msgstr "<i>Usa il touchscreen come una penna multi-touch.</i>"
+msgstr "<i>Usa il touchscreen come se avessi una penna.</i>"
 
 #: ../ui/settings.glade:1698
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
@@ -2425,7 +2425,7 @@ msgstr "Abilita il riconoscimento del palmo"
 
 #: ../ui/settings.glade:2558
 msgid "Enable touch drawing"
-msgstr "Abilita disegno con touch"
+msgstr "Abilita la possibilità di disegnare col tocco"
 
 #: ../ui/settings.glade:2421
 msgid "Enable zoom gestures (requires restart)"
