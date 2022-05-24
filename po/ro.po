@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-24 16:53\n"
+"PO-Revision-Date: 2022-05-24 18:02\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2336,10 +2336,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "Drag UP acts as if Control key is being held.\n\n"
 "Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "<i>Useful for operating without keyboard.</i>"
-msgstr "Trageți STÂNGA de la punctul de pornire acțiuni ca și cum tasta de schimbare este deținută.\n"
-"Glisați SUS acțiuni ca și cum tasta Control este ținută.\n\n"
-"Determinare Radius: Raza la care modificatorii se vor bloca până la desenul terminat.\n\n"
-"<i>Folositoare pentru operarea fără tastatură.</i>"
+msgstr "Tragerea spre stânga din punctul de pornire acționează ca și cum tasta Shift ar fi ținută apăsată.\n"
+"Tragerea în sus acționează ca și cum s-ar ține apăsată tasta Control.\n\n"
+"Raza de acțiune: Raza la care se blochează modificatorii până la terminarea desenului.\n\n"
+"<i>Util pentru lucrul fără tastatură.</i>"
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
@@ -2367,7 +2367,7 @@ msgstr "Zona de desenare"
 
 #: ../ui/settings.glade:4487
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr "Instrumente de desenare - Stabilește modificări în funcție de direcția de desenare (Experimental)"
+msgstr "Instrumente de desenare - Stabilește modificatori în funcție de direcția de desenare (Experimental)"
 
 #: ../ui/main.glade:2841 ../ui/main.glade:2878
 msgid "Duplicate"
@@ -2383,7 +2383,7 @@ msgstr "Activează"
 
 #: ../ui/settings.glade:4414
 msgid "Enable  with determination radius of "
-msgstr "Activează cu raza de determinare a "
+msgstr "Activează cu raza de acțiune de "
 
 #: ../ui/settings.glade:659
 msgid "Enable Autoloading of Journals"
@@ -2907,7 +2907,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3139
 msgid "Radius"
-msgstr ""
+msgstr "Rază"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
