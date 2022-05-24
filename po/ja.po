@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 14:53\n"
+"PO-Revision-Date: 2022-05-24 23:56\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -318,7 +318,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Cut"
-msgstr ""
+msgstr "切り取り"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Default Tool"
@@ -390,7 +390,7 @@ msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:25
 msgid "Dotted"
-msgstr ""
+msgstr "点線"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:129
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:35
@@ -468,7 +468,7 @@ msgstr ""
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:84
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:276
 msgid "Eraser"
-msgstr ""
+msgstr "消しゴム"
 
 #: ../src/core/control/Control.cpp:2305
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -623,7 +623,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:61
 msgid "Font"
-msgstr ""
+msgstr "フォント"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Forward"
@@ -631,7 +631,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:42
 msgid "GNU GPLv2 or later"
-msgstr ""
+msgstr "GNU GPLv2 以降"
 
 #: ../src/core/control/XournalMain.cpp:571
 msgid "Get version of xournalpp"
@@ -751,7 +751,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer"
-msgstr ""
+msgstr "レイヤー"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:225
 msgid "Layer Combo"
