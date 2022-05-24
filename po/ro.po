@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-24 19:21\n"
+"PO-Revision-Date: 2022-05-24 21:21\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2403,7 +2403,7 @@ msgstr "Activează sensibilitatea la apăsare"
 
 #: ../ui/settings.glade:4750
 msgid "Enable Tap action"
-msgstr ""
+msgstr "Activează acțiunea la atingere"
 
 #: ../ui/settings.glade:676
 msgid "Enable autoloading of most recent file on application startup"
