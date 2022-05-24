@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-24 18:02\n"
+"PO-Revision-Date: 2022-05-24 19:21\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2347,7 +2347,7 @@ msgstr "Trage și așează componentele de aici în benzile cu instrumente și �
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
-msgstr ""
+msgstr "Trage: Dacă valoarea este prea mică, pot apărea oscilații nedorite. Dacă valoarea este prea mare, nu va exista stabilizare."
 
 #: ../ui/main.glade:1502
 msgid "Draw Coordinate System"
@@ -2391,15 +2391,15 @@ msgstr "Activează încărcarea automată a documentelor"
 
 #: ../ui/settings.glade:375
 msgid "Enable Autosaving"
-msgstr ""
+msgstr "Activează salvarea automată"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Activează estimarea apăsării <i>(Ghicește forța de apăsare din viteza de desenare atunci când apăsarea furnizată de dispozitiv nu este disponibilă)</i>"
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Activează sensibilitatea la apăsare"
 
 #: ../ui/settings.glade:4750
 msgid "Enable Tap action"
