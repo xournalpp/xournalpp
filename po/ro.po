@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-24 15:57\n"
+"PO-Revision-Date: 2022-05-24 16:53\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2239,7 +2239,7 @@ msgstr "Simbolul cursorului creionului"
 
 #: ../ui/settings.glade:1205
 msgid "Cusp detection"
-msgstr ""
+msgstr "Detectarea vârfurilor"
 
 #: ../ui/settings.glade:2353
 msgid "Custom Commands (for Method \"Custom\")"
@@ -2326,7 +2326,10 @@ msgid "Drag LEFT from start point acts like shift key is being held.\n"
 "\t    Drag UP acts as if Control key is being held.\n\n"
 "            Determination Radius: Radius at which modifiers will lock in until finished drawing.\n\n"
 "\t    <i>Useful for operating without keyboard.</i>"
-msgstr ""
+msgstr "Tragerea spre stânga din punctul de pornire acționează ca și cum tasta Shift ar fi ținută apăsată.\n"
+"\t    Tragerea în sus acționează ca și cum s-ar ține apăsată tasta Control.\n\n"
+"            Raza de acțiune: Raza la care se blochează modificatorii până la terminarea desenului.\n\n"
+"\t    <i>Util pentru lucrul fără tastatură.</i>"
 
 #: ../ui/settings.glade:4419
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
