@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-24 21:21\n"
+"PO-Revision-Date: 2022-05-24 22:22\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1677,7 +1677,7 @@ msgstr "arată"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:259
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:278
 msgid "standard"
-msgstr "Standard"
+msgstr "standard"
 
 #: ../src/core/undo/AddUndoAction.cpp:73
 #: ../src/core/undo/DeleteUndoAction.cpp:71
@@ -2151,7 +2151,7 @@ msgstr "Culoare chenar"
 
 #: ../ui/settings.glade:2816
 msgid "Border color for current page and other selections"
-msgstr "Culoare chenar pentru pagina curentă și alte selecții"
+msgstr "Culoarea chenarului pentru pagina actuală și alte selecții"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
@@ -3090,7 +3090,7 @@ msgstr ""
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: ../ui/settings.glade:2446
 msgid "Start zooming after a distance "
@@ -3504,11 +3504,11 @@ msgstr ""
 
 #: ../ui/main.glade:616
 msgid "_Vertical"
-msgstr ""
+msgstr "_Vertical"
 
 #: ../ui/main.glade:1577
 msgid "_Vertical Space"
-msgstr ""
+msgstr "Spațiu _vertical"
 
 #: ../ui/main.glade:519
 msgid "_View"
@@ -3528,7 +3528,7 @@ msgstr ""
 
 #: ../ui/main.glade:1847
 msgid "_standard"
-msgstr ""
+msgstr "_standard"
 
 #: ../ui/main.glade:1673 ../ui/main.glade:1819 ../ui/main.glade:1928
 msgid "_thick"
@@ -3544,7 +3544,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: ../ui/pluginEntry.glade:130
 msgid "enabled,"
@@ -3560,7 +3560,7 @@ msgstr ""
 
 #: ../ui/settings.glade:426
 msgid "minutes"
-msgstr ""
+msgstr "minute"
 
 #: ../ui/settings.glade:3111 ../ui/settings.glade:3162
 #: ../ui/settings.glade:4255 ../ui/settings.glade:4266
@@ -3578,5 +3578,5 @@ msgstr ""
 
 #: ../ui/about.glade:141
 msgid "with libgtk"
-msgstr ""
+msgstr "cu libgtk"
 
