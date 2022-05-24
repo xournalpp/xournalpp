@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-23 22:37\n"
+"PO-Revision-Date: 2022-05-24 15:57\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2187,7 +2187,7 @@ msgstr "Alege un fișier de model global LaTeX"
 
 #: ../ui/settings.glade:3073 ../ui/settings.glade:3216
 msgid "Choose the color to use for \"Highlight cursor position\""
-msgstr ""
+msgstr "Alege culoarea de folosit pentru „Evidențiază poziția cursorului”"
 
 #: ../ui/settings.glade:3087
 msgid "Circle Color"
@@ -2549,7 +2549,7 @@ msgstr "Ascunde bara verticală de răsfoire"
 
 #: ../ui/settings.glade:3050
 msgid "Highlight cursor position"
-msgstr ""
+msgstr "Evidențiază poziția cursorului"
 
 #: ../ui/main.glade:2729
 msgid "Highlight selected text"
