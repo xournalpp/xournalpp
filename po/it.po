@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-24 21:21\n"
+"PO-Revision-Date: 2022-05-25 22:44\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1906,8 +1906,8 @@ msgstr "<b>Barra degli strumenti vuota</b>\n"
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
-msgstr "<b>Impostazioni Riempi opacità</b>\n"
-"Seleziona la opacità per il colore di riempimento"
+msgstr "<b>Impostazioni Opacità del riempimento</b>\n"
+"Seleziona l'opacità del colore di riempimento"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2466,7 +2466,7 @@ msgstr "R_iempi"
 
 #: ../ui/main.glade:1761 ../ui/main.glade:1966
 msgid "Fill opacity"
-msgstr "Opacità di riempimento"
+msgstr "Opacità del riempimento"
 
 #: ../ui/settings.glade:1222
 msgid "Finalize the stroke"
@@ -2638,7 +2638,7 @@ msgstr "Stabilizzazione input"
 
 #: ../ui/settings.glade:1227
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr "La stabilizzazione dell'input può creare uno spazio alla fine del tratto. Se abilitato, questo spazio viene colmato."
+msgstr "La stabilizzazione può creare uno spazio alla fine del tratto. Se abilitato, questo spazio viene colmato."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
