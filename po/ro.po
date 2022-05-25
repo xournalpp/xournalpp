@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-24 22:22\n"
+"PO-Revision-Date: 2022-05-25 16:24\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2407,15 +2407,15 @@ msgstr "Activează acțiunea la atingere"
 
 #: ../ui/settings.glade:676
 msgid "Enable autoloading of most recent file on application startup"
-msgstr ""
+msgstr "Activează încărcarea automată a celui mai recent fișier la pornirea aplicației"
 
 #: ../ui/settings.glade:852
 msgid "Enable drawing outside of window <i>(Drawing will not stop at the border of the window)</i>"
-msgstr ""
+msgstr "Activează desenarea în afara ferestrei <i>(Nu trebuie să te oprești din desenat dacă ai ajuns la marginea ferestrei)</i>"
 
 #: ../ui/settings.glade:2101
 msgid "Enable internal Hand Recognition"
-msgstr ""
+msgstr "Activează recunoașterea mâinii"
 
 #: ../ui/settings.glade:2558
 msgid "Enable touch drawing"
@@ -2423,7 +2423,7 @@ msgstr "Activează desenarea prin atingere"
 
 #: ../ui/settings.glade:2421
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "Activează gesturile pentru zoom (necesită repornire)"
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
