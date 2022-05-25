@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-25 16:24\n"
+"PO-Revision-Date: 2022-05-25 18:40\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2431,7 +2431,7 @@ msgstr "Introdu/modifică textul LaTeX"
 
 #: ../ui/main.glade:1775
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Opțiu_ni pentru gumă"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2798,7 +2798,7 @@ msgstr "Reglări opacitate"
 
 #: ../ui/settings.glade:933
 msgid "Options"
-msgstr ""
+msgstr "Opțiuni"
 
 #: ../ui/settings.glade:5429
 msgid "Output Device"
@@ -2847,7 +2847,7 @@ msgstr "Pauză"
 
 #: ../ui/main.glade:1629
 msgid "Pen _Options"
-msgstr "_Opțiuni Creion"
+msgstr "_Opțiuni pentru creion"
 
 #: ../ui/settings.glade:3783
 msgid "Performance"
