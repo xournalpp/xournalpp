@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 14:53\n"
+"PO-Revision-Date: 2022-05-25 14:13\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -409,7 +409,7 @@ msgstr "رسم سهم"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "رسم سهم مزدوج"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
@@ -604,7 +604,7 @@ msgstr "فشل تحميل الصورة ، لا يمكن تحديد حجم الص
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "تعذر فتح ملف content.xml في أرشيف zip المضغوط: «{1}»"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -1490,7 +1490,7 @@ msgstr "مستند غير محفوظ"
 
 #: ../src/core/control/jobs/ImageExport.cpp:85
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "صيغة رسوميات غير مدعومة: "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
