@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-25 20:44\n"
+"PO-Revision-Date: 2022-05-25 21:43\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2456,7 +2456,7 @@ msgstr "Exportă documentul fără niciun fond (Niciunul) sau numai cu fonduri P
 
 #: ../ui/main.glade:1751 ../ui/main.glade:1956
 msgid "Fi_ll"
-msgstr ""
+msgstr "Ump_le"
 
 #: ../ui/main.glade:1761 ../ui/main.glade:1966
 msgid "Fill opacity"
