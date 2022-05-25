@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-25 21:43\n"
+"PO-Revision-Date: 2022-05-25 22:44\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -628,7 +628,7 @@ msgstr "Fișierul nu a putut fi deschis. Trebuie deschis manual:\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
 msgid "Fill"
-msgstr "Umplere"
+msgstr "Umple"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
@@ -1907,7 +1907,7 @@ msgstr "<b>Caseta cu instrumente e goală</b>\n"
 msgid "<b>Fill opacity settings</b>\n"
 "Select opacity for fill color"
 msgstr "<b>Decide opacitatea umplerii</b>\n"
-"Alege opacitatea pentru culoarea de umplere"
+"Alege opacitatea culorii de umplere"
 
 #: ../ui/pageTemplate.glade:135
 msgid "<b>Page size</b>"
@@ -2460,7 +2460,7 @@ msgstr "Ump_le"
 
 #: ../ui/main.glade:1761 ../ui/main.glade:1966
 msgid "Fill opacity"
-msgstr ""
+msgstr "Opacitatea umplerii"
 
 #: ../ui/settings.glade:1222
 msgid "Finalize the stroke"
