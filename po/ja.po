@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-24 23:56\n"
+"PO-Revision-Date: 2022-05-25 01:15\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -852,11 +852,11 @@ msgstr "画像を開く"
 
 #: ../src/core/control/XournalMain.cpp:161
 msgid "Open Logfile"
-msgstr ""
+msgstr "ログファイルを開く"
 
 #: ../src/core/control/XournalMain.cpp:162
 msgid "Open Logfile directory"
-msgstr ""
+msgstr "ログファイルのディレクトリを開く"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:12
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:368
