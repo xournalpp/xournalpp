@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-25 14:13\n"
+"PO-Revision-Date: 2022-05-25 15:14\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -519,7 +519,7 @@ msgstr "خطأ أثناء الحفظ التلقائي: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:153
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "حدث خطأ أثناء تصدير خلفية PDF: تعذر إيجاد صفحة PDF التي رقمها "
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -946,19 +946,19 @@ msgstr "رقم الصفحة"
 
 #: ../src/util/PageRange.cpp:96
 msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr ""
+msgstr "PageRange::parse()‎ : رقم الصفحة المعطى أكبر من العدد الأقصى."
 
 #: ../src/util/PageRange.cpp:99
 msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "PageRange::parse()‎ : يجب أن يكونا حدّي المدى بترتيب تصاعدي."
 
 #: ../src/util/PageRange.cpp:92
 msgid "PageRange::parse(): invalid page range."
-msgstr ""
+msgstr "PageRange::parse()‎ : مدى صفحات غير صالح."
 
 #: ../src/util/PageRange.cpp:102
 msgid "PageRange::parse(): page numbers start with 1"
-msgstr ""
+msgstr "PageRange::parse()‎ : ترقيم الصفحات يبدأ من الواحد."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
