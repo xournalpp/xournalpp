@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-25 18:40\n"
+"PO-Revision-Date: 2022-05-25 19:43\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -892,7 +892,7 @@ msgstr "Deschide {1}"
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:8
 msgid "PDF Export"
-msgstr "Export PDF"
+msgstr "Exportă PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:39
 msgid "PDF Page {1}"
@@ -1642,7 +1642,7 @@ msgstr "elemente"
 
 #: ../src/core/control/DeviceListHelper.cpp:96
 msgid "eraser"
-msgstr "Radieră"
+msgstr "gumă"
 
 #: ../src/core/control/Control.cpp:2065
 msgid "file: {1}"
@@ -2435,7 +2435,7 @@ msgstr "Opțiu_ni pentru gumă"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr ""
+msgstr "Tip de gumă - nu se modifică"
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
@@ -3392,7 +3392,7 @@ msgstr "_Modifică"
 
 #: ../ui/main.glade:1358
 msgid "_Eraser"
-msgstr ""
+msgstr "_Gumă"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
