@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-25 19:43\n"
+"PO-Revision-Date: 2022-05-25 20:44\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -545,7 +545,7 @@ msgstr "Eroarea nu poate fi ștearsă. Trebuie să o faceți manual.\n"
 
 #: ../src/core/control/XournalMain.cpp:580
 msgid "Export FILE as PDF"
-msgstr "Exportă FIȘIERUL ca PDF"
+msgstr "Exportă fișierul ca PDF"
 
 #: ../src/core/control/XournalMain.cpp:582
 msgid "Export FILE as image files (one per page)\n"
@@ -557,7 +557,7 @@ msgstr "Exportă FILE ca fișiere de tip imagine (una per pagină)\n"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:17
 msgid "Export PDF"
-msgstr "Exportă ca PDF"
+msgstr "Exportă PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:370
 msgid "Export as PDF"
@@ -2443,11 +2443,11 @@ msgstr "Exportă"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr ""
+msgstr "Exportă ca..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
-msgstr ""
+msgstr "Exportă straturile pe rând"
 
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
@@ -3396,7 +3396,7 @@ msgstr "_Gumă"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
-msgstr ""
+msgstr "_Exportă ca PDF"
 
 #: ../ui/main.glade:152
 msgid "_File"
