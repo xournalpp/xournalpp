@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 14:53\n"
+"PO-Revision-Date: 2022-05-26 05:13\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -415,7 +415,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 msgid "Draw Line"
-msgstr ""
+msgstr "선 그리기"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -423,7 +423,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:100
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Draw Rectangle"
-msgstr ""
+msgstr "직사각형 그리기"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:135
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:43
@@ -811,7 +811,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:367
 msgid "New Xournal"
-msgstr ""
+msgstr "새 Xournal"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:425
 msgid "Next"
@@ -995,11 +995,11 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 #: ../src/core/undo/UndoRedoHandler.cpp:215
 msgid "Redo"
-msgstr ""
+msgstr "다시 실행"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:210
 msgid "Redo: "
-msgstr ""
+msgstr "다시 실행: "
 
 #: ../src/core/control/Control.cpp:2105
 msgid "Remove PDF Background"
@@ -1015,11 +1015,11 @@ msgstr ""
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
-msgstr ""
+msgstr "레이어 이름 변경"
 
 #: ../src/util/XojMsgBox.cpp:77
 msgid "Replace"
-msgstr ""
+msgstr "바꾸기"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1074
 msgid "Requested temporary file was not found for attachment {1}"
@@ -1392,7 +1392,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:44
 msgid "Toolbars"
-msgstr ""
+msgstr "툴바"
 
 #: ../src/core/control/CrashHandler.cpp:29
 msgid "Trying to emergency save the current open document…"
@@ -1413,11 +1413,11 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/core/undo/UndoRedoHandler.cpp:203
 msgid "Undo"
-msgstr ""
+msgstr "되돌리기"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:198
 msgid "Undo: "
-msgstr ""
+msgstr "되돌리기: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:295
 msgid "Unexpected root tag: {1}"
@@ -1473,11 +1473,11 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
 msgid "Very Fine"
-msgstr ""
+msgstr "매우 가늘게"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:552
 msgid "Very Thick"
-msgstr ""
+msgstr "매우 두껍게"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:32
 msgid "With PDF background"
@@ -1497,7 +1497,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:232
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "XML 파서 오류: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:25
 msgid "Xournal (Compatibility)"
@@ -1546,15 +1546,15 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Zoom in"
-msgstr ""
+msgstr "확대"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:412
 msgid "Zoom out"
-msgstr ""
+msgstr "축소"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Zoom to 100%"
-msgstr ""
+msgstr "확대／축소 100%"
 
 #: ../src/core/control/Control.cpp:2394
 #: ../src/core/control/jobs/BaseExportJob.cpp:18
@@ -1610,7 +1610,7 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:96
 msgid "eraser"
-msgstr ""
+msgstr "지우개"
 
 #: ../src/core/control/Control.cpp:2065
 msgid "file: {1}"
@@ -1623,20 +1623,20 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "keyboard"
-msgstr ""
+msgstr "키보드"
 
 #: ../src/core/undo/AddUndoAction.cpp:79
 #: ../src/core/undo/DeleteUndoAction.cpp:77
 msgid "latex"
-msgstr ""
+msgstr "latex"
 
 #: ../src/core/control/DeviceListHelper.cpp:92
 msgid "mouse"
-msgstr ""
+msgstr "마우스"
 
 #: ../src/core/control/DeviceListHelper.cpp:94
 msgid "pen"
-msgstr ""
+msgstr "펜"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:144
 msgid "show"
