@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-26 05:13\n"
+"PO-Revision-Date: 2022-05-26 06:16\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -1614,12 +1614,12 @@ msgstr "지우개"
 
 #: ../src/core/control/Control.cpp:2065
 msgid "file: {1}"
-msgstr ""
+msgstr "파일: {1}"
 
 #: ../src/core/undo/AddUndoAction.cpp:76
 #: ../src/core/undo/DeleteUndoAction.cpp:74
 msgid "image"
-msgstr ""
+msgstr "이미지"
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "keyboard"
@@ -1977,7 +1977,7 @@ msgstr ""
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr ""
+msgstr "Xournal++ 정보"
 
 #: ../ui/settings.glade:4915
 msgid "Action on Tool Tap"
@@ -2167,7 +2167,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3273
 msgid "Cursor"
-msgstr ""
+msgstr "커서"
 
 #: ../ui/settings.glade:3007
 msgid "Cursor icon for pen"
@@ -2211,7 +2211,7 @@ msgstr ""
 
 #: ../ui/main.glade:1263
 msgid "Delete Layer"
-msgstr ""
+msgstr "레이어 삭제"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2255,7 +2255,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1077
 msgid "Drag"
-msgstr ""
+msgstr "드래그"
 
 #: ../ui/settings.glade:871
 msgid "Drag LEFT from start point acts like shift key is being held.\n"
@@ -2369,11 +2369,11 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
-msgstr ""
+msgstr "내보내기"
 
 #: ../ui/main.glade:247
 msgid "Export as..."
-msgstr ""
+msgstr "다른 이름으로 내보내기..."
 
 #: ../ui/exportSettings.glade:367
 msgid "Export layers progressively"
@@ -2410,7 +2410,7 @@ msgstr ""
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3573
 msgid "Fullscreen"
-msgstr ""
+msgstr "전체 화면"
 
 #: ../ui/settings.glade:5523
 msgid "Gain"
@@ -2576,7 +2576,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5746
 msgid "LaTeX"
-msgstr ""
+msgstr "LaTeX"
 
 #: ../ui/latexSettings.glade:289
 msgid "LaTeX executable settings"
@@ -2588,39 +2588,39 @@ msgstr ""
 
 #: ../ui/settings.glade:5835 ../ui/settings.glade:5883
 msgid "Language"
-msgstr ""
+msgstr "언어"
 
 #: ../ui/settings.glade:5853
 msgid "Language Settings"
-msgstr ""
+msgstr "언어 설정"
 
 #: ../ui/main.glade:593
 msgid "Layout"
-msgstr ""
+msgstr "레이아웃"
 
 #: ../ui/settings.glade:3340
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "왼손 / 오른손잡이"
 
 #: ../ui/about.glade:421
 msgid "License"
-msgstr ""
+msgstr "라이선스"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
-msgstr ""
+msgstr "불러오기 / 저장"
 
 #: ../ui/images.glade:73
 msgid "Load file"
-msgstr ""
+msgstr "파일 불러오기"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "파일에서 불러오기"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
-msgstr ""
+msgstr "툴바 관리"
 
 #: ../ui/settings.glade:1109
 msgid "Mass"
@@ -2661,7 +2661,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1454 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr ""
+msgstr "마우스"
 
 #: ../ui/settings.glade:1423
 msgid "Mouse Buttons"
@@ -2727,15 +2727,15 @@ msgstr ""
 
 #: ../ui/settings.glade:933
 msgid "Options"
-msgstr ""
+msgstr "옵션"
 
 #: ../ui/settings.glade:5429
 msgid "Output Device"
-msgstr ""
+msgstr "출력 기기"
 
 #: ../ui/settings.glade:5044
 msgid "PDF Cache"
-msgstr ""
+msgstr "PDF 캐시"
 
 #: ../ui/main.glade:1158
 msgid "P_revious Annotated Page"
@@ -2772,7 +2772,7 @@ msgstr ""
 
 #: ../ui/main.glade:2002
 msgid "Pause"
-msgstr ""
+msgstr "일시정지"
 
 #: ../ui/main.glade:1629
 msgid "Pen _Options"
@@ -2872,7 +2872,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
-msgstr ""
+msgstr "해상도"
 
 #: ../ui/settings.glade:1405
 msgid "Right Mouse Button"
