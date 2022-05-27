@@ -199,8 +199,8 @@ TEST(ErasableStroke, testIntersectWithPaddedBox) {
     boxes[1] = {Point(1, 1), 1, 3};
     expectedResult[1] = {{0, 0.0}, {1, 2.0 / 3.0}};
     // Start in padding. Pass by inner box. End in padding going toward inner box
-    boxes[2] = {Point(1, 1), 2, 3};
-    expectedResult[2] = {{0, 0.0}, {1, 2.0 / 3.0}, {9, 1.0}, {10, 1.0}};
+    boxes[2] = {Point(1, 1), 1.9, 3.5};
+    expectedResult[2] = {{0, 0.0}, {1, 5.0 / 6.0}, {9, 5.0 / 6.0}, {10, 1.0}};
     // Start on padding boundary, pass by inner box
     boxes[3] = {Point(1, 1), 0.5, 1};
     expectedResult[3] = {{0, 0.0}, {0, 1.0}};
@@ -226,8 +226,8 @@ TEST(ErasableStroke, testIntersectWithPaddedBox) {
         printf("Test box %u: ", i);
         for (auto p: res) { printf("(%zu, %4.2f) ", p.index, p.t); }
         printf("\n");
-        ASSERT_EQ(res.size(), expectedResult[i].size());
-        for (unsigned int j = 0; j < res.size(); ++j) {
+        EXPECT_EQ(res.size(), expectedResult[i].size());
+        for (unsigned int j = 0; j < std::min(res.size(), expectedResult[i].size()); ++j) {
             printf("   Found (%zu, %4.2f) - expected (%zu, %4.2f)\n", res[j].index, res[j].t,
                    expectedResult[i][j].index, expectedResult[i][j].t);
             EXPECT_EQ(res[j].index, expectedResult[i][j].index);
