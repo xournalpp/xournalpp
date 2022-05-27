@@ -19,18 +19,28 @@ ArrowHandler::~ArrowHandler() = default;
 auto ArrowHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlDown)
         -> std::pair<std::vector<Point>, Range> {
     Point c = snappingHandler.snap(this->currPoint, this->startPoint, isAltDown);
+    const double lineLength = std::hypot(c.x - this->startPoint.x, c.y - this->startPoint.y);
+    const double thickness = control->getToolHandler()->getThickness();
+    const double slimness = lineLength / thickness;
 
     // We've now computed the line points for the arrow
-    // so we just have to build the head
+    // so we just have to build the head:
+    // arrowDist is the distance between the line's and the arrow's tips
+    // delta is the angle between each arrow leg and the line
 
-    // set up the size of the arrowhead to be 7x the thickness of the line
-    double arrowDist = control->getToolHandler()->getThickness() * 7.0;
+    // set up the size of the arrow head to be 7x the thickness of the line (regime 1)
+    const double THICK1 = 7, LENGTH2 = 0.4;
+    double arrowDist = thickness * THICK1;
+    // but not too large compared to the line length (regime 2)
+    if (slimness < THICK1 / LENGTH2) {
+        arrowDist = lineLength * LENGTH2;
+    }
 
-    // an appropriate delta is Pi/3 radians for an arrow shape
-    double delta = M_PI / 6.0;
-    double angle = atan2(c.y - this->startPoint.y, c.x - this->startPoint.x);
+    // an appropriate opening angle 2*delta is Pi/3 radians for an arrow shape
+    const double delta = M_PI / 6.0;
+    const double angle = atan2(c.y - this->startPoint.y, c.x - this->startPoint.x);
 
-    std::pair<std::vector<Point>, Range> res;
+    std::pair<std::vector<Point>, Range> res; // members initialised below
     std::vector<Point>& shape = res.first;
 
     shape.reserve(doubleEnded ? 9 : 5);
