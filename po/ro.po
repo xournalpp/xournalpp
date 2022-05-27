@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-27 20:48\n"
+"PO-Revision-Date: 2022-05-27 21:51\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -333,31 +333,31 @@ msgstr "Instrument prestabilit"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:390
 #: ../src/core/undo/DeleteUndoAction.cpp:55
 msgid "Delete"
-msgstr "Șterge"
+msgstr "Elimină"
 
 #: ../src/core/control/XournalMain.cpp:163
 msgid "Delete Logfile"
-msgstr "Șterge jurnal"
+msgstr "Elimină jurnalul"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:444
 msgid "Delete current page"
-msgstr "Șterge pagina actuală"
+msgstr "Elimină pagina actuală"
 
 #: ../src/core/control/XournalMain.cpp:205
 msgid "Delete file"
-msgstr "Șterge fișierul"
+msgstr "Elimină fișierul"
 
 #: ../src/core/undo/RemoveLayerUndoAction.cpp:25
 msgid "Delete layer"
-msgstr "Șterge stratul"
+msgstr "Elimină stratul"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Delete this layer"
-msgstr "Șterge acest strat"
+msgstr "Elimină acest strat"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
-msgstr "Șterge această pagină"
+msgstr "Elimină această pagină"
 
 #: ../src/core/control/Control.cpp:2565
 msgid "Discard"
@@ -540,7 +540,7 @@ msgstr "Eroare: {1}. Te rugăm să verifici conținutul {2}"
 #: ../src/core/control/XournalMain.cpp:183
 msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
-msgstr "Eroarea nu poate fi ștearsă. Trebuie să o faceți manual.\n"
+msgstr "Eroarea nu poate fi eliminată. Trebuie eliminată manual.\n"
 "Jurnal: {1}"
 
 #: ../src/core/control/XournalMain.cpp:580
@@ -628,7 +628,7 @@ msgstr "Fișierul nu a putut fi deschis. Trebuie deschis manual:\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:529
 msgid "Fill"
-msgstr "Umple"
+msgstr "Umplere"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
@@ -934,11 +934,11 @@ msgstr "Fondul paginii a fost schimbat"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:97
 msgid "Page deleted"
-msgstr "Pagină ștearsă"
+msgstr "Pagină eliminată"
 
 #: ../src/core/undo/InsertDeletePageUndoAction.cpp:93
 msgid "Page inserted"
-msgstr "Pagină inserată"
+msgstr "Pagină introdusă"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:59
 msgid "Page number"
@@ -1342,13 +1342,13 @@ msgstr "Configurarea benzii cu instrumente „{1}” este prestabilită. Vrei s�
 #: ../src/core/control/Control.cpp:2093
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr "Fișierul fondului atașat {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau șters.\n"
+msgstr "Fișierul fondului atașat {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat.\n"
 "A fost văzut ultima dată în: {2}"
 
 #: ../src/core/control/Control.cpp:2097
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
-msgstr "Fișierul fondului {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau șters.\n"
+msgstr "Fișierul fondului {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat.\n"
 "A fost văzut ultima dată în: {2}"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
@@ -1682,7 +1682,7 @@ msgstr "standard"
 #: ../src/core/undo/AddUndoAction.cpp:73
 #: ../src/core/undo/DeleteUndoAction.cpp:71
 msgid "stroke"
-msgstr "Linii"
+msgstr "linie"
 
 #: ../src/core/control/DeviceListHelper.cpp:110
 msgid "tablet pad"
@@ -2275,7 +2275,7 @@ msgstr "Prestabilite"
 
 #: ../ui/main.glade:1263
 msgid "Delete Layer"
-msgstr "Șterge strat"
+msgstr "Elimină stratul"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2528,7 +2528,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
-msgstr ""
+msgstr "Înălțime"
 
 #: ../ui/pagesize.glade:212
 msgid "Height:"
@@ -2606,11 +2606,11 @@ msgstr "Ignoră primele"
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Calitatea imaginii"
 
 #: ../ui/settings.glade:240
 msgid "Inertia"
-msgstr ""
+msgstr "Inerția"
 
 #: ../ui/settings.glade:5406
 msgid "Input Device"
@@ -2806,7 +2806,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5044
 msgid "PDF Cache"
-msgstr ""
+msgstr "Cache PDF"
 
 #: ../ui/main.glade:1158
 msgid "P_revious Annotated Page"
@@ -2814,7 +2814,7 @@ msgstr "Pagina p_recedentă cu însemnări"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
-msgstr ""
+msgstr "Pagini:"
 
 #: ../ui/settings.glade:4384
 msgid "Paired Pages"
@@ -2851,7 +2851,7 @@ msgstr "_Opțiuni pentru creion"
 
 #: ../ui/settings.glade:3783
 msgid "Performance"
-msgstr ""
+msgstr "Performanță"
 
 #: ../ui/settings.glade:5675
 msgid "Playback Settings"
@@ -2883,7 +2883,7 @@ msgstr "Preferințe"
 
 #: ../ui/settings.glade:1174
 msgid "Preprocessor"
-msgstr ""
+msgstr "Preprocesor"
 
 #: ../ui/settings.glade:3674
 msgid "Presentation Mode"
@@ -2891,7 +2891,7 @@ msgstr "Mod de prezentare"
 
 #: ../ui/settings.glade:4514
 msgid "Preserve line width"
-msgstr ""
+msgstr "Păstrează lățimea liniei"
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
@@ -3280,7 +3280,7 @@ msgstr "Cu ajutor din partea comunității"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
-msgstr ""
+msgstr "X.X.X"
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
@@ -3384,7 +3384,7 @@ msgstr "Instrumente _prestabilite"
 
 #: ../ui/main.glade:1235
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Elimină pagina"
 
 #: ../ui/main.glade:292
 msgid "_Edit"
@@ -3570,7 +3570,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2187
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr "s <i>(după care ecranul tactil va fi reactivat din nou)</i>"
+msgstr "s <i>(după care ecranul tactil va fi reactivat)</i>"
 
 #: ../ui/main.glade:1684 ../ui/main.glade:1830 ../ui/main.glade:1939
 msgid "ver_y thick"
