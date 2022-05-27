@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-27 17:33\n"
+"PO-Revision-Date: 2022-05-27 20:48\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2484,7 +2484,7 @@ msgstr "Pe tot ecranul"
 
 #: ../ui/settings.glade:5523
 msgid "Gain"
-msgstr ""
+msgstr "Amplificare"
 
 #: ../ui/settings.glade:1140 ../ui/settings.glade:1160
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
