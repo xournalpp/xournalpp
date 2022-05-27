@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-25 22:44\n"
+"PO-Revision-Date: 2022-05-27 16:27\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -409,7 +409,7 @@ msgstr "Disegna Freccia"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Disegna Doppia Freccia"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
@@ -465,7 +465,7 @@ msgstr "Documento da salvataggio d'emergenza"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr "Abilita la sensibilità della pressione o l'inferenza della pressione per modificare questa impostazione!"
+msgstr "Abilita la sensibilità alla pressione o la deduzione della pressione per modificare questa impostazione!"
 
 #: ../src/core/undo/AddUndoAction.cpp:55
 #: ../src/core/undo/DeleteUndoAction.cpp:52
@@ -632,7 +632,7 @@ msgstr "Riempi"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr "Pressione di ingresso filtro. Moltiplicare la pressione per il moltiplicatore di pressione. Se inferiore al minimo, utilizzare la pressione minima."
+msgstr "Filtra la pressione. Moltiplica la pressione per il moltiplicatore di pressione. Se è inferiore al valore minimo, viene utilizzata la pressione minima."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Fine"
@@ -2401,7 +2401,7 @@ msgstr "Abilita il salvataggio automatico dei Journal"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr "Abilita Rilevazione di Pressione <i>(Calcola la pressione dalla velocità di disegno quando la pressione fornita dal dispositivo non è disponibile)</i>"
+msgstr "Abilita la deduzione della pressione <i>(indovina la pressione dalla velocità di disegno quando la pressione fornita dal dispositivo non è disponibile)</i>"
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
@@ -2904,7 +2904,7 @@ msgstr "Conserva la larghezza della linea"
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
-msgstr "Moltiplicatore Di Pressione: "
+msgstr "Moltiplicatore di pressione: "
 
 #: ../ui/settings.glade:1667
 msgid "Pressure Sensitivity"
