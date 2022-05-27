@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-27 15:16\n"
+"PO-Revision-Date: 2022-05-27 16:27\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -465,7 +465,7 @@ msgstr "Document salvat de urgență"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr "Activează sensibilitatea la presiune sau deducerea nivelului de presiune pentru a schimba această valoare!"
+msgstr "Activează sensibilitatea la apăsare sau estimarea forței de apăsare pentru a schimba această reglare!"
 
 #: ../src/core/undo/AddUndoAction.cpp:55
 #: ../src/core/undo/DeleteUndoAction.cpp:52
@@ -632,7 +632,7 @@ msgstr "Umple"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr "Filtrează forța de apăsare. Înmulțește forța de apăsare cu multiplicatorul forței de apăsare. Dacă este mai mică decât valoarea minimă, se utilizează valoarea minimă."
+msgstr "Filtrează forța de apăsare. Înmulțește forța de apăsare cu multiplicatorul forței de apăsare. Dacă este mai mică decât valoarea minimă, se folosește apăsarea minimă."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Fine"
@@ -1966,7 +1966,7 @@ msgstr "<i>Alege un algoritm de stabilizare și parametrii acestuia</i>"
 
 #: ../ui/settings.glade:1505
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr "<i>Sensibilitatea la presiune permite trasarea de linii cu lățimi diferite în funcție de presiunea exercitată de creion. Dacă tableta nu acceptă această caracteristică, această reglare nu are niciun efect.</i>"
+msgstr "<i>Sensibilitatea la apăsare permite trasarea de linii cu lățimi diferite în funcție de presiunea exercitată de creion. Dacă tableta nu acceptă această caracteristică, această reglare nu are niciun efect.</i>"
 
 #: ../ui/settings.glade:4010
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -1988,7 +1988,7 @@ msgstr "<i>Alege instrumentul și reglările dacă se apasă butonul „Prestabi
 
 #: ../ui/settings.glade:1554
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr "<i>Unele aparate raportează presiuni neașteptat de mici sau mari. Acest lucru poate fi rezolvat prin stabilirea unei presiuni minime sau prin ajustarea presiunii raportate de dispozitiv.</i>"
+msgstr "<i>Unele dispozitive raportează apăsări neașteptat de mici sau mari. Acest lucru poate fi rezolvat prin stabilirea unei apăsări minime sau prin ajustarea apăsării raportate de dispozitiv.</i>"
 
 #: ../ui/settings.glade:2237
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -2355,7 +2355,7 @@ msgstr "Desenează sistemul de coordonate"
 
 #: ../ui/main.glade:1513
 msgid "Draw _Line"
-msgstr "Desenează _linii"
+msgstr "Desenează _drepte"
 
 #: ../ui/settings.glade:3055
 msgid "Draw a transparent circle around the cursor"
@@ -2395,7 +2395,7 @@ msgstr "Activează salvarea automată"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr "Activează estimarea apăsării <i>(Ghicește forța de apăsare din viteza de desenare atunci când apăsarea furnizată de dispozitiv nu este disponibilă)</i>"
+msgstr "Activează estimarea forței de apăsare <i>(Ghicește forța de apăsare din viteza de desenare atunci când apăsarea furnizată de dispozitiv nu este disponibilă)</i>"
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
@@ -2728,7 +2728,7 @@ msgstr "Buton mijloc maus"
 
 #: ../ui/settings.glade:1577
 msgid "Minimum Pressure:"
-msgstr ""
+msgstr "Apăsarea minimă:"
 
 #: ../ui/settings.glade:1454 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
@@ -2895,11 +2895,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
-msgstr ""
+msgstr "Multiplicatorul forței de apăsare: "
 
 #: ../ui/settings.glade:1667
 msgid "Pressure Sensitivity"
-msgstr "Sensibilitate la presiune"
+msgstr "Sensibilitatea la apăsare"
 
 #: ../ui/about.glade:129
 msgid "RELEASE_IDENTIFIER"
