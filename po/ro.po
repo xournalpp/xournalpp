@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-27 16:27\n"
+"PO-Revision-Date: 2022-05-27 17:33\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2295,7 +2295,7 @@ msgstr "Dezactivează caracteristica de răsfoire inerțială integrată în GTK
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
-msgstr "Dezactivează desenul pentru acest dispozitiv"
+msgstr "Dezactivează desenarea cu acest dispozitiv"
 
 #: ../ui/settings.glade:3399
 msgid "Disable scrollbar fade out"
@@ -2480,7 +2480,7 @@ msgstr ""
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3573
 msgid "Fullscreen"
-msgstr ""
+msgstr "Pe tot ecranul"
 
 #: ../ui/settings.glade:5523
 msgid "Gain"
