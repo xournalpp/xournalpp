@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-27 21:51\n"
+"PO-Revision-Date: 2022-05-28 19:30\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1122,7 +1122,7 @@ msgstr "Alege text PDF liniar"
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:71
 msgid "Select Object"
-msgstr "Alege obiectul"
+msgstr "Alege un obiect"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:65
 msgid "Select PDF Area Text"
@@ -1149,13 +1149,13 @@ msgstr "Alege text PDF"
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
-msgstr "Alege dreptunghiul"
+msgstr "Alege un dreptunghi"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:65
 msgid "Select Region"
-msgstr "Alege zona"
+msgstr "Alege o zonă"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
@@ -1179,11 +1179,11 @@ msgstr "Alege culoarea"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Select rectangle"
-msgstr "Alege dreptunghiul"
+msgstr "Alege un dreptunghi"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select region"
-msgstr "Alege zona"
+msgstr "Alege o zonă"
 
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:16
 msgid "Selection Combo"
@@ -1482,7 +1482,7 @@ msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi un cerc"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:610
 msgid "Unknown stroke type: \"{1}\", assuming pen"
-msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi un creion"
+msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi de creion"
 
 #: ../src/core/control/Control.cpp:2451
 msgid "Unsaved Document"
@@ -2464,7 +2464,7 @@ msgstr "Opacitatea umplerii"
 
 #: ../ui/settings.glade:1222
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Termină linia"
 
 #: ../ui/main.glade:2505
 msgid "Find next occurrence of the search string"
@@ -2565,7 +2565,8 @@ msgstr ""
 #: ../ui/settings.glade:4800
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
 "<i>Recommended: 1 mm</i>"
-msgstr ""
+msgstr "Cât de scurtă (mm pe ecran) este linia și...\n\n"
+"<i>Recomandat: 1 mm</i>"
 
 #: ../ui/settings.glade:4780
 msgid "How short (time)  AND...\n\n"
@@ -2991,7 +2992,7 @@ msgstr "Alege text liniar"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
-msgstr "Alege pagina PDF"
+msgstr "Alege o pagină PDF"
 
 #: ../ui/main.glade:1382
 msgid "Select Text In Rectangle"
@@ -3003,7 +3004,7 @@ msgstr "Alege banda cu instrumente:"
 
 #: ../ui/settings.glade:2867
 msgid "Selection Color (Text, Stroke Selection etc.)"
-msgstr ""
+msgstr "Culoarea selecției (Text, Linie etc.)"
 
 #: ../ui/settings.glade:3506
 msgid "Selection Edge Panning"
@@ -3196,11 +3197,11 @@ msgstr "Ecran tactil"
 
 #: ../ui/settings.glade:4860
 msgid "Try to select object first."
-msgstr "Încercați mai întâi să selectați obiectul."
+msgstr "Încearcă mai întâi să alegi obiectul."
 
 #: ../ui/settings.glade:4865 ../ui/settings.glade:4897
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr "Încearcă să alegi obiectul mai întâi; dacă nu este ales nimic, atunci arată caseta cu instrumente mobilă, dacă este activată."
+msgstr "Încearcă mai întâi să alegi obiectul; dacă nu este ales nimic, atunci arată caseta cu instrumente mobilă, dacă este activată."
 
 #: ../ui/main.glade:2749
 msgid "Underline selected text"
