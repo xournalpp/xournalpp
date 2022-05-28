@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-27 21:51\n"
+"PO-Revision-Date: 2022-05-28 18:33\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2464,7 +2464,7 @@ msgstr "Opacitatea umplerii"
 
 #: ../ui/settings.glade:1222
 msgid "Finalize the stroke"
-msgstr ""
+msgstr "Termină linia"
 
 #: ../ui/main.glade:2505
 msgid "Find next occurrence of the search string"
