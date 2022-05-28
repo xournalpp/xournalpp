@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-28 19:30\n"
+"PO-Revision-Date: 2022-05-28 20:34\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1149,7 +1149,7 @@ msgstr "Alege text PDF"
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:59
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:92
 msgid "Select Rectangle"
-msgstr "Alege un dreptunghi"
+msgstr "Selecție dreptunghiulară"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:479
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:20
@@ -1179,7 +1179,7 @@ msgstr "Alege culoarea"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 msgid "Select rectangle"
-msgstr "Alege un dreptunghi"
+msgstr "Selecție dreptunghiulară"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 msgid "Select region"
