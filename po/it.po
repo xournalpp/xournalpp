@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-29 13:24\n"
+"PO-Revision-Date: 2022-05-29 14:26\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -998,7 +998,7 @@ msgstr "Modalità presentazione"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
-msgstr "Lingua precedentemente selezionata non più disponibile!"
+msgstr "La lingua precedentemente selezionata non è più disponibile!"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Print"
@@ -1116,7 +1116,7 @@ msgstr "Seleziona Font"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:16
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 msgid "Select Linear PDF Text"
-msgstr "Selezionare linee di testo PDF"
+msgstr "Seleziona testo PDF lineare"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:21
@@ -1130,19 +1130,19 @@ msgstr "Selezionare area di testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:58
 msgid "Select PDF Text"
-msgstr "Seleziona Testo PDF"
+msgstr "Seleziona testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:21
 msgid "Select PDF Text In Rectangle"
-msgstr "Selezione rettangolare testo PDF"
+msgstr "Seleziona il testo PDF dal rettangolo"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:468
 msgid "Select PDF Text in Rectangle"
-msgstr "Selezione rettangolare testo PDF"
+msgstr "Seleziona il testo PDF dal rettangolo"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:80
 msgid "Select Pdf Text"
-msgstr "Seleziona Testo PDF"
+msgstr "Seleziona testo PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:481
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:19
@@ -1159,7 +1159,7 @@ msgstr "Seleziona Regione"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Select Text from pdf"
-msgstr "Seleziona del testo dal PDF"
+msgstr "Seleziona testo dal PDF"
 
 #: ../src/core/control/Control.cpp:2104
 msgid "Select another PDF"
@@ -2002,7 +2002,7 @@ msgstr "<i>Specifica i comandi che verranno eseguiti quando la mano viene ricono
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Specifica i dispositivi audio usati per la registrazione e riproduzione degli allegati audio.\n"
-"Se disponibile, scegli <small><tt>pulse</tt></small> come dispositivo di input / output.</i>"
+"Se disponibile, scegli <small><tt>pulse</tt></small> come dispositivo di input/output.</i>"
 
 #: ../ui/settings.glade:1805
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -2996,7 +2996,7 @@ msgstr "Seleziona Immagine"
 
 #: ../ui/main.glade:1370
 msgid "Select Linear Text"
-msgstr "Seleziona Testo Lineare"
+msgstr "Seleziona testo lineare"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -3004,7 +3004,7 @@ msgstr "Seleziona Pagina PDF"
 
 #: ../ui/main.glade:1382
 msgid "Select Text In Rectangle"
-msgstr "Seleziona Testo Nel Rettangolo"
+msgstr "Seleziona il testo dal rettangolo"
 
 #: ../ui/settings.glade:3639
 msgid "Select toolbar:"
@@ -3262,7 +3262,7 @@ msgstr "Quando un elemento viene selezionato e spostato oltre la parte visibile 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr "Quando si disegna con il tocco, i gesti a due dita destinati a muovere la vista possono invece causare lo zoom, causando problemi di prestazioni. \n"
+msgstr "Quando si disegna con il tocco, i gesti a due dita destinati a muovere la vista possono invece causare lo zoom, causando problemi. \n"
 "Questa impostazione può rendere più facile il disegno con il tocco. "
 
 #: ../ui/settings.glade:4971
