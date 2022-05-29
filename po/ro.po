@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-29 16:28\n"
+"PO-Revision-Date: 2022-05-29 17:26\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -962,7 +962,7 @@ msgstr "PageRange::parse(): numerele paginilor încep cu 1"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
-msgstr "Pagini asociate"
+msgstr "Pagini alăturate"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 #: ../src/core/undo/AddUndoAction.cpp:57
@@ -2819,7 +2819,7 @@ msgstr "Pagini:"
 
 #: ../ui/settings.glade:4384
 msgid "Paired Pages"
-msgstr ""
+msgstr "Pagini alăturate"
 
 #: ../ui/main.glade:1322
 msgid "Paper B_ackground"
@@ -3136,15 +3136,15 @@ msgstr "Model:"
 
 #: ../ui/settings.glade:2305 ../ui/settings.glade:2318
 msgid "Test"
-msgstr ""
+msgstr "Testează"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr ""
+msgstr "Testează configurarea"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr "Verifică dacă este valabilă configurația actuală, prin executarea comenzii de generare LaTeX pe fișierul modelului global, cu o formulă de test."
+msgstr "Verifică dacă este valabilă configurarea actuală, prin executarea comenzii de generare LaTeX pe fișierul modelului global, cu o formulă de test."
 
 #: ../ui/main.glade:1980
 msgid "Text Font..."
@@ -3457,7 +3457,7 @@ msgstr ""
 
 #: ../ui/main.glade:530
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Pagini alăturate"
 
 #: ../ui/main.glade:1346
 msgid "_Pen"
