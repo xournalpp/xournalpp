@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-29 15:24\n"
+"PO-Revision-Date: 2022-05-29 16:28\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -519,7 +519,7 @@ msgstr "Errore durante il salvataggio automatico: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:153
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Errore durante l'esportazione dello sfondo PDF: non riesco a trovare il numero della pagina PDF "
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -1490,7 +1490,7 @@ msgstr "Documento non Salvato"
 
 #: ../src/core/control/jobs/ImageExport.cpp:85
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "Formato grafico non accettato: "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
@@ -2482,7 +2482,7 @@ msgstr "Trova l'occorrenza precedente della stringa di ricerca"
 
 #: ../ui/settings.glade:4331
 msgid "First Page Offset "
-msgstr "Offset prima pagina "
+msgstr "Spostamento della prima pagina "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3573
 msgid "Fullscreen"
@@ -2798,7 +2798,7 @@ msgstr "Nessuna"
 
 #: ../ui/settings.glade:4330
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr "Numero di pagine da saltare di quando <b>Pagine Accoppiate</b> è abilitato"
+msgstr "Sposta la prima pagina di questo numero di pagine quando è abilitata l'opzione <b>Pagine affiancate</b>"
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
