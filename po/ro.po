@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-29 12:29\n"
+"PO-Revision-Date: 2022-05-29 14:26\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1980,7 +1980,7 @@ msgstr "<i>Încarcă mai des fondurile PDF în timp ce se face zoom pentru o cal
 
 #: ../ui/settings.glade:5798
 msgid "<i>Select language (requires restart)</i>"
-msgstr "<i>Alege limba (necesită repornirea programului)</i>"
+msgstr "<i>Alege limba (trebuie repornit programul)</i>"
 
 #: ../ui/settings.glade:5126
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
@@ -3008,7 +3008,7 @@ msgstr "Culoarea selecției (Text, Linie etc.)"
 
 #: ../ui/settings.glade:3506
 msgid "Selection Edge Panning"
-msgstr "Alege deplasarea în margine"
+msgstr "Stabilește deplasarea în margine"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3103,7 +3103,7 @@ msgstr "Alege dosarul"
 
 #: ../ui/main.glade:2769
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Taie textul ales"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3180,7 +3180,7 @@ msgstr ""
 
 #: ../ui/main.glade:2789
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Schimbă modul de alegere a textului"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
