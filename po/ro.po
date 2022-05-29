@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-29 11:25\n"
+"PO-Revision-Date: 2022-05-29 12:29\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -3008,7 +3008,7 @@ msgstr "Culoarea selecției (Text, Linie etc.)"
 
 #: ../ui/settings.glade:3506
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Alege deplasarea în margine"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3221,7 +3221,7 @@ msgstr "Folosește dimensiunile actuale ale paginii în loc de dimensiunile de m
 
 #: ../ui/settings.glade:2563 ../ui/settings.glade:2631
 msgid "Use two fingers to pan/zoom and one finger to use the selected tool."
-msgstr "Folosește două degete pentru Panoramă/Zoom și un deget pentru instrumentul ales."
+msgstr "Folosește două degete pentru a mișca/zoom și un deget pentru instrumentul ales."
 
 #: ../ui/settings.glade:4343
 msgid "Usually 0 or 1"
@@ -3249,12 +3249,12 @@ msgstr ""
 
 #: ../ui/settings.glade:3476
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Când un element este ales și deplasat dincolo de partea vizibilă a zonei de desenare, mișcă zona cu o valoare egală cu acest procent din partea vizibilă a zonei de desenare. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr "Când desenezi cu ajutorul atingerii, gesturile cu două degete menite să mute vizualizarea pot provoca în schimb zoom, ceea ce provoacă neplăceri. \n"
+msgstr "Când desenezi cu ajutorul atingerii, gesturile cu două degete menite să miște zona vizibilă pot provoca în schimb zoom, ceea ce provoacă neplăceri. \n"
 "Această opțiune poate facilita desenarea prin atingere. "
 
 #: ../ui/settings.glade:4971
