@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-29 15:24\n"
+"PO-Revision-Date: 2022-05-29 16:28\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2468,15 +2468,15 @@ msgstr "Termină linia"
 
 #: ../ui/main.glade:2505
 msgid "Find next occurrence of the search string"
-msgstr ""
+msgstr "Caută următoarea apariție a textului"
 
 #: ../ui/main.glade:2483
 msgid "Find previous occurrence of the search string"
-msgstr ""
+msgstr "Caută apariția anterioară a textului"
 
 #: ../ui/settings.glade:4331
 msgid "First Page Offset "
-msgstr ""
+msgstr "Decalarea primei pagini "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3573
 msgid "Fullscreen"
@@ -2791,7 +2791,7 @@ msgstr "Niciunul"
 
 #: ../ui/settings.glade:4330
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
+msgstr "Mută prima pagină cu acest număr de pagini când este activată opțiunea <b>Pagini alăturate</b>"
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
