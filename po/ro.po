@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-28 21:55\n"
+"PO-Revision-Date: 2022-05-29 11:25\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -3254,7 +3254,7 @@ msgstr ""
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr "Când desenezi cu ajutorul atingerii, gesturile cu două degete menite să mute vizualizarea pot provoca în schimb zoom, ceea ce provoacă probleme de performanță. \n"
+msgstr "Când desenezi cu ajutorul atingerii, gesturile cu două degete menite să mute vizualizarea pot provoca în schimb zoom, ceea ce provoacă neplăceri. \n"
 "Această opțiune poate facilita desenarea prin atingere. "
 
 #: ../ui/settings.glade:4971
