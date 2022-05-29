@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-29 16:28\n"
+"PO-Revision-Date: 2022-05-29 17:26\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2798,7 +2798,7 @@ msgstr "Nessuna"
 
 #: ../ui/settings.glade:4330
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr "Sposta la prima pagina di questo numero di pagine quando è abilitata l'opzione <b>Pagine affiancate</b>"
+msgstr "Sposta la prima pagina di questo numero di pagine quando è abilitata l'opzione <b>Pagine accoppiate</b>"
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
@@ -2826,7 +2826,7 @@ msgstr "Pagine:"
 
 #: ../ui/settings.glade:4384
 msgid "Paired Pages"
-msgstr "Pagine Accoppiate"
+msgstr "Pagine accoppiate"
 
 #: ../ui/main.glade:1322
 msgid "Paper B_ackground"
@@ -3144,11 +3144,11 @@ msgstr "Modello:"
 
 #: ../ui/settings.glade:2305 ../ui/settings.glade:2318
 msgid "Test"
-msgstr "Test"
+msgstr "Verifica"
 
 #: ../ui/latexSettings.glade:268
 msgid "Test configuration"
-msgstr "Configurazione test"
+msgstr "Verifica configurazione"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
@@ -3465,7 +3465,7 @@ msgstr "_Pagina Sucessiva"
 
 #: ../ui/main.glade:530
 msgid "_Pair Pages"
-msgstr "_Pagine Accoppiate"
+msgstr "_Pagine accoppiate"
 
 #: ../ui/main.glade:1346
 msgid "_Pen"
