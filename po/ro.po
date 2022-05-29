@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-29 17:26\n"
+"PO-Revision-Date: 2022-05-29 18:21\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -3245,7 +3245,7 @@ msgstr "Vizualizare"
 
 #: ../ui/about.glade:328
 msgid "Website"
-msgstr ""
+msgstr "Sit web"
 
 #: ../ui/settings.glade:3476
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
@@ -3269,7 +3269,7 @@ msgstr "Fără"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Lățime"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3405,11 +3405,11 @@ msgstr "_Fișier"
 
 #: ../ui/main.glade:1048
 msgid "_First Page"
-msgstr ""
+msgstr "_Prima pagină"
 
 #: ../ui/main.glade:1070
 msgid "_Goto Page"
-msgstr ""
+msgstr "_Du-te la pagina"
 
 #: ../ui/main.glade:2081
 msgid "_Help"
@@ -3425,7 +3425,7 @@ msgstr "_Orizontal"
 
 #: ../ui/main.glade:1418
 msgid "_Image"
-msgstr ""
+msgstr "_Imagine"
 
 #: ../ui/main.glade:1173
 msgid "_Journal"
@@ -3433,15 +3433,15 @@ msgstr "_Document"
 
 #: ../ui/main.glade:1092
 msgid "_Last Page"
-msgstr ""
+msgstr "_Ultima pagină"
 
 #: ../ui/main.glade:634
 msgid "_Left to Right"
-msgstr ""
+msgstr "De la _stânga la dreapta"
 
 #: ../ui/main.glade:939
 msgid "_Manage"
-msgstr ""
+msgstr "_Gestionează"
 
 #: ../ui/main.glade:1037
 msgid "_Navigation"
@@ -3449,11 +3449,11 @@ msgstr "_Navigare"
 
 #: ../ui/main.glade:1120
 msgid "_Next Layer"
-msgstr ""
+msgstr "_Stratul următor"
 
 #: ../ui/main.glade:1081
 msgid "_Next Page"
-msgstr ""
+msgstr "_Pagina următoare"
 
 #: ../ui/main.glade:530
 msgid "_Pair Pages"
@@ -3473,11 +3473,11 @@ msgstr ""
 
 #: ../ui/main.glade:1109
 msgid "_Previous Layer"
-msgstr ""
+msgstr "_Stratul anterior"
 
 #: ../ui/main.glade:1059
 msgid "_Previous Page"
-msgstr ""
+msgstr "_Pagina anterioară"
 
 #: ../ui/main.glade:645
 msgid "_Right to Left"
@@ -3567,7 +3567,7 @@ msgstr "minute"
 #: ../ui/settings.glade:4255 ../ui/settings.glade:4266
 #: ../ui/settings.glade:4454
 msgid "pixels"
-msgstr ""
+msgstr "pixeli"
 
 #: ../ui/settings.glade:2187
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
