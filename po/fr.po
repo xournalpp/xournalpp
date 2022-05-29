@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 14:53\n"
+"PO-Revision-Date: 2022-05-29 15:24\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -519,7 +519,7 @@ msgstr "Erreur lors de la sauvegarde automatique : {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:153
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Erreur lors de l'exportation de l'arrière-plan PDF : je ne trouve pas le numéro de page PDF "
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -591,7 +591,7 @@ msgstr "Exporter sans les règles\n"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:63
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr "Impossible de trouver le programme de génération LaTeX dans le CHEMIN : {1}"
+msgstr "Impossible de trouver le programme de génération LaTeX dans le PATH : {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
@@ -600,11 +600,11 @@ msgstr "Échec de l'initialisation de la surface PDF Cairo"
 
 #: ../src/core/control/tools/ImageHandler.cpp:60
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Échec du chargement, impossible de déterminer la taille de l'image !"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Impossible d'ouvrir le fichier content.xml dans l'archive zip : \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -946,19 +946,19 @@ msgstr "Numéro de page"
 
 #: ../src/util/PageRange.cpp:96
 msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr ""
+msgstr "PageRange::parse(): le numéro de page donné est plus grand que le nombre maximal."
 
 #: ../src/util/PageRange.cpp:99
 msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "PageRange::parse(): les limites de l'intervalle doivent être dans l'ordre croissant."
 
 #: ../src/util/PageRange.cpp:92
 msgid "PageRange::parse(): invalid page range."
-msgstr ""
+msgstr "PageRange::parse(): intervalle de pages invalide."
 
 #: ../src/util/PageRange.cpp:102
 msgid "PageRange::parse(): page numbers start with 1"
-msgstr ""
+msgstr "PageRange::parse(): les numéros de page commencent par 1"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
@@ -1490,7 +1490,7 @@ msgstr "Document non enregistré"
 
 #: ../src/core/control/jobs/ImageExport.cpp:85
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "Format graphique non supporté : "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
@@ -3053,7 +3053,7 @@ msgstr "Afficher les barres d'outils"
 
 #: ../ui/settings.glade:2772
 msgid "Show filepath in title bar"
-msgstr ""
+msgstr "Afficher le chemin d'accès dans la barre de titre"
 
 #: ../ui/settings.glade:3302
 msgid "Show sidebar on the right side"
