@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-29 14:26\n"
+"PO-Revision-Date: 2022-05-29 15:24\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1751,7 +1751,7 @@ msgstr "xournalpp-{1}"
 
 #: ../ui/main.glade:31
 msgid " = Floating Toolbox (experimental) ="
-msgstr " = Barra degli strumenti fluttuante (sperimentale) ="
+msgstr " = Barra degli strumenti mobile (sperimentale) ="
 
 #: ../ui/settings.glade:3923 ../ui/settings.glade:3934
 msgid "%"
@@ -2321,7 +2321,7 @@ msgstr "Calibrazione del display (DPI)"
 
 #: ../ui/settings.glade:4755
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr "Non disegnare per input di breve durata e lunghezza a meno che non siano in rapida successione. Invece, mostra gli strumenti galleggianti."
+msgstr "Non disegnare tratti di breve durata e lunghezza a meno che non siano in rapida successione. Invece, mostra barra degli strumenti mobile."
 
 #: ../ui/settings.glade:1077
 msgid "Drag"
@@ -3044,7 +3044,7 @@ msgstr "Impostazioni:"
 
 #: ../ui/settings.glade:4892
 msgid "Show Floating Toolbox"
-msgstr "Mostra Strumenti Galleggianti"
+msgstr "Mostra Barra degli strumenti mobile"
 
 #: ../ui/settings.glade:2740
 msgid "Show Menubar on Startup"
@@ -3209,7 +3209,7 @@ msgstr "Tentare di selezionare prima l'oggetto."
 
 #: ../ui/settings.glade:4865 ../ui/settings.glade:4897
 msgid "Try to select object first; if nothing selected then show floating toolbox if enabled."
-msgstr "Tentare di selezionare prima l'oggetto; se non viene selezionato nulla, mostrare la casella strumenti fluttuanti se abilitata."
+msgstr "Tentare di selezionare prima l'oggetto; se non viene selezionato nulla, mostrare la barra degli strumenti mobile se abilitata."
 
 #: ../ui/main.glade:2749
 msgid "Underline selected text"
