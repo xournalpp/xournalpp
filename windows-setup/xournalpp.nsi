@@ -2,6 +2,11 @@
 ; Author: The Xournal++ Team
 
 ;--------------------------------
+; NSIS setup
+
+Unicode true
+
+;--------------------------------
 ; Includes
 
 !include "MUI2.nsh"
@@ -197,15 +202,18 @@ SectionEnd
 !define SHCNF_FLUSH 0x1000
 !macro RefreshShellIcons
 	; Refresh shell icons. See https://nsis.sourceforge.io/Refresh_shell_icons
-	System::Call "shell32::SHChangeNotify(i ${SHCNE_ASSOCCHANGED}, i ${SHCNF_FLUSH}, i 0, i 0)"
+	DetailPrint "Refreshing shell file associations"
+	System::Call "shell32::SHChangeNotify(i ${SHCNE_ASSOCCHANGED}, i ${SHCNF_FLUSH} | ${SHCNF_IDLIST}, i 0, i 0)"
 !macroend
 
 !macro RefreshShellIconCreate FILEPATH
-	System::Call 'shell32::SHChangeNotify(i ${SHCNE_CREATE}, i (${SHCNF_FLUSH} | ${SHCNF_PATH}), w "${FILEPATH}", i 0)'
+	DetailPrint "Refreshing shell icon create ${FILEPATH}"
+	System::Call 'shell32::SHChangeNotify(i ${SHCNE_CREATE}, i ${SHCNF_FLUSH} | ${SHCNF_PATH}, w "${FILEPATH}", i 0)'
 !macroend
 
 !macro RefreshShellIconDelete FILEPATH
-	System::Call 'shell32::SHChangeNotify(i ${SHCNE_DELETE}, i (${SHCNF_FLUSH} | ${SHCNF_PATH}), w "${FILEPATH}", i 0)'
+	DetailPrint "Refreshing shell icon delete ${FILEPATH}"
+	System::Call 'shell32::SHChangeNotify(i ${SHCNE_DELETE}, i ${SHCNF_FLUSH} | ${SHCNF_PATH}, w "${FILEPATH}", i 0)'
 !macroend
 
 ;-------------------------------
@@ -326,7 +334,6 @@ Section "Uninstall"
 	Delete "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk"
 	Delete "$SMPROGRAMS\$StartMenuFolder\Uninstall.lnk"
 	RMDir "$SMPROGRAMS\$StartMenuFolder"
-	!insertmacro RefreshShellIconDelete "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk"
 
 	; Remove files
 	RMDir /r "$INSTDIR\bin"
@@ -336,5 +343,6 @@ Section "Uninstall"
 	Delete "$INSTDIR\Uninstall.exe"
 	RMDir "$INSTDIR"
 
+	!insertmacro RefreshShellIconDelete "$SMPROGRAMS\$StartMenuFolder\Xournal++.lnk"
 	!insertmacro RefreshShellIcons
 SectionEnd
