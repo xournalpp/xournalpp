@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-28 11:43\n"
+"PO-Revision-Date: 2022-05-29 12:29\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -3016,7 +3016,7 @@ msgstr "Colore della Selezione (Testo, Selezione Tratto, ecc.)"
 
 #: ../ui/settings.glade:3506
 msgid "Selection Edge Panning"
-msgstr "Selezione del bordo di spostamento"
+msgstr "Seleziona lo spostamento ai bordi"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
