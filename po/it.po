@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-29 12:29\n"
+"PO-Revision-Date: 2022-05-29 13:24\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -3257,7 +3257,7 @@ msgstr "Sito web"
 
 #: ../ui/settings.glade:3476
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr "Quando un elemento viene selezionato e spostato oltre la parte visibile del canvas, scorri lo schermo di una quantità pari a questa percentuale della parte visibile del canvas. "
+msgstr "Quando un elemento viene selezionato e spostato oltre la parte visibile dell'area di disegno, sposta l'area di una quantità pari a questa percentuale della parte visibile dell'area di disegno. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
