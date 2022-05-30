@@ -69,6 +69,11 @@ enum StylusCursorType {
     STYLUS_CURSOR_ARROW = 3,
 };
 
+enum IconTheme {
+    ICON_THEME_COLOR = 0,
+    ICON_THEME_LUCIDE = 1,
+};
+
 constexpr auto buttonToString(Button button) -> const char* {
     switch (button) {
         case BUTTON_ERASER:
@@ -105,4 +110,16 @@ constexpr auto stylusCursorTypeToString(StylusCursorType stylusCursorType) -> co
     }
 }
 
+constexpr auto iconThemeToString(IconTheme iconTheme) -> const char* {
+    switch (iconTheme) {
+        case ICON_THEME_COLOR:
+            return "iconsColor";
+        case ICON_THEME_LUCIDE:
+            return "iconsLucide";
+        default:
+            return "unknown";
+    }
+}
+
 StylusCursorType stylusCursorTypeFromString(const std::string& stylusCursorTypeStr);
+IconTheme iconThemeFromString(const std::string& iconThemeStr);

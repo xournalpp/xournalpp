@@ -16,3 +16,14 @@ auto stylusCursorTypeFromString(const std::string& stylusCursorTypeStr) -> Stylu
     g_warning("Settings::Unknown stylus cursor type: %s\n", stylusCursorTypeStr.c_str());
     return STYLUS_CURSOR_DOT;
 }
+
+auto iconThemeFromString(const std::string& iconThemeStr) -> IconTheme {
+    if (iconThemeStr == "iconsColor") {
+        return ICON_THEME_COLOR;
+    }
+    if (iconThemeStr == "iconsLucide") {
+        return ICON_THEME_LUCIDE;
+    }
+    g_warning("Settings::Unknown icon theme: %s\n", iconThemeStr.c_str());
+    return ICON_THEME_COLOR;
+}

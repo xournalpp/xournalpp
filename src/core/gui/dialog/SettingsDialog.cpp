@@ -492,6 +492,16 @@ void SettingsDialog::load() {
             break;
     }
 
+    switch (settings->getIconTheme()) {
+        case ICON_THEME_LUCIDE:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbIconTheme")), 1);
+            break;
+        case ICON_THEME_COLOR:
+        default:
+            gtk_combo_box_set_active(GTK_COMBO_BOX(get("cbIconTheme")), 0);
+            break;
+    }
+
     bool hideFullscreenMenubar = false;
     bool hideFullscreenSidebar = false;
     bool hidePresentationMenubar = false;
@@ -749,6 +759,16 @@ void SettingsDialog::save() {
         case 1:
         default:
             settings->setStylusCursorType(STYLUS_CURSOR_DOT);
+            break;
+    }
+
+    switch (gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbIconTheme")))) {
+        case 1:
+            settings->setIconTheme(ICON_THEME_LUCIDE);
+            break;
+        case 0:
+        default:
+            settings->setIconTheme(ICON_THEME_COLOR);
             break;
     }
 
