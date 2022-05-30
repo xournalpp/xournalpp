@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 14:53\n"
+"PO-Revision-Date: 2022-05-30 18:59\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -410,7 +410,7 @@ msgstr "Desegni sagon"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Desegni duoblan sagon"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
@@ -943,19 +943,19 @@ msgstr "Numero de paĝo"
 
 #: ../src/util/PageRange.cpp:96
 msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr ""
+msgstr "PageRange::parse(): paĝnumero estas pli granda ol la maksimumo."
 
 #: ../src/util/PageRange.cpp:99
 msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "PageRange::parse(): intervalo devas esti specifita en kreskanta ordo."
 
 #: ../src/util/PageRange.cpp:92
 msgid "PageRange::parse(): invalid page range."
-msgstr ""
+msgstr "PageRange::parse(): nevalida intervalo de paĝoj."
 
 #: ../src/util/PageRange.cpp:102
 msgid "PageRange::parse(): page numbers start with 1"
-msgstr ""
+msgstr "PageRange::parse(): minimuma paĝnumero estas 1"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
@@ -1487,7 +1487,7 @@ msgstr "Nekonservita dokumento"
 
 #: ../src/core/control/jobs/ImageExport.cpp:85
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "Nesubtenata grafika dosierformo: "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
@@ -2903,7 +2903,7 @@ msgstr "Gamo"
 
 #: ../ui/settings.glade:4974
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "Rebildigi kiam la paĝa zomo ŝanĝiĝas pli ol "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -3039,7 +3039,7 @@ msgstr "Montri ilobretojn"
 
 #: ../ui/settings.glade:2772
 msgid "Show filepath in title bar"
-msgstr ""
+msgstr "Montri dosierindikon en titolbreto"
 
 #: ../ui/settings.glade:3302
 msgid "Show sidebar on the right side"
@@ -3555,7 +3555,7 @@ msgstr "bilderoj"
 
 #: ../ui/settings.glade:2187
 msgid "s <i>(after which the touchscreen will be reactivated again)</i>"
-msgstr ""
+msgstr "s <i>(post tiom da daŭro, la tuŝekrano reaktiviĝos)</i>"
 
 #: ../ui/main.glade:1684 ../ui/main.glade:1830 ../ui/main.glade:1939
 msgid "ver_y thick"
