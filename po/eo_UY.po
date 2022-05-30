@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 18:59\n"
+"PO-Revision-Date: 2022-05-30 20:00\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -520,7 +520,7 @@ msgstr "Eraro dum aŭtomata konservado: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:153
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Eraro dum elportado de la PDF-fono: ne eblas trovi la PDF-paĝnumeron "
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -2011,7 +2011,7 @@ msgstr "<i>Baskuligi la videblecon de la menubreto per la klavo F10</i>"
 
 #: ../ui/settings.glade:2409
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
-msgstr ""
+msgstr "<i>Uzi pinĉan geston por ŝanĝi la zomon de ĵurnalaj paĝoj.</i>"
 
 #: ../ui/settings.glade:2544
 msgid "<i>Use the touchscreen like a multi-touch-aware pen.</i>"
@@ -2078,7 +2078,7 @@ msgstr "Aritmetika meznombro"
 
 #: ../ui/settings.glade:1774
 msgid "Artifact workaround"
-msgstr ""
+msgstr "Provizora solvo de problemoj"
 
 #: ../ui/settings.glade:5478
 msgid "Audio Devices"
@@ -2462,7 +2462,7 @@ msgstr "Trovi la antaŭan aperon de la serĉataĵo"
 
 #: ../ui/settings.glade:4331
 msgid "First Page Offset "
-msgstr ""
+msgstr "Kompenso de unua paĝo "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3573
 msgid "Fullscreen"
@@ -2777,7 +2777,7 @@ msgstr "Nenio"
 
 #: ../ui/settings.glade:4330
 msgid "Offset first page this many pages when <b>Pair Pages</b> enabled"
-msgstr ""
+msgstr "Kompensi la unuan paĝon tiome, kiam la opcio <b>Parigi paĝojn</b> estas ŝaltita"
 
 #: ../ui/fillOpacity.glade:14
 msgid "Opacity settings"
