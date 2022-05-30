@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 21:27\n"
+"PO-Revision-Date: 2022-05-30 22:32\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -551,7 +551,7 @@ msgstr "Exportă fișierul ca PDF"
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr "Exportă FILE ca fișiere de tip imagine (una per pagină)\n"
+msgstr "Exportă Fișierul ca fișiere imagine (unul pe pagină)\n"
 "                                 Ghicește formatul de ieșire din extensia IMGFILE\n"
 "                                 Formate acceptate: .png, .svg"
 
@@ -668,7 +668,7 @@ msgstr "Fișierul modelului global nu este un fișier obișnuit. Controlează co
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:422
 msgid "Go to first page"
-msgstr "Mergi la prima pagină"
+msgstr "Du-te la prima pagină"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:426
 msgid "Go to last page"
@@ -731,7 +731,7 @@ msgstr "Introdu mai jos o copie a stratului actual"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
-msgstr "Introduceți o copie a paginii curente de mai jos"
+msgstr "Introdu dedesubt o copie a acestei pagini"
 
 #: ../src/core/undo/InsertUndoAction.cpp:78
 msgid "Insert elements"
@@ -752,7 +752,7 @@ msgstr "Inserează un strat"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Insert page"
-msgstr "Inserează pagină"
+msgstr "Introdu o pagină"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
@@ -926,7 +926,7 @@ msgstr "Pagină"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:73
 msgid "Page Preview"
-msgstr "Previzualizare a paginei"
+msgstr "Previzualizare a paginii"
 
 #: ../src/core/undo/PageBackgroundChangedUndoAction.cpp:80
 msgid "Page background changed"
@@ -1241,7 +1241,7 @@ msgstr "Afișare totală"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
-msgstr "Arată doar paginile nefolosite (o pagină nefolosită)"
+msgstr "Arată numai paginile nefolosite (o pagină nefolosită)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:89
 msgid "Show only not used pages ({1} unused pages)"
@@ -1291,11 +1291,11 @@ msgstr "Schimbă poziția stratului actual cu cea a stratului de dedesubt"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
-msgstr "Schimbă poziția paginii actuale cu cea a paginii de deasupra"
+msgstr "Schimbă această pagină cu cea de deasupra"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:68
 msgid "Swap the current page with the one below"
-msgstr "Schimbă poziția paginii actuale cu cea a paginii de dedesubt"
+msgstr "Schimbă această pagină cu cea de dedesubt"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:40
 msgid "System Default"
@@ -2712,11 +2712,11 @@ msgstr "Multiplicator maxim"
 
 #: ../ui/main.glade:2833
 msgid "Merge Down"
-msgstr ""
+msgstr "Unește jos"
 
 #: ../ui/main.glade:1274
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Unește cu stratul inferior"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
