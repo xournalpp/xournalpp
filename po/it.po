@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 12:54\n"
+"PO-Revision-Date: 2022-05-30 13:51\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -3237,7 +3237,7 @@ msgstr "Di solito 0 o 1"
 
 #: ../ui/settings.glade:223
 msgid "Velocity based Gaussian weights"
-msgstr "Pesi Gaussiani basati sulla velocità"
+msgstr "Valori Gaussiani basati sulla velocità"
 
 #: ../ui/about.glade:181
 msgid "Version"
