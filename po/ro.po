@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 12:54\n"
+"PO-Revision-Date: 2022-05-30 13:51\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2496,7 +2496,7 @@ msgstr "Reglări generale pentru LaTeX"
 
 #: ../ui/about.glade:114
 msgid "Git commit"
-msgstr ""
+msgstr "Commit Git"
 
 #: ../ui/settings.glade:2970
 msgid "Global"
@@ -3229,7 +3229,7 @@ msgstr "De obicei 0 sau 1"
 
 #: ../ui/settings.glade:223
 msgid "Velocity based Gaussian weights"
-msgstr ""
+msgstr "Valori Gaussiane bazate pe viteză"
 
 #: ../ui/about.glade:181
 msgid "Version"
