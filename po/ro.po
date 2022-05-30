@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 15:53\n"
+"PO-Revision-Date: 2022-05-30 17:01\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -710,7 +710,7 @@ msgstr "Ascundeți toate"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
 msgid "Highlighter"
-msgstr "Evidenţiat"
+msgstr "Evidențiator"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:461
@@ -2431,7 +2431,7 @@ msgstr "Introdu/modifică textul LaTeX"
 
 #: ../ui/main.glade:1775
 msgid "Eraser Optio_ns"
-msgstr "Opțiu_ni pentru gumă"
+msgstr "Opțiu_ni pentru Gumă"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2560,7 +2560,7 @@ msgstr "Evidențiază textul ales"
 
 #: ../ui/main.glade:1884
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "Opțiuni pentru Evidențiat_or"
 
 #: ../ui/settings.glade:4800
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2571,7 +2571,8 @@ msgstr "Cât de scurtă (mm pe ecran) este linia și...\n\n"
 #: ../ui/settings.glade:4780
 msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
-msgstr ""
+msgstr "Cât de scurt (timp) Și...\n\n"
+"<i>Recomandat: 150 ms</i>"
 
 #: ../ui/about.glade:243
 msgid "Icon Designers"
@@ -2591,7 +2592,7 @@ msgstr "Dacă este activat, verifică dacă pachetele LaTeX necesare sunt instal
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
-msgstr ""
+msgstr "Dacă este activat, straturile fiecărei pagini vor fi adăugate unul câte unul. Fișierul PDF rezultat poate fi folosit pentru o prezentare."
 
 #: ../ui/settings.glade:664
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
@@ -2639,7 +2640,7 @@ msgstr "Introdu LaTeX"
 
 #: ../ui/main.glade:2870
 msgid "Insert Page After"
-msgstr ""
+msgstr "Introdu o pagină după"
 
 #: ../ui/main.glade:2862
 msgid "Insert Page Before"
@@ -2695,11 +2696,11 @@ msgstr "Gestionează banda cu instrumente"
 
 #: ../ui/settings.glade:1109
 msgid "Mass"
-msgstr ""
+msgstr "Greutatea"
 
 #: ../ui/settings.glade:1108 ../ui/settings.glade:1120
 msgid "Mass: the higher the mass, the more inertia and the more stabilization"
-msgstr ""
+msgstr "Greutatea: cu cât greutatea este mai mare, cu atât inerția și stabilizarea vor fi mai mari"
 
 #: ../ui/settings.glade:4820
 msgid "Max Length (mm)"
@@ -2840,7 +2841,8 @@ msgstr "_Formatul hârtiei"
 #: ../ui/about.glade:296
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
-msgstr ""
+msgstr "Bazat parțial pe Xournal\n"
+"de Denis Auroux"
 
 #: ../ui/main.glade:2002
 msgid "Pause"
@@ -2848,7 +2850,7 @@ msgstr "Pauză"
 
 #: ../ui/main.glade:1629
 msgid "Pen _Options"
-msgstr "_Opțiuni pentru creion"
+msgstr "_Opțiuni pentru Creion"
 
 #: ../ui/settings.glade:3783
 msgid "Performance"
@@ -2872,7 +2874,7 @@ msgstr "Modificările modulelor se aplică după ce Xournal++ a fost repornit"
 
 #: ../ui/settings.glade:3717
 msgid "Pre-load pages after"
-msgstr ""
+msgstr "Pagini preîncărcate după"
 
 #: ../ui/settings.glade:3705
 msgid "Pre-load pages before"
@@ -3417,7 +3419,7 @@ msgstr "_Ajutor"
 
 #: ../ui/main.glade:1394
 msgid "_Highlighter"
-msgstr ""
+msgstr "_Evidențiator"
 
 #: ../ui/main.glade:605
 msgid "_Horizontal"
