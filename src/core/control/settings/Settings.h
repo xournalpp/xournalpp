@@ -295,6 +295,9 @@ public:
     StylusCursorType getStylusCursorType() const;
     void setStylusCursorType(StylusCursorType stylusCursorType);
 
+    IconTheme getIconTheme() const;
+    void setIconTheme(IconTheme iconTheme);
+
     bool isHighlightPosition() const;
     void setHighlightPosition(bool highlight);
 
@@ -595,6 +598,11 @@ private:
      *  Type of cursor icon to use with a stylus
      */
     StylusCursorType stylusCursorType;
+
+    /**
+     * Icon Theme
+     */
+    IconTheme iconTheme;
 
     /**
      * Show a colored circle around the cursor

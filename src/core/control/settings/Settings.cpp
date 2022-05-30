@@ -87,6 +87,7 @@ void Settings::loadDefault() {
     this->autoloadPdfXoj = true;
 
     this->stylusCursorType = STYLUS_CURSOR_DOT;
+    this->iconTheme = ICON_THEME_COLOR;
     this->highlightPosition = false;
     this->cursorHighlightColor = 0x80FFFF00;  // Yellow with 50% opacity
     this->cursorHighlightRadius = 30.0;
@@ -396,6 +397,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->autoloadPdfXoj = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("stylusCursorType")) == 0) {
         this->stylusCursorType = stylusCursorTypeFromString(reinterpret_cast<const char*>(value));
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("iconTheme")) == 0) {
+        this->iconTheme = iconThemeFromString(reinterpret_cast<const char*>(value));
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("highlightPosition")) == 0) {
         this->highlightPosition = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("cursorHighlightColor")) == 0) {
@@ -874,6 +877,9 @@ void Settings::save() {
     xmlNode = saveProperty("stylusCursorType", stylusCursorTypeToString(this->stylusCursorType), root);
     ATTACH_COMMENT("The cursor icon used with a stylus, allowed values are \"none\", \"dot\", \"big\", \"arrow\"");
 
+    xmlNode = saveProperty("iconTheme", iconThemeToString(this->iconTheme), root);
+    ATTACH_COMMENT("The icon theme, allowed values are \"iconsColor\", \"iconsLucide\"");
+
     SAVE_BOOL_PROP(highlightPosition);
     xmlNode = savePropertyUnsigned("cursorHighlightColor", uint32_t(cursorHighlightColor), root);
     xmlNode = savePropertyUnsigned("cursorHighlightBorderColor", uint32_t(cursorHighlightBorderColor), root);
@@ -1209,6 +1215,18 @@ void Settings::setStylusCursorType(StylusCursorType type) {
     }
 
     this->stylusCursorType = type;
+
+    save();
+}
+
+auto Settings::getIconTheme() const -> IconTheme { return this->iconTheme; }
+
+void Settings::setIconTheme(IconTheme iconTheme) {
+    if (this->iconTheme == iconTheme) {
+        return;
+    }
+
+    this->iconTheme = iconTheme;
 
     save();
 }
