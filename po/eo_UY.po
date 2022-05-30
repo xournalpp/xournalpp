@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 20:00\n"
+"PO-Revision-Date: 2022-05-30 23:29\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -466,7 +466,7 @@ msgstr "Krize konservita dokumento"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:280
 msgid "Enable pressure sensitivity or pressure inference to change this setting!"
-msgstr ""
+msgstr "Ŝaltu premsentemon aŭ preminferencon por ŝanĝi ĉi tiun agordon!"
 
 #: ../src/core/undo/AddUndoAction.cpp:55
 #: ../src/core/undo/DeleteUndoAction.cpp:52
@@ -2381,7 +2381,7 @@ msgstr "Ŝalti aŭtomatan konservadon"
 
 #: ../ui/settings.glade:912
 msgid "Enable Pressure Inference <i>(Guess pressure from drawing speed when device-supplied pressure is not available)</i>"
-msgstr ""
+msgstr "Ŝalti preminferencon <i>(Diveni premon per desegna rapido, se aparate provizita premo ne estas havebla)</i>"
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
