@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 13:51\n"
+"PO-Revision-Date: 2022-05-30 18:02\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2880,11 +2880,11 @@ msgstr "Le modifiche dei plugin sono applicate solo dopo il riavvio di Xournal++
 
 #: ../ui/settings.glade:3717
 msgid "Pre-load pages after"
-msgstr "Pre-carica le pagine dopo"
+msgstr "Pagine precaricate dopo"
 
 #: ../ui/settings.glade:3705
 msgid "Pre-load pages before"
-msgstr "Pre-carica le pagine prima"
+msgstr "Pagine precaricate prima"
 
 #: ../ui/main.glade:505
 msgid "Preferences"
