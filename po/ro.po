@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 14:53\n"
+"PO-Revision-Date: 2022-05-30 15:53\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2520,7 +2520,7 @@ msgstr "Toleranța ancorării la grilă"
 
 #: ../ui/main.glade:1601
 msgid "H_and Tool"
-msgstr "Instrumentul Mână"
+msgstr "Instrumentul _Mână"
 
 #: ../ui/settings.glade:2378
 msgid "Hand Recognition"
@@ -3381,7 +3381,7 @@ msgstr "_Personalizează"
 
 #: ../ui/main.glade:1430
 msgid "_Default Tools"
-msgstr "Instrumente _prestabilite"
+msgstr "_Instrument prestabilit"
 
 #: ../ui/main.glade:1235
 msgid "_Delete Page"
