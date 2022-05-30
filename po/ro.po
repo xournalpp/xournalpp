@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 13:51\n"
+"PO-Revision-Date: 2022-05-30 14:53\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1958,7 +1958,7 @@ msgstr "<i>Dacă adaugi spațiu suplimentar lângă pagini, poți alege zona de 
 
 #: ../ui/settings.glade:2087
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
-msgstr "<i>Dacă aparatul este incompatibil cu recunoașterea mâinii, Xournal++ poate dezactiva ecranul tactil atunci când creionul se află lângă ecran.</i>"
+msgstr "<i>Dacă aparatul este incompatibil cu recunoașterea palmei, Xournal++ poate dezactiva ecranul tactil atunci când creionul se află lângă ecran.</i>"
 
 #: ../ui/settings.glade:1000
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
@@ -1992,7 +1992,7 @@ msgstr "<i>Unele dispozitive raportează apăsări neașteptat de mici sau mari.
 
 #: ../ui/settings.glade:2237
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr "<i>Stabilește comenzile care vor fi executate atunci când este activată recunoașterea mâinii. Comenzile vor fi executate în interfața grafică. Asigură-te că nu sunt blocate!</i>"
+msgstr "<i>Stabilește comenzile care vor fi executate atunci când este activată recunoașterea palmei. Comenzile vor fi executate în interfața grafică. Asigură-te că nu sunt blocate!</i>"
 
 #: ../ui/settings.glade:5382
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
@@ -2415,7 +2415,7 @@ msgstr "Activează desenarea în afara ferestrei <i>(Nu trebuie să te oprești 
 
 #: ../ui/settings.glade:2101
 msgid "Enable internal Hand Recognition"
-msgstr "Activează recunoașterea mâinii"
+msgstr "Activează recunoașterea palmei"
 
 #: ../ui/settings.glade:2558
 msgid "Enable touch drawing"
@@ -2524,7 +2524,7 @@ msgstr "Instrumentul Mână"
 
 #: ../ui/settings.glade:2378
 msgid "Hand Recognition"
-msgstr ""
+msgstr "Recunoașterea palmei"
 
 #: ../ui/exportSettings.glade:32
 msgid "Height"
@@ -2671,7 +2671,7 @@ msgstr "Aspect"
 
 #: ../ui/settings.glade:3340
 msgid "Left / Right-Handed"
-msgstr ""
+msgstr "Stângaci / Dreptaci"
 
 #: ../ui/about.glade:421
 msgid "License"
