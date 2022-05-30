@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 17:01\n"
+"PO-Revision-Date: 2022-05-30 18:02\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2878,7 +2878,7 @@ msgstr "Pagini preîncărcate după"
 
 #: ../ui/settings.glade:3705
 msgid "Pre-load pages before"
-msgstr ""
+msgstr "Pagini preîncărcate înainte"
 
 #: ../ui/main.glade:505
 msgid "Preferences"
