@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 23:29\n"
+"PO-Revision-Date: 2022-05-31 11:22\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -705,7 +705,7 @@ msgstr "Mână"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:72
 msgid "Hide all"
-msgstr "Ascundeți toate"
+msgstr "Ascunde tot"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:85
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:457
@@ -794,7 +794,7 @@ msgstr "Previzualizare strat"
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
-msgstr "Încărcare..."
+msgstr "Se încarcă..."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Manage Toolbars"
@@ -1237,7 +1237,7 @@ msgstr "Recunoaște forma"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:67
 msgid "Show all"
-msgstr "Afișare totală"
+msgstr "Arată tot"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:88
 msgid "Show only not used pages (one unused page)"
