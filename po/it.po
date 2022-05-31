@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 13:32\n"
+"PO-Revision-Date: 2022-05-31 14:43\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1377,7 +1377,7 @@ msgstr "Il file non è un file .xopp valido (Stringa di versione corrotta): \"{1
 
 #: ../src/core/control/LatexController.cpp:240
 msgid "The formula is empty when rendered or invalid."
-msgstr "La formula è invalida o vuota quando rappresentata."
+msgstr "La formula è vuota o non valida quando rappresentata."
 
 #: ../src/core/control/XournalMain.cpp:155
 msgid "The most recent log file name: {1}"
@@ -2924,7 +2924,7 @@ msgstr "Intervallo"
 
 #: ../ui/settings.glade:4974
 msgid "Re-render when the page's zoom changes by more than "
-msgstr "Ri-renderizza quando lo zoom della pagina cambia di più di "
+msgstr "Ricarica quando lo zoom della pagina cambia di più di "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -3268,7 +3268,7 @@ msgstr "Quando si disegna con il tocco, i gesti a due dita destinati a muovere l
 #: ../ui/settings.glade:4971
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr "Quando si ingrandisce su un PDF ad alta risoluzione, ogni ri-render può richiedere molto tempo. Impostare questo valore ad un valore elevato fa sì che questi re-rendering avvengano meno spesso.\n\n"
+msgstr "Quando si esegue lo zoom su un PDF ad alta risoluzione, ogni rendering può richiedere molto tempo. Impostando un valore elevato, questi rendering si verificano meno spesso.\n\n"
 "Impostare questo a 0% per effettuare sempre il render con lo zoom."
 
 #: ../ui/settingsButtonConfig.glade:131
