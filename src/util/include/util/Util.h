@@ -45,7 +45,7 @@ gboolean paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void* unused);
  */
 extern void writeCoordinateString(OutputStream* out, double xVal, double yVal);
 
-constexpr const gchar* PRECISION_FORMAT_STRING = "%.8f";
+constexpr const gchar* PRECISION_FORMAT_STRING = "%.8g";
 
 constexpr const auto DPI_NORMALIZATION_FACTOR = 72.0;
 
