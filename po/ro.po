@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 11:22\n"
+"PO-Revision-Date: 2022-05-31 12:34\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -676,7 +676,7 @@ msgstr "Du-te la ultima pagină"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Go to next layer"
-msgstr "Mergi la următorul nivel"
+msgstr "Du-te la stratul următor"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:424
 msgid "Go to page"
@@ -688,7 +688,7 @@ msgstr "Du-te la stratul anterior"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:430
 msgid "Go to top layer"
-msgstr "Mergi la stratul de sus"
+msgstr "Du-te la cel mai de sus strat"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:24
 msgid "Graph"
@@ -727,7 +727,7 @@ msgstr "Imagini"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Insert a copy of the current layer below"
-msgstr "Introdu mai jos o copie a stratului actual"
+msgstr "Introdu dedesubt o copie a acestui strat"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Insert a copy of the current page below"
@@ -748,7 +748,7 @@ msgstr "Introdu LaTeX"
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:27
 msgid "Insert layer"
-msgstr "Inserează un strat"
+msgstr "Introdu un strat"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:440
 msgid "Insert page"
@@ -788,7 +788,7 @@ msgstr "Strat {1}"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
-msgstr "Previzualizare strat"
+msgstr "Previzualizare straturi"
 
 #: ../src/core/gui/PageView.cpp:778
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
@@ -1035,7 +1035,7 @@ msgstr "Instrumentul {1} a fost eliminat din banda cu instrumente {2} ID {3}"
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:15
 msgid "Rename layer"
-msgstr "Redenumiţi stratul"
+msgstr "Redenumește stratul"
 
 #: ../src/util/XojMsgBox.cpp:77
 msgid "Replace"
@@ -1287,7 +1287,7 @@ msgstr "Schimbă poziția stratului actual cu cea a stratului de deasupra"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
-msgstr "Schimbă poziția stratului actual cu cea a stratului de dedesubt"
+msgstr "Schimbă acest strat cu cel de dedesubt"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:67
 msgid "Swap the current page with the one above"
@@ -2774,7 +2774,7 @@ msgstr "O pagină nouă la _sfârșit"
 
 #: ../ui/main.glade:1252
 msgid "New _Layer"
-msgstr ""
+msgstr "Strat _nou"
 
 #: ../ui/settings.glade:3023
 msgctxt "stylus cursor uses no icon"
@@ -2934,7 +2934,7 @@ msgstr "Calitatea înregistrării"
 
 #: ../ui/main.glade:1285
 msgid "Rename Layer"
-msgstr ""
+msgstr "Redenumește stratul"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
@@ -2962,7 +2962,7 @@ msgstr "Rata de eșantionare"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr ""
+msgstr "Exemplu de nume de strat"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
@@ -3451,7 +3451,7 @@ msgstr "_Navigare"
 
 #: ../ui/main.glade:1120
 msgid "_Next Layer"
-msgstr "_Stratul următor"
+msgstr "Stratul _următor"
 
 #: ../ui/main.glade:1081
 msgid "_Next Page"
@@ -3475,7 +3475,7 @@ msgstr ""
 
 #: ../ui/main.glade:1109
 msgid "_Previous Layer"
-msgstr "_Stratul anterior"
+msgstr "Stratul _anterior"
 
 #: ../ui/main.glade:1059
 msgid "_Previous Page"
@@ -3499,7 +3499,7 @@ msgstr "_Instrumente"
 
 #: ../ui/main.glade:1131
 msgid "_Top Layer"
-msgstr ""
+msgstr "_Cel mai de sus strat"
 
 #: ../ui/main.glade:663
 msgid "_Top to Bottom"
