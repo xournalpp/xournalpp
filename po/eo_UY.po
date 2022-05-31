@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 23:29\n"
+"PO-Revision-Date: 2022-05-31 00:37\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -570,7 +570,11 @@ msgid "Export layers progressively\n"
 "                                 This results in N export pages per page with N layers,\n"
 "                                 building up the layer stack progressively.\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
-msgstr ""
+msgstr "Elporti tavolojn progrese\n"
+"                                 Dum elportado kiel PDF, bildigi tavolojn progrese unu post la alia.\n"
+"                                 Tio produktas N elportitajn paĝojn por unu paĝo kun N tavoloj,\n"
+"                                 konstruante la tavolan stakon progrese.\n"
+"                                 La rezulta PDF-dosiero estas uzebla por prezento.\n"
 
 #: ../src/core/control/XournalMain.cpp:587
 msgid "Export without background\n"
@@ -629,7 +633,7 @@ msgstr "Plenigi"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr ""
+msgstr "Filtri la enigan premon. Multipliki la premon per la premmultiplikanto. Se malpli ol la minimumo, uzi la minimuman premon."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Fine"
@@ -1550,7 +1554,8 @@ msgstr "Xournal++-ŝablono"
 #: ../src/core/control/PageBackgroundChangeController.cpp:179
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
 "Please select another background type: Menu \"Journal\" → \"Configure Page Template\"."
-msgstr ""
+msgstr "Vi ne havas PDF-paĝojn elekteblajn. Nuligu la operacion.\n"
+"Bonvolu elekti alian fonan tipon per la menuero «Ĵurnalo» → «Agordi paĝan ŝablonon»."
 
 #: ../src/core/control/XournalMain.cpp:152
 msgid "You're using \"{1}/{2}\" branch. Send Bugreport will direct you to this repo's issue tracker."
@@ -1919,7 +1924,7 @@ msgstr "<b>Apartigilo</b>"
 
 #: ../ui/settings.glade:777
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
-msgstr ""
+msgstr "<i>Asigni aparatajn klasojn por ĉiu eniga aparato de via sistemo. Ŝanĝu tiujn valorojn nur se viaj aparatoj ne estas ĝuste identigitaj (ekz. se via plumo montriĝas kiel tuŝekrano)</i>"
 
 #: ../ui/settings.glade:5271
 msgid "<i>Audio recordings are currently stored in a separate folder and referenced from the journal.</i>"
@@ -1944,7 +1949,8 @@ msgstr "<i>Ekzemple:</i> 1-3 aŭ 1,3,5-7 ktp."
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Se la dokumento jam estis konservita, vi povas trovi ĝin en la sama dosierujo kun la dosiersufikso «.autosave.xoj».\n"
+"Se la dokumento ankoraŭ ne estis konservita, vi povas trovi ĝin en «~/.cache/xournalpp/autosaves».</i>"
 
 #: ../ui/settings.glade:4163
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -1952,7 +1958,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2087
 msgid "<i>If your hardware does not support hand recognition, Xournal++ can disable your touchscreen when your pen is near the screen.</i>"
-msgstr ""
+msgstr "<i>Se via aparato ne subtenas manrekonadon, Xournal++ povas malŝalti vian tuŝekranon, kiam via plumo estas proksima al la ekrano.</i>"
 
 #: ../ui/settings.glade:1000
 msgid "<i>Pick an input stabilization algorithm and its parameters</i>"
@@ -1960,7 +1966,7 @@ msgstr "<i>Elektu enigo-stabiligan algoritmon kaj ĝiajn parametrojn</i>"
 
 #: ../ui/settings.glade:1505
 msgid "<i>Pressure Sensitivity allows you to draw lines with different widths, depending on how much pressure you apply to the pen. If your tablet does not support this feature this setting has no effect.</i>"
-msgstr ""
+msgstr "<i>Premsentemo ebligas vin desegni liniojn de diversaj larĝoj, depende de tiom da premo, kiom vi metas sur la plumon. Se via tabuleto ne subtenas ĉi tiun funkcion, ĉi tiu agordo havas neniun efikon</i>"
 
 #: ../ui/settings.glade:4010
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
@@ -1969,7 +1975,8 @@ msgstr "<i>Metu mezurilon sur la ekrano, kaj movu la ŝovbutonon ĝis la du mezu
 #: ../ui/settings.glade:4946
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr ""
+msgstr "<i>Rebildigi PDF-fonojn pli ofte dum zumado por pli bona bildiga kvalito. \n"
+"<b>Noto:</b> Tio ne ŝanĝos presan kvaliton.</i>"
 
 #: ../ui/settings.glade:5798
 msgid "<i>Select language (requires restart)</i>"
@@ -1981,7 +1988,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1554
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
-msgstr ""
+msgstr "<i>Kelkaj aparatoj raportas neatendite malgrandajn aŭ grandajn premojn. Tio estas riparebla per agordado de minimuma premo aŭ multiplikado de la premo raportata de la aparato.</i>"
 
 #: ../ui/settings.glade:2237
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
@@ -2003,7 +2010,7 @@ msgstr "<i>Jen nomo proponota por nove konservotaj dokumentoj.</i>"
 
 #: ../ui/settings.glade:3989
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr ""
+msgstr "<i>Por certigi, ke je zomo de 100%, la grandoj de la elementoj estas naturalaj. (Postulas relanĉon)</i>"
 
 #: ../ui/settings.glade:2759
 msgid "<i>Toggle visibility of menubar with F10</i>"
@@ -2255,7 +2262,7 @@ msgstr "Implicita nomo por konservado"
 
 #: ../ui/settings.glade:5621
 msgid "Default Seek Time (in seconds)"
-msgstr ""
+msgstr "Implicita serĉa tempo (en sekundoj)"
 
 #: ../ui/settings.glade:518
 msgid "Default name: "
@@ -2389,7 +2396,7 @@ msgstr "Ŝalti premsentemon"
 
 #: ../ui/settings.glade:4750
 msgid "Enable Tap action"
-msgstr ""
+msgstr "Ŝalti tuŝetan agon"
 
 #: ../ui/settings.glade:676
 msgid "Enable autoloading of most recent file on application startup"
@@ -2570,11 +2577,11 @@ msgstr ""
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "Se tio estas ŝaltita, Xournal++ aŭtomate malfermos la laste redaktitan dokumenton, kiun vi povas daŭre redakti."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Se tio estas ŝaltita, antaŭ ol ruli la ilon LaTeX, Xournal++ kontrolos, ĉu postulataj LaTeX-pakoj estas instalitaj kaj ĉu la LaTeX-komandoj estas haveblaj."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
@@ -2707,7 +2714,8 @@ msgstr "Kunfandi tavolon malsupren"
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Kunfandi butonajn eventojn kun grifelpintaj eventoj\n"
+"\t    <i>(Provu tion, se</i> «<tt>xsetwacom get *aparatidentigilo* TabletPCButton</tt>» <i>montras</i> «<tt>on</tt>»<i>)</i>"
 
 #: ../ui/settings.glade:1367
 msgid "Middle Mouse Button"
@@ -3130,7 +3138,7 @@ msgstr "Testi agordojn"
 
 #: ../ui/latexSettings.glade:272
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr ""
+msgstr "Kontroli, ĉu la aktuala agordo validas per rulado de la LaTeX-komando sur la ĉiea ŝablona dosiero kun ekzempla formulo."
 
 #: ../ui/main.glade:1980
 msgid "Text Font..."
@@ -3245,7 +3253,8 @@ msgstr ""
 #: ../ui/settings.glade:4971
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr ""
+msgstr "Dum zumado en granddistingivan PDF-dosieron, ĉiu rebildigo eble daŭros longe. Agordado de ĉi tio al granda valoro maloftigas tiajn rebildigojn.\n\n"
+"Agordu ĉi tion al 0% por ĉiama rebildigado dum zumado."
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
