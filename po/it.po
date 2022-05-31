@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-30 22:32\n"
+"PO-Revision-Date: 2022-05-31 12:34\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -353,7 +353,7 @@ msgstr "Cancella livello"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:67
 msgid "Delete this layer"
-msgstr "Cancella questo livello"
+msgstr "Elimina questo livello"
 
 #: ../src/core/gui/sidebar/previews/page/SidebarPreviewPages.cpp:69
 msgid "Delete this page"
@@ -788,7 +788,7 @@ msgstr "Livello {1}"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:71
 msgid "Layerstack Preview"
-msgstr "Anteprima Layerstack"
+msgstr "Anteprima dei livelli"
 
 #: ../src/core/gui/PageView.cpp:778
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
@@ -806,7 +806,7 @@ msgstr "Medio"
 
 #: ../src/core/undo/MergeLayerDownUndoAction.cpp:25
 msgid "Merge layer down"
-msgstr "Unisci livello sottostante"
+msgstr "Unisci al livello sottostante"
 
 #: ../src/core/undo/MoveUndoAction.cpp:15
 msgid "Move"
@@ -2722,7 +2722,7 @@ msgstr "Unisci giù"
 
 #: ../ui/main.glade:1274
 msgid "Merge Layer Down"
-msgstr "Unisci livello sottostante"
+msgstr "Unisci al livello sottostante"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2968,7 +2968,7 @@ msgstr "Frequenza di Campionamento"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
-msgstr "Nome livello campione"
+msgstr "Esempio di nome del livello"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
