@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 12:34\n"
+"PO-Revision-Date: 2022-05-31 13:32\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -2314,7 +2314,7 @@ msgstr "Mezurado de la denso de la bilderoj en la ekrano"
 
 #: ../ui/settings.glade:4755
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
-msgstr ""
+msgstr "Ne desegni por enigoj de mallongaj daŭro kaj longo (krom se tiuj venas rapide unu post aliaj), anstataŭe montrante flosantan ilobreton."
 
 #: ../ui/settings.glade:1077
 msgid "Drag"
@@ -2336,7 +2336,7 @@ msgstr ""
 
 #: ../ui/toolbarCustomizeDialog.glade:57
 msgid "Drag and drop Components fom here to the toolbars and back."
-msgstr ""
+msgstr "Ŝovmetu komponantojn el ĉi tie en la ilobretojn aŭ male."
 
 #: ../ui/settings.glade:1076 ../ui/settings.glade:1088
 msgid "Drag: If the value is too small, unwanted oscillations may appear. If the value is too high, there will be no stabilization."
