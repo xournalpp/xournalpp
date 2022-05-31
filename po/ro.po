@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 13:32\n"
+"PO-Revision-Date: 2022-05-31 14:43\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1975,7 +1975,7 @@ msgstr "<i>Pune o riglă pe ecran și mută glisorul până când ambele rulatoa
 #: ../ui/settings.glade:4946
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
 "<b>Note:</b> This should not affect print quality.</i>"
-msgstr "<i>Încarcă mai des fondurile PDF în timp ce se face zoom pentru o calitate mai bună a redării. \n"
+msgstr "<i>Reîncarcă mai des fondurile PDF în timp ce se face zoom pentru o calitate mai bună a redării. \n"
 "<b>Aviz:</b> Acest lucru nu ar trebui să afecteze calitatea tipăririi.</i>"
 
 #: ../ui/settings.glade:5798
@@ -2906,7 +2906,7 @@ msgstr "Sensibilitatea la apăsare"
 
 #: ../ui/about.glade:129
 msgid "RELEASE_IDENTIFIER"
-msgstr ""
+msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/settings.glade:3139
 msgid "Radius"
@@ -2918,7 +2918,7 @@ msgstr "Rază de acțiune"
 
 #: ../ui/settings.glade:4974
 msgid "Re-render when the page's zoom changes by more than "
-msgstr ""
+msgstr "Reîncarcă atunci când zoom-ul paginii se schimbă cu mai mult de "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2942,7 +2942,7 @@ msgstr "Redenumește stratul ales"
 
 #: ../ui/settings.glade:4561
 msgid "Resizing"
-msgstr ""
+msgstr "Redimensionare"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -3014,15 +3014,15 @@ msgstr "Stabilește deplasarea în margine"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
-msgstr ""
+msgstr "Trimite în plan secundar"
 
 #: ../ui/main.glade:339
 msgid "Send to Back"
-msgstr ""
+msgstr "Trimite în ultimul plan"
 
 #: ../ui/settings.glade:1649
 msgid "Sensitivity Scale"
-msgstr ""
+msgstr "Scala de sensibilitate"
 
 #: ../ui/main.glade:702
 msgid "Set Columns"
@@ -3262,7 +3262,7 @@ msgstr "Când desenezi cu ajutorul atingerii, gesturile cu două degete menite s
 #: ../ui/settings.glade:4971
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
 "Set this to 0% to always re-render on zoom."
-msgstr "Când se face zoom pe un PDF de înaltă rezoluție, fiecare încărcare poate dura mult timp. Stabilind aceasta la o valoare mare, aceste reîncărcări se întâmplă mai rar.\n\n"
+msgstr "Când se face zoom pe un PDF de înaltă rezoluție, fiecare reîncărcare poate dura mult timp. Stabilind aceasta la o valoare mare, aceste reîncărcări se întâmplă mai rar.\n\n"
 "Pune această valoare la 0% pentru a reîncărca mereu la zoom."
 
 #: ../ui/settingsButtonConfig.glade:131
