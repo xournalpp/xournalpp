@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-25 01:15\n"
+"PO-Revision-Date: 2022-05-31 06:39\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -32,7 +32,7 @@ msgstr "\n"
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:35
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " of {1}"
 
 #: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
@@ -58,7 +58,7 @@ msgstr "<span foreground='red' size='x-large'>必要なUIファイルがあり�
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:460
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "TeXの追加/編集"
 
 #: ../src/core/control/XournalMain.cpp:622
 msgid "Advanced export options"
@@ -118,7 +118,8 @@ msgstr "属性の色が設定しません!"
 #: ../src/core/control/AudioController.cpp:99
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "オーディオフォルダーが未設定か正しくないため録音が機能しません。\n"
+"\"環境設定 > 録音\"でオーディオフォルダーを設定してください"
 
 #: ../src/core/control/Control.cpp:208
 msgid "Autosave failed with an error: {1}"
@@ -177,7 +178,7 @@ msgstr "ストロークの幅を変更する"
 
 #: ../src/core/control/xojfile/LoadHandlerHelper.cpp:80
 msgid "Color \"{1}\" unknown (not defined in default color list)!"
-msgstr ""
+msgstr "カラー \"{1}\" 不明 (既定のカラーリストで定義されていません)。"
 
 #: ../src/core/gui/sidebar/indextree/SidebarIndexPage.cpp:226
 msgid "Contents"
@@ -191,7 +192,7 @@ msgstr "コピー"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:31
 msgid "Copy current"
-msgstr ""
+msgstr "現在のものをコピー"
 
 #: ../src/core/undo/CopyUndoAction.cpp:59
 msgid "Copy page"
@@ -200,7 +201,8 @@ msgstr "ページをコピーする"
 #: ../src/util/PathUtil.cpp:257
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
-msgstr ""
+msgstr "フォルダーを作成できませんでした: {1}\n"
+"エラーで失敗しました: {2}"
 
 #: ../src/core/control/LatexController.cpp:273
 msgid "Could not load LaTeX PDF file"
