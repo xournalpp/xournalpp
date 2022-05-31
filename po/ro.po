@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 15:44\n"
+"PO-Revision-Date: 2022-05-31 16:39\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1283,7 +1283,7 @@ msgstr "Fișiere acceptate"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:65
 msgid "Swap the current layer with the one above"
-msgstr "Schimbă poziția stratului actual cu cea a stratului de deasupra"
+msgstr "Schimbă acest strat cu cel de deasupra"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:66
 msgid "Swap the current layer with the one below"
@@ -2227,7 +2227,7 @@ msgstr "Copiază fondul paginii actuale în loc de fondul stabilit mai sus."
 
 #: ../ui/exportSettings.glade:190
 msgid "Current page"
-msgstr "Pagina Curentă"
+msgstr "Pagina actuală"
 
 #: ../ui/settings.glade:3273
 msgid "Cursor"
@@ -2812,7 +2812,7 @@ msgstr "Cache PDF"
 
 #: ../ui/main.glade:1158
 msgid "P_revious Annotated Page"
-msgstr "Pagina p_recedentă cu însemnări"
+msgstr "Pagina anterioa_ră cu însemnări"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -3371,7 +3371,7 @@ msgstr "_Adaugă însemnări în PDF"
 
 #: ../ui/main.glade:674
 msgid "_Bottom to Top"
-msgstr "De_jos în sus"
+msgstr "De _jos în sus"
 
 #: ../ui/main.glade:689
 msgid "_Cols/Rows"
@@ -3559,7 +3559,7 @@ msgstr "semne"
 
 #: ../ui/settings.glade:399
 msgid "every"
-msgstr ""
+msgstr "o dată la"
 
 #: ../ui/settings.glade:426
 msgid "minutes"
