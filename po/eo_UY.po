@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 01:42\n"
+"PO-Revision-Date: 2022-05-31 12:34\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -2445,7 +2445,7 @@ msgstr "Elporti tavolojn progrese"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Elporti la dokumenton sen ajna fono (Nenio) aŭ kun nur PDF-aj kaj bildaj fonoj (Neliniite) aŭ kun ĉiaj fonoj (Ĉiuj)."
 
 #: ../ui/main.glade:1751 ../ui/main.glade:1956
 msgid "Fi_ll"
@@ -3060,7 +3060,8 @@ msgstr "Montri la vertikalan rulumskalon ĉe la maldekstro"
 #: ../ui/settings.glade:903
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
-msgstr ""
+msgstr "Se premaj informoj mankas, ju malpli rapida la streko estas, des pli da premo estas asignata.\n\n"
+"<i>Tio estas eble utila por tiuj aparatoj, al kiuj mankas premsentemo. Ekzemple, muso aŭ tuŝekrano.</i>"
 
 #: ../ui/settings.glade:3024
 msgctxt "stylus cursor uses a small dot"
