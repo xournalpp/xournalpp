@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 00:37\n"
+"PO-Revision-Date: 2022-05-31 01:42\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -2589,7 +2589,7 @@ msgstr ""
 
 #: ../ui/settings.glade:664
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "Se vi malfermas PDF-dosieron kaj ekzistas .xoj-dosiero de la sama nomo, Xournal++ anstataŭe malfermos la .xoj-dosieron."
 
 #: ../ui/settings.glade:4768
 msgid "Ignore Time (ms)"
@@ -2747,7 +2747,7 @@ msgstr "Movi supren"
 
 #: ../ui/settings.glade:3489
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "Multipliki la ruluman rapidon per multiplikanto ne pli granda ol ĉi tiu kvanto, depende de tiom, kiom de la elektita elemento estas ekster la videbla areo."
 
 #: ../ui/main.glade:1147
 msgid "N_ext Annotated Page"
@@ -3003,7 +3003,7 @@ msgstr "Koloro de elektitaĵo (teksto, streko ktp.)"
 
 #: ../ui/settings.glade:3506
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Rulumado per elekta rando"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3243,12 +3243,13 @@ msgstr "Retejo"
 
 #: ../ui/settings.glade:3476
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Kiam elemento estas elektita kaj movata preter la videbla parto de la dokumento, rulumi per kvanto egala al ĉi tiu procento de la videbla parto de la dokumento. "
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "Kiam oni desegnas per tuŝo, dufingraj gestoj por rulumado povas mise kaŭzi zomadon, kiu estas eble malrapida. \n"
+"Ĉi tiu agordo povas faciligi la desegnadon per tuŝo. "
 
 #: ../ui/settings.glade:4971
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
