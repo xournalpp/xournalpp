@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 12:34\n"
+"PO-Revision-Date: 2022-05-31 13:32\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1059,11 +1059,11 @@ msgstr "Rotire forțată"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
-msgstr "Liniat"
+msgstr "Dictando"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled with vertical line"
-msgstr "Liniat cu linie verticală"
+msgstr "Dictando cu margine liniată"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:24
 msgid "SVG graphics"
@@ -2452,7 +2452,7 @@ msgstr "Exportă straturile pe rând"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr "Exportă documentul fără niciun fond (Niciunul) sau numai cu fonduri PDF și de imagine (Nicio regulă) sau cu toate tipurile de fond (Toate)."
+msgstr "Exportă documentul fără niciun fond (Niciunul) sau numai cu fonduri PDF și de imagine (Fără liniere) sau cu toate tipurile de fond (Toate)."
 
 #: ../ui/main.glade:1751 ../ui/main.glade:1956
 msgid "Fi_ll"
@@ -2783,7 +2783,7 @@ msgstr "Niciun simbol"
 
 #: ../ui/exportSettings.glade:46
 msgid "No ruling"
-msgstr ""
+msgstr "Fără liniere"
 
 #: ../ui/exportSettings.glade:43 ../ui/settings.glade:217
 #: ../ui/settings.glade:234
@@ -2804,7 +2804,7 @@ msgstr "Opțiuni"
 
 #: ../ui/settings.glade:5429
 msgid "Output Device"
-msgstr ""
+msgstr "Dispozitiv de ieșire"
 
 #: ../ui/settings.glade:5044
 msgid "PDF Cache"
