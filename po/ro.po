@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 14:43\n"
+"PO-Revision-Date: 2022-05-31 15:44\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1707,7 +1707,7 @@ msgstr "Punct pe traseu"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:279
 msgid "whiteout"
-msgstr "fără"
+msgstr "albește"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:940
 msgid "xoj-File: {1}"
@@ -3026,11 +3026,11 @@ msgstr "Scala de sensibilitate"
 
 #: ../ui/main.glade:702
 msgid "Set Columns"
-msgstr ""
+msgstr "Numărul de coloane"
 
 #: ../ui/main.glade:807
 msgid "Set Rows"
-msgstr ""
+msgstr "Numărul de rânduri"
 
 #: ../ui/settings.glade:4883
 msgid "Settings:"
@@ -3081,7 +3081,7 @@ msgstr "Ancorare"
 
 #: ../ui/about.glade:356
 msgid "Source Code / Bug Tracker"
-msgstr ""
+msgstr "Cod sursă / Urmărire erori"
 
 #: ../ui/settings.glade:3867
 msgid "Speed for Ctrl + Scroll"
@@ -3089,7 +3089,7 @@ msgstr "Viteza pentru Ctrl + Răsfoire"
 
 #: ../ui/settings.glade:3895
 msgid "Speed for a Zoomstep"
-msgstr ""
+msgstr "Viteza pentru un pas de zoom"
 
 #: ../ui/settingsButtonConfig.glade:130
 msgid "Standard"
@@ -3097,7 +3097,7 @@ msgstr "Standard"
 
 #: ../ui/settings.glade:2446
 msgid "Start zooming after a distance "
-msgstr ""
+msgstr "Începe zoom-ul după o anumită distanță "
 
 #: ../ui/settings.glade:5293 ../ui/settings.glade:5351
 msgid "Storage Folder"
@@ -3117,7 +3117,7 @@ msgstr "Butoanele creionului electronic"
 
 #: ../ui/settings.glade:4831
 msgid "Successive (ms)"
-msgstr ""
+msgstr "Succesiv (ms)"
 
 #: ../ui/settings.glade:3026
 msgctxt "stylus cursor uses system cursor"
@@ -3170,7 +3170,7 @@ msgstr "Formula matematică introdusă în instrumentul LaTeX."
 
 #: ../ui/settings.glade:4058
 msgid "The unit of the ruler is cm"
-msgstr ""
+msgstr "Unitatea de măsură a riglei este cm"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
@@ -3178,7 +3178,7 @@ msgstr "Aceste configurări vor fi folosite pentru paginile noi"
 
 #: ../ui/settings.glade:2143
 msgid "Timeout"
-msgstr ""
+msgstr "Timp expirat"
 
 #: ../ui/main.glade:2789
 msgid "Toggle standard / region text selection"
@@ -3267,7 +3267,7 @@ msgstr "Când se face zoom pe un PDF de înaltă rezoluție, fiecare reîncărca
 
 #: ../ui/settingsButtonConfig.glade:131
 msgid "Whiteout"
-msgstr "Fără"
+msgstr "Albește"
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
@@ -3311,7 +3311,7 @@ msgstr "_1 rând"
 
 #: ../ui/main.glade:725
 msgid "_2 Columns"
-msgstr "_2 Coloane"
+msgstr "_2 coloane"
 
 #: ../ui/main.glade:830
 msgid "_2 Rows"
@@ -3319,7 +3319,7 @@ msgstr "_2 rânduri"
 
 #: ../ui/main.glade:736
 msgid "_3 Columns"
-msgstr "_3 Coloane"
+msgstr "_3 coloane"
 
 #: ../ui/main.glade:841
 msgid "_3 Rows"
@@ -3327,15 +3327,15 @@ msgstr "_3 rânduri"
 
 #: ../ui/main.glade:747
 msgid "_4 Columns"
-msgstr "_4 Coloane"
+msgstr "_4 coloane"
 
 #: ../ui/main.glade:852
 msgid "_4 Rows"
-msgstr "_4 Rânduri"
+msgstr "_4 rânduri"
 
 #: ../ui/main.glade:758
 msgid "_5 Columns"
-msgstr "_5 Coloane"
+msgstr "_5 coloane"
 
 #: ../ui/main.glade:863
 msgid "_5 Rows"
@@ -3343,27 +3343,27 @@ msgstr "_5 rânduri"
 
 #: ../ui/main.glade:769
 msgid "_6 Columns"
-msgstr "_6 Coloane"
+msgstr "_6 coloane"
 
 #: ../ui/main.glade:874
 msgid "_6 Rows"
-msgstr "_6 Rânduri"
+msgstr "_6 rânduri"
 
 #: ../ui/main.glade:780
 msgid "_7 Columns"
-msgstr "_7 Coloane"
+msgstr "_7 coloane"
 
 #: ../ui/main.glade:885
 msgid "_7 Rows"
-msgstr "_7 Rânduri"
+msgstr "_7 rânduri"
 
 #: ../ui/main.glade:791
 msgid "_8 Columns"
-msgstr "_8 Coloane"
+msgstr "_8 coloane"
 
 #: ../ui/main.glade:896
 msgid "_8 Rows"
-msgstr "_8 Rânduri"
+msgstr "_8 rânduri"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
@@ -3371,11 +3371,11 @@ msgstr "_Adaugă însemnări în PDF"
 
 #: ../ui/main.glade:674
 msgid "_Bottom to Top"
-msgstr ""
+msgstr "De_jos în sus"
 
 #: ../ui/main.glade:689
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Coloane/Rânduri"
 
 #: ../ui/main.glade:949
 msgid "_Customize"
@@ -3471,7 +3471,7 @@ msgstr "_Module"
 
 #: ../ui/main.glade:540
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Prezentare"
 
 #: ../ui/main.glade:1109
 msgid "_Previous Layer"
@@ -3483,7 +3483,7 @@ msgstr "_Pagina anterioară"
 
 #: ../ui/main.glade:645
 msgid "_Right to Left"
-msgstr ""
+msgstr "De la_dreapta la stânga"
 
 #: ../ui/main.glade:1447
 msgid "_Shape Recognizer"
@@ -3503,7 +3503,7 @@ msgstr "_Cel mai de sus strat"
 
 #: ../ui/main.glade:663
 msgid "_Top to Bottom"
-msgstr ""
+msgstr "De_sus în jos"
 
 #: ../ui/main.glade:616
 msgid "_Vertical"
@@ -3523,11 +3523,11 @@ msgstr "_elimină linii"
 
 #: ../ui/main.glade:1651 ../ui/main.glade:1797 ../ui/main.glade:1906
 msgid "_fine"
-msgstr ""
+msgstr "_subțire"
 
 #: ../ui/main.glade:1662 ../ui/main.glade:1808 ../ui/main.glade:1917
 msgid "_medium"
-msgstr ""
+msgstr "_mediu"
 
 #: ../ui/main.glade:1847
 msgid "_standard"
@@ -3535,15 +3535,15 @@ msgstr "_standard"
 
 #: ../ui/main.glade:1673 ../ui/main.glade:1819 ../ui/main.glade:1928
 msgid "_thick"
-msgstr ""
+msgstr "_gros"
 
 #: ../ui/main.glade:1640 ../ui/main.glade:1786 ../ui/main.glade:1895
 msgid "_very fine"
-msgstr ""
+msgstr "_foarte subțire"
 
 #: ../ui/main.glade:1858
 msgid "_whiteout"
-msgstr ""
+msgstr "_albește"
 
 #: ../ui/exportSettings.glade:310
 msgid "dpi"
@@ -3577,7 +3577,7 @@ msgstr "s <i>(după care ecranul tactil va fi reactivat)</i>"
 
 #: ../ui/main.glade:1684 ../ui/main.glade:1830 ../ui/main.glade:1939
 msgid "ver_y thick"
-msgstr ""
+msgstr "foarte _gros"
 
 #: ../ui/about.glade:141
 msgid "with libgtk"
