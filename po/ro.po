@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 16:39\n"
+"PO-Revision-Date: 2022-06-01 09:41\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -36,7 +36,7 @@ msgstr " din {1}"
 
 #: ../src/core/control/settings/Settings.cpp:123
 msgid "%F-Note-%H-%M"
-msgstr "%F-Notă-%H-%M"
+msgstr "%F-Notițe-%H-%M"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:152
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
