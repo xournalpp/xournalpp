@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-31 13:32\n"
+"PO-Revision-Date: 2022-06-01 11:11\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -2030,7 +2030,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2021
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
-msgstr ""
+msgstr "<i>Vi povas tuŝekrane kondutigi tiujn aparatojn, kiujn GTK ne klasifikas kiel tuŝekranojn.</i>"
 
 #: ../ui/about.glade:203
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2069,7 +2069,8 @@ msgstr "Ĉiuj paĝoj"
 #: ../ui/settings.glade:4880
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr ""
+msgstr "Ĉiuj tri kondiĉoj estas necesaj por ignori la strekon:\n"
+"Ĝi devas esti kaj mallongdaŭra kaj mallonga, kaj iu alia ĵus ignorita streko devas ne ekzisti."
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
@@ -2360,7 +2361,7 @@ msgstr "Desegnareo"
 
 #: ../ui/settings.glade:4487
 msgid "Drawing Tools - Set Modifiers by Draw Direction (Experimental)"
-msgstr ""
+msgstr "Desegniloj – agordi modifilojn per desegna direkto (eksperimenta funkcio)"
 
 #: ../ui/main.glade:2841 ../ui/main.glade:2878
 msgid "Duplicate"
@@ -2625,7 +2626,7 @@ msgstr "Stabiligo de enigo"
 
 #: ../ui/settings.glade:1227
 msgid "Input stabilization can create a gap at the end of your stroke. If enabled, this gap is filled."
-msgstr ""
+msgstr "Stabiligo de enigo povas krei breĉon ĉe la fino de via streko. Se tio estas ŝaltita, ĉi tia breĉo estos plenigita."
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
