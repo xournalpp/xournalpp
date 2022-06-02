@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-02 16:52\n"
+"PO-Revision-Date: 2022-06-02 18:06\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -636,7 +636,7 @@ msgstr "Filtra la pressione. Moltiplica la pressione per il moltiplicatore di pr
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Fine"
-msgstr "Fine"
+msgstr "Sottile"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 msgid "Floating Toolbox (experimental)"
@@ -1478,7 +1478,7 @@ msgstr "Tipo di pixmap::domain sconosciuto: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:592
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr "Tipo di fine tratto sconosciuto: \"{1}\", trattato come tondo"
+msgstr "Tipo sconosciuto di tratto: \"{1}\", si presume che sia tondo"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:610
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1502,7 +1502,7 @@ msgstr "Spazio verticale"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:548
 msgid "Very Fine"
-msgstr "Molto fine"
+msgstr "Molto sottile"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:552
 msgid "Very Thick"
