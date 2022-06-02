@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-02 18:06\n"
+"PO-Revision-Date: 2022-06-02 19:19\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -320,7 +320,7 @@ msgstr "Personalizare Benzi cu instrumente"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:28
 msgid "Customized"
-msgstr "Personalizat"
+msgstr "Personalizate"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 msgid "Cut"
@@ -648,7 +648,7 @@ msgstr "Tip de litere"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:499
 msgid "Forward"
-msgstr "Mergi înainte"
+msgstr "Înainte"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:42
 msgid "GNU GPLv2 or later"
@@ -990,7 +990,7 @@ msgstr "Redă obiectul"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:16
 msgid "Predefined"
-msgstr "Predefinit"
+msgstr "Prestabilite"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Presentation mode"
@@ -1321,7 +1321,7 @@ msgstr "Text găsit pe această pagină"
 
 #: ../src/core/gui/SearchBar.cpp:122 ../src/core/gui/SearchBar.cpp:166
 msgid "Text found once on page {1}"
-msgstr "Text găsit odată pe pagina {1}"
+msgstr "Text găsit o dată pe pagina {1}"
 
 #: ../src/core/gui/SearchBar.cpp:123 ../src/core/gui/SearchBar.cpp:167
 msgid "Text found {1} times on page {2}"
@@ -1329,7 +1329,7 @@ msgstr "Text gasit de {1} ori pe pagina {2}"
 
 #: ../src/core/gui/SearchBar.cpp:71
 msgid "Text not found"
-msgstr "Text negăsit"
+msgstr "Textul nu a fost găsit"
 
 #: ../src/core/gui/SearchBar.cpp:133 ../src/core/gui/SearchBar.cpp:177
 msgid "Text not found, searched on all pages"
@@ -2167,7 +2167,7 @@ msgstr "Dimensiune buffer"
 
 #: ../ui/about.glade:99
 msgid "Built on"
-msgstr "Construit pe data de"
+msgstr "Data creării"
 
 #: ../ui/settings.glade:1845
 msgid "Button 1"
@@ -3105,7 +3105,7 @@ msgstr "Alege dosarul"
 
 #: ../ui/main.glade:2769
 msgid "Strikethrough selected text"
-msgstr "Taie textul ales"
+msgstr "Taie cu o linie textul ales"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
