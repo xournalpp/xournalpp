@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-02 15:48\n"
+"PO-Revision-Date: 2022-06-02 16:52\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -486,7 +486,7 @@ msgstr "Eroare la însemnarea fișierului PDF „{1}”\n"
 
 #: ../src/core/gui/GladeGui.cpp:23
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
-msgstr "Eroare la încărcarea fișierului glade \"{1}\" (încercați să încărcați \"{2}\")"
+msgstr "Eroare la încărcarea fișierului glade „{1}” (încerc să încarc „{2}”)"
 
 #: ../src/core/control/Control.cpp:2128
 msgid "Error opening file \"{1}\""
@@ -494,7 +494,7 @@ msgstr "Eroare la deschiderea fișierului „{1}”"
 
 #: ../src/util/OutputStream.cpp:23
 msgid "Error opening file: \"{1}\""
-msgstr "Eroare la deschiderea fișierului „{1}”"
+msgstr "Eroare la deschiderea fișierului: „{1}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:449
 #: ../src/core/control/xojfile/LoadHandler.cpp:469
@@ -515,7 +515,7 @@ msgstr "Eroare la salvarea imaginii #2"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:15
 msgid "Error while autosaving: {1}"
-msgstr "Eroare în timpul automatizării: {1}"
+msgstr "Eroare la salvarea automată: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:153
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
@@ -2914,7 +2914,7 @@ msgstr "Rază"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
-msgstr "Rază de acțiune"
+msgstr "Interval"
 
 #: ../ui/settings.glade:4974
 msgid "Re-render when the page's zoom changes by more than "
