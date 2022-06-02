@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-02 18:06\n"
+"PO-Revision-Date: 2022-06-02 19:20\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -2173,7 +2173,7 @@ msgstr "Dimensione del Buffer"
 
 #: ../ui/about.glade:99
 msgid "Built on"
-msgstr "Basato su"
+msgstr "Creato il"
 
 #: ../ui/settings.glade:1845
 msgid "Button 1"
