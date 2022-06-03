@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-03 09:50\n"
+"PO-Revision-Date: 2022-06-03 10:50\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2476,7 +2476,7 @@ msgstr "Caută apariția anterioară a textului"
 
 #: ../ui/settings.glade:4331
 msgid "First Page Offset "
-msgstr "Decalarea primei pagini "
+msgstr "Mutarea primei pagini "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3573
 msgid "Fullscreen"
@@ -2644,7 +2644,7 @@ msgstr "Introdu o pagină după"
 
 #: ../ui/main.glade:2862
 msgid "Insert Page Before"
-msgstr "Inserare pagină înainte"
+msgstr "Introdu o pagină înainte"
 
 #: ../ui/settings.glade:5746
 msgid "LaTeX"
