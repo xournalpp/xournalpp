@@ -360,20 +360,21 @@ auto EditSelection::setFont(XojFont& font) -> UndoAction* { return this->content
 void EditSelection::fillUndoItem(DeleteUndoAction* undo) { this->contents->fillUndoItem(undo); }
 
 /**
- * Computes the reflection with respect to either the horizontal or vertical axis.
- *
- */
-auto EditSelection::reflectSelection(bool x_axis) -> UndoAction* {
+* Computes the reflection with respect to either the horizontal or vertical axis.
+* 
+*/
+auto EditSelection::reflectSelection(bool x_axis) -> UndoAction* 
+	{
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
     this->rotation = snappingHandler.snapAngle(this->rotation, false);
     this->sourcePage = page;
     this->sourceLayer = layer;
-    this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->aspectRatio, layer, page,
+	this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->aspectRatio, layer, page,
                                   this->view, this->undo, this->mouseDownType);
-    finalizeSelection();
-    return this->contents->reflectSelection(this->getRect(), x_axis);
-}
+	finalizeSelection();
+	return this->contents->reflectSelection(this->getRect(), x_axis); 
+	}
 
 /**
  * Add an element to this selection

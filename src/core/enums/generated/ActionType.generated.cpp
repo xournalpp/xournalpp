@@ -463,11 +463,11 @@ auto ActionType_fromString(const string& value) -> ActionType {
     if (value == "ACTION_SELECT_COLOR_CUSTOM") {
         return ACTION_SELECT_COLOR_CUSTOM;
     }
-
+    
     if (value == "ACTION_X_REFLECTION") {
         return ACTION_X_REFLECTION;
     }
-
+    
     if (value == "ACTION_Y_REFLECTION") {
         return ACTION_Y_REFLECTION;
     }

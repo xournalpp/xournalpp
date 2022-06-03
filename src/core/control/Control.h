@@ -76,7 +76,7 @@ public:
     Control(Control const&) = delete;
     Control(Control&&) = delete;
     auto operator=(Control const&) -> Control& = delete;
-    auto operator=(Control &&) -> Control& = delete;
+    auto operator=(Control&&) -> Control& = delete;
     ~Control() override;
 
     void initWindow(MainWindow* win);
@@ -130,7 +130,7 @@ public:
     void actionPerformed(ActionType type, ActionGroup group, GtkToolButton* toolbutton, bool enabled) override;
 
 
-    void reflectAxisOfSelection(bool x_axis);
+	void reflectAxisOfSelection(bool x_axis);
 
     /**
      * @brief Update the Cursor and the Toolbar based on the active color

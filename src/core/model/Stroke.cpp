@@ -339,16 +339,20 @@ void Stroke::rotate(double x0, double y0, double th) {
     // Width and Height will likely be changed after this operation
 }
 
-void Stroke::axis_reflect(double x0, double y0, bool x_axis) {
-    cairo_matrix_t reflection;
-    if (x_axis) {
-        cairo_matrix_init(&reflection, 1, 0, 0, -1, 0, 2 * y0);
-    } else
-        cairo_matrix_init(&reflection, -1, 0, 0, 1, 2 * x0, 0);
+void Stroke::axis_reflect(double x0, double y0, bool x_axis){
+	cairo_matrix_t reflection;
+	if(x_axis){
+		cairo_matrix_init(&reflection, 1, 0, 0, -1, 0, 2*y0);
+	} else
+		cairo_matrix_init(&reflection, -1, 0, 0, 1, 2*x0, 0);
 
-    for (auto&& p: points) { cairo_matrix_transform_point(&reflection, &p.x, &p.y); }
+    for (auto&& p: points) { 
+		cairo_matrix_transform_point(&reflection, &p.x, &p.y); 
+	}
     this->sizeCalculated = true;
+
 }
+
 
 
 void Stroke::scale(double x0, double y0, double fx, double fy, double rotation, bool restoreLineWidth) {

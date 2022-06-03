@@ -180,11 +180,11 @@ public:
      */
     UndoAction* setFill(int alphaPen, int alphaHighligther);
 
-    /**
+	/**
      * Computes the reflection with respect to either the horizontal or vertical axis.
-     *
+     * 
      */
-    UndoAction* reflectSelection(bool x_axis);
+	UndoAction* reflectSelection(bool x_axis);
 
 public:
     /**
