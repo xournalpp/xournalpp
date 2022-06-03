@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-02 19:19\n"
+"PO-Revision-Date: 2022-06-03 07:41\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -990,7 +990,7 @@ msgstr "Redă obiectul"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:16
 msgid "Predefined"
-msgstr "Prestabilite"
+msgstr "Predefinite"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Presentation mode"
@@ -1337,7 +1337,7 @@ msgstr "Textul nu a fost găsit, căutat pe toate paginile"
 
 #: ../src/core/control/Control.cpp:1144
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr "Configurarea benzii cu instrumente „{1}” este prestabilită. Vrei să creezi o copie pe care să o modifici?"
+msgstr "Configurarea benzii cu instrumente „{1}” este predefinită. Vrei să creezi o copie pe care să o modifici?"
 
 #: ../src/core/control/Control.cpp:2093
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
