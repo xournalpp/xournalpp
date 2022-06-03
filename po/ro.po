@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-03 08:45\n"
+"PO-Revision-Date: 2022-06-03 09:50\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -449,7 +449,7 @@ msgstr "Desenează o linie"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:119
 msgid "Drawing Type - don't change"
-msgstr "Tipul de desenare - nu se modifică"
+msgstr "Tipul de desenare - nu schimba"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:26
 msgid "Drawing Type Combo"
@@ -1711,7 +1711,7 @@ msgstr "albește"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:940
 msgid "xoj-File: {1}"
-msgstr "Xoj-Fișier: {1}"
+msgstr "xoj-Fișier: {1}"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:113
 msgid "xoj-preview-extractor: call with INPUT.xoj OUTPUT.png"
@@ -1731,7 +1731,7 @@ msgstr "xoj-preview-extractor: fișierul „{1}” nu este un fișier .xoj"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:139
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
-msgstr "xoj-preview-extractor: nici o previzualizare și pagină găsite, poate un fișier nevalid?"
+msgstr "xoj-preview-extractor: nu au fost găsite nici previzualizarea, nici paginile. Poate că fișierul este greșit."
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:130
 msgid "xoj-preview-extractor: opening input file \"{1}\" failed"
@@ -1970,7 +1970,7 @@ msgstr "<i>Sensibilitatea la apăsare permite trasarea de linii cu lățimi dife
 
 #: ../ui/settings.glade:4010
 msgid "<i>Put a ruler on your screen and move the slider until both rulers match.</i>"
-msgstr "<i>Pune o riglă pe ecran și mută glisorul până când ambele rulatoare se potrivesc.</i>"
+msgstr "<i>Pune o riglă pe ecran și deplasează cursorul până când ambele rigle se potrivesc.</i>"
 
 #: ../ui/settings.glade:4946
 msgid "<i>Re-render PDF backgrounds more often while zooming for better render quality. \n"
@@ -2435,7 +2435,7 @@ msgstr "Opțiu_ni pentru Gumă"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
-msgstr "Tip de gumă - nu se modifică"
+msgstr "Tip de gumă - nu schimba"
 
 #: ../ui/exportSettings.glade:56
 msgid "Export"
