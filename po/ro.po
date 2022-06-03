@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-03 12:10\n"
+"PO-Revision-Date: 2022-06-03 13:07\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1361,11 +1361,11 @@ msgstr "Fișierul în curs de încărcare are o versiune de format mai nouă dec
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:119
 msgid "The file is no valid .xopp file (Mimetype missing): \"{1}\""
-msgstr "Fisierul nu este un fisier .xopp valid (Lipseste Mimetype): \"{1}\""
+msgstr "Acesta nu este un fișier .xopp valabil (Lipsește Mimetype): „{1}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:127
 msgid "The file is no valid .xopp file (Mimetype wrong): \"{1}\""
-msgstr "Fisierul nu este un fisier .xopp valid (Lipseste Mimetype): \"{1}\""
+msgstr "Acesta nu este un fișier .xopp valabil (Lipsește Mimetype): „{1}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:136
 msgid "The file is no valid .xopp file (Version missing): \"{1}\""
@@ -2026,7 +2026,7 @@ msgstr "<i>Folosește ecranul tactil ca și cum ai avea un creion electronic.</i
 
 #: ../ui/settings.glade:1698
 msgid "<i>With some setup, pen strokes have artifacts at their beginning. This can be avoided by ignoring the first few events/stroke-points when the pen touches the screen.</i>"
-msgstr "<i>Cu anumite reglări, unele creioane lasă imprecizii la începutul scrierii. Acest lucru poate fi evitat prin ignorarea primelor semne atunci când creionul începe să scrie.</i>"
+msgstr "<i>Cu anumite reglări, unele creioane lasă imprecizii la începutul scrierii. Acest lucru poate fi evitat prin ignorarea primelor evenimente/„puncte ale liniei” atunci când creionul începe să scrie.</i>"
 
 #: ../ui/settings.glade:2021
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
@@ -2069,8 +2069,8 @@ msgstr "Toate paginile"
 #: ../ui/settings.glade:4880
 msgid "All three conditions must be met before stroke is ignored.\n"
 "It must be short in time and length and we can't have ignored another stroke recently."
-msgstr "Toate cele trei condiții trebuie îndeplinite înainte ca semnele să fie ignorate.\n"
-"Trebuie să fie scurt ca timp și lungime și nu trebuie să fi ignorat recent un alt semn."
+msgstr "Toate cele trei condiții trebuie îndeplinite înainte ca linia să fie ignorată.\n"
+"Trebuie să fie scurtă ca timp și lungime și nu trebuie să fi ignorat recent o altă linie."
 
 #: ../ui/latexSettings.glade:45
 msgid "Always check LaTeX dependencies before running"
@@ -2580,7 +2580,7 @@ msgstr "Creatori de simboluri"
 
 #: ../ui/settings.glade:4702
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
-msgstr "Dacă este activată, formele care au fost recunoscute de unealta „Recunoaște forma” vor fi ancorate automat la grilă. Acest lucru poate duce la rezultate neașteptate dacă ai activat unealta „Recunoaște forma” în timpul scrierii."
+msgstr "Dacă este activată, formele care au fost recunoscute de instrumentul „Recunoaște forma” vor fi ancorate automat la grilă. Acest lucru poate duce la rezultate neașteptate dacă ai activat „Recunoaște forma” în timpul scrierii."
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
@@ -3555,7 +3555,7 @@ msgstr "activat,"
 
 #: ../ui/settings.glade:1751
 msgid "events"
-msgstr "semne"
+msgstr "evenimente"
 
 #: ../ui/settings.glade:399
 msgid "every"
