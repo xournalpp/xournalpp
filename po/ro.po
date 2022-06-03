@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-03 07:41\n"
+"PO-Revision-Date: 2022-06-03 08:45\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1337,7 +1337,7 @@ msgstr "Textul nu a fost găsit, căutat pe toate paginile"
 
 #: ../src/core/control/Control.cpp:1144
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
-msgstr "Configurarea benzii cu instrumente „{1}” este predefinită. Vrei să creezi o copie pe care să o modifici?"
+msgstr "Configurarea benzii cu instrumente „{1}” este predefinită. Vrei să modifici o copie?"
 
 #: ../src/core/control/Control.cpp:2093
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
@@ -1723,11 +1723,11 @@ msgstr "xoj-preview-extractor: nu s-a putut găsi simbolul „{1}”"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:134
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
-msgstr "xoj-preview-extractor: fișierul \"{1}\" nu conține previzualizare"
+msgstr "xoj-preview-extractor: fișierul „{1}” nu conține previzualizări"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:126
 msgid "xoj-preview-extractor: file \"{1}\" is not .xoj file"
-msgstr "xoj-preview-extractor: fișierul \"{1}\" nu conține previzualizare"
+msgstr "xoj-preview-extractor: fișierul „{1}” nu este un fișier .xoj"
 
 #: ../src/xoj-preview-extractor/xournalpp-thumbnailer.cpp:139
 msgid "xoj-preview-extractor: no preview and page found, maybe an invalid file?"
@@ -1901,7 +1901,7 @@ msgstr "<b>Parametrii exportării documentelor</b>\n"
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
 msgstr "<b>Caseta cu instrumente e goală</b>\n"
-"            <i>Opțiuni: Arată/Instrumente</i>"
+"            <i>Opțiuni: Arată/Benzi cu instrumente</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -3243,7 +3243,7 @@ msgstr "Versiune: "
 
 #: ../ui/settings.glade:3814
 msgid "View"
-msgstr "Vizualizare"
+msgstr "Arată"
 
 #: ../ui/about.glade:328
 msgid "Website"
@@ -3515,7 +3515,7 @@ msgstr "Spațiu _vertical"
 
 #: ../ui/main.glade:519
 msgid "_View"
-msgstr "_Vizualizare"
+msgstr "_Arată"
 
 #: ../ui/main.glade:1869
 msgid "_delete strokes"
