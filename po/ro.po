@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-03 14:09\n"
+"PO-Revision-Date: 2022-06-03 15:19\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -692,7 +692,7 @@ msgstr "Du-te la cel mai de sus strat"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:24
 msgid "Graph"
-msgstr "Grafic"
+msgstr "Pătrățele"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Grid Snapping"
@@ -735,12 +735,12 @@ msgstr "Introdu dedesubt o copie a acestei pagini"
 
 #: ../src/core/undo/InsertUndoAction.cpp:78
 msgid "Insert elements"
-msgstr "Inserează elemente"
+msgstr "Introdu elemente"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 #: ../src/core/undo/InsertUndoAction.cpp:33
 msgid "Insert image"
-msgstr "Inserare imagine"
+msgstr "Introdu o imagine"
 
 #: ../src/core/undo/InsertUndoAction.cpp:35
 msgid "Insert latex"
@@ -756,11 +756,11 @@ msgstr "Introdu o pagină"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
-msgstr "Punctat Izometric"
+msgstr "Punctat izometric"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Graph"
-msgstr "Grafic izometric"
+msgstr "Grilă izometrică"
 
 #: ../src/core/control/XournalMain.cpp:567
 msgid "Jump to Page (first Page: 1)"
@@ -768,7 +768,7 @@ msgstr "Salt la pagina (prima pagină: 1)"
 
 #: ../src/core/control/LatexController.cpp:192
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "S-a produs o eroare la generarea LaTeX: {1} (cod de ieșire: {2})"
+msgstr "S-a produs o eroare la generarea LaTeX: {1} (eroare: {2})"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:239
 msgid "Layer"
