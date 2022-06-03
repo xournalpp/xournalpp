@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-03 16:28\n"
+"PO-Revision-Date: 2022-06-03 17:27\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2106,11 +2106,11 @@ msgstr "Autori"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
-msgstr "Detectează automat"
+msgstr "Detectare automată"
 
 #: ../ui/settings.glade:699
 msgid "Autoloading"
-msgstr "Autoîncărcare"
+msgstr "Încărcare automată"
 
 #: ../ui/settings.glade:456
 msgid "Autosaving"
@@ -2130,7 +2130,7 @@ msgstr "Culoarea fondului între pagini"
 
 #: ../ui/settings.glade:3478
 msgid "Base speed"
-msgstr "Viteză de pornire"
+msgstr "Viteza de deplasare"
 
 #: ../ui/settings.glade:3025
 msgctxt "stylus cursor uses a big pen icon"
@@ -2247,7 +2247,7 @@ msgstr "Comenzi personalizate (pentru metoda „Personalizată”)"
 
 #: ../ui/settings.glade:2890
 msgid "Dark Theme (requires restart)"
-msgstr "Temă întunecată (necesită repornire)"
+msgstr "Aspect întunecat (necesită repornire)"
 
 #: ../ui/settings.glade:237
 msgid "Deadzone"
@@ -3178,7 +3178,7 @@ msgstr "Aceste configurări vor fi folosite pentru paginile noi"
 
 #: ../ui/settings.glade:2143
 msgid "Timeout"
-msgstr "Timp expirat"
+msgstr "Timp"
 
 #: ../ui/main.glade:2789
 msgid "Toggle standard / region text selection"
