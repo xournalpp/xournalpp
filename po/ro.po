@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-03 15:19\n"
+"PO-Revision-Date: 2022-06-03 16:28\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -967,11 +967,11 @@ msgstr "Pagini alăturate"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:386
 #: ../src/core/undo/AddUndoAction.cpp:57
 msgid "Paste"
-msgstr "Inserează"
+msgstr "Lipește"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:493
 msgid "Pause / Play"
-msgstr "Pauză / Rulează"
+msgstr "Pauză / Pornire"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:83
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:257
@@ -980,7 +980,7 @@ msgstr "Creion"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
-msgstr "Câmp"
+msgstr "Albă"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
@@ -994,7 +994,7 @@ msgstr "Predefinite"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:406
 msgid "Presentation mode"
-msgstr "Mod de prezentare"
+msgstr "Prezentare"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:56
 msgid "Previously selected language not available anymore!"
@@ -1002,7 +1002,7 @@ msgstr "Limba aleasă anterior nu mai este valabilă!"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:371
 msgid "Print"
-msgstr "Imprimă"
+msgstr "Tipărește"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:491
 msgid "Record Audio / Stop Recording"
@@ -1098,7 +1098,7 @@ msgstr "Scală"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:388
 msgid "Search"
-msgstr "Căutare"
+msgstr "Caută"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:35
 msgid "See the full list of contributors"
@@ -1409,7 +1409,7 @@ msgstr "Această imagine nu a putut fi încărcată. Mesaj de eroare: {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:407
 msgid "Toggle fullscreen"
-msgstr "Comutare ecran complet"
+msgstr "Act/Dez Pe tot ecranul"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:82
 msgid "Tool - don't change"
@@ -1442,19 +1442,19 @@ msgstr "Nu s-a putut afișa pagina pdf."
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:379
 #: ../src/core/undo/UndoRedoHandler.cpp:203
 msgid "Undo"
-msgstr "Revenire"
+msgstr "Anulează"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:198
 msgid "Undo: "
-msgstr "Revenire: "
+msgstr "Anulează: "
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:295
 msgid "Unexpected root tag: {1}"
-msgstr "Tag-ul rădăcină neașteptat: {1}"
+msgstr "Etichetă principală neașteptată: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:316
 msgid "Unexpected tag in document: \"{1}\""
-msgstr "Etichetă neașteptată în document: \"{1}\""
+msgstr "Etichetă neașteptată în documentul: „{1}”"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Unknown background type: {1}"
@@ -1609,15 +1609,15 @@ msgstr "_Salvează"
 
 #: ../src/core/control/DeviceListHelper.cpp:98
 msgid "cursor"
-msgstr "Cursor"
+msgstr "cursor"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:265
 msgid "dash-/ dotted"
-msgstr "punctat/punctat"
+msgstr "întreruptă-/punctată"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:262
 msgid "dashed"
-msgstr "Linie întreruptă"
+msgstr "linie întreruptă"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
 msgid "default disabled"
@@ -1633,7 +1633,7 @@ msgstr "elimină linia"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:268
 msgid "dotted"
-msgstr "Punctată"
+msgstr "linie punctată"
 
 #: ../src/core/undo/AddUndoAction.cpp:65
 #: ../src/core/undo/DeleteUndoAction.cpp:63
@@ -1686,7 +1686,7 @@ msgstr "linie"
 
 #: ../src/core/control/DeviceListHelper.cpp:110
 msgid "tablet pad"
-msgstr "padul tabletei"
+msgstr "tabletă grafică"
 
 #: ../src/core/undo/AddUndoAction.cpp:82
 #: ../src/core/undo/DeleteUndoAction.cpp:80
@@ -1703,7 +1703,7 @@ msgstr "ecran tactil"
 
 #: ../src/core/control/DeviceListHelper.cpp:108
 msgid "trackpoint"
-msgstr "Punct pe traseu"
+msgstr "trackpoint"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:279
 msgid "whiteout"
@@ -2890,7 +2890,7 @@ msgstr "Preprocesor"
 
 #: ../ui/settings.glade:3674
 msgid "Presentation Mode"
-msgstr "Mod de prezentare"
+msgstr "Prezentare"
 
 #: ../ui/settings.glade:4514
 msgid "Preserve line width"
