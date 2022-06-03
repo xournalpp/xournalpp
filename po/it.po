@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-03 13:07\n"
+"PO-Revision-Date: 2022-06-03 15:19\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -760,7 +760,7 @@ msgstr "Puntinato isometrico"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:27
 msgid "Isometric Graph"
-msgstr "Grafico Isometrico"
+msgstr "Griglia isometrica"
 
 #: ../src/core/control/XournalMain.cpp:567
 msgid "Jump to Page (first Page: 1)"
