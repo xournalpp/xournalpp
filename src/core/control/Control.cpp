@@ -2181,11 +2181,10 @@ void Control::toolColorChanged() {
 
 void Control::reflectAxisOfSelection(bool x_axis) {
     if (this->win) {
-        EditSelection* sel = this->win->getXournal()->getSelection();
-        if (sel) {
-            UndoAction* undo = sel->reflectSelection(x_axis);
+		if (EditSelection* sel = this->win->getXournal()->getSelection()) {
+            std::unique_ptr<UndoAction> undo = sel->reflectSelection(x_axis);
             // move into selection
-            undoRedo->addUndoAction(UndoActionPtr(undo));
+          undoRedo -> addUndoAction(std::move(undo));
         }
 	//TODO: add text
 

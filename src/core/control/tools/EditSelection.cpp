@@ -363,7 +363,7 @@ void EditSelection::fillUndoItem(DeleteUndoAction* undo) { this->contents->fillU
 * Computes the reflection with respect to either the horizontal or vertical axis.
 * 
 */
-auto EditSelection::reflectSelection(bool x_axis) -> UndoAction* 
+std::unique_ptr<UndoAction> EditSelection::reflectSelection(bool x_axis) 
 	{
     PageRef page = this->view->getPage();
     Layer* layer = page->getSelectedLayer();
@@ -372,7 +372,6 @@ auto EditSelection::reflectSelection(bool x_axis) -> UndoAction*
     this->sourceLayer = layer;
 	this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->aspectRatio, layer, page,
                                   this->view, this->undo, this->mouseDownType);
-	finalizeSelection();
 	return this->contents->reflectSelection(this->getRect(), x_axis); 
 	}
 

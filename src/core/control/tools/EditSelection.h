@@ -184,7 +184,7 @@ public:
      * Computes the reflection with respect to either the horizontal or vertical axis.
      * 
      */
-	UndoAction* reflectSelection(bool x_axis);
+	std::unique_ptr<UndoAction> reflectSelection(bool x_axis);
 
 public:
     /**
