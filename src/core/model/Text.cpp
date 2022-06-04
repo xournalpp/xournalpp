@@ -95,7 +95,7 @@ void Text::scale(double x0, double y0, double fx, double fy, double rotation,
 
 void Text::rotate(double x0, double y0, double th) {}
 
-void Text::axis_reflect(double x0, double y0, bool axis) {}
+void Text::axisReflect(double x0, double y0, bool axis) {}
 
 auto Text::isInEditing() const -> bool { return this->inEditing; }
 

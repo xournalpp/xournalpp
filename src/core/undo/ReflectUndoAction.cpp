@@ -39,7 +39,7 @@ void ReflectUndoAction::applyReflection(double x0, double y0, bool x_axis) {
     for (Element* e: this->elements) {
         r.addPoint(e->getX(), e->getY());
         r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
-        e->axis_reflect(x0, y0, x_axis);
+        e->axisReflect(x0, y0, x_axis);
         r.addPoint(e->getX(), e->getY());
         r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
     }

@@ -320,7 +320,7 @@ std::unique_ptr<UndoAction> EditSelectionContents::reflectSelection(xoj::util::R
 	
 	for (Element* e: this->selected) {
         if (e->getType() == ELEMENT_STROKE) {
-            e->axis_reflect(mx, my, x_axis);
+            e->axisReflect(mx, my, x_axis);
             found = true;
         }
     }
