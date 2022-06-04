@@ -310,7 +310,7 @@ auto EditSelectionContents::setColor(Color color) -> UndoAction* {
  * Computes the reflection with respect to either the horizontal or vertical axis of the selected region.
  * 
  */
-std::unique_ptr<UndoAction> EditSelectionContents::reflectSelection(xoj::util::Rectangle<double> bounds, bool x_axis) {
+std::unique_ptr<UndoAction> EditSelectionContents::reflectSelection(const xoj::util::Rectangle<double>& bounds, bool x_axis) {
 	auto undo = std::make_unique<ReflectUndoAction>(
                 this->sourcePage, &this->selected, lastSnappedBounds.x + lastSnappedBounds.width / 2,
                 lastSnappedBounds.y + lastSnappedBounds.height / 2, x_axis);
