@@ -19,7 +19,6 @@
 
 class Stroke;
 class Layer;
-class Redrawable;
 
 struct LineStyleUndoActionEntry {
     LineStyleUndoActionEntry(Stroke* s, LineStyle oldStyle, LineStyle newStyle):

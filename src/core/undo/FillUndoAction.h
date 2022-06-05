@@ -14,7 +14,6 @@
 #include "UndoAction.h"
 
 class Layer;
-class Redrawable;
 class FillUndoActionEntry;
 class Stroke;
 

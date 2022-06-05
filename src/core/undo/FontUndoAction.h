@@ -19,7 +19,6 @@
 
 class FontUndoActionEntry;
 class Layer;
-class Redrawable;
 class Text;
 class XojFont;
 
