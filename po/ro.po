@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-05 13:04\n"
+"PO-Revision-Date: 2022-06-05 14:03\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1574,7 +1574,7 @@ msgstr "Cursor zoom"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Zoom fit to screen"
-msgstr "Zoom potrivit pe ecran"
+msgstr "Zoom adaptat ferestrei"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:413
 msgid "Zoom in"
@@ -2958,7 +2958,7 @@ msgstr "Toleranța rotirii forțate"
 
 #: ../ui/settings.glade:5511
 msgid "Sample Rate"
-msgstr "Rata de eșantionare"
+msgstr "Frecvența de eșantionare"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
@@ -3279,7 +3279,7 @@ msgstr "Lăţime:"
 
 #: ../ui/about.glade:393
 msgid "With help from the community"
-msgstr "Cu ajutor din partea comunității"
+msgstr "Cu ajutorul comunității"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
@@ -3451,7 +3451,7 @@ msgstr "_Navigare"
 
 #: ../ui/main.glade:1120
 msgid "_Next Layer"
-msgstr "Stratul _următor"
+msgstr "_Stratul următor"
 
 #: ../ui/main.glade:1081
 msgid "_Next Page"
@@ -3475,7 +3475,7 @@ msgstr "_Prezentare"
 
 #: ../ui/main.glade:1109
 msgid "_Previous Layer"
-msgstr "Stratul _anterior"
+msgstr "_Stratul anterior"
 
 #: ../ui/main.glade:1059
 msgid "_Previous Page"
@@ -3483,7 +3483,7 @@ msgstr "_Pagina anterioară"
 
 #: ../ui/main.glade:645
 msgid "_Right to Left"
-msgstr "De la_dreapta la stânga"
+msgstr "_De la dreapta la stânga"
 
 #: ../ui/main.glade:1447
 msgid "_Shape Recognizer"
@@ -3503,7 +3503,7 @@ msgstr "_Cel mai de sus strat"
 
 #: ../ui/main.glade:663
 msgid "_Top to Bottom"
-msgstr "De_sus în jos"
+msgstr "_De sus în jos"
 
 #: ../ui/main.glade:616
 msgid "_Vertical"
@@ -3511,7 +3511,7 @@ msgstr "_Vertical"
 
 #: ../ui/main.glade:1577
 msgid "_Vertical Space"
-msgstr "Spațiu _vertical"
+msgstr "_Spațiu vertical"
 
 #: ../ui/main.glade:519
 msgid "_View"
