@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-05 12:04\n"
+"PO-Revision-Date: 2022-06-05 14:03\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -3489,7 +3489,7 @@ msgstr "_Pagina Precedente"
 
 #: ../ui/main.glade:645
 msgid "_Right to Left"
-msgstr "Da destra a sinistra"
+msgstr "_Da destra a sinistra"
 
 #: ../ui/main.glade:1447
 msgid "_Shape Recognizer"
