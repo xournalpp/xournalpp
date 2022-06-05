@@ -23,8 +23,8 @@
 #include "enums/ActionGroup.enum.h"  // for GROUP_NOGROUP, ActionGroup
 #include "enums/ActionType.enum.h"   // for ActionType
 #include "gui/IconNameHelper.h"      // for IconNameHelper
-#include "util/Color.h"              // for Color
 #include "gui/toolbarMenubar/model/ColorPalette.h"
+#include "util/Color.h"  // for Color
 
 class AbstractToolItem;
 class FontButton;

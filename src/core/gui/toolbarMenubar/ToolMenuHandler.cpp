@@ -689,5 +689,7 @@ void ToolMenuHandler::setAudioPlaybackPaused(bool paused) {
 auto ToolMenuHandler::iconName(const char* icon) -> std::string { return iconNameHelper.iconName(icon); }
 
 void ToolMenuHandler::updateColorToolItems(const Palette& palette) {
-    for (ColorToolItem* it: this->toolbarColorItems) { it->updateColor(palette); }
+    for (ColorToolItem* it: this->toolbarColorItems) {
+        it->updateColor(palette);
+    }
 }

@@ -20,11 +20,11 @@
 
 #include "audio/DeviceInfo.h"                    // for DeviceInfo
 #include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
-#include "filesystem.h"                          // for path
 #include "gui/GladeGui.h"                        // for GladeGui
 
 #include "LatexSettingsPanel.h"  // for LatexSettingsPanel
 #include "SettingsDialogPaletteTab.h"
+#include "filesystem.h"  // for path
 
 class ButtonConfigGui;
 class Control;

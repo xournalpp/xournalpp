@@ -354,7 +354,9 @@ auto Util::listFilesSorted(fs::path directory) -> std::vector<fs::path> {
         return filePaths;
     }
 
-    for (const fs::directory_entry& p: fs::directory_iterator(directory)) { filePaths.push_back(p.path()); }
+    for (const fs::directory_entry& p: fs::directory_iterator(directory)) {
+        filePaths.push_back(p.path());
+    }
     std::sort(filePaths.begin(), filePaths.end());
     return filePaths;
 }

@@ -23,7 +23,7 @@ std::string colorize(const std::string& text, const std::string& color) {
     return std::string{"<span foreground=\""} + color + std::string{"\">"} + text + std::string{"</span>"};
 }
 
-std::string pathLink(const fs::path& path) { return FS(_F("<a href=\"file://{1}\">{1}</a>") % path.c_str()); }
+std::string pathLink(const fs::path& path) { return FS(_F("<a href=\"file://{1}\">{1}</a>") % path.u8string()); }
 
 void setGObjectPalettePath(GObject* gObject, const fs::path& path) {
     g_object_set_data(gObject, G_OBJECT_PALETTE_PATH, (gpointer)&path);
@@ -39,12 +39,13 @@ fs::path getGObjectPalettePath(GObject* gObject) {
 // Public Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SettingsDialogPaletteTab::SettingsDialogPaletteTab(GtkLabel* colorPaletteExplainLabel, GtkListBox* paletteListBox):
+SettingsDialogPaletteTab::SettingsDialogPaletteTab(GtkLabel* colorPaletteExplainLabel, GtkListBox* paletteListBox,
+                                                   const std::vector<fs::path>& paletteDirectories):
         currentlySetPalettePath{currentlySetPalettePath},
         colorPaletteExplainLabel{colorPaletteExplainLabel},
         paletteListBox{paletteListBox} {
     renderColorPaletteExplainLabel();
-    setAllPaletteFilePaths();
+    setAllPaletteFilePaths(paletteDirectories);
 }
 
 void SettingsDialogPaletteTab::renderPaletteTab(const fs::path& currentlySetPalettePath) {
@@ -74,7 +75,9 @@ GtkWidget* SettingsDialogPaletteTab::renderPaletteListBoxRow(GtkListBox* lb, con
     try {
         palette.load();
         listBoxRow = newPaletteListBoxRow(palette);
-    } catch (const std::exception& e) { listBoxRow = newErrorListBoxRow(p, e.what()); }
+    } catch (const std::exception& e) {
+        listBoxRow = newErrorListBoxRow(p, e.what());
+    }
     setGObjectPalettePath(G_OBJECT(listBoxRow), p);
 
     gtk_list_box_prepend(lb, listBoxRow);
@@ -101,10 +104,16 @@ void SettingsDialogPaletteTab::renderNoPaletteFoundDisclaimer(GtkListBox* lb) co
     gtk_list_box_prepend(lb, label);
 }
 
-void SettingsDialogPaletteTab::setAllPaletteFilePaths() {
-    std::vector<fs::path> xPaletteFilePaths = Util::listFilesSorted(Util::getPalettePath());
-    std::vector<fs::path> userPaletteFilePaths = Util::listFilesSorted(Util::getConfigFile("palettes"));
-    allPaletteFilePaths = concatenated(xPaletteFilePaths, userPaletteFilePaths);
+// use list of fs::path as input
+void SettingsDialogPaletteTab::setAllPaletteFilePaths(const std::vector<fs::path>& paletteDirectories) {
+    for (const fs::path& paletteDirectory: paletteDirectories) {
+        std::vector<fs::path> const files = Util::listFilesSorted(paletteDirectory);
+        for (const fs::path& paletteFile: files) {
+            if (paletteFile.extension() == ".gpl") {
+                allPaletteFilePaths.push_back(paletteFile);
+            }
+        }
+    }
 }
 
 auto SettingsDialogPaletteTab::getSelectedPalette() -> fs::path {
@@ -122,7 +131,7 @@ auto SettingsDialogPaletteTab::newErrorListBoxRow(const fs::path& palettePath, c
     gtk_container_add(GTK_CONTAINER(listBoxRow), rowContent);
 
     std::string formattedError = colorize("Error: " + error, "red");
-    GtkWidget* text = newPaletteTextBox(formattedError, palettePath);
+    GtkWidget* text = newPaletteTextBox(formattedError, palettePath.u8string());
     gtk_box_pack_start(GTK_BOX(rowContent), text, false, false, 0);
 
     gtk_widget_show(rowContent);
@@ -139,9 +148,9 @@ auto SettingsDialogPaletteTab::newPaletteListBoxRow(Palette& palette) -> GtkWidg
     std::string paletteName = palette.getHeader(std::string{"Name"});
     GtkWidget* text = nullptr;
     if (paletteName.empty())
-        text = newPaletteTextBox(std::string{"<i>Palette has no Name</i>"}, palette.getFilePath());
+        text = newPaletteTextBox(std::string{"<i>Palette has no Name</i>"}, palette.getFilePath().u8string());
     else
-        text = newPaletteTextBox(paletteName, palette.getFilePath());
+        text = newPaletteTextBox(paletteName, palette.getFilePath().u8string());
     gtk_box_pack_start(GTK_BOX(rowContent), text, false, false, 0);
 
     GtkWidget* colorIcons = newPaletteColorIconsBox(palette);

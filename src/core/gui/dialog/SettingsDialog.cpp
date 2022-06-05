@@ -8,26 +8,26 @@
 #include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
 #include <glib-object.h>  // for G_CALLBACK, g_signal...
 
-#include "control/AudioController.h"                // for AudioController
-#include "control/Control.h"                        // for Control
-#include "control/DeviceListHelper.h"               // for getDeviceList, Input...
-#include "control/settings/Settings.h"              // for Settings, SElement
-#include "control/settings/SettingsEnums.h"         // for STYLUS_CURSOR_ARROW
-#include "control/tools/StrokeStabilizerEnum.h"     // for AveragingMethod, Pre...
-#include "gui/MainWindow.h"                         // for MainWindow
-#include "gui/toolbarMenubar/icon/ColorSelectImage.h"
-#include "gui/XournalView.h"                        // for XournalView
-#include "gui/dialog/DeviceClassConfigGui.h"        // for DeviceClassConfigGui
-#include "gui/dialog/LanguageConfigGui.h"           // for LanguageConfigGui
-#include "gui/dialog/LatexSettingsPanel.h"          // for LatexSettingsPanel
-#include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette methods
-#include "gui/toolbarMenubar/ToolMenuHandler.h"     // for ToolMenuHandler methods
-#include "gui/widgets/ZoomCallib.h"                 // for zoomcallib_new, zoom...
-#include "util/Color.h"                             // for GdkRGBA_to_argb, rgb...
-#include "util/PathUtil.h"                          // for fromGFile, toGFilename
-#include "util/StringUtils.h"                       // for StringUtils
-#include "util/Util.h"                              // for systemWithMessage
-#include "util/i18n.h"                              // for _
+#include "control/AudioController.h"             // for AudioController
+#include "control/Control.h"                     // for Control
+#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
+#include "control/settings/Settings.h"           // for Settings, SElement
+#include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
+#include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
+#include "gui/MainWindow.h"                      // for MainWindow
+#include "gui/XournalView.h"
+#include "gui/dialog/DeviceClassConfigGui.h"           // for DeviceClassConfigGui
+#include "gui/dialog/LanguageConfigGui.h"              // for LanguageConfigGui
+#include "gui/dialog/LatexSettingsPanel.h"             // for LatexSettingsPanel
+#include "gui/toolbarMenubar/ToolMenuHandler.h"        // for ToolMenuHandler methods
+#include "gui/toolbarMenubar/icon/ColorSelectImage.h"  // for XournalView
+#include "gui/toolbarMenubar/model/ColorPalette.h"     // for Palette methods
+#include "gui/widgets/ZoomCallib.h"                    // for zoomcallib_new, zoom...
+#include "util/Color.h"                                // for GdkRGBA_to_argb, rgb...
+#include "util/PathUtil.h"                             // for fromGFile, toGFilename
+#include "util/StringUtils.h"                          // for StringUtils
+#include "util/Util.h"                                 // for systemWithMessage
+#include "util/i18n.h"                                 // for _
 
 #include "ButtonConfigGui.h"  // for ButtonConfigGui
 #include "filesystem.h"       // for is_directory
@@ -43,7 +43,8 @@ SettingsDialog::SettingsDialog(GladeSearchpath* gladeSearchPath, Settings* setti
         control(control),
         callib(zoomcallib_new()),
         latexPanel(gladeSearchPath),
-        paletteTab(GTK_LABEL(get("colorPaletteExplainLabel")), GTK_LIST_BOX(get("paletteListBox"))) {
+        paletteTab(GTK_LABEL(get("colorPaletteExplainLabel")), GTK_LIST_BOX(get("paletteListBox")),
+                   std::vector<fs::path>{Util::getPalettePath(), Util::getConfigFile("palettes")}) {
     GtkWidget* vbox = get("zoomVBox");
     g_return_if_fail(vbox != nullptr);
 
@@ -662,47 +663,6 @@ void SettingsDialog::load() {
     this->latexPanel.load(settings->latexSettings);
 }
 
-auto SettingsDialog::updateHideString(const string& hidden, bool hideMenubar, bool hideSidebar) -> string {
-    string newHidden;
-
-    for (const string& element: StringUtils::split(hidden, ',')) {
-        if (element == "mainMenubar") {
-            if (hideMenubar) {
-                hideMenubar = false;
-            } else {
-                continue;
-            }
-        } else if (element == "sidebarContents") {
-            if (hideSidebar) {
-                hideSidebar = false;
-            } else {
-                continue;
-            }
-        }
-
-        if (!newHidden.empty()) {
-            newHidden += ",";
-        }
-        newHidden += element;
-    }
-
-    if (hideMenubar) {
-        if (!newHidden.empty()) {
-            newHidden += ",";
-        }
-        newHidden += "mainMenubar";
-    }
-
-    if (hideSidebar) {
-        if (!newHidden.empty()) {
-            newHidden += ",";
-        }
-        newHidden += "sidebarContents";
-    }
-
-    return newHidden;
-}
-
 void SettingsDialog::save() {
     settings->transactionStart();
 
@@ -1014,7 +974,7 @@ void SettingsDialog::save() {
 
     this->control->getWindow()->setGtkTouchscreenScrollingForDeviceMapping();
     this->control->getWindow()->getToolMenuHandler()->updateColorToolItems(settings->getColorPalette());
-    this->control->getWindow()->reloadToolbars();
+    this->control->getWindow()->loadToolbar(this->control->getWindow()->getSelectedToolbar());
 
     this->control->initButtonTool();
     this->control->getWindow()->getXournal()->onSettingsChanged();

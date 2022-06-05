@@ -10,8 +10,8 @@
 #include "gui/toolbarMenubar/model/ColorPalette.h"
 class SettingsDialogPaletteTab {
 public:
-    SettingsDialogPaletteTab(GtkLabel* colorPaletteExplainLabel,
-                             GtkListBox* paletteListBox);
+    SettingsDialogPaletteTab(GtkLabel* colorPaletteExplainLabel, GtkListBox* paletteListBox,
+                             const std::vector<fs::path>& paletteDirectories);
     void renderPaletteTab(const fs::path& currentlySetPalettePath);
     fs::path getSelectedPalette();
 
@@ -21,12 +21,12 @@ private:
     GtkLabel* colorPaletteExplainLabel;
     GtkListBox* paletteListBox;
 
-    static GtkWidget* newErrorListBoxRow(const fs::path& palettePath, const std::string& error) ;
-    static GtkWidget* newPaletteTextBox(const std::string& mainContent, const std::string& additionalInfo) ;
-    static GtkWidget* newPaletteColorIconsBox(const Palette& palette) ;
-    static GtkWidget* newPaletteListBoxRow(Palette& palette) ;
-    void setAllPaletteFilePaths();
+    static GtkWidget* newErrorListBoxRow(const fs::path& palettePath, const std::string& error);
+    static GtkWidget* newPaletteTextBox(const std::string& mainContent, const std::string& additionalInfo);
+    static GtkWidget* newPaletteColorIconsBox(const Palette& palette);
+    static GtkWidget* newPaletteListBoxRow(Palette& palette);
     void renderNoPaletteFoundDisclaimer(GtkListBox* lb) const;
     void renderColorPaletteExplainLabel() const;
     GtkWidget* renderPaletteListBoxRow(GtkListBox* lb, const fs::path& p) const;
+    void setAllPaletteFilePaths(const std::vector<fs::path>& paletteDirectories);
 };
