@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-03 17:27\n"
+"PO-Revision-Date: 2022-06-05 11:08\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1664,7 +1664,7 @@ msgstr "LaTeX"
 
 #: ../src/core/control/DeviceListHelper.cpp:92
 msgid "mouse"
-msgstr "mouse"
+msgstr "maus"
 
 #: ../src/core/control/DeviceListHelper.cpp:94
 msgid "pen"
@@ -2311,7 +2311,7 @@ msgstr "Metoda de dezactivare"
 
 #: ../ui/settings.glade:4081
 msgid "Display DPI Calibration"
-msgstr "Afișează DPI Calibrare"
+msgstr "Calibrarea DPI a ecranului"
 
 #: ../ui/settings.glade:4755
 msgid "Do not draw for inputs of short time and length unless it comes in short succession. Instead, show floating toolbox."
@@ -2456,7 +2456,7 @@ msgstr "Exportă documentul fără niciun fond (Niciunul) sau numai cu fonduri P
 
 #: ../ui/main.glade:1751 ../ui/main.glade:1956
 msgid "Fi_ll"
-msgstr "Ump_le"
+msgstr "Ump_lere"
 
 #: ../ui/main.glade:1761 ../ui/main.glade:1966
 msgid "Fill opacity"
