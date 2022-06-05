@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-05 11:08\n"
+"PO-Revision-Date: 2022-06-05 12:04\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1570,7 +1570,7 @@ msgstr "Documentul tău nu conține pagina PDF nr. {1}\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolZoomSlider.cpp:131
 msgid "Zoom Slider"
-msgstr "Glisor zoom"
+msgstr "Cursor zoom"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Zoom fit to screen"
@@ -1935,7 +1935,7 @@ msgstr "<i>Modificările au efect numai asupra noilor înregistrări și redări
 
 #: ../ui/settings.glade:1327
 msgid "<i>Define which tools will be selected if you press a mouse button. After you release the button the previously selected tool will be selected.</i>"
-msgstr "<i>Stabilește ce instrument va fi ales dacă apeși un buton al mouse-ului. După ce lași butonul, instrumentul ales anterior va fi selecționat.</i>"
+msgstr "<i>Stabilește ce instrument va fi ales dacă apeși un buton al mausului. După ce lași butonul, instrumentul ales anterior va fi selecționat.</i>"
 
 #: ../ui/settings.glade:2612
 msgid "<i>Disabling GTK's built-in touchscreen scrolling can work around scrolling bugs on some platforms. Consider changing this setting if you experience jumps/sudden changes in scroll position when attempting to scroll with a touchscreen.</i>"
@@ -2726,7 +2726,7 @@ msgstr "Unește evenimentele butoanelor cu cele ale vârfului creionului electro
 
 #: ../ui/settings.glade:1367
 msgid "Middle Mouse Button"
-msgstr "Buton mijloc maus"
+msgstr "Butonul din mijloc al mausului"
 
 #: ../ui/settings.glade:1577
 msgid "Minimum Pressure:"
@@ -2734,15 +2734,15 @@ msgstr "Apăsarea minimă:"
 
 #: ../ui/settings.glade:1454 ../ui/settingsDeviceClassConfig.glade:42
 msgid "Mouse"
-msgstr "Mouse"
+msgstr "Maus"
 
 #: ../ui/settings.glade:1423
 msgid "Mouse Buttons"
-msgstr "Butoanele mouse-ului"
+msgstr "Butoanele Mausului"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
-msgstr "Mouse+Tastatură împreună"
+msgstr "Maus+Tastatură împreună"
 
 #: ../ui/main.glade:2825 ../ui/main.glade:2900
 msgid "Move Down"
@@ -2918,7 +2918,7 @@ msgstr "Interval"
 
 #: ../ui/settings.glade:4974
 msgid "Re-render when the page's zoom changes by more than "
-msgstr "Reîncarcă atunci când zoom-ul paginii se schimbă cu mai mult de "
+msgstr "Reîncarcă atunci când zoomul paginii se schimbă cu mai mult de "
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
@@ -2950,7 +2950,7 @@ msgstr "Rezoluție"
 
 #: ../ui/settings.glade:1405
 msgid "Right Mouse Button"
-msgstr "Buton drept maus"
+msgstr "Butonul din dreapta al mausului"
 
 #: ../ui/settings.glade:4601
 msgid "Rotation snapping tolerance"
@@ -3068,7 +3068,7 @@ msgstr "Arată bara verticală de răsfoire în stânga"
 msgid "Slower strokes are assigned a greater pressure than faster strokes, if pressure information is absent.\n\n"
 "<i>This feature may be useful for devices that lack pressure sensitivity. For example, a mouse or touchscreen.</i>"
 msgstr "Dacă nu există informații privind apăsarea, se atribuie o apăsare mai puternică mișcărilor mai lente decât mișcărilor mai rapide.\n\n"
-"<i>Această caracteristică poate fi utilă pentru dispozitivele care nu au sensibilitate la apăsare. De exemplu, un mouse sau un ecran tactil.</i>"
+"<i>Această caracteristică poate fi utilă pentru dispozitivele care nu au sensibilitate la apăsare. De exemplu, un maus sau un ecran tactil.</i>"
 
 #: ../ui/settings.glade:3024
 msgctxt "stylus cursor uses a small dot"
@@ -3097,7 +3097,7 @@ msgstr "Standard"
 
 #: ../ui/settings.glade:2446
 msgid "Start zooming after a distance "
-msgstr "Începe zoom-ul după o anumită distanță "
+msgstr "Începe zoomul după o anumită distanță "
 
 #: ../ui/settings.glade:5293 ../ui/settings.glade:5351
 msgid "Storage Folder"
@@ -3299,7 +3299,7 @@ msgstr "Gesturi pentru zoom"
 
 #: ../ui/settings.glade:3958
 msgid "Zoom Speed"
-msgstr "Viteza de mărire"
+msgstr "Viteza de zoom"
 
 #: ../ui/main.glade:714
 msgid "_1 Column"
