@@ -20,7 +20,6 @@
 class ColorUndoActionEntry;
 class Element;
 class Layer;
-class Redrawable;
 
 class ColorUndoAction: public UndoAction {
 public:

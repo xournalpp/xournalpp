@@ -15,7 +15,6 @@
 
 class Element;
 class Layer;
-class Redrawable;
 
 class InsertUndoAction: public UndoAction {
 public:

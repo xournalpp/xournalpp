@@ -17,7 +17,6 @@
 
 class Element;
 class Layer;
-class Redrawable;
 class XojPage;
 
 class LayerRenameUndoAction: public UndoAction {

@@ -14,7 +14,6 @@
 #include "UndoAction.h"
 
 class Layer;
-class Redrawable;
 class XojPage;
 
 class MoveUndoAction: public UndoAction {
