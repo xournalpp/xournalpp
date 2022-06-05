@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-05 14:03\n"
+"PO-Revision-Date: 2022-06-05 15:05\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2866,7 +2866,7 @@ msgstr "Gestionare Module"
 
 #: ../ui/main.glade:2067
 msgid "Plugin _Manager"
-msgstr "_Gestionare Module"
+msgstr "Gestionare _Module"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
@@ -3243,7 +3243,7 @@ msgstr "Versiune: "
 
 #: ../ui/settings.glade:3814
 msgid "View"
-msgstr "Arată"
+msgstr "Vizualizare"
 
 #: ../ui/about.glade:328
 msgid "Website"
@@ -3515,7 +3515,7 @@ msgstr "_Spațiu vertical"
 
 #: ../ui/main.glade:519
 msgid "_View"
-msgstr "_Arată"
+msgstr "_Vizualizare"
 
 #: ../ui/main.glade:1869
 msgid "_delete strokes"
