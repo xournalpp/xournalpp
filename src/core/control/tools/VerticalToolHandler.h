@@ -82,6 +82,12 @@ private:
      */
     void redrawBuffer();
 
+    /**
+     * @brief Get the bounding rect of the collection of elements we have adopted
+     * @return std::nullopt if no elements have been adopted, otherwise, the bounding rectangle
+     */
+    std::optional<xoj::util::Rectangle<double>> getElementsBoundingRect() const;
+
     GdkWindow* window;
     Redrawable* view;
     PageRef page;

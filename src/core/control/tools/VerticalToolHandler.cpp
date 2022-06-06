@@ -8,6 +8,7 @@
 #include "control/zoom/ZoomControl.h"
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
+#include "util/LoopUtil.h"
 #include "view/DebugShowRepaintBounds.h"
 #include "view/SelectionView.h"
 
@@ -29,7 +30,9 @@ VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, 
 
     this->adoptElements(this->spacingSide);
 
-    view->rerenderPage();
+    if (auto rect = this->getElementsBoundingRect()) {
+        view->rerenderRect(rect->x, rect->y, rect->width, rect->height);
+    }
 }
 
 VerticalToolHandler::~VerticalToolHandler() {
@@ -114,7 +117,7 @@ void VerticalToolHandler::paint(cairo_t* cr) {
                         cairo_image_surface_get_height(this->crBuffer));
         cairo_set_source_rgba(cr, 1.0, 0, 0, 0.3);
         cairo_fill(cr);
-    })
+    });
 }
 
 void VerticalToolHandler::currentPos(double x, double y) {
@@ -127,10 +130,11 @@ void VerticalToolHandler::currentPos(double x, double y) {
     this->endY = ySnapped;
 
     if (this->spacingSide == Side::Below) {
-        this->view->rerenderRect(0, std::min(oldEnd, ySnapped), this->page->getWidth(), this->page->getHeight());
+        const double min = std::min(oldEnd, ySnapped);
+        this->view->repaintRect(0, min, this->page->getWidth(), this->page->getHeight() - min);
     } else {
         g_assert(this->spacingSide == Side::Above);
-        this->view->rerenderRect(0, 0, this->page->getWidth(), std::max(oldEnd, ySnapped));
+        this->view->repaintRect(0, 0, this->page->getWidth(), std::max(oldEnd, ySnapped));
     }
 }
 
@@ -156,9 +160,29 @@ bool VerticalToolHandler::onKeyReleaseEvent(GdkEventKey* event) {
 
 auto VerticalToolHandler::getElements() const -> const std::vector<Element*>& { return this->elements; }
 
-auto VerticalToolHandler::finalize() -> std::unique_ptr<MoveUndoAction> {
-    double dY = this->endY - this->startY;
+auto VerticalToolHandler::getElementsBoundingRect() const -> std::optional<xoj::util::Rectangle<double>> {
+    if (this->elements.empty()) {
+        return std::nullopt;
+    }
+    xoj::util::Rectangle<double> rect;
+    for_first_then_each(
+            this->elements, [&](Element* e) { rect = e->boundingRect(); },
+            [&](Element* e) { rect.unite(e->boundingRect()); });
+    return rect;
+}
 
+auto VerticalToolHandler::finalize() -> std::unique_ptr<MoveUndoAction> {
+    if (this->elements.empty()) {
+        auto [min, max] = std::minmax(this->startY, this->endY);
+        // Erase the blue area indicating the shift
+        this->view->repaintRect(0, min, this->page->getWidth(), max - min);
+        return nullptr;
+    }
+
+    std::optional<xoj::util::Rectangle<double>> rect = this->getElementsBoundingRect();
+    assert(rect);
+
+    const double dY = this->endY - this->startY;
     auto undo =
             std::make_unique<MoveUndoAction>(this->layer, this->page, &this->elements, 0, dY, this->layer, this->page);
 
@@ -167,8 +191,9 @@ auto VerticalToolHandler::finalize() -> std::unique_ptr<MoveUndoAction> {
 
         this->layer->addElement(e);
     }
+    this->elements.clear();
 
-    view->rerenderPage();
+    view->rerenderRect(rect->x, rect->y + dY, rect->width, rect->height);
 
     return undo;
 }
@@ -176,7 +201,6 @@ auto VerticalToolHandler::finalize() -> std::unique_ptr<MoveUndoAction> {
 void VerticalToolHandler::zoomChanged() {
     updateZoom(this->zoomControl->getZoom());
     redrawBuffer();
-    this->view->rerenderPage();
 }
 
 void VerticalToolHandler::updateZoom(const double newZoom) {
