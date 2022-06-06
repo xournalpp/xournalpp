@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-06 20:11\n"
+"PO-Revision-Date: 2022-06-06 21:21\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -149,7 +149,7 @@ msgstr "Trazer para a frente"
 
 #: ../src/core/control/tools/EditSelection.cpp:374
 msgid "Bring to front"
-msgstr "Trazer para o primeiro plano"
+msgstr "Trazer para frente"
 
 #: ../src/core/control/Control.cpp:2106 ../src/core/control/Control.cpp:2568
 #: ../src/core/control/XournalMain.cpp:164
@@ -409,7 +409,7 @@ msgstr "Desenhar Seta"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Desenhar seta dupla"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
@@ -519,7 +519,7 @@ msgstr "Erro ao salvar automaticamente: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:153
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Erro ao exportar o fundo do pdf: não consigo encontrar o número da página do pdf "
 
 #: ../src/util/Util.cpp:74
 msgid "Error {1} executing system command: {2}"
@@ -946,19 +946,19 @@ msgstr "Número da página"
 
 #: ../src/util/PageRange.cpp:96
 msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr ""
+msgstr "PageRange::parse(): o número da página é maior que a contagem máxima."
 
 #: ../src/util/PageRange.cpp:99
 msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "PageRange::parse(): limites de intervalo devem estar em ordem crescente."
 
 #: ../src/util/PageRange.cpp:92
 msgid "PageRange::parse(): invalid page range."
-msgstr ""
+msgstr "PageRange::parse(): intervalo de página inválido."
 
 #: ../src/util/PageRange.cpp:102
 msgid "PageRange::parse(): page numbers start with 1"
-msgstr ""
+msgstr "PageRange::parse(): números de páginas começam com 1"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:404
 msgid "Paired pages"
@@ -1229,7 +1229,7 @@ msgstr "Define a largura da página para exportação em PNG\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:396
 msgid "Setsquare"
-msgstr ""
+msgstr "Esquadro"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
 msgid "Shape Recognizer"
@@ -1490,7 +1490,7 @@ msgstr "Documento não salvo"
 
 #: ../src/core/control/jobs/ImageExport.cpp:85
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "Formato gráfico não suportado: "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
