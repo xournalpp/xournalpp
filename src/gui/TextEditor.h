@@ -119,7 +119,4 @@ private:
     bool mouseDown = false;
     bool cursorOverwrite = false;
     bool cursorVisible = false;
-
-    static constexpr int PADDING_IN_PIXELS = 5;
-    static constexpr int BORDER_WIDTH_IN_PIXELS = 1;
 };

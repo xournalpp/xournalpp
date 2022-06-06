@@ -259,7 +259,7 @@ void XojPageView::startText(double x, double y) {
             this->textEditor->mousePressed(x - text->getX(), y - text->getY());
         }
 
-        this->rerenderElement(text);
+        this->rerenderPage();
     }
 }
 

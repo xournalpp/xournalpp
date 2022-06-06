@@ -168,8 +168,8 @@ void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextE
     }
 
     gtk_text_buffer_end_user_action(te->buffer);
-    te->contentsChanged();
     te->repaintEditor();
+    te->contentsChanged();
 }
 
 void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te) {
@@ -206,8 +206,8 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
         te->preeditString = "";
     }
     te->preeditCursor = cursor_pos;
-    te->contentsChanged();
     te->repaintEditor();
+    te->contentsChanged();
 
 out:
 
@@ -229,8 +229,8 @@ auto TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor
     gtk_im_context_set_surrounding(context, text, -1, pos);
     g_free(text);
 
-    te->contentsChanged();
     te->repaintEditor();
+    te->contentsChanged();
     return true;
 }
 
@@ -246,8 +246,8 @@ auto TextEditor::imDeleteSurroundingCallback(GtkIMContext* context, gint offset,
 
     gtk_text_buffer_delete_interactive(te->buffer, &start, &end, true);
 
-    te->contentsChanged();
     te->repaintEditor();
+    te->contentsChanged();
 
     return true;
 }
@@ -817,7 +817,7 @@ void TextEditor::backspace() {
 
     // Backspace deletes the selection, if one exists
     if (gtk_text_buffer_delete_selection(this->buffer, true, true)) {
-        this->repaintEditor();  // Call before updating content, so this->text->boundingRect contains the old text
+        this->repaintEditor();
         this->contentsChanged();
         return;
     }
@@ -825,7 +825,7 @@ void TextEditor::backspace() {
     gtk_text_buffer_get_iter_at_mark(this->buffer, &insert, gtk_text_buffer_get_insert(this->buffer));
 
     if (gtk_text_buffer_backspace(this->buffer, &insert, true, true)) {
-        this->repaintEditor();  // Call before updating content, so this->text->boundingRect contains the old text
+        this->repaintEditor();
         this->contentsChanged();
     } else {
         gtk_widget_error_bell(this->widget);
@@ -854,7 +854,7 @@ void TextEditor::cutToClipboard() {
     GtkClipboard* clipboard = gtk_widget_get_clipboard(this->widget, GDK_SELECTION_CLIPBOARD);
     gtk_text_buffer_cut_clipboard(this->buffer, clipboard, true);
 
-    this->repaintEditor();  // Call before updating content, so this->text->boundingRect contains the old text
+    this->repaintEditor();
     this->contentsChanged(true);
 }
 
@@ -864,8 +864,8 @@ void TextEditor::pasteFromClipboard() {
 }
 
 void TextEditor::bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te) {
-    te->contentsChanged(true);
     te->repaintEditor();
+    te->contentsChanged(true);
 }
 
 void TextEditor::resetImContext() {
@@ -875,7 +875,11 @@ void TextEditor::resetImContext() {
     }
 }
 
-void TextEditor::repaintCursor() { this->gui->repaintElement(this->text); }
+void TextEditor::repaintCursor() {
+    double x = this->text->getX();
+    double y = this->text->getY();
+    this->gui->repaintArea(x, y, x + this->text->getElementWidth(), y + this->text->getElementHeight());
+}
 
 #define CURSOR_ON_MULTIPLIER 2
 #define CURSOR_OFF_MULTIPLIER 1
@@ -903,10 +907,8 @@ auto TextEditor::blinkCallback(TextEditor* te) -> gint {
 }
 
 void TextEditor::repaintEditor() {
-    const double zoom = this->gui->getXournal()->getZoom();
-    const double padding = (BORDER_WIDTH_IN_PIXELS + PADDING_IN_PIXELS) / zoom;
-    auto rect = this->text->boundingRect();
-    this->gui->repaintRect(rect.x - padding, rect.y - padding, rect.width + 2.0 * padding, rect.height + 2.0 * padding);
+    auto rect = text->boundingRect();
+    this->gui->rerenderRect(rect.x, rect.y, rect.width, rect.height);
 }
 
 /**
@@ -1043,11 +1045,10 @@ void TextEditor::paint(cairo_t* cr, GdkRectangle* repaintRect, double zoom) {
     cairo_restore(cr);
 
     // set the line always the same size on display
-    cairo_set_line_width(cr, BORDER_WIDTH_IN_PIXELS / zoom);
+    cairo_set_line_width(cr, 1 / zoom);
     gdk_cairo_set_source_rgba(cr, &selectionColor);
 
-    cairo_rectangle(cr, x0 - PADDING_IN_PIXELS / zoom, y0 - PADDING_IN_PIXELS / zoom,
-                    width + 2 * PADDING_IN_PIXELS / zoom, height + 2 * PADDING_IN_PIXELS / zoom);
+    cairo_rectangle(cr, x0 - 5 / zoom, y0 - 5 / zoom, width + 10 / zoom, height + 10 / zoom);
     cairo_stroke(cr);
 
     // Notify the IM of the app's window and cursor position.
