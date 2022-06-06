@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 14:53\n"
+"PO-Revision-Date: 2022-06-06 20:11\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -600,11 +600,11 @@ msgstr "Falha ao inicializar PDF Cairo surface"
 
 #: ../src/core/control/tools/ImageHandler.cpp:60
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Falha ao carregar a imagem, não foi possível determinar o tamanho da imagem!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:158
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Falha ao abrir content.xml no arquivo zip: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -3053,7 +3053,7 @@ msgstr "Mostrar barra de ferramentas"
 
 #: ../ui/settings.glade:2772
 msgid "Show filepath in title bar"
-msgstr ""
+msgstr "Mostrar o caminho do arquivo na barra de título"
 
 #: ../ui/settings.glade:3302
 msgid "Show sidebar on the right side"
