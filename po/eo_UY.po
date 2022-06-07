@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-01 12:19\n"
+"POT-Creation-Date: 2022-06-07 18:03+0000\n"
+"PO-Revision-Date: 2022-06-07 19:08\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -510,7 +510,7 @@ msgstr "Eraro legante la larĝon de streko: {1}"
 msgid "Error save image #1"
 msgstr "Eraro konservante bildon 1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:165
+#: ../src/core/control/jobs/ImageExport.cpp:166
 msgid "Error save image #2"
 msgstr "Eraro konservante bildon 2"
 
@@ -518,7 +518,7 @@ msgstr "Eraro konservante bildon 2"
 msgid "Error while autosaving: {1}"
 msgstr "Eraro dum aŭtomata konservado: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:153
+#: ../src/core/control/jobs/ImageExport.cpp:154
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "Eraro dum elportado de la PDF-fono: ne eblas trovi la PDF-paĝnumeron "
 
@@ -594,8 +594,8 @@ msgstr "Elporti sen linioj\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Malsukcesis trovi la programon LaTeX en «PATH»: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:159
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Malsukcesis praŝargi Cairo-surfacon por PDF"
 
@@ -845,8 +845,8 @@ msgstr "Sekva prinotita paĝo"
 msgid "No device"
 msgstr "Neniu aparato"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:153
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:154
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:194
 msgid "No pages to export!"
 msgstr "Neniu elportota paĝo!"
 
@@ -1089,7 +1089,7 @@ msgid "Save File"
 msgstr "Konservi dosieron"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:123
-#: ../src/core/control/jobs/SaveJob.cpp:115
+#: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error: {1}"
 msgstr "Eraro konservante dosieron: {1}"
 
