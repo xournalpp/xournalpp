@@ -8,6 +8,7 @@
 #include "control/zoom/ZoomControl.h"
 #include "model/Layer.h"
 #include "undo/UndoRedoHandler.h"
+#include "view/DebugShowRepaintBounds.h"
 #include "view/SelectionView.h"
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y,
@@ -108,12 +109,12 @@ void VerticalToolHandler::paint(cairo_t* cr) {
     cairo_set_source_surface(cr, this->crBuffer, 0, elemY);
     cairo_paint(cr);
 
-#ifdef DEBUG_SHOW_PAINT_BOUNDS
-    cairo_rectangle(cr, 0, elemY, cairo_image_surface_get_width(this->crBuffer),
-                    cairo_image_surface_get_height(this->crBuffer));
-    cairo_set_source_rgba(cr, 1.0, 0, 0, 0.3);
-    cairo_fill(cr);
-#endif
+    IF_DEBUG_REPAINT({
+        cairo_rectangle(cr, 0, elemY, cairo_image_surface_get_width(this->crBuffer),
+                        cairo_image_surface_get_height(this->crBuffer));
+        cairo_set_source_rgba(cr, 1.0, 0, 0, 0.3);
+        cairo_fill(cr);
+    })
 }
 
 void VerticalToolHandler::currentPos(double x, double y) {

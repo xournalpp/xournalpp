@@ -39,7 +39,6 @@ void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
     DocumentView v;
     Control* control = view->getXournal()->getControl();
     v.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
-    v.limitArea(rect.x, rect.y, rect.width, rect.height);
     v.setPdfCache(view->xournal->getCache());
 
     doc->lock();

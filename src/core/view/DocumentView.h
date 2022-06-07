@@ -48,8 +48,6 @@ public:
     void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground = false,
                   bool hideImageBackground = false, bool hideRulingBackground = false);
 
-    void limitArea(double x, double y, double width, double height);
-
     /**
      * Mark stroke with Audio
      */
@@ -86,13 +84,7 @@ private:
     cairo_t* cr = nullptr;
     PageRef page = nullptr;
     PdfCache* pdfCache = nullptr;
-    double width = 0;
-    double height = 0;
     bool dontRenderEditingStroke = false;
     bool markAudioStroke = false;
 
-    double lX = -1;
-    double lY = -1;
-    double lWidth = -1;
-    double lHeight = -1;
 };
