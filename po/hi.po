@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 14:53\n"
+"POT-Creation-Date: 2022-06-07 18:03+0000\n"
+"PO-Revision-Date: 2022-06-07 19:08\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -506,7 +506,7 @@ msgstr ""
 msgid "Error save image #1"
 msgstr "छवि सहेजने में त्रुटि # \t१"
 
-#: ../src/core/control/jobs/ImageExport.cpp:165
+#: ../src/core/control/jobs/ImageExport.cpp:166
 msgid "Error save image #2"
 msgstr "छवि सहेजने में त्रुटि # २"
 
@@ -514,7 +514,7 @@ msgstr "छवि सहेजने में त्रुटि # २"
 msgid "Error while autosaving: {1}"
 msgstr "स्वत: सहेजते समय त्रुटि"
 
-#: ../src/core/control/jobs/ImageExport.cpp:153
+#: ../src/core/control/jobs/ImageExport.cpp:154
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr ""
 
@@ -580,8 +580,8 @@ msgstr ""
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr ""
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:159
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
 msgstr ""
 
@@ -829,8 +829,8 @@ msgstr "अगला टिप्पणी पृष्ठ"
 msgid "No device"
 msgstr "उपकरण नहीं"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:153
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:154
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:194
 msgid "No pages to export!"
 msgstr "निर्यात करने के लिए कोई पृष्ठ नहीं"
 
@@ -1072,7 +1072,7 @@ msgid "Save File"
 msgstr "फ़ाइल सेव करें"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:123
-#: ../src/core/control/jobs/SaveJob.cpp:115
+#: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error: {1}"
 msgstr "फ़ाइल त्रुटि सहेजें: {1}"
 
