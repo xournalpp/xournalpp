@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-06 21:21\n"
+"POT-Creation-Date: 2022-06-07 18:03+0000\n"
+"PO-Revision-Date: 2022-06-07 19:08\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -509,7 +509,7 @@ msgstr "Erro ao ler a largura de um traço: {1}"
 msgid "Error save image #1"
 msgstr "Erro ao salvar a imagem #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:165
+#: ../src/core/control/jobs/ImageExport.cpp:166
 msgid "Error save image #2"
 msgstr "Erro ao salvar a imagem #2"
 
@@ -517,7 +517,7 @@ msgstr "Erro ao salvar a imagem #2"
 msgid "Error while autosaving: {1}"
 msgstr "Erro ao salvar automaticamente: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:153
+#: ../src/core/control/jobs/ImageExport.cpp:154
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "Erro ao exportar o fundo do pdf: não consigo encontrar o número da página do pdf "
 
@@ -593,8 +593,8 @@ msgstr "Exportar sem configurar\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Falha ao encontrar o programa gerador de LaTeX no PATH: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:159
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Falha ao inicializar PDF Cairo surface"
 
@@ -844,8 +844,8 @@ msgstr "Próxima página anotada"
 msgid "No device"
 msgstr "Nenhum dispositivo"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:153
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:154
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:194
 msgid "No pages to export!"
 msgstr "Sem páginas para exportar!"
 
@@ -1088,7 +1088,7 @@ msgid "Save File"
 msgstr "Salvar Arquivo"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:123
-#: ../src/core/control/jobs/SaveJob.cpp:115
+#: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error: {1}"
 msgstr "Erro ao salvar arquivo: {1}"
 
