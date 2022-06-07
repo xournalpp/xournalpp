@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-06-05 14:03\n"
+"POT-Creation-Date: 2022-06-07 18:03+0000\n"
+"PO-Revision-Date: 2022-06-07 19:08\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -509,7 +509,7 @@ msgstr "Errore nella lettura dello spessore del tratto: {1}"
 msgid "Error save image #1"
 msgstr "Errore nel salvataggio dell'immagine #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:165
+#: ../src/core/control/jobs/ImageExport.cpp:166
 msgid "Error save image #2"
 msgstr "Errore nel salvataggio dell'immagine #2"
 
@@ -517,7 +517,7 @@ msgstr "Errore nel salvataggio dell'immagine #2"
 msgid "Error while autosaving: {1}"
 msgstr "Errore durante il salvataggio automatico: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:153
+#: ../src/core/control/jobs/ImageExport.cpp:154
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "Errore durante l'esportazione dello sfondo PDF: non riesco a trovare il numero della pagina PDF "
 
@@ -593,8 +593,8 @@ msgstr "Esporta senza rigatura\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Impossibile trovare il programma generatore di LaTeX: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:159
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Impossibile inizializzare la superficie Cairo PDF"
 
@@ -844,8 +844,8 @@ msgstr "Prossima pagina annotata"
 msgid "No device"
 msgstr "Nessun dispositivo"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:153
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:154
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:194
 msgid "No pages to export!"
 msgstr "Nessuna pagina da esportare!"
 
@@ -1088,7 +1088,7 @@ msgid "Save File"
 msgstr "Salva File"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:123
-#: ../src/core/control/jobs/SaveJob.cpp:115
+#: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error: {1}"
 msgstr "Errore salvataggio file: {1}"
 
