@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-22 14:04+0000\n"
-"PO-Revision-Date: 2022-05-22 14:53\n"
+"POT-Creation-Date: 2022-06-07 18:03+0000\n"
+"PO-Revision-Date: 2022-06-07 19:08\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -508,7 +508,7 @@ msgstr "Fout met lees van die wydte van 'n penslag: {1}"
 msgid "Error save image #1"
 msgstr "Fout met die stoor van foto #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:165
+#: ../src/core/control/jobs/ImageExport.cpp:166
 msgid "Error save image #2"
 msgstr "Fout met die stoor van foto #2"
 
@@ -516,7 +516,7 @@ msgstr "Fout met die stoor van foto #2"
 msgid "Error while autosaving: {1}"
 msgstr "Fout tydens autosave: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:153
+#: ../src/core/control/jobs/ImageExport.cpp:154
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr ""
 
@@ -592,8 +592,8 @@ msgstr "Voer uit sonder lyne\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Kon nie LaTeX generator program in PATH vind nie: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:158
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:198
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:159
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:199
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Inisialisering van PDF Cairo oppervlak het misluk"
 
@@ -843,8 +843,8 @@ msgstr "Nuwe geannoteerde bladsy"
 msgid "No device"
 msgstr "Geen toestel nie"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:153
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:193
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:154
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:194
 msgid "No pages to export!"
 msgstr "Geen bladsye om uit te voer nie!"
 
@@ -1087,7 +1087,7 @@ msgid "Save File"
 msgstr "Save lêer"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:123
-#: ../src/core/control/jobs/SaveJob.cpp:115
+#: ../src/core/control/jobs/SaveJob.cpp:117
 msgid "Save file error: {1}"
 msgstr "Save lêer fout: {1}"
 
