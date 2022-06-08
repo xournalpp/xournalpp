@@ -25,8 +25,8 @@ public:
     virtual ~PageListener();
 
 public:
-    void registerListener(std::shared_ptr<PageHandler> const& handler);
-    void unregisterListener();
+    void registerToHandler(std::shared_ptr<PageHandler> const& handler);
+    void unregisterFromHandler();
 
     virtual void rectChanged(xoj::util::Rectangle<double>& rect) {}
     virtual void rangeChanged(Range& range) {}

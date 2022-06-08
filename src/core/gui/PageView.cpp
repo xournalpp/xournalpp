@@ -62,12 +62,11 @@ XojPageView::XojPageView(XournalView* xournal, const PageRef& page):
         eraser(new EraseHandler(xournal->getControl()->getUndoRedoHandler(), xournal->getControl()->getDocument(),
                                 this->page, xournal->getControl()->getToolHandler(), this)),
         oldtext(nullptr) {
-    this->registerListener(this->page);
+    this->registerToHandler(this->page);
 }
 
 XojPageView::~XojPageView() {
-    // Unregister listener before destroying this handler
-    this->unregisterListener();
+    this->unregisterFromHandler();
 
     this->xournal->getControl()->getScheduler()->removePage(this);
     delete this->inputHandler;
@@ -400,10 +399,6 @@ auto XojPageView::onButtonClickEvent(const PositionInputData& pos) -> bool {
     if (x < 0 || y < 0) {
         return false;
     }
-
-    double zoom = xournal->getZoom();
-    x /= zoom;
-    y /= zoom;
 
     ToolHandler* h = control->getToolHandler();
 
