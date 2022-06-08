@@ -4,14 +4,14 @@
 
 PageListener::PageListener() = default;
 
-PageListener::~PageListener() { unregisterListener(); }
+PageListener::~PageListener() { unregisterFromHandler(); }
 
-void PageListener::registerListener(std::shared_ptr<PageHandler> const& _handler) {
+void PageListener::registerToHandler(std::shared_ptr<PageHandler> const& _handler) {
     this->handler = _handler;
     _handler->addListener(this);
 }
 
-void PageListener::unregisterListener() {
+void PageListener::unregisterFromHandler() {
     if (auto _handler = this->handler.lock(); _handler) {
         _handler->removeListener(this);
         this->handler.reset();

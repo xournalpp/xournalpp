@@ -38,7 +38,7 @@ private:
     void removeListener(PageListener* l);
 
 private:
-    std::list<PageListener*> listener;
+    std::list<PageListener*> listeners;
 
     friend class PageListener;
 };
