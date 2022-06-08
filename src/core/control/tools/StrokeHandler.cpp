@@ -391,7 +391,7 @@ void StrokeHandler::createMask() {
 
     mask.emplace(width, height);
 
-    cairo_surface_set_device_offset(mask->surf, (0.5 * strokeWidth - visibleRect->x) * ratio,
-                                    (0.5 * strokeWidth - visibleRect->y) * ratio);
+    cairo_surface_set_device_offset(mask->surf, std::round((0.5 * strokeWidth - visibleRect->x) * ratio),
+                                    std::round((0.5 * strokeWidth - visibleRect->y) * ratio));
     cairo_surface_set_device_scale(mask->surf, ratio, ratio);
 }
