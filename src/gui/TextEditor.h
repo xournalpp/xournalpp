@@ -107,6 +107,8 @@ private:
     double markPosX = 0;
     double markPosY = 0;
 
+    Rectangle<double> previousBoundingBox;
+
     bool cursorBlink = true;
     int cursorBlinkTime = 0;
     int cursorBlinkTimeout = 0;
@@ -119,4 +121,7 @@ private:
     bool mouseDown = false;
     bool cursorOverwrite = false;
     bool cursorVisible = false;
+
+    static constexpr int PADDING_IN_PIXELS = 5;
+    static constexpr int BORDER_WIDTH_IN_PIXELS = 1;
 };
