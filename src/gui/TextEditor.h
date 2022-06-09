@@ -107,6 +107,12 @@ private:
     double markPosX = 0;
     double markPosY = 0;
 
+    /**
+     * Tracks the bounding box of the editor from the last render.
+     *
+     * Because adding or deleting lines may cause the size of the bounding box to change,
+     * we need to rerender the union of the current and previous bboxes.
+     */
     Rectangle<double> previousBoundingBox;
 
     bool cursorBlink = true;
@@ -122,6 +128,8 @@ private:
     bool cursorOverwrite = false;
     bool cursorVisible = false;
 
+    // Padding between the text logical box and the frame
     static constexpr int PADDING_IN_PIXELS = 5;
+    // Width of the lines making the frame
     static constexpr int BORDER_WIDTH_IN_PIXELS = 1;
 };
