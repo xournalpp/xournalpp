@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-07 18:03+0000\n"
-"PO-Revision-Date: 2022-06-09 10:56\n"
+"PO-Revision-Date: 2022-06-09 11:52\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1015,11 +1015,11 @@ msgstr "Înregistratorul nu a putut fi pornit."
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:380
 #: ../src/core/undo/UndoRedoHandler.cpp:215
 msgid "Redo"
-msgstr "Refacere"
+msgstr "Refă"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:210
 msgid "Redo: "
-msgstr "Refacere: "
+msgstr "Refă: "
 
 #: ../src/core/control/Control.cpp:2105
 msgid "Remove PDF Background"
@@ -1494,7 +1494,7 @@ msgstr "Format grafic neacceptat: "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:483
 msgid "Vertical Space"
-msgstr "Viteza verticală"
+msgstr "Spațiu vertical"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:88
 msgid "Vertical space"
