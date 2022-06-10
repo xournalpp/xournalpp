@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 17:59+0000\n"
-"PO-Revision-Date: 2022-06-09 18:03\n"
+"PO-Revision-Date: 2022-06-10 19:44\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -1823,7 +1823,7 @@ msgstr "%a\t\t<unk> <unk> Nome abbreviato giorno della settimana (es. Thu)\n"
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(richiede riavvio)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2209,7 +2209,7 @@ msgstr "Svuota la cache durante lo scorrimento"
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "Colore"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2594,7 +2594,7 @@ msgstr "Progettisti d'icone"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "Tema icone"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2710,7 +2710,7 @@ msgstr "Carica da file"
 
 #: ../ui/settings.glade:2950
 msgid "Lucide"
-msgstr ""
+msgstr "Lucide"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -3233,7 +3233,7 @@ msgstr "Sottolinea il testo selezionato"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Usa le icone Stock disponibili (richiede riavvio)"
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
