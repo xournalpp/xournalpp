@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 17:59+0000\n"
-"PO-Revision-Date: 2022-06-10 18:41\n"
+"PO-Revision-Date: 2022-06-10 19:44\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1823,7 +1823,7 @@ msgstr "%a\t\tNumele abreviat al zilei din săptămână (de exemplu „mie”)\
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr "(necesită repornire)"
+msgstr "(trebuie repornit programul)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2014,7 +2014,7 @@ msgstr "<i>Acest nume va fi propus la salvarea unui nou document.</i>"
 
 #: ../ui/settings.glade:4047
 msgid "<i>To make sure on 100% zoom the size of elements is natural. (requires restart)</i>"
-msgstr "<i>Pentru a garanta că mărimea elementelor este naturală la un zoom de 100%. (necesită repornire)</i>"
+msgstr "<i>Pentru a garanta că mărimea elementelor este naturală la un zoom de 100%. (trebuie repornit programul)</i>"
 
 #: ../ui/settings.glade:2759
 msgid "<i>Toggle visibility of menubar with F10</i>"
@@ -2203,7 +2203,7 @@ msgstr "Șterge memoria cache în timpul răsfoirii"
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "Culoare"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2255,7 +2255,7 @@ msgstr "Comenzi personalizate (pentru metoda „Personalizată”)"
 
 #: ../ui/settings.glade:2895
 msgid "Dark Theme (requires restart)"
-msgstr "Aspect întunecat (necesită repornire)"
+msgstr "Aspect întunecat (trebuie repornit programul)"
 
 #: ../ui/settings.glade:237
 msgid "Deadzone"
@@ -2299,7 +2299,7 @@ msgstr "Dezactivare"
 
 #: ../ui/settings.glade:2626
 msgid "Disable GTK's built-in inertial scroll functionality (requires restart)."
-msgstr "Dezactivează caracteristica de răsfoire inerțială integrată în GTK (necesită repornire)."
+msgstr "Dezactivează caracteristica de răsfoire inerțială integrată în GTK (trebuie repornit programul)."
 
 #: ../ui/settingsButtonConfig.glade:50
 msgid "Disable drawing for this device"
@@ -2431,7 +2431,7 @@ msgstr "Activează desenarea prin atingere"
 
 #: ../ui/settings.glade:2421
 msgid "Enable zoom gestures (requires restart)"
-msgstr "Activează gesturile pentru zoom (necesită repornire)"
+msgstr "Activează gesturile pentru zoom (trebuie repornit programul)"
 
 #: ../ui/texdialog.glade:72
 msgid "Enter / edit LaTeX Text"
@@ -2588,7 +2588,7 @@ msgstr "Creatori de simboluri"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "Aspectul simbolurilor"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2704,7 +2704,7 @@ msgstr "Încarcă un fișier"
 
 #: ../ui/settings.glade:2950
 msgid "Lucide"
-msgstr ""
+msgstr "Lucide"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -3227,7 +3227,7 @@ msgstr "Subliniază textul ales"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr "Folosește simbolurile Stock disponibile (necesită repornire)"
+msgstr "Folosește simbolurile Stock disponibile (trebuie repornit programul)"
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
