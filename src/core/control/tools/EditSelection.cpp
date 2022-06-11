@@ -365,13 +365,13 @@ void EditSelection::fillUndoItem(DeleteUndoAction* undo) { this->contents->fillU
 */
 std::unique_ptr<UndoAction> EditSelection::reflectSelection(bool x_axis) 
 	{
-    PageRef page = this->view->getPage();
-    Layer* layer = page->getSelectedLayer();
-    this->rotation = snappingHandler.snapAngle(this->rotation, false);
-    this->sourcePage = page;
-    this->sourceLayer = layer;
-	this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->aspectRatio, layer, page,
-                                  this->view, this->undo, this->mouseDownType);
+//    PageRef page = this->view->getPage();
+//    Layer* layer = page->getSelectedLayer();
+//    this->rotation = snappingHandler.snapAngle(this->rotation, false);
+//    this->sourcePage = page;
+//    this->sourceLayer = layer;
+//	this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->aspectRatio, layer, page,
+//                                  this->view, this->undo, this->mouseDownType);
 	return this->contents->reflectSelection(this->getRect(), x_axis); 
 	}
 
