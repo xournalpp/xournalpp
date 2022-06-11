@@ -47,4 +47,7 @@ void ReflectUndoAction::applyReflection(double x0, double y0, bool x_axis) {
     this->page->fireRangeChanged(r);
 }
 
-auto ReflectUndoAction::getText() -> std::string { return _("Reflection"); }
+auto ReflectUndoAction::getText() -> std::string {  
+	if(x_axis ) return _("Reflection About X axis");
+	else return _("Reflection About Y axis");
+}
