@@ -530,8 +530,8 @@ void ToolMenuHandler::initToolItems() {
     addCustomItemTgl("HAND", ACTION_TOOL_HAND, GROUP_TOOL, true, "hand", _("Hand"));
     addCustomItemTgl("SETSQUARE", ACTION_SETSQUARE, GROUP_GEOMETRY_TOOL, false, "setsquare", _("Setsquare"));
     addCustomItemTgl("COMPASS", ACTION_COMPASS, GROUP_GEOMETRY_TOOL, false, "compass", _("Compass"));
-    addCustomItem("ACTION_X_REFLECTION", ACTION_X_REFLECTION, "x-reflect", _("x-reflection"));
-    addCustomItem("ACTION_Y_REFLECTION", ACTION_Y_REFLECTION, "y-reflect", _("y-reflection"));
+    addCustomItem("ACTION_X_REFLECTION", ACTION_X_REFLECTION, "x-reflect", _("Reflect About X-Axis"));
+    addCustomItem("ACTION_Y_REFLECTION", ACTION_Y_REFLECTION, "y-reflect", _("Reflect About Y-Axis"));
 
 
     fontButton = new FontButton(listener, gui, "SELECT_FONT", ACTION_FONT_BUTTON_CHANGED, _("Select Font"));

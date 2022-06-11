@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -40,10 +40,10 @@
      id="namedview56"
      showgrid="false"
      inkscape:zoom="10.727273"
-     inkscape:cx="11.09322"
+     inkscape:cx="5.7735814"
      inkscape:cy="11"
-     inkscape:window-x="2756"
-     inkscape:window-y="348"
+     inkscape:window-x="147"
+     inkscape:window-y="135"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg54" />
   <defs
@@ -114,23 +114,50 @@
          style="stop-color:#9d68d7;stop-opacity:1"
          id="stop29" />
     </linearGradient>
+    <marker
+       inkscape:stockid="Arrow2Mstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Mstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path864"
+         style="fill:#000000;fill-opacity:0.94117647;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:0.94117647"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(0.6)" />
+    </marker>
   </defs>
   <g
-     id="g1002"
-     transform="rotate(-90,2.9105,2.8398677)">
+     id="g843"
+     transform="translate(0,1.8237454)">
     <rect
-       y="3.1078219"
-       x="0.76462287"
+       transform="rotate(-90)"
+       y="3.1784542"
+       x="-3.2326317"
        height="2.0225508"
        width="4.2917542"
        id="rect923"
        style="fill:#b0a299;fill-opacity:1;stroke:#c6262e;stroke-width:0.26459092;stroke-opacity:1" />
     <rect
+       transform="rotate(-90)"
        style="fill:none;fill-opacity:1;stroke:#c6262e;stroke-width:0.26459092;stroke-opacity:1"
        id="rect979"
        width="4.2917542"
        height="2.0225508"
-       x="0.76462287"
-       y="0.54936272" />
+       x="-3.2326317"
+       y="0.619995" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path834"
+       d="M 2.9105,-1.8084461 V 3.9819553"
+       style="fill:none;stroke:#c6262e;stroke-width:0.10583635;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.13229544;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.94117647;marker-start:url(#Arrow2Mstart)"
+     d="m 1.6875501,2.9092288 h 2.645909"
+     id="path838"
+     inkscape:connector-curvature="0" />
 </svg>
