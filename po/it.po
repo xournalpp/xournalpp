@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 17:59+0000\n"
-"PO-Revision-Date: 2022-06-11 21:49\n"
+"PO-Revision-Date: 2022-06-11 22:59\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -421,7 +421,7 @@ msgstr "Disegna Ellisse"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:476
 msgid "Draw Line"
-msgstr "Disegna Linea"
+msgstr "Disegna linea retta"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:125
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:31
@@ -1889,7 +1889,7 @@ msgstr "<b>Colore</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:86
 msgid "<b>Default Tools</b>"
-msgstr "<b>Strumenti di Default</b>"
+msgstr "<b>Strumenti predefiniti</b>"
 
 #: ../ui/settings.glade:5238
 msgid "<b>Default</b>"
@@ -1990,7 +1990,7 @@ msgstr "<i>Seleziona la lingua (richiede riavvio)</i>"
 
 #: ../ui/settings.glade:5184
 msgid "<i>Select the tool and Settings if you press the Default Button.</i>"
-msgstr "Seleziona lo strumento e relative Impostazioni se premi il Pulsante Default"
+msgstr "<i>Selezionare lo strumento e le impostazioni se si preme il pulsante Predefinito.</i>"
 
 #: ../ui/settings.glade:1554
 msgid "<i>Some devices report unexpectedly small or large pressures. This can be fixed by setting a minimum pressure or scaling the pressure reported by the device.</i>"
@@ -1998,9 +1998,7 @@ msgstr "<i>Alcuni dispositivi segnalano pressioni inaspettatamente piccole o gra
 
 #: ../ui/settings.glade:2237
 msgid "<i>Specify commands that are called once Hand Recognition triggers. The commands will be executed in the UI Thread, make sure they are not blocking!</i>"
-msgstr "<i>Specifica i comandi che verranno eseguiti quando la mano viene riconosciuta. \n"
-"I comandi saranno eseguiti nel Thread UI, assicurati\n"
-"che non blocchino nulla!</i>"
+msgstr "<i>Specificare i comandi che verranno eseguiti quando si attiva il riconoscimento del palmo. I comandi verranno eseguiti nell'interfaccia grafica, assicurarsi che non siano bloccati!</i>"
 
 #: ../ui/settings.glade:5440
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
@@ -2321,7 +2319,7 @@ msgstr "Disabilitato"
 
 #: ../ui/settings.glade:2132
 msgid "Disabling Method"
-msgstr "Disattiva Metodo"
+msgstr "Metodo di disabilitazione"
 
 #: ../ui/settings.glade:4139
 msgid "Display DPI Calibration"
@@ -2690,7 +2688,7 @@ msgstr "Layout"
 
 #: ../ui/settings.glade:3398
 msgid "Left / Right-Handed"
-msgstr "<b>Destro / Mancino</b>"
+msgstr "Mancino / Destro"
 
 #: ../ui/about.glade:421
 msgid "License"
@@ -3135,7 +3133,7 @@ msgstr "Penna"
 
 #: ../ui/settings.glade:1939
 msgid "Stylus Buttons"
-msgstr "Pulsante del Mouse"
+msgstr "Pulsanti della penna"
 
 #: ../ui/settings.glade:4889
 msgid "Successive (ms)"
