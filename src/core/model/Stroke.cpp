@@ -349,7 +349,7 @@ void Stroke::axisReflect(double x0, double y0, bool x_axis){
     for (auto&& p: points) { 
 		cairo_matrix_transform_point(&reflection, &p.x, &p.y); 
 	}
-    this->sizeCalculated = true;
+    this->sizeCalculated = false;
 
 }
 
