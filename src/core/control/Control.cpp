@@ -1839,6 +1839,9 @@ void Control::toolChanged() {
         toolColorChanged();
     }
 
+    if (toolHandler->getToolType() == TOOL_PEN)
+        toolLineStyleChanged();
+
     ActionType rulerAction = ACTION_NOT_SELECTED;
     if (toolHandler->getDrawingType() == DRAWING_TYPE_STROKE_RECOGNIZER) {
         rulerAction = ACTION_SHAPE_RECOGNIZER;
