@@ -1976,6 +1976,11 @@ void Control::toolFillChanged() {
 }
 
 void Control::toolLineStyleChanged() {
+    if (toolHandler->getLineStyle().getClearLineStyle()) {
+        fireActionSelected(GROUP_LINE_STYLE, ACTION_NONE);
+        return;
+    }
+
     const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
     string style = StrokeStyle::formatStyle(lineStyle);
 
