@@ -536,6 +536,10 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
         t->setSize(TOOL_SIZE_NONE);
         t->setColor(Color(-1));
         t->setFill(false);
+
+        LineStyle newStyle = t->getLineStyle();
+        newStyle.setClearLineStyle(!setLineStyle);
+        t->setLineStyle(newStyle);
     }
 
     if (this->activeTool->type == TOOL_SELECT_RECT || this->activeTool->type == TOOL_SELECT_REGION ||
@@ -543,6 +547,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
         this->stateChangeListener->toolColorChanged();
         this->stateChangeListener->toolSizeChanged();
         this->stateChangeListener->toolFillChanged();
+        this->stateChangeListener->toolLineStyleChanged();
         this->fireToolChanged();
     }
 }
