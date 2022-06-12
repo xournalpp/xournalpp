@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-09 17:59+0000\n"
-"PO-Revision-Date: 2022-06-09 18:02\n"
+"POT-Creation-Date: 2022-06-12 19:53+0000\n"
+"PO-Revision-Date: 2022-06-12 20:52\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -790,7 +790,7 @@ msgstr "Calque {1}"
 msgid "Layerstack Preview"
 msgstr "Aperçu de la pile de calques"
 
-#: ../src/core/gui/PageView.cpp:778
+#: ../src/core/gui/PageView.cpp:773
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -1431,7 +1431,7 @@ msgstr "Essai de sauvegarde d'urgence du document actuellement ouvert…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Impossible d'ouvrir le fichier de modèle global à {1}. Existe-t-il ?"
 
-#: ../src/core/gui/PageView.cpp:378
+#: ../src/core/gui/PageView.cpp:377
 msgid "Unable to play audio recording {1}"
 msgstr "Impossible de lire l'enregistrement audio {1}"
 
