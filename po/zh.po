@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-09 17:59+0000\n"
-"PO-Revision-Date: 2022-06-12 13:03\n"
+"POT-Creation-Date: 2022-06-12 19:53+0000\n"
+"PO-Revision-Date: 2022-06-12 20:52\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -790,7 +790,7 @@ msgstr "{1}图层"
 msgid "Layerstack Preview"
 msgstr "图层堆叠浏览"
 
-#: ../src/core/gui/PageView.cpp:778
+#: ../src/core/gui/PageView.cpp:773
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -1431,7 +1431,7 @@ msgstr "尝试紧急保存当前打开的文档…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "无法在 {1} 打开全局模板文件，它是否存在？"
 
-#: ../src/core/gui/PageView.cpp:378
+#: ../src/core/gui/PageView.cpp:377
 msgid "Unable to play audio recording {1}"
 msgstr "无法播放音频录音 {1}"
 
