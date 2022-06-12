@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 17:59+0000\n"
-"PO-Revision-Date: 2022-06-09 18:03\n"
+"PO-Revision-Date: 2022-06-12 13:03\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1823,7 +1823,7 @@ msgstr "%a\t\t星期几的缩写 (如周四）\n"
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(需要重启)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2202,7 +2202,7 @@ msgstr "滚动时清除缓存的分页"
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "颜色"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2587,7 +2587,7 @@ msgstr "图标设计者"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "图标主题"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2703,7 +2703,7 @@ msgstr "从文件加载"
 
 #: ../ui/settings.glade:2950
 msgid "Lucide"
-msgstr ""
+msgstr "Lucide"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -3225,7 +3225,7 @@ msgstr "为选中文本添加下划线"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "使用可用的原生图标 (需要重启)"
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
