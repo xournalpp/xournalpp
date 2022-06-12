@@ -90,7 +90,9 @@ XournalView::XournalView(GtkWidget* parent, Control* control, ScrollHandling* sc
 XournalView::~XournalView() {
     g_source_remove(this->cleanupTimeout);
 
-    for (auto&& page: viewPages) { delete page; }
+    for (auto&& page: viewPages) {
+        delete page;
+    }
     viewPages.clear();
 
     delete this->repaintHandler;
@@ -741,7 +743,9 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     clearSelection();
 
-    for (auto&& page: viewPages) { delete page; }
+    for (auto&& page: viewPages) {
+        delete page;
+    }
     viewPages.clear();
 
     this->cache.reset();
@@ -754,7 +758,9 @@ void XournalView::documentChanged(DocumentChangeType type) {
 
     size_t pagecount = doc->getPageCount();
     viewPages.reserve(pagecount);
-    for (size_t i = 0; i < pagecount; i++) { viewPages.push_back(new XojPageView(this, doc->getPage(i))); }
+    for (size_t i = 0; i < pagecount; i++) {
+        viewPages.push_back(new XojPageView(this, doc->getPage(i)));
+    }
 
     doc->unlock();
 
