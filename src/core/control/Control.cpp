@@ -1984,6 +1984,19 @@ void Control::toolLineStyleChanged() {
     const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
     string style = StrokeStyle::formatStyle(lineStyle);
 
+    if (win) {
+        EditSelection* sel = win->getXournal()->getSelection();
+        if (sel) {
+            for (Element* e: sel->getElements()) {
+                if (e->getType() == ELEMENT_STROKE) {
+                    auto* s = dynamic_cast<Stroke*>(e);
+                    style = StrokeStyle::formatStyle(s->getLineStyle());
+                    break;
+                }
+            }
+        }
+    }
+
     if (style == "dash") {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH);
     } else if (style == "dashdot") {
