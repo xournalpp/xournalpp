@@ -1,7 +1,7 @@
 /*
  * Xournal++
  *
- * Undo action for rotate (EditSelection)
+ * Undo action for reflection (EditSelection)
  *
  * @author Xournal++ Team
  * https://github.com/xournalpp/xournalpp
