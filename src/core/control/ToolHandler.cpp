@@ -526,7 +526,7 @@ auto ToolHandler::getToolThickness(ToolType type) -> const double* {
 /**
  * Change the selection tools capabilities, depending on the selected elements
  */
-void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFill) {
+void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFill, bool setLineStyle) {
     // For all selection tools, apply the features
     for (size_t i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++) {
         Tool* t = tools[i].get();

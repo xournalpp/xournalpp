@@ -600,7 +600,7 @@ void XournalView::clearSelection() {
     control->setClipboardHandlerSelection(getSelection());
 
     getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
-    control->getToolHandler()->setSelectionEditTools(false, false, false);
+    control->getToolHandler()->setSelectionEditTools(false, false, false, false);
 }
 
 void XournalView::deleteSelection(EditSelection* sel) {
@@ -631,6 +631,8 @@ void XournalView::setSelection(EditSelection* selection) {
     bool canChangeColor = false;
     bool canChangeFill = false;
 
+    bool isLineStyleSameForAll{true};
+
     for (Element* e: selection->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
             canChangeColor = true;
@@ -648,7 +650,8 @@ void XournalView::setSelection(EditSelection* selection) {
         }
     }
 
-    control->getToolHandler()->setSelectionEditTools(canChangeColor, canChangeSize, canChangeFill);
+    control->getToolHandler()->setSelectionEditTools(canChangeColor, canChangeSize, canChangeFill,
+                                                     isLineStyleSameForAll);
 
     repaintSelection();
 }

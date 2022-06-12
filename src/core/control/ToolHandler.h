@@ -319,7 +319,7 @@ public:
     /**
      * Change the selection tools capabilities, depending on the selected elements
      */
-    void setSelectionEditTools(bool setColor, bool setSize, bool setFill);
+    void setSelectionEditTools(bool setColor, bool setSize, bool setFill, bool setLineStyle);
 
     const double* getToolThickness(ToolType type);
 
