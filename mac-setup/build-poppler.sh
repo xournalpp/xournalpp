@@ -1,7 +1,7 @@
 #!/bin/bash -x
 export PATH="$HOME/.new_local/bin:$PATH"
 
-curl -L https://github.com/uclouvain/openjpeg/archive/v2.4.0.tar.gz -o openjpeg.tar.gz
+curl -L https://github.com/uclouvain/openjpeg/archive/v2.5.0.tar.gz -o openjpeg.tar.gz
 tar xf openjpeg.tar.gz
 cd openjpeg-* || exit
 mkdir build
@@ -19,7 +19,7 @@ export LIBRARY_PATH="$HOME/gtk/inst/lib:$LIBRARY_PATH"
 jhbuild build freetype fontconfig
 jhbuild buildone -acf cairo
 
-curl https://poppler.freedesktop.org/poppler-22.03.0.tar.xz -o poppler.tar.xz
+curl https://poppler.freedesktop.org/poppler-22.06.0.tar.xz -o poppler.tar.xz
 tar xf poppler.tar.xz
 cd poppler-* || exit
 mkdir build
