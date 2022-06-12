@@ -311,13 +311,14 @@ auto EditSelectionContents::setColor(Color color) -> UndoAction* {
  * 
  */
 std::unique_ptr<UndoAction> EditSelectionContents::reflectSelection(const xoj::util::Rectangle<double>& bounds, bool x_axis) {
-	auto undo = std::make_unique<ReflectUndoAction>(
-                this->sourcePage, &this->selected, lastSnappedBounds.x + lastSnappedBounds.width / 2,
-                lastSnappedBounds.y + lastSnappedBounds.height / 2, x_axis);
 	bool found = false;
     double mx = bounds.x + bounds.width / 2;
     double my = bounds.y + bounds.height / 2;
-	
+	//TODO: if the selection is moved before applying the axis reflection then the document coordinates
+	// of the elements inside the selection are not updated when we reach this point 
+	//(only the coordinates of the bounds of the selection rectangle
+	// are updated). Therefore if we move a selection and then attempt to perform a reflection (keeping the selection)
+	// an unexpected behaviour happens.
 	for (Element* e: this->selected) {
         if (e->getType() == ELEMENT_STROKE) {
             e->axisReflect(mx, my, x_axis);
@@ -326,9 +327,11 @@ std::unique_ptr<UndoAction> EditSelectionContents::reflectSelection(const xoj::u
     }
 	
 	if (found) {
+		auto undo = std::make_unique<ReflectUndoAction>(
+			this->sourcePage, &this->selected, lastSnappedBounds.x + lastSnappedBounds.width / 2,
+			lastSnappedBounds.y + lastSnappedBounds.height / 2, x_axis);
         this->deleteViewBuffer();
         this->sourceView->getXournal()->repaintSelection();
-
         return undo;
     }
 
