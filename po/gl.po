@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-09 17:59+0000\n"
-"PO-Revision-Date: 2022-06-09 18:03\n"
+"POT-Creation-Date: 2022-06-12 19:53+0000\n"
+"PO-Revision-Date: 2022-06-12 20:52\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -787,7 +787,7 @@ msgstr "Capa {1}"
 msgid "Layerstack Preview"
 msgstr "Visualización da capa"
 
-#: ../src/core/gui/PageView.cpp:778
+#: ../src/core/gui/PageView.cpp:773
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:88
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:19
 msgid "Loading..."
@@ -1426,7 +1426,7 @@ msgstr "Tentando un gardado de emerxencia do actualmente aberto documento…"
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Non se puido abrir o ficheiro modelo global en {1}. Existe?"
 
-#: ../src/core/gui/PageView.cpp:378
+#: ../src/core/gui/PageView.cpp:377
 msgid "Unable to play audio recording {1}"
 msgstr "Non se puido reproducir a gravación de son {1}"
 
