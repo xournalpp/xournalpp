@@ -65,7 +65,7 @@ stages:
           - template: steps/build_linux.yml
             parameters:
               build_type: 'RelWithDebInfo'
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=/usr -DCPACK_GENERATOR="TGZ;DEB"'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_GTEST=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=/usr -DCPACK_GENERATOR="TGZ;DEB" -DUSE_GTK_SOURCEVIEW=OFF'
               cmake_commands: '--target package'
               gcc_version: '10'
           - task: PublishPipelineArtifact@1
