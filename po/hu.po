@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-12 19:53+0000\n"
-"PO-Revision-Date: 2022-06-12 20:52\n"
+"POT-Creation-Date: 2022-06-13 06:56+0000\n"
+"PO-Revision-Date: 2022-06-13 07:47\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -857,7 +857,7 @@ msgid "Normal drawing"
 msgstr "Normál rajz"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
-#: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
+#: ../src/core/plugin/Plugin.cpp:218 ../src/core/plugin/Plugin.cpp:234
 msgid "OK"
 msgstr "Rendben"
 
@@ -1618,11 +1618,11 @@ msgstr "szaggatott/pontozott"
 msgid "dashed"
 msgstr "szaggatott"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default disabled"
 msgstr "alapértelmezetten tiltva"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default enabled"
 msgstr "alapértelmezetten engedélyezve"
 
@@ -2858,6 +2858,10 @@ msgid "Partially based on Xournal\n"
 msgstr "Részben a Xournal alapján\n"
 "írta: Auroux Denis"
 
+#: ../ui/pluginEntry.glade:94
+msgid "Path: "
+msgstr ""
+
 #: ../ui/main.glade:2002
 msgid "Pause"
 msgstr "Szünet"
@@ -3251,7 +3255,7 @@ msgstr "Sebesség alapú Gauss-súlyok"
 msgid "Version"
 msgstr "Verzió"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:131
 msgid "Version: "
 msgstr "Verzió: "
 
@@ -3563,7 +3567,7 @@ msgstr "ki_fehéredés"
 msgid "dpi"
 msgstr "dpi"
 
-#: ../ui/pluginEntry.glade:130
+#: ../ui/pluginEntry.glade:167
 msgid "enabled,"
 msgstr "engedélyezve,"
 
