@@ -7,6 +7,15 @@
  *  See: https://wiki.gnome.org/action/show/Projects/GTK/Inspector
  */
 
+.dangerousMenuItem {
+	background-color: red;
+	color: white;
+}
+.dangerousMenuItem:hover {
+	background-color: #ff8888;
+	color: black;
+}
+
 #pdfFloatingToolGrid {
     padding: 7px;
 }

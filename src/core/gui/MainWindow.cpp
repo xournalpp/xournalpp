@@ -732,6 +732,13 @@ void MainWindow::setRecentMenu(GtkWidget* submenu) {
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), submenu);
 }
 
+void MainWindow::setDebugMenu(GtkWidget* submenu) {
+    GtkWidget* menuitem = get("menuHelpDebug");
+    g_return_if_fail(menuitem != nullptr);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), submenu);
+    gtk_widget_set_visible(menuitem, submenu != nullptr);
+}
+
 void MainWindow::show(GtkWindow* parent) { gtk_widget_show(this->window); }
 
 void MainWindow::setUndoDescription(const string& description) { toolbar->setUndoDescription(description); }

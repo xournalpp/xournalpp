@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -38,6 +39,7 @@
 
 
 class AudioController;
+class ConsoleCtl;
 class FullscreenHandler;
 class Sidebar;
 class XojPageView;
@@ -244,6 +246,7 @@ public:
     UndoRedoHandler* getUndoRedoHandler();
     MainWindow* getWindow();
     GtkWindow* getGtkWindow() const;
+    ConsoleCtl* getConsole();
     ScrollHandler* getScrollHandler();
     PageRef getCurrentPage();
     size_t getCurrentPageNo();
@@ -349,6 +352,7 @@ private:
 
     Settings* settings = nullptr;
     MainWindow* win = nullptr;
+    std::unique_ptr<ConsoleCtl> console;
 
     Document* doc = nullptr;
 

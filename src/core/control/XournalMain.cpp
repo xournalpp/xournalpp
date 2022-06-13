@@ -18,6 +18,7 @@
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
 
+#include "Console.h"
 #include "Control.h"
 #include "ExportHelper.h"
 #include "config-dev.h"
@@ -453,6 +454,8 @@ void on_startup(GApplication* application, XMPtr app_data) {
     }
 
     app_data->win->show(nullptr);
+    app_data->control->getConsole()->setShowOnExit(false);
+    app_data->control->getConsole()->sendHeartbeat();
 
     bool opened = false;
     if (app_data->optFilename) {
@@ -578,7 +581,10 @@ auto XournalMain::run(int argc, char** argv) -> int {
     g_signal_connect(app, "shutdown", G_CALLBACK(&on_shutdown), &app_data);
     g_signal_connect(app, "handle-local-options", G_CALLBACK(&on_handle_local_options), &app_data);
 
-    std::array options = {GOptionEntry{"page", 'n', 0, G_OPTION_ARG_INT, &app_data.openAtPageNumber,
+    gboolean dummyBool = false;
+    std::array options = {GOptionEntry{"show-console", 0, 0, G_OPTION_ARG_NONE, &dummyBool,  // This option is handled
+                                       _("Show console on process startup"), nullptr},       // at the start of main()
+                          GOptionEntry{"page", 'n', 0, G_OPTION_ARG_INT, &app_data.openAtPageNumber,
                                        _("Jump to Page (first Page: 1)"), "N"},
                           GOptionEntry{G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &app_data.optFilename,
                                        "<input>", nullptr},

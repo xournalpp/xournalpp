@@ -5,7 +5,7 @@
 #include <iostream>
 
 #ifdef _WIN32
-#include <Windows.h>
+#include "util/Win32Util.h"
 #else
 
 #include <execinfo.h>
@@ -32,15 +32,11 @@ Stacktrace::~Stacktrace() = default;
 
 #ifdef _WIN32
 fs::path Stacktrace::getExePath() {
-    char szFileName[MAX_PATH + 1];
-    GetModuleFileNameA(nullptr, szFileName, MAX_PATH + 1);
+    static const auto exePath{xoj::win32::getModuleFileName(nullptr)};
+    return exePath;
+}
 
-    return fs::path{szFileName};
-}
-void Stacktrace::printStracktrace(std::ostream& stream) {
-    // Stracktrace is currently not implemented for Windows
-    // Currently this is only needed for developing, so this is no issue
-}
+void Stacktrace::printStracktrace(std::ostream& stream) { xoj::win32::printStacktrace(stream, 1, 50); }
 #else
 
 #ifdef __APPLE__

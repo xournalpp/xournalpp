@@ -186,6 +186,13 @@ mark_as_advanced(FORCE
         DEBUG_INPUT DEBUG_RECOGNIZER DEBUG_SHEDULER DEBUG_SHOW_ELEMENT_BOUNDS DEBUG_SHOW_REPAINT_BOUNDS DEBUG_SHOW_PAINT_BOUNDS
         )
 
+if (WIN32)
+    option(DEBUG_CLANG_USE_PDB "Generate PDB symbols when building with clang. Enables native windows stacktrace." ON)
+    option(DEBUG_CONSOLE "Console debugging features, e.g. additional messages from console process, additional menu items to deliberately crash Xournal++ etc." OFF)
+    mark_as_advanced(FORCE
+            DEBUG_CLANG_USE_PDB DEBUG_CONSOLE)
+endif()
+
 # Advanced development config
 set(DEV_TOOLBAR_CONFIG "toolbar.ini" CACHE STRING "Toolbar config file name")
 set(DEV_SETTINGS_XML_FILE "settings.xml" CACHE STRING "Settings file name")

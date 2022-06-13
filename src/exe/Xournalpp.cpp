@@ -9,21 +9,33 @@
  * @license GNU GPLv2
  */
 
+#include <string_view>
+
+#include "control/Console.h"
 #include "control/CrashHandler.h"
 #include "control/XournalMain.h"
 #include "util/logger/Logger.h"
 
 #include "filesystem.h"
 
-#ifdef _WIN32
-#include "win32/console.h"
-#endif
-
 auto main(int argc, char* argv[]) -> int {
-#ifdef _WIN32
+    bool showConsole = false;
+    if (argc >= 2) {
+        using namespace std::string_view_literals;
+
+        for (char **argPtr = argv + 1, **end = argv + argc; argPtr != end; argPtr++) {
+            if (*argPtr == "--"sv) {
+                break;
+            }
+            if (*argPtr == "--show-console"sv) {
+                showConsole = true;
+                continue;
+            }
+        }
+    }
+
     // Attach to the console here. Otherwise, gspawn-win32-helper will create annoying console popups.
-    attachConsole();
-#endif
+    ConsoleCtl::initPlatformConsole(showConsole);
 
     // init crash handler
     installCrashHandlers();
