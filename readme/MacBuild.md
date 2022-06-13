@@ -91,6 +91,11 @@ Steps are from this [source](https://stackoverflow.com/questions/17980759/xcode-
 jhbuild build adwaita-icon-theme
 ````
 
+### 8. Build GtkSourceView
+````bash
+jhbuild build gtksourceview3
+````
+
 ## Build Xournal++ and package it as .app
 
 ### Automated step
