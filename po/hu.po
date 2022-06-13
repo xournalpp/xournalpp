@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-13 06:56+0000\n"
-"PO-Revision-Date: 2022-06-13 07:47\n"
+"PO-Revision-Date: 2022-06-13 22:34\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -1822,7 +1822,7 @@ msgstr "%a\t\tRövidített hétköznap (pl. K)\n"
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(újraindítás szükséges)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2201,7 +2201,7 @@ msgstr "Gyorsítótárazott oldalak törlése görgetés közben"
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "Szín"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2586,7 +2586,7 @@ msgstr "Ikontervezők"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "Ikon téma"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2702,7 +2702,7 @@ msgstr "Betöltés fájlból"
 
 #: ../ui/settings.glade:2950
 msgid "Lucide"
-msgstr ""
+msgstr "Lucide"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2860,7 +2860,7 @@ msgstr "Részben a Xournal alapján\n"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Path: "
-msgstr ""
+msgstr "Elérési út: "
 
 #: ../ui/main.glade:2002
 msgid "Pause"
