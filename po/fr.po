@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-12 19:53+0000\n"
-"PO-Revision-Date: 2022-06-12 20:52\n"
+"POT-Creation-Date: 2022-06-13 06:56+0000\n"
+"PO-Revision-Date: 2022-06-13 07:47\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -858,7 +858,7 @@ msgid "Normal drawing"
 msgstr "Dessin normal"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
-#: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
+#: ../src/core/plugin/Plugin.cpp:218 ../src/core/plugin/Plugin.cpp:234
 msgid "OK"
 msgstr "OK"
 
@@ -1619,11 +1619,11 @@ msgstr "tiret-/ pointillé"
 msgid "dashed"
 msgstr "tiret"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default disabled"
 msgstr "désactivé par défaut"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default enabled"
 msgstr "activé par défaut"
 
@@ -2859,6 +2859,10 @@ msgid "Partially based on Xournal\n"
 msgstr "Partiellement basé sur Xournal\n"
 "par Denis Auroux"
 
+#: ../ui/pluginEntry.glade:94
+msgid "Path: "
+msgstr ""
+
 #: ../ui/main.glade:2002
 msgid "Pause"
 msgstr "Pause"
@@ -3252,7 +3256,7 @@ msgstr "Pondération gaussienne basée sur la vitesse"
 msgid "Version"
 msgstr "Version"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:131
 msgid "Version: "
 msgstr "Version : "
 
@@ -3564,7 +3568,7 @@ msgstr "_blanc"
 msgid "dpi"
 msgstr "dpi"
 
-#: ../ui/pluginEntry.glade:130
+#: ../ui/pluginEntry.glade:167
 msgid "enabled,"
 msgstr "activé,"
 
