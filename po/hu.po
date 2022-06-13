@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-13 06:56+0000\n"
-"PO-Revision-Date: 2022-06-13 22:34\n"
+"PO-Revision-Date: 2022-06-13 23:35\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -3229,7 +3229,7 @@ msgstr "Kijelölt szöveg aláhúzása"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Rendelkezésre álló részvényikonok használata (újraindítás szükséges)"
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
