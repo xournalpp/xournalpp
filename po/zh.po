@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-12 19:53+0000\n"
-"PO-Revision-Date: 2022-06-12 20:52\n"
+"POT-Creation-Date: 2022-06-13 06:56+0000\n"
+"PO-Revision-Date: 2022-06-13 07:47\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -858,7 +858,7 @@ msgid "Normal drawing"
 msgstr "正常绘画"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
-#: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
+#: ../src/core/plugin/Plugin.cpp:218 ../src/core/plugin/Plugin.cpp:234
 msgid "OK"
 msgstr "确定"
 
@@ -1619,11 +1619,11 @@ msgstr "点划线"
 msgid "dashed"
 msgstr "横虚线"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default disabled"
 msgstr "默认禁用"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default enabled"
 msgstr "默认启用"
 
@@ -2858,6 +2858,10 @@ msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "部分基于 Denis Auroux 的 Xournal 软件"
 
+#: ../ui/pluginEntry.glade:94
+msgid "Path: "
+msgstr ""
+
 #: ../ui/main.glade:2002
 msgid "Pause"
 msgstr "暂停"
@@ -3251,7 +3255,7 @@ msgstr "基于速度的高斯权重"
 msgid "Version"
 msgstr "版本"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:131
 msgid "Version: "
 msgstr "版本："
 
@@ -3562,7 +3566,7 @@ msgstr "涂白(_w)"
 msgid "dpi"
 msgstr "点/每英寸"
 
-#: ../ui/pluginEntry.glade:130
+#: ../ui/pluginEntry.glade:167
 msgid "enabled,"
 msgstr "启用，"
 
