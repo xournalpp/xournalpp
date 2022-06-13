@@ -2878,9 +2878,7 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         g_warning("could not paste, Exception occurred: %s", e.what());
         Stacktrace::printStracktrace();
         if (selection) {
-            for (Element* el: selection->getElements()) {
-                delete el;
-            }
+            for (Element* el: selection->getElements()) { delete el; }
             delete selection;
         }
     }
