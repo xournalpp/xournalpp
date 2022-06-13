@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-12 19:53+0000\n"
-"PO-Revision-Date: 2022-06-12 20:52\n"
+"POT-Creation-Date: 2022-06-13 06:56+0000\n"
+"PO-Revision-Date: 2022-06-13 07:47\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -859,7 +859,7 @@ msgid "Normal drawing"
 msgstr "Ordinara desegnado"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
-#: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
+#: ../src/core/plugin/Plugin.cpp:218 ../src/core/plugin/Plugin.cpp:234
 msgid "OK"
 msgstr "Bone"
 
@@ -1620,11 +1620,11 @@ msgstr "streketita / punktita"
 msgid "dashed"
 msgstr "streketita"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default disabled"
 msgstr "Implicite malŝaltita"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default enabled"
 msgstr "Implicite ŝaltita"
 
@@ -2860,6 +2860,10 @@ msgid "Partially based on Xournal\n"
 msgstr "Parte surbaze de Xournal\n"
 "far Denis Auroux"
 
+#: ../ui/pluginEntry.glade:94
+msgid "Path: "
+msgstr ""
+
 #: ../ui/main.glade:2002
 msgid "Pause"
 msgstr "Paŭzigi"
@@ -3253,7 +3257,7 @@ msgstr "Rapido laŭ Gaŭsaj pondoj"
 msgid "Version"
 msgstr "Versio"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:131
 msgid "Version: "
 msgstr "Versio: "
 
@@ -3565,7 +3569,7 @@ msgstr "_blanka korektilo"
 msgid "dpi"
 msgstr "punktoj en colo"
 
-#: ../ui/pluginEntry.glade:130
+#: ../ui/pluginEntry.glade:167
 msgid "enabled,"
 msgstr "ŝaltita,"
 
