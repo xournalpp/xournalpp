@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-12 19:53+0000\n"
-"PO-Revision-Date: 2022-06-12 20:52\n"
+"POT-Creation-Date: 2022-06-13 06:56+0000\n"
+"PO-Revision-Date: 2022-06-13 07:47\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -858,7 +858,7 @@ msgid "Normal drawing"
 msgstr "Desen normal"
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:182
-#: ../src/core/plugin/Plugin.cpp:234 ../src/core/plugin/Plugin.cpp:250
+#: ../src/core/plugin/Plugin.cpp:218 ../src/core/plugin/Plugin.cpp:234
 msgid "OK"
 msgstr "Aprobă"
 
@@ -1619,11 +1619,11 @@ msgstr "întreruptă-/punctată"
 msgid "dashed"
 msgstr "linie întreruptă"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default disabled"
 msgstr "dezactivat în mod prestabilit"
 
-#: ../src/core/gui/dialog/PluginDialogEntry.cpp:24
+#: ../src/core/gui/dialog/PluginDialogEntry.cpp:25
 msgid "default enabled"
 msgstr "activat în mod prestabilit"
 
@@ -2860,6 +2860,10 @@ msgid "Partially based on Xournal\n"
 msgstr "Bazat parțial pe Xournal\n"
 "de Denis Auroux"
 
+#: ../ui/pluginEntry.glade:94
+msgid "Path: "
+msgstr ""
+
 #: ../ui/main.glade:2002
 msgid "Pause"
 msgstr "Pauză"
@@ -3253,7 +3257,7 @@ msgstr "Valori Gaussiane bazate pe viteză"
 msgid "Version"
 msgstr "Versiune"
 
-#: ../ui/pluginEntry.glade:94
+#: ../ui/pluginEntry.glade:131
 msgid "Version: "
 msgstr "Versiune: "
 
@@ -3565,7 +3569,7 @@ msgstr "_albește"
 msgid "dpi"
 msgstr "dpi"
 
-#: ../ui/pluginEntry.glade:130
+#: ../ui/pluginEntry.glade:167
 msgid "enabled,"
 msgstr "activat,"
 
