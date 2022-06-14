@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-13 06:56+0000\n"
-"PO-Revision-Date: 2022-06-13 07:47\n"
+"PO-Revision-Date: 2022-06-14 00:55\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -1824,7 +1824,7 @@ msgstr "%a\t\tMallongigita nomo de tago en semajno (ekz. dim)\n"
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(postulas relanĉon)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2203,7 +2203,7 @@ msgstr "Forviŝi kaŝmemoron de rulumitaj paĝoj"
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "Koloro"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2588,7 +2588,7 @@ msgstr "Piktogramdezajnistoj"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "Etoso de piktogramoj"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2704,7 +2704,7 @@ msgstr "Ŝargi el dosiero"
 
 #: ../ui/settings.glade:2950
 msgid "Lucide"
-msgstr ""
+msgstr "Lucide"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2862,7 +2862,7 @@ msgstr "Parte surbaze de Xournal\n"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Path: "
-msgstr ""
+msgstr "Dosierindiko: "
 
 #: ../ui/main.glade:2002
 msgid "Pause"
@@ -3231,7 +3231,7 @@ msgstr "Substreki elektitan tekston"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Uzi haveblajn implicitajn piktogramojn (tio postulas relanĉon)"
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
