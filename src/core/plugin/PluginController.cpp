@@ -4,12 +4,14 @@
 #include <tuple>
 #include <utility>
 
+#include <gtk/gtk.h>
+
+#include "control/Control.h"
 
 #ifdef ENABLE_PLUGINS
 #include <algorithm>
 #include <filesystem>
 
-#include "control/Control.h"
 #include "gui/GladeSearchpath.h"
 #include "gui/dialog/PluginDialog.h"
 #include "util/StringUtils.h"

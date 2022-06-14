@@ -9,19 +9,20 @@ cmake_policy(VERSION 3.13)
 ##############################
 
 add_library(defaults INTERFACE)
-target_compile_options(defaults INTERFACE -Wall -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable -Wconversion)
 target_include_directories(defaults INTERFACE ${PROJECT_BINARY_DIR}/src)
-add_library(xoj::defaults ALIAS defaults)
 if (MSVC)
-  target_compile_definitions(defaults INTERFACE PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN)
+    target_compile_definitions(defaults INTERFACE NOMINMAX WIN32_LEAN_AND_MEAN)
+elseif(GNU OR CLANG) 
+    target_compile_options(defaults INTERFACE -Wall -Wreturn-type -Wuninitialized -Wunused-value -Wunused-variable -Wconversion)
 endif ()
 # Todo (support-v3.10): guard this variable with cmake_dependent_option for CMake 3.10, and NOT(GCC)
 # then downgrade cmake_minimum_required to CMake 3.10
 if (DEV_ENABLE_GCOV)
-  target_compile_options(defaults INTERFACE --coverage)
-  target_link_options(defaults INTERFACE --coverage) #cmake v3.13
+target_compile_options(defaults INTERFACE --coverage)
+target_link_options(defaults INTERFACE --coverage) #cmake v3.13
 endif (DEV_ENABLE_GCOV)
 
+add_library(xoj::defaults ALIAS defaults)
 ##############################
 # util
 ##############################
@@ -82,9 +83,10 @@ if (WIN32)
   target_include_directories(xournalpp PRIVATE exe)
 
   # windows specific appinfo
-  set(CMAKE_RC_COMPILER_INIT windres)
+  #set(CMAKE_RC_COMPILER_INIT windres)
   enable_language(RC)
-  set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
+  #message(STATUS "CMAKE_RC_COMPILER ${CMAKE_RC_COMPILER_ID}")
+  #set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
 
   configure_file(exe/win32/xpp.rc.in ${CMAKE_CURRENT_BINARY_DIR}/win32/xpp.rc)
   target_sources(xournalpp PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/win32/xpp.rc)

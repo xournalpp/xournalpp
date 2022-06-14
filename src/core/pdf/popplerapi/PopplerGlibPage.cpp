@@ -185,11 +185,11 @@ auto PopplerGlibPage::selectTextLines(const XojPdfRectangle& selectRect, XojPdfP
         // We always want to select in the "proper" rectangle.
         PopplerRectangle area{rect.x1, rect.y1, rect.x2, rect.y2};
         if (!poppler_page_get_text_layout_for_area(this->page, &area, &rectArray, &numRects)) {
-            return {.region = cairo_region_create(), .rects = textRects};
+            return {cairo_region_create(), textRects};
         }
     } else {
         if (!poppler_page_get_text_layout(this->page, &rectArray, &numRects)) {
-            return {.region = cairo_region_create(), .rects = textRects};
+            return {cairo_region_create(), textRects};
         }
     }
 
@@ -283,5 +283,5 @@ auto PopplerGlibPage::selectTextLines(const XojPdfRectangle& selectRect, XojPdfP
     }
 
     g_assert_nonnull(region);
-    return {.region = region, .rects = textRects};
+    return {region, textRects};
 }

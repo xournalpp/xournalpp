@@ -24,7 +24,11 @@
 
 namespace Util {
 
-pid_t getPid();
+#ifndef _MSC_VER
+auto getPid() -> pid_t;
+#else
+auto getPid() -> unsigned long;
+#endif
 
 /**
  * Wrap the system call to redirect errors to a dialog

@@ -3,12 +3,15 @@
 #include <array>
 #include <cstdlib>
 
-#include <unistd.h>
-
 #include "util/Color.h"
 #include "util/PathUtil.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
+
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 struct CallbackUiData {
     explicit CallbackUiData(std::function<void()> callback): callback(std::move(callback)) {}
@@ -48,8 +51,11 @@ void Util::cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha) {
     gdk_cairo_set_source_rgba(cr, &rgba);
 }
 
+#ifndef _WIN32
 auto Util::getPid() -> pid_t { return ::getpid(); }
-
+#else
+auto Util::getPid() -> DWORD { return GetCurrentProcessId(); }
+#endif
 
 auto Util::paintBackgroundWhite(GtkWidget* widget, cairo_t* cr, void*) -> gboolean {
     GtkAllocation alloc;

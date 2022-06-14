@@ -188,50 +188,48 @@ auto EditSelectionContents::setFill(int alphaPen, int alphaHighligther) -> UndoA
  * (or nullptr if there are no Text elements)
  */
 auto EditSelectionContents::setFont(XojFont& font) -> UndoAction* {
-    double x1 = 0.0 / 0.0;
-    double x2 = 0.0 / 0.0;
-    double y1 = 0.0 / 0.0;
-    double y2 = 0.0 / 0.0;
+    if (this->selected.empty()) {
+        return nullptr;
+    }
 
+    auto textfilter = [](Element* e) { return e->getType() == ELEMENT_TEXT; };
+    auto const first_iter = std::find_if(this->selected.begin(), this->selected.end(), textfilter);
+    if (first_iter == this->selected.end()) {
+        return nullptr;
+    }
     auto* undo = new FontUndoAction(this->sourcePage, this->sourceLayer);
+    Text* t = static_cast<Text*>(*first_iter);
+    double x1 = t->getX();
+    double x2 = t->getY();
+    double y1 = t->getX() + t->getElementWidth();
+    double y2 = t->getY() + t->getElementHeight();
 
-    for (Element* e: this->selected) {
-        if (e->getType() == ELEMENT_TEXT) {
-            Text* t = dynamic_cast<Text*>(e);
-            undo->addStroke(t, t->getFont(), font);
-
-            if (std::isnan(x1)) {
-                x1 = t->getX();
-                y1 = t->getY();
-                x2 = t->getX() + t->getElementWidth();
-                y2 = t->getY() + t->getElementHeight();
-            } else {
-                // size with old font
-                x1 = std::min(x1, t->getX());
-                y1 = std::min(y1, t->getY());
-
-                x2 = std::max(x2, t->getX() + t->getElementWidth());
-                y2 = std::max(y2, t->getY() + t->getElementHeight());
-            }
-
-            t->setFont(font);
-
-            // size with new font
-            x1 = std::min(x1, t->getX());
-            y1 = std::min(y1, t->getY());
-
-            x2 = std::max(x2, t->getX() + t->getElementWidth());
-            y2 = std::max(y2, t->getY() + t->getElementHeight());
+    for (auto begi = std::next(first_iter), endi = this->selected.end(); begi != endi; ++begi) {
+        if (!textfilter(*begi)) {
+            continue;
         }
+        Text* t = static_cast<Text*>(*begi);
+        undo->addStroke(t, t->getFont(), font);
+        // size with old font
+        x1 = std::min(x1, t->getX());
+        y1 = std::min(y1, t->getY());
+
+        x2 = std::max(x2, t->getX() + t->getElementWidth());
+        y2 = std::max(y2, t->getY() + t->getElementHeight());
+
+        t->setFont(font);
+
+        // size with new font
+        x1 = std::min(x1, t->getX());
+        y1 = std::min(y1, t->getY());
+
+        x2 = std::max(x2, t->getX() + t->getElementWidth());
+        y2 = std::max(y2, t->getY() + t->getElementHeight());
     }
 
-    if (!std::isnan(x1)) {
-        this->deleteViewBuffer();
-        this->sourceView->getXournal()->repaintSelection();
-        return undo;
-    }
-    delete undo;
-    return nullptr;
+    this->deleteViewBuffer();
+    this->sourceView->getXournal()->repaintSelection();
+    return undo;
 }
 
 /**
@@ -352,7 +350,7 @@ void EditSelectionContents::finalizeSelection(Rectangle<double> bounds, Rectangl
         fy = f;
     }
     bool scale = (bounds.width != this->originalBounds.width || bounds.height != this->originalBounds.height);
-    bool rotate = (std::abs(this->rotation) > __DBL_EPSILON__);
+    bool rotate = (std::abs(this->rotation) > std::numeric_limits<double>::epsilon());
 
     double mx = bounds.x - this->originalBounds.x;
     double my = bounds.y - this->originalBounds.y;
@@ -405,7 +403,7 @@ void EditSelectionContents::updateContent(Rectangle<double> bounds, Rectangle<do
         fy = f;
     }
 
-    bool rotate = (std::abs(this->rotation - this->lastRotation) > __DBL_EPSILON__);
+    bool rotate = (std::abs(this->rotation - this->lastRotation) > std::numeric_limits<double>::epsilon());
     bool scale = (snappedBounds.width != this->lastSnappedBounds.width ||
                   snappedBounds.height != this->lastSnappedBounds.height);
 
@@ -481,7 +479,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
         this->relativeY = y;
     }
 
-    if (std::abs(rotation) > __DBL_EPSILON__) {
+    if (std::abs(rotation) > std::numeric_limits<double>::epsilon()) {
         this->rotation = rotation;
     }
 
@@ -515,7 +513,7 @@ void EditSelectionContents::paint(cairo_t* cr, double x, double y, double rotati
     double sx = static_cast<double>(wTarget) / wImg;
     double sy = static_cast<double>(hTarget) / hImg;
 
-    if (wTarget != wImg || hTarget != hImg || std::abs(rotation) > __DBL_EPSILON__) {
+    if (wTarget != wImg || hTarget != hImg || std::abs(rotation) > std::numeric_limits<double>::epsilon()) {
         if (!this->rescaleId) {
             this->rescaleId = g_idle_add(reinterpret_cast<GSourceFunc>(repaintSelection), this);
         }

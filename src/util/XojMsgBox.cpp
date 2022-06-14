@@ -2,9 +2,11 @@
 
 #include "util/i18n.h"
 
-#ifdef _WIN32
 // Needed for help dialog workaround on Windows; see XojMsgBox::showHelp
-#include <shlwapi.h>
+#ifdef _WIN32
+#include <windows.h>
+//
+#include <shellapi.h>
 #endif
 
 using std::map;
