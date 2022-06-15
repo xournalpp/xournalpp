@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-13 06:56+0000\n"
-"PO-Revision-Date: 2022-06-15 08:18\n"
+"PO-Revision-Date: 2022-06-15 09:33\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2592,7 +2592,7 @@ msgstr "Если включено, Xournal++ автоматически откр
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
-msgstr ""
+msgstr "Если включено, то перед запуском инструмента LaTeX будет произведена проверка, установлены ли нужные пакеты LaTeX и доступны ли команды LaTeX."
 
 #: ../ui/exportSettings.glade:371
 msgid "If enabled, the layers of each page will be added one by one. The resulting PDF file can be used for a presentation."
@@ -2600,7 +2600,7 @@ msgstr "Если включено, слои каждой страницы буд
 
 #: ../ui/settings.glade:664
 msgid "If you open a PDF and there is a Xournal file with the same name it will open the xoj file."
-msgstr ""
+msgstr "Если вы откроете PDF и существует файл Xournal с таким же именем, этот файл xoj тоже будет открыт."
 
 #: ../ui/settings.glade:4826
 msgid "Ignore Time (ms)"
