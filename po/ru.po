@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-13 06:56+0000\n"
-"PO-Revision-Date: 2022-06-13 07:47\n"
+"PO-Revision-Date: 2022-06-15 08:18\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -409,7 +409,7 @@ msgstr "Нарисовать стрелку"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Нарисовать двойную стрелу"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
@@ -2178,7 +2178,7 @@ msgstr "Кнопка 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Изменить"
 
 #: ../ui/latexSettings.glade:176
 msgid "Choose a global LaTeX template file"
@@ -2198,7 +2198,7 @@ msgstr "Стирать кэшированные страницы во время
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "Цвет"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2580,7 +2580,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "Тема значков"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2588,7 +2588,7 @@ msgstr "Если включено, фигуры, распознанные рас
 
 #: ../ui/settings.glade:681
 msgid "If enabled Xournal++ will open the most recent document automatically that you can continue editing your last saved document."
-msgstr ""
+msgstr "Если включено, Xournal++ автоматически откроет последний документ, чтобы вы смогли продолжить редактирование последнего сохраненного документа."
 
 #: ../ui/latexSettings.glade:49
 msgid "If enabled, check that required LaTeX packages are installed and that the LaTeX commands are available before running the LaTeX tool."
