@@ -15,7 +15,8 @@
 
 class BackgroundConfig;
 
-class xoj::view::IsoGraphBackgroundView: public BaseIsometricBackgroundView {
+namespace xoj::view {
+class IsoGraphBackgroundView: public BaseIsometricBackgroundView {
 public:
     IsoGraphBackgroundView(double pageWidth, double pageHeight, Color backgroundColor, const BackgroundConfig& config);
     virtual ~IsoGraphBackgroundView() = default;
@@ -27,3 +28,4 @@ protected:
 protected:
     constexpr static double DEFAULT_LINE_WIDTH = 1.0;
 };
+};  // namespace xoj::view

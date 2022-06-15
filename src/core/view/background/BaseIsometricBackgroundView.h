@@ -15,7 +15,8 @@
 
 class BackgroundConfig;
 
-class xoj::view::BaseIsometricBackgroundView: public OneColorBackgroundView {
+namespace xoj::view {
+class BaseIsometricBackgroundView: public OneColorBackgroundView {
 public:
     BaseIsometricBackgroundView(double pageWidth, double pageHeight, Color backgroundColor,
                                 const BackgroundConfig& config, double defaultLineWidth);
@@ -33,3 +34,4 @@ protected:
     constexpr static Color DEFAULT_LINE_COLOR = Color(0xBDBDBDU);
     constexpr static Color ALT_DEFAULT_LINE_COLOR = Color(0x434343U);
 };
+};  // namespace xoj::view

@@ -15,7 +15,8 @@
 
 class BackgroundConfig;
 
-class xoj::view::StavesBackgroundView: public OneColorBackgroundView {
+namespace xoj::view {
+class StavesBackgroundView: public OneColorBackgroundView {
 public:
     StavesBackgroundView(double pageWidth, double pageHeight, Color backgroundColor, const BackgroundConfig& config);
     virtual ~StavesBackgroundView() = default;
@@ -33,3 +34,4 @@ protected:
     constexpr static double STAVES_SPACING = 40.0;  // Between two staves
     constexpr static double LINES_SPACING = 5.0;    // Between two lines within a staff
 };
+};  // namespace xoj::view

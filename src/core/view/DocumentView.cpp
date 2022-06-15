@@ -11,8 +11,6 @@
 #include "LayerView.h"
 #include "StrokeView.h"
 
-using xoj::util::Rectangle;
-
 /**
  * Mark stroke with Audio
  */

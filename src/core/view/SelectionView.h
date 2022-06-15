@@ -11,11 +11,12 @@
 
 #pragma once
 
-#include "View.h"
-
 class ElementContainer;
 
-class xoj::view::SelectionView {
+namespace xoj::view {
+class Context;
+
+class SelectionView {
 public:
     SelectionView(const ElementContainer* container);
 
@@ -27,3 +28,4 @@ public:
 private:
     const ElementContainer* container;
 };
+};  // namespace xoj::view

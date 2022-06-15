@@ -15,7 +15,8 @@
 
 class BackgroundConfig;
 
-class xoj::view::RuledBackgroundView: public OneColorBackgroundView {
+namespace xoj::view {
+class RuledBackgroundView: public OneColorBackgroundView {
 public:
     RuledBackgroundView(double pageWidth, double pageHeight, Color backgroundColor, const BackgroundConfig& config);
     virtual ~RuledBackgroundView() = default;
@@ -32,3 +33,4 @@ protected:
     constexpr static double HEADER_SIZE = 80.0;
     constexpr static double FOOTER_SIZE = 60.0;
 };
+};  // namespace xoj::view

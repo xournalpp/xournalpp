@@ -11,6 +11,7 @@
 #include "util/LoopUtil.h"
 #include "view/DebugShowRepaintBounds.h"
 #include "view/SelectionView.h"
+#include "view/View.h"
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y,
                                          bool initiallyReverse, ZoomControl* zoomControl, GdkWindow* window):

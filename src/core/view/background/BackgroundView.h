@@ -12,7 +12,6 @@
 #pragma once
 
 #include "model/PageRef.h"
-#include "view/View.h"
 
 class BackgroundConfig;
 class Document;
@@ -20,6 +19,19 @@ class PdfCache;
 
 namespace xoj {
 namespace view {
+
+enum PDFBackgroundTreatment : bool { SHOW_PDF_BACKGROUND = true, HIDE_PDF_BACKGROUND = false };
+enum ImageBackgroundTreatment : bool { SHOW_IMAGE_BACKGROUND = true, HIDE_IMAGE_BACKGROUND = false };
+enum RulingBackgroundTreatment : bool { SHOW_RULING_BACKGROUND = true, HIDE_RULING_BACKGROUND = false };
+
+struct BackgroundFlags {
+    PDFBackgroundTreatment showPDF;
+    ImageBackgroundTreatment showImage;
+    RulingBackgroundTreatment showRuling;
+};
+
+static constexpr BackgroundFlags BACKGROUND_SHOW_ALL = {SHOW_PDF_BACKGROUND, SHOW_IMAGE_BACKGROUND,
+                                                        SHOW_RULING_BACKGROUND};
 
 class BackgroundView {
 public:
@@ -43,19 +55,5 @@ protected:
     double pageWidth;
     double pageHeight;
 };
-
-class OneColorBackgroundView;
-class ImageBackgroundView;
-class PlainBackgroundView;
-class RuledBackgroundView;
-class LinedBackgroundView;
-class GraphBackgroundView;
-class StavesBackgroundView;
-class DottedBackgroundView;
-class BaseIsometricBackgroundView;
-class IsoGraphBackgroundView;
-class IsoDottedBackgroundView;
-class PdfBackgroundView;
-class TransparentCheckerboardBackgroundView;
 };  // namespace view
 };  // namespace xoj

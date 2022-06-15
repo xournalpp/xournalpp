@@ -8,6 +8,8 @@
 #include "model/Document.h"
 #include "view/DocumentView.h"
 #include "view/LayerView.h"
+#include "view/View.h"
+#include "view/background/BackgroundView.h"
 
 PreviewJob::PreviewJob(SidebarPreviewBaseEntry* sidebar): sidebarPreview(sidebar) {}
 

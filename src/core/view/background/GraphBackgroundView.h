@@ -15,7 +15,8 @@
 
 class BackgroundConfig;
 
-class xoj::view::GraphBackgroundView: public OneColorBackgroundView {
+namespace xoj::view {
+class GraphBackgroundView: public OneColorBackgroundView {
 public:
     GraphBackgroundView(double pageWidth, double pageHeight, Color backgroundColor, const BackgroundConfig& config);
     virtual ~GraphBackgroundView() = default;
@@ -31,3 +32,4 @@ protected:
     constexpr static Color ALT_DEFAULT_LINE_COLOR = Color(0x434343U);
     constexpr static double DEFAULT_LINE_WIDTH = 0.5;
 };
+};  // namespace xoj::view
