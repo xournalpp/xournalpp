@@ -12,6 +12,8 @@
 #include "undo/RecognizerUndoAction.h"
 #include "util/Rectangle.h"
 
+#include "filesystem.h"
+
 InputHandler::InputHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
         xournal(xournal), redrawable(redrawable), page(page), stroke(nullptr) {}
 

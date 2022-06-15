@@ -9,6 +9,7 @@
 #include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
 #include "undo/GroupUndoAction.h"
 #include "undo/PageBackgroundChangedUndoAction.h"
+#include "util/PathUtil.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
 

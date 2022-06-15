@@ -1,6 +1,5 @@
 #include "SettingsDialog.h"
 
-#include <filesystem>
 #include <utility>
 
 #include <config.h>
@@ -15,6 +14,7 @@
 #include "util/i18n.h"
 
 #include "ButtonConfigGui.h"
+#include "filesystem.h"
 
 using std::string;
 using std::vector;

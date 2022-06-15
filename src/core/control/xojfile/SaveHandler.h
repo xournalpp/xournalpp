@@ -21,6 +21,8 @@
 #include "model/Stroke.h"
 #include "util/OutputStream.h"
 
+#include "filesystem.h"
+
 
 class XmlNode;
 class XmlPointNode;

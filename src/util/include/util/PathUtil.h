@@ -12,7 +12,6 @@
 #pragma once
 
 #include <cstring>
-#include <filesystem>
 #include <optional>
 
 #include <gio/gio.h>

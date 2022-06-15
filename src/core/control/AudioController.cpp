@@ -1,7 +1,6 @@
 #include "AudioController.h"
 
 #include <cinttypes>
-#include <filesystem>
 
 #include "util/Util.h"
 #include "util/XojMsgBox.h"

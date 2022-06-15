@@ -2,6 +2,7 @@
 
 #include "control/Control.h"
 #include "control/xojfile/SaveHandler.h"
+#include "util/PathUtil.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
 

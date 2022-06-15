@@ -11,6 +11,8 @@
 #include "util/safe_casts.h"
 #include "view/DocumentView.h"
 
+#include "filesystem.h"
+
 namespace {
 void drawPage(GtkPrintOperation* /*operation*/, GtkPrintContext* context, int pageNr, Document* doc) {
     cairo_t* cr = gtk_print_context_get_cairo_context(context);

@@ -19,6 +19,7 @@
 
 #include "BaseExportJob.h"
 #include "ImageExport.h"
+#include "filesystem.h"
 
 
 class CustomExportJob: public BaseExportJob {

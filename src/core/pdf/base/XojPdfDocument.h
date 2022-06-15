@@ -19,6 +19,7 @@
 #include "XojPdfBookmarkIterator.h"
 #include "XojPdfDocumentInterface.h"
 #include "XojPdfPage.h"
+#include "filesystem.h"
 
 
 class XojPdfDocument: XojPdfDocumentInterface {

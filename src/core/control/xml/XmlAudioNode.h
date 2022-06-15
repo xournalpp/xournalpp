@@ -11,8 +11,8 @@
 
 #pragma once
 
-
 #include "XmlNode.h"
+#include "filesystem.h"
 
 class XmlAudioNode: public XmlNode {
 public:

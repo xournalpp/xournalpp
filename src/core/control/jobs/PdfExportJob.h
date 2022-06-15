@@ -12,6 +12,7 @@
 #pragma once
 
 #include "BaseExportJob.h"
+#include "filesystem.h"
 
 class PdfExportJob: public BaseExportJob {
 public:

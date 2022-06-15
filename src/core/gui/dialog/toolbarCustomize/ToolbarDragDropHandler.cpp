@@ -4,6 +4,7 @@
 #include "gui/MainWindow.h"
 #include "gui/toolbarMenubar/AbstractToolItem.h"
 #include "gui/toolbarMenubar/model/ToolbarModel.h"
+#include "util/PathUtil.h"
 
 #include "ToolbarAdapter.h"
 #include "ToolbarCustomizeDialog.h"
