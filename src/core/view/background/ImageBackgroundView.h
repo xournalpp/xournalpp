@@ -15,7 +15,8 @@
 
 struct BackgroundImage;
 
-class xoj::view::ImageBackgroundView: public BackgroundView {
+namespace xoj::view {
+class ImageBackgroundView: public BackgroundView {
 public:
     ImageBackgroundView(double pageWidth, double pageHeight, const BackgroundImage& image);
 
@@ -27,3 +28,4 @@ public:
 private:
     const BackgroundImage& image;
 };
+};  // namespace xoj::view

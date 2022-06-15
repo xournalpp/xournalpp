@@ -14,8 +14,8 @@
 #include "PlainBackgroundView.h"
 
 class BackgroundConfig;
-
-class xoj::view::OneColorBackgroundView: public PlainBackgroundView {
+namespace xoj::view {
+class OneColorBackgroundView: public PlainBackgroundView {
 public:
     OneColorBackgroundView(double pageWidth, double pageHeight, Color backgroundColor, const BackgroundConfig& config,
                            double defaultLineWidth, Color defaultLineColor, Color altDefaultLineColor);
@@ -34,3 +34,4 @@ protected:
     Color foregroundColor;
     double lineWidth;
 };
+};  // namespace xoj::view

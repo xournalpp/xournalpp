@@ -11,13 +11,11 @@
 
 #pragma once
 
-#include "util/Rectangle.h"
-
-#include "View.h"
-
 class Layer;
+namespace xoj::view {
+struct Context;
 
-class xoj::view::LayerView {
+class LayerView {
 public:
     LayerView(const Layer* layer);
 
@@ -31,3 +29,4 @@ public:
 private:
     const Layer* layer;
 };
+};  // namespace xoj::view

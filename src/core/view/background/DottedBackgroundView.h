@@ -15,7 +15,8 @@
 
 class BackgroundConfig;
 
-class xoj::view::DottedBackgroundView: public OneColorBackgroundView {
+namespace xoj::view {
+class DottedBackgroundView: public OneColorBackgroundView {
 public:
     DottedBackgroundView(double pageWidth, double pageHeight, Color backgroundColor, const BackgroundConfig& config);
     virtual ~DottedBackgroundView() = default;
@@ -29,3 +30,4 @@ protected:
     constexpr static Color ALT_DEFAULT_LINE_COLOR = Color(0x434343U);
     constexpr static double DEFAULT_LINE_WIDTH = 1.5;
 };
+};  // namespace xoj::view

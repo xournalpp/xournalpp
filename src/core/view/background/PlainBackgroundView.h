@@ -16,8 +16,8 @@
 #include "BackgroundView.h"
 
 class BackgroundConfig;
-
-class xoj::view::PlainBackgroundView: public BackgroundView {
+namespace xoj::view {
+class PlainBackgroundView: public BackgroundView {
 public:
     PlainBackgroundView(double pageWidth, double pageHeight, Color backgroundColor);
     virtual ~PlainBackgroundView() = default;
@@ -29,3 +29,4 @@ protected:
 
     static std::pair<int, int> getIndexBounds(double min, double max, double step, double margin, double length);
 };
+};  // namespace xoj::view

@@ -3,6 +3,8 @@
 #include "model/Element.h"
 #include "model/ElementContainer.h"
 
+#include "View.h"
+
 using namespace xoj::view;
 
 SelectionView::SelectionView(const ElementContainer* container): container(container) {}

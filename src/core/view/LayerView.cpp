@@ -3,8 +3,8 @@
 #include "model/Layer.h"
 
 #include "DebugShowRepaintBounds.h"
+#include "View.h"
 
-using xoj::util::Rectangle;
 using namespace xoj::view;
 
 LayerView::LayerView(const Layer* layer): layer(layer) {}

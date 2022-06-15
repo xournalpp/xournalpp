@@ -15,7 +15,8 @@
 
 class BackgroundConfig;
 
-class xoj::view::IsoDottedBackgroundView: public BaseIsometricBackgroundView {
+namespace xoj::view {
+class IsoDottedBackgroundView: public BaseIsometricBackgroundView {
 public:
     IsoDottedBackgroundView(double pageWidth, double pageHeight, Color backgroundColor, const BackgroundConfig& config);
     virtual ~IsoDottedBackgroundView() = default;
@@ -27,3 +28,4 @@ protected:
 protected:
     constexpr static double DEFAULT_LINE_WIDTH = 1.5;
 };
+};  // namespace xoj::view

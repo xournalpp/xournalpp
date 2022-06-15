@@ -25,6 +25,7 @@
 #include "util/serializing/ObjectInputStream.h"
 #include "util/serializing/ObjectOutputStream.h"
 #include "view/SelectionView.h"
+#include "view/View.h"
 
 #include "Selection.h"
 

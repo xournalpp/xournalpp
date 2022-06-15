@@ -15,7 +15,8 @@
 
 #include "BackgroundView.h"
 
-class xoj::view::TransparentCheckerboardBackgroundView: public BackgroundView {
+namespace xoj::view {
+class TransparentCheckerboardBackgroundView: public BackgroundView {
 public:
     TransparentCheckerboardBackgroundView(double pageWidth, double pageHeight);
     virtual ~TransparentCheckerboardBackgroundView() noexcept;
@@ -31,3 +32,4 @@ protected:
     static constexpr Color DARK_GREY = Color(0x808080);
     static constexpr Color LIGHT_GREY = Color(0xc0c0c0);
 };
+};  // namespace xoj::view
