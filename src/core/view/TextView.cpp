@@ -6,6 +6,8 @@
 #include "util/StringUtils.h"
 #include "util/Util.h"
 
+#include "filesystem.h"
+
 using namespace xoj::view;
 
 TextView::TextView(const Text* text): text(text) {}

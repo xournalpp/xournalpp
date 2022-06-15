@@ -19,6 +19,7 @@
 #include "gui/widgets/SpinPageAdapter.h"
 #include "gui/widgets/XournalWidget.h"
 #include "util/GListView.h"
+#include "util/PathUtil.h"
 #include "util/XojMsgBox.h"
 #include "util/i18n.h"
 
@@ -28,6 +29,7 @@
 #include "ToolbarDefinitions.h"
 #include "ToolitemDragDrop.h"
 #include "XournalView.h"
+#include "filesystem.h"
 
 using std::string;
 

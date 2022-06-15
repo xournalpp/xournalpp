@@ -8,6 +8,7 @@
  *
  * @license GNU GPLv2 or later
  */
+#pragma once
 
 #include <fstream>  // std::ofstream
 

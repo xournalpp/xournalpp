@@ -12,6 +12,7 @@
 #include "gui/XournalView.h"
 #include "gui/dialog/LatexDialog.h"
 #include "undo/InsertUndoAction.h"
+#include "util/PathUtil.h"
 #include "util/StringUtils.h"
 #include "util/Util.h"
 #include "util/XojMsgBox.h"

@@ -25,7 +25,6 @@
 #include "gui/sidebar/Sidebar.h"
 #include "model/Document.h"
 #include "undo/UndoRedoHandler.h"
-#include "util/PathUtil.h"
 #include "view/SetsquareView.h"
 #include "zoom/ZoomControl.h"
 
@@ -35,6 +34,7 @@
 #include "RecentManager.h"
 #include "ScrollHandler.h"
 #include "ToolHandler.h"
+#include "filesystem.h"
 
 
 class AudioController;

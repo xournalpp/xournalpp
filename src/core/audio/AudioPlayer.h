@@ -20,6 +20,7 @@
 #include "AudioQueue.h"
 #include "PortAudioConsumer.h"
 #include "VorbisProducer.h"
+#include "filesystem.h"
 
 
 class AudioPlayer final {

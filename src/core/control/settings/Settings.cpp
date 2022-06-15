@@ -1,7 +1,6 @@
 #include "Settings.h"
 
 #include <cstdint>
-#include <filesystem>
 #include <utility>
 
 #include "control/DeviceListHelper.h"

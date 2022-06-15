@@ -9,6 +9,7 @@
 #include "util/i18n.h"
 
 #include "GladeSearchpath.h"
+#include "filesystem.h"
 
 GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const std::string& glade, const std::string& mainWnd) {
     this->gladeSearchPath = gladeSearchPath;

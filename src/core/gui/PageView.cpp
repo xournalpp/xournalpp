@@ -51,6 +51,7 @@
 #include "config-debug.h"
 #include "config-features.h"
 #include "config.h"
+#include "filesystem.h"
 
 using std::string;
 using xoj::util::Rectangle;

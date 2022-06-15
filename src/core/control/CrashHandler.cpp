@@ -11,6 +11,8 @@
 #include "util/Stacktrace.h"
 #include "util/i18n.h"
 
+#include "filesystem.h"
+
 static Document* document = nullptr;
 
 void setEmergencyDocument(Document* doc) { document = doc; }
