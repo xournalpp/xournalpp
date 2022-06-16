@@ -93,12 +93,7 @@ list(APPEND pkg-module-spec "portaudiocpp >= 12")
 list(APPEND pkg-module-spec "sndfile >= 1.0.25")
 list(APPEND pkg-module-spec "librsvg-2.0 >= 2.40")
 
-# Ubuntu 18.04 does not package gtksourceview-4
-option (USE_GTK_SOURCEVIEW "Link with gtksourceview-4 (for TeX syntax highlighting)" ON)
-if (USE_GTK_SOURCEVIEW)
-  list(APPEND pkg-module-spec "gtksourceview-4 >= 4.0.0")
-  add_compile_definitions(USE_GTK_SOURCEVIEW)
-endif(USE_GTK_SOURCEVIEW)
+pkg_check_modules(GtkSourceView IMPORTED_TARGET "gtksourceview-4 >= 4.0.0")
 
 # Profiling
 option (ENABLE_PROFILING "Link with gperftools" OFF)
@@ -140,16 +135,23 @@ if (Lua_FOUND)
     add_library(Lua::lua ALIAS lua)
 endif ()
 
+if (GtkSourceView_FOUND)
+    message("Enable GtkSourceView TeX syntax highlighting")
+    add_compile_definitions(USE_GTK_SOURCEVIEW)
+endif ()
+
 add_library(external_modules INTERFACE)
 target_link_libraries(external_modules INTERFACE
         PkgConfig::ExternalModules
         $<$<TARGET_EXISTS:Lua::lua>:Lua::lua>
+        $<$<TARGET_EXISTS:PkgConfig::GtkSourceView>:PkgConfig::GtkSourceView>
         $<$<TARGET_EXISTS:X11::Xi>:X11::Xi>
         $<$<TARGET_EXISTS:X11::X11>:X11::X11>
         $<$<TARGET_EXISTS:Backtrace::backtrace>:Backtrace::backtrace>
         ZLIB::ZLIB
         Threads::Threads
         )
+
 target_compile_definitions(external_modules INTERFACE
         GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_32
         GDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_18
