@@ -19,7 +19,7 @@
 #include "filesystem.h"
 
 #ifdef __APPLE__
-#include "exe/osx/setup-env.h"
+#include "osx/setup-env.h"
 #endif
 
 #ifdef _WIN32
