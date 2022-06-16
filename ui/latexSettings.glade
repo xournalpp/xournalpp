@@ -528,8 +528,6 @@
                                             <property name="can-focus">True</property>
                                             <property name="receives-default">True</property>
                                             <property name="font">Sans 12</property>
-                                            <property name="language">en-us</property>
-                                            <property name="level">GTK_FONT_CHOOSER_LEVEL_SIZE | GTK_FONT_CHOOSER_LEVEL_FAMILY</property>
                                             <property name="preview-text"/>
                                             <property name="title" translatable="yes">Pick the Editor's Font</property>
                                             <property name="show-style">False</property>
