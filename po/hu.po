@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-13 06:56+0000\n"
-"PO-Revision-Date: 2022-06-13 23:35\n"
+"POT-Creation-Date: 2022-06-16 10:48+0000\n"
+"PO-Revision-Date: 2022-06-16 10:50\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -34,7 +34,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " / {1}"
 
-#: ../src/core/control/settings/Settings.cpp:124
+#: ../src/core/control/settings/Settings.cpp:125
 msgid "%F-Note-%H-%M"
 msgstr "%F-Jegyzet-%H-%M"
 
@@ -204,11 +204,11 @@ msgid "Could not create folder: {1}\n"
 msgstr "A következő mappa nem hozható létre: {1}\n"
 "Hiba: {2}"
 
-#: ../src/core/control/LatexController.cpp:273
+#: ../src/core/control/LatexController.cpp:319
 msgid "Could not load LaTeX PDF file"
 msgstr "Nem sikerült a LaTeX PDF-fájl betöltése"
 
-#: ../src/core/control/LatexController.cpp:267
+#: ../src/core/control/LatexController.cpp:313
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Nem sikerült a LaTeX PDF-fájl betöltése: {1}"
 
@@ -529,11 +529,11 @@ msgstr "Hibakód {1} a(z) {2} rendszerutasítás végrehajtása közben"
 msgid "Error: {1}"
 msgstr "Hiba: {1}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:75
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:151
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Hiba történt: A(z) {1} fájl nem szabályos. Ellenőrizze a LaTeX sablonfájl beállításait."
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Hiba történt: {1}. Ellenőrizze a(z) {2} tartalmát"
 
@@ -610,7 +610,7 @@ msgstr "Nem sikerült megnyitni a content.xml-fájlt a zip-archívumban: {1}"
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Hiba a LaTeX parancs értelmezése közben: {1}"
 
-#: ../src/core/control/LatexController.cpp:58
+#: ../src/core/control/LatexController.cpp:61
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Hiba a globális sablonfájl olvasása közben. Kérem ellenőrizze a beállításait."
 
@@ -657,11 +657,11 @@ msgstr "GNU GPLv2 vagy újabb"
 msgid "Get version of xournalpp"
 msgstr "A xournalpp verzió lehívása"
 
-#: ../src/core/control/LatexController.cpp:53
+#: ../src/core/control/LatexController.cpp:56
 msgid "Global template file does not exist. Please check your settings."
 msgstr "A globális sablonfájl nem létezik. Kérem ellenőrizze a beállításait."
 
-#: ../src/core/control/LatexController.cpp:64
+#: ../src/core/control/LatexController.cpp:67
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "A globális sablonfájl nem szabályos. Kérem ellenőrizze a beállításait. "
 
@@ -696,6 +696,10 @@ msgstr "Grafikon"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Grid Snapping"
 msgstr "Rács igazítása"
+
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:42
+msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
@@ -765,7 +769,11 @@ msgstr "Izometrikus rácsos"
 msgid "Jump to Page (first Page: 1)"
 msgstr "Ugrás adott oldalra (első oldal: 1)"
 
-#: ../src/core/control/LatexController.cpp:192
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:37
+msgid "LaTeX editor theme:"
+msgstr ""
+
+#: ../src/core/control/LatexController.cpp:222
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "A LaTeX létrehozási közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
 
@@ -1068,7 +1076,7 @@ msgstr "Vonalas vertikális vonallal"
 msgid "SVG graphics"
 msgstr "SVG ábra"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:139
 msgid "Sample LaTeX file generated successfully."
 msgstr "A LaTeX-mintafájl sikeresen generálva."
 
@@ -1374,7 +1382,7 @@ msgstr "A fájl nem érvényes .xopp fájl (hiányzó verzió): „{1}”"
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "A fájl nem érvényes .xopp fájl (a verzió karakterlánca sérült): „{1}”"
 
-#: ../src/core/control/LatexController.cpp:240
+#: ../src/core/control/LatexController.cpp:281
 msgid "The formula is empty when rendered or invalid."
 msgstr "A képlet üres, vagy érvénytelen."
 
@@ -1426,7 +1434,7 @@ msgstr "Eszköztárak"
 msgid "Trying to emergency save the current open document…"
 msgstr "Megkíséreljük menteni az éppen megnyitott dokumentumot…"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:129
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "Nem lehet megnyitni a globális sablonfájlt itt: {1}. Létezik?"
 
@@ -1760,11 +1768,11 @@ msgstr "%"
 msgid "% greater than the initial distance between the two touches."
 msgstr "% nagyobb mint az érintések közötti kezdeti távolság."
 
-#: ../ui/latexSettings.glade:188
+#: ../ui/latexSettings.glade:185
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr "%%XPP_TEXT_COLOR%%"
 
-#: ../ui/latexSettings.glade:127
+#: ../ui/latexSettings.glade:148
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
@@ -2106,6 +2114,10 @@ msgstr "Szerző(k): "
 msgid "Authors"
 msgstr "Szerzők"
 
+#: ../ui/latexSettings.glade:415
+msgid "Auto-indent"
+msgstr ""
+
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
 msgstr "Automatikus felismerés"
@@ -2183,7 +2195,7 @@ msgstr "2. gomb"
 msgid "Change"
 msgstr "Módosítás"
 
-#: ../ui/latexSettings.glade:176
+#: ../ui/latexSettings.glade:173
 msgid "Choose a global LaTeX template file"
 msgstr "Válasszon ki egy globális LaTeX-sablonfájlt"
 
@@ -2206,6 +2218,10 @@ msgstr "Szín"
 #: ../ui/settings.glade:3010
 msgid "Colors"
 msgstr "Színek"
+
+#: ../ui/texdialog.glade:163
+msgid "Command Output"
+msgstr ""
 
 #: ../ui/main.glade:1225
 msgid "Configure Page Template"
@@ -2383,6 +2399,10 @@ msgstr "Megkettőzés"
 msgid "Edit (not implemented yet)"
 msgstr "Szerkesztés (még nincsen megvalósítva)"
 
+#: ../ui/latexSettings.glade:574
+msgid "Editor settings"
+msgstr ""
+
 #: ../ui/settings.glade:2260
 msgid "Enable"
 msgstr "Engedélyezés"
@@ -2431,7 +2451,7 @@ msgstr "Érintéses rajzolás engedélyezése"
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Nagyítási kézmozdulatok engedélyezése (újraindítás szükséges)"
 
-#: ../ui/texdialog.glade:72
+#: ../ui/texdialog.glade:69
 msgid "Enter / edit LaTeX Text"
 msgstr "LaTeX-szöveg szerkesztése"
 
@@ -2484,6 +2504,10 @@ msgstr "Keresett szöveg előző előfordulása"
 msgid "First Page Offset "
 msgstr "Első oldal eltolás "
 
+#: ../ui/latexSettings.glade:517
+msgid "Font: "
+msgstr ""
+
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
 msgstr "Teljes képernyő"
@@ -2496,7 +2520,7 @@ msgstr "Erősítés"
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr "Gauss-paraméter: minél magasabb, annál nagyobb a stabilitás, és annál nagyobb a késés a kurzor és a festési csúcs között."
 
-#: ../ui/latexSettings.glade:66
+#: ../ui/latexSettings.glade:87
 msgid "General LaTeX tool settings"
 msgstr "LaTeX-eszköz általános beállításai"
 
@@ -2508,7 +2532,7 @@ msgstr "Git commit"
 msgid "Global"
 msgstr "Globális"
 
-#: ../ui/latexSettings.glade:101
+#: ../ui/latexSettings.glade:122
 msgid "Global template file path"
 msgstr "Globális sablonfájl elérési útja"
 
@@ -2660,11 +2684,11 @@ msgstr "Új oldal beszúrása előtte"
 msgid "LaTeX"
 msgstr "LaTeX"
 
-#: ../ui/latexSettings.glade:289
+#: ../ui/latexSettings.glade:322
 msgid "LaTeX executable settings"
 msgstr "LaTeX végrehajtható beállítások"
 
-#: ../ui/latexSettings.glade:247
+#: ../ui/latexSettings.glade:265
 msgid "LaTeX generation command"
 msgstr "LaTeX létrehozási parancs"
 
@@ -2687,6 +2711,10 @@ msgstr "Bal / Jobbkezes"
 #: ../ui/about.glade:421
 msgid "License"
 msgstr "Licenc"
+
+#: ../ui/latexSettings.glade:401
+msgid "Line numbers"
+msgstr ""
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2820,6 +2848,10 @@ msgstr "Tulajdonságok"
 msgid "Output Device"
 msgstr "Kimeneti eszköz"
 
+#: ../ui/texdialog.glade:143
+msgid "Output generated by the LaTeX command."
+msgstr ""
+
 #: ../ui/settings.glade:5102
 msgid "PDF Cache"
 msgstr "PDF-gyorsítótár"
@@ -2873,6 +2905,10 @@ msgstr "Toll _tulajdonságok"
 #: ../ui/settings.glade:3841
 msgid "Performance"
 msgstr "Teljesítmény"
+
+#: ../ui/latexSettings.glade:532
+msgid "Pick the Editor's Font"
+msgstr ""
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3137,6 +3173,10 @@ msgstr "Mutató gombok"
 msgid "Successive (ms)"
 msgstr "Egymást követő (ezredmásodperc)"
 
+#: ../ui/latexSettings.glade:429
+msgid "Syntax highlighting"
+msgstr ""
+
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
@@ -3146,7 +3186,11 @@ msgstr "Rendszer kurzor"
 msgid "T_oolbars"
 msgstr "_Eszköztárak"
 
-#: ../ui/latexSettings.glade:215
+#: ../ui/texdialog.glade:125
+msgid "TeX Source"
+msgstr ""
+
+#: ../ui/latexSettings.glade:233
 msgid "Template file settings"
 msgstr "Sablonfájl beállításai"
 
@@ -3158,11 +3202,11 @@ msgstr "Sablon:"
 msgid "Test"
 msgstr "Teszt"
 
-#: ../ui/latexSettings.glade:268
+#: ../ui/latexSettings.glade:286
 msgid "Test configuration"
 msgstr "Állapot vizsgálata"
 
-#: ../ui/latexSettings.glade:272
+#: ../ui/latexSettings.glade:290
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Tesztelje, hogy a jelenlegi beállítások érvényesek-e a LaTeX létrehozási parancs futtatásával a globális sablonfájlban egy tesztképlettel."
 
@@ -3170,19 +3214,19 @@ msgstr "Tesztelje, hogy a jelenlegi beállítások érvényesek-e a LaTeX létre
 msgid "Text Font..."
 msgstr "Szöveg betűkészlete…"
 
-#: ../ui/latexSettings.glade:99
+#: ../ui/latexSettings.glade:120
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr "A LaTeX-fájl a LaTeX-eszköz sablonjaként."
 
-#: ../ui/latexSettings.glade:200
+#: ../ui/latexSettings.glade:197
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr "Szövegeszköz jelenlegi színe hexadecimális vörös-zöld-kék formátumban."
 
-#: ../ui/latexSettings.glade:114
+#: ../ui/latexSettings.glade:134
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr "A következő karakterláncok helyettesítésre kerülnek a globális sablonfájlban a LaTeX eszköz futtatásakor:"
 
-#: ../ui/latexSettings.glade:139
+#: ../ui/latexSettings.glade:160
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr "A LaTeX eszközbe beírt matematikai mód képlet."
 
@@ -3230,6 +3274,10 @@ msgstr "Kijelölt szöveg aláhúzása"
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
 msgstr "Rendelkezésre álló részvényikonok használata (újraindítás szükséges)"
+
+#: ../ui/latexSettings.glade:497
+msgid "Use font from system theme."
+msgstr ""
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
@@ -3298,6 +3346,10 @@ msgstr "Szélesség:"
 #: ../ui/about.glade:393
 msgid "With help from the community"
 msgstr "A Közösségtől kapott segítséggel"
+
+#: ../ui/latexSettings.glade:461
+msgid "Wrap text"
+msgstr ""
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
