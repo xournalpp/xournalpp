@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-13 06:56+0000\n"
-"PO-Revision-Date: 2022-06-13 07:47\n"
+"POT-Creation-Date: 2022-06-16 10:48+0000\n"
+"PO-Revision-Date: 2022-06-16 10:49\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -34,7 +34,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " van {1}"
 
-#: ../src/core/control/settings/Settings.cpp:124
+#: ../src/core/control/settings/Settings.cpp:125
 msgid "%F-Note-%H-%M"
 msgstr "%F-Notitie-%H-%M"
 
@@ -203,11 +203,11 @@ msgid "Could not create folder: {1}\n"
 msgstr "Kon map niet aanmaken: {1}\n"
 "Mislukt met fout: {2}"
 
-#: ../src/core/control/LatexController.cpp:273
+#: ../src/core/control/LatexController.cpp:319
 msgid "Could not load LaTeX PDF file"
 msgstr "Kan LaTeX PDF-bestand niet openen"
 
-#: ../src/core/control/LatexController.cpp:267
+#: ../src/core/control/LatexController.cpp:313
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "Kan LaTeX PDF-bestand niet openen: {1}"
 
@@ -528,11 +528,11 @@ msgstr "Fout {1} die volgende systeemcommando uitvoert: {2}"
 msgid "Error: {1}"
 msgstr "Fout: {1}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:75
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:151
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Fout: {1} is geen normaal bestand. Controleer uw LaTeX template bestand instellingen. "
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Fout: {1}. Controleer de inhoud van {2}"
 
@@ -609,7 +609,7 @@ msgstr ""
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Fout bij het parsen van LaTeX generator commando: {1}"
 
-#: ../src/core/control/LatexController.cpp:58
+#: ../src/core/control/LatexController.cpp:61
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Lezen van globaal sjabloonbestand mislukt. Controleer uw instellingen."
 
@@ -657,11 +657,11 @@ msgstr "GNU GPLv2 of hoger"
 msgid "Get version of xournalpp"
 msgstr "Versie van xournalpp ophalen"
 
-#: ../src/core/control/LatexController.cpp:53
+#: ../src/core/control/LatexController.cpp:56
 msgid "Global template file does not exist. Please check your settings."
 msgstr "Globaal sjabloonbestand bestaat niet. Controleer uw instellingen."
 
-#: ../src/core/control/LatexController.cpp:64
+#: ../src/core/control/LatexController.cpp:67
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Globaal sjabloonbestand is geen regulier bestand. Controleer uw instellingen. "
 
@@ -696,6 +696,10 @@ msgstr "Grafiek"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Grid Snapping"
 msgstr "Vastklikken aan raster"
+
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:42
+msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
@@ -765,7 +769,11 @@ msgstr "Isometrische Grafiek"
 msgid "Jump to Page (first Page: 1)"
 msgstr "Ga naar pagina (eerste pagina: 1)"
 
-#: ../src/core/control/LatexController.cpp:192
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:37
+msgid "LaTeX editor theme:"
+msgstr ""
+
+#: ../src/core/control/LatexController.cpp:222
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Latex generatie ondervond een fout: {1} (afsluitcode: {2})"
 
@@ -1067,7 +1075,7 @@ msgstr "Verticaal gelijnd"
 msgid "SVG graphics"
 msgstr "SVG-afbeeldingen"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:139
 msgid "Sample LaTeX file generated successfully."
 msgstr "Voorbeeld LaTeX-bestand succesvol gegenereerd."
 
@@ -1369,7 +1377,7 @@ msgstr "Het bestand is geen geldig .xopp-bestand (versie ontbreekt): '{1}'"
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Het bestand is geen geldig .xopp-bestand (versie is beschadigd): '{1}'"
 
-#: ../src/core/control/LatexController.cpp:240
+#: ../src/core/control/LatexController.cpp:281
 msgid "The formula is empty when rendered or invalid."
 msgstr "De formule blijkt na het renderen leeg te zijn of is ongeldig."
 
@@ -1421,7 +1429,7 @@ msgstr "Werkbalken"
 msgid "Trying to emergency save the current open document…"
 msgstr "Bezig met opslaan van huidig document voor noodgevallen…"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:129
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
@@ -1755,11 +1763,11 @@ msgstr "%"
 msgid "% greater than the initial distance between the two touches."
 msgstr "% is groter dan de originele afstand tussen de twee aanraakpunten."
 
-#: ../ui/latexSettings.glade:188
+#: ../ui/latexSettings.glade:185
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr ""
 
-#: ../ui/latexSettings.glade:127
+#: ../ui/latexSettings.glade:148
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr ""
 
@@ -2075,6 +2083,10 @@ msgstr "Auteur: "
 msgid "Authors"
 msgstr ""
 
+#: ../ui/latexSettings.glade:415
+msgid "Auto-indent"
+msgstr ""
+
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
 msgstr "Automatisch detecteren"
@@ -2152,7 +2164,7 @@ msgstr "Knop 2"
 msgid "Change"
 msgstr ""
 
-#: ../ui/latexSettings.glade:176
+#: ../ui/latexSettings.glade:173
 msgid "Choose a global LaTeX template file"
 msgstr ""
 
@@ -2175,6 +2187,10 @@ msgstr ""
 #: ../ui/settings.glade:3010
 msgid "Colors"
 msgstr "Kleuren"
+
+#: ../ui/texdialog.glade:163
+msgid "Command Output"
+msgstr ""
 
 #: ../ui/main.glade:1225
 msgid "Configure Page Template"
@@ -2349,6 +2365,10 @@ msgstr "Klonen"
 msgid "Edit (not implemented yet)"
 msgstr "Bewerken (nog niet geïmplementeerd)"
 
+#: ../ui/latexSettings.glade:574
+msgid "Editor settings"
+msgstr ""
+
 #: ../ui/settings.glade:2260
 msgid "Enable"
 msgstr "Inschakelen"
@@ -2397,7 +2417,7 @@ msgstr ""
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Zoomgebaren inschakelen (herstart vereist)"
 
-#: ../ui/texdialog.glade:72
+#: ../ui/texdialog.glade:69
 msgid "Enter / edit LaTeX Text"
 msgstr "LaTeX-tekst invoeren/bewerken"
 
@@ -2450,6 +2470,10 @@ msgstr "Naar vorige vermelding van zoekterm"
 msgid "First Page Offset "
 msgstr "Compensatie van eerste pagina "
 
+#: ../ui/latexSettings.glade:517
+msgid "Font: "
+msgstr ""
+
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
 msgstr "Beeldvullend"
@@ -2462,7 +2486,7 @@ msgstr "Toename"
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr ""
 
-#: ../ui/latexSettings.glade:66
+#: ../ui/latexSettings.glade:87
 msgid "General LaTeX tool settings"
 msgstr ""
 
@@ -2474,7 +2498,7 @@ msgstr "Git commit"
 msgid "Global"
 msgstr "Algemeen"
 
-#: ../ui/latexSettings.glade:101
+#: ../ui/latexSettings.glade:122
 msgid "Global template file path"
 msgstr ""
 
@@ -2626,11 +2650,11 @@ msgstr "Nieuwe pagina invoegen vóór"
 msgid "LaTeX"
 msgstr ""
 
-#: ../ui/latexSettings.glade:289
+#: ../ui/latexSettings.glade:322
 msgid "LaTeX executable settings"
 msgstr ""
 
-#: ../ui/latexSettings.glade:247
+#: ../ui/latexSettings.glade:265
 msgid "LaTeX generation command"
 msgstr ""
 
@@ -2653,6 +2677,10 @@ msgstr "Links-/Rechtshandig"
 #: ../ui/about.glade:421
 msgid "License"
 msgstr "Licentie"
+
+#: ../ui/latexSettings.glade:401
+msgid "Line numbers"
+msgstr ""
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2785,6 +2813,10 @@ msgstr "Opties"
 msgid "Output Device"
 msgstr "Uitvoerapparaat"
 
+#: ../ui/texdialog.glade:143
+msgid "Output generated by the LaTeX command."
+msgstr ""
+
 #: ../ui/settings.glade:5102
 msgid "PDF Cache"
 msgstr ""
@@ -2837,6 +2869,10 @@ msgstr "Stylusopties"
 
 #: ../ui/settings.glade:3841
 msgid "Performance"
+msgstr ""
+
+#: ../ui/latexSettings.glade:532
+msgid "Pick the Editor's Font"
 msgstr ""
 
 #: ../ui/settings.glade:5733
@@ -3101,6 +3137,10 @@ msgstr "Stylusknoppen"
 msgid "Successive (ms)"
 msgstr "Achtereenvolgens (ms)"
 
+#: ../ui/latexSettings.glade:429
+msgid "Syntax highlighting"
+msgstr ""
+
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
@@ -3110,7 +3150,11 @@ msgstr ""
 msgid "T_oolbars"
 msgstr "Werkb_alken"
 
-#: ../ui/latexSettings.glade:215
+#: ../ui/texdialog.glade:125
+msgid "TeX Source"
+msgstr ""
+
+#: ../ui/latexSettings.glade:233
 msgid "Template file settings"
 msgstr ""
 
@@ -3122,11 +3166,11 @@ msgstr "Sjabloon:"
 msgid "Test"
 msgstr "Testen"
 
-#: ../ui/latexSettings.glade:268
+#: ../ui/latexSettings.glade:286
 msgid "Test configuration"
 msgstr ""
 
-#: ../ui/latexSettings.glade:272
+#: ../ui/latexSettings.glade:290
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr ""
 
@@ -3134,19 +3178,19 @@ msgstr ""
 msgid "Text Font..."
 msgstr "Lettertype van tekst..."
 
-#: ../ui/latexSettings.glade:99
+#: ../ui/latexSettings.glade:120
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr ""
 
-#: ../ui/latexSettings.glade:200
+#: ../ui/latexSettings.glade:197
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr ""
 
-#: ../ui/latexSettings.glade:114
+#: ../ui/latexSettings.glade:134
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr ""
 
-#: ../ui/latexSettings.glade:139
+#: ../ui/latexSettings.glade:160
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr ""
 
@@ -3193,6 +3237,10 @@ msgstr ""
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
+msgstr ""
+
+#: ../ui/latexSettings.glade:497
+msgid "Use font from system theme."
 msgstr ""
 
 #: ../ui/settings.glade:4756
@@ -3260,6 +3308,10 @@ msgstr "Breedte:"
 #: ../ui/about.glade:393
 msgid "With help from the community"
 msgstr "Met dank aan de gemeenschap"
+
+#: ../ui/latexSettings.glade:461
+msgid "Wrap text"
+msgstr ""
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
