@@ -69,6 +69,19 @@ file (GLOB xournalpp_SOURCES_RECURSE
   pdf/popplerapi/*.cpp
 )
 
+###############################
+# Add MacOS specific files
+# Todo(Roland): consider moving this into an own MacOS specific cmake script
+# e.g. exe/macos/CMakeLists.txt
+##############################
+
+if (APPLE)
+  # MacOS specific source files
+  file (GLOB xournalpp-sources-osx exe/osx/*.cpp exe/osx/*.h)
+  target_sources(xournalpp PRIVATE ${xournalpp-sources-osx})
+  target_include_directories(xournalpp PRIVATE exe)
+endif()
+
 if (WIN32)
   # generate .ico from .png
   set (ICON_SIZES 16 32 48 256)
