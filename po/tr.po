@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-13 06:56+0000\n"
-"PO-Revision-Date: 2022-06-13 07:47\n"
+"POT-Creation-Date: 2022-06-16 10:48+0000\n"
+"PO-Revision-Date: 2022-06-16 10:50\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -34,7 +34,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " / {1}"
 
-#: ../src/core/control/settings/Settings.cpp:124
+#: ../src/core/control/settings/Settings.cpp:125
 msgid "%F-Note-%H-%M"
 msgstr "%F-Not-%H-%M"
 
@@ -204,11 +204,11 @@ msgid "Could not create folder: {1}\n"
 msgstr "Klasör oluşturulamadı: {1}\n"
 "İşlem hatasıyla başarısız oldu: {2}"
 
-#: ../src/core/control/LatexController.cpp:273
+#: ../src/core/control/LatexController.cpp:319
 msgid "Could not load LaTeX PDF file"
 msgstr "LaTeX PDF dosyası yüklenemedi"
 
-#: ../src/core/control/LatexController.cpp:267
+#: ../src/core/control/LatexController.cpp:313
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "LaTeX PDF dosyası yüklenemedi: {1}"
 
@@ -529,11 +529,11 @@ msgstr "Sistem komutu yürütülürken {1} hatası: {2}"
 msgid "Error: {1}"
 msgstr "Hata: {1}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:75
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:151
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "Hata: {1} normal bir dosya değil. Lütfen LaTeX şablon dosyası ayarlarınızı kontrol edin. "
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "Hata: {1}. Lütfen {2} içeriğini kontrol edin"
 
@@ -610,7 +610,7 @@ msgstr ""
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "LaTeX oluşturucu komutu ayrıştırılamadı: {1}"
 
-#: ../src/core/control/LatexController.cpp:58
+#: ../src/core/control/LatexController.cpp:61
 msgid "Failed to read global template file. Please check your settings."
 msgstr "Genel şablon dosyası okunamadı. Lütfen ayarlarınızı kontrol ediniz."
 
@@ -658,11 +658,11 @@ msgstr "GNU GPLv2 veya üstü"
 msgid "Get version of xournalpp"
 msgstr "Xournalpp sürümünü edinin"
 
-#: ../src/core/control/LatexController.cpp:53
+#: ../src/core/control/LatexController.cpp:56
 msgid "Global template file does not exist. Please check your settings."
 msgstr "Genel şablon dosyası yok. Lütfen ayarlarınızı kontrol ediniz."
 
-#: ../src/core/control/LatexController.cpp:64
+#: ../src/core/control/LatexController.cpp:67
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "Genel şablon dosyası düzenli bir dosya degil. Lütfen ayarlarınızı kontrol ediniz. "
 
@@ -697,6 +697,10 @@ msgstr "Grafik"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Grid Snapping"
 msgstr "Izgara Yakalama"
+
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:42
+msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
@@ -766,7 +770,11 @@ msgstr "İzometrik Grafik"
 msgid "Jump to Page (first Page: 1)"
 msgstr "Sayfaya Git (ilk Sayfa: 1)"
 
-#: ../src/core/control/LatexController.cpp:192
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:37
+msgid "LaTeX editor theme:"
+msgstr ""
+
+#: ../src/core/control/LatexController.cpp:222
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "Latex oluşturulurken bir hatayla karşılaştı: {1} (çıkış kodu: {2})"
 
@@ -1069,7 +1077,7 @@ msgstr "Dikey çizgi ile yönetilir"
 msgid "SVG graphics"
 msgstr "SVG grafikleri"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:139
 msgid "Sample LaTeX file generated successfully."
 msgstr "Örnek LaTeX dosyası başarıyla oluşturuldu."
 
@@ -1375,7 +1383,7 @@ msgstr "Dosya geçerli bir .xopp dosyası değil (Sürüm eksik): \"{1}\""
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "Dosya geçerli bir .xopp dosyası değil (Sürüm dizesi bozuk): \"{1}\""
 
-#: ../src/core/control/LatexController.cpp:240
+#: ../src/core/control/LatexController.cpp:281
 msgid "The formula is empty when rendered or invalid."
 msgstr "Formül, oluşturulduğunda veya geçersiz olduğunda boştur."
 
@@ -1427,7 +1435,7 @@ msgstr "Araç çubukları"
 msgid "Trying to emergency save the current open document…"
 msgstr "Acil durum mevcut belgeyi kaydetmeye çalışıyor…"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:129
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "{1} konumundaki genel şablon dosyası açılamıyor. Dosya mevcut mu?"
 
@@ -1761,11 +1769,11 @@ msgstr "%"
 msgid "% greater than the initial distance between the two touches."
 msgstr "% değeri iki dokunuş arasındaki ilk mesafeden daha büyük."
 
-#: ../ui/latexSettings.glade:188
+#: ../ui/latexSettings.glade:185
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr "%%XPP_TEXT_COLOR%%"
 
-#: ../ui/latexSettings.glade:127
+#: ../ui/latexSettings.glade:148
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
@@ -2106,6 +2114,10 @@ msgstr "Yazar: "
 msgid "Authors"
 msgstr "Yazarlar"
 
+#: ../ui/latexSettings.glade:415
+msgid "Auto-indent"
+msgstr ""
+
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
 msgstr "Otomatik algılama"
@@ -2183,7 +2195,7 @@ msgstr "Düğme 2"
 msgid "Change"
 msgstr "Değiştir"
 
-#: ../ui/latexSettings.glade:176
+#: ../ui/latexSettings.glade:173
 msgid "Choose a global LaTeX template file"
 msgstr "Genel bir LaTeX şablon dosyası seçin"
 
@@ -2206,6 +2218,10 @@ msgstr ""
 #: ../ui/settings.glade:3010
 msgid "Colors"
 msgstr "Renkler"
+
+#: ../ui/texdialog.glade:163
+msgid "Command Output"
+msgstr ""
 
 #: ../ui/main.glade:1225
 msgid "Configure Page Template"
@@ -2383,6 +2399,10 @@ msgstr "Çoğalt"
 msgid "Edit (not implemented yet)"
 msgstr "Düzenle (henüz uygulanmadı)"
 
+#: ../ui/latexSettings.glade:574
+msgid "Editor settings"
+msgstr ""
+
 #: ../ui/settings.glade:2260
 msgid "Enable"
 msgstr "Etkinleştir"
@@ -2431,7 +2451,7 @@ msgstr "Dokunarak çizimi aktif et"
 msgid "Enable zoom gestures (requires restart)"
 msgstr "Yakınlaştırma hareketlerini etkinleştir (yeniden başlatma gerekir)"
 
-#: ../ui/texdialog.glade:72
+#: ../ui/texdialog.glade:69
 msgid "Enter / edit LaTeX Text"
 msgstr "LaTeX Metnini girin / düzenleyin"
 
@@ -2484,6 +2504,10 @@ msgstr "Arama dizesinin bir önceki tekrarlamasını bul"
 msgid "First Page Offset "
 msgstr "İlk Sayfa Ofseti "
 
+#: ../ui/latexSettings.glade:517
+msgid "Font: "
+msgstr ""
+
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
 msgstr "Tam Ekran"
@@ -2496,7 +2520,7 @@ msgstr "Kazanç"
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr "Gauss parametresi: ne kadar yüksekse, o kadar stabil ve imleciniz ile boyama ucu arasındaki gecikme o kadar fazladır."
 
-#: ../ui/latexSettings.glade:66
+#: ../ui/latexSettings.glade:87
 msgid "General LaTeX tool settings"
 msgstr "Genel LaTeX ayarları"
 
@@ -2508,7 +2532,7 @@ msgstr "Git işlemesi"
 msgid "Global"
 msgstr "Küresel"
 
-#: ../ui/latexSettings.glade:101
+#: ../ui/latexSettings.glade:122
 msgid "Global template file path"
 msgstr "Genel şablon dosyası yolu"
 
@@ -2660,11 +2684,11 @@ msgstr "Önce Sayfa Ekle"
 msgid "LaTeX"
 msgstr "LaTeX"
 
-#: ../ui/latexSettings.glade:289
+#: ../ui/latexSettings.glade:322
 msgid "LaTeX executable settings"
 msgstr "LaTeX oluşturma ayarları"
 
-#: ../ui/latexSettings.glade:247
+#: ../ui/latexSettings.glade:265
 msgid "LaTeX generation command"
 msgstr "LaTeX oluşturma komutu"
 
@@ -2687,6 +2711,10 @@ msgstr "Solak / Sağlak"
 #: ../ui/about.glade:421
 msgid "License"
 msgstr "Lisans"
+
+#: ../ui/latexSettings.glade:401
+msgid "Line numbers"
+msgstr ""
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2820,6 +2848,10 @@ msgstr "Seçenekler"
 msgid "Output Device"
 msgstr "Çıktı Aygıtı"
 
+#: ../ui/texdialog.glade:143
+msgid "Output generated by the LaTeX command."
+msgstr ""
+
 #: ../ui/settings.glade:5102
 msgid "PDF Cache"
 msgstr "PDF Önbellek"
@@ -2873,6 +2905,10 @@ msgstr "Kalem _Seçenekleri"
 #: ../ui/settings.glade:3841
 msgid "Performance"
 msgstr "Performans"
+
+#: ../ui/latexSettings.glade:532
+msgid "Pick the Editor's Font"
+msgstr ""
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3137,6 +3173,10 @@ msgstr "Stilus Düğmeleri"
 msgid "Successive (ms)"
 msgstr "Ardışık (ms)"
 
+#: ../ui/latexSettings.glade:429
+msgid "Syntax highlighting"
+msgstr ""
+
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
@@ -3146,7 +3186,11 @@ msgstr "Sistem imleci"
 msgid "T_oolbars"
 msgstr "Araç Ç_ubukları"
 
-#: ../ui/latexSettings.glade:215
+#: ../ui/texdialog.glade:125
+msgid "TeX Source"
+msgstr ""
+
+#: ../ui/latexSettings.glade:233
 msgid "Template file settings"
 msgstr "Şablon dosya ayarları"
 
@@ -3158,11 +3202,11 @@ msgstr "Şablon:"
 msgid "Test"
 msgstr "Test"
 
-#: ../ui/latexSettings.glade:268
+#: ../ui/latexSettings.glade:286
 msgid "Test configuration"
 msgstr "Yapılandırmayı test edin"
 
-#: ../ui/latexSettings.glade:272
+#: ../ui/latexSettings.glade:290
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "Genel şablon dosyasında bir formül girerek LaTeX oluşturma komutunun düzgün çalıştığını test edin."
 
@@ -3170,19 +3214,19 @@ msgstr "Genel şablon dosyasında bir formül girerek LaTeX oluşturma komutunun
 msgid "Text Font..."
 msgstr "Metin Yazı Tipi..."
 
-#: ../ui/latexSettings.glade:99
+#: ../ui/latexSettings.glade:120
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr "LaTeX aracı için şablon olarak kullanılacak LaTeX dosyası."
 
-#: ../ui/latexSettings.glade:200
+#: ../ui/latexSettings.glade:197
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr "Metin Aracının geçerli rengi, onaltılık RGB biçiminde."
 
-#: ../ui/latexSettings.glade:114
+#: ../ui/latexSettings.glade:134
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr "LaTeX aracı çalıştırılırken genel şablon dosyasında aşağıdaki dizeler olarak değiştirilecektir:"
 
-#: ../ui/latexSettings.glade:139
+#: ../ui/latexSettings.glade:160
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr "LaTeX aracında yazılan matematik modu formülü."
 
@@ -3229,6 +3273,10 @@ msgstr "Seçili metnin altını çiz"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
+msgstr ""
+
+#: ../ui/latexSettings.glade:497
+msgid "Use font from system theme."
 msgstr ""
 
 #: ../ui/settings.glade:4756
@@ -3298,6 +3346,10 @@ msgstr "Genişlik:"
 #: ../ui/about.glade:393
 msgid "With help from the community"
 msgstr "Topluluk yardımı ile"
+
+#: ../ui/latexSettings.glade:461
+msgid "Wrap text"
+msgstr ""
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
