@@ -77,9 +77,10 @@ file (GLOB xournalpp_SOURCES_RECURSE
 
 if (APPLE)
   # MacOS specific source files
-  file (GLOB xournalpp-sources-osx exe/osx/*.cpp exe/osx/*.h)
-  target_sources(xournalpp PRIVATE ${xournalpp-sources-osx})
-  target_include_directories(xournalpp PRIVATE exe)
+  # Concatenate SOURCES lists
+  set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
+  unset (xournalpp_SOURCES_RECURSE)
+  file (GLOB xournalpp_SOURCES_RECURSE osx/*.cpp osx/*.h)
 endif()
 
 if (WIN32)
