@@ -14,8 +14,6 @@
          not needed. If the source path is left out, the default
          script will be used.
     -->
-    <launcher-script></launcher-script >
-
     <gtk>gtk+-3.0</gtk>
   </meta>
 
@@ -93,6 +91,14 @@
 
   <data dest="${bundle}/Contents/Resources">
     ${project}/icon/xournalpp.icns
+  </data>
+
+  <data dest="${bundle}/Contents/Resources/share/glib-2.0/schemas">
+    ${prefix}/share/glib-2.0/schemas
+  </data>
+
+  <data dest="${bundle}/Contents/Resources/ui">
+    ${prefix}/share/xournalpp/ui
   </data>
 
   </app-bundle>
