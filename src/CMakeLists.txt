@@ -52,6 +52,19 @@ set_target_properties(xournalpp PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BIN
 # e.g. exe/win32/CMakeLists.txt
 ###############################
 
+###############################
+# Add MacOS specific files
+# Todo(Roland): consider moving this into an own MacOS specific cmake script
+# e.g. exe/macos/CMakeLists.txt
+##############################
+
+if (APPLE)
+  # MacOS specific source files
+  file (GLOB xournalpp-sources-osx exe/osx/*.cpp exe/osx/*.h)
+  target_sources(xournalpp PRIVATE ${xournalpp-sources-osx})
+  target_include_directories(xournalpp PRIVATE exe)
+endif()
+
 if (WIN32)
   # generate .ico from .png
   find_package(ImageMagick REQUIRED COMPONENTS convert)

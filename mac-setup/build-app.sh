@@ -40,24 +40,7 @@ export GTKDIR="$1/inst"
 
 gtk-mac-bundler xournalpp.bundle
 
-mkdir -p Xournal++.app/Contents/Resources
-
-export bundle_etc="./Xournal++.app/Contents/Resources/etc"
-export GTK_IM_MODULE_FILE="$bundle_etc/gtk-2.0/gtk.immodules"
-export GDK_PIXBUF_MODULE_FILE="$bundle_etc/gtk-2.0/gdk-pixbuf.loaders"
-
-mkdir -p ./Xournal++.app/Contents/Resources/etc/gtk-2.0/
-gdk-pixbuf-query-loaders >./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
-sed -i -e "s:$1/inst/:@executable_path/../Resources/:g" ./Xournal++.app/Contents/Resources/etc/gtk-2.0/gdk-pixbuf.loaders
-# Replace old loaders cache location with new one in builtin launcher script, see https://gitlab.gnome.org/GNOME/gtk-mac-bundler/-/issues/12
-sed -i -e "s:bundle_etc/gtk-2.0/gdk-pixbuf.loaders:bundle_lib/gdk-pixbuf-2.0/2.10.0/loaders.cache:g" ./Xournal++.app/Contents/MacOS/xournalpp
-
-echo "Copy GTK Schema"
-mkdir -p ./Xournal++.app/Contents/Resources/share/glib-2.0/schemas
-cp -rp "$1"/inst/share/glib-2.0/schemas ./Xournal++.app/Contents/Resources/share/glib-2.0/
-
-echo "Copy UI"
-cp -rp ../ui ./Xournal++.app/Contents/Resources/
+echo "Replace GDK_CONTROL_MASK by GDK_META_MASK in main.glade"
 sed -i -e 's/GDK_CONTROL_MASK/GDK_META_MASK/g' ./Xournal++.app/Contents/Resources/ui/main.glade
 
 echo "Create zip"
