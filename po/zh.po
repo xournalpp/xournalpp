@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-13 06:56+0000\n"
-"PO-Revision-Date: 2022-06-16 03:08\n"
+"POT-Creation-Date: 2022-06-16 10:48+0000\n"
+"PO-Revision-Date: 2022-06-16 10:49\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -34,7 +34,7 @@ msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
 msgstr " 页，共{1} 页"
 
-#: ../src/core/control/settings/Settings.cpp:124
+#: ../src/core/control/settings/Settings.cpp:125
 msgid "%F-Note-%H-%M"
 msgstr "%F-笔记-%H-%M"
 
@@ -204,11 +204,11 @@ msgid "Could not create folder: {1}\n"
 msgstr "无法创建文件夹:{1}\n"
 "因为如下错误导致失败:{2}"
 
-#: ../src/core/control/LatexController.cpp:273
+#: ../src/core/control/LatexController.cpp:319
 msgid "Could not load LaTeX PDF file"
 msgstr "无法加载 LaTeX PDF 文件"
 
-#: ../src/core/control/LatexController.cpp:267
+#: ../src/core/control/LatexController.cpp:313
 msgid "Could not load LaTeX PDF file: {1}"
 msgstr "无法加载 LaTeX PDF 文件: {1}"
 
@@ -529,11 +529,11 @@ msgstr "错误 {1} 执行系统命令: {2}"
 msgid "Error: {1}"
 msgstr "错误：{1}"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:75
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:151
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
 msgstr "错误： {1} 不是常规文件。请检查您的 LaTeX 模板文件设置。 "
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:65
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:141
 msgid "Error: {1}. Please check the contents of {2}"
 msgstr "错误： {1}。请检查 {2} 的内容"
 
@@ -611,7 +611,7 @@ msgstr "从 zip 文件 \"{1}\" 中打开 content.xml 失败"
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "解析 LaTeX 生成命令失败:{1}"
 
-#: ../src/core/control/LatexController.cpp:58
+#: ../src/core/control/LatexController.cpp:61
 msgid "Failed to read global template file. Please check your settings."
 msgstr "无法读取全局模板文件，请检查你的设置。"
 
@@ -632,7 +632,7 @@ msgstr "填充"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:284
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
-msgstr "筛选输入压力。压力乘以压力乘数。如果低于最低值，请使用最低压力。"
+msgstr "过滤输入压力，压力乘以压力乘数，如果小于最小压力，则使用最小压力。"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:549
 msgid "Fine"
@@ -658,11 +658,11 @@ msgstr "GNU GPLv2 或更新的GNU协议版本"
 msgid "Get version of xournalpp"
 msgstr "获取xournalp版本信息"
 
-#: ../src/core/control/LatexController.cpp:53
+#: ../src/core/control/LatexController.cpp:56
 msgid "Global template file does not exist. Please check your settings."
 msgstr "缺少全局模板文件，请检查你的设置。"
 
-#: ../src/core/control/LatexController.cpp:64
+#: ../src/core/control/LatexController.cpp:67
 msgid "Global template file is not a regular file. Please check your settings. "
 msgstr "全局模板文件格式不正确，请检查你的设置。 "
 
@@ -697,6 +697,10 @@ msgstr "图形"
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:395
 msgid "Grid Snapping"
 msgstr "网格截图"
+
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:42
+msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
+msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
@@ -766,7 +770,11 @@ msgstr "等距网格线"
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到页面(第一页:1)"
 
-#: ../src/core/control/LatexController.cpp:192
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:37
+msgid "LaTeX editor theme:"
+msgstr ""
+
+#: ../src/core/control/LatexController.cpp:222
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
 msgstr "LaTeX 生成器遇到了一个错误:{1}(退出代码: {2})"
 
@@ -1069,7 +1077,7 @@ msgstr "信笺纸"
 msgid "SVG graphics"
 msgstr "SVG图形"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:63
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:139
 msgid "Sample LaTeX file generated successfully."
 msgstr "已成功生成示例 LaTeX 文件。"
 
@@ -1375,7 +1383,7 @@ msgstr "文件不是有效的 .xopp 文件 (版本缺失): \"{1}\""
 msgid "The file is not a valid .xopp file (Version string corrupted): \"{1}\""
 msgstr "文件不是有效的 .xopp 文件 (版本字符串损坏): \"{1}\""
 
-#: ../src/core/control/LatexController.cpp:240
+#: ../src/core/control/LatexController.cpp:281
 msgid "The formula is empty when rendered or invalid."
 msgstr "公式渲染后为空或无效"
 
@@ -1427,7 +1435,7 @@ msgstr "工具条"
 msgid "Trying to emergency save the current open document…"
 msgstr "尝试紧急保存当前打开的文档…"
 
-#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
+#: ../src/core/gui/dialog/LatexSettingsPanel.cpp:129
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr "无法在 {1} 打开全局模板文件，它是否存在？"
 
@@ -1761,11 +1769,11 @@ msgstr "%"
 msgid "% greater than the initial distance between the two touches."
 msgstr "%大于两次触碰之间的初始距离。"
 
-#: ../ui/latexSettings.glade:188
+#: ../ui/latexSettings.glade:185
 msgid "%%XPP_TEXT_COLOR%%"
 msgstr "%%XPP_TEXT_COLOR%%"
 
-#: ../ui/latexSettings.glade:127
+#: ../ui/latexSettings.glade:148
 msgid "%%XPP_TOOL_INPUT%%"
 msgstr "%%XPP_TOOL_INPUT%%"
 
@@ -2107,6 +2115,10 @@ msgstr "作者: "
 msgid "Authors"
 msgstr "作者"
 
+#: ../ui/latexSettings.glade:415
+msgid "Auto-indent"
+msgstr ""
+
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
 msgstr "自动检测"
@@ -2184,7 +2196,7 @@ msgstr "按钮 2"
 msgid "Change"
 msgstr "更改"
 
-#: ../ui/latexSettings.glade:176
+#: ../ui/latexSettings.glade:173
 msgid "Choose a global LaTeX template file"
 msgstr "选择LaTex全局模板文件"
 
@@ -2207,6 +2219,10 @@ msgstr "颜色"
 #: ../ui/settings.glade:3010
 msgid "Colors"
 msgstr "颜色"
+
+#: ../ui/texdialog.glade:163
+msgid "Command Output"
+msgstr ""
 
 #: ../ui/main.glade:1225
 msgid "Configure Page Template"
@@ -2384,6 +2400,10 @@ msgstr "重复"
 msgid "Edit (not implemented yet)"
 msgstr "编辑(尚未实现)"
 
+#: ../ui/latexSettings.glade:574
+msgid "Editor settings"
+msgstr ""
+
 #: ../ui/settings.glade:2260
 msgid "Enable"
 msgstr "启用"
@@ -2432,7 +2452,7 @@ msgstr "允许触摸板的绘画输入"
 msgid "Enable zoom gestures (requires restart)"
 msgstr "启用手势缩放(需要重启)"
 
-#: ../ui/texdialog.glade:72
+#: ../ui/texdialog.glade:69
 msgid "Enter / edit LaTeX Text"
 msgstr "输入/编辑 LaTeX 文本"
 
@@ -2485,6 +2505,10 @@ msgstr "向上查找搜索字符串"
 msgid "First Page Offset "
 msgstr "第一页偏移 "
 
+#: ../ui/latexSettings.glade:517
+msgid "Font: "
+msgstr ""
+
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
 msgstr "全屏"
@@ -2497,7 +2521,7 @@ msgstr "收益"
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
 msgstr "高斯参数：值越大，线条越稳定，光标到笔画末端的缺口也越大"
 
-#: ../ui/latexSettings.glade:66
+#: ../ui/latexSettings.glade:87
 msgid "General LaTeX tool settings"
 msgstr "常规 LaTeX 工具设置"
 
@@ -2509,7 +2533,7 @@ msgstr "Git 提交"
 msgid "Global"
 msgstr "全局"
 
-#: ../ui/latexSettings.glade:101
+#: ../ui/latexSettings.glade:122
 msgid "Global template file path"
 msgstr "全局模板文件路径"
 
@@ -2661,11 +2685,11 @@ msgstr "在此前插入页面"
 msgid "LaTeX"
 msgstr "LaTeX"
 
-#: ../ui/latexSettings.glade:289
+#: ../ui/latexSettings.glade:322
 msgid "LaTeX executable settings"
 msgstr "LaTeX 可执行文件设置"
 
-#: ../ui/latexSettings.glade:247
+#: ../ui/latexSettings.glade:265
 msgid "LaTeX generation command"
 msgstr "LaTeX 生成命令"
 
@@ -2688,6 +2712,10 @@ msgstr "左利手/右利手"
 #: ../ui/about.glade:421
 msgid "License"
 msgstr "许可协议"
+
+#: ../ui/latexSettings.glade:401
+msgid "Line numbers"
+msgstr ""
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2821,6 +2849,10 @@ msgstr "选项"
 msgid "Output Device"
 msgstr "输出设备"
 
+#: ../ui/texdialog.glade:143
+msgid "Output generated by the LaTeX command."
+msgstr ""
+
 #: ../ui/settings.glade:5102
 msgid "PDF Cache"
 msgstr "PDF 缓存"
@@ -2873,6 +2905,10 @@ msgstr "画笔选项(_O)"
 #: ../ui/settings.glade:3841
 msgid "Performance"
 msgstr "性能"
+
+#: ../ui/latexSettings.glade:532
+msgid "Pick the Editor's Font"
+msgstr ""
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3137,6 +3173,10 @@ msgstr "触控笔按钮"
 msgid "Successive (ms)"
 msgstr "持续（ms）"
 
+#: ../ui/latexSettings.glade:429
+msgid "Syntax highlighting"
+msgstr ""
+
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
@@ -3146,7 +3186,11 @@ msgstr "系统光标"
 msgid "T_oolbars"
 msgstr "工具条(_o)"
 
-#: ../ui/latexSettings.glade:215
+#: ../ui/texdialog.glade:125
+msgid "TeX Source"
+msgstr ""
+
+#: ../ui/latexSettings.glade:233
 msgid "Template file settings"
 msgstr "模板文件设置"
 
@@ -3158,11 +3202,11 @@ msgstr "模板："
 msgid "Test"
 msgstr "测试"
 
-#: ../ui/latexSettings.glade:268
+#: ../ui/latexSettings.glade:286
 msgid "Test configuration"
 msgstr "测试配置"
 
-#: ../ui/latexSettings.glade:272
+#: ../ui/latexSettings.glade:290
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
 msgstr "通过使用测试公式在全局模板文件上运行LaTeX生成命令，以测试当前配置是否有效。"
 
@@ -3170,19 +3214,19 @@ msgstr "通过使用测试公式在全局模板文件上运行LaTeX生成命令�
 msgid "Text Font..."
 msgstr "文本字体..."
 
-#: ../ui/latexSettings.glade:99
+#: ../ui/latexSettings.glade:120
 msgid "The LaTeX file to use as a template for the LaTeX tool."
 msgstr "以 LaTeX 文件作为 LaTeX 工具的模板。"
 
-#: ../ui/latexSettings.glade:200
+#: ../ui/latexSettings.glade:197
 msgid "The current color of the Text Tool, in hex RGB format."
 msgstr "文本工具的当前颜色，为十六进制RGB格式。"
 
-#: ../ui/latexSettings.glade:114
+#: ../ui/latexSettings.glade:134
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
 msgstr "当运行 LaTeX 工具时，以下字符串将在全局模板文件中被替换："
 
-#: ../ui/latexSettings.glade:139
+#: ../ui/latexSettings.glade:160
 msgid "The math mode formula typed in the LaTeX tool."
 msgstr "在 LaTeX 工具中键入的数学模式公式。"
 
@@ -3230,6 +3274,10 @@ msgstr "为选中文本添加下划线"
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
 msgstr "使用可用的原生图标 (需要重启)"
+
+#: ../ui/latexSettings.glade:497
+msgid "Use font from system theme."
+msgstr ""
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
@@ -3297,6 +3345,10 @@ msgstr "宽度："
 #: ../ui/about.glade:393
 msgid "With help from the community"
 msgstr "来自社区的热心帮助"
+
+#: ../ui/latexSettings.glade:461
+msgid "Wrap text"
+msgstr ""
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
