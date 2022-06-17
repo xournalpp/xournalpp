@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-16 10:48+0000\n"
-"PO-Revision-Date: 2022-06-16 10:50\n"
+"PO-Revision-Date: 2022-06-17 06:59\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -1830,7 +1830,7 @@ msgstr "%a\t\tSkrócona nazwa dnia tygodnia (np. Wt.)\n"
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(wymaga restartu aplikacji)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2401,7 +2401,7 @@ msgstr "Edycja (nie zaimplementowana)"
 
 #: ../ui/latexSettings.glade:574
 msgid "Editor settings"
-msgstr ""
+msgstr "Ustawienia edytora"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
@@ -2506,7 +2506,7 @@ msgstr "Przesunięcie pierwszej strony "
 
 #: ../ui/latexSettings.glade:517
 msgid "Font: "
-msgstr ""
+msgstr "Czcionka: "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
@@ -2610,7 +2610,7 @@ msgstr "Projektanci ikon"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "Motyw ikon"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2907,7 +2907,7 @@ msgstr "Wydajność"
 
 #: ../ui/latexSettings.glade:532
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "Wybierz czcionkę edytora"
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3174,7 +3174,7 @@ msgstr "Kolejne (ms)"
 
 #: ../ui/latexSettings.glade:429
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Podświetlanie składni"
 
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
