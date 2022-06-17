@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-16 10:48+0000\n"
-"PO-Revision-Date: 2022-06-17 14:42\n"
+"PO-Revision-Date: 2022-06-17 15:50\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -772,7 +772,7 @@ msgstr "Salt la pagina (prima pagină: 1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:37
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "Aspectul elaboratorului LaTeX:"
 
 #: ../src/core/control/LatexController.cpp:222
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -2403,7 +2403,7 @@ msgstr "Modifică (nu este implementat încă)"
 
 #: ../ui/latexSettings.glade:574
 msgid "Editor settings"
-msgstr "Opțiuni"
+msgstr "Reglări pentru elaboratorul LaTeX"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
@@ -2716,7 +2716,7 @@ msgstr "Licenţă"
 
 #: ../ui/latexSettings.glade:401
 msgid "Line numbers"
-msgstr ""
+msgstr "Numărul rândului"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2910,7 +2910,7 @@ msgstr "Performanță"
 
 #: ../ui/latexSettings.glade:532
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "Alege tipul de litere al elaboratorului"
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3279,7 +3279,7 @@ msgstr "Folosește simbolurile Stock disponibile (trebuie repornit programul)"
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
-msgstr ""
+msgstr "Folosește tipul de litere al sistemului."
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
