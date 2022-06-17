@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-16 10:48+0000\n"
-"PO-Revision-Date: 2022-06-17 20:04\n"
+"PO-Revision-Date: 2022-06-17 21:03\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -3190,7 +3190,7 @@ msgstr "B_enzi cu instrumente"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "Sursa TeX"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
