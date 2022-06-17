@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-16 10:48+0000\n"
-"PO-Revision-Date: 2022-06-17 15:50\n"
+"PO-Revision-Date: 2022-06-17 20:04\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2118,7 +2118,7 @@ msgstr "Autori"
 
 #: ../ui/latexSettings.glade:415
 msgid "Auto-indent"
-msgstr ""
+msgstr "Alineat automat"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -3177,7 +3177,7 @@ msgstr "Succesiv (ms)"
 
 #: ../ui/latexSettings.glade:429
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Evidențiere sintaxă"
 
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
