@@ -11,7 +11,14 @@
 
 #pragma once
 
-#include "BaseStrokeHandler.h"
+#include "model/PageRef.h"  // for PageRef
+
+#include "BaseStrokeHandler.h"  // for BaseStrokeHandler
+
+class Point;
+class PositionInputData;
+class XojPageView;
+class XournalView;
 
 class ArrowHandler: public BaseStrokeHandler {
 public:

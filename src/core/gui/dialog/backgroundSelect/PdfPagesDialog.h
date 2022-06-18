@@ -11,11 +11,13 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <gtk/gtk.h>  // for GtkButton, GtkToggleButton
 
-#include "BackgroundSelectDialogBase.h"
-#include "BaseElementView.h"
+#include "BackgroundSelectDialogBase.h"  // for BackgroundSelectDialogBase
+
+class Document;
+class GladeSearchpath;
+class Settings;
 
 
 class PdfPagesDialog: public BackgroundSelectDialogBase {

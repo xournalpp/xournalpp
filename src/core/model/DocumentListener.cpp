@@ -1,6 +1,8 @@
 #include "DocumentListener.h"
 
-#include "DocumentHandler.h"
+#include "model/DocumentChangeType.h"  // for DocumentChangeType
+
+#include "DocumentHandler.h"  // for DocumentHandler
 
 DocumentListener::DocumentListener() = default;
 

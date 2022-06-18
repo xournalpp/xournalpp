@@ -11,10 +11,6 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-
 class LayerController;
 
 class LayerCtrlListener {

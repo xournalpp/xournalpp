@@ -11,17 +11,14 @@
 
 #pragma once
 
-#include <list>
-#include <mutex>
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <list>     // for list, list<>::size_type
+#include <mutex>    // for mutex
 
-#include <cairo.h>
-#include <glib.h>
+#include <cairo.h>  // for cairo_t, cairo_surface_t
 
-#include "pdf/base/XojPdfDocument.h"
-#include "pdf/base/XojPdfPage.h"
-
+#include "pdf/base/XojPdfDocument.h"  // for XojPdfDocument
+#include "pdf/base/XojPdfPage.h"      // for XojPdfPageSPtr
 
 class PdfCacheEntry;
 class Settings;

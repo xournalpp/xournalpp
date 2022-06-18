@@ -1,5 +1,7 @@
 #include "TransparentCheckerboardBackgroundView.h"
 
+#include "view/background/BackgroundView.h"  // for BackgroundView, view
+
 using namespace xoj::view;
 
 TransparentCheckerboardBackgroundView::TransparentCheckerboardBackgroundView(double pageWidth, double pageHeight):

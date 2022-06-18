@@ -1,6 +1,11 @@
 #include "PageHandler.h"
 
-#include "PageListener.h"
+#include "PageListener.h"  // for PageListener
+
+namespace xoj::util {
+template <class T>
+class Rectangle;
+}  // namespace xoj::util
 
 using xoj::util::Rectangle;
 

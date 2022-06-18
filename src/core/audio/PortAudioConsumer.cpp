@@ -1,8 +1,17 @@
 #include "PortAudioConsumer.h"
 
-#include <cmath>
+#include <algorithm>  // for for_each, transform, max
+#include <deque>      // for _Deque_iterator
+#include <iterator>   // for next, prev
+#include <string>     // for to_string, string
 
-#include "AudioPlayer.h"
+#include <glib.h>  // for g_warning
+
+#include "audio/AudioQueue.h"           // for AudioQueue
+#include "audio/DeviceInfo.h"           // for DeviceInfo
+#include "control/settings/Settings.h"  // for Settings
+
+#include "AudioPlayer.h"  // for AudioPlayer
 
 constexpr auto FRAMES_PER_BUFFER{64U};
 

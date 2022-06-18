@@ -11,10 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "model/LinkDestination.h"
+#include "model/LinkDestination.h"  // for XojLinkDest
 
 
 class XojPdfAction {

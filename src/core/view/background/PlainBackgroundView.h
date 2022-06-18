@@ -11,11 +11,14 @@
 
 #pragma once
 
-#include "util/Color.h"
+#include <utility>  // for pair
 
-#include "BackgroundView.h"
+#include <cairo.h>  // for cairo_t
 
-class BackgroundConfig;
+#include "util/Color.h"  // for Color
+
+#include "BackgroundView.h"  // for BackgroundView
+
 namespace xoj::view {
 class PlainBackgroundView: public BackgroundView {
 public:

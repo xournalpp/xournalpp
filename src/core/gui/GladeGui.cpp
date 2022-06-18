@@ -1,15 +1,16 @@
 #include "GladeGui.h"
 
-#include <cstdlib>
-#include <utility>
+#include <cstdlib>  // for exit
 
-#include <config.h>
+#include <glib-object.h>  // for g_object_unref
+#include <glib.h>         // for g_error_free, GError, g_warning
 
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/XojMsgBox.h"          // for XojMsgBox
+#include "util/i18n.h"               // for FS, _F
 
-#include "GladeSearchpath.h"
-#include "filesystem.h"
+#include "GladeSearchpath.h"  // for GladeSearchpath
+#include "filesystem.h"       // for path
 
 GladeGui::GladeGui(GladeSearchpath* gladeSearchPath, const std::string& glade, const std::string& mainWnd) {
     this->gladeSearchPath = gladeSearchPath;

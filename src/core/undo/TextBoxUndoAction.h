@@ -11,11 +11,15 @@
 
 #pragma once
 
-#include "UndoAction.h"
+#include <string>  // for string
+
+#include "model/PageRef.h"  // for PageRef
+
+#include "UndoAction.h"  // for UndoAction
 
 class Element;
 class Layer;
-class XojPage;
+class Control;
 
 class TextBoxUndoAction: public UndoAction {
 public:

@@ -1,13 +1,12 @@
 #include "util/PageRange.h"
 
-#include <charconv>
-#include <cstddef>
-#include <regex>
-#include <stdexcept>
-#include <string>
-#include <utility>
+#include <charconv>   // for from_chars
+#include <cstddef>    // for size_t
+#include <regex>      // for regex_match, match_results<>::_Unchecked, regex
+#include <stdexcept>  // for invalid_argument, logic_error
+#include <string>     // for basic_string, string
 
-#include "util/i18n.h"
+#include "util/i18n.h"  // for _
 
 /**
  * @brief Parse a string of page ranges.

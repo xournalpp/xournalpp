@@ -1,17 +1,16 @@
 #include "MetadataManager.h"
 
-#include <algorithm>  // std::sort
-#include <fstream>
-#include <sstream>
+#include <algorithm>  // for sort
+#include <cstdlib>    // for strtoll, strtod
+#include <fstream>    // for operator<<, basic_ostream, basic_stringb...
+#include <memory>     // for allocator_traits<>::value_type
+#include <sstream>    // for istringstream
+#include <string>     // for char_traits, string, getline, operator!=
 
-#include <fcntl.h>
-#include <glib.h>
-#include <glib/gstdio.h>
-#include <sys/stat.h>
-#include <sys/types.h>
+#include <glib.h>  // for g_get_real_time, g_warning, gint64
 
-#include "util/PathUtil.h"
-#include "util/XojMsgBox.h"
+#include "util/PathUtil.h"   // for getConfigSubfolder
+#include "util/XojMsgBox.h"  // for XojMsgBox
 
 using namespace std;
 

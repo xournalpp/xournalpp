@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include "util/serializing/Serializable.h"  // for Serializable
 
-#include "util/serializing/Serializable.h"
+class ObjectInputStream;
+class ObjectOutputStream;
 
 
 class LineStyle: public Serializable {

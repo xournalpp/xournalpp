@@ -11,12 +11,11 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-
-#include "util/Color.h"
-#include "util/NamedColor.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gtk/gtk.h>                // for GtkWidget
 
 class AbstractToolItem;
+struct NamedColor;
 
 enum ToolItemType { TOOL_ITEM_SEPARATOR = 0, TOOL_ITEM_SPACER, TOOL_ITEM_ITEM, TOOL_ITEM_COLOR };
 

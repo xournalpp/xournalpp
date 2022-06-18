@@ -13,15 +13,15 @@
 
 #pragma once
 
-#include <array>
-#include <condition_variable>
-#include <deque>
-#include <mutex>
-#include <string>
+#include <array>               // for array
+#include <condition_variable>  // for condition_variable
+#include <deque>               // for deque
+#include <mutex>               // for mutex
+#include <string>              // for string
 
-#include <gtk/gtk.h>
+#include <glib.h>  // for GThread, GTimeVal, gpointer
 
-#include "Job.h"
+class Job;
 
 /**
  * @file Scheduler.h

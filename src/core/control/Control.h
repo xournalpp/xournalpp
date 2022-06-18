@@ -11,37 +11,34 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
+#include <string>   // for string, allocator
+#include <vector>   // for vector
 
-#include "control/jobs/ProgressListener.h"
-#include "control/jobs/XournalScheduler.h"
-#include "control/settings/MetadataManager.h"
-#include "control/settings/Settings.h"
-#include "control/zoom/ZoomControl.h"
-#include "gui/MainWindow.h"
-#include "gui/SearchBar.h"
-#include "gui/dialog/LatexDialog.h"
-#include "gui/sidebar/Sidebar.h"
-#include "model/Document.h"
-#include "undo/UndoRedoHandler.h"
-#include "view/SetsquareView.h"
-#include "zoom/ZoomControl.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gdk/gdk.h>                // for GdkEvent
+#include <gio/gio.h>                // for GApplication
+#include <glib.h>                   // for guint
+#include <gtk/gtk.h>                // for GtkLabel, GtkMenuItem
 
-#include "Actions.h"
-#include "AudioController.h"
-#include "ClipboardHandler.h"
-#include "RecentManager.h"
-#include "ScrollHandler.h"
-#include "ToolHandler.h"
-#include "filesystem.h"
+#include "control/ToolEnums.h"              // for ToolSize, ToolType
+#include "control/jobs/ProgressListener.h"  // for ProgressListener
+#include "enums/ActionGroup.enum.h"         // for ActionGroup
+#include "enums/ActionType.enum.h"          // for ActionType
+#include "model/DocumentHandler.h"          // for DocumentHandler
+#include "model/PageRef.h"                  // for PageRef
+#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler (ptr only)
 
+#include "Actions.h"           // for ActionHandler
+#include "ClipboardHandler.h"  // for ClipboardListener
+#include "RecentManager.h"     // for RecentManagerListener
+#include "ToolHandler.h"       // for ToolListener
+#include "filesystem.h"        // for path
 
 class AudioController;
 class FullscreenHandler;
 class Sidebar;
-class XojPageView;
-class SaveHandler;
 class GladeSearchpath;
 class MetadataManager;
 class XournalppCursor;
@@ -54,6 +51,17 @@ class PageTypeMenu;
 class BaseExportJob;
 class LayerController;
 class PluginController;
+class Document;
+class EditSelection;
+class Element;
+class MainWindow;
+class ObjectInputStream;
+class ScrollHandler;
+class SearchBar;
+class Settings;
+class TextEditor;
+class XournalScheduler;
+class ZoomControl;
 
 class Control:
         public ActionHandler,

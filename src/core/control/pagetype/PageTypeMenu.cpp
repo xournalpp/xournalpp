@@ -1,14 +1,19 @@
 #include "PageTypeMenu.h"
 
-#include <util/gtk4_helper.h>
+#include <algorithm>  // for max
+#include <memory>     // for unique_ptr
+#include <string>     // for string
 
-#include "control/settings/PageTemplateSettings.h"
-#include "control/settings/Settings.h"
-#include "model/BackgroundConfig.h"
-#include "util/i18n.h"
-#include "view/background/BackgroundView.h"
+#include <glib-object.h>       // for G_CALLBACK, g_sig...
+#include <util/gtk4_helper.h>  // for gtk_box_append
 
-#include "PageTypeHandler.h"
+#include "control/settings/PageTemplateSettings.h"  // for PageTemplateSettings
+#include "control/settings/Settings.h"              // for Settings
+#include "util/Color.h"                             // for Color
+#include "util/i18n.h"                              // for _
+#include "view/background/BackgroundView.h"         // for BackgroundView
+
+#include "PageTypeHandler.h"  // for PageTypeInfo, Pag...
 
 PageTypeMenuChangeListener::~PageTypeMenuChangeListener() = default;
 PageTypeApplyListener::~PageTypeApplyListener() = default;

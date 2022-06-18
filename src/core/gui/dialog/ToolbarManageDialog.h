@@ -11,10 +11,14 @@
 
 #pragma once
 
-#include "gui/GladeGui.h"
+#include <glib.h>     // for gchar
+#include <gtk/gtk.h>  // for GtkButton, GtkCellRendererText, GtkListStore
+
+#include "gui/GladeGui.h"  // for GladeGui
 
 class ToolbarData;
 class ToolbarModel;
+class GladeSearchpath;
 
 class ToolbarManageDialog: public GladeGui {
 public:

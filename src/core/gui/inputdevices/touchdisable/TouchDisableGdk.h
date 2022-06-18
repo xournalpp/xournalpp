@@ -11,12 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include "gtk/gtk.h"  // for GtkWidget
 
-#include "gtk/gtk.h"
-
-#include "TouchDisableInterface.h"
+#include "TouchDisableInterface.h"  // for TouchDisableInterface
 
 
 class TouchDisableGdk: public TouchDisableInterface {

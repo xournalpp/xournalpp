@@ -1,13 +1,15 @@
 #include "ImageOpenDlg.h"
 
-#include <config.h>
+#include <algorithm>  // for max
+#include <string>     // for string
 
-#include "control/settings/Settings.h"
-#include "util/PathUtil.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include <glib-object.h>  // for g_object_unref, g_object_ref
 
-#include "filesystem.h"
+#include "control/settings/Settings.h"  // for Settings
+#include "util/PathUtil.h"              // for fromGFilename, toGFilename
+#include "util/i18n.h"                  // for _
+
+#include "filesystem.h"  // for path
 
 auto ImageOpenDlg::show(GtkWindow* win, Settings* settings, bool localOnly, bool* attach) -> GFile* {
     GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Open Image"), win, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),

@@ -13,13 +13,12 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include "control/jobs/Job.h"  // for JobType
 
-#include "gui/PageView.h"
-#include "gui/sidebar/previews/page/SidebarPreviewPageEntry.h"
+#include "Scheduler.h"  // for JobPriority, Scheduler
 
-#include "Scheduler.h"
+class SidebarPreviewBaseEntry;
+class XojPageView;
 
 class XournalScheduler: public Scheduler {
 public:

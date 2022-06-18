@@ -1,5 +1,12 @@
 #include "PopplerGlibAction.h"
 
+#include <algorithm>  // for min
+
+#include <glib.h>              // for g_warning
+#include <poppler-action.h>    // for poppler_action_free, poppler_dest_free
+#include <poppler-document.h>  // for poppler_document_find_dest, poppler_do...
+#include <poppler-page.h>      // for poppler_page_get_size
+
 using std::string;
 
 PopplerGlibAction::PopplerGlibAction(PopplerAction* action, PopplerDocument* document):

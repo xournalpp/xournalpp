@@ -1,33 +1,40 @@
 #include "EditSelectionContents.h"
 
-#include <cmath>
-#include <memory>
+#include <algorithm>  // for min, max, transform
+#include <cmath>      // for abs, isnan
+#include <iterator>   // for back_insert_iterator
+#include <memory>     // for make_unique, __shar...
 
-#include "control/Control.h"
-#include "gui/PageView.h"
-#include "gui/XournalView.h"
-#include "model/Document.h"
-#include "model/Element.h"
-#include "model/Layer.h"
-#include "model/Stroke.h"
-#include "model/Text.h"
-#include "undo/ColorUndoAction.h"
-#include "undo/DeleteUndoAction.h"
-#include "undo/FillUndoAction.h"
-#include "undo/FontUndoAction.h"
-#include "undo/InsertUndoAction.h"
-#include "undo/LineStyleUndoAction.h"
-#include "undo/MoveUndoAction.h"
-#include "undo/RotateUndoAction.h"
-#include "undo/ScaleUndoAction.h"
-#include "undo/SizeUndoAction.h"
-#include "undo/UndoRedoHandler.h"
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
-#include "view/SelectionView.h"
-#include "view/View.h"
+#include <glib.h>  // for g_idle_add, g_sourc...
 
-#include "Selection.h"
+#include "control/Control.h"                      // for Control
+#include "control/settings/Settings.h"            // for Settings
+#include "control/tools/CursorSelectionType.h"    // for CURSOR_SELECTION_TO...
+#include "gui/PageView.h"                         // for XojPageView
+#include "gui/XournalView.h"                      // for XournalView
+#include "model/Element.h"                        // for Element, Element::I...
+#include "model/Layer.h"                          // for Layer
+#include "model/LineStyle.h"                      // for LineStyle
+#include "model/Stroke.h"                         // for Stroke, STROKE_TOOL...
+#include "model/Text.h"                           // for Text
+#include "model/XojPage.h"                        // for XojPage
+#include "undo/ColorUndoAction.h"                 // for ColorUndoAction
+#include "undo/DeleteUndoAction.h"                // for DeleteUndoAction
+#include "undo/FillUndoAction.h"                  // for FillUndoAction
+#include "undo/FontUndoAction.h"                  // for FontUndoAction
+#include "undo/InsertUndoAction.h"                // for InsertsUndoAction
+#include "undo/LineStyleUndoAction.h"             // for LineStyleUndoAction
+#include "undo/MoveUndoAction.h"                  // for MoveUndoAction
+#include "undo/RotateUndoAction.h"                // for RotateUndoAction
+#include "undo/ScaleUndoAction.h"                 // for ScaleUndoAction
+#include "undo/SizeUndoAction.h"                  // for SizeUndoAction
+#include "undo/UndoRedoHandler.h"                 // for UndoRedoHandler
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
+#include "view/SelectionView.h"                   // for SelectionView
+#include "view/View.h"                            // for Context
+
+class XojFont;
 
 using std::vector;
 using xoj::util::Rectangle;

@@ -1,5 +1,12 @@
 #include "GroupUndoAction.h"
 
+#include <algorithm>  // for none_of
+#include <utility>    // for move
+
+#include "undo/UndoAction.h"  // for UndoAction
+
+class Control;
+
 GroupUndoAction::GroupUndoAction(): UndoAction("GroupUndoAction") {}
 
 void GroupUndoAction::addAction(std::unique_ptr<UndoAction> action) { actions.push_back(std::move(action)); }

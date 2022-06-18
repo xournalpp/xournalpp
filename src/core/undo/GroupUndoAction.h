@@ -11,10 +11,15 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <memory>  // for unique_ptr
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "UndoAction.h"
+#include "model/PageRef.h"  // for PageRef
+
+#include "UndoAction.h"  // for UndoAction
+
+class Control;
 
 
 class GroupUndoAction: public UndoAction {

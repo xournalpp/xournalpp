@@ -1,8 +1,8 @@
 #include "XojPdfExportFactory.h"
 
-#include <config-features.h>
+#include "XojCairoPdfExport.h"  // for XojCairoPdfExport
 
-#include "XojCairoPdfExport.h"
+class XojPdfExport;
 
 XojPdfExportFactory::XojPdfExportFactory() = default;
 

@@ -11,10 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "TouchDisableInterface.h"
+#include "TouchDisableInterface.h"  // for TouchDisableInterface
 
 
 class TouchDisableCustom: public TouchDisableInterface {

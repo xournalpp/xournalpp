@@ -11,7 +11,11 @@
 
 #pragma once
 
-#include "XmlNode.h"
+#include <string>  // for string
+
+#include "XmlNode.h"  // for XmlNode
+
+class OutputStream;
 
 class XmlTexNode: public XmlNode {
 public:

@@ -11,10 +11,7 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include <glib.h>
+#include <glib.h>  // for GString
 
 
 class ObjectEncoding {

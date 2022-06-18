@@ -11,7 +11,17 @@
 
 #pragma once
 
-#include "AbstractItem.h"
+#include <string>  // for string
+
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gtk/gtk.h>                // for GtkToolItem, GtkWidget, GtkToolB...
+
+#include "enums/ActionGroup.enum.h"  // for ActionGroup
+#include "enums/ActionType.enum.h"   // for ActionType
+
+#include "AbstractItem.h"  // for AbstractItem
+
+class ActionHandler;
 
 class AbstractToolItem: public AbstractItem {
 public:

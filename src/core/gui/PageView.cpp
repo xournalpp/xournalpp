@@ -1,57 +1,73 @@
 #include "PageView.h"
 
-#include <algorithm>
-#include <cmath>
-#include <cstdlib>
-#include <memory>
+#include <algorithm>  // for max, find_if
+#include <cmath>      // for lround
+#include <cstdlib>    // for size_t
+#include <memory>     // for __shared_ptr_access
+#include <optional>   // for optional
+#include <utility>    // for move
 
-#include <gdk/gdk.h>
+#include <gdk/gdk.h>         // for GdkRectangle, Gdk...
+#include <gdk/gdkkeysyms.h>  // for GDK_KEY_Escape
+#include <glib.h>            // for gint, g_get_curre...
+#include <gtk/gtk.h>         // for gtk_widget_get_to...
 
-#include "control/Control.h"
-#include "control/SearchControl.h"
-#include "control/jobs/BlockingJob.h"
-#include "control/settings/ButtonConfig.h"
-#include "control/settings/Settings.h"
-#include "control/tools/ArrowHandler.h"
-#include "control/tools/CoordinateSystemHandler.h"
-#include "control/tools/EllipseHandler.h"
-#include "control/tools/EraseHandler.h"
-#include "control/tools/ImageHandler.h"
-#include "control/tools/InputHandler.h"
-#include "control/tools/PdfElemSelection.h"
-#include "control/tools/RectangleHandler.h"
-#include "control/tools/RulerHandler.h"
-#include "control/tools/Selection.h"
-#include "control/tools/SplineHandler.h"
-#include "control/tools/StrokeHandler.h"
-#include "control/tools/VerticalToolHandler.h"
-#include "gui/PdfFloatingToolbox.h"
-#include "gui/widgets/XournalWidget.h"
-#include "model/Image.h"
-#include "model/Layer.h"
-#include "model/PageRef.h"
-#include "model/Stroke.h"
-#include "model/Text.h"
-#include "pdf/base/XojPdfPage.h"
-#include "undo/DeleteUndoAction.h"
-#include "undo/InsertUndoAction.h"
-#include "undo/TextBoxUndoAction.h"
-#include "util/Range.h"
-#include "util/Rectangle.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
-#include "util/pixbuf-utils.h"
-#include "view/TextView.h"
+#include "control/AudioController.h"                // for AudioController
+#include "control/Control.h"                        // for Control
+#include "control/SearchControl.h"                  // for SearchControl
+#include "control/ToolEnums.h"                      // for DRAWING_TYPE_SPLINE
+#include "control/ToolHandler.h"                    // for ToolHandler
+#include "control/jobs/XournalScheduler.h"          // for XournalScheduler
+#include "control/settings/Settings.h"              // for Settings
+#include "control/tools/ArrowHandler.h"             // for ArrowHandler
+#include "control/tools/CoordinateSystemHandler.h"  // for CoordinateSystemH...
+#include "control/tools/EditSelection.h"            // for EditSelection
+#include "control/tools/EllipseHandler.h"           // for EllipseHandler
+#include "control/tools/EraseHandler.h"             // for EraseHandler
+#include "control/tools/ImageHandler.h"             // for ImageHandler
+#include "control/tools/InputHandler.h"             // for InputHandler
+#include "control/tools/PdfElemSelection.h"         // for PdfElemSelection
+#include "control/tools/RectangleHandler.h"         // for RectangleHandler
+#include "control/tools/RulerHandler.h"             // for RulerHandler
+#include "control/tools/Selection.h"                // for Selection, RectSe...
+#include "control/tools/SplineHandler.h"            // for SplineHandler
+#include "control/tools/StrokeHandler.h"            // for StrokeHandler
+#include "control/tools/VerticalToolHandler.h"      // for VerticalToolHandler
+#include "control/zoom/ZoomControl.h"               // for ZoomControl
+#include "gui/FloatingToolbox.h"                    // for FloatingToolbox
+#include "gui/MainWindow.h"                         // for MainWindow
+#include "gui/PdfFloatingToolbox.h"                 // for PdfFloatingToolbox
+#include "gui/SearchBar.h"                          // for SearchBar
+#include "gui/inputdevices/PositionInputData.h"     // for PositionInputData
+#include "model/Document.h"                         // for Document
+#include "model/Element.h"                          // for Element, ELEMENT_...
+#include "model/Layer.h"                            // for Layer
+#include "model/PageRef.h"                          // for PageRef
+#include "model/Stroke.h"                           // for Stroke
+#include "model/TexImage.h"                         // for TexImage
+#include "model/Text.h"                             // for Text
+#include "model/XojPage.h"                          // for XojPage
+#include "pdf/base/XojPdfPage.h"                    // for XojPdfPageSPtr
+#include "undo/DeleteUndoAction.h"                  // for DeleteUndoAction
+#include "undo/InsertUndoAction.h"                  // for InsertUndoAction
+#include "undo/MoveUndoAction.h"                    // for MoveUndoAction
+#include "undo/TextBoxUndoAction.h"                 // for TextBoxUndoAction
+#include "undo/UndoRedoHandler.h"                   // for UndoRedoHandler
+#include "util/Color.h"                             // for rgb_to_GdkRGBA
+#include "util/Rectangle.h"                         // for Rectangle
+#include "util/Util.h"                              // for npos
+#include "util/XojMsgBox.h"                         // for XojMsgBox
+#include "util/i18n.h"                              // for FS, _, _F
 
-#include "PageViewFindObjectHelper.h"
-#include "RepaintHandler.h"
-#include "TextEditor.h"
-#include "XournalView.h"
-#include "XournalppCursor.h"
-#include "config-debug.h"
-#include "config-features.h"
-#include "config.h"
-#include "filesystem.h"
+#include "PageViewFindObjectHelper.h"  // for SelectObject, Pla...
+#include "RepaintHandler.h"            // for RepaintHandler
+#include "TextEditor.h"                // for TextEditor, TextE...
+#include "XournalView.h"               // for XournalView
+#include "XournalppCursor.h"           // for XournalppCursor
+#include "config-debug.h"              // for DEBUG_SHOW_PAINT_...
+#include "filesystem.h"                // for path
+
+class Range;
 
 using std::string;
 using xoj::util::Rectangle;

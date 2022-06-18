@@ -11,14 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <gdk/gdk.h>  // for GdkCursor
+#include <glib.h>     // for guint, gulong
 
-#include <gtk/gtk.h>
-
-#include "control/tools/CursorSelectionType.h"
-#include "gui/inputdevices/InputEvents.h"
-
+#include "control/tools/CursorSelectionType.h"  // for CursorSelectionType
+#include "gui/inputdevices/InputEvents.h"       // for InputDeviceClass, INP...
 
 class Control;
 

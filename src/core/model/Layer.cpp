@@ -1,6 +1,9 @@
 #include "Layer.h"
 
-#include "util/Stacktrace.h"
+#include <glib.h>  // for g_warning
+
+#include "model/Element.h"    // for Element, Element::Index, Element::Inval...
+#include "util/Stacktrace.h"  // for Stacktrace
 
 Layer::Layer() = default;
 

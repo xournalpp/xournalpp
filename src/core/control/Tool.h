@@ -11,12 +11,14 @@
 
 #pragma once
 
-#include <array>
-#include <optional>
-#include <string>
-#include <vector>
+#include <array>     // for array
+#include <optional>  // for optional
+#include <string>    // for string
 
-#include "ToolBase.h"
+#include "control/ToolEnums.h"  // for ToolType, ToolCapabilities, ToolSize
+#include "util/Color.h"         // for Color
+
+#include "ToolBase.h"  // for ToolBase
 
 
 class Tool: public ToolBase {

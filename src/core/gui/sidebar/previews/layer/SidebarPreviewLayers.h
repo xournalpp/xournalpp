@@ -11,15 +11,20 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <memory>   // for shared_ptr
+#include <string>   // for string
 
-#include "control/layer/LayerCtrlListener.h"
-#include "gui/IconNameHelper.h"
-#include "gui/sidebar/previews/base/SidebarPreviewBase.h"
-#include "gui/sidebar/previews/layer/SidebarLayersContextMenu.h"
-#include "model/Layer.h"
+#include "control/layer/LayerCtrlListener.h"               // for LayerCtrlL...
+#include "gui/IconNameHelper.h"                            // for IconNameHe...
+#include "gui/sidebar/previews/base/SidebarPreviewBase.h"  // for SidebarPre...
+#include "gui/sidebar/previews/base/SidebarToolbar.h"      // for SidebarAct...
+#include "model/Layer.h"                                   // for Layer, Lay...
+
+class Control;
+class GladeGui;
+class LayerController;
+class SidebarLayersContextMenu;
 
 
 class SidebarPreviewLayers: public SidebarPreviewBase, public LayerCtrlListener {

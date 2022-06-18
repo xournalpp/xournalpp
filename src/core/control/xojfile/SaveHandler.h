@@ -11,22 +11,25 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <memory>  // for unique_ptr
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "control/xml/XmlAudioNode.h"
-#include "model/Document.h"
-#include "model/PageRef.h"
-#include "model/Stroke.h"
-#include "util/OutputStream.h"
+#include "control/xml/XmlNode.h"    // for XmlNode
+#include "model/BackgroundImage.h"  // for BackgroundImage
+#include "model/PageRef.h"          // for PageRef
+#include "util/Color.h"             // for Color
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
-
-class XmlNode;
 class XmlPointNode;
 class ProgressListener;
+class AudioElement;
+class Document;
+class Layer;
+class OutputStream;
+class Stroke;
+class XmlAudioNode;
 
 class SaveHandler {
 public:

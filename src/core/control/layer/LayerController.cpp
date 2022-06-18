@@ -1,17 +1,25 @@
 #include "LayerController.h"
 
-#include <memory>
+#include <memory>   // for __shared_ptr_access, make...
+#include <utility>  // for move
+#include <vector>   // for vector
 
-#include "control/Control.h"
-#include "gui/XournalView.h"
-#include "undo/InsertLayerUndoAction.h"
-#include "undo/MergeLayerDownUndoAction.h"
-#include "undo/MoveLayerUndoAction.h"
-#include "undo/RemoveLayerUndoAction.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include "control/Control.h"                // for Control
+#include "gui/MainWindow.h"                 // for MainWindow
+#include "gui/XournalView.h"                // for XournalView
+#include "gui/dialog/RenameLayerDialog.h"   // for RenameLayerDialog
+#include "model/Document.h"                 // for Document
+#include "model/XojPage.h"                  // for XojPage
+#include "undo/InsertLayerUndoAction.h"     // for InsertLayerUndoAction
+#include "undo/MergeLayerDownUndoAction.h"  // for MergeLayerDownUndoAction
+#include "undo/MoveLayerUndoAction.h"       // for MoveLayerUndoAction
+#include "undo/RemoveLayerUndoAction.h"     // for RemoveLayerUndoAction
+#include "undo/UndoAction.h"                // for UndoActionPtr, UndoAction
+#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler
+#include "util/Util.h"                      // for npos
+#include "util/i18n.h"                      // for FS, _F
 
-#include "LayerCtrlListener.h"
+#include "LayerCtrlListener.h"  // for LayerCtrlListener
 
 LayerController::LayerController(Control* control): control(control), selectedPage(npos) {}
 

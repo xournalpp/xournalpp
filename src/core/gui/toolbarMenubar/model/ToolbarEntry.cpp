@@ -1,7 +1,8 @@
 #include "ToolbarEntry.h"
 
-#include <algorithm>
-#include <utility>
+#include <utility>  // for move
+
+#include "gui/toolbarMenubar/model/ToolbarItem.h"  // for ToolbarItem
 
 using std::string;
 

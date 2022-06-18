@@ -1,11 +1,15 @@
 #include "MainWindowToolbarMenu.h"
 
-#include "control/settings/Settings.h"
-#include "gui/toolbarMenubar/ToolMenuHandler.h"
-#include "gui/toolbarMenubar/model/ToolbarData.h"
-#include "gui/toolbarMenubar/model/ToolbarModel.h"
+#include <string>  // for operator==, string
 
-#include "MainWindow.h"
+#include <glib-object.h>  // for G_CALLBACK, g_sig...
+
+#include "control/settings/Settings.h"              // for Settings
+#include "gui/toolbarMenubar/ToolMenuHandler.h"     // for ToolMenuHandler
+#include "gui/toolbarMenubar/model/ToolbarData.h"   // for ToolbarData
+#include "gui/toolbarMenubar/model/ToolbarModel.h"  // for ToolbarModel
+
+#include "MainWindow.h"  // for MainWindow
 
 class MenuSelectToolbarData {
 public:

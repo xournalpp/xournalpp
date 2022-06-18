@@ -11,16 +11,16 @@
 
 #pragma once
 
-#include <list>
-#include <string>
-#include <vector>
+#include <memory>  // for unique_ptr
+#include <vector>  // for vector
 
-#include <portaudiocpp/PortAudioCpp.hxx>
+#include <portaudiocpp/PortAudioCpp.hxx>  // for MemFunCallbackStream, System
 
-#include "control/settings/Settings.h"
+#include "DeviceInfo.h"  // for DeviceInfo
 
-#include "AudioQueue.h"
-#include "DeviceInfo.h"
+class Settings;
+template <typename T>
+class AudioQueue;
 
 
 class PortAudioProducer {

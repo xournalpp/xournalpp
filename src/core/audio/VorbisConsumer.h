@@ -11,16 +11,14 @@
 
 #pragma once
 
-#include <atomic>
-#include <fstream>
-#include <thread>
-#include <utility>
+#include <atomic>  // for atomic
+#include <thread>  // for thread
 
-#include "control/settings/Settings.h"
+#include "filesystem.h"  // for path
 
-#include "AudioQueue.h"
-#include "DeviceInfo.h"
-#include "filesystem.h"
+class Settings;
+template <typename T>
+class AudioQueue;
 
 class VorbisConsumer final {
 public:

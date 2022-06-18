@@ -12,11 +12,9 @@
 
 #pragma once
 
-#include <string>
+#include <glib.h>  // for gsize
 
-#include <glib.h>
-
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 enum PreviewExtractResult {
 

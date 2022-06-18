@@ -1,9 +1,10 @@
 #include "LinedBackgroundView.h"
 
-#include <cmath>
+#include <memory>  // for allocator
 
-#include "model/BackgroundConfig.h"
-#include "util/Util.h"
+#include "model/BackgroundConfig.h"               // for BackgroundConfig
+#include "view/background/BackgroundView.h"       // for view
+#include "view/background/RuledBackgroundView.h"  // for RuledBackgroundView
 
 using namespace background_config_strings;
 using namespace xoj::view;

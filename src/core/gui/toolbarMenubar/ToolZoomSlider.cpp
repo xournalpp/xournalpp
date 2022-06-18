@@ -1,11 +1,16 @@
 #include "ToolZoomSlider.h"
 
-#include <cmath>
-#include <sstream>
+#include <cmath>    // for exp, log
+#include <sstream>  // for stringstream, bas...
+#include <utility>  // for move
 
-#include "control/zoom/ZoomControl.h"
-#include "util/StringUtils.h"
-#include "util/i18n.h"
+#include <glib.h>  // for g_get_monotonic_time
+
+#include "control/zoom/ZoomControl.h"               // for ZoomControl, DEFA...
+#include "gui/toolbarMenubar/AbstractSliderItem.h"  // for AbstractSliderItem
+#include "util/i18n.h"                              // for _
+
+class ActionHandler;
 
 constexpr double SCALE_LOG_OFFSET = 0.20753;
 

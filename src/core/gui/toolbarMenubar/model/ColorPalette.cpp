@@ -1,14 +1,16 @@
 #include "ColorPalette.h"
 
-#include <fstream>
-#include <limits>
-#include <sstream>
+#include <fstream>    // for basic_ifstream, basic_ofstream
+#include <sstream>    // for operator<<, basic_ostream::operator<<
+#include <stdexcept>  // for invalid_argument
+#include <utility>    // for move
 
-#include <gtk/gtk.h>
+#include <glib.h>     // for g_warning, g_error
+#include <gtk/gtk.h>  // for gtk_dialog_add_button, gtk_dialog_run
 
-#include "util/StringUtils.h"
-#include "util/i18n.h"
-#include "util/serdesstream.h"
+#include "util/StringUtils.h"   // for StringUtils
+#include "util/i18n.h"          // for FORMAT_STR, FS, _
+#include "util/serdesstream.h"  // for serdes_stream
 
 
 Palette::Palette(fs::path path): filepath{std::move(path)}, namedColors{}, header{} {}

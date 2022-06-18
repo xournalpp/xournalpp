@@ -11,9 +11,11 @@
 
 #pragma once
 
-#include "util/Color.h"
+#include <cairo.h>  // for cairo_pattern_t, cairo_t
 
-#include "BackgroundView.h"
+#include "util/Color.h"  // for Color
+
+#include "BackgroundView.h"  // for BackgroundView
 
 namespace xoj::view {
 class TransparentCheckerboardBackgroundView: public BackgroundView {

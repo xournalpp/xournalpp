@@ -1,16 +1,27 @@
 #include "ImageHandler.h"
 
-#include <memory>
+#include <algorithm>  // for min
+#include <memory>     // for __shared_ptr_access, make...
+#include <string>     // for string
+#include <utility>    // for operator==, pair
 
-#include "control/Control.h"
-#include "control/stockdlg/ImageOpenDlg.h"
-#include "gui/PageView.h"
-#include "gui/XournalView.h"
-#include "model/Image.h"
-#include "model/Layer.h"
-#include "undo/InsertUndoAction.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include <glib-object.h>  // for g_object_unref
+#include <glib.h>         // for g_error_free, g_free, GError
+
+#include "control/Control.h"                // for Control
+#include "control/stockdlg/ImageOpenDlg.h"  // for ImageOpenDlg
+#include "control/tools/EditSelection.h"    // for EditSelection
+#include "gui/MainWindow.h"                 // for MainWindow
+#include "gui/PageView.h"                   // for XojPageView
+#include "gui/XournalView.h"                // for XournalView
+#include "model/Image.h"                    // for Image, Image::NOSIZE
+#include "model/Layer.h"                    // for Layer
+#include "model/PageRef.h"                  // for PageRef
+#include "model/XojPage.h"                  // for XojPage
+#include "undo/InsertUndoAction.h"          // for InsertUndoAction
+#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler
+#include "util/XojMsgBox.h"                 // for XojMsgBox
+#include "util/i18n.h"                      // for _
 
 ImageHandler::ImageHandler(Control* control, XojPageView* view) {
     this->control = control;

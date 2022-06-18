@@ -1,12 +1,16 @@
 #include "InsertUndoAction.h"
 
-#include <utility>
+#include <memory>   // for allocator, __shared_ptr_access, __share...
+#include <utility>  // for move
 
-#include "gui/Redrawable.h"
-#include "model/Element.h"
-#include "model/Layer.h"
-#include "model/PageRef.h"
-#include "util/i18n.h"
+#include "model/Element.h"    // for Element, ELEMENT_IMAGE, ELEMENT_STROKE
+#include "model/Layer.h"      // for Layer
+#include "model/PageRef.h"    // for PageRef
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/i18n.h"        // for _
+
+class Control;
 
 InsertUndoAction::InsertUndoAction(const PageRef& page, Layer* layer, Element* element):
         UndoAction("InsertUndoAction") {

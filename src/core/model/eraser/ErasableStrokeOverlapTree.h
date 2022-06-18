@@ -11,7 +11,20 @@
 
 #pragma once
 
-#include "ErasableStroke.h"
+#include <cstddef>  // for size_t
+#include <utility>  // for pair
+#include <vector>   // for vector, vector<>::iterator
+
+#include <cairo.h>  // for cairo_t
+
+#include "util/Rectangle.h"  // for Rectangle
+
+#include "ErasableStroke.h"  // for ErasableStroke::SubSection, ErasableStroke
+#include "config-debug.h"    // for DEBUG_ERASABLE_STROKE_BOXES
+
+class Point;
+class Range;
+class Stroke;
 
 class ErasableStroke::OverlapTree {
 public:

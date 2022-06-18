@@ -11,16 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
 
-#include <gtk/gtk.h>
+#include "gui/widgets/SpinPageAdapter.h"  // for SpinPageListener
+#include "model/PageRef.h"                // for PageRef
 
-#include "gui/widgets/SpinPageAdapter.h"
-#include "model/PageRef.h"
-
-
-class XojPage;
 class Control;
 
 class ScrollHandler: public SpinPageListener {

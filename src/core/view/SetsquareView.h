@@ -11,13 +11,17 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <cmath>   // for NAN
+#include <memory>  // for unique_ptr
 
-#include "gui/PageView.h"
-#include "model/Setsquare.h"
-#include "util/Point.h"
+#include <cairo.h>  // for cairo_t
 
-class Setsquare;
+#include "model/PageRef.h"    // for PageRef
+#include "model/Setsquare.h"  // for Setsquare
+#include "util/Point.h"       // for Point
+
+class Stroke;
+class XojPageView;
 
 enum Leg { HYPOTENUSE, LEFT_LEG, RIGHT_LEG };
 

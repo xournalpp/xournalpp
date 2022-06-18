@@ -1,6 +1,11 @@
 #include "LayerRenameUndoAction.h"
 
-#include "util/i18n.h"
+#include "control/layer/LayerController.h"  // for LayerController
+#include "model/Layer.h"                    // for Layer
+#include "undo/UndoAction.h"                // for UndoAction
+#include "util/i18n.h"                      // for _
+
+class Control;
 
 LayerRenameUndoAction::LayerRenameUndoAction(LayerController* layerController, Layer* layer, const std::string& newName,
                                              const std::string& oldName):

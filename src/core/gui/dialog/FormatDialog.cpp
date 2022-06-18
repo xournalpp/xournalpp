@@ -1,11 +1,17 @@
 #include "FormatDialog.h"
 
-#include <config.h>
+#include <string>  // for operator==, string, basic_string
 
-#include "model/FormatDefinitions.h"
-#include "util/GListView.h"
-#include "util/StringUtils.h"
-#include "util/i18n.h"
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+#include <glib.h>         // for g_list_free, GList
+
+#include "control/settings/Settings.h"  // for Settings
+#include "model/FormatDefinitions.h"    // for FormatUnits, XOJ_UNITS, XOJ_U...
+#include "util/GListView.h"             // for GListView, GListView<>::GList...
+#include "util/StringUtils.h"           // for StringUtils
+#include "util/i18n.h"                  // for _
+
+class GladeSearchpath;
 
 
 FormatDialog::FormatDialog(GladeSearchpath* gladeSearchPath, Settings* settings, double width, double height):

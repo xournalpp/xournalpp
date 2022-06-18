@@ -11,16 +11,14 @@
 
 #pragma once
 
-#include <cmath>
-#include <string>
-#include <vector>
+#include <gdk/gdk.h>  // for GdkEventSequence
 
-#include "util/Point.h"
+#include "util/Point.h"  // for Point
 
-#include "AbstractInputHandler.h"
-
+#include "AbstractInputHandler.h"  // for AbstractInputHandler
 
 class InputContext;
+struct InputEvent;
 
 class TouchInputHandler: public AbstractInputHandler {
 private:

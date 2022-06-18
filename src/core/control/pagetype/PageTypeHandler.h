@@ -11,15 +11,14 @@
 
 #pragma once
 
-#include <map>
-#include <string>
-#include <vector>
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include <glib.h>
+#include <glib.h>  // for GKeyFile
 
-#include "model/PageType.h"
+#include "model/PageType.h"  // for PageTypeFormat, PageType
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 class PageTypeInfo {
 public:

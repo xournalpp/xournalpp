@@ -1,20 +1,24 @@
 #include "RecentManager.h"
 
-#include <algorithm>
-#include <array>
-#include <cassert>
-#include <functional>
-#include <new>
-#include <vector>
+#include <algorithm>    // for sort, max
+#include <array>        // for array
+#include <ctime>        // for time_t
+#include <functional>   // for reference_wrapper, greater, less
+#include <optional>     // for optional
+#include <string>       // for string, allocator, operator+
+#include <type_traits>  // for make_signed
+#include <vector>       // for vector
 
-#include <filesystem.h>
+#include <gio/gio.h>      // for g_file_get_parse_name, g_file_ne...
+#include <glib-object.h>  // for g_object_get_data, g_object_set_...
 
-#include "util/GListView.h"
-#include "util/PathUtil.h"
-#include "util/SmallVector.h"
-#include "util/StringUtils.h"
-#include "util/i18n.h"
-#include "util/safe_casts.h"
+#include "util/GListView.h"          // for GListView, GListView<>::GListVie...
+#include "util/PathUtil.h"           // for fromUri, toUri, hasPdfFileExt
+#include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/SmallVector.h"        // for SmallVector
+#include "util/StringUtils.h"        // for replace_pair, StringUtils
+#include "util/i18n.h"               // for FS, FORMAT_STR, C_F
+#include "util/safe_casts.h"         // for as_signed
 
 
 constexpr auto const* MIME = "application/x-xoj";

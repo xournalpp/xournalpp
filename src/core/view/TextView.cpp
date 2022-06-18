@@ -1,12 +1,17 @@
 #include "TextView.h"
 
-#include "control/settings/Settings.h"
-#include "model/Text.h"
-#include "pdf/base/XojPdfPage.h"
-#include "util/StringUtils.h"
-#include "util/Util.h"
+#include <algorithm>  // for max
+#include <cstddef>    // for size_t
 
-#include "filesystem.h"
+#include <glib-object.h>  // for g_object_unref
+
+#include "model/Text.h"           // for Text
+#include "pdf/base/XojPdfPage.h"  // for XojPdfRectangle
+#include "util/Color.h"           // for cairo_set_source_rgbi
+#include "util/StringUtils.h"     // for StringUtils
+#include "view/View.h"            // for Context, OPACITY_NO_AUDIO, view
+
+#include "filesystem.h"  // for path
 
 using namespace xoj::view;
 

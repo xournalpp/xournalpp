@@ -1,10 +1,17 @@
 #include "RecognizerUndoAction.h"
 
-#include "gui/Redrawable.h"
-#include "model/Layer.h"
-#include "model/Stroke.h"
-#include "util/Stacktrace.h"
-#include "util/i18n.h"
+#include <memory>  // for __shared_ptr_access, __shared_ptr_acces...
+
+#include <glib.h>  // for g_warning
+
+#include "model/Layer.h"      // for Layer
+#include "model/Stroke.h"     // for Stroke
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/Stacktrace.h"  // for Stacktrace
+#include "util/i18n.h"        // for _
+
+class Control;
 
 RecognizerUndoAction::RecognizerUndoAction(const PageRef& page, Layer* layer, Stroke* original, Stroke* recognized):
         UndoAction("RecognizerUndoAction") {

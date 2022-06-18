@@ -1,6 +1,11 @@
 #include "XmlPointNode.h"
 
-#include "util/Util.h"
+#include <algorithm>  // for max
+#include <utility>    // for move
+
+#include "control/xml/XmlAudioNode.h"  // for XmlAudioNode
+#include "util/OutputStream.h"         // for OutputStream
+#include "util/Util.h"                 // for writeCoordinateString
 
 XmlPointNode::XmlPointNode(const char* tag): XmlAudioNode(tag) {}
 

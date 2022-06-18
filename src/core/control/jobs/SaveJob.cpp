@@ -1,15 +1,25 @@
 #include "SaveJob.h"
 
-#include <config.h>
+#include <cmath>   // for ceil
+#include <memory>  // for __shared_ptr_access
 
-#include "control/Control.h"
-#include "control/xojfile/SaveHandler.h"
-#include "util/PathUtil.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
-#include "view/DocumentView.h"
+#include <cairo.h>  // for cairo_create, cairo_destroy
+#include <glib.h>   // for g_warning, g_error
 
-#include "filesystem.h"
+#include "control/Control.h"              // for Control
+#include "control/jobs/BlockingJob.h"     // for BlockingJob
+#include "control/xojfile/SaveHandler.h"  // for SaveHandler
+#include "model/Document.h"               // for Document
+#include "model/PageRef.h"                // for PageRef
+#include "model/PageType.h"               // for PageType
+#include "model/XojPage.h"                // for XojPage
+#include "pdf/base/XojPdfPage.h"          // for XojPdfPageSPtr, XojPdfPage
+#include "util/PathUtil.h"                // for clearExtensions, safeRename...
+#include "util/XojMsgBox.h"               // for XojMsgBox
+#include "util/i18n.h"                    // for FS, _, _F
+#include "view/DocumentView.h"            // for DocumentView
+
+#include "filesystem.h"  // for path, filesystem_error, remove
 
 
 SaveJob::SaveJob(Control* control): BlockingJob(control, _("Save")) {}

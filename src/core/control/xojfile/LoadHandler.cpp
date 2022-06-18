@@ -1,20 +1,33 @@
 #include "LoadHandler.h"
 
-#include <cstdlib>
-#include <utility>
+#include <algorithm>    // for copy
+#include <cstdlib>      // for atoi, size_t
+#include <cstring>      // for strcmp, strlen
+#include <memory>       // for __shared_ptr_access
+#include <regex>        // for regex_search, smatch
+#include <type_traits>  // for remove_reference<>::type
+#include <utility>      // for move
 
-#include <config.h>
-#include <glib/gstdio.h>
-#include <gtk/gtk.h>
+#include <gio/gio.h>      // for g_file_get_path, g_fil...
+#include <glib-object.h>  // for g_object_unref
 
-#include "control/pagetype/PageTypeHandler.h"
-#include "model/BackgroundImage.h"
-#include "model/StrokeStyle.h"
-#include "model/XojPage.h"
-#include "util/GzUtil.h"
-#include "util/i18n.h"
+#include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
+#include "model/BackgroundImage.h"             // for BackgroundImage
+#include "model/Font.h"                        // for XojFont
+#include "model/Image.h"                       // for Image
+#include "model/Layer.h"                       // for Layer
+#include "model/PageType.h"                    // for PageType, PageTypeFormat
+#include "model/Point.h"                       // for Point
+#include "model/Stroke.h"                      // for Stroke, StrokeCapStyle
+#include "model/StrokeStyle.h"                 // for StrokeStyle
+#include "model/TexImage.h"                    // for TexImage
+#include "model/Text.h"                        // for Text
+#include "model/XojPage.h"                     // for XojPage
+#include "util/GzUtil.h"                       // for GzUtil
+#include "util/PlaceholderString.h"            // for PlaceholderString
+#include "util/i18n.h"                         // for _F, FC, FS, _
 
-#include "LoadHandlerHelper.h"
+#include "LoadHandlerHelper.h"  // for getAttrib, getAttribDo...
 
 using std::string;
 

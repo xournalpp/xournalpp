@@ -15,6 +15,9 @@
 #include <execinfo.h>
 
 #include "util/PathUtil.h"
+#include "util/Stacktrace.h"
+
+#include "config-dev.h"
 
 static bool alreadyCrashed = false;
 

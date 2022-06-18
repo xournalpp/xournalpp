@@ -11,14 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include "XojPdfExport.h"
-
+#include <memory>  // for unique_ptr
 
 class Document;
 class ProgressListener;
+class XojPdfExport;
 
 class XojPdfExportFactory {
 private:

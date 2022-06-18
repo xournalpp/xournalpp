@@ -11,16 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cairo.h>  // for cairo_surface_t, cairo_t
 
-#include <gtk/gtk.h>
-
-#include "Job.h"
-
+#include "Job.h"  // for Job, JobType
 
 class SidebarPreviewBaseEntry;
-class Document;
 
 /**
  * @brief A Job which renders a SidebarPreviewPage

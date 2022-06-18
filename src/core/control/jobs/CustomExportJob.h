@@ -11,15 +11,16 @@
 
 #pragma once
 
-#include <map>
+#include <map>     // for map
+#include <string>  // for string
 
-#include "util/PageRange.h"
-#include "util/i18n.h"
-#include "view/DocumentView.h"
+#include "util/PageRange.h"  // for PageRangeVector
 
-#include "BaseExportJob.h"
-#include "ImageExport.h"
-#include "filesystem.h"
+#include "BaseExportJob.h"  // for BaseExportJob, EXPORT_BACKGROUND_ALL
+#include "ImageExport.h"    // for RasterImageQualityParameter, EXPORT_GRAP...
+#include "filesystem.h"     // for path
+
+class Control;
 
 
 class CustomExportJob: public BaseExportJob {

@@ -11,9 +11,8 @@
 
 #pragma once
 
-#include <exception>
-#include <string>
-#include <vector>
+#include <exception>  // for exception
+#include <string>     // for string
 
 
 class InputStreamException: public std::exception {

@@ -11,12 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include <zlib.h>
+#include <zlib.h>  // for gzFile
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 class OutputStream {
 public:

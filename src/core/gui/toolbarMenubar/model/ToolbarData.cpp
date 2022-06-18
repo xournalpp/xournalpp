@@ -1,11 +1,13 @@
 #include "ToolbarData.h"
 
-#include <utility>
+#include <cstring>  // for strcmp, strncmp
+#include <utility>  // for move
 
-#include <gtk/gtk.h>
-
-#include "util/StringUtils.h"
-#include "util/i18n.h"
+#include "gui/toolbarMenubar/model/ToolbarEntry.h"  // for ToolbarEntry, Too...
+#include "gui/toolbarMenubar/model/ToolbarItem.h"   // for ToolbarItem
+#include "util/PlaceholderString.h"                 // for PlaceholderString
+#include "util/StringUtils.h"                       // for StringUtils
+#include "util/i18n.h"                              // for FC, FORMAT_STR, _F
 
 using std::string;
 

@@ -1,13 +1,17 @@
 #include "PopplerGlibDocument.h"
 
-#include <memory>
+#include <memory>    // for make_shared
+#include <optional>  // for optional
 
-#include "util/PathUtil.h"
-#include "util/Util.h"
+#include <poppler-document.h>  // for poppler_document_get_n_...
 
-#include "PopplerGlibPage.h"
-#include "PopplerGlibPageBookmarkIterator.h"
-#include "filesystem.h"
+#include "util/PathUtil.h"  // for toUri
+
+#include "PopplerGlibPage.h"                  // for PopplerGlibPage
+#include "PopplerGlibPageBookmarkIterator.h"  // for PopplerGlibPageBookmark...
+#include "filesystem.h"                       // for path
+
+class XojPdfBookmarkIterator;
 
 using std::string;
 

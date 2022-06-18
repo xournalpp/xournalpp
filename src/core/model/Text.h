@@ -11,11 +11,14 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <string>  // for string
 
-#include "AudioElement.h"
-#include "Element.h"
-#include "Font.h"
+#include "AudioElement.h"  // for AudioElement
+#include "Font.h"          // for XojFont
+
+class Element;
+class ObjectInputStream;
+class ObjectOutputStream;
 
 class Text: public AudioElement {
 public:

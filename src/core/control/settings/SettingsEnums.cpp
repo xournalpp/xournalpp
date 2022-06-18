@@ -1,5 +1,7 @@
 #include "SettingsEnums.h"
 
+#include <glib.h>  // for g_warning
+
 auto stylusCursorTypeFromString(const std::string& stylusCursorTypeStr) -> StylusCursorType {
     if (stylusCursorTypeStr == "none") {
         return STYLUS_CURSOR_NONE;

@@ -11,13 +11,12 @@
 
 #pragma once
 
-#include <mutex>
-#include <string>
-#include <vector>
+#include <mutex>   // for mutex
+#include <vector>  // for vector
 
-#include <glib.h>
+#include <glib.h>  // for gint64
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 
 class MetadataEntry {

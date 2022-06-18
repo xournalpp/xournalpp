@@ -1,11 +1,16 @@
 #include "ScaleUndoAction.h"
 
-#include <cmath>
+#include <cmath>   // for isfinite
+#include <memory>  // for allocator, __shared_ptr_access, __share...
 
-#include "model/Element.h"
-#include "model/PageRef.h"
-#include "util/Range.h"
-#include "util/i18n.h"
+#include "model/Element.h"    // for Element
+#include "model/PageRef.h"    // for PageRef
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/Range.h"       // for Range
+#include "util/i18n.h"        // for _
+
+class Control;
 
 ScaleUndoAction::ScaleUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0, double fx,
                                  double fy, double rotation, bool restoreLineWidth):

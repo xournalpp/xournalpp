@@ -1,10 +1,12 @@
 #include "BaseElementView.h"
 
-#include "control/settings/Settings.h"
-#include "gui/Shadow.h"
-#include "util/Util.h"
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 
-#include "BackgroundSelectDialogBase.h"
+#include "control/settings/Settings.h"  // for Settings
+#include "gui/Shadow.h"                 // for Shadow
+#include "util/Color.h"                 // for cairo_set_source_rgbi
+
+#include "BackgroundSelectDialogBase.h"  // for BackgroundSelectDialogBase
 
 BaseElementView::BaseElementView(int id, BackgroundSelectDialogBase* dlg): dlg(dlg), id(id) {
     this->widget = gtk_drawing_area_new();

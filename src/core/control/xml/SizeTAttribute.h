@@ -11,7 +11,11 @@
 
 #pragma once
 
-#include "Attribute.h"
+#include <cstddef>  // for size_t
+
+#include "Attribute.h"  // for XMLAttribute
+
+class OutputStream;
 
 class SizeTAttribute: public XMLAttribute {
 public:

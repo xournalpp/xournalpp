@@ -11,11 +11,7 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include <gtk/gtk.h>
-
+#include <gio/gio.h>  // for GFile
 
 class Control;
 class XojPageView;

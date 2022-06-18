@@ -1,14 +1,17 @@
-#include "model/Element.h"
-#include "model/Image.h"
-#include "model/Stroke.h"
-#include "model/TexImage.h"
-#include "model/Text.h"
+#include <cassert>  // for assert
+#include <memory>   // for make_unique, unique_ptr
 
-#include "ImageView.h"
-#include "StrokeView.h"
-#include "TexImageView.h"
-#include "TextView.h"
-#include "View.h"
+#include "model/Element.h"   // for Element, ELEMENT_IMAGE, ELEMENT_STROKE
+#include "model/Image.h"     // for Image
+#include "model/Stroke.h"    // for Stroke
+#include "model/TexImage.h"  // for TexImage
+#include "model/Text.h"      // for Text
+
+#include "ImageView.h"     // for ImageView
+#include "StrokeView.h"    // for StrokeView
+#include "TexImageView.h"  // for TexImageView
+#include "TextView.h"      // for TextView
+#include "View.h"          // for ElementView, view
 
 using namespace xoj::view;
 

@@ -1,17 +1,22 @@
 #include "Layout.h"
 
-#include <algorithm>
-#include <numeric>
-#include <optional>
-#include <utility>
+#include <algorithm>    // for max, lower_bound, transform
+#include <iterator>     // for begin, end, distance
+#include <numeric>      // for accumulate
+#include <optional>     // for optional
+#include <type_traits>  // for make_signed_t, remove_referen...
 
-#include "control/Control.h"
-#include "gui/scroll/ScrollHandling.h"
-#include "gui/widgets/XournalWidget.h"
-#include "util/Rectangle.h"
-#include "util/safe_casts.h"
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 
-#include "XournalView.h"
+#include "control/Control.h"            // for Control
+#include "control/settings/Settings.h"  // for Settings
+#include "gui/LayoutMapper.h"           // for LayoutMapper, GridPosition
+#include "gui/PageView.h"               // for XojPageView
+#include "gui/scroll/ScrollHandling.h"  // for ScrollHandling
+#include "util/Rectangle.h"             // for Rectangle
+#include "util/safe_casts.h"            // for strict_cast, as_signed, as_si...
+
+#include "XournalView.h"  // for XournalView
 
 using xoj::util::Rectangle;
 

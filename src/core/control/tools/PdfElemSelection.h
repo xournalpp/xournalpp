@@ -10,15 +10,17 @@
  */
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cinttypes>  // for uint64_t
+#include <string>     // for string
+#include <vector>     // for vector
 
-#include "control/ToolEnums.h"
-#include "gui/PageView.h"
-#include "gui/Redrawable.h"
-#include "model/Element.h"
-#include "model/PageRef.h"
-#include "pdf/base/XojPdfPage.h"
+#include <cairo.h>  // for cairo_region_t, cairo_t
+
+#include "control/ToolEnums.h"    // for ToolType
+#include "pdf/base/XojPdfPage.h"  // for XojPdfPageSelectionStyle, XojPdfRec...
+#include "util/Util.h"            // for npos
+
+class XojPageView;
 
 /// Represents elements selected from a PDF page, such as text.
 class PdfElemSelection {

@@ -1,9 +1,10 @@
 #include "util/OutputStream.h"
 
-#include <glib.h>
+#include <cstring>  // for strlen
+#include <utility>  // for move
 
-#include "util/GzUtil.h"
-#include "util/i18n.h"
+#include "util/GzUtil.h"  // for GzUtil
+#include "util/i18n.h"    // for FS, _F
 
 OutputStream::OutputStream() = default;
 

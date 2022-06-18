@@ -1,9 +1,13 @@
 #include "Element.h"
 
-#include <cmath>
+#include <algorithm>  // for max, min
+#include <cinttypes>  // for uint32_t
+#include <cmath>      // for ceil, floor, NAN
 
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
+#include <glib.h>  // for gint
+
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
 using xoj::util::Rectangle;
 

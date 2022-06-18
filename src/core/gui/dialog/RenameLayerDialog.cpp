@@ -1,10 +1,16 @@
 #include "RenameLayerDialog.h"
 
-#include <memory>
+#include <memory>  // for allocator, make_unique
+#include <string>  // for string
 
-#include "control/layer/LayerController.h"
-#include "undo/LayerRenameUndoAction.h"
-#include "util/StringUtils.h"
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+
+#include "control/layer/LayerController.h"  // for LayerController
+#include "undo/LayerRenameUndoAction.h"     // for LayerRenameUndoAction
+#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler
+
+class GladeSearchpath;
+class Layer;
 
 RenameLayerDialog::RenameLayerDialog(GladeSearchpath* gladeSearchPath, UndoRedoHandler* undo, LayerController* lc,
                                      Layer* l):

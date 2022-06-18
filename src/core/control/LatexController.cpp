@@ -1,25 +1,44 @@
 #include "LatexController.h"
 
-#include <fstream>
-#include <iomanip>
-#include <iterator>
-#include <memory>
-#include <regex>
-#include <sstream>
-#include <utility>
+#include <cstdlib>   // for free
+#include <fstream>   // for ifstream, basic_istream
+#include <iterator>  // for istreambuf_iterator, ope...
+#include <memory>    // for unique_ptr, allocator
+#include <optional>  // for optional
+#include <utility>   // for move
+#include <variant>   // for get_if
 
-#include "control/latex/LatexGenerator.h"
-#include "gui/XournalView.h"
-#include "gui/dialog/LatexDialog.h"
-#include "undo/InsertUndoAction.h"
-#include "util/PathUtil.h"
-#include "util/StringUtils.h"
-#include "util/Util.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
-#include "util/pixbuf-utils.h"
+#include <glib.h>  // for g_error_free, g_error_ma...
 
-#include "Control.h"
+#include "control/Tool.h"                    // for Tool
+#include "control/ToolEnums.h"               // for TOOL_TEXT
+#include "control/ToolHandler.h"             // for ToolHandler
+#include "control/latex/LatexGenerator.h"    // for LatexGenerator::GenError
+#include "control/settings/LatexSettings.h"  // for LatexSettings
+#include "control/settings/Settings.h"       // for Settings
+#include "control/tools/EditSelection.h"     // for EditSelection
+#include "gui/Layout.h"                      // for Layout
+#include "gui/MainWindow.h"                  // for MainWindow
+#include "gui/PageView.h"                    // for XojPageView
+#include "gui/XournalView.h"                 // for XournalView
+#include "gui/dialog/LatexDialog.h"          // for LatexDialog
+#include "model/Document.h"                  // for Document
+#include "model/Element.h"                   // for Element
+#include "model/Layer.h"                     // for Layer
+#include "model/TexImage.h"                  // for TexImage
+#include "model/Text.h"                      // for Text
+#include "model/XojPage.h"                   // for XojPage
+#include "undo/InsertUndoAction.h"           // for InsertUndoAction
+#include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
+#include "util/Color.h"                      // for Color, get_color_contrast
+#include "util/PathUtil.h"                   // for ensureFolderExists, getT...
+#include "util/PlaceholderString.h"          // for PlaceholderString
+#include "util/Rectangle.h"                  // for Rectangle
+#include "util/Util.h"                       // for npos
+#include "util/XojMsgBox.h"                  // for XojMsgBox
+#include "util/i18n.h"                       // for FS, _, _F, N_
+
+#include "Control.h"  // for Control
 
 using std::string;
 

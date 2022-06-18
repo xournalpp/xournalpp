@@ -1,15 +1,28 @@
 #include "SetsquareView.h"
 
-#include <cmath>
+#include <algorithm>  // for max, min
+#include <cmath>      // for isnan, sqrt, cos, sin, atan2
+#include <utility>    // for move
 
-#include "control/Control.h"
-#include "control/layer/LayerController.h"
-#include "gui/XournalView.h"
-#include "gui/XournalppCursor.h"
-#include "model/Setsquare.h"
-#include "undo/InsertUndoAction.h"
+#include <glib.h>  // for g_error, g_warning
 
-#include "StrokeView.h"
+#include "control/Control.h"                // for Control
+#include "control/ToolHandler.h"            // for ToolHandler
+#include "control/layer/LayerController.h"  // for LayerController
+#include "gui/PageView.h"                   // for XojPageView
+#include "gui/XournalView.h"                // for XournalView
+#include "gui/XournalppCursor.h"            // for XournalppCursor
+#include "model/Layer.h"                    // for Layer
+#include "model/Point.h"                    // for Point
+#include "model/Setsquare.h"                // for Setsquare
+#include "model/Stroke.h"                   // for Stroke
+#include "model/XojPage.h"                  // for XojPage
+#include "undo/InsertUndoAction.h"          // for InsertUndoAction
+#include "undo/UndoRedoHandler.h"           // for UndoRedoHandler
+#include "util/Rectangle.h"                 // for Rectangle
+#include "view/View.h"                      // for Context
+
+#include "StrokeView.h"  // for StrokeView
 
 using xoj::util::Rectangle;
 

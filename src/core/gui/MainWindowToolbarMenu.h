@@ -11,11 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <vector>  // for vector
 
-#include <gtk/gtk.h>
-
+#include <gtk/gtk.h>  // for GtkMenuShell, GtkCheckMenuItem, GtkWidget
 
 class Settings;
 class ToolbarData;

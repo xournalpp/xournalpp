@@ -11,11 +11,20 @@
 
 #pragma once
 
-#include <memory>
+#include <memory>  // for unique_ptr
 
-#include <gtk/gtk.h>
+#include <glib-object.h>  // for G_TYPE_CHECK_INSTANCE_CAST, G_TYPE_C...
+#include <glib.h>         // for G_BEGIN_DECLS, G_END_DECLS
+#include <gtk/gtk.h>      // for GtkWidget, GtkWidgetClass
 
-#include "util/Rectangle.h"
+#include "view/SetsquareView.h"  // for SetsquareView
+
+namespace xoj::util {
+template <class T>
+class Rectangle;
+}  // namespace xoj::util
+struct _GtkXournal;
+struct _GtkXournalClass;
 
 G_BEGIN_DECLS
 

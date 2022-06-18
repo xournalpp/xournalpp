@@ -11,7 +11,10 @@
 
 #pragma once
 
-#include "ToolbarItem.h"
+#include <string>  // for string
+#include <vector>  // for vector
+
+class ToolbarItem;
 
 typedef std::vector<ToolbarItem*> ToolbarItemVector;
 

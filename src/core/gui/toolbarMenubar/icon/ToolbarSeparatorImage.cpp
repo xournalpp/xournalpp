@@ -1,5 +1,9 @@
 #include "ToolbarSeparatorImage.h"
 
+#include <cairo.h>        // for cairo_create, cairo_destroy, cairo_image_su...
+#include <gdk/gdk.h>      // for gdk_pixbuf_get_from_surface
+#include <glib-object.h>  // for g_object_unref
+
 auto ToolbarSeparatorImage::newImage() -> GtkWidget* {
     GdkPixbuf* pixbuf = ToolbarSeparatorImage::getNewToolPixbuf();
     GtkWidget* w = gtk_image_new_from_pixbuf(pixbuf);

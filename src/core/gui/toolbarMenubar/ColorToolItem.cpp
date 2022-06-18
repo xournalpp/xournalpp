@@ -1,17 +1,19 @@
 #include "ColorToolItem.h"
 
-#include <array>
-#include <cinttypes>
-#include <memory>
+#include <array>    // for array
+#include <cstdio>   // for snprintf, size_t
+#include <memory>   // for unique_ptr
+#include <utility>  // for move
 
-#include <config.h>
+#include <glib.h>  // for gchar
 
-#include "control/ToolEnums.h"
-#include "control/ToolHandler.h"
-#include "gui/toolbarMenubar/icon/ColorSelectImage.h"
-#include "util/StringUtils.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include "control/ToolEnums.h"                         // for TOOL_CAP_COLOR
+#include "control/ToolHandler.h"                       // for ToolHandler
+#include "gui/toolbarMenubar/AbstractToolItem.h"       // for AbstractToolItem
+#include "gui/toolbarMenubar/icon/ColorSelectImage.h"  // for ColorSelectImage
+#include "util/i18n.h"                                 // for _
+
+class ActionHandler;
 
 bool ColorToolItem::inUpdate = false;
 

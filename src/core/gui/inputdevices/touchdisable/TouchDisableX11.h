@@ -13,14 +13,11 @@
 
 #ifdef X11_ENABLED
 
-#include <string>
-#include <vector>
+#include <X11/X.h>                  // for Atom, None
+#include <X11/Xlib.h>               // for Display
+#include <X11/extensions/XInput.h>  // for XDevice, XDeviceInfo
 
-#include <X11/Xatom.h>
-#include <X11/Xlib.h>
-#include <X11/extensions/XInput.h>
-
-#include "TouchDisableInterface.h"
+#include "TouchDisableInterface.h"  // for TouchDisableInterface
 
 
 class TouchDisableX11: public TouchDisableInterface {

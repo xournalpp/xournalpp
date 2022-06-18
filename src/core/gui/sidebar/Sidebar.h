@@ -11,13 +11,14 @@
 
 #pragma once
 
-#include <list>
+#include <cstddef>  // for size_t
+#include <list>     // for list
 
-#include <gtk/gtk.h>
+#include <gtk/gtk.h>  // for GtkWidget, Gtk...
 
-#include "gui/sidebar/previews/base/SidebarToolbar.h"
-#include "model/DocumentChangeType.h"
-#include "model/DocumentListener.h"
+#include "gui/sidebar/previews/base/SidebarToolbar.h"  // for SidebarActions
+#include "model/DocumentChangeType.h"                  // for DocumentChange...
+#include "model/DocumentListener.h"                    // for DocumentListener
 
 class AbstractSidebarPage;
 class Control;

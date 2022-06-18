@@ -1,6 +1,8 @@
 #include "AbstractItem.h"
 
-#include <utility>
+#include <utility>  // for move
+
+#include <glib-object.h>  // for g_object_ref, g_object_unref, g_signal_hand...
 
 AbstractItem::AbstractItem(std::string id, ActionHandler* handler, ActionType action, GtkWidget* menuitem):
         action(action), id(std::move(id)), handler(handler) {

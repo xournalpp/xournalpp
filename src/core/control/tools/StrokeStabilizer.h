@@ -10,15 +10,20 @@
  */
 #pragma once
 
-#include <array>
-#include <cmath>
-#include <deque>
-#include <functional>
+#include <cmath>    // for hypot
+#include <cstddef>  // for size_t
+#include <deque>    // for deque
+#include <memory>   // for allocator, unique_ptr
+#include <string>   // for operator+, char_traits
 
-#include "control/tools/StrokeHandler.h"
-#include "util/CircularBuffer.h"
+#include <glib.h>  // for guint32
 
-#include "StrokeStabilizerEnum.h"
+#include "control/tools/StrokeHandler.h"         // for StrokeHandler
+#include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
+#include "model/Point.h"                         // for Point
+#include "util/CircularBuffer.h"                 // for CircularBuffer
+
+class Settings;
 
 namespace StrokeStabilizer {
 

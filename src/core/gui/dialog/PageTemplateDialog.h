@@ -11,15 +11,19 @@
 
 #pragma once
 
-#include "control/pagetype/PageTypeMenu.h"
-#include "control/settings/PageTemplateSettings.h"
-#include "control/settings/Settings.h"
-#include "gui/GladeGui.h"
+#include <memory>  // for unique_ptr
+
+#include <gtk/gtk.h>  // for GtkWindow
+
+#include "control/pagetype/PageTypeMenu.h"          // for PageTypeMenu (ptr...
+#include "control/settings/PageTemplateSettings.h"  // for PageTemplateSettings
+#include "gui/GladeGui.h"                           // for GladeGui
 
 class PageTypeHandler;
-class PageTypeMenu;
 class PageTypeInfo;
 class PopupMenuButton;
+class GladeSearchpath;
+class Settings;
 
 class PageTemplateDialog: public GladeGui, public PageTypeMenuChangeListener {
 public:

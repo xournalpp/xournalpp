@@ -1,9 +1,18 @@
 #include "DeleteUndoAction.h"
 
-#include "model/Element.h"
-#include "model/Layer.h"
-#include "model/PageRef.h"
-#include "util/i18n.h"
+#include <memory>  // for __shared_ptr_access, __shared_pt...
+
+#include <glib.h>  // for g_warning
+
+#include "model/Element.h"           // for Element, ELEMENT_IMAGE, ELEMENT_...
+#include "model/Layer.h"             // for Layer
+#include "model/PageRef.h"           // for PageRef
+#include "model/XojPage.h"           // for XojPage
+#include "undo/PageLayerPosEntry.h"  // for PageLayerPosEntry, operator<
+#include "undo/UndoAction.h"         // for UndoAction
+#include "util/i18n.h"               // for _
+
+class Control;
 
 
 DeleteUndoAction::DeleteUndoAction(const PageRef& page, bool eraser): UndoAction("DeleteUndoAction"), eraser(eraser) {

@@ -11,12 +11,13 @@
 
 #pragma once
 
-#include <memory>
+#include <memory>  // for shared_ptr
+#include <string>  // for string
 
-#include <gdk/gdk.h>
-#include <glib.h>
+#include <gdk/gdk.h>  // for GdkEvent, gdk_event_free, gdk_event_copy
+#include <glib.h>     // for gdouble, gchar, guint, guint32
 
-#include "model/Point.h"
+#include "model/Point.h"  // for Point, Point::NO_PRESSURE
 
 class Settings;
 

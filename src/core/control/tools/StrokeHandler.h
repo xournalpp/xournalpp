@@ -11,10 +11,24 @@
 
 #pragma once
 
-#include "view/View.h"
+#include <memory>    // for unique_ptr
+#include <optional>  // for optional
 
-#include "InputHandler.h"
-#include "SnapToGridInputHandler.h"
+#include <cairo.h>    // for cairo_t, cairo_surface_t
+#include <gdk/gdk.h>  // for GdkEventKey
+#include <glib.h>     // for guint32
+
+#include "model/PageRef.h"  // for PageRef
+#include "model/Point.h"    // for Point
+
+#include "InputHandler.h"            // for InputHandler
+#include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
+
+class Layer;
+class PositionInputData;
+class Stroke;
+class XojPageView;
+class XournalView;
 
 namespace StrokeStabilizer {
 class Base;

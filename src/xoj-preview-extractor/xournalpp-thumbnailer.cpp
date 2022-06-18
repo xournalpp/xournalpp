@@ -12,21 +12,29 @@
 // Set to true to write a log with errors and debug logs to /tmp/xojtmb.log
 #define DEBUG_THUMBNAILER false
 
-#include <algorithm>
+#include <algorithm>  // for max, min
+#include <cstdio>     // for fclose, fopen, fwrite, FILE
+#include <iostream>   // for endl, ostream, basic_ostream
+#include <locale>     // for locale
+#include <string>     // for string, basic_string, allocator
+#include <vector>     // for vector
+
+#include <cairo.h>         // for cairo_create, cairo_image_surf...
+#include <glib.h>          // for gchar, g_get_home_dir, g_getenv
+#include <libintl.h>       // for bindtextdomain, textdomain
+#include <librsvg/rsvg.h>  // for RsvgDimensionData, rsvg_handle...
+
+#include "util/PathUtil.h"             // for getLocalePath
+#include "util/PlaceholderString.h"    // for PlaceholderString
+#include "util/XojPreviewExtractor.h"  // for XojPreviewExtractor, PREVIEW_R...
+#include "util/i18n.h"                 // for _F, _
+
+#include "config.h"      // for GETTEXT_PACKAGE, ENABLE_NLS
+#include "filesystem.h"  // for path, operator/, u8path, exists
+
+#ifdef DEBUG_THUMBERNAILER
 #include <fstream>
-#include <iostream>
-
-#include <cairo.h>
-#include <librsvg/rsvg.h>
-
-#include "util/PathUtil.h"
-#include "util/XojPreviewExtractor.h"
-#include "util/i18n.h"
-
-#include "config-paths.h"
-#include "config.h"
-#include "filesystem.h"
-
+#endif
 
 using std::cerr;
 using std::cout;

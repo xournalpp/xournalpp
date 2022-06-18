@@ -1,12 +1,14 @@
 #include "CircleRecognizer.h"
 
-#include <cmath>
+#include <cmath>     // for hypot, cos, fabs, sin, M_PI
+#include <iterator>  // for begin, end, next
+#include <vector>    // for vector
 
-#include "model/Stroke.h"
-#include "util/LoopUtil.h"
+#include "model/Point.h"   // for Point
+#include "model/Stroke.h"  // for Stroke
 
-#include "Inertia.h"
-#include "ShapeRecognizerConfig.h"
+#include "Inertia.h"                // for Inertia
+#include "ShapeRecognizerConfig.h"  // for RDEBUG, CIRCLE_MAX_SCORE, CIRCLE_...
 
 /**
  * Create circle stroke for inertia

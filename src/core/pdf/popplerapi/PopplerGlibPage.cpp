@@ -1,15 +1,17 @@
 #include "PopplerGlibPage.h"
 
-#include <sstream>
+#include <algorithm>  // for max, min
+#include <cstdlib>    // for abs, ptrdiff_t
+#include <sstream>    // for operator<<, ostringstream, basic_os...
 
-#include <poppler-page.h>
-#include <poppler.h>
+#include <glib.h>          // for g_free, g_utf8_offset_to_pointer
+#include <poppler-page.h>  // for _PopplerRectangle, poppler_page_get...
+#include <poppler.h>       // for PopplerRectangle, g_object_ref, g_o...
 
-#include "pdf/base/XojPdfPage.h"
-#include "util/GListView.h"
-#include "util/Rectangle.h"
+#include "pdf/base/XojPdfPage.h"  // for XojPdfRectangle, XojPdfPageSelectio...
+#include "util/GListView.h"       // for GListView, GListView<>::GListViewIter
 
-#include "cairo.h"
+#include "cairo.h"  // for cairo_region_create, cairo_region_c...
 
 PopplerGlibPage::PopplerGlibPage(PopplerPage* page): page(page) {
     if (page != nullptr) {

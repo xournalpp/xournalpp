@@ -1,10 +1,14 @@
 #include "PageBackgroundChangedUndoAction.h"
 
-#include <utility>
+#include <memory>   // for __shared_ptr_access, allocator
+#include <utility>  // for move
 
-#include "control/Control.h"
-#include "model/Document.h"
-#include "util/i18n.h"
+#include "control/Control.h"  // for Control
+#include "model/Document.h"   // for Document
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/Util.h"        // for npos
+#include "util/i18n.h"        // for _
 
 PageBackgroundChangedUndoAction::PageBackgroundChangedUndoAction(const PageRef& page, const PageType& origType,
                                                                  int origPdfPage, BackgroundImage origBackgroundImage,

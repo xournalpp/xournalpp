@@ -11,13 +11,15 @@
 
 #pragma once
 
-#include <vector>
+#include <cstddef>  // for size_t
+#include <vector>   // for vector
 
-#include <gtk/gtk.h>
+#include <gdk/gdk.h>  // for GdkEvent, GdkEventScroll, GdkEve...
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include "model/DocumentListener.h"
-#include "util/Point.h"
-#include "util/Rectangle.h"
+#include "model/DocumentListener.h"  // for DocumentListener
+#include "util/Point.h"              // for Point
+#include "util/Rectangle.h"          // for Rectangle
 
 constexpr auto DEFAULT_ZOOM_MAX{7};
 constexpr auto DEFAULT_ZOOM_MIN{0.3};
@@ -28,9 +30,7 @@ enum ZoomDirection : bool { ZOOM_OUT = false, ZOOM_IN = true };
 
 class XournalView;
 class Control;
-class XojPageView;
 class ZoomListener;
-class DocumentListener;
 
 class ZoomControl: public DocumentListener {
 public:

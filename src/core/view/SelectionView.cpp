@@ -1,9 +1,13 @@
 #include "SelectionView.h"
 
-#include "model/Element.h"
-#include "model/ElementContainer.h"
+#include <memory>  // for unique_ptr
+#include <vector>  // for vector
 
-#include "View.h"
+#include "model/ElementContainer.h"  // for ElementContainer
+
+#include "View.h"  // for ElementView
+
+class Element;
 
 using namespace xoj::view;
 

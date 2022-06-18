@@ -1,16 +1,24 @@
 #include "ImageExport.h"
 
-#include <cmath>
-#include <cstddef>
-#include <utility>
+#include <cmath>    // for round
+#include <cstddef>  // for size_t
+#include <memory>   // for __shared_ptr_access, allocat...
+#include <utility>  // for move
+#include <vector>   // for vector
 
-#include <cairo-svg.h>
+#include <cairo-svg.h>  // for cairo_svg_surface_create
 
-#include "model/Document.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include "control/jobs/BaseExportJob.h"  // for EXPORT_BACKGROUND_NONE, EXPO...
+#include "model/Document.h"              // for Document
+#include "model/PageRef.h"               // for PageRef
+#include "model/PageType.h"              // for PageType
+#include "model/XojPage.h"               // for XojPage
+#include "pdf/base/XojPdfPage.h"         // for XojPdfPageSPtr, XojPdfPage
+#include "util/Util.h"                   // for DPI_NORMALIZATION_FACTOR
+#include "util/i18n.h"                   // for _
+#include "view/DocumentView.h"           // for DocumentView
 
-#include "ProgressListener.h"
+#include "ProgressListener.h"  // for ProgressListener
 
 using std::string;
 

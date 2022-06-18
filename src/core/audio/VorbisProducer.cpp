@@ -1,8 +1,18 @@
 #include "VorbisProducer.h"
 
-#include <glib.h>
+#include <algorithm>  // for fill_n, max
+#include <cstdio>     // for size_t, SEEK_CUR, SEEK_SET
+#include <iterator>   // for begin, end
+#include <memory>     // for unique_ptr
+#include <string>     // for string
+#include <utility>    // for move
+#include <vector>     // for vector
 
-#include "audio/SNDFileCpp.h"
+#include <glib.h>     // for g_warning
+#include <sndfile.h>  // for SF_INFO, sf_seek, sf_count_t, sf_readf...
+
+#include "audio/AudioQueue.h"  // for AudioQueue
+#include "audio/SNDFileCpp.h"  // for make_snd_file, xoj
 
 using namespace xoj;
 

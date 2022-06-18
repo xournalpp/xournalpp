@@ -1,10 +1,16 @@
 #include "ToolbarManageDialog.h"
 
-#include <config.h>
+#include <string>  // for allocator, string
+#include <vector>  // for vector
 
-#include "gui/toolbarMenubar/model/ToolbarData.h"
-#include "gui/toolbarMenubar/model/ToolbarModel.h"
-#include "util/i18n.h"
+#include <glib-object.h>  // for g_signal_connect
+#include <pango/pango.h>  // for PANGO_WEIGHT_NORMAL
+
+#include "gui/toolbarMenubar/model/ToolbarData.h"   // for ToolbarData
+#include "gui/toolbarMenubar/model/ToolbarModel.h"  // for ToolbarModel
+#include "util/i18n.h"                              // for _
+
+class GladeSearchpath;
 
 enum { COLUMN_STRING, COLUMN_BOLD, COLUMN_POINTER, COLUMN_EDITABLE, N_COLUMNS };
 

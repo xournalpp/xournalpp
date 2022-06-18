@@ -11,7 +11,11 @@
 
 #pragma once
 
-#include "XmlNode.h"
+#include <cairo.h>  // for cairo_surface_t, cairo_status_t
+
+#include "XmlNode.h"  // for XmlNode
+
+class OutputStream;
 
 class XmlImageNode: public XmlNode {
 public:

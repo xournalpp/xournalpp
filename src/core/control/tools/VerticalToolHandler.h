@@ -11,20 +11,29 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <memory>    // for unique_ptr
+#include <optional>  // for optional
+#include <vector>    // for vector
 
-#include <cairo.h>
+#include <cairo.h>    // for cairo_surface_t, cairo_t
+#include <gdk/gdk.h>  // for GdkEventKey, GdkWindow
 
-#include "control/zoom/ZoomListener.h"
-#include "gui/Redrawable.h"
-#include "model/ElementContainer.h"
-#include "model/PageRef.h"
-#include "undo/MoveUndoAction.h"
+#include "control/zoom/ZoomListener.h"  // for ZoomListener
+#include "model/ElementContainer.h"     // for ElementContainer
+#include "model/PageRef.h"              // for PageRef
 
-#include "SnapToGridInputHandler.h"
+#include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
 
 class ZoomControl;
+class Element;
+class Layer;
+class MoveUndoAction;
+class Redrawable;
+class Settings;
+namespace xoj::util {
+template <class T>
+class Rectangle;
+}  // namespace xoj::util
 
 /**
  * Handler class for the Vertical Spacing tool.

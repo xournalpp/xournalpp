@@ -11,11 +11,8 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
 
-#include "XojPdfAction.h"
-
+class XojPdfAction;
 
 class XojPdfBookmarkIterator {
 public:

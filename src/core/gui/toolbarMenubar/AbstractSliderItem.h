@@ -11,13 +11,17 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-
 // GtkRange
-#include <gtk/gtk.h>
+#include <memory>  // for unique_ptr
+#include <string>  // for string
 
-#include "AbstractToolItem.h"
+#include <gtk/gtk.h>  // for GtkToolItem, GtkRange
+
+#include "enums/ActionType.enum.h"  // for ActionType
+
+#include "AbstractToolItem.h"  // for AbstractToolItem
+
+class ActionHandler;
 
 class AbstractSliderItem: public AbstractToolItem {
 public:
@@ -108,5 +112,6 @@ protected:
 
 private:
     class Impl;
+
     std::unique_ptr<Impl> pImpl;
 };

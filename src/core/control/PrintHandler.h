@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <cstddef>  // for size_t
 
+#include <gtk/gtk.h>  // for GtkWindow
 
 class Document;
 

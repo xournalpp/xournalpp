@@ -11,25 +11,35 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
+#include <string>   // for string
+#include <utility>  // for pair
+#include <vector>   // for vector
 
-#include "control/zoom/ZoomListener.h"
-#include "gui/widgets/XournalWidget.h"
-#include "model/DocumentListener.h"
-#include "model/PageRef.h"
+#include <gdk/gdk.h>  // for GdkEventKey, GdkEventExpose
+#include <glib.h>     // for gboolean
+#include <gtk/gtk.h>  // for GtkWidget, GtkAllocation
+
+#include "control/zoom/ZoomListener.h"  // for ZoomListener
+#include "model/DocumentChangeType.h"   // for DocumentChangeType
+#include "model/DocumentListener.h"     // for DocumentListener
 
 class Control;
 class XournalppCursor;
 class Document;
 class EditSelection;
-class Layout;
-class PagePositionHandler;
 class XojPageView;
 class PdfCache;
 class RepaintHandler;
 class ScrollHandling;
 class TextEditor;
 class HandRecognition;
+class SetsquareView;
+namespace xoj::util {
+template <class T>
+class Rectangle;
+}  // namespace xoj::util
 
 class XournalView: public DocumentListener, public ZoomListener {
 public:

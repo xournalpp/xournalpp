@@ -1,6 +1,12 @@
 #include "ImageElementView.h"
 
-#include "gui/Shadow.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_...
+#include <gdk/gdk.h>                // for gdk_cairo_s...
+
+#include "gui/Shadow.h"                                   // for Shadow
+#include "gui/dialog/backgroundSelect/BaseElementView.h"  // for BaseElement...
+
+class BackgroundSelectDialogBase;
 
 ImageElementView::ImageElementView(int id, BackgroundSelectDialogBase* dlg): BaseElementView(id, dlg) {}
 

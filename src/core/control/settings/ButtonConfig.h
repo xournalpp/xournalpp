@@ -11,12 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "control/Tool.h"
-#include "control/settings/SettingsEnums.h"
-
+#include "control/ToolEnums.h"               // for DrawingType, ToolType
+#include "control/settings/SettingsEnums.h"  // for Button
+#include "util/Color.h"                      // for Color
 
 class ToolHandler;
 

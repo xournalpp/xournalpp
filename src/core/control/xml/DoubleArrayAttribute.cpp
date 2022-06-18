@@ -1,8 +1,15 @@
 #include "DoubleArrayAttribute.h"
 
-#include <algorithm>
+#include <algorithm>  // for for_each
+#include <iterator>   // for begin, end
+#include <string>     // for allocator, string
+#include <utility>    // for move
 
-#include "util/Util.h"
+#include <glib.h>  // for g_ascii_formatd, G_ASCII_DTOSTR_B...
+
+#include "control/xml/Attribute.h"  // for XMLAttribute
+#include "util/OutputStream.h"      // for OutputStream
+#include "util/Util.h"              // for PRECISION_FORMAT_STRING
 
 DoubleArrayAttribute::DoubleArrayAttribute(const char* name, std::vector<double>&& values):
         XMLAttribute(name), values(std::move(values)) {}

@@ -1,19 +1,31 @@
 #include "XojCairoPdfExport.h"
 
-#include <map>
-#include <sstream>
-#include <stack>
-#include <vector>
+#include <algorithm>  // for copy, min
+#include <map>        // for map
+#include <memory>     // for __shared_ptr_access
+#include <sstream>    // for ostringstream, operator<<
+#include <stack>      // for stack
+#include <utility>    // for pair, make_pair
+#include <vector>     // for vector
 
-#include <cairo-pdf.h>
-#include <config.h>
+#include <cairo-pdf.h>    // for cairo_pdf_surface_set_met...
+#include <glib-object.h>  // for g_object_unref
 
-#include "util/Util.h"
-#include "util/i18n.h"
-#include "util/serdesstream.h"
-#include "view/DocumentView.h"
+#include "control/jobs/ProgressListener.h"  // for ProgressListener
+#include "model/Document.h"                 // for Document
+#include "model/Layer.h"                    // for Layer
+#include "model/LinkDestination.h"          // for LinkDestination, XojLinkDest
+#include "model/PageRef.h"                  // for PageRef
+#include "model/PageType.h"                 // for PageType
+#include "model/XojPage.h"                  // for XojPage
+#include "pdf/base/XojPdfPage.h"            // for XojPdfPageSPtr, XojPdfPage
+#include "util/Util.h"                      // for npos
+#include "util/i18n.h"                      // for _
+#include "util/serdesstream.h"              // for serdes_stream
+#include "view/DocumentView.h"              // for DocumentView
 
-#include "filesystem.h"
+#include "config.h"      // for PROJECT_STRING
+#include "filesystem.h"  // for path
 
 XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressListener):
         doc(doc), progressListener(progressListener) {}

@@ -4,12 +4,19 @@
 
 #include "MouseInputHandler.h"
 
-#include "control/settings/SettingsEnums.h"
-#include "gui/XournalppCursor.h"
-#include "gui/widgets/XournalWidget.h"
+#include "control/ToolHandler.h"               // for ToolHandler
+#include "control/settings/SettingsEnums.h"    // for Button, BUTTON_MOUSE_M...
+#include "gui/XournalView.h"                   // for XournalView
+#include "gui/XournalppCursor.h"               // for XournalppCursor
+#include "gui/inputdevices/InputEvents.h"      // for InputEvent, BUTTON_PRE...
+#include "gui/inputdevices/PenInputHandler.h"  // for PenInputHandler
+#include "gui/widgets/XournalWidget.h"         // for GtkXournal
 
-#include "InputContext.h"
-#include "InputUtils.h"
+#include "InputContext.h"  // for InputContext
+#include "InputUtils.h"    // for InputUtils
+
+class Settings;
+class XojPageView;
 
 MouseInputHandler::MouseInputHandler(InputContext* inputContext): PenInputHandler(inputContext) {}
 

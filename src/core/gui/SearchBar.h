@@ -11,11 +11,8 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include <gtk/gtk.h>
-
+#include <gtk/gtk.h>             // for GtkButton, GtkEntry
+#include <gtk/gtkcssprovider.h>  // for GtkCssProvider
 
 class Control;
 

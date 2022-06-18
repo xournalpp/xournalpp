@@ -1,7 +1,12 @@
 #include "PluginDialogEntry.h"
 
-#include "plugin/Plugin.h"
-#include "util/i18n.h"
+#include "plugin/Plugin.h"  // for Plugin
+#include "util/i18n.h"      // for _
+
+#include "config-features.h"  // for ENABLE_PLUGINS
+#include "filesystem.h"       // for path
+
+class GladeSearchpath;
 
 
 PluginDialogEntry::PluginDialogEntry(Plugin* plugin, GladeSearchpath* gladeSearchPath, GtkWidget* w):

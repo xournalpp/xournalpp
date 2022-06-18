@@ -11,7 +11,11 @@
 
 #pragma once
 
-#include "OneColorBackgroundView.h"
+#include <cairo.h>  // for cairo_t
+
+#include "util/Color.h"  // for Color
+
+#include "OneColorBackgroundView.h"  // for OneColorBackgroundView
 
 class BackgroundConfig;
 

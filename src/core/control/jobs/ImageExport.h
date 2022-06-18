@@ -11,18 +11,19 @@
 
 #pragma once
 
-#include <string>
+#include <cstddef>  // for size_t
+#include <string>   // for string
 
-#include <gtk/gtk.h>
+#include <cairo.h>  // for cairo_surface_t, cairo_t
 
-#include "util/PageRange.h"
-#include "view/DocumentView.h"
+#include "util/PageRange.h"  // for PageRangeVector
 
-#include "BaseExportJob.h"
-#include "filesystem.h"
+#include "BaseExportJob.h"  // for ExportBackgroundType, EXPORT_BACKGROUND_ALL
+#include "filesystem.h"     // for path
 
 class Document;
 class ProgressListener;
+class DocumentView;
 
 enum ExportGraphicsFormat { EXPORT_GRAPHICS_UNDEFINED, EXPORT_GRAPHICS_PDF, EXPORT_GRAPHICS_PNG, EXPORT_GRAPHICS_SVG };
 

@@ -11,15 +11,17 @@
 
 #pragma once
 
-#include <cmath>
-#include <string>
-#include <vector>
+#include <map>     // for map
+#include <vector>  // for vector
 
-#include "util/Point.h"
+#include <gdk/gdk.h>  // for GdkEventSequence
 
-#include "InputContext.h"
+#include "util/Point.h"  // for Point
 
-class InputContext;
+#include "InputContext.h"  // for InputContext::DeviceType, InputContext
+
+class Stroke;
+struct InputEvent;
 
 /**
  * @brief Input handler for the setsquare

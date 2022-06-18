@@ -11,12 +11,13 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cairo.h>  // for cairo_t
 
-#include "model/BackgroundImage.h"
+#include "model/BackgroundImage.h"  // for BackgroundImage
 
-#include "BaseElementView.h"
+#include "BaseElementView.h"  // for BaseElementView
+
+class BackgroundSelectDialogBase;
 
 
 class ImageElementView: public BaseElementView {

@@ -11,7 +11,12 @@
 
 #pragma once
 
-#include "RuledBackgroundView.h"
+#include <cairo.h>  // for cairo_t
+
+#include "model/BackgroundConfig.h"  // for BackgroundConfig
+#include "util/Color.h"              // for Color
+
+#include "RuledBackgroundView.h"  // for RuledBackgroundView
 
 namespace xoj::view {
 class LinedBackgroundView: public RuledBackgroundView {

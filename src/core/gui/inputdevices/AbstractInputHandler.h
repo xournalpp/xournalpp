@@ -11,19 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include <gdk/gdk.h>
-
-#include "control/settings/ButtonConfig.h"
-#include "gui/PageView.h"
-#include "model/Point.h"
-
-#include "InputEvents.h"
-#include "PositionInputData.h"
+#include "PositionInputData.h"  // for PositionInputData
 
 class InputContext;
+class XojPageView;
+struct InputEvent;
 
 /**
  * Abstract class for a specific input state

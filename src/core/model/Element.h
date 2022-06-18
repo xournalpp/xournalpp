@@ -11,14 +11,16 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <iosfwd>  // for ptrdiff_t
 
-#include <gtk/gtk.h>
+#include <gdk/gdk.h>  // for GdkRectangle
 
-#include "util/Color.h"
-#include "util/Rectangle.h"
-#include "util/serializing/Serializable.h"
+#include "util/Color.h"                     // for Color
+#include "util/Rectangle.h"                 // for Rectangle
+#include "util/serializing/Serializable.h"  // for Serializable
+
+class ObjectInputStream;
+class ObjectOutputStream;
 
 enum ElementType { ELEMENT_STROKE = 1, ELEMENT_IMAGE, ELEMENT_TEXIMAGE, ELEMENT_TEXT };
 

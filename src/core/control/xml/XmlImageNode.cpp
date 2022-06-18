@@ -1,5 +1,10 @@
 #include "XmlImageNode.h"
 
+#include <glib.h>  // for g_base64_encode, g_free, gchar, g_e...
+
+#include "control/xml/XmlNode.h"  // for XmlNode
+#include "util/OutputStream.h"    // for OutputStream
+
 XmlImageNode::XmlImageNode(const char* tag): XmlNode(tag) {
     this->img = nullptr;
     this->out = nullptr;

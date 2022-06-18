@@ -11,17 +11,23 @@
 
 #pragma once
 
-#include <map>
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "control/layer/LayerCtrlListener.h"
-#include "gui/IconNameHelper.h"
-#include "model/Layer.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gtk/gtk.h>                // for GtkWidget, GtkToolItem
 
-#include "AbstractToolItem.h"
+#include "control/layer/LayerCtrlListener.h"  // for LayerCtrlListener
+#include "enums/ActionType.enum.h"            // for ActionType
+#include "gui/IconNameHelper.h"               // for IconNameHelper
+#include "model/Layer.h"                      // for Layer, Layer::Index
+
+#include "AbstractToolItem.h"  // for AbstractToolItem
 
 class GladeGui;
 class PopupMenuButton;
 class LayerController;
+class ActionHandler;
 
 class ToolPageLayer: public AbstractToolItem, public LayerCtrlListener {
 public:

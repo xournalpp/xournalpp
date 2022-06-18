@@ -11,16 +11,12 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include <poppler.h>
+#include <poppler.h>  // for PopplerAction, PopplerDocument
 
-#include "model/LinkDestination.h"
-#include "pdf/base/XojPdfAction.h"
-
-
-class LinkDestination;
+#include "model/LinkDestination.h"  // for LinkDestination (ptr only), XojLi...
+#include "pdf/base/XojPdfAction.h"  // for XojPdfAction
 
 
 class PopplerGlibAction: public XojPdfAction {

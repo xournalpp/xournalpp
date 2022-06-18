@@ -1,8 +1,9 @@
 #include "PlainBackgroundView.h"
 
-#include <cmath>
+#include <algorithm>  // for max, min
+#include <cmath>      // for ceil, floor
 
-#include "model/BackgroundConfig.h"
+#include "view/background/BackgroundView.h"  // for BackgroundView, view
 
 using namespace xoj::view;
 

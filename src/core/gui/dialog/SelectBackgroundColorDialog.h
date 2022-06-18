@@ -11,16 +11,13 @@
 
 #pragma once
 
-#include <array>
-#include <optional>
-#include <string>
-#include <vector>
+#include <array>     // for array
+#include <optional>  // for optional
 
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
+#include <gdk/gdk.h>  // for GdkRGBA
+#include <gtk/gtk.h>  // for GtkWindow
 
-#include "util/Color.h"
-
+#include "util/Color.h"  // for Color
 
 class Control;
 

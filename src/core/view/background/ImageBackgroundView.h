@@ -11,7 +11,9 @@
 
 #pragma once
 
-#include "BackgroundView.h"
+#include <cairo.h>  // for cairo_t
+
+#include "BackgroundView.h"  // for BackgroundView
 
 struct BackgroundImage;
 

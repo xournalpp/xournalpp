@@ -11,12 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include <gtk/gtk.h>
+#include <gtk/gtk.h>  // for GtkButton, GtkToolButton
 
-#include "gui/GladeGui.h"
+class GladeGui;
 
 
 enum SidebarActions {

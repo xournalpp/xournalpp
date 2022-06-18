@@ -18,6 +18,9 @@
 
 #include "control/xojfile/LoadHandler.h"
 #include "control/xojfile/SaveHandler.h"
+#include "model/Image.h"
+#include "model/Stroke.h"
+#include "model/Text.h"
 #include "util/PathUtil.h"
 
 #include "filesystem.h"

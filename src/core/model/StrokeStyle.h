@@ -11,12 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "LineStyle.h"
-
-class Stroke;
+#include "LineStyle.h"  // for LineStyle
 
 class StrokeStyle {
 private:

@@ -1,35 +1,44 @@
 #include "MainWindow.h"
 
-#include <utility>
+#include <config-dev.h>             // for TOOLBAR_CONFIG
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_new_fr...
+#include <gdk/gdk.h>                // for gdk_screen_get_de...
+#include <gdk/gdkkeysyms.h>         // for GDK_KEY_Escape
+#include <gio/gio.h>                // for g_cancellable_is_...
+#include <gtk/gtkcssprovider.h>     // for gtk_css_provider_...
 
-#include <config-dev.h>
-#include <config-features.h>
-#include <config.h>
-#include <gdk/gdk.h>
+#include "control/AudioController.h"                // for AudioController
+#include "control/Control.h"                        // for Control
+#include "control/DeviceListHelper.h"               // for getSourceMapping
+#include "control/ScrollHandler.h"                  // for ScrollHandler
+#include "control/jobs/XournalScheduler.h"          // for XournalScheduler
+#include "control/layer/LayerController.h"          // for LayerController
+#include "control/settings/Settings.h"              // for Settings
+#include "control/settings/SettingsEnums.h"         // for SCROLLBAR_HIDE_HO...
+#include "control/zoom/ZoomControl.h"               // for ZoomControl
+#include "enums/ActionType.enum.h"                  // for ACTION_DELETE_LAYER
+#include "gui/FloatingToolbox.h"                    // for FloatingToolbox
+#include "gui/GladeGui.h"                           // for GladeGui
+#include "gui/PdfFloatingToolbox.h"                 // for PdfFloatingToolbox
+#include "gui/SearchBar.h"                          // for SearchBar
+#include "gui/inputdevices/InputEvents.h"           // for INPUT_DEVICE_TOUC...
+#include "gui/scroll/ScrollHandling.h"              // for ScrollHandling
+#include "gui/toolbarMenubar/ToolMenuHandler.h"     // for ToolMenuHandler
+#include "gui/toolbarMenubar/model/ToolbarData.h"   // for ToolbarData
+#include "gui/toolbarMenubar/model/ToolbarModel.h"  // for ToolbarModel
+#include "gui/widgets/SpinPageAdapter.h"            // for SpinPageAdapter
+#include "gui/widgets/XournalWidget.h"              // for gtk_xournal_get_l...
+#include "util/GListView.h"                         // for GListView, GListV...
+#include "util/PathUtil.h"                          // for getConfigFile
+#include "util/Util.h"                              // for execInUiThread, npos
+#include "util/XojMsgBox.h"                         // for XojMsgBox
+#include "util/i18n.h"                              // for FS, _F
 
-#include "control/Control.h"
-#include "control/DeviceListHelper.h"
-#include "control/layer/LayerController.h"
-#include "gui/PdfFloatingToolbox.h"
-#include "gui/inputdevices/InputEvents.h"
-#include "gui/scroll/ScrollHandling.h"
-#include "gui/toolbarMenubar/ToolMenuHandler.h"
-#include "gui/toolbarMenubar/model/ToolbarData.h"
-#include "gui/toolbarMenubar/model/ToolbarModel.h"
-#include "gui/widgets/SpinPageAdapter.h"
-#include "gui/widgets/XournalWidget.h"
-#include "util/GListView.h"
-#include "util/PathUtil.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
-
-#include "GladeSearchpath.h"
-#include "Layout.h"
-#include "MainWindowToolbarMenu.h"
-#include "ToolbarDefinitions.h"
-#include "ToolitemDragDrop.h"
-#include "XournalView.h"
-#include "filesystem.h"
+#include "GladeSearchpath.h"        // for GladeSearchpath
+#include "MainWindowToolbarMenu.h"  // for MainWindowToolbar...
+#include "ToolbarDefinitions.h"     // for TOOLBAR_DEFINITIO...
+#include "XournalView.h"            // for XournalView
+#include "filesystem.h"             // for path, exists
 
 using std::string;
 

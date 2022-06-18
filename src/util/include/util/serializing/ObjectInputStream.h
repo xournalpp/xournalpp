@@ -11,13 +11,9 @@
 
 #pragma once
 
-#include <sstream>
-
-#include <gtk/gtk.h>
-
-#include "InputStreamException.h"
-
-class Serializable;
+#include <cstddef>  // for size_t
+#include <sstream>  // for istringstream
+#include <string>   // for string
 
 class ObjectInputStream {
 public:

@@ -1,6 +1,9 @@
 #include "AudioRecorder.h"
 
-#include <utility>
+#include "audio/AudioQueue.h"         // for AudioQueue
+#include "audio/DeviceInfo.h"         // for DeviceInfo
+#include "audio/PortAudioProducer.h"  // for PortAudioProducer
+#include "audio/VorbisConsumer.h"     // for VorbisConsumer
 
 AudioRecorder::~AudioRecorder() { this->stop(); }
 

@@ -1,5 +1,8 @@
 #include "AbstractSidebarPage.h"
 
+#include <gdk/gdk.h>      // for gdk_cursor_new_for_display, gdk_display_get...
+#include <glib-object.h>  // for g_object_unref
+
 AbstractSidebarPage::AbstractSidebarPage(Control* control, SidebarToolbar* toolbar):
         control(control), toolbar(toolbar) {}
 

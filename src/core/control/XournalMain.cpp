@@ -1,34 +1,52 @@
 #include "XournalMain.h"
 
-#include <algorithm>
-#include <exception>
-#include <memory>
+#include <algorithm>  // for copy, sort, max
+#include <array>      // for array
+#include <clocale>    // for setlocale, LC_NUMERIC
+#include <cstdio>     // for printf
+#include <cstdlib>    // for exit, size_t
+#include <exception>  // for exception
+#include <iostream>   // for operator<<, endl, basic_...
+#include <locale>     // for locale
+#include <memory>     // for unique_ptr, allocator
+#include <optional>   // for optional, nullopt
+#include <stdexcept>  // for runtime_error
+#include <string>     // for string, basic_string
+#include <vector>     // for vector
 
-#include <glib/gstdio.h>
-#include <gtk/gtk.h>
-#include <libintl.h>
+#include <gio/gio.h>      // for GApplication, G_APPLICATION
+#include <glib-object.h>  // for G_CALLBACK, g_signal_con...
+#include <glib.h>         // for GOptionEntry, gchar, G_O...
+#include <gtk/gtk.h>      // for gtk_dialog_add_button
+#include <libintl.h>      // for bindtextdomain, textdomain
 
-#include "control/xojfile/LoadHandler.h"
-#include "gui/GladeSearchpath.h"
-#include "gui/MainWindow.h"
-#include "gui/XournalView.h"
-#include "undo/EmergencySaveRestore.h"
-#include "util/Stacktrace.h"
-#include "util/StringUtils.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include "control/RecentManager.h"           // for RecentManager
+#include "control/jobs/BaseExportJob.h"      // for ExportBackgroundType
+#include "control/jobs/XournalScheduler.h"   // for XournalScheduler
+#include "control/settings/LatexSettings.h"  // for LatexSettings
+#include "control/settings/Settings.h"       // for Settings
+#include "control/settings/SettingsEnums.h"  // for ICON_THEME_COLOR, ICON_T...
+#include "control/xojfile/LoadHandler.h"     // for LoadHandler
+#include "gui/GladeSearchpath.h"             // for GladeSearchpath
+#include "gui/MainWindow.h"                  // for MainWindow
+#include "gui/XournalView.h"                 // for XournalView
+#include "model/Document.h"                  // for Document
+#include "undo/EmergencySaveRestore.h"       // for EmergencySaveRestore
+#include "undo/UndoRedoHandler.h"            // for UndoRedoHandler
+#include "util/PathUtil.h"                   // for getConfigFolder, openFil...
+#include "util/PlaceholderString.h"          // for PlaceholderString
+#include "util/Stacktrace.h"                 // for Stacktrace
+#include "util/Util.h"                       // for execInUiThread
+#include "util/XojMsgBox.h"                  // for XojMsgBox
+#include "util/i18n.h"                       // for _, FS, _F
 
-#include "Control.h"
-#include "ExportHelper.h"
-#include "config-dev.h"
-#include "config-git.h"
-#include "config-paths.h"
-#include "config.h"
-#include "filesystem.h"
+#include "Control.h"       // for Control
+#include "ExportHelper.h"  // for exportImg, exportPdf
+#include "config-dev.h"    // for ERRORLOG_DIR
+#include "config-git.h"    // for GIT_BRANCH, GIT_ORIGIN_O...
+#include "config.h"        // for GETTEXT_PACKAGE, ENABLE_NLS
+#include "filesystem.h"    // for path, operator/, exists
 
-#if __linux__
-#include <libgen.h>
-#endif
 namespace {
 
 constexpr auto APP_FLAGS = GApplicationFlags(G_APPLICATION_SEND_ENVIRONMENT | G_APPLICATION_NON_UNIQUE);

@@ -1,10 +1,16 @@
 #include "BackgroundSelectDialogBase.h"
 
-#include <utility>
+#include <algorithm>  // for max
+#include <utility>    // for move
 
-#include "util/Util.h"
+#include <gdk/gdk.h>      // for GDK_EXPOSURE_MASK
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 
-#include "BaseElementView.h"
+#include "util/Util.h"  // for paintBackgroundWhite
+
+#include "BaseElementView.h"  // for BaseElementView
+
+class GladeSearchpath;
 
 
 BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSearchPath, Document* doc,

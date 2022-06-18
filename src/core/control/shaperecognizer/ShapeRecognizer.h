@@ -11,14 +11,15 @@
 
 #pragma once
 
-#include <array>
+#include <array>  // for array
 
-#include "CircleRecognizer.h"
 #include "RecoSegment.h"
-#include "ShapeRecognizerConfig.h"
+#include "ShapeRecognizerConfig.h"  // for MAX_POLYGON_SIDES
 
 class Stroke;
 class Point;
+class Inertia;
+struct RecoSegment;
 
 class ShapeRecognizer {
 public:

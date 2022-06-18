@@ -11,7 +11,9 @@
 
 #pragma once
 
-#include "Attribute.h"
+#include "Attribute.h"  // for XMLAttribute
+
+class OutputStream;
 
 class IntAttribute: public XMLAttribute {
 public:

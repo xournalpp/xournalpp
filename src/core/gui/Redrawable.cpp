@@ -1,6 +1,7 @@
 #include "Redrawable.h"
 
-#include "model/Element.h"
+#include "model/Element.h"  // for Element
+#include "util/Range.h"     // for Range
 
 void Redrawable::repaintElement(Element* e) {
     repaintArea(e->getX(), e->getY(), e->getElementWidth() + e->getX(), e->getElementHeight() + e->getY());

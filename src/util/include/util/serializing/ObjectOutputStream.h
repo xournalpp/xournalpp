@@ -11,14 +11,13 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>      // for size_t
+#include <string>       // for string
+#include <string_view>  // for string_view
 
-#include <gtk/gtk.h>
-
+#include <glib.h>  // for GString
 
 class ObjectEncoding;
-class Serializable;
 
 class ObjectOutputStream {
 public:

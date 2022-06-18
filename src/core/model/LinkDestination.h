@@ -11,10 +11,13 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <string>   // for string
 
-#include <gtk/gtk.h>
+#include <glib-object.h>  // for G_TYPE_CHECK_INSTANCE_CAST, GObject, GType
+#include <glib.h>         // for G_GNUC_CONST
+
+struct _LinkDest;
 
 
 typedef struct _LinkDest XojLinkDest;

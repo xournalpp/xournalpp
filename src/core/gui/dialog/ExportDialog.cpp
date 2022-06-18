@@ -1,12 +1,16 @@
 #include "ExportDialog.h"
 
-#include <exception>
-#include <vector>
+#include <algorithm>  // for max
+#include <stdexcept>  // for invalid_argument
+#include <string>     // for string, to_string, operator+
+#include <vector>     // for allocator
 
-#include <config.h>
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+#include <glib.h>         // for GSList, TRUE, FALSE
 
-#include "util/PageRange.h"
-#include "util/i18n.h"
+#include "util/PageRange.h"  // for parse, PageRangeVector
+
+class GladeSearchpath;
 
 ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
         GladeGui(gladeSearchPath, "exportSettings.glade", "exportDialog") {

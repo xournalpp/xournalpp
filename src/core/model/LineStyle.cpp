@@ -1,7 +1,11 @@
 #include "LineStyle.h"
 
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
+#include <cstring>  // for memcpy
+
+#include <glib.h>  // for g_free, g_malloc
+
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
 
 LineStyle::LineStyle() = default;

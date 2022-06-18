@@ -10,10 +10,9 @@
  */
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include <portaudiocpp/PortAudioCpp.hxx>
+#include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
 
 
 class DeviceInfo {

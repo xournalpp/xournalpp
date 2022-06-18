@@ -11,18 +11,20 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <memory>   // for make_unique, unique_ptr
+#include <vector>   // for vector
 
-#include "audio/AudioPlayer.h"
-#include "audio/AudioRecorder.h"
-#include "control/settings/Settings.h"
-#include "gui/toolbarMenubar/ToolMenuHandler.h"
+#include <portaudiocpp/PortAudioCpp.hxx>  // for AutoSystem
 
-#include "Control.h"
-#include "filesystem.h"
+#include "audio/AudioPlayer.h"    // for AudioPlayer
+#include "audio/AudioRecorder.h"  // for AudioRecorder
 
-class AudioPlayer;
+#include "filesystem.h"  // for path
+
+class Control;
+class DeviceInfo;
+class Settings;
 
 class AudioController final {
 public:

@@ -1,6 +1,8 @@
 #include "XmlAudioNode.h"
 
-#include <utility>
+#include <utility>  // for move
+
+#include "control/xml/XmlNode.h"  // for XmlNode
 
 XmlAudioNode::XmlAudioNode(const char* tag): XmlNode(tag), audioFilepath{} {}
 

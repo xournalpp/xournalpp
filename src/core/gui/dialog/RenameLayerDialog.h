@@ -11,10 +11,14 @@
 
 #pragma once
 
-#include "control/Control.h"
-#include "gui/GladeGui.h"
-#include "model/Layer.h"
-#include "undo/UndoRedoHandler.h"
+#include <gtk/gtk.h>  // for GtkButton, GtkWindow
+
+#include "gui/GladeGui.h"  // for GladeGui
+
+class GladeSearchpath;
+class Layer;
+class LayerController;
+class UndoRedoHandler;
 
 class RenameLayerDialog: public GladeGui {
 public:

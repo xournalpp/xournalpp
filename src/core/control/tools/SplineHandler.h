@@ -11,12 +11,22 @@
 
 #pragma once
 
-#include "model/Point.h"
+#include <vector>  // for vector
 
-#include "InputHandler.h"
-#include "SnapToGridInputHandler.h"
+#include <cairo.h>    // for cairo_t
+#include <gdk/gdk.h>  // for GdkEventKey
+#include <glib.h>     // for guint32
 
-class SplineSegment;
+#include "model/PageRef.h"   // for PageRef
+#include "model/Point.h"     // for Point
+#include "util/Rectangle.h"  // for Rectangle
+
+#include "InputHandler.h"            // for InputHandler
+#include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
+
+class PositionInputData;
+class XojPageView;
+class XournalView;
 
 /**
  * @brief A class to handle splines

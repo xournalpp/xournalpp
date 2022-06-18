@@ -11,27 +11,31 @@
 
 #pragma once
 
-#include <deque>
-#include <utility>
-#include <vector>
+#include <deque>    // for deque
+#include <utility>  // for pair
+#include <vector>   // for vector
 
-#include "control/Tool.h"
-#include "model/Element.h"
-#include "model/ElementContainer.h"
-#include "model/Font.h"
-#include "model/PageRef.h"
-#include "undo/UndoAction.h"
+#include <cairo.h>  // for cairo_surface_t, cairo_t
 
-#include "CursorSelectionType.h"
+#include "control/ToolEnums.h"              // for ToolSize
+#include "model/Element.h"                  // for Element::Index, Element
+#include "model/ElementContainer.h"         // for ElementContainer
+#include "model/PageRef.h"                  // for PageRef
+#include "undo/UndoAction.h"                // for UndoAction (ptr only)
+#include "util/Color.h"                     // for Color
+#include "util/Rectangle.h"                 // for Rectangle
+#include "util/serializing/Serializable.h"  // for Serializable
 
+#include "CursorSelectionType.h"  // for CursorSelectionType
 
 class UndoRedoHandler;
 class Layer;
 class XojPageView;
-class Selection;
-class Element;
-class EditSelectionContents;
 class DeleteUndoAction;
+class LineStyle;
+class ObjectInputStream;
+class ObjectOutputStream;
+class XojFont;
 
 class EditSelectionContents: public ElementContainer, public Serializable {
 public:

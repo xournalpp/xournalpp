@@ -11,10 +11,19 @@
 
 #pragma once
 
-#include "model/Point.h"
+#include <cairo.h>    // for cairo_t
+#include <gdk/gdk.h>  // for GdkEventKey
+#include <glib.h>     // for guint32
 
-#include "InputHandler.h"
-#include "SnapToGridInputHandler.h"
+#include "model/PageRef.h"  // for PageRef
+#include "model/Point.h"    // for Point
+
+#include "InputHandler.h"            // for InputHandler
+#include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
+
+class PositionInputData;
+class XojPageView;
+class XournalView;
 
 enum DIRSET_MODIFIERS { NONE = 0, SET = 1, SHIFT = 1 << 1, CONTROL = 1 << 2 };
 

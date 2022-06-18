@@ -1,9 +1,12 @@
 #include "CopyUndoAction.h"
 
-#include "control/Control.h"
-#include "gui/XournalppCursor.h"
-#include "model/PageRef.h"
-#include "util/i18n.h"
+#include "control/Control.h"        // for Control
+#include "control/ScrollHandler.h"  // for ScrollHandler
+#include "gui/XournalppCursor.h"    // for XournalppCursor
+#include "model/Document.h"         // for Document
+#include "model/PageRef.h"          // for PageRef
+#include "undo/UndoAction.h"        // for UndoAction
+#include "util/i18n.h"              // for _
 
 CopyUndoAction::CopyUndoAction(const PageRef& pageref, int pageNr): UndoAction("CopyUndoAction") {
     this->page = pageref;

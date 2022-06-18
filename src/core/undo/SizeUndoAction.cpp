@@ -1,11 +1,16 @@
 #include "SizeUndoAction.h"
 
-#include <utility>
+#include <memory>   // for allocator, __shared_ptr_access, __share...
+#include <utility>  // for move
 
-#include "gui/Redrawable.h"
-#include "model/Stroke.h"
-#include "util/Range.h"
-#include "util/i18n.h"
+#include "model/Point.h"      // for Point
+#include "model/Stroke.h"     // for Stroke
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/Range.h"       // for Range
+#include "util/i18n.h"        // for _
+
+class Control;
 
 using std::vector;
 

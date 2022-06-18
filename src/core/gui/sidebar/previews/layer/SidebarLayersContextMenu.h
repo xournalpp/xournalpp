@@ -11,13 +11,12 @@
 
 #pragma once
 
-#include <map>
-#include <memory>
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include <gtk/gtk.h>
+#include "gui/sidebar/previews/base/SidebarBaseContextMenu.h"  // for Sideba...
+#include "gui/sidebar/previews/base/SidebarToolbar.h"          // for Sideba...
 
-#include "gui/sidebar/previews/base/SidebarBaseContextMenu.h"
-#include "gui/sidebar/previews/base/SidebarToolbar.h"
+class GladeGui;
 
 class SidebarLayersContextMenu: public SidebarBaseContextMenu {
 public:

@@ -11,9 +11,11 @@
 
 #pragma once
 
-#include <zlib.h>
+#include <string>  // for string
 
-#include "filesystem.h"
+#include <zlib.h>  // for gzFile
+
+#include "filesystem.h"  // for path
 
 class GzUtil {
 private:

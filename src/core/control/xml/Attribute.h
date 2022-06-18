@@ -11,10 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "util/OutputStream.h"
+class OutputStream;
 
 class XMLAttribute {
 public:

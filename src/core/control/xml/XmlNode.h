@@ -11,16 +11,15 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
+#include <string>   // for string
+#include <vector>   // for vector
 
-#include "util/OutputStream.h"
-#include "util/Util.h"
-
-#include "Attribute.h"
+#include "Attribute.h"  // for XMLAttribute
 
 class ProgressListener;
+class OutputStream;
 
 class XmlNode {
 public:

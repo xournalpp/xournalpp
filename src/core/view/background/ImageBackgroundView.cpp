@@ -1,6 +1,10 @@
 #include "ImageBackgroundView.h"
 
-#include "model/BackgroundImage.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_get_height
+#include <gdk/gdk.h>                // for gdk_cairo_set_source_pixbuf
+
+#include "model/BackgroundImage.h"           // for BackgroundImage
+#include "view/background/BackgroundView.h"  // for BackgroundView, view
 
 using namespace xoj::view;
 

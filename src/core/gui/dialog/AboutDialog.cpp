@@ -1,12 +1,16 @@
 #include "AboutDialog.h"
 
-#include <gtk/gtk.h>
+#include <cstdio>  // for sprintf
+#include <memory>  // for allocator
 
-#include "util/StringUtils.h"
-#include "util/i18n.h"
+#include <gtk/gtk.h>  // for gtk_box_pack_start, gtk_label_set_markup
 
-#include "config-git.h"
-#include "config.h"
+#include "util/i18n.h"  // for _
+
+#include "config-git.h"  // for GIT_COMMIT_ID
+#include "config.h"      // for PROJECT_VERSION
+
+class GladeSearchpath;
 
 AboutDialog::AboutDialog(GladeSearchpath* gladeSearchPath): GladeGui(gladeSearchPath, "about.glade", "aboutDialog") {
     gtk_label_set_markup(GTK_LABEL(get("lbBuildDate")), __DATE__ ", " __TIME__);

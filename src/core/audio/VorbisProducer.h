@@ -11,13 +11,13 @@
 
 #pragma once
 
-#include <atomic>
-#include <thread>
-#include <utility>
+#include <atomic>  // for atomic
+#include <thread>  // for thread
 
-#include "AudioQueue.h"
-#include "DeviceInfo.h"
-#include "filesystem.h"
+#include "filesystem.h"  // for path
+
+template <typename T>
+class AudioQueue;
 
 struct VorbisProducer final {
     explicit VorbisProducer(AudioQueue<float>& audioQueue): audioQueue(audioQueue) {}

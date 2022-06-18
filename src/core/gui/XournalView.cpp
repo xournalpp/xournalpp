@@ -1,30 +1,48 @@
 #include "XournalView.h"
 
-#include <algorithm>
-#include <cmath>
-#include <memory>
-#include <tuple>
+#include <algorithm>  // for max, min
+#include <cmath>      // for lround
+#include <iterator>   // for begin
+#include <memory>     // for unique_ptr, make_unique
+#include <optional>   // for optional
 
-#include <gdk/gdk.h>
+#include <gdk/gdk.h>         // for GdkEventKey, GDK_SHIF...
+#include <gdk/gdkkeysyms.h>  // for GDK_KEY_Page_Down
+#include <glib-object.h>     // for g_object_ref_sink
 
-#include "control/Control.h"
-#include "control/PdfCache.h"
-#include "control/settings/MetadataManager.h"
-#include "gui/PdfFloatingToolbox.h"
-#include "gui/inputdevices/HandRecognition.h"
-#include "gui/widgets/XournalWidget.h"
-#include "model/Document.h"
-#include "model/Stroke.h"
-#include "undo/DeleteUndoAction.h"
-#include "util/Rectangle.h"
-#include "util/Util.h"
+#include "control/Control.h"                    // for Control
+#include "control/PdfCache.h"                   // for PdfCache
+#include "control/ScrollHandler.h"              // for ScrollHandler
+#include "control/ToolHandler.h"                // for ToolHandler
+#include "control/jobs/XournalScheduler.h"      // for XournalScheduler
+#include "control/settings/MetadataManager.h"   // for MetadataManager
+#include "control/settings/Settings.h"          // for Settings
+#include "control/tools/CursorSelectionType.h"  // for CURSOR_SELECTION_NONE
+#include "control/tools/EditSelection.h"        // for EditSelection
+#include "control/zoom/ZoomControl.h"           // for ZoomControl
+#include "enums/ActionGroup.enum.h"             // for GROUP_SETSQUARE
+#include "enums/ActionType.enum.h"              // for ACTION_NONE
+#include "gui/MainWindow.h"                     // for MainWindow
+#include "gui/PdfFloatingToolbox.h"             // for PdfFloatingToolbox
+#include "gui/inputdevices/HandRecognition.h"   // for HandRecognition
+#include "gui/inputdevices/InputContext.h"      // for InputContext
+#include "gui/widgets/XournalWidget.h"          // for gtk_xournal_get_layout
+#include "model/Document.h"                     // for Document
+#include "model/Element.h"                      // for Element, ELEMENT_STROKE
+#include "model/PageRef.h"                      // for PageRef
+#include "model/Stroke.h"                       // for Stroke, STROKE_TOOL_E...
+#include "model/XojPage.h"                      // for XojPage
+#include "undo/DeleteUndoAction.h"              // for DeleteUndoAction
+#include "undo/UndoRedoHandler.h"               // for UndoRedoHandler
+#include "util/Point.h"                         // for Point
+#include "util/Rectangle.h"                     // for Rectangle
+#include "util/Util.h"                          // for npos
+#include "view/SetsquareView.h"                 // for SetsquareView
 
-#include "Layout.h"
-#include "PageView.h"
-#include "RepaintHandler.h"
-#include "Shadow.h"
-#include "XournalppCursor.h"
-#include "filesystem.h"
+#include "Layout.h"           // for Layout
+#include "PageView.h"         // for XojPageView
+#include "RepaintHandler.h"   // for RepaintHandler
+#include "XournalppCursor.h"  // for XournalppCursor
 
 using xoj::util::Rectangle;
 

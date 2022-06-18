@@ -1,8 +1,15 @@
 #include "Selection.h"
 
-#include <cmath>
+#include <algorithm>  // for max, min
+#include <cfloat>     // for DBL_MAX
+#include <cmath>      // for abs, NAN
+#include <memory>     // for __shared_ptr_access
 
-#include "model/Layer.h"
+#include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
+
+#include "gui/Redrawable.h"  // for Redrawable
+#include "model/Layer.h"     // for Layer
+#include "model/XojPage.h"   // for XojPage
 
 Selection::Selection(Redrawable* view) {
     this->view = view;

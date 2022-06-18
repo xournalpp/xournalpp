@@ -11,20 +11,21 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
+#include <vector>   // for vector
 
-#include <gtk/gtk.h>
+#include <gtk/gtk.h>  // for GtkWidget, GtkAllocation
 
-#include "gui/GladeGui.h"
-#include "gui/sidebar/AbstractSidebarPage.h"
-
+#include "gui/sidebar/AbstractSidebarPage.h"  // for AbstractSidebarPage
+#include "model/DocumentChangeType.h"         // for DocumentChangeType
 
 class PdfCache;
 class SidebarLayout;
 class SidebarPreviewBaseEntry;
 class SidebarToolbar;
+class Control;
+class GladeGui;
 
 class SidebarPreviewBase: public AbstractSidebarPage {
 public:

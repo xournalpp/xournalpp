@@ -1,28 +1,46 @@
 #include "Stroke.h"
 
-#include <cmath>
-#include <numeric>
+#include <algorithm>  // for min, max, copy
+#include <cassert>    // for assert
+#include <cfloat>     // for DBL_MAX, DBL_MIN
+#include <cinttypes>  // for uint64_t
+#include <cmath>      // for abs, hypot, sqrt
+#include <iterator>   // for back_insert_iterator
+#include <numeric>    // for accumulate
+#include <optional>   // for optional, nullopt
+#include <string>     // for to_string, operator<<
 
-#include "eraser/PaddedBox.h"
-#include "util/Interval.h"
-#include "util/PairView.h"
-#include "util/SmallVector.h"
-#include "util/TinyVector.h"
-#include "util/i18n.h"
-#include "util/serdesstream.h"
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
+#include <cairo.h>  // for cairo_matrix_translate
+#include <glib.h>   // for g_free, g_message
 
-#include "PathParameter.h"
-#include "config-debug.h"
+#include "eraser/PaddedBox.h"                     // for PaddedBox
+#include "model/AudioElement.h"                   // for AudioElement
+#include "model/Element.h"                        // for Element, ELEMENT_ST...
+#include "model/LineStyle.h"                      // for LineStyle
+#include "model/Point.h"                          // for Point, Point::NO_PR...
+#include "util/BasePointerIterator.h"             // for BasePointerIterator
+#include "util/Interval.h"                        // for Interval
+#include "util/PairView.h"                        // for PairView<>::BaseIte...
+#include "util/PlaceholderString.h"               // for PlaceholderString
+#include "util/Rectangle.h"                       // for Rectangle
+#include "util/SmallVector.h"                     // for SmallVector
+#include "util/TinyVector.h"                      // for TinyVector
+#include "util/i18n.h"                            // for FC, FORMAT_STR
+#include "util/serdesstream.h"                    // for serdes_stream
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
+
+#include "PathParameter.h"  // for PathParameter
+#include "config-debug.h"   // for ENABLE_ERASER_DEBUG
 
 using xoj::util::Rectangle;
 
 #define COMMA ,
 // #define ENABLE_ERASER_DEBUG // See config-debug.h.in
 #ifdef ENABLE_ERASER_DEBUG
-#include <iomanip>
-#include <sstream>
+#include <iomanip>  // for operator<<, setw
+#include <sstream>  // for operator<<, basic_o...
+
 #define DEBUG_ERASER(f) f
 #else
 #define DEBUG_ERASER(f)

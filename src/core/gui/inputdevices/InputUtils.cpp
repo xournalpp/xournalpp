@@ -1,9 +1,12 @@
 #include "InputUtils.h"
 
-#include "control/ToolHandler.h"
-#include "control/settings/ButtonConfig.h"
-#include "control/settings/Settings.h"
-#include "control/settings/SettingsEnums.h"
+#include <glib.h>  // for g_message
+
+#include "control/ToolEnums.h"               // for TOOL_NONE
+#include "control/ToolHandler.h"             // for ToolHandler
+#include "control/settings/ButtonConfig.h"   // for ButtonConfig
+#include "control/settings/Settings.h"       // for Settings
+#include "control/settings/SettingsEnums.h"  // for Button, BUTTON_TOUCH
 
 
 bool InputUtils::applyButton(ToolHandler* toolHandler, Settings* settings, Button button) {

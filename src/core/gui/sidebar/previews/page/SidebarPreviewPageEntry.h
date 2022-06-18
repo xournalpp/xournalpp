@@ -11,12 +11,9 @@
 
 #pragma once
 
-#include "gui/sidebar/previews/base/SidebarPreviewBaseEntry.h"
-#include "model/PageRef.h"
+#include "gui/sidebar/previews/base/SidebarPreviewBaseEntry.h"  // for Previ...
+#include "model/PageRef.h"                                      // for PageRef
 
-#include "SidebarPreviewPages.h"
-
-class SidebarPreviewBase;
 class SidebarPreviewPages;
 
 class SidebarPreviewPageEntry: public SidebarPreviewBaseEntry {

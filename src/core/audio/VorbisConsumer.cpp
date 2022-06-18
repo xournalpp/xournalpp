@@ -1,9 +1,21 @@
 #include "VorbisConsumer.h"
 
-#include <algorithm>
-#include <cmath>
+#include <algorithm>  // for for_each, min, max
+#include <cstddef>    // for size_t
+#include <deque>      // for _Deque_iterator
+#include <iterator>   // for back_insert_iterator, back_in...
+#include <memory>     // for unique_ptr
+#include <string>     // for string
+#include <utility>    // for move
+#include <vector>     // for vector
 
-#include "SNDFileCpp.h"
+#include <glib.h>     // for g_warning
+#include <sndfile.h>  // for SF_INFO, sf_strerror, sf_writ...
+
+#include "audio/AudioQueue.h"           // for AudioQueue
+#include "control/settings/Settings.h"  // for Settings
+
+#include "SNDFileCpp.h"  // for make_snd_file, xoj
 
 using namespace xoj;
 

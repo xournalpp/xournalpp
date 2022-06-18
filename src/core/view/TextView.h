@@ -11,11 +11,15 @@
 
 #pragma once
 
-#include "pdf/base/XojPdfPage.h"
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "View.h"
+#include <pango/pangocairo.h>  // for PangoLayout, cairo_t
+
+#include "View.h"  // for ElementView
 
 class Text;
+class XojPdfRectangle;
 
 class xoj::view::TextView: public xoj::view::ElementView {
 public:

@@ -11,8 +11,7 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
 
 class ToolbarItem {

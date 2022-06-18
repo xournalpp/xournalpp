@@ -1,9 +1,8 @@
 #include "IsoDottedBackgroundView.h"
 
-#include <cmath>
-
-#include "model/BackgroundConfig.h"
-#include "util/Util.h"
+#include "model/BackgroundConfig.h"                       // for BackgroundC...
+#include "view/background/BackgroundView.h"               // for view
+#include "view/background/BaseIsometricBackgroundView.h"  // for BaseIsometr...
 
 using namespace xoj::view;
 

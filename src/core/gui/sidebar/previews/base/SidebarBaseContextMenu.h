@@ -11,10 +11,14 @@
 
 #pragma once
 
-#include <memory>
-#include <vector>
+#include <memory>  // for unique_ptr
+#include <tuple>   // for tuple
+#include <vector>  // for vector
 
-#include "gui/sidebar/previews/base/SidebarToolbar.h"
+#include <glib.h>     // for gulong
+#include <gtk/gtk.h>  // for GtkWidget
+
+#include "gui/sidebar/previews/base/SidebarToolbar.h"  // for SidebarActions
 
 class SidebarBaseContextMenu {
 public:

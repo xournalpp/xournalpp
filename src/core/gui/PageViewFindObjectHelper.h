@@ -16,7 +16,8 @@
 #include <limits>
 #include <optional>
 
-#include "audio/AudioPlayer.h"
+#include "control/AudioController.h"
+#include "control/tools/EditSelection.h"
 #include "util/PathUtil.h"
 
 #include "XournalView.h"

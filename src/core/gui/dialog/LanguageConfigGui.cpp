@@ -1,16 +1,22 @@
 #include "LanguageConfigGui.h"
 
-#include <algorithm>
+#include <algorithm>  // for find, lower_bound, sort
+#include <cstdlib>    // for setenv
+#include <memory>     // for allocator, __alloc_traits<>::...
 
-#include "control/settings/Settings.h"
-#include "util/PathUtil.h"
-#include "util/StringUtils.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include <glib-object.h>  // for G_TYPE_STRING
+#include <glib.h>         // for g_warning, gint
 
-#include "config-paths.h"
-#include "config.h"
-#include "filesystem.h"
+#include "control/settings/Settings.h"  // for Settings
+#include "util/PathUtil.h"              // for getGettextFilepath, getLocale...
+#include "util/StringUtils.h"           // for StringUtils
+#include "util/XojMsgBox.h"             // for XojMsgBox
+#include "util/i18n.h"                  // for _
+
+#include "config.h"      // for GETTEXT_PACKAGE
+#include "filesystem.h"  // for directory_iterator, operator/
+
+class GladeSearchpath;
 
 LanguageConfigGui::LanguageConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings):
         GladeGui(gladeSearchPath, "settingsLanguageConfig.glade", "offscreenwindow"), settings(settings) {

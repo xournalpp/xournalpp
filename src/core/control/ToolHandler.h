@@ -11,17 +11,19 @@
 
 #pragma once
 
-#include <array>
-#include <functional>
-#include <memory>
-#include <string>
-#include <vector>
+#include <array>       // for array
+#include <functional>  // for function
+#include <memory>      // for unique_ptr
+#include <vector>      // for vector
 
-#include "control/settings/Settings.h"
-#include "control/settings/SettingsEnums.h"
-#include "util/Color.h"
+#include "control/ToolEnums.h"               // for ToolSize, ToolType, Draw...
+#include "control/settings/SettingsEnums.h"  // for Button
+#include "util/Color.h"                      // for Color
 
-#include "Tool.h"
+#include "Tool.h"  // for Tool
+
+class LineStyle;
+class Settings;
 
 
 // enum for ptrs that are dynamically pointing to different tools

@@ -1,10 +1,13 @@
 #include "RulerHandler.h"
 
-#include <cmath>
+#include "control/tools/BaseStrokeHandler.h"       // for BaseStrokeHandler
+#include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
+#include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
+#include "model/Point.h"                           // for Point
+#include "model/Stroke.h"                          // for Stroke
 
-#include "control/Control.h"
-#include "gui/XournalView.h"
-#include "undo/InsertUndoAction.h"
+class XojPageView;
+class XournalView;
 
 RulerHandler::RulerHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
         BaseStrokeHandler(xournal, redrawable, page) {}

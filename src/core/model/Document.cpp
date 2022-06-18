@@ -1,19 +1,24 @@
 #include "Document.h"
 
-#include <algorithm>
-#include <utility>
+#include <ctime>    // for size_t, localtime, strf...
+#include <utility>  // for move, pair
 
-#include <config.h>
+#include <glib-object.h>  // for g_object_unref, G_TYPE_...
 
-#include "pdf/base/XojPdfAction.h"
-#include "util/PathUtil.h"
-#include "util/Stacktrace.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include "model/DocumentChangeType.h"         // for DOCUMENT_CHANGE_CLEARED
+#include "model/DocumentHandler.h"            // for DocumentHandler
+#include "model/PageRef.h"                    // for PageRef
+#include "model/PageType.h"                   // for PageType
+#include "pdf/base/XojPdfAction.h"            // for XojPdfAction
+#include "pdf/base/XojPdfBookmarkIterator.h"  // for XojPdfBookmarkIterator
+#include "util/PathUtil.h"                    // for clearExtensions
+#include "util/PlaceholderString.h"           // for PlaceholderString
+#include "util/Util.h"                        // for npos
+#include "util/i18n.h"                        // for FS, _F
 
-#include "LinkDestination.h"
-#include "XojPage.h"
-#include "filesystem.h"
+#include "LinkDestination.h"  // for XojLinkDest, DOCUMENT_L...
+#include "XojPage.h"          // for XojPage
+#include "filesystem.h"       // for path
 
 Document::Document(DocumentHandler* handler): handler(handler) {}
 

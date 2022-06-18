@@ -1,11 +1,15 @@
 #include "MoveUndoAction.h"
 
-#include "control/tools/EditSelection.h"
-#include "gui/Redrawable.h"
-#include "model/Element.h"
-#include "model/Layer.h"
-#include "model/PageRef.h"
-#include "util/i18n.h"
+#include <memory>  // for allocator, operator!=, __shared_ptr_access
+
+#include "model/Element.h"    // for Element
+#include "model/Layer.h"      // for Layer
+#include "model/PageRef.h"    // for PageRef
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/i18n.h"        // for _
+
+class Control;
 
 MoveUndoAction::MoveUndoAction(Layer* sourceLayer, const PageRef& sourcePage, std::vector<Element*>* selected,
                                double mx, double my, Layer* targetLayer, PageRef targetPage):

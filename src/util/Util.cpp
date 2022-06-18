@@ -1,14 +1,18 @@
 #include "util/Util.h"
 
-#include <array>
-#include <cstdlib>
+#include <array>    // for array
+#include <cstdlib>  // for system
+#include <string>   // for allocator, string
+#include <utility>  // for move
 
-#include <unistd.h>
+#include <gdk/gdk.h>  // for gdk_cairo_set_source_rgba, gdk_t...
+#include <unistd.h>   // for getpid, pid_t
 
-#include "util/Color.h"
-#include "util/PathUtil.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include "util/Color.h"              // for argb_to_GdkRGBA, rgb_to_GdkRGBA
+#include "util/OutputStream.h"       // for OutputStream
+#include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/XojMsgBox.h"          // for XojMsgBox
+#include "util/i18n.h"               // for FS, _F
 
 struct CallbackUiData {
     explicit CallbackUiData(std::function<void()> callback): callback(std::move(callback)) {}

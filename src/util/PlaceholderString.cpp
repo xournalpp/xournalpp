@@ -1,6 +1,10 @@
 #include "util/PlaceholderString.h"
 
-#include <glib.h>
+#include <cstddef>    // for size_t
+#include <exception>  // for exception
+#include <utility>    // for move
+
+#include <glib.h>  // for g_error
 
 /**
  * Format String

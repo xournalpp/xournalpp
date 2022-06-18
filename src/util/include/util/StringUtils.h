@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>   // for string, basic_string
+#include <utility>  // for pair
+#include <vector>   // for vector
 
 typedef std::pair<char, std::string> replace_pair;
 

@@ -9,13 +9,12 @@
  * @license GNU GPLv2
  */
 
-#include "control/CrashHandler.h"
-#include "control/XournalMain.h"
-#include "util/logger/Logger.h"
-
-#include "filesystem.h"
+#include "control/CrashHandler.h"  // for installCrashHandlers
+#include "control/XournalMain.h"   // for run
 
 #ifdef _WIN32
+#include <cstdlib>
+
 #include "win32/console.h"
 #endif
 

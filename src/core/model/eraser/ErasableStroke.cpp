@@ -1,14 +1,22 @@
 #include "ErasableStroke.h"
 
-#include <cmath>
+#include <algorithm>  // for max, min, copy, lower_bound
+#include <cassert>    // for assert
+#include <cstddef>    // for size_t, ptrdiff_t
+#include <iterator>   // for next
+#include <optional>   // for optional
+#include <tuple>      // for forward_as_tuple
 
-#include "model/Stroke.h"
-#include "util/Range.h"
-#include "util/SmallVector.h"
-#include "util/UnionOfIntervals.h"
+#include <glib.h>  // for g_warning
 
-#include "ErasableStrokeOverlapTree.h"
-#include "PaddedBox.h"
+#include "model/Point.h"            // for Point
+#include "model/Stroke.h"           // for Stroke, IntersectionParameter...
+#include "util/Range.h"             // for Range
+#include "util/SmallVector.h"       // for SmallVector
+#include "util/UnionOfIntervals.h"  // for UnionOfIntervals
+
+#include "ErasableStrokeOverlapTree.h"  // for ErasableStroke::OverlapTree
+#include "PaddedBox.h"                  // for PaddedBox
 
 using xoj::util::Rectangle;
 

@@ -11,17 +11,15 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <gdk/gdk.h>  // for GdkDevice
+#include <glib.h>     // for gint64
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include <gdk/gdk.h>
-
-#include "InputContext.h"
-#include "InputEvents.h"
-
+#include "InputEvents.h"  // for InputDeviceClass
 
 class Settings;
 class TouchDisableInterface;
+class InputContext;
 
 class HandRecognition {
 public:

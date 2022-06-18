@@ -11,13 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cairo.h>  // for cairo_t
 
-#include "pdf/base/XojPdfPage.h"
+#include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr
 
-#include "BaseElementView.h"
-
+#include "BaseElementView.h"  // for BaseElementView
 
 class PdfPagesDialog;
 

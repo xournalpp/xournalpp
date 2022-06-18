@@ -1,9 +1,12 @@
 #include "FullscreenHandler.h"
 
-#include "gui/MainWindow.h"
-#include "util/StringUtils.h"
+#include <cairo.h>        // for cairo_t
+#include <glib-object.h>  // for g_object_new, g_type_register...
+#include <glib.h>         // for gint, gboolean
 
-#include "Control.h"
+#include "control/settings/Settings.h"  // for Settings
+#include "gui/MainWindow.h"             // for MainWindow
+#include "util/StringUtils.h"           // for StringUtils
 
 using std::string;
 

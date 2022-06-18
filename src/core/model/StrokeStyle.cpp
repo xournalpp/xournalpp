@@ -1,6 +1,11 @@
 #include "StrokeStyle.h"
 
-#include "Stroke.h"
+#include <cstring>  // for memcmp, strcmp, strncmp
+#include <vector>   // for vector
+
+#include <glib.h>  // for g_ascii_strtod, g_free, g_strdup_printf
+
+#include "model/LineStyle.h"  // for LineStyle
 
 StrokeStyle::StrokeStyle() = default;
 

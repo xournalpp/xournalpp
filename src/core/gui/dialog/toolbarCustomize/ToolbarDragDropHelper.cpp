@@ -1,5 +1,10 @@
 #include "ToolbarDragDropHelper.h"
 
+#include <cairo.h>        // for cairo_surface_set_device_offset, cairo_surf...
+#include <gio/gio.h>      // for GIcon
+#include <glib-object.h>  // for g_object_get, G_OBJECT
+#include <glib.h>         // for g_warning, gchar
+
 namespace ToolbarDragDropHelper {
 
 const GdkAtom atomToolItem = gdk_atom_intern_static_string("application/xournal-ToolbarItem");

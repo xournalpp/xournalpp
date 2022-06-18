@@ -1,7 +1,17 @@
 #include "XournalScheduler.h"
 
-#include "PreviewJob.h"
-#include "RenderJob.h"
+#include <array>   // for array
+#include <deque>   // for _Deque_iterator, deque, operator!=
+#include <mutex>   // for lock_guard
+#include <string>  // for string
+
+#include "control/jobs/Scheduler.h"  // for JOB_PRIORITY_URGENT, JOB_PRIORIT...
+
+#include "PreviewJob.h"  // for PreviewJob
+#include "RenderJob.h"   // for RenderJob
+
+class SidebarPreviewBaseEntry;
+class XojPageView;
 
 XournalScheduler::XournalScheduler() { this->name = "XournalScheduler"; }
 

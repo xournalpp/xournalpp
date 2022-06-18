@@ -1,5 +1,7 @@
 #include "gui/sidebar/previews/base/SidebarBaseContextMenu.h"
 
+#include <glib-object.h>  // for g_object_unref, g_signal_handler_disconnect
+
 SidebarBaseContextMenu::SidebarBaseContextMenu(GtkWidget* contextMenu): contextMenu(contextMenu) {}
 
 SidebarBaseContextMenu::~SidebarBaseContextMenu() {

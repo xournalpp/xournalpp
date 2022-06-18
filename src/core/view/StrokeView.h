@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include <cstdint>
+#include <cairo.h>  // for cairo_t, CAIRO_LINE_CAP_BUTT, CAIRO_LINE_CAP_ROUND
 
-#include "View.h"
+#include "View.h"  // for ElementView
 
 class Stroke;
 

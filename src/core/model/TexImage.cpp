@@ -1,10 +1,14 @@
 #include "TexImage.h"
 
-#include <utility>
+#include <utility>  // for move
 
-#include "util/pixbuf-utils.h"
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
+#include <poppler-document.h>  // for poppler_document_ge...
+#include <poppler-page.h>      // for poppler_page_get_size
+
+#include "model/Element.h"                        // for Element, ELEMENT_TE...
+#include "util/Rectangle.h"                       // for Rectangle
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
 using xoj::util::Rectangle;
 

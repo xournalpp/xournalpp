@@ -11,9 +11,14 @@
 
 #pragma once
 
-#include "PlainBackgroundView.h"
+#include <string>  // for string
+
+#include "util/Color.h"  // for Color
+
+#include "PlainBackgroundView.h"  // for PlainBackgroundView
 
 class BackgroundConfig;
+
 namespace xoj::view {
 class OneColorBackgroundView: public PlainBackgroundView {
 public:

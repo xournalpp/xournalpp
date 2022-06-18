@@ -11,15 +11,20 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
+#include <memory>  // for unique_ptr
+#include <string>  // for string
 
-#include "control/zoom/ZoomListener.h"
-#include "gui/IconNameHelper.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gtk/gtk.h>                // for GtkRange, GtkWidget
 
-#include "AbstractSliderItem.h"
+#include "control/zoom/ZoomListener.h"  // for ZoomListener
+#include "enums/ActionType.enum.h"      // for ActionType
+#include "gui/IconNameHelper.h"         // for IconNameHelper
+
+#include "AbstractSliderItem.h"  // for AbstractSliderItem
 
 class ZoomControl;
+class ActionHandler;
 
 class ToolZoomSlider: public AbstractSliderItem, public ZoomListener {
 public:
@@ -49,5 +54,6 @@ protected:
 
 private:
     class Impl;
+
     std::unique_ptr<Impl> pImpl;
 };

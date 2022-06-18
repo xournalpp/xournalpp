@@ -1,10 +1,11 @@
 #include "RepaintHandler.h"
 
-#include "gui/scroll/ScrollHandling.h"
-#include "gui/widgets/XournalWidget.h"
+#include <gtk/gtk.h>  // for gtk_widget_queue_draw
 
-#include "PageView.h"
-#include "XournalView.h"
+#include "gui/widgets/XournalWidget.h"  // for gtk_xournal_repaint_area
+
+#include "PageView.h"     // for XojPageView
+#include "XournalView.h"  // for XournalView
 
 RepaintHandler::RepaintHandler(XournalView* xournal): xournal(xournal) {}
 

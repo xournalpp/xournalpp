@@ -1,13 +1,25 @@
 #include "XournalppCursor.h"
 
-#include <cmath>
-#include <cstdint>
+#include <cmath>             // for cos, sin, M_PI, NAN, fmod
+#include <cstdint>           // for uint32_t
+#include <initializer_list>  // for initializer_list
 
-#include "control/Control.h"
-#include "util/Util.h"
-#include "util/pixbuf-utils.h"
+#include <cairo.h>                  // for cairo_move_to, cairo_lin...
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <glib-object.h>            // for g_object_unref
+#include <gtk/gtk.h>                // for gtk_widget_get_window
 
-#include "XournalView.h"
+#include "control/Control.h"                 // for Control
+#include "control/ToolEnums.h"               // for TOOL_HAND, TOOL_PEN, TOO...
+#include "control/ToolHandler.h"             // for ToolHandler
+#include "control/settings/Settings.h"       // for Settings
+#include "control/settings/SettingsEnums.h"  // for STYLUS_CURSOR_BIG, STYLU...
+#include "control/zoom/ZoomControl.h"        // for ZoomControl
+#include "gui/MainWindow.h"                  // for MainWindow
+#include "util/Color.h"                      // for argb_to_GdkRGBA, rgb_to_...
+#include "util/pixbuf-utils.h"               // for xoj_pixbuf_get_from_surface
+
+#include "XournalView.h"  // for XournalView
 
 
 // NOTE:  Every cursor change must result in the setting of this->currentCursor to the new cursor type even for custom

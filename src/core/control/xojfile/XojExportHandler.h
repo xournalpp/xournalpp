@@ -12,10 +12,15 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include "model/PageRef.h"  // for PageRef
 
-#include "SaveHandler.h"
+#include "SaveHandler.h"  // for SaveHandler
+
+class AudioElement;
+class Stroke;
+class XmlAudioNode;
+class XmlNode;
+class XmlPointNode;
 
 
 class XojExportHandler: public SaveHandler {

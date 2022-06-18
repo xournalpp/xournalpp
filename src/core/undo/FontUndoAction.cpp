@@ -1,10 +1,16 @@
 #include "FontUndoAction.h"
 
-#include "gui/Redrawable.h"
-#include "model/Font.h"
-#include "model/Text.h"
-#include "util/Rectangle.h"
-#include "util/i18n.h"
+#include <algorithm>  // for max, min
+#include <memory>     // for __shared_ptr_access, __shared_ptr_acces...
+
+#include "model/Font.h"       // for XojFont
+#include "model/Text.h"       // for Text
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/Rectangle.h"   // for Rectangle
+#include "util/i18n.h"        // for _
+
+class Control;
 
 using xoj::util::Rectangle;
 

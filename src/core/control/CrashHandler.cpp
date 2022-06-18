@@ -1,17 +1,14 @@
 #include "CrashHandler.h"
 
-#include <ctime>
+#include <string>  // for string
 
-#include <config-dev.h>
-#include <gtk/gtk.h>
+#include <glib.h>  // for g_warning, g_error
 
-#include "control/xojfile/SaveHandler.h"
-#include "model/Document.h"
-#include "util/PathUtil.h"
-#include "util/Stacktrace.h"
-#include "util/i18n.h"
+#include "control/xojfile/SaveHandler.h"  // for SaveHandler
+#include "util/PathUtil.h"                // for getConfigFile
+#include "util/i18n.h"                    // for FC, _F, _
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 static Document* document = nullptr;
 

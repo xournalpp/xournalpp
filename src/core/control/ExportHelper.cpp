@@ -1,6 +1,22 @@
 #include "ExportHelper.h"
 
-#include "filesystem.h"
+#include <algorithm>  // for max
+#include <memory>     // for unique_ptr, allocator
+#include <string>     // for string
+
+#include <gio/gio.h>      // for g_file_new_for_commandlin...
+#include <glib-object.h>  // for g_object_unref
+#include <glib.h>         // for g_message, g_error
+
+#include "control/jobs/ImageExport.h"       // for ImageExport, EXPORT_GRAPH...
+#include "control/jobs/ProgressListener.h"  // for DummyProgressListener
+#include "model/Document.h"                 // for Document
+#include "pdf/base/XojPdfExport.h"          // for XojPdfExport
+#include "pdf/base/XojPdfExportFactory.h"   // for XojPdfExportFactory
+#include "util/PageRange.h"                 // for parse, PageRangeVector
+#include "util/i18n.h"                      // for _
+
+#include "filesystem.h"  // for operator==, path, u8path
 
 namespace ExportHelper {
 

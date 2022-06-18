@@ -1,21 +1,25 @@
 #include "ClipboardHandler.h"
 
-#include <set>
-#include <utility>
+#include <set>      // for multiset, operator!=
+#include <utility>  // for move
+#include <vector>   // for vector
 
-#include <cairo-svg.h>
-#include <config.h>
+#include <cairo-svg.h>    // for cairo_svg_surface_c...
+#include <cairo.h>        // for cairo_create, cairo...
+#include <glib-object.h>  // for g_object_unref, g_s...
 
-#include "model/Text.h"
-#include "util/Util.h"
-#include "util/pixbuf-utils.h"
-#include "util/serializing/BinObjectEncoding.h"
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
-#include "view/SelectionView.h"
-#include "view/View.h"
+#include "control/tools/EditSelection.h"          // for EditSelection
+#include "model/Element.h"                        // for Element, ELEMENT_TEXT
+#include "model/Text.h"                           // for Text
+#include "util/Util.h"                            // for DPI_NORMALIZATION_F...
+#include "util/pixbuf-utils.h"                    // for xoj_pixbuf_get_from...
+#include "util/serializing/BinObjectEncoding.h"   // for BinObjectEncoding
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
+#include "view/SelectionView.h"                   // for SelectionView
+#include "view/View.h"                            // for Context
 
-#include "Control.h"
+#include "config.h"  // for PROJECT_STRING
 
 using std::string;
 

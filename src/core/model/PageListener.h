@@ -11,13 +11,15 @@
 
 #pragma once
 
-#include <memory>
-
-#include "util/Rectangle.h"
+#include <memory>  // for shared_ptr, weak_ptr
 
 class Element;
 class PageHandler;
 class Range;
+namespace xoj::util {
+template <class T>
+class Rectangle;
+}  // namespace xoj::util
 
 class PageListener {
 public:

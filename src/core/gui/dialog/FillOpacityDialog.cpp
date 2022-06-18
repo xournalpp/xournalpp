@@ -1,5 +1,13 @@
 #include "FillOpacityDialog.h"
 
+#include <memory>  // for allocator
+
+#include <cairo.h>        // for cairo_set_operator, cairo_rectangle, cairo_...
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+#include <glib.h>         // for gdouble
+
+class GladeSearchpath;
+
 FillOpacityDialog::FillOpacityDialog(GladeSearchpath* gladeSearchPath, int alpha, bool pen):
         GladeGui(gladeSearchPath, "fillOpacity.glade", "fillOpacityDialog"), pen(pen) {
     GtkWidget* scaleAlpha = get("scaleAlpha");

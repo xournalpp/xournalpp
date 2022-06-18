@@ -1,13 +1,18 @@
 #include "UndoRedoHandler.h"
 
-#include <algorithm>
-#include <cinttypes>
+#include <algorithm>  // for find_if
+#include <cinttypes>  // for PRIu64, uint64_t
+#include <iterator>   // for end, begin
+#include <memory>     // for unique_ptr, allocator_traits<>::value_type
+#include <utility>    // for move
 
-#include "control/Control.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include <glib.h>  // for g_message, g_assert_true
 
-#include "config.h"
+#include "control/Control.h"  // for Control
+#include "model/Document.h"   // for Document
+#include "undo/UndoAction.h"  // for UndoActionPtr, UndoAction
+#include "util/XojMsgBox.h"   // for XojMsgBox
+#include "util/i18n.h"        // for _, FS, _F
 
 using std::string;
 

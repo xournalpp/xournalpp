@@ -1,13 +1,14 @@
 #include "XojPage.h"
 
-#include <algorithm>
-#include <iterator>
-#include <utility>
+#include <algorithm>  // for find, transform
+#include <iterator>   // for back_insert_iterator, back_inserter, begin
+#include <utility>    // for move
 
-#include "util/i18n.h"
+#include "model/Layer.h"     // for Layer, Layer::Index
+#include "model/PageType.h"  // for PageType, PageTypeFormat, PageTypeForma...
+#include "util/i18n.h"       // for _
 
-#include "BackgroundImage.h"
-#include "Document.h"
+#include "BackgroundImage.h"  // for BackgroundImage
 
 XojPage::XojPage(double width, double height): width(width), height(height), bgType(PageTypeFormat::Lined) {}
 

@@ -11,10 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <vector>  // for vector
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 class GladeSearchpath {
 public:

@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <cairo.h>  // for cairo_surface_t, cairo_t
 
 class Shadow {
 private:

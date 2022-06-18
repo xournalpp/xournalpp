@@ -1,5 +1,7 @@
 #include "ToolBase.h"
 
+#include "control/ToolEnums.h"  // for DrawingType, EraserType, ToolSize
+
 ToolBase::ToolBase() = default;
 
 ToolBase::~ToolBase() = default;

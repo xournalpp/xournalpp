@@ -1,14 +1,14 @@
 #include "DeviceClassConfigGui.h"
 
-#include <config.h>
+#include <string>  // for allocator, char_traits
 
-#include "control/DeviceListHelper.h"
-#include "control/settings/ButtonConfig.h"
-#include "control/settings/Settings.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include <glib.h>  // for g_ascii_strtoll, g_strdu...
 
-#include "SettingsDialog.h"
+#include "control/DeviceListHelper.h"        // for InputDevice
+#include "control/settings/Settings.h"       // for Settings
+#include "control/settings/SettingsEnums.h"  // for InputDeviceTypeOption
+
+class GladeSearchpath;
 
 DeviceClassConfigGui::DeviceClassConfigGui(GladeSearchpath* gladeSearchPath, GtkWidget* w, Settings* settings,
                                            const InputDevice& device):

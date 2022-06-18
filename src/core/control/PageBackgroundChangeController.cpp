@@ -1,19 +1,35 @@
 #include "PageBackgroundChangeController.h"
 
-#include <memory>
+#include <memory>   // for __shared_ptr...
+#include <string>   // for allocator
+#include <utility>  // for move
 
-#include "control/pagetype/PageTypeHandler.h"
-#include "control/pagetype/PageTypeMenu.h"
-#include "control/stockdlg/ImageOpenDlg.h"
-#include "gui/dialog/backgroundSelect/ImagesDialog.h"
-#include "gui/dialog/backgroundSelect/PdfPagesDialog.h"
-#include "undo/GroupUndoAction.h"
-#include "undo/PageBackgroundChangedUndoAction.h"
-#include "util/PathUtil.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_g...
+#include <gio/gio.h>                // for GFile
+#include <glib.h>                   // for g_error_free
 
-#include "Control.h"
+#include "control/pagetype/PageTypeHandler.h"            // for PageTypeInfo
+#include "control/pagetype/PageTypeMenu.h"               // for PageTypeMenu
+#include "control/settings/PageTemplateSettings.h"       // for PageTemplate...
+#include "control/settings/Settings.h"                   // for Settings
+#include "control/stockdlg/ImageOpenDlg.h"               // for ImageOpenDlg
+#include "gui/dialog/backgroundSelect/ImagesDialog.h"    // for ImagesDialog
+#include "gui/dialog/backgroundSelect/PdfPagesDialog.h"  // for PdfPagesDialog
+#include "model/BackgroundImage.h"                       // for BackgroundImage
+#include "model/Document.h"                              // for Document
+#include "model/PageType.h"                              // for PageType
+#include "model/XojPage.h"                               // for XojPage
+#include "pdf/base/XojPdfPage.h"                         // for XojPdfPageSPtr
+#include "undo/GroupUndoAction.h"                        // for GroupUndoAction
+#include "undo/PageBackgroundChangedUndoAction.h"        // for PageBackgrou...
+#include "undo/UndoAction.h"                             // for UndoAction
+#include "undo/UndoRedoHandler.h"                        // for UndoRedoHandler
+#include "util/PathUtil.h"                               // for fromGFile
+#include "util/Util.h"                                   // for npos
+#include "util/XojMsgBox.h"                              // for XojMsgBox
+#include "util/i18n.h"                                   // for FS, _, _F
+
+#include "Control.h"  // for Control
 
 
 PageBackgroundChangeController::PageBackgroundChangeController(Control* control):

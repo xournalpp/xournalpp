@@ -23,8 +23,10 @@
 
 #include "gtkmenutooltogglebutton.h"
 
-#include <algorithm>
-#include <cmath>
+#include <algorithm>  // for max
+
+#include <gdk/gdk.h>           // for GdkRectangle, gdk_window_get_origin
+#include <gobject/gmarshal.h>  // for g_cclosure_marshal_VOID__VOID
 
 #define GTK_MENU_TOOL_TOGGLE_BUTTON_GET_PRIVATE(object) \
     (G_TYPE_INSTANCE_GET_PRIVATE((object), GTK_TYPE_MENU_TOOL_TOGGLE_BUTTON, GtkMenuToolToggleButtonPrivate))

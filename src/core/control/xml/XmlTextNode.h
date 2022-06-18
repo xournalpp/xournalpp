@@ -11,8 +11,11 @@
 
 #pragma once
 
-#include "XmlAudioNode.h"
-#include "XmlNode.h"
+#include <string>  // for string
+
+#include "XmlAudioNode.h"  // for XmlAudioNode
+
+class OutputStream;
 
 class XmlTextNode: public XmlAudioNode {
 public:

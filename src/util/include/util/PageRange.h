@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <string>   // for string
+#include <vector>   // for vector
 
 struct PageRangeEntry {
     PageRangeEntry() = default;                                             // pre c++20 requirement

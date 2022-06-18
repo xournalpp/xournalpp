@@ -1,6 +1,15 @@
 #include "TexImageView.h"
 
-#include "model/TexImage.h"
+#include <string>  // for string
+
+#include <cairo.h>             // for cairo_paint_with_alpha, cairo_scale
+#include <glib.h>              // for g_warning
+#include <poppler-document.h>  // for poppler_document_get_n_pages, poppler_...
+#include <poppler-page.h>      // for poppler_page_render, poppler_page_get_...
+#include <poppler.h>           // for PopplerPage, PopplerDocument, g_clear_...
+
+#include "model/TexImage.h"  // for TexImage
+#include "view/View.h"       // for Context, OPACITY_NO_AUDIO, view
 
 using namespace xoj::view;
 

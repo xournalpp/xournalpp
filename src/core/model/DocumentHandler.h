@@ -11,13 +11,10 @@
 
 #pragma once
 
-#include <list>
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <list>     // for list
 
-#include "DocumentChangeType.h"
-#include "PageRef.h"
-
+#include "DocumentChangeType.h"  // for DocumentChangeType
 
 class DocumentListener;
 

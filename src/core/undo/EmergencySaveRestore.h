@@ -12,10 +12,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "UndoAction.h"
+#include "UndoAction.h"  // for UndoAction
+
+class Control;
 
 
 class EmergencySaveRestore: public UndoAction {

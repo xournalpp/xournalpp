@@ -11,9 +11,10 @@
 
 #pragma once
 
-#include "model/Point.h"
+#include "XmlNode.h"  // for XmlNode
 
-#include "XmlNode.h"
+class OutputStream;
+class Point;
 
 class XmlStrokeNode: public XmlNode {
 public:

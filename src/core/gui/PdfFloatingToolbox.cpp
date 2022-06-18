@@ -1,13 +1,29 @@
 #include "PdfFloatingToolbox.h"
 
-#include "control/Control.h"
-#include "gui/PageView.h"
-#include "model/Stroke.h"
-#include "undo/GroupUndoAction.h"
-#include "undo/InsertUndoAction.h"
+#include <algorithm>  // for max, min
+#include <cmath>      // for abs
+#include <string>     // for string
+#include <utility>    // for move
+#include <vector>     // for vector
 
-#include "GladeGui.h"
-#include "MainWindow.h"
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+
+#include "control/Control.h"        // for Control
+#include "control/ToolEnums.h"      // for ToolType, TOOL_SELECT_PDF_TEXT_LI...
+#include "control/ToolHandler.h"    // for ToolHandler
+#include "gui/PageView.h"           // for XojPageView
+#include "gui/XournalView.h"        // for XournalView
+#include "model/Layer.h"            // for Layer
+#include "model/PageRef.h"          // for PageRef
+#include "model/Point.h"            // for Point
+#include "model/Stroke.h"           // for Stroke, BUTT, STROKE_TOOL_HIGHLIG...
+#include "model/XojPage.h"          // for XojPage
+#include "undo/GroupUndoAction.h"   // for GroupUndoAction
+#include "undo/InsertUndoAction.h"  // for InsertUndoAction
+#include "undo/UndoAction.h"        // for UndoAction
+#include "undo/UndoRedoHandler.h"   // for UndoRedoHandler
+
+#include "MainWindow.h"  // for MainWindow
 
 PdfFloatingToolbox::PdfFloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay):
         theMainWindow(theMainWindow), position({0, 0}) {

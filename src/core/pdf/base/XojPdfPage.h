@@ -11,11 +11,12 @@
 
 #pragma once
 
-#include <memory>  // std::shared_ptr
-#include <string>
-#include <vector>
+#include <cinttypes>  // for uint8_t
+#include <memory>     // for shared_ptr
+#include <string>     // for string
+#include <vector>     // for vector
 
-#include <cairo/cairo.h>
+#include <cairo/cairo.h>  // for cairo_region_t, cairo_t
 
 /// Determines how text is selected on a user action.
 enum class XojPdfPageSelectionStyle : uint8_t {

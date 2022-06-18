@@ -1,10 +1,20 @@
 #include "ZoomControl.h"
 
-#include <algorithm>
-#include <cmath>
+#include <algorithm>  // for find, max
 
-#include "control/Control.h"
-#include "gui/XournalView.h"
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+#include <glib.h>         // for g_assert_true, g_warning, guint
+
+#include "control/Control.h"            // for Control
+#include "control/settings/Settings.h"  // for Settings
+#include "control/zoom/ZoomListener.h"  // for ZoomListener
+#include "enums/ActionGroup.enum.h"     // for GROUP_ZOOM_FIT
+#include "enums/ActionType.enum.h"      // for ACTION_NOT_SELECTED, ACTION_Z...
+#include "gui/Layout.h"                 // for Layout
+#include "gui/PageView.h"               // for XojPageView
+#include "gui/XournalView.h"            // for XournalView
+#include "gui/widgets/XournalWidget.h"  // for gtk_xournal_get_layout
+#include "util/Util.h"                  // for execInUiThread
 
 using xoj::util::Rectangle;
 

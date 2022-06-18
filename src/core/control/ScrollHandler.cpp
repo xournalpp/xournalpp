@@ -1,10 +1,17 @@
 #include "ScrollHandler.h"
 
-#include "gui/Layout.h"
-#include "gui/XournalView.h"
-#include "gui/widgets/SpinPageAdapter.h"
+#include <memory>  // for __shared_ptr_access
 
-#include "Control.h"
+#include <glib.h>  // for g_error
+
+#include "gui/MainWindow.h"               // for MainWindow
+#include "gui/XournalView.h"              // for XournalView
+#include "gui/widgets/SpinPageAdapter.h"  // for SpinPageAdapter
+#include "model/Document.h"               // for Document
+#include "model/XojPage.h"                // for XojPage
+#include "util/Util.h"                    // for npos
+
+#include "Control.h"  // for Control
 
 ScrollHandler::ScrollHandler(Control* control): control(control) {}
 

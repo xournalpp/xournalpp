@@ -1,13 +1,26 @@
 #include "StrokeView.h"
 
-#include <cmath>
+#include <algorithm>  // for max
+#include <cassert>    // for assert
+#include <cmath>      // for ceil
+#include <iterator>   // for begin, end, next
+#include <vector>     // for vector
 
-#include "model/Stroke.h"
-#include "model/eraser/ErasableStroke.h"
-#include "util/LoopUtil.h"
+#include <glib.h>  // for g_warning
 
-#include "DocumentView.h"
-#include "ErasableStrokeView.h"
+#include "model/LineStyle.h"  // for LineStyle
+#include "model/Point.h"      // for Point, Point::NO_PRESSURE
+#include "model/Stroke.h"     // for Stroke, STROKE_TOOL_HIGHLIGHTER
+#include "util/Color.h"       // for cairo_set_source_rgbi
+#include "util/LoopUtil.h"    // for for_first_then_each
+#include "util/Rectangle.h"   // for Rectangle
+#include "view/View.h"        // for Context, OPACITY_NO_AUDIO, view
+
+#include "ErasableStrokeView.h"  // for ErasableStrokeView
+#include "config-debug.h"        // for DEBUG_SHOW_MASK
+#include "filesystem.h"          // for path
+
+class ErasableStroke;
 
 using xoj::util::Rectangle;
 using namespace xoj::view;

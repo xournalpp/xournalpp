@@ -11,10 +11,13 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "UndoAction.h"
+#include "model/PageRef.h"  // for PageRef
+
+#include "UndoAction.h"  // for UndoAction
+
+class Control;
 
 
 class CopyUndoAction: public UndoAction {

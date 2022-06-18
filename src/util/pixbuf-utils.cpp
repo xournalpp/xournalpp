@@ -41,12 +41,6 @@
 
 #include "util/pixbuf-utils.h"
 
-#include <cerrno>
-#include <cmath>
-#include <cstdio>
-
-#include <gdk/gdk.h>
-
 const cairo_user_data_key_t pixel_key = {0};
 const cairo_user_data_key_t format_key = {0};
 

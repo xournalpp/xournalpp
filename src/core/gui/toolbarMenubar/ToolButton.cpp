@@ -1,8 +1,11 @@
 #include "ToolButton.h"
 
-#include <utility>
+#include <utility>  // for move
 
-#include "gui/widgets/gtkmenutooltogglebutton.h"
+#include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
+#include "gui/widgets/gtkmenutooltogglebutton.h"  // for gtk_menu_tool_toggl...
+
+class ActionHandler;
 
 using std::string;
 

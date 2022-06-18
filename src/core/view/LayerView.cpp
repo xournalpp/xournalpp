@@ -1,9 +1,16 @@
 #include "LayerView.h"
 
-#include "model/Layer.h"
+#include <memory>  // for unique_ptr
+#include <vector>  // for vector
 
-#include "DebugShowRepaintBounds.h"
-#include "View.h"
+#include <cairo.h>  // for cairo_clip_extents, cairo_rectangle
+#include <glib.h>   // for g_message
+
+#include "model/Element.h"  // for Element
+#include "model/Layer.h"    // for Layer
+
+#include "DebugShowRepaintBounds.h"  // for IF_DEBUG_REPAINT
+#include "View.h"                    // for Context, ElementView
 
 using namespace xoj::view;
 

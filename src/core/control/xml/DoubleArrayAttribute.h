@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <vector>  // for vector
 
-#include "Attribute.h"
+#include "Attribute.h"  // for XMLAttribute
+
+class OutputStream;
 
 
 class DoubleArrayAttribute: public XMLAttribute {

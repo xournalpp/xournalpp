@@ -11,16 +11,20 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <string>   // for string
 
-#include "gui/IconNameHelper.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gtk/gtk.h>                // for GtkWidget, GtkToolItem, GTK_ORIEN...
 
-#include "AbstractToolItem.h"
+#include "enums/ActionType.enum.h"  // for ActionType
+#include "gui/IconNameHelper.h"     // for IconNameHelper
 
+#include "AbstractToolItem.h"  // for AbstractToolItem
 
 class GladeGui;
 class SpinPageAdapter;
+class ActionHandler;
 
 class ToolPageSpinner: public AbstractToolItem {
 public:

@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include <glib.h>
+#include <cstddef>  // for size_t
 
-#include "util/Color.h"
+#include "util/Color.h"  // for Color
 
 class LoadHandler;
 

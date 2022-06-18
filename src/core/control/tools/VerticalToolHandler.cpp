@@ -1,17 +1,28 @@
 #include "VerticalToolHandler.h"
 
-#include <cmath>
-#include <memory>
+#include <algorithm>  // for max, min, minmax
+#include <cassert>    // for assert
+#include <cmath>      // for abs
+#include <memory>     // for __shared_ptr_access
 
-#include <cairo.h>
+#include <cairo.h>           // for cairo_fill, cairo_...
+#include <gdk/gdkkeysyms.h>  // for GDK_KEY_Control_L
+#include <glib.h>            // for g_assert, g_assert...
 
-#include "control/zoom/ZoomControl.h"
-#include "model/Layer.h"
-#include "undo/UndoRedoHandler.h"
-#include "util/LoopUtil.h"
-#include "view/DebugShowRepaintBounds.h"
-#include "view/SelectionView.h"
-#include "view/View.h"
+#include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
+#include "control/zoom/ZoomControl.h"              // for ZoomControl
+#include "gui/Redrawable.h"                        // for Redrawable
+#include "model/Element.h"                         // for Element
+#include "model/Layer.h"                           // for Layer
+#include "model/XojPage.h"                         // for XojPage
+#include "undo/MoveUndoAction.h"                   // for MoveUndoAction
+#include "util/LoopUtil.h"                         // for for_first_then_each
+#include "util/Rectangle.h"                        // for Rectangle
+#include "view/DebugShowRepaintBounds.h"           // for IF_DEBUG_REPAINT
+#include "view/SelectionView.h"                    // for SelectionView
+#include "view/View.h"                             // for Context
+
+class Settings;
 
 VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y,
                                          bool initiallyReverse, ZoomControl* zoomControl, GdkWindow* window):

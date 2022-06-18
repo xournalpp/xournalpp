@@ -11,14 +11,12 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <vector>  // for vector
 
-#include <gtk/gtk.h>
+#include <glib.h>     // for gulong
+#include <gtk/gtk.h>  // for GtkWidget, GtkRecentInfo
 
-#include "util/GListView.h"
-
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 class RecentManagerListener {
 public:

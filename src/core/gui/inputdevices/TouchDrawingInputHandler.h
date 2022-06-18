@@ -11,15 +11,12 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <gdk/gdk.h>  // for GdkEventSequence
 
-#include "control/Actions.h"
-
-#include "PenInputHandler.h"
-
+#include "PenInputHandler.h"  // for PenInputHandler
 
 class InputContext;
+struct InputEvent;
 
 class TouchDrawingInputHandler: public PenInputHandler {
 private:

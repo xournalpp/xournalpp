@@ -11,14 +11,13 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
 
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
+#include "Element.h"     // for Element, ElementType
+#include "filesystem.h"  // for path
 
-#include "Element.h"
-#include "filesystem.h"
+class ObjectInputStream;
+class ObjectOutputStream;
 
 
 class AudioElement: public Element {

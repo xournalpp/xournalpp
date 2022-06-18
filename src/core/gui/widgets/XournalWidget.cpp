@@ -1,22 +1,26 @@
 #include "XournalWidget.h"
 
-#include <cmath>
+#include <algorithm>  // for max
+#include <cmath>      // for NAN
+#include <optional>   // for optional
+#include <vector>     // for vector
 
-#include <config-debug.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkkeysyms.h>
+#include <cairo.h>    // for cairo_restore, cairo_save
+#include <gdk/gdk.h>  // for GdkRectangle, GdkWindowAttr
 
-#include "control/Control.h"
-#include "control/settings/Settings.h"
-#include "control/tools/EditSelection.h"
-#include "gui/Layout.h"
-#include "gui/Shadow.h"
-#include "gui/XournalView.h"
-#include "gui/inputdevices/InputContext.h"
-#include "gui/scroll/ScrollHandling.h"
-#include "util/Rectangle.h"
-#include "util/Util.h"
-#include "view/SetsquareView.h"
+#include "control/Control.h"                // for Control
+#include "control/settings/Settings.h"      // for Settings
+#include "control/tools/EditSelection.h"    // for EditSelection
+#include "gui/Layout.h"                     // for Layout
+#include "gui/PageView.h"                   // for XojPageView
+#include "gui/Redrawable.h"                 // for Redrawable
+#include "gui/Shadow.h"                     // for Shadow
+#include "gui/XournalView.h"                // for XournalView
+#include "gui/inputdevices/InputContext.h"  // for InputContext
+#include "gui/scroll/ScrollHandling.h"      // for ScrollHandling
+#include "util/Color.h"                     // for cairo_set_source_rgbi
+#include "util/Rectangle.h"                 // for Rectangle
+#include "view/SetsquareView.h"             // for SetsquareView
 
 
 using xoj::util::Rectangle;

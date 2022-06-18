@@ -11,16 +11,19 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "gui/GladeGui.h"
+#include <gtk/gtk.h>  // for GtkWidget, GtkToolItem
 
-#include "ToolButton.h"
+#include "enums/ActionGroup.enum.h"  // for ActionGroup
+#include "enums/ActionType.enum.h"   // for ActionType
 
+#include "ToolButton.h"  // for ToolButton
 
 class ToolMenuHandler;
 class ToolDrawType;
+class ActionHandler;
 
 class ToolDrawCombocontrol: public ToolButton {
 public:

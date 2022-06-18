@@ -11,14 +11,13 @@
 
 #pragma once
 
-#include <gdk/gdk.h>
+#include <gtk/gtk.h>  // for GtkWidget, GtkComboBox, GtkWindow
 
-#include "control/Actions.h"
-#include "control/DeviceListHelper.h"
-#include "gui/GladeGui.h"
+#include "control/DeviceListHelper.h"  // for InputDevice
+#include "gui/GladeGui.h"              // for GladeGui
 
 class Settings;
-class SettingsDialog;
+class GladeSearchpath;
 
 class DeviceClassConfigGui: public GladeGui {
 public:
