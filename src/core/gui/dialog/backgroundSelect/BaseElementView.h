@@ -11,11 +11,10 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include <gtk/gtk.h>
-
+#include <cairo.h>    // for cairo_t, cairo_surface_t
+#include <gdk/gdk.h>  // for GdkEventButton
+#include <glib.h>     // for gboolean
+#include <gtk/gtk.h>  // for GtkWidget
 
 class BackgroundSelectDialogBase;
 

@@ -11,12 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cairo.h>                  // for cairo_t, cairo_surface_t
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gtk/gtk.h>                // for GtkWidget
 
-#include <gtk/gtk.h>
-
-#include "util/Color.h"
+#include "util/Color.h"  // for Color
 
 
 enum ColorIconState {

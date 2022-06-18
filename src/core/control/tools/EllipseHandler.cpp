@@ -1,10 +1,17 @@
 #include "EllipseHandler.h"
 
-#include <cmath>
+#include <algorithm>  // for max
+#include <cmath>      // for abs, pow, M_PI, cos
 
-#include "control/Control.h"
-#include "gui/XournalView.h"
-#include "undo/InsertUndoAction.h"
+#include "control/Control.h"                       // for Control
+#include "control/settings/Settings.h"             // for Settings
+#include "control/tools/BaseStrokeHandler.h"       // for BaseStrokeHandler
+#include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
+#include "gui/XournalView.h"                       // for XournalView
+#include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
+#include "model/Stroke.h"                          // for Stroke
+
+class XojPageView;
 
 
 EllipseHandler::EllipseHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,

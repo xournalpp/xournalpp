@@ -1,13 +1,23 @@
 #include "ToolPageLayer.h"
 
-#include <utility>
+#include <algorithm>  // for find, max
+#include <cstddef>    // for size_t
+#include <iterator>   // for distance
+#include <memory>     // for operator==, __share...
+#include <utility>    // for move
 
-#include <config.h>
+#include <glib-object.h>  // for G_CALLBACK, g_signa...
+#include <glib.h>         // for g_warning
+#include <pango/pango.h>  // for pango_attr_list_insert
 
-#include "control/layer/LayerController.h"
-#include "gui/GladeGui.h"
-#include "gui/widgets/PopupMenuButton.h"
-#include "util/i18n.h"
+#include "control/layer/LayerController.h"        // for LayerController
+#include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
+#include "gui/widgets/PopupMenuButton.h"          // for PopupMenuButton
+#include "model/PageRef.h"                        // for PageRef
+#include "model/XojPage.h"                        // for XojPage
+#include "util/i18n.h"                            // for _
+
+class ActionHandler;
 
 ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, std::string id,
                              ActionType type, IconNameHelper iconNameHelper):

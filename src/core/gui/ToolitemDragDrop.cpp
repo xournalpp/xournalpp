@@ -1,8 +1,12 @@
 #include "ToolitemDragDrop.h"
 
-#include "gui/dialog/toolbarCustomize/ToolbarAdapter.h"
-#include "gui/dialog/toolbarCustomize/ToolbarDragDropHelper.h"
-#include "gui/toolbarMenubar/icon/ToolbarSeparatorImage.h"
+#include <glib-object.h>  // for g_object_...
+#include <glib.h>         // for g_malloc
+
+#include "gui/toolbarMenubar/AbstractToolItem.h"            // for AbstractT...
+#include "gui/toolbarMenubar/icon/ToolbarSeparatorImage.h"  // for getNewToo...
+
+struct NamedColor;
 
 const char* ATTACH_DRAG_DROP_DATA = "XOJ_DRAG_DROP_DATA";
 

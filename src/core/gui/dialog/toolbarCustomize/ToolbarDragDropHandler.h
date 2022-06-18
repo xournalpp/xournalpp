@@ -11,12 +11,7 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-
 class Control;
-class MainWindow;
 class ToolbarAdapter;
 class ToolbarCustomizeDialog;
 

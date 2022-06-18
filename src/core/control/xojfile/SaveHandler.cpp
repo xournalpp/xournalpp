@@ -1,26 +1,41 @@
 #include "SaveHandler.h"
 
-#include <cinttypes>
+#include <cinttypes>  // for PRIx32, uint32_t
+#include <cstdio>     // for sprintf, size_t
 
-#include <config.h>
+#include <cairo.h>                  // for cairo_surface_t
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
+#include <glib.h>                   // for g_free, g_strdup_printf
 
-#include "control/jobs/ProgressListener.h"
-#include "control/pagetype/PageTypeHandler.h"
-#include "control/xml/XmlImageNode.h"
-#include "control/xml/XmlNode.h"
-#include "control/xml/XmlPointNode.h"
-#include "control/xml/XmlTexNode.h"
-#include "control/xml/XmlTextNode.h"
-#include "model/BackgroundImage.h"
-#include "model/Document.h"
-#include "model/Image.h"
-#include "model/Layer.h"
-#include "model/Stroke.h"
-#include "model/StrokeStyle.h"
-#include "model/TexImage.h"
-#include "model/Text.h"
-#include "util/PathUtil.h"
-#include "util/i18n.h"
+#include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
+#include "control/xml/XmlAudioNode.h"          // for XmlAudioNode
+#include "control/xml/XmlImageNode.h"          // for XmlImageNode
+#include "control/xml/XmlNode.h"               // for XmlNode
+#include "control/xml/XmlPointNode.h"          // for XmlPointNode
+#include "control/xml/XmlTexNode.h"            // for XmlTexNode
+#include "control/xml/XmlTextNode.h"           // for XmlTextNode
+#include "model/AudioElement.h"                // for AudioElement
+#include "model/BackgroundImage.h"             // for BackgroundImage
+#include "model/Document.h"                    // for Document
+#include "model/Element.h"                     // for Element, ELEMENT_IMAGE
+#include "model/Font.h"                        // for XojFont
+#include "model/Image.h"                       // for Image
+#include "model/Layer.h"                       // for Layer
+#include "model/LineStyle.h"                   // for LineStyle
+#include "model/PageType.h"                    // for PageType
+#include "model/Point.h"                       // for Point
+#include "model/Stroke.h"                      // for Stroke, StrokeCapStyle
+#include "model/StrokeStyle.h"                 // for StrokeStyle
+#include "model/TexImage.h"                    // for TexImage
+#include "model/Text.h"                        // for Text
+#include "model/XojPage.h"                     // for XojPage
+#include "pdf/base/XojPdfDocument.h"           // for XojPdfDocument
+#include "util/OutputStream.h"                 // for GzOutputStream, Output...
+#include "util/PathUtil.h"                     // for clearExtensions
+#include "util/PlaceholderString.h"            // for PlaceholderString
+#include "util/i18n.h"                         // for FS, _F
+
+#include "config.h"  // for FILE_FORMAT_VERSION
 
 SaveHandler::SaveHandler() {
     this->firstPdfPageVisited = false;

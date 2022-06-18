@@ -1,6 +1,8 @@
 #include "Point.h"
 
-#include <cmath>
+#include <cmath>  // for hypot
+
+#include "util/Rectangle.h"  // for Rectangle
 
 Point::Point(double x, double y): x(x), y(y) {}
 

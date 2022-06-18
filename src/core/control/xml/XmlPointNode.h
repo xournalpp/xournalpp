@@ -11,11 +11,13 @@
 
 #pragma once
 
-#include <vector>
+#include <vector>  // for vector
 
-#include "model/Point.h"
+#include "model/Point.h"  // for Point
 
-#include "XmlAudioNode.h"
+#include "XmlAudioNode.h"  // for XmlAudioNode
+
+class OutputStream;
 
 class XmlPointNode: public XmlAudioNode {
 public:

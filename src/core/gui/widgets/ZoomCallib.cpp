@@ -10,6 +10,9 @@
  */
 #include "ZoomCallib.h"
 
+#include <cairo.h>    // for cairo_set_source_rgb, cairo_fill, cairo_move_to
+#include <gdk/gdk.h>  // for GdkWindowAttr, gdk_window_move_resize, gdk_wind...
+
 G_DEFINE_TYPE(ZoomCallib, zoomcallib, GTK_TYPE_WIDGET);  // NOLINT // @suppress("Unused static function")
 
 static void zoomcallib_get_preferred_width(GtkWidget* widget, gint* minimal_width, gint* natural_width);

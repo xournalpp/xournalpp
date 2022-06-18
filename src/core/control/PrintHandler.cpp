@@ -1,17 +1,26 @@
 #include "PrintHandler.h"
 
-#include <cmath>
+#include <cmath>   // for M_PI_2
+#include <memory>  // for __shared_ptr_access
+#include <string>  // for string
 
-#include <config-dev.h>
+#include <cairo.h>        // for cairo_rotate, cairo_translate, cairo_t
+#include <config-dev.h>   // for PRINT_CONFIG_FILE
+#include <glib-object.h>  // for g_object_unref, G_CALLBACK, g_signa...
+#include <glib.h>         // for GError, g_error_free, g_warning
 
-#include "model/Document.h"
-#include "util/PathUtil.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
-#include "util/safe_casts.h"
-#include "view/DocumentView.h"
+#include "model/Document.h"       // for Document
+#include "model/PageRef.h"        // for PageRef
+#include "model/PageType.h"       // for PageType
+#include "model/XojPage.h"        // for XojPage
+#include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr, XojPdfPage
+#include "util/PathUtil.h"        // for getConfigFile
+#include "util/XojMsgBox.h"       // for XojMsgBox
+#include "util/i18n.h"            // for _
+#include "util/safe_casts.h"      // for strict_cast
+#include "view/DocumentView.h"    // for DocumentView
 
-#include "filesystem.h"
+#include "filesystem.h"  // for exists, remove, path
 
 namespace {
 void drawPage(GtkPrintOperation* /*operation*/, GtkPrintContext* context, int pageNr, Document* doc) {

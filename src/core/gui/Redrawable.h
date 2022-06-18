@@ -11,11 +11,10 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-
-#include "util/Range.h"
+#include <gdk/gdk.h>  // for GdkRGBA
 
 class Element;
+class Range;
 
 class Redrawable {
 protected:

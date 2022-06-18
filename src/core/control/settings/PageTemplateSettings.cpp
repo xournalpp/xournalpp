@@ -1,10 +1,10 @@
 #include "PageTemplateSettings.h"
 
-#include <cinttypes>
-#include <sstream>
+#include <cinttypes>  // for PRIx32, uint32_t
+#include <cstdio>     // for snprintf, size_t
+#include <sstream>    // for basic_istream, strings...
 
-#include "control/pagetype/PageTypeHandler.h"
-#include "control/xojfile/SaveHandler.h"
+#include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
 
 using std::string;
 using std::stringstream;

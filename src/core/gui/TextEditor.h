@@ -11,15 +11,22 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <functional>  // for reference_wrapper
+#include <string>      // for string
+#include <vector>      // for vector
 
-#include "model/Text.h"
-#include "undo/TextUndoAction.h"
-#include "undo/UndoAction.h"
+#include <gdk/gdk.h>           // for GdkEventKey
+#include <glib.h>              // for gint, gboolean, gchar
+#include <gtk/gtk.h>           // for GtkIMContext, GtkTextIter, GtkWidget
+#include <pango/pangocairo.h>  // for cairo_t, PangoAttrList, PangoLayout
 
-#include "Redrawable.h"
+#include "util/Color.h"  // for Color
 
 class XojPageView;
+class Text;
+class TextUndoAction;
+class UndoAction;
+class XojFont;
 
 class TextEditor {
 public:

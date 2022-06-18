@@ -1,9 +1,17 @@
 #include "AbstractSliderItem.h"
 
-#include <cassert>
-#include <iomanip>
-#include <sstream>
-#include <tuple>
+#include <iomanip>  // for operator<<, setw
+#include <sstream>  // for stringstream, basic...
+#include <tuple>    // for tuple
+#include <utility>  // for move
+
+#include <gdk/gdk.h>      // for GdkEvent, GdkEventS...
+#include <glib-object.h>  // for G_CALLBACK, g_objec...
+#include <glib.h>         // for g_strdup, gchar
+
+#include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
+
+class ActionHandler;
 
 class AbstractSliderItem::Impl {
 public:

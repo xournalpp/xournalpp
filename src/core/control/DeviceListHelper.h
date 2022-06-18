@@ -11,14 +11,14 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string, basic_string
+#include <vector>  // for vector
 
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
+#include <gdk/gdk.h>  // for GdkInputSource, GdkDevice
 
-#include "control/settings/Settings.h"
-#include "gui/inputdevices/InputEvents.h"
+#include "gui/inputdevices/InputEvents.h"  // for InputDeviceClass
+
+class Settings;
 
 class InputDevice {
 public:

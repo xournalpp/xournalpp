@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gtk/gtk.h>                // for GtkWidget
 
 /**
  * Menuitem handler

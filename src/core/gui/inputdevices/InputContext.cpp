@@ -4,10 +4,29 @@
 
 #include "InputContext.h"
 
-#include "control/DeviceListHelper.h"
+#include <cassert>  // for assert
+#include <cstddef>  // for NULL
+#include <vector>   // for vector
 
-#include "InputEvents.h"
-#include "SetsquareInputHandler.h"
+#include <glib-object.h>  // for g_signal_hand...
+
+#include "control/Control.h"                            // for Control
+#include "control/DeviceListHelper.h"                   // for InputDevice
+#include "control/settings/Settings.h"                  // for Settings
+#include "gui/XournalView.h"                            // for XournalView
+#include "gui/inputdevices/HandRecognition.h"           // for HandRecognition
+#include "gui/inputdevices/KeyboardInputHandler.h"      // for KeyboardInput...
+#include "gui/inputdevices/MouseInputHandler.h"         // for MouseInputHan...
+#include "gui/inputdevices/StylusInputHandler.h"        // for StylusInputHa...
+#include "gui/inputdevices/TouchDrawingInputHandler.h"  // for TouchDrawingI...
+#include "gui/inputdevices/TouchInputHandler.h"         // for TouchInputHan...
+
+#include "InputEvents.h"            // for InputEvent
+#include "SetsquareInputHandler.h"  // for SetsquareInpu...
+#include "config-debug.h"           // for DEBUG_INPUT
+
+class ScrollHandling;
+class ToolHandler;
 
 InputContext::InputContext(XournalView* view, ScrollHandling* scrollHandling) {
     this->view = view;

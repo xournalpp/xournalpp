@@ -11,14 +11,18 @@
 
 #pragma once
 
-#include <memory>
+#include <memory>  // for unique_ptr
+#include <vector>  // for vector
 
-#include "gui/GladeGui.h"
+#include <gtk/gtk.h>  // for GtkWindow
 
-#include "PluginDialogEntry.h"
+#include "gui/GladeGui.h"  // for GladeGui
+
+#include "PluginDialogEntry.h"  // for PluginDialogEntry
 
 class PluginController;
 class Settings;
+class GladeSearchpath;
 
 class PluginDialog: public GladeGui {
 public:

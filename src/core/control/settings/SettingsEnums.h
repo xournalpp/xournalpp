@@ -11,10 +11,7 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include <glib.h>
+#include <string>  // for string
 
 
 /**

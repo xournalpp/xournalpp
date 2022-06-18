@@ -11,13 +11,13 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <memory>  // for shared_ptr
 
-#include <gtk/gtk.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gio/gio.h>                // for GInputStream
+#include <glib.h>                   // for GError
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 struct BackgroundImage {
     BackgroundImage();
@@ -52,5 +52,6 @@ struct BackgroundImage {
 
 private:
     struct Content;
+
     std::shared_ptr<Content> img;
 };

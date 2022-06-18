@@ -1,7 +1,9 @@
 #include "util/serializing/ObjectOutputStream.h"
 
-#include "util/serializing/ObjectEncoding.h"
-#include "util/serializing/Serializable.h"
+#include <cairo.h>  // for CAIRO_STATUS_SUCCESS
+
+#include "util/serializing/ObjectEncoding.h"  // for ObjectEncoding
+#include "util/serializing/Serializable.h"    // for XML_VERSION_STR
 
 ObjectOutputStream::ObjectOutputStream(ObjectEncoding* encoder) {
     g_assert(encoder != nullptr);

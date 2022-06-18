@@ -4,9 +4,7 @@
 
 #include "TouchDisableGdk.h"
 
-#include <gdk/gdk.h>
-
-#include "gui/XournalView.h"
+#include <gdk/gdk.h>  // for gdk_pointer_grab, gdk_pointer_ungrab, GDK_CURRE...
 
 TouchDisableGdk::TouchDisableGdk(GtkWidget* widget): widget(widget) {}
 

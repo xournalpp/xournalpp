@@ -1,22 +1,20 @@
 #include "XojExportHandler.h"
 
-#include <config.h>
+#include <memory>  // for unique_ptr, __shared_p...
+#include <string>  // for string, allocator, ope...
 
-#include "control/jobs/ProgressListener.h"
-#include "control/pagetype/PageTypeHandler.h"
-#include "control/xml/XmlImageNode.h"
-#include "control/xml/XmlNode.h"
-#include "control/xml/XmlPointNode.h"
-#include "control/xml/XmlTexNode.h"
-#include "control/xml/XmlTextNode.h"
-#include "model/BackgroundImage.h"
-#include "model/Document.h"
-#include "model/Image.h"
-#include "model/Layer.h"
-#include "model/Stroke.h"
-#include "model/TexImage.h"
-#include "model/Text.h"
-#include "util/i18n.h"
+#include "control/pagetype/PageTypeHandler.h"  // for PageTypeHandler
+#include "control/xml/XmlNode.h"               // for XmlNode
+#include "control/xml/XmlTextNode.h"           // for XmlTextNode
+#include "model/PageType.h"                    // for PageTypeFormat, PageType
+#include "model/XojPage.h"                     // for XojPage
+
+#include "config.h"  // for PROJECT_STRING, PROJEC...
+
+class AudioElement;
+class Stroke;
+class XmlAudioNode;
+class XmlPointNode;
 
 XojExportHandler::XojExportHandler() = default;
 

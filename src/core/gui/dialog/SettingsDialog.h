@@ -11,16 +11,25 @@
 
 #pragma once
 
-#include "audio/DeviceInfo.h"
-#include "control/Control.h"
-#include "control/settings/Settings.h"
-#include "gui/GladeGui.h"
+#include <memory>  // for unique_ptr
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "DeviceClassConfigGui.h"
-#include "LanguageConfigGui.h"
-#include "LatexSettingsPanel.h"
+#include <glib.h>     // for gboolean
+#include <gtk/gtk.h>  // for GtkWidget, GtkWindow
+
+#include "audio/DeviceInfo.h"                    // for DeviceInfo
+#include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
+#include "gui/GladeGui.h"                        // for GladeGui
+
+#include "LatexSettingsPanel.h"  // for LatexSettingsPanel
 
 class ButtonConfigGui;
+class Control;
+class DeviceClassConfigGui;
+class GladeSearchpath;
+class LanguageConfigGui;
+class Settings;
 
 class SettingsDialog: public GladeGui {
 public:

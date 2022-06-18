@@ -1,6 +1,13 @@
 #include "AudioPlayer.h"
 
-#include "control/Control.h"
+#include "audio/AudioQueue.h"         // for AudioQueue
+#include "audio/DeviceInfo.h"         // for DeviceInfo
+#include "audio/PortAudioConsumer.h"  // for PortAudioConsumer
+#include "audio/VorbisProducer.h"     // for VorbisProducer
+#include "control/Control.h"          // for Control
+#include "gui/MainWindow.h"           // for MainWindow
+
+class Settings;
 
 AudioPlayer::~AudioPlayer() { this->stop(); }
 

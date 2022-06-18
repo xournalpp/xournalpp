@@ -1,6 +1,8 @@
 #include "DocumentHandler.h"
 
-#include "DocumentListener.h"
+#include "model/DocumentChangeType.h"  // for DocumentChangeType
+
+#include "DocumentListener.h"  // for DocumentListener
 
 void DocumentHandler::addListener(DocumentListener* l) { this->listener.push_back(l); }
 

@@ -11,12 +11,16 @@
 
 #pragma once
 
-#include "gui/sidebar/previews/base/SidebarPreviewBaseEntry.h"
-#include "model/PageRef.h"
+#include <cstddef>  // for size_t
+#include <string>   // for string
 
-#include "SidebarPreviewLayers.h"
+#include <gtk/gtk.h>  // for GtkWi...
 
-class SidebarPreviewBase;
+#include "gui/sidebar/previews/base/SidebarPreviewBaseEntry.h"  // for Previ...
+#include "model/Layer.h"                                        // for Layer
+#include "model/PageRef.h"                                      // for PageRef
+
+class SidebarPreviewLayers;
 
 class SidebarPreviewLayerEntry: public SidebarPreviewBaseEntry {
 public:

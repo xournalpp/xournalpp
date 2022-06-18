@@ -1,33 +1,42 @@
 #include "EditSelection.h"
 
-#include <algorithm>
-#include <cmath>
-#include <limits>
+#include <algorithm>  // for min, max, stable_sort
+#include <cmath>      // for abs, cos, sin, cop...
+#include <cstddef>    // for size_t
+#include <limits>     // for numeric_limits
+#include <memory>     // for make_unique, __sha...
+#include <string>     // for string
 
-#include "control/Control.h"
-#include "gui/Layout.h"
-#include "gui/PageView.h"
-#include "gui/XournalView.h"
-#include "gui/XournalppCursor.h"
-#include "gui/widgets/XournalWidget.h"
-#include "model/Document.h"
-#include "model/Element.h"
-#include "model/Layer.h"
-#include "model/Stroke.h"
-#include "model/Text.h"
-#include "undo/ArrangeUndoAction.h"
-#include "undo/ColorUndoAction.h"
-#include "undo/FontUndoAction.h"
-#include "undo/InsertUndoAction.h"
-#include "undo/LineStyleUndoAction.h"
-#include "undo/SizeUndoAction.h"
-#include "undo/UndoRedoHandler.h"
-#include "util/i18n.h"
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
+#include <gdk/gdk.h>  // for gdk_cairo_set_sour...
 
-#include "EditSelectionContents.h"
-#include "Selection.h"
+#include "control/Control.h"                       // for Control
+#include "control/settings/Settings.h"             // for Settings
+#include "control/tools/CursorSelectionType.h"     // for CURSOR_SELECTION_NONE
+#include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
+#include "control/zoom/ZoomControl.h"              // for ZoomControl
+#include "gui/Layout.h"                            // for Layout
+#include "gui/PageView.h"                          // for XojPageView
+#include "gui/XournalView.h"                       // for XournalView
+#include "gui/XournalppCursor.h"                   // for XournalppCursor
+#include "gui/widgets/XournalWidget.h"             // for gtk_xournal_get_la...
+#include "model/Document.h"                        // for Document
+#include "model/Element.h"                         // for Element::Index
+#include "model/Layer.h"                           // for Layer
+#include "model/LineStyle.h"                       // for LineStyle
+#include "model/Point.h"                           // for Point
+#include "model/XojPage.h"                         // for XojPage
+#include "undo/ArrangeUndoAction.h"                // for ArrangeUndoAction
+#include "undo/InsertUndoAction.h"                 // for InsertsUndoAction
+#include "undo/UndoRedoHandler.h"                  // for UndoRedoHandler
+#include "util/Range.h"                            // for Range
+#include "util/i18n.h"                             // for _
+#include "util/serializing/ObjectInputStream.h"    // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"   // for ObjectOutputStream
+
+#include "EditSelectionContents.h"  // for EditSelectionConte...
+#include "Selection.h"              // for Selection
+
+class XojFont;
 
 using std::vector;
 using xoj::util::Rectangle;

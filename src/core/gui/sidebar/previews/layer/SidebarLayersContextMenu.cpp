@@ -1,5 +1,17 @@
 #include "gui/sidebar/previews/layer/SidebarLayersContextMenu.h"
 
+#include <map>      // for map, operator!=, _Rb_tree_const_iterator
+#include <memory>   // for unique_ptr, allocator, make_unique
+#include <string>   // for string, operator==, basic_string, operator<
+#include <tuple>    // for tuple
+#include <utility>  // for tuple_element<>::type, move
+#include <vector>   // for vector
+
+#include <glib-object.h>  // for g_object_ref, G_CALLBACK, g_signal_connect
+#include <glib.h>         // for gulong, g_assert
+
+#include "gui/GladeGui.h"  // for GladeGui
+
 SidebarLayersContextMenu::SidebarLayersContextMenu(GladeGui* gui, SidebarToolbar* toolbar):
         SidebarBaseContextMenu(gui->get("sidebarPreviewLayersContextMenu")) {
 

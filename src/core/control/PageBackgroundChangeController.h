@@ -11,19 +11,20 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
 
-#include "control/pagetype/PageTypeMenu.h"
-#include "control/settings/PageTemplateSettings.h"
-#include "model/DocumentListener.h"
-#include "model/PageRef.h"
+#include <gtk/gtk.h>  // for GtkWidget
 
+#include "control/pagetype/PageTypeMenu.h"  // for ApplyPageTypeSource, Page...
+#include "model/DocumentChangeType.h"       // for DocumentChangeType
+#include "model/DocumentListener.h"         // for DocumentListener
+#include "model/PageRef.h"                  // for PageRef
 
-class PageTypeMenu;
 class Control;
-class XojPage;
 class UndoAction;
+class PageType;
+class PageTypeInfo;
 
 class PageBackgroundChangeController:
         public PageTypeMenuChangeListener,

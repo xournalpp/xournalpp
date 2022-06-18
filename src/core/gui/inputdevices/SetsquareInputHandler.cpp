@@ -1,9 +1,29 @@
 #include "SetsquareInputHandler.h"
 
-#include <cmath>
+#include <algorithm>  // for max
+#include <cmath>      // for atan2, abs, cos, remainder
+#include <memory>     // for __shared_ptr_access, shar...
 
-#include "model/Snapping.h"
-#include "view/SetsquareView.h"
+#include <gdk/gdkkeysyms.h>  // for GDK_KEY_Down, GDK_KEY_Left
+#include <glib.h>            // for g_warning
+
+#include "control/Control.h"                // for Control
+#include "control/ToolEnums.h"              // for TOOL_HAND, TOOL_HIGHLIGHTER
+#include "control/ToolHandler.h"            // for ToolHandler
+#include "control/settings/Settings.h"      // for Settings
+#include "gui/PageView.h"                   // for XojPageView
+#include "gui/XournalView.h"                // for XournalView
+#include "gui/inputdevices/InputContext.h"  // for InputContext::DeviceType
+#include "gui/inputdevices/InputEvents.h"   // for InputEvent, BUTTON_PRESS_...
+#include "gui/widgets/XournalWidget.h"      // for GtkXournal
+#include "model/Element.h"                  // for Element, ELEMENT_STROKE
+#include "model/Layer.h"                    // for Layer
+#include "model/Point.h"                    // for Point
+#include "model/Setsquare.h"                // for HALF_CM
+#include "model/Snapping.h"                 // for distanceLine
+#include "model/Stroke.h"                   // for Stroke
+#include "model/XojPage.h"                  // for XojPage
+#include "view/SetsquareView.h"             // for SetsquareView, HYPOTENUSE
 
 constexpr double MOVE_AMOUNT = HALF_CM / 2.0;
 constexpr double MOVE_AMOUNT_SMALL = HALF_CM / 20.0;

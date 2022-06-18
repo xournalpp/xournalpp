@@ -1,6 +1,7 @@
 #include "Job.h"
 
-#include <gdk/gdk.h>
+#include <gdk/gdk.h>  // for gdk_threads_add_idle
+#include <glib.h>     // for g_source_remove, GSourceFunc
 
 Job::Job(): refCount(1) {}
 

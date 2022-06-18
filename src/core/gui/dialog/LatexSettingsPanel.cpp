@@ -1,18 +1,29 @@
 #include "LatexSettingsPanel.h"
 
-#include <fstream>
-#include <variant>
+#include <fstream>   // for ifstream, basic_istream
+#include <iterator>  // for istreambuf_iterator, ope...
+#include <string>    // for allocator, string
+#include <variant>   // for get_if
+
+#include <gio/gio.h>      // for GSubprocess, g_subproces...
+#include <glib-object.h>  // for g_object_unref, g_object...
+#include <glib.h>         // for g_error_free, GError
 
 #ifdef USE_GTK_SOURCEVIEW
-#include <gtksourceview/gtksource.h>
+#include <gtksourceview/gtksource.h>  // for gtk_source_style_scheme_...
 #endif
 
-#include "control/latex/LatexGenerator.h"
-#include "control/settings/Settings.h"
-#include "util/PathUtil.h"
-#include "util/i18n.h"
+#include "control/latex/LatexGenerator.h"    // for LatexGenerator::GenError
+#include "control/settings/LatexSettings.h"  // for LatexSettings
+#include "model/Font.h"                      // for XojFont
+#include "util/Color.h"                      // for Color
+#include "util/PathUtil.h"                   // for fromGFilename, getTmpDir...
+#include "util/PlaceholderString.h"          // for PlaceholderString
+#include "util/i18n.h"                       // for FS, _F, _
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path, is_regular_file
+
+class GladeSearchpath;
 
 LatexSettingsPanel::LatexSettingsPanel(GladeSearchpath* gladeSearchPath):
         GladeGui(gladeSearchPath, "latexSettings.glade", "latexSettingsPanel"),

@@ -1,15 +1,18 @@
 #include "ToolbarDragDropHandler.h"
 
-#include "control/Control.h"
-#include "gui/MainWindow.h"
-#include "gui/toolbarMenubar/AbstractToolItem.h"
-#include "gui/toolbarMenubar/model/ToolbarModel.h"
-#include "util/PathUtil.h"
+#include <string>  // for allocator, string
 
-#include "ToolbarAdapter.h"
-#include "ToolbarCustomizeDialog.h"
-#include "ToolbarDragDropHelper.h"
-#include "filesystem.h"
+#include <gtk/gtk.h>  // for GtkWidget, GTK_TO...
+
+#include "control/Control.h"                        // for Control
+#include "gui/FloatingToolbox.h"                    // for FloatingToolbox
+#include "gui/MainWindow.h"                         // for MainWindow
+#include "gui/toolbarMenubar/model/ToolbarModel.h"  // for ToolbarModel
+#include "util/PathUtil.h"                          // for getConfigFile
+
+#include "ToolbarAdapter.h"          // for ToolbarAdapter
+#include "ToolbarCustomizeDialog.h"  // for ToolbarCustomizeD...
+#include "config-dev.h"              // for TOOLBAR_CONFIG
 
 ToolbarDragDropHandler::ToolbarDragDropHandler(Control* control): control(control) {}
 

@@ -11,20 +11,23 @@
 
 #pragma once
 
-#include "config-features.h"
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
+
+#include "config-features.h"  // for ENABLE_PLUGINS
 
 #ifdef ENABLE_PLUGINS
 
-#include <string>
-#include <utility>
-#include <vector>
+#include <string>   // for string
+#include <utility>  // for move
+#include <vector>   // for vector
 
-#include <gtk/gtk.h>
+#include <gtk/gtk.h>  // for GtkWidget, GtkWindow
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 extern "C" {
-#include <lua.h>
+#include <lua.h>  // for lua_State, lua_close
 }
 
 class Plugin;

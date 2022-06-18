@@ -11,13 +11,16 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <string>   // for string
 
-#include "UndoAction.h"
+#include "model/Layer.h"    // for Layer, Layer::Index
+#include "model/PageRef.h"  // for PageRef
 
-class Layer;
+#include "UndoAction.h"  // for UndoAction
+
 class LayerController;
+class Control;
 
 class MergeLayerDownUndoAction: public UndoAction {
 public:

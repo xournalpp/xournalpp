@@ -1,13 +1,21 @@
 #include "ShapeRecognizer.h"
 
-#include <cmath>
+#include <cmath>     // for fabs, M_PI
+#include <iterator>  // for begin, next
+#include <memory>    // for allocator...
+#include <utility>   // for move
+#include <vector>    // for vector
 
-#include <config-debug.h>
+#include <glib.h>  // for g_message
 
-#include "model/Stroke.h"
+#include "control/shaperecognizer/RecoSegment.h"            // for RecoSegment
+#include "control/shaperecognizer/ShapeRecognizerConfig.h"  // for RDEBUG
+#include "model/Point.h"                                    // for Point
+#include "model/Stroke.h"                                   // for Stroke
 
-#include "CircleRecognizer.h"
-#include "Inertia.h"
+#include "CircleRecognizer.h"  // for CircleRec...
+#include "Inertia.h"           // for Inertia
+#include "config-debug.h"      // for DEBUG_REC...
 
 ShapeRecognizer::ShapeRecognizer() {
     resetRecognizer();

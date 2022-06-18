@@ -1,12 +1,23 @@
 #include "ErasableStrokeView.h"
 
-#include <cmath>
+#include <cassert>   // for assert
+#include <cmath>     // for ceil
+#include <iosfwd>    // for ptrdiff_t
+#include <iterator>  // for next
+#include <memory>    // for allocator_traits<>::value_type
+#include <vector>    // for vector
 
-#include "model/Stroke.h"
-#include "model/eraser/ErasableStroke.h"
+#include "model/LineStyle.h"              // for LineStyle
+#include "model/PathParameter.h"          // for PathParameter
+#include "model/Point.h"                  // for Point
+#include "model/Stroke.h"                 // for Stroke, STROKE_TOOL_HIGHLIG...
+#include "model/eraser/ErasableStroke.h"  // for ErasableStroke, ErasableStr...
+#include "util/Color.h"                   // for cairo_set_source_rgbi
+#include "util/Interval.h"                // for Interval
+#include "util/Rectangle.h"               // for Rectangle
 
-#include "DocumentView.h"
-#include "StrokeView.h"
+#include "StrokeView.h"    // for StrokeView, StrokeView::CAI...
+#include "config-debug.h"  // for DEBUG_ERASABLE_STROKE_BOXES
 
 using xoj::util::Rectangle;
 using namespace xoj::view;

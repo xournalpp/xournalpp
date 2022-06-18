@@ -1,10 +1,16 @@
 #include "ColorUndoAction.h"
 
-#include "gui/Redrawable.h"
-#include "model/Element.h"
-#include "model/PageRef.h"
-#include "util/Rectangle.h"
-#include "util/i18n.h"
+#include <algorithm>  // for max, min
+#include <memory>     // for __shared_ptr_access, __shared_ptr_acces...
+
+#include "model/Element.h"    // for Element
+#include "model/PageRef.h"    // for PageRef
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/Rectangle.h"   // for Rectangle
+#include "util/i18n.h"        // for _
+
+class Control;
 
 using xoj::util::Rectangle;
 

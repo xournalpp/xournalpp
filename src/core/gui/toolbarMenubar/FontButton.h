@@ -11,13 +11,19 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "gui/GladeGui.h"
-#include "model/Font.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gdk/gdk.h>                // for GdkEvent
+#include <gtk/gtk.h>                // for GtkWidget, GtkToolItem, GtkMenuItem
 
-#include "AbstractToolItem.h"
+#include "enums/ActionType.enum.h"  // for ActionType
+#include "model/Font.h"             // for XojFont
+
+#include "AbstractToolItem.h"  // for AbstractToolItem
+
+class ActionHandler;
+class GladeGui;
 
 
 class FontButton: public AbstractToolItem {

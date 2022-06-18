@@ -1,13 +1,16 @@
 #include "ToolSelectCombocontrol.h"
 
-#include <utility>
+#include <utility>  // for move
 
-#include <config.h>
+#include <glib.h>  // for g_warning
 
-#include "gui/widgets/gtkmenutooltogglebutton.h"
-#include "util/i18n.h"
+#include "gui/toolbarMenubar/ToolButton.h"        // for ToolButton
+#include "gui/widgets/gtkmenutooltogglebutton.h"  // for gtk_menu_tool_toggl...
+#include "util/i18n.h"                            // for _
 
-#include "ToolMenuHandler.h"
+#include "ToolMenuHandler.h"  // for ToolMenuHandler
+
+class ActionHandler;
 
 using std::string;
 

@@ -1,6 +1,11 @@
 #include "XmlStrokeNode.h"
 
-#include "util/Util.h"
+#include <glib.h>  // for g_ascii_formatd, G_ASCII_DTOSTR_BUF...
+
+#include "control/xml/XmlNode.h"  // for XmlNode
+#include "model/Point.h"          // for Point
+#include "util/OutputStream.h"    // for OutputStream
+#include "util/Util.h"            // for writeCoordinateString, PRECISION_FO...
 
 XmlStrokeNode::XmlStrokeNode(const char* tag): XmlNode(tag) {
     this->points = nullptr;

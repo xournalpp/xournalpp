@@ -11,21 +11,12 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cairo.h>  // for cairo_t
 
-#include <gtk/gtk.h>
+#include "model/PageRef.h"  // for PageRef
 
-#include "model/Element.h"
-#include "model/ElementContainer.h"
-#include "model/Image.h"
-#include "model/PageRef.h"
-#include "model/Stroke.h"
-#include "model/TexImage.h"
-#include "model/Text.h"
-
-class Document;
 class PdfCache;
+
 namespace xoj::view {
 struct BackgroundFlags;
 };

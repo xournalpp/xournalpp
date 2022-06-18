@@ -1,12 +1,16 @@
 #include "XojOpenDlg.h"
 
-#include <config.h>
-#include <gio/gio.h>
+#include <string>  // for string
 
-#include "util/PathUtil.h"
-#include "util/StringUtils.h"
-#include "util/XojPreviewExtractor.h"
-#include "util/i18n.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_new_from_stream
+#include <gio/gio.h>                // for g_input_stream_close, g_memor...
+#include <glib-object.h>            // for g_object_unref, g_object_ref
+#include <glib.h>                   // for gchar, g_error_free, g_get_ho...
+
+#include "control/settings/Settings.h"  // for Settings
+#include "util/PathUtil.h"              // for fromGFilename, toGFilename
+#include "util/XojPreviewExtractor.h"   // for XojPreviewExtractor, PREVIEW_...
+#include "util/i18n.h"                  // for _
 
 XojOpenDlg::XojOpenDlg(GtkWindow* win, Settings* settings): win(win), settings(settings) {
     dialog = gtk_file_chooser_dialog_new(_("Open file"), win, GTK_FILE_CHOOSER_ACTION_OPEN, _("_Cancel"),

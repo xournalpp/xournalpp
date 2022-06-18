@@ -1,9 +1,11 @@
 #include "Setsquare.h"
 
-#include <cmath>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
+#include <algorithm>         // for max, min
+#include <cmath>             // for sin, sqrt, abs, pow, cos, floor, remainder
+#include <cstdlib>           // for abs
+#include <initializer_list>  // for initializer_list
+#include <iomanip>           // for operator<<, setprecision
+#include <sstream>           // for stringstream, basic_ostream, fixed, basi...
 
 constexpr double LINE_WIDTH = .02;
 constexpr double FONT_SIZE = .2;

@@ -11,9 +11,13 @@
 
 #pragma once
 
-#include "AbstractInputHandler.h"
+#include "gui/inputdevices/InputEvents.h"  // for InputEvent
+
+#include "AbstractInputHandler.h"  // for AbstractInputHandler
 
 class InputContext;
+class PositionInputData;
+class XojPageView;
 
 class PenInputHandler: public AbstractInputHandler {
 private:

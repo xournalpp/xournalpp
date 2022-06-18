@@ -1,5 +1,16 @@
 #include "PortAudioProducer.h"
 
+#include <algorithm>  // for min, max
+#include <cstddef>    // for size_t
+#include <iterator>   // for next
+#include <string>     // for to_string, string
+
+#include <glib.h>  // for g_message
+
+#include "audio/AudioQueue.h"           // for AudioQueue
+#include "audio/DeviceInfo.h"           // for DeviceInfo
+#include "control/settings/Settings.h"  // for Settings
+
 constexpr auto FRAMES_PER_BUFFER{64U};
 
 auto PortAudioProducer::getInputDevices() const -> std::vector<DeviceInfo> {

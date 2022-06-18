@@ -12,8 +12,12 @@
 #ifndef __ZOOMCALLIB_H__
 #define __ZOOMCALLIB_H__
 
-#include <cairo.h>
-#include <gtk/gtk.h>
+#include <glib-object.h>  // for G_TYPE_CHECK_INSTANCE_TYPE, G_TYPE_CHECK_IN...
+#include <glib.h>         // for gint, G_BEGIN_DECLS, G_END_DECLS
+#include <gtk/gtk.h>      // for GtkWidget, GtkWidgetClass
+
+struct _ZoomCallib;
+struct _ZoomCallibClass;
 
 G_BEGIN_DECLS
 

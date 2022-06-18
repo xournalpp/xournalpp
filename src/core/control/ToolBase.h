@@ -12,13 +12,10 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include "model/LineStyle.h"  // for LineStyle
+#include "util/Color.h"       // for Color
 
-#include "model/LineStyle.h"
-#include "util/Color.h"
-
-#include "ToolEnums.h"
+#include "ToolEnums.h"  // for DrawingType, EraserType, ToolSize, DRAW...
 
 
 class ToolBase {

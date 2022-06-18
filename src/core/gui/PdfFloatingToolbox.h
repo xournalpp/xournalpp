@@ -1,13 +1,17 @@
 #pragma once
 
-#include "control/tools/PdfElemSelection.h"
-#include "gui/PageView.h"
-#include "gui/XournalView.h"
-#include "pdf/base/XojPdfPage.h"
+#include <cinttypes>  // for uint8_t
+#include <memory>     // for unique_ptr
 
-#include "GladeGui.h"
+#include <gdk/gdk.h>  // for GdkRectangle
+#include <glib.h>     // for gboolean
+#include <gtk/gtk.h>  // for GtkButton, GtkOverlay
+
+#include "control/tools/PdfElemSelection.h"  // for PdfElemSelection
+#include "pdf/base/XojPdfPage.h"             // for XojPdfPageSelectionStyle
 
 class MainWindow;
+class XojPageView;
 
 enum class PdfMarkerStyle : uint8_t {
     POS_TEXT_BOTTOM = 0,

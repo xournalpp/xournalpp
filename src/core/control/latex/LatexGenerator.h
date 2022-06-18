@@ -11,16 +11,16 @@
 
 #pragma once
 
-#include <string>
-#include <variant>
+#include <string>   // for string
+#include <variant>  // for variant
 
-#include <gio/gio.h>
-#include <poppler.h>
+#include <gio/gio.h>  // for GSubprocess
 
-#include "control/settings/LatexSettings.h"
-#include "util/Color.h"
+#include "util/Color.h"  // for Color
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
+
+class LatexSettings;
 
 class LatexGenerator {
 public:

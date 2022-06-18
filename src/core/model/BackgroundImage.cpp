@@ -1,6 +1,11 @@
 #include "BackgroundImage.h"
 
-#include "util/Stacktrace.h"
+#include <string>   // for string
+#include <utility>  // for move
+
+#include <glib-object.h>  // for g_object_unref
+
+#include "util/Stacktrace.h"  // for Stacktrace
 
 /*
  * The contents of a background image

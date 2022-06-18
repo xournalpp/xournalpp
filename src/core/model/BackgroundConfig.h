@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <map>
-#include <string>
+#include <cinttypes>  // for uint32_t
+#include <map>        // for map
+#include <string>     // for string
 
 
 // This class corresponds to the config line of entries in pagetemplate.ini

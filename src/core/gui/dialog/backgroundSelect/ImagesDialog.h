@@ -11,15 +11,14 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <gtk/gtk.h>  // for GtkButton, GtkWindow
 
-#include "gui/GladeGui.h"
-
-#include "BackgroundSelectDialogBase.h"
-
+#include "BackgroundSelectDialogBase.h"  // for BackgroundSelectDialogBase
 
 struct BackgroundImage;
+class Document;
+class GladeSearchpath;
+class Settings;
 
 class ImagesDialog: public BackgroundSelectDialogBase {
 public:

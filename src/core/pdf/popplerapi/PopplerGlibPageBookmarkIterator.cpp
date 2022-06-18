@@ -1,5 +1,11 @@
 #include "PopplerGlibPageBookmarkIterator.h"
 
+#include <poppler-document.h>  // for poppler_index_iter_free
+
+#include "pdf/popplerapi/PopplerGlibAction.h"  // for PopplerGlibAction
+
+class XojPdfAction;
+
 PopplerGlibPageBookmarkIterator::PopplerGlibPageBookmarkIterator(PopplerIndexIter* iter, PopplerDocument* document):
         iter(iter), document(document) {
     g_object_ref(document);

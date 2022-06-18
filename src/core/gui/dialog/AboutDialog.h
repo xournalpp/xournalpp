@@ -11,7 +11,11 @@
 
 #pragma once
 
-#include "gui/GladeGui.h"
+#include <gtk/gtk.h>  // for GtkWindow
+
+#include "gui/GladeGui.h"  // for GladeGui
+
+class GladeSearchpath;
 
 class AboutDialog: public GladeGui {
 public:

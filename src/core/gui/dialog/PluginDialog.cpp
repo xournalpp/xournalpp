@@ -1,7 +1,13 @@
 #include "PluginDialog.h"
 
-#include "control/settings/Settings.h"
-#include "plugin/PluginController.h"
+#include <string>  // for string
+
+#include "control/settings/Settings.h"     // for Settings
+#include "gui/dialog/PluginDialogEntry.h"  // for PluginDialogEntry
+#include "plugin/PluginController.h"       // for PluginController
+
+class GladeSearchpath;
+class Plugin;
 
 PluginDialog::PluginDialog(GladeSearchpath* gladeSearchPath, Settings* settings):
         GladeGui(gladeSearchPath, "plugin.glade", "pluginDialog"), settings(settings) {}

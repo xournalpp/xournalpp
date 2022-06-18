@@ -11,9 +11,12 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include "gui/ToolitemDragDrop.h"
+#include "gui/ToolitemDragDrop.h"  // for ToolItemDragDropData (ptr only)
+
+class AbstractToolItem;
+struct NamedColor;
 
 class ToolItemDragCurrentData {
 private:

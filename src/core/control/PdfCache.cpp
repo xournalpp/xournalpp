@@ -1,13 +1,17 @@
 #include "PdfCache.h"
 
-#include <algorithm>
-#include <cmath>
-#include <cstdio>
-#include <utility>
+#include <algorithm>  // for max
+#include <cmath>      // for ceil, abs
+#include <cstdio>     // for size_t
+#include <memory>     // for shared_ptr, __shared_ptr_access
+#include <string>     // for string
+#include <utility>    // for move
 
-#include "control/settings/Settings.h"
-#include "pdf/base/XojPdfDocument.h"
-#include "util/i18n.h"
+#include <glib.h>  // for g_warning
+
+#include "control/settings/Settings.h"  // for Settings
+#include "pdf/base/XojPdfDocument.h"    // for XojPdfDocument
+#include "util/i18n.h"                  // for _
 
 class PdfCacheEntry {
 public:

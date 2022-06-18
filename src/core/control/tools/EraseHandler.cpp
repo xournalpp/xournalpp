@@ -1,23 +1,27 @@
 #include "EraseHandler.h"
 
-#include <cmath>
-#include <memory>
+#include <memory>   // for make_unique, unique_ptr
+#include <utility>  // for move
+#include <vector>   // for vector
 
-#include "control/ToolHandler.h"
-#include "control/jobs/RenderJob.h"
-#include "gui/PageView.h"
-#include "gui/XournalView.h"
-#include "model/Document.h"
-#include "model/Layer.h"
-#include "model/Stroke.h"
-#include "model/eraser/ErasableStroke.h"
-#include "model/eraser/PaddedBox.h"
-#include "undo/DeleteUndoAction.h"
-#include "undo/EraseUndoAction.h"
-#include "undo/UndoRedoHandler.h"
-#include "util/Range.h"
-#include "util/Rectangle.h"
-#include "util/SmallVector.h"
+#include <gdk/gdk.h>  // for GdkRectangle
+#include <glib.h>     // for gint
+
+#include "control/ToolEnums.h"            // for ERASER_TYPE_DELETE_STROKE
+#include "control/ToolHandler.h"          // for ToolHandler
+#include "gui/Redrawable.h"               // for Redrawable
+#include "model/Document.h"               // for Document
+#include "model/Element.h"                // for Element, ELEMENT_STROKE
+#include "model/Layer.h"                  // for Layer
+#include "model/Stroke.h"                 // for Stroke
+#include "model/XojPage.h"                // for XojPage
+#include "model/eraser/ErasableStroke.h"  // for ErasableStroke
+#include "model/eraser/PaddedBox.h"       // for PaddedBox
+#include "undo/DeleteUndoAction.h"        // for DeleteUndoAction
+#include "undo/EraseUndoAction.h"         // for EraseUndoAction
+#include "undo/UndoRedoHandler.h"         // for UndoRedoHandler
+#include "util/Range.h"                   // for Range
+#include "util/SmallVector.h"             // for SmallVector
 
 EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler,
                            Redrawable* view):

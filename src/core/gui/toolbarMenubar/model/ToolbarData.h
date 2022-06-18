@@ -11,12 +11,12 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include <glib.h>
+#include <glib.h>  // for GKeyFile
 
-#include "ToolbarEntry.h"
+class ToolbarEntry;
 
 
 class ToolbarData {

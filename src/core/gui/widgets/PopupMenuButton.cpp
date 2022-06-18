@@ -1,5 +1,11 @@
 #include "PopupMenuButton.h"
 
+#include <algorithm>  // for max
+
+#include <gdk/gdk.h>      // for GdkRectangle, gdk_display_get_monitor_at_wi...
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+#include <glib.h>         // for gboolean
+
 static void menu_detacher(GtkWidget* widget, GtkMenu* menu) {
     // Nothing to do
 }

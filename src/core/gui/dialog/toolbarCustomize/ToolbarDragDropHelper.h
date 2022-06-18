@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <gdk/gdk.h>  // for GdkAtom, GdkDragContext, _GdkAtom
+#include <gtk/gtk.h>  // for GtkWidget, GtkTargetEntry
 
 namespace ToolbarDragDropHelper {
 void dragDestAddToolbar(GtkWidget* target);

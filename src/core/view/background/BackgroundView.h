@@ -11,11 +11,15 @@
 
 #pragma once
 
-#include "model/PageRef.h"
+#include <memory>  // for unique_ptr
 
-class BackgroundConfig;
-class Document;
+#include <cairo.h>  // for cairo_t
+
+#include "model/PageRef.h"  // for PageRef
+#include "util/Color.h"     // for Color
+
 class PdfCache;
+class PageType;
 
 namespace xoj {
 namespace view {

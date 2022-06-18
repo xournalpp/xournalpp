@@ -11,15 +11,16 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <string>   // for string
 
-#include "pdf/base/XojPdfDocumentInterface.h"
+#include <glib.h>  // for GError, gpointer, gsize
 
-#include "XojPdfBookmarkIterator.h"
-#include "XojPdfDocumentInterface.h"
-#include "XojPdfPage.h"
-#include "filesystem.h"
+#include "XojPdfDocumentInterface.h"  // for XojPdfDocumentInterface
+#include "XojPdfPage.h"               // for XojPdfPageSPtr
+#include "filesystem.h"               // for path
+
+class XojPdfBookmarkIterator;
 
 
 class XojPdfDocument: XojPdfDocumentInterface {

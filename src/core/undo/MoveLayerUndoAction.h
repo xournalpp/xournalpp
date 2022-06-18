@@ -11,14 +11,15 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "UndoAction.h"
+#include "model/Layer.h"    // for Layer, Layer::Index
+#include "model/PageRef.h"  // for PageRef
 
+#include "UndoAction.h"  // for UndoAction
 
-class Layer;
 class LayerController;
+class Control;
 
 class MoveLayerUndoAction: public UndoAction {
 public:

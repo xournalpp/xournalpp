@@ -13,15 +13,25 @@
 
 #include "LatexDialog.h"
 
-#include <sstream>
-#include <utility>
+#include <algorithm>  // for max, min
+#include <cstddef>    // for NULL
+#include <sstream>    // for operator<<, basic_ostream
+#include <utility>    // for move
+
+#include <gdk/gdk.h>           // for GdkRectangle
+#include <glib.h>              // for g_free, gpointer, guint
+#include <poppler-document.h>  // for poppler_document_get_n_p...
+#include <poppler-page.h>      // for poppler_page_get_size
 
 #ifdef USE_GTK_SOURCEVIEW
-#include <gtksourceview/gtksource.h>
+#include <gtksourceview/gtksource.h>  // for GTK_SOURCE_VIEW, gtk_sou...
 #endif
 
-#include "control/settings/Settings.h"
-#include "util/StringUtils.h"
+#include "control/settings/LatexSettings.h"  // for LatexSettings
+#include "model/Font.h"                      // for XojFont
+#include "util/StringUtils.h"                // for replace_pair, StringUtils
+
+class GladeSearchpath;
 
 // Default background color of the preview.
 constexpr Color DEFAULT_PREVIEW_BACKGROUND{0xFFFFFFFF};

@@ -11,16 +11,18 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "UndoAction.h"
+#include "model/PageRef.h"  // for PageRef
 
+#include "UndoAction.h"  // for UndoAction
 
 class FontUndoActionEntry;
 class Layer;
 class Text;
 class XojFont;
+class Control;
 
 class FontUndoAction: public UndoAction {
 public:

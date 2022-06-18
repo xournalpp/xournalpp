@@ -13,11 +13,18 @@
 
 #pragma once
 
-#include "gui/GladeGui.h"
-#include "model/TexImage.h"
-#include "util/Color.h"
+#include <string>  // for string
+
+#include <cairo.h>               // for cairo_surface_t, cairo_t
+#include <gtk/gtk.h>             // for GtkWidget, GtkTextBuffer, GtkWindow
+#include <gtk/gtkcssprovider.h>  // for GtkCssProvider
+#include <poppler.h>             // for PopplerDocument, PopplerPage
+
+#include "gui/GladeGui.h"  // for GladeGui
+#include "util/Color.h"    // for Color
 
 class LatexSettings;
+class GladeSearchpath;
 
 class LatexDialog: public GladeGui {
 public:

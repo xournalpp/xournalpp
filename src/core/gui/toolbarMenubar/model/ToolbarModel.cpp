@@ -1,12 +1,12 @@
 #include "ToolbarModel.h"
 
-#include <fstream>
+#include <cstddef>  // for size_t
 
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include "util/XojMsgBox.h"  // for XojMsgBox
+#include "util/i18n.h"       // for _
 
-#include "ToolbarData.h"
-#include "filesystem.h"
+#include "ToolbarData.h"  // for ToolbarData
+#include "filesystem.h"   // for path
 
 using std::string;
 

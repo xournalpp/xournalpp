@@ -11,7 +11,11 @@
 
 #pragma once
 
-#include "BaseIsometricBackgroundView.h"
+#include <cairo.h>  // for cairo_t
+
+#include "util/Color.h"  // for Color
+
+#include "BaseIsometricBackgroundView.h"  // for BaseIsometricBackgroundView
 
 class BackgroundConfig;
 

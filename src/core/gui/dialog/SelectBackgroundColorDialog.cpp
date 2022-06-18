@@ -1,8 +1,13 @@
 #include "SelectBackgroundColorDialog.h"
 
-#include "control/Control.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include <cinttypes>  // for uint32_t
+#include <string>     // for allocator
+
+#include <glib.h>  // for g_free, g_strdup_printf
+
+#include "control/Control.h"            // for Control
+#include "control/settings/Settings.h"  // for SElement, Settings
+#include "util/i18n.h"                  // for _
 
 static inline std::array<GdkRGBA, 9> background1 = {
         Util::rgb_to_GdkRGBA(Color(0xfabebeU)),  //

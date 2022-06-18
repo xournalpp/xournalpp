@@ -1,18 +1,22 @@
 #include "util/PathUtil.h"
 
-#include <array>
-#include <fstream>
+#include <cstdlib>      // for system
+#include <fstream>      // for ifstream, char_traits, basic_ist...
+#include <iterator>     // for begin
+#include <string_view>  // for basic_string_view, operator""sv
+#include <type_traits>  // for remove_reference<>::type
+#include <utility>      // for move
 
-#include <config-paths.h>
-#include <config.h>
-#include <glib.h>
-#include <stdlib.h>
+#include <config-paths.h>  // for PACKAGE_DATA_DIR
+#include <glib.h>          // for gchar, g_free, g_filename_to_uri
 
-#include "util/Stacktrace.h"
-#include "util/StringUtils.h"
-#include "util/Util.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/StringUtils.h"        // for replace_pair, StringUtils
+#include "util/Util.h"               // for getPid, execInUiThread
+#include "util/XojMsgBox.h"          // for XojMsgBox
+#include "util/i18n.h"               // for FS, _F, FORMAT_STR
+
+#include "config.h"  // for PROJECT_NAME
 
 #ifdef GHC_FILESYSTEM
 // Fix of ghc::filesystem bug (path::operator/=() won't support string_views)
@@ -39,6 +43,10 @@ auto Util::getLongPath(const fs::path& path) -> fs::path {
 }
 #else
 auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
+#endif
+
+#ifdef __APPLE__
+#include "util/Stacktrace.h"
 #endif
 
 /**

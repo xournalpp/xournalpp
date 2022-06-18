@@ -1,6 +1,11 @@
 #include "PdfBackgroundView.h"
 
-#include "control/PdfCache.h"
+#include <cassert>  // for assert
+
+#include <glib.h>  // for g_warning
+
+#include "control/PdfCache.h"                // for PdfCache
+#include "view/background/BackgroundView.h"  // for BackgroundView, view
 
 using namespace xoj::view;
 

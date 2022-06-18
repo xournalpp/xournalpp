@@ -11,10 +11,18 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>      // for size_t
+#include <string>       // for string
+#include <string_view>  // for string_view
+#include <utility>      // for pair, make_pair
 
-#include "Element.h"
+#include <cairo.h>                  // for cairo_surface_t, cairo_status_t
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbufFormat, GdkPixbuf
+
+#include "Element.h"  // for Element
+
+class ObjectInputStream;
+class ObjectOutputStream;
 
 
 class Image: public Element {

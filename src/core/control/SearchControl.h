@@ -11,8 +11,14 @@
 
 #pragma once
 
-#include "model/PageRef.h"
-#include "pdf/base/XojPdfPage.h"
+#include <string>  // for string
+#include <vector>  // for vector
+
+#include <cairo.h>    // for cairo_t
+#include <gdk/gdk.h>  // for GdkRGBA
+
+#include "model/PageRef.h"        // for PageRef
+#include "pdf/base/XojPdfPage.h"  // for XojPdfPageSPtr, XojPdfRectangle
 
 class SearchControl {
 public:

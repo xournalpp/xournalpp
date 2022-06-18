@@ -11,12 +11,12 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <gtk/gtk.h>  // for GtkToggleButton, GtkFileChooser, GtkWidget
 
-#include "control/settings/LatexSettings.h"
-#include "gui/GladeGui.h"
+#include "gui/GladeGui.h"  // for GladeGui
 
-class Settings;
+class GladeSearchpath;
+class LatexSettings;
 
 class LatexSettingsPanel: public GladeGui {
 public:

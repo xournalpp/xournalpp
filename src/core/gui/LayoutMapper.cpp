@@ -1,8 +1,9 @@
 #include "LayoutMapper.h"
 
-#include <algorithm>
+#include <algorithm>  // for max
+#include <map>        // for __alloc_traits<>::value_type
 
-#include "control/settings/Settings.h"
+#include "control/settings/Settings.h"  // for Settings
 
 constexpr auto calc_default_grid_pos = [](size_t page_nr, GridPosition grid_size,
                                           LayoutSettings::Orientation orientation) {

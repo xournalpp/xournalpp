@@ -11,15 +11,13 @@
 
 #pragma once
 
-#include <list>
-#include <string>
-#include <vector>
+#include <list>  // for list
 
-#include <gtk/gtk.h>
+#include <gdk/gdk.h>  // for GdkEvent
+#include <gtk/gtk.h>  // for GtkMenuItem, GtkToolButton
 
-#include "enums/ActionGroup.enum.h"
-#include "enums/ActionType.enum.h"
-
+#include "enums/ActionGroup.enum.h"  // for ActionGroup
+#include "enums/ActionType.enum.h"   // for ActionType
 
 class ActionHandler;
 

@@ -1,15 +1,17 @@
 #include "DocumentView.h"
 
-#include "control/PdfCache.h"  // TODO: remove to cleanup MVC scheme
-#include "model/BackgroundConfig.h"
-#include "model/Document.h"
-#include "model/Layer.h"
-#include "model/eraser/ErasableStroke.h"
-#include "view/DebugShowRepaintBounds.h"
-#include "view/background/BackgroundView.h"
+#include <memory>  // for __shared_ptr_access, uni...
+#include <vector>  // for vector
 
-#include "LayerView.h"
-#include "StrokeView.h"
+#include <glib.h>  // for g_message
+
+#include "model/Layer.h"                     // for Layer
+#include "model/XojPage.h"                   // for XojPage
+#include "view/DebugShowRepaintBounds.h"     // for IF_DEBUG_REPAINT
+#include "view/View.h"                       // for EditionTreatment, NORMAL...
+#include "view/background/BackgroundView.h"  // for BackgroundFlags, Backgro...
+
+#include "LayerView.h"  // for LayerView
 
 /**
  * Mark stroke with Audio

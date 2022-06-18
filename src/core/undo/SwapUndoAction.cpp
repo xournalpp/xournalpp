@@ -1,8 +1,14 @@
 #include "SwapUndoAction.h"
 
-#include "control/Control.h"
-#include "model/Document.h"
-#include "util/i18n.h"
+#include <utility>  // for swap
+
+#include <glib.h>  // for gint
+
+#include "control/Control.h"        // for Control
+#include "control/ScrollHandler.h"  // for ScrollHandler
+#include "model/Document.h"         // for Document
+#include "undo/UndoAction.h"        // for UndoAction
+#include "util/i18n.h"              // for _
 
 SwapUndoAction::SwapUndoAction(size_t pageNr, bool moveUp, const PageRef& swappedPage, const PageRef& otherPage):
         UndoAction("SwapUndoAction") {

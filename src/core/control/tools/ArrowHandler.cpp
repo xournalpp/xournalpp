@@ -1,10 +1,17 @@
 #include "ArrowHandler.h"
 
-#include <cmath>
+#include <cmath>  // for cos, sin, atan2, M_PI
 
-#include "control/Control.h"
-#include "gui/XournalView.h"
-#include "undo/InsertUndoAction.h"
+#include "control/Control.h"                       // for Control
+#include "control/ToolHandler.h"                   // for ToolHandler
+#include "control/tools/BaseStrokeHandler.h"       // for BaseStrokeHandler
+#include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
+#include "gui/XournalView.h"                       // for XournalView
+#include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
+#include "model/Point.h"                           // for Point
+#include "model/Stroke.h"                          // for Stroke
+
+class XojPageView;
 
 ArrowHandler::ArrowHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool doubleEnded):
         BaseStrokeHandler(xournal, redrawable, page), doubleEnded(doubleEnded) {}

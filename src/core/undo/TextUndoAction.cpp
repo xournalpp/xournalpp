@@ -1,14 +1,18 @@
 #include "TextUndoAction.h"
 
-#include <utility>
+#include <algorithm>  // for max, min
+#include <memory>     // for allocator, __shared_ptr_access, __share...
+#include <utility>    // for move
 
-#include "gui/Redrawable.h"
-#include "gui/TextEditor.h"
-#include "model/Layer.h"
-#include "model/PageRef.h"
-#include "model/Text.h"
-#include "util/Rectangle.h"
-#include "util/i18n.h"
+#include "gui/TextEditor.h"   // for TextEditor
+#include "model/PageRef.h"    // for PageRef
+#include "model/Text.h"       // for Text
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/Rectangle.h"   // for Rectangle
+#include "util/i18n.h"        // for _
+
+class Control;
 
 using xoj::util::Rectangle;
 

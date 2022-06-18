@@ -11,15 +11,18 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>   // for size_t
+#include <optional>  // for optional
+#include <string>    // for string
+#include <vector>    // for vector
 
-#include "util/Util.h"
+#include "util/Color.h"  // for Color
+#include "util/Util.h"   // for npos
 
-#include "BackgroundImage.h"
-#include "Layer.h"
-#include "PageHandler.h"
-#include "PageType.h"
+#include "BackgroundImage.h"  // for BackgroundImage
+#include "Layer.h"            // for Layer, Layer::Index
+#include "PageHandler.h"      // for PageHandler
+#include "PageType.h"         // for PageType
 
 template <class T>
 using optional = std::optional<T>;

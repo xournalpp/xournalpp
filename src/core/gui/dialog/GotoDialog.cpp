@@ -1,5 +1,11 @@
 #include "GotoDialog.h"
 
+#include <memory>  // for allocator
+
+#include <glib.h>  // for TRUE
+
+class GladeSearchpath;
+
 GotoDialog::GotoDialog(GladeSearchpath* gladeSearchPath, int maxPage):
         GladeGui(gladeSearchPath, "goto.glade", "gotoDialog") {
     gtk_spin_button_set_range(GTK_SPIN_BUTTON(get("spinPage")), 1, maxPage);

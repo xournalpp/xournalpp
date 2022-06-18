@@ -1,5 +1,9 @@
 #include "SidebarToolbar.h"
 
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+
+#include "gui/GladeGui.h"  // for GladeGui
+
 SidebarToolbar::SidebarToolbar(SidebarToolbarActionListener* listener, GladeGui* gui): listener(listener) {
     this->btUp = GTK_BUTTON(gui->get("btUp"));
     this->btDown = GTK_BUTTON(gui->get("btDown"));

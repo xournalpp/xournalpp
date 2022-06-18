@@ -1,8 +1,10 @@
 #include "TextAttribute.h"
 
-#include <utility>
+#include <utility>  // for move
 
-#include "util/StringUtils.h"
+#include "control/xml/Attribute.h"  // for XMLAttribute
+#include "util/OutputStream.h"      // for OutputStream
+#include "util/StringUtils.h"       // for replace_pair, StringUtils
 
 TextAttribute::TextAttribute(std::string name, std::string value):
         XMLAttribute(std::move(name)), value(std::move(value)) {}

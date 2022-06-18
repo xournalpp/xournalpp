@@ -11,15 +11,15 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include <gtk/gtk.h>
-
-#include "control/tools/EditSelection.h"
-
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gdk/gdk.h>                // for GdkAtom, GdkEvent
+#include <glib.h>                   // for gchar, gulong
+#include <gtk/gtk.h>                // for GtkClipboard, GtkSelectionData
 
 class ObjectInputStream;
+class EditSelection;
 
 class ClipboardListener {
 public:

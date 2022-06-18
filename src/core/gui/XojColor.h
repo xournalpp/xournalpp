@@ -11,10 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "util/Color.h"
+#include "util/Color.h"  // for Color
 
 
 struct XojColor {

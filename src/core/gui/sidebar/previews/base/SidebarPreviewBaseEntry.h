@@ -11,14 +11,13 @@
 
 #pragma once
 
-#include <mutex>
-#include <string>
-#include <vector>
+#include <mutex>  // for mutex
 
-#include <gtk/gtk.h>
+#include <cairo.h>    // for cairo_t, cairo_surface_t
+#include <glib.h>     // for gboolean
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include "model/PageRef.h"
-#include "util/Util.h"
+#include "model/PageRef.h"  // for PageRef
 
 class SidebarPreviewBase;
 

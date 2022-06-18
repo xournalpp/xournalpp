@@ -1,7 +1,8 @@
 #include "SidebarPreviewPageEntry.h"
 
-#include "control/Control.h"
-#include "gui/sidebar/previews/base/SidebarPreviewBase.h"
+#include "control/Control.h"                                // for Control
+#include "control/ScrollHandler.h"                          // for ScrollHan...
+#include "gui/sidebar/previews/page/SidebarPreviewPages.h"  // for SidebarPr...
 
 SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page):
         SidebarPreviewBaseEntry(sidebar, page), sidebar(sidebar) {

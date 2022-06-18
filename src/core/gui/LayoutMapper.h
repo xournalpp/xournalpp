@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <cstdint>
-#include <optional>
-#include <tuple>
-#include <vector>
+#include <cstddef>   // for size_t
+#include <cstdint>   // for uint32_t
+#include <optional>  // for optional
+#include <tuple>     // for operator==, tie, tuple
+#include <vector>    // for vector
 
 class Settings;
 

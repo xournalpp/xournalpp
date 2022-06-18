@@ -11,13 +11,16 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include <poppler.h>
+#include <cairo.h>    // for cairo_surface_t, cairo_status_t
+#include <glib.h>     // for GError
+#include <poppler.h>  // for PopplerDocument
 
-#include "Element.h"
+#include "Element.h"  // for Element
+
+class ObjectInputStream;
+class ObjectOutputStream;
 
 
 class TexImage: public Element {

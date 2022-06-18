@@ -11,15 +11,15 @@
 
 #pragma once
 
-#include <memory>
-#include <vector>
+#include <string>  // for string, basic_string
+#include <vector>  // for vector
 
-#include <gdk/gdk.h>
+#include <gtk/gtk.h>  // for GtkWidget, GtkWindow
 
-#include "gui/GladeGui.h"
+#include "gui/GladeGui.h"  // for GladeGui
 
 class Settings;
-class SettingsDialog;
+class GladeSearchpath;
 
 class LanguageConfigGui: public GladeGui {
 public:

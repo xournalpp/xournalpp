@@ -11,11 +11,7 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include <gtk/gtk.h>
-
+#include <gtk/gtk.h>  // for GtkAdjustment, GtkWidget, GtkScrollable
 
 class Layout;
 

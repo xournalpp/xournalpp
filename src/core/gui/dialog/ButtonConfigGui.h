@@ -11,15 +11,19 @@
 
 #pragma once
 
-#include <gdk/gdk.h>
+#include <map>     // for map, map<>::value_compare
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "control/Actions.h"
-#include "control/DeviceListHelper.h"
-#include "gui/GladeGui.h"
-#include "gui/IconNameHelper.h"
+#include <gtk/gtk.h>  // for GtkWidget, GtkComboBox, GtkWindow
+
+#include "control/DeviceListHelper.h"  // for InputDevice
+#include "control/ToolEnums.h"         // for ToolSize
+#include "gui/GladeGui.h"              // for GladeGui
+#include "gui/IconNameHelper.h"        // for IconNameHelper
 
 class Settings;
-class SettingsDialog;
+class GladeSearchpath;
 
 class ButtonConfigGui: public GladeGui {
 public:

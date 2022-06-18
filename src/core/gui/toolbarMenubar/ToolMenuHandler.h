@@ -11,13 +11,18 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <cstddef>  // for size_t
+#include <string>   // for string
+#include <vector>   // for vector
 
-#include "control/Actions.h"
-#include "gui/IconNameHelper.h"
+#include <glib-object.h>  // for GObject, GConnectFlags
+#include <glib.h>         // for gchar
+#include <gtk/gtk.h>      // for GtkWidget, GtkWindow, GtkBuilder
 
-#include "ColorToolItem.h"
-#include "MenuItem.h"
+#include "enums/ActionGroup.enum.h"  // for GROUP_NOGROUP, ActionGroup
+#include "enums/ActionType.enum.h"   // for ActionType
+#include "gui/IconNameHelper.h"      // for IconNameHelper
+#include "util/Color.h"              // for Color
 
 class AbstractToolItem;
 class FontButton;
@@ -34,6 +39,9 @@ class XojFont;
 class ZoomControl;
 class Control;
 class PageBackgroundChangeController;
+class ActionHandler;
+class ColorToolItem;
+class MenuItem;
 
 class ToolMenuHandler {
 public:

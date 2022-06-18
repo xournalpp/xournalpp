@@ -1,8 +1,13 @@
 #include "util/serializing/ObjectInputStream.h"
 
-#include "util/i18n.h"
-#include "util/pixbuf-utils.h"
-#include "util/serializing/Serializable.h"
+#include <cinttypes>  // for uint32_t
+
+#include <glib.h>  // for g_free, g_strdup_...
+
+#include "util/PlaceholderString.h"                 // for PlaceholderString
+#include "util/i18n.h"                              // for FORMAT_STR, FS
+#include "util/serializing/InputStreamException.h"  // for InputStreamException
+#include "util/serializing/Serializable.h"          // for XML_VERSION_STR
 
 // This function requires that T is read from its binary representation to work (e.g. integer type)
 template <typename T>

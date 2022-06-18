@@ -11,9 +11,13 @@
 
 #pragma once
 
-#include <poppler.h>
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "pdf/base/XojPdfPage.h"
+#include <cairo.h>    // for cairo_t, cairo_region_t
+#include <poppler.h>  // for PopplerPage
+
+#include "pdf/base/XojPdfPage.h"  // for XojPdfRectangle (ptr only), XojPdfP...
 
 
 class PopplerGlibPage: public XojPdfPage {

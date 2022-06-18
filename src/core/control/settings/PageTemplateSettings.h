@@ -11,11 +11,10 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "control/Tool.h"
-#include "model/PageType.h"
+#include "model/PageType.h"  // for PageType
+#include "util/Color.h"      // for Color
 
 
 class PageTemplateSettings {

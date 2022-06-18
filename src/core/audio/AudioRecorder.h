@@ -11,16 +11,16 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <memory>  // for make_unique, unique_ptr
+#include <vector>  // for vector
 
-#include "control/settings/Settings.h"
+#include "AudioQueue.h"         // for AudioQueue
+#include "PortAudioProducer.h"  // for PortAudioProducer
+#include "VorbisConsumer.h"     // for VorbisConsumer
+#include "filesystem.h"         // for path
 
-#include "AudioQueue.h"
-#include "PortAudioProducer.h"
-#include "VorbisConsumer.h"
-#include "filesystem.h"
+class DeviceInfo;
+class Settings;
 
 struct AudioRecorder final {
     explicit AudioRecorder(Settings& settings): settings(settings) {}

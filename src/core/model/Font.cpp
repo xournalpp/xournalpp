@@ -1,11 +1,13 @@
 #include "Font.h"
 
-#include <regex>
-#include <sstream>
-#include <utility>
+#include <cstdlib>  // for atof
+#include <regex>    // for match_results, rege...
+#include <sstream>  // for basic_ostream, oper...
+#include <utility>  // for move
+#include <vector>   // for vector
 
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
 XojFont::XojFont() = default;
 

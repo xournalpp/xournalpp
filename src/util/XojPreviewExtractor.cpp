@@ -1,16 +1,18 @@
 #include "util/XojPreviewExtractor.h"
 
-#include <array>
-#include <cstring>
+#include <array>    // for array
+#include <cstring>  // for strlen, strncmp
+#include <string>   // for allocator, string
 
-#include <glib.h>
-#include <zip.h>
-#include <zlib.h>
+#include <glib.h>     // for g_free, g_base64_decode, g_malloc, gsize
+#include <zip.h>      // for zip_close, zip_fclose, zip_stat_t, zip_fopen
+#include <zipconf.h>  // for zip_int64_t, zip_uint64_t
+#include <zlib.h>     // for gzclose, gzread, gzFile
 
-#include "util/GzUtil.h"
-#include "util/PathUtil.h"
+#include "util/GzUtil.h"    // for GzUtil
+#include "util/PathUtil.h"  // for hasXournalFileExt
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 const char* TAG_PREVIEW_NAME = "preview";
 const int TAG_PREVIEW_NAME_LEN = strlen(TAG_PREVIEW_NAME);

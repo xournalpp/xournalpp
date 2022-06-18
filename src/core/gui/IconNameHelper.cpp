@@ -1,6 +1,8 @@
 #include "IconNameHelper.h"
 
-#include "control/settings/Settings.h"
+#include <gtk/gtk.h>  // for gtk_icon_theme_get_default
+
+#include "control/settings/Settings.h"  // for Settings
 
 IconNameHelper::IconNameHelper(Settings* settings): settings(settings) {}
 

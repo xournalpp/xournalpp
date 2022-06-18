@@ -11,7 +11,10 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gio/gio.h>                // for GFile
+#include <glib.h>                   // for gint
+#include <gtk/gtk.h>                // for GtkFileChooser, GtkWindow
 
 class Settings;
 

@@ -1,10 +1,16 @@
 #include "PdfExportJob.h"
 
-#include "control/Control.h"
-#include "pdf/base/XojPdfExport.h"
-#include "pdf/base/XojPdfExportFactory.h"
-#include "util/PathUtil.h"
-#include "util/i18n.h"
+#include <memory>   // for unique_ptr, allocator
+#include <string>   // for string
+#include <utility>  // for move
+
+#include "control/Control.h"               // for Control
+#include "control/jobs/BaseExportJob.h"    // for BaseExportJob
+#include "model/Document.h"                // for Document
+#include "pdf/base/XojPdfExport.h"         // for XojPdfExport
+#include "pdf/base/XojPdfExportFactory.h"  // for XojPdfExportFactory
+#include "util/PathUtil.h"                 // for clearExtensions
+#include "util/i18n.h"                     // for _
 
 PdfExportJob::PdfExportJob(Control* control): BaseExportJob(control, _("PDF Export")) {}
 

@@ -1,7 +1,10 @@
 #include "Snapping.h"
 
-#include <algorithm>
-#include <cmath>
+#include <algorithm>  // for min, max
+#include <cmath>      // for pow, atan2, cos, hypot, remainder, sin, abs
+#include <cstdlib>    // for abs
+
+#include "model/Point.h"  // for Point
 
 namespace Snapping {
 

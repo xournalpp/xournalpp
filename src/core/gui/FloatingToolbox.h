@@ -12,7 +12,9 @@
 #pragma once
 
 
-#include "GladeGui.h"
+#include <gdk/gdk.h>  // for GdkEvent, GdkRectangle
+#include <glib.h>     // for gboolean
+#include <gtk/gtk.h>  // for GtkWidget, GtkOverlay
 
 class MainWindow;
 

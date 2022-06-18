@@ -4,9 +4,21 @@
 
 #include "AbstractInputHandler.h"
 
-#include "gui/XournalppCursor.h"
+#include <cmath>  // for round
 
-#include "InputContext.h"
+#include <glib.h>  // for gdouble, g_assert
+
+#include "control/settings/Settings.h"           // for Settings
+#include "gui/Layout.h"                          // for Layout
+#include "gui/PageView.h"                        // for XojPageView
+#include "gui/XournalView.h"                     // for XournalView
+#include "gui/XournalppCursor.h"                 // for XournalppCursor
+#include "gui/inputdevices/InputEvents.h"        // for InputEvent
+#include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
+#include "gui/widgets/XournalWidget.h"           // for GtkXournal
+#include "model/Point.h"                         // for Point, Point::NO_PRE...
+
+#include "InputContext.h"  // for InputContext
 
 AbstractInputHandler::AbstractInputHandler(InputContext* inputContext) { this->inputContext = inputContext; }
 

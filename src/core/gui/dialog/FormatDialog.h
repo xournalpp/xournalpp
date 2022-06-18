@@ -11,10 +11,15 @@
 
 #pragma once
 
-#include <vector>
+#include <memory>  // for unique_ptr
+#include <vector>  // for vector
 
-#include "control/settings/Settings.h"
-#include "gui/GladeGui.h"
+#include <gtk/gtk.h>  // for gtk_paper_size_free, GtkComboBox, GtkToggl...
+
+#include "gui/GladeGui.h"  // for GladeGui
+
+class GladeSearchpath;
+class Settings;
 
 enum Orientation { ORIENTATION_NOT_DEFINED, ORIENTATION_LANDSCAPE, ORIENTATION_PORTRAIT };
 

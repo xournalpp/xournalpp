@@ -11,32 +11,33 @@
 
 #pragma once
 
-#include <mutex>
-#include <vector>
+#include <mutex>   // for mutex
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include <cairo.h>
+#include <cairo.h>    // for cairo_t, cairo_surface_t
+#include <gdk/gdk.h>  // for GdkEventKey, GdkRectangle, GdkEventB...
 
-#include "gui/inputdevices/PositionInputData.h"
-#include "model/PageListener.h"
-#include "model/PageRef.h"
-#include "model/Stroke.h"
-#include "model/TexImage.h"
-#include "util/Range.h"
+#include "model/PageListener.h"  // for PageListener
+#include "model/PageRef.h"       // for PageRef
+#include "util/Rectangle.h"      // for Rectangle
 
-#include "Layout.h"
-#include "Redrawable.h"
+#include "Layout.h"      // for Layout
+#include "Redrawable.h"  // for Redrawable
 
-class EditSelection;
 class EraseHandler;
 class InputHandler;
 class SearchControl;
 class Selection;
-class PdfElemSelection;
 class Settings;
 class Text;
 class TextEditor;
 class VerticalToolHandler;
 class XournalView;
+class Element;
+class PositionInputData;
+class Range;
+class TexImage;
 
 class XojPageView: public Redrawable, public PageListener {
 public:

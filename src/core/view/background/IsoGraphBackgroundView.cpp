@@ -1,9 +1,10 @@
 #include "IsoGraphBackgroundView.h"
 
-#include <cmath>
+#include <cmath>  // for floor
 
-#include "model/BackgroundConfig.h"
-#include "util/Util.h"
+#include "model/BackgroundConfig.h"                       // for BackgroundC...
+#include "view/background/BackgroundView.h"               // for view
+#include "view/background/BaseIsometricBackgroundView.h"  // for BaseIsometr...
 
 using namespace xoj::view;
 

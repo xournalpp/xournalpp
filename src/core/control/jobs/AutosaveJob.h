@@ -11,11 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "Job.h"
-
+#include "Job.h"  // for Job, JobType
 
 class Control;
 

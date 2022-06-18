@@ -1,6 +1,9 @@
 #include "EmergencySaveRestore.h"
 
-#include "util/i18n.h"
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/i18n.h"        // for _
+
+class Control;
 
 EmergencySaveRestore::EmergencySaveRestore(): UndoAction("EmergencySaveRestore") {}
 

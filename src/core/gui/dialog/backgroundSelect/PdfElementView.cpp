@@ -1,10 +1,14 @@
 #include "PdfElementView.h"
 
-#include <utility>
+#include <memory>   // for __shared_pt...
+#include <utility>  // for move
 
-#include "pdf/base/XojPdfPage.h"
+#include <gtk/gtk.h>  // for gtk_widget_...
 
-#include "PdfPagesDialog.h"
+#include "gui/dialog/backgroundSelect/BaseElementView.h"  // for BaseElement...
+#include "pdf/base/XojPdfPage.h"                          // for XojPdfPageSPtr
+
+#include "PdfPagesDialog.h"  // for PdfPagesDialog
 
 
 PdfElementView::PdfElementView(int id, XojPdfPageSPtr page, PdfPagesDialog* dlg):

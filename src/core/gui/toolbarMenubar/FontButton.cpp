@@ -1,13 +1,17 @@
 #include "FontButton.h"
 
-#include <locale>
-#include <sstream>
-#include <utility>
+#include <sstream>  // for stringstream, basic...
+#include <utility>  // for move
 
-#include <config.h>
+#include <glib-object.h>  // for g_object_ref, g_obj...
 
-#include "util/i18n.h"
-#include "util/serdesstream.h"
+#include "control/Actions.h"                      // for ActionHandler
+#include "enums/ActionGroup.enum.h"               // for GROUP_NOGROUP
+#include "gui/toolbarMenubar/AbstractToolItem.h"  // for AbstractToolItem
+#include "util/i18n.h"                            // for _
+#include "util/serdesstream.h"                    // for serdes_stream
+
+class GladeGui;
 
 using std::string;
 

@@ -1,10 +1,12 @@
 #include "util/NamedColor.h"
 
-#include <cstdint>
-#include <sstream>
+#include <cstdint>    // for uint16_t, uint8_t
+#include <sstream>    // for istringstream, basic_istream, basic_i...
+#include <stdexcept>  // for invalid_argument
+#include <utility>    // for move
 
-#include "util/StringUtils.h"
-#include "util/serdesstream.h"
+#include "util/StringUtils.h"   // for StringUtils
+#include "util/serdesstream.h"  // for serdes_stream
 
 
 NamedColor::NamedColor():

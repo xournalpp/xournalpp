@@ -1,8 +1,13 @@
 #include "ArrangeUndoAction.h"
 
-#include "model/Element.h"
-#include "model/PageRef.h"
-#include "util/Range.h"
+#include <memory>  // for allocator, __shared_ptr_access, __share...
+
+#include "model/Layer.h"      // for Layer
+#include "model/PageRef.h"    // for PageRef
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+
+class Control;
 
 ArrangeUndoAction::ArrangeUndoAction(const PageRef& page, Layer* layer, std::string desc, InsertOrder oldOrder,
                                      InsertOrder newOrder):

@@ -1,10 +1,20 @@
 #include "AudioController.h"
 
-#include <cinttypes>
+#include <array>   // for array
+#include <cstdio>  // for snprintf
+#include <ctime>   // for tm, localtime, time
+#include <string>  // for string, allocator
 
-#include "util/Util.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include <glib.h>  // for g_get_monotonic_time
+
+#include "audio/AudioPlayer.h"                   // for AudioPlayer
+#include "audio/DeviceInfo.h"                    // for DeviceInfo
+#include "control/Control.h"                     // for Control
+#include "control/settings/Settings.h"           // for Settings
+#include "gui/MainWindow.h"                      // for MainWindow
+#include "gui/toolbarMenubar/ToolMenuHandler.h"  // for ToolMenuHandler
+#include "util/XojMsgBox.h"                      // for XojMsgBox
+#include "util/i18n.h"                           // for _
 
 
 using std::string;

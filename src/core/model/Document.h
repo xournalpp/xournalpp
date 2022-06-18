@@ -13,20 +13,25 @@
 
 #pragma once
 
-#include <memory>
-#include <mutex>
-#include <string>
-#include <unordered_map>
-#include <vector>
+#include <cstddef>        // for size_t
+#include <memory>         // for unique_ptr
+#include <mutex>          // for mutex
+#include <string>         // for string
+#include <unordered_map>  // for unordered_map
+#include <vector>         // for vector
 
-#include "pdf/base/XojPdfBookmarkIterator.h"
-#include "pdf/base/XojPdfDocument.h"
-#include "pdf/base/XojPdfPage.h"
+#include <cairo.h>    // for cairo_surface_t
+#include <glib.h>     // for gpointer, gsize
+#include <gtk/gtk.h>  // for GtkTreeModel, GtkTreeIter, GtkT...
 
-#include "DocumentHandler.h"
-#include "LinkDestination.h"
-#include "PageRef.h"
-#include "filesystem.h"
+#include "pdf/base/XojPdfDocument.h"  // for XojPdfDocument
+#include "pdf/base/XojPdfPage.h"      // for XojPdfPageSPtr
+
+#include "PageRef.h"     // for PageRef
+#include "filesystem.h"  // for path
+
+class DocumentHandler;
+class XojPdfBookmarkIterator;
 
 class Document {
 public:

@@ -1,6 +1,10 @@
 #include "XmlTextNode.h"
 
-#include "util/StringUtils.h"
+#include <utility>  // for move
+
+#include "control/xml/XmlAudioNode.h"  // for XmlAudioNode
+#include "util/OutputStream.h"         // for OutputStream
+#include "util/StringUtils.h"          // for replace_pair, StringUtils
 
 XmlTextNode::XmlTextNode(const char* tag, std::string text): XmlAudioNode(tag), text(std::move(text)) {}
 

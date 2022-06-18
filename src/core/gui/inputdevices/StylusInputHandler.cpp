@@ -4,13 +4,24 @@
 
 #include "StylusInputHandler.h"
 
-#include <cmath>
+#include <cmath>  // for abs
 
-#include "gui/XournalppCursor.h"
-#include "gui/widgets/XournalWidget.h"
+#include <glib.h>  // for g_message
 
-#include "InputContext.h"
-#include "InputUtils.h"
+#include "control/ToolHandler.h"                 // for ToolHandler
+#include "control/settings/Settings.h"           // for Settings
+#include "control/settings/SettingsEnums.h"      // for Button, BUTTON_ERASER
+#include "gui/PageView.h"                        // for XojPageView
+#include "gui/XournalView.h"                     // for XournalView
+#include "gui/XournalppCursor.h"                 // for XournalppCursor
+#include "gui/inputdevices/HandRecognition.h"    // for HandRecognition
+#include "gui/inputdevices/InputEvents.h"        // for InputEvent, BUTTON_P...
+#include "gui/inputdevices/PenInputHandler.h"    // for PenInputHandler
+#include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
+#include "gui/widgets/XournalWidget.h"           // for GtkXournal
+
+#include "InputContext.h"  // for InputContext
+#include "InputUtils.h"    // for InputUtils
 
 StylusInputHandler::StylusInputHandler(InputContext* inputContext): PenInputHandler(inputContext) {}
 

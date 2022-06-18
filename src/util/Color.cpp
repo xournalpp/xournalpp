@@ -1,9 +1,9 @@
 #include "util/Color.h"
 
-#include <cassert>
-#include <cstdio>
-#include <iostream>
-#include <sstream>
+#include <algorithm>  // for max, min
+#include <cassert>    // for assert
+#include <cstdio>     // for snprintf
+#include <sstream>    // for operator<<, stringstream, basic_ostream, char_t...
 
 float Util::as_grayscale_color(Color color) {
     GdkRGBA components = rgb_to_GdkRGBA(color);

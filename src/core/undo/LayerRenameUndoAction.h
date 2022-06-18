@@ -11,13 +11,13 @@
 
 #pragma once
 
-#include "control/layer/LayerController.h"
+#include <string>  // for string
 
-#include "UndoAction.h"
+#include "UndoAction.h"  // for UndoAction
 
-class Element;
 class Layer;
-class XojPage;
+class Control;
+class LayerController;
 
 class LayerRenameUndoAction: public UndoAction {
 public:

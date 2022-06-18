@@ -1,9 +1,18 @@
 #include "SearchBar.h"
 
-#include <config.h>
+#include <string>  // for allocator, string
 
-#include "control/Control.h"
-#include "util/i18n.h"
+#include <gdk/gdk.h>         // for GdkEventKey, GDK_SHIFT_MASK
+#include <gdk/gdkkeysyms.h>  // for GDK_KEY_Return
+#include <glib-object.h>     // for G_CALLBACK, g_signal_connect
+#include <glib.h>            // for g_free, g_strdup_printf
+
+#include "control/Control.h"         // for Control
+#include "control/ScrollHandler.h"   // for ScrollHandler
+#include "gui/MainWindow.h"          // for MainWindow
+#include "model/Document.h"          // for Document
+#include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/i18n.h"               // for _, FC, _F
 
 SearchBar::SearchBar(Control* control): control(control) {
     MainWindow* win = control->getWindow();

@@ -1,11 +1,22 @@
 #include "SidebarPreviewLayers.h"
 
-#include "control/Control.h"
-#include "control/PdfCache.h"
-#include "control/layer/LayerController.h"
-#include "util/i18n.h"
+#include <algorithm>  // for max
+#include <vector>     // for vector
 
-#include "SidebarPreviewLayerEntry.h"
+#include <gtk/gtk.h>  // for gtk...
+
+#include "control/Control.h"                                      // for Con...
+#include "control/layer/LayerController.h"                        // for Lay...
+#include "gui/sidebar/previews/base/SidebarPreviewBaseEntry.h"    // for Sid...
+#include "gui/sidebar/previews/layer/SidebarLayersContextMenu.h"  // for Sid...
+#include "model/PageRef.h"                                        // for Pag...
+#include "model/XojPage.h"                                        // for Xoj...
+#include "util/Util.h"                                            // for npos
+#include "util/i18n.h"                                            // for _
+
+#include "SidebarPreviewLayerEntry.h"  // for Sid...
+
+class GladeGui;
 
 SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, SidebarToolbar* toolbar, bool stacked,
                                            std::shared_ptr<SidebarLayersContextMenu> contextMenu):

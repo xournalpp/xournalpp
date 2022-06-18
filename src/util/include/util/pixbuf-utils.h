@@ -11,7 +11,9 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <cairo.h>                  // for cairo_surface_t
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <glib.h>                   // for gint
 
 cairo_surface_t* f_pixbuf_to_cairo_surface(GdkPixbuf* pixbuf);
 

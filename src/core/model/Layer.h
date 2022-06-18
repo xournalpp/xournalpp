@@ -11,10 +11,12 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>   // for size_t
+#include <optional>  // for optional
+#include <string>    // for string
+#include <vector>    // for vector
 
-#include "Element.h"
+#include "Element.h"  // for Element, Element::Index
 
 template <class T>
 using optional = std::optional<T>;

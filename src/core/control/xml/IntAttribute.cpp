@@ -1,6 +1,11 @@
 #include "IntAttribute.h"
 
-#include <glib.h>
+#include <string>  // for allocator, string
+
+#include <glib.h>  // for g_free, g_strdup_printf
+
+#include "control/xml/Attribute.h"  // for XMLAttribute
+#include "util/OutputStream.h"      // for OutputStream
 
 IntAttribute::IntAttribute(const char* name, int value): XMLAttribute(name) { this->value = value; }
 

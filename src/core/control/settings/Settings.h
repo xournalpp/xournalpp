@@ -11,21 +11,27 @@
 
 #pragma once
 
-#include <map>
-#include <memory>
+#include <cstddef>  // for size_t
+#include <map>      // for map
+#include <memory>   // for make_shared, shared_ptr
+#include <string>   // for string, basic_string
+#include <utility>  // for pair
+#include <vector>   // for vector
 
-#include <config-dev.h>
-#include <libxml/xmlreader.h>
-#include <portaudio.h>
+#include <gdk/gdk.h>                      // for GdkInputSource, GdkD...
+#include <glib.h>                         // for gchar, gboolean, gint
+#include <libxml/tree.h>                  // for xmlNodePtr, xmlDocPtr
+#include <portaudiocpp/PortAudioCpp.hxx>  // for PaDeviceIndex
 
-#include "control/Tool.h"
-#include "control/tools/StrokeStabilizerEnum.h"
-#include "gui/toolbarMenubar/model/ColorPalette.h"
-#include "model/Font.h"
+#include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
+#include "model/Font.h"                          // for XojFont
+#include "util/Color.h"                          // for Color
 
-#include "LatexSettings.h"
-#include "SettingsEnums.h"
-#include "filesystem.h"
+#include "LatexSettings.h"  // for LatexSettings
+#include "SettingsEnums.h"  // for InputDeviceTypeOption
+#include "filesystem.h"     // for path
+
+struct Palette;
 
 constexpr auto DEFAULT_GRID_SIZE = 14.17;
 

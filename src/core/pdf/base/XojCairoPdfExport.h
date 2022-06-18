@@ -11,14 +11,20 @@
 
 #pragma once
 
-#include <vector>
+#include <cstddef>  // for size_t
+#include <string>   // for string
 
-#include "control/jobs/BaseExportJob.h"
-#include "control/jobs/ProgressListener.h"
-#include "model/Document.h"
+#include <cairo.h>    // for CAIRO_VERSION, CAIRO_VERSION...
+#include <gtk/gtk.h>  // for GtkTreeModel
 
-#include "XojPdfExport.h"
-#include "filesystem.h"
+#include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType, EXPORT...
+#include "util/PageRange.h"              // for PageRangeVector
+
+#include "XojPdfExport.h"  // for XojPdfExport
+#include "filesystem.h"    // for path
+
+class Document;
+class ProgressListener;
 
 class XojCairoPdfExport: public XojPdfExport {
 public:

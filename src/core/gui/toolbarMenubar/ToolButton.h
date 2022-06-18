@@ -11,9 +11,17 @@
 
 #pragma once
 
-#include "gui/GladeGui.h"
+#include <string>  // for string, allocator
 
-#include "AbstractToolItem.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gtk/gtk.h>                // for GtkWidget, GtkToolItem
+
+#include "enums/ActionGroup.enum.h"  // for ActionGroup
+#include "enums/ActionType.enum.h"   // for ActionType
+
+#include "AbstractToolItem.h"  // for AbstractToolItem
+
+class ActionHandler;
 
 class ToolButton: public AbstractToolItem {
 public:

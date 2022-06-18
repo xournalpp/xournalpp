@@ -1,8 +1,13 @@
 #include "BlockingJob.h"
 
-#include "control/Control.h"
-#include "control/xojfile/SaveHandler.h"
-#include "gui/XournalView.h"
+#include <glib.h>     // for g_idle_add, GSourceFunc
+#include <gtk/gtk.h>  // for gtk_widget_grab_focus
+
+#include "control/Control.h"   // for Control
+#include "control/jobs/Job.h"  // for JOB_TYPE_BLOCKING, JobType
+#include "gui/MainWindow.h"    // for MainWindow
+#include "gui/XournalView.h"   // for XournalView
+#include "util/Util.h"         // for execInUiThread
 
 BlockingJob::BlockingJob(Control* control, const std::string& name): control(control) { control->block(name); }
 

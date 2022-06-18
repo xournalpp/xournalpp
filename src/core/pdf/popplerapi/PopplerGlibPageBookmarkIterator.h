@@ -11,14 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <poppler.h>  // for PopplerDocument, Popple...
 
-#include <poppler.h>
+#include "pdf/base/XojPdfBookmarkIterator.h"  // for XojPdfBookmarkIterator
 
-#include "pdf/base/XojPdfBookmarkIterator.h"
-
-#include "PopplerGlibAction.h"
+class XojPdfAction;
 
 
 class PopplerGlibPageBookmarkIterator: public XojPdfBookmarkIterator {

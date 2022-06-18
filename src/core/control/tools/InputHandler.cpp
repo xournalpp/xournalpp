@@ -1,18 +1,20 @@
 #include "InputHandler.h"
 
-#include <cmath>
+#include <cmath>    // for hypot
+#include <cstddef>  // for size_t
 
-#include "control/Control.h"
-#include "gui/MainWindow.h"
-#include "gui/PageView.h"
-#include "gui/XournalView.h"
-#include "gui/widgets/XournalWidget.h"
-#include "model/Layer.h"
-#include "undo/InsertUndoAction.h"
-#include "undo/RecognizerUndoAction.h"
-#include "util/Rectangle.h"
+#include <glib.h>  // for g_get_monotonic_time
 
-#include "filesystem.h"
+#include "control/AudioController.h"  // for AudioController
+#include "control/Control.h"          // for Control
+#include "control/ToolEnums.h"        // for TOOL_ERASER, TOOL_HIGHLIGHTER
+#include "control/ToolHandler.h"      // for ToolHandler
+#include "gui/XournalView.h"          // for XournalView
+#include "model/Point.h"              // for Point, Point::NO_PRESSURE
+#include "model/Stroke.h"             // for Stroke, STROKE_TOOL_ERASER, STR...
+#include "util/Color.h"               // for Color
+
+#include "filesystem.h"  // for path
 
 InputHandler::InputHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
         xournal(xournal), redrawable(redrawable), page(page), stroke(nullptr) {}

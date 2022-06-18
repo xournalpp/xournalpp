@@ -1,9 +1,13 @@
 #include "SidebarLayout.h"
 
-#include <list>
+#include <algorithm>  // for max
+#include <list>       // for list, operator!=, _List_iterator
+#include <vector>     // for vector
 
-#include "SidebarPreviewBase.h"
-#include "SidebarPreviewBaseEntry.h"
+#include <gtk/gtk.h>  // for GTK_LAYOUT, gtk_layout_move
+
+#include "SidebarPreviewBase.h"       // for SidebarPreviewBase
+#include "SidebarPreviewBaseEntry.h"  // for SidebarPreviewBaseEntry
 
 SidebarLayout::SidebarLayout() = default;
 

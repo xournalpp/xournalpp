@@ -4,9 +4,18 @@
 
 #include "TouchInputHandler.h"
 
-#include <cmath>
+#include <cmath>  // for abs
 
-#include "InputContext.h"
+#include "control/Control.h"                        // for Control
+#include "control/settings/Settings.h"              // for Settings
+#include "control/zoom/ZoomControl.h"               // for ZoomControl
+#include "gui/Layout.h"                             // for Layout
+#include "gui/MainWindow.h"                         // for MainWindow
+#include "gui/XournalView.h"                        // for XournalView
+#include "gui/inputdevices/AbstractInputHandler.h"  // for AbstractInputHandler
+#include "gui/inputdevices/InputEvents.h"           // for InputEvent, BUTTO...
+
+#include "InputContext.h"  // for InputContext
 
 TouchInputHandler::TouchInputHandler(InputContext* inputContext): AbstractInputHandler(inputContext) {}
 

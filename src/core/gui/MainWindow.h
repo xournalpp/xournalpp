@@ -11,18 +11,23 @@
 
 #pragma once
 
-#include <atomic>
-#include <memory>
+#include <atomic>   // for atomic_bool
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
+#include <string>   // for string
 
-#include "control/layer/LayerCtrlListener.h"
-#include "model/Font.h"
+#include <gdk/gdk.h>      // for GdkDragContext, GdkEvent
+#include <glib-object.h>  // for GClosure
+#include <glib.h>         // for gpointer, gboolean, gint
+#include <gtk/gtk.h>      // for GtkWidget, GtkCheckMenu...
 
-#include "FloatingToolbox.h"
-#include "GladeGui.h"
+#include "control/layer/LayerCtrlListener.h"  // for LayerCtrlListener
+#include "model/Font.h"                       // for XojFont
+
+#include "GladeGui.h"  // for GladeGui
 
 class Control;
 class Layout;
-class MainWindow;
 class SpinPageAdapter;
 class ScrollHandling;
 class ToolMenuHandler;
@@ -31,6 +36,8 @@ class ToolbarModel;
 class XournalView;
 class MainWindowToolbarMenu;
 class PdfFloatingToolbox;
+class FloatingToolbox;
+class GladeSearchpath;
 
 class MainWindow: public GladeGui, public LayerCtrlListener {
 public:

@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
 
-#include "util/Rectangle.h"
+namespace xoj::util {
+template <class T>
+class Rectangle;
+}  // namespace xoj::util
 
 /**
  * @class Point

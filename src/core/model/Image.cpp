@@ -1,12 +1,18 @@
 #include "Image.h"
 
-#include <array>
-#include <utility>
+#include <algorithm>  // for min
+#include <array>      // for array
+#include <utility>    // for move, pair
 
-#include <cairo.h>
+#include <cairo.h>        // for cairo_surface_destroy
+#include <gdk/gdk.h>      // for gdk_cairo_set_sourc...
+#include <glib-object.h>  // for g_object_unref
+#include <glib.h>         // for g_assert, guchar
 
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
+#include "model/Element.h"                        // for Element, ELEMENT_IMAGE
+#include "util/Rectangle.h"                       // for Rectangle
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
 using xoj::util::Rectangle;
 

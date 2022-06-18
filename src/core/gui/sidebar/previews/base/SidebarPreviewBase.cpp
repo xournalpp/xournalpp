@@ -1,10 +1,20 @@
 #include "SidebarPreviewBase.h"
 
-#include "control/Control.h"
-#include "control/PdfCache.h"
+#include <cstdlib>  // for abs, size_t
 
-#include "SidebarLayout.h"
-#include "SidebarPreviewBaseEntry.h"
+#include <glib-object.h>  // for g_object_ref, G_CALLBACK, g_sig...
+#include <glib.h>         // for g_idle_add, GSourceFunc
+
+#include "control/Control.h"   // for Control
+#include "control/PdfCache.h"  // for PdfCache
+#include "gui/MainWindow.h"    // for MainWindow
+#include "model/Document.h"    // for Document
+#include "util/Util.h"         // for npos
+
+#include "SidebarLayout.h"            // for SidebarLayout
+#include "SidebarPreviewBaseEntry.h"  // for SidebarPreviewBaseEntry
+
+class GladeGui;
 
 
 SidebarPreviewBase::SidebarPreviewBase(Control* control, GladeGui* gui, SidebarToolbar* toolbar):

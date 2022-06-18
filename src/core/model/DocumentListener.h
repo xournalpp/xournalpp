@@ -11,11 +11,9 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
 
-#include "DocumentChangeType.h"
-
+#include "DocumentChangeType.h"  // for DocumentChangeType
 
 class DocumentHandler;
 

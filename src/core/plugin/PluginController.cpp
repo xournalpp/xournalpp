@@ -7,11 +7,13 @@
 
 #ifdef ENABLE_PLUGINS
 #include <algorithm>
-#include <filesystem>
 
 #include "control/Control.h"
+#include "control/settings/Settings.h"
 #include "gui/GladeSearchpath.h"
+#include "gui/MainWindow.h"
 #include "gui/dialog/PluginDialog.h"
+#include "util/PathUtil.h"
 #include "util/StringUtils.h"
 
 #include "Plugin.h"

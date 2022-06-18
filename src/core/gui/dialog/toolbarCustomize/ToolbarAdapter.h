@@ -12,8 +12,15 @@
 #pragma once
 
 
-#include "gui/MainWindow.h"
-#include "gui/toolbarMenubar/ToolMenuHandler.h"
+#include <string>  // for string
+
+#include <gdk/gdk.h>  // for GdkDragContext
+#include <glib.h>     // for gint, guint
+#include <gtk/gtk.h>  // for GtkWidget, GtkToolbar, GtkToolItem, GtkSelectio...
+
+class AbstractToolItem;
+class MainWindow;
+class ToolMenuHandler;
 
 class ToolbarAdapter {
 public:

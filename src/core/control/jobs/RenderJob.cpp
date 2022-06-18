@@ -1,15 +1,22 @@
 #include "RenderJob.h"
 
-#include <cmath>
+#include <cmath>    // for ceil, floor
+#include <mutex>    // for mutex
+#include <utility>  // for move
+#include <vector>   // for vector
 
-#include "control/Control.h"
-#include "control/ToolHandler.h"
-#include "gui/PageView.h"
-#include "gui/XournalView.h"
-#include "model/Document.h"
-#include "util/Rectangle.h"
-#include "util/Util.h"
-#include "view/DocumentView.h"
+#include <cairo.h>  // for cairo_create, cairo_destroy, cairo_...
+
+#include "control/Control.h"      // for Control
+#include "control/ToolEnums.h"    // for TOOL_PLAY_OBJECT
+#include "control/ToolHandler.h"  // for ToolHandler
+#include "control/jobs/Job.h"     // for JOB_TYPE_RENDER, JobType
+#include "gui/PageView.h"         // for XojPageView
+#include "gui/XournalView.h"      // for XournalView
+#include "model/Document.h"       // for Document
+#include "util/Rectangle.h"       // for Rectangle
+#include "util/Util.h"            // for execInUiThread
+#include "view/DocumentView.h"    // for DocumentView
 
 using xoj::util::Rectangle;
 

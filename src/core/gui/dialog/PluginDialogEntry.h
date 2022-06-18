@@ -11,11 +11,14 @@
 
 #pragma once
 
-#include "gui/GladeGui.h"
+#include <string>  // for string
 
-class Settings;
+#include <gtk/gtk.h>  // for GtkWidget, GtkWindow
+
+#include "gui/GladeGui.h"  // for GladeGui
+
 class Plugin;
-class PluginDialog;
+class GladeSearchpath;
 
 class PluginDialogEntry: public GladeGui {
 public:

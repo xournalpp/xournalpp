@@ -11,13 +11,16 @@
 
 #pragma once
 
-#include <cstddef>
-#include <vector>
+#include <cstddef>  // for size_t
 
-#include "control/jobs/ImageExport.h"
-#include "control/settings/Settings.h"
-#include "gui/GladeGui.h"
-#include "util/PageRange.h"
+#include <gtk/gtk.h>  // for GtkComboBox, GtkWindow
+
+#include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
+#include "control/jobs/ImageExport.h"    // for RasterImageQualityParameter
+#include "gui/GladeGui.h"                // for GladeGui
+#include "util/PageRange.h"              // for PageRangeVector
+
+class GladeSearchpath;
 
 class ExportDialog: public GladeGui {
 public:

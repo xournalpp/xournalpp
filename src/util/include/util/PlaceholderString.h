@@ -14,10 +14,11 @@
 
 #pragma once
 
-#include <memory>
-#include <ostream>
-#include <string>
-#include <vector>
+#include <cinttypes>  // for int64_t
+#include <memory>     // for unique_ptr
+#include <ostream>    // for ostream
+#include <string>     // for string
+#include <vector>     // for vector
 
 /**
  * Base class for Formatting

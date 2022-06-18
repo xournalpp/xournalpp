@@ -1,20 +1,24 @@
 #include "CustomExportJob.h"
 
-#include <memory>
+#include <memory>   // for unique_ptr
+#include <utility>  // for move, pair
 
-#include <config-features.h>
+#include <gtk/gtk.h>  // for GTK_WINDOW
 
-#include "control/Control.h"
-#include "control/xojfile/XojExportHandler.h"
-#include "gui/dialog/ExportDialog.h"
-#include "pdf/base/XojPdfExport.h"
-#include "pdf/base/XojPdfExportFactory.h"
-#include "util/PathUtil.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include "control/Control.h"                   // for Control
+#include "control/jobs/BaseExportJob.h"        // for BaseExportJob::ExportType
+#include "control/xojfile/XojExportHandler.h"  // for XojExportHandler
+#include "gui/MainWindow.h"                    // for MainWindow
+#include "gui/dialog/ExportDialog.h"           // for ExportDialog
+#include "model/Document.h"                    // for Document
+#include "pdf/base/XojPdfExport.h"             // for XojPdfExport
+#include "pdf/base/XojPdfExportFactory.h"      // for XojPdfExportFactory
+#include "util/PathUtil.h"                     // for clearExtensions
+#include "util/XojMsgBox.h"                    // for XojMsgBox
+#include "util/i18n.h"                         // for _, FS, _F
 
-#include "ImageExport.h"
-#include "SaveJob.h"
+#include "ImageExport.h"  // for ImageExport, EXPORT_GR...
+#include "SaveJob.h"      // for SaveJob
 
 
 CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Custom Export")) {

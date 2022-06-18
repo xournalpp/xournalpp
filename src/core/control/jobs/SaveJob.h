@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include "BlockingJob.h"
+#include "BlockingJob.h"  // for BlockingJob
+
+class Control;
 
 
 class SaveJob: public BlockingJob {

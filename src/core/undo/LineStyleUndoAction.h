@@ -11,14 +11,17 @@
 
 #pragma once
 
-#include <vector>
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "model/LineStyle.h"
+#include "model/LineStyle.h"  // for LineStyle
+#include "model/PageRef.h"    // for PageRef
 
-#include "UndoAction.h"
+#include "UndoAction.h"  // for UndoAction
 
 class Stroke;
 class Layer;
+class Control;
 
 struct LineStyleUndoActionEntry {
     LineStyleUndoActionEntry(Stroke* s, LineStyle oldStyle, LineStyle newStyle):

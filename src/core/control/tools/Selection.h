@@ -11,13 +11,14 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <vector>  // for vector
 
-#include "gui/Redrawable.h"
-#include "model/Element.h"
-#include "model/PageRef.h"
-#include "util/Util.h"
+#include <cairo.h>  // for cairo_t
+
+#include "model/Element.h"  // for Element (ptr only), ShapeContainer
+#include "model/PageRef.h"  // for PageRef
+
+class Redrawable;
 
 
 class Selection: public ShapeContainer {

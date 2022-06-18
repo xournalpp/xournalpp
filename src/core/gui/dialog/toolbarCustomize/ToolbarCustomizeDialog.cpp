@@ -1,23 +1,32 @@
 #include "ToolbarCustomizeDialog.h"
 
-#include <config.h>
+#include <cstddef>  // for size_t
+#include <limits>   // for numeric_l...
+#include <string>   // for allocator
+#include <vector>   // for vector
 
-#include "control/Control.h"
-#include "gui/MainWindow.h"
-#include "gui/toolbarMenubar/AbstractToolItem.h"
-#include "gui/toolbarMenubar/ToolMenuHandler.h"
-#include "gui/toolbarMenubar/icon/ColorSelectImage.h"
-#include "gui/toolbarMenubar/icon/ToolbarSeparatorImage.h"
-#include "gui/toolbarMenubar/model/ToolbarData.h"
-#include "gui/toolbarMenubar/model/ToolbarModel.h"
-#include "util/Color.h"
-#include "util/GListView.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <glib-object.h>            // for G_CALLBACK
 
-#include "ToolItemDragCurrentData.h"
-#include "ToolbarDragDropHandler.h"
-#include "ToolbarDragDropHelper.h"
+#include "control/Control.h"                                // for Control
+#include "control/settings/Settings.h"                      // for Settings
+#include "gui/MainWindow.h"                                 // for MainWindow
+#include "gui/ToolitemDragDrop.h"                           // for ToolItemD...
+#include "gui/toolbarMenubar/AbstractToolItem.h"            // for AbstractT...
+#include "gui/toolbarMenubar/ToolMenuHandler.h"             // for ToolMenuH...
+#include "gui/toolbarMenubar/icon/ColorSelectImage.h"       // for ColorSele...
+#include "gui/toolbarMenubar/icon/ToolbarSeparatorImage.h"  // for getNewToo...
+#include "gui/toolbarMenubar/model/ColorPalette.h"          // for Palette
+#include "util/Color.h"                                     // for Color
+#include "util/GListView.h"                                 // for GListView
+#include "util/NamedColor.h"                                // for NamedColor
+#include "util/i18n.h"                                      // for _
+
+#include "ToolItemDragCurrentData.h"  // for ToolItemD...
+#include "ToolbarDragDropHandler.h"   // for ToolbarDr...
+#include "ToolbarDragDropHelper.h"    // for dragSourc...
+
+class GladeSearchpath;
 
 /*
  * struct used for data necessary for dragging

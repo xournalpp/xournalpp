@@ -1,30 +1,35 @@
 #include "ToolMenuHandler.h"
 
-#include <sstream>
-#include <utility>
+#include <algorithm>  // for max
+#include <sstream>    // for istringstream
 
-#include <config-features.h>
-#include <config.h>
+#include "control/Control.h"                         // for Control
+#include "control/PageBackgroundChangeController.h"  // for PageBackgroundCh...
+#include "control/pagetype/PageTypeMenu.h"           // for PageTypeMenu
+#include "control/settings/Settings.h"               // for Settings
+#include "gui/GladeGui.h"                            // for GladeGui
+#include "gui/ToolitemDragDrop.h"                    // for ToolitemDragDrop
+#include "gui/toolbarMenubar/AbstractToolItem.h"     // for AbstractToolItem
+#include "gui/toolbarMenubar/ColorToolItem.h"        // for ColorToolItem
+#include "gui/toolbarMenubar/model/ColorPalette.h"   // for Palette
+#include "gui/toolbarMenubar/model/ToolbarData.h"    // for ToolbarData
+#include "gui/toolbarMenubar/model/ToolbarEntry.h"   // for ToolbarEntry
+#include "gui/toolbarMenubar/model/ToolbarItem.h"    // for ToolbarItem
+#include "gui/toolbarMenubar/model/ToolbarModel.h"   // for ToolbarModel
+#include "model/Font.h"                              // for XojFont
+#include "util/NamedColor.h"                         // for NamedColor
+#include "util/StringUtils.h"                        // for StringUtils
+#include "util/i18n.h"                               // for _
 
-#include "control/Actions.h"
-#include "control/Control.h"
-#include "control/PageBackgroundChangeController.h"
-#include "gui/ToolitemDragDrop.h"
-#include "gui/toolbarMenubar/model/ColorPalette.h"
-#include "gui/toolbarMenubar/model/ToolbarData.h"
-#include "gui/toolbarMenubar/model/ToolbarModel.h"
-#include "util/StringUtils.h"
-#include "util/i18n.h"
-
-#include "FontButton.h"
-#include "MenuItem.h"
-#include "ToolButton.h"
-#include "ToolDrawCombocontrol.h"
-#include "ToolPageLayer.h"
-#include "ToolPageSpinner.h"
-#include "ToolPdfCombocontrol.h"
-#include "ToolSelectCombocontrol.h"
-#include "ToolZoomSlider.h"
+#include "FontButton.h"              // for FontButton
+#include "MenuItem.h"                // for MenuItem
+#include "ToolButton.h"              // for ToolButton
+#include "ToolDrawCombocontrol.h"    // for ToolDrawCombocon...
+#include "ToolPageLayer.h"           // for ToolPageLayer
+#include "ToolPageSpinner.h"         // for ToolPageSpinner
+#include "ToolPdfCombocontrol.h"     // for ToolPdfCombocontrol
+#include "ToolSelectCombocontrol.h"  // for ToolSelectComboc...
+#include "ToolZoomSlider.h"          // for ToolZoomSlider
 
 using std::string;
 

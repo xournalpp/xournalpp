@@ -1,16 +1,31 @@
 #include "Settings.h"
 
-#include <cstdint>
-#include <utility>
+#include <algorithm>    // for max
+#include <cstdint>      // for uint32_t, int32_t
+#include <cstdio>       // for sscanf, size_t
+#include <cstdlib>      // for atoi
+#include <cstring>      // for strcmp
+#include <exception>    // for exception
+#include <type_traits>  // for add_const<>::type
+#include <utility>      // for pair, move, make_...
 
-#include "control/DeviceListHelper.h"
-#include "model/FormatDefinitions.h"
-#include "util/PathUtil.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include <libxml/globals.h>    // for xmlFree, xmlInden...
+#include <libxml/parser.h>     // for xmlKeepBlanksDefault
+#include <libxml/xmlstring.h>  // for xmlStrcmp, xmlChar
 
-#include "ButtonConfig.h"
-#include "filesystem.h"
+#include "control/DeviceListHelper.h"               // for InputDevice
+#include "control/ToolEnums.h"                      // for ERASER_TYPE_NONE
+#include "control/settings/LatexSettings.h"         // for LatexSettings
+#include "control/settings/SettingsEnums.h"         // for InputDeviceTypeOp...
+#include "gui/toolbarMenubar/model/ColorPalette.h"  // for Palette
+#include "model/FormatDefinitions.h"                // for FormatUnits, XOJ_...
+#include "util/PathUtil.h"                          // for getConfigFile
+#include "util/Util.h"                              // for PRECISION_FORMAT_...
+#include "util/i18n.h"                              // for _
+
+#include "ButtonConfig.h"  // for ButtonConfig
+#include "config-dev.h"    // for PALETTE_FILE
+#include "filesystem.h"    // for path, u8path, exists
 
 
 using std::string;

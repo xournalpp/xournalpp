@@ -15,7 +15,6 @@
 
 #include "control/jobs/BaseExportJob.h"
 #include "util/PageRange.h"
-
 #include "filesystem.h"
 
 class XojPdfExport {

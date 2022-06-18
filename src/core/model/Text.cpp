@@ -1,11 +1,17 @@
 #include "Text.h"
 
-#include <utility>
+#include <utility>  // for move
 
-#include "util/Stacktrace.h"
-#include "util/serializing/ObjectInputStream.h"
-#include "util/serializing/ObjectOutputStream.h"
-#include "view/TextView.h"  // Hack: Needed to calculate the view size
+#include <glib.h>  // for g_warning
+
+#include "model/AudioElement.h"                   // for AudioElement
+#include "model/Element.h"                        // for ELEMENT_TEXT, Eleme...
+#include "model/Font.h"                           // for XojFont
+#include "util/Rectangle.h"                       // for Rectangle
+#include "util/Stacktrace.h"                      // for Stacktrace
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
+#include "view/TextView.h"                        // for TextView
 
 using xoj::util::Rectangle;
 

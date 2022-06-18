@@ -12,17 +12,20 @@
 
 #pragma once
 
-#include <memory>
-#include <mutex>
+#include <memory>   // for unique_ptr
+#include <mutex>    // for mutex
+#include <utility>  // for pair
+#include <vector>   // for vector
 
-#include <gtk/gtk.h>
+#include <cairo.h>  // for cairo_t, cairo_surface_t
 
-#include "model/PathParameter.h"
-#include "model/Stroke.h"
-#include "util/Rectangle.h"
-#include "util/UnionOfIntervals.h"
+#include "model/PathParameter.h"    // for PathParameter
+#include "model/Stroke.h"           // for Stroke (ptr only), IntersectionPa...
+#include "util/Interval.h"          // for Interval
+#include "util/Rectangle.h"         // for Rectangle
+#include "util/UnionOfIntervals.h"  // for UnionOfIntervals
 
-#include "config-debug.h"
+#include "config-debug.h"  // for DEBUG_ERASABLE_STROKE_BOXES
 
 class Range;
 struct PaddedBox;

@@ -11,16 +11,18 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <string>   // for string
 
-#include <gtk/gtk.h>
+#include <glib.h>     // for gboolean, gchar, gint
+#include <gtk/gtk.h>  // for GtkWidget, GtkTreeIter
 
-#include "gui/IconNameHelper.h"
-#include "gui/sidebar/AbstractSidebarPage.h"
-
+#include "gui/IconNameHelper.h"               // for IconNameHelper
+#include "gui/sidebar/AbstractSidebarPage.h"  // for AbstractSidebarPage
+#include "model/DocumentChangeType.h"         // for DocumentChangeType
 
 class Control;
+class SidebarToolbar;
 
 class SidebarIndexPage: public AbstractSidebarPage {
 public:

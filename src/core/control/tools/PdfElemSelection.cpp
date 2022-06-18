@@ -1,12 +1,22 @@
 #include "PdfElemSelection.h"
 
-#include <limits>
+#include <algorithm>  // for max, min
+#include <limits>     // for numeric_limits
+#include <memory>     // for __shared_ptr_access
+#include <utility>    // for move
 
-#include <cairo.h>
+#include <cairo.h>    // for cairo_line_to, cairo_region_destroy
+#include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
+#include <glib.h>     // for g_assert, g_assert_nonnull
 
-#include "control/Control.h"
-#include "gui/XournalView.h"
-#include "pdf/base/XojPdfPage.h"
+#include "control/Control.h"      // for Control
+#include "control/ToolHandler.h"  // for ToolHandler
+#include "gui/PageView.h"         // for XojPageView
+#include "gui/XournalView.h"      // for XournalView
+#include "model/Document.h"       // for Document
+#include "model/PageRef.h"        // for PageRef
+#include "model/XojPage.h"        // for XojPage
+#include "pdf/base/XojPdfPage.h"  // for XojPdfRectangle, XojPdfPageSelectio...
 
 PdfElemSelection::PdfElemSelection(double x, double y, XojPageView* view):
         view(view), pdf(nullptr), bounds({x, y, x, y}), finalized(false) {

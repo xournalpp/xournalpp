@@ -11,16 +11,15 @@
 
 #pragma once
 
-#include <cstdint>
-#include <functional>
-#include <limits>
-#include <string>
+#include <functional>  // for function
+#include <limits>      // for numeric_limits
 
-#include <gtk/gtk.h>
+#include <cairo.h>      // for cairo_t
+#include <glib.h>       // for G_PRIORITY_DEFAULT_IDLE, gboolean, gchar, gint
+#include <gtk/gtk.h>    // for GtkWidget
+#include <sys/types.h>  // for pid_t, size_t
 
-#include "util/OutputStream.h"
-
-#include "filesystem.h"
+class OutputStream;
 
 namespace Util {
 

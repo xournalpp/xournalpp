@@ -11,7 +11,11 @@
 
 #pragma once
 
-#include "BackgroundView.h"
+#include <cstddef>  // for size_t
+
+#include <cairo.h>  // for cairo_t
+
+#include "BackgroundView.h"  // for BackgroundView
 
 class PdfCache;
 

@@ -11,11 +11,7 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include "model/PageRef.h"
-
+#include "model/PageRef.h"  // for PageRef
 
 class DeleteUndoAction;
 class Document;

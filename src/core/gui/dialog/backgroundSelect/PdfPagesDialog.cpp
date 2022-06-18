@@ -1,11 +1,25 @@
 #include "PdfPagesDialog.h"
 
-#include "gui/Shadow.h"
+#include <cstddef>
+#include <memory>
+#include <string>
+#include <vector>
+
+#include <glib-object.h>
+
+#include "gui/dialog/backgroundSelect/BackgroundSelectDialogBase.h"
+#include "gui/dialog/backgroundSelect/BaseElementView.h"
 #include "model/Document.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include "model/PageRef.h"
+#include "model/PageType.h"
+#include "model/XojPage.h"
+#include "pdf/base/XojPdfPage.h"
+#include "util/i18n.h"  // for FC
 
 #include "PdfElementView.h"
+
+class GladeSearchpath;
+class Settings;
 
 
 PdfPagesDialog::PdfPagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings):

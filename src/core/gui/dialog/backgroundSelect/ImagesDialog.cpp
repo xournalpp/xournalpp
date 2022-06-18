@@ -1,9 +1,24 @@
 #include "ImagesDialog.h"
 
+#include <cstddef>
+#include <memory>
+#include <string>
+#include <vector>
+
+#include <glib-object.h>
+
+#include "gui/dialog/backgroundSelect/BackgroundSelectDialogBase.h"
+#include "gui/dialog/backgroundSelect/BaseElementView.h"
 #include "model/BackgroundImage.h"
 #include "model/Document.h"
+#include "model/PageRef.h"
+#include "model/PageType.h"
+#include "model/XojPage.h"
 
 #include "ImageElementView.h"
+
+class GladeSearchpath;
+class Settings;
 
 
 ImagesDialog::ImagesDialog(GladeSearchpath* gladeSearchPath, Document* doc, Settings* settings):

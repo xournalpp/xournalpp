@@ -11,12 +11,15 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include <gtk/gtk.h>
+#include <gdk/gdk.h>  // for GdkEvent
+#include <glib.h>     // for gulong
+#include <gtk/gtk.h>  // for GtkWidget, GtkMenuItem, GtkToolB...
 
-#include "control/Actions.h"
+#include "control/Actions.h"         // for ActionHandler (ptr only), Action...
+#include "enums/ActionGroup.enum.h"  // for ActionGroup, GROUP_NOGROUP
+#include "enums/ActionType.enum.h"   // for ActionType, ACTION_NONE
 
 
 class AbstractItem: public ActionEnabledListener, public ActionSelectionListener {

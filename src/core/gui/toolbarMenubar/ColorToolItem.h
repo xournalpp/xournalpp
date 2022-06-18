@@ -11,16 +11,23 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <memory>  // for unique_ptr
+#include <string>  // for string
 
-#include "util/NamedColor.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>  // for GdkPixbuf
+#include <gdk/gdk.h>                // for GdkEvent
+#include <gtk/gtk.h>                // for GtkWindow, GtkMenuItem, GtkToolB...
 
-#include "AbstractToolItem.h"
+#include "enums/ActionGroup.enum.h"  // for ActionGroup
+#include "enums/ActionType.enum.h"   // for ActionType
+#include "util/Color.h"              // for Color
+#include "util/NamedColor.h"         // for NamedColor
+
+#include "AbstractToolItem.h"  // for AbstractToolItem
 
 class ColorSelectImage;
 class ToolHandler;
+class ActionHandler;
 
 class ColorToolItem: public AbstractToolItem {
 public:

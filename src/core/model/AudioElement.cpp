@@ -1,6 +1,10 @@
 #include "AudioElement.h"
 
-#include <utility>
+#include <utility>  // for move
+
+#include "model/Element.h"                        // for Element, ElementType
+#include "util/serializing/ObjectInputStream.h"   // for ObjectInputStream
+#include "util/serializing/ObjectOutputStream.h"  // for ObjectOutputStream
 
 AudioElement::AudioElement(ElementType type): Element(type) {}
 

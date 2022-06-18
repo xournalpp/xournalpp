@@ -1,20 +1,24 @@
 #include "util/Stacktrace.h"
 
-#include <array>
-#include <climits>
-#include <iostream>
+#include <algorithm>  // for max
+#include <array>      // for array
+#include <cstdio>     // for fgets, pclose, popen, snprintf, FILE
+#include <iostream>   // for operator<<, basic_ostream, basic_ostream::...
+#include <string>     // for string
 
 #ifdef _WIN32
 #include <Windows.h>
 #else
 
-#include <execinfo.h>
-#include <unistd.h>
-#endif
+#include <execinfo.h>  // for backtrace, backtrace_symbols
+#include <unistd.h>    // for readlink, ssize_t
 
 #ifdef __APPLE__
 #include <glib.h>
 #include <mach-o/dyld.h>
+#else
+#include <climits>  // for PATH_MAX
+#endif
 #endif
 
 

@@ -11,14 +11,13 @@
 
 #pragma once
 
-#include <deque>
-#include <memory>
-#include <stack>
-#include <string>
-#include <vector>
+#include <deque>   // for deque
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "UndoAction.h"
+#include "model/PageRef.h"  // for PageRef
 
+#include "UndoAction.h"  // for UndoActionPtr
 
 class Control;
 

@@ -1,8 +1,15 @@
 #include "ErasableStrokeOverlapTree.h"
 
-#include <cmath>
+#include <algorithm>  // for max, min, minmax
+#include <cassert>    // for assert
+#include <optional>   // for optional
+#include <tuple>      // for tie, tuple
 
-#include "model/Stroke.h"
+#include "model/PathParameter.h"          // for PathParameter
+#include "model/Point.h"                  // for Point
+#include "model/Stroke.h"                 // for Stroke
+#include "model/eraser/ErasableStroke.h"  // for ErasableStroke::SubSection
+#include "util/Range.h"                   // for Range
 
 using xoj::util::Rectangle;
 

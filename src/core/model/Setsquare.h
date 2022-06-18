@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include <string>
+#include <string>  // for string
 
-#include <gtk/gtk.h>
+#include <cairo.h>  // for cairo_t, cairo_matrix_t
 
 constexpr static double HALF_CM = 14.17;
 constexpr static double CM = 2. * HALF_CM;

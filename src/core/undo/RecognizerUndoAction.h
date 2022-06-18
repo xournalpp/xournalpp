@@ -11,10 +11,16 @@
 
 #pragma once
 
-#include "UndoAction.h"
+#include <string>  // for string
+#include <vector>  // for vector
+
+#include "model/PageRef.h"  // for PageRef
+
+#include "UndoAction.h"  // for UndoAction
 
 class Layer;
 class Stroke;
+class Control;
 
 class RecognizerUndoAction: public UndoAction {
 public:

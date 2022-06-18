@@ -11,12 +11,18 @@
 
 #pragma once
 
-#include <memory>
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
+#include <vector>   // for vector
 
-#include "AudioElement.h"
-#include "Element.h"
-#include "LineStyle.h"
-#include "Point.h"
+#include "AudioElement.h"  // for AudioElement
+#include "LineStyle.h"     // for LineStyle
+#include "Point.h"         // for Point
+
+class Element;
+class ObjectInputStream;
+class ObjectOutputStream;
+class ShapeContainer;
 
 enum StrokeTool { STROKE_TOOL_PEN, STROKE_TOOL_ERASER, STROKE_TOOL_HIGHLIGHTER };
 enum StrokeCapStyle {
@@ -29,16 +35,10 @@ enum StrokeCapStyle {
 class ErasableStroke;
 struct PaddedBox;
 struct PathParameter;
-
-template <class T, size_t N>
-class TinyVector;
-
 template <class T, size_t N>
 class SmallVector;
-using IntersectionParametersContainer = SmallVector<PathParameter, 4>;
 
-template <class T>
-class Interval;
+using IntersectionParametersContainer = SmallVector<PathParameter, 4>;
 
 class Stroke: public AudioElement {
 public:

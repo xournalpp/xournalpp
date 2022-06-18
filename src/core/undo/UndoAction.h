@@ -11,12 +11,13 @@
 
 #pragma once
 
-#include "model/PageRef.h"
+#include <memory>  // for unique_ptr
+#include <string>  // for string
+#include <vector>  // for vector
 
-#include "config.h"
+#include "model/PageRef.h"  // for PageRef
 
 class Control;
-class XojPage;
 
 class UndoAction {
 public:

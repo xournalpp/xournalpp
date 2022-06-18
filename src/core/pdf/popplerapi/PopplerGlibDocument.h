@@ -11,11 +11,18 @@
 
 #pragma once
 
-#include <poppler.h>
+#include <cstddef>  // for size_t
+#include <string>   // for string
 
-#include "pdf/base/XojPdfDocumentInterface.h"
+#include <glib.h>     // for GError, gpointer, gsize
+#include <poppler.h>  // for PopplerDocument
 
-#include "filesystem.h"
+#include "pdf/base/XojPdfDocumentInterface.h"  // for XojPdfDocumentInterface
+#include "pdf/base/XojPdfPage.h"               // for XojPdfPageSPtr
+
+#include "filesystem.h"  // for path
+
+class XojPdfBookmarkIterator;
 
 class PopplerGlibDocument: public XojPdfDocumentInterface {
 public:

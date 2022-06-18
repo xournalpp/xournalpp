@@ -11,12 +11,12 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include <gtk/gtk.h>
+#include "util/serializing/Serializable.h"  // for Serializable
 
-#include "util/serializing/Serializable.h"
+class ObjectInputStream;
+class ObjectOutputStream;
 
 
 class XojFont: public Serializable {

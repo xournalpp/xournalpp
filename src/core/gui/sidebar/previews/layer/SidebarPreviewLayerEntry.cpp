@@ -1,9 +1,11 @@
 #include "SidebarPreviewLayerEntry.h"
 
-#include "gui/Shadow.h"
-#include "util/i18n.h"
+#include <gdk/gdk.h>      // for GdkEvent, GDK_BUTTON_PRESS, GdkEve...
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect, g_si...
 
-#include "SidebarPreviewLayers.h"
+#include "gui/Shadow.h"  // for Shadow
+
+#include "SidebarPreviewLayers.h"  // for SidebarPreviewLayers
 
 
 SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewLayers* sidebar, const PageRef& page,

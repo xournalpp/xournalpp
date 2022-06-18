@@ -1,11 +1,14 @@
 #include "control/DeviceListHelper.h"
 
-#include <algorithm>
-#include <utility>
-#include <vector>
+#include <algorithm>  // for find, remove_if
+#include <utility>    // for move
+#include <vector>     // for vector
 
-#include "util/GListView.h"
-#include "util/i18n.h"
+#include <glib.h>  // for g_list_free, g_warning
+
+#include "control/settings/Settings.h"  // for Settings
+#include "util/GListView.h"             // for GListView, GListView<>::GList...
+#include "util/i18n.h"                  // for _
 
 
 void storeNewUnlistedDevice(std::vector<InputDevice>& deviceList, GdkDevice* device) {

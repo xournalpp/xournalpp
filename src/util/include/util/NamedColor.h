@@ -11,11 +11,12 @@
  */
 
 #pragma once
-#include <string>
+#include <cstddef>  // for size_t
+#include <iosfwd>   // for istream
+#include <string>   // for string, basic_string
 
-#include "util/Color.h"
+#include "util/Color.h"  // for Color, ColorU16, ColorU8
 
-struct Palette;
 /**
  * @brief NamedColor is an object for a color with name and an optional index which refers to the index of the color
  * inside a given palette.

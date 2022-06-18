@@ -11,11 +11,15 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include <util/Rectangle.h>
+#include <utility>  // for pair
+
+#include <cairo.h>  // for cairo_t, cairo_surface_t
 
 class ErasableStroke;
-class Stroke;
+namespace xoj::util {
+template <class T>
+class Rectangle;
+}  // namespace xoj::util
 
 namespace xoj {
 namespace view {

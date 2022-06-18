@@ -14,26 +14,26 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
+#include <memory>  // for unique_ptr
+#include <string>  // for string
 
-#include <poppler.h>
+#include <gio/gio.h>  // for GAsyncResult, GCancellable
+#include <gtk/gtk.h>  // for GtkTextBuffer
+#include <poppler.h>  // for GObject
 
-#include "control/latex/LatexGenerator.h"
-#include "control/settings/LatexSettings.h"
-#include "gui/dialog/LatexDialog.h"
-#include "model/PageRef.h"
-#include "model/Text.h"
+#include "control/latex/LatexGenerator.h"  // for LatexGenerator
+#include "gui/dialog/LatexDialog.h"        // for LatexDialog
+#include "model/PageRef.h"                 // for PageRef
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 class Control;
 class TexImage;
-class Text;
 class Document;
 class XojPageView;
 class Layer;
+class Element;
+class LatexSettings;
 
 class LatexController {
 public:

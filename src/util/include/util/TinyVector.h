@@ -12,6 +12,7 @@
 #pragma once
 
 #include <array>
+#include <cassert>
 #include <stdexcept>
 
 #include "BasePointerIterator.h"

@@ -11,19 +11,18 @@
 
 #pragma once
 
-#include <optional>
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <list>     // for list
+#include <string>   // for string
 
-#include "control/Actions.h"
-#include "gui/dialog/RenameLayerDialog.h"
-#include "model/DocumentListener.h"
-#include "model/PageRef.h"
-
+#include "enums/ActionType.enum.h"     // for ActionType
+#include "model/DocumentChangeType.h"  // for DocumentChangeType
+#include "model/DocumentListener.h"    // for DocumentListener
+#include "model/Layer.h"               // for Layer, Layer::Index
+#include "model/PageRef.h"             // for PageRef
 
 class LayerCtrlListener;
 class Control;
-class Layer;
 
 class LayerController: public DocumentListener {
 public:

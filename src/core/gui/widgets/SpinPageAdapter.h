@@ -11,13 +11,11 @@
 
 #pragma once
 
-#include <cassert>
-#include <list>
-#include <string>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <list>     // for list
 
-#include <gtk/gtk.h>
-
+#include <glib.h>     // for guint, gulong
+#include <gtk/gtk.h>  // for GtkWidget, GtkSpinButton
 
 class SpinPageListener;
 

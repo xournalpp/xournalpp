@@ -1,14 +1,18 @@
 #include "XmlNode.h"
 
-#include <utility>
+#include <utility>  // for move
 
-#include "control/jobs/ProgressListener.h"
+#include <glib.h>  // for g_free
 
-#include "DoubleArrayAttribute.h"
-#include "DoubleAttribute.h"
-#include "IntAttribute.h"
-#include "SizeTAttribute.h"
-#include "TextAttribute.h"
+#include "control/jobs/ProgressListener.h"  // for ProgressListener
+#include "control/xml/Attribute.h"          // for XMLAttribute
+#include "util/OutputStream.h"              // for OutputStream
+
+#include "DoubleArrayAttribute.h"  // for DoubleArrayAttribute
+#include "DoubleAttribute.h"       // for DoubleAttribute
+#include "IntAttribute.h"          // for IntAttribute
+#include "SizeTAttribute.h"        // for SizeTAttribute
+#include "TextAttribute.h"         // for TextAttribute
 
 
 XmlNode::XmlNode(const char* tag): tag(tag) {}

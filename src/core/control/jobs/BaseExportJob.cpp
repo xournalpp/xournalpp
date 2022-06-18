@@ -1,11 +1,17 @@
 #include "BaseExportJob.h"
 
-#include <utility>
+#include <utility>  // for move
 
-#include "control/Control.h"
-#include "util/StringUtils.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include <glib.h>  // for g_warning
+
+#include "control/Control.h"            // for Control
+#include "control/jobs/BlockingJob.h"   // for BlockingJob
+#include "control/settings/Settings.h"  // for Settings
+#include "gui/MainWindow.h"             // for MainWindow
+#include "model/Document.h"             // for Document, Document::PDF
+#include "util/PathUtil.h"              // for toGFilename, clearExtensions
+#include "util/XojMsgBox.h"             // for XojMsgBox
+#include "util/i18n.h"                  // for _, FS, _F
 
 using std::string;
 

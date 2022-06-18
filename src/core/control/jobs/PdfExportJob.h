@@ -11,8 +11,10 @@
 
 #pragma once
 
-#include "BaseExportJob.h"
-#include "filesystem.h"
+#include "BaseExportJob.h"  // for BaseExportJob
+#include "filesystem.h"     // for path
+
+class Control;
 
 class PdfExportJob: public BaseExportJob {
 public:

@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <gtk/gtk.h>  // for GtkWindow, GtkFileChooser, GtkWidget
 
-#include "control/settings/Settings.h"
+#include "filesystem.h"  // for path
 
-#include "filesystem.h"
+class Settings;
 
 
 class XojOpenDlg {

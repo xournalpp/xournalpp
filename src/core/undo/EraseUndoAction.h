@@ -11,13 +11,17 @@
 
 #pragma once
 
-#include <set>
-#include <string>
+#include <set>     // for multiset
+#include <string>  // for string
 
-#include "PageLayerPosEntry.h"
-#include "UndoAction.h"
+#include "model/PageRef.h"  // for PageRef
+#include "model/Stroke.h"   // for Stroke
 
-class Stroke;
+#include "PageLayerPosEntry.h"  // for PageLayerPosEntry
+#include "UndoAction.h"         // for UndoAction
+
+class Control;
+class Layer;
 
 class EraseUndoAction: public UndoAction {
 public:

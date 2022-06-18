@@ -1,10 +1,12 @@
 #include "XojPdfDocument.h"
 
-#include <config-features.h>
+#include "pdf/base/XojPdfDocumentInterface.h"    // for XojPdfDocumentInterface
+#include "pdf/base/XojPdfPage.h"                 // for XojPdfPageSPtr
+#include "pdf/popplerapi/PopplerGlibDocument.h"  // for PopplerGlibDocument
 
-#include "pdf/popplerapi/PopplerGlibDocument.h"
+#include "filesystem.h"  // for path
 
-#include "filesystem.h"
+class XojPdfBookmarkIterator;
 
 XojPdfDocument::XojPdfDocument(): doc(new PopplerGlibDocument()) {}
 

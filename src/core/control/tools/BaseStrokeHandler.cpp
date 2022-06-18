@@ -1,14 +1,27 @@
 #include "BaseStrokeHandler.h"
 
-#include <cmath>
-#include <memory>
+#include <cmath>     // for pow, NAN
+#include <memory>    // for make_unique, __share...
+#include <optional>  // for optional
 
-#include "control/Control.h"
-#include "control/layer/LayerController.h"
-#include "gui/XournalView.h"
-#include "gui/XournalppCursor.h"
-#include "undo/InsertUndoAction.h"
-#include "view/StrokeView.h"
+#include <gdk/gdkkeysyms.h>  // for GDK_KEY_Alt_L, GDK_K...
+
+#include "control/Control.h"                     // for Control
+#include "control/layer/LayerController.h"       // for LayerController
+#include "control/settings/Settings.h"           // for Settings
+#include "control/tools/InputHandler.h"          // for InputHandler
+#include "gui/PageView.h"                        // for XojPageView
+#include "gui/XournalView.h"                     // for XournalView
+#include "gui/XournalppCursor.h"                 // for XournalppCursor
+#include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
+#include "model/Layer.h"                         // for Layer
+#include "model/Stroke.h"                        // for Stroke
+#include "model/XojPage.h"                       // for XojPage
+#include "undo/InsertUndoAction.h"               // for InsertUndoAction
+#include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
+#include "util/Rectangle.h"                      // for Rectangle
+#include "view/StrokeView.h"                     // for StrokeView
+#include "view/View.h"                           // for Context
 
 using xoj::util::Rectangle;
 

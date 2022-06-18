@@ -1,5 +1,9 @@
 #include "SpinPageAdapter.h"
 
+#include <cinttypes>  // for uint64_t
+
+#include <glib-object.h>  // for g_signal_handler_disconnect, G_CALLBACK
+
 SpinPageAdapter::SpinPageAdapter() {}
 
 SpinPageAdapter::~SpinPageAdapter() {

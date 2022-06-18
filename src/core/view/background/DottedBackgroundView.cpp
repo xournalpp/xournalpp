@@ -1,9 +1,11 @@
 #include "DottedBackgroundView.h"
 
-#include <cmath>
+#include <memory>  // for allocator
 
-#include "model/BackgroundConfig.h"
-#include "util/Util.h"
+#include "model/BackgroundConfig.h"                  // for BackgroundConfig
+#include "view/background/BackgroundView.h"          // for view
+#include "view/background/OneColorBackgroundView.h"  // for OneColorBackgrou...
+#include "view/background/PlainBackgroundView.h"     // for PlainBackgroundView
 
 using namespace background_config_strings;
 using namespace xoj::view;

@@ -11,13 +11,21 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <utility>
-#include <vector>
+#include <cstddef>  // for size_t
+#include <memory>   // for unique_ptr
+#include <string>   // for string
+#include <tuple>    // for tuple
+#include <vector>   // for vector
 
-#include "gui/IconNameHelper.h"
-#include "gui/sidebar/previews/base/SidebarPreviewBase.h"
+#include <glib.h>     // for gulong
+#include <gtk/gtk.h>  // for GtkWidget
+
+#include "gui/IconNameHelper.h"                            // for IconNameHe...
+#include "gui/sidebar/previews/base/SidebarPreviewBase.h"  // for SidebarPre...
+#include "gui/sidebar/previews/base/SidebarToolbar.h"      // for SidebarAct...
+
+class Control;
+class GladeGui;
 
 
 class SidebarPreviewPages: public SidebarPreviewBase {

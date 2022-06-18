@@ -1,20 +1,28 @@
 #include "PageTemplateDialog.h"
 
-#include <fstream>
-#include <memory>
-#include <sstream>
+#include <cstdio>    // for sprintf
+#include <ctime>     // for localtime, strftime, time
+#include <fstream>   // for ofstream, basic_ostream
+#include <memory>    // for allocator, unique_ptr
+#include <optional>  // for optional
+#include <string>    // for string, operator<<
 
-#include "control/pagetype/PageTypeHandler.h"
-#include "control/stockdlg/XojOpenDlg.h"
-#include "gui/widgets/PopupMenuButton.h"
-#include "model/FormatDefinitions.h"
-#include "util/PathUtil.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include <gdk/gdk.h>      // for GdkRGBA
+#include <glib-object.h>  // for G_CALLBACK, g_signal_c...
 
-#include "FormatDialog.h"
-#include "filesystem.h"
-using std::ofstream;
+#include "control/pagetype/PageTypeHandler.h"  // for PageTypeInfo, PageType...
+#include "control/settings/Settings.h"         // for Settings
+#include "control/stockdlg/XojOpenDlg.h"       // for XojOpenDlg
+#include "gui/widgets/PopupMenuButton.h"       // for PopupMenuButton
+#include "model/FormatDefinitions.h"           // for FormatUnits, XOJ_UNITS
+#include "util/Color.h"                        // for GdkRGBA_to_argb, rgb_t...
+#include "util/PathUtil.h"                     // for fromGFilename, readString
+#include "util/i18n.h"                         // for _
+
+#include "FormatDialog.h"  // for FormatDialog
+#include "filesystem.h"    // for path
+
+class GladeSearchpath;
 
 PageTemplateDialog::PageTemplateDialog(GladeSearchpath* gladeSearchPath, Settings* settings, PageTypeHandler* types):
         GladeGui(gladeSearchPath, "pageTemplate.glade", "templateDialog"),

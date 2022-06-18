@@ -1,20 +1,22 @@
 #include "BackgroundView.h"
 
-#include "control/PdfCache.h"
-#include "model/BackgroundConfig.h"
-#include "model/Document.h"
+#include <glib.h>  // for g_warning
 
-#include "DottedBackgroundView.h"
-#include "GraphBackgroundView.h"
-#include "ImageBackgroundView.h"
-#include "IsoDottedBackgroundView.h"
-#include "IsoGraphBackgroundView.h"
-#include "LinedBackgroundView.h"
-#include "PdfBackgroundView.h"
-#include "PlainBackgroundView.h"
-#include "RuledBackgroundView.h"
-#include "StavesBackgroundView.h"
-#include "TransparentCheckerboardBackgroundView.h"
+#include "model/PageType.h"                          // for PageType, PageTy...
+#include "model/XojPage.h"                           // for XojPage
+#include "view/background/OneColorBackgroundView.h"  // for OneColorBackgrou...
+
+#include "DottedBackgroundView.h"                   // for DottedBackground...
+#include "GraphBackgroundView.h"                    // for GraphBackgroundView
+#include "ImageBackgroundView.h"                    // for ImageBackgroundView
+#include "IsoDottedBackgroundView.h"                // for IsoDottedBackgro...
+#include "IsoGraphBackgroundView.h"                 // for IsoGraphBackgrou...
+#include "LinedBackgroundView.h"                    // for LinedBackgroundView
+#include "PdfBackgroundView.h"                      // for PdfBackgroundView
+#include "PlainBackgroundView.h"                    // for PlainBackgroundView
+#include "RuledBackgroundView.h"                    // for RuledBackgroundView
+#include "StavesBackgroundView.h"                   // for StavesBackground...
+#include "TransparentCheckerboardBackgroundView.h"  // for TransparentCheck...
 
 using namespace xoj::view;
 

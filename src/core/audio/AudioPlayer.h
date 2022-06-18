@@ -11,16 +11,17 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <memory>  // for make_unique, unique_ptr
+#include <vector>  // for vector
 
-#include "control/Control.h"
-#include "control/settings/Settings.h"
+#include "AudioQueue.h"         // for AudioQueue
+#include "PortAudioConsumer.h"  // for PortAudioConsumer
+#include "VorbisProducer.h"     // for VorbisProducer
+#include "filesystem.h"         // for path
 
-#include "AudioQueue.h"
-#include "PortAudioConsumer.h"
-#include "VorbisProducer.h"
-#include "filesystem.h"
+class Control;
+class DeviceInfo;
+class Settings;
 
 
 class AudioPlayer final {

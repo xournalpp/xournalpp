@@ -11,12 +11,15 @@
 
 #pragma once
 
-#include <cstring>
-#include <optional>
+#include <cstring>   // for strlen, size_t
+#include <optional>  // for optional
+#include <string>    // for string, allocator, basic_string
 
-#include <gio/gio.h>
+#include <gio/gio.h>    // for GFile
+#include <glib.h>       // for g_free, GError, g_error_free, g_filename_fro...
+#include <sys/types.h>  // for ssize_t
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path, u8path
 
 namespace Util {
 /**

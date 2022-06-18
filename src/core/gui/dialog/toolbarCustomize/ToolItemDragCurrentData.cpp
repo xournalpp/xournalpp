@@ -1,6 +1,11 @@
 #include "ToolItemDragCurrentData.h"
 
-#include "util/Stacktrace.h"
+#include <glib.h>  // for g_malloc, g_malloc_n, g_free, g_new
+
+#include "util/Stacktrace.h"  // for Stacktrace
+
+class AbstractToolItem;
+struct NamedColor;
 
 ToolItemDragDropData* ToolItemDragCurrentData::data = nullptr;
 

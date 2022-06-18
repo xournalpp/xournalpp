@@ -1,9 +1,11 @@
 #include "Scheduler.h"
 
-#include <cassert>
-#include <cinttypes>
+#include <cassert>    // for assert
+#include <cinttypes>  // for PRId64, uint64_t
 
-#include <config-debug.h>
+#include "control/jobs/Job.h"  // for Job, JOB_TYPE_RENDER
+
+#include "config-debug.h"  // for DEBUG_SHEDULER
 
 #ifdef DEBUG_SHEDULER
 #define SDEBUG g_message

@@ -1,6 +1,7 @@
 #include "ButtonConfig.h"
 
-#include "control/ToolHandler.h"
+#include "control/Tool.h"         // for Tool
+#include "control/ToolHandler.h"  // for ToolHandler
 
 ButtonConfig::ButtonConfig(ToolType action, Color color, ToolSize size, DrawingType drawingType,
                            EraserType eraserMode) {

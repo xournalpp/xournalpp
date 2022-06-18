@@ -1,12 +1,17 @@
 #include "AutosaveJob.h"
 
-#include "control/Control.h"
-#include "control/xojfile/SaveHandler.h"
-#include "util/PathUtil.h"
-#include "util/XojMsgBox.h"
-#include "util/i18n.h"
+#include <glib.h>  // for g_message, g_warning
 
-#include "filesystem.h"
+#include "control/Control.h"              // for Control
+#include "control/jobs/Job.h"             // for JOB_TYPE_AUTOSAVE, JobType
+#include "control/xojfile/SaveHandler.h"  // for SaveHandler
+#include "model/Document.h"               // for Document
+#include "undo/UndoRedoHandler.h"         // for UndoRedoHandler
+#include "util/PathUtil.h"                // for clearExtensions, getAutosav...
+#include "util/XojMsgBox.h"               // for XojMsgBox
+#include "util/i18n.h"                    // for FS, _F
+
+#include "filesystem.h"  // for path, u8path
 
 AutosaveJob::AutosaveJob(Control* control): control(control) {}
 

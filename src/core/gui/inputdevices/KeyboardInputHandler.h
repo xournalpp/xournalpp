@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include "AbstractInputHandler.h"  // for AbstractInputHandler
 
-#include "AbstractInputHandler.h"
+class InputContext;
+struct InputEvent;
 
 
 class KeyboardInputHandler: public AbstractInputHandler {

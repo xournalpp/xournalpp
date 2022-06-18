@@ -1,17 +1,30 @@
 #include "TextEditor.h"
 
-#include <memory>
+#include <algorithm>  // for max
+#include <cstring>    // for strcmp, size_t
+#include <memory>     // for allocator, make_unique, __shared_p...
+#include <utility>    // for move
 
-#include <gtk/gtkimmulticontext.h>
+#include <gdk/gdkkeysyms.h>  // for GDK_KEY_B, GDK_KEY_ISO_Enter, GDK_...
+#include <glib-object.h>     // for g_object_get, g_object_unref, G_CA...
 
-#include "control/Control.h"
-#include "undo/ColorUndoAction.h"
-#include "view/TextView.h"
+#include "control/Control.h"       // for Control
+#include "model/Font.h"            // for XojFont
+#include "model/PageRef.h"         // for PageRef
+#include "model/Text.h"            // for Text
+#include "model/XojPage.h"         // for XojPage
+#include "undo/ColorUndoAction.h"  // for ColorUndoAction
+#include "undo/TextUndoAction.h"   // for TextUndoAction
+#include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
+#include "util/Rectangle.h"        // for Rectangle
+#include "view/TextView.h"         // for TextView
 
-#include "PageView.h"
-#include "TextEditorWidget.h"
-#include "XournalView.h"
-#include "XournalppCursor.h"
+#include "PageView.h"          // for XojPageView
+#include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
+#include "XournalView.h"       // for XournalView
+#include "XournalppCursor.h"   // for XournalppCursor
+
+class UndoAction;
 
 using std::string;
 

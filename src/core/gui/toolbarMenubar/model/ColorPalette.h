@@ -1,12 +1,15 @@
 #pragma once
 
-#include <map>
-#include <string>
-#include <vector>
+#include <cstddef>    // for size_t
+#include <exception>  // for exception
+#include <iosfwd>     // for istream
+#include <map>        // for map
+#include <string>     // for string, basic_string
+#include <vector>     // for vector
 
-#include "util/NamedColor.h"
+#include "util/NamedColor.h"  // for NamedColor
 
-#include "filesystem.h"
+#include "filesystem.h"  // for path
 
 /**
  * @brief Header entity of a gpl file

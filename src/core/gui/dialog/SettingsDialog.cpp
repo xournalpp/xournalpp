@@ -1,20 +1,34 @@
 #include "SettingsDialog.h"
 
-#include <utility>
+#include <algorithm>    // for max
+#include <cstddef>      // for NULL, size_t
+#include <type_traits>  // for __underlying_type_im...
 
-#include <config.h>
+#include <gdk/gdk.h>      // for GdkRGBA, GdkRectangle
+#include <glib-object.h>  // for G_CALLBACK, g_signal...
 
-#include "control/DeviceListHelper.h"
-#include "control/tools/StrokeStabilizerEnum.h"
-#include "gui/XournalView.h"
-#include "gui/widgets/ZoomCallib.h"
-#include "util/PathUtil.h"
-#include "util/StringUtils.h"
-#include "util/Util.h"
-#include "util/i18n.h"
+#include "control/AudioController.h"             // for AudioController
+#include "control/Control.h"                     // for Control
+#include "control/DeviceListHelper.h"            // for getDeviceList, Input...
+#include "control/settings/Settings.h"           // for Settings, SElement
+#include "control/settings/SettingsEnums.h"      // for STYLUS_CURSOR_ARROW
+#include "control/tools/StrokeStabilizerEnum.h"  // for AveragingMethod, Pre...
+#include "gui/MainWindow.h"                      // for MainWindow
+#include "gui/XournalView.h"                     // for XournalView
+#include "gui/dialog/DeviceClassConfigGui.h"     // for DeviceClassConfigGui
+#include "gui/dialog/LanguageConfigGui.h"        // for LanguageConfigGui
+#include "gui/dialog/LatexSettingsPanel.h"       // for LatexSettingsPanel
+#include "gui/widgets/ZoomCallib.h"              // for zoomcallib_new, zoom...
+#include "util/Color.h"                          // for GdkRGBA_to_argb, rgb...
+#include "util/PathUtil.h"                       // for fromGFile, toGFilename
+#include "util/StringUtils.h"                    // for StringUtils
+#include "util/Util.h"                           // for systemWithMessage
+#include "util/i18n.h"                           // for _
 
-#include "ButtonConfigGui.h"
-#include "filesystem.h"
+#include "ButtonConfigGui.h"  // for ButtonConfigGui
+#include "filesystem.h"       // for is_directory
+
+class GladeSearchpath;
 
 using std::string;
 using std::vector;

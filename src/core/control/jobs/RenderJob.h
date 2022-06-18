@@ -11,17 +11,15 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include <gtk/gtk.h>
-
-#include "util/Rectangle.h"
-
-#include "Job.h"
-
+#include "Job.h"  // for Job, JobType
 
 class XojPageView;
+namespace xoj::util {
+template <class T>
+class Rectangle;
+}  // namespace xoj::util
 
 class RenderJob: public Job {
 public:

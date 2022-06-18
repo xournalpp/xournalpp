@@ -11,13 +11,10 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include "PenInputHandler.h"
-
+#include "PenInputHandler.h"  // for PenInputHandler
 
 class InputContext;
+struct InputEvent;
 
 class StylusInputHandler: public PenInputHandler {
 public:

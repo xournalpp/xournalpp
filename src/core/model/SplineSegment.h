@@ -11,14 +11,12 @@
 
 #pragma once
 
-#include <list>
+#include <list>     // for list
+#include <utility>  // for pair
 
-#include <gtk/gtk.h>
+#include <cairo.h>  // for cairo_t
 
-#include "util/Point.h"
-
-#include "Element.h"
-#include "Stroke.h"
+#include "model/Point.h"  // for Point
 
 
 /**

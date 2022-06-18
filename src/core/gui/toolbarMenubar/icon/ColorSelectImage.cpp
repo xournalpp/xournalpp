@@ -1,8 +1,10 @@
 #include "ColorSelectImage.h"
 
-#include <cmath>
+#include <cmath>  // for M_PI
 
-#include "util/pixbuf-utils.h"
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+
+#include "util/pixbuf-utils.h"  // for xoj_pixbuf_get_from_surface
 
 ColorSelectImage::ColorSelectImage(Color color, bool circle): color(color), circle(circle) {
     widget = gtk_drawing_area_new();

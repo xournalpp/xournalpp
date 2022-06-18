@@ -1,22 +1,40 @@
 #include "StrokeHandler.h"
 
-#include <cmath>
-#include <memory>
+#include <algorithm>  // for max, min
+#include <cassert>    // for assert
+#include <cfloat>     // for DBL_EPSILON
+#include <cmath>      // for ceil, pow, abs
+#include <memory>     // for unique_ptr, mak...
+#include <utility>    // for move
+#include <vector>     // for vector
 
-#include <gdk/gdk.h>
+#include <gdk/gdk.h>  // for GdkEventKey
 
-#include "control/Control.h"
-#include "control/layer/LayerController.h"
-#include "control/settings/Settings.h"
-#include "control/shaperecognizer/ShapeRecognizer.h"
-#include "gui/PageView.h"
-#include "gui/XournalView.h"
-#include "undo/InsertUndoAction.h"
-#include "undo/RecognizerUndoAction.h"
-#include "view/StrokeView.h"
+#include "control/Control.h"                          // for Control
+#include "control/ToolEnums.h"                        // for DRAWING_TYPE_ST...
+#include "control/ToolHandler.h"                      // for ToolHandler
+#include "control/layer/LayerController.h"            // for LayerController
+#include "control/settings/Settings.h"                // for Settings
+#include "control/shaperecognizer/ShapeRecognizer.h"  // for ShapeRecognizer
+#include "control/tools/InputHandler.h"               // for InputHandler::P...
+#include "control/tools/SnapToGridInputHandler.h"     // for SnapToGridInput...
+#include "gui/PageView.h"                             // for XojPageView
+#include "gui/XournalView.h"                          // for XournalView
+#include "gui/inputdevices/PositionInputData.h"       // for PositionInputData
+#include "model/Layer.h"                              // for Layer
+#include "model/LineStyle.h"                          // for LineStyle
+#include "model/Stroke.h"                             // for Stroke, STROKE_...
+#include "model/XojPage.h"                            // for XojPage
+#include "undo/InsertUndoAction.h"                    // for InsertUndoAction
+#include "undo/RecognizerUndoAction.h"                // for RecognizerUndoA...
+#include "undo/UndoRedoHandler.h"                     // for UndoRedoHandler
+#include "util/Color.h"                               // for cairo_set_sourc...
+#include "util/Range.h"                               // for Range
+#include "util/Rectangle.h"                           // for Rectangle, util
+#include "view/StrokeView.h"                          // for StrokeView, Str...
+#include "view/View.h"                                // for Context
 
-#include "StrokeStabilizer.h"
-#include "config-features.h"
+#include "StrokeStabilizer.h"  // for Base, get
 
 using namespace xoj::util;
 

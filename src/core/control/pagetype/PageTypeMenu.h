@@ -11,15 +11,14 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <vector>  // for vector
 
-#include <gtk/gtk.h>
+#include <cairo.h>    // for cairo_surface_t
+#include <glib.h>     // for guint
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include "model/PageType.h"
+#include "model/PageType.h"  // for PageType
 
-
-class PageTypeHandler;
 class PageTypeHandler;
 class PageTypeInfo;
 class Settings;

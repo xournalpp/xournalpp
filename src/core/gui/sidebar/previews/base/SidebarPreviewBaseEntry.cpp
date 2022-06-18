@@ -1,10 +1,19 @@
 #include "SidebarPreviewBaseEntry.h"
 
-#include "control/Control.h"
-#include "gui/Shadow.h"
-#include "util/i18n.h"
+#include <memory>  // for __shared_ptr_access
 
-#include "SidebarPreviewBase.h"
+#include <gdk/gdk.h>      // for GdkEvent, GDK_BUTTON_PRESS
+#include <glib-object.h>  // for G_CALLBACK, g_object_ref
+
+#include "control/Control.h"                // for Control
+#include "control/jobs/XournalScheduler.h"  // for XournalScheduler
+#include "control/settings/Settings.h"      // for Settings
+#include "gui/Shadow.h"                     // for Shadow
+#include "model/XojPage.h"                  // for XojPage
+#include "util/Color.h"                     // for cairo_set_source_rgbi
+#include "util/i18n.h"                      // for _
+
+#include "SidebarPreviewBase.h"  // for SidebarPreviewBase
 
 SidebarPreviewBaseEntry::SidebarPreviewBaseEntry(SidebarPreviewBase* sidebar, const PageRef& page):
         sidebar(sidebar), page(page) {

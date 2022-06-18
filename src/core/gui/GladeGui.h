@@ -11,11 +11,10 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <string>  // for string
 
-#include <gtk/gtk.h>
-
+#include <gdk/gdk.h>  // for GdkWindow
+#include <gtk/gtk.h>  // for GtkWidget, GtkWindow, GtkBuilder
 
 class GladeSearchpath;
 

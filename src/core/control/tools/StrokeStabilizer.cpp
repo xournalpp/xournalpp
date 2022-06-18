@@ -1,9 +1,15 @@
 #include "StrokeStabilizer.h"
 
-#include <numeric>
+#include <algorithm>  // for min
+#include <iterator>   // for begin, end
+#include <list>       // for list, operator!=
+#include <numeric>    // for accumulate
+#include <vector>     // for vector
 
-#include "control/settings/Settings.h"
-#include "model/SplineSegment.h"
+#include "control/settings/Settings.h"           // for Settings
+#include "control/tools/StrokeStabilizerEnum.h"  // for Preprocessor, Averag...
+#include "model/SplineSegment.h"                 // for SplineSegment
+#include "model/Stroke.h"                        // for Stroke
 
 /**
  * StrokeStabilizer::get

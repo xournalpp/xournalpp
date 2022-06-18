@@ -11,7 +11,11 @@
 
 #pragma once
 
-#include "Attribute.h"
+#include <string>  // for string
+
+#include "Attribute.h"  // for XMLAttribute
+
+class OutputStream;
 
 class TextAttribute: public XMLAttribute {
 public:

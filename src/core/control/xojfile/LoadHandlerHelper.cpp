@@ -10,9 +10,17 @@
  */
 #include "LoadHandlerHelper.h"
 
-#include "util/i18n.h"
+#include <cinttypes>  // for uint32_t
+#include <cstdlib>    // for strtol, strtoull
+#include <cstring>    // for strcmp, size_t, strlen
+#include <string>     // for allocator, string
 
-#include "LoadHandler.h"
+#include <glib.h>  // for g_error_new, G_MARKUP_ERROR, G_M...
+
+#include "util/PlaceholderString.h"  // for PlaceholderString
+#include "util/i18n.h"               // for FC, _F, _
+
+#include "LoadHandler.h"  // for LoadHandler, getAttribInt, getAt...
 
 #define error(...)                                                                                     \
     if (loadHandler->error == nullptr) {                                                               \

@@ -1,6 +1,9 @@
 #include "ImageView.h"
 
-#include "model/Image.h"
+#include <cairo.h>  // for cairo_image_surface_get_height, cairo_image...
+
+#include "model/Image.h"  // for Image
+#include "view/View.h"    // for Context, OPACITY_NO_AUDIO, view
 
 using namespace xoj::view;
 

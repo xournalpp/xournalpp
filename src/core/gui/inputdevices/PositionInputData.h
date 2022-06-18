@@ -12,7 +12,8 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
+#include <gdk/gdk.h>  // for GdkModifierType
+#include <glib.h>     // for guint32
 
 class PositionInputData {
 public:

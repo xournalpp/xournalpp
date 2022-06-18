@@ -1,19 +1,30 @@
 #include "Plugin.h"
+
+#include <algorithm>  // for max
+#include <array>      // for array
+#include <map>        // for map
+
+#include <gdk/gdk.h>      // for GdkModifierType
+#include <glib-object.h>  // for G_CALLBACK, g_signal_connect
+#include <glib.h>         // for g_key_file_free, g_warning, g_free
+
+#include "util/PathUtil.h"   // for toGFilename
+#include "util/XojMsgBox.h"  // for XojMsgBox
 #ifdef ENABLE_PLUGINS
 
-#include <utility>
+#include <utility>  // for move, pair
 
-#include "util/i18n.h"
+#include "util/i18n.h"  // for _
 
-#include "config.h"
+#include "config.h"  // for PROJECT_VERSION
 
 extern "C" {
-#include <lauxlib.h>
-#include <lua.h>
-#include <lualib.h>
+#include <lauxlib.h>  // for luaL_Reg, luaL_newstate, luaL_requiref
+#include <lua.h>      // for lua_getglobal, lua_getfield, lua_setf...
+#include <lualib.h>   // for luaL_openlibs
 }
 
-#include "luapi_application.h"
+#include "luapi_application.h"  // for luaopen_app
 
 /*
  ** these libs are loaded by lua.c and are readily available to any Lua

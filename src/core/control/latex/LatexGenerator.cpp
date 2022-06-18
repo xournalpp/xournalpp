@@ -1,15 +1,17 @@
 #include "LatexGenerator.h"
 
-#include <iomanip>
-#include <iterator>
-#include <regex>
-#include <sstream>
+#include <iomanip>  // for operator<<, setfill, setw
+#include <regex>    // for smatch, sregex_iterator
+#include <sstream>  // for ostringstream, basic_ost...
 
-#include <glib.h>
+#include <glib.h>     // for GError, gchar, g_error_free
+#include <poppler.h>  // for g_object_unref
 
-#include "util/PathUtil.h"
-#include "util/i18n.h"
-#include "util/serdesstream.h"
+#include "control/settings/LatexSettings.h"  // for LatexSettings
+#include "util/PathUtil.h"                   // for getLongPath
+#include "util/PlaceholderString.h"          // for PlaceholderString
+#include "util/i18n.h"                       // for FS, _F
+#include "util/serdesstream.h"               // for serdes_stream
 
 LatexGenerator::LatexGenerator(const LatexSettings& settings): settings(settings) {}
 

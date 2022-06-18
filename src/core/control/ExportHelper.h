@@ -11,14 +11,10 @@
 
 #pragma once
 
-#include <libintl.h>
 
-#include "control/jobs/ImageExport.h"
-#include "control/jobs/ProgressListener.h"
-#include "control/xojfile/LoadHandler.h"
-#include "pdf/base/XojPdfExport.h"
-#include "pdf/base/XojPdfExportFactory.h"
-#include "util/i18n.h"
+#include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType
+
+class Document;
 
 namespace ExportHelper {
 

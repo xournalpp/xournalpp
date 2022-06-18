@@ -1,10 +1,12 @@
 #include "BackgroundConfig.h"
 
-#include <sstream>
-#include <utility>
+#include <cstddef>  // for size_t
+#include <sstream>  // for istringstream, basic_ios::imbue, basi...
+#include <utility>  // for pair
+#include <vector>   // for vector
 
-#include "util/StringUtils.h"
-#include "util/serdesstream.h"
+#include "util/StringUtils.h"   // for StringUtils
+#include "util/serdesstream.h"  // for serdes_stream
 
 using std::string;
 

@@ -11,12 +11,6 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
-#include <gtk/gtk.h>
-
-
 class SidebarPreviewBase;
 
 class SidebarLayout {

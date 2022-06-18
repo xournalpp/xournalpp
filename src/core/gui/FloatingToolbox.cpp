@@ -1,13 +1,19 @@
 #include "FloatingToolbox.h"
 
-#include <gdk/gdk.h>
+#include <algorithm>  // for max
+#include <memory>     // for allocator
 
-#include "control/Control.h"
-#include "control/settings/ButtonConfig.h"
+#include <gdk/gdk.h>      // for GdkRectangle, GDK_LEAVE_...
+#include <glib-object.h>  // for G_CALLBACK, g_signal_con...
 
-#include "GladeGui.h"
-#include "MainWindow.h"
-#include "ToolbarDefinitions.h"
+#include "control/Control.h"                 // for Control
+#include "control/ToolEnums.h"               // for TOOL_FLOATING_TOOLBOX
+#include "control/settings/ButtonConfig.h"   // for ButtonConfig
+#include "control/settings/Settings.h"       // for Settings
+#include "control/settings/SettingsEnums.h"  // for BUTTON_COUNT
+
+#include "MainWindow.h"          // for MainWindow
+#include "ToolbarDefinitions.h"  // for ToolbarEntryDefintion
 
 
 FloatingToolbox::FloatingToolbox(MainWindow* theMainWindow, GtkOverlay* overlay) {

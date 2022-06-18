@@ -11,19 +11,19 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
+#include <optional>  // for optional
 
-#include <gtk/gtk.h>
+#include <cairo.h>    // for cairo_t
+#include <gdk/gdk.h>  // for GdkEventKey
 
-#include "gui/inputdevices/PositionInputData.h"
-#include "model/PageRef.h"
-#include "view/StrokeView.h"
+#include "model/PageRef.h"    // for PageRef
+#include "view/StrokeView.h"  // for StrokeView
 
 class Point;
 class Stroke;
 class XournalView;
 class XojPageView;
+class PositionInputData;
 
 /**
  * @brief A base class to handle pointer input

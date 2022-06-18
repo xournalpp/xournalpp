@@ -1,10 +1,14 @@
 #include "SearchControl.h"
 
-#include <utility>
+#include <algorithm>  // for min
+#include <memory>     // for __shared_ptr_access
+#include <utility>    // for move
 
-#include "model/Layer.h"
-#include "model/Text.h"
-#include "view/TextView.h"
+#include "model/Element.h"  // for Element, ELEMENT_TEXT
+#include "model/Layer.h"    // for Layer
+#include "model/Text.h"     // for Text
+#include "model/XojPage.h"  // for XojPage
+#include "view/TextView.h"  // for TextView
 
 using std::string;
 

@@ -1,5 +1,7 @@
 #include "util/Range.h"
 
+#include <algorithm>  // for max, min
+
 Range::Range(double x, double y) {
     this->x1 = x;
     this->x2 = x;

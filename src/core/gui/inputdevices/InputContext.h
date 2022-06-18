@@ -12,30 +12,26 @@
 #pragma once
 
 
-#include <memory>
-#include <set>
-#include <string>
-#include <vector>
+#include <memory>  // for unique_ptr
+#include <set>     // for set
+#include <string>  // for string
 
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
+#include <gdk/gdk.h>  // for GdkEvent, GdkModifierType
+#include <glib.h>     // for gulong
+#include <gtk/gtk.h>  // for GtkWidget
 
-#include "control/Control.h"
-#include "control/ToolHandler.h"
-#include "gui/XournalView.h"
-#include "gui/scroll/ScrollHandling.h"
-#include "gui/widgets/XournalWidget.h"
-
-#include "AbstractInputHandler.h"
-#include "HandRecognition.h"
-#include "KeyboardInputHandler.h"
-#include "MouseInputHandler.h"
-#include "StylusInputHandler.h"
-#include "TouchDrawingInputHandler.h"
-#include "TouchInputHandler.h"
-#include "config-debug.h"
+#include "gui/widgets/XournalWidget.h"  // for GtkXournal
 
 class SetsquareInputHandler;
+class KeyboardInputHandler;
+class MouseInputHandler;
+class ScrollHandling;
+class Settings;
+class StylusInputHandler;
+class ToolHandler;
+class TouchDrawingInputHandler;
+class TouchInputHandler;
+class XournalView;
 
 class InputContext {
 
