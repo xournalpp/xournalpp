@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-16 10:48+0000\n"
-"PO-Revision-Date: 2022-06-18 11:59\n"
+"PO-Revision-Date: 2022-06-18 19:24\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -552,7 +552,7 @@ msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
 msgstr "Esporta FILE come file immagine (uno per pagina)\n"
-"                                 Stima il formato di output dall'estensione di IMGFILE\n"
+"                                 Stima il formato di uscita dall'estensione di IMGFILE\n"
 "                                 Formati supportati: .png, .svg"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:17
@@ -700,7 +700,7 @@ msgstr "Forza alla Griglia"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:42
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "GtkSourceView è stato disabilitato durante la creazione di Xournal++! Alcune opzioni non saranno disponibili."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:485
@@ -772,7 +772,7 @@ msgstr "Vai a Pagina (prima Pagina: 1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:37
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "Tema editor LaTeX:"
 
 #: ../src/core/control/LatexController.cpp:222
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -2012,7 +2012,7 @@ msgstr "<i>Specificare i comandi che verranno eseguiti quando si attiva il ricon
 msgid "<i>Specify the audio devices used for recording and playback of audio attachments.\n"
 "If available select <small><tt>pulse</tt></small> as input / output device.</i>"
 msgstr "<i>Specifica i dispositivi audio usati per la registrazione e riproduzione degli allegati audio.\n"
-"Se disponibile, scegli <small><tt>pulse</tt></small> come dispositivo di input/output.</i>"
+"Se disponibile, scegli <small><tt>pulse</tt></small> come dispositivo di entrata/uscita.</i>"
 
 #: ../ui/settings.glade:1805
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
@@ -2512,7 +2512,7 @@ msgstr "Spostamento della prima pagina "
 
 #: ../ui/latexSettings.glade:517
 msgid "Font: "
-msgstr ""
+msgstr "Carattere: "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
@@ -2914,7 +2914,7 @@ msgstr "Prestazioni"
 
 #: ../ui/latexSettings.glade:532
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "Scegli il carattere dell'editor"
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3194,7 +3194,7 @@ msgstr "B_arre degli Strumenti"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "Sorgente TeX"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
@@ -3283,7 +3283,7 @@ msgstr "Usa le icone Stock disponibili (richiede riavvio)"
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
-msgstr ""
+msgstr "Usa il tipo di carattere del sistema."
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
@@ -3355,7 +3355,7 @@ msgstr "Con aiuto da parte della community"
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "A capo automatico"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
