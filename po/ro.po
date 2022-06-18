@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-16 10:48+0000\n"
-"PO-Revision-Date: 2022-06-18 18:26\n"
+"PO-Revision-Date: 2022-06-18 19:24\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -3351,7 +3351,7 @@ msgstr "Cu ajutorul comunității"
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "Automat pe un rând nou"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
