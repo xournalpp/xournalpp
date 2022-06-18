@@ -14,19 +14,20 @@
 #include <memory>  // for make_unique, unique_ptr
 #include <vector>  // for vector
 
-#include "AudioQueue.h"         // for AudioQueue
-#include "PortAudioConsumer.h"  // for PortAudioConsumer
-#include "VorbisProducer.h"     // for VorbisProducer
-#include "filesystem.h"         // for path
+#include "filesystem.h"  // for path
 
+template <typename T>
+class AudioQueue;
 class Control;
 class DeviceInfo;
+class PortAudioConsumer;
 class Settings;
+class VorbisProducer;
 
 
 class AudioPlayer final {
 public:
-    explicit AudioPlayer(Control& control, Settings& settings): control(control), settings(settings) {}
+    explicit AudioPlayer(Control& control, Settings& settings);
     AudioPlayer(AudioPlayer const&) = delete;
     AudioPlayer(AudioPlayer&&) = delete;
     auto operator=(AudioPlayer const&) -> AudioPlayer& = delete;
@@ -49,7 +50,7 @@ private:
     Control& control;
     Settings& settings;
 
-    std::unique_ptr<AudioQueue<float>> audioQueue = std::make_unique<AudioQueue<float>>();
-    std::unique_ptr<PortAudioConsumer> portAudioConsumer = std::make_unique<PortAudioConsumer>(*this, *audioQueue);
-    std::unique_ptr<VorbisProducer> vorbisProducer = std::make_unique<VorbisProducer>(*audioQueue);
+    std::unique_ptr<AudioQueue<float>> audioQueue;
+    std::unique_ptr<PortAudioConsumer> portAudioConsumer;
+    std::unique_ptr<VorbisProducer> vorbisProducer;
 };

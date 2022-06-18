@@ -17,11 +17,10 @@
 
 #include <portaudiocpp/PortAudioCpp.hxx>  // for AutoSystem
 
-#include "audio/AudioPlayer.h"    // for AudioPlayer
-#include "audio/AudioRecorder.h"  // for AudioRecorder
-
 #include "filesystem.h"  // for path
 
+class AudioPlayer;
+class AudioRecorder;
 class Control;
 class DeviceInfo;
 class Settings;
@@ -29,7 +28,7 @@ class Settings;
 class AudioController final {
 public:
     // Todo convert Pointers to reference (changes to control.cpp are necessary)
-    AudioController(Settings* settings, Control* control): settings(*settings), control(*control) {}
+    AudioController(Settings* settings, Control* control);
 
     bool startRecording();
     bool stopRecording();
@@ -58,8 +57,8 @@ private:
      * AudioRecorder and AudioPlayer
      * */
     portaudio::AutoSystem autoSys;
-    std::unique_ptr<AudioRecorder> audioRecorder = std::make_unique<AudioRecorder>(settings);
-    std::unique_ptr<AudioPlayer> audioPlayer = std::make_unique<AudioPlayer>(control, settings);
+    std::unique_ptr<AudioRecorder> audioRecorder;
+    std::unique_ptr<AudioPlayer> audioPlayer;
 
     fs::path audioFilename;
     size_t timestamp = 0;
