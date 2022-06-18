@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-16 10:48+0000\n"
-"PO-Revision-Date: 2022-06-17 21:03\n"
+"PO-Revision-Date: 2022-06-18 17:25\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -3194,7 +3194,7 @@ msgstr "Sursa TeX"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
-msgstr "Configurare a fișierului modelului"
+msgstr "Configurarea fișierului modelului"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
