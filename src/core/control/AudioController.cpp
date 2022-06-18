@@ -8,6 +8,7 @@
 #include <glib.h>  // for g_get_monotonic_time
 
 #include "audio/AudioPlayer.h"                   // for AudioPlayer
+#include "audio/AudioRecorder.h"                 // for AudioRecorder
 #include "audio/DeviceInfo.h"                    // for DeviceInfo
 #include "control/Control.h"                     // for Control
 #include "control/settings/Settings.h"           // for Settings
@@ -19,6 +20,13 @@
 
 using std::string;
 using std::vector;
+
+AudioController::AudioController(Settings* settings, Control* control):
+        settings(*settings),
+        control(*control),
+        audioRecorder(std::make_unique<AudioRecorder>(*settings)),
+        audioPlayer(std::make_unique<AudioPlayer>(*control, *settings)) {}
+
 
 auto AudioController::startRecording() -> bool {
     if (!this->isRecording()) {

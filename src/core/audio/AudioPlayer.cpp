@@ -9,6 +9,13 @@
 
 class Settings;
 
+AudioPlayer::AudioPlayer(Control& control, Settings& settings):
+        control(control),
+        settings(settings),
+        audioQueue(std::make_unique<AudioQueue<float>>()),
+        portAudioConsumer(std::make_unique<PortAudioConsumer>(*this, *audioQueue)),
+        vorbisProducer(std::make_unique<VorbisProducer>(*audioQueue)) {}
+
 AudioPlayer::~AudioPlayer() { this->stop(); }
 
 auto AudioPlayer::start(fs::path const& file, unsigned int timestamp) -> bool {
