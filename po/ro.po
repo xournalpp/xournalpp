@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-16 10:48+0000\n"
-"PO-Revision-Date: 2022-06-18 19:24\n"
+"PO-Revision-Date: 2022-06-18 20:28\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -2716,7 +2716,7 @@ msgstr "Licenţă"
 
 #: ../ui/latexSettings.glade:401
 msgid "Line numbers"
-msgstr "Numărul rândului"
+msgstr "Numerotare rânduri"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
