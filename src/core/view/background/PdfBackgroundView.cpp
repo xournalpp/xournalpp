@@ -18,7 +18,12 @@ void PdfBackgroundView::draw(cairo_t* cr) const {
         cairo_matrix_t matrix = {0};
         cairo_get_matrix(cr, &matrix);
         assert(matrix.xx == matrix.yy && matrix.xy == 0.0 && matrix.yx == 0.0);  // Homothety matrix
-        pdfCache->render(cr, pageNo, matrix.xx, pageWidth, pageHeight);
+        double scaleX;
+        double scaleY;
+        cairo_surface_get_device_scale(cairo_get_target(cr), &scaleX, &scaleY);
+        assert(scaleX == scaleY);
+        double pixelsPerPageUnit = matrix.xx * scaleX;
+        pdfCache->render(cr, pageNo, pixelsPerPageUnit, pageWidth, pageHeight);
     } else {
         g_warning("PdfBackgroundView::draw Missing pdf cache: cannot render the pdf page");
         PdfCache::renderMissingPdfPage(cr, pageWidth, pageHeight);
