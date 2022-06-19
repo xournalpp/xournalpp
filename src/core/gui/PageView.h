@@ -21,6 +21,7 @@
 #include "model/PageListener.h"  // for PageListener
 #include "model/PageRef.h"       // for PageRef
 #include "util/Rectangle.h"      // for Rectangle
+#include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr, CairoSPtr
 
 #include "Layout.h"      // for Layout
 #include "Redrawable.h"  // for Redrawable
@@ -45,8 +46,6 @@ public:
     ~XojPageView() override;
 
 public:
-    void updatePageSize(double width, double height);
-
     void rerenderPage() override;
     void rerenderRect(double x, double y, double width, double height) override;
 
@@ -169,11 +168,6 @@ public:  // event handler
      */
     bool paintPage(cairo_t* cr, GdkRectangle* rect);
 
-    /**
-     * Does the painting, called in synchronized block
-     */
-    void paintPageSync(cairo_t* cr, GdkRectangle* rect);
-
 public:  // listener
     void rectChanged(xoj::util::Rectangle<double>& rect) override;
     void rangeChanged(Range& range) override;
@@ -181,8 +175,6 @@ public:  // listener
     void elementChanged(Element* elem) override;
 
 private:
-    void handleScrollEvent(GdkEventButton* event);
-
     void startText(double x, double y);
 
     void addRerenderRect(double x, double y, double width, double height);
@@ -229,7 +221,8 @@ private:
 
     bool selected = false;
 
-    cairo_surface_t* crBuffer = nullptr;
+    xoj::util::CairoSurfaceSPtr crBuffer;
+    std::mutex drawingMutex;
 
     bool inEraser = false;
 
@@ -251,8 +244,6 @@ private:
     std::mutex repaintRectMutex;
     std::vector<xoj::util::Rectangle<double>> rerenderRects;
     bool rerenderComplete = false;
-
-    std::mutex drawingMutex;
 
     int dispX{};  // position on display - set in Layout::layoutPages
     int dispY{};

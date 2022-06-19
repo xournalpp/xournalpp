@@ -47,10 +47,6 @@ public:
     ~XournalView() override;
 
 public:
-    bool paint(GtkWidget* widget, GdkEventExpose* event);
-
-    void requestPage(XojPageView* page);
-
     // Recalculate the layout width and height amd layout the pages with the updated layout size
     void layoutPages();
 

@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <cairo/cairo.h>  // for cairo_surface_t
 #include <gtk/gtk.h>  // for GtkWidget
 
 #include "Job.h"  // for Job, JobType
@@ -42,6 +43,8 @@ private:
     static void repaintWidget(GtkWidget* widget);
 
     void rerenderRectangle(xoj::util::Rectangle<double> const& rect);
+
+    void renderToBuffer(cairo_surface_t* buffer) const;
 
 private:
     XojPageView* view;

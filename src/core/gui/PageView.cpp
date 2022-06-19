@@ -58,6 +58,7 @@
 #include "util/Util.h"                              // for npos
 #include "util/XojMsgBox.h"                         // for XojMsgBox
 #include "util/i18n.h"                              // for FS, _, _F
+#include "view/DebugShowRepaintBounds.h"            // for IF_DEBUG_REPAINT
 
 #include "PageViewFindObjectHelper.h"  // for SelectObject, Pla...
 #include "RepaintHandler.h"            // for RepaintHandler
@@ -89,7 +90,7 @@ XojPageView::~XojPageView() {
     delete this->inputHandler;
     delete this->eraser;
     endText();
-    deleteViewBuffer();
+    deleteViewBuffer();  // Ensures the mutex is locked during the buffer's destruction
     delete this->search;
 }
 
@@ -104,7 +105,7 @@ void XojPageView::setIsVisible(bool visible) {
 }
 
 auto XojPageView::getLastVisibleTime() -> int {
-    if (this->crBuffer == nullptr) {
+    if (!this->crBuffer) {
         return -1;
     }
 
@@ -112,12 +113,8 @@ auto XojPageView::getLastVisibleTime() -> int {
 }
 
 void XojPageView::deleteViewBuffer() {
-    this->drawingMutex.lock();
-    if (this->crBuffer) {
-        cairo_surface_destroy(this->crBuffer);
-        this->crBuffer = nullptr;
-    }
-    this->drawingMutex.unlock();
+    std::lock_guard lock(this->drawingMutex);
+    this->crBuffer.reset();
 }
 
 auto XojPageView::containsPoint(int x, int y, bool local) const -> bool {
@@ -811,62 +808,41 @@ void XojPageView::drawLoadingPage(cairo_t* cr) {
     rerenderPage();
 }
 
-/**
- * Does the painting, called in synchronized block
- */
-void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect) {
-    if (this->crBuffer == nullptr) {
-        drawLoadingPage(cr);
-        return;
-    }
+auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
 
     double zoom = xournal->getZoom();
-    int dispWidth = getDisplayWidth();
-
-    cairo_save(cr);
-
-    double width = cairo_image_surface_get_width(this->crBuffer);
-
-    bool rerender = true;
-    if (width / xournal->getDpiScaleFactor() == dispWidth) {
-        rerender = false;
-    }
-
-    if (width != dispWidth) {
-        double scale = (static_cast<double>(dispWidth)) / (width);
-
-        // Scale current image to fit the zoom level
-        cairo_scale(cr, scale, scale);
-        cairo_pattern_set_filter(cairo_get_source(cr), CAIRO_FILTER_FAST);
-
-        cairo_set_source_surface(cr, this->crBuffer, 0, 0);
-
-        if (rerender) {
-            rerenderPage();
+    {
+        std::lock_guard lock(this->drawingMutex);  // Lock the mutex first
+        xoj::util::CairoSaveGuard saveGuard(cr);   // see comment at the end of the scope
+        if (!this->crBuffer) {
+            drawLoadingPage(cr);
+            return true;
         }
 
-        rect = nullptr;
-    } else {
-        cairo_set_source_surface(cr, this->crBuffer, 0, 0);
-    }
+        int dispWidth = getDisplayWidth();
+        cairo_scale(cr, zoom, zoom);
 
-    if (rect) {
-        cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
-        cairo_fill(cr);
+        double width = cairo_image_surface_get_width(this->crBuffer.get());
 
-#ifdef DEBUG_SHOW_PAINT_BOUNDS
-        cairo_set_source_rgb(cr, 1.0, 0.5, 1.0);
-        cairo_set_line_width(cr, 1. / zoom);
-        cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
-        cairo_stroke(cr);
-#endif
-    } else {
-        cairo_paint(cr);
-    }
+        if (width / xournal->getDpiScaleFactor() != dispWidth) {
+            rerenderPage();
+        }
+        cairo_set_source_surface(cr, this->crBuffer.get(), 0, 0);
 
-    cairo_restore(cr);
-
-    cairo_scale(cr, zoom, zoom);
+        if (rect) {
+            cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
+            cairo_fill(cr);
+            IF_DEBUG_REPAINT({
+                cairo_set_source_rgb(cr, 1.0, 0.5, 1.0);
+                cairo_set_line_width(cr, 1. / zoom);
+                cairo_rectangle(cr, rect->x, rect->y, rect->width, rect->height);
+                cairo_stroke(cr);
+            })
+        } else {
+            cairo_paint(cr);
+        }
+    }  // Restore the state of cr and then release the mutex
+       // restoring the state of cr ensures this->crBuffer is not longer referenced as the source in cr.
 
     /**
      * All the tool painters below follow the assumption:
@@ -874,21 +850,19 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect) {
      *
      * To anyone adding another painter here: please keep this assumption true
      */
+    xoj::util::CairoSaveGuard saveGuard(cr);
+    cairo_scale(cr, zoom, zoom);
 
     if (this->verticalSpace) {
         this->verticalSpace->paint(cr);
     }
 
     if (this->textEditor) {
-        cairo_save(cr);
         this->textEditor->paint(cr, zoom);
-        cairo_restore(cr);
     }
 
     if (this->selection) {
-        cairo_save(cr);
         this->selection->paint(cr, zoom);
-        cairo_restore(cr);
     }
 
     auto* pdfToolbox = this->xournal->getControl()->getWindow()->getPdfToolbox();
@@ -897,24 +871,12 @@ void XojPageView::paintPageSync(cairo_t* cr, GdkRectangle* rect) {
     }
 
     if (this->search) {
-        cairo_save(cr);
         this->search->paint(cr, zoom, getSelectionColor());
-        cairo_restore(cr);
     }
 
     if (this->inputHandler) {
-        cairo_save(cr);
         this->inputHandler->draw(cr);
-        cairo_restore(cr);
     }
-}
-
-auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
-    this->drawingMutex.lock();
-
-    paintPageSync(cr, rect);
-
-    this->drawingMutex.unlock();
     return true;
 }
 
@@ -926,7 +888,7 @@ auto XojPageView::isSelected() const -> bool { return selected; }
 
 auto XojPageView::getBufferPixels() -> int {
     if (crBuffer) {
-        return cairo_image_surface_get_width(crBuffer) * cairo_image_surface_get_height(crBuffer);
+        return cairo_image_surface_get_width(crBuffer.get()) * cairo_image_surface_get_height(crBuffer.get());
     }
     return 0;
 }
@@ -1017,17 +979,9 @@ void XojPageView::pageChanged() { rerenderPage(); }
 
 void XojPageView::elementChanged(Element* elem) {
     if (this->inputHandler && elem == this->inputHandler->getStroke()) {
-        this->drawingMutex.lock();
-
-        cairo_t* cr = cairo_create(this->crBuffer);
-        const double ratio = xournal->getZoom() * static_cast<double>(xournal->getDpiScaleFactor());
-        cairo_scale(cr, ratio, ratio);
-
-        this->inputHandler->draw(cr);
-
-        cairo_destroy(cr);
-
-        this->drawingMutex.unlock();
+        std::lock_guard lock(this->drawingMutex);
+        xoj::util::CairoSPtr cr(cairo_create(this->crBuffer.get()));
+        this->inputHandler->draw(cr.get());
     } else {
         rerenderElement(elem);
     }

@@ -7,16 +7,17 @@
 
 #include <cairo.h>  // for cairo_create, cairo_destroy, cairo_...
 
-#include "control/Control.h"      // for Control
-#include "control/ToolEnums.h"    // for TOOL_PLAY_OBJECT
-#include "control/ToolHandler.h"  // for ToolHandler
-#include "control/jobs/Job.h"     // for JOB_TYPE_RENDER, JobType
-#include "gui/PageView.h"         // for XojPageView
-#include "gui/XournalView.h"      // for XournalView
-#include "model/Document.h"       // for Document
-#include "util/Rectangle.h"       // for Rectangle
-#include "util/Util.h"            // for execInUiThread
-#include "view/DocumentView.h"    // for DocumentView
+#include "control/Control.h"          // for Control
+#include "control/ToolEnums.h"        // for TOOL_PLAY_OBJECT
+#include "control/ToolHandler.h"      // for ToolHandler
+#include "control/jobs/Job.h"         // for JOB_TYPE_RENDER, JobType
+#include "gui/PageView.h"             // for XojPageView
+#include "gui/XournalView.h"          // for XournalView
+#include "model/Document.h"           // for Document
+#include "util/Rectangle.h"           // for Rectangle
+#include "util/Util.h"                // for execInUiThread
+#include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr, CairoSPtr
+#include "view/DocumentView.h"        // for DocumentView
 
 using xoj::util::Rectangle;
 
@@ -25,54 +26,34 @@ RenderJob::RenderJob(XojPageView* view): view(view) {}
 auto RenderJob::getSource() -> void* { return this->view; }
 
 void RenderJob::rerenderRectangle(Rectangle<double> const& rect) {
-    double zoom = view->xournal->getZoom();
-    Document* doc = view->xournal->getDocument();
+    const double ratio = view->xournal->getZoom() * this->view->xournal->getDpiScaleFactor();
 
     /**
-     * Make sure the mask is big enough
-     * The +1 covers examples like rect.x = 0.4, rect.width = 1 and zoom = 1
-     * We need a mask of width 2 pixels for that...
+     * The +1 makes sure the mask is big enough
+     * For example, if rect.x = m + 0.9, rect.width = n + 0.2 and ratio = 1 and m and n are integers
+     * We need a mask of width n+2 pixels for that...
      **/
-    auto x = int(std::floor(rect.x * zoom));
-    auto y = int(std::floor(rect.y * zoom));
-    auto width = int(std::ceil(rect.width * zoom)) + 1;
-    auto height = int(std::ceil(rect.height * zoom)) + 1;
+    const auto x = std::floor(rect.x * ratio);
+    const auto y = std::floor(rect.y * ratio);
+    const auto width = int(std::ceil(rect.width * ratio)) + 1;
+    const auto height = int(std::ceil(rect.height * ratio)) + 1;
 
-    cairo_surface_t* rectBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
-    cairo_t* crRect = cairo_create(rectBuffer);
-    cairo_translate(crRect, -x, -y);
-    cairo_scale(crRect, zoom, zoom);
+    xoj::util::CairoSurfaceSPtr rectBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height));
+    cairo_surface_set_device_offset(rectBuffer.get(), -x, -y);
+    cairo_surface_set_device_scale(rectBuffer.get(), ratio, ratio);
 
-    DocumentView v;
-    Control* control = view->getXournal()->getControl();
-    v.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
-    v.setPdfCache(view->xournal->getCache());
+    renderToBuffer(rectBuffer.get());
 
-    doc->lock();
-    v.drawPage(view->page, crRect, false);
-    doc->unlock();
+    std::lock_guard lock(this->view->drawingMutex);
+    xoj::util::CairoSPtr crPageBuffer(cairo_create(view->crBuffer.get()));
 
-    cairo_destroy(crRect);
-
-    view->drawingMutex.lock();
-
-    cairo_t* crPageBuffer = cairo_create(view->crBuffer);
-
-    cairo_set_operator(crPageBuffer, CAIRO_OPERATOR_SOURCE);
-    cairo_set_source_surface(crPageBuffer, rectBuffer, x, y);
-    cairo_rectangle(crPageBuffer, x, y, width, height);
-    cairo_fill(crPageBuffer);
-
-    cairo_destroy(crPageBuffer);
-
-    cairo_surface_destroy(rectBuffer);
-
-    view->drawingMutex.unlock();
+    cairo_set_operator(crPageBuffer.get(), CAIRO_OPERATOR_SOURCE);
+    cairo_set_source_surface(crPageBuffer.get(), rectBuffer.get(), 0, 0);
+    cairo_rectangle(crPageBuffer.get(), rect.x, rect.y, rect.width, rect.height);
+    cairo_fill(crPageBuffer.get());
 }
 
 void RenderJob::run() {
-    double zoom = this->view->xournal->getZoom();
-
     this->view->repaintRectMutex.lock();
 
     bool rerenderComplete = this->view->rerenderComplete;
@@ -82,41 +63,20 @@ void RenderJob::run() {
 
     this->view->repaintRectMutex.unlock();
 
-    int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
+    const int dpiScaleFactor = this->view->xournal->getDpiScaleFactor();
 
-    if (rerenderComplete || dpiScaleFactor > 1) {
-        Document* doc = this->view->xournal->getDocument();
+    if (rerenderComplete) {
+        const int dispWidth = this->view->getDisplayWidth() * dpiScaleFactor;
+        const int dispHeight = this->view->getDisplayHeight() * dpiScaleFactor;
+        const double ratio = this->view->xournal->getZoom() * dpiScaleFactor;
 
-        int dispWidth = this->view->getDisplayWidth();
-        int dispHeight = this->view->getDisplayHeight();
+        xoj::util::CairoSurfaceSPtr newBuffer(cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight));
+        cairo_surface_set_device_scale(newBuffer.get(), ratio, ratio);
 
-        dispWidth *= dpiScaleFactor;
-        dispHeight *= dpiScaleFactor;
-        zoom *= dpiScaleFactor;
+        renderToBuffer(newBuffer.get());
 
-        cairo_surface_t* crBuffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, dispWidth, dispHeight);
-        cairo_t* cr2 = cairo_create(crBuffer);
-        cairo_scale(cr2, zoom, zoom);
-
-        doc->lock();
-
-        Control* control = view->getXournal()->getControl();
-        DocumentView localView;
-        localView.setMarkAudioStroke(control->getToolHandler()->getToolType() == TOOL_PLAY_OBJECT);
-        localView.setPdfCache(this->view->xournal->getCache());
-        localView.drawPage(this->view->page, cr2, false);
-
-        cairo_destroy(cr2);
-
-        this->view->drawingMutex.lock();
-
-        if (this->view->crBuffer) {
-            cairo_surface_destroy(this->view->crBuffer);
-        }
-        this->view->crBuffer = crBuffer;
-
-        this->view->drawingMutex.unlock();
-        doc->unlock();
+        std::lock_guard lock(this->view->drawingMutex);
+        std::swap(this->view->crBuffer, newBuffer);
     } else {
         for (Rectangle<double> const& rect: rerenderRects) { rerenderRectangle(rect); }
     }
@@ -124,6 +84,19 @@ void RenderJob::run() {
     // Schedule a repaint of the widget
     repaintWidget(this->view->getXournal()->getWidget());
 }
+
+void RenderJob::renderToBuffer(cairo_surface_t* buffer) const {
+    xoj::util::CairoSPtr crRect(cairo_create(buffer));
+
+    DocumentView localView;
+    localView.setMarkAudioStroke(this->view->getXournal()->getControl()->getToolHandler()->getToolType() ==
+                                 TOOL_PLAY_OBJECT);
+    localView.setPdfCache(this->view->xournal->getCache());
+
+    std::lock_guard<Document> lock(*this->view->xournal->getDocument());
+    localView.drawPage(this->view->page, crRect.get(), false);
+}
+
 
 /**
  * Repaint the widget in UI Thread
