@@ -109,6 +109,16 @@ stages:
               ./build-app.sh /Users/xournal-dev/gtk
             workingDirectory: ./mac-setup
             displayName: 'Create App'
+          - task: InstallAppleCertificate@2
+            inputs:
+              certSecureFile: 'certificate.p12'
+              certPwd: '$(P12password)'
+            displayName: 'Install certificate'
+          - task: Xcode@5
+            inputs:
+              signingOption: 'manual'
+              signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
+            displayName: 'Sign app bundle'
           - task: PublishPipelineArtifact@0
             inputs:
               artifactName: 'macOS'
