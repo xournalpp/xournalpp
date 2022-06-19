@@ -6,6 +6,7 @@
 #include "util/SmallVector.h"
 #include "util/TinyVector.h"
 
+namespace {
 class TestData {
 public:
     TestData() { nbData++; };
@@ -36,6 +37,7 @@ public:
     static int nbData;
 };
 int TestData::nbData = 0;
+};  // namespace
 
 TEST(UtilsVectors, testTinyVector) {
     TestData::nbData = 0;
