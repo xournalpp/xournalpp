@@ -37,6 +37,8 @@ stages:
             workingDirectory: ./build
             condition: or(eq(variables['Build.Reason'], 'IndividualCI'), ne(variables['runForRelease'], 'False')) # Run for non-scheduled (release)
   - stage: Release
+    variables:
+    - group: code-signing-group
     jobs:
       - template: jobs/release_ubuntu.yml
         parameters:
@@ -109,16 +111,37 @@ stages:
               ./build-app.sh /Users/xournal-dev/gtk
             workingDirectory: ./mac-setup
             displayName: 'Create App'
-          - task: InstallAppleCertificate@2
+          - task: DownloadSecureFile@1
+            name: cert
             inputs:
-              certSecureFile: 'certificate.p12'
-              certPwd: '$(P12password)'
-            displayName: 'Install certificate'
-          - task: Xcode@5
+              secureFile: 'code-signing-certificate-macos.p12'
+            displayName: 'Download code signing certificate'
+          - task: DownloadSecureFile@1
+            name: cert_ca
             inputs:
-              signingOption: 'manual'
-              signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
-            displayName: 'Sign app bundle'
+              secureFile: 'code-signing-certificate-ca-macos.p12'
+            displayName: 'Download code signing certificate authority'
+          - task: DownloadSecureFile@1
+            name: apple_cert
+            inputs:
+              secureFile: 'AppleWWDRCA.cer'
+            displayName: 'Download Apple certificate'
+          - bash: |
+              set -x
+              security create-keychain -p "" build.keychain
+              security default-keychain -s build.keychain
+              security unlock-keychain -p "" build.keychain
+              security set-keychain-settings build.keychain
+              security import '$(cert.secureFilePath)' -k build.keychain -P $(P12password) -T /usr/bin/codesign
+              security import '$(cert_ca.secureFilePath)' -k build.keychain -P $(P12password) -T /usr/bin/codesign
+              security import '$(apple_cert.secureFilePath)' -k build.keychain -T /usr/bin/codesign
+              security list-keychains -s build.keychain
+              security find-identity
+              security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
+              codesign -s Xournal++ -f Xournal++.app
+              codesign -dv Xournal++.app
+            workingDirectory: ./mac-setup
+            displayName: 'Import certificate and sign app bundle'
           - task: PublishPipelineArtifact@0
             inputs:
               artifactName: 'macOS'
