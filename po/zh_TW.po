@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-16 10:48+0000\n"
-"PO-Revision-Date: 2022-06-16 10:50\n"
+"PO-Revision-Date: 2022-06-20 06:55\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -62,7 +62,7 @@ msgstr "插入/編輯TeX"
 
 #: ../src/core/control/XournalMain.cpp:637
 msgid "Advanced export options"
-msgstr "進階輸出選項"
+msgstr "進階匯出選項"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:36
 msgid "All files"
@@ -407,7 +407,7 @@ msgstr "繪製箭頭"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "繪製雙箭頭"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:127
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:33
@@ -3186,7 +3186,7 @@ msgstr "工具條(_o)"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "TeX源碼"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
@@ -3271,7 +3271,7 @@ msgstr "將所選文字加上底線"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "使用可用的原生圖示 (需要重啟)"
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
@@ -3347,7 +3347,7 @@ msgstr "来自社區的幫忙"
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "文字折行"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
