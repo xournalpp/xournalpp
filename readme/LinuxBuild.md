@@ -53,7 +53,7 @@ libgtksourceview-4-dev
 #### For openSUSE:
 ```bash
 sudo zypper install cmake gtk3-devel portaudio-devel libsndfile-devel \
-texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-lgi \
+texlive-dvipng texlive libxml2-devel libpoppler-glib-devel libzip-devel librsvg-devel lua-devel lua-lgi \
 gtksourceview4-devel
 ```
 
