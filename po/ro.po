@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-21 06:18+0000\n"
-"PO-Revision-Date: 2022-06-21 06:25\n"
+"PO-Revision-Date: 2022-06-22 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -1307,7 +1307,7 @@ msgstr "Schimbă această pagină cu cea de dedesubt"
 
 #: ../src/core/gui/dialog/LanguageConfigGui.cpp:46
 msgid "System Default"
-msgstr "Prestabilit de sistem"
+msgstr "Limba sistemului"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:91
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:464
