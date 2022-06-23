@@ -1,0 +1,30 @@
+steps:
+  - task: DownloadSecureFile@1
+    name: cert
+    inputs:
+      secureFile: 'code-signing-certificate-macos.p12'
+      displayName: 'Download code signing certificate'
+  - task: DownloadSecureFile@1
+    name: cert_ca
+    inputs:
+      secureFile: 'code-signing-certificate-ca-macos.p12'
+    displayName: 'Download code signing certificate authority'
+  - bash: |
+      set -x
+      security create-keychain -p "" build.keychain
+      security default-keychain -s build.keychain
+      security unlock-keychain -p "" build.keychain
+      security set-keychain-settings build.keychain
+      curl -L -O https://www.apple.com/certificateauthority/AppleWWDRCA.cer
+      sudo security add-trusted-cert -d -r trustRoot -k build.keychain AppleWWDRCA.cer
+      sudo security add-trusted-cert -d -r trustRoot -k System.keychain AppleWWDRCA.cer
+      security import '$(cert.secureFilePath)' -k build.keychain -P $(P12password) -T /usr/bin/codesign
+      security import '$(cert_ca.secureFilePath)' -k build.keychain -P $(P12password) -T /usr/bin/codesign
+      security list-keychains -s build.keychain
+      security find-identity -p codesigning
+      security find-identity -p sys-kerberos-kdc
+      security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
+      sudo codesign -s Xournal++ -f Xournal++.app
+      codesign -dv Xournal++.app
+    workingDirectory: ./mac-setup
+    displayName: 'Import certificates and sign app bundle'

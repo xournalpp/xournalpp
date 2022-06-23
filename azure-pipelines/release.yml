@@ -45,6 +45,8 @@ stages:
             workingDirectory: ./build
             condition: or(eq(variables['Build.Reason'], 'IndividualCI'), ne(variables['runForRelease'], 'False')) # Run for non-scheduled (release)
   - stage: Release
+    variables:
+    - group: code-signing-group
     jobs:
       - template: jobs/release_ubuntu.yml
         parameters:
@@ -117,16 +119,7 @@ stages:
               ./build-app.sh /Users/xournal-dev/gtk
             workingDirectory: ./mac-setup
             displayName: 'Create App'
-          - task: InstallAppleCertificate@2
-            inputs:
-              certSecureFile: 'certificate.p12'
-              certPwd: '$(P12password)'
-            displayName: 'Install certificate'
-          - task: Xcode@5
-            inputs:
-              signingOption: 'manual'
-              signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
-            displayName: 'Sign app bundle'
+          - template: steps/codesigning_mac.yml
           - task: PublishPipelineArtifact@0
             inputs:
               artifactName: 'macOS'

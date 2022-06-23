@@ -111,37 +111,7 @@ stages:
               ./build-app.sh /Users/xournal-dev/gtk
             workingDirectory: ./mac-setup
             displayName: 'Create App'
-          - task: DownloadSecureFile@1
-            name: cert
-            inputs:
-              secureFile: 'code-signing-certificate-macos.p12'
-            displayName: 'Download code signing certificate'
-          - task: DownloadSecureFile@1
-            name: cert_ca
-            inputs:
-              secureFile: 'code-signing-certificate-ca-macos.p12'
-            displayName: 'Download code signing certificate authority'
-          - task: DownloadSecureFile@1
-            name: apple_cert
-            inputs:
-              secureFile: 'AppleWWDRCA.cer'
-            displayName: 'Download Apple certificate'
-          - bash: |
-              set -x
-              security create-keychain -p "" build.keychain
-              security default-keychain -s build.keychain
-              security unlock-keychain -p "" build.keychain
-              security set-keychain-settings build.keychain
-              security import '$(cert.secureFilePath)' -k build.keychain -P $(P12password) -T /usr/bin/codesign
-              security import '$(cert_ca.secureFilePath)' -k build.keychain -P $(P12password) -T /usr/bin/codesign
-              security import '$(apple_cert.secureFilePath)' -k build.keychain -T /usr/bin/codesign
-              security list-keychains -s build.keychain
-              security find-identity
-              security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
-              codesign -s Xournal++ -f Xournal++.app
-              codesign -dv Xournal++.app
-            workingDirectory: ./mac-setup
-            displayName: 'Import certificate and sign app bundle'
+          - template: steps/codesigning_mac.yml
           - task: PublishPipelineArtifact@0
             inputs:
               artifactName: 'macOS'
