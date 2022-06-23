@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-21 06:18+0000\n"
-"PO-Revision-Date: 2022-06-21 06:25\n"
+"PO-Revision-Date: 2022-06-23 10:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -517,7 +517,7 @@ msgstr "自動儲存時發生錯誤：{1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:162
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "PDF 背景匯出錯誤：找不到頁碼 "
 
 #: ../src/util/Util.cpp:78
 msgid "Error {1} executing system command: {2}"
@@ -697,7 +697,7 @@ msgstr "網格固定"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "建立 Xournal++ 時已關閉 GtkSourceView！有些選項可能會無法使用。"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
@@ -769,7 +769,7 @@ msgstr "跳到頁面(第一頁:1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "LaTeX 編輯器主題："
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -951,19 +951,19 @@ msgstr "頁碼"
 
 #: ../src/util/PageRange.cpp:95
 msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr ""
+msgstr "PageRange::parse(): 指定頁碼已超出最大頁碼。"
 
 #: ../src/util/PageRange.cpp:98
 msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "PageRange::parse(): 區段間隔必須使用遞增形式。"
 
 #: ../src/util/PageRange.cpp:91
 msgid "PageRange::parse(): invalid page range."
-msgstr ""
+msgstr "PageRange::parse(): 無效的頁面範圍"
 
 #: ../src/util/PageRange.cpp:101
 msgid "PageRange::parse(): page numbers start with 1"
-msgstr ""
+msgstr "PageRange::parse(): 頁面編號從 1 開始"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Paired pages"
@@ -1495,7 +1495,7 @@ msgstr "未保存文檔"
 
 #: ../src/core/control/jobs/ImageExport.cpp:93
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "不支援的圖像格式: "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Vertical Space"
@@ -1828,7 +1828,7 @@ msgstr "%a\t\t星期幾的缩寫 (e.g. Thu)\n"
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(需要重新啟動)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2114,7 +2114,7 @@ msgstr "作者群"
 
 #: ../ui/latexSettings.glade:415
 msgid "Auto-indent"
-msgstr ""
+msgstr "自動縮排"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2211,7 +2211,7 @@ msgstr "滾動時清除快取頁面"
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "顏色"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2219,7 +2219,7 @@ msgstr "顏色"
 
 #: ../ui/texdialog.glade:163
 msgid "Command Output"
-msgstr ""
+msgstr "指令輸出"
 
 #: ../ui/main.glade:1225
 msgid "Configure Page Template"
@@ -2399,7 +2399,7 @@ msgstr "編輯(尚未執行)"
 
 #: ../ui/latexSettings.glade:574
 msgid "Editor settings"
-msgstr ""
+msgstr "編輯器設定"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
@@ -2504,7 +2504,7 @@ msgstr "第一頁偏移 "
 
 #: ../ui/latexSettings.glade:517
 msgid "Font: "
-msgstr ""
+msgstr "字型： "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
@@ -2608,7 +2608,7 @@ msgstr "Icon Designer"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "佈景主題"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2712,7 +2712,7 @@ msgstr "授權條款"
 
 #: ../ui/latexSettings.glade:401
 msgid "Line numbers"
-msgstr ""
+msgstr "行號"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
