@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-21 06:18+0000\n"
-"PO-Revision-Date: 2022-06-22 15:59\n"
+"PO-Revision-Date: 2022-06-25 17:41\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -149,7 +149,7 @@ msgstr "Adu mai aproape"
 
 #: ../src/core/control/tools/EditSelection.cpp:383
 msgid "Bring to front"
-msgstr "Adu în prim plan"
+msgstr "Adu în prim-plan"
 
 #: ../src/core/control/Control.cpp:2149 ../src/core/control/Control.cpp:2611
 #: ../src/core/control/XournalMain.cpp:182
@@ -2175,7 +2175,7 @@ msgstr "Adu mai aproape"
 
 #: ../ui/main.glade:312
 msgid "Bring to Front"
-msgstr "Adu în prim plan"
+msgstr "Adu în prim-plan"
 
 #: ../ui/settings.glade:1017
 msgid "Buffersize"
