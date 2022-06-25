@@ -124,11 +124,18 @@ void PdfCache::render(cairo_t* cr, size_t pdfPageNo, double zoom, double pageWid
         auto* img = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
                                                static_cast<int>(std::ceil(popplerPage->getWidth() * renderZoom)),
                                                static_cast<int>(std::ceil(popplerPage->getHeight() * renderZoom)));
-        cairo_surface_set_device_scale(img, renderZoom, renderZoom);
-
+        /**
+         * We can not only rely on cairo_surface_set_device_scale here, as Poppler does not use this scale properly and
+         * renders as if 1 pixel = 1 page coordinate unit.
+         **/
         cairo_t* cr2 = cairo_create(img);
+        cairo_scale(cr2, renderZoom, renderZoom);
         popplerPage->render(cr2);
         cairo_destroy(cr2);
+
+        // but we still use it here to set the scale properly for the upcoming blitting.
+        cairo_surface_set_device_scale(img, renderZoom, renderZoom);
+
 
         cacheResult = cache(popplerPage, img, renderZoom);
     }
