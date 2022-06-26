@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-21 06:18+0000\n"
-"PO-Revision-Date: 2022-06-21 06:25\n"
+"POT-Creation-Date: 2022-06-26 06:29+0000\n"
+"PO-Revision-Date: 2022-06-26 06:40\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -906,7 +906,7 @@ msgstr "تصدير PDF"
 msgid "PDF Page {1}"
 msgstr "صفحة PDF رقم {1}"
 
-#: ../src/core/control/PdfCache.cpp:147
+#: ../src/core/control/PdfCache.cpp:154
 msgid "PDF background missing"
 msgstr "خلفية PDF مفقودة"
 
