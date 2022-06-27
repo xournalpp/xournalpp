@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-26 06:29+0000\n"
-"PO-Revision-Date: 2022-06-26 06:39\n"
+"POT-Creation-Date: 2022-06-27 21:09+0000\n"
+"PO-Revision-Date: 2022-06-27 21:12\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -772,7 +772,7 @@ msgstr "Taso {1}"
 msgid "Layerstack Preview"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:790
+#: ../src/core/gui/PageView.cpp:787
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:97
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
@@ -1403,7 +1403,7 @@ msgstr ""
 msgid "Unable to open global template file at {1}. Does it exist?"
 msgstr ""
 
-#: ../src/core/gui/PageView.cpp:394
+#: ../src/core/gui/PageView.cpp:391
 msgid "Unable to play audio recording {1}"
 msgstr ""
 
