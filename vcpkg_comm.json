@@ -1,0 +1,9 @@
+{
+    "name": "xournalpp",
+    "version": "1.0",
+    "dependencies": ["atk", "cairo", "gdk-pixbuf", "pango", "glib", "gtk" ],
+    "builtin-baseline": "b03f150241107bbe9b643c47eeaf6d1bb13e5e5c",
+    "overrides": [
+        { "name": "gtk", "version": "3.22.19-4" }
+    ]
+}

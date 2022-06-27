@@ -94,12 +94,7 @@ void Image::setImage(std::string&& data) {
     g_object_unref(loader);
 }
 
-void Image::setImage(GdkPixbuf* img) {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    setImage(gdk_cairo_surface_create_from_pixbuf(img, 0, nullptr));
-#pragma GCC diagnostic pop
-}
+void Image::setImage(GdkPixbuf* img) { setImage(gdk_cairo_surface_create_from_pixbuf(img, 0, nullptr)); }
 
 void Image::setImage(cairo_surface_t* image) {
     if (this->image) {
