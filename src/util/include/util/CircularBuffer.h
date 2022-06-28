@@ -8,6 +8,10 @@
  *
  * @license GNU GPLv2 or later
  */
+#pragma once
+
+#include <vector>
+
 template <class T>
 class CircularBuffer: private std::vector<T> {
 public:

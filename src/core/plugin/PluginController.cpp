@@ -1,5 +1,6 @@
 #include "PluginController.h"
 
+#include <cassert>
 #include <memory>
 #include <tuple>
 #include <utility>

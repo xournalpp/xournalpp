@@ -17,7 +17,6 @@
 #include <deque>
 #include <limits>
 #include <mutex>
-#include <vector>
 
 template <typename T>
 class AudioQueue {

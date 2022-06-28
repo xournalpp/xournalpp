@@ -21,6 +21,7 @@
 #include "model/Image.h"
 #include "model/Stroke.h"
 #include "model/Text.h"
+#include "model/XojPage.h"
 #include "util/PathUtil.h"
 
 #include "filesystem.h"
