@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 21:09+0000\n"
-"PO-Revision-Date: 2022-06-27 21:11\n"
+"POT-Creation-Date: 2022-06-28 21:35+0000\n"
+"PO-Revision-Date: 2022-06-28 22:52\n"
 "Last-Translator: \n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -277,11 +277,11 @@ msgstr "Non se puido retirar a ferramenta {1} da Barra de ferramentas {2} na pos
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Non se puido renomear o ficheiro de autogardado de «{1}» a «{2}»: {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:74
+#: ../src/core/control/latex/LatexGenerator.cpp:81
 msgid "Could not save .tex file: {1}"
 msgstr "Non se puido gardar o ficheiro .tex: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:90
+#: ../src/core/control/latex/LatexGenerator.cpp:96
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Non foi posíbel inicial {1}: {2} (código de saída: {3})"
 
@@ -586,7 +586,7 @@ msgid "Export without ruling\n"
 msgstr "Exportar sen normas\n"
 "                                 O ficheiro exportado non ten unha norma regular\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:74
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Non se puido atopar o programa xerador LaTex na RUTA: {1}"
 
@@ -603,9 +603,13 @@ msgstr ""
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Fallou o procesamento da orde do xerador LaTeX: {1}"
+
+#: ../src/core/control/latex/LatexGenerator.cpp:59
+msgid "Failed to parse LaTeX generator path: {1}"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
