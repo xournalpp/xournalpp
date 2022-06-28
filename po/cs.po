@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 21:09+0000\n"
-"PO-Revision-Date: 2022-06-27 21:12\n"
+"POT-Creation-Date: 2022-06-28 21:35+0000\n"
+"PO-Revision-Date: 2022-06-28 22:53\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -279,11 +279,11 @@ msgstr "Nástroj {1} z panelu nástrojů {2} nelze odstranit z pozice {3}"
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nelze přejmenovat soubor automatického ukládání z \"{1}\" na \"{2}\": {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:74
+#: ../src/core/control/latex/LatexGenerator.cpp:81
 msgid "Could not save .tex file: {1}"
 msgstr "Soubor .tex nebylo možno uložit: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:90
+#: ../src/core/control/latex/LatexGenerator.cpp:96
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Nelze spustit {1}: {2} (návratový kód: {3})"
 
@@ -588,7 +588,7 @@ msgid "Export without ruling\n"
 msgstr "Exportovat bez pravítka\n"
 "                                 Exportovaný soubor nemá pravítko\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:74
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Nepodařilo se najít program na generování LaTeX v PATH: {1}"
 
@@ -605,9 +605,13 @@ msgstr "Selhalo načtení obrázku, nepovedlo se určit jeho velikost!"
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Nepovedlo se otevřít context.xml v zip archivu: \"{1}\""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Nepodařilo se zpracovat příkaz generátoru LaTeX: {1}"
+
+#: ../src/core/control/latex/LatexGenerator.cpp:59
+msgid "Failed to parse LaTeX generator path: {1}"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
