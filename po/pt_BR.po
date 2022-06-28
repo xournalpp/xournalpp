@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 21:09+0000\n"
-"PO-Revision-Date: 2022-06-27 21:12\n"
+"POT-Creation-Date: 2022-06-28 21:35+0000\n"
+"PO-Revision-Date: 2022-06-28 22:53\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -280,11 +280,11 @@ msgstr "Não foi possível remover o item de ferramenta {1} da barra de ferramen
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Não foi possível renomear o arquivo de salvamento automático de \"{1}\" para \"{2}\": {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:74
+#: ../src/core/control/latex/LatexGenerator.cpp:81
 msgid "Could not save .tex file: {1}"
 msgstr "Não foi possível salvar o arquivo .tex: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:90
+#: ../src/core/control/latex/LatexGenerator.cpp:96
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Não foi possível iniciar o {1}: {2} (Código de saída: {3})"
 
@@ -589,7 +589,7 @@ msgid "Export without ruling\n"
 msgstr "Exportar sem configurar\n"
 "                                 O arquivo exportado não tem nenhum papel configurado\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:74
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Falha ao encontrar o programa gerador de LaTeX no PATH: {1}"
 
@@ -606,9 +606,13 @@ msgstr "Falha ao carregar a imagem, não foi possível determinar o tamanho da i
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Falha ao abrir content.xml no arquivo zip: \"{1}\""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Falha ao analisar o comando do gerador LaTeX: {1}"
+
+#: ../src/core/control/latex/LatexGenerator.cpp:59
+msgid "Failed to parse LaTeX generator path: {1}"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
