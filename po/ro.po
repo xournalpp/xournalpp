@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 21:09+0000\n"
-"PO-Revision-Date: 2022-06-27 21:12\n"
+"POT-Creation-Date: 2022-06-28 21:35+0000\n"
+"PO-Revision-Date: 2022-06-28 22:53\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -280,11 +280,11 @@ msgstr "Nu s-a putut elimina instrumentul {1} din banda cu instrumente {2} pozi�
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nu s-a putut redenumi fișierul salvat automat din „{1}” în „{2}”: {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:74
+#: ../src/core/control/latex/LatexGenerator.cpp:81
 msgid "Could not save .tex file: {1}"
 msgstr "Nu s-a putut salva fișierul .tex: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:90
+#: ../src/core/control/latex/LatexGenerator.cpp:96
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "Nu s-a putut porni {1}: {2} (eroare: {3})"
 
@@ -589,7 +589,7 @@ msgid "Export without ruling\n"
 msgstr "Exportă fără liniere\n"
 "                                 Fișierul exportat nu are hârtia liniată\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:74
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Nu s-a putut găsi programul de generare LaTeX cu calea: {1}"
 
@@ -606,9 +606,13 @@ msgstr "Nu s-a putut încărca imaginea, nu s-a putut stabili mărimea imaginii!
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Nu s-a putut deschide content.xml în arhiva zip: „{1}”"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Nu s-a reușit analizarea comenzii de generare LaTeX: {1}"
+
+#: ../src/core/control/latex/LatexGenerator.cpp:59
+msgid "Failed to parse LaTeX generator path: {1}"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
