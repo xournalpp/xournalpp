@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <vector>
+
 class Element;
 
 class ElementContainer {

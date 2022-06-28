@@ -8,10 +8,10 @@
  *
  * @license GNU GPLv2 or later
  */
-
 #pragma once
+
 #include <memory>
 
-#include "XojPage.h"
+class XojPage;
 
 using PageRef = std::shared_ptr<XojPage>;

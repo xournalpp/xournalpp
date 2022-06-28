@@ -36,6 +36,7 @@
 #include "model/Stroke.h"
 #include "model/StrokeStyle.h"
 #include "model/Text.h"
+#include "model/XojPage.h"
 #include "undo/InsertUndoAction.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
