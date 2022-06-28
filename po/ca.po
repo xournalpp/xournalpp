@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 21:09+0000\n"
-"PO-Revision-Date: 2022-06-27 21:12\n"
+"POT-Creation-Date: 2022-06-28 21:35+0000\n"
+"PO-Revision-Date: 2022-06-28 22:53\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -278,11 +278,11 @@ msgstr "No s'ha pogut eliminar l'element {1} de la barra d'eines {2} a la posici
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "No s'ha pogut canviar el nom de l'arxiu de desat automàtic de \"{1}\" a \"{2}\": {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:74
+#: ../src/core/control/latex/LatexGenerator.cpp:81
 msgid "Could not save .tex file: {1}"
 msgstr "No s'ha pogut desar l'arxiu .tex: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:90
+#: ../src/core/control/latex/LatexGenerator.cpp:96
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "No s'ha pogut iniciar {1}: {2} (codi de sortida: {3})"
 
@@ -587,7 +587,7 @@ msgid "Export without ruling\n"
 msgstr "Exportar sense línies\n"
 "                                 El fitxer exportat no te línies al paper\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:74
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "No s'ha pogut trobar el programa generador LaTeX a la RUTA: {1}"
 
@@ -604,8 +604,12 @@ msgstr ""
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr ""
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
+msgstr ""
+
+#: ../src/core/control/latex/LatexGenerator.cpp:59
+msgid "Failed to parse LaTeX generator path: {1}"
 msgstr ""
 
 #: ../src/core/control/LatexController.cpp:81
