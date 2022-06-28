@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 21:09+0000\n"
-"PO-Revision-Date: 2022-06-27 21:12\n"
+"POT-Creation-Date: 2022-06-28 21:35+0000\n"
+"PO-Revision-Date: 2022-06-28 22:53\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -280,11 +280,11 @@ msgstr "Nem sikerült eltávolítani a(z) {1} eszközt a(z) {2} eszköztár {3} 
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "Nem sikerült átnevezni az automatikusan mentett fájlt erről: „{1}” erre: „{2}”: {3}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:74
+#: ../src/core/control/latex/LatexGenerator.cpp:81
 msgid "Could not save .tex file: {1}"
 msgstr "Nem sikerült elmenteni a .tex fájlt: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:90
+#: ../src/core/control/latex/LatexGenerator.cpp:96
 msgid "Could not start {1}: {2} (exit code: {3})"
 msgstr "A(z) {1} elindítása sikertelen: {2} (kilépési kód: {3})"
 
@@ -589,7 +589,7 @@ msgid "Export without ruling\n"
 msgstr "Margó nélküli exportálás\n"
 "                                 Az exportált fájl papírmargó nélküli\n"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:65
+#: ../src/core/control/latex/LatexGenerator.cpp:74
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "A LaTeX generáló program nem található a PATH helyen: {1}"
 
@@ -606,9 +606,13 @@ msgstr "Nem sikerült betölteni a képet, nem sikerült meghatározni a kép m�
 msgid "Failed to open content.xml in zip archive: \"{1}\""
 msgstr "Nem sikerült megnyitni a content.xml-fájlt a zip-archívumban: {1}"
 
-#: ../src/core/control/latex/LatexGenerator.cpp:61
+#: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
 msgstr "Hiba a LaTeX parancs értelmezése közben: {1}"
+
+#: ../src/core/control/latex/LatexGenerator.cpp:59
+msgid "Failed to parse LaTeX generator path: {1}"
+msgstr ""
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
