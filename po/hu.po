@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-28 21:35+0000\n"
-"PO-Revision-Date: 2022-06-28 22:53\n"
+"PO-Revision-Date: 2022-06-29 00:34\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -2510,7 +2510,7 @@ msgstr "Első oldal eltolás "
 
 #: ../ui/latexSettings.glade:517
 msgid "Font: "
-msgstr ""
+msgstr "Betűkészlet: "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
@@ -3281,7 +3281,7 @@ msgstr "Rendelkezésre álló részvényikonok használata (újraindítás szük
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
-msgstr ""
+msgstr "Betűkészlet használata a rendszertémából."
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
@@ -3353,7 +3353,7 @@ msgstr "A Közösségtől kapott segítséggel"
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "Szöveg körbefuttatása"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
