@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-28 21:35+0000\n"
-"PO-Revision-Date: 2022-06-29 02:11\n"
+"PO-Revision-Date: 2022-06-29 03:07\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -286,7 +286,7 @@ msgstr "Nem sikerült elmenteni a .tex fájlt: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:96
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr "A(z) {1} elindítása sikertelen: {2} (kilépési kód: {3})"
+msgstr "A(z) {1} elindítása sikertelen: {2} (visszatérési érték: {3})"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:113
 msgid "Could not undo \"{1}\"\n"
@@ -531,7 +531,7 @@ msgstr "Hiba: {1}"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:162
 msgid "Error: {1} is not a regular file. Please check your LaTeX template file settings. "
-msgstr "Hiba történt: A(z) {1} fájl nem szabályos. Ellenőrizze a LaTeX sablonfájl beállításait."
+msgstr "Hiba történt: A(z) {1} fájl nem szabályos. Kérjük, ellenőrizze a LaTeX-sablonfájl beállításokat! "
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:152
 msgid "Error: {1}. Please check the contents of {2}"
@@ -591,7 +591,7 @@ msgstr "Margó nélküli exportálás\n"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:74
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr "Nem sikerült megtalálni a LaTeX-generáló programot a PATH helyen: {1}"
+msgstr "Nem sikerült megtalálni a LaTeX-létrehozó programot a PATH helyen: {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:171
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:211
@@ -608,15 +608,15 @@ msgstr "Nem sikerült megnyitni a content.xml-fájlt a zip-archívumban: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr "Hiba a LaTeX parancs értelmezése közben: {1}"
+msgstr "Nem sikerült a LaTeX-létrehozó parancs értelmezése közben: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr "Nem sikerült a LaTeX-generáló elérési útjának elemzése: {1}"
+msgstr "Nem sikerült a LaTeX-létrehozó elérési útjának elemzése: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
-msgstr "Hiba a globális sablonfájl olvasása közben. Kérem ellenőrizze a beállításait."
+msgstr "Nem sikerült beolvasni a globális sablonfájlt. Kérjük, ellenőrizze a beállításokat!"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:108
 msgid "Failed to resolve path with the following error:\n"
@@ -663,11 +663,11 @@ msgstr "A xournalpp verzió lehívása"
 
 #: ../src/core/control/LatexController.cpp:76
 msgid "Global template file does not exist. Please check your settings."
-msgstr "A globális sablonfájl nem létezik. Kérem ellenőrizze a beállításait."
+msgstr "A globális sablonfájl nem létezik. Kérjük, ellenőrizze a beállításokat!"
 
 #: ../src/core/control/LatexController.cpp:87
 msgid "Global template file is not a regular file. Please check your settings. "
-msgstr "A globális sablonfájl nem szabályos. Kérem ellenőrizze a beállításait. "
+msgstr "A globális sablonfájl nem szabályos. Kérjük, ellenőrizze a beállításokat! "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Go to first page"
@@ -703,7 +703,7 @@ msgstr "Rács igazítása"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "A GtkSourceView le volt tiltva a Xournal++ készítésekor! Egyes kapcsolók nem lesznek elérhetők."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
@@ -779,7 +779,7 @@ msgstr "LaTeX-szerkesztő téma:"
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr "A LaTeX létrehozási közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
+msgstr "A LaTeX-létrehozó közben a következő hiba lépett fel: {1} (visszatérési érték: {2})"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:249
 msgid "Layer"
@@ -1082,7 +1082,7 @@ msgstr "SVG ábra"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:150
 msgid "Sample LaTeX file generated successfully."
-msgstr "A LaTeX-mintafájl sikeresen generálva."
+msgstr "A LaTeX-mintafájl sikeresen létrehozva."
 
 #: ../src/core/control/Control.cpp:2603 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
@@ -1481,7 +1481,7 @@ msgstr "Ismeretlen tartománytípus: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:248
 msgid "Unknown parser error"
-msgstr "Ismeretlen értelmezőhiba történt"
+msgstr "Ismeretlen elemzési hiba történt"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:418
 msgid "Unknown pixmap::domain type: {1}"
@@ -1537,7 +1537,7 @@ msgstr "Rossz számú pont, {1} kapott, várható: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:245
 msgid "XML Parser error: {1}"
-msgstr "XML-elemzőhiba történt: {1}"
+msgstr "XML-elemzési hiba történt: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
@@ -2694,7 +2694,7 @@ msgstr "LaTeX végrehajtható beállítások"
 
 #: ../ui/latexSettings.glade:265
 msgid "LaTeX generation command"
-msgstr "LaTeX létrehozási parancs"
+msgstr "LaTeX-létrehozó parancs"
 
 #: ../ui/settings.glade:5893 ../ui/settings.glade:5941
 msgid "Language"
@@ -2854,7 +2854,7 @@ msgstr "Kimeneti eszköz"
 
 #: ../ui/texdialog.glade:143
 msgid "Output generated by the LaTeX command."
-msgstr ""
+msgstr "A LaTeX parancs által előállított kimenet."
 
 #: ../ui/settings.glade:5102
 msgid "PDF Cache"
@@ -3212,7 +3212,7 @@ msgstr "Állapot vizsgálata"
 
 #: ../ui/latexSettings.glade:290
 msgid "Test if the current configuration is valid by running the LaTeX generation command on the global template file with a test formula."
-msgstr "Tesztelje, hogy a jelenlegi beállítások érvényesek-e a LaTeX létrehozási parancs futtatásával a globális sablonfájlban egy tesztképlettel."
+msgstr "Tesztelje, hogy a jelenlegi beállítások érvényesek-e a LaTeX-létrehozó parancs futtatásával a globális sablonfájlban egy tesztképlettel."
 
 #: ../ui/main.glade:1980
 msgid "Text Font..."
