@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-28 21:35+0000\n"
-"PO-Revision-Date: 2022-06-29 00:34\n"
+"PO-Revision-Date: 2022-06-29 02:11\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -591,7 +591,7 @@ msgstr "Margó nélküli exportálás\n"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:74
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr "A LaTeX generáló program nem található a PATH helyen: {1}"
+msgstr "Nem sikerült megtalálni a LaTeX-generáló programot a PATH helyen: {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:171
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:211
@@ -612,7 +612,7 @@ msgstr "Hiba a LaTeX parancs értelmezése közben: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "Nem sikerült a LaTeX-generáló elérési útjának elemzése: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
@@ -775,7 +775,7 @@ msgstr "Ugrás adott oldalra (első oldal: 1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "LaTeX-szerkesztő téma:"
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -2120,7 +2120,7 @@ msgstr "Szerzők"
 
 #: ../ui/latexSettings.glade:415
 msgid "Auto-indent"
-msgstr ""
+msgstr "Önműködő behúzás"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2225,7 +2225,7 @@ msgstr "Színek"
 
 #: ../ui/texdialog.glade:163
 msgid "Command Output"
-msgstr ""
+msgstr "Parancskimenet"
 
 #: ../ui/main.glade:1225
 msgid "Configure Page Template"
@@ -2405,7 +2405,7 @@ msgstr "Szerkesztés (még nincsen megvalósítva)"
 
 #: ../ui/latexSettings.glade:574
 msgid "Editor settings"
-msgstr ""
+msgstr "Szerkesztő beállításai"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
@@ -2718,7 +2718,7 @@ msgstr "Licenc"
 
 #: ../ui/latexSettings.glade:401
 msgid "Line numbers"
-msgstr ""
+msgstr "Sorok számozása"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2912,7 +2912,7 @@ msgstr "Teljesítmény"
 
 #: ../ui/latexSettings.glade:532
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "A szerkesztő-betűkészlet kijelölése"
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3179,7 +3179,7 @@ msgstr "Egymást követő (ezredmásodperc)"
 
 #: ../ui/latexSettings.glade:429
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Szintaxis kiemelése"
 
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
@@ -3192,7 +3192,7 @@ msgstr "_Eszköztárak"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "TeX-forrás"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
