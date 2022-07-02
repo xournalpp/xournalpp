@@ -13,10 +13,10 @@
 using xoj::util::Rectangle;
 
 void assertRangesEq(const Range& r1, const Range& r2) {
-    ASSERT_EQ(r1.getX(), r2.getX());
-    ASSERT_EQ(r1.getY(), r2.getY());
-    ASSERT_EQ(r1.getX2(), r2.getX2());
-    ASSERT_EQ(r1.getY2(), r2.getY2());
+    ASSERT_EQ(r1.minX, r2.minX);
+    ASSERT_EQ(r1.minY, r2.minY);
+    ASSERT_EQ(r1.maxX, r2.maxX);
+    ASSERT_EQ(r1.maxY, r2.maxY);
 }
 
 TEST(ErasableStroke, testOverlapTree) {
@@ -66,7 +66,7 @@ TEST(ErasableStroke, testOverlapTree) {
     // clang format on
 
     auto singlePointRangeAtCenter = [](Range range) {
-        return Range(0.5 * (range.getX() + range.getX2()), 0.5 * (range.getY() + range.getY2()));
+        return Range(0.5 * (range.minX + range.maxX), 0.5 * (range.minY + range.maxY));
     };
 
     for (size_t i = 0; i < 2; i++) {
