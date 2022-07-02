@@ -11,25 +11,37 @@
 
 #pragma once
 
+#include <limits>
 
-class Range {
+namespace xoj::util {
+template <typename Float>
+class Rectangle;
+};
+
+class Range final {
 public:
-    Range(double x, double y);
-    virtual ~Range();
+    Range() = default;  // Empty range
+    Range(double x, double y): minX(x), minY(y), maxX(x), maxY(y) {}
+    Range(double minX, double minY, double maxX, double maxY): minX(minX), minY(minY), maxX(maxX), maxY(maxY) {}
+    explicit Range(const xoj::util::Rectangle<double>& r);
 
     void addPoint(double x, double y);
 
-    double getX() const;
-    double getY() const;
-    double getWidth() const;
-    double getHeight() const;
+    [[nodiscard]] Range unite(const Range& other) const;
+    [[nodiscard]] Range intersect(const Range& other) const;
 
-    double getX2() const;
-    double getY2() const;
+    [[nodiscard]] double getX() const;
+    [[nodiscard]] double getY() const;
+    [[nodiscard]] double getWidth() const;
+    [[nodiscard]] double getHeight() const;
 
-private:
-    double x1;
-    double y1;
-    double y2;
-    double x2;
+    void addPadding(double padding);
+
+    [[nodiscard]] bool empty() const;
+    [[nodiscard]] bool isValid() const;
+
+    double minX = std::numeric_limits<double>::max();
+    double minY = std::numeric_limits<double>::max();
+    double maxX = std::numeric_limits<double>::lowest();
+    double maxY = std::numeric_limits<double>::lowest();
 };

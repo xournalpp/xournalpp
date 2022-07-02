@@ -2,32 +2,46 @@
 
 #include <algorithm>  // for max, min
 
-Range::Range(double x, double y) {
-    this->x1 = x;
-    this->x2 = x;
+#include "util/Rectangle.h"
 
-    this->y1 = y;
-    this->y2 = y;
-}
 
-Range::~Range() = default;
+Range::Range(const xoj::util::Rectangle<double>& r): minX(r.x), minY(r.y), maxX(r.x + r.width), maxY(r.y + r.height) {}
 
 void Range::addPoint(double x, double y) {
-    this->x1 = std::min(this->x1, x);
-    this->x2 = std::max(this->x2, x);
+    this->minX = std::min(this->minX, x);
+    this->maxX = std::max(this->maxX, x);
 
-    this->y1 = std::min(this->y1, y);
-    this->y2 = std::max(this->y2, y);
+    this->minY = std::min(this->minY, y);
+    this->maxY = std::max(this->maxY, y);
 }
 
-auto Range::getX() const -> double { return this->x1; }
+Range Range::unite(const Range& o) const {
+    return Range(std::min(minX, o.minX), std::min(minY, o.minY), std::max(maxX, o.maxX), std::max(maxY, o.maxY));
+}
 
-auto Range::getY() const -> double { return this->y1; }
+Range Range::intersect(const Range& o) const {
+    Range rg(std::max(minX, o.minX), std::max(minY, o.minY), std::min(maxX, o.maxX), std::min(maxY, o.maxY));
+    return rg.isValid() ? rg : Range();
+}
 
-auto Range::getWidth() const -> double { return this->x2 - this->x1; }
+auto Range::getX() const -> double { return this->minX; }
 
-auto Range::getHeight() const -> double { return this->y2 - this->y1; }
+auto Range::getY() const -> double { return this->minY; }
 
-auto Range::getX2() const -> double { return this->x2; }
+auto Range::getWidth() const -> double { return this->maxX - this->minX; }
 
-auto Range::getY2() const -> double { return this->y2; }
+auto Range::getHeight() const -> double { return this->maxY - this->minY; }
+
+void Range::addPadding(double padding) {
+    this->minX -= padding;
+    this->maxX += padding;
+    this->minY -= padding;
+    this->maxY += padding;
+}
+
+auto Range::empty() const -> bool {
+    Range empty;
+    return this->minX == empty.minX && this->minY == empty.minY && this->maxX == empty.maxX && this->maxY == empty.maxY;
+}
+
+bool Range::isValid() const { return minX <= maxX && minY <= maxY; }
