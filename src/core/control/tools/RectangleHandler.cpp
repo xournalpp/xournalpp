@@ -4,7 +4,7 @@
 
 #include "control/Control.h"                       // for Control
 #include "control/settings/Settings.h"             // for Settings
-#include "control/tools/BaseStrokeHandler.h"       // for BaseStrokeHandler
+#include "control/tools/BaseShapeHandler.h"        // for BaseShapeHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "gui/XournalView.h"                       // for XournalView
 #include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
@@ -14,7 +14,7 @@ class XojPageView;
 
 RectangleHandler::RectangleHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
                                    bool flipControl):
-        BaseStrokeHandler(xournal, redrawable, page, flipShift, flipControl) {}
+        BaseShapeHandler(xournal, redrawable, page, flipShift, flipControl) {}
 
 RectangleHandler::~RectangleHandler() = default;
 

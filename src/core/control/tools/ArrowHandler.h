@@ -13,14 +13,14 @@
 
 #include "model/PageRef.h"  // for PageRef
 
-#include "BaseStrokeHandler.h"  // for BaseStrokeHandler
+#include "BaseShapeHandler.h"  // for BaseShapeHandler
 
 class Point;
 class PositionInputData;
 class XojPageView;
 class XournalView;
 
-class ArrowHandler: public BaseStrokeHandler {
+class ArrowHandler: public BaseShapeHandler {
 public:
     ArrowHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool doubleEnded);
     ~ArrowHandler() override;

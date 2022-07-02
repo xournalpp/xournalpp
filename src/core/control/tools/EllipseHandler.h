@@ -14,13 +14,13 @@
 #include "model/PageRef.h"  // for PageRef
 #include "model/Point.h"    // for Point
 
-#include "BaseStrokeHandler.h"  // for BaseStrokeHandler
+#include "BaseShapeHandler.h"  // for BaseShapeHandler
 
 class PositionInputData;
 class XojPageView;
 class XournalView;
 
-class EllipseHandler: public BaseStrokeHandler {
+class EllipseHandler: public BaseShapeHandler {
 public:
     EllipseHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
                    bool flipControl = false);
