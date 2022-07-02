@@ -1,4 +1,4 @@
-#include "BaseStrokeHandler.h"
+#include "BaseShapeHandler.h"
 
 #include <cmath>     // for pow, NAN
 #include <memory>    // for make_unique, __share...
@@ -25,19 +25,19 @@
 
 using xoj::util::Rectangle;
 
-guint32 BaseStrokeHandler::lastStrokeTime;  // persist for next stroke
+guint32 BaseShapeHandler::lastStrokeTime;  // persist for next stroke
 
 
-BaseStrokeHandler::BaseStrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
-                                     bool flipControl):
+BaseShapeHandler::BaseShapeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
+                                   bool flipControl):
         InputHandler(xournal, redrawable, page),
         flipShift(flipShift),
         flipControl(flipControl),
         snappingHandler(xournal->getControl()->getSettings()) {}
 
-BaseStrokeHandler::~BaseStrokeHandler() = default;
+BaseShapeHandler::~BaseShapeHandler() = default;
 
-void BaseStrokeHandler::draw(cairo_t* cr) {
+void BaseShapeHandler::draw(cairo_t* cr) {
     if (!stroke) {
         return;
     }
@@ -46,7 +46,7 @@ void BaseStrokeHandler::draw(cairo_t* cr) {
     strokeView->draw(context);
 }
 
-auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
+auto BaseShapeHandler::onKeyEvent(GdkEventKey* event) -> bool {
     if (event->is_modifier) {
         Rectangle<double> rect = stroke->boundingRect();
 
@@ -82,7 +82,7 @@ auto BaseStrokeHandler::onKeyEvent(GdkEventKey* event) -> bool {
     return false;
 }
 
-auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
+auto BaseShapeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
     if (!stroke) {
         return false;
     }
@@ -114,12 +114,12 @@ auto BaseStrokeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> boo
     return true;
 }
 
-void BaseStrokeHandler::onMotionCancelEvent() {
+void BaseShapeHandler::onMotionCancelEvent() {
     delete stroke;
     stroke = nullptr;
 }
 
-void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
+void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     xournal->getCursor()->activateDrawDirCursor(false);  // in case released within  fixate_Dir_Mods_Dist
 
     if (stroke == nullptr) {
@@ -146,20 +146,20 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
 
         if (lengthSqrd < pow((strokeFilterIgnoreLength * dpmm), 2) &&
             pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) {
-            if (pos.timestamp - BaseStrokeHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
+            if (pos.timestamp - BaseShapeHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
                 // stroke not being added to layer... delete here.
                 delete stroke;
                 stroke = nullptr;
                 this->userTapped = true;
 
-                BaseStrokeHandler::lastStrokeTime = pos.timestamp;
+                BaseShapeHandler::lastStrokeTime = pos.timestamp;
 
                 xournal->getCursor()->updateCursor();
 
                 return;
             }
         }
-        BaseStrokeHandler::lastStrokeTime = pos.timestamp;
+        BaseShapeHandler::lastStrokeTime = pos.timestamp;
     }
 
 
@@ -190,7 +190,7 @@ void BaseStrokeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
     xournal->getCursor()->updateCursor();
 }
 
-void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
+void BaseShapeHandler::onButtonPressEvent(const PositionInputData& pos) {
     double zoom = xournal->getZoom();
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
@@ -203,11 +203,11 @@ void BaseStrokeHandler::onButtonPressEvent(const PositionInputData& pos) {
     this->startStrokeTime = pos.timestamp;
 }
 
-void BaseStrokeHandler::onButtonDoublePressEvent(const PositionInputData& pos) {
+void BaseShapeHandler::onButtonDoublePressEvent(const PositionInputData& pos) {
     // nothing to do
 }
 
-void BaseStrokeHandler::modifyModifiersByDrawDir(double width, double height, bool changeCursor) {
+void BaseShapeHandler::modifyModifiersByDrawDir(double width, double height, bool changeCursor) {
     bool gestureShift = this->flipShift;
     bool gestureControl = this->flipControl;
 

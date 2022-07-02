@@ -1,6 +1,6 @@
 #include "RulerHandler.h"
 
-#include "control/tools/BaseStrokeHandler.h"       // for BaseStrokeHandler
+#include "control/tools/BaseShapeHandler.h"        // for BaseShapeHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
 #include "model/Point.h"                           // for Point
@@ -10,7 +10,7 @@ class XojPageView;
 class XournalView;
 
 RulerHandler::RulerHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page):
-        BaseStrokeHandler(xournal, redrawable, page) {}
+        BaseShapeHandler(xournal, redrawable, page) {}
 
 RulerHandler::~RulerHandler() = default;
 
