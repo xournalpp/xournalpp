@@ -742,6 +742,17 @@ void EditSelection::moveSelection(double dx, double dy) {
     this->view->getXournal()->repaintSelection();
 }
 
+void EditSelection::placeSelection(double dx, double dy) {
+    this->x = dx;
+    this->y = dy;
+    this->snappedBounds.x = dx;
+    this->snappedBounds.y = dy;
+
+    updateMatrix();
+
+    this->view->getXournal()->repaintSelection();
+}
+
 void EditSelection::setEdgePan(bool pan) {
     if (pan && !this->edgePanHandler) {
         this->edgePanHandler = g_timeout_source_new(1000 / PAN_TIMER_RATE);
