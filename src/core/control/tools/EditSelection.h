@@ -196,6 +196,12 @@ public:
      * (should be called in the mouse-button-released event handler)
      */
     void mouseUp();
+    
+    
+    /**
+     * Place the selection at a specified spot
+     */
+    void placeSelection(double dx, double dy);
 
     /**
      * Move the selection
