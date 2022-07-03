@@ -63,8 +63,7 @@ auto KeyboardInputHandler::handleImpl(InputEvent const& event) -> bool {
             if (keyEvent->keyval == GDK_KEY_Left) {
                 xdir = -1;
             } else if (keyEvent->keyval == GDK_KEY_Up) {
-                //ydir = -1;
-                
+                ydir = -1;
             } else if (keyEvent->keyval == GDK_KEY_Right) {
                 xdir = 1;
             } else if (keyEvent->keyval == GDK_KEY_Down) {
