@@ -1,8 +1,10 @@
+
 //
 // Created by ulrich on 12.04.19.
 //
 
 #include "KeyboardInputHandler.h"
+#include "control/settings/PageTemplateSettings.h"  // for PageTemplateSettings
 
 #include <gdk/gdk.h>         // for _GdkEventKey, gdk...
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Down, GDK...
@@ -20,19 +22,22 @@ KeyboardInputHandler::KeyboardInputHandler(InputContext* inputContext): Abstract
 KeyboardInputHandler::~KeyboardInputHandler() = default;
 
 auto KeyboardInputHandler::handleImpl(InputEvent const& event) -> bool {
+    
     GtkXournal* xournal = inputContext->getXournal();
     GdkEvent* gdkEvent = event.sourceEvent;
-    
     PageTemplateSettings model;
 
     double width = model.getPageWidth();
 
-
     if (gdk_event_get_event_type(gdkEvent) == GDK_KEY_PRESS) {
+    
         auto keyEvent = reinterpret_cast<GdkEventKey*>(gdkEvent);
         EditSelection* selection = xournal->selection;
+        
         double shapeWidth = xournal->selection->getWidth();
 
+        std::cout << "the-width: " << xournal->selection->getWidth() << "sdl";
+        
         if (selection) {
             int d = 3;
             if (keyEvent->state & GDK_MOD1_MASK) {
@@ -43,25 +48,30 @@ auto KeyboardInputHandler::handleImpl(InputEvent const& event) -> bool {
 
             int xdir = 0;
             int ydir = 0;
-            
-            
+
             if (keyEvent->keyval == GDK_KEY_Alt_L) {
                 //(((width / 2) - (shapeWidth / 2)) - this peice of code means that we place it in the middle
-                // of the page, and we make sure we put the shape in the middle by dividing the shapes width by 2;
+                // of the page, and we make sure we put the shape in the middle by dividing the width by 2;
                 selection->placeSelection(((width / 2) - (shapeWidth / 2)), xournal->selection->getOriginalYOnView());
                 selection->ensureWithinVisibleArea();
                 return true;
             }
             
+            
+            //note to shaan:clean up.
+          
             if (keyEvent->keyval == GDK_KEY_Left) {
                 xdir = -1;
             } else if (keyEvent->keyval == GDK_KEY_Up) {
-                ydir = -1;
+                //ydir = -1;
+                
             } else if (keyEvent->keyval == GDK_KEY_Right) {
                 xdir = 1;
             } else if (keyEvent->keyval == GDK_KEY_Down) {
                 ydir = 1;
             }
+        
+
             if (xdir != 0 || ydir != 0) {
                 selection->moveSelection(d * xdir, d * ydir);
                 selection->ensureWithinVisibleArea();
