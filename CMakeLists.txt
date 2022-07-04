@@ -303,12 +303,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
             DESTINATION share/mime/packages)
     install(FILES desktop/com.github.xournalpp.xournalpp.desktop
             DESTINATION share/applications)
-    install(FILES desktop/x-xojpp.desktop
-            DESTINATION share/mimelnk/application)
-    install(FILES desktop/x-xopp.desktop
-            DESTINATION share/mimelnk/application)
-    install(FILES desktop/x-xopt.desktop
-            DESTINATION share/mimelnk/application)
     install(FILES desktop/com.github.xournalpp.xournalpp.thumbnailer
             DESTINATION share/thumbnailers)
     install(FILES desktop/com.github.xournalpp.xournalpp.appdata.xml
