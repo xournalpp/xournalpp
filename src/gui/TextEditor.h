@@ -62,6 +62,8 @@ public:
     UndoAction* setColor(Color color);
 
 private:
+    void setTextToPangoLayout(PangoLayout* pl) const;
+
     Rectangle<double> computeBoundingRect();
     void repaintEditor();
     void drawCursor(cairo_t* cr, double x, double y, double height, double zoom);
