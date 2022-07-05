@@ -6,6 +6,7 @@
 
 #include "control/Control.h"
 #include "undo/ColorUndoAction.h"
+#include "util/Rectangle.h"
 #include "view/DocumentView.h"
 #include "view/TextView.h"
 
@@ -904,8 +905,62 @@ auto TextEditor::blinkCallback(TextEditor* te) -> gint {
     return false;
 }
 
+auto TextEditor::computeBoundingRect() -> Rectangle<double> {
+    /**
+     * We draw on a fake surface to get the size of the printed text
+     * See also TextView::calcSize
+     *
+     * NB: we cannot rely on TextView::calcSize directly, since it would not take the IM preeditString into account.
+     */
+    cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
+    cairo_t* cr = cairo_create(surface);
+    auto* textElement = this->getText();
+
+    PangoLayout* pl = TextView::initPango(cr, textElement);
+
+    GtkTextIter cursorIter = {nullptr};
+    GtkTextMark* cursor = gtk_text_buffer_get_insert(this->buffer);
+    gtk_text_buffer_get_iter_at_mark(this->buffer, &cursorIter, cursor);
+
+    if (!this->preeditString.empty()) {
+        string text = textElement->getText();
+        int offset = gtk_text_iter_get_offset(&cursorIter);
+        int pos = gtk_text_iter_get_line_index(&cursorIter);
+
+        for (gtk_text_iter_set_line_index(&cursorIter, 0); gtk_text_iter_backward_line(&cursorIter);) {
+            pos += gtk_text_iter_get_bytes_in_line(&cursorIter);
+        }
+        gtk_text_iter_set_offset(&cursorIter, offset);
+        string txt = text.substr(0, pos) + preeditString + text.substr(pos);
+
+        PangoAttrList* attrlist = pango_attr_list_new();
+        PangoAttrList* preedit_attrlist = this->preeditAttrList;
+        pango_attr_list_splice(attrlist, preedit_attrlist, pos, preeditString.length());
+        pango_layout_set_attributes(pl, attrlist);
+        pango_attr_list_unref(attrlist);
+        attrlist = nullptr;
+        pango_layout_set_text(pl, txt.c_str(), txt.length());
+    } else {
+        string txt = textElement->getText();
+        pango_layout_set_text(pl, txt.c_str(), txt.length());
+    }
+
+    int w = 0;
+    int h = 0;
+    pango_layout_get_size(pl, &w, &h);
+    double width = (static_cast<double>(w)) / PANGO_SCALE;
+    double height = (static_cast<double>(h)) / PANGO_SCALE;
+    g_object_unref(pl);
+
+    cairo_destroy(cr);
+    cairo_surface_destroy(surface);
+
+    return Rectangle<double>(textElement->getX(), textElement->getY(), width, height);
+}
+
+
 void TextEditor::repaintEditor() {
-    auto rect = this->text->boundingRect();
+    auto rect = this->computeBoundingRect();
     this->previousBoundingBox.unite(rect);
     const double zoom = this->gui->getXournal()->getZoom();
     const double padding = (BORDER_WIDTH_IN_PIXELS + PADDING_IN_PIXELS) / zoom;

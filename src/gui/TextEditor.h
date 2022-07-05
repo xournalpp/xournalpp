@@ -19,6 +19,8 @@
 #include "undo/UndoAction.h"
 
 class XojPageView;
+template <class T>
+class Rectangle;
 
 class TextEditor {
 public:
@@ -60,6 +62,7 @@ public:
     UndoAction* setColor(Color color);
 
 private:
+    Rectangle<double> computeBoundingRect();
     void repaintEditor();
     void drawCursor(cairo_t* cr, double x, double y, double height, double zoom);
     void repaintCursor();
