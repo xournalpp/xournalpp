@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-28 21:35+0000\n"
-"PO-Revision-Date: 2022-07-05 10:10\n"
+"PO-Revision-Date: 2022-07-05 11:23\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -518,7 +518,7 @@ msgstr "Chyba při automatickém ukládání: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:162
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Chyba při exportu pozadí PDF: Nemohu najít číslo PDF stránky "
 
 #: ../src/util/Util.cpp:78
 msgid "Error {1} executing system command: {2}"
@@ -611,7 +611,7 @@ msgstr "Nepodařilo se zpracovat příkaz generátoru LaTeX: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "Chyba při zpracování cesty k LaTeX generátoru: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
@@ -703,7 +703,7 @@ msgstr "Přichytávání na mřížku"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "GtkSourceView byl zakázan během tvorby Xournal++! Některé možnosti budou nedostupné."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
@@ -775,7 +775,7 @@ msgstr "Přejít na stránku (první stránka: 1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "Téma LaTeX editoru:"
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -1489,7 +1489,7 @@ msgstr "Neznámý typ pixmap::domain: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:605
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
-msgstr ""
+msgstr "Neznámý typ konců čáry: \"{1}\", předpokládám zaoblené"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:623
 msgid "Unknown stroke type: \"{1}\", assuming pen"
@@ -1501,7 +1501,7 @@ msgstr "Neuložený dokument"
 
 #: ../src/core/control/jobs/ImageExport.cpp:93
 msgid "Unsupported graphics format: "
-msgstr ""
+msgstr "Nepodporovaný grafický formát: "
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Vertical Space"
@@ -1834,7 +1834,7 @@ msgstr "%a\t\tZkrácený název dne (například Čt)\n"
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(vyžaduje restart)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -1961,7 +1961,8 @@ msgstr "<i>Příklad:</i> 1-3 nebo 1,3,5-7 atd."
 #: ../ui/settings.glade:356
 msgid "<i>If the document already was saved you can find it in the same folder with the extension .autosave.xoj\n"
 "If the file was not yet saved you can find it in ~/.cache/xournalpp/autosaves</i>"
-msgstr ""
+msgstr "<i>Pokud byl již dokument uložen, můžete jej najít ve stejné složce s příponou .autosave.xoj\n"
+"Pokud ještě uložen nebyl, najdete jej v ~/.cache/xournalpp/autosaves</i>"
 
 #: ../ui/settings.glade:4221
 msgid "<i>If you add additional space beside the pages you can choose the area of the screen you would like to work on.</i>"
@@ -2117,7 +2118,7 @@ msgstr "Autoři"
 
 #: ../ui/latexSettings.glade:415
 msgid "Auto-indent"
-msgstr ""
+msgstr "Automatické odsazení"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2194,7 +2195,7 @@ msgstr "Tlačítko 2"
 
 #: ../ui/pageTemplate.glade:160
 msgid "Change"
-msgstr ""
+msgstr "Změnit"
 
 #: ../ui/latexSettings.glade:173
 msgid "Choose a global LaTeX template file"
@@ -2214,7 +2215,7 @@ msgstr "Vyčistit mezipaměť při posouvání"
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "Barva"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2222,7 +2223,7 @@ msgstr "Barvy"
 
 #: ../ui/texdialog.glade:163
 msgid "Command Output"
-msgstr ""
+msgstr "Výstup příkazu"
 
 #: ../ui/main.glade:1225
 msgid "Configure Page Template"
@@ -2242,7 +2243,7 @@ msgstr "Kopírovat místo toho velikost aktuální stránky"
 
 #: ../ui/main.glade:2707
 msgid "Copy selected text"
-msgstr ""
+msgstr "Zkopírovat vybraný text"
 
 #: ../ui/pageTemplate.glade:192
 msgid "Copy the background of the current page instead of using the background set above."
@@ -2402,7 +2403,7 @@ msgstr "Upravit (zatím neimplementováno)"
 
 #: ../ui/latexSettings.glade:574
 msgid "Editor settings"
-msgstr ""
+msgstr "Nastavení editoru"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
@@ -2507,7 +2508,7 @@ msgstr "Posun první stránky "
 
 #: ../ui/latexSettings.glade:517
 msgid "Font: "
-msgstr ""
+msgstr "Písmo: "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
@@ -2587,7 +2588,7 @@ msgstr "Zvýraznit pozici kurzoru"
 
 #: ../ui/main.glade:2729
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Zvýraznit vybraný text"
 
 #: ../ui/main.glade:1884
 msgid "Highlighter Opti_ons"
@@ -2611,7 +2612,7 @@ msgstr "Návrhář ikon"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "Téma ikon"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2715,7 +2716,7 @@ msgstr "Licence"
 
 #: ../ui/latexSettings.glade:401
 msgid "Line numbers"
-msgstr ""
+msgstr "Číslování řádků"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2727,11 +2728,11 @@ msgstr "Načíst soubor"
 
 #: ../ui/pageTemplate.glade:54
 msgid "Load from file"
-msgstr ""
+msgstr "Načíst ze souboru"
 
 #: ../ui/settings.glade:2950
 msgid "Lucide"
-msgstr ""
+msgstr "Lucide"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2755,11 +2756,11 @@ msgstr "Maximální multiplikátor"
 
 #: ../ui/main.glade:2833
 msgid "Merge Down"
-msgstr ""
+msgstr "Sloučit dolů"
 
 #: ../ui/main.glade:1274
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Sloučit vrstvu dolů"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2851,7 +2852,7 @@ msgstr "Výstupní zařízení"
 
 #: ../ui/texdialog.glade:143
 msgid "Output generated by the LaTeX command."
-msgstr ""
+msgstr "Výstup generovaný příkazem LaTeXu."
 
 #: ../ui/settings.glade:5102
 msgid "PDF Cache"
@@ -2893,7 +2894,7 @@ msgstr "Částečně založeno na Xournal\n"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Path: "
-msgstr ""
+msgstr "Cesta: "
 
 #: ../ui/main.glade:2002
 msgid "Pause"
