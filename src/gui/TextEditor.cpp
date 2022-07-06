@@ -906,40 +906,45 @@ auto TextEditor::blinkCallback(TextEditor* te) -> gint {
 }
 
 void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
+    std::string txt = this->text->getText();
+
     if (!this->preeditString.empty()) {
-        GtkTextIter cursorIter = {nullptr};
-        GtkTextMark* cursor = gtk_text_buffer_get_insert(this->buffer);
-        gtk_text_buffer_get_iter_at_mark(this->buffer, &cursorIter, cursor);
+        // When using an Input Method, we need to insert the preeditString into the text at the cursor location
 
-        string text = this->text->getText();
-        int offset = gtk_text_iter_get_offset(&cursorIter);
-        int pos = gtk_text_iter_get_line_index(&cursorIter);
-
-        for (gtk_text_iter_set_line_index(&cursorIter, 0); gtk_text_iter_backward_line(&cursorIter);) {
-            pos += gtk_text_iter_get_bytes_in_line(&cursorIter);
+        // Get the byte position of the cursor in the string, so we can insert at the right place
+        int pos = 0;
+        {
+            // Get an iterator at the cursor location
+            GtkTextIter it = {nullptr};
+            GtkTextMark* cursor = gtk_text_buffer_get_insert(this->buffer);
+            gtk_text_buffer_get_iter_at_mark(this->buffer, &it, cursor);
+            // Bytes from beginning of line to iterator
+            pos = gtk_text_iter_get_line_index(&it);
+            gtk_text_iter_set_line_index(&it, 0);
+            // Count bytes of previous lines
+            while (gtk_text_iter_backward_line(&it)) {
+                pos += gtk_text_iter_get_bytes_in_line(&it);
+            }
         }
-        gtk_text_iter_set_offset(&cursorIter, offset);
-        string txt = text.substr(0, pos) + preeditString + text.substr(pos);
+        txt.insert(static_cast<size_t>(pos), this->preeditString);
 
         PangoAttrList* attrlist = pango_attr_list_new();
         PangoAttrList* preedit_attrlist = this->preeditAttrList;
-        pango_attr_list_splice(attrlist, preedit_attrlist, pos, preeditString.length());
+        pango_attr_list_splice(attrlist, preedit_attrlist, pos, static_cast<int>(preeditString.length()));
         pango_layout_set_attributes(pl, attrlist);
         pango_attr_list_unref(attrlist);
         attrlist = nullptr;
-        pango_layout_set_text(pl, txt.c_str(), txt.length());
-    } else {
-        string txt = this->text->getText();
-        pango_layout_set_text(pl, txt.c_str(), txt.length());
     }
+    pango_layout_set_text(pl, txt.c_str(), static_cast<int>(txt.length()));
 }
 
 auto TextEditor::computeBoundingRect() -> Rectangle<double> {
-    /**
+    /*
      * We draw on a fake surface to get the size of the printed text
      * See also TextView::calcSize
      *
-     * NB: we cannot rely on TextView::calcSize directly, since it would not take the IM preeditString into account.
+     * NB: we cannot rely on TextView::calcSize directly, since it would not take the size changes due to the IM
+     * preeditString into account.
      */
     cairo_surface_t* surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
     cairo_t* cr = cairo_create(surface);
