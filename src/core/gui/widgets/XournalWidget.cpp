@@ -93,7 +93,7 @@ static void gtk_xournal_class_init(GtkXournalClass* cptr) {
     reinterpret_cast<GObjectClass*>(widget_class)->dispose = gtk_xournal_dispose;
 }
 
-auto gtk_xournal_get_visible_area(GtkWidget* widget, XojPageView* p) -> Rectangle<double>* {
+auto gtk_xournal_get_visible_area(GtkWidget* widget, const XojPageView* p) -> Rectangle<double>* {
     g_return_val_if_fail(widget != nullptr, nullptr);
     g_return_val_if_fail(GTK_IS_XOURNAL(widget), nullptr);
 

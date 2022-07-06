@@ -24,6 +24,7 @@
 #include "control/zoom/ZoomListener.h"  // for ZoomListener
 #include "model/DocumentChangeType.h"   // for DocumentChangeType
 #include "model/DocumentListener.h"     // for DocumentListener
+#include "util/Util.h"                  // for npos
 
 class Control;
 class XournalppCursor;
@@ -65,7 +66,7 @@ public:
 
     void forceUpdatePagenumbers();
 
-    XojPageView* getViewFor(size_t pageNr);
+    XojPageView* getViewFor(size_t pageNr) const;
 
     bool searchTextOnPage(std::string text, size_t p, int* occures, double* top);
 
@@ -73,7 +74,7 @@ public:
     bool copy();
     bool paste();
 
-    void getPasteTarget(double& x, double& y);
+    void getPasteTarget(double& x, double& y) const;
 
     bool actionDelete();
 
@@ -82,34 +83,34 @@ public:
     int getDisplayWidth() const;
     int getDisplayHeight() const;
 
-    bool isPageVisible(size_t page, int* visibleHeight);
+    bool isPageVisible(size_t page, int* visibleHeight) const;
 
     void ensureRectIsVisible(int x, int y, int width, int height);
 
     void setSelection(EditSelection* selection);
-    EditSelection* getSelection();
+    EditSelection* getSelection() const;
     void deleteSelection(EditSelection* sel = nullptr);
     void repaintSelection(bool evenWithoutSelection = false);
 
     void setSetsquareView(std::unique_ptr<SetsquareView> setsquareView);
     void resetSetsquareView();
-    SetsquareView* getSetsquareView();
+    SetsquareView* getSetsquareView() const;
     void repaintSetsquare(bool evenWithoutSetsquare = false);
 
-    TextEditor* getTextEditor();
+    TextEditor* getTextEditor() const;
     std::vector<XojPageView*> const& getViewPages() const;
 
-    Control* getControl();
-    double getZoom();
-    int getDpiScaleFactor();
-    Document* getDocument();
-    PdfCache* getCache();
-    RepaintHandler* getRepaintHandler();
-    GtkWidget* getWidget();
-    XournalppCursor* getCursor();
+    Control* getControl() const;
+    double getZoom() const;
+    int getDpiScaleFactor() const;
+    Document* getDocument() const;
+    PdfCache* getCache() const;
+    RepaintHandler* getRepaintHandler() const;
+    GtkWidget* getWidget() const;
+    XournalppCursor* getCursor() const;
 
-    xoj::util::Rectangle<double>* getVisibleRect(int page);
-    xoj::util::Rectangle<double>* getVisibleRect(XojPageView* redrawable);
+    xoj::util::Rectangle<double>* getVisibleRect(size_t page) const;
+    xoj::util::Rectangle<double>* getVisibleRect(const XojPageView* redrawable) const;
 
     /**
      * A pen action was detected now, therefore ignore touch events
@@ -120,12 +121,12 @@ public:
     /**
      * @return Helper class for Touch specific fixes
      */
-    HandRecognition* getHandRecognition();
+    HandRecognition* getHandRecognition() const;
 
     /**
      * @return Scrollbars
      */
-    ScrollHandling* getScrollHandling();
+    ScrollHandling* getScrollHandling() const;
 
 public:
     // ZoomListener interface
@@ -153,8 +154,6 @@ private:
 
     std::pair<size_t, size_t> preloadPageBounds(size_t page, size_t maxPage);
 
-    xoj::util::Rectangle<double>* getVisibleRect(size_t page);
-
     static gboolean clearMemoryTimer(XournalView* widget);
 
     void cleanupBufferCache();
@@ -175,7 +174,7 @@ private:
     Control* control = nullptr;
 
     size_t currentPage = 0;
-    size_t lastSelectedPage = -1;
+    size_t lastSelectedPage = npos;
 
     std::unique_ptr<PdfCache> cache;
 

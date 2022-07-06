@@ -33,9 +33,9 @@ public:
      *
      * for refreshing the view buffer (if you have changed the document) call rerender.
      */
-    virtual void repaintArea(double x1, double y1, double x2, double y2) = 0;
-    void repaintRect(double x, double y, double width, double height);
-    [[maybe_unused]] void repaintElement(Element* e);
+    virtual void repaintArea(double x1, double y1, double x2, double y2) const = 0;
+    void repaintRect(double x, double y, double width, double height) const;
+    [[maybe_unused]] void repaintElement(Element* e) const;
 
     /**
      * Call this if you only need to readraw the view, this means the buffer will be painted again,
@@ -43,7 +43,7 @@ public:
      *
      * for refreshing the view buffer (if you have changed the document) call repaint.
      */
-    virtual void repaintPage() = 0;
+    virtual void repaintPage() const = 0;
 
     /**
      * Repaint our buffer, then redraw the widget
