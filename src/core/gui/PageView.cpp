@@ -699,9 +699,9 @@ void XojPageView::rerenderPage() {
     this->xournal->getControl()->getScheduler()->addRerenderPage(this);
 }
 
-void XojPageView::repaintPage() { xournal->getRepaintHandler()->repaintPage(this); }
+void XojPageView::repaintPage() const { xournal->getRepaintHandler()->repaintPage(this); }
 
-void XojPageView::repaintArea(double x1, double y1, double x2, double y2) {
+void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const {
     double zoom = xournal->getZoom();
     xournal->getRepaintHandler()->repaintPageArea(this, std::lround(x1 * zoom) - 10, std::lround(y1 * zoom) - 10,
                                                   std::lround(x2 * zoom) + 20, std::lround(y2 * zoom) + 20);
@@ -917,9 +917,9 @@ auto XojPageView::getMappedRow() const -> int { return this->mappedRow; }
 auto XojPageView::getMappedCol() const -> int { return this->mappedCol; }
 
 
-auto XojPageView::getPage() -> const PageRef { return page; }
+auto XojPageView::getPage() const -> const PageRef { return page; }
 
-auto XojPageView::getXournal() -> XournalView* { return this->xournal; }
+auto XojPageView::getXournal() const -> XournalView* { return this->xournal; }
 
 auto XojPageView::getHeight() const -> double { return this->page->getHeight(); }
 

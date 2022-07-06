@@ -290,7 +290,7 @@ auto XournalView::onKeyPressEvent(GdkEventKey* event) -> bool {
     return false;
 }
 
-auto XournalView::getRepaintHandler() -> RepaintHandler* { return this->repaintHandler; }
+auto XournalView::getRepaintHandler() const -> RepaintHandler* { return this->repaintHandler; }
 
 auto XournalView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
     size_t p = getCurrentPage();
@@ -338,7 +338,7 @@ void XournalView::forceUpdatePagenumbers() {
     control->firePageSelected(p);
 }
 
-auto XournalView::getViewFor(size_t pageNr) -> XojPageView* {
+auto XournalView::getViewFor(size_t pageNr) const -> XojPageView* {
     if (pageNr == npos || pageNr >= this->viewPages.size()) {
         return nullptr;
     }
@@ -394,7 +394,7 @@ void XournalView::pageSelected(size_t page) {
     }
 }
 
-auto XournalView::getControl() -> Control* { return control; }
+auto XournalView::getControl() const -> Control* { return control; }
 
 void XournalView::scrollTo(size_t pageNo, double yDocument) {
     if (pageNo >= this->viewPages.size()) {
@@ -447,7 +447,7 @@ void XournalView::layerChanged(size_t page) {
     }
 }
 
-void XournalView::getPasteTarget(double& x, double& y) {
+void XournalView::getPasteTarget(double& x, double& y) const {
     size_t pageNo = getCurrentPage();
     if (pageNo == npos) {
         return;
@@ -467,7 +467,7 @@ void XournalView::getPasteTarget(double& x, double& y) {
  *
  * Or nullptr if the page is not visible
  */
-auto XournalView::getVisibleRect(size_t page) -> Rectangle<double>* {
+auto XournalView::getVisibleRect(size_t page) const -> Rectangle<double>* {
     if (page == npos || page >= this->viewPages.size()) {
         return nullptr;
     }
@@ -476,21 +476,21 @@ auto XournalView::getVisibleRect(size_t page) -> Rectangle<double>* {
     return getVisibleRect(p);
 }
 
-auto XournalView::getVisibleRect(XojPageView* redrawable) -> Rectangle<double>* {
+auto XournalView::getVisibleRect(const XojPageView* redrawable) const -> Rectangle<double>* {
     return gtk_xournal_get_visible_area(this->widget, redrawable);
 }
 
 /**
  * @return Helper class for Touch specific fixes
  */
-auto XournalView::getHandRecognition() -> HandRecognition* { return handRecognition; }
+auto XournalView::getHandRecognition() const -> HandRecognition* { return handRecognition; }
 
 /**
  * @return Scrollbars
  */
-auto XournalView::getScrollHandling() -> ScrollHandling* { return scrollHandling; }
+auto XournalView::getScrollHandling() const -> ScrollHandling* { return scrollHandling; }
 
-auto XournalView::getWidget() -> GtkWidget* { return widget; }
+auto XournalView::getWidget() const -> GtkWidget* { return widget; }
 
 void XournalView::ensureRectIsVisible(int x, int y, int width, int height) {
     Layout* layout = gtk_xournal_get_layout(this->widget);
@@ -560,7 +560,7 @@ void XournalView::pageDeleted(size_t page) {
     control->getScrollHandler()->scrollToPage(currentPage);
 }
 
-auto XournalView::getTextEditor() -> TextEditor* {
+auto XournalView::getTextEditor() const -> TextEditor* {
     for (auto&& page: viewPages) {
         if (page->getTextEditor()) {
             return page->getTextEditor();
@@ -570,7 +570,7 @@ auto XournalView::getTextEditor() -> TextEditor* {
     return nullptr;
 }
 
-auto XournalView::getCache() -> PdfCache* { return this->cache.get(); }
+auto XournalView::getCache() const -> PdfCache* { return this->cache.get(); }
 
 void XournalView::pageInserted(size_t page) {
     Document* doc = control->getDocument();
@@ -586,9 +586,9 @@ void XournalView::pageInserted(size_t page) {
     layout->updateVisibility();
 }
 
-auto XournalView::getZoom() -> double { return control->getZoomControl()->getZoom(); }
+auto XournalView::getZoom() const -> double { return control->getZoomControl()->getZoom(); }
 
-auto XournalView::getDpiScaleFactor() -> int { return gtk_widget_get_scale_factor(widget); }
+auto XournalView::getDpiScaleFactor() const -> int { return gtk_widget_get_scale_factor(widget); }
 
 void XournalView::clearSelection() {
     EditSelection* sel = GTK_XOURNAL(widget)->selection;
@@ -675,7 +675,7 @@ void XournalView::resetSetsquareView() {
     this->control->fireActionSelected(GROUP_SETSQUARE, ACTION_NONE);
 }
 
-auto XournalView::getSetsquareView() -> SetsquareView* {
+auto XournalView::getSetsquareView() const -> SetsquareView* {
     g_return_val_if_fail(this->widget != nullptr, nullptr);
     g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), nullptr);
 
@@ -713,7 +713,7 @@ auto XournalView::getDisplayWidth() const -> int {
     return allocation.width;
 }
 
-auto XournalView::isPageVisible(size_t page, int* visibleHeight) -> bool {
+auto XournalView::isPageVisible(size_t page, int* visibleHeight) const -> bool {
     Rectangle<double>* rect = getVisibleRect(page);
     if (rect) {
         if (visibleHeight) {
@@ -804,13 +804,13 @@ auto XournalView::actionDelete() -> bool {
     return page->actionDelete();
 }
 
-auto XournalView::getDocument() -> Document* { return control->getDocument(); }
+auto XournalView::getDocument() const -> Document* { return control->getDocument(); }
 
 auto XournalView::getViewPages() const -> std::vector<XojPageView*> const& { return viewPages; }
 
-auto XournalView::getCursor() -> XournalppCursor* { return control->getCursor(); }
+auto XournalView::getCursor() const -> XournalppCursor* { return control->getCursor(); }
 
-auto XournalView::getSelection() -> EditSelection* {
+auto XournalView::getSelection() const -> EditSelection* {
     g_return_val_if_fail(this->widget != nullptr, nullptr);
     g_return_val_if_fail(GTK_IS_XOURNAL(this->widget), nullptr);
 

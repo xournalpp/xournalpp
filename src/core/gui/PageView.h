@@ -49,8 +49,8 @@ public:
     void rerenderPage() override;
     void rerenderRect(double x, double y, double width, double height) override;
 
-    void repaintPage() override;
-    void repaintArea(double x1, double y1, double x2, double y2) override;
+    void repaintPage() const override;
+    void repaintArea(double x1, double y1, double x2, double y2) const override;
 
     void setSelected(bool selected);
 
@@ -104,9 +104,9 @@ public:
      * Returns a reference to the XojPage belonging to
      * this PageView
      */
-    const PageRef getPage();
+    const PageRef getPage() const;
 
-    XournalView* getXournal();
+    XournalView* getXournal() const;
 
     /**
      * Returns the width of this PageView
