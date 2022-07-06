@@ -922,9 +922,7 @@ void TextEditor::setTextToPangoLayout(PangoLayout* pl) const {
             pos = gtk_text_iter_get_line_index(&it);
             gtk_text_iter_set_line_index(&it, 0);
             // Count bytes of previous lines
-            while (gtk_text_iter_backward_line(&it)) {
-                pos += gtk_text_iter_get_bytes_in_line(&it);
-            }
+            while (gtk_text_iter_backward_line(&it)) { pos += gtk_text_iter_get_bytes_in_line(&it); }
         }
         txt.insert(static_cast<size_t>(pos), this->preeditString);
 
