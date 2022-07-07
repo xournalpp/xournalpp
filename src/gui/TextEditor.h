@@ -19,6 +19,8 @@
 #include "undo/UndoAction.h"
 
 class XojPageView;
+template <class T>
+class Rectangle;
 
 class TextEditor {
 public:
@@ -60,6 +62,14 @@ public:
     UndoAction* setColor(Color color);
 
 private:
+    /**
+     * @brief Add the text to the providedd Pango layout.
+     * The added text contains both this->text, and the preedit string of the Input Method (this->preeditstring)
+     * This function also sets up the attributes of the preedit string (typically underlined)
+     */
+    void setTextToPangoLayout(PangoLayout* pl) const;
+
+    Rectangle<double> computeBoundingRect();
     void repaintEditor();
     void drawCursor(cairo_t* cr, double x, double y, double height, double zoom);
     void repaintCursor();
