@@ -293,7 +293,25 @@ void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {
     background->setAttrib("type", "solid");
     background->setAttrib("color", getColorStr(p->getBackgroundColor()));
 
-    background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(p->getBackgroundType().format));
+    if (auto fmt = p->getBackgroundType().format; fmt == PageTypeFormat::Copy) {
+        /*
+         * PageTypeFormat::Copy is just a placeholder for the various background related menus, indicating that the
+         * background should be copied from another page.
+         * IT SHOULD NEVER APPEAR IN AN ACTUAL PAGE MODEL OR A FORTIORI IN A SAVED FILE
+         *
+         * A page with background type PageTypeFormat::Copy is unwanted.
+         * To avoid creating corrupted files, we replace the format with PageTypeFormat::Plain
+         */
+        if (!this->errorMessage.empty()) {
+            this->errorMessage += "\n";
+        }
+        this->errorMessage += _("Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to "
+                                "avoid corrupted file");
+
+        background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(PageTypeFormat::Plain));
+    } else {
+        background->setAttrib("style", PageTypeHandler::getStringForPageTypeFormat(fmt));
+    }
 
     // Not compatible with Xournal, so the background needs
     // to be changed to a basic one!
