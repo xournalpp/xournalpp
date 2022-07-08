@@ -5,7 +5,10 @@ pr:
     - '*'
   paths:
     include:
-      - '*'
+      - '*.c'
+      - '*.cpp'
+      - '*.h'
+      - '*.hpp'
     exclude:
       - po/xournalpp.pot
       - po/*.po
@@ -15,49 +18,23 @@ stages:
   jobs:
   - job: 'Build_Test'
     pool:
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-20.04'
     displayName: 'Test for correct Clang formatting'
     steps:
     - bash: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-        sudo apt-add-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-12 main"
+        sudo apt-add-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal main"
         sudo apt-get update
-        sudo apt-get install -y clang-format-12
+        sudo apt-get install -y clang-format
       displayName: 'Install clang-format'
     - bash: |
         # Checkout the master branch as we require it to get the list of modified files
-        git checkout $(System.PullRequest.TargetBranch)
-        git fetch origin +$(Build.SourceBranch)
+        git config --global clangFormat.extensions "c,h,cpp,hpp,hxx,cxx,cc,hh'"
 
-        BASE_COMMIT=$(git merge-base FETCH_HEAD $(System.PullRequest.TargetBranch))
-        FILES=$(git --no-pager diff --name-only $BASE_COMMIT FETCH_HEAD -- '*.cpp' '*.hpp' '*.h')
+        git switch $(System.PullRequest.TargetBranch)
+        git switch $(System.PullRequest.SourceBranch)
+        BASE_COMMIT=$(git merge-base $(System.PullRequest.SourceBranch) $(System.PullRequest.TargetBranch))
+        echo Computing diff to commit hash $BASE_COMMIT
 
-        echo "List of modified source files:"
-        for f in $FILES; do echo "$f"; done
-
-        # Checkout the PR so we can check the modified files for correct formatting
-        git checkout FETCH_HEAD
-
-        # Apply clang-format, modifying all badly formatted files
-        if [ ! -z "$FILES" ]; then
-            git --no-pager diff -U0 $BASE_COMMIT -- $FILES | perl azure-pipelines/util/format_diff_lines.pl
-        fi
-
+        git clang-format --diff $BASE_COMMIT --
       displayName: 'Run clang-format on modified files'
-    - bash: |
-        # Check for modified files
-        if [ -z "$(git status --porcelain)" ]; then 
-            # Working directory clean
-            echo "The code was properly formatted using clang-format before being submitted."
-            exit 0
-        else 
-            # Uncommitted changes
-            echo "The code was not formatted using clang-format before being submitted."
-            echo "To format the code, try running the following command from the root of the repository:"
-            echo "    git --no-pager diff -U0 -- '*.cpp' '*.c' '*.h' '*.hpp' | perl azure-pipelines/util/format_diff_lines.pl"
-            echo
-            echo "The formatting changes required are shown below."
-            git --no-pager diff
-            exit 1
-        fi
-      displayName: 'Check for badly formatted modified files'
