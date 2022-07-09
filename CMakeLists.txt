@@ -107,9 +107,9 @@ pkg_check_modules(ExternalModules REQUIRED IMPORTED_TARGET ${pkg-module-spec})
 if (#[[${CMAKE_VERSION} VERSION_LESS "3.18" AND]] ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # bugfix for old pkg_config versions
     get_target_property(libs PkgConfig::ExternalModules INTERFACE_LINK_LIBRARIES)
-    message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES: ${libs}")
+    # message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES: ${libs}")
     string(REPLACE "-framework;" "-framework " libs "${libs}")
-    message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES fixed: ${libs}")
+    # message(STATUS "PkgConfig::ExternalModules::INTERFACE_LINK_LIBRARIES fixed: ${libs}")
     set_target_properties(PkgConfig::ExternalModules PROPERTIES INTERFACE_LINK_LIBRARIES "${libs}")
 
 
@@ -123,7 +123,6 @@ endif ()
 
 find_package(ZLIB REQUIRED)
 find_package(Threads REQUIRED)
-find_package(X11)
 find_package(Lua 5.3) # Lua 5.4 is only supported with cmake >=3.18
 if (Lua_FOUND)
     # currently not fully supported by cmake
@@ -138,6 +137,30 @@ endif ()
 if (GtkSourceView_FOUND)
     message("Enable GtkSourceView TeX syntax highlighting")
     add_compile_definitions(USE_GTK_SOURCEVIEW)
+endif ()
+
+# X11 link settings
+
+# Note: CMAKE_REQUIRED_FIND_PACKAGE is only supported by CMake >= 3.22
+option(CMAKE_REQUIRED_FIND_PACKAGE_X11 "Force linking with X11" OFF)
+# Disable X11 on Windows/MacOS by default
+if (NOT CMAKE_REQUIRED_FIND_PACKAGE_X11 AND (CMAKE_SYSTEM_NAME MATCHES "Windows|Darwin"))
+    set(_DISABLE_X11_default ON)
+else()
+    set(_DISABLE_X11_default OFF)
+endif()
+option(CMAKE_DISABLE_FIND_PACKAGE_X11 "Disable linking with X11" ${_DISABLE_X11_default})
+unset(_DISABLE_X11_default)
+
+# To configure X11 linking, set the following definitions:
+#   CMAKE_DISABLE_FIND_PACKAGE_X11 - turn on to disable X11 features
+#   CMAKE_REQUIRED_FIND_PACKAGE_X11 - turn on to force use of X11 features
+
+# backwards compatibility for CMAKE_REQUIRED_FIND_PACKAGE_*
+if (CMAKE_REQUIRED_FIND_PACKAGE_X11)
+    find_package(X11 REQUIRED COMPONENTS Xi Xext)
+else()
+    find_package(X11 COMPONENTS Xi Xext)
 endif ()
 
 add_library(external_modules INTERFACE)
@@ -331,6 +354,7 @@ add_custom_target(uninstall
 message("
 Configuration:
     Compiler:                   ${CMAKE_CXX_COMPILER}
+    X11 support enabled:        ${X11_FOUND}
     GTEST enabled:              ${ENABLE_GTEST}
     GCOV enabled:               ${DEV_ENABLE_GCOV}
     Filesystem library:         ${CXX_FILESYSTEM_NAMESPACE}
