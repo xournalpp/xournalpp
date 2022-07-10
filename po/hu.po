@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-28 21:35+0000\n"
-"PO-Revision-Date: 2022-06-29 03:07\n"
+"POT-Creation-Date: 2022-07-10 20:04+0000\n"
+"PO-Revision-Date: 2022-07-10 20:06\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -216,24 +216,24 @@ msgstr "Nem sikerült a LaTeX PDF-fájl betöltése: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Nem sikerült a pagetemplates.ini fájl betöltése"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:819
+#: ../src/core/control/xojfile/LoadHandler.cpp:837
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: A fájl nem olvasható"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:829
+#: ../src/core/control/xojfile/LoadHandler.cpp:847
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: A fájl nem írható"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:799
-#: ../src/core/control/xojfile/LoadHandler.cpp:1050
+#: ../src/core/control/xojfile/LoadHandler.cpp:817
 #: ../src/core/control/xojfile/LoadHandler.cpp:1068
+#: ../src/core/control/xojfile/LoadHandler.cpp:1086
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: A fájlméret érvénytelen"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:790
-#: ../src/core/control/xojfile/LoadHandler.cpp:806
-#: ../src/core/control/xojfile/LoadHandler.cpp:1043
-#: ../src/core/control/xojfile/LoadHandler.cpp:1057
+#: ../src/core/control/xojfile/LoadHandler.cpp:808
+#: ../src/core/control/xojfile/LoadHandler.cpp:824
+#: ../src/core/control/xojfile/LoadHandler.cpp:1061
+#: ../src/core/control/xojfile/LoadHandler.cpp:1075
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "A csatolmány nem nyitható meg: {1}. Hibaüzenet: {2}"
 
@@ -253,12 +253,12 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Nem sikerült beolvasni az egyedi toolbar.ini fájlt: {1}\n"
 "Az eszköztár nem lesz elérhető"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:377
-#: ../src/core/control/xojfile/LoadHandler.cpp:400
+#: ../src/core/control/xojfile/LoadHandler.cpp:395
+#: ../src/core/control/xojfile/LoadHandler.cpp:418
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "A kép nem olvasható: {1}. Hibaüzenet: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:410
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "A klónozott háttérkép {1} oldalszámának olvasása sikertelen."
 
@@ -298,7 +298,7 @@ msgstr "A visszalépés nem sikerült „{1}”\n"
 msgid "Could not write background \"{1}\", {2}"
 msgstr "A(z) „{1}” háttér nem írható, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:341
+#: ../src/core/control/xojfile/SaveHandler.cpp:359
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "A(z) \"{1}\" háttér nem írható. Folytatás ettől függetlenül."
 
@@ -496,12 +496,12 @@ msgstr "Hiba történt a fájl megnyitása közben: {1}"
 msgid "Error opening file: \"{1}\""
 msgstr "Hiba történt a fájl megnyitása közben: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:462
-#: ../src/core/control/xojfile/LoadHandler.cpp:482
+#: ../src/core/control/xojfile/LoadHandler.cpp:480
+#: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Error reading PDF: {1}"
 msgstr "Hiba történt a PDF-fájl olvasásakor: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:537
+#: ../src/core/control/xojfile/LoadHandler.cpp:555
 msgid "Error reading width of a stroke: {1}"
 msgstr "Hiba történt a vonalvastagság olvasása során: {1}"
 
@@ -955,6 +955,10 @@ msgstr "Oldal beszúrva"
 msgid "Page number"
 msgstr "Oldalszám"
 
+#: ../src/core/control/xojfile/SaveHandler.cpp:308
+msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
+msgstr ""
+
 #: ../src/util/PageRange.cpp:95
 msgid "PageRange::parse(): given page number is larger than maximum count."
 msgstr "PageRange::parse(): egy adott oldalszám nagyobb, mint a legfeljebb oldalszám."
@@ -1052,7 +1056,7 @@ msgstr "Réteg átnevezése"
 msgid "Replace"
 msgstr "Csere"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1087
+#: ../src/core/control/xojfile/LoadHandler.cpp:1105
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "A(z) {1} melléklethez kért ideiglenes fájl nem található"
 
@@ -1467,7 +1471,7 @@ msgstr "Váratlan gyökércímke: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Váratlan címke a dokumentumban: „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:513
+#: ../src/core/control/xojfile/LoadHandler.cpp:531
 msgid "Unknown background type: {1}"
 msgstr "Ismeretlen háttértípus: {1}"
 
@@ -1475,7 +1479,7 @@ msgstr "Ismeretlen háttértípus: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Ismeretlen színérték: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:469
+#: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown domain type: {1}"
 msgstr "Ismeretlen tartománytípus: {1}"
 
@@ -1483,15 +1487,15 @@ msgstr "Ismeretlen tartománytípus: {1}"
 msgid "Unknown parser error"
 msgstr "Ismeretlen elemzési hiba történt"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:418
+#: ../src/core/control/xojfile/LoadHandler.cpp:436
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Ismeretlen pixmap::domain típus: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:605
+#: ../src/core/control/xojfile/LoadHandler.cpp:623
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Ismeretlen vonásírásvégtípus: „{1}”, kereket feltételezve"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:641
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Ismeretlen vonásírás típusa: „{1}”, tollat feltételezve"
 
@@ -1527,11 +1531,11 @@ msgstr "PDF-háttérrel"
 msgid "Write text"
 msgstr "Szöveg írása"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:944
+#: ../src/core/control/xojfile/LoadHandler.cpp:962
 msgid "Wrong count of points ({1})"
 msgstr "Hibás pontszám ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:954
+#: ../src/core/control/xojfile/LoadHandler.cpp:972
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Rossz számú pont, {1} kapott, várható: {2}"
 
@@ -1720,7 +1724,7 @@ msgstr "trackpoint"
 msgid "whiteout"
 msgstr "kifehéredés"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:953
+#: ../src/core/control/xojfile/LoadHandler.cpp:971
 msgid "xoj-File: {1}"
 msgstr "xoj-fájl: {1}"
 
