@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-28 21:35+0000\n"
-"PO-Revision-Date: 2022-06-28 22:52\n"
+"POT-Creation-Date: 2022-07-10 20:04+0000\n"
+"PO-Revision-Date: 2022-07-10 20:06\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -216,24 +216,24 @@ msgstr "Tidak dapat memuat berkas LaTeX PDF: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Tidak dapat memuat berkas pagetemplates.ini"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:819
+#: ../src/core/control/xojfile/LoadHandler.cpp:837
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Tidak dapat membuka lampiran: {1}. Pesan kesalahan: Tidak dapat membaca berkas"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:829
+#: ../src/core/control/xojfile/LoadHandler.cpp:847
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Tidak dapat membuka lampiran: {1}. Pesan kesalahan: Tidak dapat menulis berkas"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:799
-#: ../src/core/control/xojfile/LoadHandler.cpp:1050
+#: ../src/core/control/xojfile/LoadHandler.cpp:817
 #: ../src/core/control/xojfile/LoadHandler.cpp:1068
+#: ../src/core/control/xojfile/LoadHandler.cpp:1086
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Tidak dapat membuka lampiran: {1}. Pesan kesalahan: Tidak ada ukuran berkas yang valid"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:790
-#: ../src/core/control/xojfile/LoadHandler.cpp:806
-#: ../src/core/control/xojfile/LoadHandler.cpp:1043
-#: ../src/core/control/xojfile/LoadHandler.cpp:1057
+#: ../src/core/control/xojfile/LoadHandler.cpp:808
+#: ../src/core/control/xojfile/LoadHandler.cpp:824
+#: ../src/core/control/xojfile/LoadHandler.cpp:1061
+#: ../src/core/control/xojfile/LoadHandler.cpp:1075
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Tidak dapat membuka lampiran: {1}. Pesan kesalahan: {2}"
 
@@ -253,12 +253,12 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Tidak dapat mengurai berkas umum toolbar.ini: {1}\n"
 "Tidak dapat menyediakan bilah alat"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:377
-#: ../src/core/control/xojfile/LoadHandler.cpp:400
+#: ../src/core/control/xojfile/LoadHandler.cpp:395
+#: ../src/core/control/xojfile/LoadHandler.cpp:418
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Tidak dapat membaca gambar: {1}. Pesan kesalahan: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:410
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Tidak dapat membaca nomor halaman untuk salinan latar belakang gambar: {1}."
 
@@ -298,7 +298,7 @@ msgstr "Tidak dapat membatalkan \"{1}\"\n"
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Tidak dapat menulis latar belakang \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:341
+#: ../src/core/control/xojfile/SaveHandler.cpp:359
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Tidak dapat menulis latar belakang \"{1}\". Tetap melanjutkan."
 
@@ -496,12 +496,12 @@ msgstr "Kesalahan ketika membuka berkas \"{1}\""
 msgid "Error opening file: \"{1}\""
 msgstr "Kesalahan ketika membuka berkas: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:462
-#: ../src/core/control/xojfile/LoadHandler.cpp:482
+#: ../src/core/control/xojfile/LoadHandler.cpp:480
+#: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Error reading PDF: {1}"
 msgstr "Kesalahan saat membaca PDF: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:537
+#: ../src/core/control/xojfile/LoadHandler.cpp:555
 msgid "Error reading width of a stroke: {1}"
 msgstr "Kesalahan saat membaca lebar goresan: {1}"
 
@@ -954,6 +954,10 @@ msgstr "Halaman disisipkan"
 msgid "Page number"
 msgstr "Nomor halaman"
 
+#: ../src/core/control/xojfile/SaveHandler.cpp:308
+msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
+msgstr ""
+
 #: ../src/util/PageRange.cpp:95
 msgid "PageRange::parse(): given page number is larger than maximum count."
 msgstr ""
@@ -1051,7 +1055,7 @@ msgstr "Ganti nama layer"
 msgid "Replace"
 msgstr "Ganti"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1087
+#: ../src/core/control/xojfile/LoadHandler.cpp:1105
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Berkas sementara yang diminta tidak ditemukan untuk lampiran {1}"
 
@@ -1459,7 +1463,7 @@ msgstr "Tag akar tak diharapkan: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Tag tak diharapkan di dokumen: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:513
+#: ../src/core/control/xojfile/LoadHandler.cpp:531
 msgid "Unknown background type: {1}"
 msgstr "Tipe latar belakang tidak diketahui: {1}"
 
@@ -1467,7 +1471,7 @@ msgstr "Tipe latar belakang tidak diketahui: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Nilai warna tidak diketahui \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:469
+#: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown domain type: {1}"
 msgstr "Tipe domain tidak diketahui: {1}"
 
@@ -1475,15 +1479,15 @@ msgstr "Tipe domain tidak diketahui: {1}"
 msgid "Unknown parser error"
 msgstr "Kesalahan pengurai tidak diketahui"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:418
+#: ../src/core/control/xojfile/LoadHandler.cpp:436
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Tipe pixmap::domain tidak diketahui: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:605
+#: ../src/core/control/xojfile/LoadHandler.cpp:623
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr ""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:641
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tipe goresan tidak diketahui: \"{1}\", diasumsikan pena"
 
@@ -1519,11 +1523,11 @@ msgstr "Dengan latar belakang PDF"
 msgid "Write text"
 msgstr "Tulis teks"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:944
+#: ../src/core/control/xojfile/LoadHandler.cpp:962
 msgid "Wrong count of points ({1})"
 msgstr "Kesalahan perhitungan titik ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:954
+#: ../src/core/control/xojfile/LoadHandler.cpp:972
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Kesalahan perhitungan titik, mendapatkan {1}, mengharapkan {2}"
 
@@ -1712,7 +1716,7 @@ msgstr "titik lintasan"
 msgid "whiteout"
 msgstr "putihkan"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:953
+#: ../src/core/control/xojfile/LoadHandler.cpp:971
 msgid "xoj-File: {1}"
 msgstr "xoj-File: {1}"
 
