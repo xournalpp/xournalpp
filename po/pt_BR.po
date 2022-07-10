@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-28 21:35+0000\n"
-"PO-Revision-Date: 2022-06-28 22:53\n"
+"POT-Creation-Date: 2022-07-10 20:04+0000\n"
+"PO-Revision-Date: 2022-07-10 20:06\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -216,24 +216,24 @@ msgstr "Não foi possível carregar o arquivo PDF do LaTeX: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Não pode carregar o arquivo pagetemplates.ini"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:819
+#: ../src/core/control/xojfile/LoadHandler.cpp:837
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Não foi possível abrir o anexo: {1}. Mensagem de erro: Não foi possível ler o arquivo"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:829
+#: ../src/core/control/xojfile/LoadHandler.cpp:847
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Não foi possível abrir o anexo: {1}. Mensagem de erro: Não foi possível gravar o arquivo"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:799
-#: ../src/core/control/xojfile/LoadHandler.cpp:1050
+#: ../src/core/control/xojfile/LoadHandler.cpp:817
 #: ../src/core/control/xojfile/LoadHandler.cpp:1068
+#: ../src/core/control/xojfile/LoadHandler.cpp:1086
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Não foi possível abrir o anexo: {1}. Mensagem de erro: Nenhum tamanho de arquivo válido fornecido"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:790
-#: ../src/core/control/xojfile/LoadHandler.cpp:806
-#: ../src/core/control/xojfile/LoadHandler.cpp:1043
-#: ../src/core/control/xojfile/LoadHandler.cpp:1057
+#: ../src/core/control/xojfile/LoadHandler.cpp:808
+#: ../src/core/control/xojfile/LoadHandler.cpp:824
+#: ../src/core/control/xojfile/LoadHandler.cpp:1061
+#: ../src/core/control/xojfile/LoadHandler.cpp:1075
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Não foi possível abrir o anexo: {1}. Mensagem de erro: {2}"
 
@@ -253,12 +253,12 @@ msgid "Could not parse general toolbar.ini file: {1}\n"
 msgstr "Não foi possível interpretar o arquivo toolbar.ini geral: {1}\n"
 "Nenhuma barra de ferramentas estará disponível"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:377
-#: ../src/core/control/xojfile/LoadHandler.cpp:400
+#: ../src/core/control/xojfile/LoadHandler.cpp:395
+#: ../src/core/control/xojfile/LoadHandler.cpp:418
 msgid "Could not read image: {1}. Error message: {2}"
 msgstr "Não foi possível ler a imagem: {1}. Mensagem de erro: {2}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:410
+#: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
 msgstr "Não foi possível ler o número da página para imagem de fundo clonada: {1}."
 
@@ -298,7 +298,7 @@ msgstr "Não foi possível desfazer \"{1}\"\n"
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Não foi possível escrever o fundo \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:341
+#: ../src/core/control/xojfile/SaveHandler.cpp:359
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Não foi possível escrever o fundo \"{1}\". Continuando mesmo assim."
 
@@ -496,12 +496,12 @@ msgstr "Erro ao abrir o arquivo {1}"
 msgid "Error opening file: \"{1}\""
 msgstr "Erro ao abrir o arquivo: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:462
-#: ../src/core/control/xojfile/LoadHandler.cpp:482
+#: ../src/core/control/xojfile/LoadHandler.cpp:480
+#: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Error reading PDF: {1}"
 msgstr "Erro ao ler o PDF: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:537
+#: ../src/core/control/xojfile/LoadHandler.cpp:555
 msgid "Error reading width of a stroke: {1}"
 msgstr "Erro ao ler a largura de um traço: {1}"
 
@@ -956,6 +956,10 @@ msgstr "Página inserida"
 msgid "Page number"
 msgstr "Número da página"
 
+#: ../src/core/control/xojfile/SaveHandler.cpp:308
+msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
+msgstr ""
+
 #: ../src/util/PageRange.cpp:95
 msgid "PageRange::parse(): given page number is larger than maximum count."
 msgstr "PageRange::parse(): o número da página é maior que a contagem máxima."
@@ -1053,7 +1057,7 @@ msgstr "Renomear camada"
 msgid "Replace"
 msgstr "Substituir"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1087
+#: ../src/core/control/xojfile/LoadHandler.cpp:1105
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "O arquivo temporário solicitado não foi encontrado para o anexo {1}"
 
@@ -1468,7 +1472,7 @@ msgstr "Origem de marcador inesperada: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Marcador inesperado no documento: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:513
+#: ../src/core/control/xojfile/LoadHandler.cpp:531
 msgid "Unknown background type: {1}"
 msgstr "Tipo de fundo desconhecido: {1}"
 
@@ -1476,7 +1480,7 @@ msgstr "Tipo de fundo desconhecido: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Valor de cor desconhecido \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:469
+#: ../src/core/control/xojfile/LoadHandler.cpp:487
 msgid "Unknown domain type: {1}"
 msgstr "Tipo de domínio desconhecido: {1}"
 
@@ -1484,15 +1488,15 @@ msgstr "Tipo de domínio desconhecido: {1}"
 msgid "Unknown parser error"
 msgstr "Erro desconhecido no analisador"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:418
+#: ../src/core/control/xojfile/LoadHandler.cpp:436
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Pixmap::tipo de domínio desconhecido: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:605
+#: ../src/core/control/xojfile/LoadHandler.cpp:623
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Traçado desconhecido: \"{1}\", assumindo caneta"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:641
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tipo de traçado desconhecido: \"{1}\", assumindo a caneta"
 
@@ -1528,11 +1532,11 @@ msgstr "Com PDF de plano de fundo"
 msgid "Write text"
 msgstr "Escrever texto"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:944
+#: ../src/core/control/xojfile/LoadHandler.cpp:962
 msgid "Wrong count of points ({1})"
 msgstr "Contagem errada de pontos ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:954
+#: ../src/core/control/xojfile/LoadHandler.cpp:972
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Número errado de pontos, obtido {1}, esperado {2}"
 
@@ -1721,7 +1725,7 @@ msgstr "Ponto de rastreio"
 msgid "whiteout"
 msgstr "Borracha pontual"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:953
+#: ../src/core/control/xojfile/LoadHandler.cpp:971
 msgid "xoj-File: {1}"
 msgstr "xoj-arquivo: {1}"
 
