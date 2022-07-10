@@ -247,6 +247,15 @@ TEST(ControlLoadHandler, testPageTypeZipped) {
     checkPageType(doc, 5, "p6", PageType(PageTypeFormat::Image));
 }
 
+TEST(ControlLoadHandler, testPageTypeFormatCopyFix) {
+    LoadHandler handler;
+    Document* doc = handler.loadDocument(GET_TESTFILE("pageTypeFormatCopy.xopp"));
+
+    EXPECT_EQ((size_t)3, doc->getPageCount());
+    checkPageType(doc, 0, "p1", PageType(PageTypeFormat::Lined));
+    checkPageType(doc, 1, "p2", PageType(PageTypeFormat::Plain));  // PageTypeFormat::Copy in the file
+    checkPageType(doc, 2, "p3", PageType(PageTypeFormat::Plain));  // PageTypeFormat::Plain in the file
+}
 
 TEST(ControlLoadHandler, testLayer) {
     LoadHandler handler;
