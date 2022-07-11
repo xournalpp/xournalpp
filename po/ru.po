@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-10 20:04+0000\n"
-"PO-Revision-Date: 2022-07-10 20:06\n"
+"POT-Creation-Date: 2022-07-11 08:36+0000\n"
+"PO-Revision-Date: 2022-07-11 08:42\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/core/control/XournalMain.cpp:393
+#: ../src/core/control/XournalMain.cpp:400
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -42,7 +42,7 @@ msgstr "%F-Заметка-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Устройства не найдены. Должно быть что-то не так - может отправить отчёт об ошибке?</b>"
 
-#: ../src/core/control/XournalMain.cpp:388
+#: ../src/core/control/XournalMain.cpp:395
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Отсутствует необх�
 msgid "Add/Edit TeX"
 msgstr "Добавить/редактировать Tex"
 
-#: ../src/core/control/XournalMain.cpp:655
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Advanced export options"
 msgstr "Расширенные параметры экспорта"
 
@@ -363,7 +363,7 @@ msgstr "Удалить эту страницу"
 msgid "Discard"
 msgstr "Не сохранять"
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:669
 msgid "Display advanced export options"
 msgstr "Показать расширенные параметры экспорта"
 
@@ -459,6 +459,22 @@ msgstr ""
 msgid "Edit text"
 msgstr "Редактировать текст"
 
+#: ../src/util/ElementRange.cpp:101
+msgid "ElementRange::parse(): element indices start with 1"
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:95
+msgid "ElementRange::parse(): given element index is larger than maximum count."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:98
+msgid "ElementRange::parse(): interval bounds must be in increasing order."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:91
+msgid "ElementRange::parse(): invalid element range."
+msgstr ""
+
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
 msgstr "Экстренно сохраненный документ"
@@ -505,11 +521,11 @@ msgstr "Ошибка при чтении PDF: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "Ошибка чтения ширины черты: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:153
+#: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
 msgstr "Ошибка сохранения изображения #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:174
+#: ../src/core/control/jobs/ImageExport.cpp:195
 msgid "Error save image #2"
 msgstr "Ошибка сохранения изображения #2"
 
@@ -517,7 +533,7 @@ msgstr "Ошибка сохранения изображения #2"
 msgid "Error while autosaving: {1}"
 msgstr "Ошибка при автосохранении: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr ""
 
@@ -543,11 +559,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "Лог-файл ошибок не может быть удалён. Вы должны сделать это вручную.\n"
 "Лог-файл: {1}"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:622
 msgid "Export FILE as PDF"
 msgstr "Экспорт файла в PDF"
 
-#: ../src/core/control/XournalMain.cpp:615
+#: ../src/core/control/XournalMain.cpp:624
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -563,7 +579,7 @@ msgstr "Экспорт PDF"
 msgid "Export as PDF"
 msgstr "Экспортировать в PDF"
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -575,7 +591,7 @@ msgstr "Экспортировать слои последовательно\n"
 "                                 прогрессивное создание стека слоя.\n"
 "                                 Полученный PDF файл может быть использован для презентации.\n"
 
-#: ../src/core/control/XournalMain.cpp:620
+#: ../src/core/control/XournalMain.cpp:629
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -583,7 +599,7 @@ msgstr "Экспорт без фона\n"
 "                                 Экспортируемый файл имеет прозрачный или белый фон,\n"
 "                                 в зависимости от того, что поддерживает его формат\n"
 
-#: ../src/core/control/XournalMain.cpp:625
+#: ../src/core/control/XournalMain.cpp:634
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Экспорт без линования\n"
@@ -593,8 +609,8 @@ msgstr "Экспорт без линования\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Не удалось найти программу генератора LaTeX в PATH: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:171
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:211
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Не удалось инициализировать поверхность PDF Каира"
 
@@ -658,7 +674,7 @@ msgstr "Далее"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 или более поздняя версия"
 
-#: ../src/core/control/XournalMain.cpp:604
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Get version of xournalpp"
 msgstr "Узнать версию xournalpp"
 
@@ -725,7 +741,7 @@ msgstr "Маркер"
 msgid "Image"
 msgstr "Изображение"
 
-#: ../src/core/control/ExportHelper.cpp:76
+#: ../src/core/control/ExportHelper.cpp:78
 msgid "Image file successfully created"
 msgstr "Файл изображения успешно создан"
 
@@ -770,7 +786,7 @@ msgstr "Изометрия (точки)"
 msgid "Isometric Graph"
 msgstr "Изометрия (сетка)"
 
-#: ../src/core/control/XournalMain.cpp:600
+#: ../src/core/control/XournalMain.cpp:609
 msgid "Jump to Page (first Page: 1)"
 msgstr "Перейти на страницу (первая страница: 1)"
 
@@ -856,8 +872,8 @@ msgstr "Следующая аннотированная страница"
 msgid "No device"
 msgstr "Нет устройства"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:166
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:206
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
 msgid "No pages to export!"
 msgstr "Нет страниц для экспорта!"
 
@@ -874,7 +890,12 @@ msgstr "Обычный рисунок"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/core/control/XournalMain.cpp:636
+#: ../src/core/control/XournalMain.cpp:649
+msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Экспортировать только страницы, указанные в RANGE (например, \"2-3,5,7-\")\n"
@@ -914,7 +935,7 @@ msgstr "PDF страница {1}"
 msgid "PDF background missing"
 msgstr "Отсутствует PDF фон"
 
-#: ../src/core/control/ExportHelper.cpp:117
+#: ../src/core/control/ExportHelper.cpp:121
 msgid "PDF file successfully created"
 msgstr "PDF файл успешно создан"
 
@@ -959,22 +980,6 @@ msgstr "Номер страницы"
 #: ../src/core/control/xojfile/SaveHandler.cpp:308
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
-
-#: ../src/util/PageRange.cpp:95
-msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr ""
-
-#: ../src/util/PageRange.cpp:98
-msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr ""
-
-#: ../src/util/PageRange.cpp:91
-msgid "PageRange::parse(): invalid page range."
-msgstr "PageRange::parse(): неверный диапазон страниц."
-
-#: ../src/util/PageRange.cpp:101
-msgid "PageRange::parse(): page numbers start with 1"
-msgstr "PageRange::parse(): номера страниц начинаются с 1"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Paired pages"
@@ -1221,13 +1226,13 @@ msgstr "На задний план"
 msgid "Separator"
 msgstr "Разделитель"
 
-#: ../src/core/control/XournalMain.cpp:640
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Установите DPI для экспорта PNG. По умолчанию 300\n"
 "                                 Не имеет эффекта без -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1235,7 +1240,7 @@ msgstr "Установите высоту страницы для экспорт
 "                                 Не имеет эффекта без -i/--create-img=foo.png\n"
 "                                 Игнорируется, если используется --export-png-dpi или --export-png-width"
 
-#: ../src/core/control/XournalMain.cpp:644
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1263,13 +1268,13 @@ msgstr "Показывать только неиспользуемые стра�
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Показывать только неиспользуемые страницы ({1} неиспользуемых страниц)"
 
-#: ../src/core/control/XournalMain.cpp:478
+#: ../src/core/control/XournalMain.cpp:485
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "К сожалению, Xournal++ может открывать только один файл одновременно.\n"
 "Остальные игнорируются."
 
-#: ../src/core/control/XournalMain.cpp:493
+#: ../src/core/control/XournalMain.cpp:500
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "Xournal++ в данный момент не может открывать удалённые файлы.\n"
@@ -1502,7 +1507,7 @@ msgstr "Неизвестный тип черты: \"{1}\", предполага�
 msgid "Unsaved Document"
 msgstr "Несохранённый документ"
 
-#: ../src/core/control/jobs/ImageExport.cpp:93
+#: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
 msgstr "Неподдерживаемый графический формат: "
 
