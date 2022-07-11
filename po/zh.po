@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-10 20:04+0000\n"
-"PO-Revision-Date: 2022-07-10 20:06\n"
+"POT-Creation-Date: 2022-07-11 08:36+0000\n"
+"PO-Revision-Date: 2022-07-11 08:41\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/core/control/XournalMain.cpp:393
+#: ../src/core/control/XournalMain.cpp:400
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -42,7 +42,7 @@ msgstr "%F-笔记-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>没有找到设备。可能出错了，要提交 bug 报告吗？</b>"
 
-#: ../src/core/control/XournalMain.cpp:388
+#: ../src/core/control/XournalMain.cpp:395
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>缺失必要的用户界面文件�
 msgid "Add/Edit TeX"
 msgstr "插入/编辑TeX"
 
-#: ../src/core/control/XournalMain.cpp:655
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Advanced export options"
 msgstr "高级导出选项"
 
@@ -363,7 +363,7 @@ msgstr "删除此页面"
 msgid "Discard"
 msgstr "丢弃"
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:669
 msgid "Display advanced export options"
 msgstr "显示高级导出选项"
 
@@ -459,6 +459,22 @@ msgstr "绘制类型组合"
 msgid "Edit text"
 msgstr "编辑文本"
 
+#: ../src/util/ElementRange.cpp:101
+msgid "ElementRange::parse(): element indices start with 1"
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:95
+msgid "ElementRange::parse(): given element index is larger than maximum count."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:98
+msgid "ElementRange::parse(): interval bounds must be in increasing order."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:91
+msgid "ElementRange::parse(): invalid element range."
+msgstr ""
+
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
 msgstr "紧急保存的文档"
@@ -505,11 +521,11 @@ msgstr "读入PDF出错：{1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "读入笔划粗细出错：{1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:153
+#: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
 msgstr "保存图像 #1 时出错"
 
-#: ../src/core/control/jobs/ImageExport.cpp:174
+#: ../src/core/control/jobs/ImageExport.cpp:195
 msgid "Error save image #2"
 msgstr "保存图像 #2 时出错"
 
@@ -517,7 +533,7 @@ msgstr "保存图像 #2 时出错"
 msgid "Error while autosaving: {1}"
 msgstr "自动保存时出错: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "导出pdf背景错误: 无法找到pdf页码 "
 
@@ -543,11 +559,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "错误日志未能删除，请手工处理。\n"
 "日志文件: {1}"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:622
 msgid "Export FILE as PDF"
 msgstr "导出为 PDF"
 
-#: ../src/core/control/XournalMain.cpp:615
+#: ../src/core/control/XournalMain.cpp:624
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -563,7 +579,7 @@ msgstr "输出为PDF"
 msgid "Export as PDF"
 msgstr "导出为 PDF"
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -575,7 +591,7 @@ msgstr "逐步导出图层\n"
 "                                 逐步建立图层堆栈。\n"
 "                                 生成的 PDF 文件可以用于演示文稿。\n"
 
-#: ../src/core/control/XournalMain.cpp:620
+#: ../src/core/control/XournalMain.cpp:629
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -583,7 +599,7 @@ msgstr "无背景导出\n"
 "                                 导出文件可能具有白色或透明背景，\n"
 "                                 取决于文件的导出格式\n"
 
-#: ../src/core/control/XournalMain.cpp:625
+#: ../src/core/control/XournalMain.cpp:634
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "无规则导出\n"
@@ -594,8 +610,8 @@ msgstr "无规则导出\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "路径中无法找到 LaTeX 生成器: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:171
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:211
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "PDF Cairo画布初始化失败"
 
@@ -658,7 +674,7 @@ msgstr "下一步"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 或更新的GNU协议版本"
 
-#: ../src/core/control/XournalMain.cpp:604
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Get version of xournalpp"
 msgstr "获取xournalp版本信息"
 
@@ -725,7 +741,7 @@ msgstr "高亮"
 msgid "Image"
 msgstr "图片"
 
-#: ../src/core/control/ExportHelper.cpp:76
+#: ../src/core/control/ExportHelper.cpp:78
 msgid "Image file successfully created"
 msgstr "图片文件创建成功"
 
@@ -770,7 +786,7 @@ msgstr "等轴点阵"
 msgid "Isometric Graph"
 msgstr "等距网格线"
 
-#: ../src/core/control/XournalMain.cpp:600
+#: ../src/core/control/XournalMain.cpp:609
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到页面(第一页:1)"
 
@@ -856,8 +872,8 @@ msgstr "下一个标注页面"
 msgid "No device"
 msgstr "没有设备"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:166
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:206
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
 msgid "No pages to export!"
 msgstr "没有要导出的页面！"
 
@@ -874,7 +890,12 @@ msgstr "正常绘画"
 msgid "OK"
 msgstr "确定"
 
-#: ../src/core/control/XournalMain.cpp:636
+#: ../src/core/control/XournalMain.cpp:649
+msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "只导出RANGE指定的页面(例如“2-3,5,7-\")\n"
@@ -914,7 +935,7 @@ msgstr "PDF页码{1}"
 msgid "PDF background missing"
 msgstr "PDF背景丢失"
 
-#: ../src/core/control/ExportHelper.cpp:117
+#: ../src/core/control/ExportHelper.cpp:121
 msgid "PDF file successfully created"
 msgstr "PDF文件成功建立"
 
@@ -959,22 +980,6 @@ msgstr "页码"
 #: ../src/core/control/xojfile/SaveHandler.cpp:308
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
-
-#: ../src/util/PageRange.cpp:95
-msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr "PageRange::parse(): 给定的页数超过了最大页数。"
-
-#: ../src/util/PageRange.cpp:98
-msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr "PageRange::parse(): 区间的上下界限必须是升序。"
-
-#: ../src/util/PageRange.cpp:91
-msgid "PageRange::parse(): invalid page range."
-msgstr "PageRange::parse(): 页码范围无效。"
-
-#: ../src/util/PageRange.cpp:101
-msgid "PageRange::parse(): page numbers start with 1"
-msgstr "PageRange::parse(): 页码从1开始"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Paired pages"
@@ -1221,13 +1226,13 @@ msgstr "置于底层"
 msgid "Separator"
 msgstr "分割线"
 
-#: ../src/core/control/XournalMain.cpp:640
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "设置PNG 导出的DPI ，默认是 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1235,7 +1240,7 @@ msgstr "设置PNG导出页面的高度\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 
-#: ../src/core/control/XournalMain.cpp:644
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1263,13 +1268,13 @@ msgstr "只显示未使用页面(一个未使用页面)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "只显示未使用页面({1}个未使用页面)"
 
-#: ../src/core/control/XournalMain.cpp:478
+#: ../src/core/control/XournalMain.cpp:485
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "对不起，Xournal++ 只能一次打开一个文件。\n"
 "其他文件已被忽略。"
 
-#: ../src/core/control/XournalMain.cpp:493
+#: ../src/core/control/XournalMain.cpp:500
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "对不起，Xournal++ 目前无法打开远程目录里的文件。\n"
@@ -1504,7 +1509,7 @@ msgstr "未知笔划类型: \"{1}\"，将假设为笔"
 msgid "Unsaved Document"
 msgstr "未保存文档"
 
-#: ../src/core/control/jobs/ImageExport.cpp:93
+#: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
 msgstr "不支持的绘图格式: "
 
