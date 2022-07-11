@@ -14,6 +14,7 @@
 #include <cairo.h>  // for cairo_t
 
 #include "model/PageRef.h"  // for PageRef
+#include "util/ElementRange.h"
 
 class PdfCache;
 
@@ -38,6 +39,20 @@ public:
      */
     void drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStroke, bool hidePdfBackground = false,
                   bool hideImageBackground = false, bool hideRulingBackground = false);
+
+    /**
+     * Only draws the prescribed layers of the given page, regardless of the layer's current visibility.
+     * @param layerRange Range of layers to draw
+     * @param page The page to draw
+     * @param cr Draw to this context
+     * @param dontRenderEditingStroke false to draw currently drawing stroke
+     * @param hidePdfBackground true to hide the PDF background
+     * @param hideImageBackground true to hide the PDF background
+     * @param hideRulingBacground true to hide the ruling background
+     */
+    void drawLayersOfPage(const LayerRangeVector& layerRange, PageRef page, cairo_t* cr, bool dontRenderEditingStroke,
+                          bool hidePdfBackground = false, bool hideImageBackground = false,
+                          bool hideRulingBackground = false);
 
     /**
      * Mark stroke with Audio

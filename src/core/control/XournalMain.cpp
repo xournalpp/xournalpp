@@ -248,6 +248,9 @@ void checkForEmergencySave(Control* control) {
  * @param input Path to the input file
  * @param output Path to the output file(s)
  * @param range Page range to be parsed. If range=nullptr, exports the whole file
+ * @param layerRange Layer range to be parsed. Will only export those layers, for every exported page.
+ *                  If a number is too high for the number of layers on a given page, it is just ignored.
+ *                  If range=nullptr, exports all layers.
  * @param pngDpi Set dpi for Png files. Non positive values are ignored
  * @param pngWidth Set the width for Png files. Non positive values are ignored
  * @param pngHeight Set the height for Png files. Non positive values are ignored
@@ -257,8 +260,8 @@ void checkForEmergencySave(Control* control) {
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-auto exportImg(const char* input, const char* output, const char* range, int pngDpi, int pngWidth, int pngHeight,
-               ExportBackgroundType exportBackground) -> int {
+auto exportImg(const char* input, const char* output, const char* range, const char* layerRange, int pngDpi,
+               int pngWidth, int pngHeight, ExportBackgroundType exportBackground) -> int {
     LoadHandler loader;
 
     Document* doc = loader.loadDocument(input);
@@ -266,13 +269,16 @@ auto exportImg(const char* input, const char* output, const char* range, int png
         g_error("%s", loader.getLastError().c_str());
     }
 
-    return ExportHelper::exportImg(doc, output, range, pngDpi, pngWidth, pngHeight, exportBackground);
+    return ExportHelper::exportImg(doc, output, range, layerRange, pngDpi, pngWidth, pngHeight, exportBackground);
 }
 
 /**
  * @brief Export the input file as pdf
  * @param input Path to the input file
  * @param output Path to the output file
+ * @param layerRange Layer range to be parsed. Will only export those layers, for every exported page.
+ *                  If a number is too high for the number of layers on a given page, it is just ignored.
+ *                  If range=nullptr, exports all layers.
  * @param range Page range to be parsed. If range=nullptr, exports the whole file
  * @param exportBackground If EXPORT_BACKGROUND_NONE, the exported pdf file has white background
  * @param progressiveMode If true, then for each xournalpp page, instead of rendering one PDF page, the page layers are
@@ -280,15 +286,15 @@ auto exportImg(const char* input, const char* output, const char* range, int png
  *
  * @return 0 on success, -2 on failure opening the input file, -3 on export failure
  */
-auto exportPdf(const char* input, const char* output, const char* range, ExportBackgroundType exportBackground,
-               bool progressiveMode) -> int {
+auto exportPdf(const char* input, const char* output, const char* range, const char* layerRange,
+               ExportBackgroundType exportBackground, bool progressiveMode) -> int {
     LoadHandler loader;
 
     Document* doc = loader.loadDocument(input);
     if (doc == nullptr) {
         g_error("%s", loader.getLastError().c_str());
     }
-    return ExportHelper::exportPdf(doc, output, range, exportBackground, progressiveMode);
+    return ExportHelper::exportPdf(doc, output, range, layerRange, exportBackground, progressiveMode);
 }
 
 struct XournalMainPrivate {
@@ -310,6 +316,7 @@ struct XournalMainPrivate {
     gboolean showVersion = false;
     int openAtPageNumber = 0;  // when no --page is used, the document opens at the page specified in the metadata file
     gchar* exportRange{};
+    gchar* exportLayerRange{};
     int exportPngDpi = -1;
     int exportPngWidth = -1;
     int exportPngHeight = -1;
@@ -556,6 +563,7 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
         return exec_guarded(
                 [&] {
                     return exportPdf(*app_data->optFilename, app_data->pdfFilename, app_data->exportRange,
+                                     app_data->exportLayerRange,
                                      app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :
                                      app_data->exportNoRuling     ? EXPORT_BACKGROUND_UNRULED :
                                                                     EXPORT_BACKGROUND_ALL,
@@ -567,7 +575,8 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
         return exec_guarded(
                 [&] {
                     return exportImg(*app_data->optFilename, app_data->imgFilename, app_data->exportRange,
-                                     app_data->exportPngDpi, app_data->exportPngWidth, app_data->exportPngHeight,
+                                     app_data->exportLayerRange, app_data->exportPngDpi, app_data->exportPngWidth,
+                                     app_data->exportPngHeight,
                                      app_data->exportNoBackground ? EXPORT_BACKGROUND_NONE :
                                      app_data->exportNoRuling     ? EXPORT_BACKGROUND_UNRULED :
                                                                     EXPORT_BACKGROUND_ALL);
@@ -635,7 +644,11 @@ auto XournalMain::run(int argc, char** argv) -> int {
             GOptionEntry{"export-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportRange,
                          _("Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
                            "                                 No effect without -p/--create-pdf or -i/--create-img"),
-                         nullptr},
+                         "RANGE"},
+            GOptionEntry{"export-layer-range", 0, 0, G_OPTION_ARG_STRING, &app_data.exportLayerRange,
+                         _("On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+                           "                                 No effect without -p/--create-pdf or -i/--create-img"),
+                         "RANGE"},
             GOptionEntry{"export-png-dpi", 0, 0, G_OPTION_ARG_INT, &app_data.exportPngDpi,
                          _("Set DPI for PNG exports. Default is 300\n"
                            "                                 No effect without -i/--create-img=foo.png"),

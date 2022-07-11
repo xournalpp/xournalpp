@@ -95,3 +95,44 @@ void DocumentView::drawPage(PageRef page, cairo_t* cr, bool dontRenderEditingStr
 
     finializeDrawing();
 }
+
+
+void DocumentView::drawLayersOfPage(const LayerRangeVector& layerRange, PageRef page, cairo_t* cr,
+                                    bool dontRenderEditingStroke, bool hidePdfBackground, bool hideImageBackground,
+                                    bool hideRulingBackground) {
+    initDrawing(page, cr, dontRenderEditingStroke);
+
+    {  // Draw background
+        xoj::view::BackgroundFlags bgFlags;
+        bgFlags.showImage = (xoj::view::ImageBackgroundTreatment)!hideImageBackground;
+        bgFlags.showPDF = (xoj::view::PDFBackgroundTreatment)!hidePdfBackground;
+        bgFlags.showRuling = (xoj::view::RulingBackgroundTreatment)!hideRulingBackground;
+        drawBackground(bgFlags);
+    }
+
+    size_t layerCount = page->getLayerCount();
+    std::vector<bool> visible(layerCount, false);
+
+    for (LayerRangeEntry e: layerRange) {
+        auto last = e.last;
+        if (last >= layerCount) {
+            last = layerCount - 1;
+        }
+        for (auto x = e.first; x <= last; x++) {
+            visible[x] = true;
+        }
+    }
+
+    xoj::view::Context context{cr, (xoj::view::NonAudioTreatment)this->markAudioStroke,
+                               (xoj::view::EditionTreatment) !this->dontRenderEditingStroke, xoj::view::NORMAL_COLOR};
+    auto visibilityIt = visible.begin();
+    for (Layer* l: *page->getLayers()) {
+        if (!*(visibilityIt++)) {
+            continue;
+        }
+        xoj::view::LayerView layerView(l);
+        layerView.draw(context);
+    }
+
+    finializeDrawing();
+}

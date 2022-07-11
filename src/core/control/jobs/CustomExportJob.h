@@ -14,7 +14,7 @@
 #include <map>     // for map
 #include <string>  // for string
 
-#include "util/PageRange.h"  // for PageRangeVector
+#include "util/ElementRange.h"  // for PageRangeVector
 
 #include "BaseExportJob.h"  // for BaseExportJob, EXPORT_BACKGROUND_ALL
 #include "ImageExport.h"    // for RasterImageQualityParameter, EXPORT_GRAP...

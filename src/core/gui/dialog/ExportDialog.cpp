@@ -8,7 +8,7 @@
 #include <glib-object.h>  // for G_CALLBACK, g_signal_connect
 #include <glib.h>         // for GSList, TRUE, FALSE
 
-#include "util/PageRange.h"  // for parse, PageRangeVector
+#include "util/ElementRange.h"  // for parse, PageRangeVector
 
 class GladeSearchpath;
 
@@ -28,7 +28,7 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
         if (active) {
             const std::string text_form(gtk_editable_get_chars(GTK_EDITABLE(txtPages), 0, -1));
             try {
-                PageRange::parse(text_form, self->pageCount);
+                ElementRange::parse(text_form, self->pageCount);
                 gtk_style_context_remove_class(context, "error");
                 gtk_widget_set_sensitive(btOk, TRUE);
             } catch (const std::invalid_argument& e) {
@@ -50,7 +50,7 @@ ExportDialog::ExportDialog(GladeSearchpath* gladeSearchPath):
         const std::string text_form(gtk_editable_get_chars(txtPages, 0, -1));
         auto btOk = self->get("btOk");
         try {
-            PageRange::parse(text_form, self->pageCount);
+            ElementRange::parse(text_form, self->pageCount);
             gtk_style_context_remove_class(context, "error");
             gtk_widget_set_sensitive(btOk, TRUE);
         } catch (const std::invalid_argument& e) {
@@ -133,7 +133,7 @@ auto ExportDialog::getRange() -> PageRangeVector {
     GtkWidget* rdRangePages = get("rdRangePages");
 
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangePages))) {
-        return PageRange::parse(gtk_entry_get_text(GTK_ENTRY(get("txtPages"))), this->pageCount);
+        return ElementRange::parse(gtk_entry_get_text(GTK_ENTRY(get("txtPages"))), this->pageCount);
     }
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rdRangeCurrent))) {
         PageRangeVector range;

@@ -18,7 +18,7 @@
 #include <gtk/gtk.h>  // for GtkTreeModel
 
 #include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType, EXPORT...
-#include "util/PageRange.h"              // for PageRangeVector
+#include "util/ElementRange.h"           // for PageRangeVector
 
 #include "XojPdfExport.h"  // for XojPdfExport
 #include "filesystem.h"    // for path
@@ -61,6 +61,12 @@ private:
      * new page */
     void exportPageLayers(size_t page);
 
+    /**
+     * @brief Select layers to export by parsing str
+     * @param rangeStr A string parsed to get a list of layers
+     */
+    void setLayerRange(const char* rangeStr) override;
+
 private:
     Document* doc = nullptr;
     ProgressListener* progressListener = nullptr;
@@ -71,4 +77,6 @@ private:
     ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
 
     std::string lastError;
+
+    std::unique_ptr<LayerRangeVector> layerRange;
 };

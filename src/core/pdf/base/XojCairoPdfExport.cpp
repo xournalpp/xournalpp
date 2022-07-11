@@ -131,8 +131,14 @@ void XojCairoPdfExport::exportPage(size_t page) {
         popplerPage->renderForPrinting(cr);
     }
 
-    view.drawPage(p, this->cr, true /* dont render eraseable */, true /* don't rerender the pdf background */,
-                  exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
+    if (layerRange) {
+        view.drawLayersOfPage(*layerRange, p, this->cr, true /* dont render eraseable */,
+                              true /* don't rerender the pdf background */, exportBackground == EXPORT_BACKGROUND_NONE,
+                              exportBackground <= EXPORT_BACKGROUND_UNRULED);
+    } else {
+        view.drawPage(p, this->cr, true /* dont render eraseable */, true /* don't rerender the pdf background */,
+                      exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
+    }
 
     // next page
     cairo_show_page(this->cr);
@@ -236,3 +242,11 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) ->
 }
 
 auto XojCairoPdfExport::getLastError() -> std::string { return lastError; }
+
+void XojCairoPdfExport::setLayerRange(const char* rangeStr) {
+    if (rangeStr) {
+        // Use no upper bound for layer indices, as the maximal value can vary between pages
+        layerRange =
+                std::make_unique<LayerRangeVector>(ElementRange::parse(rangeStr, std::numeric_limits<size_t>::max()));
+    }
+}

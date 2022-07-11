@@ -1,4 +1,4 @@
-#include "util/PageRange.h"
+#include "util/ElementRange.h"
 
 #include <charconv>   // for from_chars
 #include <cstddef>    // for size_t
@@ -29,21 +29,21 @@
  * (permissive) and the return values are in the range 0 - (pageCount-1).
  *
  * @param s The string containing page ranges to parse.
- * @param pageCount The largest page that is possible to refer to.
+ * @param maxCount The largest element index that is possible to refer to.
  * @exception std::logic_error If `pageCount == 0`.
  * @exception std::invalid_argument If the input doesn't match any acceptable
  * page ranges.
  * @return A vector containing the page ranges.
  */
-std::vector<PageRangeEntry> PageRange::parse(const std::string& s, size_t pageCount) {
+ElementRangeVector ElementRange::parse(const std::string& s, size_t maxCount) {
     // break the string into comma (or ;:) separated tokens.
     const std::regex separators("[,;:]");
     auto begin = std::sregex_token_iterator(s.cbegin(), s.cend(), separators, -1);
     auto end = std::sregex_token_iterator();
 
-    std::vector<PageRangeEntry> entries;
-    if (pageCount == 0) {
-        throw std::logic_error("PageRange::parse(): pageCount is zero.");
+    ElementRangeVector entries;
+    if (maxCount == 0) {
+        throw std::logic_error("ElementRange::parse(): maxCount is zero.");
     }
 
     /* The following input cases are considered:
@@ -64,7 +64,7 @@ std::vector<PageRangeEntry> PageRange::parse(const std::string& s, size_t pageCo
     // for each token separated by `separators`
     for (auto it = begin; it != end; it++) {
         std::smatch match;
-        PageRangeEntry entry;
+        ElementRangeEntry entry;
         const std::string str = it->str();
         // This if-else block determines which case of 1) through 6) we deal with
         if (std::regex_match(str, match, singlePage)) {
@@ -74,7 +74,7 @@ std::vector<PageRangeEntry> PageRange::parse(const std::string& s, size_t pageCo
         } else if (std::regex_match(str, match, rightOpenRange)) {
             const auto token = match[1].str();
             std::from_chars(token.data(), token.data() + token.size(), entry.first);
-            entry.last = pageCount;
+            entry.last = maxCount;
         } else if (std::regex_match(str, match, leftOpenRange)) {
             const auto token = match[1].str();
             std::from_chars(token.data(), token.data() + token.size(), entry.last);
@@ -86,19 +86,19 @@ std::vector<PageRangeEntry> PageRange::parse(const std::string& s, size_t pageCo
             std::from_chars(tokenLast.data(), tokenLast.data() + tokenLast.size(), entry.last);
         } else if (std::regex_match(str, match, bothOpenRange)) {
             entry.first = 1;
-            entry.last = pageCount;
+            entry.last = maxCount;
         } else {
-            throw std::invalid_argument(_("PageRange::parse(): invalid page range."));
+            throw std::invalid_argument(_("ElementRange::parse(): invalid element range."));
         }
 
-        if (entry.first > pageCount || entry.last > pageCount) {
-            throw std::invalid_argument(_("PageRange::parse(): given page number is larger than maximum count."));
+        if (entry.first > maxCount || entry.last > maxCount) {
+            throw std::invalid_argument(_("ElementRange::parse(): given element index is larger than maximum count."));
         }
         if (entry.last < entry.first) {
-            throw std::invalid_argument(_("PageRange::parse(): interval bounds must be in increasing order."));
+            throw std::invalid_argument(_("ElementRange::parse(): interval bounds must be in increasing order."));
         }
         if (entry.first == 0) {  // entry.last cannot be 0 unless entry.first is.
-            throw std::invalid_argument(_("PageRange::parse(): page numbers start with 1"));
+            throw std::invalid_argument(_("ElementRange::parse(): element indices start with 1"));
         }
 
         // decrease the ranges because they should start from 0 instead of 1
