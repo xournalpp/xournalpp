@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-10 20:04+0000\n"
-"PO-Revision-Date: 2022-07-11 03:27\n"
+"PO-Revision-Date: 2022-07-11 04:25\n"
 "Last-Translator: \n"
 "Language-Team: Thai\n"
 "Language: th_TH\n"
@@ -700,7 +700,7 @@ msgstr "รูปภาพ"
 
 #: ../src/core/control/ExportHelper.cpp:76
 msgid "Image file successfully created"
-msgstr ""
+msgstr "สร้างไฟล์รูปภาพสำเร็จแล้ว"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
 msgid "Images"
@@ -725,7 +725,7 @@ msgstr "แทรกรูปภาพ"
 
 #: ../src/core/undo/InsertUndoAction.cpp:39
 msgid "Insert latex"
-msgstr ""
+msgstr "แทรกลาเทกซ์"
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:29
 msgid "Insert layer"
@@ -765,7 +765,7 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:82
 msgid "Layer Preview"
-msgstr ""
+msgstr "ดูตัวอย่างเลเยอร์"
 
 #: ../src/core/control/layer/LayerController.cpp:372
 msgid "Layer {1}"
@@ -795,11 +795,11 @@ msgstr ""
 
 #: ../src/core/undo/MoveUndoAction.cpp:19
 msgid "Move"
-msgstr ""
+msgstr "ย้าย"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:26
 msgid "Move layer"
-msgstr ""
+msgstr "ย้ายเลเยอร์"
 
 #: ../src/core/undo/SwapUndoAction.cpp:68
 msgid "Move page downwards"
@@ -827,7 +827,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:68
 msgid "No device"
-msgstr ""
+msgstr "ไม่พบอุปกรณ์"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:166
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:206
@@ -854,7 +854,7 @@ msgstr ""
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 msgid "Open Image"
-msgstr ""
+msgstr "เปิดไฟล์ภาพ"
 
 #: ../src/core/control/XournalMain.cpp:179
 msgid "Open Logfile"
@@ -872,11 +872,11 @@ msgstr "เปิดไฟล์"
 #: ../src/core/control/RecentManager.cpp:197
 msgctxt "{1} is a URI"
 msgid "Open {1}"
-msgstr ""
+msgstr "เปิด {1}"
 
 #: ../src/core/control/jobs/PdfExportJob.cpp:15
 msgid "PDF Export"
-msgstr ""
+msgstr "ส่งออกเป็น PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:41
 msgid "PDF Page {1}"
@@ -894,7 +894,7 @@ msgstr ""
 #: ../src/core/control/jobs/PdfExportJob.cpp:19
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
 msgid "PDF files"
-msgstr ""
+msgstr "ไฟล์ PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:47
 msgid "PDF {1}"
@@ -1023,11 +1023,11 @@ msgstr ""
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
-msgstr ""
+msgstr "เปลี่ยนชื่อเลเยอร์"
 
 #: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
-msgstr ""
+msgstr "แทนที่"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1105
 msgid "Requested temporary file was not found for attachment {1}"
@@ -1035,7 +1035,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:224
 msgid "Restore file"
-msgstr ""
+msgstr "กู้คืนไฟล์"
 
 #: ../src/core/undo/RotateUndoAction.cpp:56
 msgid "Rotation"
@@ -1110,7 +1110,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:74
 msgid "Select Object"
-msgstr ""
+msgstr "เลือกวัตถุ"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
@@ -1118,7 +1118,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
-msgstr ""
+msgstr "เลือกข้อความ PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
@@ -1130,7 +1130,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "เลือกข้อความ PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
@@ -1246,7 +1246,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
 msgid "Stop"
-msgstr ""
+msgstr "หยุด"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:138
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:47
@@ -1310,7 +1310,7 @@ msgstr ""
 
 #: ../src/core/gui/SearchBar.cpp:80
 msgid "Text not found"
-msgstr ""
+msgstr "ไม่พบข้อความ"
 
 #: ../src/core/gui/SearchBar.cpp:142 ../src/core/gui/SearchBar.cpp:186
 msgid "Text not found, searched on all pages"
