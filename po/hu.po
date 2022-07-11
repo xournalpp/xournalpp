@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-10 20:04+0000\n"
-"PO-Revision-Date: 2022-07-10 20:06\n"
+"POT-Creation-Date: 2022-07-11 08:36+0000\n"
+"PO-Revision-Date: 2022-07-11 08:42\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/core/control/XournalMain.cpp:393
+#: ../src/core/control/XournalMain.cpp:400
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -42,7 +42,7 @@ msgstr "%F-Jegyzet-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>Nem található eszköz. Ez gyanús - talán egy jelenteni való hiba?</b>"
 
-#: ../src/core/control/XournalMain.cpp:388
+#: ../src/core/control/XournalMain.cpp:395
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>A szükséges UI fájl hiányzik:\
 msgid "Add/Edit TeX"
 msgstr "TeX hozzáadása/szerkesztése"
 
-#: ../src/core/control/XournalMain.cpp:655
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Advanced export options"
 msgstr "Haladó exportálási lehetőségek"
 
@@ -363,7 +363,7 @@ msgstr "Oldal törlése"
 msgid "Discard"
 msgstr "Módosítások elvetése"
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:669
 msgid "Display advanced export options"
 msgstr "A haladó exportálási lehetőségek megjelenítése"
 
@@ -459,6 +459,22 @@ msgstr "Kombinált rajzolástípus"
 msgid "Edit text"
 msgstr "Szöveg szerkesztése"
 
+#: ../src/util/ElementRange.cpp:101
+msgid "ElementRange::parse(): element indices start with 1"
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:95
+msgid "ElementRange::parse(): given element index is larger than maximum count."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:98
+msgid "ElementRange::parse(): interval bounds must be in increasing order."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:91
+msgid "ElementRange::parse(): invalid element range."
+msgstr ""
+
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
 msgstr "Biztonsági mentett dokumentum"
@@ -505,11 +521,11 @@ msgstr "Hiba történt a PDF-fájl olvasásakor: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "Hiba történt a vonalvastagság olvasása során: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:153
+#: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
 msgstr "Hiba történt a kép mentése közben! #1"
 
-#: ../src/core/control/jobs/ImageExport.cpp:174
+#: ../src/core/control/jobs/ImageExport.cpp:195
 msgid "Error save image #2"
 msgstr "Hiba történt a kép mentése közben! #2"
 
@@ -517,7 +533,7 @@ msgstr "Hiba történt a kép mentése közben! #2"
 msgid "Error while autosaving: {1}"
 msgstr "Hiba történt az automatikus mentés közben: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "Hiba történt a pdf-háttér exportálása közben: nem található a pdf-oldalszám: "
 
@@ -543,11 +559,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "A hibanapló nem törölhető. Manuálisan kell törölnie.\n"
 "Naplófájl: {1}"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:622
 msgid "Export FILE as PDF"
 msgstr "FILE exportálása PDF-fájlként"
 
-#: ../src/core/control/XournalMain.cpp:615
+#: ../src/core/control/XournalMain.cpp:624
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -563,7 +579,7 @@ msgstr "PDF-fájl exportálása"
 msgid "Export as PDF"
 msgstr "Exportálás PDF-fájlként"
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -575,7 +591,7 @@ msgstr "Rétegek exportálása sorredben\n"
 "                                 végighaladva az egymásra helyezett rétegeken.\n"
 "                                 Az végleges PDF így használható prezentációként.\n"
 
-#: ../src/core/control/XournalMain.cpp:620
+#: ../src/core/control/XournalMain.cpp:629
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -583,7 +599,7 @@ msgstr "Háttér nélküli exportálás\n"
 "                                 Az exportált fájl háttere a támogatott formátumtól\n"
 "                                 függően átlátszó vagy fehér lesz\n"
 
-#: ../src/core/control/XournalMain.cpp:625
+#: ../src/core/control/XournalMain.cpp:634
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Margó nélküli exportálás\n"
@@ -593,8 +609,8 @@ msgstr "Margó nélküli exportálás\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "Nem sikerült megtalálni a LaTeX-létrehozó programot a PATH helyen: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:171
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:211
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "Nem sikerült a PDF-Kairó felületének inicializálása"
 
@@ -657,7 +673,7 @@ msgstr "Következő"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 vagy újabb"
 
-#: ../src/core/control/XournalMain.cpp:604
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Get version of xournalpp"
 msgstr "A xournalpp verzió lehívása"
 
@@ -724,7 +740,7 @@ msgstr "Kiemelő"
 msgid "Image"
 msgstr "Kép"
 
-#: ../src/core/control/ExportHelper.cpp:76
+#: ../src/core/control/ExportHelper.cpp:78
 msgid "Image file successfully created"
 msgstr "Képfájl sikeresen létrehozva"
 
@@ -769,7 +785,7 @@ msgstr "Izometrikus pontozott"
 msgid "Isometric Graph"
 msgstr "Izometrikus rácsos"
 
-#: ../src/core/control/XournalMain.cpp:600
+#: ../src/core/control/XournalMain.cpp:609
 msgid "Jump to Page (first Page: 1)"
 msgstr "Ugrás adott oldalra (első oldal: 1)"
 
@@ -855,8 +871,8 @@ msgstr "Következő széljegyzeteket tartalmazó lap"
 msgid "No device"
 msgstr "Nincs eszköz"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:166
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:206
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
 msgid "No pages to export!"
 msgstr "Nincs exportálandó oldal!"
 
@@ -873,7 +889,12 @@ msgstr "Normál rajz"
 msgid "OK"
 msgstr "Rendben"
 
-#: ../src/core/control/XournalMain.cpp:636
+#: ../src/core/control/XournalMain.cpp:649
+msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Csak az alábbi oldalakat exportálja (pl. \"2-3,5,7-\")\n"
@@ -913,7 +934,7 @@ msgstr "PDF oldal {1}"
 msgid "PDF background missing"
 msgstr "PDF-háttér hiányzik"
 
-#: ../src/core/control/ExportHelper.cpp:117
+#: ../src/core/control/ExportHelper.cpp:121
 msgid "PDF file successfully created"
 msgstr "PDF fájl sikeresen létrehozva"
 
@@ -958,22 +979,6 @@ msgstr "Oldalszám"
 #: ../src/core/control/xojfile/SaveHandler.cpp:308
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
-
-#: ../src/util/PageRange.cpp:95
-msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr "PageRange::parse(): egy adott oldalszám nagyobb, mint a legfeljebb oldalszám."
-
-#: ../src/util/PageRange.cpp:98
-msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr "PageRange::parse(): az oldal tartományának növekvő sorrendben kell lennie."
-
-#: ../src/util/PageRange.cpp:91
-msgid "PageRange::parse(): invalid page range."
-msgstr "PageRange::parse(): érvénytelen oldaltartomány."
-
-#: ../src/util/PageRange.cpp:101
-msgid "PageRange::parse(): page numbers start with 1"
-msgstr "PageRange::parse(): az oldalszámok 1-gyel kezdődnek"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Paired pages"
@@ -1220,13 +1225,13 @@ msgstr "Hátraküldés"
 msgid "Separator"
 msgstr "Elválasztó"
 
-#: ../src/core/control/XournalMain.cpp:640
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "DPI beállítása PNG exportokhoz. Az alapértelmezett érték 300\n"
 "                                 nincs hatása -i/--create-img=foo.png nélkül"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1234,7 +1239,7 @@ msgstr "Oldalmagasság beállítása PNG exportokhoz\n"
 "                                 Nincs hatása -i/--create-img=foo.png nélkül\n"
 "                                 Figyelmen kívül hagyva ha --export-png-dpi vagy --export-png-width használatban van"
 
-#: ../src/core/control/XournalMain.cpp:644
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1262,13 +1267,13 @@ msgstr "Nem használt oldalak megjelenítése (egy nem használt oldal)"
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "Nem használt oldalak megjelenítése ({1} nem használt oldal)"
 
-#: ../src/core/control/XournalMain.cpp:478
+#: ../src/core/control/XournalMain.cpp:485
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "Elnézést, a Xournal++ egyszerre csak egy fájlt tud megnyitni.\n"
 "A további fájlok figyelmen kívül hagyva."
 
-#: ../src/core/control/XournalMain.cpp:493
+#: ../src/core/control/XournalMain.cpp:500
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "Elnézést, a Xournal++ jelenleg nem tud távoli fájlokat megnyitni.\n"
@@ -1503,7 +1508,7 @@ msgstr "Ismeretlen vonásírás típusa: „{1}”, tollat feltételezve"
 msgid "Unsaved Document"
 msgstr "Nem mentett dokumentum"
 
-#: ../src/core/control/jobs/ImageExport.cpp:93
+#: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
 msgstr "Nem támogatott grafikus formátum: "
 
