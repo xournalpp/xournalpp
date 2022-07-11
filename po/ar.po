@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-10 20:04+0000\n"
-"PO-Revision-Date: 2022-07-10 20:06\n"
+"POT-Creation-Date: 2022-07-11 08:36+0000\n"
+"PO-Revision-Date: 2022-07-11 08:42\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /master/po/xournalpp.pot\n"
 "X-Crowdin-File-ID: 6\n"
 
-#: ../src/core/control/XournalMain.cpp:393
+#: ../src/core/control/XournalMain.cpp:400
 msgid "\n\n"
 "Will now attempt to run without this file."
 msgstr "\n\n"
@@ -42,7 +42,7 @@ msgstr "%F-ملاحظة-%H-%M"
 msgid "<b>No devices were found. This seems wrong - maybe file a bug report?</b>"
 msgstr "<b>لم يتم العثور على أجهزة. لا يبدو هذا صائبًا- ربما تودُّ إرسال بلاغٍ عن العطل؟</b>"
 
-#: ../src/core/control/XournalMain.cpp:388
+#: ../src/core/control/XournalMain.cpp:395
 msgid "<span foreground='red' size='x-large'>Missing the needed UI file:\n"
 "<b>{1}</b></span>\n"
 "Could not find them at any location.\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>لم يتم العثور على م
 msgid "Add/Edit TeX"
 msgstr "إدخال / تحرير LaTeX"
 
-#: ../src/core/control/XournalMain.cpp:655
+#: ../src/core/control/XournalMain.cpp:668
 msgid "Advanced export options"
 msgstr "خيارات التصدير المتقدمة"
 
@@ -363,7 +363,7 @@ msgstr "حذف هذه الصفحة"
 msgid "Discard"
 msgstr "إغلاق بدون حفظ"
 
-#: ../src/core/control/XournalMain.cpp:656
+#: ../src/core/control/XournalMain.cpp:669
 msgid "Display advanced export options"
 msgstr "إظهار خيارات التصدير المتقدمة"
 
@@ -459,6 +459,22 @@ msgstr "مجموعة أدوات الرسم"
 msgid "Edit text"
 msgstr "تحرير النص"
 
+#: ../src/util/ElementRange.cpp:101
+msgid "ElementRange::parse(): element indices start with 1"
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:95
+msgid "ElementRange::parse(): given element index is larger than maximum count."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:98
+msgid "ElementRange::parse(): interval bounds must be in increasing order."
+msgstr ""
+
+#: ../src/util/ElementRange.cpp:91
+msgid "ElementRange::parse(): invalid element range."
+msgstr ""
+
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
 msgstr "المستند المحفوظ اضطراريا"
@@ -505,11 +521,11 @@ msgstr "خطأ في قراءة ملف PDF؛ التفاصيل: {1}"
 msgid "Error reading width of a stroke: {1}"
 msgstr "خطأ في قراءة عرض الخط: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:153
+#: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
 msgstr "خطأ في حفظ الصورة رقم ١"
 
-#: ../src/core/control/jobs/ImageExport.cpp:174
+#: ../src/core/control/jobs/ImageExport.cpp:195
 msgid "Error save image #2"
 msgstr "خطأ في حفظ الصورة رقم ٢"
 
@@ -517,7 +533,7 @@ msgstr "خطأ في حفظ الصورة رقم ٢"
 msgid "Error while autosaving: {1}"
 msgstr "خطأ أثناء الحفظ التلقائي: {1}"
 
-#: ../src/core/control/jobs/ImageExport.cpp:162
+#: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
 msgstr "حدث خطأ أثناء تصدير خلفية PDF: تعذر إيجاد صفحة PDF التي رقمها "
 
@@ -543,11 +559,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "تعذر حذف سجل الأخطاء. عليك فعل ذلك يدويا.\n"
 "ملف السجل: {1}"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:622
 msgid "Export FILE as PDF"
 msgstr "تصدير «ملف» كـPDF"
 
-#: ../src/core/control/XournalMain.cpp:615
+#: ../src/core/control/XournalMain.cpp:624
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -563,7 +579,7 @@ msgstr "تصدير PDF"
 msgid "Export as PDF"
 msgstr "تصدير كـPDF"
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -575,7 +591,7 @@ msgstr "تصدير الطبقات تدريجيا\n"
 "                                  عدد ن من الطبقات، فيبني كومة الطبقات تدريجيا.\n"
 "                                 يمكن استخدام ملف الـPDF الناتج كعرض تقديمي.\n"
 
-#: ../src/core/control/XournalMain.cpp:620
+#: ../src/core/control/XournalMain.cpp:629
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -583,7 +599,7 @@ msgstr "تصدير بدون خلفية\n"
 "                                 ستكون خلفية الملف المصدَّر شفافة أو بيضاء،\n"
 "                                 اعتمادا على ما تدعمه الصيغة\n"
 
-#: ../src/core/control/XournalMain.cpp:625
+#: ../src/core/control/XournalMain.cpp:634
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "تصدير بدون تسطير\n"
@@ -593,8 +609,8 @@ msgstr "تصدير بدون تسطير\n"
 msgid "Failed to find LaTeX generator program in PATH: {1}"
 msgstr "تعذر العثور على برنامج توليد LaTeX في متغير مسارات النظام: {1}"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:171
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:211
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
 msgid "Failed to initialize PDF Cairo surface"
 msgstr "تعذر تهيئة PDF Cairo surface"
 
@@ -658,7 +674,7 @@ msgstr "تقديم"
 msgid "GNU GPLv2 or later"
 msgstr "رخصة جنو العمومية، الإصدارة الثانية أو أحدث"
 
-#: ../src/core/control/XournalMain.cpp:604
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Get version of xournalpp"
 msgstr "الحصول على نسخة xournalpp"
 
@@ -725,7 +741,7 @@ msgstr "قلم تظليل"
 msgid "Image"
 msgstr "صورة"
 
-#: ../src/core/control/ExportHelper.cpp:76
+#: ../src/core/control/ExportHelper.cpp:78
 msgid "Image file successfully created"
 msgstr "تم إنشاء ملف الصورة بنجاح"
 
@@ -770,7 +786,7 @@ msgstr "أيزومتري منقط"
 msgid "Isometric Graph"
 msgstr "رسم بياني أيزومتري"
 
-#: ../src/core/control/XournalMain.cpp:600
+#: ../src/core/control/XournalMain.cpp:609
 msgid "Jump to Page (first Page: 1)"
 msgstr "انتقال إلى الصفحة (الصفحة الأولى: 1)"
 
@@ -856,8 +872,8 @@ msgstr "الصفحة المعلّق عليها التالية"
 msgid "No device"
 msgstr "لا يوجد جهاز"
 
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:166
-#: ../src/core/pdf/base/XojCairoPdfExport.cpp:206
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:172
+#: ../src/core/pdf/base/XojCairoPdfExport.cpp:212
 msgid "No pages to export!"
 msgstr "لا توجد صفحات للتصدير!"
 
@@ -874,7 +890,12 @@ msgstr "رسم عادي"
 msgid "OK"
 msgstr "موافق"
 
-#: ../src/core/control/XournalMain.cpp:636
+#: ../src/core/control/XournalMain.cpp:649
+msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
+"                                 No effect without -p/--create-pdf or -i/--create-img"
+msgstr ""
+
+#: ../src/core/control/XournalMain.cpp:645
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "تصدير الصفحات التي يحددها «المدى» فقط (مثال: «‪2-3,5,7-‬»)\n"
@@ -914,7 +935,7 @@ msgstr "صفحة PDF رقم {1}"
 msgid "PDF background missing"
 msgstr "خلفية PDF مفقودة"
 
-#: ../src/core/control/ExportHelper.cpp:117
+#: ../src/core/control/ExportHelper.cpp:121
 msgid "PDF file successfully created"
 msgstr "تم إنشاء ملف الـPDF بنجاح"
 
@@ -959,22 +980,6 @@ msgstr "رقم الصفحة"
 #: ../src/core/control/xojfile/SaveHandler.cpp:308
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr ""
-
-#: ../src/util/PageRange.cpp:95
-msgid "PageRange::parse(): given page number is larger than maximum count."
-msgstr "PageRange::parse()‎ : رقم الصفحة المعطى أكبر من العدد الأقصى."
-
-#: ../src/util/PageRange.cpp:98
-msgid "PageRange::parse(): interval bounds must be in increasing order."
-msgstr "PageRange::parse()‎ : يجب أن يكونا حدّي المدى بترتيب تصاعدي."
-
-#: ../src/util/PageRange.cpp:91
-msgid "PageRange::parse(): invalid page range."
-msgstr "PageRange::parse()‎ : مدى صفحات غير صالح."
-
-#: ../src/util/PageRange.cpp:101
-msgid "PageRange::parse(): page numbers start with 1"
-msgstr "PageRange::parse()‎ : ترقيم الصفحات يبدأ من الواحد."
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Paired pages"
@@ -1221,13 +1226,13 @@ msgstr "إرسال إلى المؤخرة"
 msgid "Separator"
 msgstr "فاصل"
 
-#: ../src/core/control/XournalMain.cpp:640
+#: ../src/core/control/XournalMain.cpp:653
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "تعيين دقة (DPI) التصدير إلى PNG. الدقة المبدئية هي 300\n"
 "                                 لا تأثير بدون ‪-i/--create-img=foo.png‬"
 
-#: ../src/core/control/XournalMain.cpp:650
+#: ../src/core/control/XournalMain.cpp:663
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1235,7 +1240,7 @@ msgstr "تعيين ارتفاع الصفحة عند التصدير إلى PNG\n"
 "                                 لا تأثير بدون ‪-i/--create-img=foo.png‬\n"
 "                                 يتم إهماله عند استخدام ‪--export-png-dpi‬ أو ‪--export-png-width‬"
 
-#: ../src/core/control/XournalMain.cpp:644
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -1263,13 +1268,13 @@ msgstr "إظهار الصفحات غير المستخدمة فقط (صفحة و�
 msgid "Show only not used pages ({1} unused pages)"
 msgstr "إظهار الصفحات غير المستخدمة فقط ({1} صفحات غير مستخدمة)"
 
-#: ../src/core/control/XournalMain.cpp:478
+#: ../src/core/control/XournalMain.cpp:485
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
 msgstr "عذرا، يستطيع Xournal++‎ فتح ملف واحد فقط في المرة الواحدة.\n"
 "تم تجاهل الملفات الأخرى."
 
-#: ../src/core/control/XournalMain.cpp:493
+#: ../src/core/control/XournalMain.cpp:500
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
 msgstr "عذرا، لا يستطيع Xournal++‎ فتح الملفات البعيدة حاليا.\n"
@@ -1504,7 +1509,7 @@ msgstr "نوع خط رسم مجهول: «{1}»، سأفترض أنه قلم"
 msgid "Unsaved Document"
 msgstr "مستند غير محفوظ"
 
-#: ../src/core/control/jobs/ImageExport.cpp:93
+#: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
 msgstr "صيغة رسوميات غير مدعومة: "
 
