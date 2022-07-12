@@ -316,7 +316,9 @@ void EditSelectionContents::fillUndoItem(DeleteUndoAction* undo) {
     // and owned by the selection, therefore the layer
     // doesn't know the index anymore
     int index = layer->getElements().size();
-    for (Element* e: this->selected) { undo->addElement(layer, e, index); }
+    for (Element* e: this->selected) {
+        undo->addElement(layer, e, index);
+    }
 
     this->selected.clear();
     this->insertOrder.clear();

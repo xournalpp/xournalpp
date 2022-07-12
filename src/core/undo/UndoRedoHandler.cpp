@@ -38,7 +38,9 @@ inline void printAction(PtrType& action) {
 
 template <typename PtrType>
 inline void printUndoList(std::deque<PtrType> list) {
-    for (auto&& action: list) { printAction(action); }
+    for (auto&& action: list) {
+        printAction(action);
+    }
 }
 
 #ifdef UNDO_TRACE
@@ -221,14 +223,18 @@ auto UndoRedoHandler::redoDescription() -> string {
 }
 
 void UndoRedoHandler::fireUpdateUndoRedoButtons(const std::vector<PageRef>& pages) {
-    for (auto&& undoRedoListener: this->listener) { undoRedoListener->undoRedoChanged(); }
+    for (auto&& undoRedoListener: this->listener) {
+        undoRedoListener->undoRedoChanged();
+    }
 
     for (PageRef page: pages) {
         if (!page) {
             continue;
         }
 
-        for (auto&& undoRedoListener: this->listener) { undoRedoListener->undoRedoPageChanged(page); }
+        for (auto&& undoRedoListener: this->listener) {
+            undoRedoListener->undoRedoPageChanged(page);
+        }
     }
 }
 

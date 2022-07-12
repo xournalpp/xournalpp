@@ -139,7 +139,9 @@ auto PopplerGlibPage::selectText(const XojPdfRectangle& rect, XojPdfPageSelectio
 
             char* const startPos = g_utf8_offset_to_pointer(textBytes, i);
             char* const endPos = g_utf8_offset_to_pointer(textBytes, i + 1);
-            for (long j = 0; j < static_cast<ptrdiff_t>(endPos - startPos); ++j) { ss << startPos[j]; }
+            for (long j = 0; j < static_cast<ptrdiff_t>(endPos - startPos); ++j) {
+                ss << startPos[j];
+            }
         }
         g_free(textBytes);
         return ss.str();

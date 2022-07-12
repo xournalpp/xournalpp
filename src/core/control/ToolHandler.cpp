@@ -187,7 +187,9 @@ void ToolHandler::selectTool(ToolType type) {
 }
 
 void ToolHandler::fireToolChanged() {
-    for (auto&& listener: this->toolChangeListeners) { listener(this->activeTool->type); }
+    for (auto&& listener: this->toolChangeListeners) {
+        listener(this->activeTool->type);
+    }
 
     stateChangeListener->toolChanged();
 }

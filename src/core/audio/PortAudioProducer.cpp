@@ -108,7 +108,9 @@ void PortAudioProducer::stopRecording() {
             if (this->inputStream->isActive()) {
                 this->inputStream->stop();
             }
-        } catch (portaudio::PaException& e) { g_message("PortAudioProducer: Closing stream failed"); }
+        } catch (portaudio::PaException& e) {
+            g_message("PortAudioProducer: Closing stream failed");
+        }
     }
 
     // Notify the consumer at the other side that there will be no more data

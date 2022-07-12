@@ -34,9 +34,13 @@ void ArrangeUndoAction::applyRearrange() {
     const auto& srcOrder = this->undone ? this->newOrder : this->oldOrder;
     const auto& tgtOrder = this->undone ? this->oldOrder : this->newOrder;
 
-    for (const auto& [e, _]: srcOrder) { layer->removeElement(e, false); }
+    for (const auto& [e, _]: srcOrder) {
+        layer->removeElement(e, false);
+    }
 
-    for (const auto& [e, i]: tgtOrder) { layer->insertElement(e, i); }
+    for (const auto& [e, i]: tgtOrder) {
+        layer->insertElement(e, i);
+    }
 
     this->page->firePageChanged();
 }

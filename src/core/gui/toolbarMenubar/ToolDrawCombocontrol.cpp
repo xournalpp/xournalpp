@@ -47,11 +47,15 @@ ToolDrawCombocontrol::ToolDrawCombocontrol(ToolMenuHandler* toolMenuHandler, Act
     drawTypes.push_back(new ToolDrawType(_("Stroke recognizer"), toolMenuHandler->iconName("shape-recognizer"),
                                          ACTION_SHAPE_RECOGNIZER));
 
-    for (ToolDrawType* t: drawTypes) { createMenuItem(t->name, t->icon, t->type); }
+    for (ToolDrawType* t: drawTypes) {
+        createMenuItem(t->name, t->icon, t->type);
+    }
 }
 
 ToolDrawCombocontrol::~ToolDrawCombocontrol() {
-    for (ToolDrawType* t: drawTypes) { delete t; }
+    for (ToolDrawType* t: drawTypes) {
+        delete t;
+    }
     this->drawTypes.clear();
     this->toolMenuHandler = nullptr;
 }

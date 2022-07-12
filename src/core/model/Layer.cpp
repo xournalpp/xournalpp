@@ -8,7 +8,9 @@
 Layer::Layer() = default;
 
 Layer::~Layer() {
-    for (Element* e: this->elements) { delete e; }
+    for (Element* e: this->elements) {
+        delete e;
+    }
     this->elements.clear();
 }
 
@@ -19,7 +21,9 @@ auto Layer::clone() const -> Layer* {
         layer->setName(getName());
     }
 
-    for (Element* e: this->elements) { layer->addElement(e->clone()); }
+    for (Element* e: this->elements) {
+        layer->addElement(e->clone());
+    }
 
     return layer;
 }

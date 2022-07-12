@@ -166,7 +166,9 @@ int main(int argc, char* argv[]) {
                     return CAIRO_STATUS_READ_ERROR;
                 }
 
-                for (auto i = 0; i < length; i++) { data[i] = closure->data[closure->pos + i]; }
+                for (auto i = 0; i < length; i++) {
+                    data[i] = closure->data[closure->pos + i];
+                }
                 closure->pos += length;
                 return CAIRO_STATUS_SUCCESS;
             };

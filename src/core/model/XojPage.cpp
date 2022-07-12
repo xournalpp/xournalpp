@@ -13,7 +13,9 @@
 XojPage::XojPage(double width, double height): width(width), height(height), bgType(PageTypeFormat::Lined) {}
 
 XojPage::~XojPage() {
-    for (Layer* l: this->layer) { delete l; }
+    for (Layer* l: this->layer) {
+        delete l;
+    }
     this->layer.clear();
 }
 

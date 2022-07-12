@@ -195,7 +195,9 @@ void SidebarPreviewPages::actionPerformed(SidebarActions action) {
 }
 
 void SidebarPreviewPages::updatePreviews() {
-    for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
+    for (SidebarPreviewBaseEntry* p: this->previews) {
+        delete p;
+    }
     this->previews.clear();
 
     Document* doc = this->getControl()->getDocument();
@@ -267,7 +269,9 @@ void SidebarPreviewPages::pageInserted(size_t page) {
  * Unselect the last selected page, if any
  */
 void SidebarPreviewPages::unselectPage() {
-    for (SidebarPreviewBaseEntry* p: this->previews) { p->setSelected(false); }
+    for (SidebarPreviewBaseEntry* p: this->previews) {
+        p->setSelected(false);
+    }
 }
 
 void SidebarPreviewPages::pageSelected(size_t page) {

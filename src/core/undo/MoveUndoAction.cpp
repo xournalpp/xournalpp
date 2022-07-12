@@ -33,9 +33,13 @@ MoveUndoAction::~MoveUndoAction() = default;
 
 void MoveUndoAction::move() {
     if (this->undone) {
-        for (Element* e: this->elements) { e->move(dx, dy); }
+        for (Element* e: this->elements) {
+            e->move(dx, dy);
+        }
     } else {
-        for (Element* e: this->elements) { e->move(-dx, -dy); }
+        for (Element* e: this->elements) {
+            e->move(-dx, -dy);
+        }
     }
 }
 

@@ -30,7 +30,9 @@ FillUndoAction::FillUndoAction(const PageRef& page, Layer* layer): UndoAction("F
 }
 
 FillUndoAction::~FillUndoAction() {
-    for (FillUndoActionEntry* e: this->data) { delete e; }
+    for (FillUndoActionEntry* e: this->data) {
+        delete e;
+    }
     this->data.clear();
 }
 

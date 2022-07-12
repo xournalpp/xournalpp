@@ -47,7 +47,6 @@ public:
     void clearCache();
 
 public:
-
     /**
      * @brief Set the maximum tolerable zoom difference, as a percentage.
      *

@@ -34,7 +34,9 @@ Scheduler::~Scheduler() {
     stop();
 
     Job* job = nullptr;
-    while ((job = getNextJobUnlocked()) != nullptr) { job->unref(); }
+    while ((job = getNextJobUnlocked()) != nullptr) {
+        job->unref();
+    }
 
     if (this->blockRenderZoomTime) {
         g_free(this->blockRenderZoomTime);

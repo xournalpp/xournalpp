@@ -80,5 +80,7 @@ void Inertia::increase(Point p1, Point p2, int coef) {
 
 void Inertia::calc(const Point* pt, int start, int end) {
     this->mass = this->sx = this->sy = this->sxx = this->sxy = this->syy = 0.;
-    for (int i = start; i < end - 1; i++) { this->increase(pt[i], pt[i + 1], 1); }
+    for (int i = start; i < end - 1; i++) {
+        this->increase(pt[i], pt[i + 1], 1);
+    }
 }

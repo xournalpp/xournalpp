@@ -242,11 +242,15 @@ void ZoomControl::fireZoomChanged() {
         this->zoom = this->zoomMax;
     }
 
-    for (ZoomListener* z: this->listener) { z->zoomChanged(); }
+    for (ZoomListener* z: this->listener) {
+        z->zoomChanged();
+    }
 }
 
 void ZoomControl::fireZoomRangeValueChanged() {
-    for (ZoomListener* z: this->listener) { z->zoomRangeValuesChanged(); }
+    for (ZoomListener* z: this->listener) {
+        z->zoomRangeValuesChanged();
+    }
 }
 
 auto ZoomControl::getZoom() const -> double { return this->zoom; }

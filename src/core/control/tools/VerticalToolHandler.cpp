@@ -60,7 +60,9 @@ void VerticalToolHandler::adoptElements(const Side side) {
     this->spacingSide = side;
 
     // Return current elements back to page
-    for (Element* e: this->elements) { this->layer->addElement(e); }
+    for (Element* e: this->elements) {
+        this->layer->addElement(e);
+    }
     this->elements.clear();
 
     // Add new elements based on position
@@ -71,7 +73,9 @@ void VerticalToolHandler::adoptElements(const Side side) {
         }
     }
 
-    for (Element* e: this->elements) { this->layer->removeElement(e, false); }
+    for (Element* e: this->elements) {
+        this->layer->removeElement(e, false);
+    }
 
     if (this->crBuffer) {
         redrawBuffer();

@@ -133,7 +133,9 @@ auto SaveJob::save() -> bool {
         try {
             // If a backup was created it can be removed now since no error occured during the save
             fs::remove(fs::path{target} += "~");
-        } catch (fs::filesystem_error const& fe) { g_warning("Could not delete backup! Failed with %s", fe.what()); }
+        } catch (fs::filesystem_error const& fe) {
+            g_warning("Could not delete backup! Failed with %s", fe.what());
+        }
     } else {
         doc->setCreateBackupOnSave(true);
     }

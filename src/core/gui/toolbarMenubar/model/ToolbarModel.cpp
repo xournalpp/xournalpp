@@ -13,7 +13,9 @@ using std::string;
 ToolbarModel::ToolbarModel() = default;
 
 ToolbarModel::~ToolbarModel() {
-    for (ToolbarData* data: this->toolbars) { delete data; }
+    for (ToolbarData* data: this->toolbars) {
+        delete data;
+    }
     this->toolbars.clear();
 }
 
@@ -52,7 +54,9 @@ auto ToolbarModel::parse(fs::path const& filepath, bool predefined) -> bool {
     gsize length = 0;
     gchar** groups = g_key_file_get_groups(config, &length);
 
-    for (gsize i = 0; i < length; i++) { parseGroup(config, groups[i], predefined); }
+    for (gsize i = 0; i < length; i++) {
+        parseGroup(config, groups[i], predefined);
+    }
 
     g_strfreev(groups);
     g_key_file_free(config);

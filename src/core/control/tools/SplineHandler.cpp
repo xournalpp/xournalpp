@@ -383,7 +383,9 @@ void SplineHandler::updateStroke() {
     // convert collection of segments to stroke
     stroke->deletePointsFrom(0);
     for (auto s: segments) {
-        for (auto p: s.toPointSequence()) { stroke->addPoint(p); }
+        for (auto p: s.toPointSequence()) {
+            stroke->addPoint(p);
+        }
     }
     if (!segments.empty()) {
         stroke->addPoint(segments.back().secondKnot);

@@ -181,7 +181,9 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, const PageRangeVector& r
     }
 
     size_t count = 0;
-    for (const auto& e: range) { count += e.last - e.first + 1; }
+    for (const auto& e: range) {
+        count += e.last - e.first + 1;
+    }
 
     if (this->progressListener) {
         this->progressListener->setMaximumState(count);

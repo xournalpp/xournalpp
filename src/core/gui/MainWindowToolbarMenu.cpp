@@ -31,12 +31,16 @@ MainWindowToolbarMenu::~MainWindowToolbarMenu() {
 }
 
 void MainWindowToolbarMenu::freeToolMenu() {
-    for (MenuSelectToolbarData* data: toolbarMenuData) { delete data; }
+    for (MenuSelectToolbarData* data: toolbarMenuData) {
+        delete data;
+    }
     this->toolbarMenuData.clear();
 }
 
 void MainWindowToolbarMenu::setTmpDisabled(bool disabled) {
-    for (MenuSelectToolbarData* data: this->toolbarMenuData) { gtk_widget_set_sensitive(data->item, !disabled); }
+    for (MenuSelectToolbarData* data: this->toolbarMenuData) {
+        gtk_widget_set_sensitive(data->item, !disabled);
+    }
 }
 
 void MainWindowToolbarMenu::selectToolbar(Settings* settings, ToolMenuHandler* toolbar) {
@@ -59,7 +63,9 @@ void MainWindowToolbarMenu::selectToolbar(Settings* settings, ToolMenuHandler* t
 auto MainWindowToolbarMenu::getSelectedToolbar() -> ToolbarData* { return selectedToolbar; }
 
 void MainWindowToolbarMenu::removeOldElements(GtkMenuShell* menubar) {
-    for (GtkWidget* w: menuitems) { gtk_container_remove(GTK_CONTAINER(menubar), w); }
+    for (GtkWidget* w: menuitems) {
+        gtk_container_remove(GTK_CONTAINER(menubar), w);
+    }
     menuitems.clear();
 
     freeToolMenu();

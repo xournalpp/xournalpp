@@ -30,7 +30,9 @@ BackgroundSelectDialogBase::BackgroundSelectDialogBase(GladeSearchpath* gladeSea
 }
 
 BackgroundSelectDialogBase::~BackgroundSelectDialogBase() {
-    for (BaseElementView* e: elements) { delete e; }
+    for (BaseElementView* e: elements) {
+        delete e;
+    }
     elements.clear();
 }
 
@@ -81,7 +83,9 @@ void BackgroundSelectDialogBase::layout() {
 }
 
 void BackgroundSelectDialogBase::show(GtkWindow* parent) {
-    for (BaseElementView* e: elements) { gtk_layout_put(GTK_LAYOUT(this->layoutContainer), e->getWidget(), 0, 0); }
+    for (BaseElementView* e: elements) {
+        gtk_layout_put(GTK_LAYOUT(this->layoutContainer), e->getWidget(), 0, 0);
+    }
 
     if (!elements.empty()) {
         setSelected(0);

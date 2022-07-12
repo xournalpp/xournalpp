@@ -53,11 +53,15 @@ void LayerController::addListener(LayerCtrlListener* listener) { this->listener.
 void LayerController::removeListener(LayerCtrlListener* listener) { this->listener.remove(listener); }
 
 void LayerController::fireRebuildLayerMenu() {
-    for (LayerCtrlListener* l: this->listener) { l->rebuildLayerMenu(); }
+    for (LayerCtrlListener* l: this->listener) {
+        l->rebuildLayerMenu();
+    }
 }
 
 void LayerController::fireLayerVisibilityChanged() {
-    for (LayerCtrlListener* l: this->listener) { l->layerVisibilityChanged(); }
+    for (LayerCtrlListener* l: this->listener) {
+        l->layerVisibilityChanged();
+    }
 }
 
 auto LayerController::actionPerformed(ActionType type) -> bool {
@@ -128,7 +132,9 @@ void LayerController::hideAllLayer() { hideOrHideAllLayer(false); }
  */
 void LayerController::hideOrHideAllLayer(bool show) {
     PageRef page = getCurrentPage();
-    for (Layer::Index i = 1; i <= page->getLayerCount(); i++) { page->setLayerVisible(i, show); }
+    for (Layer::Index i = 1; i <= page->getLayerCount(); i++) {
+        page->setLayerVisible(i, show);
+    }
 
     fireLayerVisibilityChanged();
     control->getWindow()->getXournal()->layerChanged(selectedPage);
@@ -324,7 +330,9 @@ void LayerController::switchToLay(Layer::Index layerId, bool hideShow) {
     p->setSelectedLayerId(layerId);
 
     if (hideShow) {
-        for (Layer::Index i = 1; i <= p->getLayerCount(); i++) { p->setLayerVisible(i, i <= layerId); }
+        for (Layer::Index i = 1; i <= p->getLayerCount(); i++) {
+            p->setLayerVisible(i, i <= layerId);
+        }
     }
 
     // Repaint page

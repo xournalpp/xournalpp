@@ -30,7 +30,9 @@ CustomExportJob::CustomExportJob(Control* control): BaseExportJob(control, _("Cu
 }
 
 CustomExportJob::~CustomExportJob() {
-    for (auto& filter: filters) { delete filter.second; }
+    for (auto& filter: filters) {
+        delete filter.second;
+    }
 }
 
 void CustomExportJob::addFilterToDialog() {

@@ -92,5 +92,4 @@ private:
     PdfCache* pdfCache = nullptr;
     bool dontRenderEditingStroke = false;
     bool markAudioStroke = false;
-
 };

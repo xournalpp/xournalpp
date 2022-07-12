@@ -24,11 +24,15 @@ void ToolbarData::operator=(const ToolbarData& other) {
     this->predefined = other.predefined;
 
     contents.clear();
-    for (const ToolbarEntry* e: other.contents) { contents.push_back(new ToolbarEntry(*e)); }
+    for (const ToolbarEntry* e: other.contents) {
+        contents.push_back(new ToolbarEntry(*e));
+    }
 }
 
 ToolbarData::~ToolbarData() {
-    for (ToolbarEntry* e: this->contents) { delete e; }
+    for (ToolbarEntry* e: this->contents) {
+        delete e;
+    }
     contents.clear();
 }
 
@@ -65,7 +69,9 @@ void ToolbarData::load(GKeyFile* config, const char* group) {
         e->setName(keys[i]);
         gchar** list = g_key_file_get_string_list(config, group, keys[i], &keyLen, nullptr);
 
-        for (gsize x = 0; x < keyLen; x++) { e->addItem(StringUtils::trim(string(list[x]))); }
+        for (gsize x = 0; x < keyLen; x++) {
+            e->addItem(StringUtils::trim(string(list[x])));
+        }
 
         contents.push_back(e);
 

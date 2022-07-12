@@ -76,9 +76,13 @@ TextEditor::~TextEditor() {
 
     if (this->ownText) {
         UndoRedoHandler* handler = gui->getXournal()->getControl()->getUndoRedoHandler();
-        for (TextUndoAction& undo: this->undoActions) { handler->removeUndoAction(&undo); }
+        for (TextUndoAction& undo: this->undoActions) {
+            handler->removeUndoAction(&undo);
+        }
     } else {
-        for (TextUndoAction& undo: this->undoActions) { undo.textEditFinished(); }
+        for (TextUndoAction& undo: this->undoActions) {
+            undo.textEditFinished();
+        }
     }
     this->undoActions.clear();
 

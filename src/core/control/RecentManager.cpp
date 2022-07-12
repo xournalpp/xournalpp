@@ -133,13 +133,17 @@ void RecentManager::openRecent(const fs::path& p) {
         return;
     }
 
-    for (RecentManagerListener* l: this->listener) { l->fileOpened(p); }
+    for (RecentManagerListener* l: this->listener) {
+        l->fileOpened(p);
+    }
 }
 
 auto RecentManager::getMenu() -> GtkWidget* { return menu; }
 
 void RecentManager::freeOldMenus() {
-    for (GtkWidget* w: menuItemList) { gtk_widget_destroy(w); }
+    for (GtkWidget* w: menuItemList) {
+        gtk_widget_destroy(w);
+    }
 
     this->menuItemList.clear();
 }
@@ -167,7 +171,9 @@ auto RecentManager::getMostRecent() -> GtkRecentInfo* {
     }
     gtk_recent_info_ref(mostRecent);
 
-    for (auto& recent_info: GListView<GtkRecentInfo>(recent_items)) { gtk_recent_info_unref(&recent_info); }
+    for (auto& recent_info: GListView<GtkRecentInfo>(recent_items)) {
+        gtk_recent_info_unref(&recent_info);
+    }
     g_list_free(recent_items);
     return mostRecent;
 }

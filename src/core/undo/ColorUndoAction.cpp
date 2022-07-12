@@ -28,7 +28,9 @@ ColorUndoAction::ColorUndoAction(const PageRef& page, Layer* layer): UndoAction(
 }
 
 ColorUndoAction::~ColorUndoAction() {
-    for (ColorUndoActionEntry* e: this->data) { delete e; }
+    for (ColorUndoActionEntry* e: this->data) {
+        delete e;
+    }
 }
 
 void ColorUndoAction::addStroke(Element* e, Color originalColor, Color newColor) {

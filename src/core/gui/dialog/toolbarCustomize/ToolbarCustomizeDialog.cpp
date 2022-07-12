@@ -252,7 +252,9 @@ void ToolbarCustomizeDialog::freeIconview() {
     GtkGrid* table = GTK_GRID(get("tbDefaultTools"));
 
     GList* children = gtk_container_get_children(GTK_CONTAINER(table));
-    for (auto& w: GListView<GtkWidget>(children)) { gtk_container_remove(GTK_CONTAINER(table), &w); }
+    for (auto& w: GListView<GtkWidget>(children)) {
+        gtk_container_remove(GTK_CONTAINER(table), &w);
+    }
     g_list_free(children);
 }
 
@@ -323,7 +325,9 @@ void ToolbarCustomizeDialog::freeColorIconview() {
     GtkGrid* table = GTK_GRID(get("tbColor"));
 
     GList* children = gtk_container_get_children(GTK_CONTAINER(table));
-    for (auto& w: GListView<GtkWidget>(children)) { gtk_container_remove(GTK_CONTAINER(table), &w); }
+    for (auto& w: GListView<GtkWidget>(children)) {
+        gtk_container_remove(GTK_CONTAINER(table), &w);
+    }
 
     g_list_free(children);
 }

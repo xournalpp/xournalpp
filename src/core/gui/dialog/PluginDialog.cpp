@@ -25,7 +25,9 @@ void PluginDialog::saveSettings() {
     std::string pluginDisabled;
 
     // Save plugin settings
-    for (auto&& bcg: this->plugins) { bcg->saveSettings(pluginEnabled, pluginDisabled); }
+    for (auto&& bcg: this->plugins) {
+        bcg->saveSettings(pluginEnabled, pluginDisabled);
+    }
 
     settings->setPluginEnabled(pluginEnabled);
     settings->setPluginDisabled(pluginDisabled);

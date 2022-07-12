@@ -18,9 +18,9 @@
 #include <cairo.h>    // for cairo_t, cairo_surface_t
 #include <gdk/gdk.h>  // for GdkEventKey, GdkRectangle, GdkEventB...
 
-#include "model/PageListener.h"  // for PageListener
-#include "model/PageRef.h"       // for PageRef
-#include "util/Rectangle.h"      // for Rectangle
+#include "model/PageListener.h"       // for PageListener
+#include "model/PageRef.h"            // for PageRef
+#include "util/Rectangle.h"           // for Rectangle
 #include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr, CairoSPtr
 
 #include "Layout.h"      // for Layout

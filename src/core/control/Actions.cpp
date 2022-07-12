@@ -40,7 +40,9 @@ ActionHandler::ActionHandler() = default;
 ActionHandler::~ActionHandler() = default;
 
 void ActionHandler::fireEnableAction(ActionType action, bool enabled) {
-    for (ActionEnabledListener* listener: this->enabledListener) { listener->actionEnabledAction(action, enabled); }
+    for (ActionEnabledListener* listener: this->enabledListener) {
+        listener->actionEnabledAction(action, enabled);
+    }
 }
 
 void ActionHandler::addListener(ActionEnabledListener* listener) { this->enabledListener.push_back(listener); }
@@ -48,7 +50,9 @@ void ActionHandler::addListener(ActionEnabledListener* listener) { this->enabled
 void ActionHandler::removeListener(ActionEnabledListener* listener) { this->enabledListener.remove(listener); }
 
 void ActionHandler::fireActionSelected(ActionGroup group, ActionType action) {
-    for (ActionSelectionListener* listener: this->selectionListener) { listener->actionSelected(group, action); }
+    for (ActionSelectionListener* listener: this->selectionListener) {
+        listener->actionSelected(group, action);
+    }
 }
 
 void ActionHandler::addListener(ActionSelectionListener* listener) { this->selectionListener.push_back(listener); }

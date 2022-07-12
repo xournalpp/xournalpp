@@ -12,8 +12,6 @@
 #pragma once
 
 
-
-
 namespace XournalMain {
 auto run(int argc, char** argv) -> int;
 }

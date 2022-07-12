@@ -78,9 +78,13 @@ ToolMenuHandler::~ToolMenuHandler() {
 }
 
 void ToolMenuHandler::freeDynamicToolbarItems() {
-    for (AbstractToolItem* it: this->toolItems) { it->setUsed(false); }
+    for (AbstractToolItem* it: this->toolItems) {
+        it->setUsed(false);
+    }
 
-    for (ColorToolItem* it: this->toolbarColorItems) { delete it; }
+    for (ColorToolItem* it: this->toolbarColorItems) {
+        delete it;
+    }
     this->toolbarColorItems.clear();
 }
 
@@ -242,11 +246,17 @@ void ToolMenuHandler::addColorToolItem(AbstractToolItem* it) {
 }
 
 void ToolMenuHandler::setTmpDisabled(bool disabled) {
-    for (AbstractToolItem* it: this->toolItems) { it->setTmpDisabled(disabled); }
+    for (AbstractToolItem* it: this->toolItems) {
+        it->setTmpDisabled(disabled);
+    }
 
-    for (MenuItem* it: this->menuItems) { it->setTmpDisabled(disabled); }
+    for (MenuItem* it: this->menuItems) {
+        it->setTmpDisabled(disabled);
+    }
 
-    for (ColorToolItem* it: this->toolbarColorItems) { it->setTmpDisabled(disabled); }
+    for (ColorToolItem* it: this->toolbarColorItems) {
+        it->setTmpDisabled(disabled);
+    }
 
     GtkWidget* menuViewSidebarVisible = gui->get("menuViewSidebarVisible");
     gtk_widget_set_sensitive(menuViewSidebarVisible, !disabled);

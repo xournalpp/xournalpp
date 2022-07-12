@@ -59,7 +59,9 @@ SidebarPreviewBase::~SidebarPreviewBase() {
 
     this->scrollPreview = nullptr;
 
-    for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
+    for (SidebarPreviewBaseEntry* p: this->previews) {
+        delete p;
+    }
     this->previews.clear();
 }
 

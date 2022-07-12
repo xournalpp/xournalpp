@@ -50,7 +50,9 @@ auto StrokeStyle::parseStyle(const char* style) -> LineStyle {
     }
 
     auto* dashesArr = new double[dash.size()];
-    for (int i = 0; i < static_cast<int>(dash.size()); i++) { dashesArr[i] = dash[i]; }
+    for (int i = 0; i < static_cast<int>(dash.size()); i++) {
+        dashesArr[i] = dash[i];
+    }
 
     LineStyle ls;
     ls.setDashes(dashesArr, static_cast<int>(dash.size()));
