@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-12 19:51\n"
+"PO-Revision-Date: 2022-07-12 20:52\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -465,15 +465,15 @@ msgstr "ElementRange::parse(): indicii elementului încep cu 1"
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): indicele elementului dat este mai mare decât numărul maxim."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): limitele intervalului trebuie să fie în ordine crescătoare."
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): interval de elemente incorect."
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -893,7 +893,8 @@ msgstr "Aprobă"
 #: ../src/core/control/XournalMain.cpp:649
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Exportă numai straturile indicate de interval (de ex. „2-3,5,7-”)\n"
+"                                 Niciun efect fără -p/--create-pdf or -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:645
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -979,7 +980,7 @@ msgstr "Numărul paginii"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:308
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "Formatul tipului de pagină PageTypeFormat::Copy - convertit în PageTypeFormat::Plain pentru a evita deteriorarea fișierului"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Paired pages"
