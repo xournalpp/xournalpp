@@ -111,7 +111,6 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/com.github.%{n
 %{_datadir}/icons/hicolor/scalable/apps/com.github.%{name}.%{name}.svg
 %{_datadir}/icons/hicolor/scalable/mimetypes/*
 %{_datadir}/mime/packages/com.github.%{name}.%{name}.xml
-%exclude %{_datadir}/mimelnk/application/*
 %{_datadir}/thumbnailers/com.github.%{name}.%{name}.thumbnailer
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/resources/{default,legacy}_template.tex
