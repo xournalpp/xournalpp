@@ -1,12 +1,15 @@
 #include "ReflectUndoAction.h"
 
-#include "model/Element.h"
-#include "model/PageRef.h"
-#include "util/Range.h"
-#include "util/i18n.h"
 
-ReflectUndoAction::ReflectUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0,
-                                   bool x_axis):
+#include "model/Element.h"    // for Element
+#include "model/PageRef.h"    // for PageRef
+#include "model/XojPage.h"    // for XojPage
+#include "undo/UndoAction.h"  // for UndoAction
+#include "util/Range.h"       // for Range
+#include "util/i18n.h"        // for _
+
+
+ReflectUndoAction::ReflectUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0, bool x_axis):
         UndoAction("ReflectUndoAction") {
     this->page = page;
     this->elements = *elements;
