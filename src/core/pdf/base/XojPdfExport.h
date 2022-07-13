@@ -26,20 +26,26 @@
 class Document;
 class ProgressListener;
 
-class XojPdfExport: public XojPdfExport {
+class XojPdfExport {
 public:
     XojPdfExport(Document* doc, ProgressListener* progressListener);
-    ~XojPdfExport() override;
+    ~XojPdfExport();
 
 public:
-    bool createPdf(fs::path const& file, bool progressiveMode) override;
-    bool createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode) override;
-    std::string getLastError() override;
+    bool createPdf(fs::path const& file, bool progressiveMode);
+    bool createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode);
+    std::string getLastError();
 
     /**
      * Export without background
      */
-    void setExportBackground(ExportBackgroundType exportBackground) override;
+    void setExportBackground(ExportBackgroundType exportBackground);
+
+    /**
+     * @brief Select layers to export by parsing str
+     * @param rangeStr A string parsed to get a list of layers
+     */
+    void setLayerRange(const char* rangeStr);
 
 private:
     bool startPdf(const fs::path& file);
@@ -60,12 +66,6 @@ private:
      * Export as a PDF document where each additional layer creates a
      * new page */
     void exportPageLayers(size_t page);
-
-    /**
-     * @brief Select layers to export by parsing str
-     * @param rangeStr A string parsed to get a list of layers
-     */
-    void setLayerRange(const char* rangeStr) override;
 
 private:
     Document* doc = nullptr;
