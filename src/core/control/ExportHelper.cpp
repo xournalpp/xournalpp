@@ -12,7 +12,6 @@
 #include "control/jobs/ProgressListener.h"  // for DummyProgressListener
 #include "model/Document.h"                 // for Document
 #include "pdf/base/XojPdfExport.h"          // for XojPdfExport
-#include "pdf/base/XojPdfExportFactory.h"   // for XojPdfExportFactory
 #include "util/ElementRange.h"              // for parse, PageRangeVector
 #include "util/i18n.h"                      // for _
 
@@ -96,26 +95,26 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
 
     GFile* file = g_file_new_for_commandline_arg(output);
 
-    std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, nullptr);
-    pdfe->setExportBackground(exportBackground);
+    XojPdfExport pdfe{doc, nullptr};
+    pdfe.setExportBackground(exportBackground);
     auto path = fs::u8path(g_file_peek_path(file));
     g_object_unref(file);
 
     bool exportSuccess = 0;  // Return of the export job
 
-    pdfe->setLayerRange(layerRange);
+    pdfe.setLayerRange(layerRange);
 
     if (range) {
         // Parse the range
         PageRangeVector exportRange = ElementRange::parse(range, doc->getPageCount());
         // Do the export
-        exportSuccess = pdfe->createPdf(path, exportRange, progressiveMode);
+        exportSuccess = pdfe.createPdf(path, exportRange, progressiveMode);
     } else {
-        exportSuccess = pdfe->createPdf(path, progressiveMode);
+        exportSuccess = pdfe.createPdf(path, progressiveMode);
     }
 
     if (!exportSuccess) {
-        g_error("%s", pdfe->getLastError().c_str());
+        g_error("%s", pdfe.getLastError().c_str());
     }
 
     g_message("%s", _("PDF file successfully created"));

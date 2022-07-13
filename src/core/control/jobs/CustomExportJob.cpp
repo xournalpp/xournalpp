@@ -12,7 +12,6 @@
 #include "gui/dialog/ExportDialog.h"           // for ExportDialog
 #include "model/Document.h"                    // for Document
 #include "pdf/base/XojPdfExport.h"             // for XojPdfExport
-#include "pdf/base/XojPdfExportFactory.h"      // for XojPdfExportFactory
 #include "util/PathUtil.h"                     // for clearExtensions
 #include "util/XojMsgBox.h"                    // for XojMsgBox
 #include "util/i18n.h"                         // for _, FS, _F
@@ -133,12 +132,12 @@ void CustomExportJob::run() {
         // the ui is blocked, so there should be no changes...
         Document* doc = control->getDocument();
 
-        std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, control);
+        XojPdfExport pdfe{doc, control};
 
-        pdfe->setExportBackground(exportBackground);
+        pdfe.setExportBackground(exportBackground);
 
-        if (!pdfe->createPdf(this->filepath, exportRange, progressiveMode)) {
-            this->errorMsg = pdfe->getLastError();
+        if (!pdfe.createPdf(this->filepath, exportRange, progressiveMode)) {
+            this->errorMsg = pdfe.getLastError();
         }
 
     } else {
