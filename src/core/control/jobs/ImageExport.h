@@ -18,8 +18,9 @@
 
 #include "util/ElementRange.h"  // for PageRangeVector, LayerRangeVector
 
-#include "BaseExportJob.h"  // for ExportBackgroundType, EXPORT_BACKGROUND_ALL
-#include "filesystem.h"     // for path
+#include "BaseExportJob.h"   // for ExportBackgroundType, EXPORT_BACKGROUND_ALL
+#include "ExportTemplate.h"  // for ExportTemplate
+#include "filesystem.h"      // for path
 
 class Document;
 class ProgressListener;
@@ -65,7 +66,7 @@ private:
 /**
  * @brief A class handling export as images
  */
-class ImageExport {
+class ImageExport: public ExportTemplate {
 public:
     ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, ExportBackgroundType exportBackground,
                 const PageRangeVector& exportRange);
