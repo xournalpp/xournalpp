@@ -17,16 +17,16 @@
 #include <cairo.h>    // for CAIRO_VERSION, CAIRO_VERSION...
 #include <gtk/gtk.h>  // for GtkTreeModel
 
-#include "control/jobs/BaseExportJob.h"  // for ExportBackgroundType, EXPORT...
-#include "util/ElementRange.h"           // for PageRangeVector
+#include "control/jobs/BaseExportJob.h"   // for ExportBackgroundType, EXPORT...
+#include "control/jobs/ExportTemplate.h"  // for ExportTemplate
+#include "util/ElementRange.h"            // for PageRangeVector
 
-#include "XojPdfExport.h"  // for XojPdfExport
-#include "filesystem.h"    // for path
+#include "filesystem.h"  // for path
 
 class Document;
 class ProgressListener;
 
-class XojPdfExport {
+class XojPdfExport: public ExportTemplate {
 public:
     XojPdfExport(Document* doc, ProgressListener* progressListener);
     ~XojPdfExport();
