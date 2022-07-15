@@ -1,4 +1,4 @@
-#include "XojCairoPdfExport.h"
+#include "XojPdfExport.h"
 
 #include <algorithm>  // for copy, min
 #include <map>        // for map
@@ -27,10 +27,10 @@
 #include "config.h"      // for PROJECT_STRING
 #include "filesystem.h"  // for path
 
-XojCairoPdfExport::XojCairoPdfExport(Document* doc, ProgressListener* progressListener):
+XojPdfExport::XojPdfExport(Document* doc, ProgressListener* progressListener):
         doc(doc), progressListener(progressListener) {}
 
-XojCairoPdfExport::~XojCairoPdfExport() {
+XojPdfExport::~XojPdfExport() {
     if (this->surface != nullptr) {
         endPdf();
     }
@@ -39,11 +39,11 @@ XojCairoPdfExport::~XojCairoPdfExport() {
 /**
  * Export without background
  */
-void XojCairoPdfExport::setExportBackground(ExportBackgroundType exportBackground) {
+void XojPdfExport::setExportBackground(ExportBackgroundType exportBackground) {
     this->exportBackground = exportBackground;
 }
 
-auto XojCairoPdfExport::startPdf(const fs::path& file) -> bool {
+auto XojPdfExport::startPdf(const fs::path& file) -> bool {
     this->surface = cairo_pdf_surface_create(file.u8string().c_str(), 0, 0);
     this->cr = cairo_create(surface);
 
@@ -58,7 +58,7 @@ auto XojCairoPdfExport::startPdf(const fs::path& file) -> bool {
 }
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
-void XojCairoPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
+void XojPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
     if (tocModel == nullptr)
         return;
 
@@ -107,14 +107,14 @@ void XojCairoPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
 }
 #endif
 
-void XojCairoPdfExport::endPdf() {
+void XojPdfExport::endPdf() {
     cairo_destroy(this->cr);
     this->cr = nullptr;
     cairo_surface_destroy(this->surface);
     this->surface = nullptr;
 }
 
-void XojCairoPdfExport::exportPage(size_t page) {
+void XojPdfExport::exportPage(size_t page) {
     PageRef p = doc->getPage(page);
 
     cairo_pdf_surface_set_size(this->surface, p->getWidth(), p->getHeight());
@@ -146,7 +146,7 @@ void XojCairoPdfExport::exportPage(size_t page) {
 }
 
 // export layers one by one to produce as many PDF pages as there are layers.
-void XojCairoPdfExport::exportPageLayers(size_t page) {
+void XojPdfExport::exportPageLayers(size_t page) {
     PageRef p = doc->getPage(page);
 
     // We keep a copy of the layers initial Visible state
@@ -167,7 +167,7 @@ void XojCairoPdfExport::exportPageLayers(size_t page) {
     for (const auto& layer: *p->getLayers()) layer->setVisible(initialVisibility[layer]);
 }
 
-auto XojCairoPdfExport::createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode) -> bool {
+auto XojPdfExport::createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode) -> bool {
     if (range.empty()) {
         this->lastError = _("No pages to export!");
         return false;
@@ -207,7 +207,7 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, const PageRangeVector& r
     return true;
 }
 
-auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) -> bool {
+auto XojPdfExport::createPdf(fs::path const& file, bool progressiveMode) -> bool {
     if (doc->getPageCount() < 1) {
         lastError = _("No pages to export!");
         return false;
@@ -241,9 +241,9 @@ auto XojCairoPdfExport::createPdf(fs::path const& file, bool progressiveMode) ->
     return true;
 }
 
-auto XojCairoPdfExport::getLastError() -> std::string { return lastError; }
+auto XojPdfExport::getLastError() -> std::string { return lastError; }
 
-void XojCairoPdfExport::setLayerRange(const char* rangeStr) {
+void XojPdfExport::setLayerRange(const char* rangeStr) {
     if (rangeStr) {
         // Use no upper bound for layer indices, as the maximal value can vary between pages
         layerRange =
