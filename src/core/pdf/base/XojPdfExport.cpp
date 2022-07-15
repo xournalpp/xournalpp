@@ -242,11 +242,3 @@ auto XojPdfExport::createPdf(fs::path const& file, bool progressiveMode) -> bool
 }
 
 auto XojPdfExport::getLastError() -> std::string { return lastError; }
-
-void XojPdfExport::setLayerRange(const char* rangeStr) {
-    if (rangeStr) {
-        // Use no upper bound for layer indices, as the maximal value can vary between pages
-        layerRange =
-                std::make_unique<LayerRangeVector>(ElementRange::parse(rangeStr, std::numeric_limits<size_t>::max()));
-    }
-}
