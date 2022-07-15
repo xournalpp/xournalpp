@@ -41,12 +41,6 @@ public:
      */
     void setExportBackground(ExportBackgroundType exportBackground);
 
-    /**
-     * @brief Select layers to export by parsing str
-     * @param rangeStr A string parsed to get a list of layers
-     */
-    void setLayerRange(const char* rangeStr);
-
 private:
     bool startPdf(const fs::path& file);
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
@@ -77,6 +71,4 @@ private:
     ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
 
     std::string lastError;
-
-    std::unique_ptr<LayerRangeVector> layerRange;
 };

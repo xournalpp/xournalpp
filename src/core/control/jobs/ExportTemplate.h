@@ -11,7 +11,25 @@
 
 #pragma once
 
+#include <memory>  // for std::unique_ptr
+
+#include "util/ElementRange.h"  // for LayerRangeVector
+
 /**
  * @brief Template class for export classes
  */
-class ExportTemplate {};
+class ExportTemplate {
+public:
+    /**
+     * @brief Select layers to export by parsing str
+     * @param rangeStr A string parsed to get a list of layers
+     */
+    auto setLayerRange(const char* rangeStr) -> void;
+
+
+protected:
+    /**
+     * @brief A pointer to a range of layers to export (the same for every exported pages)
+     */
+    std::unique_ptr<LayerRangeVector> layerRange;
+};

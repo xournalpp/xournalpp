@@ -48,18 +48,6 @@ void ImageExport::setQualityParameter(ExportQualityCriterion criterion, int valu
 }
 
 /**
- * @brief Select layers to export by parsing str
- * @param rangeStr A string parsed to get a list of layers
- */
-void ImageExport::setLayerRange(const char* rangeStr) {
-    if (rangeStr) {
-        // Use no upper bound for layer indices, as the maximal value can vary between pages
-        layerRange =
-                std::make_unique<LayerRangeVector>(ElementRange::parse(rangeStr, std::numeric_limits<size_t>::max()));
-    }
-}
-
-/**
  * @brief Get the last error message
  * @return The last error message to show to the user
  */
