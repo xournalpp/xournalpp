@@ -114,7 +114,7 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     }
 
     if (!exportSuccess) {
-        g_error("%s", pdfe.getLastError().c_str());
+        g_error("%s", pdfe.getLastErrorMsg().c_str());
     }
 
     g_message("%s", _("PDF file successfully created"));

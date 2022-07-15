@@ -48,12 +48,6 @@ void ImageExport::setQualityParameter(ExportQualityCriterion criterion, int valu
 }
 
 /**
- * @brief Get the last error message
- * @return The last error message to show to the user
- */
-auto ImageExport::getLastErrorMsg() const -> string { return lastError; }
-
-/**
  * @brief Create Cairo surface for a given page
  * @param width the width of the page being exported
  * @param height the height of the page being exported

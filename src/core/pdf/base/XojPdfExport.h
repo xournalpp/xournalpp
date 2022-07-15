@@ -34,7 +34,6 @@ public:
 public:
     bool createPdf(fs::path const& file, bool progressiveMode);
     bool createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode);
-    std::string getLastError();
 
     /**
      * Export without background
@@ -69,6 +68,4 @@ private:
     cairo_t* cr = nullptr;
 
     ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
-
-    std::string lastError;
 };

@@ -9,3 +9,5 @@ auto ExportTemplate::setLayerRange(const char* rangeStr) -> void {
                 std::make_unique<LayerRangeVector>(ElementRange::parse(rangeStr, std::numeric_limits<size_t>::max()));
     }
 }
+
+auto ExportTemplate::getLastErrorMsg() const -> std::string { return lastError; }
