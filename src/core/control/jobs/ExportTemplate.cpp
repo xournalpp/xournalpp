@@ -2,6 +2,14 @@
 
 #include <cmath>  // for round
 
+#include "control/jobs/ProgressListener.h"  // for ProgressListener
+
+ExportTemplate::ExportTemplate(Document* doc, ExportBackgroundType exportBackground,
+                               ProgressListener* progressListener):
+        doc{doc}, exportBackground{exportBackground}, progressListener{progressListener} {}
+
+ExportTemplate::~ExportTemplate() {}
+
 auto ExportTemplate::setLayerRange(const char* rangeStr) -> void {
     if (rangeStr) {
         // Use no upper bound for layer indices, as the maximal value can vary between pages

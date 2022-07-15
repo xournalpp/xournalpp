@@ -23,22 +23,16 @@
 
 #include "filesystem.h"  // for path
 
-class Document;
 class ProgressListener;
 
 class XojPdfExport: public ExportTemplate {
 public:
-    XojPdfExport(Document* doc, ProgressListener* progressListener);
+    XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener);
     ~XojPdfExport();
 
 public:
     bool createPdf(fs::path const& file, bool progressiveMode);
     bool createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode);
-
-    /**
-     * Export without background
-     */
-    void setExportBackground(ExportBackgroundType exportBackground);
 
 private:
     bool startPdf(const fs::path& file);
@@ -59,13 +53,4 @@ private:
      * Export as a PDF document where each additional layer creates a
      * new page */
     void exportPageLayers(size_t page);
-
-private:
-    Document* doc = nullptr;
-    ProgressListener* progressListener = nullptr;
-
-    cairo_surface_t* surface = nullptr;
-    cairo_t* cr = nullptr;
-
-    ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
 };

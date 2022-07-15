@@ -103,11 +103,11 @@ auto CustomExportJob::showFilechooser() -> bool {
  * Create one Graphics file per page
  */
 void CustomExportJob::exportGraphics() {
-    ImageExport imgExport(control->getDocument(), filepath, format, exportBackground, exportRange);
+    ImageExport imgExport(control->getDocument(), filepath, format, exportBackground, exportRange, control);
     if (format == EXPORT_GRAPHICS_PNG) {
         imgExport.setQualityParameter(pngQualityParameter);
     }
-    imgExport.exportGraphics(control);
+    imgExport.exportGraphics();
     errorMsg = imgExport.getLastErrorMsg();
 }
 
@@ -132,9 +132,7 @@ void CustomExportJob::run() {
         // the ui is blocked, so there should be no changes...
         Document* doc = control->getDocument();
 
-        XojPdfExport pdfe{doc, control};
-
-        pdfe.setExportBackground(exportBackground);
+        XojPdfExport pdfe{doc, exportBackground, control};
 
         if (!pdfe.createPdf(this->filepath, exportRange, progressiveMode)) {
             this->errorMsg = pdfe.getLastErrorMsg();

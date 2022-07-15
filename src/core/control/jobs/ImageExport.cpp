@@ -27,8 +27,12 @@ using std::string;
 
 
 ImageExport::ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format,
-                         ExportBackgroundType exportBackground, const PageRangeVector& exportRange):
-        doc(doc), file(std::move(file)), format(format), exportBackground(exportBackground), exportRange(exportRange) {}
+                         ExportBackgroundType exportBackground, const PageRangeVector& exportRange,
+                         ProgressListener* progressListener):
+        ExportTemplate{doc, exportBackground, progressListener},
+        file(std::move(file)),
+        format(format),
+        exportRange(exportRange) {}
 
 ImageExport::~ImageExport() = default;
 
@@ -181,9 +185,8 @@ void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, Ex
 
 /**
  * @brief Create one Graphics file per page
- * @param stateListener A listener to track the export progress
  */
-void ImageExport::exportGraphics(ProgressListener* stateListener) {
+void ImageExport::exportGraphics() {
     // don't lock the page here for the whole flow, else we get a dead lock...
     // the ui is blocked, so there should be no changes...
     auto count = doc->getPageCount();
@@ -199,7 +202,7 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
         }
     }
 
-    stateListener->setMaximumState(selectedCount);
+    progressListener->setMaximumState(selectedCount);
 
     /*
      * Compute the zoomRatio only once if using DPI as a PNG quality criterion
@@ -219,7 +222,7 @@ void ImageExport::exportGraphics(ProgressListener* stateListener) {
         }
 
         if (selectedPages[i]) {
-            stateListener->setCurrentState(current++);
+            progressListener->setCurrentState(current++);
 
             exportImagePage(i, id, zoomRatio, format, view);  // Todo(narrowing): remove cast
         }
