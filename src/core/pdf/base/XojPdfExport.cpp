@@ -27,20 +27,13 @@
 #include "config.h"      // for PROJECT_STRING
 #include "filesystem.h"  // for path
 
-XojPdfExport::XojPdfExport(Document* doc, ProgressListener* progressListener):
-        doc(doc), progressListener(progressListener) {}
+XojPdfExport::XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener):
+        ExportTemplate{doc, exportBackground, progressListener} {}
 
 XojPdfExport::~XojPdfExport() {
     if (this->surface != nullptr) {
         endPdf();
     }
-}
-
-/**
- * Export without background
- */
-void XojPdfExport::setExportBackground(ExportBackgroundType exportBackground) {
-    this->exportBackground = exportBackground;
 }
 
 auto XojPdfExport::startPdf(const fs::path& file) -> bool {

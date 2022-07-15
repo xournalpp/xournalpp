@@ -15,11 +15,20 @@
 
 #include "util/ElementRange.h"  // for LayerRangeVector
 
+#include "BaseExportJob.h"  // for ExportBackgroundType, EXPORT_BACKGROUND_ALL
+
+class Document;
+class ProgressListener;
+
 /**
  * @brief Template class for export classes
  */
 class ExportTemplate {
 public:
+    ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener);
+
+    virtual ~ExportTemplate();
+
     /**
      * @brief Select layers to export by parsing str
      * @param rangeStr A string parsed to get a list of layers
@@ -42,4 +51,29 @@ protected:
      * The last error message to show to the user
      */
     std::string lastError;
+
+    /**
+     * Document to export
+     */
+    Document* doc = nullptr;
+
+    /**
+     * Option for background export
+     */
+    ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
+
+    /**
+     * A listener to track the export progress
+     */
+    ProgressListener* progressListener = nullptr;
+
+    /**
+     * Cairo export surface
+     */
+    cairo_surface_t* surface = nullptr;
+
+    /**
+     * Cairo context
+     */
+    cairo_t* cr = nullptr;
 };

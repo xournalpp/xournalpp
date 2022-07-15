@@ -22,7 +22,6 @@
 #include "ExportTemplate.h"  // for ExportTemplate
 #include "filesystem.h"      // for path
 
-class Document;
 class ProgressListener;
 class DocumentView;
 
@@ -69,7 +68,7 @@ private:
 class ImageExport: public ExportTemplate {
 public:
     ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, ExportBackgroundType exportBackground,
-                const PageRangeVector& exportRange);
+                const PageRangeVector& exportRange, ProgressListener* progressListener);
     virtual ~ImageExport();
 
 public:
@@ -77,7 +76,7 @@ public:
      * @brief Create one Graphics file per page
      * @param stateListener A listener to track the progress
      */
-    void exportGraphics(ProgressListener* stateListener);
+    void exportGraphics();
 
     /**
      * @brief Set a quality level for PNG exports
@@ -134,11 +133,6 @@ private:
 
 public:
     /**
-     * Document to export
-     */
-    Document* doc = nullptr;
-
-    /**
      * Filename for export
      */
     fs::path file;
@@ -149,11 +143,6 @@ public:
     ExportGraphicsFormat format = EXPORT_GRAPHICS_UNDEFINED;
 
     /**
-     * Do not export the Background
-     */
-    ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
-
-    /**
      * The range to export
      */
     const PageRangeVector& exportRange;
@@ -162,14 +151,4 @@ public:
      * @brief The export quality parameters, used if format==EXPORT_GRAPHICS_PNG
      */
     RasterImageQualityParameter qualityParameter = RasterImageQualityParameter();
-
-    /**
-     * Export surface
-     */
-    cairo_surface_t* surface = nullptr;
-
-    /**
-     * Cairo context
-     */
-    cairo_t* cr = nullptr;
 };

@@ -53,7 +53,7 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
 
     DummyProgressListener progress;
 
-    ImageExport imgExport(doc, path, format, exportBackground, exportRange);
+    ImageExport imgExport(doc, path, format, exportBackground, exportRange, &progress);
 
     if (format == EXPORT_GRAPHICS_PNG) {
         if (pngDpi > 0) {
@@ -67,7 +67,7 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
 
     imgExport.setLayerRange(layerRange);
 
-    imgExport.exportGraphics(&progress);
+    imgExport.exportGraphics();
 
     std::string errorMsg = imgExport.getLastErrorMsg();
     if (!errorMsg.empty()) {
@@ -95,8 +95,8 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
 
     GFile* file = g_file_new_for_commandline_arg(output);
 
-    XojPdfExport pdfe{doc, nullptr};
-    pdfe.setExportBackground(exportBackground);
+    XojPdfExport pdfe{doc, exportBackground, nullptr};
+
     auto path = fs::u8path(g_file_peek_path(file));
     g_object_unref(file);
 
