@@ -135,7 +135,7 @@ void CustomExportJob::run() {
         pdfe.setExportBackground(exportBackground);
 
         if (!pdfe.createPdf(this->filepath, exportRange, progressiveMode)) {
-            this->errorMsg = pdfe.getLastError();
+            this->errorMsg = pdfe.getLastErrorMsg();
         }
 
     } else {

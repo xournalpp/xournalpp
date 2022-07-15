@@ -74,12 +74,6 @@ public:
 
 public:
     /**
-     * @brief Get the last error message
-     * @return The last error message to show to the user
-     */
-    std::string getLastErrorMsg() const;
-
-    /**
      * @brief Create one Graphics file per page
      * @param stateListener A listener to track the progress
      */
@@ -178,9 +172,4 @@ public:
      * Cairo context
      */
     cairo_t* cr = nullptr;
-
-    /**
-     * The last error message to show to the user
-     */
-    std::string lastError;
 };

@@ -240,5 +240,3 @@ auto XojPdfExport::createPdf(fs::path const& file, bool progressiveMode) -> bool
     endPdf();
     return true;
 }
-
-auto XojPdfExport::getLastError() -> std::string { return lastError; }
