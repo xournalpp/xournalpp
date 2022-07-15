@@ -26,10 +26,10 @@
 class Document;
 class ProgressListener;
 
-class XojCairoPdfExport: public XojPdfExport {
+class XojPdfExport: public XojPdfExport {
 public:
-    XojCairoPdfExport(Document* doc, ProgressListener* progressListener);
-    ~XojCairoPdfExport() override;
+    XojPdfExport(Document* doc, ProgressListener* progressListener);
+    ~XojPdfExport() override;
 
 public:
     bool createPdf(fs::path const& file, bool progressiveMode) override;
