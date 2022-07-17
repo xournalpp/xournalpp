@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-17 14:53\n"
+"PO-Revision-Date: 2022-07-17 15:53\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -201,7 +201,7 @@ msgstr "Kopírovat stránku"
 msgid "Could not create folder: {1}\n"
 "Failed with error: {2}"
 msgstr "Nelze vytvořit složku: {1}\n"
-"Selhání s chybou: {2}"
+"Selhalo s chybou: {2}"
 
 #: ../src/core/control/LatexController.cpp:339
 msgid "Could not load LaTeX PDF file"
@@ -364,7 +364,7 @@ msgstr "Zahodit"
 
 #: ../src/core/control/XournalMain.cpp:669
 msgid "Display advanced export options"
-msgstr "Zobrazit rozšírené možnosti exportu"
+msgstr "Zobrazit pokročilé možnosti exportu"
 
 #: ../src/core/control/Control.cpp:2094
 msgid "Do not open Autosave files. They may will be overwritten!\n"
@@ -464,15 +464,15 @@ msgstr "ElementRange::parse(): indexy prvků začínají od 1"
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): daný index prvku je větší než maximální počet."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): krajní body intervalu musí být ve stoupajícím pořadí."
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): neplatné rozmezí prvků."
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -892,7 +892,8 @@ msgstr "OK"
 #: ../src/core/control/XournalMain.cpp:649
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Při exportu, exportovat pouze vrstvy specifikované pomocí RANGE (např. \"2-3,5,7-\")\n"
+"                                 Nemá efekt bez -p/--create-pdf nebo -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:645
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -978,7 +979,7 @@ msgstr "Číslo stránky"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:308
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "Formát typu stránky je PageTypeFormat::Copy - převeden do PageTypeFormat::Plain, aby se předešlo poškození soboru"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Paired pages"
@@ -1249,7 +1250,7 @@ msgstr "Nastavte šířku stránky pro export do PNG\n"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Setsquare"
-msgstr ""
+msgstr "Trojúhelník"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Shape Recognizer"
@@ -1923,7 +1924,8 @@ msgstr "<b>Nastavení exportu dokumentu</b>\n"
 #: ../ui/main.glade:110
 msgid "<b>Empty Toolbox</b>\n"
 "            <i>Menu: View/Toolbars</i>"
-msgstr ""
+msgstr "<b>Prázdný panel nástrojů</b>\n"
+"            <i>Menu: Zobrazit/Nástrojové lišty</i>"
 
 #: ../ui/fillOpacity.glade:80
 msgid "<b>Fill opacity settings</b>\n"
@@ -3031,7 +3033,7 @@ msgstr "Název vzorové vrstvy"
 
 #: ../ui/pageTemplate.glade:40
 msgid "Save to file"
-msgstr ""
+msgstr "Uložit do souboru"
 
 #: ../ui/settings.glade:3477
 msgid "Scrollbars"
@@ -3055,7 +3057,7 @@ msgstr "Výběr obrázku"
 
 #: ../ui/main.glade:1370
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Vybrat text v řádku"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -3063,7 +3065,7 @@ msgstr "Výběr PDF stránky"
 
 #: ../ui/main.glade:1382
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Vybrat text v obdélníku"
 
 #: ../ui/settings.glade:3697
 msgid "Select toolbar:"
@@ -3119,7 +3121,7 @@ msgstr "Zobrazit panely nástrojů"
 
 #: ../ui/settings.glade:2777
 msgid "Show filepath in title bar"
-msgstr ""
+msgstr "Zobrazit cestu k souborům v záhlaví"
 
 #: ../ui/settings.glade:3360
 msgid "Show sidebar on the right side"
@@ -3170,7 +3172,7 @@ msgstr "Složka úložiště"
 
 #: ../ui/main.glade:2769
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Přeškrtnout vybraný text"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3186,7 +3188,7 @@ msgstr "Postupně (ms)"
 
 #: ../ui/latexSettings.glade:429
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Zvýraznění syntaxe"
 
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
@@ -3255,7 +3257,7 @@ msgstr "Časový limit"
 
 #: ../ui/main.glade:2789
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Přepnout standartní / oblastní výběr textu"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
@@ -3280,15 +3282,15 @@ msgstr "Pokus se nejdříve vybrat objekt; pokud není nic vybráno, zobrazí se
 
 #: ../ui/main.glade:2749
 msgid "Underline selected text"
-msgstr ""
+msgstr "Podtrhnout vybraný text"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Použít dostupné Stock ikony (vyžaduje restart)"
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
-msgstr ""
+msgstr "Používat písmo ze systémového motivu."
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
@@ -3360,7 +3362,7 @@ msgstr "S pomocí komunity"
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "Zalomit text"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
