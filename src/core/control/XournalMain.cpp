@@ -531,7 +531,11 @@ auto on_handle_local_options(GApplication*, GVariantDict*, XMPtr app_data) -> gi
     initCAndCoutLocales();
 
     auto print_version = [&] {
-        std::cout << PROJECT_NAME << " " << PROJECT_VERSION << std::endl;
+        if(!std::string(GIT_COMMIT_ID).empty()){
+            std::cout << PROJECT_NAME << " " << PROJECT_VERSION << " (" << GIT_COMMIT_ID << ")" << std::endl;
+        } else{
+            std::cout << PROJECT_NAME << " " << PROJECT_VERSION << std::endl;
+        }
         std::cout << "└──libgtk: " << gtk_get_major_version() << "."  //
                   << gtk_get_minor_version() << "."                   //
                   << gtk_get_micro_version() << std::endl;            //
