@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-11 08:42\n"
+"PO-Revision-Date: 2022-07-17 14:53\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -460,7 +460,7 @@ msgstr "Upravit text"
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
+msgstr "ElementRange::parse(): indexy prvků začínají od 1"
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
@@ -2919,7 +2919,7 @@ msgstr "Výkon"
 
 #: ../ui/latexSettings.glade:532
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "Vyberte písmo editoru"
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3191,7 +3191,7 @@ msgstr ""
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
 msgid "System cursor"
-msgstr ""
+msgstr "Systémový kurzor"
 
 #: ../ui/main.glade:921
 msgid "T_oolbars"
@@ -3199,7 +3199,7 @@ msgstr "Ná_strojové lišty"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "TeX Zdroj"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
