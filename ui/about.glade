@@ -85,6 +85,7 @@
                     <property name="can-focus">False</property>
                     <property name="halign">start</property>
                     <property name="label">X.X.X</property>
+                    <property name="selectable">True</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -127,6 +128,7 @@
                     <property name="can-focus">False</property>
                     <property name="halign">start</property>
                     <property name="label" translatable="yes">RELEASE_IDENTIFIER</property>
+                    <property name="selectable">True</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -154,6 +156,7 @@
                     <property name="can-focus">False</property>
                     <property name="halign">start</property>
                     <property name="label" translatable="yes">X.X.X</property>
+                    <property name="selectable">True</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
