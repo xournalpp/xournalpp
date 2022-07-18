@@ -1,12 +1,16 @@
 #include "ExportTemplate.h"
 
 #include <cmath>  // for round
+#include <utility>
 
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 
-ExportTemplate::ExportTemplate(Document* doc, ExportBackgroundType exportBackground,
-                               ProgressListener* progressListener):
-        doc{doc}, exportBackground{exportBackground}, progressListener{progressListener} {}
+ExportTemplate::ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
+                               fs::path filePath):
+        doc{doc},
+        exportBackground{exportBackground},
+        progressListener{progressListener},
+        filePath{std::move(filePath)} {}
 
 ExportTemplate::~ExportTemplate() {}
 
@@ -19,3 +23,13 @@ auto ExportTemplate::setLayerRange(const char* rangeStr) -> void {
 }
 
 auto ExportTemplate::getLastErrorMsg() const -> std::string { return lastError; }
+
+auto ExportTemplate::freeCairoResources() -> bool {
+    cairo_destroy(cr);
+    cr = nullptr;
+
+    cairo_surface_destroy(surface);
+    surface = nullptr;
+
+    return true;
+}

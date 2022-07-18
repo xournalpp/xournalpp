@@ -67,7 +67,7 @@ private:
  */
 class ImageExport: public ExportTemplate {
 public:
-    ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format, ExportBackgroundType exportBackground,
+    ImageExport(Document* doc, fs::path filePath, ExportGraphicsFormat format, ExportBackgroundType exportBackground,
                 const PageRangeVector& exportRange, ProgressListener* progressListener);
     virtual ~ImageExport();
 
@@ -96,19 +96,10 @@ private:
      * @brief Create Cairo surface for a given page
      * @param width the width of the page being exported
      * @param height the height of the page being exported
-     * @param id the id of the page being exported
-     * @param zoomRatio the zoom ratio for PNG exports with fixed DPI
      *
-     * @return the zoom ratio of the current page if the export type is PNG, 0.0 otherwise
-     *          The return value may differ from that of the parameter zoomRatio
-     *          if the export has fixed page width or height (in pixels)
+     * @return true if surface creation succeeded
      */
-    double createSurface(double width, double height, size_t id, double zoomRatio);
-
-    /**
-     * Free / store the surface
-     */
-    bool freeSurface(size_t id);
+    auto createSurface(double width, double height) -> bool;
 
     /**
      * @brief Get a filename with a (page) number appended
@@ -122,21 +113,16 @@ private:
     /**
      * @brief Export a single PNG/SVG page
      * @param pageId The index of the page being exported
-     * @param id The number of the page being exported
-     * @param zoomRatio The zoom ratio for PNG exports with fixed DPI
      * @param format The format of the exported image
      * @param view A DocumentView for drawing the page
      */
-    void exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportGraphicsFormat format, DocumentView& view);
+    void exportImagePage(size_t pageId, ExportGraphicsFormat format, DocumentView& view);
+
+    auto computeZoomRatioWithFactor(double normalizationFactor) -> double;
 
     static constexpr size_t SINGLE_PAGE = size_t(-1);
 
 public:
-    /**
-     * Filename for export
-     */
-    fs::path file;
-
     /**
      * Export graphics format
      */
@@ -151,4 +137,15 @@ public:
      * @brief The export quality parameters, used if format==EXPORT_GRAPHICS_PNG
      */
     RasterImageQualityParameter qualityParameter = RasterImageQualityParameter();
+
+private:
+    /**
+     * The number of the page being exported
+     */
+    size_t id = 0;
+
+    /**
+     * The zoom ratio for PNG exports with fixed DPI
+     */
+    double zoomRatio = 1.0;
 };

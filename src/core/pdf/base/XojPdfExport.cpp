@@ -27,27 +27,28 @@
 #include "config.h"      // for PROJECT_STRING
 #include "filesystem.h"  // for path
 
-XojPdfExport::XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener):
-        ExportTemplate{doc, exportBackground, progressListener} {}
+XojPdfExport::XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
+                           fs::path filePath):
+        ExportTemplate{doc, exportBackground, progressListener, std::move(filePath)} {}
 
 XojPdfExport::~XojPdfExport() {
     if (this->surface != nullptr) {
-        endPdf();
+        freeCairoResources();
     }
 }
 
-auto XojPdfExport::startPdf(const fs::path& file) -> bool {
-    this->surface = cairo_pdf_surface_create(file.u8string().c_str(), 0, 0);
-    this->cr = cairo_create(surface);
+auto XojPdfExport::startPdf() -> bool {
+    surface = cairo_pdf_surface_create(filePath.u8string().c_str(), 0, 0);
+    cr = cairo_create(surface);
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
     cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilepath().filename().u8string().c_str());
     cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_CREATOR, PROJECT_STRING);
     GtkTreeModel* tocModel = doc->getContentsModel();
-    this->populatePdfOutline(tocModel);
+    populatePdfOutline(tocModel);
 #endif
 
-    return cairo_surface_status(this->surface) == CAIRO_STATUS_SUCCESS;
+    return cairo_surface_status(surface) == CAIRO_STATUS_SUCCESS;
 }
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
@@ -99,13 +100,6 @@ void XojPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
     }
 }
 #endif
-
-void XojPdfExport::endPdf() {
-    cairo_destroy(this->cr);
-    this->cr = nullptr;
-    cairo_surface_destroy(this->surface);
-    this->surface = nullptr;
-}
 
 void XojPdfExport::exportPage(size_t page) {
     PageRef p = doc->getPage(page);
@@ -160,13 +154,13 @@ void XojPdfExport::exportPageLayers(size_t page) {
     for (const auto& layer: *p->getLayers()) layer->setVisible(initialVisibility[layer]);
 }
 
-auto XojPdfExport::createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode) -> bool {
+auto XojPdfExport::createPdf(const PageRangeVector& range, bool progressiveMode) -> bool {
     if (range.empty()) {
         this->lastError = _("No pages to export!");
         return false;
     }
 
-    if (!startPdf(file)) {
+    if (!startPdf()) {
         this->lastError = _("Failed to initialize PDF Cairo surface");
         this->lastError += "\nCairo error: ";
         this->lastError += cairo_status_to_string(cairo_surface_status(this->surface));
@@ -196,17 +190,17 @@ auto XojPdfExport::createPdf(fs::path const& file, const PageRangeVector& range,
         }
     }
 
-    endPdf();
+    freeCairoResources();
     return true;
 }
 
-auto XojPdfExport::createPdf(fs::path const& file, bool progressiveMode) -> bool {
+auto XojPdfExport::createPdf(bool progressiveMode) -> bool {
     if (doc->getPageCount() < 1) {
         lastError = _("No pages to export!");
         return false;
     }
 
-    if (!startPdf(file)) {
+    if (!startPdf()) {
         this->lastError = _("Failed to initialize PDF Cairo surface");
         this->lastError += "\nCairo error: ";
         this->lastError += cairo_status_to_string(cairo_surface_status(this->surface));
@@ -230,6 +224,6 @@ auto XojPdfExport::createPdf(fs::path const& file, bool progressiveMode) -> bool
         }
     }
 
-    endPdf();
+    freeCairoResources();
     return true;
 }

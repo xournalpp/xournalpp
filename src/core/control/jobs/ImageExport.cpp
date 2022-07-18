@@ -26,11 +26,10 @@
 using std::string;
 
 
-ImageExport::ImageExport(Document* doc, fs::path file, ExportGraphicsFormat format,
+ImageExport::ImageExport(Document* doc, fs::path filePath, ExportGraphicsFormat format,
                          ExportBackgroundType exportBackground, const PageRangeVector& exportRange,
                          ProgressListener* progressListener):
-        ExportTemplate{doc, exportBackground, progressListener},
-        file(std::move(file)),
+        ExportTemplate{doc, exportBackground, progressListener, std::move(filePath)},
         format(format),
         exportRange(exportRange) {}
 
@@ -51,66 +50,42 @@ void ImageExport::setQualityParameter(ExportQualityCriterion criterion, int valu
     this->qualityParameter = RasterImageQualityParameter(criterion, value);
 }
 
-/**
- * @brief Create Cairo surface for a given page
- * @param width the width of the page being exported
- * @param height the height of the page being exported
- * @param id the id of the page being exported
- * @param zoomRatio the zoom ratio for PNG exports with fixed DPI
- *
- * @return the zoom ratio of the current page if the export type is PNG, 0.0 otherwise
- *          The return value may differ from that of the parameter zoomRatio if the export has fixed page width or
- * height (in pixels). In this case, the zoomRatio (and the DPI) is page-dependent as soon as the document has pages of
- * different sizes.
- */
-auto ImageExport::createSurface(double width, double height, size_t id, double zoomRatio) -> double {
-    switch (this->format) {
+auto ImageExport::createSurface(double width, double height) -> bool {
+    switch (format) {
         case EXPORT_GRAPHICS_PNG:
-            switch (this->qualityParameter.getQualityCriterion()) {
+            switch (qualityParameter.getQualityCriterion()) {
                 case EXPORT_QUALITY_WIDTH:
-                    zoomRatio = ((double)this->qualityParameter.getValue()) / width;
-                    this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->qualityParameter.getValue(),
-                                                               (int)std::round(height * zoomRatio));
+                    zoomRatio = computeZoomRatioWithFactor(width);
                     break;
                 case EXPORT_QUALITY_HEIGHT:
-                    zoomRatio = ((double)this->qualityParameter.getValue()) / height;
-                    this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, (int)std::round(width * zoomRatio),
-                                                               this->qualityParameter.getValue());
+                    zoomRatio = computeZoomRatioWithFactor(height);
                     break;
-                case EXPORT_QUALITY_DPI:  // Use the zoomRatio given as argument
-                    this->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, (int)std::round(width * zoomRatio),
-                                                               (int)std::round(height * zoomRatio));
+                case EXPORT_QUALITY_DPI:
+                    zoomRatio = computeZoomRatioWithFactor(Util::DPI_NORMALIZATION_FACTOR);
                     break;
             }
-            this->cr = cairo_create(this->surface);
-            cairo_scale(this->cr, zoomRatio, zoomRatio);
-            return zoomRatio;
+            width = std::round(width * zoomRatio);
+            height = std::round(height * zoomRatio);
+            surface =
+                    cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(width), static_cast<int>(height));
+            cr = cairo_create(surface);
+            cairo_scale(cr, zoomRatio, zoomRatio);
+            break;
         case EXPORT_GRAPHICS_SVG:
-            this->surface = cairo_svg_surface_create(getFilenameWithNumber(id).u8string().c_str(), width, height);
-            cairo_svg_surface_restrict_to_version(this->surface, CAIRO_SVG_VERSION_1_2);
-            this->cr = cairo_create(this->surface);
+            surface = cairo_svg_surface_create(getFilenameWithNumber(id).u8string().c_str(), static_cast<int>(width),
+                                               static_cast<int>(height));
+            cairo_svg_surface_restrict_to_version(surface, CAIRO_SVG_VERSION_1_2);
+            cr = cairo_create(surface);
             break;
         default:
-            this->lastError = _("Unsupported graphics format: ") + std::to_string(this->format);
+            lastError = _("Unsupported graphics format: ") + std::to_string(format);
+            return false;
     }
-    return 0.0;
+    return cairo_surface_status(surface) == CAIRO_STATUS_SUCCESS;
 }
 
-/**
- * Free / store the surface
- */
-auto ImageExport::freeSurface(size_t id) -> bool {
-    cairo_destroy(this->cr);
-
-    cairo_status_t status = CAIRO_STATUS_SUCCESS;
-    if (format == EXPORT_GRAPHICS_PNG) {
-        auto filepath = getFilenameWithNumber(id);
-        status = cairo_surface_write_to_png(surface, filepath.u8string().c_str());
-    }
-    cairo_surface_destroy(surface);
-
-    // we ignore this problem
-    return status == CAIRO_STATUS_SUCCESS;
+auto ImageExport::computeZoomRatioWithFactor(double normalizationFactor) -> double {
+    return ((double)qualityParameter.getValue()) / normalizationFactor;
 }
 
 /**
@@ -123,11 +98,11 @@ auto ImageExport::freeSurface(size_t id) -> bool {
 auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
     if (no == SINGLE_PAGE) {
         // No number to add
-        return file;
+        return filePath;
     }
 
-    auto ext = file.extension();
-    auto path(file);
+    auto ext = filePath.extension();
+    auto path(filePath);
     path.replace_extension();
     (path += (std::string("-") + std::to_string(no))) += ext;
     return path;
@@ -136,21 +111,15 @@ auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
 /**
  * @brief Export a single PNG/SVG page
  * @param pageId The index of the page being exported
- * @param id The number of the page being exported
- * @param zoomRatio The zoom ratio for PNG exports with fixed DPI
  * @param format The format of the exported image
  * @param view A DocumentView for drawing the page
  */
-void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, ExportGraphicsFormat format,
-                                  DocumentView& view) {
+void ImageExport::exportImagePage(size_t pageId, ExportGraphicsFormat format, DocumentView& view) {
     doc->lock();
     PageRef page = doc->getPage(pageId);
     doc->unlock();
 
-    zoomRatio = createSurface(page->getWidth(), page->getHeight(), id, zoomRatio);
-
-    cairo_status_t state = cairo_surface_status(this->surface);
-    if (state != CAIRO_STATUS_SUCCESS) {
+    if (!createSurface(page->getWidth(), page->getHeight())) {
         this->lastError = _("Error save image #1");
         return;
     }
@@ -178,7 +147,12 @@ void ImageExport::exportImagePage(size_t pageId, size_t id, double zoomRatio, Ex
                       exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
     }
 
-    if (!freeSurface(id)) {
+    if (format == EXPORT_GRAPHICS_PNG) {
+        auto filepath = getFilenameWithNumber(id);
+        cairo_surface_write_to_png(surface, filepath.u8string().c_str());
+    }
+
+    if (!freeCairoResources()) {
         // could not create this file...
         this->lastError = _("Error save image #2");
         return;
@@ -206,19 +180,11 @@ void ImageExport::exportGraphics() {
 
     progressListener->setMaximumState(selectedCount);
 
-    /*
-     * Compute the zoomRatio only once if using DPI as a PNG quality criterion
-     */
-    double zoomRatio = 1.0;
-    if ((this->format == EXPORT_GRAPHICS_PNG) && (this->qualityParameter.getQualityCriterion() == EXPORT_QUALITY_DPI)) {
-        zoomRatio = ((double)this->qualityParameter.getValue()) / Util::DPI_NORMALIZATION_FACTOR;
-    }
-
     DocumentView view;
     int current = 0;
 
     for (size_t i = 0; i < count; i++) {
-        auto id = i + 1;
+        id = i + 1;
         if (onePage) {
             id = SINGLE_PAGE;
         }
@@ -226,7 +192,7 @@ void ImageExport::exportGraphics() {
         if (selectedPages[i]) {
             progressListener->setCurrentState(current++);
 
-            exportImagePage(i, id, zoomRatio, format, view);  // Todo(narrowing): remove cast
+            exportImagePage(i, format, view);  // Todo(narrowing): remove cast
         }
     }
 }

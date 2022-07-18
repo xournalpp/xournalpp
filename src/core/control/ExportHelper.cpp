@@ -95,10 +95,10 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
 
     GFile* file = g_file_new_for_commandline_arg(output);
 
-    XojPdfExport pdfe{doc, exportBackground, nullptr};
-
     auto path = fs::u8path(g_file_peek_path(file));
     g_object_unref(file);
+
+    XojPdfExport pdfe{doc, exportBackground, nullptr, path};
 
     bool exportSuccess = 0;  // Return of the export job
 
@@ -108,9 +108,9 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
         // Parse the range
         PageRangeVector exportRange = ElementRange::parse(range, doc->getPageCount());
         // Do the export
-        exportSuccess = pdfe.createPdf(path, exportRange, progressiveMode);
+        exportSuccess = pdfe.createPdf(exportRange, progressiveMode);
     } else {
-        exportSuccess = pdfe.createPdf(path, progressiveMode);
+        exportSuccess = pdfe.createPdf(progressiveMode);
     }
 
     if (!exportSuccess) {
