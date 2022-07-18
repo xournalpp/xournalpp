@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-18 06:12\n"
+"PO-Revision-Date: 2022-07-18 07:14\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -720,7 +720,7 @@ msgstr "Acople de retícula"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "¡GtkSourceView fue desactivado cuando se construyó Xournal++! Algunas opciones no estarán disponibles."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
@@ -792,7 +792,7 @@ msgstr "Ir a la página (primera página: 1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "Tema del editor LaTeX:"
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -893,7 +893,8 @@ msgstr "Aceptar"
 #: ../src/core/control/XournalMain.cpp:649
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Al exportar, sólo exporta las capas especificadas por el RANGO (por ejemplo, \"2-3,5,7-\")\n"
+"                                 Sin efecto sin -p/--create-pdf o -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:645
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -979,7 +980,7 @@ msgstr "Número de página"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:308
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "El formato de tipo de página es PageTypeFormat::Copy - convertido a PageTypeFormat::Plain para evitar archivos corruptos"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Paired pages"
@@ -1843,7 +1844,7 @@ msgstr "%a\t\tNombre de día abreviado (ej., jue)\n"
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(Requiere reinicio)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2129,7 +2130,7 @@ msgstr "Autores"
 
 #: ../ui/latexSettings.glade:415
 msgid "Auto-indent"
-msgstr ""
+msgstr "Auto-sangría"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2226,7 +2227,7 @@ msgstr "Borrar paginado en caché mientras se desplaza"
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2234,7 +2235,7 @@ msgstr "Colores"
 
 #: ../ui/texdialog.glade:163
 msgid "Command Output"
-msgstr ""
+msgstr "Salida de comandos"
 
 #: ../ui/main.glade:1225
 msgid "Configure Page Template"
@@ -2519,7 +2520,7 @@ msgstr "Primer Offset de página "
 
 #: ../ui/latexSettings.glade:517
 msgid "Font: "
-msgstr ""
+msgstr "Fuente: "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
@@ -2905,7 +2906,7 @@ msgstr "Basado parcialmente en Xournal\n"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Path: "
-msgstr ""
+msgstr "Ruta: "
 
 #: ../ui/main.glade:2002
 msgid "Pause"
@@ -2921,7 +2922,7 @@ msgstr "Rendimiento"
 
 #: ../ui/latexSettings.glade:532
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "Elegir la fuente del editor"
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3188,7 +3189,7 @@ msgstr "Consecutivo (ms)"
 
 #: ../ui/latexSettings.glade:429
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Resaltado de la sintaxis"
 
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
@@ -3201,7 +3202,7 @@ msgstr "_Barras de herramientas"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "Fuente TeX"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
@@ -3286,7 +3287,7 @@ msgstr "Subrayar el texto seleccionado"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Usar iconos disponibles en stock (requiere reiniciar)"
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
@@ -3362,7 +3363,7 @@ msgstr "Con ayuda de la comunidad"
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "Ajustar texto"
 
 #: ../ui/about.glade:156
 msgid "X.X.X"
