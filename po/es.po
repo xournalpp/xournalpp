@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-13 23:26\n"
+"PO-Revision-Date: 2022-07-18 06:12\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -461,19 +461,19 @@ msgstr "Editar texto"
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
+msgstr "ElementRange::parse(): los índices del elemento comienzan en 1"
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): el índice del elemento ingresado es mayor que el máximo."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): los límites del intervalo deben estar en orden creciente."
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): rango de elemento no válido."
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -628,7 +628,7 @@ msgstr "Error al procesar el comando del generador LaTeX: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "Error al procesar la ruta del generador LaTeX: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
