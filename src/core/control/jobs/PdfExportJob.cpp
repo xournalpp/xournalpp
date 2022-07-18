@@ -34,10 +34,10 @@ void PdfExportJob::run() {
     Document* doc = control->getDocument();
 
     doc->lock();
-    XojPdfExport pdfe{doc, EXPORT_BACKGROUND_ALL, control};
+    XojPdfExport pdfe{doc, EXPORT_BACKGROUND_ALL, control, filepath};
     doc->unlock();
 
-    if (!pdfe.createPdf(this->filepath, false)) {
+    if (!pdfe.createPdf(false)) {
         this->errorMsg = pdfe.getLastErrorMsg();
         if (control->getWindow()) {
             callAfterRun();

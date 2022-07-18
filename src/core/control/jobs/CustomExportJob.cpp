@@ -132,9 +132,9 @@ void CustomExportJob::run() {
         // the ui is blocked, so there should be no changes...
         Document* doc = control->getDocument();
 
-        XojPdfExport pdfe{doc, exportBackground, control};
+        XojPdfExport pdfe{doc, exportBackground, control, filepath};
 
-        if (!pdfe.createPdf(this->filepath, exportRange, progressiveMode)) {
+        if (!pdfe.createPdf(exportRange, progressiveMode)) {
             this->errorMsg = pdfe.getLastErrorMsg();
         }
 

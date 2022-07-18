@@ -27,15 +27,17 @@ class ProgressListener;
 
 class XojPdfExport: public ExportTemplate {
 public:
-    XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener);
+    XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
+                 fs::path filePath);
     ~XojPdfExport();
 
 public:
-    bool createPdf(fs::path const& file, bool progressiveMode);
-    bool createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode);
+    bool createPdf(bool progressiveMode);
+    bool createPdf(const PageRangeVector& range, bool progressiveMode);
 
 private:
-    bool startPdf(const fs::path& file);
+    auto startPdf() -> bool;
+
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
     /**
      * Populate the outline of the generated PDF using the outline of the
@@ -47,7 +49,7 @@ private:
      */
     void populatePdfOutline(GtkTreeModel* tocModel);
 #endif
-    void endPdf();
+
     void exportPage(size_t page);
     /**
      * Export as a PDF document where each additional layer creates a

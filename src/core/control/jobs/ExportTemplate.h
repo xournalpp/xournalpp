@@ -25,7 +25,8 @@ class ProgressListener;
  */
 class ExportTemplate {
 public:
-    ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener);
+    ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
+                   fs::path filePath);
 
     virtual ~ExportTemplate();
 
@@ -40,6 +41,12 @@ public:
      * @return The last error message to show to the user
      */
     auto getLastErrorMsg() const -> std::string;
+
+protected:
+    /**
+     * @brief Destroy cairo surface and cr
+     */
+    auto freeCairoResources() -> bool;
 
 protected:
     /**
@@ -76,4 +83,9 @@ protected:
      * Cairo context
      */
     cairo_t* cr = nullptr;
+
+    /**
+     * Filename for export
+     */
+    fs::path const filePath;
 };
