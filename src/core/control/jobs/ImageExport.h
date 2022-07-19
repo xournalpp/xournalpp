@@ -82,7 +82,7 @@ public:
      * @brief Set a quality level for PNG exports
      * @param qParam A quality parameter for the export
      */
-    void setQualityParameter(RasterImageQualityParameter qParam);
+    void setQualityParameter(const RasterImageQualityParameter& qParam);
 
     /**
      * @brief Set a quality level for PNG exports
