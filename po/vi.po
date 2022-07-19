@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-11 08:42\n"
+"POT-Creation-Date: 2022-07-19 07:58+0000\n"
+"PO-Revision-Date: 2022-07-19 08:13\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Thiếu tệp giao diện người
 msgid "Add/Edit TeX"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Advanced export options"
 msgstr "Các tùy chọn xuất nâng cao"
 
@@ -362,7 +362,7 @@ msgstr "Xóa trang này"
 msgid "Discard"
 msgstr "Bỏ"
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Display advanced export options"
 msgstr "Hiển thị các tùy chọn xuất nâng cao"
 
@@ -558,11 +558,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "Nhật ký ghi lỗi không thể bị xóa. Bạn phải làm điều đó theo cách thủ công.\n"
 "Tệp nhật ký: {1}"
 
-#: ../src/core/control/XournalMain.cpp:622
+#: ../src/core/control/XournalMain.cpp:626
 msgid "Export FILE as PDF"
 msgstr "Xuất TỆP TIN dưới dạng PDF"
 
-#: ../src/core/control/XournalMain.cpp:624
+#: ../src/core/control/XournalMain.cpp:628
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -578,7 +578,7 @@ msgstr "Xuất PDF"
 msgid "Export as PDF"
 msgstr "Xuất dưới dạng PDF"
 
-#: ../src/core/control/XournalMain.cpp:638
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -590,7 +590,7 @@ msgstr "Xuất dần dần các lớp\n"
 "                                 tăng dần lớp chồng lên nhau.\n"
 "                                 Kết quả của tệp PDF có thể được sử dụng cho một bản trình bày.\n"
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:633
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -598,7 +598,7 @@ msgstr "Xuất không nền\n"
 "                                 Tệp được xuất có nền trong suốt hoặc trắng,\n"
 "                                 tùy thuộc vào những gì định dạng của nó hỗ trợ\n"
 
-#: ../src/core/control/XournalMain.cpp:634
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Xuất không quy định\n"
@@ -673,7 +673,7 @@ msgstr "Tới trước"
 msgid "GNU GPLv2 or later"
 msgstr "Giấy phép Công cộng Chung GNU phiên bản 2 trở lên"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:617
 msgid "Get version of xournalpp"
 msgstr "Tải phiên bản của xournalpp"
 
@@ -785,7 +785,7 @@ msgstr "Chiếu Chấm ba chiều"
 msgid "Isometric Graph"
 msgstr "Chiếu Đồ thị ba chiều"
 
-#: ../src/core/control/XournalMain.cpp:609
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Jump to Page (first Page: 1)"
 msgstr "Nhảy đến Trang (Trang đầu tiên: 1)"
 
@@ -889,12 +889,12 @@ msgstr "Bản vẽ thường"
 msgid "OK"
 msgstr "Đồng ý"
 
-#: ../src/core/control/XournalMain.cpp:649
+#: ../src/core/control/XournalMain.cpp:653
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Chỉ xuất các trang được chỉ định theo PHẠM VI (ví dụ: \"2-3,5,7-\")\n"
@@ -1225,18 +1225,18 @@ msgstr ""
 msgid "Separator"
 msgstr "Dấu ngăn cách"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:657
+#: ../src/core/control/XournalMain.cpp:661
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -2016,7 +2016,7 @@ msgstr ""
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr ""
 
-#: ../ui/about.glade:203
+#: ../ui/about.glade:206
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr ""
@@ -2082,7 +2082,7 @@ msgstr ""
 msgid "Author: "
 msgstr ""
 
-#: ../ui/about.glade:449
+#: ../ui/about.glade:452
 msgid "Authors"
 msgstr ""
 
@@ -2151,7 +2151,7 @@ msgstr ""
 msgid "Buffersize"
 msgstr ""
 
-#: ../ui/about.glade:99
+#: ../ui/about.glade:100
 msgid "Built on"
 msgstr ""
 
@@ -2490,7 +2490,7 @@ msgstr ""
 msgid "General LaTeX tool settings"
 msgstr ""
 
-#: ../ui/about.glade:114
+#: ../ui/about.glade:115
 msgid "Git commit"
 msgstr ""
 
@@ -2568,7 +2568,7 @@ msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr ""
 
-#: ../ui/about.glade:243
+#: ../ui/about.glade:246
 msgid "Icon Designers"
 msgstr ""
 
@@ -2672,7 +2672,7 @@ msgstr ""
 msgid "Left / Right-Handed"
 msgstr ""
 
-#: ../ui/about.glade:421
+#: ../ui/about.glade:424
 msgid "License"
 msgstr "Bản quyền"
 
@@ -2847,7 +2847,7 @@ msgstr ""
 msgid "Paper _Format"
 msgstr ""
 
-#: ../ui/about.glade:296
+#: ../ui/about.glade:299
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
@@ -2920,7 +2920,7 @@ msgstr ""
 msgid "Pressure Sensitivity"
 msgstr ""
 
-#: ../ui/about.glade:129
+#: ../ui/about.glade:130
 msgid "RELEASE_IDENTIFIER"
 msgstr ""
 
@@ -3094,7 +3094,7 @@ msgstr ""
 msgid "Snapping"
 msgstr ""
 
-#: ../ui/about.glade:356
+#: ../ui/about.glade:359
 msgid "Source Code / Bug Tracker"
 msgstr ""
 
@@ -3260,7 +3260,7 @@ msgstr "Thường là 0 hoặc 1"
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/about.glade:181
+#: ../ui/about.glade:184
 msgid "Version"
 msgstr "Phiên bản"
 
@@ -3272,7 +3272,7 @@ msgstr "Phiên bản: "
 msgid "View"
 msgstr "Xem"
 
-#: ../ui/about.glade:328
+#: ../ui/about.glade:331
 msgid "Website"
 msgstr ""
 
@@ -3302,7 +3302,7 @@ msgstr ""
 msgid "Width:"
 msgstr "Độ rộng:"
 
-#: ../ui/about.glade:393
+#: ../ui/about.glade:396
 msgid "With help from the community"
 msgstr "Với sự trợ giúp từ cộng đồng"
 
@@ -3310,7 +3310,7 @@ msgstr "Với sự trợ giúp từ cộng đồng"
 msgid "Wrap text"
 msgstr ""
 
-#: ../ui/about.glade:156
+#: ../ui/about.glade:158
 msgid "X.X.X"
 msgstr ""
 
@@ -3608,7 +3608,7 @@ msgstr "s <i>(sau đó màn hình cảm ứng sẽ được kích hoạt trở l
 msgid "ver_y thick"
 msgstr ""
 
-#: ../ui/about.glade:141
+#: ../ui/about.glade:143
 msgid "with libgtk"
 msgstr ""
 
