@@ -2148,7 +2148,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         }
 
         // try to find file in current directory
-        auto proposedPdfFilepath = filepath.parent_path() /= missingFilePath.filename();
+        auto proposedPdfFilepath = filepath.parent_path() / missingFilePath.filename();
         bool proposedPdfFileExits = fs::exists(proposedPdfFilepath);
         if (proposedPdfFileExits) {
             msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.string());
