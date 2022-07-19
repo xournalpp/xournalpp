@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-11 08:42\n"
+"POT-Creation-Date: 2022-07-19 07:58+0000\n"
+"PO-Revision-Date: 2022-07-19 08:13\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>ui  की एक महेत्�
 msgid "Add/Edit TeX"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Advanced export options"
 msgstr "उन्नत निर्यात विकल्प"
 
@@ -361,7 +361,7 @@ msgstr "यह पृष्ठ मिटाएँ"
 msgid "Discard"
 msgstr "रद्द करें"
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Display advanced export options"
 msgstr "उन्नत निर्यात विकल्प प्रदर्शित करें"
 
@@ -555,11 +555,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 "Logfile: {1}"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:622
+#: ../src/core/control/XournalMain.cpp:626
 msgid "Export FILE as PDF"
 msgstr "वहनीय दस्तावेज़ फ़ाइल के रूप में फ़ाइल निर्यात करें"
 
-#: ../src/core/control/XournalMain.cpp:624
+#: ../src/core/control/XournalMain.cpp:628
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -573,7 +573,7 @@ msgstr "वहनीय दस्तावेज़ फ़ाइल निर्
 msgid "Export as PDF"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:638
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -581,13 +581,13 @@ msgid "Export layers progressively\n"
 "                                 The resulting PDF file can be used for a presentation.\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:633
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:634
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr ""
@@ -659,7 +659,7 @@ msgstr "आगे बढें।"
 msgid "GNU GPLv2 or later"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:617
 msgid "Get version of xournalpp"
 msgstr "xournalpp का संस्करण प्राप्त करें"
 
@@ -771,7 +771,7 @@ msgstr "Isometric Dotted"
 msgid "Isometric Graph"
 msgstr "सममितीय ग्राफ़"
 
-#: ../src/core/control/XournalMain.cpp:609
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Jump to Page (first Page: 1)"
 msgstr "पृष्ठ पर कूदो (पहली पृष्ठ: 1)"
 
@@ -875,12 +875,12 @@ msgstr "सामान्य चित्रकारी"
 msgid "OK"
 msgstr "ठीक है"
 
-#: ../src/core/control/XournalMain.cpp:649
+#: ../src/core/control/XournalMain.cpp:653
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
@@ -1210,13 +1210,13 @@ msgstr "पीछे भेजें"
 msgid "Separator"
 msgstr "विभाजक"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "PNG निर्यात के लिए DPI सेट करें। डिफ़ॉल्ट है 300\n"
 "                                 -i/--create-img=foo.png के बिना कोई प्रभाव नहीं"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1224,7 +1224,7 @@ msgstr "PNG निर्यात के लिए पृष्ठ ऊंचा�
 "                                 --i/--create-img=foo.png के बिना कोई प्रभाव नहीं\n"
 "                                 यदि --export-png-dpi या --export-png-width का उपयोग किया जाता है, तो ज्ञात है"
 
-#: ../src/core/control/XournalMain.cpp:657
+#: ../src/core/control/XournalMain.cpp:661
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -2009,7 +2009,7 @@ msgstr ""
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr ""
 
-#: ../ui/about.glade:203
+#: ../ui/about.glade:206
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr ""
@@ -2075,7 +2075,7 @@ msgstr ""
 msgid "Author: "
 msgstr ""
 
-#: ../ui/about.glade:449
+#: ../ui/about.glade:452
 msgid "Authors"
 msgstr ""
 
@@ -2144,7 +2144,7 @@ msgstr ""
 msgid "Buffersize"
 msgstr ""
 
-#: ../ui/about.glade:99
+#: ../ui/about.glade:100
 msgid "Built on"
 msgstr ""
 
@@ -2483,7 +2483,7 @@ msgstr ""
 msgid "General LaTeX tool settings"
 msgstr ""
 
-#: ../ui/about.glade:114
+#: ../ui/about.glade:115
 msgid "Git commit"
 msgstr ""
 
@@ -2561,7 +2561,7 @@ msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr ""
 
-#: ../ui/about.glade:243
+#: ../ui/about.glade:246
 msgid "Icon Designers"
 msgstr ""
 
@@ -2665,7 +2665,7 @@ msgstr ""
 msgid "Left / Right-Handed"
 msgstr ""
 
-#: ../ui/about.glade:421
+#: ../ui/about.glade:424
 msgid "License"
 msgstr ""
 
@@ -2840,7 +2840,7 @@ msgstr ""
 msgid "Paper _Format"
 msgstr ""
 
-#: ../ui/about.glade:296
+#: ../ui/about.glade:299
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
@@ -2913,7 +2913,7 @@ msgstr ""
 msgid "Pressure Sensitivity"
 msgstr ""
 
-#: ../ui/about.glade:129
+#: ../ui/about.glade:130
 msgid "RELEASE_IDENTIFIER"
 msgstr ""
 
@@ -3087,7 +3087,7 @@ msgstr ""
 msgid "Snapping"
 msgstr ""
 
-#: ../ui/about.glade:356
+#: ../ui/about.glade:359
 msgid "Source Code / Bug Tracker"
 msgstr ""
 
@@ -3253,7 +3253,7 @@ msgstr ""
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/about.glade:181
+#: ../ui/about.glade:184
 msgid "Version"
 msgstr ""
 
@@ -3265,7 +3265,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: ../ui/about.glade:328
+#: ../ui/about.glade:331
 msgid "Website"
 msgstr ""
 
@@ -3295,7 +3295,7 @@ msgstr ""
 msgid "Width:"
 msgstr ""
 
-#: ../ui/about.glade:393
+#: ../ui/about.glade:396
 msgid "With help from the community"
 msgstr ""
 
@@ -3303,7 +3303,7 @@ msgstr ""
 msgid "Wrap text"
 msgstr ""
 
-#: ../ui/about.glade:156
+#: ../ui/about.glade:158
 msgid "X.X.X"
 msgstr ""
 
@@ -3601,7 +3601,7 @@ msgstr ""
 msgid "ver_y thick"
 msgstr ""
 
-#: ../ui/about.glade:141
+#: ../ui/about.glade:143
 msgid "with libgtk"
 msgstr ""
 
