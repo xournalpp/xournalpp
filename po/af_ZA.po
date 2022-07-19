@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-11 08:42\n"
+"POT-Creation-Date: 2022-07-19 07:58+0000\n"
+"PO-Revision-Date: 2022-07-19 08:13\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -59,7 +59,7 @@ msgstr "<span foreground='red' size='x-large'>Vermis die nodige verbruikers kopp
 msgid "Add/Edit TeX"
 msgstr "Voeg by/Verander TeX"
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Advanced export options"
 msgstr "Gevorderde uitvoer opsies"
 
@@ -362,7 +362,7 @@ msgstr "Verwyder hierdie bladsy"
 msgid "Discard"
 msgstr "Gooi weg"
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Display advanced export options"
 msgstr "Wys gevorderde uitvoer opsies"
 
@@ -558,11 +558,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "Fout aanmelding kon nie verwyder word nie. Jy moet dit handmatig doen.\n"
 "Foutlêer: {1}"
 
-#: ../src/core/control/XournalMain.cpp:622
+#: ../src/core/control/XournalMain.cpp:626
 msgid "Export FILE as PDF"
 msgstr "Voer LÊER uit as PDF"
 
-#: ../src/core/control/XournalMain.cpp:624
+#: ../src/core/control/XournalMain.cpp:628
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -578,7 +578,7 @@ msgstr "Voer PDF uit"
 msgid "Export as PDF"
 msgstr "Voer as PDF uit"
 
-#: ../src/core/control/XournalMain.cpp:638
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -590,7 +590,7 @@ msgstr "Voer lêers uit geleidelik   \n"
 "                                 bou die lae stapel geleidelik.\n"
 "                                 Die gevolglike PDF lêer kan gebruik word vir 'n voorlegging.\n"
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:633
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -598,7 +598,7 @@ msgstr "Voer uit sonder agtergrond\n"
 "                                 Die uitgevoerde lêer het 'n deurskynende of wit agtergrond\n"
 "                                 afhangend van wat die formaat ondersteun\n"
 
-#: ../src/core/control/XournalMain.cpp:634
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Voer uit sonder lyne\n"
@@ -673,7 +673,7 @@ msgstr "Vorentoe"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 of later"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:617
 msgid "Get version of xournalpp"
 msgstr "Kry die weergawe van xournalpp"
 
@@ -785,7 +785,7 @@ msgstr "Isometries Gestippel"
 msgid "Isometric Graph"
 msgstr "Isometries Grafiek"
 
-#: ../src/core/control/XournalMain.cpp:609
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Jump to Page (first Page: 1)"
 msgstr "Spring na bladsy (eerste Bladsy: 1)"
 
@@ -889,12 +889,12 @@ msgstr "Gewone tekening"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/core/control/XournalMain.cpp:649
+#: ../src/core/control/XournalMain.cpp:653
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Voer net die blaaie in die gespesifiseerde reeks uit (bv. \"2-3,5,7-\")\n"
@@ -1225,13 +1225,13 @@ msgstr "Stuur na agter"
 msgid "Separator"
 msgstr "Verdeler"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Stel DPI vir PNG uitvoerings. Standaard is 300\n"
 "                                 Geen effek sonder -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1239,7 +1239,7 @@ msgstr "Stel bladsy hoogte vir PNG uitvoerings\n"
 "                                 Geen effek sonder -i/--create-img=foo.png\n"
 "                                 Geignoreer indien --export-png-dpi of --export-png-width gebruik word"
 
-#: ../src/core/control/XournalMain.cpp:657
+#: ../src/core/control/XournalMain.cpp:661
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -2023,7 +2023,7 @@ msgstr ""
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr ""
 
-#: ../ui/about.glade:203
+#: ../ui/about.glade:206
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr ""
@@ -2089,7 +2089,7 @@ msgstr ""
 msgid "Author: "
 msgstr ""
 
-#: ../ui/about.glade:449
+#: ../ui/about.glade:452
 msgid "Authors"
 msgstr ""
 
@@ -2158,7 +2158,7 @@ msgstr ""
 msgid "Buffersize"
 msgstr ""
 
-#: ../ui/about.glade:99
+#: ../ui/about.glade:100
 msgid "Built on"
 msgstr ""
 
@@ -2497,7 +2497,7 @@ msgstr ""
 msgid "General LaTeX tool settings"
 msgstr ""
 
-#: ../ui/about.glade:114
+#: ../ui/about.glade:115
 msgid "Git commit"
 msgstr ""
 
@@ -2575,7 +2575,7 @@ msgid "How short (time)  AND...\n\n"
 "<i>Recommended: 150ms</i>"
 msgstr ""
 
-#: ../ui/about.glade:243
+#: ../ui/about.glade:246
 msgid "Icon Designers"
 msgstr ""
 
@@ -2679,7 +2679,7 @@ msgstr ""
 msgid "Left / Right-Handed"
 msgstr ""
 
-#: ../ui/about.glade:421
+#: ../ui/about.glade:424
 msgid "License"
 msgstr ""
 
@@ -2854,7 +2854,7 @@ msgstr ""
 msgid "Paper _Format"
 msgstr ""
 
-#: ../ui/about.glade:296
+#: ../ui/about.glade:299
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
@@ -2927,7 +2927,7 @@ msgstr ""
 msgid "Pressure Sensitivity"
 msgstr ""
 
-#: ../ui/about.glade:129
+#: ../ui/about.glade:130
 msgid "RELEASE_IDENTIFIER"
 msgstr ""
 
@@ -3101,7 +3101,7 @@ msgstr ""
 msgid "Snapping"
 msgstr ""
 
-#: ../ui/about.glade:356
+#: ../ui/about.glade:359
 msgid "Source Code / Bug Tracker"
 msgstr ""
 
@@ -3267,7 +3267,7 @@ msgstr ""
 msgid "Velocity based Gaussian weights"
 msgstr ""
 
-#: ../ui/about.glade:181
+#: ../ui/about.glade:184
 msgid "Version"
 msgstr ""
 
@@ -3279,7 +3279,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: ../ui/about.glade:328
+#: ../ui/about.glade:331
 msgid "Website"
 msgstr ""
 
@@ -3309,7 +3309,7 @@ msgstr ""
 msgid "Width:"
 msgstr ""
 
-#: ../ui/about.glade:393
+#: ../ui/about.glade:396
 msgid "With help from the community"
 msgstr ""
 
@@ -3317,7 +3317,7 @@ msgstr ""
 msgid "Wrap text"
 msgstr ""
 
-#: ../ui/about.glade:156
+#: ../ui/about.glade:158
 msgid "X.X.X"
 msgstr ""
 
@@ -3615,7 +3615,7 @@ msgstr ""
 msgid "ver_y thick"
 msgstr ""
 
-#: ../ui/about.glade:141
+#: ../ui/about.glade:143
 msgid "with libgtk"
 msgstr ""
 
