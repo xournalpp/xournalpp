@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-12 17:31\n"
+"POT-Creation-Date: 2022-07-19 07:58+0000\n"
+"PO-Revision-Date: 2022-07-19 08:12\n"
 "Last-Translator: \n"
 "Language-Team: Esperanto\n"
 "Language: eo_UY\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Mankas la necesa fasada dosiero:\n
 msgid "Add/Edit TeX"
 msgstr "Enmeti/modifi TeX"
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Advanced export options"
 msgstr "Altnivelaj opcioj pri elportado"
 
@@ -364,7 +364,7 @@ msgstr "Forviŝi ĉi tiun paĝon"
 msgid "Discard"
 msgstr "Forĵeti"
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Display advanced export options"
 msgstr "Montri komplikajn opciojn pri elportado"
 
@@ -560,11 +560,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "Erarprotokolo ne estas forviŝebla. Vi devas forviŝi ĝin permane.\n"
 "Protokoldosiero: {1}"
 
-#: ../src/core/control/XournalMain.cpp:622
+#: ../src/core/control/XournalMain.cpp:626
 msgid "Export FILE as PDF"
 msgstr "Elporti dosieron kiel PDF"
 
-#: ../src/core/control/XournalMain.cpp:624
+#: ../src/core/control/XournalMain.cpp:628
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -580,7 +580,7 @@ msgstr "Elporti kiel PDF"
 msgid "Export as PDF"
 msgstr "Elporti kiel PDF"
 
-#: ../src/core/control/XournalMain.cpp:638
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -592,7 +592,7 @@ msgstr "Elporti tavolojn progrese\n"
 "                                 konstruante la tavolan stakon progrese.\n"
 "                                 La rezulta PDF-dosiero estas uzebla por prezento.\n"
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:633
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -600,7 +600,7 @@ msgstr "Elporti sen fono\n"
 "                                 La elportota dosiero havos travideblan aŭ blankan fonon,\n"
 "                                 depende de la kapabloj de la dosierformo\n"
 
-#: ../src/core/control/XournalMain.cpp:634
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Elporti sen linioj\n"
@@ -675,7 +675,7 @@ msgstr "Antaŭen"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPL versio 2 aŭ pli nova"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:617
 msgid "Get version of xournalpp"
 msgstr "Havigi version de xournalpp"
 
@@ -787,7 +787,7 @@ msgstr "Izometre punktita"
 msgid "Isometric Graph"
 msgstr "Izometre grafa"
 
-#: ../src/core/control/XournalMain.cpp:609
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Jump to Page (first Page: 1)"
 msgstr "Salti al paĝo (unua paĝo: 1)"
 
@@ -891,13 +891,13 @@ msgstr "Ordinara desegnado"
 msgid "OK"
 msgstr "Bone"
 
-#: ../src/core/control/XournalMain.cpp:649
+#: ../src/core/control/XournalMain.cpp:653
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Dum elportado, nur elporti la tavolojn specifitajn de RANGE (ekz. «2-3,5,7-»)\n"
 "                                 Senefika sen «-p»/«--create-pdf» aŭ «-i»/«--create-img»"
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Nur elporti la paĝojn specifitajn de RANGE (ekz. «2-3,5,7-»)\n"
@@ -1228,13 +1228,13 @@ msgstr "Porti fonen"
 msgid "Separator"
 msgstr "Apartigilo"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "Agordi la bilderdenson (bilderojn en colo) por elporti kiel PNG-bildon. Implicite 300\n"
 "                                 Senefika sen «-i»/«--create-img=foo.png»"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1242,7 +1242,7 @@ msgstr "Agordi la alton de bildo por elporti kiel PNG-bildon\n"
 "                                 Senefika sen «-i»/«--create-img=foo.png»\n"
 "                                 Ignorota se «--export-png-dpi» aŭ «--export-png-width» estas uzata"
 
-#: ../src/core/control/XournalMain.cpp:657
+#: ../src/core/control/XournalMain.cpp:661
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -2058,7 +2058,7 @@ msgstr "<i>En iuj sistemoj, plumstrekoj havas problemojn komence. Tio estas evit
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>Vi povas tuŝekrane kondutigi tiujn aparatojn, kiujn GTK ne klasifikas kiel tuŝekranojn.</i>"
 
-#: ../ui/about.glade:203
+#: ../ui/about.glade:206
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2126,7 +2126,7 @@ msgstr "Sonregistrado"
 msgid "Author: "
 msgstr "Aŭtoro: "
 
-#: ../ui/about.glade:449
+#: ../ui/about.glade:452
 msgid "Authors"
 msgstr "Aŭtoroj"
 
@@ -2195,7 +2195,7 @@ msgstr "Porti malfonen"
 msgid "Buffersize"
 msgstr "Grando de bufro"
 
-#: ../ui/about.glade:99
+#: ../ui/about.glade:100
 msgid "Built on"
 msgstr "Surbaze de"
 
@@ -2540,7 +2540,7 @@ msgstr "Gaŭsa parametro: ju pli granda, des pli stabila kaj des pli da atendoda
 msgid "General LaTeX tool settings"
 msgstr "Ĝeneralaj agordoj pri la ilo LaTeX"
 
-#: ../ui/about.glade:114
+#: ../ui/about.glade:115
 msgid "Git commit"
 msgstr "Git-enmeto"
 
@@ -2620,7 +2620,7 @@ msgid "How short (time)  AND...\n\n"
 msgstr "Kiel mallonga (tempe) KAJ…\n\n"
 "<i>Rekomendo: 150 ms</i>"
 
-#: ../ui/about.glade:243
+#: ../ui/about.glade:246
 msgid "Icon Designers"
 msgstr "Piktogramdezajnistoj"
 
@@ -2724,7 +2724,7 @@ msgstr "Aranĝo"
 msgid "Left / Right-Handed"
 msgstr "Maldekstramana / dekstramana"
 
-#: ../ui/about.glade:421
+#: ../ui/about.glade:424
 msgid "License"
 msgstr "Permesilo"
 
@@ -2900,7 +2900,7 @@ msgstr "Papera _koloro"
 msgid "Paper _Format"
 msgstr "_Formato"
 
-#: ../ui/about.glade:296
+#: ../ui/about.glade:299
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "Parte surbaze de Xournal\n"
@@ -2974,7 +2974,7 @@ msgstr "Premmultiplikanto: "
 msgid "Pressure Sensitivity"
 msgstr "Premsentemo"
 
-#: ../ui/about.glade:129
+#: ../ui/about.glade:130
 msgid "RELEASE_IDENTIFIER"
 msgstr "RELEASE_IDENTIFIER"
 
@@ -3149,7 +3149,7 @@ msgstr "Piktogramo de malgranda punkto"
 msgid "Snapping"
 msgstr "Alkradigo"
 
-#: ../ui/about.glade:356
+#: ../ui/about.glade:359
 msgid "Source Code / Bug Tracker"
 msgstr "Fontkodo / cimspurilo"
 
@@ -3315,7 +3315,7 @@ msgstr "Ordinare 0 aŭ 1"
 msgid "Velocity based Gaussian weights"
 msgstr "Rapido laŭ Gaŭsaj pondoj"
 
-#: ../ui/about.glade:181
+#: ../ui/about.glade:184
 msgid "Version"
 msgstr "Versio"
 
@@ -3327,7 +3327,7 @@ msgstr "Versio: "
 msgid "View"
 msgstr "Vidi"
 
-#: ../ui/about.glade:328
+#: ../ui/about.glade:331
 msgid "Website"
 msgstr "Retejo"
 
@@ -3359,7 +3359,7 @@ msgstr "Larĝo"
 msgid "Width:"
 msgstr "Larĝo:"
 
-#: ../ui/about.glade:393
+#: ../ui/about.glade:396
 msgid "With help from the community"
 msgstr "Helpataj de la komunumo"
 
@@ -3367,7 +3367,7 @@ msgstr "Helpataj de la komunumo"
 msgid "Wrap text"
 msgstr "Faldi liniojn"
 
-#: ../ui/about.glade:156
+#: ../ui/about.glade:158
 msgid "X.X.X"
 msgstr "X.X.X"
 
@@ -3665,7 +3665,7 @@ msgstr "s <i>(post tiom da daŭro, la tuŝekrano reaktiviĝos)</i>"
 msgid "ver_y thick"
 msgstr "Dike_ga"
 
-#: ../ui/about.glade:141
+#: ../ui/about.glade:143
 msgid "with libgtk"
 msgstr "per libgtk"
 
