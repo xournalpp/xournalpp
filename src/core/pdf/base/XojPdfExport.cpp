@@ -170,11 +170,11 @@ auto XojPdfExport::createPdf(const PageRangeVector& range, bool progressiveMode)
     size_t count = 0;
     for (const auto& e: range) { count += e.last - e.first + 1; }
 
-    if (this->progressListener) {
-        this->progressListener->setMaximumState(count);
+    if (progressListener) {
+        progressListener->setMaximumState(static_cast<int>(count));
     }
 
-    size_t c = 0;
+    count = 0;
     for (const auto& e: range) {
         auto max = std::min(e.last, doc->getPageCount());
         for (size_t i = e.first; i <= max; i++) {
@@ -184,8 +184,9 @@ auto XojPdfExport::createPdf(const PageRangeVector& range, bool progressiveMode)
                 exportPage(i);
             }
 
-            if (this->progressListener) {
-                this->progressListener->setCurrentState(c++);
+            if (progressListener) {
+                progressListener->setCurrentState(static_cast<int>(count));
+                ++count;
             }
         }
     }
@@ -207,9 +208,9 @@ auto XojPdfExport::createPdf(bool progressiveMode) -> bool {
         return false;
     }
 
-    auto count = doc->getPageCount();
-    if (this->progressListener) {
-        this->progressListener->setMaximumState(count);
+    size_t count = doc->getPageCount();
+    if (progressListener) {
+        progressListener->setMaximumState(static_cast<int>(count));
     }
 
     for (decltype(count) i = 0; i < count; i++) {
@@ -219,8 +220,8 @@ auto XojPdfExport::createPdf(bool progressiveMode) -> bool {
             exportPage(i);
         }
 
-        if (this->progressListener) {
-            this->progressListener->setCurrentState(i);
+        if (progressListener) {
+            progressListener->setCurrentState(static_cast<int>(i));
         }
     }
 
