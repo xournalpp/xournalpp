@@ -46,13 +46,13 @@ public:
      * @brief Get the quality criterion of this parameter
      * @return The quality criterion
      */
-    ExportQualityCriterion getQualityCriterion();
+    auto getQualityCriterion() -> ExportQualityCriterion const;
 
     /**
      * @brief Get the target value of this parameter
      * @return The target value
      */
-    int getValue();
+    auto getValue() -> int const;
 
 private:
     /**

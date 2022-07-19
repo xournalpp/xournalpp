@@ -199,9 +199,9 @@ void ImageExport::exportGraphics() {
 
 RasterImageQualityParameter::RasterImageQualityParameter() = default;
 RasterImageQualityParameter::RasterImageQualityParameter(ExportQualityCriterion criterion, int value):
-        qualityCriterion(criterion), value(value) {}
+        qualityCriterion{criterion}, value{value} {}
 RasterImageQualityParameter::~RasterImageQualityParameter() = default;
 
-auto RasterImageQualityParameter::getQualityCriterion() -> ExportQualityCriterion { return qualityCriterion; }
+auto RasterImageQualityParameter::getQualityCriterion() -> ExportQualityCriterion const { return qualityCriterion; }
 
-auto RasterImageQualityParameter::getValue() -> int { return value; }
+auto RasterImageQualityParameter::getValue() -> int const { return value; }
