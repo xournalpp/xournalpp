@@ -39,7 +39,7 @@ ImageExport::~ImageExport() = default;
  * @brief Set a quality level for PNG exports
  * @param qParam A quality parameter for the export
  */
-void ImageExport::setQualityParameter(RasterImageQualityParameter qParam) { this->qualityParameter = qParam; }
+void ImageExport::setQualityParameter(const RasterImageQualityParameter& qParam) { qualityParameter = qParam; }
 
 /**
  * @brief Set a quality level for PNG exports
