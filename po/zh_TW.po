@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-11 08:42\n"
+"POT-Creation-Date: 2022-07-19 07:58+0000\n"
+"PO-Revision-Date: 2022-07-19 08:13\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>遺失必須的使用者界面檔�
 msgid "Add/Edit TeX"
 msgstr "插入/編輯TeX"
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Advanced export options"
 msgstr "進階匯出選項"
 
@@ -361,7 +361,7 @@ msgstr "刪除此頁面"
 msgid "Discard"
 msgstr "丟棄"
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Display advanced export options"
 msgstr "顯示進階輸出選項"
 
@@ -557,11 +557,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "錯誤日誌未能刪除，請手工處理。\n"
 "日誌檔案: {1}"
 
-#: ../src/core/control/XournalMain.cpp:622
+#: ../src/core/control/XournalMain.cpp:626
 msgid "Export FILE as PDF"
 msgstr "匯出為 PDF 檔"
 
-#: ../src/core/control/XournalMain.cpp:624
+#: ../src/core/control/XournalMain.cpp:628
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -577,7 +577,7 @@ msgstr "輸出為PDF"
 msgid "Export as PDF"
 msgstr "匯出成 PDF"
 
-#: ../src/core/control/XournalMain.cpp:638
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -589,7 +589,7 @@ msgstr "漸進式輸出圖層\n"
 "                                 並且將圖層疊漸進式堆疊。\n"
 "                                 最後輸出的 PDF 檔成品可用於現場簡報。\n"
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:633
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -597,7 +597,7 @@ msgstr "無背景輸出\n"
 "                                 取決於所支援的檔案格式，\n"
 "                                 輸出的檔案將會有透明或全白背景。\n"
 
-#: ../src/core/control/XournalMain.cpp:634
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "無格線輸出\n"
@@ -671,7 +671,7 @@ msgstr "下一頁"
 msgid "GNU GPLv2 or later"
 msgstr "GNU 公用授權條款第 2 版或較後版本"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:617
 msgid "Get version of xournalpp"
 msgstr "獲取 xournalpp 版本資訊"
 
@@ -783,7 +783,7 @@ msgstr "等距點陣"
 msgid "Isometric Graph"
 msgstr "等距圖表"
 
-#: ../src/core/control/XournalMain.cpp:609
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Jump to Page (first Page: 1)"
 msgstr "跳到頁面(第一頁:1)"
 
@@ -887,12 +887,12 @@ msgstr "正常繪圖"
 msgid "OK"
 msgstr "確定"
 
-#: ../src/core/control/XournalMain.cpp:649
+#: ../src/core/control/XournalMain.cpp:653
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "只從範圍輸出特定頁面(e.g. \"2-3,5,7-\")\n"
@@ -1223,13 +1223,13 @@ msgstr "置於底層"
 msgid "Separator"
 msgstr "分割線"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "設定PNG輸出的DPI. 預設值是300\n"
 "                                 No effect without -i/--create-img=foo.pn"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1237,7 +1237,7 @@ msgstr "設定PNG輸出頁面的高度\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
 
-#: ../src/core/control/XournalMain.cpp:657
+#: ../src/core/control/XournalMain.cpp:661
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -2053,7 +2053,7 @@ msgstr "<i>通過一些設置，筆劃在開始時會出現偽影。 這可以�
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>您可以配置未被 GTK 識別為觸摸屏的設備，使其表現得像一個設備。</i>"
 
-#: ../ui/about.glade:203
+#: ../ui/about.glade:206
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2121,7 +2121,7 @@ msgstr "音訊錄製"
 msgid "Author: "
 msgstr "作者： "
 
-#: ../ui/about.glade:449
+#: ../ui/about.glade:452
 msgid "Authors"
 msgstr "作者群"
 
@@ -2190,7 +2190,7 @@ msgstr "提升到最上層"
 msgid "Buffersize"
 msgstr "緩衝大小"
 
-#: ../ui/about.glade:99
+#: ../ui/about.glade:100
 msgid "Built on"
 msgstr "基於"
 
@@ -2535,7 +2535,7 @@ msgstr "高斯参数：值越大，線條月穩定，光標到筆劃末端的缺
 msgid "General LaTeX tool settings"
 msgstr "一般 LaTeX 工具設定"
 
-#: ../ui/about.glade:114
+#: ../ui/about.glade:115
 msgid "Git commit"
 msgstr "Git提交"
 
@@ -2615,7 +2615,7 @@ msgid "How short (time)  AND...\n\n"
 msgstr "時間多短和...\n\n"
 "<i>建議: 150ms</i>"
 
-#: ../ui/about.glade:243
+#: ../ui/about.glade:246
 msgid "Icon Designers"
 msgstr "Icon Designer"
 
@@ -2719,7 +2719,7 @@ msgstr "版面"
 msgid "Left / Right-Handed"
 msgstr "左/右-慣用手"
 
-#: ../ui/about.glade:421
+#: ../ui/about.glade:424
 msgid "License"
 msgstr "授權條款"
 
@@ -2895,7 +2895,7 @@ msgstr "紙張顏色(_C)"
 msgid "Paper _Format"
 msgstr "紙張樣式(_F)"
 
-#: ../ui/about.glade:296
+#: ../ui/about.glade:299
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "部分基於 Xournal\n"
@@ -2969,7 +2969,7 @@ msgstr "壓力倍增器 ： "
 msgid "Pressure Sensitivity"
 msgstr "筆壓感應"
 
-#: ../ui/about.glade:129
+#: ../ui/about.glade:130
 msgid "RELEASE_IDENTIFIER"
 msgstr "RELEASE_IDENTIFIER"
 
@@ -3144,7 +3144,7 @@ msgstr "小圖示"
 msgid "Snapping"
 msgstr "對齊"
 
-#: ../ui/about.glade:356
+#: ../ui/about.glade:359
 msgid "Source Code / Bug Tracker"
 msgstr "原始碼 / 錯誤追蹤"
 
@@ -3310,7 +3310,7 @@ msgstr "通常為 0 或 1"
 msgid "Velocity based Gaussian weights"
 msgstr "基於速度的高斯權重"
 
-#: ../ui/about.glade:181
+#: ../ui/about.glade:184
 msgid "Version"
 msgstr "版本"
 
@@ -3322,7 +3322,7 @@ msgstr "版本： "
 msgid "View"
 msgstr "視圖"
 
-#: ../ui/about.glade:328
+#: ../ui/about.glade:331
 msgid "Website"
 msgstr "網站"
 
@@ -3354,7 +3354,7 @@ msgstr "寬度"
 msgid "Width:"
 msgstr "寬度："
 
-#: ../ui/about.glade:393
+#: ../ui/about.glade:396
 msgid "With help from the community"
 msgstr "来自社區的幫忙"
 
@@ -3362,7 +3362,7 @@ msgstr "来自社區的幫忙"
 msgid "Wrap text"
 msgstr "文字折行"
 
-#: ../ui/about.glade:156
+#: ../ui/about.glade:158
 msgid "X.X.X"
 msgstr "X.X.X"
 
@@ -3660,7 +3660,7 @@ msgstr "s <i>(在此之後觸控螢幕將被重新激活)</i>"
 msgid "ver_y thick"
 msgstr "極粗(_y)"
 
-#: ../ui/about.glade:141
+#: ../ui/about.glade:143
 msgid "with libgtk"
 msgstr "使用 libgtk"
 
