@@ -170,7 +170,7 @@ void ImageExport::exportGraphics() {
     bool onePage = ((this->exportRange.size() == 1) && (this->exportRange[0].first == this->exportRange[0].last));
 
     std::vector<char> selectedPages(count, 0);
-    size_t selectedCount = 0;
+    int selectedCount = 0;
     for (PageRangeEntry const& e: this->exportRange) {
         for (size_t x = e.first; x <= e.last; x++) {
             selectedPages[x] = true;
