@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-11 08:36+0000\n"
-"PO-Revision-Date: 2022-07-11 08:42\n"
+"POT-Creation-Date: 2022-07-19 07:58+0000\n"
+"PO-Revision-Date: 2022-07-19 08:13\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -60,7 +60,7 @@ msgstr "<span foreground='red' size='x-large'>Benötigte UI-Datei fehlt:\n"
 msgid "Add/Edit TeX"
 msgstr "LaTeX editieren/hinzufügen"
 
-#: ../src/core/control/XournalMain.cpp:668
+#: ../src/core/control/XournalMain.cpp:672
 msgid "Advanced export options"
 msgstr "Erweiterte Exportoptionen"
 
@@ -363,7 +363,7 @@ msgstr "Diese Seite löschen"
 msgid "Discard"
 msgstr "Verwerfen"
 
-#: ../src/core/control/XournalMain.cpp:669
+#: ../src/core/control/XournalMain.cpp:673
 msgid "Display advanced export options"
 msgstr "Erweiterte Exportoptionen anzeigen"
 
@@ -559,11 +559,11 @@ msgid "Errorlog cannot be deleted. You have to do it manually.\n"
 msgstr "Fehlerlog konnte nicht gelöscht werden. Sie müssen die Datei manuell löschen.\n"
 "Logdatei: {1}"
 
-#: ../src/core/control/XournalMain.cpp:622
+#: ../src/core/control/XournalMain.cpp:626
 msgid "Export FILE as PDF"
 msgstr "Datei als PDF exportieren"
 
-#: ../src/core/control/XournalMain.cpp:624
+#: ../src/core/control/XournalMain.cpp:628
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
@@ -579,7 +579,7 @@ msgstr "Exportieren als PDF"
 msgid "Export as PDF"
 msgstr "Als PDF exportieren"
 
-#: ../src/core/control/XournalMain.cpp:638
+#: ../src/core/control/XournalMain.cpp:642
 msgid "Export layers progressively\n"
 "                                 In PDF export, Render layers progressively one by one.\n"
 "                                 This results in N export pages per page with N layers,\n"
@@ -591,7 +591,7 @@ msgstr "Ebenen schrittweise exportieren\n"
 "                                 was den Ebenenstapel Schritt für Schritt aufbaut.\n"
 "                                 Die entstehende PDF-Datei kann als Präsentation benutzt werden.\n"
 
-#: ../src/core/control/XournalMain.cpp:629
+#: ../src/core/control/XournalMain.cpp:633
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
@@ -599,7 +599,7 @@ msgstr "Exportiere ohne Hintergrund\n"
 "                                 Die exportierte Datei hat einen transparenten oder weißen Hintergrund,\n"
 "                                 abhängig davon, was das jeweilige Dateiformat unterstützt\n"
 
-#: ../src/core/control/XournalMain.cpp:634
+#: ../src/core/control/XournalMain.cpp:638
 msgid "Export without ruling\n"
 "                                 The exported file has no paper ruling\n"
 msgstr "Exportiere ohne Lineatur\n"
@@ -674,7 +674,7 @@ msgstr "Vorwärts"
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 oder neuer"
 
-#: ../src/core/control/XournalMain.cpp:613
+#: ../src/core/control/XournalMain.cpp:617
 msgid "Get version of xournalpp"
 msgstr "Xournalpp-Version erhalten"
 
@@ -786,7 +786,7 @@ msgstr "Isometrische Bepunktung"
 msgid "Isometric Graph"
 msgstr "Isometrischer Graph"
 
-#: ../src/core/control/XournalMain.cpp:609
+#: ../src/core/control/XournalMain.cpp:613
 msgid "Jump to Page (first Page: 1)"
 msgstr "Springe zur Seite (erste Seite: 1)"
 
@@ -890,12 +890,12 @@ msgstr "Normal zeichnen"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/core/control/XournalMain.cpp:649
+#: ../src/core/control/XournalMain.cpp:653
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr ""
 
-#: ../src/core/control/XournalMain.cpp:645
+#: ../src/core/control/XournalMain.cpp:649
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
 msgstr "Exportiere nur die durch den Bereich angegebenen Seiten (z.B. \"2-3,5,7-\")\n"
@@ -1226,13 +1226,13 @@ msgstr "In den Hintergrund"
 msgid "Separator"
 msgstr "Trenner"
 
-#: ../src/core/control/XournalMain.cpp:653
+#: ../src/core/control/XournalMain.cpp:657
 msgid "Set DPI for PNG exports. Default is 300\n"
 "                                 No effect without -i/--create-img=foo.png"
 msgstr "DPI für PNG-Exporte festlegen. Standard ist 300\n"
 "                                 Keine Auswirkung ohne -i/--create-img=foo.png"
 
-#: ../src/core/control/XournalMain.cpp:663
+#: ../src/core/control/XournalMain.cpp:667
 msgid "Set page height for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi or --export-png-width is used"
@@ -1240,7 +1240,7 @@ msgstr "Seitenhöhe für Export von PNG-Dateien festlegen\n"
 "                                 Keine Auswirkung ohne -i/--create-img=foo.png\n"
 "                                 Ignoriert wenn --export-png-dpi oder --export-png-width verwendet wird"
 
-#: ../src/core/control/XournalMain.cpp:657
+#: ../src/core/control/XournalMain.cpp:661
 msgid "Set page width for PNG exports\n"
 "                                 No effect without -i/--create-img=foo.png\n"
 "                                 Ignored if --export-png-dpi is used"
@@ -2056,7 +2056,7 @@ msgstr "<i>Unter Umständen kann der Anfang eines Strichs Artifakte aufweisen. D
 msgid "<i>You can configure devices, not identified by GTK as touchscreen, to behave as if they were one.</i>"
 msgstr "<i>Sie können Geräte, welche durch GTK nicht als Touchscreen identifiziert werden, konfigurieren, sich als solche zu verhalten.</i>"
 
-#: ../ui/about.glade:203
+#: ../ui/about.glade:206
 msgid "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
 "<i>The next generation</i>"
 msgstr "<span size=\"xx-large\" weight=\"bold\">Xournal++</span>\n"
@@ -2124,7 +2124,7 @@ msgstr "Audioaufzeichnung"
 msgid "Author: "
 msgstr "Autor: "
 
-#: ../ui/about.glade:449
+#: ../ui/about.glade:452
 msgid "Authors"
 msgstr "Autoren"
 
@@ -2193,7 +2193,7 @@ msgstr "In den Vordergrund"
 msgid "Buffersize"
 msgstr "Puffergröße"
 
-#: ../ui/about.glade:99
+#: ../ui/about.glade:100
 msgid "Built on"
 msgstr "Kompiliert am"
 
@@ -2538,7 +2538,7 @@ msgstr "Gaußscher Parameter: Je höher, desto stabiler und desto mehr Verzöger
 msgid "General LaTeX tool settings"
 msgstr "Allgemeine LaTeX-Einstellungen"
 
-#: ../ui/about.glade:114
+#: ../ui/about.glade:115
 msgid "Git commit"
 msgstr "Git commit"
 
@@ -2618,7 +2618,7 @@ msgid "How short (time)  AND...\n\n"
 msgstr "Wie kurz (zeitlich)  UND...\n\n"
 "<i>Empfohlen: 150ms</i>"
 
-#: ../ui/about.glade:243
+#: ../ui/about.glade:246
 msgid "Icon Designers"
 msgstr "Icon Designer"
 
@@ -2722,7 +2722,7 @@ msgstr "Layout"
 msgid "Left / Right-Handed"
 msgstr "Links / Rechtshändig"
 
-#: ../ui/about.glade:421
+#: ../ui/about.glade:424
 msgid "License"
 msgstr "Lizenz"
 
@@ -2898,7 +2898,7 @@ msgstr "Seite Hintergrundfarbe"
 msgid "Paper _Format"
 msgstr "Seitenformat"
 
-#: ../ui/about.glade:296
+#: ../ui/about.glade:299
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "Teilweise basierend auf Xournal\n"
@@ -2972,7 +2972,7 @@ msgstr "Druckmultiplikator: "
 msgid "Pressure Sensitivity"
 msgstr "Druckempfindlichkeit"
 
-#: ../ui/about.glade:129
+#: ../ui/about.glade:130
 msgid "RELEASE_IDENTIFIER"
 msgstr "RELEASE_IDENTIFIER"
 
@@ -3147,7 +3147,7 @@ msgstr "Kleines Punkt-Symbol"
 msgid "Snapping"
 msgstr "Raster"
 
-#: ../ui/about.glade:356
+#: ../ui/about.glade:359
 msgid "Source Code / Bug Tracker"
 msgstr "Quellcode / Bug-Tracker"
 
@@ -3313,7 +3313,7 @@ msgstr "Normalerweise 0 oder 1"
 msgid "Velocity based Gaussian weights"
 msgstr "Gaußsche Gewichtung auf Geschwindigkeit"
 
-#: ../ui/about.glade:181
+#: ../ui/about.glade:184
 msgid "Version"
 msgstr "Version"
 
@@ -3325,7 +3325,7 @@ msgstr "Version: "
 msgid "View"
 msgstr "Ansicht"
 
-#: ../ui/about.glade:328
+#: ../ui/about.glade:331
 msgid "Website"
 msgstr "Webseite"
 
@@ -3357,7 +3357,7 @@ msgstr "Breite"
 msgid "Width:"
 msgstr "Breite:"
 
-#: ../ui/about.glade:393
+#: ../ui/about.glade:396
 msgid "With help from the community"
 msgstr "Mit Hilfe der Community"
 
@@ -3365,7 +3365,7 @@ msgstr "Mit Hilfe der Community"
 msgid "Wrap text"
 msgstr ""
 
-#: ../ui/about.glade:156
+#: ../ui/about.glade:158
 msgid "X.X.X"
 msgstr "X.X.X"
 
@@ -3663,7 +3663,7 @@ msgstr "s <i>(nach denen der Touchscreen reaktiviert wird)</i>"
 msgid "ver_y thick"
 msgstr "sehr dick"
 
-#: ../ui/about.glade:141
+#: ../ui/about.glade:143
 msgid "with libgtk"
 msgstr "mit libgtk"
 
