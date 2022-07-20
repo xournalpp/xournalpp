@@ -50,7 +50,7 @@ void ImageExport::setQualityParameter(ExportQualityCriterion criterion, int valu
     this->qualityParameter = RasterImageQualityParameter(criterion, value);
 }
 
-auto ImageExport::createSurface(double width, double height) -> bool {
+auto ImageExport::createCairoCr(double width, double height) -> bool {
     switch (format) {
         case EXPORT_GRAPHICS_PNG:
             switch (qualityParameter.getQualityCriterion()) {
@@ -119,7 +119,7 @@ void ImageExport::exportImagePage(size_t pageId, ExportGraphicsFormat format, Do
     PageRef page = doc->getPage(pageId);
     doc->unlock();
 
-    if (!createSurface(page->getWidth(), page->getHeight())) {
+    if (!createCairoCr(page->getWidth(), page->getHeight())) {
         this->lastError = _("Error save image #1");
         return;
     }

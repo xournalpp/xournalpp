@@ -88,4 +88,14 @@ protected:
      * Filename for export
      */
     fs::path const filePath;
+
+private:
+    /**
+     * @brief Create Cairo cr and surface for a given page
+     * @param width the width of the page being exported
+     * @param height the height of the page being exported
+     *
+     * @return true if surface creation succeeded
+     */
+    virtual auto createCairoCr(double width, double height) -> bool = 0;
 };
