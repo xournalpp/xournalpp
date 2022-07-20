@@ -94,6 +94,8 @@ public:
 
     void endText();
 
+    void endSpline();
+
     bool searchTextOnPage(const std::string& text, size_t* occurrences, double* yOfUpperMostMatch);
 
     bool onKeyPressEvent(GdkEventKey* event);

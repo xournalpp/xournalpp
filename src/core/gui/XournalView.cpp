@@ -430,11 +430,17 @@ void XournalView::pageRelativeXY(int offCol, int offRow) {
 }
 
 
-void XournalView::endTextAllPages(XojPageView* except) {
+void XournalView::endTextAllPages(XojPageView* except) const {
     for (auto v: this->viewPages) {
         if (except != v) {
             v->endText();
         }
+    }
+}
+
+void XournalView::endSplineAllPages() const {
+    for (auto v: this->viewPages) {
+        v->endSpline();
     }
 }
 

@@ -1299,6 +1299,14 @@ auto Control::isInDragAndDropToolbar() -> bool {
 }
 
 void Control::setShapeTool(ActionType type, bool enabled) {
+
+    if (this->toolHandler->getDrawingType() == DRAWING_TYPE_SPLINE && (type != ACTION_TOOL_DRAW_SPLINE || !enabled)) {
+        // Shape changed from spline to something else: finish ongoing splines
+        if (win) {
+            win->getXournal()->endSplineAllPages();
+        }
+    }
+
     if (!enabled) {
         // Disable all entries
         this->toolHandler->setDrawingType(DRAWING_TYPE_DEFAULT);
@@ -1988,6 +1996,11 @@ void Control::toolChanged() {
     if (type != TOOL_TEXT) {
         if (win) {
             win->getXournal()->endTextAllPages();
+        }
+    }
+    if (toolHandler->getDrawingType() != DRAWING_TYPE_SPLINE) {
+        if (win) {
+            win->getXournal()->endSplineAllPages();
         }
     }
 }
