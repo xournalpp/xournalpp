@@ -69,8 +69,9 @@ public:
     void onButtonDoublePressEvent(const PositionInputData& pos, double zoom) override;
     bool onKeyEvent(GdkEventKey* event) override;
 
-private:
     void finalizeSpline();
+
+private:
     void movePoint(double dx, double dy);
     void updateStroke();
     xoj::util::Rectangle<double> computeRepaintRectangle() const;

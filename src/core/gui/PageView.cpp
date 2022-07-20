@@ -318,6 +318,15 @@ static void eraseViewsOf(std::vector<std::unique_ptr<xoj::view::OverlayView>>& v
     assert(hasNoViewOf(views, o));
 }
 
+void XojPageView::endSpline() {
+    if (SplineHandler* h = dynamic_cast<SplineHandler*>(this->inputHandler); h) {
+        h->finalizeSpline();
+        assert(hasNoViewOf(overlayViews, inputHandler));
+        delete this->inputHandler;
+        this->inputHandler = nullptr;
+    }
+}
+
 auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     Control* control = xournal->getControl();
 
@@ -897,6 +906,8 @@ void XojPageView::setSelected(bool selected) {
     if (selected) {
         this->xournal->requestFocus();
         this->xournal->getRepaintHandler()->repaintPageBorder(this);
+    } else {
+        this->endSpline();
     }
 }
 

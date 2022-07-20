@@ -47,14 +47,6 @@ void SplineHandler::draw(cairo_t* cr) {
         return;
     }
 
-    if (control->getToolHandler()->getDrawingType() != DRAWING_TYPE_SPLINE) {
-        g_warning("Drawing type is not spline any longer");
-        this->finalizeSpline();
-        this->knots.clear();
-        this->tangents.clear();
-        return;
-    }
-
     double zoom = control->getZoomControl()->getZoom();
     double radius = RADIUS_WITHOUT_ZOOM / zoom;
     double lineWidth = LINE_WIDTH_WITHOUT_ZOOM / zoom;
@@ -247,8 +239,6 @@ void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
             if (pos.timestamp - SplineHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
                 // spline not being added to layer... delete here.
                 this->finalizeSpline();
-                this->knots.clear();
-                this->tangents.clear();
                 this->userTapped = true;
 
                 SplineHandler::lastStrokeTime = pos.timestamp;
@@ -332,6 +322,9 @@ void SplineHandler::finalizeSpline() {
     this->redrawable->rerenderRect(rect.x, rect.y, rect.width, rect.height);
 
     control->getCursor()->updateCursor();
+
+    this->knots.clear();
+    this->tangents.clear();
 }
 
 void SplineHandler::addKnot(const Point& p) { addKnotWithTangent(p, Point(0, 0)); }
