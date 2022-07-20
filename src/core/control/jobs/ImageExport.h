@@ -92,14 +92,7 @@ public:
     void setQualityParameter(ExportQualityCriterion criterion, int value);
 
 private:
-    /**
-     * @brief Create Cairo surface for a given page
-     * @param width the width of the page being exported
-     * @param height the height of the page being exported
-     *
-     * @return true if surface creation succeeded
-     */
-    auto createSurface(double width, double height) -> bool;
+    auto createCairoCr(double width, double height) -> bool override;
 
     /**
      * @brief Get a filename with a (page) number appended

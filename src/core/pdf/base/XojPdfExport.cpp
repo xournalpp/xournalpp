@@ -37,8 +37,8 @@ XojPdfExport::~XojPdfExport() {
     }
 }
 
-auto XojPdfExport::startPdf() -> bool {
-    surface = cairo_pdf_surface_create(filePath.u8string().c_str(), 0, 0);
+auto XojPdfExport::createCairoCr(double width = 0.0, double height = 0.0) -> bool {
+    surface = cairo_pdf_surface_create(filePath.u8string().c_str(), width, height);
     cr = cairo_create(surface);
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
@@ -160,7 +160,7 @@ auto XojPdfExport::createPdf(const PageRangeVector& range, bool progressiveMode)
         return false;
     }
 
-    if (!startPdf()) {
+    if (!createCairoCr()) {
         this->lastError = _("Failed to initialize PDF Cairo surface");
         this->lastError += "\nCairo error: ";
         this->lastError += cairo_status_to_string(cairo_surface_status(this->surface));
@@ -201,7 +201,7 @@ auto XojPdfExport::createPdf(bool progressiveMode) -> bool {
         return false;
     }
 
-    if (!startPdf()) {
+    if (!createCairoCr()) {
         this->lastError = _("Failed to initialize PDF Cairo surface");
         this->lastError += "\nCairo error: ";
         this->lastError += cairo_status_to_string(cairo_surface_status(this->surface));

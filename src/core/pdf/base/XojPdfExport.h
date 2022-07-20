@@ -36,7 +36,7 @@ public:
     bool createPdf(const PageRangeVector& range, bool progressiveMode);
 
 private:
-    auto startPdf() -> bool;
+    auto createCairoCr(double width, double height) -> bool override;
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
     /**
