@@ -10,6 +10,7 @@
  */
 #pragma once
 
+#include <array>
 #include <iterator>
 
 #include "TypeIfThenElse.h"
@@ -108,13 +109,20 @@ private:
 
 public:
     const_iterator begin() const { return const_iterator(container.begin()); }
-    iterator begin() { return iterator(container.begin()); }
+
+    template <class T = contiguous_container_type, std::enable_if_t<!std::is_const<T>::value, int> = 0>
+    iterator begin() {
+        return iterator(container.begin());
+    }
+
     const_iterator end() const {
         if (container.empty()) {
             return begin();
         }
         return const_iterator(std::prev(container.end()));
     }
+
+    template <class T = contiguous_container_type, std::enable_if_t<!std::is_const<T>::value, int> = 0>
     iterator end() {
         if (container.empty()) {
             return begin();
