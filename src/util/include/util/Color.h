@@ -104,9 +104,11 @@ constexpr auto ColorU16_to_argb(const ColorU16& color) -> Color;
 constexpr auto argb_to_ColorU16(const Color& color) -> ColorU16;
 constexpr auto GdkRGBA_to_ColorU16(const GdkRGBA& color) -> ColorU16;
 
+/// Set the color of a cairo context -- uses alpha as alpha value
+void cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha = 1.0);
 
-void cairo_set_source_rgbi(cairo_t* cr, Color color);
-void cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha);
+/// Set the color of a cairo context -- uses color.alpha as alpha value
+void cairo_set_source_argb(cairo_t* cr, Color color);  // Use color.alpha
 
 constexpr auto floatToUIntColor(double color) -> uint8_t;
 
