@@ -3,20 +3,16 @@
 #include <algorithm>  // for max
 #include <cassert>    // for assert
 #include <cmath>      // for ceil
-#include <iterator>   // for begin, end, next
-#include <vector>     // for vector
 
 #include <glib.h>  // for g_warning
 
-#include "model/LineStyle.h"  // for LineStyle
-#include "model/Point.h"      // for Point, Point::NO_PRESSURE
 #include "model/Stroke.h"     // for Stroke, STROKE_TOOL_HIGHLIGHTER
 #include "util/Color.h"       // for cairo_set_source_rgbi
-#include "util/LoopUtil.h"    // for for_first_then_each
 #include "util/Rectangle.h"   // for Rectangle
 #include "view/View.h"        // for Context, OPACITY_NO_AUDIO, view
 
 #include "ErasableStrokeView.h"  // for ErasableStrokeView
+#include "StrokeViewHelper.h"
 #include "config-debug.h"        // for DEBUG_SHOW_MASK
 #include "filesystem.h"          // for path
 
@@ -26,52 +22,6 @@ using xoj::util::Rectangle;
 using namespace xoj::view;
 
 StrokeView::StrokeView(const Stroke* s): s(s) {}
-
-void StrokeView::pathToCairo(cairo_t* cr) const {
-    for_first_then_each(
-            s->getPointVector(), [cr](auto const& first) { cairo_move_to(cr, first.x, first.y); },
-            [cr](auto const& other) { cairo_line_to(cr, other.x, other.y); });
-}
-
-/**
- * No pressure sensitivity, one line is drawn
- */
-void StrokeView::drawNoPressure(cairo_t* cr) const {
-    cairo_set_line_width(cr, s->getWidth());
-
-    const double* dashes = nullptr;
-    int dashCount = 0;
-    s->getLineStyle().getDashes(dashes, dashCount);
-    assert((dashCount == 0 && dashes == nullptr) || (dashCount != 0 && dashes != nullptr));
-    cairo_set_dash(cr, dashes, dashCount, 0);
-
-    pathToCairo(cr);
-    cairo_stroke(cr);
-}
-
-/**
- * Draw a stroke with pressure, for this multiple lines with different widths needs to be drawn
- */
-void StrokeView::drawWithPressure(cairo_t* cr) const {
-    double dashOffset = 0;
-    const double* dashes = nullptr;
-    int dashCount = 0;
-    s->getLineStyle().getDashes(dashes, dashCount);
-    assert((dashCount == 0 && dashes == nullptr) || (dashCount != 0 && dashes != nullptr));
-
-    for (auto p1i = begin(s->getPointVector()), p2i = std::next(p1i), endi = end(s->getPointVector());
-         p1i != endi && p2i != endi; ++p1i, ++p2i) {
-        auto width = p1i->z != Point::NO_PRESSURE ? p1i->z : s->getWidth();
-        cairo_set_line_width(cr, width);
-        if (dashes) {
-            cairo_set_dash(cr, dashes, dashCount, dashOffset);
-            dashOffset += p1i->lineLengthTo(*p2i);
-        }
-        cairo_move_to(cr, p1i->x, p1i->y);
-        cairo_line_to(cr, p2i->x, p2i->y);
-        cairo_stroke(cr);
-    }
-}
 
 void StrokeView::draw(const Context& ctx) const {
 
@@ -180,7 +130,7 @@ void StrokeView::draw(const Context& ctx) const {
             ErasableStrokeView erasableStrokeView(*erasable);
             erasableStrokeView.drawFilling(cr);
         } else {
-            pathToCairo(cr);
+            StrokeViewHelper::pathToCairo(cr, s->getPointVector());
             cairo_fill(cr);
         }
     }
@@ -213,9 +163,9 @@ void StrokeView::draw(const Context& ctx) const {
         ErasableStrokeView erasableStrokeView(*erasable);
         erasableStrokeView.draw(cr);
     } else if (s->hasPressure() && !highlighter) {
-        drawWithPressure(cr);
+        StrokeViewHelper::drawWithPressure(cr, s->getPointVector(), s->getLineStyle());
     } else {
-        drawNoPressure(cr);
+        StrokeViewHelper::drawNoPressure(cr, s->getPointVector(), s->getWidth(), s->getLineStyle());
     }
 
     if (useMask) {
