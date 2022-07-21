@@ -5,7 +5,7 @@ parameters:
   build_type: 'Debug'
   cmake_flags: ''
   cmake_commands: ''
-  gcc_version: '8'
+  gcc_version: '10'
 steps:
   - bash: |
       mkdir build
