@@ -53,6 +53,12 @@ public:
     void wipe();
 
     /**
+     * @brief Erase part the surface's content
+     * @param rg The part to erase, in Page coordinates
+     */
+    void wipeRange(const Range& rg);
+
+    /**
      * @brief Delete the mask
      */
     void reset();

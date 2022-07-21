@@ -28,7 +28,6 @@
 #include "control/jobs/XournalScheduler.h"          // for XournalScheduler
 #include "control/settings/Settings.h"              // for Settings
 #include "control/tools/ArrowHandler.h"             // for ArrowHandler
-#include "control/tools/BaseShapeHandler.h"         // for BaseShapeHandler
 #include "control/tools/CoordinateSystemHandler.h"  // for CoordinateSystemH...
 #include "control/tools/EditSelection.h"            // for EditSelection
 #include "control/tools/EllipseHandler.h"           // for EllipseHandler
@@ -78,7 +77,6 @@
 #include "view/overlays/PdfElementSelectionView.h"  // for PdfElementSelecti...
 #include "view/overlays/SearchResultView.h"         // for SearchResultView
 #include "view/overlays/SelectionView.h"            // for SelectionView
-#include "view/overlays/ShapeToolView.h"            // for ShapeToolView
 
 #include "PageViewFindObjectHelper.h"  // for SelectObject, Pla...
 #include "RepaintHandler.h"            // for RepaintHandler
@@ -314,6 +312,11 @@ void XojPageView::startText(double x, double y) {
 }
 #endif
 
+static void eraseViewsOf(std::vector<std::unique_ptr<xoj::view::OverlayView>>& views, const OverlayBase* o) {
+    views.erase(std::remove_if(views.begin(), views.end(), [o](auto& v) { return v->isViewOf(o); }), views.end());
+    assert(hasNoViewOf(views, o));
+}
+
 auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     Control* control = xournal->getControl();
 
@@ -342,42 +345,43 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         (h->getToolType() == TOOL_ERASER && h->getEraserType() == ERASER_TYPE_WHITEOUT)) {
 
         if (this->inputHandler) {
-            assert(hasNoViewOf(overlayViews, inputHandler));
+            /**
+             * Due to https://github.com/xournalpp/xournalpp/issues/4377
+             * some devices under some configurations can start an action while another one has already started
+             * This is a workaround to avoid mem leaks and segfaults
+             * This `if` statement can probably be replaced by an `assert` once #4377 is fixed
+             */
+            g_warning("InputHandler already exists upon XojPageView::onButtonPressEvent. Deleting it (and its views)");
+            eraseViewsOf(this->overlayViews, this->inputHandler);
             delete this->inputHandler;
             this->inputHandler = nullptr;
         }
 
-        BaseShapeHandler* shapeHandler = nullptr;
         Control* control = this->xournal->getControl();
         switch (h->getDrawingType()) {
             case DRAWING_TYPE_LINE:
-                shapeHandler = new RulerHandler(control, getPage());
+                this->inputHandler = new RulerHandler(control, getPage());
                 break;
             case DRAWING_TYPE_RECTANGLE:
-                shapeHandler = new RectangleHandler(control, getPage());
+                this->inputHandler = new RectangleHandler(control, getPage());
                 break;
             case DRAWING_TYPE_ELLIPSE:
-                shapeHandler = new EllipseHandler(control, getPage());
+                this->inputHandler = new EllipseHandler(control, getPage());
                 break;
             case DRAWING_TYPE_ARROW:
-                shapeHandler = new ArrowHandler(control, getPage(), false);
+                this->inputHandler = new ArrowHandler(control, getPage(), false);
                 break;
             case DRAWING_TYPE_DOUBLE_ARROW:
-                shapeHandler = new ArrowHandler(control, getPage(), true);
+                this->inputHandler = new ArrowHandler(control, getPage(), true);
                 break;
             case DRAWING_TYPE_COORDINATE_SYSTEM:
-                shapeHandler = new CoordinateSystemHandler(control, getPage());
+                this->inputHandler = new CoordinateSystemHandler(control, getPage());
                 break;
             default:
-                this->inputHandler = new StrokeHandler(control, this, getPage());
+                this->inputHandler = new StrokeHandler(control, getPage());
         }
-        if (shapeHandler) {
-            this->inputHandler = shapeHandler;
-            this->inputHandler->onButtonPressEvent(pos, zoom);
-            this->overlayViews.emplace_back(std::make_unique<xoj::view::ShapeToolView>(shapeHandler, this));
-        } else {
-            this->inputHandler->onButtonPressEvent(pos, zoom);
-        }
+        this->inputHandler->onButtonPressEvent(pos, zoom);
+        this->overlayViews.emplace_back(this->inputHandler->createView(this));
 
     } else if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HIGHLIGHTER) &&
                h->getDrawingType() == DRAWING_TYPE_SPLINE) {
@@ -816,7 +820,10 @@ void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg)
 
 void XojPageView::deleteOverlayView(xoj::view::OverlayView* v, const Range& rg) {
     this->deleteView(v);
-    this->flagDirtyRegion(rg);
+    if (!rg.empty()) {
+        assert(rg.isValid());
+        this->flagDirtyRegion(rg);
+    }
 }
 
 int XojPageView::getDPIScaling() const { return xournal->getDpiScaleFactor(); }
@@ -1172,9 +1179,16 @@ void XojPageView::elementChanged(Element* elem) {
     /*
      * The input handlers issue an elementChanged event when creating an element.
      * There is however no need to redraw the element in this case: the element was already painted to the buffer via a
-     * call to removeToolView
+     * call to drawAndDeleteToolView
+     * There are a couple of exceptions:
+     *  * if the added element is not on the top-most layer, a rerendering is required to draw it under the upper layers
+     *  * if the added element overflows out of the visible part of the page, the ToolView may not have drawn to the
+     *    page buffer the part outside the visible area. Rerendering as well
      */
-    if (!this->inputHandler || elem != this->inputHandler->getStroke()) {
+    const bool noRerender = inputHandler && elem == inputHandler->getStroke() &&
+                            page->getSelectedLayerId() == page->getLayerCount() &&
+                            getVisiblePart().contains(elem->boundingRect());
+    if (!noRerender) {
         rerenderElement(elem);
     }
 }

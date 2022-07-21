@@ -36,11 +36,16 @@ protected:
     Mask createMask(cairo_t* targetCr) const;
 
     /**
+     * @brief Helper function to get a color whose alpha value depends on the tool's properties
+     */
+    static Color strokeColorWithAlpha(const Stroke& s);
+
+    /**
      * @brief All that's required to draw a stroke in cairo
      */
-    cairo_operator_t cairoOp;
-    Color strokeColor;
-    LineStyle lineStyle;
+    const cairo_operator_t cairoOp;
+    const Color strokeColor;
+    const LineStyle lineStyle;
     double strokeWidth;
 };
 };  // namespace xoj::view

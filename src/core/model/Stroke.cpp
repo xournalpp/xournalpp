@@ -242,8 +242,10 @@ auto Stroke::isInSelection(ShapeContainer* container) const -> bool {
 
 void Stroke::addPoint(const Point& p) {
     this->points.emplace_back(p);
-    updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p,
-                 hasPressure() ? p.z / 2.0 : this->width / 2.0);
+    if (sizeCalculated) {
+        updateBounds(Element::x, Element::y, Element::width, Element::height, Element::snappedBounds, p,
+                     hasPressure() ? p.z / 2.0 : this->width / 2.0);
+    }
 }
 
 auto Stroke::getPointCount() const -> int { return this->points.size(); }

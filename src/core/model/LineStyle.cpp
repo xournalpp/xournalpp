@@ -29,6 +29,13 @@ void LineStyle::operator=(const LineStyle& other) {
     setDashes(dashes, dashCount);
 }
 
+#ifndef NDEBUG
+bool LineStyle::operator==(const LineStyle& other) const {
+    return (this->dashes == nullptr && other.dashes == nullptr) ||
+           (this->dashes != nullptr && other.dashes != nullptr &&
+            std::equal(this->dashes, this->dashes + this->dashCount, other.dashes, other.dashes + other.dashCount));
+}
+#endif
 
 void LineStyle::serialize(ObjectOutputStream& out) const {
     out.writeObject("LineStyle");
