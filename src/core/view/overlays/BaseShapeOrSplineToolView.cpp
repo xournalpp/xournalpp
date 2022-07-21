@@ -43,7 +43,8 @@ cairo_t* BaseShapeOrSplineToolView::prepareContext(cairo_t* cr) const {
             // operator is already set by createMask().
         } else {
             // Clear the mask
-            mask.wipe();
+            mask.wipeRange(maskWipeExtent);
+            maskWipeExtent = Range();
         }
         return mask.get();
     } else {
@@ -54,7 +55,6 @@ cairo_t* BaseShapeOrSplineToolView::prepareContext(cairo_t* cr) const {
         const double* dashes = nullptr;
         int dashCount = 0;
         this->lineStyle.getDashes(dashes, dashCount);
-        assert((dashCount == 0 && dashes == nullptr) || (dashCount != 0 && dashes != nullptr));
         cairo_set_dash(cr, dashes, dashCount, 0.0);
         return cr;
     }

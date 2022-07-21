@@ -395,9 +395,12 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     } else if ((h->getToolType() == TOOL_PEN || h->getToolType() == TOOL_HIGHLIGHTER) &&
                h->getDrawingType() == DRAWING_TYPE_SPLINE) {
         if (!this->inputHandler) {
-            this->inputHandler = new SplineHandler(this->xournal->getControl(), this, getPage());
+            this->inputHandler = new SplineHandler(this->xournal->getControl(), getPage());
+            this->inputHandler->onButtonPressEvent(pos, zoom);
+            this->overlayViews.emplace_back(this->inputHandler->createView(this));
+        } else {
+            this->inputHandler->onButtonPressEvent(pos, zoom);
         }
-        this->inputHandler->onButtonPressEvent(pos, zoom);
     } else if (h->getToolType() == TOOL_ERASER) {
         this->eraser->erase(x, y);
         this->inEraser = true;
@@ -622,9 +625,19 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 void XojPageView::onSequenceCancelEvent() {
     if (this->inputHandler) {
         this->inputHandler->onSequenceCancelEvent();
-        assert(hasNoViewOf(overlayViews, inputHandler));
-        delete this->inputHandler;
-        this->inputHandler = nullptr;
+
+        if (auto* h = dynamic_cast<SplineHandler*>(this->inputHandler); h) {
+            // SplineHandler can survive a sequence cancellation
+            if (!h->getStroke()) {
+                assert(hasNoViewOf(overlayViews, inputHandler));
+                delete this->inputHandler;
+                this->inputHandler = nullptr;
+            }
+        } else {
+            assert(hasNoViewOf(overlayViews, inputHandler));
+            delete this->inputHandler;
+            this->inputHandler = nullptr;
+        }
     }
 }
 
@@ -1079,10 +1092,6 @@ auto XojPageView::paintPage(cairo_t* cr, GdkRectangle* rect) -> bool {
 
     if (this->textEditor) {
         this->textEditor->paint(cr, zoom);
-    }
-
-    if (this->inputHandler) {
-        this->inputHandler->draw(cr);
     }
 
     for (const auto& v: this->overlayViews) {
