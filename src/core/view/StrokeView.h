@@ -33,20 +33,6 @@ public:
     void draw(const Context& ctx) const override;
 
 private:
-    inline void pathToCairo(cairo_t* cr) const;
-
-    /**
-     * No pressure sensitivity, one line is drawn
-     */
-    void drawNoPressure(cairo_t* cr) const;
-
-    /**
-     * Draw a stroke with pressure, for this multiple
-     * lines with different widths needs to be drawn
-     */
-    void drawWithPressure(cairo_t* cr) const;
-
-private:
     const Stroke* s;
 
 public:
