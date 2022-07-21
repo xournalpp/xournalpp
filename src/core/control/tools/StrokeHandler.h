@@ -13,7 +13,6 @@
 
 #include <memory>  // for unique_ptr
 
-#include <cairo.h>    // for cairo_t, cairo_surface_t
 #include <gdk/gdk.h>  // for GdkEventKey
 #include <glib.h>     // for guint32
 
@@ -57,8 +56,6 @@ class StrokeHandler: public InputHandler {
 public:
     StrokeHandler(Control* control, const PageRef& page);
     ~StrokeHandler() override;
-
-    void draw(cairo_t*) override {}
 
     void onSequenceCancelEvent() override;
     bool onMotionNotifyEvent(const PositionInputData& pos, double zoom) override;

@@ -12,6 +12,7 @@
 
 #include <cairo.h>
 
+#include "util/Range.h"
 #include "view/Mask.h"
 
 #include "BaseStrokeToolView.h"
@@ -37,6 +38,8 @@ protected:
     // The mask is only for filled highlighter strokes, to avoid artefacts as in
     // https://github.com/xournalpp/xournalpp/issues/3709
     mutable Mask mask;
-    bool needMask;
+    const bool needMask;
+    /// @brief The part of the mask that needs to be wiped to ensure the filling is correctly drawn.
+    mutable Range maskWipeExtent;
 };
 };  // namespace xoj::view

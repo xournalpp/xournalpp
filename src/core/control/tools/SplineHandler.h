@@ -15,27 +15,40 @@
 #include <optional>  // for optional
 #include <vector>    // for vector
 
-#include <cairo.h>    // for cairo_t
 #include <gdk/gdk.h>  // for GdkEventKey
 #include <glib.h>     // for guint32
 
 #include "model/PageRef.h"   // for PageRef
 #include "model/Point.h"     // for Point
-#include "util/Rectangle.h"  // for Rectangle
-#include "view/StrokeView.h"
-#include "view/overlays/OverlayView.h"
+#include "util/Range.h"      // for Range
 
 #include "InputHandler.h"            // for InputHandler
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
 
 class PositionInputData;
-class LegacyRedrawable;
-class XournalView;
+class Control;
+
+namespace xoj::util {
+template <class T>
+class DispatchPool;
+};
 
 namespace xoj::view {
 class OverlayView;
 class Repaintable;
-}  // namespace xoj::view
+class SplineToolView;
+};  // namespace xoj::view
+
+/**
+ * @brief Helper structure for communication with the views
+ */
+struct SplineHandlerData {
+    const std::vector<Point>& knots;
+    const std::vector<Point>& tangents;
+    const Point& currPoint;
+    double knotsAttractionRadius;
+    bool closedSpline;
+};
 
 /**
  * @brief A class to handle splines
@@ -53,14 +66,10 @@ class Repaintable;
 
 class SplineHandler: public InputHandler {
 public:
-    SplineHandler(Control* control, LegacyRedrawable* redrawable, const PageRef& page);
+    SplineHandler(Control* control, const PageRef& page);
     ~SplineHandler() override;
 
-    void draw(cairo_t* cr) override;
-
-    std::unique_ptr<xoj::view::OverlayView> createView(xoj::view::Repaintable* parent) const override {
-        return nullptr;
-    }
+    std::unique_ptr<xoj::view::OverlayView> createView(xoj::view::Repaintable* parent) const override;
 
     void onSequenceCancelEvent() override;
     bool onMotionNotifyEvent(const PositionInputData& pos, double zoom) override;
@@ -71,10 +80,29 @@ public:
 
     void finalizeSpline();
 
+public:
+    const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SplineToolView>>& getViewPool() const;
+
+    using Data = SplineHandlerData;
+    std::optional<Data> getData() const;
+
+    static auto linearizeSpline(const Data& data) -> std::vector<Point>;
+
+    Range computeTotalRepaintRange(const Data& data, double strokeWidth) const;
+
+    Range computeLastSegmentRepaintRange() const;
+
 private:
+    void addKnot(const Point& p);
+    void addKnotWithTangent(const Point& p, const Point& t);
+    void modifyLastTangent(const Point& t);
+    void deleteLastKnotWithTangent();
     void movePoint(double dx, double dy);
-    void updateStroke();
-    xoj::util::Rectangle<double> computeRepaintRectangle() const;
+
+    /**
+     * @brief Clears out the spline and remove the views. Assumes the spline has at most 1 definitive knot
+     */
+    void clearTinySpline();
 
     // to filter out short strokes (usually the user tapping on the page to select it)
     guint32 startStrokeTime{};
@@ -84,22 +112,18 @@ private:
 private:
     std::vector<Point> knots{};
     std::vector<Point> tangents{};
-    std::optional<xoj::view::StrokeView> strokeView;
+    Point currPoint;
+    Point buttonDownPoint;  // never snapped to grid
+    /**
+     * @brief Radius of the knots attractive radius for closing the spline.
+     *      Depends on the zoom level during input events
+     */
+    double knotsAttractionRadius;
 
     bool isButtonPressed = false;
     SnapToGridInputHandler snappingHandler;
 
-    LegacyRedrawable* redrawable;
+    std::shared_ptr<xoj::util::DispatchPool<xoj::view::SplineToolView>> viewPool;
 
-public:
-    void addKnot(const Point& p);
-    void addKnotWithTangent(const Point& p, const Point& t);
-    void modifyLastTangent(const Point& t);
-    void deleteLastKnotWithTangent();
-    size_t getKnotCount() const;
-
-protected:
-    Point currPoint;
-    Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid. See startPoint defined in
-                            // derived classes such as EllipseHandler.
+    static constexpr double KNOTS_ATTRACTION_RADIUS_IN_PIXELS = 10.0;  // for circling the spline's knots
 };

@@ -1,111 +1,44 @@
 #include "SplineHandler.h"
 
 #include <algorithm>  // for max, max_element
+#include <cassert>    // for assert
 #include <cmath>      // for pow, M_PI, cos, sin
 #include <cstddef>    // for size_t
 #include <list>       // for list, operator!=
 #include <memory>     // for allocator_traits<>...
 #include <optional>   // for optional
+#include <utility>    // for move
 
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Escape
 
 #include "control/Control.h"                       // for Control
-#include "control/ToolEnums.h"                     // for DRAWING_TYPE_SPLINE
-#include "control/ToolHandler.h"                   // for ToolHandler
 #include "control/layer/LayerController.h"         // for LayerController
 #include "control/settings/Settings.h"             // for Settings
 #include "control/tools/InputHandler.h"            // for InputHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
-#include "control/zoom/ZoomControl.h"
-#include "gui/LegacyRedrawable.h"                  // for LegacyRedrawable
-#include "gui/XournalView.h"                       // for XournalView
 #include "gui/XournalppCursor.h"                   // for XournalppCursor
 #include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
+#include "model/Document.h"                        // for Document
 #include "model/Layer.h"                           // for Layer
 #include "model/SplineSegment.h"                   // for SplineSegment
 #include "model/Stroke.h"                          // for Stroke
 #include "model/XojPage.h"                         // for XojPage
 #include "undo/InsertUndoAction.h"                 // for InsertUndoAction
 #include "undo/UndoRedoHandler.h"                  // for UndoRedoHandler
-#include "view/StrokeView.h"                       // for StrokeView
-#include "view/View.h"                             // for Context
-
-using xoj::util::Rectangle;
+#include "util/DispatchPool.h"
+#include "view/overlays/SplineToolView.h"
 
 guint32 SplineHandler::lastStrokeTime;  // persist for next stroke
 
-SplineHandler::SplineHandler(Control* control, LegacyRedrawable* redrawable, const PageRef& page):
-        InputHandler(control, page), snappingHandler(control->getSettings()), redrawable(redrawable) {}
+SplineHandler::SplineHandler(Control* control, const PageRef& page):
+        InputHandler(control, page),
+        snappingHandler(control->getSettings()),
+        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::SplineToolView>>()) {}
 
 SplineHandler::~SplineHandler() = default;
 
-constexpr double RADIUS_WITHOUT_ZOOM = 10.0;
-constexpr double LINE_WIDTH_WITHOUT_ZOOM = 2.0;
-
-void SplineHandler::draw(cairo_t* cr) {
-    if (!stroke || this->knots.empty()) {
-        return;
-    }
-
-    double zoom = control->getZoomControl()->getZoom();
-    double radius = RADIUS_WITHOUT_ZOOM / zoom;
-    double lineWidth = LINE_WIDTH_WITHOUT_ZOOM / zoom;
-
-    cairo_set_line_width(cr, lineWidth);
-    const Point& firstKnot = this->knots.front();
-    const Point& lastKnot = this->knots.back();
-    const Point& firstTangent = this->tangents.front();
-    const Point& lastTangent = this->tangents.back();
-    double dist = this->buttonDownPoint.lineLengthTo(firstKnot);
-
-    // draw circles around knot points
-    cairo_set_source_rgb(cr, 0.3, 0.3, 0.3);           // use gray color for all knots except first one
-    for (auto p: knots) {                              // circle all knots, circle around first knot will be redrawn
-        cairo_move_to(cr, p.x + radius, p.y);          // move to start point of circle arc;
-        cairo_arc(cr, p.x, p.y, radius, 0, 2 * M_PI);  // draw circle
-    }
-    cairo_stroke(cr);
-    cairo_set_source_rgb(cr, 1, 0, 0);                             // use red color for first knot
-    cairo_move_to(cr, firstKnot.x + radius, firstKnot.y);          // move to start point of circle arc;
-    cairo_arc(cr, firstKnot.x, firstKnot.y, radius, 0, 2 * M_PI);  // draw circle
-    if (dist<radius&& this->getKnotCount()> 1) {  // current point lies within the circle around the first knot
-        cairo_fill(cr);
-    } else {
-        cairo_stroke(cr);
-    }
-
-    // draw dynamically changing segment
-    cairo_set_source_rgb(cr, 0.3, 0.3, 0.3);  // use gray color
-    const Point& cp1 = Point(lastKnot.x + lastTangent.x, lastKnot.y + lastTangent.y);
-    const Point& cp2 = (dist<radius&& this->getKnotCount()> 1) ?
-                               Point(firstKnot.x - firstTangent.x, firstKnot.y - firstTangent.y) :
-                               this->currPoint;
-    const Point& otherKnot = (dist<radius&& this->getKnotCount()> 1) ? this->buttonDownPoint : this->currPoint;
-    SplineSegment changingSegment = SplineSegment(lastKnot, cp1, cp2, otherKnot);
-    changingSegment.draw(cr);
-
-    // draw dynamically changing tangent
-    cairo_move_to(cr, lastKnot.x - lastTangent.x, lastKnot.y - lastTangent.y);
-    cairo_line_to(cr, lastKnot.x + lastTangent.x, lastKnot.y + lastTangent.y);
-
-    cairo_stroke(cr);
-
-
-    // draw other tangents
-    cairo_set_source_rgb(cr, 0, 1, 0);
-    for (size_t i = 0; i < this->getKnotCount(); i++) {
-        cairo_move_to(cr, this->knots[i].x - this->tangents[i].x,
-                      this->knots[i].y - this->tangents[i].y);  // draw dynamically changing segment
-        cairo_line_to(cr, this->knots[i].x + this->tangents[i].x, this->knots[i].y + this->tangents[i].y);
-    }
-    cairo_stroke(cr);
-
-    // create stroke and draw spline
-    this->updateStroke();
-    if (this->getKnotCount() > 1) {
-        auto context = xoj::view::Context::createDefault(cr);
-        strokeView->draw(context);
-    }
+std::unique_ptr<xoj::view::OverlayView> SplineHandler::createView(xoj::view::Repaintable* parent) const {
+    return std::make_unique<xoj::view::SplineToolView>(this, parent);
 }
 
 constexpr double SHIFT_AMOUNT = 1.0;
@@ -121,41 +54,45 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
         return false;
     }
 
-    Rectangle<double> rect = this->computeRepaintRectangle();
+    assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
+    Range rg = this->computeLastSegmentRepaintRange();
 
     switch (event->keyval) {
         case GDK_KEY_Escape: {
-            this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
             this->finalizeSpline();
             return true;
         }
         case GDK_KEY_BackSpace: {
-            if (!knots.empty()) {
-                this->deleteLastKnotWithTangent();
-                this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
+            if (this->knots.size() == 1) {
+                this->finalizeSpline();
                 return true;
             }
+            this->deleteLastKnotWithTangent();
+            assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
+            const Point& p = this->knots.back();
+            const Point& t = this->tangents.back();
+            rg.addPoint(p.x - t.x, p.y - t.y);  // Ensure the tangent vector gets its color updated
             break;
         }
         case GDK_KEY_Right: {
             this->movePoint(SHIFT_AMOUNT, 0);
-            this->redrawable->repaintRect(rect.x, rect.y, rect.width + SHIFT_AMOUNT, rect.height);
-            return true;
+            rg = rg.unite(this->computeLastSegmentRepaintRange());
+            break;
         }
         case GDK_KEY_Left: {
             this->movePoint(-SHIFT_AMOUNT, 0);
-            this->redrawable->repaintRect(rect.x - SHIFT_AMOUNT, rect.y, rect.width, rect.height);
-            return true;
+            rg = rg.unite(this->computeLastSegmentRepaintRange());
+            break;
         }
         case GDK_KEY_Up: {
             this->movePoint(0, -SHIFT_AMOUNT);
-            this->redrawable->repaintRect(rect.x, rect.y - SHIFT_AMOUNT, rect.width, rect.height + SHIFT_AMOUNT);
-            return true;
+            rg = rg.unite(this->computeLastSegmentRepaintRange());
+            break;
         }
         case GDK_KEY_Down: {
             this->movePoint(0, SHIFT_AMOUNT);
-            this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height + SHIFT_AMOUNT);
-            return true;
+            rg = rg.unite(this->computeLastSegmentRepaintRange());
+            break;
         }
         case GDK_KEY_r:
         case GDK_KEY_R: {  // r like "rotate"
@@ -165,8 +102,8 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
             double xNew = cos(angle * M_PI / 180) * xOld + sin(angle * M_PI / 180) * yOld;
             double yNew = -sin(angle * M_PI / 180) * xOld + cos(angle * M_PI / 180) * yOld;
             this->modifyLastTangent(Point(xNew, yNew));
-            this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
-            return true;
+            rg = rg.unite(this->computeLastSegmentRepaintRange());
+            break;
         }
         case GDK_KEY_s:
         case GDK_KEY_S: {  // s like "scale"
@@ -182,19 +119,27 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
             double xNew = xOld * factor;
             double yNew = yOld * factor;
             this->modifyLastTangent(Point(xNew, yNew));
-            this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
-            return true;
+            rg = rg.unite(this->computeLastSegmentRepaintRange());
+            break;
         }
+        default:
+            return false;
     }
-    return false;
+
+    this->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
+    return true;
 }
 
 auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) -> bool {
-    if (!stroke || this->knots.empty()) {
+    if (!stroke) {
         return false;
     }
 
-    Rectangle<double> rect = this->computeRepaintRectangle();
+    assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
+
+    this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / zoom;
+
+    Range rg = this->computeLastSegmentRepaintRange();
     if (this->isButtonPressed) {
         Point newTangent = Point(pos.x / zoom - this->currPoint.x, pos.y / zoom - this->currPoint.y);
         if (validMotion(newTangent, this->tangents.back())) {
@@ -204,17 +149,30 @@ auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoo
         this->buttonDownPoint = Point(pos.x / zoom, pos.y / zoom);
         this->currPoint = snappingHandler.snap(this->buttonDownPoint, knots.back(), pos.isAltDown());
     }
+    rg = rg.unite(this->computeLastSegmentRepaintRange());
 
-    rect.unite(this->computeRepaintRectangle());
-    this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
-
+    this->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
     return true;
 }
 
-void SplineHandler::onSequenceCancelEvent() { stroke.reset(); }
+void SplineHandler::onSequenceCancelEvent() {
+    //  Touch screen sequence changed from normal to swipe/zoom/scroll sequence
+    isButtonPressed = false;
+    if (!stroke) {
+        return;
+    }
+
+    if (this->knots.size() == 1) {
+        this->clearTinySpline();
+    } else {
+        auto rg = this->computeLastSegmentRepaintRange();
+        this->deleteLastKnotWithTangent();
+        this->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
+    }
+}
 
 void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos, double zoom) {
-    isButtonPressed = false;
+    this->isButtonPressed = false;
 
     if (!stroke) {
         return;
@@ -222,69 +180,71 @@ void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
 
     Settings* settings = control->getSettings();
 
-    if (settings->getStrokeFilterEnabled() && this->getKnotCount() < 2)  // Note: Mostly same as in BaseStrokeHandler
-    {
-        int strokeFilterIgnoreTime = 0, strokeFilterSuccessiveTime = 0;
-        double strokeFilterIgnoreLength = NAN;
+    if (settings->getStrokeFilterEnabled()) {
+        if (this->knots.size() < 2)  // Note: Mostly same as in BaseStrokeHandler
+        {
+            int strokeFilterIgnoreTime = 0, strokeFilterSuccessiveTime = 0;
+            double strokeFilterIgnoreLength = NAN;
 
-        settings->getStrokeFilter(&strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime);
-        double dpmm = settings->getDisplayDpi() / 25.4;
+            settings->getStrokeFilter(&strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime);
+            double dpmm = settings->getDisplayDpi() / 25.4;
 
-        double lengthSqrd = (pow(((pos.x / zoom) - (this->buttonDownPoint.x)), 2) +
-                             pow(((pos.y / zoom) - (this->buttonDownPoint.y)), 2)) *
-                            pow(zoom, 2);
+            double lengthSqrd = (pow(((pos.x / zoom) - (this->buttonDownPoint.x)), 2) +
+                                 pow(((pos.y / zoom) - (this->buttonDownPoint.y)), 2)) *
+                                pow(zoom, 2);
 
-        if (lengthSqrd < pow((strokeFilterIgnoreLength * dpmm), 2) &&
-            pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) {
-            if (pos.timestamp - SplineHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
-                // spline not being added to layer... delete here.
-                this->finalizeSpline();
-                this->userTapped = true;
+            if (lengthSqrd < pow((strokeFilterIgnoreLength * dpmm), 2) &&
+                pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) {
+                if (pos.timestamp - SplineHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
+                    // spline not being added to layer... delete here.
+                    clearTinySpline();
 
-                SplineHandler::lastStrokeTime = pos.timestamp;
+                    this->userTapped = true;
 
-                control->getCursor()->updateCursor();
+                    SplineHandler::lastStrokeTime = pos.timestamp;
 
-                return;
+                    control->getCursor()->updateCursor();
+
+                    return;
+                }
             }
+            SplineHandler::lastStrokeTime = pos.timestamp;
         }
-        SplineHandler::lastStrokeTime = pos.timestamp;
     }
 }
 
 void SplineHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
-    isButtonPressed = true;
-    double radius = RADIUS_WITHOUT_ZOOM / zoom;
-    this->buttonDownPoint = Point(pos.x / zoom, pos.y / zoom);
-    this->currPoint = Point(pos.x / zoom, pos.y / zoom);
+    this->isButtonPressed = true;
 
-    if (!knots.empty()) {
-        this->currPoint = snappingHandler.snap(this->currPoint, knots.back(), pos.isAltDown());
-    } else {
-        this->currPoint = snappingHandler.snapToGrid(this->currPoint, pos.isAltDown());
-    }
+    this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / zoom;
 
     if (!stroke) {
+        // This should only happen right after the SplineHandler's creation, before any views got attached
+        assert(this->viewPool->empty());
+
         stroke = createStroke(this->control);
-        stroke->addPoint(this->currPoint);
-        strokeView.emplace(stroke.get());
+        assert(this->knots.empty() && this->tangents.empty());
+        this->buttonDownPoint = Point(pos.x / zoom, pos.y / zoom);
+        this->currPoint = snappingHandler.snapToGrid(this->buttonDownPoint, pos.isAltDown());
         this->addKnot(this->currPoint);
-        this->redrawable->rerenderRect(this->currPoint.x - radius, this->currPoint.y - radius, 2 * radius, 2 * radius);
     } else {
+        assert(!this->knots.empty());
+        this->buttonDownPoint = Point(pos.x / zoom, pos.y / zoom);
+        this->currPoint = snappingHandler.snap(this->buttonDownPoint, knots.back(), pos.isAltDown());
         double dist = this->buttonDownPoint.lineLengthTo(this->knots.front());
-        if (dist < radius && !this->knots.empty()) {  // now the spline is closed and finalized
+        if (dist < this->knotsAttractionRadius) {  // now the spline is closed and finalized
             this->addKnotWithTangent(this->knots.front(), this->tangents.front());
             this->finalizeSpline();
         } else if (validMotion(currPoint, this->knots.back())) {
             this->addKnot(this->currPoint);
-            this->redrawable->rerenderRect(this->currPoint.x - radius, this->currPoint.y - radius, 2 * radius,
-                                           2 * radius);
+            auto rg = this->computeLastSegmentRepaintRange();
+            this->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
         }
     }
     this->startStrokeTime = pos.timestamp;
 }
 
-void SplineHandler::onButtonDoublePressEvent(const PositionInputData& pos, double zoom) { finalizeSpline(); }
+void SplineHandler::onButtonDoublePressEvent(const PositionInputData&, double) { finalizeSpline(); }
 
 void SplineHandler::movePoint(double dx, double dy) {
     // move last non dynamically changing point
@@ -294,22 +254,29 @@ void SplineHandler::movePoint(double dx, double dy) {
     }
 }
 
+void SplineHandler::clearTinySpline() {
+    auto rg = this->computeLastSegmentRepaintRange();
+    // Clearing the knots ensures the view will not draw anything (thus the repainting will erase everything)
+    this->knots.clear();
+    this->tangents.clear();
+    this->stroke.reset();
+    // Repaints and deletes the views
+    this->viewPool->dispatchAndClear(xoj::view::SplineToolView::FINALIZATION_REQUEST, rg);
+}
+
 void SplineHandler::finalizeSpline() {
-    if (!stroke) {
+    assert(this->stroke);
+
+    auto optData = getData();
+    assert(optData);
+    auto& data = optData.value();
+
+    if (data.knots.size() < 2) {  // This is not a valid spline
+        clearTinySpline();
         return;
     }
 
-    if (this->getKnotCount() < 2) {  // This is not a valid spline
-        Rectangle<double> rect = this->computeRepaintRectangle();
-        stroke.reset();
-        this->redrawable->repaintRect(rect.x, rect.y, rect.width, rect.height);
-
-        return;
-    }
-
-    this->updateStroke();
-    Rectangle<double> rect = this->computeRepaintRectangle();
-
+    stroke->setPointVector(linearizeSpline(data));
     stroke->freeUnusedPointItems();
 
     Layer* layer = page->getSelectedLayer();
@@ -317,14 +284,20 @@ void SplineHandler::finalizeSpline() {
     UndoRedoHandler* undo = control->getUndoRedoHandler();
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 
-    layer->addElement(stroke.release());
+    Document* doc = control->getDocument();
+    doc->lock();
+    layer->addElement(stroke.get());
+    doc->unlock();
 
-    this->redrawable->rerenderRect(rect.x, rect.y, rect.width, rect.height);
+    auto rg = this->computeTotalRepaintRange(data, stroke->getWidth());
+    this->viewPool->dispatchAndClear(xoj::view::SplineToolView::FINALIZATION_REQUEST, rg);
+
+    // Wait until this finishes before releasing `stroke`, so that PageView::elementChanged does not needlessly rerender
+    // the stroke
+    this->page->fireElementChanged(stroke.get());
+    stroke.release();
 
     control->getCursor()->updateCursor();
-
-    this->knots.clear();
-    this->tangents.clear();
 }
 
 void SplineHandler::addKnot(const Point& p) { addKnotWithTangent(p, Point(0, 0)); }
@@ -334,66 +307,107 @@ void SplineHandler::addKnotWithTangent(const Point& p, const Point& t) {
     this->tangents.push_back(t);
 }
 
-void SplineHandler::modifyLastTangent(const Point& t) { this->tangents.back() = t; }
+void SplineHandler::modifyLastTangent(const Point& t) {
+    assert(!this->tangents.empty());
+    this->tangents.back() = t;
+}
 
 void SplineHandler::deleteLastKnotWithTangent() {
-    if (this->getKnotCount() > 1) {
-        this->knots.pop_back();
-        this->tangents.pop_back();
-    }
+    assert(this->knots.size() > 1 && this->knots.size() == this->tangents.size());
+    this->knots.pop_back();
+    this->tangents.pop_back();
 }
 
-auto SplineHandler::getKnotCount() const -> size_t {
-    if (this->knots.size() != this->tangents.size()) {
-        g_warning("number of knots and tangents differ");
-    }
-    return this->knots.size();
-}
-
-void SplineHandler::updateStroke() {
-    if (!stroke) {
-        return;
-    }
-    // create spline segments
-    std::vector<SplineSegment> segments = {};
-    Point cp1, cp2;
-    for (size_t i = 0; i < this->getKnotCount() - 1; i++) {
-        cp1 = Point(this->knots[i].x + this->tangents[i].x, this->knots[i].y + this->tangents[i].y);
-        cp2 = Point(this->knots[i + 1].x - this->tangents[i + 1].x, this->knots[i + 1].y - this->tangents[i + 1].y);
-        segments.push_back(SplineSegment(this->knots[i], cp1, cp2, this->knots[i + 1]));
-    }
-
-    // convert collection of segments to stroke
-    stroke->deletePointsFrom(0);
-    for (auto s: segments) {
-        for (auto p: s.toPointSequence()) { stroke->addPoint(p); }
-    }
-    if (!segments.empty()) {
-        stroke->addPoint(segments.back().secondKnot);
-    }
-}
-
-auto SplineHandler::computeRepaintRectangle() const -> Rectangle<double> {
-    double zoom = control->getZoomControl()->getZoom();  // todo(bhennion) in splitting: remove zoom dependence
-    double radius = RADIUS_WITHOUT_ZOOM / zoom;
+auto SplineHandler::computeTotalRepaintRange(const Data& data, double strokeWidth) const -> Range {
     std::vector<double> xCoords = {};
     std::vector<double> yCoords = {};
-    for (auto p: knots) {
+    for (auto p: data.knots) {
         xCoords.push_back(p.x);
         yCoords.push_back(p.y);
     }
-    for (size_t i = 0; i < this->getKnotCount(); i++) {
-        xCoords.push_back(this->knots[i].x + this->tangents[i].x);
-        xCoords.push_back(this->knots[i].x - this->tangents[i].x);
-        yCoords.push_back(this->knots[i].y + this->tangents[i].y);
-        yCoords.push_back(this->knots[i].y - this->tangents[i].y);
+    for (size_t i = 0; i < data.knots.size(); i++) {
+        xCoords.push_back(data.knots[i].x + data.tangents[i].x);
+        xCoords.push_back(data.knots[i].x - data.tangents[i].x);
+        yCoords.push_back(data.knots[i].y + data.tangents[i].y);
+        yCoords.push_back(data.knots[i].y - data.tangents[i].y);
     }
-    xCoords.push_back(this->currPoint.x);
-    yCoords.push_back(this->currPoint.y);
+    xCoords.push_back(data.currPoint.x);
+    yCoords.push_back(data.currPoint.y);
 
     double minX = *std::min_element(xCoords.begin(), xCoords.end());
     double maxX = *std::max_element(xCoords.begin(), xCoords.end());
     double minY = *std::min_element(yCoords.begin(), yCoords.end());
     double maxY = *std::max_element(yCoords.begin(), yCoords.end());
-    return Rectangle<double>(minX - radius, minY - radius, maxX - minX + 2 * radius, maxY - minY + 2 * radius);
+
+    Range rg(minX, minY, maxX, maxY);
+    rg.addPadding(std::max(data.knotsAttractionRadius, strokeWidth));  // Circles around the knots and the spline width
+    return rg;
+}
+
+Range SplineHandler::computeLastSegmentRepaintRange() const {
+    assert(!this->knots.empty() && this->knots.size() == this->tangents.size());
+
+    Range rg(this->currPoint.x, this->currPoint.y);
+    const Point& p = this->knots.back();
+    const Point& t = this->tangents.back();
+    rg.addPoint(p.x + t.x, p.y + t.y);
+    rg.addPoint(p.x - t.x, p.y - t.y);
+    if (auto n = this->knots.size(); n > 1) {
+        const Point& q = this->knots[n - 2];
+        const Point& s = this->tangents[n - 2];
+        rg.addPoint(q.x + s.x, q.y + s.y);
+        rg.addPoint(q.x, q.y);  // Enough for the last segment.
+    }
+
+    // Ensure the range contains the spline (with its width) and the knots' circles
+    rg.addPadding(std::max(this->knotsAttractionRadius, this->stroke->getWidth()));
+
+    if (const Point& q = this->knots.front(); this->currPoint.lineLengthTo(q) < this->knotsAttractionRadius) {
+        // Make sure the range contains the last spline segment in case the spline is closed.
+        // The last segment has a width fixed in pixels. The appropriate padding to account for this width will be added
+        // on the View side.
+        rg.addPoint(q.x, q.y);
+        const Point& s = this->tangents.front();
+        rg.addPoint(q.x - s.x, q.y - s.y);
+    } else if (this->stroke->getFill() != -1) {
+        // If the stroke is filled, we need to update the filling as well. Changes in the filling happen in the convex
+        // hull of the last segment and the first knot, so adding the first knot to the range is enough at this point.
+        rg.addPoint(q.x, q.y);
+    }
+    return rg;
+}
+
+auto SplineHandler::getViewPool() const -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::SplineToolView>>& {
+    return viewPool;
+}
+
+auto SplineHandler::getData() const -> std::optional<Data> {
+    if (this->knots.empty()) {
+        return std::nullopt;
+    }
+    bool closedSpline = this->knots.size() > 1 &&
+                        this->buttonDownPoint.lineLengthTo(this->knots.front()) < this->knotsAttractionRadius;
+    Data data = {this->knots, this->tangents, this->currPoint, this->knotsAttractionRadius, closedSpline};
+    return data;
+}
+
+auto SplineHandler::linearizeSpline(const SplineHandler::Data& data) -> std::vector<Point> {
+    assert(!data.knots.empty() && data.knots.size() == data.tangents.size());
+
+    std::vector<Point> result;
+
+    auto itKnot1 = data.knots.begin();
+    auto itKnot2 = std::next(itKnot1);
+    auto itTgt1 = data.tangents.begin();
+    auto itTgt2 = std::next(itTgt1);
+    auto end = data.knots.end();
+    for (; itKnot2 != end; ++itKnot1, ++itKnot2, ++itTgt1, ++itTgt2) {
+        SplineSegment seg(*itKnot1, Point(itKnot1->x + itTgt1->x, itKnot1->y + itTgt1->y),
+                          Point(itKnot2->x - itTgt2->x, itKnot2->y - itTgt2->y), *itKnot2);
+        auto pts = seg.toPointSequence();
+        std::move(pts.begin(), pts.end(), std::back_inserter(result));
+    }
+    result.emplace_back(data.knots.back());
+
+    return result;
 }
