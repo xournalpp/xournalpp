@@ -42,13 +42,13 @@ void Util::execInUiThread(std::function<void()>&& callback, gint priority) {
                               new CallbackUiData(std::move(callback)), nullptr);
 }
 
-void Util::cairo_set_source_rgbi(cairo_t* cr, Color color) {
-    auto rgba = rgb_to_GdkRGBA(color);
+void Util::cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha) {
+    auto rgba = argb_to_GdkRGBA(color, alpha);
     gdk_cairo_set_source_rgba(cr, &rgba);
 }
 
-void Util::cairo_set_source_rgbi(cairo_t* cr, Color color, double alpha) {
-    auto rgba = argb_to_GdkRGBA(color, alpha);
+void Util::cairo_set_source_argb(cairo_t* cr, Color color) {
+    auto rgba = argb_to_GdkRGBA(color);
     gdk_cairo_set_source_rgba(cr, &rgba);
 }
 

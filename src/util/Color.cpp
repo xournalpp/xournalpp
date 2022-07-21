@@ -23,8 +23,7 @@ auto Util::rgb_to_hex_string(Color rgb) -> std::string {
     char resultHex[7];
 
     // 06: Pad with zeroes to a length of 6.
-    int status = std::snprintf(resultHex, 7, "%06x", uint32_t(rgb));
-    assert(status > 0);
+    assert(std::snprintf(resultHex, 7, "%06x", uint32_t(rgb)) > 0);
 
     std::stringstream result;
     result << "#" << resultHex;
