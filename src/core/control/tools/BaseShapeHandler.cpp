@@ -206,6 +206,10 @@ void BaseShapeHandler::modifyModifiersByDrawDir(double width, double height, dou
 
 auto BaseShapeHandler::getShape() const -> const std::vector<Point>& { return this->shape; }
 
+auto BaseShapeHandler::createView(xoj::view::Repaintable* parent) const -> std::unique_ptr<xoj::view::OverlayView> {
+    return std::make_unique<xoj::view::ShapeToolView>(this, parent);
+}
+
 auto BaseShapeHandler::getViewPool() const
         -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::ShapeToolView>>& {
     return viewPool;

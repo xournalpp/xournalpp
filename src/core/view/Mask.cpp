@@ -93,6 +93,14 @@ void Mask::wipe() {
     });
 }
 
+void Mask::wipeRange(const Range& rg) {
+    assert(isInitialized());
+    xoj::util::CairoSaveGuard saveGuard(cr.get());
+    cairo_rectangle(cr.get(), rg.minX, rg.minY, rg.getWidth(), rg.getHeight());
+    cairo_clip(cr.get());
+    wipe();
+}
+
 void Mask::reset() { cr.reset(); }
 
 #ifdef DEBUG_MASKS

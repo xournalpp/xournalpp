@@ -34,6 +34,8 @@ class DispatchPool;
 }
 
 namespace xoj::view {
+class OverlayView;
+class Repaintable;
 class ShapeToolView;
 };
 
@@ -55,6 +57,8 @@ public:
     void onButtonPressEvent(const PositionInputData& pos, double zoom) override;
     void onButtonDoublePressEvent(const PositionInputData& pos, double zoom) override;
     bool onKeyEvent(GdkEventKey* event) override;
+
+    std::unique_ptr<xoj::view::OverlayView> createView(xoj::view::Repaintable* parent) const override;
 
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::ShapeToolView>>& getViewPool() const;
 

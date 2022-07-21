@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>    // for unique_ptr
 #include <optional>  // for optional
 #include <vector>    // for vector
 
@@ -22,6 +23,7 @@
 #include "model/Point.h"     // for Point
 #include "util/Rectangle.h"  // for Rectangle
 #include "view/StrokeView.h"
+#include "view/overlays/OverlayView.h"
 
 #include "InputHandler.h"            // for InputHandler
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
@@ -29,6 +31,11 @@
 class PositionInputData;
 class LegacyRedrawable;
 class XournalView;
+
+namespace xoj::view {
+class OverlayView;
+class Repaintable;
+}  // namespace xoj::view
 
 /**
  * @brief A class to handle splines
@@ -50,6 +57,10 @@ public:
     ~SplineHandler() override;
 
     void draw(cairo_t* cr) override;
+
+    std::unique_ptr<xoj::view::OverlayView> createView(xoj::view::Repaintable* parent) const override {
+        return nullptr;
+    }
 
     void onSequenceCancelEvent() override;
     bool onMotionNotifyEvent(const PositionInputData& pos, double zoom) override;

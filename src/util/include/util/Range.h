@@ -41,6 +41,7 @@ public:
     [[nodiscard]] bool empty() const;
     [[nodiscard]] bool isValid() const;
     [[nodiscard]] bool contains(double x, double y) const;
+    [[nodiscard]] bool contains(const xoj::util::Rectangle<double>& r) const;
 
     double minX = std::numeric_limits<double>::max();
     double minY = std::numeric_limits<double>::max();

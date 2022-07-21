@@ -54,3 +54,7 @@ auto Range::empty() const -> bool {
 bool Range::isValid() const { return minX <= maxX && minY <= maxY; }
 
 bool Range::contains(double x, double y) const { return x >= minX && x <= maxX && y >= minY && y <= maxY; }
+
+bool Range::contains(const xoj::util::Rectangle<double>& r) const {
+    return this->minX <= r.x && this->maxX >= r.x + r.width && this->minY <= r.y && this->maxY >= r.y + r.height;
+}
