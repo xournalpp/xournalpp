@@ -31,7 +31,6 @@
 #include "model/Element.h"                      // for Element, ELEMENT_STROKE
 #include "model/PageRef.h"                      // for PageRef
 #include "model/Stroke.h"                       // for Stroke, STROKE_TOOL_E...
-#include "model/StrokeStyle.h"                  // for formatStyle
 #include "model/XojPage.h"                      // for XojPage
 #include "undo/DeleteUndoAction.h"              // for DeleteUndoAction
 #include "undo/UndoRedoHandler.h"               // for UndoRedoHandler
@@ -630,9 +629,7 @@ void XournalView::setSelection(EditSelection* selection) {
     bool canChangeColor = false;
     bool canChangeFill = false;
 
-    bool isLineStyleSameForAll = true;
-    bool isFirstStrokeElement = true;
-    std::string previous_style = "none";
+    bool isLineStyleSameForAll{true};
 
     for (Element* e: selection->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
@@ -644,16 +641,10 @@ void XournalView::setSelection(EditSelection* selection) {
                 canChangeFill = true;
             }
             canChangeSize = true;
+        }
 
-            const LineStyle& lineStyle = s->getLineStyle();
-            const std::string current_style = StrokeStyle::formatStyle(lineStyle);
-            if (isFirstStrokeElement) {
-                previous_style = current_style;
-                isFirstStrokeElement = false;
-            } else {
-                if (current_style != previous_style)
-                    isLineStyleSameForAll = false;
-            }
+        if (canChangeColor && canChangeSize && canChangeFill) {
+            break;
         }
     }
 
