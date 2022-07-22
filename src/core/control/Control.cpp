@@ -1828,6 +1828,15 @@ void Control::toolChanged() {
         toolSizeChanged();
     }
 
+    bool enableLineStyle = toolHandler->hasCapability(TOOL_CAP_LINE_STYLE);
+    fireEnableAction(ACTION_TOOL_LINE_STYLE_PLAIN, enableLineStyle);
+    fireEnableAction(ACTION_TOOL_LINE_STYLE_DASH, enableLineStyle);
+    fireEnableAction(ACTION_TOOL_LINE_STYLE_DASH_DOT, enableLineStyle);
+    fireEnableAction(ACTION_TOOL_LINE_STYLE_DOT, enableLineStyle);
+    if (enableLineStyle) {
+        toolLineStyleChanged();
+    }
+
     bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);
     fireEnableAction(ACTION_TOOL_FILL, enableFill);
     if (enableFill) {
