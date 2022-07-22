@@ -532,15 +532,14 @@ auto ToolHandler::isSinglePageTool() -> bool {
     ToolType toolType = this->getToolType();
     DrawingType drawingType = this->getDrawingType();
 
-    return toolType == (TOOL_PEN && (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_ELLIPSE ||
-                                     drawingType == DRAWING_TYPE_COORDINATE_SYSTEM ||
-                                     drawingType == DRAWING_TYPE_LINE || drawingType == DRAWING_TYPE_RECTANGLE)) ||
-           drawingType == DRAWING_TYPE_SPLINE || toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT ||
-           toolType == TOOL_SELECT_OBJECT || toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE ||
-           toolType == TOOL_DRAW_COORDINATE_SYSTEM || toolType == TOOL_DRAW_ARROW ||
-           toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE;
+    return ((toolType == TOOL_PEN || toolType == TOOL_HIGHLIGHTER) &&
+            (drawingType == DRAWING_TYPE_ARROW || drawingType == DRAWING_TYPE_ELLIPSE ||
+             drawingType == DRAWING_TYPE_COORDINATE_SYSTEM || drawingType == DRAWING_TYPE_LINE ||
+             drawingType == DRAWING_TYPE_RECTANGLE || drawingType == DRAWING_TYPE_SPLINE)) ||
+           toolType == TOOL_SELECT_REGION || toolType == TOOL_SELECT_RECT || toolType == TOOL_SELECT_OBJECT ||
+           toolType == TOOL_DRAW_RECT || toolType == TOOL_DRAW_ELLIPSE || toolType == TOOL_DRAW_COORDINATE_SYSTEM ||
+           toolType == TOOL_DRAW_ARROW || toolType == TOOL_FLOATING_TOOLBOX || toolType == TOOL_DRAW_SPLINE;
 }
-
 
 auto ToolHandler::getSelectedTool(SelectedTool selectedTool) -> Tool* {
     switch (selectedTool) {
