@@ -27,6 +27,8 @@ AudioController::AudioController(Settings* settings, Control* control):
         audioRecorder(std::make_unique<AudioRecorder>(*settings)),
         audioPlayer(std::make_unique<AudioPlayer>(*control, *settings)) {}
 
+AudioController::~AudioController() = default;
+
 
 auto AudioController::startRecording() -> bool {
     if (!this->isRecording()) {
