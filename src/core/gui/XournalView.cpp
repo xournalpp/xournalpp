@@ -630,9 +630,9 @@ void XournalView::setSelection(EditSelection* selection) {
     bool canChangeColor = false;
     bool canChangeFill = false;
 
-    bool isLineStyleSameForAll{true};
-    bool isFirstElement{true};
-    std::string previous_style{"none"};
+    bool isLineStyleSameForAll = true;
+    bool isFirstElement = true;
+    std::string previous_style = "none";
 
     for (Element* e: selection->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
