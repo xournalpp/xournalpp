@@ -532,13 +532,10 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
         t->setCapability(TOOL_CAP_COLOR, setColor);
         t->setCapability(TOOL_CAP_SIZE, setSize);
         t->setCapability(TOOL_CAP_FILL, setFill);
+        t->setCapability(TOOL_CAP_LINE_STYLE, setLineStyle);
         t->setSize(TOOL_SIZE_NONE);
         t->setColor(Color(-1));
         t->setFill(false);
-
-        LineStyle newStyle = t->getLineStyle();
-        newStyle.setClearLineStyle(!setLineStyle);
-        t->setLineStyle(newStyle);
     }
 
     if (this->activeTool->type == TOOL_SELECT_RECT || this->activeTool->type == TOOL_SELECT_REGION ||
