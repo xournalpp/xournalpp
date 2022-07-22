@@ -27,8 +27,6 @@ void LineStyle::operator=(const LineStyle& other) {
 
     other.getDashes(dashes, dashCount);
     setDashes(dashes, dashCount);
-
-    clearLineStyle = other.clearLineStyle;
 }
 
 
@@ -90,8 +88,3 @@ void LineStyle::setDashes(const double* dashes, int dashCount) {
  * @return true if dashed
  */
 auto LineStyle::hasDashes() const -> bool { return this->dashCount > 0; }
-
-
-void LineStyle::setClearLineStyle(bool clearLineStyle) { this->clearLineStyle = clearLineStyle; }
-
-bool LineStyle::getClearLineStyle() const { return clearLineStyle; }

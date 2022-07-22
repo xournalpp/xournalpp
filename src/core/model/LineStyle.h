@@ -51,15 +51,6 @@ public:
      */
     void setDashes(const double* dashes, int dashCount);
 
-    /**
-     * Set flag to clear the LineStyle selection in the toolbar
-     *
-     * @param clearLineStyle true, to clear toolbar LineStyle selection
-     */
-    void setClearLineStyle(bool clearLineStyle);
-
-    bool getClearLineStyle() const;
-
 private:
     /**
      * Dash definition (nullptr for no Dash)
@@ -70,9 +61,4 @@ private:
      * Dash count (0 for no dash)
      */
     int dashCount = 0;
-
-    /**
-     * Flag to clear LineStyle selection
-     */
-    bool clearLineStyle = false;
 };
