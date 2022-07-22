@@ -1992,20 +1992,35 @@ void Control::toolLineStyleChanged() {
     const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
     string style = StrokeStyle::formatStyle(lineStyle);
 
+    bool isLineStyleSameForAll = true;
+	
     if (win) {
         EditSelection* sel = win->getXournal()->getSelection();
         if (sel) {
-            for (Element* e: sel->getElements()) {
-                if (e->getType() == ELEMENT_STROKE) {
-                    auto* s = dynamic_cast<Stroke*>(e);
-                    style = StrokeStyle::formatStyle(s->getLineStyle());
-                    break;
-                }
-            }
+			bool isFirstStrokeElement = true;
+			string previous_style = "none";
+			
+			for (Element* e: sel->getElements()) {
+				if (e->getType() == ELEMENT_STROKE) {
+					auto* s = dynamic_cast<Stroke*>(e);
+					style = StrokeStyle::formatStyle(s->getLineStyle());
+
+					if (isFirstStrokeElement) {
+						previous_style = style;
+						isFirstStrokeElement = false;
+					} else {
+						if (style != previous_style) {
+							isLineStyleSameForAll = false;
+						}
+					}
+				}
+			}
         }
     }
 
-    if (style == "dash") {
+    if (!isLineStyleSameForAll) {
+        fireActionSelected(GROUP_LINE_STYLE, ACTION_NONE);
+    } else if (style == "dash") {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH);
     } else if (style == "dashdot") {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH_DOT);
@@ -2015,7 +2030,6 @@ void Control::toolLineStyleChanged() {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_PLAIN);
     }
 }
-
 
 void Control::toolColorChanged() {
     fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
