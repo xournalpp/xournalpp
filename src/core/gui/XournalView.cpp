@@ -628,8 +628,7 @@ void XournalView::setSelection(EditSelection* selection) {
     bool canChangeSize = false;
     bool canChangeColor = false;
     bool canChangeFill = false;
-
-    bool isLineStyleSameForAll{true};
+    bool canChangeLineStyle = false;
 
     for (Element* e: selection->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
@@ -639,17 +638,17 @@ void XournalView::setSelection(EditSelection* selection) {
             if (s->getToolType() != STROKE_TOOL_ERASER) {
                 canChangeColor = true;
                 canChangeFill = true;
+                canChangeLineStyle = true;
             }
             canChangeSize = true;
         }
 
-        if (canChangeColor && canChangeSize && canChangeFill) {
+        if (canChangeColor && canChangeSize && canChangeFill && canChangeLineStyle) {
             break;
         }
     }
 
-    control->getToolHandler()->setSelectionEditTools(canChangeColor, canChangeSize, canChangeFill,
-                                                     isLineStyleSameForAll);
+    control->getToolHandler()->setSelectionEditTools(canChangeColor, canChangeSize, canChangeFill, canChangeLineStyle);
 
     repaintSelection();
 }
