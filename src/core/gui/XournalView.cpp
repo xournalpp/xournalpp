@@ -631,7 +631,7 @@ void XournalView::setSelection(EditSelection* selection) {
     bool canChangeFill = false;
 
     bool isLineStyleSameForAll = true;
-    bool isFirstElement = true;
+    bool isFirstStrokeElement = true;
     std::string previous_style = "none";
 
     for (Element* e: selection->getElements()) {
@@ -647,9 +647,9 @@ void XournalView::setSelection(EditSelection* selection) {
 
             const LineStyle& lineStyle = s->getLineStyle();
             const std::string current_style = StrokeStyle::formatStyle(lineStyle);
-            if (isFirstElement) {
+            if (isFirstStrokeElement) {
                 previous_style = current_style;
-                isFirstElement = false;
+                isFirstStrokeElement = false;
             } else {
                 if (current_style != previous_style)
                     isLineStyleSameForAll = false;
