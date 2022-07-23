@@ -2021,6 +2021,7 @@ auto getLineStyleOfSelection(const EditSelection* sel) -> std::optional<string> 
     bool isFirstPenStrokeElement = true;
     string previous_style = "pen";
 
+    // Todo(cpp20) Replace with std::ranges::filter_view and for_first_then_for_each
     for (const Element* e: sel->getElements()) {
         if (e->getType() == ELEMENT_STROKE) {
             const auto* s = dynamic_cast<const Stroke*>(e);
