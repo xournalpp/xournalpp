@@ -2966,9 +2966,9 @@ void Control::setLineStyle(const string& style) {
 
     if (sel) {
         undoRedo->addUndoAction(sel->setLineStyle(stl));
+    } else {
+        this->toolHandler->setLineStyle(stl);
     }
-
-    this->toolHandler->setLineStyle(stl);
 }
 
 void Control::setToolSize(ToolSize size) {
