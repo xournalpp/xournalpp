@@ -1997,20 +1997,23 @@ void Control::toolLineStyleChanged() {
     if (win) {
         const EditSelection* sel = win->getXournal()->getSelection();
         if (sel) {
-            bool isFirstStrokeElement = true;
+            bool isFirstPenStrokeElement = true;
             string previous_style = "none";
 
             for (const Element* e: sel->getElements()) {
                 if (e->getType() == ELEMENT_STROKE) {
                     const auto* s = dynamic_cast<const Stroke*>(e);
-                    style = StrokeStyle::formatStyle(s->getLineStyle());
 
-                    if (isFirstStrokeElement) {
-                        previous_style = style;
-                        isFirstStrokeElement = false;
-                    } else {
-                        if (style != previous_style) {
-                            isLineStyleSameForAll = false;
+                    if (s->getToolType() == STROKE_TOOL_PEN) {
+                        style = StrokeStyle::formatStyle(s->getLineStyle());
+
+                        if (isFirstPenStrokeElement) {
+                            previous_style = style;
+                            isFirstPenStrokeElement = false;
+                        } else {
+                            if (style != previous_style) {
+                                isLineStyleSameForAll = false;
+                            }
                         }
                     }
                 }
