@@ -435,3 +435,14 @@ private:
      */
     FullscreenHandler* fullscreenHandler;
 };
+
+/**
+ * @brief Get the line style of pen stroke elements in a selection
+ *
+ * @return If all pen stroke elements have the same line style, the style is
+ * returned.
+ * If there are elements with differing line styles, empty is returned.
+ * If there are no pen stroke elements, "pen" (referring to the style of the pen
+ * tool) is returned.
+ */
+auto getLineStyleOfSelection(const EditSelection* sel) -> std::optional<std::string> const;

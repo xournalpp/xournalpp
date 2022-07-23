@@ -1992,36 +1992,19 @@ void Control::toolLineStyleChanged() {
     const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
     string style = StrokeStyle::formatStyle(lineStyle);
 
-    bool isLineStyleSameForAll = true;
-
+    std::optional<string> styleOfSelection = std::optional(style);
     if (win) {
         const EditSelection* sel = win->getXournal()->getSelection();
+
         if (sel) {
-            bool isFirstPenStrokeElement = true;
-            string previous_style = "none";
-
-            for (const Element* e: sel->getElements()) {
-                if (e->getType() == ELEMENT_STROKE) {
-                    const auto* s = dynamic_cast<const Stroke*>(e);
-
-                    if (s->getToolType() == STROKE_TOOL_PEN) {
-                        style = StrokeStyle::formatStyle(s->getLineStyle());
-
-                        if (isFirstPenStrokeElement) {
-                            previous_style = style;
-                            isFirstPenStrokeElement = false;
-                        } else {
-                            if (style != previous_style) {
-                                isLineStyleSameForAll = false;
-                            }
-                        }
-                    }
-                }
+            styleOfSelection = getLineStyleOfSelection(sel);
+            if (styleOfSelection && styleOfSelection.value() != "pen") {
+                style = styleOfSelection.value();
             }
         }
     }
 
-    if (!isLineStyleSameForAll) {
+    if (!styleOfSelection) {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_NONE);
     } else if (style == "dash") {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH);
@@ -2032,6 +2015,32 @@ void Control::toolLineStyleChanged() {
     } else {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_PLAIN);
     }
+}
+
+auto getLineStyleOfSelection(const EditSelection* sel) -> std::optional<string> const {
+    bool isFirstPenStrokeElement = true;
+    string previous_style = "pen";
+
+    for (const Element* e: sel->getElements()) {
+        if (e->getType() == ELEMENT_STROKE) {
+            const auto* s = dynamic_cast<const Stroke*>(e);
+
+            if (s->getToolType() == STROKE_TOOL_PEN) {
+                const string style = StrokeStyle::formatStyle(s->getLineStyle());
+
+                if (isFirstPenStrokeElement) {
+                    previous_style = style;
+                    isFirstPenStrokeElement = false;
+                } else {
+                    if (style != previous_style) {
+                        return std::nullopt;
+                    }
+                }
+            }
+        }
+    }
+
+    return previous_style;
 }
 
 void Control::toolColorChanged() {
