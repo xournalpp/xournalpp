@@ -129,7 +129,7 @@ void TexImage::rotate(double x0, double y0, double th) {
     // Rotation for TexImages not yet implemented
 }
 
-void TexImage::axisReflect(double x0, double y0, bool x_axis) {
+void TexImage::axisReflect(double x0, double y0, cairo_matrix_t *cmatrix, bool x_axis) {
     // Reflection for TexImages not yet implemented
 }
 

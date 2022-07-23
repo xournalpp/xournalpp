@@ -17,6 +17,7 @@
 #include "model/PageRef.h"  // for PageRef
 
 #include "UndoAction.h"  // for UndoAction
+#include <cairo.h>
 
 
 class Control;
@@ -25,7 +26,7 @@ class Element;
 
 class ReflectUndoAction: public UndoAction {
 public:
-    ReflectUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0, bool x_axis);
+    ReflectUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0, cairo_matrix_t * cmatrix, bool x_axis);
     virtual ~ReflectUndoAction();
 
 public:
@@ -41,5 +42,6 @@ private:
 
     double x0;
     double y0;
+	cairo_matrix_t * cmatrix;
     bool x_axis = true;
 };

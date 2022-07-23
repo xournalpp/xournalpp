@@ -365,9 +365,27 @@ void EditSelection::fillUndoItem(DeleteUndoAction* undo) { this->contents->fillU
 */
 std::unique_ptr<UndoAction> EditSelection::reflectSelection(bool x_axis) 
 	{
-	const Rectangle<double> viewRect = this->getBoundingBoxInView();
-	return this->contents->reflectSelection(this->getRect(), x_axis); 
+		PageRef page = this->view->getPage();
+		Layer* layer = page->getSelectedLayer();
+		this->rotation = snappingHandler.snapAngle(this->rotation, false);
+
+		this->sourcePage = page;
+		this->sourceLayer = layer;
+
+		this->contents->updateContent(this->getRect(), this->snappedBounds, this->rotation, this->aspectRatio, layer, page,
+                                  this->view, this->undo, this->mouseDownType);
+		double zoom = this->view->getXournal()->getZoom();
+    // store rotation matrix for pointer use; the center of the rotation is the center of the bounding box
+		double rx = (this->snappedBounds.x + this->snappedBounds.width / 2) * zoom;
+		double ry = (this->snappedBounds.y + this->snappedBounds.height / 2) * zoom;
+
+		cairo_matrix_init_identity(&this->cmatrix);
+		cairo_matrix_translate(&this->cmatrix, rx, ry);
+		cairo_matrix_rotate(&this->cmatrix, -this->rotation);
+		&this->cmatrix;
+		return this->contents->reflectSelection(this->getRect(), &cmatrix ,x_axis); 
 	}
+
 
 /**
  * Add an element to this selection

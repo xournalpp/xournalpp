@@ -9,7 +9,7 @@
 #include "util/i18n.h"        // for _
 
 
-ReflectUndoAction::ReflectUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0, bool x_axis):
+ReflectUndoAction::ReflectUndoAction(const PageRef& page, std::vector<Element*>* elements, double x0, double y0, cairo_matrix_t * cmatrix, bool x_axis):
         UndoAction("ReflectUndoAction") {
     this->page = page;
     this->elements = *elements;
@@ -42,7 +42,7 @@ void ReflectUndoAction::applyReflection(double x0, double y0, bool x_axis) {
     for (Element* e: this->elements) {
         r.addPoint(e->getX(), e->getY());
         r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
-        e->axisReflect(x0, y0, x_axis);
+        e->axisReflect(x0, y0, cmatrix, x_axis);
         r.addPoint(e->getX(), e->getY());
         r.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
     }

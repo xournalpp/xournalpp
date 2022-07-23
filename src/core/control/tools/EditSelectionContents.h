@@ -85,7 +85,7 @@ public:
      * Computes the reflection with respect to either the horizontal or vertical axis.
      * 
      */
-	std::unique_ptr<UndoAction> reflectSelection(const xoj::util::Rectangle<double>& bounds, bool x_axis);
+	std::unique_ptr<UndoAction> reflectSelection(const xoj::util::Rectangle<double>& bounds, cairo_matrix_t *cmatrix, bool x_axis);
 
 public:
     /**
