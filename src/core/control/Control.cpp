@@ -1993,28 +1993,28 @@ void Control::toolLineStyleChanged() {
     string style = StrokeStyle::formatStyle(lineStyle);
 
     bool isLineStyleSameForAll = true;
-	
-    if (win) {
-        EditSelection* sel = win->getXournal()->getSelection();
-        if (sel) {
-			bool isFirstStrokeElement = true;
-			string previous_style = "none";
-			
-			for (Element* e: sel->getElements()) {
-				if (e->getType() == ELEMENT_STROKE) {
-					auto* s = dynamic_cast<Stroke*>(e);
-					style = StrokeStyle::formatStyle(s->getLineStyle());
 
-					if (isFirstStrokeElement) {
-						previous_style = style;
-						isFirstStrokeElement = false;
-					} else {
-						if (style != previous_style) {
-							isLineStyleSameForAll = false;
-						}
-					}
-				}
-			}
+    if (win) {
+        const EditSelection* sel = win->getXournal()->getSelection();
+        if (sel) {
+            bool isFirstStrokeElement = true;
+            string previous_style = "none";
+
+            for (const Element* e: sel->getElements()) {
+                if (e->getType() == ELEMENT_STROKE) {
+                    const auto* s = dynamic_cast<const Stroke*>(e);
+                    style = StrokeStyle::formatStyle(s->getLineStyle());
+
+                    if (isFirstStrokeElement) {
+                        previous_style = style;
+                        isFirstStrokeElement = false;
+                    } else {
+                        if (style != previous_style) {
+                            isLineStyleSameForAll = false;
+                        }
+                    }
+                }
+            }
         }
     }
 
