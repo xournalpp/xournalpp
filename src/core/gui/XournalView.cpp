@@ -633,11 +633,14 @@ void XournalView::setSelection(EditSelection* selection) {
     for (const Element* e: selection->getElements()) {
         if (e->getType() == ELEMENT_TEXT) {
             canChangeColor = true;
-        } else if (e->getType() == ELEMENT_STROKE) {
+        }
+        if (e->getType() == ELEMENT_STROKE) {
             const auto* s = dynamic_cast<const Stroke*>(e);
             if (s->getToolType() != STROKE_TOOL_ERASER) {
                 canChangeColor = true;
                 canChangeFill = true;
+            }
+            if (s->getToolType() == STROKE_TOOL_PEN) {
                 canChangeLineStyle = true;
             }
             canChangeSize = true;
