@@ -1989,22 +1989,9 @@ void Control::toolFillChanged() {
 }
 
 void Control::toolLineStyleChanged() {
-    const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
-    string style = StrokeStyle::formatStyle(lineStyle);
+    std::optional<string> style = getLineStyleToSelect();
 
-    std::optional<string> styleOfSelection = std::optional(style);
-    if (win) {
-        const EditSelection* sel = win->getXournal()->getSelection();
-
-        if (sel) {
-            styleOfSelection = getLineStyleOfSelection(sel);
-            if (styleOfSelection && styleOfSelection.value() != "pen") {
-                style = styleOfSelection.value();
-            }
-        }
-    }
-
-    if (!styleOfSelection) {
+    if (!style) {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_NONE);
     } else if (style == "dash") {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH);
@@ -2017,9 +2004,21 @@ void Control::toolLineStyleChanged() {
     }
 }
 
-auto getLineStyleOfSelection(const EditSelection* sel) -> std::optional<string> const {
+auto Control::getLineStyleToSelect() -> std::optional<string> const {
+    const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
+    string style = StrokeStyle::formatStyle(lineStyle);
+
+    if (!win) {
+        return style;
+    }
+
+    const EditSelection* sel = win->getXournal()->getSelection();
+    if (!sel) {
+        return style;
+    }
+
     bool isFirstPenStrokeElement = true;
-    string previous_style = "pen";
+    string previous_style = "none";
 
     // Todo(cpp20) Replace with std::ranges::filter_view and for_first_then_for_each
     for (const Element* e: sel->getElements()) {
@@ -2027,7 +2026,7 @@ auto getLineStyleOfSelection(const EditSelection* sel) -> std::optional<string> 
             const auto* s = dynamic_cast<const Stroke*>(e);
 
             if (s->getToolType() == STROKE_TOOL_PEN) {
-                const string style = StrokeStyle::formatStyle(s->getLineStyle());
+                style = StrokeStyle::formatStyle(s->getLineStyle());
 
                 if (isFirstPenStrokeElement) {
                     previous_style = style;
@@ -2041,7 +2040,7 @@ auto getLineStyleOfSelection(const EditSelection* sel) -> std::optional<string> 
         }
     }
 
-    return previous_style;
+    return style;
 }
 
 void Control::toolColorChanged() {
