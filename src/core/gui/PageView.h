@@ -182,6 +182,7 @@ public:  // event handler
     bool onButtonTriplePressEvent(const PositionInputData& pos);
     bool onMotionNotifyEvent(const PositionInputData& pos);
     void onSequenceCancelEvent();
+    void onTapEvent(const PositionInputData& pos);
 
     /**
      * This event fires after onButtonPressEvent and also

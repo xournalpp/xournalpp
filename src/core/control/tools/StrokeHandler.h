@@ -14,7 +14,6 @@
 #include <memory>  // for unique_ptr
 
 #include <gdk/gdk.h>  // for GdkEventKey
-#include <glib.h>     // for guint32
 
 #include "model/PageRef.h"  // for PageRef
 #include "model/Point.h"    // for Point
@@ -90,10 +89,6 @@ protected:
     SnapToGridInputHandler snappingHandler;
 
 private:
-    // to filter out short strokes (usually the user tapping on the page to select it)
-    guint32 startStrokeTime{};
-    static guint32 lastStrokeTime;  // persist across strokes - allow us to not ignore persistent dotting.
-
     /**
      * @brief Pointer to the Stabilizer instance
      */

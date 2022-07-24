@@ -13,7 +13,6 @@
 
 #include "control/Control.h"                       // for Control
 #include "control/layer/LayerController.h"         // for LayerController
-#include "control/settings/Settings.h"             // for Settings
 #include "control/tools/InputHandler.h"            // for InputHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "control/zoom/ZoomControl.h"
@@ -28,8 +27,6 @@
 #include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
 #include "util/DispatchPool.h"
 #include "view/overlays/SplineToolView.h"
-
-guint32 SplineHandler::lastStrokeTime;  // persist for next stroke
 
 SplineHandler::SplineHandler(Control* control, const PageRef& page):
         InputHandler(control, page),
@@ -189,45 +186,6 @@ void SplineHandler::onSequenceCancelEvent() {
 
 void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos, double zoom) {
     this->isButtonPressed = false;
-
-    if (!stroke) {
-        return;
-    }
-
-    Settings* settings = control->getSettings();
-
-    if (settings->getStrokeFilterEnabled()) {
-        if (this->knots.size() < 2)  // Note: Mostly same as in BaseStrokeHandler
-        {
-            int strokeFilterIgnoreTime = 0, strokeFilterSuccessiveTime = 0;
-            double strokeFilterIgnoreLength = NAN;
-
-            settings->getStrokeFilter(&strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime);
-            double dpmm = settings->getDisplayDpi() / 25.4;
-
-            double lengthSqrd = (pow(((pos.x / zoom) - (this->buttonDownPoint.x)), 2) +
-                                 pow(((pos.y / zoom) - (this->buttonDownPoint.y)), 2)) *
-                                pow(zoom, 2);
-
-            if (lengthSqrd < pow((strokeFilterIgnoreLength * dpmm), 2) &&
-                pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) {
-                if (pos.timestamp - SplineHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
-                    // spline not being added to layer... delete here.
-                    clearTinySpline();
-
-                    this->userTapped = true;
-
-                    SplineHandler::lastStrokeTime = pos.timestamp;
-
-                    control->getCursor()->updateCursor();
-
-                    return;
-                }
-            }
-            SplineHandler::lastStrokeTime = pos.timestamp;
-        }
-    }
-
     if (this->inFirstKnotAttractionZone) {
         // The click began in the first knot's attraction zone
         // Finalize the spline if we still are in this zone, cancel the sequence otherwise
@@ -270,7 +228,6 @@ void SplineHandler::onButtonPressEvent(const PositionInputData& pos, double zoom
             this->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
         }
     }
-    this->startStrokeTime = pos.timestamp;
 }
 
 void SplineHandler::onButtonDoublePressEvent(const PositionInputData&, double) { finalizeSpline(); }

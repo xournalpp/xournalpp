@@ -16,7 +16,6 @@
 #include <vector>    // for vector
 
 #include <gdk/gdk.h>  // for GdkEventKey
-#include <glib.h>     // for guint32
 
 #include "control/zoom/ZoomListener.h"
 #include "model/PageRef.h"   // for PageRef
@@ -107,11 +106,6 @@ private:
      * @brief Clears out the spline and remove the views. Assumes the spline has at most 1 definitive knot
      */
     void clearTinySpline();
-
-    // to filter out short strokes (usually the user tapping on the page to select it)
-    guint32 startStrokeTime{};
-    static guint32 lastStrokeTime;  // persist across strokes - allow us to not ignore persistent dotting.
-
 
 private:
     std::vector<Point> knots{};

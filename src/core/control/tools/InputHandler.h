@@ -87,11 +87,6 @@ public:
 
     Stroke* getStroke() const;
 
-    /**
-     * userTapped - experimental feature to take action on filtered draw. See cbDoActionOnStrokeFilter
-     */
-    bool userTapped = false;
-
 protected:
     [[nodiscard]] static std::unique_ptr<Stroke> createStroke(Control* control);
 

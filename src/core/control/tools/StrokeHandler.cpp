@@ -39,8 +39,6 @@
 
 using namespace xoj::util;
 
-guint32 StrokeHandler::lastStrokeTime;  // persist for next stroke
-
 StrokeHandler::StrokeHandler(Control* control, const PageRef& page):
         InputHandler(control, page),
         snappingHandler(control->getSettings()),
@@ -141,40 +139,6 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
      */
     stabilizer->finalizeStroke();
 
-    Settings* settings = control->getSettings();
-
-    if (settings->getStrokeFilterEnabled())  // Note: For shape tools see BaseStrokeHandler which has a slightly
-                                             // different version of this filter. See //!
-    {
-        int strokeFilterIgnoreTime = 0, strokeFilterSuccessiveTime = 0;
-        double strokeFilterIgnoreLength = NAN;
-
-        settings->getStrokeFilter(&strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime);
-        double dpmm = settings->getDisplayDpi() / 25.4;
-
-        double lengthSqrd = (pow(((pos.x / zoom) - (this->buttonDownPoint.x)), 2) +
-                             pow(((pos.y / zoom) - (this->buttonDownPoint.y)), 2)) *
-                            pow(zoom, 2);
-
-        if (lengthSqrd < pow((strokeFilterIgnoreLength * dpmm), 2) &&
-            pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) {
-            if (pos.timestamp - StrokeHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
-                // stroke not being added to layer... delete here but clear first!
-
-                this->viewPool->dispatchAndClear(xoj::view::StrokeToolView::CANCELLATION_REQUEST,
-                                                 Range(this->stroke->boundingRect()));
-                stroke.reset();
-
-                this->userTapped = true;
-
-                StrokeHandler::lastStrokeTime = pos.timestamp;
-
-                return;
-            }
-        }
-        StrokeHandler::lastStrokeTime = pos.timestamp;
-    }
-
     // Backward compatibility and also easier to handle for me;-)
     // I cannot draw a line with one point, to draw a visible line I need two points,
     // twice the same Point is also OK
@@ -196,6 +160,7 @@ void StrokeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
     UndoRedoHandler* undo = control->getUndoRedoHandler();
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 
+    Settings* settings = control->getSettings();
     if (settings->getEmptyLastPageAppend() == EmptyLastPageAppendType::OnDrawOfLastPage) {
         auto* doc = control->getDocument();
         doc->lock();
@@ -303,8 +268,6 @@ void StrokeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom
     stroke->addPoint(Point(this->buttonDownPoint.x, this->buttonDownPoint.y, width));
 
     stabilizer->initialize(this, zoom, pos);
-
-    this->startStrokeTime = pos.timestamp;
 }
 
 void StrokeHandler::onButtonDoublePressEvent(const PositionInputData&, double) {
