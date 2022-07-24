@@ -104,7 +104,7 @@ public:
      *
      * @return Color of active tool
      */
-    Color getColor();
+    Color getColor() const;
 
     /**
      * @brief Get the Fill of the active tool
@@ -112,7 +112,7 @@ public:
      * @return -1 if fill is disabled
      * @return int > 0 otherwise
      */
-    int getFill();
+    int getFill() const;
 
     /**
      * @brief Get the Drawing Type one of selected tools
@@ -120,7 +120,7 @@ public:
      * @param selectedTool by the default the active one
      * @return DrawingType
      */
-    DrawingType getDrawingType(SelectedTool selectedTool = SelectedTool::active);
+    DrawingType getDrawingType(SelectedTool selectedTool = SelectedTool::active) const;
 
     /**
      * @brief Set the Drawing Type of the toolbar selected tool
@@ -144,7 +144,7 @@ public:
      *
      * @return const LineStyle&
      */
-    const LineStyle& getLineStyle();
+    const LineStyle& getLineStyle() const;
 
     /**
      * @brief Get the Size of one of the selected tools
@@ -152,7 +152,7 @@ public:
      * @param selectedTool
      * @return ToolSize
      */
-    ToolSize getSize(SelectedTool selectedTool = SelectedTool::active);
+    ToolSize getSize(SelectedTool selectedTool = SelectedTool::active) const;
 
     /**
      * @brief Set the Size of toolbar selected tool
@@ -176,26 +176,26 @@ public:
      *
      * @return double
      */
-    double getThickness();
+    double getThickness() const;
 
     void setLineStyle(const LineStyle& style);
 
-    ToolSize getPenSize();
-    ToolSize getEraserSize();
-    ToolSize getHighlighterSize();
+    ToolSize getPenSize() const;
+    ToolSize getEraserSize() const;
+    ToolSize getHighlighterSize() const;
     void setPenSize(ToolSize size);
     void setEraserSize(ToolSize size);
     void setHighlighterSize(ToolSize size);
 
     void setPenFillEnabled(bool fill, bool fireEvent = true);
-    bool getPenFillEnabled();
+    bool getPenFillEnabled() const;
     void setPenFill(int alpha);
-    int getPenFill();
+    int getPenFill() const;
 
     void setHighlighterFillEnabled(bool fill, bool fireEvent = true);
-    bool getHighlighterFillEnabled();
+    bool getHighlighterFillEnabled() const;
     void setHighlighterFill(int alpha);
-    int getHighlighterFill();
+    int getHighlighterFill() const;
 
     /**
      * @brief Set the toolbar selected tool to the type
@@ -211,13 +211,13 @@ public:
      *
      * @return ToolType
      */
-    ToolType getToolType();
+    ToolType getToolType() const;
 
     /**
      * @brief Update the Toolbar and the cursor based on the active Tool
      *
      */
-    void fireToolChanged();
+    void fireToolChanged() const;
 
     /**
      * @brief Listen for tool changes.
@@ -236,7 +236,7 @@ public:
      * @param type
      * @return Tool&
      */
-    Tool& getTool(ToolType type);
+    Tool& getTool(ToolType type) const;
 
     /**
      * @brief Set the Eraser Type of the Eraser in the toolbar
@@ -264,7 +264,7 @@ public:
      * @param selectedTool
      * @return EraserType
      */
-    EraserType getEraserType();
+    EraserType getEraserType() const;
 
     /**
      * @brief Update the toolbar based on the Eraser type of the active tool
@@ -280,7 +280,7 @@ public:
      * @return true if tool has the capability
      * @return false if tool does not have the capability
      */
-    bool hasCapability(ToolCapabilities cap, SelectedTool selectedTool = SelectedTool::active);
+    bool hasCapability(ToolCapabilities cap, SelectedTool selectedTool = SelectedTool::active) const;
 
     /**
      * @brief Check whether the active tool is a Drawing tool.
@@ -293,9 +293,9 @@ public:
      * @return true if active tool is a drawing tool
      * @return false if active tool is no drawing tool
      */
-    bool isDrawingTool();
+    bool isDrawingTool() const;
 
-    void saveSettings();
+    void saveSettings() const;
     void loadSettings();
 
     /**
@@ -321,14 +321,14 @@ public:
      */
     void setSelectionEditTools(bool setColor, bool setSize, bool setFill, bool setLineStyle);
 
-    const double* getToolThickness(ToolType type);
+    const double* getToolThickness(ToolType type) const;
 
     /**
      * Returns whether the current tool will create an element that may only reside on a single page even when the
      * pointer moves to another
      * @return
      */
-    bool isSinglePageTool();
+    bool isSinglePageTool() const;
 
 protected:
     void initTools();
@@ -342,7 +342,7 @@ private:
      * @param button
      * @return Tool*
      */
-    Tool* getButtonTool(Button button);
+    Tool* getButtonTool(Button button) const;
 
     /**
      * @brief Get the Selected Tool pointer based on enum
@@ -350,7 +350,7 @@ private:
      * @param selectedTool
      * @return Tool*
      */
-    Tool* getSelectedTool(SelectedTool selectedTool);
+    Tool* getSelectedTool(SelectedTool selectedTool) const;
 
     // active Tool which is used for drawing
     Tool* activeTool = nullptr;
