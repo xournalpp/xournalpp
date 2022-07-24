@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-19 07:58+0000\n"
-"PO-Revision-Date: 2022-07-19 08:13\n"
+"PO-Revision-Date: 2022-07-24 13:19\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -409,7 +409,7 @@ msgstr "Marraztu gezia"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Marraztu gezi bikoitza"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:132
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -461,19 +461,19 @@ msgstr "Editatu testua"
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
+msgstr "ElementRange::parse(): elementuen indizeak 1etik hasten dira"
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): emandako elementu-indizea kopuru maximoa baino handiagoa da."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): tarteen mugek goranzko ordenan egon behar dute."
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): elementu-barruti baliogabea."
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -535,7 +535,7 @@ msgstr "Errorea automatikoki gordetzean: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Errore bat gertatu da pdf-aren atzeko planoa esportatzean: ezin dut aurkitu pdf orrialdearen zenbakia "
 
 #: ../src/util/Util.cpp:78
 msgid "Error {1} executing system command: {2}"
@@ -616,11 +616,11 @@ msgstr "Akats bat gertatu da Cairo PDF orriaren azalera abiaraztean"
 
 #: ../src/core/control/tools/ImageHandler.cpp:71
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Ezin izan da irudia kargatu, ezin izan da zehaztu irudiaren tamaina!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "Ezin izan da ireki zip artxiboko content.xml: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -628,7 +628,7 @@ msgstr "Huts egin du aztertzen LaTex-en komando sortzailea: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "Ezin izan da analizatu LaTeX sorgailuaren bidea: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
