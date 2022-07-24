@@ -337,6 +337,12 @@ public:
      */
     bool isSinglePageTool() const;
 
+    /**
+     * @brief Whether the tool supports short taps filtering (for floating toolbox or selection)
+     * see Preferences->Drawing Area->Action on Tool tap
+     */
+    bool supportsTapFilter() const;
+
 protected:
     void initTools();
 

@@ -81,6 +81,9 @@ void PenInputHandler::handleScrollEvent(InputEvent const& event) {
 auto PenInputHandler::actionStart(InputEvent const& event) -> bool {
     this->inputContext->focusWidget();
 
+    this->lastActionStartTimeStamp = event.timestamp;
+    this->sequenceStartPosition = {event.absoluteX, event.absoluteY};
+
     XojPageView* currentPage = this->getPageAtCurrentPosition(event);
     // set reference data for handling of entering/leaving page
     this->updateLastEvent(event);
@@ -328,6 +331,40 @@ auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
     ToolHandler* toolHandler = inputContext->getToolHandler();
 
     cursor->setMouseDown(false);
+
+    if (toolHandler->supportsTapFilter()) {
+        auto* settings = inputContext->getSettings();
+        if (settings->getStrokeFilterEnabled()) {
+            int tapMaxDuration = 0, filterRepetitionTime = 0;
+            double tapMaxDistance = NAN;  // in mm
+
+            settings->getStrokeFilter(&tapMaxDuration, &tapMaxDistance, &filterRepetitionTime);
+
+            const double dpmm = settings->getDisplayDpi() / 25.4;
+            const double dist = std::hypot(this->sequenceStartPosition.x - event.absoluteX,
+                                           this->sequenceStartPosition.y - event.absoluteY);
+
+            const bool noMovement = dist < tapMaxDistance * dpmm;
+            const bool fastEnoughTap = event.timestamp - this->lastActionStartTimeStamp < tapMaxDuration;
+            const bool notAnAftershock = event.timestamp - this->lastActionEndTimeStamp > filterRepetitionTime;
+
+            if (noMovement && fastEnoughTap && notAnAftershock) {
+                // Cancel the sequence and trigger the necessary action
+                XojPageView* pageUnderTap =
+                        this->sequenceStartPage ? this->sequenceStartPage : getPageAtCurrentPosition(event);
+                if (pageUnderTap) {
+                    pageUnderTap->onSequenceCancelEvent();
+                    PositionInputData pos = getInputDataRelativeToCurrentPage(pageUnderTap, event);
+                    pageUnderTap->onTapEvent(pos);
+                }
+                this->sequenceStartPage = nullptr;
+                this->inputRunning = false;
+                this->lastActionEndTimeStamp = event.timestamp;
+                return false;
+            }
+        }
+    }
+    this->lastActionEndTimeStamp = event.timestamp;
 
     EditSelection* sel = xournal->view->getSelection();
     if (sel) {

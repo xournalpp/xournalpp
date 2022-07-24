@@ -12,6 +12,7 @@
 #pragma once
 
 #include "gui/inputdevices/InputEvents.h"  // for InputEvent
+#include "util/Point.h"
 
 #include "AbstractInputHandler.h"  // for AbstractInputHandler
 
@@ -71,6 +72,13 @@ protected:
      * Page a selection started at as we require this for motion updates
      */
     XojPageView* sequenceStartPage = nullptr;
+
+    /**
+     * For tap event filtering. See Preferences->Drawing Area->Action on Tool Tap
+     */
+    guint32 lastActionEndTimeStamp = 0U;
+    guint32 lastActionStartTimeStamp = 0U;
+    utl::Point<double> sequenceStartPosition;
 
 public:
     explicit PenInputHandler(InputContext* inputContext);

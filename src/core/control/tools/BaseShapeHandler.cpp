@@ -22,8 +22,6 @@
 #include "util/DispatchPool.h"                     // for DispatchPool
 #include "view/overlays/ShapeToolView.h"           // for ShapeToolView
 
-guint32 BaseShapeHandler::lastStrokeTime;  // persist for next stroke
-
 
 BaseShapeHandler::BaseShapeHandler(Control* control, const PageRef& page, bool flipShift, bool flipControl):
         InputHandler(control, page),
@@ -100,39 +98,6 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
         return;
     }
 
-    Settings* settings = control->getSettings();
-
-    if (settings->getStrokeFilterEnabled())  // Note: For simple strokes see StrokeHandler which has a slightly
-                                             // different version of this filter.  See //!
-    {
-        int strokeFilterIgnoreTime = 0, strokeFilterSuccessiveTime = 0;
-        double strokeFilterIgnoreLength = NAN;
-
-        settings->getStrokeFilter(&strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime);
-        double dpmm = settings->getDisplayDpi() / 25.4;
-
-        double lengthSqrd = (pow(((pos.x / zoom) - (this->buttonDownPoint.x)), 2) +
-                             pow(((pos.y / zoom) - (this->buttonDownPoint.y)), 2)) *
-                            pow(zoom, 2);
-
-        if (lengthSqrd < pow((strokeFilterIgnoreLength * dpmm), 2) &&
-            pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) {
-            if (pos.timestamp - BaseShapeHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
-                // stroke not being added to layer... delete here.
-                this->cancelStroke();
-
-                this->userTapped = true;
-
-                BaseShapeHandler::lastStrokeTime = pos.timestamp;
-
-                control->getCursor()->updateCursor();
-
-                return;
-            }
-        }
-        BaseShapeHandler::lastStrokeTime = pos.timestamp;
-    }
-
     Layer* layer = page->getSelectedLayer();
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
@@ -160,7 +125,6 @@ void BaseShapeHandler::onButtonPressEvent(const PositionInputData& pos, double z
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
 
-    this->startStrokeTime = pos.timestamp;
     this->startPoint = snappingHandler.snapToGrid(this->buttonDownPoint, pos.isAltDown());
     this->currPoint = this->startPoint;
 

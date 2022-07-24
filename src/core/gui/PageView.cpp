@@ -662,6 +662,41 @@ void XojPageView::onSequenceCancelEvent() {
     }
 }
 
+void XojPageView::onTapEvent(const PositionInputData& pos) {
+    if (this->inputHandler) {
+        /*
+         * We only want tap events to trigger special actions if no tool is currently under use
+         * (e.g. a spline is currently under edition)
+         * Feed the event to the InputHandler as a click
+         */
+        const double zoom = getZoom();
+        this->inputHandler->onButtonPressEvent(pos, zoom);
+        this->inputHandler->onButtonReleaseEvent(pos, zoom);
+        if (!this->inputHandler->getStroke()) {
+            // The InputHandler finalized its edition
+            assert(hasNoViewOf(overlayViews, inputHandler));
+            delete this->inputHandler;
+            this->inputHandler = nullptr;
+        }
+        return;
+    }
+
+    auto* settings = xournal->getControl()->getSettings();
+    bool doAction = settings->getDoActionOnStrokeFiltered();
+    if (settings->getTrySelectOnStrokeFiltered()) {
+        double zoom = xournal->getZoom();
+        SelectObject select(this);
+        if (select.at(pos.x / zoom, pos.y / zoom)) {
+            doAction = false;  // selection made.. no action.
+        }
+    }
+
+    if (doAction)  // pop up a menu
+    {
+        this->showFloatingToolbox(pos);
+    }
+}
+
 auto XojPageView::showPdfToolbox(const PositionInputData& pos) -> void {
     // Compute coords of the canvas relative to the application window origin.
     gint wx = 0, wy = 0;
@@ -691,21 +726,6 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
     if (this->inputHandler) {
         double zoom = xournal->getZoom();
         this->inputHandler->onButtonReleaseEvent(pos, zoom);
-
-        if (this->inputHandler->userTapped) {
-            bool doAction = control->getSettings()->getDoActionOnStrokeFiltered();
-            if (control->getSettings()->getTrySelectOnStrokeFiltered()) {
-                SelectObject select(this);
-                if (select.at(pos.x / zoom, pos.y / zoom)) {
-                    doAction = false;  // selection made.. no action.
-                }
-            }
-
-            if (doAction)  // pop up a menu
-            {
-                this->showFloatingToolbox(pos);
-            }
-        }
 
         ToolHandler* h = control->getToolHandler();
         bool isDrawingTypeSpline = h->getDrawingType() == DRAWING_TYPE_SPLINE;
