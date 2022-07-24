@@ -631,24 +631,33 @@ void XournalView::setSelection(EditSelection* selection) {
     bool canChangeLineStyle = false;
 
     for (const Element* e: selection->getElements()) {
-        if (e->getType() == ELEMENT_TEXT) {
-            canChangeColor = true;
-        }
-        if (e->getType() == ELEMENT_STROKE) {
-            const auto* s = dynamic_cast<const Stroke*>(e);
-            if (s->getToolType() != STROKE_TOOL_ERASER) {
+        switch (e->getType()) {
+            case ELEMENT_TEXT:
                 canChangeColor = true;
-                canChangeFill = true;
+                continue;
+            case ELEMENT_STROKE: {
+                canChangeSize = true;
+
+                const auto* s = dynamic_cast<const Stroke*>(e);
+                if (s->getToolType() == STROKE_TOOL_PEN) {
+                    // can change everything, leave loop with break
+                    canChangeColor = true;
+                    canChangeFill = true;
+                    canChangeLineStyle = true;
+                    break;
+                }
+                if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+                    canChangeColor = true;
+                    canChangeFill = true;
+                }
+                continue;
             }
-            if (s->getToolType() == STROKE_TOOL_PEN) {
-                canChangeLineStyle = true;
-            }
-            canChangeSize = true;
+            default:
+                continue;
         }
 
-        if (canChangeColor && canChangeSize && canChangeFill && canChangeLineStyle) {
-            break;
-        }
+        // leave loop
+        break;
     }
 
     control->getToolHandler()->setSelectionEditTools(canChangeColor, canChangeSize, canChangeFill, canChangeLineStyle);
