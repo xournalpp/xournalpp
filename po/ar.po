@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-19 07:58+0000\n"
-"PO-Revision-Date: 2022-07-19 08:13\n"
+"PO-Revision-Date: 2022-07-25 00:53\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -1846,7 +1846,7 @@ msgstr "(ملاحظة: جميع المتغيرات تتكون من حرفين: �
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(يتطلب إعادة التشغيل)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2229,7 +2229,7 @@ msgstr "مسح الصفحات المخزنة في الذاكرة أثناء ال
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "اللون"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2417,7 +2417,7 @@ msgstr "تحرير (لم تتم برمجته بعد)"
 
 #: ../ui/latexSettings.glade:574
 msgid "Editor settings"
-msgstr ""
+msgstr "إعدادات المحرر"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
@@ -2522,7 +2522,7 @@ msgstr "ترحيل الصفحة الأولى "
 
 #: ../ui/latexSettings.glade:517
 msgid "Font: "
-msgstr ""
+msgstr "الخط: "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
