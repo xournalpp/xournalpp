@@ -110,27 +110,42 @@ void StrokeView::draw(const Context& ctx) const {
          */
 
         /**
-         * We need to rescale the mask according to the scaling ratio of the target cairo context.
-         * We find out this scaling by looking at the transformation matrix
+         * The mask needs to have to right resolution: the number of pixels per page coordinate units.
+         *
+         * This value can be recovered from the given canvas: the mask must have the exact same resolution as the canvas
+         * This resolution combines both the surface scale and the transformation matrix zoom ratio.
          */
-        cairo_matrix_t matrix;
-        cairo_get_matrix(ctx.cr, &matrix);
-        // We assume the matrix is diagonal (i.e. only scaling, no rotation)
-        assert(matrix.xy == 0 && matrix.yx == 0);
+        double scaleX;
+        double scaleY;
+        cairo_surface_get_device_scale(cairo_get_target(ctx.cr), &scaleX, &scaleY);
+
+        {  // Multiply the scale using the transformation matrix
+            cairo_matrix_t matrix;
+            cairo_get_matrix(ctx.cr, &matrix);
+            // We assume the matrix is diagonal (i.e. only scaling, no rotation)
+            assert(matrix.xy == 0 && matrix.yx == 0);
+
+            scaleX *= matrix.xx;
+            scaleY *= matrix.yy;
+        }
 
         /**
          * Create a surface tailored to the stroke's bounding box
          */
         Rectangle<double> box = s->boundingRect();
 
-        const int width = static_cast<int>(std::ceil(box.width * matrix.xx));
-        const int height = static_cast<int>(std::ceil(box.height * matrix.yy));
+        // Use integral offsets to avoid unnecessary antialiasing upon blitting the mask
+        const double offsetX = -std::floor(box.x * scaleX);
+        const double offsetY = -std::floor(box.y * scaleY);
+
+        const int width = static_cast<int>(std::ceil((box.x + box.width) * scaleX) + offsetX);
+        const int height = static_cast<int>(std::ceil((box.y + box.height) * scaleY) + offsetY);
 
         surfMask = cairo_image_surface_create(CAIRO_FORMAT_A8, width, height);
 
         // Apply offset and scaling
-        cairo_surface_set_device_offset(surfMask, -box.x * matrix.xx, -box.y * matrix.yy);
-        cairo_surface_set_device_scale(surfMask, matrix.xx, matrix.yy);
+        cairo_surface_set_device_offset(surfMask, offsetX, offsetY);
+        cairo_surface_set_device_scale(surfMask, scaleX, scaleY);
 
         // Get a context to draw on our mask
         cr = cairo_create(surfMask);
