@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-19 07:58+0000\n"
-"PO-Revision-Date: 2022-07-19 08:13\n"
+"PO-Revision-Date: 2022-07-26 07:54\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -26,12 +26,13 @@ msgstr "\n\n"
 #: ../src/core/control/jobs/BaseExportJob.cpp:53
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"Vols continuar?"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
 msgid " of {1}"
-msgstr ""
+msgstr " de {1}"
 
 #: ../src/core/control/settings/Settings.cpp:139
 msgid "%F-Note-%H-%M"
@@ -57,7 +58,7 @@ msgstr "<span foreground='red' size='x-large'>Falta el  arxiu de IU necessari:\n
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:465
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Afegir/Editar TeX"
 
 #: ../src/core/control/XournalMain.cpp:672
 msgid "Advanced export options"
@@ -117,7 +118,8 @@ msgstr "Atribut de color no definit!"
 #: ../src/core/control/AudioController.cpp:116
 msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
-msgstr ""
+msgstr "No s'ha configurat una carpeta d'àudio o aquesta és invàlida! La gravació no funcionarà!\n"
+"Si us plau, configureu la carpeta d'enregistrament a \"Configuració > Gravació d'àudio\""
 
 #: ../src/core/control/Control.cpp:251
 msgid "Autosave failed with an error: {1}"
@@ -258,7 +260,7 @@ msgstr "No s'ha pogut llegir la imatge: {1}. Missatge d'error: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
-msgstr ""
+msgstr "No s'ha pogut llegir el número de pàgina de la imatge de fons clonada: {1}."
 
 #: ../src/core/undo/UndoRedoHandler.cpp:142
 msgid "Could not redo \"{1}\"\n"
@@ -407,7 +409,7 @@ msgstr "Dibuixar Fletxa"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Dibuixar Fletxa Doble"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:132
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -575,7 +577,7 @@ msgstr "Exportar PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exportar a PDF"
 
 #: ../src/core/control/XournalMain.cpp:642
 msgid "Export layers progressively\n"
@@ -614,11 +616,11 @@ msgstr ""
 
 #: ../src/core/control/tools/ImageHandler.cpp:71
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "Error carregant imatge, no s'ha pogut determinar la seva mida!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "No s'ha pogut carregar content.xml a l'arxiu zip: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
@@ -2893,7 +2895,7 @@ msgstr ""
 
 #: ../ui/main.glade:505
 msgid "Preferences"
-msgstr ""
+msgstr "Configuració"
 
 #: ../ui/settings.glade:1174
 msgid "Preprocessor"
@@ -3311,7 +3313,7 @@ msgstr ""
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
-msgstr ""
+msgstr "Configuració de Xournal++"
 
 #: ../ui/settings.glade:4170
 msgid "Zoom"
