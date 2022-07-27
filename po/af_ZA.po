@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-19 07:58+0000\n"
-"PO-Revision-Date: 2022-07-23 15:47\n"
+"POT-Creation-Date: 2022-07-27 17:03+0000\n"
+"PO-Revision-Date: 2022-07-27 17:05\n"
 "Last-Translator: \n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
@@ -150,7 +150,7 @@ msgstr "Bring vorentoe"
 msgid "Bring to front"
 msgstr "Bring na vore"
 
-#: ../src/core/control/Control.cpp:2149 ../src/core/control/Control.cpp:2611
+#: ../src/core/control/Control.cpp:2201 ../src/core/control/Control.cpp:2663
 #: ../src/core/control/XournalMain.cpp:182
 msgid "Cancel"
 msgstr "Kanselleer"
@@ -358,7 +358,7 @@ msgstr "Verwyder hierdie laag"
 msgid "Delete this page"
 msgstr "Verwyder hierdie bladsy"
 
-#: ../src/core/control/Control.cpp:2608
+#: ../src/core/control/Control.cpp:2660
 msgid "Discard"
 msgstr "Gooi weg"
 
@@ -366,7 +366,7 @@ msgstr "Gooi weg"
 msgid "Display advanced export options"
 msgstr "Wys gevorderde uitvoer opsies"
 
-#: ../src/core/control/Control.cpp:2094
+#: ../src/core/control/Control.cpp:2146
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -378,7 +378,7 @@ msgstr "Moet nie Autosave lêers oop maak nie. Hulle sal oorskryf word!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Moet nie die agtergrond PDF oorskryf nie! Hierdie sal foute veroorsaak!"
 
-#: ../src/core/control/Control.cpp:2602
+#: ../src/core/control/Control.cpp:2654
 msgid "Document file was removed."
 msgstr "Dokument lêer was verwyder."
 
@@ -493,7 +493,7 @@ msgstr "Verwyder penslag"
 msgid "Eraser"
 msgstr "Uitveër"
 
-#: ../src/core/control/Control.cpp:2348
+#: ../src/core/control/Control.cpp:2400
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Fout annoteer PDF lêer \"{1}\"\n"
@@ -503,7 +503,7 @@ msgstr "Fout annoteer PDF lêer \"{1}\"\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Fout terwyl glade lêer gelaai was \"{1}\" (probeer om \"{2}\" te laai)"
 
-#: ../src/core/control/Control.cpp:2171
+#: ../src/core/control/Control.cpp:2223
 msgid "Error opening file \"{1}\""
 msgstr "Fout tydens oopmaak van lêer \"{1}\""
 
@@ -1041,7 +1041,7 @@ msgstr "Doen weer"
 msgid "Redo: "
 msgstr "Doen weer: "
 
-#: ../src/core/control/Control.cpp:2148
+#: ../src/core/control/Control.cpp:2200
 msgid "Remove PDF Background"
 msgstr "Verwyder PDF agtergrond"
 
@@ -1093,16 +1093,16 @@ msgstr "SVG grafieke"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Voorbeeld LaTex lêer suksesvol gegenereer."
 
-#: ../src/core/control/Control.cpp:2603 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2655 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Save"
 msgstr "Save"
 
-#: ../src/core/control/Control.cpp:2603
+#: ../src/core/control/Control.cpp:2655
 msgid "Save As..."
 msgstr "Save As..."
 
-#: ../src/core/control/Control.cpp:2437
+#: ../src/core/control/Control.cpp:2489
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Save lêer"
@@ -1181,7 +1181,7 @@ msgstr "Kies Gebied"
 msgid "Select Text from pdf"
 msgstr "Kies Teks van pdf"
 
-#: ../src/core/control/Control.cpp:2147
+#: ../src/core/control/Control.cpp:2199
 msgid "Select another PDF"
 msgstr "Kies 'n ander PDF"
 
@@ -1359,13 +1359,13 @@ msgstr "Teks nie gevind nie, gesoek op alle blaaie"
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Die Nutsbalk-konfigurasie \"{1}\" is voorafgekies, wil jy 'n afskrif maak om te verander?"
 
-#: ../src/core/control/Control.cpp:2136
+#: ../src/core/control/Control.cpp:2188
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Die bygevoegde agtergrond lêer {1} kon nie gevind word nie. Dit mag dalk geskuif, hernoem of delete wees.\n"
 "Dit was laas gesien by: {2}"
 
-#: ../src/core/control/Control.cpp:2140
+#: ../src/core/control/Control.cpp:2192
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Die bygevoegde agtergrond lêer {1} kon nie gevind word nie. Dit mag dalk geskuif, hernoem of delete wees.\n"
@@ -1375,7 +1375,7 @@ msgstr "Die bygevoegde agtergrond lêer {1} kon nie gevind word nie. Dit mag dal
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Die kontrole vir die oorskryf van die agtergrond het misluk met:\n"
 
-#: ../src/core/control/Control.cpp:2179
+#: ../src/core/control/Control.cpp:2231
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Die lêer wat gelaai word het 'n lêer formaat wat nuwer is as die een tans ondersteun deur hierdie weergawe van Xournal++, so dit mag dalk nie reg laai nie. Maak in elk geval oop?"
 
@@ -1419,7 +1419,7 @@ msgstr "Daar was 'n fout met die vertoning van hulp: {1}"
 msgid "Thick"
 msgstr "Dik"
 
-#: ../src/core/control/Control.cpp:2602
+#: ../src/core/control/Control.cpp:2654
 msgid "This document is not saved yet."
 msgstr "Hierdie dokument is nog nie gestoor nie."
 
@@ -1504,7 +1504,7 @@ msgstr ""
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2494
+#: ../src/core/control/Control.cpp:2546
 msgid "Unsaved Document"
 msgstr ""
 
@@ -1560,7 +1560,7 @@ msgstr "Xournal lêers"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2443
+#: ../src/core/control/Control.cpp:2495
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr ""
@@ -1605,7 +1605,7 @@ msgstr "Zoem uit"
 msgid "Zoom to 100%"
 msgstr ""
 
-#: ../src/core/control/Control.cpp:2437
+#: ../src/core/control/Control.cpp:2489
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1618,7 +1618,7 @@ msgstr ""
 msgid "_Open"
 msgstr "_Maak oop"
 
-#: ../src/core/control/Control.cpp:2438
+#: ../src/core/control/Control.cpp:2490
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1661,7 +1661,7 @@ msgstr "elemente"
 msgid "eraser"
 msgstr "uitveër"
 
-#: ../src/core/control/Control.cpp:2108
+#: ../src/core/control/Control.cpp:2160
 msgid "file: {1}"
 msgstr "lêer: {1}"
 
