@@ -2130,25 +2130,41 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
     if ((loadedDocument != nullptr && loadHandler.isAttachedPdfMissing()) ||
         !loadHandler.getMissingPdfFilename().empty()) {
         // give the user a second chance to select a new PDF filepath, or to discard the PDF
-
         const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
 
-        std::string msg;
+        string parentFolderPath;
+        string filename;
 
+        // since POSIX systems detect the whole Windows path as a filename, this checks whether missingFilePath contains
+        // a Windows path
+        GMatchInfo* matchInfo = nullptr;
+        GRegex* regex = g_regex_new(R"([A-Z]:\\.*\\(.*))", static_cast<GRegexCompileFlags>(0),
+                                    static_cast<GRegexMatchFlags>(0), nullptr);
+        g_regex_match(regex, missingFilePath.filename().c_str(), static_cast<GRegexMatchFlags>(0), &matchInfo);
+
+        if (g_match_info_matches(matchInfo)) {
+            parentFolderPath = missingFilePath.filename();
+            filename = g_match_info_fetch(matchInfo, 1);
+        } else {
+            parentFolderPath = missingFilePath.parent_path().string();
+            filename = missingFilePath.filename().string();
+        }
+
+        std::string msg;
         if (loadHandler.isAttachedPdfMissing()) {
             msg = FS(_F("The attached background file \"{1}\" could not be found. It might have been moved, "
                         "renamed or deleted.") %
-                     missingFilePath.filename().string());
+                     filename);
         } else {
             msg = FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or "
                         "deleted.") %
-                     missingFilePath.filename().string());
+                     filename);
         }
 
-        msg += FS(_F("\nIt was last seen at: \"{1}\"") % missingFilePath.parent_path().string());
+        msg += FS(_F("\nIt was last seen at: \"{1}\"") % parentFolderPath);
 
         // try to find file in current directory
-        auto proposedPdfFilepath = filepath.parent_path() / missingFilePath.filename();
+        auto proposedPdfFilepath = filepath.parent_path() / filename;
         bool proposedPdfFileExits = fs::exists(proposedPdfFilepath);
         if (proposedPdfFileExits) {
             msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.string());
