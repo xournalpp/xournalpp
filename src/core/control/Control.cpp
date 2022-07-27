@@ -2137,15 +2137,15 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 
         if (loadHandler.isAttachedPdfMissing()) {
             msg = FS(_F("The attached background file \"{1}\" could not be found. It might have been moved, "
-                        "renamed or "
-                        "deleted.\nIt was last seen at: \"{2}\"") %
-                     missingFilePath.filename().string() % missingFilePath.parent_path().string());
+                        "renamed or deleted.") %
+                     missingFilePath.filename().string());
         } else {
             msg = FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or "
-                        "deleted.\nIt "
-                        "was last seen at: \"{2}\"") %
-                     missingFilePath.filename().string() % missingFilePath.parent_path().string());
+                        "deleted.") %
+                     missingFilePath.filename().string());
         }
+
+        msg += FS(_F("\nIt was last seen at: \"{1}\"") % missingFilePath.parent_path().string());
 
         // try to find file in current directory
         auto proposedPdfFilepath = filepath.parent_path() / missingFilePath.filename();
@@ -2156,33 +2156,40 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
                                                    GTK_BUTTONS_NONE, "%s", msg.c_str());
 
-        if (proposedPdfFileExits) gtk_dialog_add_button(GTK_DIALOG(dialog), _("Use proposed PDF"), 1);
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 2);
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 3);
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 4);
+        enum dialogOptions { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
+
+        if (proposedPdfFileExits) {
+            gtk_dialog_add_button(GTK_DIALOG(dialog), _("Use proposed PDF"), USE_PROPOSED);
+        }
+        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), SELECT_OTHER);
+        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), REMOVE);
+        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), CANCEL);
         gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
         int res = gtk_dialog_run(GTK_DIALOG(dialog));
         gtk_widget_destroy(dialog);
 
-        if (res == 3)  // remove PDF background
-        {
-            loadHandler.removePdfBackground();
-            loadedDocument = loadHandler.loadDocument(filepath);
-        } else if (res == 2)  // select another PDF background
-        {
-            bool attachToDocument = false;
-            XojOpenDlg dlg(getGtkWindow(), this->settings);
-            auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
-            if (!pdfFilename.empty()) {
-                loadHandler.setPdfReplacement(pdfFilename, attachToDocument);
+        switch (res) {
+            case USE_PROPOSED:
+                if (!proposedPdfFilepath.empty()) {
+                    loadHandler.setPdfReplacement(proposedPdfFilepath, true);
+                    loadedDocument = loadHandler.loadDocument(filepath);
+                }
+                break;
+            case SELECT_OTHER: {
+                bool attachToDocument = false;
+                XojOpenDlg dlg(getGtkWindow(), this->settings);
+                auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
+                if (!pdfFilename.empty()) {
+                    loadHandler.setPdfReplacement(pdfFilename, attachToDocument);
+                    loadedDocument = loadHandler.loadDocument(filepath);
+                }
+            } break;
+            case REMOVE:
+                loadHandler.removePdfBackground();
                 loadedDocument = loadHandler.loadDocument(filepath);
-            }
-        } else if (res == 1) // use proposed PDF
-        {
-            if (!proposedPdfFilepath.empty()) {
-                loadHandler.setPdfReplacement(proposedPdfFilepath, true);
-                loadedDocument = loadHandler.loadDocument(filepath);
-            }
+                break;
+            default:
+                break;
         }
     }
 
