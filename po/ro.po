@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-19 07:58+0000\n"
-"PO-Revision-Date: 2022-07-19 08:13\n"
+"POT-Creation-Date: 2022-07-27 17:03+0000\n"
+"PO-Revision-Date: 2022-07-27 17:05\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -151,7 +151,7 @@ msgstr "Adu mai aproape"
 msgid "Bring to front"
 msgstr "Adu în prim-plan"
 
-#: ../src/core/control/Control.cpp:2149 ../src/core/control/Control.cpp:2611
+#: ../src/core/control/Control.cpp:2201 ../src/core/control/Control.cpp:2663
 #: ../src/core/control/XournalMain.cpp:182
 msgid "Cancel"
 msgstr "Renunță"
@@ -359,7 +359,7 @@ msgstr "Elimină acest strat"
 msgid "Delete this page"
 msgstr "Elimină această pagină"
 
-#: ../src/core/control/Control.cpp:2608
+#: ../src/core/control/Control.cpp:2660
 msgid "Discard"
 msgstr "Nu salva"
 
@@ -367,7 +367,7 @@ msgstr "Nu salva"
 msgid "Display advanced export options"
 msgstr "Arată opțiuni avansate de exportare"
 
-#: ../src/core/control/Control.cpp:2094
+#: ../src/core/control/Control.cpp:2146
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -379,7 +379,7 @@ msgstr "Nu deschide fișierele salvate automat. Acestea pot fi suprascrise!\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "Nu suprascrie fondul PDF! Acest lucru va provoca erori!"
 
-#: ../src/core/control/Control.cpp:2602
+#: ../src/core/control/Control.cpp:2654
 msgid "Document file was removed."
 msgstr "Fișierul documentului a fost eliminat."
 
@@ -494,7 +494,7 @@ msgstr "Șterge linia"
 msgid "Eraser"
 msgstr "Gumă"
 
-#: ../src/core/control/Control.cpp:2348
+#: ../src/core/control/Control.cpp:2400
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "Eroare la însemnarea fișierului PDF „{1}”\n"
@@ -504,7 +504,7 @@ msgstr "Eroare la însemnarea fișierului PDF „{1}”\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "Eroare la încărcarea fișierului glade „{1}” (încerc să încarc „{2}”)"
 
-#: ../src/core/control/Control.cpp:2171
+#: ../src/core/control/Control.cpp:2223
 msgid "Error opening file \"{1}\""
 msgstr "Eroare la deschiderea fișierului „{1}”"
 
@@ -1043,7 +1043,7 @@ msgstr "Refă"
 msgid "Redo: "
 msgstr "Refă: "
 
-#: ../src/core/control/Control.cpp:2148
+#: ../src/core/control/Control.cpp:2200
 msgid "Remove PDF Background"
 msgstr "Elimină fondul PDF"
 
@@ -1095,16 +1095,16 @@ msgstr "Grafică SVG"
 msgid "Sample LaTeX file generated successfully."
 msgstr "Exemplu de fișier LaTeX generat cu succes."
 
-#: ../src/core/control/Control.cpp:2603 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2655 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Save"
 msgstr "Salvează"
 
-#: ../src/core/control/Control.cpp:2603
+#: ../src/core/control/Control.cpp:2655
 msgid "Save As..."
 msgstr "Salvează ca..."
 
-#: ../src/core/control/Control.cpp:2437
+#: ../src/core/control/Control.cpp:2489
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "Salvează fișierul"
@@ -1183,7 +1183,7 @@ msgstr "Alege o zonă"
 msgid "Select Text from pdf"
 msgstr "Alege textul din PDF"
 
-#: ../src/core/control/Control.cpp:2147
+#: ../src/core/control/Control.cpp:2199
 msgid "Select another PDF"
 msgstr "Alege un alt PDF"
 
@@ -1361,13 +1361,13 @@ msgstr "Textul nu a fost găsit, căutat pe toate paginile"
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "Configurarea benzii cu instrumente „{1}” este predefinită. Vrei să modifici o copie?"
 
-#: ../src/core/control/Control.cpp:2136
+#: ../src/core/control/Control.cpp:2188
 msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Fișierul fondului atașat {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat.\n"
 "A fost văzut ultima dată în: {2}"
 
-#: ../src/core/control/Control.cpp:2140
+#: ../src/core/control/Control.cpp:2192
 msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
 "It was last seen at: {2}"
 msgstr "Fișierul fondului {1} nu a putut fi găsit. Este posibil să fi fost mutat, redenumit sau eliminat.\n"
@@ -1377,7 +1377,7 @@ msgstr "Fișierul fondului {1} nu a putut fi găsit. Este posibil să fi fost mu
 msgid "The check for overwriting the background failed with:\n"
 msgstr "Verificarea pentru suprascrierea fondului a eșuat cu:\n"
 
-#: ../src/core/control/Control.cpp:2179
+#: ../src/core/control/Control.cpp:2231
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "Fișierul în curs de încărcare are o versiune de format mai nouă decât cea acceptată în prezent de această versiune de Xournal++, deci este posibil să nu se încarce în mod corespunzător. Deschizi oricum?"
 
@@ -1421,7 +1421,7 @@ msgstr "A apărut o eroare la afișarea ajutorului: {1}"
 msgid "Thick"
 msgstr "Gros"
 
-#: ../src/core/control/Control.cpp:2602
+#: ../src/core/control/Control.cpp:2654
 msgid "This document is not saved yet."
 msgstr "Acest document nu este salvat încă."
 
@@ -1506,7 +1506,7 @@ msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi un cerc"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi de creion"
 
-#: ../src/core/control/Control.cpp:2494
+#: ../src/core/control/Control.cpp:2546
 msgid "Unsaved Document"
 msgstr "Document nesalvat"
 
@@ -1562,7 +1562,7 @@ msgstr "Fișiere Xournal"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ s-a blocat ultima dată. Vrei să recuperezi ultimul fișier?"
 
-#: ../src/core/control/Control.cpp:2443
+#: ../src/core/control/Control.cpp:2495
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Fișier Xournal++"
@@ -1610,7 +1610,7 @@ msgstr "Micșorează"
 msgid "Zoom to 100%"
 msgstr "Zoom 100%"
 
-#: ../src/core/control/Control.cpp:2437
+#: ../src/core/control/Control.cpp:2489
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1623,7 +1623,7 @@ msgstr "_Renunță"
 msgid "_Open"
 msgstr "_Deschide"
 
-#: ../src/core/control/Control.cpp:2438
+#: ../src/core/control/Control.cpp:2490
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1666,7 +1666,7 @@ msgstr "elemente"
 msgid "eraser"
 msgstr "gumă"
 
-#: ../src/core/control/Control.cpp:2108
+#: ../src/core/control/Control.cpp:2160
 msgid "file: {1}"
 msgstr "fișier: {1}"
 
