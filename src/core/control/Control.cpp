@@ -2140,10 +2140,10 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         GMatchInfo* matchInfo = nullptr;
         GRegex* regex = g_regex_new(R"([A-Z]:\\.*\\(.*))", static_cast<GRegexCompileFlags>(0),
                                     static_cast<GRegexMatchFlags>(0), nullptr);
-        g_regex_match(regex, missingFilePath.filename().c_str(), static_cast<GRegexMatchFlags>(0), &matchInfo);
+        g_regex_match(regex, (gchar*) missingFilePath.filename().c_str(), static_cast<GRegexMatchFlags>(0), &matchInfo);
 
         if (g_match_info_matches(matchInfo)) {
-            parentFolderPath = missingFilePath.filename();
+            parentFolderPath = missingFilePath.filename().string();
             filename = g_match_info_fetch(matchInfo, 1);
         } else {
             parentFolderPath = missingFilePath.parent_path().string();
