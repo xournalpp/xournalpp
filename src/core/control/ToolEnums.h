@@ -105,4 +105,5 @@ enum ToolCapabilities : unsigned int {
     TOOL_CAP_COORDINATE_SYSTEM = 1 << 9,
     TOOL_CAP_DASH_LINE = 1 << 10,
     TOOL_CAP_SPLINE = 1 << 11,
+    TOOL_CAP_LINE_STYLE = 1 << 12
 };

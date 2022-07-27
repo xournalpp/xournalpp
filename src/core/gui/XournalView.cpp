@@ -598,7 +598,7 @@ void XournalView::clearSelection() {
     control->setClipboardHandlerSelection(getSelection());
 
     getCursor()->setMouseSelectionType(CURSOR_SELECTION_NONE);
-    control->getToolHandler()->setSelectionEditTools(false, false, false);
+    control->getToolHandler()->setSelectionEditTools(false, false, false, false);
 }
 
 void XournalView::deleteSelection(EditSelection* sel) {
@@ -628,25 +628,39 @@ void XournalView::setSelection(EditSelection* selection) {
     bool canChangeSize = false;
     bool canChangeColor = false;
     bool canChangeFill = false;
+    bool canChangeLineStyle = false;
 
-    for (Element* e: selection->getElements()) {
-        if (e->getType() == ELEMENT_TEXT) {
-            canChangeColor = true;
-        } else if (e->getType() == ELEMENT_STROKE) {
-            auto* s = dynamic_cast<Stroke*>(e);
-            if (s->getToolType() != STROKE_TOOL_ERASER) {
+    for (const Element* e: selection->getElements()) {
+        switch (e->getType()) {
+            case ELEMENT_TEXT:
                 canChangeColor = true;
-                canChangeFill = true;
+                continue;
+            case ELEMENT_STROKE: {
+                canChangeSize = true;
+
+                const auto* s = dynamic_cast<const Stroke*>(e);
+                if (s->getToolType() == STROKE_TOOL_PEN) {
+                    // can change everything, leave loop with break
+                    canChangeColor = true;
+                    canChangeFill = true;
+                    canChangeLineStyle = true;
+                    break;
+                }
+                if (s->getToolType() == STROKE_TOOL_HIGHLIGHTER) {
+                    canChangeColor = true;
+                    canChangeFill = true;
+                }
+                continue;
             }
-            canChangeSize = true;
+            default:
+                continue;
         }
 
-        if (canChangeColor && canChangeSize && canChangeFill) {
-            break;
-        }
+        // leave loop
+        break;
     }
 
-    control->getToolHandler()->setSelectionEditTools(canChangeColor, canChangeSize, canChangeFill);
+    control->getToolHandler()->setSelectionEditTools(canChangeColor, canChangeSize, canChangeFill, canChangeLineStyle);
 
     repaintSelection();
 }

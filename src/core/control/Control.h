@@ -351,6 +351,14 @@ private:
      */
     void applyPreferredLanguage();
 
+    /**
+     * @brief Get the pen line style to select in the toolbar
+     *
+     * @return style to select, empty if no style should be selected (active
+     * selection with differing line styles)
+     */
+    auto getLineStyleToSelect() -> std::optional<std::string> const;
+
     RecentManager* recent = nullptr;
     UndoRedoHandler* undoRedo = nullptr;
     ZoomControl* zoom = nullptr;

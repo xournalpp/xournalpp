@@ -41,7 +41,8 @@ void ToolHandler::initTools() {
     tools[TOOL_PEN - TOOL_PEN] = std::make_unique<Tool>(
             "pen", TOOL_PEN, Color{0x3333CCU},
             TOOL_CAP_COLOR | TOOL_CAP_SIZE | TOOL_CAP_RULER | TOOL_CAP_RECTANGLE | TOOL_CAP_ELLIPSE | TOOL_CAP_ARROW |
-                    TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE,
+                    TOOL_CAP_DOUBLE_ARROW | TOOL_CAP_SPLINE | TOOL_CAP_RECOGNIZER | TOOL_CAP_FILL | TOOL_CAP_DASH_LINE |
+                    TOOL_CAP_LINE_STYLE,
             thickness);
 
     thickness[TOOL_SIZE_VERY_FINE] = 1;
@@ -524,13 +525,14 @@ auto ToolHandler::getToolThickness(ToolType type) -> const double* {
 /**
  * Change the selection tools capabilities, depending on the selected elements
  */
-void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFill) {
+void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFill, bool setLineStyle) {
     // For all selection tools, apply the features
     for (size_t i = TOOL_SELECT_RECT - TOOL_PEN; i <= TOOL_SELECT_OBJECT - TOOL_PEN; i++) {
         Tool* t = tools[i].get();
         t->setCapability(TOOL_CAP_COLOR, setColor);
         t->setCapability(TOOL_CAP_SIZE, setSize);
         t->setCapability(TOOL_CAP_FILL, setFill);
+        t->setCapability(TOOL_CAP_LINE_STYLE, setLineStyle);
         t->setSize(TOOL_SIZE_NONE);
         t->setColor(Color(-1));
         t->setFill(false);
@@ -541,6 +543,7 @@ void ToolHandler::setSelectionEditTools(bool setColor, bool setSize, bool setFil
         this->stateChangeListener->toolColorChanged();
         this->stateChangeListener->toolSizeChanged();
         this->stateChangeListener->toolFillChanged();
+        this->stateChangeListener->toolLineStyleChanged();
         this->fireToolChanged();
     }
 }

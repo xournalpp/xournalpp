@@ -1828,6 +1828,15 @@ void Control::toolChanged() {
         toolSizeChanged();
     }
 
+    bool enableLineStyle = toolHandler->hasCapability(TOOL_CAP_LINE_STYLE);
+    fireEnableAction(ACTION_TOOL_LINE_STYLE_PLAIN, enableLineStyle);
+    fireEnableAction(ACTION_TOOL_LINE_STYLE_DASH, enableLineStyle);
+    fireEnableAction(ACTION_TOOL_LINE_STYLE_DASH_DOT, enableLineStyle);
+    fireEnableAction(ACTION_TOOL_LINE_STYLE_DOT, enableLineStyle);
+    if (enableLineStyle) {
+        toolLineStyleChanged();
+    }
+
     bool enableFill = toolHandler->hasCapability(TOOL_CAP_FILL);
     fireEnableAction(ACTION_TOOL_FILL, enableFill);
     if (enableFill) {
@@ -1837,6 +1846,10 @@ void Control::toolChanged() {
     // Update color
     if (toolHandler->hasCapability(TOOL_CAP_COLOR)) {
         toolColorChanged();
+    }
+
+    if (toolHandler->getToolType() == TOOL_PEN) {
+        toolLineStyleChanged();
     }
 
     ActionType rulerAction = ACTION_NOT_SELECTED;
@@ -1976,10 +1989,11 @@ void Control::toolFillChanged() {
 }
 
 void Control::toolLineStyleChanged() {
-    const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
-    string style = StrokeStyle::formatStyle(lineStyle);
+    std::optional<string> style = getLineStyleToSelect();
 
-    if (style == "dash") {
+    if (!style) {
+        fireActionSelected(GROUP_LINE_STYLE, ACTION_NONE);
+    } else if (style == "dash") {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH);
     } else if (style == "dashdot") {
         fireActionSelected(GROUP_LINE_STYLE, ACTION_TOOL_LINE_STYLE_DASH_DOT);
@@ -1990,6 +2004,44 @@ void Control::toolLineStyleChanged() {
     }
 }
 
+auto Control::getLineStyleToSelect() -> std::optional<string> const {
+    const LineStyle& lineStyle = toolHandler->getTool(TOOL_PEN).getLineStyle();
+    string style = StrokeStyle::formatStyle(lineStyle);
+
+    if (!win) {
+        return style;
+    }
+
+    const EditSelection* sel = win->getXournal()->getSelection();
+    if (!sel) {
+        return style;
+    }
+
+    bool isFirstPenStrokeElement = true;
+    string previous_style = "none";
+
+    // Todo(cpp20) Replace with std::ranges::filter_view and for_first_then_for_each
+    for (const Element* e: sel->getElements()) {
+        if (e->getType() == ELEMENT_STROKE) {
+            const auto* s = dynamic_cast<const Stroke*>(e);
+
+            if (s->getToolType() == STROKE_TOOL_PEN) {
+                style = StrokeStyle::formatStyle(s->getLineStyle());
+
+                if (isFirstPenStrokeElement) {
+                    previous_style = style;
+                    isFirstPenStrokeElement = false;
+                } else {
+                    if (style != previous_style) {
+                        return std::nullopt;
+                    }
+                }
+            }
+        }
+    }
+
+    return style;
+}
 
 void Control::toolColorChanged() {
     fireActionSelected(GROUP_COLOR, ACTION_SELECT_COLOR);
@@ -2914,9 +2966,9 @@ void Control::setLineStyle(const string& style) {
 
     if (sel) {
         undoRedo->addUndoAction(sel->setLineStyle(stl));
+    } else {
+        this->toolHandler->setLineStyle(stl);
     }
-
-    this->toolHandler->setLineStyle(stl);
 }
 
 void Control::setToolSize(ToolSize size) {
