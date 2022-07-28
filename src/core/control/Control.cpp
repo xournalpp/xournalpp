@@ -7,6 +7,7 @@
 #include <memory>     // for make...
 #include <numeric>    // for accu...
 #include <optional>   // for opti...
+#include <regex>      // for regex
 #include <utility>    // for move
 
 #include "audio/AudioPlayer.h"                                   // for AudioPlayer
@@ -2140,14 +2141,12 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 #else
         // since POSIX systems detect the whole Windows path as a filename, this checks whether missingFilePath contains
         // a Windows path
-        GMatchInfo* matchInfo = nullptr;
-        GRegex* regex = g_regex_new(R"([A-Z]:\\.*\\(.*))", static_cast<GRegexCompileFlags>(0),
-                                    static_cast<GRegexMatchFlags>(0), nullptr);
-        g_regex_match(regex, (gchar*) missingFilePath.filename().c_str(), static_cast<GRegexMatchFlags>(0), &matchInfo);
+        std::regex regex(R"([A-Z]:\\(?:.*\\)*(.*))");
+        std::cmatch matchInfo;
 
-        if (g_match_info_matches(matchInfo)) {
+        if (std::regex_match(missingFilePath.filename().string().c_str(), matchInfo, regex) && matchInfo[1].matched) {
             parentFolderPath = missingFilePath.filename().string();
-            filename = g_match_info_fetch(matchInfo, 1);
+            filename = matchInfo[1].str();
         } else {
             parentFolderPath = missingFilePath.parent_path().string();
             filename = missingFilePath.filename().string();
