@@ -2132,9 +2132,12 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         // give the user a second chance to select a new PDF filepath, or to discard the PDF
         const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
 
-        string parentFolderPath;
-        string filename;
-
+        std::string parentFolderPath;
+        std::string filename;
+#if defined(WIN32)
+        parentFolderPath = missingFilePath.parent_path().string();
+        filename = missingFilePath.filename().string();
+#else
         // since POSIX systems detect the whole Windows path as a filename, this checks whether missingFilePath contains
         // a Windows path
         GMatchInfo* matchInfo = nullptr;
@@ -2149,7 +2152,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
             parentFolderPath = missingFilePath.parent_path().string();
             filename = missingFilePath.filename().string();
         }
-
+#endif
         std::string msg;
         if (loadHandler.isAttachedPdfMissing()) {
             msg = FS(_F("The attached background file \"{1}\" could not be found. It might have been moved, "
