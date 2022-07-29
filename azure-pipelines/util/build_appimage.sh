@@ -44,5 +44,8 @@ ICON_FILE="$APPDIR"/usr/share/icons/hicolor/scalable/apps/com.github.xournalpp.x
 DESKTOP_FILE="$APPDIR"/usr/share/applications/com.github.xournalpp.xournalpp.desktop
 echo "Use the icon file $ICON_FILE and the desktop file $DESKTOP_FILE"
 
+LIB=/usr/lib/x86_64-linux-gnu/libthai.so.0
+echo "Bundle libthai"
+
 # call through linuxdeploy
-./"$LINUXDEPLOY" --appdir="$APPDIR" --plugin gtk --plugin gettext --output appimage --icon-file="$ICON_FILE" --desktop-file="$DESKTOP_FILE"
+./"$LINUXDEPLOY" --appdir="$APPDIR" --plugin gtk --plugin gettext --library "$LIB" --output appimage --icon-file="$ICON_FILE" --desktop-file="$DESKTOP_FILE"
