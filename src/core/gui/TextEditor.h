@@ -21,6 +21,7 @@
 #include <pango/pangocairo.h>  // for cairo_t, PangoAttrList, PangoLayout
 
 #include "util/Color.h"  // for Color
+#include "util/Rectangle.h"  // for Rectangle
 
 class XojPageView;
 class Text;
@@ -68,6 +69,14 @@ public:
     UndoAction* setColor(Color color);
 
 private:
+    /**
+     * @brief Add the text to the providedd Pango layout.
+     * The added text contains both this->text, and the preedit string of the Input Method (this->preeditstring)
+     * This function also sets up the attributes of the preedit string (typically underlined)
+     */
+    void setTextToPangoLayout(PangoLayout* pl) const;
+
+    xoj::util::Rectangle<double> computeBoundingRect();
     void repaintEditor();
     void drawCursor(cairo_t* cr, double x, double y, double height, double zoom);
     void repaintCursor();
@@ -115,6 +124,14 @@ private:
     double markPosX = 0;
     double markPosY = 0;
 
+    /**
+     * Tracks the bounding box of the editor from the last render.
+     *
+     * Because adding or deleting lines may cause the size of the bounding box to change,
+     * we need to rerender the union of the current and previous bboxes.
+     */
+    xoj::util::Rectangle<double> previousBoundingBox;
+
     bool cursorBlink = true;
     int cursorBlinkTime = 0;
     int cursorBlinkTimeout = 0;
@@ -127,4 +144,9 @@ private:
     bool mouseDown = false;
     bool cursorOverwrite = false;
     bool cursorVisible = false;
+
+    // Padding between the text logical box and the frame
+    static constexpr int PADDING_IN_PIXELS = 5;
+    // Width of the lines making the frame
+    static constexpr int BORDER_WIDTH_IN_PIXELS = 1;
 };

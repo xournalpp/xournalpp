@@ -65,6 +65,20 @@ if (APPLE)
   target_include_directories(xournalpp PRIVATE exe)
 endif()
 
+###############################
+# Add MacOS specific files
+# Todo(Roland): consider moving this into an own MacOS specific cmake script
+# e.g. exe/macos/CMakeLists.txt
+##############################
+
+if (APPLE)
+  # MacOS specific source files
+  # Concatenate SOURCES lists
+  set (xournalpp_SOURCES ${xournalpp_SOURCES_RECURSE} ${xournalpp_SOURCES})
+  unset (xournalpp_SOURCES_RECURSE)
+  file (GLOB xournalpp_SOURCES_RECURSE osx/*.cpp osx/*.h)
+endif()
+
 if (WIN32)
   # generate .ico from .png
   find_package(ImageMagick REQUIRED COMPONENTS convert)

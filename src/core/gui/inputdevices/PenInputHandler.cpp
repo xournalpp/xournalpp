@@ -291,8 +291,6 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         }
     }
 
-    bool result = false;
-
     // Update the cursor
     xournal->view->getCursor()->setInsidePage(currentPage != nullptr);
 
@@ -309,7 +307,10 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
 
         pos.pressure = this->filterPressure(pos, sequenceStartPage);
 
-        result = sequenceStartPage->onMotionNotifyEvent(pos);
+        bool result = sequenceStartPage->onMotionNotifyEvent(pos);
+
+        this->updateLastEvent(event);  // Update the last position of the input device
+        return result;
     }
 
     if (currentPage && this->penInWidget) {
@@ -317,13 +318,13 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         PositionInputData pos = getInputDataRelativeToCurrentPage(currentPage, event);
         pos.pressure = this->filterPressure(pos, currentPage);
 
-        result = currentPage->onMotionNotifyEvent(pos);
+        bool result = currentPage->onMotionNotifyEvent(pos);
+
+        this->updateLastEvent(event);  // Update the last position of the input device
+        return result;
     }
 
-    // Update the last position of the input device
-    this->updateLastEvent(event);
-
-    return result;
+    return false;
 }
 
 auto PenInputHandler::actionEnd(InputEvent const& event) -> bool {
