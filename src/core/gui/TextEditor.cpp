@@ -398,7 +398,7 @@ void TextEditor::selectAtCursor(TextEditor::SelectType ty) {
     const auto searchFlag = GTK_TEXT_SEARCH_TEXT_ONLY;  // To be used to find double newlines
 
     switch (ty) {
-        case TextEditor::SelectType::word:
+        case TextEditor::SelectType::WORD:
             // Do nothing if cursor is over whitespace
             GtkTextIter currentPos;
             gtk_text_buffer_get_iter_at_mark(this->buffer, &currentPos, mark);
@@ -413,7 +413,7 @@ void TextEditor::selectAtCursor(TextEditor::SelectType ty) {
                 gtk_text_iter_forward_word_end(&endPos);
             }
             break;
-        case TextEditor::SelectType::paragraph:
+        case TextEditor::SelectType::PARAGRAPH:
             // Note that a GTK "paragraph" is a line, so there's no nice one-liner.
             // We define a paragraph as text separated by double newlines.
             while (!gtk_text_iter_is_start(&startPos)) {
@@ -442,7 +442,7 @@ void TextEditor::selectAtCursor(TextEditor::SelectType ty) {
                 gtk_text_iter_forward_line(&endPos);
             }
             break;
-        case TextEditor::SelectType::all:
+        case TextEditor::SelectType::ALL:
             gtk_text_buffer_get_bounds(this->buffer, &startPos, &endPos);
             break;
     }
