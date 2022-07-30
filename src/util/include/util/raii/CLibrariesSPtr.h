@@ -32,13 +32,14 @@ public:
     using handler_type = H;
 
 private:
-    static auto safeRef(T* ptr) -> T* { return ptr ? H::ref(ptr) : ptr; }
+    static auto safeAdopt(T* ptr) -> T* { return ptr ? H::adopt(ptr) : nullptr; }
+    static auto safeRef(T* ptr) -> T* { return ptr ? H::ref(ptr) : nullptr; }
     static auto safeUnref(T* ptr) -> void {
         if (ptr) {
             H::unref(ptr);
         }
     }
-    static auto safeSinkRef(T* ptr) -> T* { return ptr ? H::sink_ref(ptr) : ptr; }
+    static auto safeRefSink(T* ptr) -> T* { return ptr ? H::ref_sink(ptr) : nullptr; }
     static auto safeReset(T*& ptr, T* val) -> void { safeUnref(std::exchange(ptr, val)); }
 
 public:
@@ -67,23 +68,21 @@ public:
     constexpr static struct RefSink {
     } refsink = RefSink();
 
-    CLibrariesSPtr(T* p, Adopt = adopt): p(H::adopt(p)) {}
-    CLibrariesSPtr(T* p, Ref): p(safeRef(p)) {}
-    CLibrariesSPtr(T* p, RefSink): p(safeSinkRef(p)) {}
+    explicit CLibrariesSPtr(T* p, Adopt = adopt): p(safeAdopt(p)) {}
+    explicit CLibrariesSPtr(T* p, Ref): p(safeRef(p)) {}
+    explicit CLibrariesSPtr(T* p, RefSink): p(safeRefSink(p)) {}
 
-    void reset(T* other = nullptr, Adopt = adopt) { safeReset(p, other); }
+    void reset(T* other = nullptr, Adopt = adopt) { safeReset(p, safeAdopt(other)); }
     void reset(T* other, Ref) { safeReset(p, safeRef(other)); }
     void reset(T* other, RefSink) { safeReset(p, safeRefSink(other)); }
 
     operator bool() const { return p != nullptr; }
 
-    T* get() { return p; }
-    const T* get() const { return p; }
+    T* get() const { return p; }
 
     T* release() { return std::exchange(p, nullptr); }
 
-    T* operator->() { return p; }
-    const T* operator->() const { return p; }
+    T* operator->() const { return p; }
 
     void swap(CLibrariesSPtr& other) { std::swap(p, other.p); }
 

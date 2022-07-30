@@ -257,8 +257,8 @@ static void test_object_class_init(TestObjectClass* klass) {
 G_END_DECLS
 };  // namespace
 
-TEST(UtilsRAII, testGObjectSPtr) {
-    using TestPtr = xoj::util::CLibrariesSPtr<TestObject, xoj::util::specialization::GObjectHandler<TestObject>>;
+TEST(UtilsRAII, testGObjectSPtrConstructors) {
+    using TestPtr = xoj::util::GObjectSPtr<TestObject>;
     EXPECT_EQ(TestObjectCount, 0);
     {
         TestPtr t(TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr)));
@@ -281,6 +281,39 @@ TEST(UtilsRAII, testGObjectSPtr) {
         TestObject* t = TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr));
         EXPECT_EQ(TestObjectCount, 1);
         TestPtr t1(t, TestPtr::ref);
+        g_object_unref(t);
+        EXPECT_EQ(TestObjectCount, 1);
+    }
+    EXPECT_EQ(TestObjectCount, 0);
+}
+
+TEST(UtilsRAII, testGObjectSPtrReset) {
+    using TestPtr = xoj::util::GObjectSPtr<TestObject>;
+    EXPECT_EQ(TestObjectCount, 0);
+    {
+        TestPtr t;
+        t.reset(TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr)));
+        EXPECT_FALSE(g_object_is_floating(t.get()));
+        EXPECT_EQ(TestObjectCount, 1);
+    }
+    EXPECT_EQ(TestObjectCount, 0);
+    {
+        TestObject* t = TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr));
+        EXPECT_FALSE(g_object_is_floating(t));
+        g_object_force_floating(G_OBJECT(t));
+        EXPECT_TRUE(g_object_is_floating(t));
+        EXPECT_EQ(TestObjectCount, 1);
+        TestPtr t1;
+        t1.reset(t);  // Adopt a floating ref
+        EXPECT_EQ(t1.get(), t);
+        EXPECT_FALSE(g_object_is_floating(t1.get()));
+    }
+    EXPECT_EQ(TestObjectCount, 0);
+    {
+        TestObject* t = TEST_OBJECT(g_object_new(TEST_OBJECT_TYPE, nullptr));
+        EXPECT_EQ(TestObjectCount, 1);
+        TestPtr t1;
+        t1.reset(t, TestPtr::ref);
         g_object_unref(t);
         EXPECT_EQ(TestObjectCount, 1);
     }
