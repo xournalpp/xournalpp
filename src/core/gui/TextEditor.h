@@ -22,6 +22,8 @@
 
 #include "util/Color.h"  // for Color
 #include "util/Rectangle.h"
+#include "util/raii/GObjectSPtr.h"
+#include "util/raii/PangoSPtr.h"
 
 class XojPageView;
 class Text;
@@ -50,10 +52,10 @@ public:
     void moveCursor(GtkMovementStep step, int count, bool extendSelection);
     void deleteFromCursor(GtkDeleteType type, int count);
     void backspace();
-    void copyToCliboard();
+    void copyToCliboard() const;
     void cutToClipboard();
     void pasteFromClipboard();
-    std::string getSelection();
+    std::string getSelection() const;
 
     Text* getText();
     void textCopyed();
@@ -62,7 +64,7 @@ public:
     void mouseMoved(double x, double y);
     void mouseReleased();
 
-    UndoAction* getFirstUndoAction();
+    UndoAction* getFirstUndoAction() const;
 
     void setText(const std::string& text);
     void setFont(XojFont font);
@@ -79,12 +81,12 @@ private:
 
     xoj::util::Rectangle<double> computeBoundingRect();
     void repaintEditor();
-    void drawCursor(cairo_t* cr, double x, double y, double height, double zoom);
+    void drawCursor(cairo_t* cr, double x, double y, double height, double zoom) const;
     void repaintCursor();
     void resetImContext();
 
-    int getByteOffset(int charOffset);
-    int getCharOffset(int byteOffset);
+    int getByteOffset(int charOffset) const;
+    int getCharOffset(int byteOffset) const;
 
     static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te);
 
@@ -100,24 +102,26 @@ private:
     void calcVirtualCursor();
     void jumpALine(GtkTextIter* textIter, int count);
 
-    void findPos(GtkTextIter* iter, double x, double y);
+    void findPos(GtkTextIter* iter, double x, double y) const;
     void markPos(double x, double y, bool extendSelection);
 
     void contentsChanged(bool forceCreateUndoAction = false);
 
 private:
-    XojPageView* gui = nullptr;
-    GtkWidget* widget = nullptr;
-    GtkWidget* textWidget = nullptr;
-    GtkIMContext* imContext = nullptr;
-    GtkTextBuffer* buffer = nullptr;
-    PangoLayout* layout = nullptr;
-    Text* text = nullptr;
+    XojPageView* gui;
+    GtkWidget* xournalWidget;
+    Text* text;
+    std::string lastText;
 
-    PangoAttrList* preeditAttrList = nullptr;
+    xoj::util::GObjectSPtr<GtkWidget> textWidget;
+    xoj::util::GObjectSPtr<GtkIMContext> imContext;
+    xoj::util::GObjectSPtr<GtkTextBuffer> buffer;
+    xoj::util::GObjectSPtr<PangoLayout> layout;
+
+    // InputMethod preedit data
+    xoj::util::PangoAttrListSPtr preeditAttrList;
     int preeditCursor;
     std::string preeditString;
-    std::string lastText;
 
     std::vector<std::reference_wrapper<TextUndoAction>> undoActions;
 
@@ -133,10 +137,12 @@ private:
      */
     xoj::util::Rectangle<double> previousBoundingBox;
 
+    // cursor blinking timings. In millisecond.
+    unsigned int cursorBlinkingTimeOn = 0;
+    unsigned int cursorBlinkingTimeOff = 0;
+    // unsigned int cursorBlinkTimeout = 0;  // Not used for now...
+    unsigned int blinkCallbackId = 0;  // handler id
     bool cursorBlink = true;
-    int cursorBlinkTime = 0;
-    int cursorBlinkTimeout = 0;
-    int blinkTimeout = 0;  // handler id
 
     bool ownText = false;
     bool markPosExtendSelection = false;
@@ -150,4 +156,8 @@ private:
     static constexpr int PADDING_IN_PIXELS = 5;
     // Width of the lines making the frame
     static constexpr int BORDER_WIDTH_IN_PIXELS = 1;
+    // In a blinking period, how much time is the cursor visible vs not visible
+    static constexpr unsigned int CURSOR_ON_MULTIPLIER = 2;
+    static constexpr unsigned int CURSOR_OFF_MULTIPLIER = 1;
+    static constexpr unsigned int CURSOR_DIVIDER = CURSOR_ON_MULTIPLIER + CURSOR_OFF_MULTIPLIER;
 };

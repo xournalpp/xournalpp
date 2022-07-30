@@ -16,15 +16,12 @@
 #include <cairo.h>
 
 #include "CLibrariesSPtr.h"
+#include "IdentityFunction.h"
 
 namespace xoj::util {
 
 inline namespace raii {
 namespace specialization {
-
-template <typename T>  // Todo(cpp20): replace with std:identity()
-constexpr auto identity = [](T* p) { return p; };
-
 class CairoHandler {
 public:
     constexpr static auto ref = cairo_reference;
