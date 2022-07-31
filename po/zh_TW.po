@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-27 17:03+0000\n"
-"PO-Revision-Date: 2022-07-27 17:05\n"
+"POT-Creation-Date: 2022-07-31 19:57+0000\n"
+"PO-Revision-Date: 2022-07-31 19:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -28,6 +28,16 @@ msgid "\n"
 " Do you want to continue?"
 msgstr "\n"
 "是否繼續?"
+
+#: ../src/core/control/Control.cpp:2218
+msgid "\n"
+"It was last seen at: \"{1}\""
+msgstr ""
+
+#: ../src/core/control/Control.cpp:2224
+msgid "\n"
+"Proposed replacement file: \"{1}\""
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -120,11 +130,11 @@ msgid "Audio folder not set or invalid! Recording won't work!\n"
 "Please set the recording folder under \"Preferences > Audio recording\""
 msgstr "未設置音訊存放目錄或目錄位置不合法, 無法錄製聲音, 請到\"偏好設置 > 音訊錄製\"設定音訊存放目錄"
 
-#: ../src/core/control/Control.cpp:251
+#: ../src/core/control/Control.cpp:252
 msgid "Autosave failed with an error: {1}"
 msgstr "自動存檔失敗: {1}"
 
-#: ../src/core/control/Control.cpp:231
+#: ../src/core/control/Control.cpp:232
 msgid "Autosave renamed from {1} to {2}"
 msgstr "自動存檔, 檔案名稱由{1} 改成{2}"
 
@@ -150,7 +160,7 @@ msgstr "往前移動"
 msgid "Bring to front"
 msgstr "移到上層"
 
-#: ../src/core/control/Control.cpp:2201 ../src/core/control/Control.cpp:2663
+#: ../src/core/control/Control.cpp:2236 ../src/core/control/Control.cpp:2707
 #: ../src/core/control/XournalMain.cpp:182
 msgid "Cancel"
 msgstr "取消"
@@ -274,7 +284,7 @@ msgstr "無法移除於 {1} 工具列，位置為 {2} 的工具項目"
 msgid "Could not remove tool item {1} from Toolbar {2} on position {3}"
 msgstr "無法移除於工具列 {2}，位置為 {3} 的工具項目：{1}"
 
-#: ../src/core/control/Control.cpp:242
+#: ../src/core/control/Control.cpp:243
 msgid "Could not rename autosave file from \"{1}\" to \"{2}\": {3}"
 msgstr "無法將自動儲存檔案 \"{1}\" 重新命名至 \"{2}\"： {3}"
 
@@ -357,7 +367,7 @@ msgstr "刪除此圖層"
 msgid "Delete this page"
 msgstr "刪除此頁面"
 
-#: ../src/core/control/Control.cpp:2660
+#: ../src/core/control/Control.cpp:2704
 msgid "Discard"
 msgstr "丟棄"
 
@@ -365,7 +375,7 @@ msgstr "丟棄"
 msgid "Display advanced export options"
 msgstr "顯示進階輸出選項"
 
-#: ../src/core/control/Control.cpp:2146
+#: ../src/core/control/Control.cpp:2147
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
@@ -377,7 +387,7 @@ msgstr "請勿開啟自動保存檔案，否則它們可能會被覆寫！\n"
 msgid "Do not overwrite the background PDF! This will cause errors!"
 msgstr "請勿覆寫背景 PDF 檔！這樣可能導致錯誤！"
 
-#: ../src/core/control/Control.cpp:2654
+#: ../src/core/control/Control.cpp:2698
 msgid "Document file was removed."
 msgstr "文檔已刪除。"
 
@@ -492,7 +502,7 @@ msgstr "擦除筆劃"
 msgid "Eraser"
 msgstr "橡皮"
 
-#: ../src/core/control/Control.cpp:2400
+#: ../src/core/control/Control.cpp:2444
 msgid "Error annotate PDF file \"{1}\"\n"
 "{2}"
 msgstr "PDF檔案\"{1}\"標註出錯\n"
@@ -502,7 +512,7 @@ msgstr "PDF檔案\"{1}\"標註出錯\n"
 msgid "Error loading glade file \"{1}\" (try to load \"{2}\")"
 msgstr "加載glade檔案\"{1}\"出錯(嘗試加載\"{2}\")"
 
-#: ../src/core/control/Control.cpp:2223
+#: ../src/core/control/Control.cpp:2267
 msgid "Error opening file \"{1}\""
 msgstr "打開檔案\"{1}\"出錯"
 
@@ -874,7 +884,7 @@ msgstr "沒有設備"
 msgid "No pages to export!"
 msgstr "沒有頁面可以匯出！"
 
-#: ../src/core/control/Control.cpp:1397
+#: ../src/core/control/Control.cpp:1398
 msgid "No pdf pages available to append. You may need to reopen the document first."
 msgstr "沒有可以添加的PDF頁面。您可能需要重新開啟文件檔。"
 
@@ -1026,7 +1036,7 @@ msgstr "列印"
 msgid "Record Audio / Stop Recording"
 msgstr "錄製音訊 / 停止錄製音訊"
 
-#: ../src/core/control/Control.cpp:967
+#: ../src/core/control/Control.cpp:968
 msgid "Recorder could not be started."
 msgstr "錄製程式無法啟動。"
 
@@ -1039,7 +1049,7 @@ msgstr "重複"
 msgid "Redo: "
 msgstr "重複："
 
-#: ../src/core/control/Control.cpp:2200
+#: ../src/core/control/Control.cpp:2235
 msgid "Remove PDF Background"
 msgstr "去掉PDF背景"
 
@@ -1091,16 +1101,16 @@ msgstr "svg圖形"
 msgid "Sample LaTeX file generated successfully."
 msgstr "產生範例 LaTeX file 成功。"
 
-#: ../src/core/control/Control.cpp:2655 ../src/core/control/jobs/SaveJob.cpp:25
+#: ../src/core/control/Control.cpp:2699 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Save"
 msgstr "保存"
 
-#: ../src/core/control/Control.cpp:2655
+#: ../src/core/control/Control.cpp:2699
 msgid "Save As..."
 msgstr "另存為..."
 
-#: ../src/core/control/Control.cpp:2489
+#: ../src/core/control/Control.cpp:2533
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
 msgstr "保存檔案"
@@ -1179,7 +1189,7 @@ msgstr "選擇區域"
 msgid "Select Text from pdf"
 msgstr "從PDF中選擇文字"
 
-#: ../src/core/control/Control.cpp:2199
+#: ../src/core/control/Control.cpp:2234
 msgid "Select another PDF"
 msgstr "選擇其他PDF"
 
@@ -1353,27 +1363,23 @@ msgstr "文本未找到"
 msgid "Text not found, searched on all pages"
 msgstr "找遍所有頁面未找到文本"
 
-#: ../src/core/control/Control.cpp:1187
+#: ../src/core/control/Control.cpp:1188
 msgid "The Toolbarconfiguration \"{1}\" is predefined, would you create a copy to edit?"
 msgstr "工具條配置\"{1}\"是預置的，要產生一個拷貝到編輯?"
 
-#: ../src/core/control/Control.cpp:2188
-msgid "The attached background file {1} could not be found. It might have been moved, renamed or deleted.\n"
-"It was last seen at: {2}"
-msgstr "找不到附加的背景檔案 {1} 。 可能已經被移動、刪除或重新命名。\n"
-"最後一次出現在: {2}"
+#: ../src/core/control/Control.cpp:2209
+msgid "The attached background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
+msgstr ""
 
-#: ../src/core/control/Control.cpp:2192
-msgid "The background file {1} could not be found. It might have been moved, renamed or deleted.\n"
-"It was last seen at: {2}"
-msgstr "找不到背景檔案 {1} 。 可能已經被移動、刪除或重新命名。\n"
-"最後一次出現在: {2}"
+#: ../src/core/control/Control.cpp:2213
+msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
+msgstr ""
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
 msgstr "覆蓋背景失敗：\n"
 
-#: ../src/core/control/Control.cpp:2231
+#: ../src/core/control/Control.cpp:2275
 msgid "The file being loaded has a file format version newer than the one currently supported by this version of Xournal++, so it may not load properly. Open anyways?"
 msgstr "正在開啟的檔案格式版本筆目前Xournal++支持的文件格式版本更新， 可能無法正確開啟，仍要開啟？"
 
@@ -1417,7 +1423,7 @@ msgstr "顯示說明文件時發生錯誤。{1}"
 msgid "Thick"
 msgstr "粗"
 
-#: ../src/core/control/Control.cpp:2654
+#: ../src/core/control/Control.cpp:2698
 msgid "This document is not saved yet."
 msgstr "此文件尚未存檔"
 
@@ -1453,7 +1459,7 @@ msgstr "無法打開全域模板檔案{1}。它存在嘛？"
 msgid "Unable to play audio recording {1}"
 msgstr "無法播放錄音{1}"
 
-#: ../src/core/control/Control.cpp:1411
+#: ../src/core/control/Control.cpp:1412
 msgid "Unable to retrieve pdf page."
 msgstr "無法獲取PDF頁面。"
 
@@ -1502,13 +1508,17 @@ msgstr "未知的筆觸類型：“{1}“，設為圓形"
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "未知的筆類別： \"{1}\"，假設爲畫筆"
 
-#: ../src/core/control/Control.cpp:2546
+#: ../src/core/control/Control.cpp:2590
 msgid "Unsaved Document"
 msgstr "未保存文檔"
 
 #: ../src/core/control/jobs/ImageExport.cpp:108
 msgid "Unsupported graphics format: "
 msgstr "不支援的圖像格式: "
+
+#: ../src/core/control/Control.cpp:2232
+msgid "Use proposed PDF"
+msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Vertical Space"
@@ -1558,7 +1568,7 @@ msgstr "Xournal檔案"
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
 msgstr "Xournal++ 上次崩溃了。您想恢復最後一個编辑的文件？"
 
-#: ../src/core/control/Control.cpp:2495
+#: ../src/core/control/Control.cpp:2539
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
 msgstr "Xournal++ 檔案"
@@ -1606,7 +1616,7 @@ msgstr "縮小"
 msgid "Zoom to 100%"
 msgstr "原始尺寸"
 
-#: ../src/core/control/Control.cpp:2489
+#: ../src/core/control/Control.cpp:2533
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:15
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
@@ -1619,7 +1629,7 @@ msgstr "取消 (_C)"
 msgid "_Open"
 msgstr "開啟 (_O)"
 
-#: ../src/core/control/Control.cpp:2490
+#: ../src/core/control/Control.cpp:2534
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
@@ -1662,7 +1672,7 @@ msgstr "元素"
 msgid "eraser"
 msgstr "橡皮"
 
-#: ../src/core/control/Control.cpp:2160
+#: ../src/core/control/Control.cpp:2161
 msgid "file: {1}"
 msgstr "檔案: {1}"
 
