@@ -7,6 +7,7 @@
 #include <memory>     // for make...
 #include <numeric>    // for accu...
 #include <optional>   // for opti...
+#include <regex>      // for regex
 #include <utility>    // for move
 
 #include "audio/AudioPlayer.h"                                   // for AudioPlayer
@@ -2182,40 +2183,83 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
     if ((loadedDocument != nullptr && loadHandler.isAttachedPdfMissing()) ||
         !loadHandler.getMissingPdfFilename().empty()) {
         // give the user a second chance to select a new PDF filepath, or to discard the PDF
-
         const fs::path missingFilePath = fs::path(loadHandler.getMissingPdfFilename());
-        const std::string msg1 =
-                FS(_F("The attached background file {1} could not be found. It might have been moved, renamed or "
-                      "deleted.\nIt was last seen at: {2}") %
-                   missingFilePath.filename().string() % missingFilePath.parent_path().string());
-        const std::string msg2 =
-                FS(_F("The background file {1} could not be found. It might have been moved, renamed or deleted.\nIt "
-                      "was last seen at: {2}") %
-                   missingFilePath.filename().string() % missingFilePath.parent_path().string());
-        GtkWidget* dialog =
-                gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, "%s",
-                                       loadHandler.isAttachedPdfMissing() ? msg1.c_str() : msg2.c_str());
 
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), 1);
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), 2);
-        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), 3);
+        std::string parentFolderPath;
+        std::string filename;
+#if defined(WIN32)
+        parentFolderPath = missingFilePath.parent_path().string();
+        filename = missingFilePath.filename().string();
+#else
+        // since POSIX systems detect the whole Windows path as a filename, this checks whether missingFilePath contains
+        // a Windows path
+        std::regex regex(R"([A-Z]:\\(?:.*\\)*(.*))");
+        std::cmatch matchInfo;
+
+        if (std::regex_match(missingFilePath.filename().string().c_str(), matchInfo, regex) && matchInfo[1].matched) {
+            parentFolderPath = missingFilePath.filename().string();
+            filename = matchInfo[1].str();
+        } else {
+            parentFolderPath = missingFilePath.parent_path().string();
+            filename = missingFilePath.filename().string();
+        }
+#endif
+        std::string msg;
+        if (loadHandler.isAttachedPdfMissing()) {
+            msg = FS(_F("The attached background file \"{1}\" could not be found. It might have been moved, "
+                        "renamed or deleted.") %
+                     filename);
+        } else {
+            msg = FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or "
+                        "deleted.") %
+                     filename);
+        }
+
+        msg += FS(_F("\nIt was last seen at: \"{1}\"") % parentFolderPath);
+
+        // try to find file in current directory
+        auto proposedPdfFilepath = filepath.parent_path() / filename;
+        bool proposedPdfFileExits = fs::exists(proposedPdfFilepath);
+        if (proposedPdfFileExits) {
+            msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.string());
+        }
+        GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
+                                                   GTK_BUTTONS_NONE, "%s", msg.c_str());
+
+        enum dialogOptions { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
+
+        if (proposedPdfFileExits) {
+            gtk_dialog_add_button(GTK_DIALOG(dialog), _("Use proposed PDF"), USE_PROPOSED);
+        }
+        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), SELECT_OTHER);
+        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Remove PDF Background"), REMOVE);
+        gtk_dialog_add_button(GTK_DIALOG(dialog), _("Cancel"), CANCEL);
         gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(this->getWindow()->getWindow()));
         int res = gtk_dialog_run(GTK_DIALOG(dialog));
         gtk_widget_destroy(dialog);
 
-        if (res == 2)  // remove PDF background
-        {
-            loadHandler.removePdfBackground();
-            loadedDocument = loadHandler.loadDocument(filepath);
-        } else if (res == 1)  // select another PDF background
-        {
-            bool attachToDocument = false;
-            XojOpenDlg dlg(getGtkWindow(), this->settings);
-            auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
-            if (!pdfFilename.empty()) {
-                loadHandler.setPdfReplacement(pdfFilename, attachToDocument);
+        switch (res) {
+            case USE_PROPOSED:
+                if (!proposedPdfFilepath.empty()) {
+                    loadHandler.setPdfReplacement(proposedPdfFilepath, true);
+                    loadedDocument = loadHandler.loadDocument(filepath);
+                }
+                break;
+            case SELECT_OTHER: {
+                bool attachToDocument = false;
+                XojOpenDlg dlg(getGtkWindow(), this->settings);
+                auto pdfFilename = dlg.showOpenDialog(true, attachToDocument);
+                if (!pdfFilename.empty()) {
+                    loadHandler.setPdfReplacement(pdfFilename, attachToDocument);
+                    loadedDocument = loadHandler.loadDocument(filepath);
+                }
+            } break;
+            case REMOVE:
+                loadHandler.removePdfBackground();
                 loadedDocument = loadHandler.loadDocument(filepath);
-            }
+                break;
+            default:
+                break;
         }
     }
 
@@ -2909,7 +2953,9 @@ void Control::clipboardPasteXournal(ObjectInputStream& in) {
         g_warning("could not paste, Exception occurred: %s", e.what());
         Stacktrace::printStracktrace();
         if (selection) {
-            for (Element* el: selection->getElements()) { delete el; }
+            for (Element* el: selection->getElements()) {
+                delete el;
+            }
             delete selection;
         }
     }
