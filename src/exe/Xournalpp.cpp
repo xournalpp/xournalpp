@@ -16,10 +16,6 @@
 #include "osx/setup-env.h"
 #endif
 
-#ifdef __APPLE__
-#include "osx/setup-env.h"
-#endif
-
 #ifdef _WIN32
 #include <cstdlib>
 
