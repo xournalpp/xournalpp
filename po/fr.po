@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-31 19:57+0000\n"
-"PO-Revision-Date: 2022-07-31 19:58\n"
+"PO-Revision-Date: 2022-08-01 20:25\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -32,12 +32,14 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2218
 msgid "\n"
 "It was last seen at: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Il a été vu pour la dernière fois à : \"{1}\""
 
 #: ../src/core/control/Control.cpp:2224
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Fichier de remplacement proposé : \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -3212,7 +3214,7 @@ msgstr "Barre d'_outils"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "Source TeX"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
@@ -3297,7 +3299,7 @@ msgstr "Souligner le texte sélectionné"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Utiliser les icônes Stock disponibles (nécessite un redémarrage)"
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
