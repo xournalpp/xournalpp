@@ -11,8 +11,7 @@
 
 #pragma once
 
-#include <memory>   // for shared_ptr
-#include <mutex>    // for mutex
+#include <memory>  // for shared_ptr
 #include <utility>  // for pair
 #include <vector>   // for vector
 
@@ -60,9 +59,9 @@ public:
     const std::shared_ptr<xoj::util::DispatchPool<xoj::view::ShapeToolView>>& getViewPool() const;
 
     /**
-     * @brief (Thread-safe) Get a clone of the shape's points.
+     * @brief Get the shape's points.
      */
-    std::vector<Point> getShapeClone() const;
+    const std::vector<Point>& getShape() const;
 
 private:
     /**
@@ -73,13 +72,13 @@ private:
     virtual std::pair<std::vector<Point>, Range> createShape(bool isAltDown, bool isShiftDown, bool isControlDown) = 0;
 
     /**
-     * @brief (Thread-safe) Update the current shape with the latest event info.
+     * @brief Update the current shape with the latest event info.
      *      Also warns the listeners about the change, usually triggering a redraw during the next screen update.
      */
     void updateShape(bool isAltDown, bool isShiftDown, bool isControlDown);
 
     /**
-     * @brief (Thread-safe) Cancel the current shape creation: clears all data and wipes any drawing made
+     * @brief Cancel the current shape creation: clears all data and wipes any drawing made
      */
     void cancelStroke();
 
@@ -92,7 +91,6 @@ protected:
 
 protected:
     std::vector<Point> shape;
-    mutable std::mutex shapeMutex;
 
     /**
      * @brief Bounding box of the stroke after its last update

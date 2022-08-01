@@ -12,7 +12,6 @@
 #pragma once
 
 #include <memory>  // for unique_ptr
-#include <mutex>   // for mutex
 
 #include <cairo.h>    // for cairo_t
 #include <gdk/gdk.h>  // for GdkEventKey
