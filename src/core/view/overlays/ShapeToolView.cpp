@@ -17,7 +17,7 @@ ShapeToolView::ShapeToolView(const BaseShapeHandler* toolHandler, const Repainta
 ShapeToolView::~ShapeToolView() noexcept { this->unregisterFromPool(); }
 
 void ShapeToolView::draw(cairo_t* cr) const {
-    auto pts = this->toolHandler->getShapeClone();
+    const auto& pts = this->toolHandler->getShape();
 
     if (pts.empty()) {
         // The input sequence has been cancelled. This view should soon be deleted
