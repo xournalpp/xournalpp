@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-31 19:57+0000\n"
-"PO-Revision-Date: 2022-07-31 19:58\n"
+"PO-Revision-Date: 2022-08-04 21:43\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -32,12 +32,14 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2218
 msgid "\n"
 "It was last seen at: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Sie wurde zuletzt gesehen in: \"{1}\""
 
 #: ../src/core/control/Control.cpp:2224
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Vorgeschlagene Datei: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -419,7 +421,7 @@ msgstr "Pfeil zeichnen"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:39
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:478
 msgid "Draw Double Arrow"
-msgstr ""
+msgstr "Doppelpfeil zeichnen"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:132
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
@@ -1372,11 +1374,11 @@ msgstr "Die Werkzeugleistenkonfiguration \"{1}\" ist vordefiniert, möchten Sie 
 
 #: ../src/core/control/Control.cpp:2209
 msgid "The attached background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Die angehängte Hintergrunddatei \"{1}\" konnte nicht gefunden werden. Sie wurde möglicherweise verschoben, umbenannt oder gelöscht."
 
 #: ../src/core/control/Control.cpp:2213
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Die Hintergrunddatei \"{1}\" konnte nicht gefunden werden. Sie wurde möglicherweise verschoben, umbenannt oder gelöscht."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
@@ -1521,7 +1523,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2232
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Nutze das vorgeschlagene PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Vertical Space"
@@ -1854,7 +1856,7 @@ msgstr "%a\t\tAbgekürzter Wochentag (z.B. Mit)\n"
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(erfordert Neustart)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
