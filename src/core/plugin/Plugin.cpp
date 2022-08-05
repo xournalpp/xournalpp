@@ -100,10 +100,10 @@ void Plugin::registerMenu(GtkWindow* mainWindow, GtkWidget* menu) {
     gtk_window_add_accel_group(GTK_WINDOW(mainWindow), accelGroup);
 }
 
-void Plugin::executeMenuEntry(MenuEntry* entry) { callFunction(entry->callback); }
+void Plugin::executeMenuEntry(MenuEntry* entry) { callFunction(entry->callback, entry->mode); }
 
-auto Plugin::registerMenu(std::string menu, std::string callback, std::string accelerator) -> size_t {
-    menuEntries.emplace_back(this, std::move(menu), std::move(callback), std::move(accelerator));
+auto Plugin::registerMenu(std::string menu, std::string callback, long mode, std::string accelerator) -> size_t {
+    menuEntries.emplace_back(this, std::move(menu), std::move(callback), mode, std::move(accelerator));
     return menuEntries.size() - 1;
 }
 
@@ -235,11 +235,18 @@ void Plugin::loadScript() {
     }
 }
 
-auto Plugin::callFunction(const std::string& fnc) -> bool {
+auto Plugin::callFunction(const std::string& fnc, long mode) -> bool {
     lua_getglobal(lua.get(), fnc.c_str());
 
+    int numArgs = 0;
+
+    if (mode != LONG_MAX) {
+        lua_pushinteger(lua.get(), mode);
+        numArgs = 1;
+    }
+
     // Run the function
-    if (lua_pcall(lua.get(), 0, 0, 0)) {
+    if (lua_pcall(lua.get(), numArgs, 0, 0)) {
         const char* errMsg = lua_tostring(lua.get(), -1);
         std::map<int, std::string> button;
         button.insert(std::pair<int, std::string>(0, _("OK")));
