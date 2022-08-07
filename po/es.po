@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-31 19:57+0000\n"
-"PO-Revision-Date: 2022-07-31 19:58\n"
+"PO-Revision-Date: 2022-08-07 14:13\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -2112,7 +2112,7 @@ msgstr "Siempre comprobar las dependencias LaTeX antes de ejecutar"
 
 #: ../ui/main.glade:1215
 msgid "Append New PDF Pages"
-msgstr "Adjuntar nuevas páginas Pdf"
+msgstr "Adjuntar nuevas páginas PDF"
 
 #: ../ui/settings.glade:220
 msgid "Arithmetic mean"
