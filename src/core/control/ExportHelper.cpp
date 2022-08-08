@@ -67,10 +67,8 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
 
     imgExport.setLayerRange(layerRange);
 
-    imgExport.exportGraphics();
-
-    std::string errorMsg = imgExport.getLastErrorMsg();
-    if (!errorMsg.empty()) {
+    if (!imgExport.exportDocument()) {
+        std::string errorMsg = imgExport.getLastErrorMsg();
         g_message("Error exporting image: %s\n", errorMsg.c_str());
     }
 
@@ -107,10 +105,7 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     pdfe.setLayerRange(layerRange);
 
     // Do the export
-    bool exportSuccess = false;  // Return of the export job
-    exportSuccess = pdfe.createPdf(exportRange, progressiveMode);
-
-    if (!exportSuccess) {
+    if (!pdfe.exportDocument()) {
         g_error("%s", pdfe.getLastErrorMsg().c_str());
     }
 
