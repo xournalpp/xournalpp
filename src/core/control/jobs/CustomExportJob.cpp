@@ -130,9 +130,12 @@ void CustomExportJob::run() {
         // the ui is blocked, so there should be no changes...
         Document* doc = control->getDocument();
 
-        XojPdfExport pdfe{doc, exportBackground, control, filepath};
+        PageRangeVector exportRange =
+                ElementRange::parse("1-" + std::to_string(doc->getPageCount()), doc->getPageCount());
 
-        if (!pdfe.createPdf(exportRange, progressiveMode)) {
+        XojPdfExport pdfe{doc, exportBackground, control, filepath, exportRange};
+
+        if (!pdfe.createPdf(progressiveMode)) {
             this->errorMsg = pdfe.getLastErrorMsg();
         }
 

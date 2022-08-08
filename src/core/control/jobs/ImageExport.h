@@ -122,11 +122,6 @@ public:
     ExportGraphicsFormat format = EXPORT_GRAPHICS_UNDEFINED;
 
     /**
-     * The range to export
-     */
-    const PageRangeVector& exportRange;
-
-    /**
      * @brief The export quality parameters, used if format==EXPORT_GRAPHICS_PNG
      */
     RasterImageQualityParameter qualityParameter = RasterImageQualityParameter();
