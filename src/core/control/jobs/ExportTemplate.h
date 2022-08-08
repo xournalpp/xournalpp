@@ -116,3 +116,11 @@ private:
      */
     virtual auto exportPage(const size_t pageNo) -> bool = 0;
 };
+
+/**
+ * @brief Counts the number of pages to export
+ * @param exportRange the page ranges specifying pages to export
+ *
+ * @return total number of pages to export
+ */
+auto countPagesToExport(const PageRangeVector& exportRange) -> size_t;

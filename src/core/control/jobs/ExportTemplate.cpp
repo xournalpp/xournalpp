@@ -4,6 +4,7 @@
 #include <utility>
 
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
+#include "model/Document.h"                 // for Document
 
 ExportTemplate::ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
                                fs::path filePath, const PageRangeVector& exportRange):
@@ -33,4 +34,34 @@ auto ExportTemplate::freeCairoResources() -> bool {
     surface = nullptr;
 
     return true;
+}
+
+auto ExportTemplate::exportDocument() -> bool {
+    if (progressListener) {
+        size_t n = countPagesToExport(exportRange);
+        progressListener->setMaximumState(static_cast<int>(n));
+    }
+
+    size_t exportedPages = 0;
+    for (const auto& rangeEntry: exportRange) {
+        auto lastPage = std::min(rangeEntry.last, doc->getPageCount());
+
+        for (auto i = rangeEntry.first; i <= lastPage; ++i, ++exportedPages) {
+            exportPage(i);
+
+            if (progressListener) {
+                progressListener->setCurrentState(static_cast<int>(exportedPages));
+            }
+        }
+    }
+
+    return true;
+}
+
+auto countPagesToExport(const PageRangeVector& exportRange) -> size_t {
+    size_t count = 0;
+    for (const auto& e: exportRange) {
+        count += e.last - e.first + 1;
+    }
+    return count;
 }
