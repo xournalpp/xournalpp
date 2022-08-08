@@ -42,6 +42,12 @@ public:
      */
     auto getLastErrorMsg() const -> std::string;
 
+    /**
+     * @brief Export document template method
+     * @return Success/failure indicator
+     */
+    auto exportDocument() -> bool;
+
 protected:
     /**
      * @brief Destroy cairo surface and cr
@@ -103,4 +109,10 @@ private:
      * @return true if surface creation succeeded
      */
     virtual auto createCairoCr(double width, double height) -> bool = 0;
+
+    /**
+     * @brief Export a single page
+     * @return true on successful export
+     */
+    virtual auto exportPage(const size_t pageNo) -> bool = 0;
 };

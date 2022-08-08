@@ -193,6 +193,12 @@ void ImageExport::exportGraphics() {
     }
 }
 
+auto ImageExport::exportPage(const size_t pageNo) -> bool {
+    DocumentView view;
+    exportImagePage(pageNo, format, view);
+    return true;
+}
+
 RasterImageQualityParameter::RasterImageQualityParameter() = default;
 RasterImageQualityParameter::RasterImageQualityParameter(ExportQualityCriterion criterion, int value):
         qualityCriterion{criterion}, value{value} {}

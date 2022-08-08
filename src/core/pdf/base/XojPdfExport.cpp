@@ -103,7 +103,7 @@ void XojPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
 }
 #endif
 
-void XojPdfExport::exportPage(size_t page) {
+auto XojPdfExport::exportPage(size_t page) -> bool {
     PageRef p = doc->getPage(page);
 
     cairo_pdf_surface_set_size(this->surface, p->getWidth(), p->getHeight());
@@ -132,6 +132,7 @@ void XojPdfExport::exportPage(size_t page) {
     // next page
     cairo_show_page(this->cr);
     cairo_restore(this->cr);
+    return true;
 }
 
 // export layers one by one to produce as many PDF pages as there are layers.
