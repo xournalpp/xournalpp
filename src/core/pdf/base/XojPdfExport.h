@@ -50,7 +50,7 @@ private:
     void populatePdfOutline(GtkTreeModel* tocModel);
 #endif
 
-    void exportPage(size_t page);
+    auto exportPage(size_t page) -> bool override;
     /**
      * Export as a PDF document where each additional layer creates a
      * new page */

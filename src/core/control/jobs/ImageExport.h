@@ -136,4 +136,6 @@ private:
      * The zoom ratio for PNG exports with fixed DPI
      */
     double zoomRatio = 1.0;
+
+    auto exportPage(const size_t pageNo) -> bool override;
 };
