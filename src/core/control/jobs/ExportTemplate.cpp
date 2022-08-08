@@ -6,7 +6,8 @@
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 
 ExportTemplate::ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
-                               fs::path filePath):
+                               fs::path filePath, const PageRangeVector& exportRange):
+        exportRange{exportRange},
         doc{doc},
         exportBackground{exportBackground},
         progressListener{progressListener},

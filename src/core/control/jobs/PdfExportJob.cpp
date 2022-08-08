@@ -33,8 +33,9 @@ auto PdfExportJob::testAndSetFilepath(fs::path file) -> bool {
 void PdfExportJob::run() {
     Document* doc = control->getDocument();
 
+    PageRangeVector exportRange = ElementRange::parse("1-" + std::to_string(doc->getPageCount()), doc->getPageCount());
     doc->lock();
-    XojPdfExport pdfe{doc, EXPORT_BACKGROUND_ALL, control, filepath};
+    XojPdfExport pdfe{doc, EXPORT_BACKGROUND_ALL, control, filepath, exportRange};
     doc->unlock();
 
     if (!pdfe.createPdf(false)) {

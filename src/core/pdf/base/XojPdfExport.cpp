@@ -28,11 +28,13 @@
 #include "filesystem.h"  // for path
 
 XojPdfExport::XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
-                           fs::path filePath):
-        ExportTemplate{doc, exportBackground, progressListener, std::move(filePath)} {}
+                           fs::path filePath, const PageRangeVector& exportRange):
+        ExportTemplate{doc, exportBackground, progressListener, std::move(filePath), exportRange} {
+    createCairoCr(0.0, 0.0);
+}
 
 XojPdfExport::~XojPdfExport() {
-    if (this->surface != nullptr) {
+    if (surface) {
         freeCairoResources();
     }
 }

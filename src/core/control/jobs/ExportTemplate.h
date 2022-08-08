@@ -26,7 +26,7 @@ class ProgressListener;
 class ExportTemplate {
 public:
     ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
-                   fs::path filePath);
+                   fs::path filePath, const PageRangeVector& exportRange);
 
     virtual ~ExportTemplate();
 
@@ -50,9 +50,14 @@ protected:
 
 protected:
     /**
-     * @brief A pointer to a range of layers to export (the same for every exported pages)
+     * A pointer to a range of layers to export (the same for every exported pages)
      */
     std::unique_ptr<LayerRangeVector> layerRange;
+
+    /**
+     * The page range to export
+     */
+    const PageRangeVector& exportRange;
 
     /**
      * The last error message to show to the user

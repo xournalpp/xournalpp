@@ -98,20 +98,17 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     auto path = fs::u8path(g_file_peek_path(file));
     g_object_unref(file);
 
-    XojPdfExport pdfe{doc, exportBackground, nullptr, path};
-
-    bool exportSuccess = 0;  // Return of the export job
-
-    pdfe.setLayerRange(layerRange);
-
+    PageRangeVector exportRange = ElementRange::parse("1-" + std::to_string(doc->getPageCount()), doc->getPageCount());
     if (range) {
         // Parse the range
-        PageRangeVector exportRange = ElementRange::parse(range, doc->getPageCount());
-        // Do the export
-        exportSuccess = pdfe.createPdf(exportRange, progressiveMode);
-    } else {
-        exportSuccess = pdfe.createPdf(progressiveMode);
+        exportRange = ElementRange::parse(range, doc->getPageCount());
     }
+    XojPdfExport pdfe{doc, exportBackground, nullptr, path, exportRange};
+    pdfe.setLayerRange(layerRange);
+
+    // Do the export
+    bool exportSuccess = false;  // Return of the export job
+    exportSuccess = pdfe.createPdf(exportRange, progressiveMode);
 
     if (!exportSuccess) {
         g_error("%s", pdfe.getLastErrorMsg().c_str());
