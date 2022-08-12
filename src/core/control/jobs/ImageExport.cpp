@@ -106,20 +106,16 @@ auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
     return path;
 }
 
-/**
- * @brief Export a single PNG/SVG page
- * @param pageId The index of the page being exported
- * @param format The format of the exported image
- * @param view A DocumentView for drawing the page
- */
-void ImageExport::exportImagePage(size_t pageId, ExportGraphicsFormat format, DocumentView& view) {
+auto ImageExport::exportPage(const size_t pageNo) -> bool {
+    DocumentView view;
+
     doc->lock();
-    PageRef page = doc->getPage(pageId);
+    PageRef page = doc->getPage(pageNo);
     doc->unlock();
 
     if (!createCairoCr(page->getWidth(), page->getHeight())) {
         this->lastError = _("Error save image #1");
-        return;
+        return false;
     }
 
     if (page->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
@@ -153,13 +149,9 @@ void ImageExport::exportImagePage(size_t pageId, ExportGraphicsFormat format, Do
     if (!freeCairoResources()) {
         // could not create this file...
         this->lastError = _("Error save image #2");
-        return;
+        return false;
     }
-}
 
-auto ImageExport::exportPage(const size_t pageNo) -> bool {
-    DocumentView view;
-    exportImagePage(pageNo, format, view);
     return true;
 }
 
