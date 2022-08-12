@@ -55,6 +55,12 @@ protected:
      */
     auto freeCairoResources() -> bool;
 
+    /**
+     * @brief Export a single page
+     * @return true on successful export
+     */
+    auto exportPage(const size_t pageNo) -> bool;
+
 protected:
     /**
      * A pointer to a range of layers to export (the same for every exported pages)
@@ -110,12 +116,6 @@ private:
      * @return true if surface creation succeeded
      */
     virtual auto createCairoCr(double width, double height) -> bool = 0;
-
-    /**
-     * @brief Export a single page
-     * @return true on successful export
-     */
-    virtual auto exportPage(const size_t pageNo) -> bool = 0;
 
     /**
      * @brief Configure Cairo Resources for page to export

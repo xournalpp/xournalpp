@@ -5,6 +5,9 @@
 
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "model/Document.h"                 // for Document
+#include "model/XojPage.h"                  // for XojPage
+#include "util/i18n.h"                      // for _
+#include "view/DocumentView.h"              // for DocumentView
 
 ExportTemplate::ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
                                fs::path filePath, const PageRangeVector& exportRange):
@@ -64,4 +67,48 @@ auto countPagesToExport(const PageRangeVector& exportRange) -> size_t {
         count += e.last - e.first + 1;
     }
     return count;
+}
+
+auto ExportTemplate::exportPage(const size_t pageNo) -> bool {
+    PageRef page = doc->getPage(pageNo);  // TODO: lock or don't lock?
+
+    if (!configureCairoResourcesForPage(page)) {
+        return false;
+    }
+
+    DocumentView view;
+
+    // For a better pdf quality, we use a dedicated pdf rendering
+    if (page->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
+        // Handle the pdf page separately, to call renderForPrinting for better
+        // quality.
+        auto pgNo = page->getPdfPageNr();
+        XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
+        if (!popplerPage) {
+            lastError = _("Error while exporting the pdf background: cannot find the pdf page number.");
+            lastError += std::to_string(pgNo);
+            // TODO return? Problem free CairoResources
+        } else if (format == EXPORT_GRAPHICS_PNG) {
+            popplerPage->render(cr);
+        } else {
+            popplerPage->renderForPrinting(cr);
+        }
+    }
+
+    bool dontRenderEraseable = true;  // TODO rename
+    bool dontRenderPdfBackground = true;
+    if (layerRange) {
+        view.drawLayersOfPage(*layerRange, page, cr, dontRenderEraseable, dontRenderPdfBackground,
+                              exportBackground == EXPORT_BACKGROUND_NONE,
+                              exportBackground <= EXPORT_BACKGROUND_UNRULED);
+    } else {
+        view.drawPage(page, cr, dontRenderEraseable, dontRenderPdfBackground,
+                      exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
+    }
+
+    if (!clearCairoConfig()) {
+        return false;
+    }
+
+    return true;
 }
