@@ -101,7 +101,7 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
         // Parse the range
         exportRange = ElementRange::parse(range, doc->getPageCount());
     }
-    XojPdfExport pdfe{doc, exportBackground, nullptr, path, exportRange};
+    XojPdfExport pdfe{doc, exportBackground, nullptr, path, exportRange, progressiveMode};
     pdfe.setLayerRange(layerRange);
 
     // Do the export

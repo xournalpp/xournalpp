@@ -28,7 +28,7 @@ class ProgressListener;
 class XojPdfExport: public ExportTemplate {
 public:
     XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
-                 fs::path filePath, const PageRangeVector& exportRange);
+                 fs::path filePath, const PageRangeVector& exportRange, const bool progressiveMode);
     ~XojPdfExport();
 
 public:
@@ -55,4 +55,10 @@ private:
      * Export as a PDF document where each additional layer creates a
      * new page */
     void exportPageLayers(size_t page);
+
+private:
+    /**
+     * Export all Layers progressively
+     */
+    const bool progressiveMode = false;
 };
