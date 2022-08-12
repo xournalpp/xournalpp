@@ -97,8 +97,6 @@ private:
      */
     fs::path getFilenameWithNumber(size_t no) const;
 
-    auto exportPage(const size_t pageNo) -> bool override;
-
     auto computeZoomRatioWithFactor(double normalizationFactor) -> double;
 
     static constexpr size_t SINGLE_PAGE = size_t(-1);

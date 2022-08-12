@@ -106,45 +106,6 @@ auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
     return path;
 }
 
-auto ImageExport::exportPage(const size_t pageNo) -> bool {
-    DocumentView view;
-
-    doc->lock();
-    PageRef page = doc->getPage(pageNo);
-    doc->unlock();
-
-    if (!configureCairoResourcesForPage(page)) {
-        return false;
-    }
-
-    if (page->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
-        // Handle the pdf page separately, to call renderForPrinting for better quality.
-        auto pgNo = page->getPdfPageNr();
-        XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
-        if (!popplerPage) {
-            this->lastError = _("Error while exporting the pdf background: I cannot find the pdf page number ");
-            this->lastError += std::to_string(pgNo);
-        } else {
-            popplerPage->renderForPrinting(cr);
-        }
-    }
-
-    if (layerRange) {
-        view.drawLayersOfPage(*layerRange, page, this->cr, true /* dont render eraseable */,
-                              true /* don't rerender the pdf background */, exportBackground == EXPORT_BACKGROUND_NONE,
-                              exportBackground <= EXPORT_BACKGROUND_UNRULED);
-    } else {
-        view.drawPage(page, this->cr, true /* dont render eraseable */, true /* don't rerender the pdf background */,
-                      exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
-    }
-
-    if (!clearCairoConfig()) {
-        return false;
-    }
-
-    return true;
-}
-
 auto ImageExport::configureCairoResourcesForPage(const PageRef page) -> bool {
     if (!createCairoCr(page->getWidth(), page->getHeight())) {
         lastError = _("Error: cannot configure Cairo resources.");
