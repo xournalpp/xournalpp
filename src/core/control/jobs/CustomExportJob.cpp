@@ -133,7 +133,7 @@ void CustomExportJob::run() {
         PageRangeVector exportRange =
                 ElementRange::parse("1-" + std::to_string(doc->getPageCount()), doc->getPageCount());
 
-        XojPdfExport pdfe{doc, exportBackground, control, filepath, exportRange};
+        XojPdfExport pdfe{doc, exportBackground, control, filepath, exportRange, progressiveMode};
 
         if (!pdfe.exportDocument()) {
             this->errorMsg = pdfe.getLastErrorMsg();
