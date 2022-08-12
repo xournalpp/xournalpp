@@ -97,13 +97,7 @@ private:
      */
     fs::path getFilenameWithNumber(size_t no) const;
 
-    /**
-     * @brief Export a single PNG/SVG page
-     * @param pageId The index of the page being exported
-     * @param format The format of the exported image
-     * @param view A DocumentView for drawing the page
-     */
-    void exportImagePage(size_t pageId, ExportGraphicsFormat format, DocumentView& view);
+    auto exportPage(const size_t pageNo) -> bool override;
 
     auto computeZoomRatioWithFactor(double normalizationFactor) -> double;
 
@@ -130,6 +124,4 @@ private:
      * The zoom ratio for PNG exports with fixed DPI
      */
     double zoomRatio = 1.0;
-
-    auto exportPage(const size_t pageNo) -> bool override;
 };
