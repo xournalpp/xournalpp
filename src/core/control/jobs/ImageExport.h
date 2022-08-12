@@ -73,12 +73,6 @@ public:
 
 public:
     /**
-     * @brief Create one Graphics file per page
-     * @param stateListener A listener to track the progress
-     */
-    void exportGraphics();
-
-    /**
      * @brief Set a quality level for PNG exports
      * @param qParam A quality parameter for the export
      */
