@@ -27,7 +27,7 @@ class ProgressListener;
 class ExportTemplate {
 public:
     ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
-                   fs::path filePath, const PageRangeVector& exportRange);
+                   fs::path filePath, const PageRangeVector& exportRange, const bool progressiveMode);
 
     virtual ~ExportTemplate();
 
@@ -54,12 +54,6 @@ protected:
      * @brief Destroy cairo surface and cr
      */
     auto freeCairoResources() -> bool;
-
-    /**
-     * @brief Export a single page
-     * @return true on successful export
-     */
-    auto exportPage(const size_t pageNo) -> bool;
 
 protected:
     /**
@@ -107,6 +101,11 @@ protected:
      */
     fs::path const filePath;
 
+    /**
+     * Export all Layers progressively
+     */
+    const bool progressiveMode = false;
+
 private:
     /**
      * @brief Create Cairo cr and surface for a given page
@@ -116,6 +115,18 @@ private:
      * @return true if surface creation succeeded
      */
     virtual auto createCairoCr(double width, double height) -> bool = 0;
+
+    /**
+     * @brief Export all layers of a single page one by one (each layer a new page)
+     * @return true on successful export
+     */
+    auto exportPageLayers(const size_t pageNo) -> bool;
+
+    /**
+     * @brief Export a single page
+     * @return true on successful export
+     */
+    auto exportPage(const size_t pageNo) -> bool;
 
     /**
      * @brief Configure Cairo Resources for page to export
