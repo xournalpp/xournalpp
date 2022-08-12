@@ -52,6 +52,10 @@ private:
      * new page */
     void exportPageLayers(size_t page);
 
+    auto configureCairoResourcesForPage(const PageRef page) -> bool override;
+
+    auto clearCairoConfig() -> bool override;
+
 private:
     /**
      * Export all Layers progressively

@@ -13,6 +13,7 @@
 
 #include <memory>  // for std::unique_ptr
 
+#include "model/PageRef.h"      // for PageRef
 #include "util/ElementRange.h"  // for LayerRangeVector
 
 #include "BaseExportJob.h"  // for ExportBackgroundType, EXPORT_BACKGROUND_ALL
@@ -115,6 +116,18 @@ private:
      * @return true on successful export
      */
     virtual auto exportPage(const size_t pageNo) -> bool = 0;
+
+    /**
+     * @brief Configure Cairo Resources for page to export
+     * @return true on successful configuration
+     */
+    virtual auto configureCairoResourcesForPage(const PageRef page) -> bool = 0;
+
+    /**
+     * @brief Clear current Cairo configuration
+     * @return true on success
+     */
+    virtual auto clearCairoConfig() -> bool = 0;
 };
 
 /**
