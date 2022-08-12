@@ -113,8 +113,7 @@ auto ImageExport::exportPage(const size_t pageNo) -> bool {
     PageRef page = doc->getPage(pageNo);
     doc->unlock();
 
-    if (!createCairoCr(page->getWidth(), page->getHeight())) {
-        this->lastError = _("Error save image #1");
+    if (!configureCairoResourcesForPage(page)) {
         return false;
     }
 
@@ -139,14 +138,29 @@ auto ImageExport::exportPage(const size_t pageNo) -> bool {
                       exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
     }
 
+    if (!clearCairoConfig()) {
+        return false;
+    }
+
+    return true;
+}
+
+auto ImageExport::configureCairoResourcesForPage(const PageRef page) -> bool {
+    if (!createCairoCr(page->getWidth(), page->getHeight())) {
+        lastError = _("Error: cannot configure Cairo resources.");
+        return false;
+    }
+    return true;
+}
+
+auto ImageExport::clearCairoConfig() -> bool {
     if (format == EXPORT_GRAPHICS_PNG) {
-        auto filepath = getFilenameWithNumber(id);
-        cairo_surface_write_to_png(surface, filepath.u8string().c_str());
+        const auto filename = getFilenameWithNumber(id);
+        cairo_surface_write_to_png(surface, filename.u8string().c_str());
     }
 
     if (!freeCairoResources()) {
-        // could not create this file...
-        this->lastError = _("Error save image #2");
+        lastError = _("Error: cannot free Cairo resources.");
         return false;
     }
 

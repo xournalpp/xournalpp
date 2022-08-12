@@ -103,6 +103,10 @@ private:
 
     static constexpr size_t SINGLE_PAGE = size_t(-1);
 
+    auto configureCairoResourcesForPage(const PageRef page) -> bool override;
+
+    auto clearCairoConfig() -> bool override;
+
 public:
     /**
      * Export graphics format

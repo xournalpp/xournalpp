@@ -107,11 +107,11 @@ void XojPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
 auto XojPdfExport::exportPage(size_t page) -> bool {
     PageRef p = doc->getPage(page);
 
-    cairo_pdf_surface_set_size(this->surface, p->getWidth(), p->getHeight());
+    if (!configureCairoResourcesForPage(p)) {
+        return false;
+    }
 
     DocumentView view;
-
-    cairo_save(this->cr);
 
     // For a better pdf quality, we use a dedicated pdf rendering
     if (p->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
@@ -130,9 +130,22 @@ auto XojPdfExport::exportPage(size_t page) -> bool {
                       exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
     }
 
-    // next page
-    cairo_show_page(this->cr);
-    cairo_restore(this->cr);
+    if (!clearCairoConfig()) {
+        return false;
+    }
+
+    return true;
+}
+
+auto XojPdfExport::configureCairoResourcesForPage(const PageRef page) -> bool {
+    cairo_pdf_surface_set_size(surface, page->getWidth(), page->getHeight());
+    cairo_save(cr);
+    return true;
+}
+
+auto XojPdfExport::clearCairoConfig() -> bool {
+    cairo_show_page(cr);
+    cairo_restore(cr);
     return true;
 }
 
