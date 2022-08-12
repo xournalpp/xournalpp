@@ -29,8 +29,7 @@
 
 XojPdfExport::XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
                            fs::path filePath, const PageRangeVector& exportRange, const bool progressiveMode):
-        ExportTemplate{doc, exportBackground, progressListener, std::move(filePath), exportRange},
-        progressiveMode{progressiveMode} {
+        ExportTemplate{doc, exportBackground, progressListener, std::move(filePath), exportRange, progressiveMode} {
     createCairoCr(0.0, 0.0);
 }
 
@@ -114,26 +113,4 @@ auto XojPdfExport::clearCairoConfig() -> bool {
     cairo_show_page(cr);
     cairo_restore(cr);
     return true;
-}
-
-// export layers one by one to produce as many PDF pages as there are layers.
-void XojPdfExport::exportPageLayers(size_t page) {
-    PageRef p = doc->getPage(page);
-
-    // We keep a copy of the layers initial Visible state
-    std::map<Layer*, bool> initialVisibility;
-    for (const auto& layer: *p->getLayers()) {
-        initialVisibility[layer] = layer->isVisible();
-        layer->setVisible(false);
-    }
-
-    // We draw as many pages as there are layers. The first page has
-    // only Layer 1 visible, the last has all layers visible.
-    for (const auto& layer: *p->getLayers()) {
-        layer->setVisible(true);
-        exportPage(page);
-    }
-
-    // We restore the initial visibilities
-    for (const auto& layer: *p->getLayers()) layer->setVisible(initialVisibility[layer]);
 }

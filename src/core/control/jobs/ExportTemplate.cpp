@@ -1,21 +1,24 @@
 #include "ExportTemplate.h"
 
 #include <cmath>  // for round
+#include <map>    // for map
 #include <utility>
 
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "model/Document.h"                 // for Document
+#include "model/Layer.h"                    // for Layer
 #include "model/XojPage.h"                  // for XojPage
 #include "util/i18n.h"                      // for _
 #include "view/DocumentView.h"              // for DocumentView
 
 ExportTemplate::ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
-                               fs::path filePath, const PageRangeVector& exportRange):
+                               fs::path filePath, const PageRangeVector& exportRange, const bool progressiveMode):
         exportRange{exportRange},
         doc{doc},
         exportBackground{exportBackground},
         progressListener{progressListener},
-        filePath{std::move(filePath)} {}
+        filePath{std::move(filePath)},
+        progressiveMode{progressiveMode} {}
 
 ExportTemplate::~ExportTemplate() {}
 
@@ -50,7 +53,12 @@ auto ExportTemplate::exportDocument() -> bool {
         auto lastPage = std::min(rangeEntry.last, doc->getPageCount());
 
         for (auto i = rangeEntry.first; i <= lastPage; ++i, ++exportedPages) {
-            exportPage(i);
+            if (progressiveMode && !exportPageLayers(i)) {
+                return false;
+            }
+            if (!progressiveMode && !exportPage(i)) {
+                return false;
+            }
 
             if (progressListener) {
                 progressListener->setCurrentState(static_cast<int>(exportedPages));
@@ -67,6 +75,33 @@ auto countPagesToExport(const PageRangeVector& exportRange) -> size_t {
         count += e.last - e.first + 1;
     }
     return count;
+}
+
+auto ExportTemplate::exportPageLayers(const size_t pageNo) -> bool {
+    PageRef p = doc->getPage(pageNo);
+
+    // We keep a copy of the layers initial Visible state
+    std::map<Layer*, bool> initialVisibility;
+    for (const auto& layer: *p->getLayers()) {
+        initialVisibility[layer] = layer->isVisible();
+        layer->setVisible(false);
+    }
+
+    // We draw as many pages as there are layers. The first page has
+    // only Layer 1 visible, the last has all layers visible.
+    for (const auto& layer: *p->getLayers()) {
+        layer->setVisible(true);
+        if (!exportPage(pageNo)) {
+            return false;
+        }
+    }
+
+    // We restore the initial visibilities
+    for (const auto& layer: *p->getLayers()) {
+        layer->setVisible(initialVisibility[layer]);
+    }
+
+    return true;
 }
 
 auto ExportTemplate::exportPage(const size_t pageNo) -> bool {
