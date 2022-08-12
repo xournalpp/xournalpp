@@ -509,7 +509,6 @@ static int applib_getDocumentStructure(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     Control* control = plugin->getControl();
     Document* doc = control->getDocument();
-    LayerController* lc = control->getLayerController();
 
     lua_newtable(L);
 
@@ -569,7 +568,7 @@ static int applib_getDocumentStructure(lua_State* L) {
             lua_newtable(L);  // beginning of table for layer l
 
             lua_pushliteral(L, "name");
-            lua_pushstring(L, lc->getLayerNameById(currLayer).c_str());
+            lua_pushstring(L, l->getName().c_str());
             lua_settable(L, -3);
 
             lua_pushliteral(L, "isVisible");
@@ -593,7 +592,7 @@ static int applib_getDocumentStructure(lua_State* L) {
     lua_settable(L, -3);  // end of pages table
 
     lua_pushliteral(L, "currentPage");
-    lua_pushinteger(L, lc->getCurrentPageId() + 1);
+    lua_pushinteger(L, control->getCurrentPageNo() + 1);
     lua_settable(L, -3);
 
     lua_pushliteral(L, "pdfBackgroundFilename");
