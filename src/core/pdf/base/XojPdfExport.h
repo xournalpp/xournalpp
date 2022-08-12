@@ -31,10 +31,6 @@ public:
                  fs::path filePath, const PageRangeVector& exportRange, const bool progressiveMode);
     ~XojPdfExport();
 
-public:
-    bool createPdf(bool progressiveMode);
-    bool createPdf(const PageRangeVector& range, bool progressiveMode);
-
 private:
     auto createCairoCr(double width, double height) -> bool override;
 
