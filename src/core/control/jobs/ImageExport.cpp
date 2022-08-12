@@ -157,44 +157,6 @@ void ImageExport::exportImagePage(size_t pageId, ExportGraphicsFormat format, Do
     }
 }
 
-/**
- * @brief Create one Graphics file per page
- */
-void ImageExport::exportGraphics() {
-    // don't lock the page here for the whole flow, else we get a dead lock...
-    // the ui is blocked, so there should be no changes...
-    auto count = doc->getPageCount();
-
-    bool onePage = ((this->exportRange.size() == 1) && (this->exportRange[0].first == this->exportRange[0].last));
-
-    std::vector<char> selectedPages(count, 0);
-    int selectedCount = 0;
-    for (PageRangeEntry const& e: this->exportRange) {
-        for (size_t x = e.first; x <= e.last; x++) {
-            selectedPages[x] = true;
-            selectedCount++;
-        }
-    }
-
-    progressListener->setMaximumState(selectedCount);
-
-    DocumentView view;
-    int current = 0;
-
-    for (size_t i = 0; i < count; i++) {
-        id = i + 1;
-        if (onePage) {
-            id = SINGLE_PAGE;
-        }
-
-        if (selectedPages[i]) {
-            progressListener->setCurrentState(current++);
-
-            exportImagePage(i, format, view);  // Todo(narrowing): remove cast
-        }
-    }
-}
-
 auto ImageExport::exportPage(const size_t pageNo) -> bool {
     DocumentView view;
     exportImagePage(pageNo, format, view);
