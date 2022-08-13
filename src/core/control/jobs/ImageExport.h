@@ -70,22 +70,25 @@ public:
     ImageExport(Document* doc, fs::path filePath, ExportGraphicsFormat format);
     virtual ~ImageExport();
 
-public:
     /**
      * @brief Set a quality level for PNG exports
      * @param qParam A quality parameter for the export
      */
-    void setQualityParameter(const RasterImageQualityParameter& qParam);
+    auto setQualityParameter(const RasterImageQualityParameter& qParam) -> void;
 
     /**
      * @brief Set a quality level for PNG exports
      * @param criterion A quality criterion for the export
      * @param value The target value of this criterion
      */
-    void setQualityParameter(ExportQualityCriterion criterion, int value);
+    auto setQualityParameter(ExportQualityCriterion criterion, int value) -> void;
 
 private:
     auto createCairoCr(double width, double height) -> bool override;
+
+    auto configureCairoResourcesForPage(const PageRef page) -> bool override;
+
+    auto clearCairoConfig() -> bool override;
 
     /**
      * @brief Get a filename with a (page) number appended
@@ -94,17 +97,12 @@ private:
      *
      * @return The filename
      */
-    fs::path getFilenameWithNumber(size_t no) const;
+    auto getFilenameWithNumber(size_t no) const -> fs::path;
 
     auto computeZoomRatioWithFactor(double normalizationFactor) -> double;
 
     static constexpr size_t SINGLE_PAGE = size_t(-1);
 
-    auto configureCairoResourcesForPage(const PageRef page) -> bool override;
-
-    auto clearCairoConfig() -> bool override;
-
-public:
     /**
      * Export graphics format
      */
@@ -115,7 +113,6 @@ public:
      */
     RasterImageQualityParameter qualityParameter = RasterImageQualityParameter();
 
-private:
     /**
      * The number of the page being exported
      */

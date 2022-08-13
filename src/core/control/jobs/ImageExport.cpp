@@ -31,18 +31,9 @@ ImageExport::ImageExport(Document* doc, fs::path filePath, ExportGraphicsFormat 
 
 ImageExport::~ImageExport() = default;
 
-/**
- * @brief Set a quality level for PNG exports
- * @param qParam A quality parameter for the export
- */
-void ImageExport::setQualityParameter(const RasterImageQualityParameter& qParam) { qualityParameter = qParam; }
+auto ImageExport::setQualityParameter(const RasterImageQualityParameter& qParam) -> void { qualityParameter = qParam; }
 
-/**
- * @brief Set a quality level for PNG exports
- * @param criterion A quality criterion for the export
- * @param value The target value of this criterion
- */
-void ImageExport::setQualityParameter(ExportQualityCriterion criterion, int value) {
+auto ImageExport::setQualityParameter(ExportQualityCriterion criterion, int value) -> void {
     this->qualityParameter = RasterImageQualityParameter(criterion, value);
 }
 
@@ -84,13 +75,6 @@ auto ImageExport::computeZoomRatioWithFactor(double normalizationFactor) -> doub
     return ((double)qualityParameter.getValue()) / normalizationFactor;
 }
 
-/**
- * @brief Get a filename with a (page) number appended
- * @param no The appended number. If no==-1, does not append anything.
- * e.g. .../export-2.png, if the no is -1, return .../export.png
- *
- * @return The filename
- */
 auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
     if (no == SINGLE_PAGE) {
         // No number to add
