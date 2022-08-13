@@ -58,7 +58,7 @@ protected:
     /**
      * Document to export
      */
-    Document* doc = nullptr;
+    Document* doc;
 
     /**
      * Filename for export
