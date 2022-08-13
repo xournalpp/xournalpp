@@ -55,36 +55,20 @@ protected:
      */
     auto freeCairoResources() -> bool;
 
-protected:
-    /**
-     * A pointer to a range of layers to export (the same for every exported pages)
-     */
-    std::unique_ptr<LayerRangeVector> layerRange;
-
-    /**
-     * The page range to export
-     */
-    const PageRangeVector& exportRange;
-
-    /**
-     * The last error message to show to the user
-     */
-    std::string lastError;
-
     /**
      * Document to export
      */
     Document* doc = nullptr;
 
     /**
-     * Option for background export
+     * Filename for export
      */
-    ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
+    const fs::path filePath;
 
     /**
-     * A listener to track the export progress
+     * The last error message to show to the user
      */
-    ProgressListener* progressListener = nullptr;
+    std::string lastError;
 
     /**
      * Cairo export surface
@@ -96,16 +80,6 @@ protected:
      */
     cairo_t* cr = nullptr;
 
-    /**
-     * Filename for export
-     */
-    fs::path const filePath;
-
-    /**
-     * Export all Layers progressively
-     */
-    const bool progressiveMode = false;
-
 private:
     /**
      * @brief Create Cairo cr and surface for a given page
@@ -115,6 +89,18 @@ private:
      * @return true if surface creation succeeded
      */
     virtual auto createCairoCr(double width, double height) -> bool = 0;
+
+    /**
+     * @brief Configure Cairo Resources for page to export
+     * @return true on successful configuration
+     */
+    virtual auto configureCairoResourcesForPage(const PageRef page) -> bool = 0;
+
+    /**
+     * @brief Clear current Cairo configuration
+     * @return true on success
+     */
+    virtual auto clearCairoConfig() -> bool = 0;
 
     /**
      * @brief Export all layers of a single page one by one (each layer a new page)
@@ -129,16 +115,29 @@ private:
     auto exportPage(const size_t pageNo) -> bool;
 
     /**
-     * @brief Configure Cairo Resources for page to export
-     * @return true on successful configuration
+     * Option for background export
      */
-    virtual auto configureCairoResourcesForPage(const PageRef page) -> bool = 0;
+    ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;
 
     /**
-     * @brief Clear current Cairo configuration
-     * @return true on success
+     * A listener to track the export progress
      */
-    virtual auto clearCairoConfig() -> bool = 0;
+    ProgressListener* progressListener = nullptr;
+
+    /**
+     * The page range to export
+     */
+    const PageRangeVector& exportRange;
+
+    /**
+     * A pointer to a range of layers to export (the same for every exported pages)
+     */
+    std::unique_ptr<LayerRangeVector> layerRange;
+
+    /**
+     * Export all Layers progressively
+     */
+    const bool progressiveMode = false;
 };
 
 /**
