@@ -11,14 +11,7 @@
 #include "util/i18n.h"                      // for _
 #include "view/DocumentView.h"              // for DocumentView
 
-ExportTemplate::ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
-                               fs::path filePath, const PageRangeVector& exportRange, const bool progressiveMode):
-        exportRange{exportRange},
-        doc{doc},
-        exportBackground{exportBackground},
-        progressListener{progressListener},
-        filePath{std::move(filePath)},
-        progressiveMode{progressiveMode} {}
+ExportTemplate::ExportTemplate(Document* doc, fs::path filePath): doc{doc}, filePath{std::move(filePath)} {}
 
 ExportTemplate::~ExportTemplate() {}
 

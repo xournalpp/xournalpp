@@ -67,8 +67,7 @@ private:
  */
 class ImageExport: public ExportTemplate {
 public:
-    ImageExport(Document* doc, fs::path filePath, ExportGraphicsFormat format, ExportBackgroundType exportBackground,
-                const PageRangeVector& exportRange, ProgressListener* progressListener);
+    ImageExport(Document* doc, fs::path filePath, ExportGraphicsFormat format);
     virtual ~ImageExport();
 
 public:

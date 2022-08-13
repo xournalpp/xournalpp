@@ -51,9 +51,9 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
         exportRange.emplace_back(0, doc->getPageCount() - 1);
     }
 
-    DummyProgressListener progress;
-
-    ImageExport imgExport(doc, path, format, exportBackground, exportRange, &progress);
+    ImageExport imgExport(doc, path, format);
+    imgExport.setExportBackground(exportBackground);
+    imgExport.setExportRange(exportRange);
 
     if (format == EXPORT_GRAPHICS_PNG) {
         if (pngDpi > 0) {
@@ -101,8 +101,11 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
         // Parse the range
         exportRange = ElementRange::parse(range, doc->getPageCount());
     }
-    XojPdfExport pdfe{doc, exportBackground, nullptr, path, exportRange, progressiveMode};
+    XojPdfExport pdfe{doc, path};
     pdfe.setLayerRange(layerRange);
+    pdfe.setExportBackground(exportBackground);
+    pdfe.setExportRange(exportRange);
+    pdfe.setProgressiveMode(progressiveMode);
 
     // Do the export
     if (!pdfe.exportDocument()) {

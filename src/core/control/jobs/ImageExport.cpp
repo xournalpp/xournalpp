@@ -26,11 +26,8 @@
 using std::string;
 
 
-ImageExport::ImageExport(Document* doc, fs::path filePath, ExportGraphicsFormat format,
-                         ExportBackgroundType exportBackground, const PageRangeVector& exportRange,
-                         ProgressListener* progressListener):
-        ExportTemplate{doc, exportBackground, progressListener, std::move(filePath), exportRange, false},
-        format(format) {}
+ImageExport::ImageExport(Document* doc, fs::path filePath, ExportGraphicsFormat format):
+        ExportTemplate{doc, std::move(filePath)}, format(format) {}
 
 ImageExport::~ImageExport() = default;
 
