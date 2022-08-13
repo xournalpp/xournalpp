@@ -33,6 +33,10 @@ public:
 private:
     auto createCairoCr(double width, double height) -> bool override;
 
+    auto configureCairoResourcesForPage(const PageRef page) -> bool override;
+
+    auto clearCairoConfig() -> bool override;
+
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
     /**
      * Populate the outline of the generated PDF using the outline of the
@@ -44,8 +48,4 @@ private:
      */
     void populatePdfOutline(GtkTreeModel* tocModel);
 #endif
-
-    auto configureCairoResourcesForPage(const PageRef page) -> bool override;
-
-    auto clearCairoConfig() -> bool override;
 };
