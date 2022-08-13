@@ -101,7 +101,11 @@ auto CustomExportJob::showFilechooser() -> bool {
  * Create one Graphics file per page
  */
 void CustomExportJob::exportGraphics() {
-    ImageExport imgExport{control->getDocument(), filepath, format, exportBackground, exportRange, control};
+    ImageExport imgExport{control->getDocument(), filepath, format};
+    imgExport.setExportBackground(exportBackground);
+    imgExport.setExportRange(exportRange);
+    imgExport.setProgressListener(control);
+
     if (format == EXPORT_GRAPHICS_PNG) {
         imgExport.setQualityParameter(pngQualityParameter);
     }
@@ -133,7 +137,12 @@ void CustomExportJob::run() {
         PageRangeVector exportRange =
                 ElementRange::parse("1-" + std::to_string(doc->getPageCount()), doc->getPageCount());
 
-        XojPdfExport pdfe{doc, exportBackground, control, filepath, exportRange, progressiveMode};
+        XojPdfExport pdfe{doc, filepath};
+        pdfe.setExportBackground(exportBackground);
+        pdfe.setProgressListener(control);
+        pdfe.setExportRange(exportRange);
+        pdfe.setProgressiveMode(progressiveMode);
+
 
         if (!pdfe.exportDocument()) {
             this->errorMsg = pdfe.getLastErrorMsg();

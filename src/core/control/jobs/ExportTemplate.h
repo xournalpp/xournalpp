@@ -26,8 +26,7 @@ class ProgressListener;
  */
 class ExportTemplate {
 public:
-    ExportTemplate(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
-                   fs::path filePath, const PageRangeVector& exportRange, const bool progressiveMode);
+    ExportTemplate(Document* doc, fs::path filePath);
 
     virtual ~ExportTemplate();
 

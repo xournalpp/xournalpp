@@ -27,8 +27,7 @@ class ProgressListener;
 
 class XojPdfExport: public ExportTemplate {
 public:
-    XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
-                 fs::path filePath, const PageRangeVector& exportRange, const bool progressiveMode);
+    XojPdfExport(Document* doc, fs::path filePath);
     ~XojPdfExport();
 
 private:

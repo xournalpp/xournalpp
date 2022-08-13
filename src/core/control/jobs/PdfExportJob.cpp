@@ -36,10 +36,12 @@ void PdfExportJob::run() {
     Document* doc = control->getDocument();
 
     PageRangeVector exportRange = ElementRange::parse("1-" + std::to_string(doc->getPageCount()), doc->getPageCount());
-    bool progressiveMode = false;
+
     doc->lock();
-    XojPdfExport pdfe{doc, EXPORT_BACKGROUND_ALL, control, filepath, exportRange, progressiveMode};
+    XojPdfExport pdfe{doc, filepath};
     doc->unlock();
+    pdfe.setProgressListener(control);
+    pdfe.setExportRange(exportRange);
 
     if (!pdfe.exportDocument()) {
         this->errorMsg = pdfe.getLastErrorMsg();

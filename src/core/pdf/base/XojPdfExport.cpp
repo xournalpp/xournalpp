@@ -27,9 +27,7 @@
 #include "config.h"      // for PROJECT_STRING
 #include "filesystem.h"  // for path
 
-XojPdfExport::XojPdfExport(Document* doc, ExportBackgroundType exportBackground, ProgressListener* progressListener,
-                           fs::path filePath, const PageRangeVector& exportRange, const bool progressiveMode):
-        ExportTemplate{doc, exportBackground, progressListener, std::move(filePath), exportRange, progressiveMode} {
+XojPdfExport::XojPdfExport(Document* doc, fs::path filePath): ExportTemplate{doc, std::move(filePath)} {
     createCairoCr(0.0, 0.0);
 }
 
