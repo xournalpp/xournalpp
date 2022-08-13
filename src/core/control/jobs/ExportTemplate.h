@@ -35,7 +35,15 @@ public:
      * @brief Select layers to export by parsing str
      * @param rangeStr A string parsed to get a list of layers
      */
-    auto setLayerRange(const char* rangeStr) -> void;
+    void setLayerRange(const char* rangeStr);
+
+    void setExportBackground(const ExportBackgroundType exportBackground);
+
+    void setProgressListener(ProgressListener* progressListener);
+
+    void setExportRange(const PageRangeVector& exportRange);
+
+    void setProgressiveMode(const bool progressiveMode);
 
     /**
      * @brief Get the last error message
@@ -127,7 +135,7 @@ private:
     /**
      * The page range to export
      */
-    const PageRangeVector& exportRange;
+    PageRangeVector& exportRange = nullptr;
 
     /**
      * A pointer to a range of layers to export (the same for every exported pages)
@@ -137,7 +145,7 @@ private:
     /**
      * Export all Layers progressively
      */
-    const bool progressiveMode = false;
+    bool progressiveMode = false;
 };
 
 /**

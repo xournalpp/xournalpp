@@ -30,6 +30,18 @@ auto ExportTemplate::setLayerRange(const char* rangeStr) -> void {
     }
 }
 
+void ExportTemplate::setExportBackground(const ExportBackgroundType exportBackground) {
+    this->exportBackground = exportBackground;
+}
+
+void ExportTemplate::setProgressListener(ProgressListener* progressListener) {
+    this->progressListener = progressListener;
+}
+
+void ExportTemplate::setExportRange(const PageRangeVector& exportRange) { this->exportRange = exportRange; }
+
+void ExportTemplate::setProgressiveMode(const bool progressiveMode) { this->progressiveMode = progressiveMode; }
+
 auto ExportTemplate::getLastErrorMsg() const -> std::string { return lastError; }
 
 auto ExportTemplate::freeCairoResources() -> bool {
