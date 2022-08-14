@@ -78,20 +78,7 @@ auto ExportTemplate::exportDocument() -> bool {
 
     size_t exportedPages = 0;
     for (const auto& rangeEntry: exportRange) {
-        auto lastPage = std::min(rangeEntry.last, doc->getPageCount());
-
-        for (auto i = rangeEntry.first; i <= lastPage; ++i, ++exportedPages) {
-            if (progressiveMode && !exportPageLayers(i)) {
-                return false;
-            }
-            if (!progressiveMode && !exportPage(i)) {
-                return false;
-            }
-
-            if (progressListener) {
-                progressListener->setCurrentState(static_cast<int>(exportedPages));
-            }
-        }
+        exportedPages += exportPagesInRangeEntry(rangeEntry, exportedPages);
     }
 
     return true;
@@ -103,6 +90,26 @@ auto countPagesToExport(const PageRangeVector& exportRange) -> size_t {
         count += e.last - e.first + 1;
     }
     return count;
+}
+
+auto ExportTemplate::exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry, const size_t& exportedPages)
+        -> size_t {
+    size_t exportedPagesInEntry = 0;
+    auto lastPage = std::min(rangeEntry.last, doc->getPageCount());
+
+    for (auto i = rangeEntry.first; i <= lastPage; ++i, ++exportedPagesInEntry) {
+        if (progressiveMode) {
+            exportPageLayers(i);
+        } else {
+            exportPage(i);
+        }
+
+        if (progressListener) {
+            int progressCount = static_cast<int>(exportedPages + exportedPagesInEntry);
+            progressListener->setCurrentState(progressCount);
+        }
+    }
+    return exportedPagesInEntry;
 }
 
 auto ExportTemplate::freeCairoResources() -> bool {
