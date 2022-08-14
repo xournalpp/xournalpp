@@ -1,12 +1,10 @@
 #include "ExportTemplate.h"
 
 #include <cmath>  // for round
-#include <map>    // for map
 #include <utility>
 
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "model/Document.h"                 // for Document
-#include "model/Layer.h"                    // for Layer
 #include "model/XojPage.h"                  // for XojPage
 #include "util/i18n.h"                      // for _
 #include "view/DocumentView.h"              // for DocumentView
@@ -118,30 +116,39 @@ auto ExportTemplate::freeCairoResources() -> bool {
 }
 
 auto ExportTemplate::exportPageLayers(const size_t pageNo) -> bool {
-    PageRef p = doc->getPage(pageNo);
+    PageRef page = doc->getPage(pageNo);
 
-    // We keep a copy of the layers initial Visible state
-    std::map<Layer*, bool> initialVisibility;
-    for (const auto& layer: *p->getLayers()) {
-        initialVisibility[layer] = layer->isVisible();
-        layer->setVisible(false);
-    }
+    std::map<Layer*, bool> initialVisibility = clearLayerVisibilityStateOfPage(page);
 
     // We draw as many pages as there are layers. The first page has
     // only Layer 1 visible, the last has all layers visible.
-    for (const auto& layer: *p->getLayers()) {
+    for (const auto& layer: *page->getLayers()) {
         layer->setVisible(true);
-        if (!exportPage(pageNo)) {
-            return false;
-        }
+        exportPage(pageNo);
     }
 
-    // We restore the initial visibilities
-    for (const auto& layer: *p->getLayers()) {
-        layer->setVisible(initialVisibility[layer]);
+    setLayerVisibilityStateOfPage(page, initialVisibility);
+
+    if (lastError != "") {
+        return false;
     }
 
     return true;
+}
+
+auto clearLayerVisibilityStateOfPage(const PageRef& page) -> std::map<Layer*, bool> {
+    std::map<Layer*, bool> layerVisibilityState;
+    for (const auto& layer: *page->getLayers()) {
+        layerVisibilityState[layer] = layer->isVisible();
+        layer->setVisible(false);
+    }
+    return layerVisibilityState;
+}
+
+void setLayerVisibilityStateOfPage(const PageRef& page, std::map<Layer*, bool> visibilityState) {
+    for (const auto& layer: *page->getLayers()) {
+        layer->setVisible(visibilityState[layer]);
+    }
 }
 
 auto ExportTemplate::exportPage(const size_t pageNo) -> bool {

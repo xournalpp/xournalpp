@@ -11,9 +11,11 @@
 
 #pragma once
 
+#include <map>       // for map
 #include <memory>    // for std::unique_ptr
 #include <optional>  // for std::optional
 
+#include "model/Layer.h"        // for Layer
 #include "model/PageRef.h"      // for PageRef
 #include "util/ElementRange.h"  // for ElementRangeVector
 
@@ -169,3 +171,15 @@ auto parseRange(const char* rangeStr) -> std::optional<LayerRangeVector>;
  * @return total number of pages to export
  */
 auto countPagesToExport(const PageRangeVector& exportRange) -> size_t;
+
+
+/**
+ * @brief Clear the page's layers visibility state (all set to false)
+ * @return The previous layer visibility state (before cleared)
+ */
+auto clearLayerVisibilityStateOfPage(const PageRef& page) -> std::map<Layer*, bool>;
+
+/**
+ * @brief Set the page's layer visibility state
+ */
+void setLayerVisibilityStateOfPage(const PageRef& page, std::map<Layer*, bool> visibilityState);
