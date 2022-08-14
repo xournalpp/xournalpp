@@ -51,6 +51,18 @@ auto XojPdfExport::createCairoCr(double width = 0.0, double height = 0.0) -> boo
     return cairo_surface_status(surface) == CAIRO_STATUS_SUCCESS;
 }
 
+auto XojPdfExport::configureCairoResourcesForPage(const PageRef page) -> bool {
+    cairo_pdf_surface_set_size(surface, page->getWidth(), page->getHeight());
+    cairo_save(cr);
+    return true;
+}
+
+auto XojPdfExport::clearCairoConfig() -> bool {
+    cairo_show_page(cr);
+    cairo_restore(cr);
+    return true;
+}
+
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
 void XojPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
     if (tocModel == nullptr)
@@ -100,15 +112,3 @@ void XojPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
     }
 }
 #endif
-
-auto XojPdfExport::configureCairoResourcesForPage(const PageRef page) -> bool {
-    cairo_pdf_surface_set_size(surface, page->getWidth(), page->getHeight());
-    cairo_save(cr);
-    return true;
-}
-
-auto XojPdfExport::clearCairoConfig() -> bool {
-    cairo_show_page(cr);
-    cairo_restore(cr);
-    return true;
-}

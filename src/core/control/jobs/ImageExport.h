@@ -84,11 +84,11 @@ public:
     auto setQualityParameter(ExportQualityCriterion criterion, int value) -> void;
 
 private:
-    auto createCairoCr(double width, double height) -> bool override;
-
     auto configureCairoResourcesForPage(const PageRef page) -> bool override;
 
-    auto clearCairoConfig() -> bool override;
+    auto createCairoCr(double width, double height) -> bool override;
+
+    auto computeZoomRatioWithFactor(double normalizationFactor) -> double;
 
     /**
      * @brief Get a filename with a (page) number appended
@@ -99,7 +99,7 @@ private:
      */
     auto getFilenameWithNumber(size_t no) const -> fs::path;
 
-    auto computeZoomRatioWithFactor(double normalizationFactor) -> double;
+    auto clearCairoConfig() -> bool override;
 
     static constexpr size_t SINGLE_PAGE = size_t(-1);
 
