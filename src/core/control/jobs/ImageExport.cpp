@@ -46,6 +46,9 @@ auto ImageExport::configureCairoResourcesForPage(const PageRef page) -> bool {
 }
 
 auto ImageExport::createCairoCr(double width, double height) -> bool {
+    xoj::util::CairoSurfaceSPtr newSurface;
+    xoj::util::CairoSPtr newCr;
+
     switch (format) {
         case EXPORT_GRAPHICS_PNG:
             switch (qualityParameter.getQualityCriterion()) {
@@ -61,22 +64,26 @@ auto ImageExport::createCairoCr(double width, double height) -> bool {
             }
             width = std::round(width * zoomRatio);
             height = std::round(height * zoomRatio);
-            surface =
+            newSurface =
                     cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(width), static_cast<int>(height));
-            cr = cairo_create(surface);
-            cairo_scale(cr, zoomRatio, zoomRatio);
+            newCr = cairo_create(newSurface.get());
+            cairo_scale(newCr.get(), zoomRatio, zoomRatio);
             break;
         case EXPORT_GRAPHICS_SVG:
-            surface = cairo_svg_surface_create(getFilenameWithNumber(id).u8string().c_str(), static_cast<int>(width),
-                                               static_cast<int>(height));
-            cairo_svg_surface_restrict_to_version(surface, CAIRO_SVG_VERSION_1_2);
-            cr = cairo_create(surface);
+            newSurface = cairo_svg_surface_create(getFilenameWithNumber(id).u8string().c_str(), static_cast<int>(width),
+                                                  static_cast<int>(height));
+            cairo_svg_surface_restrict_to_version(newSurface.get(), CAIRO_SVG_VERSION_1_2);
+            newCr = cairo_create(newSurface.get());
             break;
         default:
             lastError = _("Unsupported graphics format: ") + std::to_string(format);
             return false;
     }
-    return cairo_surface_status(surface) == CAIRO_STATUS_SUCCESS;
+
+    std::swap(surface, newSurface);
+    std::swap(cr, newCr);
+
+    return cairo_surface_status(surface.get()) == CAIRO_STATUS_SUCCESS;
 }
 
 auto ImageExport::computeZoomRatioWithFactor(double normalizationFactor) -> double {
@@ -99,12 +106,7 @@ auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
 auto ImageExport::clearCairoConfig() -> bool {
     if (format == EXPORT_GRAPHICS_PNG) {
         const auto filename = getFilenameWithNumber(id);
-        cairo_surface_write_to_png(surface, filename.u8string().c_str());
-    }
-
-    if (!freeCairoResources()) {
-        lastError = _("Error: cannot free Cairo resources.");
-        return false;
+        cairo_surface_write_to_png(surface.get(), filename.u8string().c_str());
     }
 
     return true;

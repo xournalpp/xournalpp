@@ -15,9 +15,10 @@
 #include <memory>    // for std::unique_ptr
 #include <optional>  // for std::optional
 
-#include "model/Layer.h"        // for Layer
-#include "model/PageRef.h"      // for PageRef
-#include "util/ElementRange.h"  // for ElementRangeVector
+#include "model/Layer.h"              // for Layer
+#include "model/PageRef.h"            // for PageRef
+#include "util/ElementRange.h"        // for ElementRangeVector
+#include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr, CairoSPtr
 
 #include "BaseExportJob.h"  // for ExportBackgroundType, EXPORT_BACKGROUND_ALL
 
@@ -59,11 +60,6 @@ public:
 
 protected:
     /**
-     * @brief Destroy cairo surface and cr
-     */
-    auto freeCairoResources() -> bool;
-
-    /**
      * Document to export
      */
     Document* doc;
@@ -81,12 +77,12 @@ protected:
     /**
      * Cairo export surface
      */
-    cairo_surface_t* surface = nullptr;
+    xoj::util::CairoSurfaceSPtr surface;
 
     /**
      * Cairo context
      */
-    cairo_t* cr = nullptr;
+    xoj::util::CairoSPtr cr;
 
 private:
     /**

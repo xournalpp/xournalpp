@@ -31,35 +31,32 @@ XojPdfExport::XojPdfExport(Document* doc, fs::path filePath): ExportTemplate{doc
     createCairoCr(0.0, 0.0);
 }
 
-XojPdfExport::~XojPdfExport() {
-    if (surface) {
-        freeCairoResources();
-    }
-}
+XojPdfExport::~XojPdfExport() {}
 
 auto XojPdfExport::createCairoCr(double width = 0.0, double height = 0.0) -> bool {
     surface = cairo_pdf_surface_create(filePath.u8string().c_str(), width, height);
-    cr = cairo_create(surface);
+    cr = cairo_create(surface.get());
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
-    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_TITLE, doc->getFilepath().filename().u8string().c_str());
-    cairo_pdf_surface_set_metadata(surface, CAIRO_PDF_METADATA_CREATOR, PROJECT_STRING);
+    cairo_pdf_surface_set_metadata(surface.get(), CAIRO_PDF_METADATA_TITLE,
+                                   doc->getFilepath().filename().u8string().c_str());
+    cairo_pdf_surface_set_metadata(surface.get(), CAIRO_PDF_METADATA_CREATOR, PROJECT_STRING);
     GtkTreeModel* tocModel = doc->getContentsModel();
     populatePdfOutline(tocModel);
 #endif
 
-    return cairo_surface_status(surface) == CAIRO_STATUS_SUCCESS;
+    return cairo_surface_status(surface.get()) == CAIRO_STATUS_SUCCESS;
 }
 
 auto XojPdfExport::configureCairoResourcesForPage(const PageRef page) -> bool {
-    cairo_pdf_surface_set_size(surface, page->getWidth(), page->getHeight());
-    cairo_save(cr);
+    cairo_pdf_surface_set_size(surface.get(), page->getWidth(), page->getHeight());
+    cairo_save(cr.get());
     return true;
 }
 
 auto XojPdfExport::clearCairoConfig() -> bool {
-    cairo_show_page(cr);
-    cairo_restore(cr);
+    cairo_show_page(cr.get());
+    cairo_restore(cr.get());
     return true;
 }
 
@@ -96,7 +93,7 @@ void XojPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
             }
             const auto linkAttr = linkAttrBuf.str();
             auto outlineFlags = dest->getExpand() ? CAIRO_PDF_OUTLINE_FLAG_OPEN : 0;
-            cairo_pdf_surface_add_outline(this->surface, parentId, link->dest->getName().data(), linkAttr.data(),
+            cairo_pdf_surface_add_outline(surface.get(), parentId, link->dest->getName().data(), linkAttr.data(),
                                           static_cast<cairo_pdf_outline_flags_t>(outlineFlags));
         }
         g_object_unref(link);
