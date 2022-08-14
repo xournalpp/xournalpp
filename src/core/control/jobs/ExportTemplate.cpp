@@ -112,16 +112,6 @@ auto ExportTemplate::exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry
     return exportedPagesInEntry;
 }
 
-auto ExportTemplate::freeCairoResources() -> bool {
-    cairo_destroy(cr);
-    cr = nullptr;
-
-    cairo_surface_destroy(surface);
-    surface = nullptr;
-
-    return true;
-}
-
 auto ExportTemplate::exportPageLayers(const size_t pageNo) -> bool {
     PageRef page = doc->getPage(pageNo);
 
@@ -187,7 +177,7 @@ void ExportTemplate::renderBackground(const PageRef& page) {
         } else if (format == EXPORT_GRAPHICS_PNG) {
             popplerPage->render(cr);
         } else {
-            popplerPage->renderForPrinting(cr);
+            popplerPage->renderForPrinting(cr.get());
         }
     }
 }
@@ -197,11 +187,11 @@ void ExportTemplate::drawPage(const PageRef& page) {
     bool dontRenderEraseable = true;  // TODO rename
     bool dontRenderPdfBackground = true;
     if (layerRange) {
-        view.drawLayersOfPage(layerRange.value(), page, cr, dontRenderEraseable, dontRenderPdfBackground,
+        view.drawLayersOfPage(layerRange.value(), page, cr.get(), dontRenderEraseable, dontRenderPdfBackground,
                               exportBackground == EXPORT_BACKGROUND_NONE,
                               exportBackground <= EXPORT_BACKGROUND_UNRULED);
     } else {
-        view.drawPage(page, cr, dontRenderEraseable, dontRenderPdfBackground,
+        view.drawPage(page, cr.get(), dontRenderEraseable, dontRenderPdfBackground,
                       exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
     }
 }
