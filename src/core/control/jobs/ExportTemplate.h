@@ -121,6 +121,16 @@ private:
     auto exportPage(const size_t pageNo) -> bool;
 
     /**
+     * @brief Render page Background if available and exportBackground set
+     */
+    void renderBackground(const PageRef& page);
+
+    /**
+     * @brief Draw the page
+     */
+    void drawPage(const PageRef& page);
+
+    /**
      * Option for background export
      */
     ExportBackgroundType exportBackground = EXPORT_BACKGROUND_ALL;

@@ -151,25 +151,35 @@ auto ExportTemplate::exportPage(const size_t pageNo) -> bool {
         return false;
     }
 
-    DocumentView view;
+    renderBackground(page);
+    drawPage(page);
 
+    if (!clearCairoConfig()) {
+        return false;
+    }
+
+    return true;
+}
+
+void ExportTemplate::renderBackground(const PageRef& page) {
     // For a better pdf quality, we use a dedicated pdf rendering
     if (page->getBackgroundType().isPdfPage() && (exportBackground != EXPORT_BACKGROUND_NONE)) {
-        // Handle the pdf page separately, to call renderForPrinting for better
-        // quality.
+        // Handle the pdf page separately, to call renderForPrinting for better quality.
         auto pgNo = page->getPdfPageNr();
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
         if (!popplerPage) {
             lastError = _("Error while exporting the pdf background: cannot find the pdf page number.");
             lastError += std::to_string(pgNo);
-            // TODO return? Problem free CairoResources
         } else if (format == EXPORT_GRAPHICS_PNG) {
             popplerPage->render(cr);
         } else {
             popplerPage->renderForPrinting(cr);
         }
     }
+}
 
+void ExportTemplate::drawPage(const PageRef& page) {
+    DocumentView view;
     bool dontRenderEraseable = true;  // TODO rename
     bool dontRenderPdfBackground = true;
     if (layerRange) {
@@ -180,10 +190,4 @@ auto ExportTemplate::exportPage(const size_t pageNo) -> bool {
         view.drawPage(page, cr, dontRenderEraseable, dontRenderPdfBackground,
                       exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
     }
-
-    if (!clearCairoConfig()) {
-        return false;
-    }
-
-    return true;
 }
