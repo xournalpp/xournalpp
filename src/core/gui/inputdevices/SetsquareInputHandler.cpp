@@ -195,7 +195,7 @@ auto SetsquareInputHandler::handleKeyboard(InputEvent const& event) -> bool {
                 xshift = amount * xdir;
                 yshift = amount * ydir;
             }
-            setsquareView->move(amount * xshift, amount * yshift);
+            setsquareView->move(xshift, yshift);
             view->repaintSetsquare();
             return true;
         }
