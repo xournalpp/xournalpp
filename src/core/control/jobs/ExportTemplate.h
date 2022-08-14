@@ -11,10 +11,11 @@
 
 #pragma once
 
-#include <memory>  // for std::unique_ptr
+#include <memory>    // for std::unique_ptr
+#include <optional>  // for std::optional
 
 #include "model/PageRef.h"      // for PageRef
-#include "util/ElementRange.h"  // for LayerRangeVector
+#include "util/ElementRange.h"  // for ElementRangeVector
 
 #include "BaseExportJob.h"  // for ExportBackgroundType, EXPORT_BACKGROUND_ALL
 
@@ -30,17 +31,15 @@ public:
 
     virtual ~ExportTemplate();
 
-    /**
-     * @brief Select layers to export by parsing str
-     * @param rangeStr A string parsed to get a list of layers
-     */
-    void setLayerRange(const char* rangeStr);
-
     void setExportBackground(const ExportBackgroundType exportBackground);
 
     void setProgressListener(ProgressListener* progressListener);
 
     void setExportRange(const PageRangeVector& exportRange);
+    void setExportRange(const char* rangeStr);
+
+    void setLayerRange(const LayerRangeVector& layerRange);
+    void setLayerRange(const char* rangeStr);
 
     void setProgressiveMode(const bool progressiveMode);
 
@@ -134,12 +133,12 @@ private:
     /**
      * The page range to export
      */
-    PageRangeVector& exportRange = nullptr;
+    PageRangeVector exportRange;
 
     /**
      * A pointer to a range of layers to export (the same for every exported pages)
      */
-    std::unique_ptr<LayerRangeVector> layerRange;
+    std::optional<LayerRangeVector> layerRange = std::nullopt;
 
     /**
      * Export all Layers progressively
@@ -148,9 +147,15 @@ private:
 };
 
 /**
- * @brief Counts the number of pages to export
- * @param exportRange the page ranges specifying pages to export
+ * @brief Parses the provided range string
+ * @param rangeStr String specifying the a page or layer range
  *
+ * @return nullopt if no or empty range, otherwise ElementRangeVector
+ */
+auto parseRange(const char* rangeStr) -> std::optional<LayerRangeVector>;
+
+/**
+ * @brief Counts the number of pages to export
  * @return total number of pages to export
  */
 auto countPagesToExport(const PageRangeVector& exportRange) -> size_t;
