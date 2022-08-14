@@ -72,16 +72,6 @@ void ExportTemplate::setProgressiveMode(const bool progressiveMode) { this->prog
 
 auto ExportTemplate::getLastErrorMsg() const -> std::string { return lastError; }
 
-auto ExportTemplate::freeCairoResources() -> bool {
-    cairo_destroy(cr);
-    cr = nullptr;
-
-    cairo_surface_destroy(surface);
-    surface = nullptr;
-
-    return true;
-}
-
 auto ExportTemplate::exportDocument() -> bool {
     if (progressListener) {
         size_t n = countPagesToExport(exportRange);
@@ -115,6 +105,16 @@ auto countPagesToExport(const PageRangeVector& exportRange) -> size_t {
         count += e.last - e.first + 1;
     }
     return count;
+}
+
+auto ExportTemplate::freeCairoResources() -> bool {
+    cairo_destroy(cr);
+    cr = nullptr;
+
+    cairo_surface_destroy(surface);
+    surface = nullptr;
+
+    return true;
 }
 
 auto ExportTemplate::exportPageLayers(const size_t pageNo) -> bool {

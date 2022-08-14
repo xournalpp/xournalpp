@@ -37,6 +37,14 @@ auto ImageExport::setQualityParameter(ExportQualityCriterion criterion, int valu
     this->qualityParameter = RasterImageQualityParameter(criterion, value);
 }
 
+auto ImageExport::configureCairoResourcesForPage(const PageRef page) -> bool {
+    if (!createCairoCr(page->getWidth(), page->getHeight())) {
+        lastError = _("Error: cannot configure Cairo resources.");
+        return false;
+    }
+    return true;
+}
+
 auto ImageExport::createCairoCr(double width, double height) -> bool {
     switch (format) {
         case EXPORT_GRAPHICS_PNG:
@@ -86,14 +94,6 @@ auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
     path.replace_extension();
     (path += (std::string("-") + std::to_string(no))) += ext;
     return path;
-}
-
-auto ImageExport::configureCairoResourcesForPage(const PageRef page) -> bool {
-    if (!createCairoCr(page->getWidth(), page->getHeight())) {
-        lastError = _("Error: cannot configure Cairo resources.");
-        return false;
-    }
-    return true;
 }
 
 auto ImageExport::clearCairoConfig() -> bool {
