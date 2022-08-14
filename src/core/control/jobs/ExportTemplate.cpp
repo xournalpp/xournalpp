@@ -11,17 +11,13 @@
 #include "util/i18n.h"                      // for _
 #include "view/DocumentView.h"              // for DocumentView
 
-ExportTemplate::ExportTemplate(Document* doc, fs::path filePath): doc{doc}, filePath{std::move(filePath)} {}
+ExportTemplate::ExportTemplate(Document* doc, fs::path filePath): doc{doc}, filePath{std::move(filePath)} {
+    ElementRangeVector fullRange;
+    fullRange.emplace_back(0, doc->getPageCount() - 1);
+    setExportRange(fullRange);
+}
 
 ExportTemplate::~ExportTemplate() {}
-
-auto ExportTemplate::setLayerRange(const char* rangeStr) -> void {
-    if (rangeStr) {
-        // Use no upper bound for layer indices, as the maximal value can vary between pages
-        layerRange =
-                std::make_unique<LayerRangeVector>(ElementRange::parse(rangeStr, std::numeric_limits<size_t>::max()));
-    }
-}
 
 void ExportTemplate::setExportBackground(const ExportBackgroundType exportBackground) {
     this->exportBackground = exportBackground;
@@ -31,7 +27,46 @@ void ExportTemplate::setProgressListener(ProgressListener* progressListener) {
     this->progressListener = progressListener;
 }
 
-void ExportTemplate::setExportRange(const PageRangeVector& exportRange) { this->exportRange = exportRange; }
+void ExportTemplate::setExportRange(const PageRangeVector& exportRange) {
+    if (exportRange.empty()) {
+        ElementRangeVector fullRange;
+        fullRange.emplace_back(0, doc->getPageCount() - 1);
+        this->exportRange = fullRange;
+    } else {
+        this->exportRange = exportRange;
+    }
+}
+
+void ExportTemplate::setExportRange(const char* rangeStr) {
+    ElementRangeVector fullRange;
+    fullRange.emplace_back(0, doc->getPageCount() - 1);
+    exportRange = parseRange(rangeStr).value_or(fullRange);
+}
+
+void ExportTemplate::setLayerRange(const LayerRangeVector& layerRange) {
+    if (layerRange.empty()) {
+        this->layerRange = std::nullopt;
+    } else {
+        this->layerRange = layerRange;
+    }
+}
+
+void ExportTemplate::setLayerRange(const char* rangeStr) { layerRange = parseRange(rangeStr); }
+
+auto parseRange(const char* rangeStr) -> std::optional<ElementRangeVector> {
+    if (!rangeStr) {
+        return std::nullopt;
+    }
+
+    // Use no upper bound for layer indices, as the maximal value can vary between pages
+    ElementRangeVector v = ElementRange::parse(rangeStr, std::numeric_limits<size_t>::max());
+
+    if (v.empty()) {
+        return std::nullopt;
+    }
+
+    return v;
+}
 
 void ExportTemplate::setProgressiveMode(const bool progressiveMode) { this->progressiveMode = progressiveMode; }
 
@@ -136,7 +171,7 @@ auto ExportTemplate::exportPage(const size_t pageNo) -> bool {
     bool dontRenderEraseable = true;  // TODO rename
     bool dontRenderPdfBackground = true;
     if (layerRange) {
-        view.drawLayersOfPage(*layerRange, page, cr, dontRenderEraseable, dontRenderPdfBackground,
+        view.drawLayersOfPage(layerRange.value(), page, cr, dontRenderEraseable, dontRenderPdfBackground,
                               exportBackground == EXPORT_BACKGROUND_NONE,
                               exportBackground <= EXPORT_BACKGROUND_UNRULED);
     } else {

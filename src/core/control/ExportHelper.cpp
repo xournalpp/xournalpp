@@ -44,16 +44,10 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
         format = EXPORT_GRAPHICS_SVG;
     }
 
-    PageRangeVector exportRange;
-    if (range) {
-        exportRange = ElementRange::parse(range, doc->getPageCount());
-    } else {
-        exportRange.emplace_back(0, doc->getPageCount() - 1);
-    }
-
     ImageExport imgExport(doc, path, format);
     imgExport.setExportBackground(exportBackground);
-    imgExport.setExportRange(exportRange);
+    imgExport.setExportRange(range);
+    imgExport.setLayerRange(layerRange);
 
     if (format == EXPORT_GRAPHICS_PNG) {
         if (pngDpi > 0) {
@@ -64,8 +58,6 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
             imgExport.setQualityParameter(EXPORT_QUALITY_HEIGHT, pngHeight);
         }
     }
-
-    imgExport.setLayerRange(layerRange);
 
     if (!imgExport.exportDocument()) {
         std::string errorMsg = imgExport.getLastErrorMsg();
