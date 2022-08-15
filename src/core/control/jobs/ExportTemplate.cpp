@@ -70,7 +70,12 @@ void ExportTemplate::setProgressiveMode(const bool progressiveMode) { this->prog
 
 auto ExportTemplate::getLastErrorMsg() const -> std::optional<std::string> { return lastError; }
 
-auto ExportTemplate::exportDocument() -> bool {
+void ExportTemplate::exportDocument() {
+    if (!doc) {
+        lastError = _("Error: no document to export.");
+        return;
+    }
+
     numberOfPagesToExport = countPagesToExport(exportRange);
 
     if (progressListener) {
@@ -81,8 +86,6 @@ auto ExportTemplate::exportDocument() -> bool {
     for (const auto& rangeEntry: exportRange) {
         exportedPages += exportPagesInRangeEntry(rangeEntry, exportedPages);
     }
-
-    return true;
 }
 
 auto countPagesToExport(const PageRangeVector& exportRange) -> size_t {
@@ -110,10 +113,11 @@ auto ExportTemplate::exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry
             progressListener->setCurrentState(progressCount);
         }
     }
+
     return exportedPagesInEntry;
 }
 
-auto ExportTemplate::exportPageLayers(const size_t pageNo) -> bool {
+void ExportTemplate::exportPageLayers(const size_t pageNo) {
     PageRef page = doc->getPage(pageNo);
 
     std::map<Layer*, bool> initialVisibility = clearLayerVisibilityStateOfPage(page);
@@ -126,8 +130,6 @@ auto ExportTemplate::exportPageLayers(const size_t pageNo) -> bool {
     }
 
     setLayerVisibilityStateOfPage(page, initialVisibility);
-
-    return true;
 }
 
 auto clearLayerVisibilityStateOfPage(const PageRef& page) -> std::map<Layer*, bool> {
@@ -155,9 +157,7 @@ auto ExportTemplate::exportPage(const size_t pageNo) -> bool {
     renderBackground(page);
     drawPage(page);
 
-    if (!clearCairoConfig()) {
-        return false;
-    }
+    clearCairoConfig();
 
     return true;
 }

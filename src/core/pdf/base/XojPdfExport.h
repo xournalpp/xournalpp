@@ -35,7 +35,7 @@ private:
 
     auto configureCairoResourcesForPage(const size_t pageNo) -> bool override;
 
-    auto clearCairoConfig() -> bool override;
+    void clearCairoConfig() override;
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
     /**

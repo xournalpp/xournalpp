@@ -55,10 +55,9 @@ auto XojPdfExport::configureCairoResourcesForPage(const size_t pageNo) -> bool {
     return true;
 }
 
-auto XojPdfExport::clearCairoConfig() -> bool {
+void XojPdfExport::clearCairoConfig() {
     cairo_show_page(cr.get());
     cairo_restore(cr.get());
-    return true;
 }
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
