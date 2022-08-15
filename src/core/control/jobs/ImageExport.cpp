@@ -37,7 +37,9 @@ auto ImageExport::setQualityParameter(ExportQualityCriterion criterion, int valu
     this->qualityParameter = RasterImageQualityParameter(criterion, value);
 }
 
-auto ImageExport::configureCairoResourcesForPage(const PageRef page) -> bool {
+auto ImageExport::configureCairoResourcesForPage(const size_t pageNo) -> bool {
+    const PageRef& page = doc->getPage(pageNo);
+
     double width = page->getWidth();
     double height = page->getHeight();
 

@@ -33,7 +33,7 @@ public:
 private:
     auto createCairoResources(int width, int height) -> bool override;
 
-    auto configureCairoResourcesForPage(const PageRef page) -> bool override;
+    auto configureCairoResourcesForPage(const size_t pageNo) -> bool override;
 
     auto clearCairoConfig() -> bool override;
 

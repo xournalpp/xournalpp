@@ -48,7 +48,8 @@ auto XojPdfExport::createCairoResources(int width, int height) -> bool {
     return cairo_surface_status(surface.get()) == CAIRO_STATUS_SUCCESS;
 }
 
-auto XojPdfExport::configureCairoResourcesForPage(const PageRef page) -> bool {
+auto XojPdfExport::configureCairoResourcesForPage(const size_t pageNo) -> bool {
+    const PageRef& page = doc->getPage(pageNo);
     cairo_pdf_surface_set_size(surface.get(), page->getWidth(), page->getHeight());
     cairo_save(cr.get());
     return true;

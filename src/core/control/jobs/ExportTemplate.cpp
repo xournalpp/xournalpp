@@ -151,7 +151,7 @@ void setLayerVisibilityStateOfPage(const PageRef& page, std::map<Layer*, bool> v
 auto ExportTemplate::exportPage(const size_t pageNo) -> bool {
     PageRef page = doc->getPage(pageNo);  // TODO: lock or don't lock?
 
-    if (!configureCairoResourcesForPage(page)) {
+    if (!configureCairoResourcesForPage(pageNo)) {
         return false;
     }
 

@@ -98,7 +98,7 @@ private:
      * @brief Configure Cairo Resources for page to export
      * @return true on successful configuration
      */
-    virtual auto configureCairoResourcesForPage(const PageRef page) -> bool = 0;
+    virtual auto configureCairoResourcesForPage(const size_t page) -> bool = 0;
 
     /**
      * @brief Clear current Cairo configuration
