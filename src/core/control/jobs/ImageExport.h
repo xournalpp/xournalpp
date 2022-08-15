@@ -101,8 +101,6 @@ private:
 
     auto clearCairoConfig() -> bool override;
 
-    static constexpr size_t SINGLE_PAGE = size_t(-1);
-
     /**
      * Export graphics format
      */
