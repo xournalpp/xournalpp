@@ -56,7 +56,7 @@ public:
      * @brief Export document template method
      * @return Success/failure indicator
      */
-    auto exportDocument() -> bool;
+    void exportDocument();
 
 protected:
     /**
@@ -109,7 +109,7 @@ private:
      * @brief Clear current Cairo configuration
      * @return true on success
      */
-    virtual auto clearCairoConfig() -> bool = 0;
+    virtual void clearCairoConfig() = 0;
 
     /**
      * @brief Export all pages in a RangeEntry
@@ -122,7 +122,7 @@ private:
      * @brief Export all layers of a single page one by one (each layer a new page)
      * @return true on successful export
      */
-    auto exportPageLayers(const size_t pageNo) -> bool;
+    void exportPageLayers(const size_t pageNo);
 
     /**
      * @brief Export a single page

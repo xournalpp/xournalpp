@@ -119,12 +119,10 @@ auto ImageExport::getFilePathForPage(const size_t pageNo) const -> fs::path {
     return path;
 }
 
-auto ImageExport::clearCairoConfig() -> bool {
+void ImageExport::clearCairoConfig() {
     if (format == EXPORT_GRAPHICS_PNG) {
         cairo_surface_write_to_png(surface.get(), pageFilePath.u8string().c_str());
     }
-
-    return true;
 }
 
 RasterImageQualityParameter::RasterImageQualityParameter() = default;
