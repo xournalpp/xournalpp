@@ -3,6 +3,7 @@
 #include <cmath>    // for round
 #include <cstddef>  // for size_t
 #include <memory>   // for __shared_ptr_access, allocat...
+#include <sstream>  // for std::ostringstream
 #include <utility>  // for move
 #include <vector>   // for vector
 
