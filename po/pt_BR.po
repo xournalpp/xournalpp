@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-31 19:57+0000\n"
-"PO-Revision-Date: 2022-07-31 19:58\n"
+"PO-Revision-Date: 2022-08-15 12:08\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -32,12 +32,14 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2218
 msgid "\n"
 "It was last seen at: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Foi visto pela última vez em: \"{1}\""
 
 #: ../src/core/control/Control.cpp:2224
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Arquivo para substituição proposto: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -471,19 +473,19 @@ msgstr "Editar texto"
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
+msgstr "ElementRange::parse(): índices de elementos começam com 1"
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): dado o índice de elementos é maior que a contagem máxima."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): limites de intervalo devem estar em ordem crescente."
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): intervalo de elementos inválido."
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -638,7 +640,7 @@ msgstr "Falha ao analisar o comando do gerador LaTeX: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "Falha ao analisar o caminho do gerador LaTeX: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
@@ -730,7 +732,7 @@ msgstr "Alinhamento em Grade"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "GtkSourceView foi desativado ao compilar o Xournal++! Algumas opções não estarão disponíveis."
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
@@ -802,7 +804,7 @@ msgstr "Ir para página (primeira página: 1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "Tema do editor LaTeX:"
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -903,7 +905,8 @@ msgstr "OK"
 #: ../src/core/control/XournalMain.cpp:653
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "Ao exportar, somente exporta as camadas pelo INTERVALO (e.g. \"2-3,5,7-\")\n"
+"                                 Sem efeito sem -p/--create-pdf ou -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:649
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -989,7 +992,7 @@ msgstr "Número da página"
 
 #: ../src/core/control/xojfile/SaveHandler.cpp:308
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
-msgstr ""
+msgstr "O formato do tipo de página é PageTypeFormat::Copiar - convertido para PageTypeFormat::Simples para evitar arquivos danificados"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:409
 msgid "Paired pages"
@@ -1372,11 +1375,11 @@ msgstr "A configuração da barra de ferramentas \"{1}\" está predefinida, voc�
 
 #: ../src/core/control/Control.cpp:2209
 msgid "The attached background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "O arquivo de fundo anexado \"{1}\" não pôde ser encontrado. Ele pode ter sido movido, renomeado ou excluído. Foi visto pela última vez em."
 
 #: ../src/core/control/Control.cpp:2213
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "O arquivo de fundo anexado \"{1}\" não pôde ser encontrado. Ele pode ter sido movido, renomeado ou excluído. Foi visto pela última vez em."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
@@ -1521,7 +1524,7 @@ msgstr "Formato gráfico não suportado: "
 
 #: ../src/core/control/Control.cpp:2232
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Usar PDF proposto"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Vertical Space"
@@ -1854,7 +1857,7 @@ msgstr "%a\t\tNome do dia da semana abreviado (por exemplo, Qui.)\n"
 
 #: ../ui/settings.glade:2963
 msgid "(requires restart)"
-msgstr ""
+msgstr "(Requer reinicialização)"
 
 #: ../ui/settings.glade:4901
 msgid "... AND How much time must have passed since last stroke.\n\n"
@@ -2140,7 +2143,7 @@ msgstr "Autores"
 
 #: ../ui/latexSettings.glade:415
 msgid "Auto-indent"
-msgstr ""
+msgstr "Auto-indentar"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
@@ -2237,7 +2240,7 @@ msgstr "Limpar cache de página durante a rolagem"
 
 #: ../ui/settings.glade:2949
 msgid "Color"
-msgstr ""
+msgstr "Cor"
 
 #: ../ui/settings.glade:3010
 msgid "Colors"
@@ -2245,7 +2248,7 @@ msgstr "Cores"
 
 #: ../ui/texdialog.glade:163
 msgid "Command Output"
-msgstr ""
+msgstr "Saída de comando"
 
 #: ../ui/main.glade:1225
 msgid "Configure Page Template"
@@ -2425,7 +2428,7 @@ msgstr "Editar (ainda não implementado)"
 
 #: ../ui/latexSettings.glade:574
 msgid "Editor settings"
-msgstr ""
+msgstr "Configurações do editor"
 
 #: ../ui/settings.glade:2260
 msgid "Enable"
@@ -2530,7 +2533,7 @@ msgstr "Deslocamento da primeira página "
 
 #: ../ui/latexSettings.glade:517
 msgid "Font: "
-msgstr ""
+msgstr "Fonte: "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
@@ -2634,7 +2637,7 @@ msgstr "Designers do Ícone"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "Tema dos icones"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2738,7 +2741,7 @@ msgstr "Licença"
 
 #: ../ui/latexSettings.glade:401
 msgid "Line numbers"
-msgstr ""
+msgstr "Números de linhas"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2754,7 +2757,7 @@ msgstr "Carregar do arquivo"
 
 #: ../ui/settings.glade:2950
 msgid "Lucide"
-msgstr ""
+msgstr "Lucida"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2874,7 +2877,7 @@ msgstr "Dispositivo de Saída"
 
 #: ../ui/texdialog.glade:143
 msgid "Output generated by the LaTeX command."
-msgstr ""
+msgstr "Saída gerada pelo comando LaTeX."
 
 #: ../ui/settings.glade:5102
 msgid "PDF Cache"
@@ -2916,7 +2919,7 @@ msgstr "Portado da base do Xournal\n"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Path: "
-msgstr ""
+msgstr "Caminho: "
 
 #: ../ui/main.glade:2002
 msgid "Pause"
@@ -2932,7 +2935,7 @@ msgstr "Desempenho"
 
 #: ../ui/latexSettings.glade:532
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "Escolha a Fonte do Editor"
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3199,7 +3202,7 @@ msgstr "Sucessivo (ms)"
 
 #: ../ui/latexSettings.glade:429
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Destaque de sintaxe"
 
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
@@ -3212,7 +3215,7 @@ msgstr "B_arras de Ferramentas"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "Fonte TeX"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
@@ -3297,11 +3300,11 @@ msgstr "Sublinhar o texto selecionado"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Usar ícones padrão disponíveis (requer reinicialização)"
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
-msgstr ""
+msgstr "Usar fonte do tema do sistema."
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
@@ -3373,7 +3376,7 @@ msgstr "Obter ajuda da comunidade"
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "Quebrar texto"
 
 #: ../ui/about.glade:158
 msgid "X.X.X"
