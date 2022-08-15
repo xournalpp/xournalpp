@@ -63,8 +63,9 @@ auto XojPdfExport::clearCairoConfig() -> bool {
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
 void XojPdfExport::populatePdfOutline(GtkTreeModel* tocModel) {
-    if (tocModel == nullptr)
+    if (tocModel == nullptr) {
         return;
+    }
 
     int idCounter = CAIRO_PDF_OUTLINE_ROOT;
     std::stack<std::pair<GtkTreeIter, int>> nodeStack;
