@@ -179,14 +179,15 @@ void ExportTemplate::renderBackground(const PageRef& page) {
 
 void ExportTemplate::drawPage(const PageRef& page) {
     DocumentView view;
-    bool dontRenderEraseable = true;  // TODO rename
-    bool dontRenderPdfBackground = true;
+    bool dontRenderEditingStroke = true;
+    bool hidePdfBackground = true;
+    bool hideImageBackground = exportBackground == EXPORT_BACKGROUND_NONE;
+    bool hideRulingBackground = exportBackground <= EXPORT_BACKGROUND_UNRULED;
     if (layerRange) {
-        view.drawLayersOfPage(layerRange.value(), page, cr.get(), dontRenderEraseable, dontRenderPdfBackground,
-                              exportBackground == EXPORT_BACKGROUND_NONE,
-                              exportBackground <= EXPORT_BACKGROUND_UNRULED);
+        view.drawLayersOfPage(layerRange.value(), page, cr.get(), dontRenderEditingStroke, hidePdfBackground,
+                              hideImageBackground, hideRulingBackground);
     } else {
-        view.drawPage(page, cr.get(), dontRenderEraseable, dontRenderPdfBackground,
-                      exportBackground == EXPORT_BACKGROUND_NONE, exportBackground <= EXPORT_BACKGROUND_UNRULED);
+        view.drawPage(page, cr.get(), dontRenderEditingStroke, hidePdfBackground, hideImageBackground,
+                      hideRulingBackground);
     }
 }
