@@ -38,14 +38,14 @@ auto ImageExport::setQualityParameter(ExportQualityCriterion criterion, int valu
 }
 
 auto ImageExport::configureCairoResourcesForPage(const PageRef page) -> bool {
-    if (!createCairoCr(page->getWidth(), page->getHeight())) {
+    if (!createCairoResources(static_cast<int>(page->getWidth()), static_cast<int>(page->getHeight()))) {
         lastError = _("Error: cannot configure Cairo resources.");
         return false;
     }
     return true;
 }
 
-auto ImageExport::createCairoCr(double width, double height) -> bool {
+auto ImageExport::createCairoResources(int width, int height) -> bool {
     xoj::util::CairoSurfaceSPtr newSurface;
     xoj::util::CairoSPtr newCr;
 
@@ -64,14 +64,12 @@ auto ImageExport::createCairoCr(double width, double height) -> bool {
             }
             width = std::round(width * zoomRatio);
             height = std::round(height * zoomRatio);
-            newSurface =
-                    cairo_image_surface_create(CAIRO_FORMAT_ARGB32, static_cast<int>(width), static_cast<int>(height));
+            newSurface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
             newCr = cairo_create(newSurface.get());
             cairo_scale(newCr.get(), zoomRatio, zoomRatio);
             break;
         case EXPORT_GRAPHICS_SVG:
-            newSurface = cairo_svg_surface_create(getFilenameWithNumber(id).u8string().c_str(), static_cast<int>(width),
-                                                  static_cast<int>(height));
+            newSurface = cairo_svg_surface_create(getFilenameWithNumber(id).u8string().c_str(), width, height);
             cairo_svg_surface_restrict_to_version(newSurface.get(), CAIRO_SVG_VERSION_1_2);
             newCr = cairo_create(newSurface.get());
             break;
