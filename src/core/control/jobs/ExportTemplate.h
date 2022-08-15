@@ -92,7 +92,7 @@ private:
      *
      * @return true if surface creation succeeded
      */
-    virtual auto createCairoCr(double width, double height) -> bool = 0;
+    virtual auto createCairoResources(int width, int height) -> bool = 0;
 
     /**
      * @brief Configure Cairo Resources for page to export

@@ -28,12 +28,12 @@
 #include "filesystem.h"  // for path
 
 XojPdfExport::XojPdfExport(Document* doc, fs::path filePath): ExportTemplate{doc, std::move(filePath)} {
-    createCairoCr(0.0, 0.0);
+    createCairoResources(0, 0);
 }
 
 XojPdfExport::~XojPdfExport() {}
 
-auto XojPdfExport::createCairoCr(double width = 0.0, double height = 0.0) -> bool {
+auto XojPdfExport::createCairoResources(int width, int height) -> bool {
     surface = cairo_pdf_surface_create(filePath.u8string().c_str(), width, height);
     cr = cairo_create(surface.get());
 

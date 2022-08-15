@@ -31,7 +31,7 @@ public:
     ~XojPdfExport();
 
 private:
-    auto createCairoCr(double width, double height) -> bool override;
+    auto createCairoResources(int width, int height) -> bool override;
 
     auto configureCairoResourcesForPage(const PageRef page) -> bool override;
 

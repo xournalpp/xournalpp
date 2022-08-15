@@ -86,7 +86,7 @@ public:
 private:
     auto configureCairoResourcesForPage(const PageRef page) -> bool override;
 
-    auto createCairoCr(double width, double height) -> bool override;
+    auto createCairoResources(int width, int height) -> bool override;
 
     auto computeZoomRatioWithFactor(double normalizationFactor) -> double;
 
