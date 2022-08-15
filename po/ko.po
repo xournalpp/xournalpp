@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-31 19:57+0000\n"
-"PO-Revision-Date: 2022-07-31 19:58\n"
+"POT-Creation-Date: 2022-08-15 15:17+0000\n"
+"PO-Revision-Date: 2022-08-15 15:29\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -877,7 +877,7 @@ msgid "Normal drawing"
 msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/model/ColorPalette.cpp:184
-#: ../src/core/plugin/Plugin.cpp:229 ../src/core/plugin/Plugin.cpp:245
+#: ../src/core/plugin/Plugin.cpp:229 ../src/core/plugin/Plugin.cpp:252
 msgid "OK"
 msgstr "확인"
 
