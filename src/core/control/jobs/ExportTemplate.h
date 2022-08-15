@@ -50,7 +50,7 @@ public:
      * @brief Get the last error message
      * @return The last error message to show to the user
      */
-    auto getLastErrorMsg() const -> std::string;
+    auto getLastErrorMsg() const -> std::optional<std::string>;
 
     /**
      * @brief Export document template method
@@ -72,7 +72,7 @@ protected:
     /**
      * The last error message to show to the user
      */
-    std::string lastError;
+    std::optional<std::string> lastError = std::nullopt;
 
     /**
      * Cairo export surface

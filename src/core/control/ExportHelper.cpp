@@ -59,12 +59,13 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
         }
     }
 
-    if (!imgExport.exportDocument()) {
-        std::string errorMsg = imgExport.getLastErrorMsg();
+    imgExport.exportDocument();
+    if (imgExport.getLastErrorMsg()) {
+        std::string errorMsg = imgExport.getLastErrorMsg().value();
         g_message("Error exporting image: %s\n", errorMsg.c_str());
+    } else {
+        g_message("%s", _("Image file successfully created"));
     }
-
-    g_message("%s", _("Image file successfully created"));
 
     return 0;  // no error
 }
@@ -100,11 +101,12 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     pdfe.setProgressiveMode(progressiveMode);
 
     // Do the export
-    if (!pdfe.exportDocument()) {
-        g_error("%s", pdfe.getLastErrorMsg().c_str());
+    pdfe.exportDocument();
+    if (pdfe.getLastErrorMsg()) {
+        g_error("%s", pdfe.getLastErrorMsg().value().c_str());
+    } else {
+        g_message("%s", _("PDF file successfully created"));
     }
-
-    g_message("%s", _("PDF file successfully created"));
 
     return 0;  // no error
 }
