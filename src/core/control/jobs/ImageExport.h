@@ -97,7 +97,7 @@ private:
      *
      * @return The filename
      */
-    auto getFilenameWithNumber(size_t no) const -> fs::path;
+    auto getFilePathForPage(const size_t pageNo) const -> fs::path;
 
     auto clearCairoConfig() -> bool override;
 
@@ -114,9 +114,9 @@ private:
     RasterImageQualityParameter qualityParameter = RasterImageQualityParameter();
 
     /**
-     * The number of the page being exported
+     * The file path of the page being exported
      */
-    size_t id = 0;
+    fs::path pageFilePath;
 
     /**
      * The zoom ratio for PNG exports with fixed DPI
