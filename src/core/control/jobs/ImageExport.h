@@ -84,7 +84,7 @@ public:
     auto setQualityParameter(ExportQualityCriterion criterion, int value) -> void;
 
 private:
-    auto configureCairoResourcesForPage(const PageRef page) -> bool override;
+    auto configureCairoResourcesForPage(const size_t pageNo) -> bool override;
 
     auto createCairoResources(int width, int height) -> bool override;
 
