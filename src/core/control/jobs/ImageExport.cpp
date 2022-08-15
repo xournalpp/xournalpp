@@ -38,7 +38,29 @@ auto ImageExport::setQualityParameter(ExportQualityCriterion criterion, int valu
 }
 
 auto ImageExport::configureCairoResourcesForPage(const PageRef page) -> bool {
-    if (!createCairoResources(static_cast<int>(page->getWidth()), static_cast<int>(page->getHeight()))) {
+    double width = page->getWidth();
+    double height = page->getHeight();
+
+    if (format == EXPORT_GRAPHICS_PNG) {
+        switch (qualityParameter.getQualityCriterion()) {
+            case EXPORT_QUALITY_WIDTH:
+                zoomRatio = computeZoomRatioWithFactor(width);
+                break;
+            case EXPORT_QUALITY_HEIGHT:
+                zoomRatio = computeZoomRatioWithFactor(height);
+                break;
+            case EXPORT_QUALITY_DPI:
+                zoomRatio = computeZoomRatioWithFactor(Util::DPI_NORMALIZATION_FACTOR);
+                break;
+        }
+        width = std::round(width * zoomRatio);
+        height = std::round(height * zoomRatio);
+    } else if (format != EXPORT_GRAPHICS_SVG) {
+        lastError = _("Unsupported graphics format: ") + std::to_string(format);
+        return false;
+    }
+
+    if (!createCairoResources(static_cast<int>(width), static_cast<int>(height))) {
         lastError = _("Error: cannot configure Cairo resources.");
         return false;
     }
@@ -51,19 +73,6 @@ auto ImageExport::createCairoResources(int width, int height) -> bool {
 
     switch (format) {
         case EXPORT_GRAPHICS_PNG:
-            switch (qualityParameter.getQualityCriterion()) {
-                case EXPORT_QUALITY_WIDTH:
-                    zoomRatio = computeZoomRatioWithFactor(width);
-                    break;
-                case EXPORT_QUALITY_HEIGHT:
-                    zoomRatio = computeZoomRatioWithFactor(height);
-                    break;
-                case EXPORT_QUALITY_DPI:
-                    zoomRatio = computeZoomRatioWithFactor(Util::DPI_NORMALIZATION_FACTOR);
-                    break;
-            }
-            width = std::round(width * zoomRatio);
-            height = std::round(height * zoomRatio);
             newSurface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
             newCr = cairo_create(newSurface.get());
             cairo_scale(newCr.get(), zoomRatio, zoomRatio);
