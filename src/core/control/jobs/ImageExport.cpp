@@ -107,10 +107,15 @@ auto ImageExport::getFilePathForPage(const size_t pageNo) const -> fs::path {
         return filePath;
     }
 
+    int digitNo = static_cast<int>(std::ceil(log10(static_cast<double>(doc->getPageCount() + 1))));
+    std::ostringstream strs;
+    strs << std::setw(digitNo) << std::setfill('0') << (pageNo + 1);
+    std::string id = strs.str();
+
     const auto ext = filePath.extension();
     auto path(filePath);
     path.replace_extension();
-    (path += ("-" + std::to_string(pageNo + 1))) += ext;
+    (path += ("-" + id)) += ext;
     return path;
 }
 
