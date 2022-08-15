@@ -84,6 +84,11 @@ protected:
      */
     xoj::util::CairoSPtr cr;
 
+    /**
+     * The number of the pages to be exported
+     */
+    size_t numberOfPagesToExport = 0;
+
 private:
     /**
      * @brief Create Cairo cr and surface for a given page

@@ -40,6 +40,8 @@ auto ImageExport::setQualityParameter(ExportQualityCriterion criterion, int valu
 auto ImageExport::configureCairoResourcesForPage(const size_t pageNo) -> bool {
     const PageRef& page = doc->getPage(pageNo);
 
+    pageFilePath = getFilePathForPage(pageNo);
+
     double width = page->getWidth();
     double height = page->getHeight();
 
@@ -80,7 +82,7 @@ auto ImageExport::createCairoResources(int width, int height) -> bool {
             cairo_scale(newCr.get(), zoomRatio, zoomRatio);
             break;
         case EXPORT_GRAPHICS_SVG:
-            newSurface = cairo_svg_surface_create(getFilenameWithNumber(id).u8string().c_str(), width, height);
+            newSurface = cairo_svg_surface_create(pageFilePath.u8string().c_str(), width, height);
             cairo_svg_surface_restrict_to_version(newSurface.get(), CAIRO_SVG_VERSION_1_2);
             newCr = cairo_create(newSurface.get());
             break;
@@ -99,23 +101,27 @@ auto ImageExport::computeZoomRatioWithFactor(double normalizationFactor) -> doub
     return ((double)qualityParameter.getValue()) / normalizationFactor;
 }
 
-auto ImageExport::getFilenameWithNumber(size_t no) const -> fs::path {
-    if (no == SINGLE_PAGE) {
+auto ImageExport::getFilePathForPage(const size_t pageNo) const -> fs::path {
+    if (numberOfPagesToExport == 1) {
         // No number to add
         return filePath;
     }
 
-    auto ext = filePath.extension();
+    int digitNo = static_cast<int>(std::ceil(log10(static_cast<double>(numberOfPagesToExport))));
+    std::ostringstream strs;
+    strs << std::setw(digitNo) << std::setfill('0') << pageNo;
+    std::string id = strs.str();
+
+    const auto ext = filePath.extension();
     auto path(filePath);
     path.replace_extension();
-    (path += (std::string("-") + std::to_string(no))) += ext;
+    (path += ("-" + id)) += ext;
     return path;
 }
 
 auto ImageExport::clearCairoConfig() -> bool {
     if (format == EXPORT_GRAPHICS_PNG) {
-        const auto filename = getFilenameWithNumber(id);
-        cairo_surface_write_to_png(surface.get(), filename.u8string().c_str());
+        cairo_surface_write_to_png(surface.get(), pageFilePath.u8string().c_str());
     }
 
     return true;

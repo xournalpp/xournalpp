@@ -71,9 +71,10 @@ void ExportTemplate::setProgressiveMode(const bool progressiveMode) { this->prog
 auto ExportTemplate::getLastErrorMsg() const -> std::string { return lastError; }
 
 auto ExportTemplate::exportDocument() -> bool {
+    numberOfPagesToExport = countPagesToExport(exportRange);
+
     if (progressListener) {
-        size_t n = countPagesToExport(exportRange);
-        progressListener->setMaximumState(static_cast<int>(n));
+        progressListener->setMaximumState(static_cast<int>(numberOfPagesToExport));
     }
 
     size_t exportedPages = 0;
