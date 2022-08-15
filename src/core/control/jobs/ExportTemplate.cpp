@@ -68,7 +68,7 @@ auto parseRange(const char* rangeStr) -> std::optional<ElementRangeVector> {
 
 void ExportTemplate::setProgressiveMode(const bool progressiveMode) { this->progressiveMode = progressiveMode; }
 
-auto ExportTemplate::getLastErrorMsg() const -> std::string { return lastError; }
+auto ExportTemplate::getLastErrorMsg() const -> std::optional<std::string> { return lastError; }
 
 auto ExportTemplate::exportDocument() -> bool {
     numberOfPagesToExport = countPagesToExport(exportRange);
@@ -127,10 +127,6 @@ auto ExportTemplate::exportPageLayers(const size_t pageNo) -> bool {
 
     setLayerVisibilityStateOfPage(page, initialVisibility);
 
-    if (lastError != "") {
-        return false;
-    }
-
     return true;
 }
 
@@ -174,7 +170,7 @@ void ExportTemplate::renderBackground(const PageRef& page) {
         XojPdfPageSPtr popplerPage = doc->getPdfPage(pgNo);
         if (!popplerPage) {
             lastError = _("Error while exporting the pdf background: cannot find the pdf page number.");
-            lastError += std::to_string(pgNo);
+            lastError.value() += std::to_string(pgNo);
         } else {
             popplerPage->renderForPrinting(cr.get());
         }

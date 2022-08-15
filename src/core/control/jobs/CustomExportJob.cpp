@@ -112,7 +112,10 @@ void CustomExportJob::exportGraphics() {
         imgExport.setQualityParameter(pngQualityParameter);
     }
     imgExport.exportDocument();
-    errorMsg = imgExport.getLastErrorMsg();
+
+    if (imgExport.getLastErrorMsg()) {
+        errorMsg = imgExport.getLastErrorMsg().value();
+    }
 }
 
 void CustomExportJob::run() {
@@ -142,8 +145,9 @@ void CustomExportJob::run() {
         pdfe.setExportRange(exportRange);
         pdfe.setProgressiveMode(progressiveMode);
 
-        if (!pdfe.exportDocument()) {
-            this->errorMsg = pdfe.getLastErrorMsg();
+        pdfe.exportDocument();
+        if (pdfe.getLastErrorMsg()) {
+            errorMsg = pdfe.getLastErrorMsg().value();
         }
 
     } else {

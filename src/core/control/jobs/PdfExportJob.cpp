@@ -38,8 +38,10 @@ void PdfExportJob::run() {
     doc->unlock();
     pdfe.setProgressListener(control);
 
-    if (!pdfe.exportDocument()) {
-        this->errorMsg = pdfe.getLastErrorMsg();
+    pdfe.exportDocument();
+
+    if (pdfe.getLastErrorMsg()) {
+        errorMsg = pdfe.getLastErrorMsg().value();
         if (control->getWindow()) {
             callAfterRun();
         }
