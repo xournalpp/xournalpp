@@ -96,7 +96,7 @@ auto countPagesToExport(const PageRangeVector& exportRange) -> size_t {
     return count;
 }
 
-auto ExportTemplate::exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry, const size_t& exportedPages)
+auto ExportTemplate::exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry, const size_t exportedPages)
         -> size_t {
     size_t exportedPagesInEntry = 0;
     auto lastPage = std::min(rangeEntry.last, doc->getPageCount());

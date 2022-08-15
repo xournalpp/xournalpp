@@ -116,7 +116,7 @@ private:
      * @param exportedPages number of already exported pages
      * @return Number of pages from the RangeEntry
      */
-    auto exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry, const size_t& exportedPages) -> size_t;
+    auto exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry, const size_t exportedPages) -> size_t;
 
     /**
      * @brief Export all layers of a single page one by one (each layer a new page)
