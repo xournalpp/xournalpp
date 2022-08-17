@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"PO-Revision-Date: 2022-08-17 15:31\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -2913,7 +2913,7 @@ msgstr "部分基於 Xournal\n"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Path: "
-msgstr ""
+msgstr "路徑: "
 
 #: ../ui/main.glade:2002
 msgid "Pause"
@@ -3129,7 +3129,7 @@ msgstr "顯示工具列"
 
 #: ../ui/settings.glade:2777
 msgid "Show filepath in title bar"
-msgstr ""
+msgstr "在標題列內顯示檔案位置"
 
 #: ../ui/settings.glade:3360
 msgid "Show sidebar on the right side"
@@ -3196,7 +3196,7 @@ msgstr "持續 (ms)"
 
 #: ../ui/latexSettings.glade:429
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "標示語法"
 
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
@@ -3298,7 +3298,7 @@ msgstr "使用可用的原生圖示 (需要重啟)"
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
-msgstr ""
+msgstr "使用系統主題的字型"
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
