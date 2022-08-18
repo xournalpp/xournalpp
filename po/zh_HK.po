@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"PO-Revision-Date: 2022-08-18 04:11\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional, Hong Kong\n"
 "Language: zh_HK\n"
@@ -26,7 +26,8 @@ msgstr "\n\n"
 #: ../src/core/control/jobs/BaseExportJob.cpp:53
 msgid "\n"
 " Do you want to continue?"
-msgstr ""
+msgstr "\n"
+"是否繼續?"
 
 #: ../src/core/control/Control.cpp:2218
 msgid "\n"
@@ -67,7 +68,7 @@ msgstr "<span foreground='red' size='x-large'>遺失必須的使用者界面檔�
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:465
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "插入/編輯TeX"
 
 #: ../src/core/control/XournalMain.cpp:672
 msgid "Advanced export options"
@@ -87,7 +88,7 @@ msgstr "套用到目前的頁面"
 
 #: ../src/core/control/tools/EditSelection.cpp:378
 msgid "Arrange"
-msgstr ""
+msgstr "排列"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:32
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:116
