@@ -128,6 +128,10 @@ auto ExportDialog::getBackgroundType() -> ExportBackgroundType {
     return (ExportBackgroundType)gtk_combo_box_get_active(GTK_COMBO_BOX(get("cbBackgroundType")));
 }
 
+auto ExportDialog::getCropToContent() -> bool {
+    return gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(get("cbCropToContent")));
+}
+
 auto ExportDialog::getRange() -> PageRangeVector {
     GtkWidget* rdRangeCurrent = get("rdRangeCurrent");
     GtkWidget* rdRangePages = get("rdRangePages");

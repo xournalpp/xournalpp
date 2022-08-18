@@ -33,6 +33,7 @@ public:
     PageRangeVector getRange();
     bool progressiveMode();
     ExportBackgroundType getBackgroundType();
+    auto getCropToContent() -> bool;
 
     /**
      * @brief Reads the quality parameter from the dialog
