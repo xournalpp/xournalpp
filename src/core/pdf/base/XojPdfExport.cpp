@@ -55,7 +55,7 @@ auto XojPdfExport::configureCairoResourcesForPage(const size_t pageNo) -> bool {
     return true;
 }
 
-void XojPdfExport::clearCairoConfig() {
+void XojPdfExport::clearCairoConfig(const size_t pageNo) {
     cairo_show_page(cr.get());
     cairo_restore(cr.get());
 }

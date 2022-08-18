@@ -120,7 +120,7 @@ auto ImageExport::getFilePathForPage(const size_t pageNo) const -> fs::path {
     return path;
 }
 
-void ImageExport::clearCairoConfig() {
+void ImageExport::clearCairoConfig(const size_t pageNo) {
     if (format == EXPORT_GRAPHICS_PNG) {
         cairo_surface_write_to_png(surface.get(), pageFilePath.u8string().c_str());
     }

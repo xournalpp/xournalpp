@@ -99,7 +99,7 @@ private:
      */
     auto getFilePathForPage(const size_t pageNo) const -> fs::path;
 
-    void clearCairoConfig() override;
+    void clearCairoConfig(const size_t pageNo) override;
 
     /**
      * Export graphics format

@@ -111,7 +111,7 @@ private:
      * @brief Clear current Cairo configuration
      * @return true on success
      */
-    virtual void clearCairoConfig() = 0;
+    virtual void clearCairoConfig(const size_t pageNo) = 0;
 
     /**
      * @brief Export all pages in a RangeEntry
