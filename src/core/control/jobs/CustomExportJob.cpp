@@ -90,6 +90,7 @@ auto CustomExportJob::showFilechooser() -> bool {
     exportRange = dlg.getRange();
     progressiveMode = dlg.progressiveMode();
     exportBackground = dlg.getBackgroundType();
+    cropToContent = dlg.getCropToContent();
 
     if (format == EXPORT_GRAPHICS_PNG) {
         pngQualityParameter = dlg.getPngQualityParameter();
@@ -107,6 +108,7 @@ void CustomExportJob::exportGraphics() {
     imgExport.setExportBackground(exportBackground);
     imgExport.setExportRange(exportRange);
     imgExport.setProgressListener(control);
+    imgExport.setCropToContent(cropToContent);
 
     if (format == EXPORT_GRAPHICS_PNG) {
         imgExport.setQualityParameter(pngQualityParameter);
@@ -144,6 +146,7 @@ void CustomExportJob::run() {
         pdfe.setProgressListener(control);
         pdfe.setExportRange(exportRange);
         pdfe.setProgressiveMode(progressiveMode);
+        pdfe.setCropToContent(cropToContent);
 
         pdfe.exportDocument();
         if (pdfe.getLastErrorMsg()) {

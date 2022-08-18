@@ -46,6 +46,8 @@ public:
 
     void setProgressiveMode(const bool progressiveMode);
 
+    void setCropToContent(const bool cropToContent);
+
     /**
      * @brief Get the last error message
      * @return The last error message to show to the user
@@ -164,6 +166,11 @@ private:
      * Export all Layers progressively
      */
     bool progressiveMode = false;
+
+    /**
+     * Crop exported pages to drawing content
+     */
+    bool cropToContent = false;
 };
 
 /**

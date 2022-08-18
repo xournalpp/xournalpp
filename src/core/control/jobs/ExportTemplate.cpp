@@ -68,6 +68,8 @@ auto parseRange(const char* rangeStr) -> std::optional<ElementRangeVector> {
 
 void ExportTemplate::setProgressiveMode(const bool progressiveMode) { this->progressiveMode = progressiveMode; }
 
+void ExportTemplate::setCropToContent(const bool cropToContent) { this->cropToContent = cropToContent; }
+
 auto ExportTemplate::getLastErrorMsg() const -> std::optional<std::string> { return lastError; }
 
 void ExportTemplate::exportDocument() {
