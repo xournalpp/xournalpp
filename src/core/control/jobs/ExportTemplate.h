@@ -91,6 +91,11 @@ protected:
      */
     size_t numberOfPagesToExport = 0;
 
+    /**
+     * Range to
+     */
+    std::optional<Range> cropRange = std::nullopt;
+
 private:
     /**
      * @brief Create Cairo cr and surface for a given page

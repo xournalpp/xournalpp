@@ -104,6 +104,11 @@ auto ExportTemplate::exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry
     auto lastPage = std::min(rangeEntry.last, doc->getPageCount());
 
     for (auto i = rangeEntry.first; i <= lastPage; ++i, ++exportedPagesInEntry) {
+        if (cropToContent) {
+            const PageRef page = doc->getPage(i);
+            cropRange = calcRangeFromElements(page->getSelectedLayer()->getElements());
+        }
+
         if (progressiveMode) {
             exportPageLayers(i);
         } else {
