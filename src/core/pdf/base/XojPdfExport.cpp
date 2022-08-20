@@ -8,7 +8,8 @@
 #include <utility>    // for pair, make_pair
 #include <vector>     // for vector
 
-#include <cairo-pdf.h>    // for cairo_pdf_surface_set_met...
+#include <cairo-pdf.h>  // for cairo_pdf_surface_set_met...
+#include <cairo.h>
 #include <glib-object.h>  // for g_object_unref
 
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
@@ -50,7 +51,12 @@ auto XojPdfExport::createCairoResources(int width, int height) -> bool {
 
 auto XojPdfExport::configureCairoResourcesForPage(const size_t pageNo) -> bool {
     const PageRef& page = doc->getPage(pageNo);
-    cairo_pdf_surface_set_size(surface.get(), page->getWidth(), page->getHeight());
+    if (cropRange) {
+        Range range = cropRange.value();
+        cairo_pdf_surface_set_size(surface.get(), range.getWidth(), range.getHeight());
+    } else {
+        cairo_pdf_surface_set_size(surface.get(), page->getWidth(), page->getHeight());
+    }
     cairo_save(cr.get());
     return true;
 }

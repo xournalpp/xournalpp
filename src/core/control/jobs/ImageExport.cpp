@@ -45,6 +45,11 @@ auto ImageExport::configureCairoResourcesForPage(const size_t pageNo) -> bool {
 
     double width = page->getWidth();
     double height = page->getHeight();
+    if (cropRange) {
+        Range range = cropRange.value();
+        width = range.getWidth();
+        height = range.getHeight();
+    }
 
     if (format == EXPORT_GRAPHICS_PNG) {
         switch (qualityParameter.getQualityCriterion()) {

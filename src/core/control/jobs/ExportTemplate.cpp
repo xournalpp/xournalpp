@@ -3,6 +3,8 @@
 #include <cmath>  // for round
 #include <utility>
 
+#include <cairo-pdf.h>
+
 #include "control/jobs/ProgressListener.h"  // for ProgressListener
 #include "model/Document.h"                 // for Document
 #include "model/XojPage.h"                  // for XojPage
@@ -182,10 +184,38 @@ auto ExportTemplate::exportPage(const size_t pageNo) -> bool {
         return false;
     }
 
+    xoj::util::CairoSurfaceSPtr tmpSurface;
+    xoj::util::CairoSPtr tmpCr;
+    if (cropRange) {
+        // swap out cairo
+        Range range = cropRange.value();
+        // create new cropped cairo surface
+        tmpSurface = cairo_pdf_surface_create(nullptr, page->getWidth(), page->getHeight());
+        tmpCr = cairo_create(tmpSurface.get());
+        std::swap(surface, tmpSurface);
+        std::swap(cr, tmpCr);
+    }
+
     renderBackground(page);
     drawPage(page);
 
-    clearCairoConfig();
+    if (cropRange) {
+        Range range = cropRange.value();
+        // copy
+        cairo_set_source_surface(tmpCr.get(), surface.get(), -range.getX(), -range.getY());
+        cairo_rectangle(tmpCr.get(), 0, 0, range.getWidth(), range.getHeight());
+        cairo_fill(tmpCr.get());
+
+        // TODO: Avoid blurry output (not working)
+        cairo_set_source_rgb(tmpCr.get(), 0, 0, 0);
+        cairo_stroke(tmpCr.get());
+
+        // swap in
+        std::swap(surface, tmpSurface);
+        std::swap(cr, tmpCr);
+    }
+
+    clearCairoConfig(pageNo);
 
     return true;
 }
