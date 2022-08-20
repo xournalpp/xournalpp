@@ -187,6 +187,12 @@ auto parseRange(const char* rangeStr) -> std::optional<LayerRangeVector>;
  */
 auto countPagesToExport(const PageRangeVector& exportRange) -> size_t;
 
+/**
+ * @brief Computes the range of the passed elements
+ * @param elements Elements of a page
+ * @return Range the elements extend on the page
+ */
+auto calcRangeFromElements(std::vector<Element*> elements) -> std::optional<Range>;
 
 /**
  * @brief Clear the page's layers visibility state (all set to false)

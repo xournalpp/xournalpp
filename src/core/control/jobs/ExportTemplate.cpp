@@ -119,6 +119,27 @@ auto ExportTemplate::exportPagesInRangeEntry(const ElementRangeEntry& rangeEntry
     return exportedPagesInEntry;
 }
 
+auto calcRangeFromElements(std::vector<Element*> elements) -> std::optional<Range> {
+    if (elements.empty()) {
+        return std::nullopt;
+    }
+
+    Element* first = elements.front();
+    Range range(first->getX(), first->getY());
+
+    for (Element* e: elements) {
+        range.addPoint(e->getX(), e->getY());
+        range.addPoint(e->getX() + e->getElementWidth(), e->getY() + e->getElementHeight());
+    }
+
+    // Add padding:
+    int padding = 1;
+    range.addPoint(range.getX() - padding, range.getY() - padding);
+    range.addPoint(range.getX2() + padding, range.getY2() + padding);
+
+    return range;
+}
+
 void ExportTemplate::exportPageLayers(const size_t pageNo) {
     PageRef page = doc->getPage(pageNo);
 
