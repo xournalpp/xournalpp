@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"PO-Revision-Date: 2022-08-21 11:40\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -2529,7 +2529,7 @@ msgstr "İlk Sayfa Ofseti "
 
 #: ../ui/latexSettings.glade:517
 msgid "Font: "
-msgstr ""
+msgstr "Yazı Tipi: "
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
@@ -2915,7 +2915,7 @@ msgstr "Kısmen Denis Auroux tarafından\n"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Path: "
-msgstr ""
+msgstr "Yol: "
 
 #: ../ui/main.glade:2002
 msgid "Pause"
@@ -3198,7 +3198,7 @@ msgstr "Ardışık (ms)"
 
 #: ../ui/latexSettings.glade:429
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Sözdizimini vurgula"
 
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
@@ -3372,7 +3372,7 @@ msgstr "Topluluk yardımı ile"
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "Metni Kaydır"
 
 #: ../ui/about.glade:158
 msgid "X.X.X"
