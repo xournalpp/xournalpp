@@ -81,7 +81,9 @@ void SpinPageAdapter::addListener(SpinPageListener* listener) { this->listener.p
 void SpinPageAdapter::removeListener(SpinPageListener* listener) { this->listener.remove(listener); }
 
 void SpinPageAdapter::firePageChanged() {
-    for (SpinPageListener* listener: this->listener) { listener->pageChanged(this->page); }
+    for (SpinPageListener* listener: this->listener) {
+        listener->pageChanged(this->page);
+    }
 }
 
 SpinPageListener::~SpinPageListener() = default;

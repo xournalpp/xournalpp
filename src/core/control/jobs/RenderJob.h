@@ -12,7 +12,7 @@
 #pragma once
 
 #include <cairo/cairo.h>  // for cairo_surface_t
-#include <gtk/gtk.h>  // for GtkWidget
+#include <gtk/gtk.h>      // for GtkWidget
 
 #include "Job.h"  // for Job, JobType
 

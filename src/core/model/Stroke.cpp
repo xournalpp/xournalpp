@@ -329,7 +329,9 @@ void Stroke::rotate(double x0, double y0, double th) {
     cairo_matrix_rotate(&rotMatrix, th);
     cairo_matrix_translate(&rotMatrix, -x0, -y0);
 
-    for (auto&& p: points) { cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y); }
+    for (auto&& p: points) {
+        cairo_matrix_transform_point(&rotMatrix, &p.x, &p.y);
+    }
     this->sizeCalculated = false;
     // Width and Height will likely be changed after this operation
 }
@@ -373,11 +375,15 @@ void Stroke::scalePressure(double factor) {
     if (!hasPressure()) {
         return;
     }
-    for (auto&& p: this->points) { p.z *= factor; }
+    for (auto&& p: this->points) {
+        p.z *= factor;
+    }
 }
 
 void Stroke::clearPressure() {
-    for (auto&& p: points) { p.z = Point::NO_PRESSURE; }
+    for (auto&& p: points) {
+        p.z = Point::NO_PRESSURE;
+    }
 }
 
 void Stroke::setLastPressure(double pressure) {
@@ -401,7 +407,9 @@ void Stroke::setPressure(const std::vector<double>& pressure) {
     }
 
     auto max_size = std::min(pressure.size(), this->points.size() - 1);
-    for (size_t i = 0U; i != max_size; ++i) { this->points[i].z = pressure[i]; }
+    for (size_t i = 0U; i != max_size; ++i) {
+        this->points[i].z = pressure[i];
+    }
 }
 
 /**
@@ -833,7 +841,9 @@ void Stroke::setStrokeCapStyle(const StrokeCapStyle capStyle) { this->capStyle =
 void Stroke::debugPrint() const {
     g_message("%s", FC(FORMAT_STR("Stroke {1} / hasPressure() = {2}") % (uint64_t)this % this->hasPressure()));
 
-    for (auto&& p: points) { g_message("%lf / %lf / %lf", p.x, p.y, p.z); }
+    for (auto&& p: points) {
+        g_message("%lf / %lf / %lf", p.x, p.y, p.z);
+    }
 
     g_message("\n");
 }

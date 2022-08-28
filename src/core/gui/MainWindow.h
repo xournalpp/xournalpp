@@ -50,6 +50,7 @@ public:
     void layerVisibilityChanged() override;
 
     FloatingToolbox* floatingToolbox;
+
 public:
     void show(GtkWindow* parent) override;
 

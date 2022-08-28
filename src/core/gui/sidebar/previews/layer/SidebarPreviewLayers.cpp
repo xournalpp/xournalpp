@@ -37,7 +37,9 @@ SidebarPreviewLayers::SidebarPreviewLayers(Control* control, GladeGui* gui, Side
 
 SidebarPreviewLayers::~SidebarPreviewLayers() {
     // clear old previews
-    for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
+    for (SidebarPreviewBaseEntry* p: this->previews) {
+        delete p;
+    }
     this->previews.clear();
 }
 
@@ -100,7 +102,9 @@ void SidebarPreviewLayers::pageChanged(size_t page) {
     }
 
     // Repaint all layer
-    for (SidebarPreviewBaseEntry* p: this->previews) { p->repaint(); }
+    for (SidebarPreviewBaseEntry* p: this->previews) {
+        p->repaint();
+    }
 }
 
 void SidebarPreviewLayers::updatePreviews() {
@@ -109,7 +113,9 @@ void SidebarPreviewLayers::updatePreviews() {
     }
 
     // clear old previews
-    for (SidebarPreviewBaseEntry* p: this->previews) { delete p; }
+    for (SidebarPreviewBaseEntry* p: this->previews) {
+        delete p;
+    }
     this->previews.clear();
     this->selectedEntry = npos;
 

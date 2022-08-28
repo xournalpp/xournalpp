@@ -114,12 +114,16 @@ void SaveHandler::visitStroke(XmlPointNode* stroke, Stroke* s) {
 
     int pointCount = s->getPointCount();
 
-    for (int i = 0; i < pointCount; i++) { stroke->addPoint(s->getPoint(i)); }
+    for (int i = 0; i < pointCount; i++) {
+        stroke->addPoint(s->getPoint(i));
+    }
 
     if (s->hasPressure()) {
         auto* values = new double[pointCount + 1];
         values[0] = s->getWidth();
-        for (int i = 0; i < pointCount; i++) { values[i + 1] = s->getPoint(i).z; }
+        for (int i = 0; i < pointCount; i++) {
+            values[i + 1] = s->getPoint(i).z;
+        }
 
         stroke->setAttrib("width", values, pointCount);
     } else {
@@ -286,7 +290,9 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
         page->addChild(layer);
     }
 
-    for (Layer* l: *p->getLayers()) { visitLayer(page, l); }
+    for (Layer* l: *p->getLayers()) {
+        visitLayer(page, l);
+    }
 }
 
 void SaveHandler::writeSolidBackground(XmlNode* background, PageRef p) {

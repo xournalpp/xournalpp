@@ -13,9 +13,7 @@ void Job::unref() {
     }
 }
 
-void Job::ref() {
-    refCount.fetch_add(1, std::memory_order_relaxed);
-}
+void Job::ref() { refCount.fetch_add(1, std::memory_order_relaxed); }
 
 void Job::deleteJob() {
     this->onDelete();

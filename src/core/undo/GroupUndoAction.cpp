@@ -31,14 +31,18 @@ auto GroupUndoAction::getPages() -> std::vector<PageRef> {
 
 auto GroupUndoAction::redo(Control* control) -> bool {
     bool result = true;
-    for (auto& action: actions) { result = result && action->redo(control); }
+    for (auto& action: actions) {
+        result = result && action->redo(control);
+    }
 
     return result;
 }
 
 auto GroupUndoAction::undo(Control* control) -> bool {
     bool result = true;
-    for (auto& action: actions) { result = result && action->undo(control); }
+    for (auto& action: actions) {
+        result = result && action->undo(control);
+    }
 
     return result;
 }

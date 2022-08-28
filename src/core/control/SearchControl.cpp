@@ -74,7 +74,9 @@ auto SearchControl::search(std::string text, int* occures, double* top) -> bool 
             XojPdfRectangle first = this->results[0];
 
             double min = first.y1;
-            for (XojPdfRectangle rect: this->results) { min = std::min(min, rect.y1); }
+            for (XojPdfRectangle rect: this->results) {
+                min = std::min(min, rect.y1);
+            }
 
             *top = min;
         }

@@ -26,7 +26,9 @@ RecognizerUndoAction::~RecognizerUndoAction() {
     if (this->undone) {
         delete this->recognized;
     } else {
-        for (Stroke* s: this->original) { delete s; }
+        for (Stroke* s: this->original) {
+            delete s;
+        }
     }
     this->recognized = nullptr;
     this->original.clear();

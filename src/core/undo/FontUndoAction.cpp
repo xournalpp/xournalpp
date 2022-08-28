@@ -33,7 +33,9 @@ FontUndoAction::FontUndoAction(const PageRef& page, Layer* layer): UndoAction("F
 }
 
 FontUndoAction::~FontUndoAction() {
-    for (FontUndoActionEntry* e: this->data) { delete e; }
+    for (FontUndoActionEntry* e: this->data) {
+        delete e;
+    }
     this->data.clear();
 }
 

@@ -86,7 +86,9 @@ void SelectBackgroundColorDialog::storeLastUsedValuesInSettings() {
     SElement& el = settings->getCustomElement("lastUsedPageBgColor");
 
     // Move all colors one step back
-    for (int i = LAST_BACKGROUND_COLOR_COUNT - 1; i > 0; i--) { lastBackgroundColors[i] = lastBackgroundColors[i - 1]; }
+    for (int i = LAST_BACKGROUND_COLOR_COUNT - 1; i > 0; i--) {
+        lastBackgroundColors[i] = lastBackgroundColors[i - 1];
+    }
 
     lastBackgroundColors[0] = newColor;
 

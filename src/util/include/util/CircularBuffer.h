@@ -30,7 +30,9 @@ public:
         (*this)[head] = ev;
     }
     void assign(const T& ev) {
-        for (T& e: *this) { e = ev; }
+        for (T& e: *this) {
+            e = ev;
+        }
     }
     size_t size() { return length; }
 

@@ -52,7 +52,9 @@ auto Palette::load_default() -> void {
     getline(defaultFile, line);
     if (!parseFirstGimpPaletteLine(line))
         g_error("The default file was mallformed. This should never happen!");
-    while (getline(defaultFile, line)) { parseHeaderLine(line) || parseColorLine(line); }
+    while (getline(defaultFile, line)) {
+        parseHeaderLine(line) || parseColorLine(line);
+    }
 }
 
 auto Palette::parseFirstGimpPaletteLine(const std::string& line) const -> bool {

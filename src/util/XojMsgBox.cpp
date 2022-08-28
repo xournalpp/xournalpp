@@ -64,7 +64,9 @@ auto XojMsgBox::showPluginMessage(const string& pluginName, const string& msg, c
     g_object_set_property(G_OBJECT(dialog), "secondary-text", &val);
     g_value_unset(&val);
 
-    for (auto& kv: button) { gtk_dialog_add_button(GTK_DIALOG(dialog), kv.second.c_str(), kv.first); }
+    for (auto& kv: button) {
+        gtk_dialog_add_button(GTK_DIALOG(dialog), kv.second.c_str(), kv.first);
+    }
 
     int res = gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);

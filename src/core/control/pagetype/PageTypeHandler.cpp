@@ -34,7 +34,9 @@ PageTypeHandler::PageTypeHandler(GladeSearchpath* gladeSearchPath) {
 }
 
 PageTypeHandler::~PageTypeHandler() {
-    for (PageTypeInfo* t: types) { delete t; }
+    for (PageTypeInfo* t: types) {
+        delete t;
+    }
     types.clear();
 }
 
@@ -49,7 +51,9 @@ auto PageTypeHandler::parseIni(fs::path const& filepath) -> bool {
     gsize length = 0;
     gchar** groups = g_key_file_get_groups(config, &length);
 
-    for (gsize i = 0; i < length; i++) { loadFormat(config, groups[i]); }
+    for (gsize i = 0; i < length; i++) {
+        loadFormat(config, groups[i]);
+    }
 
     g_strfreev(groups);
     g_key_file_free(config);

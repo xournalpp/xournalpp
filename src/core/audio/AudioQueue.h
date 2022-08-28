@@ -87,14 +87,18 @@ public:
     void waitForProducer(std::unique_lock<std::mutex>& lock) {
         // static_assert(lock.mutex() == &this->queueLock);
         assert(lock.mutex() == &this->queueLock);
-        while (!this->pushNotified && !hasStreamEnded()) { this->pushLockCondition.wait(lock); }
+        while (!this->pushNotified && !hasStreamEnded()) {
+            this->pushLockCondition.wait(lock);
+        }
         this->pushNotified = false;
     }
 
     void waitForConsumer(std::unique_lock<std::mutex>& lock) {
         // static_assert(lock.mutex() == &this->queueLock);
         assert(lock.mutex() == &this->queueLock);
-        while (!this->popNotified && !hasStreamEnded()) { this->popLockCondition.wait(lock); }
+        while (!this->popNotified && !hasStreamEnded()) {
+            this->popLockCondition.wait(lock);
+        }
         this->popNotified = false;
     }
 

@@ -52,7 +52,9 @@ public:
         int height = 0;
         int x = 0;
 
-        for (SidebarPreviewBaseEntry* p: this->list) { height = std::max(height, p->getHeight()); }
+        for (SidebarPreviewBaseEntry* p: this->list) {
+            height = std::max(height, p->getHeight());
+        }
 
 
         for (SidebarPreviewBaseEntry* p: this->list) {

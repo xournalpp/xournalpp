@@ -33,7 +33,9 @@ void MetadataManager::deleteMetadataFile(fs::path const& path) {
 
     try {
         fs::remove(path);
-    } catch (fs::filesystem_error const&) { g_warning("Could not delete metadata file %s", path.string().c_str()); }
+    } catch (fs::filesystem_error const&) {
+        g_warning("Could not delete metadata file %s", path.string().c_str());
+    }
 }
 
 /**

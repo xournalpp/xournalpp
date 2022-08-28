@@ -44,7 +44,9 @@ void StavesBackgroundView::draw(cairo_t* cr) const {
         cairo_line_to(cr, MARGIN, offset + 4 * LINES_SPACING);
     };
 
-    for (int i = indexMinY; i <= indexMaxY; ++i) { drawStaff(HEADER_SIZE + i * vOffsetBetweenStaves); }
+    for (int i = indexMinY; i <= indexMaxY; ++i) {
+        drawStaff(HEADER_SIZE + i * vOffsetBetweenStaves);
+    }
 
     cairo_save(cr);
     Util::cairo_set_source_rgbi(cr, foregroundColor);

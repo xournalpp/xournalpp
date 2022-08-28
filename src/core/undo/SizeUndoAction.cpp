@@ -42,7 +42,9 @@ SizeUndoAction::SizeUndoAction(const PageRef& page, Layer* layer): UndoAction("S
 }
 
 SizeUndoAction::~SizeUndoAction() {
-    for (SizeUndoActionEntry* e: this->data) { delete e; }
+    for (SizeUndoActionEntry* e: this->data) {
+        delete e;
+    }
     this->data.clear();
 }
 
@@ -50,7 +52,9 @@ auto SizeUndoAction::getPressure(Stroke* s) -> vector<double> {
     int count = s->getPointCount();
     vector<double> data;
     data.reserve(count);
-    for (int i = 0; i < count; i++) { data.push_back(s->getPoint(i).z); }
+    for (int i = 0; i < count; i++) {
+        data.push_back(s->getPoint(i).z);
+    }
 
     return data;
 }

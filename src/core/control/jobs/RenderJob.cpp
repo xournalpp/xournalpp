@@ -78,7 +78,9 @@ void RenderJob::run() {
         std::lock_guard lock(this->view->drawingMutex);
         std::swap(this->view->crBuffer, newBuffer);
     } else {
-        for (Rectangle<double> const& rect: rerenderRects) { rerenderRectangle(rect); }
+        for (Rectangle<double> const& rect: rerenderRects) {
+            rerenderRectangle(rect);
+        }
     }
 
     // Schedule a repaint of the widget

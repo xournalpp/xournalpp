@@ -68,7 +68,9 @@ void PdfCache::updateSettings(Settings* settings) {
 }
 
 void PdfCache::clearCache() {
-    for (PdfCacheEntry* e: this->data) { delete e; }
+    for (PdfCacheEntry* e: this->data) {
+        delete e;
+    }
     this->data.clear();
 }
 

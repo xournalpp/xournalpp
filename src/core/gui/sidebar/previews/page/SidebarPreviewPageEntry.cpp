@@ -5,8 +5,7 @@
 #include "gui/sidebar/previews/page/SidebarPreviewPages.h"  // for SidebarPr...
 
 SidebarPreviewPageEntry::SidebarPreviewPageEntry(SidebarPreviewPages* sidebar, const PageRef& page):
-        SidebarPreviewBaseEntry(sidebar, page), sidebar(sidebar) {
-}
+        SidebarPreviewBaseEntry(sidebar, page), sidebar(sidebar) {}
 
 SidebarPreviewPageEntry::~SidebarPreviewPageEntry() = default;
 

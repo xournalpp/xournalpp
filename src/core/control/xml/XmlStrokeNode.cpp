@@ -27,7 +27,9 @@ void XmlStrokeNode::setWidth(double width, const double* widths, int widthsLengt
     delete[] this->widths;
 
     this->widths = new double[widthsLength];
-    for (int i = 0; i < widthsLength; i++) { this->widths[i] = widths[i]; }
+    for (int i = 0; i < widthsLength; i++) {
+        this->widths[i] = widths[i];
+    }
     this->widthsLength = widthsLength;
 }
 
