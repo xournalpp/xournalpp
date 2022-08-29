@@ -237,7 +237,7 @@
                       <object class="GtkEntry" id="entryTermY">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
-                        <property name="text" translatable="yes">pow(t,2)</property>
+                        <property name="text" translatable="yes">t^2</property>
                       </object>
                       <packing>
                         <property name="left-attach">1</property>

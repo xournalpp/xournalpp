@@ -33,7 +33,7 @@ _M.binops = {
     , { op='!=', prec= 7 }
     , { op='~=', prec= 7 }
     , { op='&',  prec= 8 }
-    , { op='^',  prec= 9 }
+    , { op='^',  prec= 2 }
     , { op='|',  prec=10 }
     , { op='&&', prec=11 }
     , { op='and', prec=11 }
@@ -1246,7 +1246,7 @@ _run = function( atom, ctx, stack )
             if base.type(v1) ~= "number" or base.type(v2) ~= "number" then
                 v = coerce(v1, "boolean") ~= coerce(v2, "boolean")
             else
-                v = bit.bxor( coerce(v1, "number"), coerce(v2, "number") )
+                v = coerce(v1, "number") ^ coerce(v2, "number")
             end
         elseif e.op == '<' then
             if not check_operand(v1, {"number","string"}, v2) then evalerror("Invalid comparison ("
