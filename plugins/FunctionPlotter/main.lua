@@ -28,33 +28,39 @@ function showDialog()
 
 -- Connect actions
   function ui.btnAddGraph.on_clicked()
-    local xMin = ui.spbtXMin:get_value()
-    local xMax = ui.spbtXMax:get_value()
-    local xUnit = ui.spbtXUnit:get_value()
-    local yMin = ui.spbtYMin:get_value()
-    local yMax = ui.spbtYMax:get_value()
-    local yUnit = ui.spbtYUnit:get_value()
     local tMin = ui.spbtTMin:get_value()
     local tMax = ui.spbtTMax:get_value()
-    local width = ui.spbtWidth:get_value()
-    local height = ui.spbtHeight:get_value()
-    local samples = ui.spbtSamples:get_value()
-    local type = ui.comboentryType:get_text()
+
+    wc = { -- coordinate system window
+      xMin = ui.spbtXMin:get_value(), 
+      xMax = ui.spbtXMax:get_value(),
+      xUnit = ui.spbtXUnit:get_value(),
+      yMin = ui.spbtYMin:get_value(),
+      yMax = ui.spbtYMax:get_value(),
+      yUnit = ui.spbtYUnit:get_value(),
+    }
+
     local unit = ui.comboentryUnit:get_text()
     local factor = getFactor(unit)
 
-    local xcoord, ycoord = {}, {}
-    local cx, cy = 300, 200
-    local xppWidth = width*factor
-    local xppHeight = height*factor
-    local strokes = {}
+    wxpp = { -- xournalpp window
+      width = ui.spbtWidth:get_value()*factor,
+      height = ui.spbtHeight:get_value()*factor,
+      cx = 300, 
+      cy = 200
+    }
+
+    local xcoord, ycoord, strokes = {}, {}, {}
+    local samples = ui.spbtSamples:get_value()
+
+    -- draw graph
     for i = 0, samples-1 do
       local t = tMin + i/(samples-1)*(tMax-tMin)
       local xt = eval("x", t) 
       local yt = eval("y", t)
-      if (xt~=nil and xt>=xMin and xt<=xMax and yt~=nil and yt>=yMin and yt<=yMax) then
-        table.insert(xcoord, fitX(xMin, xMax, xppWidth, cx, xt))
-        table.insert(ycoord, fitY(yMin, yMax, xppHeight, cy, yt))
+      if (xt~=nil and xt>=wc.xMin and xt<=wc.xMax and yt~=nil and yt>=wc.yMin and yt<=wc.yMax) then
+        table.insert(xcoord, fitX(xt))
+        table.insert(ycoord, fitY(yt))
       else 
         appendStroke(strokes, xcoord, ycoord)
         xcoord = {}; ycoord = {}
@@ -62,31 +68,35 @@ function showDialog()
     end
     appendStroke(strokes, xcoord, ycoord)
 
-    local mx = fitX(xMin, xMax, xppWidth, cx, xMin)
-    local Mx = fitX(xMin, xMax, xppWidth, cx, xMax)
-    local x0 = fitX(xMin, xMax, xppWidth, cx, 0)
-    local my = fitY(yMin, yMax, xppHeight, cy, yMin)
-    local My = fitY(yMin, yMax, xppHeight, cy, yMax)
-    local y0 = fitY(yMin, yMax, xppHeight, cy, 0)
-    local xAxis = {x = {mx,Mx}, y={y0, y0}, color=0x000000, width=1}
-    local yAxis = {x = {x0, x0}, y={my, My}, color=0x000000, width=1}
-    table.insert(strokes, xAxis)
-    table.insert(strokes, yAxis)
+    local type = ui.comboentryType:get_text()
+    if type == "custom" then
+      -- draw x-axis and y-axis
+      local mx, my = fit(wc.xMin, wc.yMin)
+      local Mx, My = fit(wc.xMax, wc.yMax)
+      local x0, y0 = fit(0, 0)
+      local xAxis = {x = {mx, Mx}, y = {y0, y0}, color=0x000000, width=1}
+      local yAxis = {x = {x0, x0}, y = {my, My}, color=0x000000, width=1}
+      local arrowLength = 8
+      local xHead = {x = {Mx-arrowLength, Mx, Mx-arrowLength}, y = {y0-.6*arrowLength, y0, y0+.6*arrowLength}, color=0x000000, width=1, fill=-1}
+      local yHead = {x = {x0-.6*arrowLength, x0, x0+.6*arrowLength}, y = {My+arrowLength, My, My+arrowLength}, color=0x000000, width=1, fill=-1}
+      table.insert(strokes, xAxis)
+      table.insert(strokes, yAxis)
+      table.insert(strokes, xHead)
+      table.insert(strokes, yHead)
 
-    local tickHeight = 4.0
-    local xticks = { strokes = {}}
-    for i = (xMin // xUnit), (xMax // xUnit) do
-      if i*xUnit >= xMin and i*xUnit <= xMax then 
-        local xval = fitX(xMin, xMax, xppWidth, cx, i*xUnit)
+      local tickHeight = 4.0
+      -- draw ticks on x-axis
+      for i = (wc.xMin // wc.xUnit) + 1, (wc.xMax // wc.xUnit) do
+        local xval = fitX(i*wc.xUnit)
+        if xval >= Mx - 2*arrowLength then break end
         table.insert(strokes, {x = {xval, xval}, y = {y0+tickHeight/2, y0-tickHeight/2}, width = 1.0, color = 0x000000})
       end
-    end
-    local yticks = { strokes = {}}
-    for i = (yMin // yUnit), (yMax // yUnit) do
-      if i*yUnit >= yMin and i*yUnit <= yMax then
-        local yval = fitY(yMin, yMax, xppHeight, cy, i*yUnit)
-        table.insert(strokes, {x = {x0-tickHeight/2, x0+tickHeight/2}, y = {yval, yval}, width = 1.0, color = 0x000000})
-      end 
+      -- draw ticks on y-axis
+      for i = (wc.yMin // wc.yUnit) + 1, (wc.yMax // wc.yUnit) do
+        local yval = fitY(i*wc.yUnit)
+        if yval <= My + 2*arrowLength then break end
+        table.insert(strokes, {x = {x0-tickHeight/2, x0+tickHeight/2}, y = {yval, yval}, width = 1.0, color = 0x000000}) 
+      end
     end
     app.addStrokes({strokes = strokes})
     app.refreshPage()
@@ -122,12 +132,16 @@ function showDialog()
     end
   end
 
-  function fitX(xmin, xmax, width, cx, t)
-    return width/(xmax-xmin)*(t-xmin) + cx-width/2
+  function fitX(t)
+    return wxpp.width/(wc.xMax-wc.xMin)*(t-wc.xMin) + wxpp.cx-wxpp.width/2
   end
 
-  function fitY(ymin, ymax, height, cy, t)
-    return -height/(ymax-ymin)*(t-ymin) + cy+height/2
+  function fitY(t)
+    return -wxpp.height/(wc.yMax-wc.yMin)*(t-wc.yMin) + wxpp.cy+wxpp.height/2
+  end
+
+  function fit(x,y)
+    return fitX(x), fitY(y)
   end
 
   function ui.btnDiscard.on_clicked()
