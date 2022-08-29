@@ -63,6 +63,7 @@ local charmap = { t = "\t", r = "\r", n = "\n" }
 local reservedWords = {
       ['false']=false, ['true']=true
     , pi=math.pi, PI=math.pi
+    , e=math.exp(1), E=math.exp(1)
     , ['null']=NULLATOM, ['NULL']=NULLATOM, ['nil']=NULLATOM
 }
 
