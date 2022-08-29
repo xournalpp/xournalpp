@@ -68,36 +68,64 @@ function showDialog()
     end
     appendStroke(strokes, xcoord, ycoord)
 
-    local type = ui.comboentryType:get_text()
-    if type == "custom" then
+    local colAxis, alphaAxis = packRgba(ui.colAxis:get_rgba())
+    local colGrid, alphaGrid = packRgba(ui.colGrid:get_rgba())
+    local axisStyle = ui.comboentryAxis:get_text()
+    local gridStyle = ui.comboentryGrid:get_text()
+    local lwAxis = ui.spbtLineWidthAxis:get_value()
+    local lwGrid = ui.spbtLineWidthGrid:get_value()
+    
+    local arrowLength = 8
+    local mx, my = fit(wc.xMin, wc.yMin)
+    local Mx, My = fit(wc.xMax, wc.yMax)
+    local x0, y0 = fit(0, 0)
+
+    local autofit = ui.cbAutoFit:get_active()
+    local drawAxisLines = ui.cbAxisLines:get_active()
+    local drawTicks = ui.cbTicks:get_active()
+    local drawGrid = ui.cbGrid:get_active()
+
+    if drawAxisLines then
       -- draw x-axis and y-axis
-      local mx, my = fit(wc.xMin, wc.yMin)
-      local Mx, My = fit(wc.xMax, wc.yMax)
-      local x0, y0 = fit(0, 0)
-      local xAxis = {x = {mx, Mx}, y = {y0, y0}, color=0x000000, width=1}
-      local yAxis = {x = {x0, x0}, y = {my, My}, color=0x000000, width=1}
-      local arrowLength = 8
-      local xHead = {x = {Mx-arrowLength, Mx, Mx-arrowLength}, y = {y0-.6*arrowLength, y0, y0+.6*arrowLength}, color=0x000000, width=1, fill=-1}
-      local yHead = {x = {x0-.6*arrowLength, x0, x0+.6*arrowLength}, y = {My+arrowLength, My, My+arrowLength}, color=0x000000, width=1, fill=-1}
+      local xAxis = {x = {mx, Mx}, y = {y0, y0}, lineStyle = axisStyle, color=colAxis, width=lwAxis}
+      local yAxis = {x = {x0, x0}, y = {my, My}, lineStyle = axisStyle, color=colAxis, width=lwAxis}
+      local xHead = {x = {Mx-arrowLength, Mx, Mx-arrowLength}, y = {y0-.6*arrowLength, y0, y0+.6*arrowLength}, color=colAxis, width=lwAxis, fill=-1}
+      local yHead = {x = {x0-.6*arrowLength, x0, x0+.6*arrowLength}, y = {My+arrowLength, My, My+arrowLength}, color=colAxis, width=lwAxis, fill=-1}
       table.insert(strokes, xAxis)
       table.insert(strokes, yAxis)
       table.insert(strokes, xHead)
       table.insert(strokes, yHead)
+    end
 
+    if drawGrid then
+      -- draw vertical grid lines
+      for i = (wc.xMin // wc.xUnit) + 1, (wc.xMax // wc.xUnit) do
+        local xval = fitX(i*wc.xUnit)
+        table.insert(strokes, {x = {xval, xval}, y = {my, My}, width = lwGrid, lineStyle = gridStyle, color = colGrid})
+      end
+      -- draw horizontal grid lines
+      for i = (wc.yMin // wc.yUnit) + 1, (wc.yMax // wc.yUnit) do
+        local yval = fitY(i*wc.yUnit)
+        table.insert(strokes, {x = {mx, Mx}, y = {yval, yval}, width = lwGrid, lineStyle = gridStyle, color = colGrid}) 
+      end
+    end
+
+    if drawTicks then
       local tickHeight = 4.0
       -- draw ticks on x-axis
       for i = (wc.xMin // wc.xUnit) + 1, (wc.xMax // wc.xUnit) do
         local xval = fitX(i*wc.xUnit)
         if xval >= Mx - 2*arrowLength then break end
-        table.insert(strokes, {x = {xval, xval}, y = {y0+tickHeight/2, y0-tickHeight/2}, width = 1.0, color = 0x000000})
+        table.insert(strokes, {x = {xval, xval}, y = {y0+tickHeight/2, y0-tickHeight/2}, width = lwAxis, color = colAxis})
       end
       -- draw ticks on y-axis
       for i = (wc.yMin // wc.yUnit) + 1, (wc.yMax // wc.yUnit) do
         local yval = fitY(i*wc.yUnit)
         if yval <= My + 2*arrowLength then break end
-        table.insert(strokes, {x = {x0-tickHeight/2, x0+tickHeight/2}, y = {yval, yval}, width = 1.0, color = 0x000000}) 
+        table.insert(strokes, {x = {x0-tickHeight/2, x0+tickHeight/2}, y = {yval, yval}, width = lwAxis, color = colAxis}) 
       end
     end
+
     app.addStrokes({strokes = strokes})
     app.refreshPage()
   end
@@ -155,6 +183,11 @@ function showDialog()
       return 28.34
     end
     return 1
+  end
+
+  function packRgba(rgba)
+    local math = require("math")
+    return math.floor(256^2*255*rgba.red + 256*255*rgba.green+255*rgba.blue), math.floor(rgba.alpha*255)
   end
 
   dialog:show_all()
