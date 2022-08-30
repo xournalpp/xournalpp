@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"PO-Revision-Date: 2022-08-30 22:10\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -32,12 +32,14 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2218
 msgid "\n"
 "It was last seen at: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Fue visto por última vez en: \"{1}\""
 
 #: ../src/core/control/Control.cpp:2224
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Archivo de reemplazo propuesto: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -1372,11 +1374,11 @@ msgstr "La configuración de barras de herramientas «{1}» es la predefinida. �
 
 #: ../src/core/control/Control.cpp:2209
 msgid "The attached background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "No se ha encontrado el archivo de fondo adjunto \"{1}\". Podría haber sido movido, renombrado o eliminado."
 
 #: ../src/core/control/Control.cpp:2213
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "No se ha encontrado el archivo de fondo \"{1}\". Podría haber sido movido, renombrado o eliminado."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
@@ -1521,7 +1523,7 @@ msgstr "Formato gráfico no compatible: "
 
 #: ../src/core/control/Control.cpp:2232
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Usar el PDF propuesto"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Vertical Space"
