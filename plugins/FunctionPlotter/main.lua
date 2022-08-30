@@ -52,18 +52,44 @@ function showDialog()
 
     local xcoord, ycoord, strokes = {}, {}, {}
     local samples = ui.spbtSamples:get_value()
-
+    local lastInside = false
+    local last = nil
+    local p = nil
     -- draw graph
     for i = 0, samples-1 do
       local t = tMin + i/(samples-1)*(tMax-tMin)
       local xt = eval("x", t) 
       local yt = eval("y", t)
-      if (xt~=nil and xt>=wc.xMin and xt<=wc.xMax and yt~=nil and yt>=wc.yMin and yt<=wc.yMax) then
-        table.insert(xcoord, fitX(xt))
-        table.insert(ycoord, fitY(yt))
-      else 
+      defined = xt~=nil and yt~=nil and xt==xt and yt==yt  -- not nil and not nan
+      inside = (wc.xMin <= xt and xt<=wc.xMax and wc.yMin <= yt and yt <= wc.yMax)
+      if not defined then 
+        last = nil
+      elseif inside or lastInside then
+        if inside and (last==nil or lastInside) then
+          table.insert(xcoord, fitX(xt))
+          table.insert(ycoord, fitY(yt))
+          last = {x=xt, y=yt}
+          lastInside = true
+        elseif inside then
+          p = interpolate(xt, yt, last.x, last.y)
+          print(xt, yt, last.x, last.y)
+          table.insert(xcoord, fitX(p.x))
+          table.insert(ycoord, fitY(p.y))
+          table.insert(xcoord, fitX(xt))
+          table.insert(ycoord, fitY(yt))  
+          last = {x=xt, y=yt}
+          lastInside = true
+        elseif lastInside then
+          p = interpolate(last.x, last.y, xt, yt)
+          table.insert(xcoord, fitX(p.x))
+          table.insert(ycoord, fitY(p.y))
+          last = {x=xt, y=yt}
+          lastInside = false
+        end
+      else
         appendStroke(strokes, xcoord, ycoord)
         xcoord = {}; ycoord = {}
+        last = {x=xt, y=yt}
       end
     end
     appendStroke(strokes, xcoord, ycoord)
@@ -156,6 +182,34 @@ function showDialog()
         return nil
       else
         return resultValue
+      end
+    end
+  end
+
+  function interpolate(x0,y0,x1,y1)
+    -- Assume (x0, y0) inside, (x1, y1) outside
+    local candidates = {}
+    if x1>wc.xMax then
+      t = (wc.xMax-x0)/(x1-x0)        -- x0+t*(x1-x0) = wc.xMax
+      table.insert(candidates, {x=wc.xMax, y=y0+t*(y1-y0)})
+    end
+    if x1<wc.xMin then
+      t = (wc.xMin-x0)/(x1-x0)        -- x0+t*(x1-x0) = wc.xMin
+      table.insert(candidates, {x=wc.xMin, y=y0+t*(y1-y0)})
+    end
+    if y1>wc.yMax then
+      t = (wc.yMax-y0)/(y1-y0)        -- y0+t*(y1-y0) = wc.yMax
+      table.insert(candidates, {x=x0+t*(x1-x0), y=wc.yMax})
+    end
+    if y1<wc.yMin then
+      t = (wc.yMin-y0)/(y1-y0)        -- y0+t*(y1-y0) = wc.yMin
+      table.insert(candidates, {x=x0+t*(x1-x0), y=wc.yMin})
+    end
+    -- return the first candidate inside the rectangle
+    for i=1,#candidates do
+      c = candidates[i]
+      if c.x>=wc.xMin and c.x<=wc.xMax and c.y>=wc.yMin and c.y<=wc.yMax then
+        return c
       end
     end
   end
