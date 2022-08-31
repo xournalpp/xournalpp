@@ -5,6 +5,7 @@ function initUi()
 end
 
 function showDialog()
+  local math = require("math")
   local hasLuaxp, luaxp = pcall(require, "luaxp")
   if not hasLuaxp then
     app.msgbox("You should have a copy of the luaxp module inside the plugin folder")
@@ -52,44 +53,83 @@ function showDialog()
 
     local xcoord, ycoord, strokes = {}, {}, {}
     local samples = ui.spbtSamples:get_value()
-    local lastInside = false
-    local last = nil
-    local p = nil
-    -- draw graph
-    for i = 0, samples-1 do
-      local t = tMin + i/(samples-1)*(tMax-tMin)
-      local xt = eval("x", t) 
-      local yt = eval("y", t)
-      defined = xt~=nil and yt~=nil and xt==xt and yt==yt  -- not nil and not nan
-      inside = (wc.xMin <= xt and xt<=wc.xMax and wc.yMin <= yt and yt <= wc.yMax)
-      if not defined then 
-        last = nil
-      elseif inside or lastInside then
-        if inside and (last==nil or lastInside) then
+    local xc, yc = {}, {}
+    local autofit = ui.cbAutoFit:get_active()
+    if autofit then
+      print("autofitting")
+      local xMin, xMax, yMin, yMax = 0/0, 0/0, 0/0, 0/0
+      -- draw graph
+      for i = 0, samples-1 do
+        local t = tMin + i/(samples-1)*(tMax-tMin)
+        local xt = eval("x", t) 
+        local yt = eval("y", t)
+        local defined = xt~=nil and yt~=nil and xt==xt and yt==yt  -- not nil and not nan
+        if defined then
+          xMin, xMax = math.min(xt, xMin), math.max(xt, xMax)
+          yMin, yMax = math.min(yt, yMin), math.max(yt, yMax)
+          table.insert(xc, xt)
+          table.insert(yc, yt)
+        else
+          table.insert(xc, nil)
+          table.insert(yc, nil)
+        end
+      end
+      wc.xMin = xMin
+      wc.xMax = xMax
+      wc.yMin = yMin
+      wc.yMax = yMax
+      print(wc.xMin, wc.xMax, wc.yMin, wc.yMax)
+      for i = 1, #xc do
+        local xt, yt = xc[i], yc[i]
+        local defined = xt~=nil
+        if defined then
           table.insert(xcoord, fitX(xt))
           table.insert(ycoord, fitY(yt))
-          last = {x=xt, y=yt}
-          lastInside = true
-        elseif inside then
-          p = interpolate(xt, yt, last.x, last.y)
-          print(xt, yt, last.x, last.y)
-          table.insert(xcoord, fitX(p.x))
-          table.insert(ycoord, fitY(p.y))
-          table.insert(xcoord, fitX(xt))
-          table.insert(ycoord, fitY(yt))  
-          last = {x=xt, y=yt}
-          lastInside = true
-        elseif lastInside then
-          p = interpolate(last.x, last.y, xt, yt)
-          table.insert(xcoord, fitX(p.x))
-          table.insert(ycoord, fitY(p.y))
-          last = {x=xt, y=yt}
-          lastInside = false
+        else 
+          appendStroke(strokes, xcoord, ycoord)
+          xcoord = {}; ycoord = {}
         end
-      else
-        appendStroke(strokes, xcoord, ycoord)
-        xcoord = {}; ycoord = {}
-        last = {x=xt, y=yt}
+      end
+    else 
+      local lastInside = false
+      local last = nil
+      local p = nil
+      -- draw graph
+      for i = 0, samples-1 do
+        local t = tMin + i/(samples-1)*(tMax-tMin)
+        local xt = eval("x", t) 
+        local yt = eval("y", t)
+        local defined = xt~=nil and yt~=nil and xt==xt and yt==yt  -- not nil and not nan
+        local inside = (wc.xMin <= xt and xt<=wc.xMax and wc.yMin <= yt and yt <= wc.yMax)
+        if not defined then 
+          last = nil
+        elseif inside or lastInside then
+          if inside and (last==nil or lastInside) then
+            table.insert(xcoord, fitX(xt))
+            table.insert(ycoord, fitY(yt))
+            last = {x=xt, y=yt}
+            lastInside = true
+          elseif inside then
+            p = interpolate(xt, yt, last.x, last.y)
+            print(xt, yt, last.x, last.y)
+            table.insert(xcoord, fitX(p.x))
+            table.insert(ycoord, fitY(p.y))
+            table.insert(xcoord, fitX(xt))
+            table.insert(ycoord, fitY(yt))  
+            last = {x=xt, y=yt}
+            lastInside = true
+          elseif lastInside then
+            p = interpolate(last.x, last.y, xt, yt)
+            table.insert(xcoord, fitX(p.x))
+            table.insert(ycoord, fitY(p.y))
+            last = {x=xt, y=yt}
+            lastInside = false
+          end
+        else
+          appendStroke(strokes, xcoord, ycoord)
+          xcoord = {}; ycoord = {}
+          last = {x=xt, y=yt}
+        end
       end
     end
     appendStroke(strokes, xcoord, ycoord)
@@ -100,13 +140,13 @@ function showDialog()
     local gridStyle = ui.comboentryGrid:get_text()
     local lwAxis = ui.spbtLineWidthAxis:get_value()
     local lwGrid = ui.spbtLineWidthGrid:get_value()
+    local tickHeight = ui.spbtTickHeight:get_value()
     
     local arrowLength = 8
     local mx, my = fit(wc.xMin, wc.yMin)
     local Mx, My = fit(wc.xMax, wc.yMax)
     local x0, y0 = fit(0, 0)
 
-    local autofit = ui.cbAutoFit:get_active()
     local drawAxisLines = ui.cbAxisLines:get_active()
     local drawTicks = ui.cbTicks:get_active()
     local drawGrid = ui.cbGrid:get_active()
@@ -137,7 +177,6 @@ function showDialog()
     end
 
     if drawTicks then
-      local tickHeight = 4.0
       -- draw ticks on x-axis
       for i = (wc.xMin // wc.xUnit) + 1, (wc.xMax // wc.xUnit) do
         local xval = fitX(i*wc.xUnit)
@@ -230,6 +269,37 @@ function showDialog()
     dialog:destroy()
   end
 
+  function ui.cbAutoFit.on_toggled()
+    local active = not ui.cbAutoFit:get_active()
+    ui.spbtXMin:set_sensitive(active)
+    ui.spbtXMax:set_sensitive(active)
+    ui.spbtYMin:set_sensitive(active)
+    ui.spbtYMax:set_sensitive(active)
+  end
+
+  function ui.cbAxisLines.on_toggled()
+    local active = ui.cbAxisLines:get_active()
+    ui.colAxis:set_sensitive(active)
+    ui.comboAxis:set_sensitive(active)
+    ui.spbtLineWidthAxis:set_sensitive(active)
+  end
+
+  function ui.cbTicks.on_toggled()
+    local active = ui.cbTicks:get_active()
+    ui.spbtXUnit:set_sensitive(active)
+    ui.spbtYUnit:set_sensitive(active)
+    ui.spbtTickHeight:set_sensitive(active)
+  end
+
+  function ui.cbGrid.on_toggled()
+    local active = ui.cbGrid:get_active()
+    ui.colGrid:set_sensitive(active)
+    ui.comboGrid:set_sensitive(active)
+    ui.spbtLineWidthGrid:set_sensitive(active)
+    ui.spbtYMax:set_sensitive(active)
+  end
+
+
   function getFactor(unit)
     if unit == "inch" then
       return 72
@@ -240,7 +310,6 @@ function showDialog()
   end
 
   function packRgba(rgba)
-    local math = require("math")
     return math.floor(256^2*255*rgba.red + 256*255*rgba.green+255*rgba.blue), math.floor(rgba.alpha*255)
   end
 
