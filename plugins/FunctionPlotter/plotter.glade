@@ -910,7 +910,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkSpinButton">
+                              <object class="GtkSpinButton" id="spbtTickHeight">
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="adjustment">adjustmentTickHeight</property>
@@ -1030,6 +1030,7 @@
                             <child>
                               <object class="GtkColorButton" id="colGrid">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="can-focus">True</property>
                                 <property name="receives-default">True</property>
                                 <property name="rgba">rgb(154,153,150)</property>
@@ -1042,6 +1043,7 @@
                             <child>
                               <object class="GtkSpinButton" id="spbtLineWidthGrid">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="can-focus">True</property>
                                 <property name="text" translatable="yes">0.20</property>
                                 <property name="adjustment">adjustmentGridLineWidth</property>
@@ -1058,6 +1060,7 @@
                             <child>
                               <object class="GtkComboBox" id="comboGrid">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="can-focus">False</property>
                                 <property name="model">liststoreAxis</property>
                                 <property name="active">0</property>
