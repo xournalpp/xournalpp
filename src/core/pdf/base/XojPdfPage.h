@@ -16,7 +16,7 @@
 #include <string>     // for string
 #include <vector>     // for vector
 
-#include <cairo/cairo.h>  // for cairo_region_t, cairo_t
+#include <cairo.h>  // for cairo_region_t, cairo_t
 
 /// Determines how text is selected on a user action.
 enum class XojPdfPageSelectionStyle : uint8_t {
