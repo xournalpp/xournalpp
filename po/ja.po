@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"PO-Revision-Date: 2022-09-06 15:09\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -216,15 +216,15 @@ msgstr "フォルダーを作成できませんでした: {1}\n"
 
 #: ../src/core/control/LatexController.cpp:339
 msgid "Could not load LaTeX PDF file"
-msgstr ""
+msgstr "LaTeX PDFファイルを読み込めませんでした"
 
 #: ../src/core/control/LatexController.cpp:333
 msgid "Could not load LaTeX PDF file: {1}"
-msgstr ""
+msgstr "LaTeX PDFファイルを読み込めませんでした: {1}"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:16
 msgid "Could not load pagetemplates.ini file"
-msgstr ""
+msgstr "pagetemplates.ini ファイルを読み込めませんでした"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:837
 msgid "Could not open attachment: {1}. Error message: Could not read file"
@@ -254,7 +254,8 @@ msgstr "\"{1}\" を開けませんでした"
 #: ../src/core/gui/MainWindow.cpp:106
 msgid "Could not parse custom toolbar.ini file: {1}\n"
 "Toolbars will not be available"
-msgstr ""
+msgstr "カスタム toolbar.ini ファイルを解析できませんでした: {1}\n"
+"ツールバーは利用できなくなります"
 
 #: ../src/core/gui/MainWindow.cpp:97
 msgid "Could not parse general toolbar.ini file: {1}\n"
@@ -419,7 +420,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:475
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "楕円を描く"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:128
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
@@ -734,11 +735,11 @@ msgstr ""
 
 #: ../src/core/control/ExportHelper.cpp:78
 msgid "Image file successfully created"
-msgstr ""
+msgstr "画像ファイルが正常に作成されました"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:21
 msgid "Images"
-msgstr ""
+msgstr "画像"
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:78
 msgid "Insert a copy of the current layer below"
@@ -750,16 +751,16 @@ msgstr ""
 
 #: ../src/core/undo/InsertUndoAction.cpp:82
 msgid "Insert elements"
-msgstr ""
+msgstr "要素を挿入"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:92
 #: ../src/core/undo/InsertUndoAction.cpp:37
 msgid "Insert image"
-msgstr ""
+msgstr "画像を挿入"
 
 #: ../src/core/undo/InsertUndoAction.cpp:39
 msgid "Insert latex"
-msgstr ""
+msgstr "latexを挿入"
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:29
 msgid "Insert layer"
@@ -813,7 +814,7 @@ msgstr ""
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:97
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:29
 msgid "Loading..."
-msgstr ""
+msgstr "読み込み中…"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:414
 msgid "Manage Toolbars"
@@ -829,11 +830,11 @@ msgstr ""
 
 #: ../src/core/undo/MoveUndoAction.cpp:19
 msgid "Move"
-msgstr ""
+msgstr "移動"
 
 #: ../src/core/undo/MoveLayerUndoAction.cpp:26
 msgid "Move layer"
-msgstr ""
+msgstr "レイヤーを移動"
 
 #: ../src/core/undo/SwapUndoAction.cpp:68
 msgid "Move page downwards"
