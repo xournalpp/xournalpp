@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-09-06 15:09\n"
+"PO-Revision-Date: 2022-09-06 16:33\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -260,12 +260,13 @@ msgstr "カスタム toolbar.ini ファイルを解析できませんでした: 
 #: ../src/core/gui/MainWindow.cpp:97
 msgid "Could not parse general toolbar.ini file: {1}\n"
 "No Toolbars will be available"
-msgstr ""
+msgstr "カスタム toolbar.ini ファイルを解析できませんでした: {1}\n"
+"ツールバーは利用できなくなります"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:395
 #: ../src/core/control/xojfile/LoadHandler.cpp:418
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "画像を読み込めませんでした: {1}。エラーメッセージ: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
@@ -290,7 +291,7 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:81
 msgid "Could not save .tex file: {1}"
-msgstr ""
+msgstr ".tex ファイルを保存できませんでした: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:96
 msgid "Could not start {1}: {2} (exit code: {3})"
@@ -311,7 +312,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:88
 msgid "Create new layer"
-msgstr ""
+msgstr "新規レイヤーを作成"
 
 #: ../src/core/gui/dialog/FormatDialog.cpp:71
 msgid "Custom"
@@ -323,7 +324,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:415
 msgid "Customize Toolbars"
-msgstr ""
+msgstr "ツールバーをカスタマイズ"
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:34
 msgid "Customized"
@@ -368,7 +369,7 @@ msgstr "このページを削除"
 
 #: ../src/core/control/Control.cpp:2704
 msgid "Discard"
-msgstr ""
+msgstr "破棄"
 
 #: ../src/core/control/XournalMain.cpp:673
 msgid "Display advanced export options"
@@ -564,21 +565,23 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:626
 msgid "Export FILE as PDF"
-msgstr ""
+msgstr "ファイルをPDFとしてエクスポート"
 
 #: ../src/core/control/XournalMain.cpp:628
 msgid "Export FILE as image files (one per page)\n"
 "                                 Guess the output format from the extension of IMGFILE\n"
 "                                 Supported formats: .png, .svg"
-msgstr ""
+msgstr "ファイルを画像ファイルとしてエクスポート (1ページにつき1つ)\n"
+"                                 IMGFILE の拡張子から出力フォーマットを推測します。\n"
+"                                 サポートされているフォーマット: .png, .svg"
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:23
 msgid "Export PDF"
-msgstr ""
+msgstr "PDFでエクスポート"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:375
 msgid "Export as PDF"
-msgstr ""
+msgstr "PDFでエクスポート"
 
 #: ../src/core/control/XournalMain.cpp:642
 msgid "Export layers progressively\n"
@@ -592,7 +595,9 @@ msgstr ""
 msgid "Export without background\n"
 "                                 The exported file has transparent or white background,\n"
 "                                 depending on what its format supports\n"
-msgstr ""
+msgstr "背景なしでエクスポート\n"
+"                                 エクスポートされたファイルはフォーマットがサポートする形式によって,\n"
+"                                 透明や白背景になります。\n"
 
 #: ../src/core/control/XournalMain.cpp:638
 msgid "Export without ruling\n"
@@ -601,7 +606,7 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:74
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "PATHにLaTeX出力用プログラムが見つかりませんでした: {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
@@ -640,7 +645,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:534
 msgid "Fill"
-msgstr ""
+msgstr "塗りつぶし"
 
 #: ../src/core/gui/dialog/SettingsDialog.cpp:298
 msgid "Filter input pressure. Multiply the pressure by the pressure multiplier. If less than the minimum, use the minimum pressure."
@@ -680,27 +685,27 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:427
 msgid "Go to first page"
-msgstr ""
+msgstr "最初のページに移動"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:431
 msgid "Go to last page"
-msgstr ""
+msgstr "最後のページに移動"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:434
 msgid "Go to next layer"
-msgstr ""
+msgstr "次のレイヤーに移動"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:429
 msgid "Go to page"
-msgstr ""
+msgstr "ページに移動"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:433
 msgid "Go to previous layer"
-msgstr ""
+msgstr "前のレイヤーに移動"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:435
 msgid "Go to top layer"
-msgstr ""
+msgstr "一番上のレイヤーに移動"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:24
 msgid "Graph"
@@ -712,16 +717,16 @@ msgstr ""
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:53
 msgid "GtkSourceView was disabled when building Xournal++! Some options will not be available."
-msgstr ""
+msgstr "Xournal++をビルドした際にGtkSourceViewが無効になりました！いくつかのオプションは利用できません。"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:96
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:490
 msgid "Hand"
-msgstr ""
+msgstr "手のひらツール"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:82
 msgid "Hide all"
-msgstr ""
+msgstr "すべて非表示"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
@@ -731,7 +736,7 @@ msgstr ""
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:466
 msgid "Image"
-msgstr ""
+msgstr "画像"
 
 #: ../src/core/control/ExportHelper.cpp:78
 msgid "Image file successfully created"
@@ -764,11 +769,11 @@ msgstr "latexを挿入"
 
 #: ../src/core/undo/InsertLayerUndoAction.cpp:29
 msgid "Insert layer"
-msgstr ""
+msgstr "レイヤーを挿入"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Insert page"
-msgstr ""
+msgstr "ページを挿入"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
@@ -780,7 +785,7 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:613
 msgid "Jump to Page (first Page: 1)"
-msgstr ""
+msgstr "ページ移動 (最初のページが1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
@@ -788,7 +793,7 @@ msgstr ""
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
-msgstr ""
+msgstr "LaTeX生成中にエラーが発生しました: {1} (終了コード: {2})"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:249
 msgid "Layer"
@@ -928,13 +933,13 @@ msgstr ""
 
 #: ../src/core/control/ExportHelper.cpp:121
 msgid "PDF file successfully created"
-msgstr ""
+msgstr "PDFファイルが正常に作成されました"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:26
 #: ../src/core/control/jobs/PdfExportJob.cpp:19
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:47
 msgid "PDF files"
-msgstr ""
+msgstr "PDFファイル"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:47
 msgid "PDF {1}"
@@ -942,7 +947,7 @@ msgstr "PDF {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:27
 msgid "PNG graphics"
-msgstr ""
+msgstr "PNG画像"
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:88
 msgid "Page"
@@ -979,7 +984,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:391
 #: ../src/core/undo/AddUndoAction.cpp:66
 msgid "Paste"
-msgstr ""
+msgstr "貼り付け"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:498
 msgid "Pause / Play"
@@ -1035,7 +1040,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2235
 msgid "Remove PDF Background"
-msgstr ""
+msgstr "PDFの背景を削除"
 
 #: ../src/core/gui/dialog/toolbarCustomize/ToolbarAdapter.cpp:164
 msgid "Removed tool item from Toolbar {1} ID {2}"
@@ -1051,7 +1056,7 @@ msgstr ""
 
 #: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
-msgstr ""
+msgstr "置換"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:1105
 msgid "Requested temporary file was not found for attachment {1}"
@@ -1088,21 +1093,21 @@ msgstr ""
 #: ../src/core/control/Control.cpp:2699 ../src/core/control/jobs/SaveJob.cpp:25
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:374
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: ../src/core/control/Control.cpp:2699
 msgid "Save As..."
-msgstr ""
+msgstr "名前を付けて保存..."
 
 #: ../src/core/control/Control.cpp:2533
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:85
 msgid "Save File"
-msgstr ""
+msgstr "ファイルを保存"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:127
 #: ../src/core/control/jobs/SaveJob.cpp:127
 msgid "Save file error: {1}"
-msgstr ""
+msgstr "ファイルの保存エラー: {1}"
 
 #: ../src/core/undo/ScaleUndoAction.cpp:60
 msgid "Scale"
@@ -1110,7 +1115,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:393
 msgid "Search"
-msgstr ""
+msgstr "検索"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:39
 msgid "See the full list of contributors"
@@ -1122,7 +1127,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
 msgid "Select Font"
-msgstr ""
+msgstr "フォントを選択"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:471
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
@@ -1257,12 +1262,14 @@ msgstr ""
 #: ../src/core/control/XournalMain.cpp:485
 msgid "Sorry, Xournal++ can only open one file at once.\n"
 "Others are ignored."
-msgstr ""
+msgstr "申し訳ありません、Xournal++ は一度に 1 つのファイルしか開くことができません。\n"
+"他のファイルは無視されます。"
 
 #: ../src/core/control/XournalMain.cpp:500
 msgid "Sorry, Xournal++ cannot open remote files at the moment.\n"
 "You have to copy the file to a local directory."
-msgstr ""
+msgstr "申し訳ありません、Xournal++は現在リモートファイルを開くことができません。\n"
+"ローカルディレクトリにファイルをコピーする必要があります。"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
@@ -1422,7 +1429,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ToolbarManageDialog.cpp:50
 msgid "Toolbars"
-msgstr ""
+msgstr "ツールバー"
 
 #: ../src/core/control/CrashHandler.cpp:28
 msgid "Trying to emergency save the current open document…"
@@ -1443,7 +1450,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:384
 #: ../src/core/undo/UndoRedoHandler.cpp:208
 msgid "Undo"
-msgstr ""
+msgstr "元に戻す"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:203
 msgid "Undo: "
@@ -1531,7 +1538,7 @@ msgstr ""
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:245
 msgid "XML Parser error: {1}"
-msgstr ""
+msgstr "XML構文解析エラー: {1}"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:29
 msgid "Xournal (Compatibility)"
@@ -1539,21 +1546,21 @@ msgstr ""
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:55
 msgid "Xournal files"
-msgstr ""
+msgstr "Xournalファイル"
 
 #: ../src/core/control/XournalMain.cpp:218
 msgid "Xournal++ crashed last time. Would you like to restore the last edited file?"
-msgstr ""
+msgstr "前回Xournal++がクラッシュしました。最後に編集したファイルを復元しますか？"
 
 #: ../src/core/control/Control.cpp:2539
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:62
 msgid "Xournal++ files"
-msgstr ""
+msgstr "Xournal++ファイル"
 
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:69
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:91
 msgid "Xournal++ template"
-msgstr ""
+msgstr "Xournal++テンプレート"
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:196
 msgid "You don't have any PDF pages to select from. Cancel operation.\n"
@@ -1580,15 +1587,15 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:418
 msgid "Zoom in"
-msgstr ""
+msgstr "拡大"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:417
 msgid "Zoom out"
-msgstr ""
+msgstr "縮小"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:420
 msgid "Zoom to 100%"
-msgstr ""
+msgstr "100%の縮尺にする"
 
 #: ../src/core/control/Control.cpp:2533
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
@@ -1596,22 +1603,22 @@ msgstr ""
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:16
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Cancel"
-msgstr ""
+msgstr "キャンセル (_C)"
 
 #: ../src/core/control/stockdlg/ImageOpenDlg.cpp:16
 #: ../src/core/control/stockdlg/XojOpenDlg.cpp:17
 msgid "_Open"
-msgstr ""
+msgstr "開く (_O)"
 
 #: ../src/core/control/Control.cpp:2534
 #: ../src/core/control/jobs/BaseExportJob.cpp:24
 #: ../src/core/gui/dialog/PageTemplateDialog.cpp:86
 msgid "_Save"
-msgstr ""
+msgstr "保存 (_S)"
 
 #: ../src/core/control/DeviceListHelper.cpp:101
 msgid "cursor"
-msgstr ""
+msgstr "カーソル"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:270
 msgid "dash-/ dotted"
@@ -1644,11 +1651,11 @@ msgstr ""
 
 #: ../src/core/control/DeviceListHelper.cpp:99
 msgid "eraser"
-msgstr ""
+msgstr "消しゴム"
 
 #: ../src/core/control/Control.cpp:2161
 msgid "file: {1}"
-msgstr ""
+msgstr "ファイル: {1}"
 
 #: ../src/core/undo/AddUndoAction.cpp:85
 #: ../src/core/undo/DeleteUndoAction.cpp:83
@@ -2015,7 +2022,7 @@ msgstr ""
 
 #: ../ui/about.glade:9
 msgid "About Xournal++"
-msgstr ""
+msgstr "Xournal++について"
 
 #: ../ui/settings.glade:4973
 msgid "Action on Tool Tap"
