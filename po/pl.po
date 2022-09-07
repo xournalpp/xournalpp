@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"PO-Revision-Date: 2022-09-07 21:27\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -32,12 +32,14 @@ msgstr "\n"
 #: ../src/core/control/Control.cpp:2218
 msgid "\n"
 "It was last seen at: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Ostatnio był widziany w: \"{1}\""
 
 #: ../src/core/control/Control.cpp:2224
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Proponowany plik zastępczy: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -471,19 +473,19 @@ msgstr "Edytuj tekst"
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
+msgstr "ElementRange::parse(): indeksy elementów zaczynają się od 1"
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): podany indeks elementu jest większy od maksymalnej liczby."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): prawy koniec zakresu nie może być mniejszy od lewego."
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): niepoprawny zakres."
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -1371,11 +1373,11 @@ msgstr "Konfiguracja paska narzędzi \"{1}\" jest predefiniowana. Czy stworzyć 
 
 #: ../src/core/control/Control.cpp:2209
 msgid "The attached background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Załączony plik tła \"{1}\" nie został znaleziony. Być może zmieniła się jego nazwa bądź został przeniesiony lub usunięty."
 
 #: ../src/core/control/Control.cpp:2213
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "Plik tła \"{1}\" nie został znaleziony. Być może zmieniła się jego nazwa bądź został przeniesiony lub usunięty."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
@@ -1520,7 +1522,7 @@ msgstr "Nieobsługiwany format grafiki: "
 
 #: ../src/core/control/Control.cpp:2232
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Użyj proponowanego pliku PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Vertical Space"
@@ -2139,7 +2141,7 @@ msgstr "Autorzy"
 
 #: ../ui/latexSettings.glade:415
 msgid "Auto-indent"
-msgstr ""
+msgstr "Automatyczne wcięcie"
 
 #: ../ui/settings.glade:2158
 msgid "Autodetect"
