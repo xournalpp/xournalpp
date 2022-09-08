@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-09-06 16:33\n"
+"PO-Revision-Date: 2022-09-08 08:20\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -493,7 +493,7 @@ msgstr ""
 #: ../src/core/undo/DeleteUndoAction.cpp:61
 #: ../src/core/undo/EraseUndoAction.cpp:60
 msgid "Erase stroke"
-msgstr ""
+msgstr "ストロークを消去"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:281
@@ -520,7 +520,7 @@ msgstr ""
 #: ../src/core/control/xojfile/LoadHandler.cpp:480
 #: ../src/core/control/xojfile/LoadHandler.cpp:500
 msgid "Error reading PDF: {1}"
-msgstr ""
+msgstr "PDF読み込みエラー: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:555
 msgid "Error reading width of a stroke: {1}"
@@ -536,11 +536,11 @@ msgstr ""
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:21
 msgid "Error while autosaving: {1}"
-msgstr ""
+msgstr "自動保存中にエラーが発生しました: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "PDF背景をエクスポート中にエラーが発生しました: pdfページ番号が見つかりません "
 
 #: ../src/util/Util.cpp:78
 msgid "Error {1} executing system command: {2}"
@@ -611,19 +611,19 @@ msgstr "PATHにLaTeX出力用プログラムが見つかりませんでした: {
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "PDF Cairo サーフェスの初期化に失敗しました"
 
 #: ../src/core/control/tools/ImageHandler.cpp:71
 msgid "Failed to load image, could not determine image size!"
-msgstr ""
+msgstr "画像の読み込みに失敗: 画像のサイズを決定できませんでした!"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:171
 msgid "Failed to open content.xml in zip archive: \"{1}\""
-msgstr ""
+msgstr "zipアーカイブ中のcontent.xmlを開けませんでした: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "LaTeX生成コマンドの解析に失敗しました: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator path: {1}"
@@ -657,7 +657,7 @@ msgstr ""
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:97
 msgid "Floating Toolbox (experimental)"
-msgstr ""
+msgstr "フローティングツールボックス (実験的)"
 
 #: ../src/core/gui/toolbarMenubar/FontButton.cpp:65
 msgid "Font"
@@ -673,7 +673,7 @@ msgstr "GNU GPLv2 以降"
 
 #: ../src/core/control/XournalMain.cpp:617
 msgid "Get version of xournalpp"
-msgstr ""
+msgstr "xournalppのバージョンを取得"
 
 #: ../src/core/control/LatexController.cpp:76
 msgid "Global template file does not exist. Please check your settings."
@@ -731,7 +731,7 @@ msgstr "すべて非表示"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Highlighter"
-msgstr ""
+msgstr "蛍光ペン"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:466
@@ -789,7 +789,7 @@ msgstr "ページ移動 (最初のページが1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "LaTeXエディタのテーマ:"
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -1023,11 +1023,11 @@ msgstr "印刷"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:496
 msgid "Record Audio / Stop Recording"
-msgstr ""
+msgstr "録音開始/録音停止"
 
 #: ../src/core/control/Control.cpp:968
 msgid "Recorder could not be started."
-msgstr ""
+msgstr "録音を開始できませんでした。"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:385
 #: ../src/core/undo/UndoRedoHandler.cpp:220
@@ -1052,7 +1052,7 @@ msgstr ""
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
-msgstr ""
+msgstr "レイヤーの名前を変更"
 
 #: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
@@ -1068,7 +1068,7 @@ msgstr ""
 
 #: ../src/core/undo/RotateUndoAction.cpp:56
 msgid "Rotation"
-msgstr ""
+msgstr "回転"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:398
 msgid "Rotation Snapping"
@@ -1084,7 +1084,7 @@ msgstr ""
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:28
 msgid "SVG graphics"
-msgstr ""
+msgstr "SVG画像"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:150
 msgid "Sample LaTeX file generated successfully."
@@ -1249,15 +1249,15 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageLayer.cpp:77
 msgid "Show all"
-msgstr ""
+msgstr "すべて表示"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:102
 msgid "Show only not used pages (one unused page)"
-msgstr ""
+msgstr "未使用のページのみを表示 (1つの未使用ページ)"
 
 #: ../src/core/gui/dialog/backgroundSelect/PdfPagesDialog.cpp:103
 msgid "Show only not used pages ({1} unused pages)"
-msgstr ""
+msgstr "未使用のページのみを表示 ({1} 枚の未使用ページ)"
 
 #: ../src/core/control/XournalMain.cpp:485
 msgid "Sorry, Xournal++ can only open one file at once.\n"
@@ -2766,15 +2766,15 @@ msgstr ""
 
 #: ../ui/main.glade:1194
 msgid "New Page _After"
-msgstr ""
+msgstr "次に新しいページを追加(_A)"
 
 #: ../ui/main.glade:1184
 msgid "New Page _Before"
-msgstr ""
+msgstr "前に新しいページを追加(_B)"
 
 #: ../ui/main.glade:1205
 msgid "New Page at _End"
-msgstr ""
+msgstr "最後に新しいページを追加(_E)"
 
 #: ../ui/main.glade:1252
 msgid "New _Layer"
