@@ -2,6 +2,7 @@
 
 #include <cinttypes>  // for PRIx32, uint32_t
 #include <cstdio>     // for sprintf, size_t
+#include <filesystem> // for exists
 
 #include <cairo.h>                  // for cairo_surface_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
@@ -235,7 +236,9 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                 background->setAttrib("filename", "bg.pdf");
 
                 GError* error = nullptr;
-                doc->getPdfDocument().save(filepath, &error);
+                if (!exists(filepath)) {
+                    doc->getPdfDocument().save(filepath, &error);
+                }
 
                 if (error) {
                     if (!this->errorMessage.empty()) {
