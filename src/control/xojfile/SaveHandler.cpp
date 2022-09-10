@@ -1,6 +1,7 @@
 #include "SaveHandler.h"
 
 #include <cinttypes>
+#include <filesystem>  // for exists
 
 #include <config.h>
 
@@ -233,7 +234,9 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                 background->setAttrib("filename", "bg.pdf");
 
                 GError* error = nullptr;
-                doc->getPdfDocument().save(filepath, &error);
+                if (!exists(filepath)) {
+                    doc->getPdfDocument().save(filepath, &error);
+                }
 
                 if (error) {
                     if (!this->errorMessage.empty()) {
