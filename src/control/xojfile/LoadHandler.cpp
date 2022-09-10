@@ -428,6 +428,7 @@ void LoadHandler::parseBgPdf() {
                     pdfFilename = xournalFilepath.remove_filename() / pdfFilename;
                 }
             } else if (!strcmp("attach", domain)) {
+                attachToDocument = true;
                 // Handle old format separately
                 if (this->isGzFile) {
                     pdfFilename = (fs::path{xournalFilepath} += ".") += pdfFilename;
