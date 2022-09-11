@@ -150,6 +150,10 @@ auto TextEditor::setColor(Color color) -> UndoAction* {
 
 void TextEditor::setFont(XojFont font) {
     this->text->setFont(font);
+    afterFontChange();
+}
+
+void TextEditor::afterFontChange() {
     xoj::view::TextView::updatePangoFont(this->layout, this->text);
     this->repaintEditor();
 }
@@ -289,19 +293,16 @@ auto TextEditor::onKeyPressEvent(GdkEventKey* event) -> bool {
     } else if (gtk_bindings_activate_event(G_OBJECT(this->textWidget), event)) {
         return true;
     } else if ((event->state & modifiers) == GDK_CONTROL_MASK) {
-        // Bold text
         if (event->keyval == GDK_KEY_b || event->keyval == GDK_KEY_B) {
-            toggleBold();
+            toggleBoldFace();
             return true;
         }
-        // Increase text size
         if (event->keyval == GDK_KEY_plus) {
-            incSize();
+            increaseFontSize();
             return true;
         }
-        // Decrease text size
         if (event->keyval == GDK_KEY_minus) {
-            decSize();
+            decreaseFontSize();
             return true;
         }
     } else if (event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_ISO_Enter ||
@@ -353,41 +354,36 @@ void TextEditor::toggleOverwrite() {
  * I know it's a bit rough and duplicated
  * Improve that later on...
  */
-void TextEditor::decSize() {
+void TextEditor::decreaseFontSize() {
     XojFont& font = text->getFont();
-    double fontSize = font.getSize();
-    fontSize--;
-    font.setSize(fontSize);
-    setFont(font);
+    if (double size = font.getSize(); size > 1) {
+        font.setSize(font.getSize() - 1);
+        afterFontChange();
+    }
 }
 
-void TextEditor::incSize() {
+void TextEditor::increaseFontSize() {
     XojFont& font = text->getFont();
-    double fontSize = font.getSize();
-    fontSize++;
-    font.setSize(fontSize);
-    setFont(font);
+    font.setSize(font.getSize() + 1);
+    afterFontChange();
 }
 
-void TextEditor::toggleBold() {
+void TextEditor::toggleBoldFace() {
     // get the current/used font
     XojFont& font = text->getFont();
     string fontName = font.getName();
 
-    std::size_t found = fontName.find("Bold");
+    std::size_t found = fontName.find(" Bold");
 
     // toggle bold
     if (found == string::npos) {
         fontName = fontName + " Bold";
     } else {
-        fontName = fontName.substr(0, found - 1);
+        fontName = fontName.erase(found, 5);
     }
 
-    // commit changes
     font.setName(fontName);
-    setFont(font);
-
-    // this->repaintEditor();
+    afterFontChange();
 }
 
 void TextEditor::selectAtCursor(TextEditor::SelectType ty) {
