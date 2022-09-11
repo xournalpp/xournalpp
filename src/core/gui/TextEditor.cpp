@@ -18,7 +18,8 @@
 #include "undo/TextUndoAction.h"   // for TextUndoAction
 #include "undo/UndoRedoHandler.h"  // for UndoRedoHandler
 #include "util/Rectangle.h"        // for Rectangle
-#include "view/TextView.h"         // for TextView
+#include "util/raii/CStringWrapper.h"
+#include "view/TextView.h"  // for TextView
 
 #include "PageView.h"          // for XojPageView
 #include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
@@ -112,9 +113,8 @@ auto TextEditor::getText() -> Text* {
     GtkTextIter start, end;
 
     gtk_text_buffer_get_bounds(this->buffer.get(), &start, &end);
-    char* text = gtk_text_iter_get_text(&start, &end);
-    this->text->setText(text);
-    g_free(text);
+    auto text = xoj::util::OwnedCString::assumeOwnership(gtk_text_iter_get_text(&start, &end));
+    this->text->setText(text.get());
 
     return this->text;
 }
@@ -189,7 +189,7 @@ void TextEditor::iMCommitCallback(GtkIMContext* context, const gchar* str, TextE
 }
 
 void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te) {
-    gchar* str = nullptr;
+    xoj::util::OwnedCString str;
     gint cursor_pos = 0;
     GtkTextIter iter;
 
@@ -197,7 +197,7 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
 
     {
         PangoAttrList* attrs = nullptr;
-        gtk_im_context_get_preedit_string(context, &str, &attrs, &cursor_pos);
+        gtk_im_context_get_preedit_string(context, str.contentReplacer(), &attrs, &cursor_pos);
         if (attrs == nullptr) {
             attrs = pango_attr_list_new();
         }
@@ -210,21 +210,17 @@ void TextEditor::iMPreeditChangedCallback(GtkIMContext* context, TextEditor* te)
      */
     if (str && str[0] && !gtk_text_iter_can_insert(&iter, true)) {
         gtk_widget_error_bell(te->xournalWidget);
-        goto out;
+        return;
     }
 
-    if (str != nullptr) {
-        te->preeditString = str;
+    if (str) {
+        te->preeditString = str.get();
     } else {
         te->preeditString = "";
     }
     te->preeditCursor = cursor_pos;
     te->contentsChanged();
     te->repaintEditor();
-
-out:
-
-    g_free(str);
 }
 
 auto TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor* te) -> bool {
@@ -238,9 +234,8 @@ auto TextEditor::iMRetrieveSurroundingCallback(GtkIMContext* context, TextEditor
     gtk_text_iter_set_line_offset(&start, 0);
     gtk_text_iter_forward_to_line_end(&end);
 
-    gchar* text = gtk_text_iter_get_slice(&start, &end);
-    gtk_im_context_set_surrounding(context, text, -1, pos);
-    g_free(text);
+    auto text = xoj::util::OwnedCString::assumeOwnership(gtk_text_iter_get_slice(&start, &end));
+    gtk_im_context_set_surrounding(context, text.get(), -1, pos);
 
     te->contentsChanged();
     te->repaintEditor();
@@ -840,14 +835,11 @@ void TextEditor::backspace() {
 }
 
 auto TextEditor::getSelection() const -> std::string {
-    GtkTextIter start, end;
-    char* text = nullptr;
     std::string s;
 
-    if (gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end)) {
-        text = gtk_text_iter_get_text(&start, &end);
-        s = text;
-        g_free(text);
+    if (GtkTextIter start, end; gtk_text_buffer_get_selection_bounds(this->buffer.get(), &start, &end)) {
+        auto text = xoj::util::OwnedCString::assumeOwnership(gtk_text_iter_get_text(&start, &end));
+        s = text.get();
     }
     return s;
 }
