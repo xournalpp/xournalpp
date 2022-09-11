@@ -44,9 +44,9 @@ public:
 
     void toggleOverwrite();
     void selectAtCursor(TextEditor::SelectType ty);
-    void toggleBold();
-    void incSize();
-    void decSize();
+    void toggleBoldFace();
+    void increaseFontSize();
+    void decreaseFontSize();
     void moveCursor(GtkMovementStep step, int count, bool extendSelection);
     void deleteFromCursor(GtkDeleteType type, int count);
     void backspace();
@@ -66,6 +66,7 @@ public:
 
     void setText(const std::string& text);
     void setFont(XojFont font);
+    void afterFontChange();
     UndoAction* setColor(Color color);
 
 private:
