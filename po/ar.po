@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"PO-Revision-Date: 2022-09-13 21:20\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -640,7 +640,7 @@ msgstr "تعذر تحليل أمر توليد LaTeX هذا: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator path: {1}"
-msgstr ""
+msgstr "تعذر تحليل أمر توليد LaTeX هذا: {1}"
 
 #: ../src/core/control/LatexController.cpp:81
 msgid "Failed to read global template file. Please check your settings."
@@ -804,7 +804,7 @@ msgstr "انتقال إلى الصفحة (الصفحة الأولى: 1)"
 
 #: ../src/core/gui/dialog/LatexSettingsPanel.cpp:48
 msgid "LaTeX editor theme:"
-msgstr ""
+msgstr "سمة محرر LaTeX:"
 
 #: ../src/core/control/LatexController.cpp:242
 msgid "Latex generation encountered an error: {1} (exit code: {2})"
@@ -905,7 +905,8 @@ msgstr "موافق"
 #: ../src/core/control/XournalMain.cpp:653
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "عند التصدير، قم بتصدير الطبقات التي يحددها «المدى» فقط (مثال: «‪2-3,5,7-‬»)\n"
+"                                 لا تأثير بغير ‪-p/--create-pdf‬ أو ‪-i/--create-img‬"
 
 #: ../src/core/control/XournalMain.cpp:649
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1374,11 +1375,11 @@ msgstr "مجموعة أشرطة الأدوات «{1}» هي مسبقة التع�
 
 #: ../src/core/control/Control.cpp:2209
 msgid "The attached background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "تعذر العثور على ملف الخلفية المرفق \"{1}\". ربما تم نقله أو إعادة تسميته أو حذفه."
 
 #: ../src/core/control/Control.cpp:2213
 msgid "The background file \"{1}\" could not be found. It might have been moved, renamed or deleted."
-msgstr ""
+msgstr "تعذر العثور على ملف الخلفية \"{1}\". ربما تم نقله أو إعادة تسميته أو حذفه."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:52
 msgid "The check for overwriting the background failed with:\n"
@@ -2638,7 +2639,7 @@ msgstr "مصممو الأيقونات"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
-msgstr ""
+msgstr "سمة الأيقونات"
 
 #: ../ui/settings.glade:4760
 msgid "If activated, shapes that have been recognized by the shape recognizer will be snapped to the grid automatically. This may lead to unexpected results if you have the shape recognizer turned on while writing."
@@ -2936,7 +2937,7 @@ msgstr "الأداء"
 
 #: ../ui/latexSettings.glade:532
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "اختر خط المحرر"
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3216,7 +3217,7 @@ msgstr "أ_شرطة الأدوات"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "مصدر TeX"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
@@ -3301,11 +3302,11 @@ msgstr "تسطير النص المحدد"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "استخدام أيقونات النظام المتاحة (يحتاج إعادة التشغيل)"
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
-msgstr ""
+msgstr "استخدام خط سمة النظام."
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
@@ -3377,7 +3378,7 @@ msgstr "مع مساعدة من المجتمع"
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "التفاف النص"
 
 #: ../ui/about.glade:158
 msgid "X.X.X"
