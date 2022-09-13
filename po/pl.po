@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-09-07 22:32\n"
+"PO-Revision-Date: 2022-09-13 11:41\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -135,7 +135,7 @@ msgstr "Nie ustawiono folderu pliku dźwiękowego! Nagrywanie nie będzie dział
 
 #: ../src/core/control/Control.cpp:252
 msgid "Autosave failed with an error: {1}"
-msgstr "Auto-zapis się nie powiódł z powodu błędu: {1}"
+msgstr "Wystąpił błąd podczas automatycznego zapisu: {1}"
 
 #: ../src/core/control/Control.cpp:232
 msgid "Autosave renamed from {1} to {2}"
@@ -143,7 +143,7 @@ msgstr "Zmieniono nazwę auto-zapisu z {1} na {2}"
 
 #: ../src/core/control/jobs/AutosaveJob.cpp:48
 msgid "Autosaving to {1}"
-msgstr "Auto-zapis do {1}"
+msgstr "Automatyczne zapisywanie do {1}"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:428
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:507
@@ -383,9 +383,9 @@ msgstr "Wyświetl zaawansowane opcje eksportu"
 msgid "Do not open Autosave files. They may will be overwritten!\n"
 "Copy the files to another folder.\n"
 "Files from Folder {1} cannot be opened."
-msgstr "Nie otwieraj plików Auto-zapisu. Mogą zostać nadpisane!\n"
-"Skopiuj plik do innego folderu.\n"
-"Pliki w Folderze {1} nie mogą zostać otwarte."
+msgstr "Nie otwieraj plików autozapisu. Mogą one zostać nadpisane!\n"
+"Skopiuj pliki do innego folderu.\n"
+"Pliki z folderu {1} nie mogą zostać otwarte."
 
 #: ../src/core/control/jobs/BaseExportJob.cpp:46
 msgid "Do not overwrite the background PDF! This will cause errors!"
