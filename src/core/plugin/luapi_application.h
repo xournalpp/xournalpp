@@ -38,10 +38,18 @@
 #include "model/StrokeStyle.h"
 #include "model/Text.h"
 #include "model/XojPage.h"
+#include "plugin/Plugin.h"
 #include "undo/InsertUndoAction.h"
 #include "util/StringUtils.h"
 #include "util/XojMsgBox.h"
+#include "util/i18n.h"                  // for _
 #include "util/safe_casts.h"
+
+extern "C" {
+#include <lauxlib.h>  // for luaL_Reg, luaL_newstate, luaL_requiref
+#include <lua.h>      // for lua_getglobal, lua_getfield, lua_setf...
+#include <lualib.h>   // for luaL_openlibs
+}
 
 /**
  * Renames file 'from' to file 'to' in the file system.
