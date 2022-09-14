@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-09-14 00:44\n"
+"PO-Revision-Date: 2022-09-14 01:52\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -33,12 +33,13 @@ msgstr "\n"
 msgid "\n"
 "It was last seen at: \"{1}\""
 msgstr "\n"
-"Vist per darrer cop a \"{1}\""
+"Vist per darrer cop a: \"{1}\""
 
 #: ../src/core/control/Control.cpp:2224
 msgid "\n"
 "Proposed replacement file: \"{1}\""
-msgstr ""
+msgstr "\n"
+"Arxiu de recanvi proposat: \"{1}\""
 
 #: ../src/core/gui/toolbarMenubar/ToolPageSpinner.cpp:37
 msgctxt "Page {pagenumber} \"of {pagecount}\""
@@ -464,7 +465,7 @@ msgstr "Tipus de dibuix - no canviar"
 
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:29
 msgid "Drawing Type Combo"
-msgstr ""
+msgstr "Estoig de Tipus de Dibuix"
 
 #: ../src/core/undo/TextBoxUndoAction.cpp:43
 msgid "Edit text"
@@ -472,19 +473,19 @@ msgstr "Editar text"
 
 #: ../src/util/ElementRange.cpp:101
 msgid "ElementRange::parse(): element indices start with 1"
-msgstr ""
+msgstr "ElementRange::parse(): els indexes de l'element comencen per 1"
 
 #: ../src/util/ElementRange.cpp:95
 msgid "ElementRange::parse(): given element index is larger than maximum count."
-msgstr ""
+msgstr "ElementRange::parse(): l'índex de l'element donat és més gran que el nombre màxim."
 
 #: ../src/util/ElementRange.cpp:98
 msgid "ElementRange::parse(): interval bounds must be in increasing order."
-msgstr ""
+msgstr "ElementRange::parse(): els extrems de l'interval han d'anar en ordre creixent."
 
 #: ../src/util/ElementRange.cpp:91
 msgid "ElementRange::parse(): invalid element range."
-msgstr ""
+msgstr "ElementRange::parse(): interval d'elements invàlids."
 
 #: ../src/core/undo/EmergencySaveRestore.cpp:22
 msgid "Emergency saved document"
@@ -546,7 +547,7 @@ msgstr "Error durant el desat automàtic: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Error en exportar el fons del pdf: no puc trobar el número de pàgina del pdf "
 
 #: ../src/util/Util.cpp:78
 msgid "Error {1} executing system command: {2}"
@@ -623,7 +624,7 @@ msgstr "No s'ha pogut trobar el programa generador LaTeX a la RUTA: {1}"
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
 msgid "Failed to initialize PDF Cairo surface"
-msgstr ""
+msgstr "Fallida en inicialitzar la superfície PDF Cairo"
 
 #: ../src/core/control/tools/ImageHandler.cpp:71
 msgid "Failed to load image, could not determine image size!"
@@ -635,7 +636,7 @@ msgstr "No s'ha pogut carregar content.xml a l'arxiu zip: \"{1}\""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:70
 msgid "Failed to parse LaTeX generator command: {1}"
-msgstr ""
+msgstr "Fallit l'intent d'examinar la comanda del generador LaTeX: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:59
 msgid "Failed to parse LaTeX generator path: {1}"
