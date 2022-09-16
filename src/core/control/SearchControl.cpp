@@ -8,7 +8,6 @@
 #include "model/Layer.h"    // for Layer
 #include "model/Text.h"     // for Text
 #include "model/XojPage.h"  // for XojPage
-#include "view/TextView.h"  // for TextView
 #include "view/overlays/SearchResultView.h"
 
 SearchControl::SearchControl(const PageRef& page, XojPdfPageSPtr pdf):
@@ -42,7 +41,7 @@ auto SearchControl::search(const std::string& text, size_t* occurrences, double*
             if (e->getType() == ELEMENT_TEXT) {
                 Text* t = dynamic_cast<Text*>(e);
 
-                std::vector<XojPdfRectangle> textResult = xoj::view::TextView::findText(t, text);
+                std::vector<XojPdfRectangle> textResult = t->findText(text);
 
                 this->results.insert(this->results.end(), textResult.begin(), textResult.end());
             }

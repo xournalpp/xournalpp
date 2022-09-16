@@ -21,7 +21,8 @@
 #include <pango/pangocairo.h>  // for cairo_t, PangoAttrList, PangoLayout
 
 #include "util/Color.h"  // for Color
-#include "util/Rectangle.h"
+#include "util/Range.h"
+#include "util/raii/CStringWrapper.h"
 #include "util/raii/GObjectSPtr.h"
 #include "util/raii/PangoSPtr.h"
 
@@ -30,6 +31,11 @@ class Text;
 class TextUndoAction;
 class UndoAction;
 class XojFont;
+
+namespace xoj::util {
+template <class T>
+class Rectangle;
+};
 
 class TextEditor {
 public:
@@ -57,7 +63,7 @@ public:
     void pasteFromClipboard();
     std::string getSelection() const;
 
-    Text* getText();
+    Text* getText() const;
     void textCopyed();
 
     void mousePressed(double x, double y);
@@ -66,27 +72,31 @@ public:
 
     UndoAction* getFirstUndoAction() const;
 
-    void setText(const std::string& text);
+    void replaceBufferContent(const std::string& text);
     void setFont(XojFont font);
     void afterFontChange();
     UndoAction* setColor(Color color);
 
 private:
     /**
-     * @brief Add the text to the providedd Pango layout.
+     * @brief Add the text to the provided Pango layout.
      * The added text contains both this->text, and the preedit string of the Input Method (this->preeditstring)
      * This function also sets up the attributes of the preedit string (typically underlined)
      */
     void setTextToPangoLayout(PangoLayout* pl) const;
 
-    xoj::util::Rectangle<double> computeBoundingRect();
-    void repaintEditor();
-    void drawCursor(cairo_t* cr, double x, double y, double height, double zoom) const;
+    Range computeBoundingBox() const;
+    void repaintEditor(bool sizeChanged = true);
+
+    /**
+     * @brief Draws the cursor
+     * @return The bounding box of the cursor, in TextBox coordinates (i.e relative to the text box upper left corner)
+     *          The bounding box is returned even if the cursor is currently not visible (blinking...)
+     */
+    xoj::util::Rectangle<double> drawCursor(cairo_t* cr, double zoom) const;
+
     void repaintCursor();
     void resetImContext();
-
-    int getByteOffset(int charOffset) const;
-    int getCharOffset(int byteOffset) const;
 
     static void bufferPasteDoneCallback(GtkTextBuffer* buffer, GtkClipboard* clipboard, TextEditor* te);
 
@@ -97,7 +107,7 @@ private:
 
     void moveCursor(const GtkTextIter* newLocation, gboolean extendSelection);
 
-    void calcVirtualCursor();
+    void computeVirtualCursorPosition();
     void jumpALine(GtkTextIter* textIter, int count);
 
     void findPos(GtkTextIter* iter, double x, double y) const;
@@ -117,23 +127,26 @@ private:
     xoj::util::GObjectSPtr<PangoLayout> layout;
 
     // InputMethod preedit data
-    xoj::util::PangoAttrListSPtr preeditAttrList;
     int preeditCursor;
-    std::string preeditString;
+    xoj::util::PangoAttrListSPtr preeditAttrList;
+    xoj::util::OwnedCString preeditString;
 
     std::vector<std::reference_wrapper<TextUndoAction>> undoActions;
 
-    double virtualCursor = 0;
-    double markPosX = 0;
-    double markPosY = 0;
-
     /**
-     * Tracks the bounding box of the editor from the last render.
+     * @brief Tracks the bounding box of the editor from the last render.
      *
      * Because adding or deleting lines may cause the size of the bounding box to change,
-     * we need to rerender the union of the current and previous bboxes.
+     * we need to repaint the union of the current and previous bboxes.
      */
-    xoj::util::Rectangle<double> previousBoundingBox;
+    Range previousBoundingBox;
+
+    /**
+     * @brief Coordinate of the virtual cursor, in Pango coordinates.
+     * (The virtual cursor is used when moving the cursor vertically (e.g. pressing up arrow), to get a good "vertical
+     * move" feeling, even if we pass by (say) an empty line)
+     */
+    int virtualCursorAbscissa = 0;
 
     // cursor blinking timings. In millisecond.
     unsigned int cursorBlinkingTimeOn = 0;
@@ -164,8 +177,6 @@ private:
     bool cursorBlink = true;
 
     bool ownText = false;
-    bool markPosExtendSelection = false;
-    bool markPosQueue = false;
     bool needImReset = false;
     bool mouseDown = false;
     bool cursorOverwrite = false;
