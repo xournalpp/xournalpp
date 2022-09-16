@@ -74,7 +74,7 @@ TextEditor::~TextEditor() {
     this->widget = nullptr;
 
     Control* control = gui->getXournal()->getControl();
-    control->setCopyPasteEnabled(false);
+    control->setCopyCutEnabled(false);
 
     this->contentsChanged(true);
 
@@ -681,10 +681,10 @@ void TextEditor::moveCursor(const GtkTextIter* newLocation, gboolean extendSelec
 
     if (extendSelection) {
         gtk_text_buffer_move_mark_by_name(this->buffer, "insert", newLocation);
-        control->setCopyPasteEnabled(true);
+        control->setCopyCutEnabled(true);
     } else {
         gtk_text_buffer_place_cursor(this->buffer, newLocation);
-        control->setCopyPasteEnabled(false);
+        control->setCopyCutEnabled(false);
     }
 
     this->repaintEditor();
