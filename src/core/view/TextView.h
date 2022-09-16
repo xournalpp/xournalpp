@@ -16,10 +16,11 @@
 
 #include <pango/pangocairo.h>  // for PangoLayout, cairo_t
 
+#include "util/raii/GObjectSPtr.h"
+
 #include "View.h"  // for ElementView
 
 class Text;
-class XojPdfRectangle;
 
 class xoj::view::TextView: public xoj::view::ElementView {
 public:
@@ -32,24 +33,9 @@ public:
     void draw(const Context& ctx) const override;
 
     /**
-     * Calculates the size of a Text model
-     */
-    static void calcSize(const Text* t, double& width, double& height);
-
-    /**
-     * Searches text within a Text model
-     */
-    static std::vector<XojPdfRectangle> findText(const Text* t, const std::string& search);
-
-    /**
      * Initialize a Pango layout
      */
-    static PangoLayout* initPango(cairo_t* cr, const Text* t);
-
-    /**
-     * Sets the font name from Text model
-     */
-    static void updatePangoFont(PangoLayout* layout, const Text* t);
+    static xoj::util::GObjectSPtr<PangoLayout> initPango(cairo_t* cr, const Text* t);
 
 private:
     const Text* text;

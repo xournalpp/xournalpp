@@ -21,7 +21,7 @@ OwnedCString OwnedCString::assumeOwnership(char* s) {
 OwnedCString::~OwnedCString() { g_free(data); }
 
 const char* OwnedCString::get() const { return data; }
-OwnedCString::operator bool() const { return data; }
+OwnedCString::operator bool() const { return data && data[0]; }
 
 OwnedCString::operator std::string_view() const { return data ? data : std::string_view(); }
 

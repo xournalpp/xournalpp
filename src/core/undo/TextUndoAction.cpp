@@ -42,7 +42,7 @@ auto TextUndoAction::undo(Control* control) -> bool {
 
     newText = text->getText();
     text->setText(lastText);
-    this->textEditor->setText(lastText);
+    this->textEditor->replaceBufferContent(lastText);
 
     x1 = std::min(x1, text->getX());
     y1 = std::min(y1, text->getY());
@@ -63,7 +63,7 @@ auto TextUndoAction::redo(Control* control) -> bool {
     double y2 = text->getY() + text->getElementHeight();
 
     text->setText(newText);
-    this->textEditor->setText(newText);
+    this->textEditor->replaceBufferContent(newText);
 
     x1 = std::min(x1, text->getX());
     y1 = std::min(y1, text->getY());
