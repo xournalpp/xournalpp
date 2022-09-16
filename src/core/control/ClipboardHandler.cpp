@@ -242,7 +242,7 @@ void ClipboardHandler::setSelection(EditSelection* selection) {
     this->listener->clipboardCutCopyEnabled(selection != nullptr);
 }
 
-void ClipboardHandler::setCopyPasteEnabled(bool enabled) {
+void ClipboardHandler::setCopyCutEnabled(bool enabled) {
     if (enabled) {
         listener->clipboardCutCopyEnabled(true);
     } else if (!selection) {

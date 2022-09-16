@@ -3046,7 +3046,7 @@ void Control::setClipboardHandlerSelection(EditSelection* selection) {
     }
 }
 
-void Control::setCopyPasteEnabled(bool enabled) { this->clipboardHandler->setCopyPasteEnabled(enabled); }
+void Control::setCopyCutEnabled(bool enabled) { this->clipboardHandler->setCopyCutEnabled(enabled); }
 
 void Control::setFill(bool fill) {
     EditSelection* sel = nullptr;

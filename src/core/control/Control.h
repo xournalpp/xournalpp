@@ -221,7 +221,7 @@ public:
 
     void moveSelectionToLayer(size_t layerNo);
 
-    void setCopyPasteEnabled(bool enabled);
+    void setCopyCutEnabled(bool enabled);
 
     void enableAutosave(bool enable);
 

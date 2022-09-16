@@ -45,7 +45,7 @@ public:
 
     void setSelection(EditSelection* selection);
 
-    void setCopyPasteEnabled(bool enabled);
+    void setCopyCutEnabled(bool enabled);
 
 private:
     static void ownerChangedCallback(GtkClipboard* clip, GdkEvent* event, ClipboardHandler* handler);
