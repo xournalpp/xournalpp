@@ -5,14 +5,14 @@
 #include <tuple>
 #include <utility>
 
+#include "control/Control.h"
+#include "gui/MainWindow.h"
 
 #ifdef ENABLE_PLUGINS
 #include <algorithm>
 
-#include "control/Control.h"
 #include "control/settings/Settings.h"
 #include "gui/GladeSearchpath.h"
-#include "gui/MainWindow.h"
 #include "gui/dialog/PluginDialog.h"
 #include "util/PathUtil.h"
 #include "util/StringUtils.h"
