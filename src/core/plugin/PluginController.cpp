@@ -2,13 +2,13 @@
 
 #include <cassert>
 #include <memory>
-#include <tuple>
-#include <utility>
 
 #include "control/Control.h"
 #include "gui/MainWindow.h"
 
 #ifdef ENABLE_PLUGINS
+#include <tuple>
+#include <utility>
 #include <algorithm>
 
 #include "control/settings/Settings.h"
