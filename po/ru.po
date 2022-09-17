@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"PO-Revision-Date: 2022-09-17 14:17\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -545,7 +545,7 @@ msgstr "Ошибка при автосохранении: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:177
 msgid "Error while exporting the pdf background: I cannot find the pdf page number "
-msgstr ""
+msgstr "Ошибка при экспорте фона PDF: я не могу найти номер страницы PDF"
 
 #: ../src/util/Util.cpp:78
 msgid "Error {1} executing system command: {2}"
@@ -571,7 +571,7 @@ msgstr "Лог-файл ошибок не может быть удалён. Вы
 
 #: ../src/core/control/XournalMain.cpp:626
 msgid "Export FILE as PDF"
-msgstr "Экспорт файла в PDF"
+msgstr "Экспортировать файл в PDF"
 
 #: ../src/core/control/XournalMain.cpp:628
 msgid "Export FILE as image files (one per page)\n"
@@ -903,7 +903,7 @@ msgstr "OK"
 #: ../src/core/control/XournalMain.cpp:653
 msgid "On export, only export the layers specified by RANGE (e.g. \"2-3,5,7-\")\n"
 "                                 No effect without -p/--create-pdf or -i/--create-img"
-msgstr ""
+msgstr "При экспорте экспортируйте только слои, указанные в ДИАПАЗОНЕ (например, \"2-3,5,7-\") Никакого эффекта без -p/--create-pdf или -i/--create-img"
 
 #: ../src/core/control/XournalMain.cpp:649
 msgid "Only export the pages specified by RANGE (e.g. \"2-3,5,7-\")\n"
@@ -1137,7 +1137,7 @@ msgstr "Полный список участников"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:99
 msgid "Select Area Text from pdf"
-msgstr ""
+msgstr "Выбрать область текста из PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:492
 msgid "Select Font"
@@ -1147,7 +1147,7 @@ msgstr "Выбрать шрифт"
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:19
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:22
 msgid "Select Linear PDF Text"
-msgstr ""
+msgstr "Выбрать линейный PDF текст"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:487
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
@@ -1157,23 +1157,23 @@ msgstr "Выбрать объект"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
-msgstr ""
+msgstr "Выбрать текст PDF области"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:61
 msgid "Select PDF Text"
-msgstr ""
+msgstr "Выбрать PDF текст"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:24
 msgid "Select PDF Text In Rectangle"
-msgstr ""
+msgstr "Выбрать PDF текст в прямоугольнике"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:473
 msgid "Select PDF Text in Rectangle"
-msgstr ""
+msgstr "Выбрать PDF текст в прямоугольнике"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:83
 msgid "Select Pdf Text"
-msgstr ""
+msgstr "Выбрать PDF текст"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:486
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:22
@@ -1190,7 +1190,7 @@ msgstr "Выделение лассо"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
 msgid "Select Text from pdf"
-msgstr ""
+msgstr "Выбрать текст из PDF"
 
 #: ../src/core/control/Control.cpp:2234
 msgid "Select another PDF"
@@ -1521,7 +1521,7 @@ msgstr "Неподдерживаемый графический формат: "
 
 #: ../src/core/control/Control.cpp:2232
 msgid "Use proposed PDF"
-msgstr ""
+msgstr "Использовать предложенный PDF"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Vertical Space"
@@ -2497,7 +2497,7 @@ msgstr "Экспортировать слои последовательно"
 #. Keep the order the same as in listBackgroundType and use the translation of these types in parentheses.
 #: ../ui/exportSettings.glade:352
 msgid "Export the document without any background (None) or with PDF and image backgrounds only (No ruling) or with all background types (All)."
-msgstr ""
+msgstr "Экспортировать документ без какого-либо фона (Нет) или только с фоном PDF и изображений (Без правки) или со всеми типами фона (Все)."
 
 #: ../ui/main.glade:1751 ../ui/main.glade:1956
 msgid "Fi_ll"
@@ -2777,7 +2777,7 @@ msgstr ""
 
 #: ../ui/main.glade:1274
 msgid "Merge Layer Down"
-msgstr ""
+msgstr "Объединение со следующим слоем"
 
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
@@ -2814,11 +2814,11 @@ msgstr "Переместить вверх"
 
 #: ../ui/settings.glade:3547
 msgid "Multiply the panning speed by up to this amount, based on how much of the selected element is out of view."
-msgstr ""
+msgstr "Умножьте скорость панорамирования на эту величину в зависимости от того, какая часть выбранного элемента находится вне поля зрения."
 
 #: ../ui/main.glade:1147
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Следующая комментированная страница"
 
 #: ../ui/main.glade:1194
 msgid "New Page _After"
@@ -2868,7 +2868,7 @@ msgstr "Устройство вывода"
 
 #: ../ui/texdialog.glade:143
 msgid "Output generated by the LaTeX command."
-msgstr ""
+msgstr "Результат, производимый командой LaTeX."
 
 #: ../ui/settings.glade:5102
 msgid "PDF Cache"
@@ -2876,7 +2876,7 @@ msgstr "Кэш PDF"
 
 #: ../ui/main.glade:1158
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Предыдущая комментированная страница"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2888,7 +2888,7 @@ msgstr "Парные страницы"
 
 #: ../ui/main.glade:1322
 msgid "Paper B_ackground"
-msgstr ""
+msgstr "Фон бумаги"
 
 #: ../ui/pagesize.glade:18
 msgid "Paper Format"
@@ -2910,7 +2910,7 @@ msgstr "Частично основано на Xournal\n"
 
 #: ../ui/pluginEntry.glade:94
 msgid "Path: "
-msgstr ""
+msgstr "Путь:"
 
 #: ../ui/main.glade:2002
 msgid "Pause"
@@ -2926,7 +2926,7 @@ msgstr "Производительность"
 
 #: ../ui/latexSettings.glade:532
 msgid "Pick the Editor's Font"
-msgstr ""
+msgstr "Выбрать шрифт редактора"
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
@@ -3062,7 +3062,7 @@ msgstr "Выбрать изображение"
 
 #: ../ui/main.glade:1370
 msgid "Select Linear Text"
-msgstr ""
+msgstr "Выбрать линейный текст"
 
 #: ../ui/pdfpages.glade:8
 msgid "Select PDF Page"
@@ -3070,7 +3070,7 @@ msgstr "Выбрать PDF страницу"
 
 #: ../ui/main.glade:1382
 msgid "Select Text In Rectangle"
-msgstr ""
+msgstr "Выбрать текст в прямоугольнике"
 
 #: ../ui/settings.glade:3697
 msgid "Select toolbar:"
@@ -3082,7 +3082,7 @@ msgstr "Цвет выделения (текст, выделение линий �
 
 #: ../ui/settings.glade:3564
 msgid "Selection Edge Panning"
-msgstr ""
+msgstr "Панорамирование края выделения"
 
 #: ../ui/main.glade:330
 msgid "Send Backward"
@@ -3126,7 +3126,7 @@ msgstr "Показать панель инструментов"
 
 #: ../ui/settings.glade:2777
 msgid "Show filepath in title bar"
-msgstr ""
+msgstr "Показывать путь к файлу в заголовке окна"
 
 #: ../ui/settings.glade:3360
 msgid "Show sidebar on the right side"
@@ -3177,7 +3177,7 @@ msgstr "Место хранения"
 
 #: ../ui/main.glade:2769
 msgid "Strikethrough selected text"
-msgstr ""
+msgstr "Зачеркнуть выделенный текст"
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
@@ -3193,7 +3193,7 @@ msgstr "Последовательно (мс)"
 
 #: ../ui/latexSettings.glade:429
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Подсветка синтаксиса"
 
 #: ../ui/settings.glade:3084
 msgctxt "stylus cursor uses system cursor"
@@ -3206,7 +3206,7 @@ msgstr "_Панели инструментов"
 
 #: ../ui/texdialog.glade:125
 msgid "TeX Source"
-msgstr ""
+msgstr "Исходник TeX"
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
@@ -3262,15 +3262,15 @@ msgstr "Время ожидания"
 
 #: ../ui/main.glade:2789
 msgid "Toggle standard / region text selection"
-msgstr ""
+msgstr "Переключить стандартное / региональное выделение текста"
 
 #: ../ui/settings.glade:2581
 msgid "Touch Drawing"
-msgstr ""
+msgstr "Рисование касанием"
 
 #: ../ui/settings.glade:2649
 msgid "Touch Scrolling"
-msgstr ""
+msgstr "Прокрутка касанием"
 
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
@@ -3287,15 +3287,15 @@ msgstr "Сначала попробуйте выбрать объект; есл�
 
 #: ../ui/main.glade:2749
 msgid "Underline selected text"
-msgstr ""
+msgstr "Подчеркнуть выделенный текст"
 
 #: ../ui/settings.glade:2911
 msgid "Use available Stock Icons (requires restart)"
-msgstr ""
+msgstr "Использовать доступные стандартные иконки (необходим перезапуск)"
 
 #: ../ui/latexSettings.glade:497
 msgid "Use font from system theme."
-msgstr ""
+msgstr "Использовать шрифт из системной темы."
 
 #: ../ui/settings.glade:4756
 msgid "Use snapping for recognized shapes"
@@ -3335,12 +3335,13 @@ msgstr "Сайт"
 
 #: ../ui/settings.glade:3534
 msgid "When an element is selected and moved past the visible portion of the canvas, pan the screen by an amount equal to this percentage of the visible part of the canvas. "
-msgstr ""
+msgstr "Когда элемент выбран и перемещен за пределы видимой части холста, панорамируйте экран на величину, равную этому проценту от видимой части холста."
 
 #: ../ui/settings.glade:2440
 msgid "When drawing with touch, two-finger gestures intended to pan the view can instead cause it to zoom, causing performance issues. \n"
 "This setting can make it easier to draw with touch. "
-msgstr ""
+msgstr "При рисовании с помощью касания жесты двумя пальцами, предназначенные для панорамирования, могут вместо этого привести к масштабированию, вызвав проблемы с производительностью.\n"
+"Эта настройка может упростить рисование с помощью касания."
 
 #: ../ui/settings.glade:5029
 msgid "When zoomed in on a high-resolution PDF, each re-render can take a long time. Setting this to a large value causes these re-renders to happen less often.\n\n"
@@ -3366,7 +3367,7 @@ msgstr "С помощью сообщества"
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "Обернуть текст"
 
 #: ../ui/about.glade:158
 msgid "X.X.X"
