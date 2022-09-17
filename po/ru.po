@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-09-17 14:17\n"
+"PO-Revision-Date: 2022-09-17 20:58\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -2464,7 +2464,7 @@ msgstr "Включить внутреннее распознавание рук�
 
 #: ../ui/settings.glade:2558
 msgid "Enable touch drawing"
-msgstr ""
+msgstr "Включить рисование касанием"
 
 #: ../ui/settings.glade:2421
 msgid "Enable zoom gestures (requires restart)"
@@ -2525,7 +2525,7 @@ msgstr "Отступ первой страницы "
 
 #: ../ui/latexSettings.glade:517
 msgid "Font: "
-msgstr ""
+msgstr "Шрифт:"
 
 #: ../ui/main.glade:550 ../ui/settings.glade:3631
 msgid "Fullscreen"
@@ -2537,7 +2537,7 @@ msgstr "Коэффициент усиления"
 
 #: ../ui/settings.glade:1140 ../ui/settings.glade:1160
 msgid "Gaussian parameter: the higher, the more stabilization and the more lag between your cursor and the painting tip."
-msgstr ""
+msgstr "Гаусовский параметр: выше, больше стабилизации и больше задержка в рисовании."
 
 #: ../ui/latexSettings.glade:87
 msgid "General LaTeX tool settings"
@@ -2605,7 +2605,7 @@ msgstr "Положение курсора маркера"
 
 #: ../ui/main.glade:2729
 msgid "Highlight selected text"
-msgstr ""
+msgstr "Подсветить выбранный текст"
 
 #: ../ui/main.glade:1884
 msgid "Highlighter Opti_ons"
@@ -2625,7 +2625,7 @@ msgstr "Как коротко (по времени) И...\n\n"
 
 #: ../ui/about.glade:246
 msgid "Icon Designers"
-msgstr ""
+msgstr "Дизайнеры кнопок"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
@@ -2733,7 +2733,7 @@ msgstr "Лицензия"
 
 #: ../ui/latexSettings.glade:401
 msgid "Line numbers"
-msgstr ""
+msgstr "Номера строк"
 
 #: ../ui/settings.glade:727
 msgid "Load / Save"
@@ -2749,7 +2749,7 @@ msgstr "Загрузить из файла"
 
 #: ../ui/settings.glade:2950
 msgid "Lucide"
-msgstr ""
+msgstr "Lucide"
 
 #: ../ui/toolbarManageDialog.glade:9
 msgid "Manage Toolbar"
@@ -2769,11 +2769,11 @@ msgstr "Макс. длина (мм)"
 
 #: ../ui/settings.glade:3549
 msgid "Max multiplier"
-msgstr ""
+msgstr "Максимальный множитель"
 
 #: ../ui/main.glade:2833
 msgid "Merge Down"
-msgstr ""
+msgstr "Объединение с предыдущим"
 
 #: ../ui/main.glade:1274
 msgid "Merge Layer Down"
@@ -2782,7 +2782,7 @@ msgstr "Объединение со следующим слоем"
 #: ../ui/settings.glade:883
 msgid "Merge button events with stylus tip events\n"
 "\t    <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
-msgstr ""
+msgstr "Объединить события кнопок с событиями пера <i>(Check this if</i> \"<tt>xsetwacom get *deviceId* TabletPCButton</tt>\" <i>returns</i> \"<tt>on</tt>\"<i>)</i>"
 
 #: ../ui/settings.glade:1367
 msgid "Middle Mouse Button"
