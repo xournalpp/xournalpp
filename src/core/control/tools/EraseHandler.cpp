@@ -9,7 +9,7 @@
 
 #include "control/ToolEnums.h"            // for ERASER_TYPE_DELETE_STROKE
 #include "control/ToolHandler.h"          // for ToolHandler
-#include "gui/Redrawable.h"               // for Redrawable
+#include "gui/LegacyRedrawable.h"         // for Redrawable
 #include "model/Document.h"               // for Document
 #include "model/Element.h"                // for Element, ELEMENT_STROKE
 #include "model/Layer.h"                  // for Layer
@@ -24,7 +24,7 @@
 #include "util/SmallVector.h"             // for SmallVector
 
 EraseHandler::EraseHandler(UndoRedoHandler* undo, Document* doc, const PageRef& page, ToolHandler* handler,
-                           Redrawable* view):
+                           LegacyRedrawable* view):
         page(page),
         handler(handler),
         view(view),

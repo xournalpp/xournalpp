@@ -7,11 +7,11 @@
 
 #include <gdk/gdk.h>  // for GdkRGBA, gdk_cairo_set_source_rgba
 
-#include "gui/Redrawable.h"  // for Redrawable
+#include "gui/LegacyRedrawable.h"  // for Redrawable
 #include "model/Layer.h"     // for Layer
 #include "model/XojPage.h"   // for XojPage
 
-Selection::Selection(Redrawable* view) {
+Selection::Selection(LegacyRedrawable* view) {
     this->view = view;
     this->page = nullptr;
 
@@ -28,7 +28,7 @@ Selection::~Selection() {
 
 //////////////////////////////////////////////////////////
 
-RectSelection::RectSelection(double x, double y, Redrawable* view): Selection(view) {
+RectSelection::RectSelection(double x, double y, LegacyRedrawable* view): Selection(view) {
     this->sx = x;
     this->sy = y;
     this->ex = x;
@@ -134,7 +134,7 @@ public:
     double y;
 };
 
-RegionSelect::RegionSelect(double x, double y, Redrawable* view): Selection(view) { currentPos(x, y); }
+RegionSelect::RegionSelect(double x, double y, LegacyRedrawable* view): Selection(view) { currentPos(x, y); }
 
 void RegionSelect::paint(cairo_t* cr, double zoom) {
     // at least three points needed

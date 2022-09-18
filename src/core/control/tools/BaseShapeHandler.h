@@ -11,63 +11,109 @@
 
 #pragma once
 
+#include <memory>   // for shared_ptr
+#include <mutex>    // for mutex
+#include <utility>  // for pair
+#include <vector>   // for vector
+
 #include <cairo.h>    // for cairo_t
 #include <gdk/gdk.h>  // for GdkEventKey
 #include <glib.h>     // for guint32
 
 #include "model/PageRef.h"  // for PageRef
 #include "model/Point.h"    // for Point
+#include "util/Range.h"     // for Range
 
 #include "InputHandler.h"            // for InputHandler
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
 
 class PositionInputData;
-class XojPageView;
-class XournalView;
+
+namespace xoj::util {
+template <class T>
+class DispatchPool;
+}
+
+namespace xoj::view {
+class ShapeToolView;
+};
 
 enum DIRSET_MODIFIERS { NONE = 0, SET = 1, SHIFT = 1 << 1, CONTROL = 1 << 2 };
 
 
 class BaseShapeHandler: public InputHandler {
 public:
-    BaseShapeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift = false,
-                     bool flipControl = false);
+    BaseShapeHandler(Control* control, const PageRef& page, bool flipShift = false, bool flipControl = false);
 
     ~BaseShapeHandler() override;
 
-    void draw(cairo_t* cr) override;
+    // Legacy function, to be removed in #4159
+    void draw(cairo_t*) override {}
 
-    void onMotionCancelEvent() override;
-    bool onMotionNotifyEvent(const PositionInputData& pos) override;
-    void onButtonReleaseEvent(const PositionInputData& pos) override;
-    void onButtonPressEvent(const PositionInputData& pos) override;
-    void onButtonDoublePressEvent(const PositionInputData& pos) override;
+    void onSequenceCancelEvent() override;
+    bool onMotionNotifyEvent(const PositionInputData& pos, double zoom) override;
+    void onButtonReleaseEvent(const PositionInputData& pos, double zoom) override;
+    void onButtonPressEvent(const PositionInputData& pos, double zoom) override;
+    void onButtonDoublePressEvent(const PositionInputData& pos, double zoom) override;
     bool onKeyEvent(GdkEventKey* event) override;
 
-private:
-    virtual void drawShape(Point& currentPoint, const PositionInputData& pos) = 0;
-    DIRSET_MODIFIERS drawModifierFixed = NONE;
-    int lastCursor = -1;  // avoid same setCursor
-    bool flipShift =
-            false;  // use to reverse Shift key modifier action. i.e.  for separate Rectangle and Square Tool buttons.
-    bool flipControl = false;  // use to reverse Control key modifier action.
+    const std::shared_ptr<xoj::util::DispatchPool<xoj::view::ShapeToolView>>& getViewPool() const;
 
-    // to filter out short strokes (usually the user tapping on the page to select it)
-    guint32 startStrokeTime{};
-    static guint32 lastStrokeTime;  // persist across strokes - allow us to not ignore persistent dotting.
+    /**
+     * @brief (Thread-safe) Get a clone of the shape's points.
+     */
+    std::vector<Point> getShapeClone() const;
+
+private:
+    /**
+     * @brief Create the shape (to be drawn and added as a stroke), depending on the last event in
+     * @return Pair [vector, range] where vector contains the points drawing the shape and range is the smallest range
+     * containing all those points. WARNING: Stroke thickness is not taken into account.
+     */
+    virtual std::pair<std::vector<Point>, Range> createShape(bool isAltDown, bool isShiftDown, bool isControlDown) = 0;
+
+    /**
+     * @brief (Thread-safe) Update the current shape with the latest event info.
+     *      Also warns the listeners about the change, usually triggering a redraw during the next screen update.
+     */
+    void updateShape(bool isAltDown, bool isShiftDown, bool isControlDown);
+
+    /**
+     * @brief (Thread-safe) Cancel the current shape creation: clears all data and wipes any drawing made
+     */
+    void cancelStroke();
 
 protected:
     /**
      * modifyModifiersByDrawDir
      * @brief 	Toggle shift and control modifiers depending on initial drawing direction.
      */
-    void modifyModifiersByDrawDir(double width, double height, bool changeCursor = true);
+    void modifyModifiersByDrawDir(double width, double height, double zoom, bool changeCursor = true);
 
 protected:
-    Point currPoint;
-    Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid. See startPoint defined in
-                            // derived classes such as CircleHandler.
+    std::vector<Point> shape;
+    mutable std::mutex shapeMutex;
+
+    /**
+     * @brief Bounding box of the stroke after its last update
+     */
+    Range lastDrawingRange;
+
+    DIRSET_MODIFIERS drawModifierFixed = NONE;
+    bool flipShift =
+            false;  // use to reverse Shift key modifier action. i.e.  for separate Rectangle and Square Tool buttons.
+    bool flipControl = false;  // use to reverse Control key modifier action.
     bool modShift = false;
     bool modControl = false;
     SnapToGridInputHandler snappingHandler;
+
+    // to filter out short strokes (usually the user tapping on the page to select it)
+    guint32 startStrokeTime{};
+    static guint32 lastStrokeTime;  // persist across strokes - allow us to not ignore persistent dotting.
+
+    Point currPoint;
+    Point buttonDownPoint;  // used for tapSelect and filtering - never snapped to grid.
+    Point startPoint;       // May be snapped to grid
+
+    std::shared_ptr<xoj::util::DispatchPool<xoj::view::ShapeToolView>> viewPool;
 };

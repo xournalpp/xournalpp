@@ -1,0 +1,46 @@
+/*
+ * Xournal++
+ *
+ * Virtual class for showing overlays (e.g. active tools, selections and so on)
+ *
+ * @author Xournal++ Team
+ * https://github.com/xournalpp/xournalpp
+ *
+ * @license GNU GPLv2 or later
+ */
+
+#pragma once
+
+#include <cairo.h>
+
+#include "model/LineStyle.h"
+#include "util/Color.h"
+#include "view/overlays/OverlayView.h"
+
+class Stroke;
+
+namespace xoj::view {
+class Mask;
+class Repaintable;
+
+class BaseStrokeToolView: public OverlayView {
+protected:
+    BaseStrokeToolView(const Repaintable* parent, const Stroke& stroke);
+    ~BaseStrokeToolView() noexcept override;
+
+    /**
+     * @brief Creates a mask corresponding to the parent's visible area.
+     * The mask is optimized (?) to be blitted to a surface of the same type as cairo_get_target(targetCr).
+     * If targetCr == nullptr, the surface is of CAIRO_SURFACE_TYPE_IMAGE.
+     */
+    Mask createMask(cairo_t* targetCr) const;
+
+    /**
+     * @brief All that's required to draw a stroke in cairo
+     */
+    cairo_operator_t cairoOp;
+    Color strokeColor;
+    LineStyle lineStyle;
+    double strokeWidth;
+};
+};  // namespace xoj::view

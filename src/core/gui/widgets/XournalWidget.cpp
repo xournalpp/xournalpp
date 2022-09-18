@@ -12,8 +12,8 @@
 #include "control/settings/Settings.h"      // for Settings
 #include "control/tools/EditSelection.h"    // for EditSelection
 #include "gui/Layout.h"                     // for Layout
+#include "gui/LegacyRedrawable.h"           // for Redrawable
 #include "gui/PageView.h"                   // for XojPageView
-#include "gui/Redrawable.h"                 // for Redrawable
 #include "gui/Shadow.h"                     // for Shadow
 #include "gui/XournalView.h"                // for XournalView
 #include "gui/inputdevices/InputContext.h"  // for InputContext
@@ -286,7 +286,7 @@ static auto gtk_xournal_draw(GtkWidget* widget, cairo_t* cr) -> gboolean {
         cairo_save(cr);
         double zoom = xournal->view->getZoom();
 
-        Redrawable* red = xournal->selection->getView();
+        LegacyRedrawable* red = xournal->selection->getView();
         cairo_translate(cr, red->getX(), red->getY());
 
         xournal->selection->paint(cr, zoom);

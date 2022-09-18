@@ -11,7 +11,8 @@
 
 #pragma once
 
-#include <vector>  // for vector
+#include <optional>  // for optional
+#include <vector>    // for vector
 
 #include <cairo.h>    // for cairo_t
 #include <gdk/gdk.h>  // for GdkEventKey
@@ -20,12 +21,13 @@
 #include "model/PageRef.h"   // for PageRef
 #include "model/Point.h"     // for Point
 #include "util/Rectangle.h"  // for Rectangle
+#include "view/StrokeView.h"
 
 #include "InputHandler.h"            // for InputHandler
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
 
 class PositionInputData;
-class XojPageView;
+class LegacyRedrawable;
 class XournalView;
 
 /**
@@ -44,16 +46,16 @@ class XournalView;
 
 class SplineHandler: public InputHandler {
 public:
-    SplineHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
+    SplineHandler(Control* control, LegacyRedrawable* redrawable, const PageRef& page);
     ~SplineHandler() override;
 
     void draw(cairo_t* cr) override;
 
-    void onMotionCancelEvent() override;
-    bool onMotionNotifyEvent(const PositionInputData& pos) override;
-    void onButtonReleaseEvent(const PositionInputData& pos) override;
-    void onButtonPressEvent(const PositionInputData& pos) override;
-    void onButtonDoublePressEvent(const PositionInputData& pos) override;
+    void onSequenceCancelEvent() override;
+    bool onMotionNotifyEvent(const PositionInputData& pos, double zoom) override;
+    void onButtonReleaseEvent(const PositionInputData& pos, double zoom) override;
+    void onButtonPressEvent(const PositionInputData& pos, double zoom) override;
+    void onButtonDoublePressEvent(const PositionInputData& pos, double zoom) override;
     bool onKeyEvent(GdkEventKey* event) override;
 
 private:
@@ -70,15 +72,19 @@ private:
 private:
     std::vector<Point> knots{};
     std::vector<Point> tangents{};
+    std::optional<xoj::view::StrokeView> strokeView;
+
     bool isButtonPressed = false;
     SnapToGridInputHandler snappingHandler;
+
+    LegacyRedrawable* redrawable;
 
 public:
     void addKnot(const Point& p);
     void addKnotWithTangent(const Point& p, const Point& t);
     void modifyLastTangent(const Point& t);
     void deleteLastKnotWithTangent();
-    int getKnotCount() const;
+    size_t getKnotCount() const;
 
 protected:
     Point currPoint;

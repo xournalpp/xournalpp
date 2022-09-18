@@ -1,96 +1,108 @@
 #include "EllipseHandler.h"
 
 #include <algorithm>  // for max
-#include <cmath>      // for abs, pow, M_PI, cos
+#include <cassert>
+#include <cmath>  // for abs, pow, M_PI, cos
 
 #include "control/Control.h"                       // for Control
 #include "control/settings/Settings.h"             // for Settings
 #include "control/tools/BaseShapeHandler.h"        // for BaseShapeHandler
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
-#include "gui/XournalView.h"                       // for XournalView
-#include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
-#include "model/Stroke.h"                          // for Stroke
+#include "model/Point.h"                           // for Point
 
-class XojPageView;
-
-
-EllipseHandler::EllipseHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
-                               bool flipControl):
-        BaseShapeHandler(xournal, redrawable, page, flipShift, flipControl) {}
+EllipseHandler::EllipseHandler(Control* control, const PageRef& page, bool flipShift, bool flipControl):
+        BaseShapeHandler(control, page, flipShift, flipControl) {}
 
 EllipseHandler::~EllipseHandler() = default;
 
-
-void EllipseHandler::drawShape(Point& c, const PositionInputData& pos) {
-    this->currPoint = c;
-
+auto EllipseHandler::createShape(bool isAltDown, bool isShiftDown, bool isControlDown)
+        -> std::pair<std::vector<Point>, Range> {
     /**
      * Snap point to grid (if enabled - Alt key pressed will toggle)
      */
-    c = snappingHandler.snapToGrid(c, pos.isAltDown());
+    Point c = snappingHandler.snapToGrid(this->currPoint, isAltDown);
 
-    if (!this->started)  // initialize first point
-    {
-        this->startPoint = c;
-        this->started = true;
-        stroke->addPoint(c);  // avoid complaints about <2 points.
-    } else {
-        double width = c.x - this->startPoint.x;
-        double height = c.y - this->startPoint.y;
+    double width = c.x - this->startPoint.x;
+    double height = c.y - this->startPoint.y;
 
 
-        this->modShift = pos.isShiftDown();
-        this->modControl = pos.isControlDown();
+    this->modShift = isShiftDown;
+    this->modControl = isControlDown;
 
-        Settings* settings = xournal->getControl()->getSettings();
-        if (settings->getDrawDirModsEnabled())  // change modifiers based on draw dir
-        {
-            this->modifyModifiersByDrawDir(width, height, true);
-        }
-
-        if (this->modShift)  // make circle
-        {
-            int signW = width > 0 ? 1 : -1;
-            int signH = height > 0 ? 1 : -1;
-            width = (this->modControl) ? sqrt(pow(width, 2) + pow(height, 2)) :
-                                         std::max(width * signW, height * signH) * signW;
-            height = (width * signW) * signH;
-        }
-
-        double diameterX = 0;
-        double diameterY = 0;
-        int npts = 0;
-        double center_x = 0;
-        double center_y = 0;
-        double angle = 0;
-
-        // set resolution proportional to radius
-        if (!this->modControl) {
-            diameterX = width;
-            diameterY = height;
-            npts = static_cast<int>(std::abs(diameterX * 2.0));
-            center_x = this->startPoint.x + width / 2.0;
-            center_y = this->startPoint.y + height / 2.0;
-            angle = 0;
-        } else {  // control key down, draw centered at cursor
-            diameterX = width * 2.0;
-            diameterY = height * 2.0;
-            npts = static_cast<int>(std::abs(diameterX) + std::abs(diameterY));
-            center_x = this->startPoint.x;
-            center_y = this->startPoint.y;
-            angle = 0;
-        }
-        if (npts < 24) {
-            npts = 24;  // min. number of points
-        }
-
-        // remove previous points
-        stroke->deletePointsFrom(0);
-        for (int j = 0; j <= npts; j++) {
-            int i = j % npts;  // so that we end exactly where we started.
-            double xp = center_x + diameterX / 2.0 * cos((2 * M_PI * i) / npts + angle + M_PI);
-            double yp = center_y + diameterY / 2.0 * sin((2 * M_PI * i) / npts + angle + M_PI);
-            stroke->addPoint(Point(xp, yp));
-        }
+    Settings* settings = control->getSettings();
+    if (settings->getDrawDirModsEnabled()) {
+        // change modifiers based on draw dir
+        this->modifyModifiersByDrawDir(width, height, true);
     }
+
+    if (this->modShift) {
+        // make circle
+        width = (this->modControl) ? std::hypot(width, height) :
+                                     std::copysign(std::max(std::abs(width), std::abs(height)), width);
+        height = std::copysign(width, height);
+    }
+
+    double radiusX = 0;
+    double radiusY = 0;
+    double center_x = 0;
+    double center_y = 0;
+
+    if (!this->modControl) {
+        radiusX = 0.5 * width;
+        radiusY = 0.5 * height;
+        center_x = this->startPoint.x + radiusX;
+        center_y = this->startPoint.y + radiusY;
+    } else {
+        // control key down, draw centered at cursor
+        radiusX = width;
+        radiusY = height;
+        center_x = this->startPoint.x;
+        center_y = this->startPoint.y;
+    }
+
+    /*
+     * Set resolution depending on the radius (heuristic)
+     */
+    auto nbPtsPerQuadrant =
+            static_cast<unsigned int>(std::ceil(5 + 0.1 * std::max(std::abs(radiusX), std::abs(radiusY))));
+    const double stepAngle = M_PI_2 / nbPtsPerQuadrant;
+    const double excentricity = std::abs(radiusY / radiusX);
+
+    std::pair<std::vector<Point>, Range> res;
+    std::vector<Point>& shape = res.first;
+
+    /*
+     * This call to reserve() makes the calls to std::transform() below safe.
+     * DO NOT REMOVE
+     * NB: the +1 is necessary to add a copy of the first point and close the ellipse.
+     */
+    shape.reserve(4 * nbPtsPerQuadrant + 1);
+
+    shape.emplace_back(center_x + radiusX, center_y);
+    for (unsigned int j = 1U; j < nbPtsPerQuadrant; j++) {
+        const double tgtAngle = stepAngle * j;
+        // This formula dispatches the points, so that points are denser where the ellipse has higher curvature.
+        const double centerAngle = 0.5 * (std::atan(excentricity * std::tan(tgtAngle)) + tgtAngle);
+        double xp = center_x + radiusX * std::cos(centerAngle);
+        double yp = center_y + radiusY * std::sin(centerAngle);
+        shape.emplace_back(xp, yp);
+    }
+    shape.emplace_back(center_x, center_y + radiusY);
+
+    // The following std::transform() are only safe because no reallocations will happen (see reserve() above).
+    // Symmetry for second quadrant
+    assert(shape.capacity() >= 2 * shape.size() - 1);
+    std::transform(std::next(shape.rbegin()), shape.rend(), std::back_inserter(shape),
+                   [&](const Point& p) { return Point(2 * center_x - p.x, p.y); });
+
+    // Symmetry for the second half
+    assert(shape.capacity() >= 2 * shape.size() - 1);
+    std::transform(std::next(shape.rbegin()), shape.rend(), std::back_inserter(shape),
+                   [&](const Point& p) { return Point(p.x, 2 * center_y - p.y); });
+
+    Range rg(center_x + radiusX, center_y + radiusY);
+    rg.addPoint(center_x - radiusX, center_y - radiusY);
+    res.second = rg;
+
+    return res;
 }

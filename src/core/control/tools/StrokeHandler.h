@@ -20,6 +20,7 @@
 
 #include "model/PageRef.h"  // for PageRef
 #include "model/Point.h"    // for Point
+#include "view/StrokeView.h"
 
 #include "InputHandler.h"            // for InputHandler
 #include "SnapToGridInputHandler.h"  // for SnapToGridInputHandler
@@ -46,16 +47,16 @@ class Active;
  */
 class StrokeHandler: public InputHandler {
 public:
-    StrokeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page);
+    StrokeHandler(Control* control, XojPageView* pageView, const PageRef& page);
     ~StrokeHandler() override = default;
 
     void draw(cairo_t* cr) override;
 
-    void onMotionCancelEvent() override;
-    bool onMotionNotifyEvent(const PositionInputData& pos) override;
-    void onButtonReleaseEvent(const PositionInputData& pos) override;
-    void onButtonPressEvent(const PositionInputData& pos) override;
-    void onButtonDoublePressEvent(const PositionInputData& pos) override;
+    void onSequenceCancelEvent() override;
+    bool onMotionNotifyEvent(const PositionInputData& pos, double zoom) override;
+    void onButtonReleaseEvent(const PositionInputData& pos, double zoom) override;
+    void onButtonPressEvent(const PositionInputData& pos, double zoom) override;
+    void onButtonDoublePressEvent(const PositionInputData& pos, double zoom) override;
     bool onKeyEvent(GdkEventKey* event) override;
 
     /**
@@ -123,6 +124,8 @@ private:
     };
     std::optional<Mask> mask;
 
+    std::optional<xoj::view::StrokeView> strokeView;
+
     // to filter out short strokes (usually the user tapping on the page to select it)
     guint32 startStrokeTime{};
     static guint32 lastStrokeTime;  // persist across strokes - allow us to not ignore persistent dotting.
@@ -138,4 +141,6 @@ private:
     friend class StrokeStabilizer::Active;
 
     static constexpr double MAX_WIDTH_VARIATION = 0.3;
+
+    XojPageView* pageView;
 };
