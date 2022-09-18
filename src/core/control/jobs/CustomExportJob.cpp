@@ -12,7 +12,6 @@
 #include "gui/dialog/ExportDialog.h"           // for ExportDialog
 #include "model/Document.h"                    // for Document
 #include "pdf/base/XojPdfExport.h"             // for XojPdfExport
-#include "pdf/base/XojPdfExportFactory.h"      // for XojPdfExportFactory
 #include "util/PathUtil.h"                     // for clearExtensions
 #include "util/XojMsgBox.h"                    // for XojMsgBox
 #include "util/i18n.h"                         // for _, FS, _F
@@ -91,6 +90,7 @@ auto CustomExportJob::showFilechooser() -> bool {
     exportRange = dlg.getRange();
     progressiveMode = dlg.progressiveMode();
     exportBackground = dlg.getBackgroundType();
+    cropToContent = dlg.getCropToContent();
 
     if (format == EXPORT_GRAPHICS_PNG) {
         pngQualityParameter = dlg.getPngQualityParameter();
@@ -104,12 +104,20 @@ auto CustomExportJob::showFilechooser() -> bool {
  * Create one Graphics file per page
  */
 void CustomExportJob::exportGraphics() {
-    ImageExport imgExport(control->getDocument(), filepath, format, exportBackground, exportRange);
+    ImageExport imgExport{control->getDocument(), filepath, format};
+    imgExport.setExportBackground(exportBackground);
+    imgExport.setExportRange(exportRange);
+    imgExport.setProgressListener(control);
+    imgExport.setCropToContent(cropToContent);
+
     if (format == EXPORT_GRAPHICS_PNG) {
         imgExport.setQualityParameter(pngQualityParameter);
     }
-    imgExport.exportGraphics(control);
-    errorMsg = imgExport.getLastErrorMsg();
+    imgExport.exportDocument();
+
+    if (imgExport.getLastErrorMsg()) {
+        errorMsg = imgExport.getLastErrorMsg().value();
+    }
 }
 
 void CustomExportJob::run() {
@@ -133,12 +141,16 @@ void CustomExportJob::run() {
         // the ui is blocked, so there should be no changes...
         Document* doc = control->getDocument();
 
-        std::unique_ptr<XojPdfExport> pdfe = XojPdfExportFactory::createExport(doc, control);
+        XojPdfExport pdfe{doc, filepath};
+        pdfe.setExportBackground(exportBackground);
+        pdfe.setProgressListener(control);
+        pdfe.setExportRange(exportRange);
+        pdfe.setProgressiveMode(progressiveMode);
+        pdfe.setCropToContent(cropToContent);
 
-        pdfe->setExportBackground(exportBackground);
-
-        if (!pdfe->createPdf(this->filepath, exportRange, progressiveMode)) {
-            this->errorMsg = pdfe->getLastError();
+        pdfe.exportDocument();
+        if (pdfe.getLastErrorMsg()) {
+            errorMsg = pdfe.getLastErrorMsg().value();
         }
 
     } else {

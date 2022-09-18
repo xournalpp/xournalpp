@@ -11,33 +11,41 @@
 
 #pragma once
 
-#include <string>
+#include <cstddef>  // for size_t
+#include <string>   // for string
 
-#include "control/jobs/BaseExportJob.h"
-#include "util/ElementRange.h"
+#include <cairo.h>    // for CAIRO_VERSION, CAIRO_VERSION...
+#include <gtk/gtk.h>  // for GtkTreeModel
 
-#include "filesystem.h"
+#include "control/jobs/BaseExportJob.h"   // for ExportBackgroundType, EXPORT...
+#include "control/jobs/ExportTemplate.h"  // for ExportTemplate
+#include "util/ElementRange.h"            // for PageRangeVector
 
-class XojPdfExport {
+#include "filesystem.h"  // for path
+
+class ProgressListener;
+
+class XojPdfExport: public ExportTemplate {
 public:
-    XojPdfExport();
-    virtual ~XojPdfExport();
-
-public:
-    virtual bool createPdf(fs::path const& file, bool progressiveMode) = 0;
-    virtual bool createPdf(fs::path const& file, const PageRangeVector& range, bool progressiveMode) = 0;
-    virtual std::string getLastError() = 0;
-
-    /**
-     * Export without background
-     */
-    virtual void setExportBackground(ExportBackgroundType exportBackground);
-
-    /**
-     * @brief Select layers to export by parsing str
-     * @param rangeStr A string parsed to get a list of layers
-     */
-    virtual void setLayerRange(const char* rangeStr) = 0;
+    XojPdfExport(Document* doc, fs::path filePath);
+    ~XojPdfExport();
 
 private:
+    auto createCairoResources(int width, int height) -> bool override;
+
+    auto configureCairoResourcesForPage(const size_t pageNo) -> bool override;
+
+    void clearCairoConfig(const size_t pageNo) override;
+
+#if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
+    /**
+     * Populate the outline of the generated PDF using the outline of the
+     * background PDF.
+     *
+     * This requires features available only in cairo 1.16 or newer.
+     *
+     * @param tocModel The Document's content model. Does nothing if set to null.
+     */
+    void populatePdfOutline(GtkTreeModel* tocModel);
+#endif
 };
