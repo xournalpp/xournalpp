@@ -11,7 +11,7 @@
 
 #include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHan...
 #include "control/zoom/ZoomControl.h"              // for ZoomControl
-#include "gui/Redrawable.h"                        // for Redrawable
+#include "gui/LegacyRedrawable.h"                  // for Redrawable
 #include "model/Element.h"                         // for Element
 #include "model/Layer.h"                           // for Layer
 #include "model/XojPage.h"                         // for XojPage
@@ -24,7 +24,7 @@
 
 class Settings;
 
-VerticalToolHandler::VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y,
+VerticalToolHandler::VerticalToolHandler(LegacyRedrawable* view, const PageRef& page, Settings* settings, double y,
                                          bool initiallyReverse, ZoomControl* zoomControl, GdkWindow* window):
         window(window),
         view(view),

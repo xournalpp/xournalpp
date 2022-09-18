@@ -16,16 +16,28 @@
 class Element;
 class Range;
 
-class Redrawable {
+/*
+ * The (base) class Redrawable (now LegacyRedrawable) is deprecated. Use xoj::view::Repaintable instead.
+ *
+ * Reasons for the deprecation:
+ *
+ *  * It is basically used synonymously to XojPageView.
+ *  * More importantly, the coexistence of Redrawable::repaint... and Redrawable::rerender... is bothersome.
+ *    it is not clear (without diving in the code) what the difference should be.
+ *    (repaint = ask gtk to call us back to blitt the buffer, rerender = change the buffer's content)
+ *    The rerender... methods should not exist. The derived class should be told what happened (something changed),
+ *    and decide by itself if the buffer should be updated or not (if there is a buffer to begin with).
+ */
+class [[deprecated]] LegacyRedrawable {
 protected:
-    Redrawable() = default;
+    LegacyRedrawable() = default;
 
 public:
-    Redrawable(Redrawable&&) = default;
-    Redrawable(Redrawable const&) = default;
-    virtual ~Redrawable() = default;
-    Redrawable& operator=(Redrawable&&) = default;
-    Redrawable& operator=(Redrawable const&) = default;
+    LegacyRedrawable(LegacyRedrawable&&) = default;
+    LegacyRedrawable(LegacyRedrawable const&) = default;
+    virtual ~LegacyRedrawable() = default;
+    LegacyRedrawable& operator=(LegacyRedrawable&&) = default;
+    LegacyRedrawable& operator=(LegacyRedrawable const&) = default;
 
     /**
      * Call this if you only need to repaint the view, this means the buffer will be painted again,

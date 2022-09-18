@@ -28,7 +28,7 @@ class ZoomControl;
 class Element;
 class Layer;
 class MoveUndoAction;
-class Redrawable;
+class LegacyRedrawable;
 class Settings;
 namespace xoj::util {
 template <class T>
@@ -44,8 +44,8 @@ public:
      * @param initiallyReverse Set this to true if the user has the reverse mode
      * button (e.g., Ctrl) held down when a vertical selection is started.
      */
-    VerticalToolHandler(Redrawable* view, const PageRef& page, Settings* settings, double y, bool initiallyReverse,
-                        ZoomControl* zoomControl, GdkWindow* window);
+    VerticalToolHandler(LegacyRedrawable* view, const PageRef& page, Settings* settings, double y,
+                        bool initiallyReverse, ZoomControl* zoomControl, GdkWindow* window);
     ~VerticalToolHandler() override;
     VerticalToolHandler(VerticalToolHandler&) = delete;
     VerticalToolHandler& operator=(VerticalToolHandler&) = delete;
@@ -98,7 +98,7 @@ private:
     std::optional<xoj::util::Rectangle<double>> getElementsBoundingRect() const;
 
     GdkWindow* window;
-    Redrawable* view;
+    LegacyRedrawable* view;
     PageRef page;
     Layer* layer;
     std::vector<Element*> elements;

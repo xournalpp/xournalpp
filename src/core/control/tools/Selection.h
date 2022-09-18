@@ -18,12 +18,12 @@
 #include "model/Element.h"  // for Element (ptr only), ShapeContainer
 #include "model/PageRef.h"  // for PageRef
 
-class Redrawable;
+class LegacyRedrawable;
 
 
 class Selection: public ShapeContainer {
 public:
-    Selection(Redrawable* view);
+    Selection(LegacyRedrawable* view);
     ~Selection() override;
 
 public:
@@ -36,7 +36,7 @@ private:
 protected:
     std::vector<Element*> selectedElements;
     PageRef page;
-    Redrawable* view;
+    LegacyRedrawable* view;
 
     double x1Box;
     double x2Box;
@@ -48,7 +48,7 @@ protected:
 
 class RectSelection: public Selection {
 public:
-    RectSelection(double x, double y, Redrawable* view);
+    RectSelection(double x, double y, LegacyRedrawable* view);
     ~RectSelection() override;
 
 public:
@@ -78,7 +78,7 @@ class RegionPoint;
 
 class RegionSelect: public Selection {
 public:
-    RegionSelect(double x, double y, Redrawable* view);
+    RegionSelect(double x, double y, LegacyRedrawable* view);
 
 public:
     bool finalize(PageRef page) override;

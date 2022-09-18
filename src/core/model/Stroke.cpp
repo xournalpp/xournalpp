@@ -302,6 +302,22 @@ Point Stroke::getPoint(PathParameter parameter) const {
 
 auto Stroke::getPoints() const -> const Point* { return this->points.data(); }
 
+void Stroke::setPointVector(const std::vector<Point>& other, const Range* const snappingBox) {
+    this->points = other;
+    if (!snappingBox || this->points.empty() || this->points.front().z != Point::NO_PRESSURE) {
+        // We cannot deduce the bounding box from the snapping box if the stroke has pressure values
+        this->sizeCalculated = false;
+    } else {
+        assert(snappingBox->isValid());
+        this->snappedBounds = xoj::util::Rectangle<double>(*snappingBox);
+        Element::x = snappingBox->minX - 0.5 * this->width;
+        Element::y = snappingBox->minY - 0.5 * this->width;
+        Element::width = snappingBox->getWidth() + this->width;
+        Element::height = snappingBox->getHeight() + this->width;
+        this->sizeCalculated = true;
+    }
+}
+
 void Stroke::freeUnusedPointItems() { this->points = {begin(this->points), end(this->points)}; }
 
 void Stroke::setToolType(StrokeTool type) { this->toolType = type; }

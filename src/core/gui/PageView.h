@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <memory>  // for unique_ptr
 #include <mutex>   // for mutex
 #include <string>  // for string
 #include <vector>  // for vector
@@ -18,13 +19,14 @@
 #include <cairo.h>    // for cairo_t, cairo_surface_t
 #include <gdk/gdk.h>  // for GdkEventKey, GdkRectangle, GdkEventB...
 
-#include "model/PageListener.h"  // for PageListener
-#include "model/PageRef.h"       // for PageRef
-#include "util/Rectangle.h"      // for Rectangle
+#include "model/PageListener.h"       // for PageListener
+#include "model/PageRef.h"            // for PageRef
+#include "util/Rectangle.h"           // for Rectangle
 #include "util/raii/CairoWrappers.h"  // for CairoSurfaceSPtr, CairoSPtr
+#include "view/Repaintable.h"
 
 #include "Layout.h"      // for Layout
-#include "Redrawable.h"  // for Redrawable
+#include "LegacyRedrawable.h"  // for Redrawable
 
 class EraseHandler;
 class InputHandler;
@@ -39,8 +41,13 @@ class Element;
 class PositionInputData;
 class Range;
 class TexImage;
+class OverlayBase;
 
-class XojPageView: public Redrawable, public PageListener {
+namespace xoj::view {
+class OverlayView;
+}
+
+class XojPageView: public LegacyRedrawable, public PageListener, public xoj::view::Repaintable {
 public:
     XojPageView(XournalView* xournal, const PageRef& page);
     ~XojPageView() override;
@@ -51,6 +58,16 @@ public:
 
     void repaintPage() const override;
     void repaintArea(double x1, double y1, double x2, double y2) const override;
+
+    // Repaintable interface
+    void flagDirtyRegion(const Range& rg) const override;
+    int getDPIScaling() const override;
+    double getZoom() const override;
+    Range getVisiblePart() const override;
+
+    double getWidth() const override;
+    double getHeight() const override;
+
 
     void setSelected(bool selected);
 
@@ -109,16 +126,6 @@ public:
     XournalView* getXournal() const;
 
     /**
-     * Returns the width of this PageView
-     */
-    double getWidth() const;
-
-    /**
-     * Returns the height of this XojPageView
-     */
-    double getHeight() const;
-
-    /**
      * Returns the width of this XojPageView as displayed
      * on the display taking into account the current zoom
      */
@@ -154,7 +161,7 @@ public:  // event handler
     bool onButtonDoublePressEvent(const PositionInputData& pos);
     bool onButtonTriplePressEvent(const PositionInputData& pos);
     bool onMotionNotifyEvent(const PositionInputData& pos);
-    void onMotionCancelEvent();
+    void onSequenceCancelEvent();
 
     /**
      * This event fires after onButtonPressEvent and also
@@ -196,6 +203,8 @@ private:
      */
     void showPdfToolbox(const PositionInputData& pos);
 
+    auto getViewOf(OverlayBase* overlay) const -> xoj::view::OverlayView*;
+    void deleteViewOf(OverlayBase* overlay);
 
 private:
     PageRef page;
@@ -203,6 +212,8 @@ private:
     Settings* settings = nullptr;
     EraseHandler* eraser = nullptr;
     InputHandler* inputHandler = nullptr;
+
+    std::vector<std::unique_ptr<xoj::view::OverlayView>> overlayViews;
 
     /**
      * The selected (while selection)

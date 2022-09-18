@@ -105,6 +105,15 @@ public:
     Point getPoint(PathParameter parameter) const;
     const Point* getPoints() const;
 
+    /**
+     * @brief Replace the stroke's points by the ones in the provided vector (they will be copied).
+     * @param other New vector of points for the stroke
+     * @param snappingBox (optional) Precomputed snapping box of the new points (i.e. the smallest Range containing all
+     * the points, stroke width or pressure values not being considered). The snappingBox parameter avoids a
+     * recomputation of the bounding boxes if the new points have no pressure values.
+     */
+    void setPointVector(const std::vector<Point>& other, const Range* const snappingBox = nullptr);
+
     void deletePoint(int index);
     void deletePointsFrom(int index);
 

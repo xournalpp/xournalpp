@@ -1,133 +1,102 @@
 #include "BaseShapeHandler.h"
 
-#include <cmath>     // for pow, NAN
-#include <memory>    // for make_unique, __share...
-#include <optional>  // for optional
+#include <cassert>  // for assert
+#include <cmath>    // for pow, NAN
+#include <memory>   // for make_unique, __share...
 
 #include <gdk/gdkkeysyms.h>  // for GDK_KEY_Alt_L, GDK_K...
 
-#include "control/Control.h"                     // for Control
-#include "control/layer/LayerController.h"       // for LayerController
-#include "control/settings/Settings.h"           // for Settings
-#include "control/tools/InputHandler.h"          // for InputHandler
-#include "gui/PageView.h"                        // for XojPageView
-#include "gui/XournalView.h"                     // for XournalView
-#include "gui/XournalppCursor.h"                 // for XournalppCursor
-#include "gui/inputdevices/PositionInputData.h"  // for PositionInputData
-#include "model/Layer.h"                         // for Layer
-#include "model/Stroke.h"                        // for Stroke
-#include "model/XojPage.h"                       // for XojPage
-#include "undo/InsertUndoAction.h"               // for InsertUndoAction
-#include "undo/UndoRedoHandler.h"                // for UndoRedoHandler
-#include "util/Rectangle.h"                      // for Rectangle
-#include "view/StrokeView.h"                     // for StrokeView
-#include "view/View.h"                           // for Context
-
-using xoj::util::Rectangle;
+#include "control/Control.h"                       // for Control
+#include "control/layer/LayerController.h"         // for LayerController
+#include "control/settings/Settings.h"             // for Settings
+#include "control/tools/InputHandler.h"            // for InputHandler
+#include "control/tools/SnapToGridInputHandler.h"  // for SnapToGridInputHandler
+#include "gui/XournalppCursor.h"                   // for XournalppCursor
+#include "gui/inputdevices/PositionInputData.h"    // for PositionInputData
+#include "model/Layer.h"                           // for Layer
+#include "model/Stroke.h"                          // for Stroke
+#include "model/XojPage.h"                         // for XojPage
+#include "undo/InsertUndoAction.h"                 // for InsertUndoAction
+#include "undo/UndoRedoHandler.h"                  // for UndoRedoHandler
+#include "util/DispatchPool.h"                     // for DispatchPool
+#include "view/overlays/ShapeToolView.h"           // for ShapeToolView
 
 guint32 BaseShapeHandler::lastStrokeTime;  // persist for next stroke
 
 
-BaseShapeHandler::BaseShapeHandler(XournalView* xournal, XojPageView* redrawable, const PageRef& page, bool flipShift,
-                                   bool flipControl):
-        InputHandler(xournal, redrawable, page),
+BaseShapeHandler::BaseShapeHandler(Control* control, const PageRef& page, bool flipShift, bool flipControl):
+        InputHandler(control, page),
         flipShift(flipShift),
         flipControl(flipControl),
-        snappingHandler(xournal->getControl()->getSettings()) {}
+        snappingHandler(control->getSettings()),
+        viewPool(std::make_shared<xoj::util::DispatchPool<xoj::view::ShapeToolView>>()) {}
 
 BaseShapeHandler::~BaseShapeHandler() = default;
 
-void BaseShapeHandler::draw(cairo_t* cr) {
-    if (!stroke) {
-        return;
+void BaseShapeHandler::updateShape(bool isAltDown, bool isShiftDown, bool isControlDown) {
+    auto [shape, rg] = this->createShape(isAltDown, isShiftDown, isControlDown);
+    {
+        std::lock_guard lock(this->shapeMutex);
+        std::swap(shape, this->shape);
     }
+    rg.addPadding(0.5 * this->stroke->getWidth());
+    Range repaintRange = rg.unite(lastDrawingRange);
+    lastDrawingRange = rg;
+    viewPool->dispatch(xoj::view::ShapeToolView::FLAG_DIRTY_REGION, repaintRange);
+}
 
-    auto context = xoj::view::Context::createDefault(cr);
-    strokeView->draw(context);
+void BaseShapeHandler::cancelStroke() {
+    {
+        std::lock_guard lock(this->shapeMutex);
+        this->shape.clear();
+    }
+    this->viewPool->dispatch(xoj::view::ShapeToolView::FLAG_DIRTY_REGION, this->lastDrawingRange);
+    this->lastDrawingRange = Range();
 }
 
 auto BaseShapeHandler::onKeyEvent(GdkEventKey* event) -> bool {
     if (event->is_modifier) {
-        Rectangle<double> rect = stroke->boundingRect();
-
-        PositionInputData pos{};
-        pos.x = pos.y = pos.pressure = 0;  // not used in redraw
+        GdkModifierType state;
         if (event->keyval == GDK_KEY_Shift_L || event->keyval == GDK_KEY_Shift_R) {
-            pos.state = static_cast<GdkModifierType>(
-                    event->state ^ GDK_SHIFT_MASK);  // event state does not include current this modifier keypress - so
-                                                     // ^toggle will work for press and release.
+            // event->state contains the modifiers' states BEFORE the current event
+            // We need a XOR to handler both keypress and keyrelease at once
+            state = static_cast<GdkModifierType>(event->state ^ GDK_SHIFT_MASK);
         } else if (event->keyval == GDK_KEY_Control_L || event->keyval == GDK_KEY_Control_R) {
-            pos.state = static_cast<GdkModifierType>(event->state ^ GDK_CONTROL_MASK);
+            state = static_cast<GdkModifierType>(event->state ^ GDK_CONTROL_MASK);
         } else if (event->keyval == GDK_KEY_Alt_L || event->keyval == GDK_KEY_Alt_R) {
-            pos.state = static_cast<GdkModifierType>(event->state ^ GDK_MOD1_MASK);
+            state = static_cast<GdkModifierType>(event->state ^ GDK_MOD1_MASK);
         } else {
             return false;
         }
 
-        this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
-                                      stroke->getElementHeight());
+        bool isAltDown = state & GDK_MOD1_MASK;
+        bool isShiftDown = state & GDK_SHIFT_MASK;
+        bool isControlDown = state & GDK_CONTROL_MASK;
 
-
-        Point malleablePoint = this->currPoint;  // make a copy as it might get snapped to grid.
-        this->drawShape(malleablePoint, pos);
-
-
-        rect.unite(stroke->boundingRect());
-
-        double w = stroke->getWidth();
-        redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
+        this->updateShape(isAltDown, isShiftDown, isControlDown);
 
         return true;
     }
     return false;
 }
 
-auto BaseShapeHandler::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
-    if (!stroke) {
-        return false;
+auto BaseShapeHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) -> bool {
+    Point newPoint(pos.x / zoom, pos.y / zoom);
+    if (!validMotion(newPoint, this->currPoint)) {
+        return true;
     }
+    this->currPoint = newPoint;
 
-    double zoom = xournal->getZoom();
-    double x = pos.x / zoom;
-    double y = pos.y / zoom;
-    int pointCount = stroke->getPointCount();
-
-    Point currentPoint(x, y);
-    Rectangle<double> rect = stroke->boundingRect();
-
-    if (pointCount > 0) {
-        if (!validMotion(currentPoint, stroke->getPoint(pointCount - 1))) {
-            return true;
-        }
-    }
-
-    this->redrawable->repaintRect(stroke->getX(), stroke->getY(), stroke->getElementWidth(),
-                                  stroke->getElementHeight());
-
-    drawShape(currentPoint, pos);
-
-    rect.unite(stroke->boundingRect());
-    double w = stroke->getWidth();
-
-    redrawable->repaintRect(rect.x - w, rect.y - w, rect.width + 2 * w, rect.height + 2 * w);
+    this->updateShape(pos.isAltDown(), pos.isShiftDown(), pos.isControlDown());
 
     return true;
 }
 
-void BaseShapeHandler::onMotionCancelEvent() {
-    delete stroke;
-    stroke = nullptr;
-}
+void BaseShapeHandler::onSequenceCancelEvent() { this->cancelStroke(); }
 
-void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
-    xournal->getCursor()->activateDrawDirCursor(false);  // in case released within  fixate_Dir_Mods_Dist
+void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double zoom) {
+    control->getCursor()->activateDrawDirCursor(false);  // in case released within  fixate_Dir_Mods_Dist
 
-    if (stroke == nullptr) {
-        return;
-    }
-
-
-    Control* control = xournal->getControl();
     Settings* settings = control->getSettings();
 
     if (settings->getStrokeFilterEnabled())  // Note: For simple strokes see StrokeHandler which has a slightly
@@ -139,22 +108,21 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         settings->getStrokeFilter(&strokeFilterIgnoreTime, &strokeFilterIgnoreLength, &strokeFilterSuccessiveTime);
         double dpmm = settings->getDisplayDpi() / 25.4;
 
-        double zoom = xournal->getZoom();
         double lengthSqrd = (pow(((pos.x / zoom) - (this->buttonDownPoint.x)), 2) +
                              pow(((pos.y / zoom) - (this->buttonDownPoint.y)), 2)) *
-                            pow(xournal->getZoom(), 2);
+                            pow(zoom, 2);
 
         if (lengthSqrd < pow((strokeFilterIgnoreLength * dpmm), 2) &&
             pos.timestamp - this->startStrokeTime < strokeFilterIgnoreTime) {
             if (pos.timestamp - BaseShapeHandler::lastStrokeTime > strokeFilterSuccessiveTime) {
                 // stroke not being added to layer... delete here.
-                delete stroke;
-                stroke = nullptr;
+                this->cancelStroke();
+
                 this->userTapped = true;
 
                 BaseShapeHandler::lastStrokeTime = pos.timestamp;
 
-                xournal->getCursor()->updateCursor();
+                control->getCursor()->updateCursor();
 
                 return;
             }
@@ -162,75 +130,71 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos) {
         BaseShapeHandler::lastStrokeTime = pos.timestamp;
     }
 
-
-    // This is not a valid stroke
-    if (stroke->getPointCount() < 2) {
-        g_warning("Stroke incomplete!");
-        delete stroke;
-        stroke = nullptr;
-        return;
-    }
-
-    stroke->freeUnusedPointItems();
-
-
     control->getLayerController()->ensureLayerExists(page);
 
     Layer* layer = page->getSelectedLayer();
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke));
+    auto [shape, snappingBox] = this->createShape(pos.isAltDown(), pos.isShiftDown(), pos.isControlDown());
+    stroke->setPointVector(shape, &snappingBox);
 
-    layer->addElement(stroke);
-    page->fireElementChanged(stroke);
+    {
+        /*
+         * Update the shape, for one last drawing operation triggered by page->fireElementChanged below
+         * This avoids the stroke blinking.
+         */
+        std::lock_guard lock(this->shapeMutex);
+        std::swap(shape, this->shape);
+    }
 
-    stroke = nullptr;
+    undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 
-    xournal->getCursor()->updateCursor();
+    layer->addElement(stroke.get());
+    page->fireElementChanged(stroke.get());
+    stroke.release();
+
+    control->getCursor()->updateCursor();
 }
 
-void BaseShapeHandler::onButtonPressEvent(const PositionInputData& pos) {
-    double zoom = xournal->getZoom();
+void BaseShapeHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
+    assert(this->viewPool->empty());
     this->buttonDownPoint.x = pos.x / zoom;
     this->buttonDownPoint.y = pos.y / zoom;
 
-    if (!stroke) {
-        createStroke(Point(this->buttonDownPoint.x, this->buttonDownPoint.y));
-        strokeView.emplace(stroke);
-    }
-
     this->startStrokeTime = pos.timestamp;
+    this->startPoint = snappingHandler.snapToGrid(this->buttonDownPoint, pos.isAltDown());
+
+    this->stroke = createStroke(this->control);
 }
 
-void BaseShapeHandler::onButtonDoublePressEvent(const PositionInputData& pos) {
+void BaseShapeHandler::onButtonDoublePressEvent(const PositionInputData&, double) {
     // nothing to do
 }
 
-void BaseShapeHandler::modifyModifiersByDrawDir(double width, double height, bool changeCursor) {
+void BaseShapeHandler::modifyModifiersByDrawDir(double width, double height, double zoom, bool changeCursor) {
     bool gestureShift = this->flipShift;
     bool gestureControl = this->flipControl;
 
-    if (this->drawModifierFixed ==
-        NONE) {  // User hasn't dragged out past DrawDirModsRadius  i.e. modifier not yet locked.
+    if (this->drawModifierFixed == NONE) {
+        // User hasn't dragged out past DrawDirModsRadius  i.e. modifier not yet locked.
         gestureShift = (width < 0) != gestureShift;
         gestureControl = (height < 0) != gestureControl;
 
         this->modShift = this->modShift == !gestureShift;
         this->modControl = this->modControl == !gestureControl;
 
-        double zoom = xournal->getZoom();
-        double fixate_Dir_Mods_Dist =
-                std::pow(xournal->getControl()->getSettings()->getDrawDirModsRadius() / zoom, 2.0);
-        if (std::pow(width, 2.0) > fixate_Dir_Mods_Dist || std::pow(height, 2.0) > fixate_Dir_Mods_Dist) {
+        double fixate_Dir_Mods_Dist = control->getSettings()->getDrawDirModsRadius() / zoom;
+        assert(fixate_Dir_Mods_Dist > 0.0);
+        if (std::abs(width) > fixate_Dir_Mods_Dist || std::abs(height) > fixate_Dir_Mods_Dist) {
             this->drawModifierFixed = static_cast<DIRSET_MODIFIERS>(SET | (gestureShift ? SHIFT : NONE) |
                                                                     (gestureControl ? CONTROL : NONE));
             if (changeCursor) {
-                xournal->getCursor()->activateDrawDirCursor(false);
+                control->getCursor()->activateDrawDirCursor(false);
             }
         } else {
             if (changeCursor) {
-                xournal->getCursor()->activateDrawDirCursor(true, this->modShift, this->modControl);
+                control->getCursor()->activateDrawDirCursor(true, this->modShift, this->modControl);
             }
         }
     } else {
@@ -239,4 +203,14 @@ void BaseShapeHandler::modifyModifiersByDrawDir(double width, double height, boo
         this->modShift = this->modShift == !gestureShift;
         this->modControl = this->modControl == !gestureControl;
     }
+}
+
+auto BaseShapeHandler::getShapeClone() const -> std::vector<Point> {
+    std::lock_guard lock(this->shapeMutex);
+    return this->shape;
+}
+
+auto BaseShapeHandler::getViewPool() const
+        -> const std::shared_ptr<xoj::util::DispatchPool<xoj::view::ShapeToolView>>& {
+    return viewPool;
 }
