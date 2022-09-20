@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"POT-Creation-Date: 2022-09-20 15:53+0000\n"
+"PO-Revision-Date: 2022-09-20 16:01\n"
 "Last-Translator: \n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -225,24 +225,24 @@ msgstr "Nelze načíst LaTeX PDF soubor: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Soubor pagetemplates.ini nelze načíst"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:838
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Nelze otevřít přílohu: {1}. Chybová zpráva: Nelze přečíst soubor"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:847
+#: ../src/core/control/xojfile/LoadHandler.cpp:848
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Nelze otevřít přílohu: {1}. Chybová zpráva: Nelze zapsat do souboru"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:817
-#: ../src/core/control/xojfile/LoadHandler.cpp:1068
-#: ../src/core/control/xojfile/LoadHandler.cpp:1086
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1069
+#: ../src/core/control/xojfile/LoadHandler.cpp:1087
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Nelze otevřít přílohu: {1}. Chybová zpráva: Není zadána platná velikost souboru"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:808
-#: ../src/core/control/xojfile/LoadHandler.cpp:824
-#: ../src/core/control/xojfile/LoadHandler.cpp:1061
-#: ../src/core/control/xojfile/LoadHandler.cpp:1075
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1062
+#: ../src/core/control/xojfile/LoadHandler.cpp:1076
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Nelze otevřít přílohu: {1}. Chybová zpráva: {2}"
 
@@ -303,11 +303,11 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "Nelze vrátit zpět „{1}“\n"
 "Něco je špatně… Napište prosím hlášení o chybě…"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:245
+#: ../src/core/control/xojfile/SaveHandler.cpp:248
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Nelze zapsat pozadí „{1}“, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:359
+#: ../src/core/control/xojfile/SaveHandler.cpp:362
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Nelze zapsat pozadí „{1}“. Přesto pokračujeme."
 
@@ -521,12 +521,12 @@ msgstr "Chyba otevírání souboru „{1}“"
 msgid "Error opening file: \"{1}\""
 msgstr "Chyba otevírání souboru: „{1}“"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:480
-#: ../src/core/control/xojfile/LoadHandler.cpp:500
+#: ../src/core/control/xojfile/LoadHandler.cpp:481
+#: ../src/core/control/xojfile/LoadHandler.cpp:501
 msgid "Error reading PDF: {1}"
 msgstr "Chyba čtení PDF: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:555
+#: ../src/core/control/xojfile/LoadHandler.cpp:556
 msgid "Error reading width of a stroke: {1}"
 msgstr "Chyba čtení šířky čáry: {1}"
 
@@ -987,7 +987,7 @@ msgstr "Stránka vložena"
 msgid "Page number"
 msgstr "Číslo stránky"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:308
+#: ../src/core/control/xojfile/SaveHandler.cpp:311
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr "Formát typu stránky je PageTypeFormat::Copy - převeden do PageTypeFormat::Plain, aby se předešlo poškození soboru"
 
@@ -1072,7 +1072,7 @@ msgstr "Přejmenovat vrstvu"
 msgid "Replace"
 msgstr "Nahradit"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1105
+#: ../src/core/control/xojfile/LoadHandler.cpp:1106
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Požadovaný dočasný soubor nebyl nalezen pro přílohu {1}"
 
@@ -1483,7 +1483,7 @@ msgstr "Neočekávaný kořenový tag: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Neočekávaný tag v dokumentu: „{1}“"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:531
+#: ../src/core/control/xojfile/LoadHandler.cpp:532
 msgid "Unknown background type: {1}"
 msgstr "Neznámý typ pozadí: {1}"
 
@@ -1491,7 +1491,7 @@ msgstr "Neznámý typ pozadí: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Neznámá hodnota barvy „{1}“"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:487
+#: ../src/core/control/xojfile/LoadHandler.cpp:488
 msgid "Unknown domain type: {1}"
 msgstr "Neznámý typ domény: {1}"
 
@@ -1503,11 +1503,11 @@ msgstr "Neznámá chyba načítání XML"
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Neznámý typ pixmap::domain: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:624
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Neznámý typ konců čáry: \"{1}\", předpokládám zaoblené"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:641
+#: ../src/core/control/xojfile/LoadHandler.cpp:642
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Neznámý typ čáry: „{1}“, bereme jej jako pero"
 
@@ -1547,11 +1547,11 @@ msgstr "S PDF pozadím"
 msgid "Write text"
 msgstr "Psát text"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:962
+#: ../src/core/control/xojfile/LoadHandler.cpp:963
 msgid "Wrong count of points ({1})"
 msgstr "Špatný počet bodů ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:972
+#: ../src/core/control/xojfile/LoadHandler.cpp:973
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Špatný počet bodů, obdrženo {1}, očekáváno {2}"
 
@@ -1740,7 +1740,7 @@ msgstr "trackpoint"
 msgid "whiteout"
 msgstr "bělení"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:971
+#: ../src/core/control/xojfile/LoadHandler.cpp:972
 msgid "xoj-File: {1}"
 msgstr "xoj-soubor: {1}"
 
