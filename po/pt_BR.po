@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"POT-Creation-Date: 2022-09-20 15:53+0000\n"
+"PO-Revision-Date: 2022-09-20 16:01\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -228,24 +228,24 @@ msgstr "Não foi possível carregar o arquivo PDF do LaTeX: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Não pode carregar o arquivo pagetemplates.ini"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:838
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Não foi possível abrir o anexo: {1}. Mensagem de erro: Não foi possível ler o arquivo"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:847
+#: ../src/core/control/xojfile/LoadHandler.cpp:848
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Não foi possível abrir o anexo: {1}. Mensagem de erro: Não foi possível gravar o arquivo"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:817
-#: ../src/core/control/xojfile/LoadHandler.cpp:1068
-#: ../src/core/control/xojfile/LoadHandler.cpp:1086
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1069
+#: ../src/core/control/xojfile/LoadHandler.cpp:1087
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Não foi possível abrir o anexo: {1}. Mensagem de erro: Nenhum tamanho de arquivo válido fornecido"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:808
-#: ../src/core/control/xojfile/LoadHandler.cpp:824
-#: ../src/core/control/xojfile/LoadHandler.cpp:1061
-#: ../src/core/control/xojfile/LoadHandler.cpp:1075
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1062
+#: ../src/core/control/xojfile/LoadHandler.cpp:1076
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Não foi possível abrir o anexo: {1}. Mensagem de erro: {2}"
 
@@ -306,11 +306,11 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "Não foi possível desfazer \"{1}\"\n"
 "Algo deu errado… Por favor, escreva um relatório de erros…"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:245
+#: ../src/core/control/xojfile/SaveHandler.cpp:248
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Não foi possível escrever o fundo \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:359
+#: ../src/core/control/xojfile/SaveHandler.cpp:362
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Não foi possível escrever o fundo \"{1}\". Continuando mesmo assim."
 
@@ -524,12 +524,12 @@ msgstr "Erro ao abrir o arquivo {1}"
 msgid "Error opening file: \"{1}\""
 msgstr "Erro ao abrir o arquivo: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:480
-#: ../src/core/control/xojfile/LoadHandler.cpp:500
+#: ../src/core/control/xojfile/LoadHandler.cpp:481
+#: ../src/core/control/xojfile/LoadHandler.cpp:501
 msgid "Error reading PDF: {1}"
 msgstr "Erro ao ler o PDF: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:555
+#: ../src/core/control/xojfile/LoadHandler.cpp:556
 msgid "Error reading width of a stroke: {1}"
 msgstr "Erro ao ler a largura de um traço: {1}"
 
@@ -990,7 +990,7 @@ msgstr "Página inserida"
 msgid "Page number"
 msgstr "Número da página"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:308
+#: ../src/core/control/xojfile/SaveHandler.cpp:311
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr "O formato do tipo de página é PageTypeFormat::Copiar - convertido para PageTypeFormat::Simples para evitar arquivos danificados"
 
@@ -1075,7 +1075,7 @@ msgstr "Renomear camada"
 msgid "Replace"
 msgstr "Substituir"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1105
+#: ../src/core/control/xojfile/LoadHandler.cpp:1106
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "O arquivo temporário solicitado não foi encontrado para o anexo {1}"
 
@@ -1486,7 +1486,7 @@ msgstr "Origem de marcador inesperada: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Marcador inesperado no documento: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:531
+#: ../src/core/control/xojfile/LoadHandler.cpp:532
 msgid "Unknown background type: {1}"
 msgstr "Tipo de fundo desconhecido: {1}"
 
@@ -1494,7 +1494,7 @@ msgstr "Tipo de fundo desconhecido: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Valor de cor desconhecido \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:487
+#: ../src/core/control/xojfile/LoadHandler.cpp:488
 msgid "Unknown domain type: {1}"
 msgstr "Tipo de domínio desconhecido: {1}"
 
@@ -1506,11 +1506,11 @@ msgstr "Erro desconhecido no analisador"
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Pixmap::tipo de domínio desconhecido: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:624
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Traçado desconhecido: \"{1}\", assumindo caneta"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:641
+#: ../src/core/control/xojfile/LoadHandler.cpp:642
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tipo de traçado desconhecido: \"{1}\", assumindo a caneta"
 
@@ -1550,11 +1550,11 @@ msgstr "Com PDF de plano de fundo"
 msgid "Write text"
 msgstr "Escrever texto"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:962
+#: ../src/core/control/xojfile/LoadHandler.cpp:963
 msgid "Wrong count of points ({1})"
 msgstr "Contagem errada de pontos ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:972
+#: ../src/core/control/xojfile/LoadHandler.cpp:973
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Número errado de pontos, obtido {1}, esperado {2}"
 
@@ -1743,7 +1743,7 @@ msgstr "Ponto de rastreio"
 msgid "whiteout"
 msgstr "Borracha pontual"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:971
+#: ../src/core/control/xojfile/LoadHandler.cpp:972
 msgid "xoj-File: {1}"
 msgstr "xoj-arquivo: {1}"
 
