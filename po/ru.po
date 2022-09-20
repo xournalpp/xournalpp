@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-09-17 22:20\n"
+"POT-Creation-Date: 2022-09-20 15:53+0000\n"
+"PO-Revision-Date: 2022-09-20 16:01\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -227,24 +227,24 @@ msgstr "Не удалось загрузить LaTeX PDF файл: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Не удалось загрузить файл pagetemplates.ini"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:838
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: Не удалось прочитать файл"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:847
+#: ../src/core/control/xojfile/LoadHandler.cpp:848
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: Не удалось записать файл"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:817
-#: ../src/core/control/xojfile/LoadHandler.cpp:1068
-#: ../src/core/control/xojfile/LoadHandler.cpp:1086
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1069
+#: ../src/core/control/xojfile/LoadHandler.cpp:1087
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: недопустимый размер файла"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:808
-#: ../src/core/control/xojfile/LoadHandler.cpp:824
-#: ../src/core/control/xojfile/LoadHandler.cpp:1061
-#: ../src/core/control/xojfile/LoadHandler.cpp:1075
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1062
+#: ../src/core/control/xojfile/LoadHandler.cpp:1076
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Не удалось открыть вложение: {1}. Сообщение об ошибке: {2}"
 
@@ -305,11 +305,11 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "Не удалось отменить «{1}»\n"
 "Что-то пошло не так… Пожалуйста, напишите отчет об ошибке…"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:245
+#: ../src/core/control/xojfile/SaveHandler.cpp:248
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Не удалось записать фон «{1}», {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:359
+#: ../src/core/control/xojfile/SaveHandler.cpp:362
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Не удалось записать фон «{1}». Тем не менее, продолжаем."
 
@@ -523,12 +523,12 @@ msgstr "Ошибка при открытии файла «{1}»"
 msgid "Error opening file: \"{1}\""
 msgstr "Ошибка при открытии файла: «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:480
-#: ../src/core/control/xojfile/LoadHandler.cpp:500
+#: ../src/core/control/xojfile/LoadHandler.cpp:481
+#: ../src/core/control/xojfile/LoadHandler.cpp:501
 msgid "Error reading PDF: {1}"
 msgstr "Ошибка при чтении PDF: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:555
+#: ../src/core/control/xojfile/LoadHandler.cpp:556
 msgid "Error reading width of a stroke: {1}"
 msgstr "Ошибка чтения ширины черты: {1}"
 
@@ -988,7 +988,7 @@ msgstr "Страница вставлена"
 msgid "Page number"
 msgstr "Номер страницы"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:308
+#: ../src/core/control/xojfile/SaveHandler.cpp:311
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr "Формат типа страницы — PageTypeFormat::Copy — преобразуется в PageTypeFormat::Plain во избежание повреждения файла"
 
@@ -1073,7 +1073,7 @@ msgstr "Переименовать слой"
 msgid "Replace"
 msgstr "Заменить"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1105
+#: ../src/core/control/xojfile/LoadHandler.cpp:1106
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Запрошенный временный файл не найден для вложения {1}"
 
@@ -1484,7 +1484,7 @@ msgstr "Неожиданный корневой тег: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Неожиданный тег в документе: «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:531
+#: ../src/core/control/xojfile/LoadHandler.cpp:532
 msgid "Unknown background type: {1}"
 msgstr "Неизвестный тип фона: {1}"
 
@@ -1492,7 +1492,7 @@ msgstr "Неизвестный тип фона: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Неизвестное значение цвета «{1}»"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:487
+#: ../src/core/control/xojfile/LoadHandler.cpp:488
 msgid "Unknown domain type: {1}"
 msgstr "Неизвестный тип домена: {1}"
 
@@ -1504,11 +1504,11 @@ msgstr "Неизвестная ошибка парсера"
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Неизвестный тип pixmap::domain: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:624
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Неизвестный тип обводки: \"{1}\", предположительно круглый"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:641
+#: ../src/core/control/xojfile/LoadHandler.cpp:642
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Неизвестный тип черты: \"{1}\", предполагается, что это перо"
 
@@ -1548,11 +1548,11 @@ msgstr "С PDF фоном"
 msgid "Write text"
 msgstr "Написать текст"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:962
+#: ../src/core/control/xojfile/LoadHandler.cpp:963
 msgid "Wrong count of points ({1})"
 msgstr "Неправильное количество точек ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:972
+#: ../src/core/control/xojfile/LoadHandler.cpp:973
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Неправильное количество точек, получено {1}, ожидается {2}"
 
@@ -1741,7 +1741,7 @@ msgstr "trackpoint"
 msgid "whiteout"
 msgstr "забеливание"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:971
+#: ../src/core/control/xojfile/LoadHandler.cpp:972
 msgid "xoj-File: {1}"
 msgstr "Файл xoj: {1}"
 
