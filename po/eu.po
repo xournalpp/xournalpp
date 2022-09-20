@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"POT-Creation-Date: 2022-09-20 15:53+0000\n"
+"PO-Revision-Date: 2022-09-20 16:01\n"
 "Last-Translator: \n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -226,24 +226,24 @@ msgstr "Ezin izan da LaTeX PDF fitxategia kargatu: {1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Ezin izan da pagetemplates.ini fitxategia kargatu"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:838
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ezin da fitxategia irakurri"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:847
+#: ../src/core/control/xojfile/LoadHandler.cpp:848
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ezin da fitxategia idatzi"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:817
-#: ../src/core/control/xojfile/LoadHandler.cpp:1068
-#: ../src/core/control/xojfile/LoadHandler.cpp:1086
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1069
+#: ../src/core/control/xojfile/LoadHandler.cpp:1087
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: ez da fitxategi-tamaina baliozkoa"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:808
-#: ../src/core/control/xojfile/LoadHandler.cpp:824
-#: ../src/core/control/xojfile/LoadHandler.cpp:1061
-#: ../src/core/control/xojfile/LoadHandler.cpp:1075
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1062
+#: ../src/core/control/xojfile/LoadHandler.cpp:1076
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Ezin izan da eranskina ireki: {1}. Errore mezua: {2}"
 
@@ -304,11 +304,11 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "Ezin izan da \"{1}\" desegin\n"
 "Zerbait gaizki joan da… Mesedez, idatzi akatsen berri…"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:245
+#: ../src/core/control/xojfile/SaveHandler.cpp:248
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Ezin izan da atzeko planoa idatzi \"{1}\", {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:359
+#: ../src/core/control/xojfile/SaveHandler.cpp:362
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Ezin izan da \"{1}\" atzeko planoa idatzi. Jarraitu hala ere."
 
@@ -522,12 +522,12 @@ msgstr "Errorea \"{1}\" fitxategia irekitzean"
 msgid "Error opening file: \"{1}\""
 msgstr "Errorea \"{1}\" fitxategia irekitzean"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:480
-#: ../src/core/control/xojfile/LoadHandler.cpp:500
+#: ../src/core/control/xojfile/LoadHandler.cpp:481
+#: ../src/core/control/xojfile/LoadHandler.cpp:501
 msgid "Error reading PDF: {1}"
 msgstr "Errorea {1} PDF irakurtzean"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:555
+#: ../src/core/control/xojfile/LoadHandler.cpp:556
 msgid "Error reading width of a stroke: {1}"
 msgstr "Errorea trazuaren zabalera irakurtzean: {1}"
 
@@ -988,7 +988,7 @@ msgstr "Orria txertatua"
 msgid "Page number"
 msgstr "Orriaren zenbakia"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:308
+#: ../src/core/control/xojfile/SaveHandler.cpp:311
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr "Orrialde motaren formatua PageTypeFormat::Copy da - PageTypeFormat::Plain bihurtu da fitxategi hondatuta ekiditeko"
 
@@ -1073,7 +1073,7 @@ msgstr "Berrizendatu geruza"
 msgid "Replace"
 msgstr "Ordeztu"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1105
+#: ../src/core/control/xojfile/LoadHandler.cpp:1106
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Eskatutako behin-behineko fitxategia ez da aurkitu eranskinean {1}"
 
@@ -1484,7 +1484,7 @@ msgstr "Ustekabeko root etiketa: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Ustekabeko etiketa dokumentuan: \"{1}\""
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:531
+#: ../src/core/control/xojfile/LoadHandler.cpp:532
 msgid "Unknown background type: {1}"
 msgstr "Atzeko plano mota ezezaguna: {1}"
 
@@ -1492,7 +1492,7 @@ msgstr "Atzeko plano mota ezezaguna: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Kolore balio ezezaguna: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:487
+#: ../src/core/control/xojfile/LoadHandler.cpp:488
 msgid "Unknown domain type: {1}"
 msgstr "Domeinu mota ezezaguna: {1}"
 
@@ -1504,11 +1504,11 @@ msgstr "Analisi errore ezezaguna"
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Pixmap::domain mota ezezaguna: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:624
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Trazu mota ezezaguna: \"{1}\", biribila suposatzen da"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:641
+#: ../src/core/control/xojfile/LoadHandler.cpp:642
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Trazu mota ezezaguna: {1}, arkatza erabiliko da"
 
@@ -1548,11 +1548,11 @@ msgstr "Atzeko planoko PDFrekin"
 msgid "Write text"
 msgstr "Idatzi testua"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:962
+#: ../src/core/control/xojfile/LoadHandler.cpp:963
 msgid "Wrong count of points ({1})"
 msgstr "Puntuen zenbaketa okerra ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:972
+#: ../src/core/control/xojfile/LoadHandler.cpp:973
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Puntuen zenbaketa okerra, eskuratua {1}, espero zen {2}"
 
@@ -1741,7 +1741,7 @@ msgstr "trackpoint"
 msgid "whiteout"
 msgstr "tinta zuzentzailea"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:971
+#: ../src/core/control/xojfile/LoadHandler.cpp:972
 msgid "xoj-File: {1}"
 msgstr "xoj-fitxategia: {1}"
 
