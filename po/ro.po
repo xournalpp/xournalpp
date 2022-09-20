@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 15:17+0000\n"
-"PO-Revision-Date: 2022-08-15 15:29\n"
+"POT-Creation-Date: 2022-09-20 15:53+0000\n"
+"PO-Revision-Date: 2022-09-20 16:01\n"
 "Last-Translator: \n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -228,24 +228,24 @@ msgstr "Nu s-a putut încărca fișierul PDF LaTeX:{1}"
 msgid "Could not load pagetemplates.ini file"
 msgstr "Nu s-a putut încărca fișierul pagetemplates.ini"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:837
+#: ../src/core/control/xojfile/LoadHandler.cpp:838
 msgid "Could not open attachment: {1}. Error message: Could not read file"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut citi fișierul"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:847
+#: ../src/core/control/xojfile/LoadHandler.cpp:848
 msgid "Could not open attachment: {1}. Error message: Could not write file"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nu s-a putut scrie fișierul"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:817
-#: ../src/core/control/xojfile/LoadHandler.cpp:1068
-#: ../src/core/control/xojfile/LoadHandler.cpp:1086
+#: ../src/core/control/xojfile/LoadHandler.cpp:818
+#: ../src/core/control/xojfile/LoadHandler.cpp:1069
+#: ../src/core/control/xojfile/LoadHandler.cpp:1087
 msgid "Could not open attachment: {1}. Error message: No valid file size provided"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: Nicio dimensiune validă a fișierului furnizată"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:808
-#: ../src/core/control/xojfile/LoadHandler.cpp:824
-#: ../src/core/control/xojfile/LoadHandler.cpp:1061
-#: ../src/core/control/xojfile/LoadHandler.cpp:1075
+#: ../src/core/control/xojfile/LoadHandler.cpp:809
+#: ../src/core/control/xojfile/LoadHandler.cpp:825
+#: ../src/core/control/xojfile/LoadHandler.cpp:1062
+#: ../src/core/control/xojfile/LoadHandler.cpp:1076
 msgid "Could not open attachment: {1}. Error message: {2}"
 msgstr "Fișierul atașat nu a putut fi deschis: {1}. Mesaj de eroare: {2}"
 
@@ -306,11 +306,11 @@ msgid "Could not undo \"{1}\"\n"
 msgstr "Nu s-a putut anula „{1}”\n"
 "Ceva nu a mers bine… Te rugăm să scrii un raport de eroare…"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:245
+#: ../src/core/control/xojfile/SaveHandler.cpp:248
 msgid "Could not write background \"{1}\", {2}"
 msgstr "Nu s-a putut scrie fondul „{1}”, {2}"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:359
+#: ../src/core/control/xojfile/SaveHandler.cpp:362
 msgid "Could not write background \"{1}\". Continuing anyway."
 msgstr "Nu s-a putut scrie fondul „{1}”. Continuă oricum."
 
@@ -524,12 +524,12 @@ msgstr "Eroare la deschiderea fișierului „{1}”"
 msgid "Error opening file: \"{1}\""
 msgstr "Eroare la deschiderea fișierului: „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:480
-#: ../src/core/control/xojfile/LoadHandler.cpp:500
+#: ../src/core/control/xojfile/LoadHandler.cpp:481
+#: ../src/core/control/xojfile/LoadHandler.cpp:501
 msgid "Error reading PDF: {1}"
 msgstr "Eroare la citirea PDF: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:555
+#: ../src/core/control/xojfile/LoadHandler.cpp:556
 msgid "Error reading width of a stroke: {1}"
 msgstr "Eroare la citirea grosimii liniei: {1}"
 
@@ -990,7 +990,7 @@ msgstr "Pagină introdusă"
 msgid "Page number"
 msgstr "Numărul paginii"
 
-#: ../src/core/control/xojfile/SaveHandler.cpp:308
+#: ../src/core/control/xojfile/SaveHandler.cpp:311
 msgid "Page type format is PageTypeFormat::Copy - converted to PageTypeFormat::Plain to avoid corrupted file"
 msgstr "Formatul tipului de pagină PageTypeFormat::Copy - convertit în PageTypeFormat::Plain pentru a evita deteriorarea fișierului"
 
@@ -1075,7 +1075,7 @@ msgstr "Redenumește stratul"
 msgid "Replace"
 msgstr "Înlocuiește"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:1105
+#: ../src/core/control/xojfile/LoadHandler.cpp:1106
 msgid "Requested temporary file was not found for attachment {1}"
 msgstr "Fișierul temporar solicitat nu a fost găsit pentru atașamentul {1}"
 
@@ -1486,7 +1486,7 @@ msgstr "Etichetă principală neașteptată: {1}"
 msgid "Unexpected tag in document: \"{1}\""
 msgstr "Etichetă neașteptată în documentul: „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:531
+#: ../src/core/control/xojfile/LoadHandler.cpp:532
 msgid "Unknown background type: {1}"
 msgstr "Tip necunoscut de fond: {1}"
 
@@ -1494,7 +1494,7 @@ msgstr "Tip necunoscut de fond: {1}"
 msgid "Unknown color value \"{1}\""
 msgstr "Valoare necunoscută a culorii „{1}”"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:487
+#: ../src/core/control/xojfile/LoadHandler.cpp:488
 msgid "Unknown domain type: {1}"
 msgstr "Tip de domeniu necunoscut: {1}"
 
@@ -1506,11 +1506,11 @@ msgstr "Eroare necunoscută de analizare"
 msgid "Unknown pixmap::domain type: {1}"
 msgstr "Tip de pixmap::domain necunoscut: {1}"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:623
+#: ../src/core/control/xojfile/LoadHandler.cpp:624
 msgid "Unknown stroke cap type: \"{1}\", assuming round"
 msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi un cerc"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:641
+#: ../src/core/control/xojfile/LoadHandler.cpp:642
 msgid "Unknown stroke type: \"{1}\", assuming pen"
 msgstr "Tip necunoscut de linie: „{1}”, se presupune a fi de creion"
 
@@ -1550,11 +1550,11 @@ msgstr "Cu fond PDF"
 msgid "Write text"
 msgstr "Scrie text"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:962
+#: ../src/core/control/xojfile/LoadHandler.cpp:963
 msgid "Wrong count of points ({1})"
 msgstr "Număr greșit de puncte ({1})"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:972
+#: ../src/core/control/xojfile/LoadHandler.cpp:973
 msgid "Wrong number of points, got {1}, expected {2}"
 msgstr "Număr greșit de puncte, obținut {1}, așteptat {2}"
 
@@ -1743,7 +1743,7 @@ msgstr "trackpoint"
 msgid "whiteout"
 msgstr "albește"
 
-#: ../src/core/control/xojfile/LoadHandler.cpp:971
+#: ../src/core/control/xojfile/LoadHandler.cpp:972
 msgid "xoj-File: {1}"
 msgstr "xoj-Fișier: {1}"
 
