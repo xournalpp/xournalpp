@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-20 15:53+0000\n"
-"PO-Revision-Date: 2022-09-20 16:01\n"
+"PO-Revision-Date: 2022-09-22 12:27\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -1261,7 +1261,7 @@ msgstr "Установите ширину страницы для экспорт
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:401
 msgid "Setsquare"
-msgstr ""
+msgstr "Setsquare"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:469
 msgid "Shape Recognizer"
