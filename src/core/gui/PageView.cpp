@@ -41,6 +41,7 @@
 #include "control/tools/Selection.h"                // for RectSelection
 #include "control/tools/SplineHandler.h"            // for SplineHandler
 #include "control/tools/StrokeHandler.h"            // for StrokeHandler
+#include "control/tools/TextEditor.h"               // for TextEditor, TextE...
 #include "control/tools/VerticalToolHandler.h"      // for VerticalToolHandler
 #include "gui/FloatingToolbox.h"                    // for FloatingToolbox
 #include "gui/MainWindow.h"                         // for MainWindow
@@ -82,7 +83,6 @@
 
 #include "PageViewFindObjectHelper.h"  // for SelectObject, Pla...
 #include "RepaintHandler.h"            // for RepaintHandler
-#include "TextEditor.h"                // for TextEditor, TextE...
 #include "XournalView.h"               // for XournalView
 #include "XournalppCursor.h"           // for XournalppCursor
 #include "filesystem.h"                // for path

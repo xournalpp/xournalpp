@@ -613,7 +613,7 @@ void ToolMenuHandler::initToolItems() {
                                      this);
 }
 
-void ToolMenuHandler::setFontButtonFont(XojFont& font) { this->fontButton->setFont(font); }
+void ToolMenuHandler::setFontButtonFont(const XojFont& font) { this->fontButton->setFont(font); }
 
 auto ToolMenuHandler::getFontButtonFont() -> XojFont { return this->fontButton->getFont(); }
 

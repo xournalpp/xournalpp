@@ -1,6 +1,6 @@
 #include "TextEditionView.h"
 
-#include "gui/TextEditor.h"
+#include "control/tools/TextEditor.h"
 #include "model/Text.h"
 #include "util/Color.h"
 #include "util/raii/CairoWrappers.h"

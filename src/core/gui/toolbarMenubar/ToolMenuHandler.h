@@ -79,7 +79,7 @@ public:
     SpinPageAdapter* getPageSpinner();
     void setPageInfo(size_t pagecount, size_t pdfpage = 0);
 
-    void setFontButtonFont(XojFont& font);
+    void setFontButtonFont(const XojFont& font);
     XojFont getFontButtonFont();
 
     void showFontSelectionDlg();

@@ -36,7 +36,7 @@ void FontButton::activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) {
     handler->actionPerformed(ACTION_FONT_BUTTON_CHANGED, GROUP_NOGROUP, nullptr, true);
 }
 
-void FontButton::setFontFontButton(GtkWidget* fontButton, XojFont& font) {
+void FontButton::setFontFontButton(GtkWidget* fontButton, const XojFont& font) {
     GtkFontButton* button = GTK_FONT_BUTTON(fontButton);
     auto fontSizeStream = serdes_stream<std::stringstream>();
     fontSizeStream << font.getSize();
@@ -44,7 +44,7 @@ void FontButton::setFontFontButton(GtkWidget* fontButton, XojFont& font) {
     gtk_font_button_set_font_name(button, name.c_str());
 }
 
-void FontButton::setFont(XojFont& font) {
+void FontButton::setFont(const XojFont& font) {
     this->font = font;
     if (this->fontButton == nullptr) {
         return;

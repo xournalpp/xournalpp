@@ -65,6 +65,8 @@ class TextEditor;
 class XournalScheduler;
 class ZoomControl;
 class ToolMenuHandler;
+class XojFont;
+
 class Control:
         public ActionHandler,
         public ToolListener,
@@ -148,6 +150,8 @@ public:
 
     void selectTool(ToolType type);
     void selectDefaultTool();
+
+    void setFontSelected(const XojFont& font);
 
     void updatePageNumbers(size_t page, size_t pdfPage);
 
