@@ -72,7 +72,7 @@ public:
 
     void updatePageNumbers(size_t page, size_t pagecount, size_t pdfpage);
 
-    void setFontButtonFont(XojFont& font);
+    void setFontButtonFont(const XojFont& font);
     XojFont getFontButtonFont() const;
 
     void saveSidebarSize();

@@ -34,7 +34,7 @@ public:
 
 public:
     void activated(GtkMenuItem* menuitem, GtkToolButton* toolbutton) override;
-    void setFont(XojFont& font);
+    void setFont(const XojFont& font);
     XojFont getFont() const;
     std::string getToolDisplayName() const override;
     void showFontDialog();
@@ -45,7 +45,7 @@ protected:
     GtkToolItem* newItem() override;
 
     static GtkWidget* newFontButton();
-    static void setFontFontButton(GtkWidget* fontButton, XojFont& font);
+    static void setFontFontButton(GtkWidget* fontButton, const XojFont& font);
 
     GtkWidget* getNewToolIcon() const override;
     GdkPixbuf* getNewToolPixbuf() const override;

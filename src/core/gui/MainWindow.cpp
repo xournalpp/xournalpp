@@ -644,7 +644,7 @@ void MainWindow::createToolbar() {
     this->control->getScheduler()->unblockRerenderZoom();
 }
 
-void MainWindow::setFontButtonFont(XojFont& font) { toolbar->setFontButtonFont(font); }
+void MainWindow::setFontButtonFont(const XojFont& font) { toolbar->setFontButtonFont(font); }
 
 auto MainWindow::getFontButtonFont() const -> XojFont { return toolbar->getFontButtonFont(); }
 

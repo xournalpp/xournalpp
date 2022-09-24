@@ -12,9 +12,10 @@
 #include "control/AudioController.h"
 #include "control/Control.h"  // for Control
 #include "control/settings/Settings.h"
-#include "model/Font.h"            // for XojFont
-#include "model/Text.h"            // for Text
-#include "model/XojPage.h"         // for XojPage
+#include "gui/XournalppCursor.h"  // for XournalppCursor
+#include "model/Font.h"           // for XojFont
+#include "model/Text.h"           // for Text
+#include "model/XojPage.h"        // for XojPage
 #include "undo/DeleteUndoAction.h"
 #include "undo/InsertUndoAction.h"
 #include "undo/TextBoxUndoAction.h"
@@ -24,11 +25,7 @@
 #include "util/raii/CStringWrapper.h"
 #include "view/overlays/TextEditionView.h"
 
-#include "MainWindow.h"
-#include "PageView.h"          // for XojPageView
 #include "TextEditorWidget.h"  // for gtk_xoj_int_txt_new
-#include "XournalView.h"       // for XournalView
-#include "XournalppCursor.h"   // for XournalppCursor
 
 class UndoAction;
 
@@ -1018,7 +1015,7 @@ void TextEditor::finalizeEdition() {
     Layer* layer = this->page->getSelectedLayer();
     UndoRedoHandler* undo = this->control->getUndoRedoHandler();
 
-    this->control->getWindow()->setFontButtonFont(this->control->getSettings()->getFont());
+    this->control->setFontSelected(this->control->getSettings()->getFont());
 
     if (this->bufferEmpty()) {
         // Delete the edited element from layer
@@ -1091,7 +1088,7 @@ void TextEditor::initializeEditionAt(double x, double y) {
         }
         this->originalTextElement = nullptr;
     } else {
-        this->control->getWindow()->setFontButtonFont(text->getFont());
+        this->control->setFontSelected(text->getFont());
         this->originalTextElement = text;
 
         // The original code did not use clone here (but did the cloning by hand). Why?
