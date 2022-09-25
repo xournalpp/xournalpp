@@ -2241,7 +2241,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         switch (res) {
             case USE_PROPOSED:
                 if (!proposedPdfFilepath.empty()) {
-                    loadHandler.setPdfReplacement(proposedPdfFilepath, true);
+                    loadHandler.setPdfReplacement(proposedPdfFilepath, loadHandler.isAttachedPdfMissing());
                     loadedDocument = loadHandler.loadDocument(filepath);
                 }
                 break;
