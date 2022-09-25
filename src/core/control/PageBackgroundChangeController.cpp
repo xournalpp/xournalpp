@@ -115,7 +115,11 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
     PageType origType = page->getBackgroundType();
 
     // Apply the new background
-    applyPageBackground(page, pageType);
+    if (pageType.format != PageTypeFormat::Copy)
+        applyPageBackground(page, pageType);
+    else
+        g_warning("Found 'Copy' page type. Doing nothing™.");
+
 
     control->firePageChanged(pageNr);
     control->updateBackgroundSizeButton();
