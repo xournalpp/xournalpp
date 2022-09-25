@@ -97,8 +97,6 @@ private:
 
     void moveCursor(const GtkTextIter* newLocation, gboolean extendSelection);
 
-    static gint blinkCallback(TextEditor* te);
-
     void calcVirtualCursor();
     void jumpALine(GtkTextIter* textIter, int count);
 
@@ -140,8 +138,29 @@ private:
     // cursor blinking timings. In millisecond.
     unsigned int cursorBlinkingTimeOn = 0;
     unsigned int cursorBlinkingTimeOff = 0;
-    // unsigned int cursorBlinkTimeout = 0;  // Not used for now...
-    unsigned int blinkCallbackId = 0;  // handler id
+    struct BlinkTimer {
+        BlinkTimer(unsigned int id = 0): id(id) {}
+        BlinkTimer(const BlinkTimer&) = delete;
+        BlinkTimer(BlinkTimer&&) = delete;
+        BlinkTimer& operator=(const BlinkTimer&) = delete;
+        BlinkTimer& operator=(BlinkTimer&&) = delete;
+        BlinkTimer& operator=(unsigned int newId) {
+            if (id) {
+                g_source_remove(id);
+            }
+            id = newId;
+            return *this;
+        }
+        ~BlinkTimer() {
+            if (id) {
+                g_source_remove(id);
+            }
+        }
+        static bool callback(TextEditor* te);
+
+    private:
+        unsigned int id = 0;  // handler id
+    } blinkTimer;
     bool cursorBlink = true;
 
     bool ownText = false;

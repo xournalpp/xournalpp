@@ -55,13 +55,6 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
             auto cursorBlinkingPeriod = static_cast<unsigned int>(tmp);
             this->cursorBlinkingTimeOn = cursorBlinkingPeriod * CURSOR_ON_MULTIPLIER / CURSOR_DIVIDER;
             this->cursorBlinkingTimeOff = cursorBlinkingPeriod - this->cursorBlinkingTimeOn;
-            /*
-             * The blink timeout is ignored. To remedy this, restore the following snippet and use cursorBlinkTimeout!
-             *
-             * g_object_get(settings, "gtk-cursor-blink-timeout", &tmp, nullptr);
-             * assert(tmp >= 0);
-             * this->cursorBlinkTimeout = static_cast<unsigned int>(tmp);
-             */
         }
     }
 
@@ -73,8 +66,9 @@ TextEditor::TextEditor(XojPageView* gui, GtkWidget* widget, Text* text, bool own
     g_signal_connect(this->imContext.get(), "retrieve-surrounding", G_CALLBACK(iMRetrieveSurroundingCallback), this);
     g_signal_connect(this->imContext.get(), "delete-surrounding", G_CALLBACK(imDeleteSurroundingCallback), this);
 
+
     if (this->cursorBlink) {
-        blinkCallback(this);
+        BlinkTimer::callback(this);
     } else {
         this->cursorVisible = true;
     }
@@ -103,10 +97,6 @@ TextEditor::~TextEditor() {
         delete this->text;
     }
     this->text = nullptr;
-
-    if (this->blinkCallbackId) {
-        g_source_remove(this->blinkCallbackId);
-    }
 }
 
 auto TextEditor::getText() -> Text* {
@@ -542,10 +532,7 @@ void TextEditor::moveCursor(GtkMovementStep step, int count, bool extendSelectio
 
     if (this->cursorBlink) {
         this->cursorVisible = false;
-        if (this->blinkCallbackId) {
-            g_source_remove(this->blinkCallbackId);
-        }
-        blinkCallback(this);
+        BlinkTimer::callback(this);
     } else {
         repaintCursor();
     }
@@ -879,16 +866,10 @@ void TextEditor::repaintCursor() { this->gui->repaintElement(this->text); }
 /*
  * Blink!
  */
-auto TextEditor::blinkCallback(TextEditor* te) -> gint {
-    if (te->cursorVisible) {
-        te->blinkCallbackId =
-                gdk_threads_add_timeout(te->cursorBlinkingTimeOff, reinterpret_cast<GSourceFunc>(blinkCallback), te);
-    } else {
-        te->blinkCallbackId =
-                gdk_threads_add_timeout(te->cursorBlinkingTimeOn, reinterpret_cast<GSourceFunc>(blinkCallback), te);
-    }
-
+auto TextEditor::BlinkTimer::callback(TextEditor* te) -> bool {
     te->cursorVisible = !te->cursorVisible;
+    auto time = te->cursorVisible ? te->cursorBlinkingTimeOn : te->cursorBlinkingTimeOff;
+    te->blinkTimer = gdk_threads_add_timeout(time, reinterpret_cast<GSourceFunc>(callback), te);
 
     te->repaintCursor();
 
