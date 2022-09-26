@@ -2206,21 +2206,19 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 #endif
         std::string msg;
         if (loadHandler.isAttachedPdfMissing()) {
-            msg = FS(_F("The attached background file \"{1}\" could not be found. It might have been moved, "
-                        "renamed or deleted.") %
-                     filename);
+            msg = FS(_F("The attached background file could not be found. It might have been moved, "
+                        "renamed or deleted."));
         } else {
             msg = FS(_F("The background file \"{1}\" could not be found. It might have been moved, renamed or "
-                        "deleted.") %
-                     filename);
+                        "deleted.\nIt was last seen at: \"{2}\"") %
+                     filename % parentFolderPath);
         }
-
-        msg += FS(_F("\nIt was last seen at: \"{1}\"") % parentFolderPath);
 
         // try to find file in current directory
         auto proposedPdfFilepath = filepath.parent_path() / filename;
-        bool proposedPdfFileExits = fs::exists(proposedPdfFilepath);
-        if (proposedPdfFileExits) {
+        bool proposePdfFile = !loadHandler.isAttachedPdfMissing() && !filename.empty() &&
+                              fs::exists(proposedPdfFilepath) && !fs::is_directory(proposedPdfFilepath);
+        if (proposePdfFile) {
             msg += FS(_F("\nProposed replacement file: \"{1}\"") % proposedPdfFilepath.string());
         }
         GtkWidget* dialog = gtk_message_dialog_new(getGtkWindow(), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION,
@@ -2228,7 +2226,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
 
         enum dialogOptions { USE_PROPOSED, SELECT_OTHER, REMOVE, CANCEL };
 
-        if (proposedPdfFileExits) {
+        if (proposePdfFile) {
             gtk_dialog_add_button(GTK_DIALOG(dialog), _("Use proposed PDF"), USE_PROPOSED);
         }
         gtk_dialog_add_button(GTK_DIALOG(dialog), _("Select another PDF"), SELECT_OTHER);
@@ -2241,7 +2239,7 @@ auto Control::openFile(fs::path filepath, int scrollToPage, bool forceOpen) -> b
         switch (res) {
             case USE_PROPOSED:
                 if (!proposedPdfFilepath.empty()) {
-                    loadHandler.setPdfReplacement(proposedPdfFilepath, loadHandler.isAttachedPdfMissing());
+                    loadHandler.setPdfReplacement(proposedPdfFilepath, false);
                     loadedDocument = loadHandler.loadDocument(filepath);
                 }
                 break;
