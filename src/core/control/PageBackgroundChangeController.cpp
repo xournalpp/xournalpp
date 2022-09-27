@@ -115,10 +115,11 @@ auto PageBackgroundChangeController::commitPageTypeChange(const size_t pageNum, 
     PageType origType = page->getBackgroundType();
 
     // Apply the new background
-    if (pageType.format != PageTypeFormat::Copy)
+    if (pageType.format != PageTypeFormat::Copy) {
         applyPageBackground(page, pageType);
-    else
+    } else {
         g_warning("Found 'Copy' page type. Doing nothing™.");
+    }
 
 
     control->firePageChanged(pageNr);
