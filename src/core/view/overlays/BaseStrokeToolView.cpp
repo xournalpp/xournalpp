@@ -22,8 +22,8 @@ static Color strokeColorWithAlpha(const Stroke& s) {
     return c;
 }
 
-BaseStrokeToolView::BaseStrokeToolView(const Repaintable* parent, const Stroke& stroke):
-        OverlayView(parent),
+BaseStrokeToolView::BaseStrokeToolView(Repaintable* parent, const Stroke& stroke):
+        ToolView(parent),
         cairoOp(stroke.getToolType() == STROKE_TOOL_HIGHLIGHTER ? CAIRO_OPERATOR_MULTIPLY : CAIRO_OPERATOR_OVER),
         strokeColor(strokeColorWithAlpha(stroke)),
         lineStyle(stroke.getLineStyle()),

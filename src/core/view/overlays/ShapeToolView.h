@@ -26,7 +26,7 @@ class Repaintable;
 class ShapeToolView final: public BaseShapeOrSplineToolView, public xoj::util::Listener<ShapeToolView> {
 
 public:
-    ShapeToolView(const BaseShapeHandler* handler, const Repaintable* parent);
+    ShapeToolView(const BaseShapeHandler* handler, Repaintable* parent);
     ~ShapeToolView() noexcept override;
 
     /**
@@ -42,6 +42,15 @@ public:
     static constexpr struct FlagDirtyRegionRequest {
     } FLAG_DIRTY_REGION = {};
     void on(FlagDirtyRegionRequest, const Range& rg);
+
+
+    static constexpr struct FinalizationRequest {
+    } FINALIZATION_REQUEST = {};
+    /**
+     * @brief Called before the corresponding BaseShapeHandler's destruction
+     * @param rg The bounding box of the entire stroke
+     */
+    void deleteOn(FinalizationRequest, const Range& rg);
 
 private:
     const BaseShapeHandler* toolHandler;

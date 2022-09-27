@@ -19,7 +19,7 @@ namespace xoj::view {
 class Repaintable;
 class OverlayView {
 public:
-    OverlayView(const Repaintable* parent): parent(parent) {}
+    OverlayView(Repaintable* parent): parent(parent) {}
     virtual ~OverlayView() = default;
 
     /**
@@ -30,6 +30,16 @@ public:
     virtual bool isViewOf(const OverlayBase* overlay) const = 0;
 
 protected:
-    const Repaintable* parent;
+    Repaintable* parent;
+};
+
+class ToolView: public OverlayView {
+public:
+    ToolView(Repaintable* parent): OverlayView(parent) {}
+
+    /**
+     * @brief Draws without putative drawing aids (e.g. spline knots and tangents, text frame)
+     */
+    virtual void drawWithoutDrawingAids(cairo_t* cr) const { this->draw(cr); }
 };
 };  // namespace xoj::view

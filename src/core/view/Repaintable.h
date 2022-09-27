@@ -13,6 +13,7 @@
 class Range;
 
 namespace xoj::view {
+class ToolView;
 
 class Repaintable {
 public:
@@ -41,5 +42,11 @@ public:
      * @brief Flag a region as dirty. Dirty regions will get redrawn at the next screen refresh.
      */
     virtual void flagDirtyRegion(const Range& rg) const = 0;
+
+    /**
+     * @brief Remove a tool view and repaint the given range
+     *      Called just before the tool sequence ends and the handler is deleted.
+     */
+    virtual void drawAndDeleteToolView(ToolView* v, const Range& rg) = 0;
 };
 };  // namespace xoj::view

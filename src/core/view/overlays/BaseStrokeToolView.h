@@ -23,9 +23,9 @@ namespace xoj::view {
 class Mask;
 class Repaintable;
 
-class BaseStrokeToolView: public OverlayView {
+class BaseStrokeToolView: public ToolView {
 protected:
-    BaseStrokeToolView(const Repaintable* parent, const Stroke& stroke);
+    BaseStrokeToolView(Repaintable* parent, const Stroke& stroke);
     ~BaseStrokeToolView() noexcept override;
 
     /**
