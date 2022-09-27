@@ -24,7 +24,7 @@ class Repaintable;
 class BaseShapeOrSplineToolView: public BaseStrokeToolView {
 
 public:
-    BaseShapeOrSplineToolView(const InputHandler* handler, const Repaintable* parent);
+    BaseShapeOrSplineToolView(const InputHandler* handler, Repaintable* parent);
     ~BaseShapeOrSplineToolView() noexcept override;
 
 protected:

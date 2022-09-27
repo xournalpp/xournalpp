@@ -9,7 +9,7 @@
 
 using namespace xoj::view;
 
-ShapeToolView::ShapeToolView(const BaseShapeHandler* toolHandler, const Repaintable* parent):
+ShapeToolView::ShapeToolView(const BaseShapeHandler* toolHandler, Repaintable* parent):
         BaseShapeOrSplineToolView(toolHandler, parent), toolHandler(toolHandler) {
     this->registerToPool(toolHandler->getViewPool());
 }
@@ -36,3 +36,7 @@ void ShapeToolView::draw(cairo_t* cr) const {
 bool ShapeToolView::isViewOf(const OverlayBase* overlay) const { return overlay == this->toolHandler; }
 
 void ShapeToolView::on(ShapeToolView::FlagDirtyRegionRequest, const Range& rg) { this->parent->flagDirtyRegion(rg); }
+
+void ShapeToolView::deleteOn(ShapeToolView::FinalizationRequest, const Range& rg) {
+    this->parent->drawAndDeleteToolView(this, rg);
+}

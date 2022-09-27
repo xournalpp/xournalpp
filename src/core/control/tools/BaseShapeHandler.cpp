@@ -36,16 +36,18 @@ BaseShapeHandler::~BaseShapeHandler() = default;
 void BaseShapeHandler::updateShape(bool isAltDown, bool isShiftDown, bool isControlDown) {
     auto [shape, rg] = this->createShape(isAltDown, isShiftDown, isControlDown);
     std::swap(shape, this->shape);
-    rg.addPadding(0.5 * this->stroke->getWidth());
-    Range repaintRange = rg.unite(lastDrawingRange);
-    lastDrawingRange = rg;
+    Range repaintRange = rg.unite(lastSnappingRange);
+    lastSnappingRange = rg;
+    repaintRange.addPadding(0.5 * this->stroke->getWidth());
     viewPool->dispatch(xoj::view::ShapeToolView::FLAG_DIRTY_REGION, repaintRange);
 }
 
 void BaseShapeHandler::cancelStroke() {
     this->shape.clear();
-    this->viewPool->dispatch(xoj::view::ShapeToolView::FLAG_DIRTY_REGION, this->lastDrawingRange);
-    this->lastDrawingRange = Range();
+    Range repaintRange = this->lastSnappingRange;
+    repaintRange.addPadding(0.5 * this->stroke->getWidth());
+    this->viewPool->dispatchAndClear(xoj::view::ShapeToolView::FINALIZATION_REQUEST, repaintRange);
+    this->lastSnappingRange = Range();
 }
 
 auto BaseShapeHandler::onKeyEvent(GdkEventKey* event) -> bool {
@@ -130,14 +132,11 @@ void BaseShapeHandler::onButtonReleaseEvent(const PositionInputData& pos, double
 
     UndoRedoHandler* undo = control->getUndoRedoHandler();
 
-    auto [shape, snappingBox] = this->createShape(pos.isAltDown(), pos.isShiftDown(), pos.isControlDown());
-    stroke->setPointVector(shape, &snappingBox);
+    stroke->setPointVector(this->shape, &lastSnappingRange);
 
-    /*
-     * Update the shape, for one last drawing operation triggered by page->fireElementChanged below
-     * This avoids the stroke blinking.
-     */
-    std::swap(shape, this->shape);
+    Range repaintRange = lastSnappingRange;
+    repaintRange.addPadding(0.5 * this->stroke->getWidth());
+    this->viewPool->dispatchAndClear(xoj::view::ShapeToolView::FINALIZATION_REQUEST, repaintRange);
 
     undo->addUndoAction(std::make_unique<InsertUndoAction>(page, layer, stroke.get()));
 

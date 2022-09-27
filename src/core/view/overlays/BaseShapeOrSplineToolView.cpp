@@ -20,7 +20,7 @@ static double getFillingAlpha(const InputHandler* h) {
     return f == -1 ? 0.0 : f / 255.0;
 }
 
-BaseShapeOrSplineToolView::BaseShapeOrSplineToolView(const InputHandler* toolHandler, const Repaintable* parent):
+BaseShapeOrSplineToolView::BaseShapeOrSplineToolView(const InputHandler* toolHandler, Repaintable* parent):
         BaseStrokeToolView(parent, safeGetStroke(toolHandler)),
         fillingAlpha(getFillingAlpha(toolHandler)),
         needMask(this->fillingAlpha != 0.0 && safeGetStroke(toolHandler).getToolType() == STROKE_TOOL_HIGHLIGHTER) {}

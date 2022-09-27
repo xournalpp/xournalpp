@@ -283,6 +283,14 @@ void XojPageView::startText(double x, double y) {
     }
 }
 
+#ifndef NDEBUG
+// used in assert()
+[[maybe_unused]] static bool hasNoViewOf(const std::vector<std::unique_ptr<xoj::view::OverlayView>>& views,
+                                         const OverlayBase* o) {
+    return std::find_if(views.begin(), views.end(), [o](auto& v) { return v->isViewOf(o); }) == views.end();
+}
+#endif
+
 auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
     Control* control = xournal->getControl();
 
@@ -311,7 +319,7 @@ auto XojPageView::onButtonPressEvent(const PositionInputData& pos) -> bool {
         (h->getToolType() == TOOL_ERASER && h->getEraserType() == ERASER_TYPE_WHITEOUT)) {
 
         if (this->inputHandler) {
-            this->deleteViewOf(this->inputHandler);
+            assert(hasNoViewOf(overlayViews, inputHandler));
             delete this->inputHandler;
             this->inputHandler = nullptr;
         }
@@ -506,7 +514,7 @@ auto XojPageView::onButtonDoublePressEvent(const PositionInputData& pos) -> bool
     } else if (drawingType == DRAWING_TYPE_SPLINE) {
         if (this->inputHandler) {
             this->inputHandler->onButtonDoublePressEvent(pos, zoom);
-            this->deleteViewOf(this->inputHandler);
+            assert(hasNoViewOf(overlayViews, inputHandler));
             delete this->inputHandler;
             this->inputHandler = nullptr;
         }
@@ -574,6 +582,7 @@ auto XojPageView::onMotionNotifyEvent(const PositionInputData& pos) -> bool {
 void XojPageView::onSequenceCancelEvent() {
     if (this->inputHandler) {
         this->inputHandler->onSequenceCancelEvent();
+        assert(hasNoViewOf(overlayViews, inputHandler));
         delete this->inputHandler;
         this->inputHandler = nullptr;
     }
@@ -591,18 +600,9 @@ auto XojPageView::showPdfToolbox(const PositionInputData& pos) -> void {
     pdfToolbox->show(wx, wy);
 }
 
-auto XojPageView::getViewOf(OverlayBase* overlay) const -> xoj::view::OverlayView* {
+void XojPageView::deleteView(xoj::view::OverlayView* view) {
     auto it = std::find_if(this->overlayViews.begin(), this->overlayViews.end(),
-                           [overlay](const auto& v) { return v->isViewOf(overlay); });
-    if (it != this->overlayViews.end()) {
-        return it->get();
-    }
-    return nullptr;
-}
-
-void XojPageView::deleteViewOf(OverlayBase* overlay) {
-    auto it = std::find_if(this->overlayViews.begin(), this->overlayViews.end(),
-                           [overlay](const auto& v) { return v->isViewOf(overlay); });
+                           [view](const auto& v) { return view == v.get(); });
     if (it != this->overlayViews.end()) {
         this->overlayViews.erase(it);
     }
@@ -633,7 +633,7 @@ auto XojPageView::onButtonReleaseEvent(const PositionInputData& pos) -> bool {
         ToolHandler* h = control->getToolHandler();
         bool isDrawingTypeSpline = h->getDrawingType() == DRAWING_TYPE_SPLINE;
         if (!isDrawingTypeSpline || !this->inputHandler->getStroke()) {  // The Spline Tool finalizes drawing manually
-            this->deleteViewOf(this->inputHandler);
+            assert(hasNoViewOf(overlayViews, inputHandler));
             delete this->inputHandler;
             this->inputHandler = nullptr;
         }
@@ -726,7 +726,7 @@ auto XojPageView::onKeyReleaseEvent(GdkEventKey* event) -> bool {
         DrawingType drawingType = this->xournal->getControl()->getToolHandler()->getDrawingType();
         if (drawingType == DRAWING_TYPE_SPLINE) {  // Spline drawing has been finalized
             if (this->inputHandler) {
-                this->deleteViewOf(this->inputHandler);
+                assert(hasNoViewOf(overlayViews, inputHandler));
                 delete this->inputHandler;
                 this->inputHandler = nullptr;
             }
@@ -756,6 +756,17 @@ void XojPageView::repaintArea(double x1, double y1, double x2, double y2) const 
 }
 
 void XojPageView::flagDirtyRegion(const Range& rg) const { repaintArea(rg.minX, rg.minY, rg.maxX, rg.maxY); }
+
+void XojPageView::drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg) {
+    if (v->isViewOf(this->inputHandler)) {
+        // Draw the inputHandler's view onto the page buffer.
+        std::lock_guard lock(this->drawingMutex);
+        xoj::util::CairoSPtr cr(cairo_create(this->crBuffer.get()));
+        v->drawWithoutDrawingAids(cr.get());
+    }
+    this->deleteView(v);
+    this->flagDirtyRegion(rg);
+}
 
 int XojPageView::getDPIScaling() const { return xournal->getDpiScaleFactor(); }
 
@@ -1045,14 +1056,12 @@ void XojPageView::rangeChanged(Range& range) { rerenderRange(range); }
 void XojPageView::pageChanged() { rerenderPage(); }
 
 void XojPageView::elementChanged(Element* elem) {
-    if (this->inputHandler && elem == this->inputHandler->getStroke()) {
-        // Blitt the inputHandler's view onto the page buffer.
-        if (auto* view = this->getViewOf(this->inputHandler); view) {
-            std::lock_guard lock(this->drawingMutex);
-            xoj::util::CairoSPtr cr(cairo_create(this->crBuffer.get()));
-            view->draw(cr.get());
-        }
-    } else {
+    /*
+     * The input handlers issue an elementChanged event when creating an element.
+     * There is however no need to redraw the element in this case: the element was already painted to the buffer via a
+     * call to removeToolView
+     */
+    if (!this->inputHandler || elem != this->inputHandler->getStroke()) {
         rerenderElement(elem);
     }
 }

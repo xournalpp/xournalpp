@@ -94,8 +94,9 @@ protected:
 
     /**
      * @brief Bounding box of the stroke after its last update
+     *      WARNING: The stroke width is not taken into account (i.e. this is the snapping box)
      */
-    Range lastDrawingRange;
+    Range lastSnappingRange;
 
     DIRSET_MODIFIERS drawModifierFixed = NONE;
     bool flipShift =

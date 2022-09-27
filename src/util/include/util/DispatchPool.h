@@ -23,13 +23,18 @@ namespace xoj::util {
  *
  * The listeners must implement functions
  *      void on(Arg&&...);
- * that the dispatcher will call through dispatch().
+ * that the dispatcher will call through dispatch() and/or functions
+ *      void deleteOn(Arg&&...);
+ * that the dispatcher will call through dispatchAndClear();
+ *
+ * The `on()`s must not delete the listener, or even remove it from the pool.
+ * The `deleteOn()`s must make sure the listener no longer references the pool (for instance by deleting the listener)
  */
 template <class ListenerT>
 class DispatchPool final {
 public:
     using listener_type = ListenerT;
-
+    
     /**
      * @brief Invokes the `on()` method of all registered `ListenerT`s.
      */
@@ -37,6 +42,21 @@ public:
     void dispatch(Args&&... args) const {
         for (auto* v: this->pool) {
             v->on(std::forward<Args>(args)...);
+        }
+    }
+
+    /**
+     * @brief Invokes the `deleteOn()` method of all registered `ListenerT`s and clears the pool.
+     * A call to v->deleteOn() is supposed to delete the listener v
+     * (or at the very least remove any reference to the dispatcher in the listener v)
+     */
+    template <typename... Args>
+    void dispatchAndClear(Args&&... args) const {
+        // We cannot iterate on the this->pool: the listener's deletion would trigger calls to DispatchPool::remove()
+        // leading to possible segfaults.
+        auto p = std::move(this->pool);
+        for (auto* v: p) {
+            v->deleteOn(std::forward<Args>(args)...);
         }
     }
 

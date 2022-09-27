@@ -41,10 +41,10 @@ class Element;
 class PositionInputData;
 class Range;
 class TexImage;
-class OverlayBase;
 
 namespace xoj::view {
 class OverlayView;
+class ToolView;
 }
 
 class XojPageView: public LegacyRedrawable, public PageListener, public xoj::view::Repaintable {
@@ -61,12 +61,19 @@ public:
 
     // Repaintable interface
     void flagDirtyRegion(const Range& rg) const override;
+    /**
+     * @brief This draws the ToolView directly onto the buffer, deletes the view and repaints the given range
+     *      Used to avoid blinking when a tool finished editing an element
+     */
+    void drawAndDeleteToolView(xoj::view::ToolView* v, const Range& rg) override;
+
     int getDPIScaling() const override;
     double getZoom() const override;
     Range getVisiblePart() const override;
 
     double getWidth() const override;
     double getHeight() const override;
+    // End of Repaintable interface
 
 
     void setSelected(bool selected);
@@ -203,8 +210,7 @@ private:
      */
     void showPdfToolbox(const PositionInputData& pos);
 
-    auto getViewOf(OverlayBase* overlay) const -> xoj::view::OverlayView*;
-    void deleteViewOf(OverlayBase* overlay);
+    void deleteView(xoj::view::OverlayView* v);
 
 private:
     PageRef page;
