@@ -1017,8 +1017,18 @@ void EditSelection::paint(cairo_t* cr, double zoom) {
     // bottom right
     drawAnchorRect(cr, x + width, y + height, zoom);
 
+    // prevent DeleteRect to go out of page area by moving it right or down if necessary
+    double px = std::min(x, x + width) - (DELETE_PADDING + this->btnWidth) / zoom;
+    double py = std::min(y, y + height);
+    if (px < 0.0) {
+        px += (DELETE_PADDING + this->btnWidth) / zoom * 2.0 + std::abs(width);
+    }
 
-    drawDeleteRect(cr, std::min(x, x + width) - (DELETE_PADDING + this->btnWidth) / zoom, y, zoom);
+    if (py < 0.0) {
+        py += std::abs(height);
+    }
+
+    drawDeleteRect(cr, px, py, zoom);
 }
 
 void EditSelection::drawAnchorRotation(cairo_t* cr, double x, double y, double zoom) {
