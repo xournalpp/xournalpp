@@ -33,7 +33,7 @@ void emergencySave() {
     auto const& filepath = Util::getConfigFile("emergencysave.xopp");
 
     SaveHandler handler;
-    handler.prepareSave(document);
+    handler.prepareSave(document, filepath);
     handler.saveTo(filepath);
 
     if (!handler.getErrorMessage().empty()) {

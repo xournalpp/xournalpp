@@ -80,8 +80,8 @@ void testLoadStoreLoadHelper(const fs::path& filepath, double tol = 1e-8) {
     auto elements1 = getElements(doc1.get());
 
     SaveHandler h;
-    h.prepareSave(doc1.get());
     auto tmp = Util::getTmpDirSubfolder() / "save.xopp";
+    h.prepareSave(doc1.get(), tmp);
     h.saveTo(tmp);
 
     // Create a second loader so the first one doesn't free the memory
@@ -408,7 +408,7 @@ TEST(ControlLoadHandler, imageSaveJpegBackwardCompat) {
         ASSERT_TRUE(doc) << "doc with jpeg should not be null";
 
         SaveHandler saver;
-        saver.prepareSave(doc.get());
+        saver.prepareSave(doc.get(), outPath);
         saver.saveTo(outPath);
     }
 
@@ -439,7 +439,7 @@ TEST(ControlLoadHandler, linebreaksLatex) {
         ASSERT_TRUE(doc) << "latex objects with linebreaks";
 
         SaveHandler saver;
-        saver.prepareSave(doc.get());
+        saver.prepareSave(doc.get(), outPath);
         saver.saveTo(outPath);
     }
 
