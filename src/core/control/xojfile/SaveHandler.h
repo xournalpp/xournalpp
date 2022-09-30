@@ -36,7 +36,7 @@ public:
     SaveHandler();
 
 public:
-    void prepareSave(const Document* doc);
+    void prepareSave(const Document* doc, const fs::path& target);
     void saveTo(const fs::path& filepath, ProgressListener* listener = nullptr);
     void saveTo(OutputStream* out, const fs::path& filepath, ProgressListener* listener = nullptr);
     const std::string& getErrorMessage();
@@ -44,7 +44,7 @@ public:
 protected:
     static std::string getColorStr(Color c, unsigned char alpha = 0xff);
 
-    virtual void visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id);
+    virtual void visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id, const fs::path& target);
     virtual void visitLayer(XmlNode* page, const Layer* l);
     virtual void visitStroke(XmlPointNode* stroke, const Stroke* s);
 

@@ -262,18 +262,18 @@ auto exportImg(const char* input, const char* output, const char* range, const c
  * @return int 0 on success
  */
 auto saveDoc(const char* input, const char* output) -> int {
-    // LoadHandler loader;
     SaveHandler saver;
     char* inputFilename = (char*)input;
-    const fs::path p = Util::fromGFilename(inputFilename, false);
+    const fs::path in = Util::fromGFilename(inputFilename, false);
     auto handler = std::make_unique<DocumentHandler>();
     auto newDoc = std::make_unique<Document>(handler.get());
-    const bool res = newDoc->readPdf(p, /*initPages=*/true, false);
+    const bool res = newDoc->readPdf(in, /*initPages=*/true, false);
     if (!res) {
         g_error("%s", FC(_F("Error: {1}") % newDoc->getLastErrorMsg().c_str()));
     }
-    saver.prepareSave(newDoc.get());
-    saver.saveTo(output);
+    fs::path out = Util::fromGFilename((char*)output, false);
+    saver.prepareSave(newDoc.get(), out);
+    saver.saveTo(out);
 
     if (!saver.getErrorMessage().empty()) {
         g_error("%s", FC(_F("Error: {1}") % saver.getErrorMessage()));

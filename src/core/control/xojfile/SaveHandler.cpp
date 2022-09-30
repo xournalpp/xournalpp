@@ -3,7 +3,6 @@
 #include <cinttypes>   // for PRIx32
 #include <cstdint>     // for uint32_t
 #include <cstdio>      // for sprintf, size_t
-#include <filesystem>  // for exists
 
 #include <cairo.h>                  // for cairo_surface_t
 #include <gdk-pixbuf/gdk-pixbuf.h>  // for gdk_pixbuf_save
@@ -33,18 +32,19 @@
 #include "model/XojPage.h"                     // for XojPage
 #include "pdf/base/XojPdfDocument.h"           // for XojPdfDocument
 #include "util/OutputStream.h"                 // for GzOutputStream, Output...
-#include "util/PathUtil.h"                     // for clearExtensions
+#include "util/PathUtil.h"                     // for clearExtensions, normalizeAssetPath
 #include "util/PlaceholderString.h"            // for PlaceholderString
 #include "util/i18n.h"                         // for FS, _F
 
 #include "config.h"  // for FILE_FORMAT_VERSION
+#include "filesystem.h"
 
 SaveHandler::SaveHandler() {
     this->firstPdfPageVisited = false;
     this->attachBgId = 1;
 }
 
-void SaveHandler::prepareSave(const Document* doc) {
+void SaveHandler::prepareSave(const Document* doc, const fs::path& target) {
     if (this->root) {
         // cleanup old data
         backgroundImages.clear();
@@ -71,7 +71,7 @@ void SaveHandler::prepareSave(const Document* doc) {
 
     for (size_t i = 0; i < doc->getPageCount(); i++) {
         PageRef p = doc->getPage(i);
-        visitPage(root.get(), p, doc, static_cast<int>(i));
+        visitPage(root.get(), p, doc, static_cast<int>(i), target);
     }
 }
 
@@ -210,7 +210,7 @@ void SaveHandler::visitLayer(XmlNode* page, const Layer* l) {
     }
 }
 
-void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id) {
+void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, int id, const fs::path& target) {
     auto* page = new XmlNode("page");
     root->addChild(page);
     page->setAttrib("width", p->getWidth());
@@ -254,7 +254,8 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
                 }
             } else {
                 background->setAttrib("domain", "absolute");
-                background->setAttrib("filename", doc->getPdfFilepath().u8string());
+                auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath(), target.parent_path());
+                background->setAttrib("filename", normalizedPath);
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -285,7 +286,8 @@ void SaveHandler::visitPage(XmlNode* root, ConstPageRef p, const Document* doc, 
             g_free(filename);
         } else {
             background->setAttrib("domain", "absolute");
-            background->setAttrib("filename", p->getBackgroundImage().getFilepath().u8string());
+            auto normalizedPath = Util::normalizeAssetPath(p->getBackgroundImage().getFilepath(), target.parent_path());
+            background->setAttrib("filename", normalizedPath);
             BackgroundImage img = p->getBackgroundImage();
 
             /*

@@ -106,11 +106,11 @@ auto SaveJob::save() -> bool {
     SaveHandler h;
 
     doc->lock();
-    h.prepareSave(doc);
     fs::path target = doc->getFilepath();
-    doc->unlock();
-
     Util::safeReplaceExtension(target, "xopp");
+
+    h.prepareSave(doc, target);
+    doc->unlock();
 
     auto const createBackup = doc->shouldCreateBackupOnSave();
 

@@ -33,16 +33,17 @@ constexpr auto CONFIG_FOLDER_NAME = "xournalpp"sv;
 #include <windows.h>
 
 auto Util::getLongPath(const fs::path& path) -> fs::path {
-    DWORD wLongPathSz = GetLongPathNameW(path.c_str(), nullptr, 0);
+    auto asWString = path.wstring();
+    DWORD wLongPathSz = GetLongPathNameW(asWString.c_str(), nullptr, 0);
 
     if (wLongPathSz == 0) {
         return path;
     }
 
     std::wstring wLongPath(wLongPathSz, L'\0');
-    GetLongPathNameW(path.c_str(), wLongPath.data(), static_cast<DWORD>(wLongPath.size()));
+    GetLongPathNameW(asWString.c_str(), wLongPath.data(), static_cast<DWORD>(wLongPath.size()));
     wLongPath.pop_back();
-    return fs::path(std::move(wLongPath));
+    return {std::move(wLongPath)};
 }
 #else
 auto Util::getLongPath(const fs::path& path) -> fs::path { return path; }
@@ -319,6 +320,14 @@ auto Util::ensureFolderExists(const fs::path& p) -> fs::path {
         Util::execInUiThread([msg = std::move(msg)]() { XojMsgBox::showErrorToUser(nullptr, msg); });
     }
     return p;
+}
+
+auto Util::normalizeAssetPath(const fs::path& asset, const fs::path& base) -> std::string {
+    try {
+        return fs::proximate(asset, base).generic_u8string();
+    } catch (...) {
+        return asset.generic_u8string();
+    }
 }
 
 auto Util::isChildOrEquivalent(fs::path const& path, fs::path const& base) -> bool {
