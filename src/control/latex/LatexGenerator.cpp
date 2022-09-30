@@ -6,6 +6,7 @@
 #include <sstream>
 
 #include <glib.h>
+#include <util/Util.h>
 #include <util/PathUtil.h>
 
 #include "i18n.h"
