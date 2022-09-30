@@ -117,7 +117,7 @@ void CustomExportJob::run() {
 
         XojExportHandler h;
         doc->lock();
-        h.prepareSave(doc);
+        h.prepareSave(doc, filepath);
         h.saveTo(filepath, this->control);
         doc->unlock();
 

@@ -32,7 +32,7 @@
 #include "model/XojPage.h"                     // for XojPage
 #include "pdf/base/XojPdfDocument.h"           // for XojPdfDocument
 #include "util/OutputStream.h"                 // for GzOutputStream, Output...
-#include "util/PathUtil.h"                     // for clearExtensions
+#include "util/PathUtil.h"                     // for clearExtensions, normalizeAssetPath
 #include "util/PlaceholderString.h"            // for PlaceholderString
 #include "util/i18n.h"                         // for FS, _F
 
@@ -43,7 +43,7 @@ SaveHandler::SaveHandler() {
     this->attachBgId = 1;
 }
 
-void SaveHandler::prepareSave(Document* doc) {
+void SaveHandler::prepareSave(Document* doc, const std::filesystem::path& target) {
     if (this->root) {
         // cleanup old data
         backgroundImages.clear();
@@ -70,7 +70,7 @@ void SaveHandler::prepareSave(Document* doc) {
 
     for (size_t i = 0; i < doc->getPageCount(); i++) {
         PageRef p = doc->getPage(i);
-        visitPage(root.get(), p, doc, static_cast<int>(i));
+        visitPage(root.get(), p, doc, static_cast<int>(i), target);
     }
 }
 
@@ -211,7 +211,7 @@ void SaveHandler::visitLayer(XmlNode* page, Layer* l) {
     }
 }
 
-void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
+void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id, const std::filesystem::path& target) {
     auto* page = new XmlNode("page");
     root->addChild(page);
     page->setAttrib("width", p->getWidth());
@@ -255,7 +255,8 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
                 }
             } else {
                 background->setAttrib("domain", "absolute");
-                background->setAttrib("filename", doc->getPdfFilepath().string());
+                auto normalizedPath = Util::normalizeAssetPath(doc->getPdfFilepath().string(), target.parent_path());
+                background->setAttrib("filename", normalizedPath);
             }
         }
         background->setAttrib("pageno", p->getPdfPageNr() + 1);
@@ -280,7 +281,10 @@ void SaveHandler::visitPage(XmlNode* root, PageRef p, Document* doc, int id) {
             p->getBackgroundImage().setCloneId(id);
         } else {
             background->setAttrib("domain", "absolute");
-            background->setAttrib("filename", p->getBackgroundImage().getFilepath().string());
+            auto normalizedPath = Util::normalizeAssetPath(
+                    std::filesystem::current_path() / p->getBackgroundImage().getFilepath().string(),
+                    target.parent_path());
+            background->setAttrib("filename", normalizedPath);
             p->getBackgroundImage().setCloneId(id);
         }
     } else {
