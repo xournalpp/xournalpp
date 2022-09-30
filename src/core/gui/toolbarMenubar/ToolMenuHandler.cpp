@@ -532,7 +532,7 @@ void ToolMenuHandler::initToolItems() {
     addToolItem(toolPageLayer);
 
     addCustomItemTgl("TOOL_FILL", ACTION_TOOL_FILL, GROUP_FILL, false, "fill", _("Fill"));
-
+    addCustomItem("PEN_FILL_OPACITY", ACTION_TOOL_PEN_FILL_OPACITY, "pen-fill-opacity", _("Fill Opacity"));
 
     /*
      * Non-menu items
