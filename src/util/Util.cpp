@@ -77,3 +77,5 @@ void Util::systemWithMessage(const char* command) {
         XojMsgBox::showErrorToUser(nullptr, msg);
     }
 }
+
+bool Util::isFlatpakInstallation() { return fs::exists("/.flatpak-info"); }
