@@ -27,7 +27,7 @@ if (EXISTS "${PROJECT_SOURCE_DIR}/.git" AND PATH_GIT)
                    OUTPUT_VARIABLE GIT_BRANCH
                    OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-  execute_process (COMMAND "${PATH_GIT}" config --get remote.origin.url
+  execute_process (COMMAND "${PATH_GIT}" remote get-url origin
                    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
                    OUTPUT_VARIABLE GIT_ORIGIN_URL
                    OUTPUT_STRIP_TRAILING_WHITESPACE)
