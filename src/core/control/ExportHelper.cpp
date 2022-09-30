@@ -46,7 +46,8 @@ auto exportImg(Document* doc, const char* output, const char* range, const char*
 
     ImageExport imgExport(doc, path, format);
     imgExport.setExportBackground(exportBackground);
-    imgExport.setExportRange(range);
+    const PageRangeVector exportRange = parseExportRange(doc, range);
+    imgExport.setExportRange(exportRange);
     imgExport.setLayerRange(layerRange);
 
     if (format == EXPORT_GRAPHICS_PNG) {
@@ -89,14 +90,10 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     auto path = fs::u8path(g_file_peek_path(file));
     g_object_unref(file);
 
-    PageRangeVector exportRange = ElementRange::parse("1-" + std::to_string(doc->getPageCount()), doc->getPageCount());
-    if (range) {
-        // Parse the range
-        exportRange = ElementRange::parse(range, doc->getPageCount());
-    }
     XojPdfExport pdfe{doc, path};
     pdfe.setLayerRange(layerRange);
     pdfe.setExportBackground(exportBackground);
+    const PageRangeVector exportRange = parseExportRange(doc, range);
     pdfe.setExportRange(exportRange);
     pdfe.setProgressiveMode(progressiveMode);
 
@@ -109,6 +106,15 @@ auto exportPdf(Document* doc, const char* output, const char* range, const char*
     }
 
     return 0;  // no error
+}
+
+auto parseExportRange(Document* doc, const char* range) -> PageRangeVector {
+    if (range) {
+        return ElementRange::parse(range, doc->getPageCount());
+    }
+    ElementRangeVector fullRange;
+    fullRange.emplace_back(0, doc->getPageCount() - 1);
+    return fullRange;
 }
 
 }  // namespace ExportHelper

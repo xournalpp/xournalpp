@@ -35,12 +35,6 @@ void ExportTemplate::setExportRange(const PageRangeVector& exportRange) {
     }
 }
 
-void ExportTemplate::setExportRange(const char* rangeStr) {
-    ElementRangeVector fullRange;
-    fullRange.emplace_back(0, doc->getPageCount() - 1);
-    exportRange = parseRange(rangeStr).value_or(fullRange);
-}
-
 void ExportTemplate::setLayerRange(const LayerRangeVector& layerRange) {
     if (layerRange.empty()) {
         this->layerRange = std::nullopt;
