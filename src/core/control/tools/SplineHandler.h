@@ -121,6 +121,7 @@ private:
     double knotsAttractionRadius;
 
     bool isButtonPressed = false;
+    bool inFirstKnotAttractionZone = false;
     SnapToGridInputHandler snappingHandler;
 
     std::shared_ptr<xoj::util::DispatchPool<xoj::view::SplineToolView>> viewPool;
