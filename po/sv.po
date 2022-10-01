@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-27 21:11+0000\n"
-"PO-Revision-Date: 2022-10-01 06:44\n"
+"PO-Revision-Date: 2022-10-01 07:45\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -63,7 +63,7 @@ msgstr "<span foreground='red' size='x-large'>Saknar den nödvändiga användarg
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:465
 msgid "Add/Edit TeX"
-msgstr ""
+msgstr "Lägg till/redigera TeX"
 
 #: ../src/core/control/XournalMain.cpp:672
 msgid "Advanced export options"
@@ -396,7 +396,7 @@ msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:25
 msgid "Dotted"
-msgstr ""
+msgstr "Prickad"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:134
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:38
@@ -413,7 +413,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:36
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:475
 msgid "Draw Ellipse"
-msgstr ""
+msgstr "Rita ellips"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:128
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:41
@@ -490,7 +490,7 @@ msgstr "Sudda streck"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:89
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:281
 msgid "Eraser"
-msgstr "Suddigummi"
+msgstr "Radergummi"
 
 #: ../src/core/control/Control.cpp:2442
 msgid "Error annotate PDF file \"{1}\"\n"
@@ -653,7 +653,7 @@ msgstr "Teckensnitt"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:504
 msgid "Forward"
-msgstr ""
+msgstr "Framåt"
 
 #: ../src/core/gui/dialog/AboutDialog.cpp:46
 msgid "GNU GPLv2 or later"
@@ -697,7 +697,7 @@ msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:24
 msgid "Graph"
-msgstr "Graf"
+msgstr "Rutad"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:400
 msgid "Grid Snapping"
@@ -719,7 +719,7 @@ msgstr "Dölj alla"
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:90
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:462
 msgid "Highlighter"
-msgstr ""
+msgstr "Överstrykningspenna"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:33
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:466
@@ -761,7 +761,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:445
 msgid "Insert page"
-msgstr ""
+msgstr "Infoga sida"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:26
 msgid "Isometric Dotted"
@@ -793,7 +793,7 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:82
 msgid "Layer Preview"
-msgstr ""
+msgstr "Förhandsgranska lager"
 
 #: ../src/core/control/layer/LayerController.cpp:372
 msgid "Layer {1}"
@@ -801,7 +801,7 @@ msgstr ""
 
 #: ../src/core/gui/sidebar/previews/layer/SidebarPreviewLayers.cpp:82
 msgid "Layerstack Preview"
-msgstr ""
+msgstr "Förhandsgranska lagerstacken"
 
 #: ../src/core/gui/PageView.cpp:787
 #: ../src/core/gui/sidebar/previews/base/SidebarPreviewBaseEntry.cpp:97
@@ -851,7 +851,7 @@ msgstr "Nästa"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:438
 msgid "Next annotated page"
-msgstr ""
+msgstr "Nästa annoterade sida"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:68
 msgid "No device"
@@ -985,7 +985,7 @@ msgstr "Penna"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:20
 msgid "Plain"
-msgstr ""
+msgstr "Blank"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:489
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:25
@@ -1064,11 +1064,11 @@ msgstr ""
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:21
 msgid "Ruled"
-msgstr ""
+msgstr "Linjerad"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:22
 msgid "Ruled with vertical line"
-msgstr ""
+msgstr "Linjerad med vertikalt streck"
 
 #: ../src/core/control/jobs/CustomExportJob.cpp:28
 msgid "SVG graphics"
@@ -1127,7 +1127,7 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:24
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:74
 msgid "Select Object"
-msgstr ""
+msgstr "Markera objekt"
 
 #: ../src/core/gui/toolbarMenubar/ToolPdfCombocontrol.cpp:68
 msgid "Select PDF Area Text"
@@ -1154,13 +1154,13 @@ msgstr ""
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:62
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:95
 msgid "Select Rectangle"
-msgstr ""
+msgstr "Markera rektangel"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:484
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:23
 #: ../src/core/gui/toolbarMenubar/ToolSelectCombocontrol.cpp:68
 msgid "Select Region"
-msgstr ""
+msgstr "Markera region"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:98
 msgid "Select Text from pdf"
@@ -1396,7 +1396,7 @@ msgstr ""
 
 #: ../src/core/control/Control.cpp:2696
 msgid "This document is not saved yet."
-msgstr ""
+msgstr "Detta dokument har inte sparats ännu."
 
 #: ../src/core/control/PageBackgroundChangeController.cpp:161
 msgid "This image could not be loaded. Error message: {1}"
@@ -1493,7 +1493,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:488
 msgid "Vertical Space"
-msgstr ""
+msgstr "Vertikalt utrymme"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:93
 msgid "Vertical space"
@@ -1613,7 +1613,7 @@ msgstr ""
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:267
 msgid "dashed"
-msgstr ""
+msgstr "streckad"
 
 #: ../src/core/gui/dialog/PluginDialogEntry.cpp:30
 msgid "default disabled"
@@ -2066,7 +2066,7 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:57
 msgid "Author: "
-msgstr ""
+msgstr "Skapare: "
 
 #: ../ui/about.glade:452
 msgid "Authors"
@@ -2098,7 +2098,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2847
 msgid "Background color between pages"
-msgstr ""
+msgstr "Bakgrundsfärg mellan sidor"
 
 #: ../ui/settings.glade:3536
 msgid "Base speed"
@@ -2123,7 +2123,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2821
 msgid "Border color for current page and other selections"
-msgstr ""
+msgstr "Kantfärg för aktuell sida och andra markeringar"
 
 #: ../ui/main.glade:321
 msgid "Bring Forward"
@@ -2215,7 +2215,7 @@ msgstr "Markör"
 
 #: ../ui/settings.glade:3065
 msgid "Cursor icon for pen"
-msgstr ""
+msgstr "Pekarikon för penna"
 
 #: ../ui/settings.glade:1205
 msgid "Cusp detection"
@@ -2325,11 +2325,11 @@ msgstr ""
 
 #: ../ui/main.glade:1502
 msgid "Draw Coordinate System"
-msgstr ""
+msgstr "Rita koordinatsystem"
 
 #: ../ui/main.glade:1513
 msgid "Draw _Line"
-msgstr ""
+msgstr "Rita _linje"
 
 #: ../ui/settings.glade:3113
 msgid "Draw a transparent circle around the cursor"
@@ -2474,7 +2474,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:87
 msgid "General LaTeX tool settings"
-msgstr ""
+msgstr "Allmänna inställningar för LaTeX-verktyget"
 
 #: ../ui/about.glade:115
 msgid "Git commit"
@@ -2600,15 +2600,15 @@ msgstr ""
 
 #: ../ui/settings.glade:5464
 msgid "Input Device"
-msgstr ""
+msgstr "Inmatningsenhet"
 
 #: ../ui/settings.glade:813
 msgid "Input Devices"
-msgstr ""
+msgstr "Inmatningsenheter"
 
 #: ../ui/settings.glade:1278
 msgid "Input System"
-msgstr ""
+msgstr "Inmatningssystem"
 
 #: ../ui/settings.glade:1247
 msgid "Input stabilization"
@@ -2620,7 +2620,7 @@ msgstr ""
 
 #: ../ui/texdialog.glade:9
 msgid "Insert Latex"
-msgstr "Infoga Latex"
+msgstr "Infoga LaTeX"
 
 #: ../ui/main.glade:2870
 msgid "Insert Page After"
@@ -2648,7 +2648,7 @@ msgstr "Språk"
 
 #: ../ui/settings.glade:5911
 msgid "Language Settings"
-msgstr ""
+msgstr "Språkinställningar"
 
 #: ../ui/main.glade:593
 msgid "Layout"
@@ -2729,7 +2729,7 @@ msgstr "Mus"
 
 #: ../ui/settings.glade:1423
 msgid "Mouse Buttons"
-msgstr ""
+msgstr "Musknappar"
 
 #: ../ui/settingsDeviceClassConfig.glade:43
 msgid "Mouse+Keyboard Combo"
@@ -2749,19 +2749,19 @@ msgstr ""
 
 #: ../ui/main.glade:1147
 msgid "N_ext Annotated Page"
-msgstr ""
+msgstr "Nästa annoterade sida"
 
 #: ../ui/main.glade:1194
 msgid "New Page _After"
-msgstr ""
+msgstr "Ny sida efter"
 
 #: ../ui/main.glade:1184
 msgid "New Page _Before"
-msgstr ""
+msgstr "Ny sida före"
 
 #: ../ui/main.glade:1205
 msgid "New Page at _End"
-msgstr ""
+msgstr "Ny sida i slutet"
 
 #: ../ui/main.glade:1252
 msgid "New _Layer"
@@ -2795,7 +2795,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5487
 msgid "Output Device"
-msgstr ""
+msgstr "Utmatningsenhet"
 
 #: ../ui/texdialog.glade:143
 msgid "Output generated by the LaTeX command."
@@ -2807,7 +2807,7 @@ msgstr ""
 
 #: ../ui/main.glade:1158
 msgid "P_revious Annotated Page"
-msgstr ""
+msgstr "Föregående annoterade sida"
 
 #: ../ui/exportSettings.glade:206
 msgid "Pages:"
@@ -2827,11 +2827,11 @@ msgstr ""
 
 #: ../ui/main.glade:1312
 msgid "Paper _Color"
-msgstr ""
+msgstr "Pappersfärg"
 
 #: ../ui/main.glade:1302
 msgid "Paper _Format"
-msgstr ""
+msgstr "Pappersformat"
 
 #: ../ui/about.glade:299
 msgid "Partially based on Xournal\n"
@@ -2860,19 +2860,19 @@ msgstr ""
 
 #: ../ui/settings.glade:5733
 msgid "Playback Settings"
-msgstr ""
+msgstr "Uppspelningsinställningar"
 
 #: ../ui/plugin.glade:14
 msgid "Plugin Manager"
-msgstr ""
+msgstr "Hanterare för insticksprogram"
 
 #: ../ui/main.glade:2067
 msgid "Plugin _Manager"
-msgstr ""
+msgstr "Hanterare för insticksprogram"
 
 #: ../ui/plugin.glade:121
 msgid "Plugin changes are only applied after Xournal++ is restarted"
-msgstr ""
+msgstr "Ändringar i insticksprogramen tillämpas inte förrän Xournal++ startats om"
 
 #: ../ui/settings.glade:3775
 msgid "Pre-load pages after"
@@ -2924,7 +2924,7 @@ msgstr ""
 
 #: ../ui/main.glade:187
 msgid "Recent _Documents"
-msgstr ""
+msgstr "Senaste _dokument"
 
 #: ../ui/main.glade:1992
 msgid "Record / Stop"
@@ -2960,7 +2960,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5569
 msgid "Sample Rate"
-msgstr ""
+msgstr "Samplingsfrekvens"
 
 #: ../ui/renameLayerDialog.glade:65
 msgid "Sample layer name"
@@ -3028,11 +3028,11 @@ msgstr ""
 
 #: ../ui/main.glade:702
 msgid "Set Columns"
-msgstr ""
+msgstr "Ange antal kolumner"
 
 #: ../ui/main.glade:807
 msgid "Set Rows"
-msgstr ""
+msgstr "Ange antal rader"
 
 #: ../ui/settings.glade:4941
 msgid "Settings:"
@@ -3159,7 +3159,7 @@ msgstr ""
 
 #: ../ui/main.glade:1980
 msgid "Text Font..."
-msgstr ""
+msgstr "Teckensnitt..."
 
 #: ../ui/latexSettings.glade:120
 msgid "The LaTeX file to use as a template for the LaTeX tool."
@@ -3252,11 +3252,11 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:131
 msgid "Version: "
-msgstr ""
+msgstr "Version: "
 
 #: ../ui/settings.glade:3872
 msgid "View"
-msgstr ""
+msgstr "Vy"
 
 #: ../ui/about.glade:331
 msgid "Website"
@@ -3318,67 +3318,67 @@ msgstr ""
 
 #: ../ui/main.glade:714
 msgid "_1 Column"
-msgstr ""
+msgstr "_1 kolumn"
 
 #: ../ui/main.glade:819
 msgid "_1 Row"
-msgstr ""
+msgstr "_1 rad"
 
 #: ../ui/main.glade:725
 msgid "_2 Columns"
-msgstr ""
+msgstr "_2 kolumner"
 
 #: ../ui/main.glade:830
 msgid "_2 Rows"
-msgstr ""
+msgstr "_2 rader"
 
 #: ../ui/main.glade:736
 msgid "_3 Columns"
-msgstr ""
+msgstr "_3 kolumner"
 
 #: ../ui/main.glade:841
 msgid "_3 Rows"
-msgstr ""
+msgstr "_3 rader"
 
 #: ../ui/main.glade:747
 msgid "_4 Columns"
-msgstr ""
+msgstr "_4 kolumner"
 
 #: ../ui/main.glade:852
 msgid "_4 Rows"
-msgstr ""
+msgstr "_4 rader"
 
 #: ../ui/main.glade:758
 msgid "_5 Columns"
-msgstr ""
+msgstr "_5 kolumner"
 
 #: ../ui/main.glade:863
 msgid "_5 Rows"
-msgstr ""
+msgstr "_5 rader"
 
 #: ../ui/main.glade:769
 msgid "_6 Columns"
-msgstr ""
+msgstr "_6 kolumner"
 
 #: ../ui/main.glade:874
 msgid "_6 Rows"
-msgstr ""
+msgstr "_6 rader"
 
 #: ../ui/main.glade:780
 msgid "_7 Columns"
-msgstr ""
+msgstr "_7 kolumner"
 
 #: ../ui/main.glade:885
 msgid "_7 Rows"
-msgstr ""
+msgstr "_7 rader"
 
 #: ../ui/main.glade:791
 msgid "_8 Columns"
-msgstr ""
+msgstr "_8 kolumner"
 
 #: ../ui/main.glade:896
 msgid "_8 Rows"
-msgstr ""
+msgstr "_8 rader"
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
@@ -3390,11 +3390,11 @@ msgstr ""
 
 #: ../ui/main.glade:689
 msgid "_Cols/Rows"
-msgstr ""
+msgstr "_Kol/Rader"
 
 #: ../ui/main.glade:949
 msgid "_Customize"
-msgstr ""
+msgstr "_Anpassa"
 
 #: ../ui/main.glade:1430
 msgid "_Default Tools"
@@ -3402,7 +3402,7 @@ msgstr ""
 
 #: ../ui/main.glade:1235
 msgid "_Delete Page"
-msgstr ""
+msgstr "_Ta bort sida"
 
 #: ../ui/main.glade:292
 msgid "_Edit"
@@ -3410,7 +3410,7 @@ msgstr "_Redigera"
 
 #: ../ui/main.glade:1358
 msgid "_Eraser"
-msgstr ""
+msgstr "Radergummi"
 
 #: ../ui/main.glade:237
 msgid "_Export as PDF"
@@ -3434,15 +3434,15 @@ msgstr "_Hjälp"
 
 #: ../ui/main.glade:1394
 msgid "_Highlighter"
-msgstr ""
+msgstr "Överstrykningspenna"
 
 #: ../ui/main.glade:605
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horisontell"
 
 #: ../ui/main.glade:1418
 msgid "_Image"
-msgstr ""
+msgstr "_Bild"
 
 #: ../ui/main.glade:1173
 msgid "_Journal"
@@ -3450,15 +3450,15 @@ msgstr ""
 
 #: ../ui/main.glade:1092
 msgid "_Last Page"
-msgstr ""
+msgstr "_Sista sidan"
 
 #: ../ui/main.glade:634
 msgid "_Left to Right"
-msgstr ""
+msgstr "Vänster till höger"
 
 #: ../ui/main.glade:939
 msgid "_Manage"
-msgstr ""
+msgstr "_Hantera"
 
 #: ../ui/main.glade:1037
 msgid "_Navigation"
@@ -3466,7 +3466,7 @@ msgstr ""
 
 #: ../ui/main.glade:1120
 msgid "_Next Layer"
-msgstr ""
+msgstr "Nästa lager"
 
 #: ../ui/main.glade:1081
 msgid "_Next Page"
@@ -3474,15 +3474,15 @@ msgstr "_Nästa sida"
 
 #: ../ui/main.glade:530
 msgid "_Pair Pages"
-msgstr ""
+msgstr "_Parkopplade sidor"
 
 #: ../ui/main.glade:1346
 msgid "_Pen"
-msgstr ""
+msgstr "_Penna"
 
 #: ../ui/main.glade:2056
 msgid "_Plugin"
-msgstr ""
+msgstr "Insticksprogram"
 
 #: ../ui/main.glade:540
 msgid "_Presentation Mode"
@@ -3490,7 +3490,7 @@ msgstr "_Presentationsläge"
 
 #: ../ui/main.glade:1109
 msgid "_Previous Layer"
-msgstr ""
+msgstr "Föregående lager"
 
 #: ../ui/main.glade:1059
 msgid "_Previous Page"
@@ -3498,7 +3498,7 @@ msgstr "F_öregående sida"
 
 #: ../ui/main.glade:645
 msgid "_Right to Left"
-msgstr ""
+msgstr "Höger till vänster"
 
 #: ../ui/main.glade:1447
 msgid "_Shape Recognizer"
@@ -3514,7 +3514,7 @@ msgstr "_Verktyg"
 
 #: ../ui/main.glade:1131
 msgid "_Top Layer"
-msgstr ""
+msgstr "Översta lagret"
 
 #: ../ui/main.glade:663
 msgid "_Top to Bottom"
@@ -3522,11 +3522,11 @@ msgstr ""
 
 #: ../ui/main.glade:616
 msgid "_Vertical"
-msgstr ""
+msgstr "_Vertikal"
 
 #: ../ui/main.glade:1577
 msgid "_Vertical Space"
-msgstr ""
+msgstr "_Vertikalt utrymme"
 
 #: ../ui/main.glade:519
 msgid "_View"
@@ -3566,7 +3566,7 @@ msgstr ""
 
 #: ../ui/pluginEntry.glade:167
 msgid "enabled,"
-msgstr ""
+msgstr "aktiverad,"
 
 #: ../ui/settings.glade:1751
 msgid "events"
