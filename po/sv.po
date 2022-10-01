@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-27 21:11+0000\n"
-"PO-Revision-Date: 2022-09-27 21:27\n"
+"PO-Revision-Date: 2022-10-01 06:44\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -1040,7 +1040,7 @@ msgstr ""
 
 #: ../src/core/undo/LayerRenameUndoAction.cpp:20
 msgid "Rename layer"
-msgstr ""
+msgstr "Byt namn på lager"
 
 #: ../src/util/XojMsgBox.cpp:82
 msgid "Replace"
@@ -2255,7 +2255,7 @@ msgstr ""
 
 #: ../ui/main.glade:1263
 msgid "Delete Layer"
-msgstr ""
+msgstr "Ta bort lager"
 
 #: ../ui/settingsButtonConfig.glade:132
 msgid "Delete stroke"
@@ -2765,7 +2765,7 @@ msgstr ""
 
 #: ../ui/main.glade:1252
 msgid "New _Layer"
-msgstr ""
+msgstr "Nytt _Lager"
 
 #: ../ui/settings.glade:3081
 msgctxt "stylus cursor uses no icon"
@@ -3382,7 +3382,7 @@ msgstr ""
 
 #: ../ui/main.glade:196
 msgid "_Annotate PDF"
-msgstr ""
+msgstr "_Annotera PDF"
 
 #: ../ui/main.glade:674
 msgid "_Bottom to Top"
@@ -3406,7 +3406,7 @@ msgstr ""
 
 #: ../ui/main.glade:292
 msgid "_Edit"
-msgstr ""
+msgstr "_Redigera"
 
 #: ../ui/main.glade:1358
 msgid "_Eraser"
@@ -3418,19 +3418,19 @@ msgstr ""
 
 #: ../ui/main.glade:152
 msgid "_File"
-msgstr ""
+msgstr "_Arkiv"
 
 #: ../ui/main.glade:1048
 msgid "_First Page"
-msgstr ""
+msgstr "_Första sidan"
 
 #: ../ui/main.glade:1070
 msgid "_Goto Page"
-msgstr ""
+msgstr "_Gå till sida"
 
 #: ../ui/main.glade:2081
 msgid "_Help"
-msgstr ""
+msgstr "_Hjälp"
 
 #: ../ui/main.glade:1394
 msgid "_Highlighter"
@@ -3470,7 +3470,7 @@ msgstr ""
 
 #: ../ui/main.glade:1081
 msgid "_Next Page"
-msgstr ""
+msgstr "_Nästa sida"
 
 #: ../ui/main.glade:530
 msgid "_Pair Pages"
@@ -3486,7 +3486,7 @@ msgstr ""
 
 #: ../ui/main.glade:540
 msgid "_Presentation Mode"
-msgstr ""
+msgstr "_Presentationsläge"
 
 #: ../ui/main.glade:1109
 msgid "_Previous Layer"
@@ -3494,7 +3494,7 @@ msgstr ""
 
 #: ../ui/main.glade:1059
 msgid "_Previous Page"
-msgstr ""
+msgstr "F_öregående sida"
 
 #: ../ui/main.glade:645
 msgid "_Right to Left"
@@ -3510,7 +3510,7 @@ msgstr ""
 
 #: ../ui/main.glade:1335
 msgid "_Tools"
-msgstr ""
+msgstr "_Verktyg"
 
 #: ../ui/main.glade:1131
 msgid "_Top Layer"
@@ -3530,7 +3530,7 @@ msgstr ""
 
 #: ../ui/main.glade:519
 msgid "_View"
-msgstr ""
+msgstr "Vi_sa"
 
 #: ../ui/main.glade:1869
 msgid "_delete strokes"
