@@ -131,7 +131,7 @@ auto SplineHandler::onKeyEvent(GdkEventKey* event) -> bool {
 }
 
 auto SplineHandler::onMotionNotifyEvent(const PositionInputData& pos, double zoom) -> bool {
-    if (!stroke) {
+    if (!stroke || this->inFirstKnotAttractionZone) {
         return false;
     }
 
@@ -162,7 +162,7 @@ void SplineHandler::onSequenceCancelEvent() {
         return;
     }
 
-    if (this->knots.size() == 1) {
+    if (this->knots.size() <= 1) {
         this->clearTinySpline();
     } else {
         auto rg = this->computeLastSegmentRepaintRange();
@@ -211,6 +211,20 @@ void SplineHandler::onButtonReleaseEvent(const PositionInputData& pos, double zo
             SplineHandler::lastStrokeTime = pos.timestamp;
         }
     }
+
+    if (this->inFirstKnotAttractionZone) {
+        // The click began in the first knot's attraction zone
+        // Finalize the spline if we still are in this zone, cancel the sequence otherwise
+        const Point p(pos.x / zoom, pos.y / zoom);
+        double dist = p.lineLengthTo(this->knots.front());
+        this->knotsAttractionRadius = KNOTS_ATTRACTION_RADIUS_IN_PIXELS / zoom;
+        if (dist < this->knotsAttractionRadius) {
+            finalizeSpline();
+        } else {
+            this->inFirstKnotAttractionZone = false;
+            onSequenceCancelEvent();
+        }
+    }
 }
 
 void SplineHandler::onButtonPressEvent(const PositionInputData& pos, double zoom) {
@@ -234,7 +248,9 @@ void SplineHandler::onButtonPressEvent(const PositionInputData& pos, double zoom
         double dist = this->buttonDownPoint.lineLengthTo(this->knots.front());
         if (dist < this->knotsAttractionRadius) {  // now the spline is closed and finalized
             this->addKnotWithTangent(this->knots.front(), this->tangents.front());
-            this->finalizeSpline();
+            this->inFirstKnotAttractionZone = true;
+            auto rg = this->computeLastSegmentRepaintRange();
+            this->viewPool->dispatch(xoj::view::SplineToolView::FLAG_DIRTY_REGION, rg);
         } else if (validMotion(currPoint, this->knots.back())) {
             this->addKnot(this->currPoint);
             auto rg = this->computeLastSegmentRepaintRange();
