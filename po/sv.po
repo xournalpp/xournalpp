@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-27 21:11+0000\n"
-"PO-Revision-Date: 2022-10-01 09:45\n"
+"PO-Revision-Date: 2022-10-02 07:17\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -258,7 +258,7 @@ msgstr ""
 #: ../src/core/control/xojfile/LoadHandler.cpp:395
 #: ../src/core/control/xojfile/LoadHandler.cpp:418
 msgid "Could not read image: {1}. Error message: {2}"
-msgstr ""
+msgstr "Kunde inte läsa bild: {1}. Felmeddelande: {2}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:428
 msgid "Could not read page number for cloned background image: {1}."
@@ -287,7 +287,7 @@ msgstr "Kunde inte spara .tex-filen: {1}"
 
 #: ../src/core/control/latex/LatexGenerator.cpp:96
 msgid "Could not start {1}: {2} (exit code: {3})"
-msgstr ""
+msgstr "Kunde inte starta {1}: {2} (exit-kod: {3})"
 
 #: ../src/core/undo/UndoRedoHandler.cpp:113
 msgid "Could not undo \"{1}\"\n"
@@ -434,7 +434,7 @@ msgstr "Rita rektangel"
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:46
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:482
 msgid "Draw Spline"
-msgstr ""
+msgstr "Rita spline"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:136
 #: ../src/core/gui/toolbarMenubar/ToolDrawCombocontrol.cpp:42
@@ -517,7 +517,7 @@ msgstr "Fel vid läsning av PDF: {1}"
 
 #: ../src/core/control/xojfile/LoadHandler.cpp:556
 msgid "Error reading width of a stroke: {1}"
-msgstr ""
+msgstr "Fel vid läsning av bredden på ett streck: {1}"
 
 #: ../src/core/control/jobs/ImageExport.cpp:168
 msgid "Error save image #1"
@@ -537,7 +537,7 @@ msgstr ""
 
 #: ../src/util/Util.cpp:78
 msgid "Error {1} executing system command: {2}"
-msgstr ""
+msgstr "Fel {1} vid körning av systemkommando: {2}"
 
 #: ../src/core/control/CrashHandler.cpp:37
 msgid "Error: {1}"
@@ -596,7 +596,7 @@ msgstr ""
 
 #: ../src/core/control/latex/LatexGenerator.cpp:74
 msgid "Failed to find LaTeX generator program in PATH: {1}"
-msgstr ""
+msgstr "Det gick inte att hitta LaTeX-generatorprogrammet i PATH: {1}"
 
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:177
 #: ../src/core/pdf/base/XojCairoPdfExport.cpp:217
@@ -1263,7 +1263,7 @@ msgstr "Tyvärr kan Xournal++ inte öppna fjärrfiler just nu.\n"
 
 #: ../src/core/control/pagetype/PageTypeHandler.cpp:23
 msgid "Staves"
-msgstr ""
+msgstr "Notrader"
 
 #: ../src/core/gui/toolbarMenubar/ToolMenuHandler.cpp:501
 msgid "Stop"
@@ -1384,11 +1384,11 @@ msgstr ""
 
 #: ../src/core/control/XournalMain.cpp:168
 msgid "There are errorlogfiles from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Det finns felloggfiler från Xournal++. Vänligen skicka en felrapport, så felet kan rättas."
 
 #: ../src/core/control/XournalMain.cpp:167
 msgid "There is an errorlogfile from Xournal++. Please send a Bugreport, so the bug may be fixed."
-msgstr ""
+msgstr "Det finns en felloggfil från Xournal++. Vänligen skicka en felrapport, så felet kan rättas."
 
 #: ../src/util/XojMsgBox.cpp:100
 msgid "There was an error displaying help: {1}"
@@ -1412,7 +1412,7 @@ msgstr "Slå på/av helskärm"
 
 #: ../src/core/gui/dialog/ButtonConfigGui.cpp:87
 msgid "Tool - don't change"
-msgstr ""
+msgstr "Verktyg - ändra inte"
 
 #: ../src/core/gui/toolbarMenubar/model/ToolbarData.cpp:104
 msgid "Toolbar found: {1}"
@@ -1898,7 +1898,7 @@ msgstr "<b>Sidstorlek</b>"
 
 #: ../ui/toolbarCustomizeDialog.glade:196
 msgid "<b>Separator</b>"
-msgstr ""
+msgstr "<b>Avgränsare</b>"
 
 #: ../ui/settings.glade:777
 msgid "<i>Assign device classes to each input device of your system. Only change these values if your devices are not correctly matched. (e.g. your pen shows up as touchscreen)</i>"
@@ -1977,7 +1977,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1805
 msgid "<i>Specify the tools that will be selected if a button of the stylus is pressed or the eraser is used. After releasing the button, the previous tool will be selected.</i>"
-msgstr ""
+msgstr "<i>Ange de verktyg som kommer att väljas om en knapp på pennan trycks ned eller suddet används. Efter att du har släppt knappen kommer det föregående verktyget att väljas.</i>"
 
 #: ../ui/settings.glade:486
 msgid "<i>This name will be proposed if you save a new document.</i>"
@@ -1989,7 +1989,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2759
 msgid "<i>Toggle visibility of menubar with F10</i>"
-msgstr ""
+msgstr "<i>Växla synlighet för menyraden med F10</i>"
 
 #: ../ui/settings.glade:2409
 msgid "<i>Use pinch gestures to zoom journal pages.</i>"
@@ -2063,7 +2063,7 @@ msgstr ""
 
 #: ../ui/settings.glade:5536
 msgid "Audio Devices"
-msgstr ""
+msgstr "Ljudenheter"
 
 #: ../ui/settings.glade:5779
 msgid "Audio Recording"
@@ -2107,7 +2107,7 @@ msgstr "Bakgrundsfärg mellan sidor"
 
 #: ../ui/settings.glade:3536
 msgid "Base speed"
-msgstr ""
+msgstr "Grundhastighet"
 
 #: ../ui/settings.glade:3083
 msgctxt "stylus cursor uses a big pen icon"
@@ -2382,7 +2382,7 @@ msgstr ""
 
 #: ../ui/settings.glade:1519
 msgid "Enable Pressure Sensitivity"
-msgstr ""
+msgstr "Aktivera tryckkänslighet"
 
 #: ../ui/settings.glade:4808
 msgid "Enable Tap action"
@@ -2406,7 +2406,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2421
 msgid "Enable zoom gestures (requires restart)"
-msgstr ""
+msgstr "Aktivera zoomgester (kräver omstart)"
 
 #: ../ui/texdialog.glade:69
 msgid "Enter / edit LaTeX Text"
@@ -2414,7 +2414,7 @@ msgstr "Ange / redigera LaTeX-text"
 
 #: ../ui/main.glade:1775
 msgid "Eraser Optio_ns"
-msgstr ""
+msgstr "Alternativ för radergummi"
 
 #: ../ui/settingsButtonConfig.glade:129
 msgid "Eraser Type - don't change"
@@ -2547,7 +2547,7 @@ msgstr ""
 
 #: ../ui/main.glade:1884
 msgid "Highlighter Opti_ons"
-msgstr ""
+msgstr "Alternativ för överstrykningspenna"
 
 #: ../ui/settings.glade:4858
 msgid "How short (screen mm)  of the stroke  AND...\n\n"
@@ -2561,7 +2561,7 @@ msgstr ""
 
 #: ../ui/about.glade:246
 msgid "Icon Designers"
-msgstr ""
+msgstr "Ikondesigner"
 
 #: ../ui/settings.glade:2933
 msgid "Icon Theme"
@@ -2597,7 +2597,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:145
 msgid "Image quality"
-msgstr ""
+msgstr "Bildkvalitet"
 
 #: ../ui/settings.glade:240
 msgid "Inertia"
@@ -2854,7 +2854,7 @@ msgstr "Pausa"
 
 #: ../ui/main.glade:1629
 msgid "Pen _Options"
-msgstr ""
+msgstr "Alternativ för penna"
 
 #: ../ui/settings.glade:3841
 msgid "Performance"
@@ -2902,7 +2902,7 @@ msgstr "Presentationsläge"
 
 #: ../ui/settings.glade:4572
 msgid "Preserve line width"
-msgstr ""
+msgstr "Bevara radbredd"
 
 #: ../ui/settings.glade:1588
 msgid "Pressure Multiplier: "
@@ -2918,7 +2918,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3197
 msgid "Radius"
-msgstr ""
+msgstr "Radie"
 
 #: ../ui/exportSettings.glade:160
 msgid "Range"
@@ -2942,7 +2942,7 @@ msgstr "Inspelningskvalitet"
 
 #: ../ui/main.glade:1285
 msgid "Rename Layer"
-msgstr ""
+msgstr "Byt namn på lager"
 
 #: ../ui/renameLayerDialog.glade:8
 msgid "Rename selected layer"
@@ -2950,7 +2950,7 @@ msgstr ""
 
 #: ../ui/settings.glade:4619
 msgid "Resizing"
-msgstr ""
+msgstr "Storleksändring"
 
 #: ../ui/exportSettings.glade:26
 msgid "Resolution"
@@ -3010,7 +3010,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3697
 msgid "Select toolbar:"
-msgstr ""
+msgstr "Välj verktygsfält:"
 
 #: ../ui/settings.glade:2872
 msgid "Selection Color (Text, Stroke Selection etc.)"
@@ -3050,7 +3050,7 @@ msgstr ""
 
 #: ../ui/settings.glade:2740
 msgid "Show Menubar on Startup"
-msgstr ""
+msgstr "Visa menyrad vid start"
 
 #: ../ui/main.glade:561
 msgid "Show Sidebar"
@@ -3092,7 +3092,7 @@ msgstr ""
 
 #: ../ui/settings.glade:3925
 msgid "Speed for Ctrl + Scroll"
-msgstr ""
+msgstr "Hastighet för Ctrl + Scroll"
 
 #: ../ui/settings.glade:3953
 msgid "Speed for a Zoomstep"
@@ -3116,11 +3116,11 @@ msgstr ""
 
 #: ../ui/settings.glade:1970
 msgid "Stylus"
-msgstr ""
+msgstr "Pekpenna"
 
 #: ../ui/settings.glade:1939
 msgid "Stylus Buttons"
-msgstr ""
+msgstr "Pekpenneknappar"
 
 #: ../ui/settings.glade:4889
 msgid "Successive (ms)"
@@ -3145,7 +3145,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:233
 msgid "Template file settings"
-msgstr ""
+msgstr "Inställningar för mallfil"
 
 #: ../ui/pagesize.glade:101
 msgid "Template:"
@@ -3169,11 +3169,11 @@ msgstr "Teckensnitt..."
 
 #: ../ui/latexSettings.glade:120
 msgid "The LaTeX file to use as a template for the LaTeX tool."
-msgstr ""
+msgstr "Den LaTeX-fil som ska användas som mall för LaTeX-verktyget."
 
 #: ../ui/latexSettings.glade:197
 msgid "The current color of the Text Tool, in hex RGB format."
-msgstr ""
+msgstr "Den aktuella färgen för textverktyget, i hex-RGB-format."
 
 #: ../ui/latexSettings.glade:134
 msgid "The following strings will be substituted in the global template file when running the LaTeX tool:"
@@ -3189,7 +3189,7 @@ msgstr "Enheten för linjalen är cm"
 
 #: ../ui/pageTemplate.glade:114
 msgid "These settings will be used for new pages"
-msgstr ""
+msgstr "Dessa inställningar kommer att användas för nya sidor"
 
 #: ../ui/settings.glade:2143
 msgid "Timeout"
@@ -3210,7 +3210,7 @@ msgstr ""
 #: ../ui/settings.glade:2056 ../ui/settings.glade:2680
 #: ../ui/settingsDeviceClassConfig.glade:46
 msgid "Touchscreen"
-msgstr ""
+msgstr "Pekskärm"
 
 #: ../ui/settings.glade:4918
 msgid "Try to select object first."
@@ -3288,7 +3288,7 @@ msgstr ""
 
 #: ../ui/exportSettings.glade:29
 msgid "Width"
-msgstr ""
+msgstr "Bredd"
 
 #: ../ui/pagesize.glade:189
 msgid "Width:"
@@ -3300,7 +3300,7 @@ msgstr ""
 
 #: ../ui/latexSettings.glade:461
 msgid "Wrap text"
-msgstr ""
+msgstr "Radbryt text"
 
 #: ../ui/about.glade:158
 msgid "X.X.X"
@@ -3308,7 +3308,7 @@ msgstr ""
 
 #: ../ui/settings.glade:248
 msgid "Xournal++ Preferences"
-msgstr ""
+msgstr "Xournal++-inställningar"
 
 #: ../ui/settings.glade:4170
 msgid "Zoom"
@@ -3316,7 +3316,7 @@ msgstr "Zoom"
 
 #: ../ui/settings.glade:2513
 msgid "Zoom Gestures"
-msgstr ""
+msgstr "Zoomgester"
 
 #: ../ui/settings.glade:4016
 msgid "Zoom Speed"
