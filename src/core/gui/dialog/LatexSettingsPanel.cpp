@@ -66,6 +66,7 @@ LatexSettingsPanel::~LatexSettingsPanel() {
 
 void LatexSettingsPanel::load(const LatexSettings& settings) {
     gtk_toggle_button_set_active(this->cbAutoDepCheck, settings.autoCheckDependencies);
+    gtk_entry_set_text(GTK_ENTRY(this->get("latexDefaultEntry")), settings.defaultText.c_str());
     if (!settings.globalTemplatePath.empty()) {
         gtk_file_chooser_set_filename(this->globalTemplateChooser,
                                       Util::toGFilename(settings.globalTemplatePath).c_str());
@@ -103,6 +104,7 @@ void LatexSettingsPanel::load(const LatexSettings& settings) {
 
 void LatexSettingsPanel::save(LatexSettings& settings) {
     settings.autoCheckDependencies = gtk_toggle_button_get_active(this->cbAutoDepCheck);
+    settings.defaultText = gtk_entry_get_text(GTK_ENTRY(this->get("latexDefaultEntry")));
     settings.globalTemplatePath = Util::fromGFilename(gtk_file_chooser_get_filename(this->globalTemplateChooser));
     settings.genCmd = gtk_entry_get_text(GTK_ENTRY(this->get("latexSettingsGenCmd")));
 
@@ -141,7 +143,7 @@ void LatexSettingsPanel::checkDeps() {
                      settings.globalTemplatePath.u8string().c_str());
         } else {
             std::string templ(std::istreambuf_iterator<char>(is), {});
-            std::string sample = LatexGenerator::templateSub("x^2", templ, Color(0x000000U));
+            std::string sample = LatexGenerator::templateSub(settings.defaultText, templ, Color(0x000000U));
             auto const& tmpDir = Util::getTmpDirSubfolder("tex");
             auto result = LatexGenerator(settings).asyncRun(tmpDir, sample);
             if (auto* proc = std::get_if<GSubprocess*>(&result)) {

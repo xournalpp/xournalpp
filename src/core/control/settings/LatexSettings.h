@@ -19,6 +19,7 @@
 class LatexSettings {
 public:
     bool autoCheckDependencies{true};
+    std::string defaultText{"x^2"};
     fs::path globalTemplatePath{};
 #ifdef __APPLE__
     std::string genCmd{"/Library/TeX/texbin/pdflatex -halt-on-error -interaction=nonstopmode '{}'"};

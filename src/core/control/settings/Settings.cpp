@@ -537,6 +537,8 @@ void Settings::parseItem(xmlDocPtr doc, xmlNodePtr cur) {
         this->trySelectOnStrokeFiltered = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.autoCheckDependencies")) == 0) {
         this->latexSettings.autoCheckDependencies = xmlStrcmp(value, reinterpret_cast<const xmlChar*>("true")) == 0;
+    } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.defaultText")) == 0) {
+        this->latexSettings.defaultText = reinterpret_cast<char*>(value);
     } else if (xmlStrcmp(name, reinterpret_cast<const xmlChar*>("latexSettings.globalTemplatePath")) == 0) {
         std::string v(reinterpret_cast<char*>(value));
         this->latexSettings.globalTemplatePath = fs::u8path(v);
@@ -1019,6 +1021,7 @@ void Settings::save() {
     /**/
 
     SAVE_BOOL_PROP(latexSettings.autoCheckDependencies);
+    SAVE_STRING_PROP(latexSettings.defaultText);
     // Inline SAVE_STRING_PROP(latexSettings.globalTemplatePath) since it
     // breaks on Windows due to the native character representation being
     // wchar_t instead of char
